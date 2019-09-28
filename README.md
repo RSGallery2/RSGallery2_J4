@@ -1,5 +1,5 @@
 
-![RSGallery logo with text](https://github.com/RSGallery2/RSGallery2_Project/blob/master/RSGallery2_Logo/RSG2_logoText.svg?raw=true) 
+![RSGallery logo with text](https://github.com/RSGallery2/RSGallery2_Project/blob/master/RSGallery2_Logo/RSG2_logoText.svg) 
 
 # RSGallery2_Component
 RSGallery2 is one of several gallery extensions/components for the well known CMS Joomla!
