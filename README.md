@@ -1,4 +1,3 @@
-
 ![RSGallery logo with text](https://github.com/RSGallery2/RSGallery2_Project/blob/master/RSGallery2_Logo/RSG2_logoText.svg) 
 
 # RSGallery2_Component
