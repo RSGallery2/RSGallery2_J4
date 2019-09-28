@@ -1,0 +1,42 @@
+
+
+
+div.quickicon-icon span.fa-cog
+{
+	color: blue;
+}
+
+
+div.quickicon-icon span.fa-th
+{
+	color: green;
+}
+
+
+div.quickicon-icon span.fa-upload
+{
+	color: green;
+}
+
+
+div.quickicon-icon span.fa-image
+{
+	color: green;
+}
+
+
+div.quickicon-icon span.fa-cogs
+{
+	color: red;
+}
+
+/* border-radius: 25px; */
+div.quickicon-icon
+{
+	/* border: 2px solid red; /**/
+	border-color: red;
+	border-width: thick;
+	border-radius: 5px;
+}
+
+

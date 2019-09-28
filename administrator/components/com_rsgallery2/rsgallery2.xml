@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="component" method="upgrade">
+	<name>COM_RSGALLERY2</name>
+	<creationDate>2019-09-27</creationDate>
+	<author>RSGallery2 Team</author>
+	<authorEmail>team2@rsgallery2.org</authorEmail>
+	<authorUrl>https://www.rsgallery2.org</authorUrl>
+	<copyright>(c) 2003-2019 RSGallery2 Team</copyright>
+	<license>GNU General Public License version 2 or later;</license>
+	<version>5.0.0.1</version>
+	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
+	<namespace>Joomla\Component\Rsgallery2</namespace>
+        <scriptfile>script.php</scriptfile>
+	<!-- Back-end files -->
+	<administration>
+		<!-- Menu entries -->
+		<menu view="rsgallery2">COM_RSGALLERY2_MENU</menu>
+		<submenu>
+			<menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu>
+			<!-- Note that all & must be escaped to &amp; for the file to be valid XML and be parsed by the installer -->
+			<menu view="COM_RSGALLERY2_MENU_CONTROL_PANEL"
+			      img="class:config"
+			      link="option=com_rsgallery2">COM_RSGALLERY2_MENU_CONTROL_PANEL
+			</menu>
+			<menu view="COM_RSGALLERY2_MENU_GALLERIES"
+			      link="option=com_rsgallery2&amp;view=galleries">COM_RSGALLERY2_MENU_GALLERIES
+			</menu>
+			<menu view="COM_RSGALLERY2_MENU_UPLOAD"
+			      link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD
+			</menu>
+			<menu view="COM_RSGALLERY2_MENU_IMAGES"
+			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_ITEMS
+			</menu>
+			<menu view="COM_RSGALLERY2_MENU_CONFIG"
+			      link="option=com_rsgallery2&amp;view=config&amp;task=config.edit">COM_RSGALLERY2_MENU_CONFIG
+			</menu>
+			<menu view="COM_RSGALLERY2_MENU_MAINTENANCE"
+			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE
+			</menu>
+		</submenu>
+        <media folder="media/com_foos" destination="com_foos">
+		    <folder>js</folder>
+		    <folder>css</folder>
+		    <folder>images</folder>
+        </media> 		
+		<files folder="administrator/components/com_rsgallery2">
+			<filename>rsgallery2.xml</filename>
+			<folder>Controller</folder>
+			<folder>Extension</folder>
+			<folder>Service</folder>
+			<folder>View</folder>
+			<folder>services</folder>
+			<folder>tmpl</folder>
+		</files>
+	</administration>
+</extension>
