@@ -53,4 +53,12 @@
 			<folder>tmpl</folder>
 		</files>
 	</administration>
+	<!-- ToDo: 
+	<changelogurl>https://example.com/.../changelog.xml</changelogurl>
+	-->
+	<!-- ToDo: 
+	<updateservers>
+		<server type="extension" name="Foo Updates">http://example.com/.../foo_update.xml</server>
+	</updateservers> 
+	-->
 </extension>

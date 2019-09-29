@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_RSGALLERY2_RSGALLERY2_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_RSGALLERY2_RSGALLERY2_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+	<!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request"
+			addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
+		>
+			<field
+				name="id"
+				type="modal_rsgallery2"
+				label="COM_RSGALLERY2_SELECT_RSGALLERY2_LABEL"
+				required="true"
+				select="true"
+				new="true"
+				edit="true"
+				clear="true"
+			/>
+		</fieldset>
+	</fields>
+</metadata>

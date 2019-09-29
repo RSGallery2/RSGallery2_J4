@@ -11,12 +11,15 @@ namespace Joomla\Component\Rsgallery2\Administrator\View\Rsgallery2;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
  * View class for a list of rsgallery2.
@@ -28,10 +31,26 @@ class HtmlView extends BaseHtmlView
 	protected $buttons = [];
 
 	/**
+	 * The sidebar markup
+	 *
+	 * @var  string
+	 */
+	protected $sidebar;
+
+	protected $lastGalleries;
+	protected $lastImages;
+
+	protected $changeLog;
+
+	protected $credits;
+
+	protected $externalLicenses;
+
+	/**
 	 * Method to display the view.
 	 *
-		 * @param   string  $tpl  A template file to load. [optional]
-		 *
+	 * @param   string  $tpl  A template file to load. [optional]
+	 *
 	 * @return  mixed  A string if successful, otherwise an \Exception object.
 	 *
 	 * @since   1.0
@@ -40,6 +59,18 @@ class HtmlView extends BaseHtmlView
 	{
 
 		$this->buttons = $this->getButtons();
+
+		$this->lastGalleries = ["first gallery"];
+		$this->lastImages = ["first image"];
+
+		$this->changeLog = "Change log may be json object";
+
+		$this->credits = ["Credits string"];
+
+		$this->externalLicenses = ["external licenses"];
+
+		$this->sidebar = \JHtmlSidebar::render();
+		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 
 		// Set the title
 		ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAIN_CONTROL_PANEL'), 'home-2');
