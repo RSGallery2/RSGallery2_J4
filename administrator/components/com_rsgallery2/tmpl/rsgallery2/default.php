@@ -21,17 +21,10 @@ use Joomla\CMS\Language\Text;
 
 JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'auto', 'relative' => true));
 
+HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
+
+
 /**
-<?php
-$html = HTMLHelper::_('icons.buttons', $this->buttons);
-?>
-<?php if (!empty($html)) : ?>
-<nav  class="quick-icons" aria-label="<?php echo Text::_('MOD_QUICKICON_NAV_LABEL'); ?>">
-<ul>
-<?php echo $html; ?>
-</ul>
-</nav>
-<?php endif; ?>
 
 
 d:\xampp\htdocs\joomla4x\media\com_rsgallery2\images\RSG2_logo.big.png
@@ -41,6 +34,47 @@ d:\xampp\htdocs\joomla4x\media\com_rsgallery2\images\RSG2_logo.big.png
 //echo '  <img src="' . JUri::root(true) . '/administrator/components/com_rsgallery2/images/rsg2-logo.png" align="middle" alt="RSGallery2 logo" /> ';
 echo '  <img src="' . JUri::root(true) . '/administrator/components/com_rsgallery2/images/RSG2_logoText.svg" align="middle" alt="RSGallery2 logo 2" /> ';
 /**/
+//--- Logo -----------------------------
+
+function DisplayRSG2Logo()
+{
+	echo '    <div class="rsg2logo">';
+//	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+	echo '     </div>';
+//	echo '<p class="test">';
+//	echo '</p>                                                                                                                                                          ';
+}
+
+//--- Control buttons ------------------
+//
+function DisplayRSG2ControlButtons($buttons)
+{
+
+    $html = HTMLHelper::_('icons.buttons', $buttons);
+	if (!empty($html))
+	{
+		//echo '<nav class="quick-icons" aria-label="'
+		//    . Text::_('MOD_QUICKICON_NAV_LABEL') . '">';
+		echo '    <ul class="nav flex-wrap row-fluid">';
+		echo           $html;
+		echo '    </ul>';
+		//echo '</nav>';
+	}
+
+	/** Test standard quick.icons format *
+	if (!empty($html))
+	{
+		echo '<nav class="quick-icons" aria-label="'
+		    . Text::_('MOD_QUICKICON_NAV_LABEL') . '">';
+		echo '    <ul class="nav flex-wrap row-fluid">';
+		echo           $html;
+		echo '    </ul>';
+		echo '</nav>';
+	}
+    /**/
+}
+
 
 function DisplayInfoRsgallery2($Rsg2Version)
 {
@@ -221,44 +255,40 @@ function DisplayInfoExternalLicenses ($externalLicenses)
     <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
         <div id="j-main-container" class="j-main-container">
 
-
-
-            <p class="test">
-                <div class="rsg2logo">
-                    <?php
-                    // echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
-                    echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
-                    ?>
-                </div>
-            </p>
-
             <?php
-            $html = HTMLHelper::_('icons.buttons', $this->buttons);
-            ?>
-            <?php if (!empty($html)) : ?>
-            <nav  class="quick-icons" aria-label="<?php echo Text::_('MOD_QUICKICON_NAV_LABEL'); ?>">
-                <ul>
-                    <?php echo $html; ?>
-                </ul>
-            </nav>
-            <?php endif; ?>
 
-            <?php
+            //--- Logo -----------------------------
+
+            DisplayRSG2Logo();
+
+            //--- Control buttons ------------------
+
+            DisplayRSG2ControlButtons($this->buttons);
+
+            //--- RSG2 info table -----------------------------
+
             // DisplayInfoRsgallery2($this->Rsg2Version);
             // ToDo: use real version
             DisplayInfoRsgallery2("5.0.0.1");
 
-            // // Info about last created galleries and lst uploaded images
+            //--- Last galleries and last uploaded images -----------------------------
+
+            // // Info about last created galleries and last uploaded images
             // side by side
             DisplayInfoGalleryImages ($this->lastGalleries, $this->lastImages);
+
+            //--- Change log -----------------------------
 
             // Info about the change log og RSG3 sources
             DisplayInfoChangeLog ($this->changeLog);
 
+            //--- Credits -----------------------------
+
             // Info about supporters of RSGallery 2
             DisplayInfoCredits ($this->credits);
 
-            // Info about
+            //--- External component licenses -----------------------------
+
             DisplayInfoExternalLicenses ($this->externalLicenses);
 
 

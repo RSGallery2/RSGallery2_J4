@@ -16,7 +16,7 @@
 		<!-- Menu entries -->
 		<menu view="rsgallery2">COM_RSGALLERY2_MENU</menu>
 		<submenu>
-			<menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu>
+			<!-- menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu -->
 			<!-- Note that all & must be escaped to &amp; for the file to be valid XML and be parsed by the installer -->
 			<menu view="COM_RSGALLERY2_MENU_CONTROL_PANEL"
 			      img="class:config"
@@ -29,7 +29,7 @@
 			      link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_IMAGES"
-			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_ITEMS
+			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_CONFIG"
 			      link="option=com_rsgallery2&amp;view=config&amp;task=config.edit">COM_RSGALLERY2_MENU_CONFIG
@@ -38,27 +38,42 @@
 			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE
 			</menu>
 		</submenu>
-        <media folder="media/com_foos" destination="com_foos">
-		    <folder>js</folder>
-		    <folder>css</folder>
-		    <folder>images</folder>
-        </media> 		
 		<files folder="administrator/components/com_rsgallery2">
+			<filename>changelog.xml</filename>
 			<filename>rsgallery2.xml</filename>
+			<filename>script.php</filename>
 			<folder>Controller</folder>
 			<folder>Extension</folder>
+			<folder>Helper</folder>
+			<folder>language</folder>
 			<folder>Service</folder>
-			<folder>View</folder>
 			<folder>services</folder>
 			<folder>tmpl</folder>
+			<folder>View</folder>
 		</files>
 	</administration>
-	<!-- ToDo: 
+
+	<!-- Frond-end files -->
+	<files folder="components/com_rsgallery2">
+		<folder>Controller</folder>
+		<folder>language</folder>
+		<folder>Model</folder>
+		<folder>tmpl</folder>
+		<folder>View</folder>
+	</files>
+
+	<!-- css, js, images files, .... -->
+	<media folder="media/com_rsgallery2" destination="com_rsgallery2">
+		<folder>js</folder>
+		<folder>css</folder>
+		<folder>images</folder>
+	</media>
+
+
 	<changelogurl>https://example.com/.../changelog.xml</changelogurl>
-	-->
-	<!-- ToDo: 
+	<!-- ToDo:
 	<updateservers>
 		<server type="extension" name="Foo Updates">http://example.com/.../foo_update.xml</server>
-	</updateservers> 
+	</updateservers>
 	-->
 </extension>

@@ -33,7 +33,7 @@ class Rsgallery2Helper extends ContentHelper
 	 */
 	public static function addSubmenu($vName)
 	{
-		if (ComponentHelper::isEnabled('com_fields') && ComponentHelper::getParams('com_rsgallery2')->get('custom_fields_enable', '1'))
+//		if (ComponentHelper::isEnabled('com_fields') && ComponentHelper::getParams('com_rsgallery2')->get('custom_fields_enable', '1'))
 		{
 			\JHtmlSidebar::addEntry(
 				Text::_('JGLOBAL_FIELDS'),
