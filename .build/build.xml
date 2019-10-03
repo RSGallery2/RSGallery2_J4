@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="RSG2_component" default="build">
+	<description>
+	--- RSGallery2 component build script with phing ---
+		The script collects release files in folder 
+		..\.packages\tmp. Then it replaces or changes 
+		text in files. Then these files are zipped and the 
+		tmp folder is removed. Resulting file is named like 
+		RSGallery2_Component.4.4.1.zip
+		(RSGallery2_Component.prepare.4.5.0.0_20190609.zip) 
+
+		Changes are done in the copied files. 
+		Use phing -f updateProject.xml before to standardize 
+		all files of the project
+		
+		Changes in files
+		* Version and date for copyright in *.php files
+		* Set lines with @since to actual date in *.php
+		* Remove site params.ini files
+		* .
+		* .
+		
+		command line
+		phing
+		phing -logfile .\build.log
+		phing -debug -logfile .\build.log
+		phing -verbose -debug -logfile .\build.log
+
+	</description>
+
+	<!-- 
+	.........................................................................
+	ToDo:
+	.........................................................................
+	* Use phingcall to order targets
+	* Make project file with major plugins ...  *.pkg 
+	* .
+	* .
+	* .
+	* .
+	-->
+
+<!--
+=========================================================================
+   Parameter
+=========================================================================
+-->
+
+	<!-- 
+	.........................................................................
+	Version number of build
+	.........................................................................	
+	-->
+	
+    <!-- Version number of build -->
+    <property name="build.version" value="5.0.0.2" override="true" />
+	    <!-- additional naming postfix -->
+    <!--property name="build.postfix" value="prepare." override="true" /-->
+    <property name="build.postfix" value="" override="true" />
+
+	<!-- 
+	.........................................................................
+	
+	.........................................................................	
+	-->
+	
+    <property name="type" value="Component" override="true" />
+    <property name="name" value="RSGallery2" override="true" />
+	<property name="extension" value="RSGallery2" />
+
+	<!-- 
+	.........................................................................
+	date stamps
+	.........................................................................
+	-->
+	
+    <!-- Get the standard date for build -->
+    <!-- tstamp prefix="build.date" /-->
+
+	<tstamp>
+		<format property="dateYearMonthDay" pattern="%Y%m%d" />
+	</tstamp>
+	
+	<tstamp>
+		<format property="date.year.month.day" pattern="%Y.%m.%d" />
+	</tstamp>
+	
+	<tstamp>
+		<format property="date.day.month.year" pattern="%d. %b. %Y" />
+	</tstamp>
+	
+	<tstamp>
+		<format property="date.year" pattern="%Y" />
+	</tstamp>
+	
+	
+	<!-- 
+	.........................................................................
+	folders
+	.........................................................................
+	-->
+	
+    <!-- Set the directory where the packages should be saved. Relative to the build dir -->
+    <property name="buildDir" value="./../.packages/" override="true" />
+    <!-- Declare Project src files -->
+    <property name="root" value="./.." override="true" />
+    <property name="administrator" value="${root}/administrator" />
+    <property name="components" value="${root}/components" />
+    <!--property name="modules" value="${root}/plugins" / -->
+    <!--property name="plugins" value="${root}/plugins" / -->
+    <property name="media" value="${root}/media" />
+
+	<!-- 
+	.........................................................................
+	file sets
+	.........................................................................
+	-->
+	
+    <!-- File set administrator folder -->
+    <fileset dir="${administrator}" id="adminSet">
+        <include name="**" />
+		<!-- may be accidentally copied from installation server -->
+        <exclude name="rsgallery2.xml" />
+        <exclude name="install.rsgallery2.php" />
+    </fileset>
+
+    <!-- File set site folder -->
+    <fileset dir="${components}" id="siteSet">
+        <include name="**" />
+        <exclude name="**/params.ini" />
+    </fileset>
+
+    <!-- File set media folder -->
+    <fileset dir="${media}" id="mediaSet">
+        <include name="**" />
+    </fileset>
+
+<!--
+=========================================================================
+   Targets
+=========================================================================
+-->
+
+	<target name="build" depends="prepareFolder, copy2Temp, 
+	                              manifestFile, zipFiles,
+								  deleteTemp">
+	
+		<!-- 
+		* prepareFolder
+		* copy2Temp
+		* manifestFile
+		* zipFiles
+		* deleteTemp
+		* .
+		-->
+		
+		<!--phingcall target="bar">
+			<property name="property1" value="aaaaa" />
+			<property name="foo" value="baz" />
+		</phingcall-->
+
+		<echo msg="build done" />
+
+		<echo msg="------------------------------------------" />
+		<echo msg="Don't forget to change RSG2_...update.xml file when releasing" />
+		<echo msg="------------------------------------------" />
+		<propertyprompt
+			propertyName="reminder"
+			promptText="exit:"
+		/>		
+		
+	</target>
+
+    <target name="prepareFolder">
+		<echo msg="prepareFolder start" />
+	
+        <mkdir dir="${buildDir}/tmp/administrator" />
+        <mkdir dir="${buildDir}/tmp/components" />
+        <mkdir dir="${buildDir}/tmp/media" />
+        <!-- mkdir dir="${buildDir}/tmp/plugins" / -->
+		
+        <echo msg="prepareFolder end" />
+    </target>
+
+    <target name="zipFiles">
+		<echo msg="zipFiles start" />
+		
+		<!--zip destfile="${buildDir}/RSGallery2_Component.${build.postfix}${build.version}_${build.date.DSTAMP}.zip"-->
+		<zip destfile="${buildDir}/${name}_${type}.${build.postfix}${build.version}_${dateYearMonthDay}.zip">
+			<fileset dir="${buildDir}/tmp">
+				<include name="**" />
+			</fileset>
+		</zip>
+		
+		<echo msg="zipFiles end" />
+    </target>
+
+    <target name="deleteTemp">
+		<echo msg="deleteTemp start" />
+
+		<delete dir="${buildDir}/tmp" />
+		
+		<echo msg="deleteTemp end" />
+    </target>
+
+    <target name="copy2Temp">
+		<echo msg="copy2Temp start" />
+
+        <!--Copy admin files to tmp folder -->
+        <copy todir="${buildDir}/tmp/administrator">
+            <fileset refid="adminSet" />
+        </copy>
+        <!-- Copy site files -->
+        <copy todir="${buildDir}/tmp/components">
+            <fileset refid="siteSet" />
+        </copy>
+        <!-- Copy media files -->
+        <copy todir="${buildDir}/tmp/media">
+            <fileset refid="mediaSet" />
+        </copy>
+        <!-- copy the plugins -->
+        <!--copy todir="${buildDir}/tmp/plugins">
+            <fileset refid="pluginsSet" />
+        </copy-->
+        <!-- Copy the manifest.xml -->
+        <copy file="${root}/${extension}.xml" tofile="${buildDir}/tmp/${extension}.xml" />
+        <!--copy file="${root}/install.rsgallery2.php" tofile="${buildDir}/tmp/install.rsgallery2.php" /-->
+        <copy file="${root}/script.php" tofile="${buildDir}/tmp/script.php" />
+        <copy file="${root}/index.html" tofile="${buildDir}/tmp/index.html" />
+        <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" />
+
+        <!--copy file="${admin}/install.php" tofile="${buildDir}/tmp/install.php" /-->
+        <echo msg="Copy was successful" />
+        <!-- insert version, build number and date into the xml files -->
+
+        <!--reflexive>
+            <fileset id="sourcefiles" dir="${buildDir}/tmp/">
+                <include name="rsgallery2.xml" />
+            </fileset>
+            <filterchain>
+                <replaceregexp>
+			        <! - -
+				        
+				        
+			        - - >
+			        < ! - -
+                    <regexp pattern="<creationDate>.*</creationDate>" replace="<creationDate>${build.date.DSTAMP}<creationDate>" />
+                    <regexp pattern="<copyright>\(c\) (\d)\-.*RSGallery2 Team</copyright>" replace="<copyright>\(c\) \1-${dateYearMonthDay}RSGallery2 Team</copyright>" />
+			        - - >
+                </replaceregexp>
+            </filterchain>
+        </reflexive-->
+
+		<!--reflexive>
+			<fileset dir=".">
+				<include pattern="*.html">
+			</fileset>
+			<filterchain>
+				<replaceregexp>
+					<regexp pattern="\r(\n)" replace="\1"/>
+				</replaceregexp>
+			</filterchain>
+		</reflexive-->
+
+		<echo msg="copy2Temp end" />
+    </target>
+
+	<!-- 
+	.........................................................................
+	manifestFile
+	.........................................................................
+	Updates version, creationDate, and copyright date
+	-->
+	
+    <target name="manifestFile">
+		<echo msg="manifestFile start" />
+		<echo msg="build.version: ${build.version}" />
+		<echo msg="date.day.month.year: ${date.day.month.year}" />
+		<reflexive>
+			<fileset dir="${buildDir}/tmp/">
+				<include pattern="${extension}.xml" />
+			</fileset>
+			<filterchain>
+				<replaceregexp>
+					<regexp pattern="(?&lt;=&lt;version&gt;).*(?=&lt;)" replace="${build.version}"/>
+					<regexp pattern="(?&lt;=&lt;creationDate&gt;).*(?=&lt;)" replace="${date.day.month.year}"/>
+					<regexp pattern="(?&lt;=&lt;copyright&gt;\([cC]\) 2003\-).*(?= RSGallery2 Team)" replace="${date.year}"/>
+				</replaceregexp>
+			</filterchain>
+		</reflexive>
+		<echo msg="manifestFile end" />
+    </target>
+
+
+</project>
