@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset 
+		name="rsgallery2">
+		label="COM_CONFIG_RSGALLERY2_FIELDSET_LABEL"
+		description="COM_CONFIG_RSGALLERY2_FIELDSET_DESC"
+
+		<field
+				id="advancedSef"
+				name="advancedSef"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_ADVANCED_SEF"
+				description="COM_RSGALLERY2_ADVANCED_SEF_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				type="spacer"
+				name="spacer_admin"
+				hr="true"
+		/>
+
+		<field
+				name="noteAdminSection"
+				type="note"
+				class="alert"
+				close="true"
+				label="COM_RSGALLERY2_CONFIG_NOTE_ADMIN_SECTION"
+				description="COM_RSGALLERY2_CONFIG_NOTE_ADMIN_SECTION_DESC"
+		/>
+
+		<field
+				id="config_version"
+				name="config_version"
+				type="hidden"
+				default="0.0.0"
+		/>
+
+		<field
+				id="debugBackend"
+				name="debug"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEBUG_BACKEND"
+				description="COM_RSGALLERY2_DEBUG_BACKEND_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+				id="debugSite"
+				name="debugSite"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEBUG_SITE"
+				description="COM_RSGALLERY2_DEBUG_SITE_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+				id="develop"
+				name="develop"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEVELOP"
+				description="COM_RSGALLERY2_DEVELOP_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	</fieldset>
+
+	<fieldset
+		name="GalleriesView"
+		label="COM_RSGALLERY2_FIELD_GALLERIES_VIEW"
+		description="COM_RSGALLERY2_FIELD_GALLERIES_VIEW_DESC"
+	>
+
+		<field name="intro_text"
+			   type="editor"
+			   label="COM_RSGALLERY2_INTRODUCTION_TEXT"
+			   description="COM_RSGALLERY2_INTRODUCTION_DESC"
+			   filter="JComponentHelper::filterText"
+			   buttons="false"
+		/>
+	</fieldset>
+
+	<fieldset
+			name="Images"
+			label="COM_RSGALLERY2_FIELD_IMAGE_OPTIONS_VIEW"
+			description="COM_RSGALLERY2_FIELD_IMAGE_OPTIONS_VIEW_DESC"
+	>
+		<field type="spacer" name="myspacer" hr="true" />
+		<field name="note31" type="note" class="alert" close="true" label="LOREMIPSUM" description="LOREMIPSUM_DESC" />
+
+	</fieldset>
+
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC"
+		>
+
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			validate="rules"
+			filter="rules"
+			component="com_rsgallery2"
+			section="component"
+		/>
+
+	</fieldset>
+</config>

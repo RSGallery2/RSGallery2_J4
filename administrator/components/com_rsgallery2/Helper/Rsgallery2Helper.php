@@ -84,7 +84,8 @@ class Rsgallery2Helper extends ContentHelper
 		//--- Add maintenance view link ------------------------------------
 
 //		if ($vName == 'config') {
-		$link = 'index.php?option=com_rsgallery2&view=maintenance';
+      //$link = 'index.php?option=com_rsgallery2&view=maintenance';
+		$link = 'index.php?option=com_config&view=component&component=com_rsgallery2';
 		// In config add maintenance
 		\JHtmlSidebar::addEntry(
 			'<span class="icon-screwdriver" >  </span>' .

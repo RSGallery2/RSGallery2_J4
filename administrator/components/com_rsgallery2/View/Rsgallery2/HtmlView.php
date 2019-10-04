@@ -86,12 +86,27 @@ class HtmlView extends BaseHtmlView
 		$this->sidebar = \JHtmlSidebar::render();
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 
-		// Set the title
-		ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAIN_CONTROL_PANEL'), 'home-2');
-		// Set the title
-		//ToolbarHelper::title(Text::_('COM_MEDIA'), 'images mediamanager');
+		$this->addToolbar();
 
 		return parent::display($tpl);
+	}
+
+	/**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	protected function addToolbar()
+	{
+		// Get the toolbar object instance
+		$toolbar = Toolbar::getInstance('toolbar');
+
+		// Set the title
+		ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAIN_CONTROL_PANEL'), 'home-2');
+
+		$toolbar->preferences('com_rsgallery2');
 	}
 
 
