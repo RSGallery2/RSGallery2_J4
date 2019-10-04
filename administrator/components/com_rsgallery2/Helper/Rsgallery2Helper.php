@@ -33,7 +33,8 @@ class Rsgallery2Helper extends ContentHelper
 	 */
 	public static function addSubmenu($vName)
 	{
-//		if (ComponentHelper::isEnabled('com_fields') && ComponentHelper::getParams('com_rsgallery2')->get('custom_fields_enable', '1'))
+		/**
+		if (ComponentHelper::isEnabled('com_fields') && ComponentHelper::getParams('com_rsgallery2')->get('custom_fields_enable', '1'))
 		{
 			\JHtmlSidebar::addEntry(
 				Text::_('JGLOBAL_FIELDS'),
@@ -46,5 +47,61 @@ class Rsgallery2Helper extends ContentHelper
 				$vName == 'fields.groups'
 			);
 		}
+		/**/
+
+		$link = 'index.php?option=com_rsgallery2&view=rsgallery2';
+		\JHtmlSidebar::addEntry(
+			'<span class="icon-images" >  </span>' .
+			Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL'),
+			$link,
+			$vName == 'galleries');
+
+		$link = 'index.php?option=com_rsgallery2&view=galleries';
+		\JHtmlSidebar::addEntry(
+			'<span class="icon-images" >  </span>' .
+			Text::_('COM_RSGALLERY2_MENU_GALLERIES'),
+			$link,
+			$vName == 'galleries');
+
+		$link = 'index.php?option=com_rsgallery2&view=upload';
+		\JHtmlSidebar::addEntry(
+			'<span class="icon-upload" >  </span>' .
+			Text::_('COM_RSGALLERY2_MENU_UPLOAD'),
+			$link,
+			$vName == 'galleries');
+
+		//--- Add images view link ------------------------------------
+
+		$link = 'index.php?option=com_rsgallery2&view=images';
+		\JHtmlSidebar::addEntry(
+			'<span class="icon-image" >  </span>' .
+			Text::_('COM_RSGALLERY2_MENU_IMAGES'),
+			// 'index.php?option=com_rsgallery2&rsgOption=images',
+			$link,
+			//$vName != 'view_images');
+			false);
+
+		//--- Add maintenance view link ------------------------------------
+
+//		if ($vName == 'config') {
+		$link = 'index.php?option=com_rsgallery2&view=maintenance';
+		// In config add maintenance
+		\JHtmlSidebar::addEntry(
+			'<span class="icon-screwdriver" >  </span>' .
+			Text::_('COM_RSGALLERY2_MENU_MAINTENANCE'),
+			$link,
+			false);
+//		}
+
+
+		$link = 'index.php?option=com_rsgallery2&view=config&task=config.edit';
+		// In maintenance add config
+		\JHtmlSidebar::addEntry(
+			'<span class="icon-equalizer" >  </span>' .
+			Text::_('COM_RSGALLERY2_MENU_CONFIG'),
+			$link,
+			false);
+
+
 	}
 }

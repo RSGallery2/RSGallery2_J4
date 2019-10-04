@@ -1,42 +1,75 @@
 
 
 
-div.quickicon-icon span.fa-cog
+div.quickicon-icon div.fa-cog
 {
 	color: blue;
 }
 
 
-div.quickicon-icon span.fa-th
+div.quickicon-icon div.fa-th
 {
 	color: green;
 }
 
 
-div.quickicon-icon span.fa-upload
+div.quickicon-icon div.fa-upload
 {
 	color: green;
 }
 
 
-div.quickicon-icon span.fa-image
+div.quickicon-icon div.fa-image
 {
 	color: green;
 }
 
 
-div.quickicon-icon span.fa-cogs
+div.quickicon-icon div.fa-cogs
 {
 	color: red;
 }
 
 /* border-radius: 25px; */
+li.quickicon-single
+{
+	border: thick solid lightgray; /**/
+
+	/*	border-color: red;
+        border-width: thick;
+    /**/
+	border-radius: 2px;
+
+	background: white;
+
+	padding: 4px;
+	margin: 4px;
+}
+
+/* border-radius: 25px; */
 div.quickicon-icon
 {
-	/* border: 2px solid red; /**/
-	border-color: red;
-	border-width: thick;
-	border-radius: 5px;
+	font-size: xx-large;
+
+	display: block;
+	text-align: center;
+
+	margin-left: auto;
+	margin-right: auto;
+
+/*	width: 5em;  /**/
+	width: auto;  /**/
+
+/*	border: 2px solid red; /**/
+
+/*	border-color: red; /**/
+/*    border-width: thick; /**/
+
+/*	border-radius: 5px; /**/
+
+	padding: 4px; /**/
+	margin: 4px; /**/
+
 }
 
 .table_morecondensed>thead>tr>th,
@@ -44,4 +77,26 @@ div.quickicon-icon
 .table_morecondensed>tfoot>tr>th,
 .table_morecondensed>thead>tr>td,
 .table_morecondensed>tbody>tr>td,
-.table_morecondensed>tfoot>tr>td{ padding: 4px; }
+.table_morecondensed>tfoot>tr>td
+{
+	padding: 4px;
+}
+
+.rsg2-panel-info {
+/*	border: thick solid lightgray; /**/
+
+/*	background: white; /**/
+
+	padding: 4px; /**/
+	margin: 4px; /**/
+}
+
+.rsg2-panel-info .table {
+
+/*	background: lightgrey; /**/
+/*	box-shadow: none; /**/
+/*	border: none; /**/
+/*	padding: 4px; /**/
+/*	margin: 4px; /**/
+}
+

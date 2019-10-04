@@ -120,8 +120,9 @@
     <fileset dir="${administrator}" id="adminSet">
         <include name="**" />
 		<!-- may be accidentally copied from installation server -->
-        <exclude name="rsgallery2.xml" />
+        <exclude name="changelog.xml" />
         <exclude name="install.rsgallery2.php" />
+        <exclude name="rsgallery2.xml" />
     </fileset>
 
     <!-- File set site folder -->
@@ -162,7 +163,7 @@
 		<echo msg="build done" />
 
 		<echo msg="------------------------------------------" />
-		<echo msg="Don't forget to change RSG2_...update.xml file when releasing" />
+		<echo msg="Don't forget to change RSG2_...update and changelog file when releasing" />
 		<echo msg="------------------------------------------" />
 		<propertyprompt
 			propertyName="reminder"
@@ -223,8 +224,9 @@
             <fileset refid="pluginsSet" />
         </copy-->
         <!-- Copy the manifest.xml -->
-        <copy file="${root}/${extension}.xml" tofile="${buildDir}/tmp/${extension}.xml" />
         <!--copy file="${root}/install.rsgallery2.php" tofile="${buildDir}/tmp/install.rsgallery2.php" /-->
+        <copy file="${root}/${extension}.xml" tofile="${buildDir}/tmp/${extension}.xml" />
+        <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" />
         <copy file="${root}/script.php" tofile="${buildDir}/tmp/script.php" />
         <copy file="${root}/index.html" tofile="${buildDir}/tmp/index.html" />
         <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" />

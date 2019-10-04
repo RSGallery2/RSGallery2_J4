@@ -57,6 +57,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar()
 	{
+		/**
 		Factory::getApplication()->input->set('hidemainmenu', true);
 
 		$isNew = ($this->item->id == 0);
@@ -65,8 +66,7 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::apply('foo.apply');
 		ToolbarHelper::cancel('foo.cancel', 'JTOOLBAR_CLOSE');
+		/**/
 	}
-
-
 }
 

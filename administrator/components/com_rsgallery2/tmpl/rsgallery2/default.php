@@ -10,7 +10,12 @@
 
 defined('_JEXEC') or die;
 
+/**
+use Joomla\CMS\Changelog\Changelog;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Response\JsonResponse;
+/**/
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
@@ -43,7 +48,9 @@ function DisplayRSG2Logo()
 	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
 	echo '     </div>';
 //	echo '<p class="test">';
-//	echo '</p>                                                                                                                                                          ';
+//	echo '</p>
+
+	echo '<div class="clearfix"></div>';
 }
 
 //--- Control buttons ------------------
@@ -73,6 +80,8 @@ function DisplayRSG2ControlButtons($buttons)
 		echo '</nav>';
 	}
     /**/
+
+	echo '<div class="clearfix"></div>';
 }
 
 
@@ -85,6 +94,13 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	echo '<row>';
 	//echo '<span class="rsg2logo-container col-md-6">';
 
+	echo '   <div class="card bg-light data-toggle="collapse">';
+	echo '      <div class="card-header">';
+	echo '          ' . JText::_('COM_RSGALLERY2_GALLERY_INFORMATION');
+	echo '      </div>';
+	echo '      <div id="credit-card-body" class="card-body">';
+
+	echo '<div class="rsg2-panel-info">';
 	/**/
 //    echo '<table class="table table-striped">';
 //	echo '<table class="table table-bordered table-striped w-auto text-xsmall table-hover table-light">';
@@ -103,7 +119,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 //	echo '                <a href="' . JRoute::_('index.php?option=com_rsgallery2&view=rsgallery2&layout=ChangeLog') . '"';
 //	echo '                   title="' . JText::_('COM_RSGALLERY2_VIEW_CHANGE_LOG') . '""';
 //	echo '                   class="modal">' . $Rsg2Version . '</a>';
-	echo '                   ' . $Rsg2Version;
+	echo '                   <strong>' . $Rsg2Version . '</strong>';
 	echo '            </td>';
 	echo '        </tr>';
 	/**/
@@ -112,7 +128,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	echo '            <td>' . JText::_('COM_RSGALLERY2_LICENSE') . ': ' . '</td>';
 	echo '            <td>';
 	echo '               <a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"'
-                        . ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
+		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
 	echo '            </td>';
 	echo '        </tr>';
 	/**/
@@ -121,7 +137,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	echo '            <td>' . JText::_('COM_RSGALLERY2_HOME_PAGE') . '</td>';
 	echo '            <td>';
 	echo '                <a href="http://www.rsgallery2.org/" target="_blank" '
-                         . ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
+		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
 	echo '            </td>';
 	echo '        </tr>';
 	/**/
@@ -130,7 +146,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	echo '            <td>' . JText::_('COM_RSGALLERY2_FORUM') . '</td>';
 	echo '            <td>';
 	echo '                <a href="http://www.forum.rsgallery2.org/" target="_blank" '
-                         . ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
+		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
 	echo '            </td>';
 	echo '        </tr>';
 	/**/
@@ -139,7 +155,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	echo '            <td>' . JText::_('COM_RSGALLERY2_DOCUMENTATION') . '</td>';
 	echo '            <td>';
 	echo '                <a href="http://www.rsgallery2.org/index.php/documentation" target="_blank"'
-                          . ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
+		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
 	echo '            </td>';
 	echo '        </tr>';
 
@@ -148,11 +164,16 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	echo '</table>';
 	/**/
 	//echo '</span>';
+	echo '</div>';
+
+	echo '      </div>';
+//    echo '      <div class="card-footer">Footer</div>';
+	echo '   </div>';
 
 	echo '</row>';
 //	echo '</div>'; // container fluid
 
-	echo '<br>';
+	echo '<div class="clearfix"></div>';
 
 	return;
 }
@@ -162,7 +183,11 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	echo '<div class="clearfix"></div>';
 
 	echo '<row>';
-	echo '   <div class="card bg-light w-25 data-toggle="collapse">';
+//	echo '   <div class="card bg-light w-25 data-toggle="collapse">';
+	echo '   <div class="col-md-4">';
+	echo '       <div class="custom-column">';
+	echo '           <div class="custom-column-content">';
+	echo '   <div class="card bg-light data-toggle="collapse">';
 	echo '      <div class="card-header">';
 	echo '          ' . JText::_('COM_RSGALLERY2_GALLERIES');
 	echo '      </div>';
@@ -171,8 +196,16 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	echo '      </div>';
 //    echo '      <div class="card-footer">Footer</div>';
 	echo '   </div>';
+	echo '   </div>';
 
-	echo '   <div class="card bg-light w-50 data-toggle="collapse">';
+	echo '   </div>';
+	echo '   </div>';
+
+//	echo '   <div class="card bg-light w-50 data-toggle="collapse">';
+	echo '   <div class="col-md-8">';
+	echo '       <div class="custom-column">';
+	echo '               <div class="custom-column-content">';
+	echo '   <div class="card bg-light data-toggle="collapse">';
 	echo '      <div class="card-header">';
 	echo '          ' . JText::_('COM_RSGALLERY2_IMAGES');
 	echo '      </div>';
@@ -181,9 +214,14 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	echo '      </div>';
 //    echo '      <div class="card-footer">Footer</div>';
 	echo '   </div>';
+	echo '   </div>';
+
+	echo '   </div>';
+	echo '   </div>';
+
 	echo '</row>';
 
-
+	echo '<div class="clearfix"></div>';
 
 }
 
@@ -198,7 +236,8 @@ function DisplayInfoCredits ($credits)
 	echo '          ' . JText::_('COM_RSGALLERY2_CREDITS');
    	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
-	echo '         credits: ' . implode("|", $credits);
+//	echo '         credits: ' . implode("|", $credits);
+	echo '         ' . $credits;
 	echo '      </div>';
 //    echo '      <div class="card-footer">Footer</div>';
 	echo '   </div>';
@@ -206,10 +245,82 @@ function DisplayInfoCredits ($credits)
 
 }
 
-// Info about the change log og RSG3 sources
-function DisplayInfoChangeLog ($changeLog)
+function tableFromXml($changelogs)
 {
+    $html[] = '';
+    $html[] = '<table class="table table-striped thead-dark table-bordered">';
+    $html[] = '    <thead>';
+    $html[] = '        <tr>';
+//    $html[] = '            <th>' . 'Name' . '</th>';
+//    $html[] = '            <th>Call Sign</th>';
+//    $html[] = '            <th>Type</th>';
+//    $html[] = '            <th>Status</th>';
+//    $html[] = '            <th>Expiration Date</th>';
+    $html[] = '        </tr>';
+    $html[] = '    </thead>';
+
+    $html[] = '    <tbody>';
+    $html[] = '';
+    foreach ($changelogs as $xmlElement)
+    {
+    $html[] = '        <tr class="">';
+    $html[] = '            <td>' . $xmlElement->asXML() . '</td>';
+//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+    $html[] = '        </tr>';
+    };
+    $html[] = '    </tbody>';
+    $html[] = '</table>';
+
+    // implode($html);
+    // implode(' ', $html);
+    // implode('< /br>', $html);
+    return implode($html);
+}
+
+// Info about the change log og RSG3 sources
+function DisplayInfoChangeLog ($changelogs)
+{
+    /**
+	$item = new stdClass();
+	$item->id = 209;
+	$item->name = "com_sgallery2";
+	$item->version = "5.0.0.2";
+    /**/
+
 	echo '<div class="clearfix"></div>';
+
+	/**
+	echo HTMLHelper::_(
+		'bootstrap.renderModal',
+		'changelogModal' . $item->id, // $item->extension_id,
+		array(
+			'title' => Text::sprintf('COM_INSTALLER_CHANGELOG_TITLE', $item->name, $item->version),
+		),
+		''
+	);
+    /**/
+
+	//====================================================================
+    //echo '$changelogs: ' . json_encode ($changelogs);
+
+    /**
+    if (!empty($xml))
+    {
+        $json = json_encode($xml);
+        echo '$json: ' . json_encode ($json);
+        echo ('<br>');
+        $array = json_decode($json,TRUE);
+        echo '$array: ' . json_encode ($array);
+        echo ('<br>');
+    }
+    /**/
+	echo ('<hr>');
+	echo ('<hr>');
+
+	$htmlChangelogs = tableFromXml($changelogs);
 
 	echo '<row>';
 	echo '   <div class="card bg-light w-auto data-toggle="collapse" data-target="#credit-card-body">';
@@ -217,12 +328,60 @@ function DisplayInfoChangeLog ($changeLog)
 	echo '          ' . JText::_('COM_RSGALLERY2_CHANGELOG');
 	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
-	echo '         changeLog: ' . $changeLog;
+	//echo '         htmlChangelogs: ' . $htmlChangelogs;
+	echo '         ' . $htmlChangelogs;
 	echo '      </div>';
-//    echo '      <div class="card-footer">Footer</div>';
 	echo '   </div>';
 	echo '</row>';
 
+
+	/**
+	$headers=get_headers($changelogUrl);
+	echo 'headers: ' . json_encode ($headers);
+	echo ('<br>');
+
+	$changelog = new Changelog;
+	//$changelog->setVersion($source === 'manage' ? $extension->version : $extension->updateVersion);
+	$loaded = $changelog->loadFromXml($changelogUrl);
+
+	echo '$loaded: ' . $loaded;
+	echo '<br>';
+	echo 'changelog: ' . json_encode ($changelog);
+	echo ('<br>');
+
+	// Read all the entries
+	$entries = array(
+		'security' => array(),
+		'fix'      => array(),
+		'addition' => array(),
+		'change'   => array(),
+		'remove'   => array(),
+		'language' => array(),
+		'note'     => array()
+	);
+
+	array_walk(
+		$entries,
+		function (&$value, $name) use ($changelog) {
+
+			if ($field = $changelog->get($name))
+			{
+				$value = $changelog->get($name)->data;
+			}
+		}
+	);
+
+	echo '$entries: ' . json_encode ($entries);
+	echo '<br>';
+
+	$layout = new FileLayout('joomla.installer.changelog');
+	$output = $layout->render($entries);
+
+	echo 'OutPut: ' . json_encode ($output);
+	echo '<br>';
+	echo ('JsonResponse: ' . new JsonResponse($output));
+	echo '<br>';
+	/**/
 }
 
 // Info about
@@ -236,7 +395,7 @@ function DisplayInfoExternalLicenses ($externalLicenses)
 	echo '          ' . JText::_('COM_RSGALLERY2_EXTERNAL_LICENSES');
 	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
-	echo '         externalLicenses: ' . implode("|", $externalLicenses);
+	echo '         ' . $externalLicenses;
 	echo '      </div>';
 //    echo '      <div class="card-footer">Footer</div>';
 	echo '   </div>';
@@ -246,56 +405,79 @@ function DisplayInfoExternalLicenses ($externalLicenses)
 ?>
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
       method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+    <div class="row">
+        <?php if (!empty($this->sidebar)) : ?>
+            <div id="j-sidebar-container" class="col-md-2">
+                <?php echo $this->sidebar; ?>
+            </div>
+        <?php endif; ?>
+        <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
+            <div id="j-main-container" class="j-main-container">
 
-	<?php if (!empty($this->sidebar)) : ?>
-        <div id="j-sidebar-container" class="col-md-2">
-			<?php echo $this->sidebar; ?>
-        </div>
-	<?php endif; ?>
-    <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
-        <div id="j-main-container" class="j-main-container">
+                <?php
 
-            <?php
+                //--- Logo -----------------------------
 
-            //--- Logo -----------------------------
+                DisplayRSG2Logo();
 
-            DisplayRSG2Logo();
+                //--- Control buttons ------------------
 
-            //--- Control buttons ------------------
+                DisplayRSG2ControlButtons($this->buttons);
 
-            DisplayRSG2ControlButtons($this->buttons);
+    //            echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
+    //            echo '<hr style="height:2px;border-width:0;color:lightgray;background-color:lightgray">';
+                echo '<hr>';
 
-            //--- RSG2 info table -----------------------------
+                //--- RSG2 info table -----------------------------
 
-            // DisplayInfoRsgallery2($this->Rsg2Version);
-            // ToDo: use real version
-            DisplayInfoRsgallery2("5.0.0.1");
+                // DisplayInfoRsgallery2($this->Rsg2Version);
+                // ToDo: use real version
+                DisplayInfoRsgallery2($this->Rsg2Version);
 
-            //--- Last galleries and last uploaded images -----------------------------
+                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
+                echo '<hr>';
 
-            // // Info about last created galleries and last uploaded images
-            // side by side
-            DisplayInfoGalleryImages ($this->lastGalleries, $this->lastImages);
+                //--- Last galleries and last uploaded images -----------------------------
 
-            //--- Change log -----------------------------
+                // // Info about last created galleries and last uploaded images
+                // side by side
+                DisplayInfoGalleryImages ($this->lastGalleries, $this->lastImages);
 
-            // Info about the change log og RSG3 sources
-            DisplayInfoChangeLog ($this->changeLog);
+                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
+                echo '<hr>';
 
-            //--- Credits -----------------------------
+                //--- Change log -----------------------------
+                /**
+                $db = Factory::getDBO();
+                $com_articles = $db->setQuery("SELECT * FROM #__extensions WHERE name = 'com_directory'");
+                $com_articles = $com_articles->loadObject();
+                print_r($com_articles);
+                /**/
 
-            // Info about supporters of RSGallery 2
-            DisplayInfoCredits ($this->credits);
+                // Info about the change log og RSG3 sources
+                // DisplayInfoChangeLog ($this->extension_id);
+                DisplayInfoChangeLog ($this->changelogs);
 
-            //--- External component licenses -----------------------------
+                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
+                echo '<hr>';
 
-            DisplayInfoExternalLicenses ($this->externalLicenses);
+                //--- Credits -----------------------------
 
+                // Info about supporters of RSGallery 2
+                DisplayInfoCredits ($this->credits);
 
+                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
+                echo '<hr>';
 
+                //--- External component licenses -----------------------------
 
+                DisplayInfoExternalLicenses ($this->externalLicenses);
 
-            ?>
+                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
+                echo '<hr>';
+
+                ?>
+            </div>
         </div>
     </div>
 

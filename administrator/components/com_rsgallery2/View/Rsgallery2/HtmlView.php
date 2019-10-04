@@ -12,13 +12,19 @@ namespace Joomla\Component\Rsgallery2\Administrator\View\Rsgallery2;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Factory;
+//use Joomla\CMS\Helper\ContentHelper;
+//use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+
+use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
+use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsEnumeration;
+use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsExternal;
+
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
@@ -37,10 +43,12 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected $sidebar;
 
+	protected $Rsg2Version;
+
 	protected $lastGalleries;
 	protected $lastImages;
 
-	protected $changeLog;
+	protected $changelogs;
 
 	protected $credits;
 
@@ -57,18 +65,24 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-
-		$this->buttons = $this->getButtons();
+		$this->buttons = $this->getRsg2controlButtons();
 
 		$this->lastGalleries = ["first gallery"];
 		$this->lastImages = ["first image"];
 
-		$this->changeLog = "Change log may be json object";
+		//$this->Rsg2Version = rsg2Common::getRsg2ComponentVersion();
+		$oRsg2Version = new rsgallery2Version();
+		$this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 
-		$this->credits = ["Credits string"];
 
-		$this->externalLicenses = ["external licenses"];
+		$changelogUrl = Route::_(Uri::root() . '/administrator/components/com_rsgallery2/changelog.xml');
+		$this->changelogs = simplexml_load_file($changelogUrl);
 
+		$this->credits = CreditsEnumeration::CreditsEnumerationText;
+
+		$this->externalLicenses = CreditsExternal::CreditsExternalText;
+
+		Rsgallery2Helper::addSubmenu('Control');
 		$this->sidebar = \JHtmlSidebar::render();
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 
@@ -81,7 +95,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 
-	private function getButtons()
+	private function getRsg2controlButtons()
 	{
 		$buttons = array(
 			array(
