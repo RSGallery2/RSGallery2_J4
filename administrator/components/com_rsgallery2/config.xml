@@ -40,8 +40,8 @@
 		/>
 
 		<field
-				id="debugBackend"
-				name="debug"
+				id="isDebugBackend"
+				name="isDebugBackend"
 				type="radio"
 				default="0"
 				label="COM_RSGALLERY2_DEBUG_BACKEND"
@@ -51,8 +51,8 @@
 			<option value="0">JNO</option>
 		</field>
 		<field
-				id="debugSite"
-				name="debugSite"
+				id="isDebugSite"
+				name="isDebugSite"
 				type="radio"
 				default="0"
 				label="COM_RSGALLERY2_DEBUG_SITE"
@@ -62,8 +62,8 @@
 			<option value="0">JNO</option>
 		</field>
 		<field
-				id="develop"
-				name="develop"
+				id="isDevelop"
+				name="isDevelop"
 				type="radio"
 				default="0"
 				label="COM_RSGALLERY2_DEVELOP"

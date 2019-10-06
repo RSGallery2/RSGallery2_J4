@@ -83,18 +83,16 @@ class Rsgallery2Helper extends ContentHelper
 
 		//--- Add maintenance view link ------------------------------------
 
-//		if ($vName == 'config') {
-      //$link = 'index.php?option=com_rsgallery2&view=maintenance';
-		$link = 'index.php?option=com_config&view=component&component=com_rsgallery2';
+		$link = 'index.php?option=com_rsgallery2&view=maintenance';
 		// In config add maintenance
 		\JHtmlSidebar::addEntry(
 			'<span class="icon-screwdriver" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_MAINTENANCE'),
 			$link,
 			false);
-//		}
 
-
+		//--- config ------------------------------------
+		/**
 		$link = 'index.php?option=com_rsgallery2&view=config&task=config.edit';
 		// In maintenance add config
 		\JHtmlSidebar::addEntry(
@@ -102,7 +100,7 @@ class Rsgallery2Helper extends ContentHelper
 			Text::_('COM_RSGALLERY2_MENU_CONFIG'),
 			$link,
 			false);
-
+		/**/
 
 	}
 }

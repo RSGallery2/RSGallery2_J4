@@ -40,7 +40,7 @@ class HtmlView extends BaseHtmlView
 	{
 
 
-	echo 'HtmlView.php: ' . realpath(dirname(__FILE__));
+		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
 
 		return parent::display($tpl);
 	}

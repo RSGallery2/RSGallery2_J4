@@ -11,12 +11,16 @@ namespace Joomla\Component\Rsgallery2\Administrator\View\Galleries;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+
+use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
  * View class for a list of rsgallery2.
@@ -26,6 +30,9 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
 	protected $buttons = [];
+
+	protected $isDebugBackend;
+	protected $isDevelop;
 
 	/**
 	 * Method to display the view.
@@ -39,11 +46,25 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 
-		echo 'HtmlView.php: ' . realpath(dirname(__FILE__));
+		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
 
 		$this->addToolbar();
 
+		//--- config --------------------------------------------------------------------
 
+		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+		$this->isDevelop = $rsgConfig->get('isDevelop');
+
+		//---  --------------------------------------------------------------------
+
+
+		Rsgallery2Helper::addSubmenu('Control');
+		$this->sidebar = \JHtmlSidebar::render();
+		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
+
+		$this->addToolbar();
 
 		return parent::display($tpl);
 	}
@@ -57,16 +78,25 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar()
 	{
-		/**
-		Factory::getApplication()->input->set('hidemainmenu', true);
+		// Get the toolbar object instance
+		$toolbar = Toolbar::getInstance('toolbar');
 
-		$isNew = ($this->item->id == 0);
+		// on develop show open tasks if existing
+		if (!empty ($this->isDevelop))
+		{
+			echo '<span style="color:red">'
+				. '*  Test ...<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+				. '</span><br><br>';
+		}
 
-		ToolbarHelper::title($isNew ? Text::_('COM_FOOS_MANAGER_FOO_NEW') : Text::_('COM_FOOS_MANAGER_FOO_EDIT'), 'address foo');
+		// Set the title
+		ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_GALLERIES'), 'images');
 
-		ToolbarHelper::apply('foo.apply');
-		ToolbarHelper::cancel('foo.cancel', 'JTOOLBAR_CLOSE');
-		/**/
+		$toolbar->preferences('com_rsgallery2');
 	}
+
 }
 

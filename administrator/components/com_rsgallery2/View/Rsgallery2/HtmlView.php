@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Component\ComponentHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsEnumeration;
@@ -54,6 +55,9 @@ class HtmlView extends BaseHtmlView
 
 	protected $externalLicenses;
 
+	protected $isDebugBackend;
+	protected $isDevelop;
+
 	/**
 	 * Method to display the view.
 	 *
@@ -67,13 +71,21 @@ class HtmlView extends BaseHtmlView
 	{
 		$this->buttons = $this->getRsg2controlButtons();
 
+		//--- config --------------------------------------------------------------------
+
+		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+		$this->isDevelop = $rsgConfig->get('isDevelop');
+
+		//---  --------------------------------------------------------------------
+
 		$this->lastGalleries = ["first gallery"];
 		$this->lastImages = ["first image"];
 
 		//$this->Rsg2Version = rsg2Common::getRsg2ComponentVersion();
 		$oRsg2Version = new rsgallery2Version();
 		$this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
-
 
 		$changelogUrl = Route::_(Uri::root() . '/administrator/components/com_rsgallery2/changelog.xml');
 		$this->changelogs = simplexml_load_file($changelogUrl);
@@ -103,8 +115,19 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
+		// on develop show open tasks if existing
+		if (!empty ($this->isDevelop))
+		{
+			echo '<span style="color:red">'
+				. '*  Test ...<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+				. '</span><br><br>';
+		}
+
 		// Set the title
-		ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAIN_CONTROL_PANEL'), 'home-2');
+		ToolBarHelper::title(Text::_('COM_RSGALLERY2_SUBMENU_CONTROL_PANEL'), 'home-2');
 
 		$toolbar->preferences('com_rsgallery2');
 	}

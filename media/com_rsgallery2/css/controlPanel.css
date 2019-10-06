@@ -1,5 +1,28 @@
+/**
+div.quickicon-icon {
 
+	font-size: xx-large;
+	text-align: center;
+	width: 5em;
+	width: auto;
+	border: 2px solid red;
+	border-color: red;
+	border-width: thick;
+	border-radius: 5px;
+	padding: 4px;
+	margin: 4px;
 
+}
+/**/
+
+div.rsg2logo
+{
+	padding-top: 0;
+	margin-top: 0;
+
+/*	border: 2px solid red; /**/
+
+}
 
 div.quickicon-icon div.fa-cog
 {
@@ -33,6 +56,7 @@ div.quickicon-icon div.fa-cogs
 /* border-radius: 25px; */
 li.quickicon-single
 {
+	display: block;
 	border: thick solid lightgray; /**/
 
 	/*	border-color: red;
@@ -42,20 +66,31 @@ li.quickicon-single
 
 	background: white;
 
-	padding: 4px;
-	margin: 4px;
+	padding-left: auto;
+	padding-right: auto;
+
+	margin-left: auto;
+	margin-right: auto;
+
+/*    padding: 4px; /**/
+    margin: 4px; /**/
 }
+
+    li.quickicon-single:hover {
+    /*	background: lightblue;  /**/
+	background: lightgray;  /**/
+	border: thick solid darkgray; /**/
+	text-color:white; /**/
+}
+
+
 
 /* border-radius: 25px; */
 div.quickicon-icon
 {
 	font-size: xx-large;
 
-	display: block;
 	text-align: center;
-
-	margin-left: auto;
-	margin-right: auto;
 
 /*	width: 5em;  /**/
 	width: auto;  /**/

@@ -53,12 +53,86 @@ function DisplayRSG2Logo()
 	echo '<div class="clearfix"></div>';
 }
 
+/**
+ * @param        $displayData
+ * @param string $class
+ *
+ * @return array
+ *
+ * @since version
+ */
+function HtmlButton ($displayData, $class = '')
+{
+	$id      = empty($displayData['id']) ? '' : (' id="' . $displayData['id'] . '"');
+	$target  = empty($displayData['target']) ? '' : (' target="' . $displayData['target'] . '"');
+	$onclick = empty($displayData['onclick']) ? '' : (' onclick="' . $displayData['onclick'] . '"');
+	//$title   = empty($displayData['title']) ? '' : (' title="' . $this->escape($displayData['title']) . '"');
+	$title   = empty($displayData['title']) ? '' : (' title="' . $displayData['title'] . '"');
+	$text    = empty($displayData['text']) ? '' : ('<span class="j-links-link">' . $displayData['text'] . '</span>');
+
+	$html[] = '<li>';
+	$html[] = '<a' . $id . ' ' . $class . ' href="' . $displayData['link'] . '" ' . $target . $onclick . $title . '>';
+	$html[] = '	      <div class="quickicon-icon d-flex align-items-end">';
+    $html[] = '	           <span class="' . $displayData['image'] . '" aria-hidden="true"></span>';
+    $html[] = '	      </div>';
+	$html[] = '	      <div class="quickicon-text d-flex align-items-center">' . $text . '</div>';
+	$html[] = '    </a>';
+    $html[] = '</li>';
+
+    return $html;
+}
+
+function HtmlButtons ($buttons = [])
+{
+	$html = [];
+
+    foreach($buttons as  $button)
+    {
+        $htmlButton =  HtmlButton ($button);
+        array_merge($html, $htmlButton);
+    }
+
+    return $html;
+}
+
+//--- Control buttons ------------------
+//
+function DisplayRSG2ControlButtonsTest($buttons)
+{
+
+	$html = HTMLHelper::_('icons.buttons', $buttons);
+	if (!empty($html))
+	{
+//		echo '<nav class="quick-icons" aria-label="' . Text::_('MOD_QUICKICON_NAV_LABEL') . '">';
+		// echo '    <ul class="nav flex-wrap row-fluid">';
+		echo '    <ul>';
+		echo           $html;
+		echo '    </ul>';
+//		echo '</nav>';
+	}
+
+	/** Test standard quick.icons format *
+	if (!empty($html))
+	{
+	echo '<nav class="quick-icons" aria-label="'
+	. Text::_('MOD_QUICKICON_NAV_LABEL') . '">';
+	echo '    <ul class="nav flex-wrap row-fluid">';
+	echo           $html;
+	echo '    </ul>';
+	echo '</nav>';
+	}
+	/**/
+
+	echo '<div class="clearfix"></div>';
+}
+
+
 //--- Control buttons ------------------
 //
 function DisplayRSG2ControlButtons($buttons)
 {
 
-    $html = HTMLHelper::_('icons.buttons', $buttons);
+	$html = HTMLHelper::_('icons.buttons', $buttons);
 	if (!empty($html))
 	{
 		//echo '<nav class="quick-icons" aria-label="'
@@ -72,14 +146,14 @@ function DisplayRSG2ControlButtons($buttons)
 	/** Test standard quick.icons format *
 	if (!empty($html))
 	{
-		echo '<nav class="quick-icons" aria-label="'
-		    . Text::_('MOD_QUICKICON_NAV_LABEL') . '">';
-		echo '    <ul class="nav flex-wrap row-fluid">';
-		echo           $html;
-		echo '    </ul>';
-		echo '</nav>';
+	echo '<nav class="quick-icons" aria-label="'
+	. Text::_('MOD_QUICKICON_NAV_LABEL') . '">';
+	echo '    <ul class="nav flex-wrap row-fluid">';
+	echo           $html;
+	echo '    </ul>';
+	echo '</nav>';
 	}
-    /**/
+	/**/
 
 	echo '<div class="clearfix"></div>';
 }
@@ -407,9 +481,9 @@ function DisplayInfoExternalLicenses ($externalLicenses)
       method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
     <div class="row">
         <?php if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="col-md-2">
-                <?php echo $this->sidebar; ?>
-            </div>
+        <div id="j-sidebar-container" class="col-md-2">
+            <?php echo $this->sidebar; ?>
+        </div>
         <?php endif; ?>
         <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
             <div id="j-main-container" class="j-main-container">
