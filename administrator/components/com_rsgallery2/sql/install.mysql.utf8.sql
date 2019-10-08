@@ -1,35 +1,46 @@
----
---- galleries
----
+--
+-- galleries
+--
 
-CREATE TABLE IF NOT EXISTS `#__rsgallery2_galleries` (
-  `id` int(11) NOT NULL auto_increment,
-  `parent` int(11) NOT NULL default 0,
-  `name` varchar(255) NOT NULL default '',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `published` tinyint(1) NOT NULL default '0',
-  `checked_out` int(11) unsigned NOT NULL default '0',
-  `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
-  `ordering` int(11) NOT NULL default '0',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `hits` int(11) NOT NULL default '0',
-  `params` text NOT NULL,
-  `user` tinyint(4) NOT NULL default '0',
-  `uid` int(11) unsigned NOT NULL default '0',
-  `allowed` varchar(100) NOT NULL default '0',
+CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
+  "id" serial NOT NULL,
+  "asset_id" bigint DEFAULT 0 NOT NULL
+  "parent_id" integer DEFAULT 0 NOT NULL,
+  "lft" bigint DEFAULT 0 NOT NULL,
+  "rgt" bigint DEFAULT 0 NOT NULL,
+  "level" integer DEFAULT 0 NOT NULL,
+  "path" varchar(255) DEFAULT '' NOT NULL,
+  `name` varchar(255) DEFAULT '' NOT NULL,
+  "alias" varchar(255) DEFAULT '' NOT NULL,
+  "note" varchar(255) DEFAULT '' NOT NULL,
+  "description" text DEFAULT '' NOT NULL,
+  "published" smallint DEFAULT 0 NOT NULL,
+  "checked_out" bigint DEFAULT 0 NOT NULL,
+  "checked_out_time" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
+  "access" bigint DEFAULT 0 NOT NULL,
+  "params" text DEFAULT '' NOT NULL,
+  "metadesc" varchar(1024) DEFAULT '' NOT NULL,
+  "metakey" varchar(1024) DEFAULT '' NOT NULL,
+  "metadata" varchar(2048) DEFAULT '' NOT NULL,
+  "created_user_id" integer DEFAULT 0 NOT NULL,
+  "created_time" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
+  "modified_user_id" integer DEFAULT 0 NOT NULL,
+  "modified_time" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
+  "hits" integer DEFAULT 0 NOT NULL,
+  "language" varchar(7) DEFAULT '' NOT NULL,
+  "version" bigint DEFAULT 1 NOT NULL,
+
   `thumb_id` int(11) unsigned NOT NULL default '0',
-  `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-  `access` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
----
---- images
----
+  PRIMARY KEY ("id")
+);
 
-CREATE TABLE IF NOT EXISTS `#__rsgallery2_files` (
-  `id` int(9) unsigned NOT NULL auto_increment,
+--
+-- images
+--
+
+CREATE TABLE IF NOT EXISTS `#__rsgallery2_imagess` (
+  "id" serial NOT NULL,
   `name` varchar(255) NOT NULL default '',
   `alias` varchar(255) NOT NULL DEFAULT '',
   `descr` text,
@@ -53,12 +64,20 @@ CREATE TABLE IF NOT EXISTS `#__rsgallery2_files` (
   KEY `id` (`id`)
 )ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
+--
+-- Image resolutions
+--
+
+
+
+
 ---
 --- comments
 ---
 
 CREATE TABLE IF NOT EXISTS `#__rsgallery2_comments` (
-  `id` int(11) NOT NULL auto_increment,
+  "id" serial NOT NULL,
   `user_id` int(11) NOT NULL,
   `user_name` varchar(100) NOT NULL,
   `user_ip` varchar(50) NOT NULL default '0.0.0.0',
@@ -84,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `#__rsgallery2_comments` (
 ---
 
 CREATE TABLE IF NOT EXISTS `#__rsgallery2_config` (
-  `id` int(9) unsigned NOT NULL auto_increment,
+  "id" serial NOT NULL,
   `name` text NOT NULL,
   `value` text NOT NULL,
  PRIMARY KEY `id` (`id`)
@@ -96,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `#__rsgallery2_config` (
 ---
 
 CREATE TABLE IF NOT EXISTS `#__rsgallery2_acl` (
-  `id` int(11) NOT NULL auto_increment,
+  "id" serial NOT NULL,
   `gallery_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL default '0',
   `public_view` tinyint(1) NOT NULL default '1',
@@ -117,45 +136,3 @@ CREATE TABLE IF NOT EXISTS `#__rsgallery2_acl` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
---
--- Table structure for table `#__categories`
---
-
-CREATE TABLE IF NOT EXISTS "#__categoriesTmp" (
-  "id" serial NOT NULL,
-  "asset_id" bigint DEFAULT 0 NOT NULL,
-  "parent_id" integer DEFAULT 0 NOT NULL,
-  "lft" bigint DEFAULT 0 NOT NULL,
-  "rgt" bigint DEFAULT 0 NOT NULL,
-  "level" integer DEFAULT 0 NOT NULL,
-  "path" varchar(255) DEFAULT '' NOT NULL,
-  "extension" varchar(50) DEFAULT '' NOT NULL,
-  "title" varchar(255) DEFAULT '' NOT NULL,
-  "alias" varchar(255) DEFAULT '' NOT NULL,
-  "note" varchar(255) DEFAULT '' NOT NULL,
-  "description" text DEFAULT '' NOT NULL,
-  "published" smallint DEFAULT 0 NOT NULL,
-  "checked_out" bigint DEFAULT 0 NOT NULL,
-  "checked_out_time" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
-  "access" bigint DEFAULT 0 NOT NULL,
-  "params" text DEFAULT '' NOT NULL,
-  "metadesc" varchar(1024) DEFAULT '' NOT NULL,
-  "metakey" varchar(1024) DEFAULT '' NOT NULL,
-  "metadata" varchar(2048) DEFAULT '' NOT NULL,
-  "created_user_id" integer DEFAULT 0 NOT NULL,
-  "created_time" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
-  "modified_user_id" integer DEFAULT 0 NOT NULL,
-  "modified_time" timestamp without time zone DEFAULT '1970-01-01 00:00:00' NOT NULL,
-  "hits" integer DEFAULT 0 NOT NULL,
-  "language" varchar(7) DEFAULT '' NOT NULL,
-  "version" bigint DEFAULT 1 NOT NULL,
-  PRIMARY KEY ("id")
-);
-CREATE INDEX "#__categories_cat_idx" ON "#__categories" ("extension", "published", "access");
-CREATE INDEX "#__categories_idx_access" ON "#__categories" ("access");
-CREATE INDEX "#__categories_idx_checkout" ON "#__categories" ("checked_out");
-CREATE INDEX "#__categories_idx_path" ON "#__categories" ("path");
-CREATE INDEX "#__categories_idx_left_right" ON "#__categories" ("lft", "rgt");
-CREATE INDEX "#__categories_idx_alias" ON "#__categories" ("alias");
-CREATE INDEX "#__categories_idx_language" ON "#__categories" ("language");
- 
