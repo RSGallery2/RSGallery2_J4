@@ -28,17 +28,6 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
 
 HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
 
-
-/**
-
-
-d:\xampp\htdocs\joomla4x\media\com_rsgallery2\images\RSG2_logo.big.png
-
-<div class="rsg2logo-container">
-
-//echo '  <img src="' . JUri::root(true) . '/administrator/components/com_rsgallery2/images/rsg2-logo.png" align="middle" alt="RSGallery2 logo" /> ';
-echo '  <img src="' . JUri::root(true) . '/administrator/components/com_rsgallery2/images/RSG2_logoText.svg" align="middle" alt="RSGallery2 logo 2" /> ';
-/**/
 //--- Logo -----------------------------
 
 function DisplayRSG2Logo()
@@ -99,7 +88,7 @@ function HtmlButtons ($buttons = [])
 //
 function DisplayRSG2ControlButtonsTest($buttons)
 {
-
+    /**/
 	$html = HTMLHelper::_('icons.buttons', $buttons);
 	if (!empty($html))
 	{
@@ -110,6 +99,7 @@ function DisplayRSG2ControlButtonsTest($buttons)
 		echo '    </ul>';
 //		echo '</nav>';
 	}
+    /**/
 
 	/** Test standard quick.icons format *
 	if (!empty($html))
@@ -132,6 +122,20 @@ function DisplayRSG2ControlButtonsTest($buttons)
 function DisplayRSG2ControlButtons($buttons)
 {
 
+	$htmlButtons = HTMLHelper::_('icons.buttons', $buttons);
+
+
+
+    $html[] = '<div class="flex-buttons-table" >';
+    $html[] = '';
+    $html[] = '';
+    $html[] =     $htmlButtons;
+    $html[] = '';
+    $html[] = '';
+    $html[] = '</div>';
+
+	echo implode($html);
+	/**
 	$html = HTMLHelper::_('icons.buttons', $buttons);
 	if (!empty($html))
 	{
@@ -142,6 +146,7 @@ function DisplayRSG2ControlButtons($buttons)
 		echo '    </ul>';
 		//echo '</nav>';
 	}
+    /**/
 
 	/** Test standard quick.icons format *
 	if (!empty($html))

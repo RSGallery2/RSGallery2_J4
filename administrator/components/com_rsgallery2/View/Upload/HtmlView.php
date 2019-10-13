@@ -29,6 +29,13 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * The sidebar markup
+	 *
+	 * @var  string
+	 */
+	protected $sidebar;
+
 	protected $buttons = [];
 
 	protected $isDebugBackend;
@@ -57,7 +64,7 @@ class HtmlView extends BaseHtmlView
 
 		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
 
-		Rsgallery2Helper::addSubmenu('Upload');
+		Rsgallery2Helper::addSubmenu('upload');
 		$this->sidebar = \JHtmlSidebar::render();
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 

@@ -13,6 +13,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
+JHtml::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'auto', 'relative' => true));
+
+
+
 // https://stackoverflow.com/questions/34140793/bootstrap-4-responsive-cards-in-card-columns
 
 $CssText = <<<'EOT'

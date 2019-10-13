@@ -94,9 +94,9 @@ class HtmlView extends BaseHtmlView
 
 		$this->externalLicenses = CreditsExternal::CreditsExternalText;
 
-		Rsgallery2Helper::addSubmenu('Control');
-		$this->sidebar = \JHtmlSidebar::render();
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
+		Rsgallery2Helper::addSubmenu('control');
+		$this->sidebar = \JHtmlSidebar::render();
 
 		$this->addToolbar();
 

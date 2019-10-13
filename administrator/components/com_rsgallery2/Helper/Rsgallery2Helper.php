@@ -49,26 +49,28 @@ class Rsgallery2Helper extends ContentHelper
 		}
 		/**/
 
+		echo "\$vname: $vName <br><br>";
+
 		$link = 'index.php?option=com_rsgallery2&view=rsgallery2';
 		\JHtmlSidebar::addEntry(
 			'<span class="icon-images" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL'),
 			$link,
-			$vName == 'galleries');
+			$vName != 'control');
 
 		$link = 'index.php?option=com_rsgallery2&view=galleries';
 		\JHtmlSidebar::addEntry(
 			'<span class="icon-images" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_GALLERIES'),
 			$link,
-			$vName == 'galleries');
+			$vName != 'galleries');
 
 		$link = 'index.php?option=com_rsgallery2&view=upload';
 		\JHtmlSidebar::addEntry(
 			'<span class="icon-upload" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_UPLOAD'),
 			$link,
-			$vName == 'galleries');
+			$vName != 'upload');
 
 		//--- Add images view link ------------------------------------
 
@@ -78,8 +80,8 @@ class Rsgallery2Helper extends ContentHelper
 			Text::_('COM_RSGALLERY2_MENU_IMAGES'),
 			// 'index.php?option=com_rsgallery2&rsgOption=images',
 			$link,
-			//$vName != 'view_images');
-			false);
+			$vName != 'images');
+			//false);
 
 		//--- Add maintenance view link ------------------------------------
 
@@ -89,7 +91,7 @@ class Rsgallery2Helper extends ContentHelper
 			'<span class="icon-screwdriver" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_MAINTENANCE'),
 			$link,
-			false);
+			$vName != 'maintenance');
 
 		//--- config ------------------------------------
 		/**

@@ -58,7 +58,7 @@ class HtmlView extends BaseHtmlView
 
 		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
 
-		Rsgallery2Helper::addSubmenu('Control');
+		Rsgallery2Helper::addSubmenu('images');
 		$this->sidebar = \JHtmlSidebar::render();
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 

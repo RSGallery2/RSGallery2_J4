@@ -29,6 +29,13 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * The sidebar markup
+	 *
+	 * @var  string
+	 */
+	protected $sidebar;
+
 	protected $buttons = [];
 
 	protected $isDebugBackend;
@@ -60,7 +67,7 @@ class HtmlView extends BaseHtmlView
 		//---  --------------------------------------------------------------------
 
 
-		Rsgallery2Helper::addSubmenu('Control');
+		Rsgallery2Helper::addSubmenu('galleries');
 		$this->sidebar = \JHtmlSidebar::render();
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 

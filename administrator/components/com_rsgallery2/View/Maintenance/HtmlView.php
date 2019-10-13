@@ -29,10 +29,28 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
+	/**
+	 * The sidebar markup
+	 *
+	 * @var  string
+	 */
+	protected $sidebar;
+
 	protected $buttons = [];
 
 	protected $isDebugBackend;
 	protected $isDevelop;
+
+	protected $isDangerActive;
+	protected $isRawDbActive;
+	protected $isUpgradeActive;
+	protected $isTestActive;
+	protected $developActive;
+
+	// ToDo: Use other rights instead of core.admin -> IsRoot ?
+	// core.admin is the permission used to control access to
+	// the global config
+	protected $UserIsRoot;
 
 	/**
 	 * Method to display the view.
@@ -53,14 +71,33 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		//---  --------------------------------------------------------------------
+		$this->isRawDbActive   = true; // false / true;
+		$this->isDangerActive  = true; // false / true;
+		$this->isUpgradeActive = true; // false / true;
+		if ($this->isDevelop)
+		{
+			$this->isTestActive    = true; // false / true;
+			$this->developActive = true; // false / true;
+		}
 
+		//--- Check user rights ---------------------------------------------
 
-		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
+		// toDo: More detailed for rsgallery admin
+		$app       = Factory::getApplication();
 
-		Rsgallery2Helper::addSubmenu('Control');
+		$user = $app->getIdentity();
+		//$user     = Factory::getUser();
+		$canAdmin = $user->authorise('core.admin');
+		$this->UserIsRoot = $canAdmin;
+
+		//--- begin to display ----------------------------------------------
+
+		//---  --------------------------------------------------------------
+
+		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
+		$Layout = Factory::getApplication()->input->get('layout');
+		Rsgallery2Helper::addSubmenu('maintenance');
 		$this->sidebar = \JHtmlSidebar::render();
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 
 		$this->addToolbar();
 
@@ -83,7 +120,10 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  Test ...<br>'
+				. '* Purge / delete of database variables should be confirmed<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
