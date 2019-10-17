@@ -1,0 +1,145 @@
+$break-small: 500px;
+$break-large: 800 pxpx;
+
+.flex-main-row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around; /**/
+  width: 100%;
+
+  @media screen and (min-width: $break-large) {
+    justify-content: space-around;
+  }
+
+  @media screen and (max-width: $break-small) {
+    flex-direction: column;
+  }
+
+}
+
+/*--- sections repair / danger ------*/
+
+.icons-panel {
+  margin-top: 20px; /**/
+  margin-left: 10px; /**/
+  margin-right: 20px; /**/
+  clear: left;
+  /* background-color: #df3e3e; /**/
+  border-radius: 3px;
+  /* padding: 10px; /**/
+  display: block; /**/
+
+  max-width: 15em; /**/
+
+  /*--- sections repair / danger ------*/
+
+  .repair {
+    border: 1px solid blue;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .danger {
+    border: 1px solid #d00;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .developer {
+    border: 1px solid #3056ff;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .upgrade {
+    border: 1px solid purple;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .test {
+    border: 1px solid #96a918;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .rawDb {
+    border: 1px solid darkorange;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .rsg2 {
+    border: 1px solid green;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .outdated {
+    border: 1px solid goldenrod;
+    border-radius: 3px 3px 0px 0px;
+  }
+
+
+
+
+  .dangerZone {
+    background-color: #df3e3e; /**/
+    color: white; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .repairZone {
+
+    background-color: DodgerBlue; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .developerZone {
+
+    background-color: #3056ff; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .upgradeZone {
+
+    background-color: purple; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .testZone {
+
+    background-color: #96a918; /**/
+    color: white; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .rawDbZone {
+
+    background-color: darkorange; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .rsg2Zone {
+
+    background-color: green; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .outdatedZone {
+
+    background-color: goldenrod; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+}
+
+
+
+
+

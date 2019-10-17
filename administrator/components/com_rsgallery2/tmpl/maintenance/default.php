@@ -77,7 +77,7 @@ $RSG2_ZoneButtons[] = new zoneButtons(
     'viewConfigSlideshow'
 );
 
-//--- Raw database -----------------------------
+//--- Raw database zone -----------------------------
 
 $rawDatabase_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_RAW_DB_ZONE'), Text::_('COM_RSGALLERY2_RAW_DB_ZONE_DESCRIPTION'), 'rawDb', 'rawDbZone');
 
@@ -123,37 +123,56 @@ $rawDatabase_ZoneButtons[] =  new zoneButtons(
 );
 /**/
 
-//---  -----------------------------
+//--- Repair zone -----------------------------
 
 $repair_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_REPAIR_ZONE'), Text::_('COM_RSGALLERY2_FUNCTIONS_MAY_CHANGE_DATA'), 'repair', 'repairZone');
 
-$repair_ZoneButtons = [];
+/**/
+$repair_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&amp;view=maintConsolidateDB'),
+	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGE_DATABASE'),
+	Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'),
+	array('icon-database', 'icon-checkbox-checked'),
+	'consolidateDB'
+);
+/**/
 
-//---  -----------------------------
+/**/
+$repair_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&amp;view=config&amp;layout=RawEdit'),
+	Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'),
+	Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'),
+	array('icon-equalizer', 'icon-edit'),
+	'editConfigRaw'
+);
+/**/
+
+
+//--- danger zone  -----------------------------
 
 $danger_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_DANGER_ZONE'), Text::_('COM_RSGALLERY2_DANGER_ZONE_DESCRIPTION'), 'danger', 'dangerZone');
 
 $danger_ZoneButtons = [];
 
-//---  -----------------------------
+//--- upgrade zone -----------------------------
 
 $upgrade_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_UPGRADE_ZONE'), Text::_('COM_RSGALLERY2_UPGRADE_ZONE_DESCRIPTION'), 'upgrade', 'upgradeZone');
 
 $upgrade_ZoneButtons = [];
 
-//---  -----------------------------
+//--- outdated zone -----------------------------
 
 $outdated_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_OUTDATED_ZONE'), Text::_('COM_RSGALLERY2_OUTDATED_ZONE_DESC'), 'outdated', 'outdatedZone');
 
 $outdated_ZoneButtons = [];
 
-//---  -----------------------------
+//--- developer zone -----------------------------
 
 $developer_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_DEVELOPER_ZONE'), Text::_('COM_RSGALLERY2_DEVELOPER_ZONE_DESCRIPTION'), 'developer', 'developerZone');
 
 $developer_ZoneButtons = [];
 
-//---  -----------------------------
+//--- ready for test zone -----------------------------
 
 $ready4Test_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_TEST_ZONE'), Text::_('COM_RSGALLERY2_TEST_ZONE_DESCRIPTION'), 'test', 'testZone');
 
@@ -247,13 +266,17 @@ function DisplayZone($Zone, $Buttons) {
                     //---  -----------------------------
 
                     DisplayZone($RSG2_Zone, $RSG2_ZoneButtons);
+                    DisplayZone($rawDatabase_Zone, $rawDatabase_ZoneButtons);
+
+                    // DisplayZone($outdated_Zone, $outdated_ZoneButtons);
+                    /**/
                     DisplayZone($repair_Zone, $repair_ZoneButtons);
                     DisplayZone($danger_Zone, $danger_ZoneButtons);
-                    DisplayZone($rawDatabase_Zone, $rawDatabase_ZoneButtons);
                     DisplayZone($upgrade_Zone, $upgrade_ZoneButtons);
-                    DisplayZone($outdated_Zone, $outdated_ZoneButtons);
-                    DisplayZone($developer_Zone, $developer_ZoneButtons);
+
                     DisplayZone($ready4Test_Zone, $ready4Test_ZoneButtons);
+                    DisplayZone($developer_Zone, $developer_ZoneButtons);
+                    /**/
 
                     ?>
                 </div>
