@@ -67,6 +67,9 @@
     <property name="type" value="Component" override="true" />
     <property name="name" value="RSGallery2" override="true" />
 	<property name="extension" value="RSGallery2" />
+	<php function="strtolower" returnProperty="extensionLower">
+		<param value="${extension}" />
+	</php>
 
 	<!-- 
 	.........................................................................
@@ -225,7 +228,7 @@
         </copy-->
         <!-- Copy the manifest.xml -->
         <!--copy file="${root}/install.rsgallery2.php" tofile="${buildDir}/tmp/install.rsgallery2.php" /-->
-        <copy file="${root}/${extension}.xml" tofile="${buildDir}/tmp/${extension}.xml" />
+        <copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/${extensionLower}.xml" />
         <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" />
         <copy file="${root}/script.php" tofile="${buildDir}/tmp/script.php" />
         <copy file="${root}/index.html" tofile="${buildDir}/tmp/index.html" />
@@ -280,7 +283,7 @@
 		<echo msg="date.day.month.year: ${date.day.month.year}" />
 		<reflexive>
 			<fileset dir="${buildDir}/tmp/">
-				<include pattern="${extension}.xml" />
+				<include pattern="${extensionLower}.xml" />
 			</fileset>
 			<filterchain>
 				<replaceregexp>
