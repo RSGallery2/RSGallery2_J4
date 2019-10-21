@@ -92,6 +92,8 @@ class HtmlView extends BaseHtmlView
 
 		//--- begin to display ----------------------------------------------
 
+//		Factory::getApplication()->input->set('hidemainmenu', true);
+
 		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
