@@ -1,6 +1,11 @@
 $break-small: 500px;
 $break-large: 800 pxpx;
 
+
+// https://stackoverflow.com/questions/49809524/change-variable-colors-if-else-in-scss
+
+
+
 .flex-main-row {
   display: flex;
   flex-flow: row wrap;
