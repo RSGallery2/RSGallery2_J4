@@ -5,14 +5,13 @@
 .flex-main-row {
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: space-around; /**/
+	justify-content: space-around;
 	width: 100%;
 }
 
 /* Medium screens */
 @media all and (max-width: 800px) {
 	.flex-main-row {
-		/* When on medium sized screens, we center it by evenly distributing empty space around items */
 		justify-content: space-around;
 	}
 }
@@ -20,7 +19,6 @@
 /* Small screens */
 @media all and (max-width: 500px) {
 	.flex-main-row {
-		/* On small screens, we are no longer using row direction but column */
 		flex-direction: column;
 	}
 }
@@ -31,7 +29,7 @@
 	flex-basis: 100%;
 	flex: 1;
 /*	max-width: 10em; /**/
- 	margin: 5px; /**/
+ 	margin: 5px;
 	padding: 5px;
 }
 
@@ -45,11 +43,25 @@
 	/* background-color: #df3e3e; /**/
 	border-radius : 3px;
 	/* padding: 10px; /**/
-	display       : block; /**/
+	display       : block;
 
-	max-width: 15em; /**/
+	max-width: 15em;
 }
 
+.icons-panel .rsg2Zone {	
+	background-color : green; 
+	color            : white;
+	margin-left      : 0px;
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .rawDbZone {
+	
+	background-color : darkorange;
+	color            : white; 
+	margin-left      : 0px; 
+	border-radius    : 3px 3px 0px 0px;
+}
 
 .icons-panel .dangerZone {
 	background-color : #df3e3e; /**/
@@ -85,22 +97,6 @@
 	
 	background-color : #96a918; /**/
 	color            : white; /**/
-	border-radius    : 3px 3px 0px 0px;
-}
-
-.icons-panel .rawDbZone {
-	
-	background-color : darkorange; /**/
-	color            : white; /**/
-	margin-left      : 0px; /**/
-	border-radius    : 3px 3px 0px 0px;
-}
-
-.icons-panel .rsg2Zone {
-	
-	background-color : green; /**/
-	color            : white; /**/
-	margin-left      : 0px; /**/
 	border-radius    : 3px 3px 0px 0px;
 }
 

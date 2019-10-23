@@ -1,15 +1,19 @@
 $break-small: 500px;
-$break-large: 800 pxpx;
+$break-large: 800px;
+
+$columnThemes: 'rsg2' green, 'rawDb' darkorange, 'repair' DodgerBlue, 'danger' #df3e3e,
+      'upgrade' purple, 'developer' #3056ff, 'test' #96a918, 'outdated' goldenrod;
+$columnThemesNotUsed: 'test' 'outdated';
+$panel_border_radius: 3px 3px 0 0;
 
 
-// https://stackoverflow.com/questions/49809524/change-variable-colors-if-else-in-scss
-
-
+/*--- One column on small screens ------*/
+/* Large */
 
 .flex-main-row {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around; /**/
+  justify-content: space-around;
   width: 100%;
 
   @media screen and (min-width: $break-large) {
@@ -19,268 +23,79 @@ $break-large: 800 pxpx;
   @media screen and (max-width: $break-small) {
     flex-direction: column;
   }
-
 }
+
+
+.rsg2-icon-bar {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  /*	max-width: 10em; /**/
+  margin: 5px;
+  padding: 5px;
+}
+
 
 /*--- sections repair / danger ------*/
 
 .icons-panel {
-  margin-top: 20px; /**/
-  margin-left: 10px; /**/
-  margin-right: 20px; /**/
-  clear: left;
-  /* background-color: #df3e3e; /**/
-  border-radius: 3px;
-  /* padding: 10px; /**/
-  display: block; /**/
 
-  max-width: 15em; /**/
+/*  border: 1px solid; /**/
+/*  border-radius: $panel_border_radius; /**/
 
+  border-radius : 3px;
+  display: block;
+  max-width: 15em;
 
-
-  .dangerZone {
-    background-color: #df3e3e; /**/
-    color: white; /**/
-    border-radius: 3px 3px 0px 0px;
+  .icons-panel-info {
+    margin      : 10px; /**/
+    /*	margin-left : 40px; /**/
+    max-width   :  20em; /**/
   }
 
-  .repairZone {
-
-    background-color: DodgerBlue; /**/
-    color: white; /**/
-    margin-left: 0px; /**/
-    border-radius: 3px 3px 0px 0px;
+  .icons-panel-title header {
+    /* padding: 2em, 1em, 2em, 1em; /**/
+    /*	padding: 4em; /**/
+    /* padding-top: 1em; /**/
+    /* padding-bottom: 1em; /**/
+    /* margin-left : 10px; /**/
+    min-height: 2em;
   }
 
-  .developerZone {
 
-    background-color: #3056ff; /**/
-    color: white; /**/
-    margin-left: 0px; /**/
-    border-radius: 3px 3px 0px 0px;
+  @debug "01 My very own string just because.";
+
+  @each $theme, $color in $columnThemes {
+
+    @debug "theme: #{$theme}";
+    @debug "color: #{$color}";
+
+    .#{$theme}Zone {
+      border: 3px solid;
+      border-color: $color;
+      background-color : $color;
+      color            : white;
+
+      border-radius: $panel_border_radius;
+    }
   }
 
-  .upgradeZone {
+  @each $theme, $color in $columnThemes {
 
-    background-color: purple; /**/
-    color: white; /**/
-    margin-left: 0px; /**/
-    border-radius: 3px 3px 0px 0px;
-  }
+    @debug "theme: #{$theme}";
+    @debug "color: #{$color}";
 
-  .testZone {
+    &.#{$theme} {
+      border: 3px solid;
+      border-color: $color;
+      border-radius    : 3px 3px 0 0;
 
-    background-color: #96a918; /**/
-    color: white; /**/
-    border-radius: 3px 3px 0px 0px;
-  }
+    }
 
-  .rawDbZone {
-
-    background-color: darkorange; /**/
-    color: white; /**/
-    margin-left: 0px; /**/
-    border-radius: 3px 3px 0px 0px;
-  }
-
-  .rsg2Zone {
-
-    background-color: green; /**/
-    color: white; /**/
-    margin-left: 0px; /**/
-    border-radius: 3px 3px 0px 0px;
-  }
-
-  .outdatedZone {
-
-    background-color: goldenrod; /**/
-    color: white; /**/
-    margin-left: 0px; /**/
-    border-radius: 3px 3px 0px 0px;
   }
 
 }
 
-.repair {
-  border: 1px solid blue;
-  border-radius: 3px 3px 0px 0px;
-}
-
-/*--- sections repair / danger ------*/
-
-.danger {
-  border: 1px solid #d00;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.developer {
-  border: 1px solid #3056ff;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.upgrade {
-  border: 1px solid purple;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.test {
-  border: 1px solid #96a918;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.rawDb {
-  border: 1px solid darkorange;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.rsg2 {
-  border: 1px solid green;
-  border-radius: 3px 3px 0px 0px;
-}
-
-.outdated {
-  border: 1px solid goldenrod;
-  border-radius: 3px 3px 0px 0px;
-}
-
-
-
-
-
-.icons-panel-title header {
-  /* padding: 2em, 1em, 2em, 1em; /**/
-  /*	padding: 4em; /**/
-  padding-top: 1em; /**/
-  padding-bottom: 1em; /**/
-  margin-left : 10px; /**/
-  min-height: 2em;
-}
-
-.icons-panel-info {
-  margin      : 10px; /**/
-  /*	margin-left : 40px; /**/
-  max-width   :  20em; /**/
-}
-
-
-/*---------------------------------------------*/
-
-.rsg2-icon-bar a {
-  float            : left; /**/
-
-  background-color : white; /**/
-  border-radius    : 8px; /**/
-  border           : 5px solid lightgrey; /**/
-
-  /*	margin: 10px 20px; /**/
-  /*	margin: 5px 10px; /**/
-  /* margin           : 5px 15px; /**/
-  /* margin           : 5px 5px 0 5px; /**/
-  /* padding          : 7px; /**/
-  padding           : 10px 5px 0 5px;
-  /* margin: 5px; /**/
-  /*	width: 80%; /**/
-
-  /*	display: block; /**/
-  display          : inline-block; /**/
-
-  /* width: 448px !important; /**/
-  /* width: 450px;  /**/
-
-  vertical-align   : middle;
-
-  box-shadow       : 2px 2px 1px #888888; /**/
-
-  width: 100%;
-
-
-}
-
-.rsg2-icon-bar a:link {
-  color : #808080;
-  color: blue;
-}
-
-.rsg2-icon-bar a:hover {
-  /*	color : #333;  /**/
-  /*    color: #08c; /**/
-  /*	background-color: #f1e8e6;  /**/
-  border-color : green; /**/
-  /*	border: 1px solid #c24733; /**/
-  /*	padding: 3px 4px 0px 6px; /**/
-  /*	position: relative; /**/
-  /*	left: -3px; /**/
-  /*	top: -3px; /**/
-}
-
-/**/
-.rsg2-icon-bar a:active {
-  /*	color : darkred; /**/
-  background-color : sandybrown;
-}
-
-.rsg2-icon-bar button {
-  float            : left; /**/
-
-  background-color : white; /**/
-  border-radius    : 8px; /**/
-  border           : 5px solid lightgrey; /**/
-
-  /*	margin: 10px 20px; /**/
-  /*	margin: 5px 10px; /**/
-  margin           : 5px 15px; /**/
-  /*	padding: 7px; /**/
-  /*	width: 80%; /**/
-
-  /*	display: block; /**/
-  display          : inline-block; /**/
-
-  /* width: 448px !important; /**/
-  /* width: 450px;  /**/
-
-  vertical-align   : middle;
-
-  box-shadow       : 2px 2px 1px #888888; /**/
-}
-
-.rsg2-icon-bar button:link {
-  color : #808080; /**/
-}
-
-.rsg2-icon-bar button:hover {
-  /*	color : #333;  /**/
-  /*    color: #08c; /**/
-  /*	background-color: #f1e8e6;  /**/
-  border-color : green; /**/
-  /*	border: 1px solid #c24733; /**/
-  /*	padding: 3px 4px 0px 6px; /**/
-  /*	position: relative; /**/
-  /*	left: -3px; /**/
-  /*	top: -3px; /**/
-}
-
-/**/
-.rsg2-icon-bar button:active {
-  /*	color : darkred; /**/
-  background-color : sandybrown;
-}
-
-
-figure span {
-  /* float   : left; /**/
-  /*	border: 1px solid #003bb3; /**/
-  /*	border-radius: 4px; /**/
-  /*	display: table; /**/
-  /*	display: block; /**/
-  /*	margin: 5px 10px; /**/
-  padding: 7px 10px; /**/
-  /*	padding: 10px; /**/
-  /*	padding: 0px 10px 0px 10px; /**/
-  /*	padding: 0px 10px 0px 10px; /**/
-  display : inline-block; /**/
-}
-
-
-
-
+/* border-radius: $panel_border_radius $panel_border_radius 0 0; /**/
 
