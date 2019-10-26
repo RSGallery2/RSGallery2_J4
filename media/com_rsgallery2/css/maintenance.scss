@@ -73,11 +73,13 @@ $panel_border_radius: 3px 3px 0 0;
 
     .#{$theme}Zone {
       border: 3px solid;
-      border-color: $color;
+      border-color: red; // $color;
       background-color : $color;
       color            : white;
-
+      padding: 5px;
       border-radius: $panel_border_radius;
+      font-size: large;
+      font-weight: bold;
     }
   }
 
@@ -97,5 +99,9 @@ $panel_border_radius: 3px 3px 0 0;
 
 }
 
+Xheader {
+  font-size: large;
+  font-weight: bold;
+}
 /* border-radius: $panel_border_radius $panel_border_radius 0 0; /**/
 
