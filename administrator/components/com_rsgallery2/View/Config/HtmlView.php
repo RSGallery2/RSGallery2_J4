@@ -11,6 +11,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\View\Config;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -28,7 +29,7 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
-	protected $buttons = [];
+	protected $configVars;
 
 	/**
 	 * Method to display the view.
@@ -41,17 +42,25 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-
 		$Layout = Factory::getApplication()->input->get('layout');
-		echo '$Layout: ' . $Layout . '<br>' ;
-		//echo '$tpl: ' . json_encode($tpl) . '<br>' ;
-		echo '$tpl: ' . $tpl . '<br>' ;
+		//echo '$Layout: ' . $Layout . '<br>';
 
+		$this->configVars = array ();
 
+		try
+		{
+			$this->configVars = ComponentHelper::getParams('com_rsgallery2');
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>' ;
-
-		//---  --------------------------------------------------------------
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+			//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
 		/**/
@@ -90,9 +99,27 @@ class HtmlView extends BaseHtmlView
 				. '</span><br><br>';
 		}
 
-		// Set the title
-		ToolBarHelper::title(Text::_('YYYYY'), 'screwdriver'); // 'maintenance');
+		switch ($Layout)
+		{
+			case 'RawView':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_VIEW'), 'screwdriver');
+				ToolBarHelper::cancel('config.cancel_rawView');
+				break;
 
+			case 'RawEdit':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'), 'screwdriver');
+				ToolBarHelper::apply('config.apply_rawEdit');
+				ToolBarHelper::save('config.save_rawEdit');
+				ToolBarHelper::cancel('config.cancel_rawEdit');
+				break;
+			default:
+				ToolBarHelper::cancel('config.cancel');
+				break;
+		}
+
+		// direct to config
 		$toolbar->preferences('com_rsgallery2');
 	}
 
