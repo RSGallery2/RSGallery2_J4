@@ -4,11 +4,11 @@ $break-large: 800px;
 $columnThemes: 'rsg2' green, 'rawDb' darkorange, 'repair' DodgerBlue, 'danger' #df3e3e,
       'upgrade' purple, 'developer' #3056ff, 'test' #96a918, 'outdated' goldenrod;
 $columnThemesNotUsed: 'test' 'outdated';
-$panel_border_radius: 3px 3px 0 0;
+$panel_border_radius: 2px; // 3px;
+$button_border_radius: 2px; // 3px;
 
 
 /*--- One column on small screens ------*/
-/* Large */
 
 .flex-main-row {
   display: flex;
@@ -26,60 +26,36 @@ $panel_border_radius: 3px 3px 0 0;
 }
 
 
-.rsg2-icon-bar {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 100%;
-  flex: 1;
-  /*	max-width: 10em; /**/
-  margin: 5px;
-  padding: 5px;
-}
-
-
 /*--- sections repair / danger ------*/
 
 .icons-panel {
 
-/*  border: 1px solid; /**/
-/*  border-radius: $panel_border_radius; /**/
-
-  border-radius : 3px;
   display: block;
   max-width: 15em;
+  margin-bottom: 10px;
 
   .icons-panel-info {
-    margin      : 10px; /**/
-    /*	margin-left : 40px; /**/
-    max-width   :  20em; /**/
+    margin      : 10px;
+    max-width   :  20em;
   }
 
   .icons-panel-title header {
-    /* padding: 2em, 1em, 2em, 1em; /**/
-    /*	padding: 4em; /**/
-    /* padding-top: 1em; /**/
-    /* padding-bottom: 1em; /**/
-    /* margin-left : 10px; /**/
     min-height: 2em;
   }
 
-
-  @debug "01 My very own string just because.";
-
   @each $theme, $color in $columnThemes {
 
-    @debug "theme: #{$theme}";
-    @debug "color: #{$color}";
-
     .#{$theme}Zone {
-      border: 3px solid;
-      border-color: red; // $color;
-      background-color : $color;
-      color            : white;
       padding: 5px;
-      border-radius: $panel_border_radius;
       font-size: large;
       font-weight: bold;
+
+      border: 3px solid $color;
+      border-radius: $panel_border_radius $panel_border_radius 0 0;
+      //border-color: red; // $color;
+
+      color            : white;
+      background-color : $color;
     }
   }
 
@@ -91,17 +67,63 @@ $panel_border_radius: 3px 3px 0 0;
     &.#{$theme} {
       border: 3px solid;
       border-color: $color;
-      border-radius    : 3px 3px 0 0;
+      border-radius: $panel_border_radius $panel_border_radius 0 0;
 
+      //
+      span.icoMoon {
+        color            : $color;
+      }
+
+      .rsg2-icon-bar a:hover {
+        border-color: $color;
+      }
+    }
+  }
+}
+
+.rsg2-icon-bar {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+
+  a {
+    background-color: white;
+
+    margin: 5px;
+    padding: 25px 25px 0px 25px;
+    display: inline-block;
+
+    background-color: white;
+
+    border-radius: $button_border_radius;
+    border: 5px solid lightgrey;
+    box-shadow: 2px 2px 1px #888888;
+
+    &:hover {
+      text-decoration: none;
     }
 
+    &:active {
+      background-color: sandybrown;
+    }
+
+    span.icoMoon {
+      margin-right: 22px;
+    }
+
+    .maint-title {
+      color: blue;
+      //display: inline-block;
+    }
+
+    .maint-text {
+      color: black;
+    }
   }
-
 }
 
-Xheader {
-  font-size: large;
-  font-weight: bold;
-}
-/* border-radius: $panel_border_radius $panel_border_radius 0 0; /**/
+
+
+
 

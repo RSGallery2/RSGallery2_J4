@@ -190,12 +190,11 @@ function DisplayButton($button)
     echo '    <figure class="rsg2-icon">';
             foreach ($button->classIcons as $Idx => $imageClass )
             {
-    echo '            <span class="' . $imageClass . ' iconMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
+    echo '            <span class="' . $imageClass . ' icoMoon icoMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
             }
     echo '        <figcaption class="rsg2-text">';
-    echo '            <span class="maint-title">' . $button->textTitle  . '</span>';
-    echo '            <!--br-->';
-    echo '            <span class="maint-text">' . $button->textInfo  . '</span>';
+    echo '            <div class="maint-title">' . $button->textTitle  . '</div>';
+    echo '            <div class="maint-text">' . $button->textInfo  . '</div>';
     echo '        </figcaption>';
     echo '    </figure>';
     echo '</a>';

@@ -1,5 +1,4 @@
 /*--- One column on small screens ------*/
-/* Large */
 .flex-main-row {
   display: flex;
   flex-flow: row wrap;
@@ -17,136 +16,210 @@
   }
 }
 
+/*--- sections repair / danger ------*/
+.icons-panel {
+  display: block;
+  max-width: 15em;
+  margin-bottom: 10px;
+}
+.icons-panel .icons-panel-info {
+  margin: 10px;
+  max-width: 20em;
+}
+.icons-panel .icons-panel-title header {
+  min-height: 2em;
+}
+.icons-panel .rsg2Zone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid green;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: green;
+}
+.icons-panel .rawDbZone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid darkorange;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: darkorange;
+}
+.icons-panel .repairZone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid DodgerBlue;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: DodgerBlue;
+}
+.icons-panel .dangerZone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid #df3e3e;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: #df3e3e;
+}
+.icons-panel .upgradeZone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid purple;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: purple;
+}
+.icons-panel .developerZone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid #3056ff;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: #3056ff;
+}
+.icons-panel .testZone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid #96a918;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: #96a918;
+}
+.icons-panel .outdatedZone {
+  padding: 5px;
+  font-size: large;
+  font-weight: bold;
+  border: 3px solid goldenrod;
+  border-radius: 2px 2px 0 0;
+  color: white;
+  background-color: goldenrod;
+}
+.icons-panel.rsg2 {
+  border: 3px solid;
+  border-color: green;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.rsg2 span.icoMoon {
+  color: green;
+}
+.icons-panel.rsg2 .rsg2-icon-bar a:hover {
+  border-color: green;
+}
+.icons-panel.rawDb {
+  border: 3px solid;
+  border-color: darkorange;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.rawDb span.icoMoon {
+  color: darkorange;
+}
+.icons-panel.rawDb .rsg2-icon-bar a:hover {
+  border-color: darkorange;
+}
+.icons-panel.repair {
+  border: 3px solid;
+  border-color: DodgerBlue;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.repair span.icoMoon {
+  color: DodgerBlue;
+}
+.icons-panel.repair .rsg2-icon-bar a:hover {
+  border-color: DodgerBlue;
+}
+.icons-panel.danger {
+  border: 3px solid;
+  border-color: #df3e3e;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.danger span.icoMoon {
+  color: #df3e3e;
+}
+.icons-panel.danger .rsg2-icon-bar a:hover {
+  border-color: #df3e3e;
+}
+.icons-panel.upgrade {
+  border: 3px solid;
+  border-color: purple;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.upgrade span.icoMoon {
+  color: purple;
+}
+.icons-panel.upgrade .rsg2-icon-bar a:hover {
+  border-color: purple;
+}
+.icons-panel.developer {
+  border: 3px solid;
+  border-color: #3056ff;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.developer span.icoMoon {
+  color: #3056ff;
+}
+.icons-panel.developer .rsg2-icon-bar a:hover {
+  border-color: #3056ff;
+}
+.icons-panel.test {
+  border: 3px solid;
+  border-color: #96a918;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.test span.icoMoon {
+  color: #96a918;
+}
+.icons-panel.test .rsg2-icon-bar a:hover {
+  border-color: #96a918;
+}
+.icons-panel.outdated {
+  border: 3px solid;
+  border-color: goldenrod;
+  border-radius: 2px 2px 0 0;
+}
+.icons-panel.outdated span.icoMoon {
+  color: goldenrod;
+}
+.icons-panel.outdated .rsg2-icon-bar a:hover {
+  border-color: goldenrod;
+}
+
 .rsg2-icon-bar {
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
-  /*	max-width: 10em; /**/
+}
+.rsg2-icon-bar a {
+  background-color: white;
   margin: 5px;
-  padding: 5px;
+  padding: 25px 25px 0px 25px;
+  display: inline-block;
+  background-color: white;
+  border-radius: 2px;
+  border: 5px solid lightgrey;
+  box-shadow: 2px 2px 1px #888888;
 }
-
-/*--- sections repair / danger ------*/
-.icons-panel {
-  /*  border: 1px solid; /**/
-  /*  border-radius: $panel_border_radius; /**/
-  border-radius: 3px;
-  display: block;
-  max-width: 15em;
+.rsg2-icon-bar a:hover {
+  text-decoration: none;
 }
-.icons-panel .icons-panel-info {
-  margin: 10px;
-  /**/
-  /*	margin-left : 40px; /**/
-  max-width: 20em;
-  /**/
+.rsg2-icon-bar a:active {
+  background-color: sandybrown;
 }
-.icons-panel .icons-panel-title header {
-  /* padding: 2em, 1em, 2em, 1em; /**/
-  /*	padding: 4em; /**/
-  /* padding-top: 1em; /**/
-  /* padding-bottom: 1em; /**/
-  /* margin-left : 10px; /**/
-  min-height: 2em;
+.rsg2-icon-bar a span.icoMoon {
+  margin-right: 22px;
 }
-.icons-panel .rsg2Zone {
-  border: 3px solid;
-  border-color: green;
-  background-color: green;
-  color: white;
-  border-radius: 3px 3px 0 0;
+.rsg2-icon-bar a .maint-title {
+  color: blue;
 }
-.icons-panel .rawDbZone {
-  border: 3px solid;
-  border-color: darkorange;
-  background-color: darkorange;
-  color: white;
-  border-radius: 3px 3px 0 0;
+.rsg2-icon-bar a .maint-text {
+  color: black;
 }
-.icons-panel .repairZone {
-  border: 3px solid;
-  border-color: DodgerBlue;
-  background-color: DodgerBlue;
-  color: white;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel .dangerZone {
-  border: 3px solid;
-  border-color: #df3e3e;
-  background-color: #df3e3e;
-  color: white;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel .upgradeZone {
-  border: 3px solid;
-  border-color: purple;
-  background-color: purple;
-  color: white;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel .developerZone {
-  border: 3px solid;
-  border-color: #3056ff;
-  background-color: #3056ff;
-  color: white;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel .testZone {
-  border: 3px solid;
-  border-color: #96a918;
-  background-color: #96a918;
-  color: white;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel .outdatedZone {
-  border: 3px solid;
-  border-color: goldenrod;
-  background-color: goldenrod;
-  color: white;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.rsg2 {
-  border: 3px solid;
-  border-color: green;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.rawDb {
-  border: 3px solid;
-  border-color: darkorange;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.repair {
-  border: 3px solid;
-  border-color: DodgerBlue;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.danger {
-  border: 3px solid;
-  border-color: #df3e3e;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.upgrade {
-  border: 3px solid;
-  border-color: purple;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.developer {
-  border: 3px solid;
-  border-color: #3056ff;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.test {
-  border: 3px solid;
-  border-color: #96a918;
-  border-radius: 3px 3px 0 0;
-}
-.icons-panel.outdated {
-  border: 3px solid;
-  border-color: goldenrod;
-  border-radius: 3px 3px 0 0;
-}
-
-/* border-radius: $panel_border_radius $panel_border_radius 0 0; /**/
 
 /*# sourceMappingURL=maintenance.css.map */
