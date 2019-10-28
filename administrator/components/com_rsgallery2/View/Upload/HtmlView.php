@@ -12,6 +12,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\View\Upload;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -35,11 +36,19 @@ class HtmlView extends BaseHtmlView
 	 * @var  string
 	 */
 	protected $sidebar;
-
-	protected $buttons = [];
+	protected $form;
 
 	protected $isDebugBackend;
 	protected $isDevelop;
+
+	protected $UploadLimit;
+	protected $PostMaxSize;
+	protected $MemoryLimit;
+	protected $MaxSize;
+
+	protected $FtpUploadPath;
+	// protected $LastUsedUploadZip;
+	protected $is1GalleryExisting;
 
 	/**
 	 * Method to display the view.
@@ -60,9 +69,96 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		//---  --------------------------------------------------------------------
+		//--- Form --------------------------------------------------------------------
 
-		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
+		$xmlFile = JPATH_COMPONENT . '/models/forms/upload.xml';
+		$form = Form::getInstance('upload', $xmlFile);
+
+		//---  Limits --------------------------------------------------------------------
+
+		// Instantiate the media helper
+		$mediaHelper = new HelperMedia;
+		// Maximum allowed size in MB
+		$this->UploadLimit = round($mediaHelper->toBytes(ini_get('upload_max_filesize')) / (1024 * 1024));
+		$this->PostMaxSize = round($mediaHelper->toBytes(ini_get('post_max_size')) / (1024 * 1024));
+		$this->MemoryLimit = round($mediaHelper->toBytes(ini_get('memory_limit')) / (1024 * 1024));
+		$this->MaxSize = FilesystemHelper::fileUploadMaxSize();
+
+		//--- FtpUploadPath ------------------------
+
+		// Retrieve path from config
+		$FtpUploadPath = $rsgConfig->get('ftp_path');
+		// On empty use last successful
+		if (empty ($FtpUploadPath)) {
+			$FtpUploadPath = $rsgConfig->get('last_used_ftp_path');
+		}
+		$this->FtpUploadPath = $FtpUploadPath;
+
+		//--- LastUsedUploadZip ------------------------
+
+		// Not possible to set input variable in HTML so it is not collected
+		// $this->LastUploadedZip = $app->getUserState('com_rsgallery2.last_used_uploaded_zip');
+		// $LastUsedUploadZip->getLastUsedUploadZip();
+
+		// register 'upload_drag_and_drop', 'upload_zip_pc', 'upload_folder_server'
+		//$this->ActiveSelection = $rsgConfig->getLastUpdateType();
+		$this->ActiveSelection = $rsgConfig->get('last_update_type');
+		if (empty ($this->ActiveSelection)) {
+			$this->ActiveSelection = 'upload_drag_and_drop';
+		}
+
+		// 0: default, 1: enable, 2: disable
+		$isUseOneGalleryNameForAllImages = $rsgConfig->get('isUseOneGalleryNameForAllImages');
+		if (empty ($isUseOneGalleryNameForAllImages)) {
+			$isUseOneGalleryNameForAllImages = '1';
+		}
+		if ($isUseOneGalleryNameForAllImages == '2') {
+			$isUseOneGalleryNameForAllImages = '0';
+		}
+
+		//--- Pre select latest gallery ?  ------------------------
+
+		$IdGallerySelect = -1; //No selection
+
+		$input = JFactory::getApplication()->input;
+
+		// coming from gallery edit -> new id
+		$Id = $input->get('id', 0, 'INT');
+		if (!empty ($Id)) {
+			$IdGallerySelect = $Id;
+		}
+
+		$isPreSelectLatestGallery = $rsgConfig->get('IsPreSelectLatestGallery');
+		if ($isPreSelectLatestGallery) {
+			$IdGallerySelect = $this->getIdLatestGallery();
+		}
+
+		$this->is1GalleryExisting = $this->is1GalleryExisting();
+
+		// upload_zip, upload_folder
+		$formParam = array(
+			'all_img_in_step1_01' => $isUseOneGalleryNameForAllImages,
+			'all_img_in_step1_02' => $isUseOneGalleryNameForAllImages,
+			'SelectGalleries01_01' => $IdGallerySelect,
+			'SelectGalleries02_02' => $IdGallerySelect
+		);
+
+		$form->bind($formParam);
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new RuntimeException(implode('<br />', $errors), 500);
+		}
+
+		// Assign the Data
+		$this->form = $form;
+		// $this->item = $item;
+
+
+
+
+		//---  --------------------------------------------------------------------
 
 		Rsgallery2Helper::addSubmenu('upload');
 		$this->sidebar = \JHtmlSidebar::render();

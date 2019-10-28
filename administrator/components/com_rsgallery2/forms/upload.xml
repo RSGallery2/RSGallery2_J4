@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form enctype="multipart/form-data">
+	<fieldset name="upload_drag_and_drop">
+		<!-- Gallery selection -->
+		<field
+				id="SelectGalleries_03"
+				name="SelectGalleries03"
+				type="GallerySelectList"
+				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+				required="true"
+				class="inputbox span5"
+				addfieldpath="/administrator/components/com_rsgallery2/models/fields"
+				size="4"
+		/>
+	</fieldset>
+	<fieldset name="upload_zip">
+		<!--field
+				id="all_img_in_step1_01"
+				name="all_img_in_step1_01"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
+				description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field-->
+		<field 
+				id="all_img_in_step1_01"
+				name="all_img_in_step1_01" 
+				type="hidden" 
+				default="1" 
+		/>
+		<!-- Gallery selection -->
+		<field
+				id="SelectGalleries_01"
+				name="SelectGalleries01"
+				type="GallerySelectList"
+				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+				required="true"
+				class="inputbox"
+				addfieldpath="/administrator/components/com_rsgallery2/models/fields"
+				size="4"
+		/>
+	</fieldset>
+	<fieldset name="upload_folder">
+		<!--field
+				id="all_img_in_step1_02"
+				name="all_img_in_step1_02"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
+				description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
+				class="btn-group btn-group-yesno span5">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field-->
+		<field 
+				id="all_img_in_step1_02"
+				name="all_img_in_step1_02" 
+				type="hidden" 
+				default="1" 
+		/>
+
+		<!-- Gallery selection -->
+		<field
+				id="SelectGalleries_02"
+				name="SelectGalleries02"
+				type="GallerySelectList"
+				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+				required="true"
+				class="inputbox span5"
+				addfieldpath="/administrator/components/com_rsgallery2/models/fields"
+				size="4"
+		/>
+	</fieldset>
+</form>
