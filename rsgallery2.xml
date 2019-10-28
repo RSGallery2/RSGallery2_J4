@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>2019-09-27</creationDate>
+	<creationDate>21. Oct. 2019</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<copyright>(c) 2003-2019 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.0.1</version>
+	<version>5.0.0.2</version>
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
 	<namespace>Joomla\Component\Rsgallery2</namespace>
-        <scriptfile>script.php</scriptfile>
+
+	<scriptfile>script.php</scriptfile>
+
+	<!-- sql files -->
+	<install> <!-- Runs on install -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall> <!-- Runs on uninstall -->
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<update>  <!-- Runs on update -->
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
 	<!-- Back-end files -->
 	<administration>
 		<!-- Menu entries -->

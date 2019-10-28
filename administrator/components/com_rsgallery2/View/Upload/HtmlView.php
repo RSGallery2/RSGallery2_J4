@@ -14,7 +14,9 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\FilesystemHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -72,12 +74,13 @@ class HtmlView extends BaseHtmlView
 		//--- Form --------------------------------------------------------------------
 
 		$xmlFile = JPATH_COMPONENT . '/models/forms/upload.xml';
-		$form = Form::getInstance('upload', $xmlFile);
+		// $form = Form::getInstance('upload', $xmlFile);
 
 		//---  Limits --------------------------------------------------------------------
 
 		// Instantiate the media helper
-		$mediaHelper = new HelperMedia;
+		$mediaHelper = new MediaHelper;
+
 		// Maximum allowed size in MB
 		$this->UploadLimit = round($mediaHelper->toBytes(ini_get('upload_max_filesize')) / (1024 * 1024));
 		$this->PostMaxSize = round($mediaHelper->toBytes(ini_get('post_max_size')) / (1024 * 1024));
@@ -120,7 +123,7 @@ class HtmlView extends BaseHtmlView
 
 		$IdGallerySelect = -1; //No selection
 
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->input;
 
 		// coming from gallery edit -> new id
 		$Id = $input->get('id', 0, 'INT');
@@ -143,7 +146,7 @@ class HtmlView extends BaseHtmlView
 			'SelectGalleries02_02' => $IdGallerySelect
 		);
 
-		$form->bind($formParam);
+		//$form->bind($formParam);
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -152,7 +155,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Assign the Data
-		$this->form = $form;
+		// $this->form = $form;
 		// $this->item = $item;
 
 
@@ -200,6 +203,30 @@ class HtmlView extends BaseHtmlView
 		$toolbar->preferences('com_rsgallery2');
 	}
 
+	/**
+	 * Check if at least one gallery exists
+	 *
+	 * @return string ID of latest gallery
+	 *
+	 * @since 4.3.0
+	 */
+	public function is1GalleryExisting()
+	{
+		$is1GalleryExisting = false;
 
+		// ToDo: try
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+
+		// ToDo get row number instead of names
+		$query->select($db->quoteName('id'))
+			->from('#__rsg2_galleries');
+
+		$db->setQuery($query, 0, 1);
+		$IdGallery = $db->loadResult();
+		$is1GalleryExisting = !empty ($IdGallery);
+
+		return $is1GalleryExisting;
+	}
 }
 
