@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>21. Oct. 2019</creationDate>
+	<creationDate>28. Oct. 2019</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
@@ -16,19 +16,19 @@
 	<!-- sql files -->
 	<install> <!-- Runs on install -->
 		<sql>
-			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+			<file driver="mysql" charset="utf8">administrator/components/com_rsgallery2/sql/install.mysql.utf8.sql</file>
 		</sql>
 	</install>
 	<uninstall> <!-- Runs on uninstall -->
 		<sql>
-			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+			<file driver="mysql" charset="utf8">administrator/components/com_rsgallery2/sql/uninstall.mysql.utf8.sql</file>
 		</sql>
 	</uninstall>
-	<update>  <!-- Runs on update -->
-		<schemas>
+	<!--update-->  <!-- Runs on update -->
+		<!--schemas>
 			<schemapath type="mysql">sql/updates/mysql</schemapath>
 		</schemas>
-	</update>
+	</update-->
 
 	<!-- Back-end files -->
 	<administration>
@@ -57,10 +57,11 @@
 			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE
 			</menu>
 		</submenu>
+
 		<files folder="administrator/components/com_rsgallery2">
 			<filename>changelog.xml</filename>
 			<filename>rsgallery2.xml</filename>
-			<filename>script.php</filename>
+			<filename>install_rsg2.php</filename>
 			<folder>Controller</folder>
 			<folder>Extension</folder>
 			<folder>Helper</folder>

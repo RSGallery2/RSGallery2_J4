@@ -16,19 +16,19 @@
 	<!-- sql files -->
 	<install> <!-- Runs on install -->
 		<sql>
-			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+			<file driver="mysql" charset="utf8">administrator/components/com_rsgallery2/sql/install.mysql.utf8.sql</file>
 		</sql>
 	</install>
 	<uninstall> <!-- Runs on uninstall -->
 		<sql>
-			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+			<file driver="mysql" charset="utf8">administrator/components/com_rsgallery2/sql/uninstall.mysql.utf8.sql</file>
 		</sql>
 	</uninstall>
-	<update>  <!-- Runs on update -->
-		<schemas>
+	<!--update-->  <!-- Runs on update -->
+		<!--schemas>
 			<schemapath type="mysql">sql/updates/mysql</schemapath>
 		</schemas>
-	</update>
+	</update-->
 
 	<!-- Back-end files -->
 	<administration>
@@ -57,6 +57,7 @@
 			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE
 			</menu>
 		</submenu>
+
 		<files folder="administrator/components/com_rsgallery2">
 			<filename>changelog.xml</filename>
 			<filename>rsgallery2.xml</filename>
