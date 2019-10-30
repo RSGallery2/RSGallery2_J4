@@ -46,7 +46,7 @@ class Rsgallery2InstallerScript
 	 */
 	public function install($parent)
 	{
-		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL');
+		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
 
 		return true;
 	}
@@ -63,7 +63,7 @@ class Rsgallery2InstallerScript
 	 */
 	public function uninstall($parent)
 	{
-		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL');
+		echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
 
 		return true;
 	}
@@ -80,7 +80,7 @@ class Rsgallery2InstallerScript
 	 */
 	public function update($parent)
 	{
-		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UPDATE');
+		echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
 
 		return true;
 	}
@@ -114,6 +114,13 @@ class Rsgallery2InstallerScript
 			return false;
 		}
 
+		// ToDo: minimum RSG2 version
+
+
+
+
+		// COM_RSGALLERY2_PREFLIGHT_INSTALL_TEXT / COM_RSGALLERY2_PREFLIGHT_UPDATE_TEXT
+		// COM_RSGALLERY2_PREFLIGHT_UNINSTALL_TEXT
 		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT');
 
 		return true;
@@ -132,6 +139,9 @@ class Rsgallery2InstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
+
+		// COM_RSGALLERY2_POSTFLIGHT_UPDATE_TEXT, COM_RSGALLERY2_POSTFLIGHT_INSTALL_TEXT
+		// NO:  COM_RSGALLERY2_POSTFLIGHT_UNINSTALL_TEXT
 		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
 
 		return true;
