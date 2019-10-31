@@ -5,9 +5,7 @@
 rsgallery2.org.xml
 
 *.pyc
-admin/install.rsgallery2.php
-admin/rsgallery2.xml
-
+//administrator\components\com_rsgallery2\rsgallery2.xml
 .build/*.log
 
 

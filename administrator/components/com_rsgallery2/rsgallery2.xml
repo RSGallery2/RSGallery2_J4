@@ -11,7 +11,7 @@
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
 	<namespace>Joomla\Component\Rsgallery2</namespace>
 
-	<scriptfile>script.php</scriptfile>
+	<scriptfile>install_rsg2.php</scriptfile>
 
 	<!-- sql files -->
 	<install> <!-- Runs on install -->
@@ -61,7 +61,7 @@
 		<files folder="administrator/components/com_rsgallery2">
 			<filename>changelog.xml</filename>
 			<filename>rsgallery2.xml</filename>
-			<filename>script.php</filename>
+			<!--filename>install_rsg2.php</filename-->
 			<folder>Controller</folder>
 			<folder>Extension</folder>
 			<folder>Helper</folder>

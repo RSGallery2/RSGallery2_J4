@@ -122,10 +122,10 @@
     <!-- File set administrator folder -->
     <fileset dir="${administrator}" id="adminSet">
         <include name="**" />
-		<!-- may be accidentally copied from installation server -->
+		<!-- 2019.10.31 may be accidentally copied from installation server 
         <exclude name="changelog.xml" />
         <exclude name="install.rsgallery2.php" />
-        <exclude name="rsgallery2.xml" />
+        <exclude name="rsgallery2.xml" /-->
     </fileset>
 
     <!-- File set site folder -->
@@ -170,7 +170,7 @@
 		<echo msg="------------------------------------------" />
 		<propertyprompt
 			propertyName="reminder"
-			promptText="exit:"
+			promptText="Don't forget to change RSG2_...update and changelog file when releasing:"
 		/>		
 		
 	</target>
@@ -228,11 +228,11 @@
         </copy-->
         <!-- Copy the manifest.xml -->
         <!--copy file="${root}/install.rsgallery2.php" tofile="${buildDir}/tmp/install.rsgallery2.php" /-->
-        <copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/${extensionLower}.xml" />
-        <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" />
-        <copy file="${root}/script.php" tofile="${buildDir}/tmp/script.php" />
+        <!--  2019.10.31 copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/${extensionLower}.xml" />
+        <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" /-->
+        <!--  2019.10.31  copy file="${root}/install_rsg2.php" tofile="${buildDir}/tmp/install_rsg2.php" />
         <copy file="${root}/index.html" tofile="${buildDir}/tmp/index.html" />
-        <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" />
+        <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" / -->
 
         <!--copy file="${admin}/install.php" tofile="${buildDir}/tmp/install.php" /-->
         <echo msg="Copy was successful" />
