@@ -53,7 +53,7 @@
 	-->
 	
     <!-- Version number of build -->
-    <property name="build.version" value="5.0.0.2" override="true" />
+    <property name="build.version" value="5.0.0.3" override="true" />
 	    <!-- additional naming postfix -->
     <!--property name="build.postfix" value="prepare." override="true" /-->
     <property name="build.postfix" value="" override="true" />
@@ -227,13 +227,16 @@
             <fileset refid="pluginsSet" />
         </copy-->
         <!-- Copy the manifest.xml -->
-        <!--copy file="${root}/install.rsgallery2.php" tofile="${buildDir}/tmp/install.rsgallery2.php" /-->
-        <!--  2019.10.31 copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/${extensionLower}.xml" />
-        <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" /-->
-        <!--  2019.10.31  copy file="${root}/install_rsg2.php" tofile="${buildDir}/tmp/install_rsg2.php" />
+        <copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/${extensionLower}.xml" />
+        <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" />
+        <copy file="${root}/install_rsg2.php" tofile="${buildDir}/tmp/install_rsg2.php" />
         <copy file="${root}/index.html" tofile="${buildDir}/tmp/index.html" />
-        <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" / -->
+        <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" />
 
+        <!-- Update files in administrator folder manifest.xml -->
+        <copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/administrator/components/com_rsgallery2/${extensionLower}.xml" />
+        <copy file="${root}/install_rsg2.php" tofile="${buildDir}/tmp/administrator/components/com_rsgallery2/install_rsg2.php" />
+ 
         <!--copy file="${admin}/install.php" tofile="${buildDir}/tmp/install.php" /-->
         <echo msg="Copy was successful" />
         <!-- insert version, build number and date into the xml files -->

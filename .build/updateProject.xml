@@ -50,7 +50,7 @@
 	-->
 	
     <!-- Version number of build -->
-    <property name="build.version" value="5.0.0.2" override="true" />
+    <property name="build.version" value="5.0.0.3" override="true" />
     <!-- additional naming postfix -->
     <property name="build.postfix" value="prepare." override="true" />
     <!--property name="build.postfix" value="" override="true" / -->
@@ -130,7 +130,7 @@
     <!-- File set site folder -->
     <fileset dir="${components}" id="siteSet">
         <include name="**" />
-        <!--exclude name="**/params.ini" /-->
+        <exclude name="**/params.ini" />
     </fileset>
 
     <fileset dir="${components}" id="siteParamsIniSet">
@@ -141,7 +141,6 @@
     <fileset dir="${components}" id="mediaSet">
         <include name="**" />
     </fileset>
-
 
 <!--
 =========================================================================
@@ -162,6 +161,14 @@
 		</phingcall>
 		
 		<echo msg="build done" />
+		<echo msg="------------------------------------------" />
+		<echo msg="Don't forget to change RSG2_...update and changelog file when releasing" />
+		<echo msg="------------------------------------------" />
+		<propertyprompt
+			propertyName="reminder"
+			promptText="Don't forget to change RSG2_...update and changelog file when releasing:"
+		/>		
+		
 	</target>
 	
 	<!-- 
