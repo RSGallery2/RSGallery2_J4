@@ -20,7 +20,7 @@ use Joomla\CMS\Log\Log;
  * @since  1.0.0
  *
  */
-class Rsgallery2InstallerScript
+class Com_Rsgallery2InstallerScript
 {
 	/**
 	 * Extension script constructor.
