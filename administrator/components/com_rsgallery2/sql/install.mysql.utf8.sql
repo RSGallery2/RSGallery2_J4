@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `rgt` int(11) DEFAULT 0 NOT NULL,
   `level` integer DEFAULT 0 NOT NULL,
   `path` varchar(400) NOT NULL DEFAULT '',
-   -- ToDO: Does parent Id interfere with nested tree ? May need access and write function to the data itself
   `parent_id` int(11)  NOT NULL DEFAULT 0,
-
+  `access` int(10) NOT NULL DEFAULT 0, 
+  
   `asset_id` int(11)  NOT NULL DEFAULT 0,
   
 --  `rtl` tinyint(4) NOT NULL DEFAULT 0,  
