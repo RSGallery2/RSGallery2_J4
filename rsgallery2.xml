@@ -59,13 +59,18 @@
 		</submenu>
 
 		<files folder="administrator/components/com_rsgallery2">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
 			<filename>changelog.xml</filename>
-			<filename>rsgallery2.xml</filename>
+			<!--filename>rsgallery2.xml</filename-->
 			<!--filename>install_rsg2.php</filename-->
 			<folder>Controller</folder>
 			<folder>Extension</folder>
+			<folder>forms</folder>
 			<folder>Helper</folder>
+			<folder>helpers</folder>
 			<folder>language</folder>
+			<folder>Model</folder>
 			<folder>Service</folder>
 			<folder>services</folder>
 			<folder>sql</folder>
