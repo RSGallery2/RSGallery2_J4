@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_RSGALLERY2_GALLERIES_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_RSGALLERY2_GALLERIES_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+	<fieldset name="request">
+		<fields name="request">
+			<field
+				name="extension"
+				type="componentsgallery"
+				label="COM_RSGALLERY2_CHOOSE_COMPONENT_LABEL"
+				required="true"
+			>
+				<option value="">COM_MENUS_OPTION_SELECT_COMPONENT</option>
+			</field>
+		</fields>
+	</fieldset>
+</metadata>
