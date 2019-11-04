@@ -138,11 +138,11 @@ class HtmlView extends BaseHtmlView
 		$buttons = array(
 			array(
 
-				//'link'   => Route::_('index.php?option=com_content&task=article.add'),
+				//'link'   => Route::_('index.php?option=com_rsgallery2&task=article.add'),
 				'link'   => Route::_('index.php?option=com_rsgallery2&view=config'),
 				'image'  => 'fa fa-cog',
 				'text'   => Text::_('COM_RSGALLERY2_MAIN_CONFIGURATION'),
-				'access' => array('core.manage', 'com_content', 'core.create', 'com_content'),
+				'access' => array('core.manage', 'com_rsgallery2', 'core.create', 'com_rsgallery2'),
 				'group'  => '',
 			),
 			array(

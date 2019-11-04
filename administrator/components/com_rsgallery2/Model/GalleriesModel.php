@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 
 /**
- * Categories Component Categories Model
+ * RSGallery2 Component Galleries Model
  *
  * @since  1.6
  */
@@ -95,7 +95,7 @@ class Rsgallery2Model extends ListModel
 			$this->context .= '.' . $forcedLanguage;
 		}
 
-		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_content', 'cmd');
+		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
 
 		$this->setState('filter.extension', $extension);
 		$parts = explode('.', $extension);
@@ -144,7 +144,7 @@ class Rsgallery2Model extends ListModel
 	}
 
 	/**
-	 * Method to get a database query to list categories.
+	 * Method to get a database query to list galleries.
 	 *
 	 * @return  \JDatabaseQuery object.
 	 *

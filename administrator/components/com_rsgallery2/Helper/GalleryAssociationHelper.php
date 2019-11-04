@@ -30,7 +30,7 @@ abstract class GalleryAssociationHelper
 	 *
 	 * @since  3.0
 	 */
-	public static function getGalleryAssociations($id = 0, $extension = 'com_content')
+	public static function getGalleryAssociations($id = 0, $extension = 'com_rsgallery2')
 	{
 		$return = array();
 

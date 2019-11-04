@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2s
+ * @subpackage  com_rsgallery2
  *
  * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -38,12 +38,12 @@ class Rsgallery2Helper extends ContentHelper
 		{
 			\JHtmlSidebar::addEntry(
 				Text::_('JGLOBAL_FIELDS'),
-				'index.php?option=com_fields&context=com_rsgallery2s.rsgallery2',
+				'index.php?option=com_fields&context=com_rsgallery2.rsgallery2',
 				$vName == 'fields.fields'
 			);
 			\JHtmlSidebar::addEntry(
 				Text::_('JGLOBAL_FIELD_GROUPS'),
-				'index.php?option=com_fields&view=groups&context=com_rsgallery2s.rsgallery2',
+				'index.php?option=com_fields&view=groups&context=com_rsgallery2.rsgallery2',
 				$vName == 'fields.groups'
 			);
 		}

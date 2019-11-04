@@ -84,7 +84,7 @@ class GalleriesHelper
 	 *
 	 * @return  array of associations.
 	 */
-	public static function getAssociations($pk, $extension = 'com_content')
+	public static function getAssociations($pk, $extension = 'com_rsgallery2')
 	{
 		$langAssociations = Associations::getAssociations($extension, '#__galleries', 'com_rsgallery2.item', $pk, 'id', 'alias', '');
 		$associations     = array();

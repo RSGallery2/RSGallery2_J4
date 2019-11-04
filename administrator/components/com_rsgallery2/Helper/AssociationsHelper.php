@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2s
+ * @subpackage  com_rsgallery2
  *
  * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -30,7 +30,7 @@ class AssociationsHelper extends AssociationExtensionHelper
 	 *
 	 * @since   3.7.0
 	 */
-	protected $extension = 'com_rsgallery2s';
+	protected $extension = 'com_rsgallery2';
 
 	/**
 	 * Array of item types
@@ -84,7 +84,7 @@ class AssociationsHelper extends AssociationExtensionHelper
 
 		if ($typeName === 'category')
 		{
-			$context    = 'com_categories.item';
+			$context    = 'com_rsgallery2.item';
 			$catidField = '';
 		}
 
@@ -192,7 +192,7 @@ class AssociationsHelper extends AssociationExtensionHelper
 					$support['level'] = true;
 
 					$tables = array(
-						'a' => '#__categories'
+						'a' => '#__rsg2_galleries'
 					);
 
 					$title = 'category';

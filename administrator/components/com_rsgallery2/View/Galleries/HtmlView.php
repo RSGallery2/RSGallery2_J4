@@ -231,7 +231,7 @@ class HtmlView extends BaseHtmlView
 				'btn-success'
 			);
 
-			if (ComponentHelper::isEnabled('com_contenthistory') && $componentParams->get('save_history', 0) && $itemEditable)
+			if (ComponentHelper::isEnabled('com_history') && $componentParams->get('save_history', 0) && $itemEditable)
 			{
 				$typeAlias = $extension . '.gallery';
 				ToolbarHelper::versions($typeAlias, $this->item->id);

@@ -32,11 +32,11 @@ use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
 /**
- * Rsgallery2 Component Category Model
+ * Rsgallery2 Component Gallery Model
  *
  * @since  1.6
  */
-class CategoryModel extends AdminModel
+class GalleryModel extends AdminModel
 {
 	/**
 	 * The prefix to use with controller messages.
@@ -73,7 +73,7 @@ class CategoryModel extends AdminModel
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
-		$extension = Factory::getApplication()->input->get('extension', 'com_content');
+		$extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
 		$this->typeAlias = $extension . '.category';
 
 		// Add a new batch command
@@ -166,7 +166,7 @@ class CategoryModel extends AdminModel
 		$pk = $app->input->getInt('id');
 		$this->setState($this->getName() . '.id', $pk);
 
-		$extension = $app->input->get('extension', 'com_content');
+		$extension = $app->input->get('extension', 'com_rsgallery2');
 		$this->setState('category.extension', $extension);
 		$parts = explode('.', $extension);
 
@@ -232,8 +232,8 @@ class CategoryModel extends AdminModel
 
 			if (!empty($result->id))
 			{
-				$result->tags = new TagsHelper;
-				$result->tags->getTagIds($result->id, $result->extension . '.category');
+//				$result->tags = new TagsHelper;
+//				$result->tags->getTagIds($result->id, $result->extension . '.category');
 			}
 		}
 
@@ -243,7 +243,7 @@ class CategoryModel extends AdminModel
 		{
 			if ($result->id != null)
 			{
-				$result->associations = ArrayHelper::toInteger(CategoriesHelper::getAssociations($result->id, $result->extension));
+				$result->associations = ArrayHelper::toInteger(GalleriesHelper::getAssociations($result->id, $result->extension));
 			}
 			else
 			{
@@ -351,8 +351,8 @@ class CategoryModel extends AdminModel
 			if (!$data->id)
 			{
 				// Check for which extension the Category Manager is used and get selected fields
-				$extension = substr($app->getUserState('com_rsgallery2.categories.filter.extension'), 4);
-				$filters = (array) $app->getUserState('com_rsgallery2.categories.' . $extension . '.filter');
+				$extension = substr($app->getUserState('com_rsgallery2.galleries.filter.extension'), 4);
+				$filters = (array) $app->getUserState('com_rsgallery2.galleries.' . $extension . '.filter');
 
 				$data->set(
 					'published',
@@ -858,7 +858,7 @@ class CategoryModel extends AdminModel
 	}
 
 	/**
-	 * Batch copy categories to a new category.
+	 * Batch copy galleries to a new gallery.
 	 *
 	 * @param   integer  $value     The new category.
 	 * @param   array    $pks       An array of row IDs.
@@ -1070,7 +1070,7 @@ class CategoryModel extends AdminModel
 	}
 
 	/**
-	 * Batch move categories to a new category.
+	 * Batch move galleries to a new gallery.
 	 *
 	 * @param   integer  $value     The new category ID.
 	 * @param   array    $pks       An array of row IDs.
@@ -1220,7 +1220,7 @@ class CategoryModel extends AdminModel
 	}
 
 	/**
-	 * Custom clean the cache of com_content and content modules
+	 * Custom clean the cache of com_rsgallery2 and content modules
 	 *
 	 * @param   string   $group      Cache group name.
 	 * @param   integer  $client_id  Application client id.
@@ -1235,8 +1235,8 @@ class CategoryModel extends AdminModel
 
 		switch ($extension)
 		{
-			case 'com_content':
-				parent::cleanCache('com_content');
+			case 'com_rsgallery2':
+				parent::cleanCache('com_rsgallery2');
 				parent::cleanCache('mod_articles_archive');
 				parent::cleanCache('mod_articles_categories');
 				parent::cleanCache('mod_articles_category');
