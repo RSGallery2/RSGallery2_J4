@@ -34,56 +34,25 @@ class Com_Rsgallery2InstallerScript
 		$this->minimumPhp = JOOMLA_MINIMUM_PHP;
 	}
 
-	/**
-	 * Method to install the extension
-	 *
-	 * @param   InstallerAdapter  $parent  The class calling this method
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since  1.0.0
-	 *
-	 */
-	public function install($parent)
-	{
-		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
+    protected $newRelease;
+    protected $oldRelease;
+    protected $minimum_joomla_release;
+    protected $actual_joomla_release;
 
-		return true;
-	}
+    // 	protected $;
+    // 	protected $;
+    // 	protected $;
 
-	/**
-	 * Method to uninstall the extension
-	 *
-	 * @param   InstallerAdapter  $parent  The class calling this method
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since  1.0.0
-	 *
-	 */
-	public function uninstall($parent)
-	{
-		echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
-
-		return true;
-	}
-
-	/**
-	 * Method to update the extension
-	 *
-	 * @param   InstallerAdapter  $parent  The class calling this method
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since  1.0.0
-	 *
-	 */
-	public function update($parent)
-	{
-		echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
-
-		return true;
-	}
+    /*-------------------------------------------------------------------------
+    preflight
+    ---------------------------------------------------------------------------
+    This is where most of the checking should be done before install, update
+    or discover_install. Preflight is executed prior to any Joomla install,
+    update or discover_install actions. Preflight is not executed on uninstall.
+    A string denoting the type of action (install, update or discover_install)
+    is passed to preflight in the $type operand. Your code can use this string
+    to execute different checks and responses for the three cases.
+    -------------------------------------------------------------------------*/
 
 	/**
 	 * Function called before extension installation/update/removal procedure commences
@@ -126,6 +95,68 @@ class Com_Rsgallery2InstallerScript
 		return true;
 	}
 
+    /*-------------------------------------------------------------------------
+    install
+    ---------------------------------------------------------------------------
+    Install is executed after the Joomla install database scripts have
+    completed. Returning 'false' will abort the install and undo any changes
+    already made. It is cleaner to abort the install during preflight, if
+    possible. Since fewer install actions have occurred at preflight, there
+    is less risk that that their reversal may be done incorrectly.
+    -------------------------------------------------------------------------*/
+	/**
+	 * Method to install the extension
+	 *
+	 * @param   InstallerAdapter  $parent  The class calling this method
+	 *
+	 * @return  boolean  True on success
+	 *
+	 * @since  1.0.0
+	 *
+	 */
+	public function install($parent)
+	{
+		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
+
+		return true;
+	}
+
+    /*-------------------------------------------------------------------------
+    update
+    ---------------------------------------------------------------------------
+    Update is executed after the Joomla update database scripts have completed.
+    Returning 'false' will abort the update and undo any changes already made.
+    It is cleaner to abort the update during preflight, if possible. Since
+    fewer update actions have occurred at preflight, there is less risk that
+    that their reversal may be done incorrectly.
+    -------------------------------------------------------------------------*/
+	/**
+	 * Method to update the extension
+	 *
+	 * @param   InstallerAdapter  $parent  The class calling this method
+	 *
+	 * @return  boolean  True on success
+	 *
+	 * @since  1.0.0
+	 *
+	 */
+	public function update($parent)
+	{
+		echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
+
+		return true;
+	}
+
+    /*-------------------------------------------------------------------------
+    postflight
+    ---------------------------------------------------------------------------
+    Postflight is executed after the Joomla install, update or discover_update
+    actions have completed. It is not executed after uninstall. Postflight is
+    executed after the extension is registered in the database. The type of
+    action (install, update or discover_install) is passed to postflight in
+    the $type operand. Postflight cannot cause an abort of the Joomla
+    install, update or discover_install action.
+    -------------------------------------------------------------------------*/
 	/**
 	 * Function called after extension installation/update/removal procedure commences
 	 *
@@ -146,4 +177,29 @@ class Com_Rsgallery2InstallerScript
 
 		return true;
 	}
+    /*-------------------------------------------------------------------------
+    uninstall
+    ---------------------------------------------------------------------------
+    The uninstall method is executed before any Joomla uninstall action,
+    such as file removal or database changes. Uninstall cannot cause an
+    abort of the Joomla uninstall action, so returning false would be a
+    waste of time
+    -------------------------------------------------------------------------*/
+	/**
+	 * Method to uninstall the extension
+	 *
+	 * @param   InstallerAdapter  $parent  The class calling this method
+	 *
+	 * @return  boolean  True on success
+	 *
+	 * @since  1.0.0
+	 *
+	 */
+	public function uninstall($parent)
+	{
+		echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
+
+		return true;
+	}
+
 }
