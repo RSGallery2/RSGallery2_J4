@@ -214,17 +214,28 @@ class HtmlView extends BaseHtmlView
 	{
 		$is1GalleryExisting = false;
 
-		// ToDo: try
-		$db = Factory::getDbo();
-		$query = $db->getQuery(true);
+		try
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
 
-		// ToDo get row number instead of names
-		$query->select($db->quoteName('id'))
-			->from('#__rsg2_galleries');
+			// ToDo get row number instead of names
+			$query->select($db->quoteName('id'))
+				->from('#__rsg2_galleries');
 
-		$db->setQuery($query, 0, 1);
-		$IdGallery = $db->loadResult();
-		$is1GalleryExisting = !empty ($IdGallery);
+			$db->setQuery($query, 0, 1);
+			$IdGallery          = $db->loadResult();
+			$is1GalleryExisting = !empty ($IdGallery);
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error retrieving "__rsg2_galleries" table' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
 
 		return $is1GalleryExisting;
 	}

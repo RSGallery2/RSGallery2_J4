@@ -11,57 +11,20 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
 JHtml::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'auto', 'relative' => true));
 
+HTMLHelper::_('behavior.core');
 
+Text::script('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL');
 
-// https://stackoverflow.com/questions/34140793/bootstrap-4-responsive-cards-in-card-columns
+HTMLHelper::_('behavior.tabstate');
 
-$CssText = <<<'EOT'
-$primary-color: #ccc;
-$col-bg-color: #eee;
-$col-footer-bg-color: #eee;
-$col-header-bg-color: #007bff;
-$col-content-bg-color: #fff;
+$app = Factory::getApplication();
 
-body {
-  background-color: $primary-color;
-}  
-
-.custom-column {  
-  background-color: $col-bg-color;
-  border: 5px solid $col-bg-color;    
-  padding: 10px;
-  box-sizing: border-box;  
-}
-
-.custom-column-header {
-  font-size: 24px;
-  background-color: #007bff;  
-  color: white;
-  padding: 15px;  
-  text-align: center;
-}
-
-.custom-column-content {
-  background-color: $col-content-bg-color;
-  border: 2px solid white;  
-  padding: 20px;  
-}
-
-.custom-column-footer {
-  background-color: $col-footer-bg-color;   
-  padding-top: 20px;
-  text-align: center;
-}
-EOT;
-
-$doc = Factory::getDocument();
-$doc->addStyleDeclaration($CssText);
-
-
+$tabs = []
 
 ?>
 
@@ -78,62 +41,32 @@ $doc->addStyleDeclaration($CssText);
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-4">
-                            <div class="custom-column">
-                                <div class="custom-column-header">Header</div>
-                                <div class="custom-column-content">
-                                    <ul class="list-group">
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Cras justo odio</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Dapibus ac facilisis in</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Morbi leo risus</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Porta ac consectetur ac</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Vestibulum at eros</li>
-                                    </ul>
-                                </div>
-                                <div class="custom-column-footer"><button class="btn btn-primary btn-lg">Click here</button></div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <div class="custom-column">
-                                <div class="custom-column-header">Header</div>
-                                <div class="custom-column-content">
-                                    <ul class="list-group">
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Cras justo odio</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Dapibus ac facilisis in</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Morbi leo risus</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Porta ac consectetur ac</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Vestibulum at eros</li>
-                                    </ul>
-                                </div>
-                                <div class="custom-column-footer"><button class="btn btn-primary btn-lg">Click here</button></div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <div class="custom-column">
-                                <div class="custom-column-header">Header</div>
-                                <div class="custom-column-content">
-                                    <ul class="list-group">
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Cras justo odio</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Dapibus ac facilisis in</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Morbi leo risus</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Porta ac consectetur ac</li>
-                                        <li class="list-group-item"><i class="fa fa-check"></i> Vestibulum at eros</li>
-                                    </ul>
-                                </div>
-                                <div class="custom-column-footer"><button class="btn btn-primary btn-lg">Click here</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => $tabs[0]['name'] ?? '']); ?>
+				<?php // Show installation tabs ?>
+				<?php foreach ($tabs as $tab) : ?>
+					<?php echo HTMLHelper::_('uitab.addTab', 'myTab', $tab['name'], $tab['label']); ?>
+                    <fieldset class="uploadform option-fieldset options-grid-form-full">
+						<?php echo $tab['content']; ?>
+                    </fieldset>
+					<?php echo HTMLHelper::_('uitab.endTab'); ?>
+				<?php endforeach; ?>
+				<?php if (!$tabs) : ?>
+					<?php $app->enqueueMessage(Text::_('COM_INSTALLER_NO_INSTALLATION_PLUGINS_FOUND'), 'warning'); ?>
+				<?php endif; ?>
 
 
-			</div>
+				<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'ftp', Text::_('COM_INSTALLER_MSG_DESCFTPTITLE')); ?>
+				<?php echo $this->loadTemplate('ftp'); ?>
+				<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+				<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+
+            </div>
 		</div>
 	</div>
 
+    <input type="hidden" name="installtype" value="">
+    <input type="hidden" name="task" value="install.install">
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
