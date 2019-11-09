@@ -148,11 +148,13 @@ class HtmlView extends BaseHtmlView
 
 		//$form->bind($formParam);
 
+		/**
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new RuntimeException(implode('<br />', $errors), 500);
 		}
+		/**/
 
 		// Assign the Data
 		// $this->form = $form;
