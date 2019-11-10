@@ -49,11 +49,11 @@ class Rsgallery2Helper extends ContentHelper
 		}
 		/**/
 
-		echo "\$vname: $vName <br><br>";
+		echo "\$vname: $vName <br>";
 
 		$link = 'index.php?option=com_rsgallery2&view=rsgallery2';
 		\JHtmlSidebar::addEntry(
-			'<span class="icon-images" >  </span>' .
+			'<span class="icon-home-2" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL'),
 			$link,
 			$vName != 'control');
