@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>01. Nov. 2019</creationDate>
+	<creationDate>07. Nov. 2019</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
@@ -66,14 +66,17 @@
 			<!--filename>install_rsg2.php</filename-->
 			<folder>Controller</folder>
 			<folder>Extension</folder>
+			<folder>Field</folder>
 			<folder>forms</folder>
 			<folder>Helper</folder>
 			<folder>helpers</folder>
 			<folder>language</folder>
+			<folder>layout</folder>
 			<folder>Model</folder>
 			<folder>Service</folder>
 			<folder>services</folder>
 			<folder>sql</folder>
+			<folder>Table</folder>
 			<folder>tmpl</folder>
 			<folder>View</folder>
 		</files>
