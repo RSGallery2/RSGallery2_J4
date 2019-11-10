@@ -11,13 +11,31 @@ namespace Joomla\Component\Rsgallery2\Administrator\Table;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Table\Nested;
+use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseDriver;
+ 
 /**
  * Gallery table
  *
  * @since  1.6
  */
-class GalleryTable extends \JTableGallery
+class GalleryTable extends Nested
 {
+	/**
+	 * Constructor
+	 *
+	 * @param   DatabaseDriver  $db  Database connector object
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(DatabaseDriver $db)
+	{
+		$this->typeAlias = 'com_rsgallery.gallery';
+
+		parent::__construct('#__rsg2_galleries', 'id', $db);
+	}
+
 	/**
 	 * Method to delete a node and, optionally, its child nodes from the table.
 	 *

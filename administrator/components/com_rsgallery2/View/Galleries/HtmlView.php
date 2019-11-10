@@ -18,7 +18,9 @@ use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
  * View class for a list of rsgallery2.
@@ -28,18 +30,11 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 class HtmlView extends BaseHtmlView
 {
 	/**
-	 * The \JForm object
+	 * An array of items
 	 *
-	 * @var  \JForm
+	 * @var  array
 	 */
-	protected $form;
-
-	/**
-	 * The active item
-	 *
-	 * @var  object
-	 */
-	protected $item;
+	protected $items;
 
 	/**
 	 * The model state
@@ -49,11 +44,25 @@ class HtmlView extends BaseHtmlView
 	protected $state;
 
 	/**
-	 * Flag if an association exists
+	 * Form object for search filters
 	 *
-	 * @var  boolean
+	 * @var  \JForm
 	 */
-	protected $assoc;
+	public $filterForm;
+
+	/**
+	 * The active search filters
+	 *
+	 * @var  array
+	 */
+	public $activeFilters;
+
+	/**
+	 * The sidebar markup
+	 *
+	 * @var  string
+	 */
+	protected $sidebar;
 
 	/**
 	 * The actions the user is authorised to perform
@@ -63,12 +72,15 @@ class HtmlView extends BaseHtmlView
 	protected $canDo;
 
 	/**
-	 * Is there a content type associated with this gallery aias
+	 * Is there a content type associated with this gallery alias
 	 *
 	 * @var    boolean
 	 * @since  4.0.0
 	 */
 	protected $checkTags = false;
+
+	protected $isDebugBackend;
+	protected $isDevelop;
 
 	/**
 	 * Display the view.
@@ -79,20 +91,31 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->form = $this->get('Form');
-		$this->item = $this->get('Item');
+		$this->items = $this->get('Items');
+		$this->filterForm = $this->get('FilterForm');
+		$this->activeFilters = $this->get('ActiveFilters');
 		$this->state = $this->get('State');
+
 		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
 		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
 		//$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id'));
-		$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id')); 
-		$this->assoc = $this->get('Assoc');
+		$this->canDo = ContentHelper::getActions('com_rsgallery2');
+		//$this->assoc = $this->get('Assoc');
 
+		//--- config --------------------------------------------------------------------
+
+		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+		$this->isDevelop = $rsgConfig->get('isDevelop');
+
+		/** ToDo: *
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new \JViewGenericdataexception(implode("\n", $errors), 500);
 		}
+		/**/
 
 		//// Check if we have a content type for this alias
 		//if (!empty(TagsHelper::getTypes('objectList', array($this->state->get('gallery.extension') . '.gallery'), true)))
@@ -100,23 +123,33 @@ class HtmlView extends BaseHtmlView
 		//	$this->checkTags = true;
 		//}
 
-		Factory::getApplication()->input->set('hidemainmenu', true);
+//		Factory::getApplication()->input->set('hidemainmenu', true);
 
-		// If we are forcing a language in modal (used for associations).
-		if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
+		if ($this->getLayout() !== 'modal')
 		{
-			// Set the language field to the forcedLanguage and disable changing it.
-			$this->form->setValue('language', null, $forcedLanguage);
-			$this->form->setFieldAttribute('language', 'readonly', 'true');
+			HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
+			Rsgallery2Helper::addSubmenu('galleries');
+			$this->sidebar = \JHtmlSidebar::render();
 
-			// Only allow to select galleries with All language or with the forced language.
-			$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
-
-			// Only allow to select tags with All language or with the forced language.
-			$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
+			$Layout = Factory::getApplication()->input->get('layout');
+			$this->addToolbar($Layout);
 		}
+		else
+		{
+			// If we are forcing a language in modal (used for associations).
+			if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
+			{
+				// Set the language field to the forcedLanguage and disable changing it.
+				$this->form->setValue('language', null, $forcedLanguage);
+				$this->form->setFieldAttribute('language', 'readonly', 'true');
 
-		$this->addToolbar();
+				// Only allow to select galleries with All language or with the forced language.
+				$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
+
+				// Only allow to select tags with All language or with the forced language.
+				$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
+			}
+		}
 
 		return parent::display($tpl);
 	}
@@ -128,8 +161,62 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   1.6
 	 */
-	protected function addToolbar()
+	protected function addToolbar($Layout = 'default')
 	{
+		// Get the toolbar object instance
+		$toolbar = Toolbar::getInstance('toolbar');
+
+		// on develop show open tasks if existing
+		if (!empty ($this->isDevelop))
+		{
+			echo '<span style="color:red">'
+				. 'Tasks: <br>'
+				. '*  Test ...<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+				. '</span><br><br>';
+		}
+
+		switch ($Layout)
+		{
+			case 'galleries_raw':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_VIEW_RAW_DATA'), 'images');
+
+				JToolBarHelper::editList('gallery.edit');
+
+				// on develop show open tasks if existing
+				if (!empty ($Rsg2DevelopActive))
+				{
+					echo '<span style="color:red">Task: Add delete function, Test add double name</span><br><br>';
+				}
+				break;
+
+			default:
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_GALLERIES'), 'images');
+
+				ToolBarHelper::addNew('gallery.add');
+				ToolBarHelper::editList('gallery.edit');
+//				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'galleries.delete', 'JTOOLBAR_EMPTY_TRASH');
+				ToolBarHelper::deleteList('', 'galleries.delete', 'JTOOLBAR_DELETE');
+
+				ToolBarHelper::publish('galleries.publish', 'JTOOLBAR_PUBLISH', true);
+				ToolBarHelper::unpublish('galleries.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+
+				// on develop show open tasks if existing
+				if (!empty ($Rsg2DevelopActive))
+				{
+					echo '<span style="color:red">Task:  c) Search tools -> group by parent/ parent child tree ? </span><br><br>';
+				}
+
+				break;
+			
+		}
+
+		$toolbar->preferences('com_rsgallery2');
+
+
+		/** ? joomla media .... ?
 		$extension = Factory::getApplication()->input->get('extension');
 		$user = Factory::getUser();
 		$userId = $user->id;
@@ -258,7 +345,7 @@ class HtmlView extends BaseHtmlView
 		 * -remotely searching in a language defined dedicated URL: *component*_HELP_URL
 		 * -locally  searching in a component help file if helpURL param exists in the component and is set to ''
 		 * -remotely searching in a component URL if helpURL param exists in the component and is NOT set to ''
-		 */
+		 *
 		if ($lang->hasKey($lang_help_url = strtoupper($component) . '_HELP_URL'))
 		{
 			$debug = $lang->setDebug(false);
@@ -271,5 +358,25 @@ class HtmlView extends BaseHtmlView
 		}
 
 		ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
+		/**/
+	}
+	/**
+	 * Returns an array of fields the table can be sorted by
+	 *
+	 * @return  array  Array containing the field name to sort by as the key and display text as value
+	 *
+	 * @since   1.0
+	 */
+	protected function getSortFields()
+	{
+		return array(
+			'a.ordering'     => Text::_('JGRID_HEADING_ORDERING'),
+			'a.published'    => Text::_('JSTATUS'),
+			'a.name'         => Text::_('JGLOBAL_TITLE'),
+			'category_title' => Text::_('JCATEGORY'),
+			'a.access'       => Text::_('JGRID_HEADING_ACCESS'),
+			'a.language'     => Text::_('JGRID_HEADING_LANGUAGE'),
+			'a.id'           => Text::_('JGRID_HEADING_ID'),
+		);
 	}
 }

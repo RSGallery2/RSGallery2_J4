@@ -97,10 +97,10 @@ class HtmlView extends BaseHtmlView
 		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
-		$Layout = Factory::getApplication()->input->get('layout');
 		Rsgallery2Helper::addSubmenu('maintenance');
 		$this->sidebar = \JHtmlSidebar::render();
 
+		//$Layout = Factory::getApplication()->input->get('layout');
 		$this->addToolbar();
 
 		return parent::display($tpl);

@@ -44,16 +44,17 @@ class GalleryController extends FormController
 	 *
 	 * @since  1.6
 	 * @see    \JControllerLegacy
-	 */
+	 *
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config, $factory, $app, $input);
 
 		if (empty($this->extension))
 		{
-			$this->extension = $this->input->get('extension', 'com_content');
+			$this->extension = $this->input->get('extension', 'com_rsgallery2');
 		}
 	}
+	/**/
 
 	/**
 	 * Method to check if you can add a new record.
@@ -63,13 +64,14 @@ class GalleryController extends FormController
 	 * @return  boolean
 	 *
 	 * @since   1.6
-	 */
+	 *
 	protected function allowAdd($data = array())
 	{
 		$user = Factory::getUser();
 
 		return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
 	}
+	/**/
 
 	/**
 	 * Method to check if you can edit a record.
@@ -80,7 +82,7 @@ class GalleryController extends FormController
 	 * @return  boolean
 	 *
 	 * @since   1.6
-	 */
+	 *
 	protected function allowEdit($data = array(), $key = 'parent_id')
 	{
 		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
@@ -114,6 +116,7 @@ class GalleryController extends FormController
 
 		return false;
 	}
+	/**/
 
 	/**
 	 * Method to run batch operations.
@@ -123,13 +126,13 @@ class GalleryController extends FormController
 	 * @return  boolean  True if successful, false otherwise and internal error is set.
 	 *
 	 * @since   1.6
-	 */
+	 *
 	public function batch($model = null)
 	{
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Set the model
-		/** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+		/** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
 		$model = $this->getModel('Gallery');
 
 		// Preset the redirect
@@ -137,6 +140,7 @@ class GalleryController extends FormController
 
 		return parent::batch($model);
 	}
+	/**/
 
 	/**
 	 * Gets the URL arguments to append to an item redirect.
@@ -147,7 +151,7 @@ class GalleryController extends FormController
 	 * @return  string  The arguments to append to the redirect URL.
 	 *
 	 * @since   1.6
-	 */
+	 *
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
 	{
 		$append = parent::getRedirectToItemAppend($recordId);
@@ -155,6 +159,7 @@ class GalleryController extends FormController
 
 		return $append;
 	}
+	/**/
 
 	/**
 	 * Gets the URL arguments to append to a list redirect.
@@ -162,7 +167,7 @@ class GalleryController extends FormController
 	 * @return  string  The arguments to append to the redirect URL.
 	 *
 	 * @since   1.6
-	 */
+	 *
 	protected function getRedirectToListAppend()
 	{
 		$append = parent::getRedirectToListAppend();
@@ -170,6 +175,7 @@ class GalleryController extends FormController
 
 		return $append;
 	}
+	/**/
 
 	/**
 	 * Function that allows child controller access to model data after the data has been saved.
@@ -180,7 +186,7 @@ class GalleryController extends FormController
 	 * @return  void
 	 *
 	 * @since   3.1
-	 */
+	 *
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = array())
 	{
 		$item = $model->getItem();
@@ -197,4 +203,5 @@ class GalleryController extends FormController
 			$item->metadata = (string) $registry;
 		}
 	}
+	/**/
 }

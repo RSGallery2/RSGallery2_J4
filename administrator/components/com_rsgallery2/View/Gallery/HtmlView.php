@@ -18,6 +18,7 @@ use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
@@ -70,6 +71,9 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected $checkTags = false;
 
+	protected $isDebugBackend;
+	protected $isDevelop;
+
 	/**
 	 * Display the view.
 	 *
@@ -100,6 +104,8 @@ class HtmlView extends BaseHtmlView
 
 		Factory::getApplication()->input->set('hidemainmenu', true);
 
+		
+		/**
 		// If we are forcing a language in modal (used for associations).
 		if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
 		{
@@ -115,7 +121,12 @@ class HtmlView extends BaseHtmlView
 		}
 
 		$this->addToolbar();
+		/**/
 
+		// different toolbar on different layouts
+		$Layout = Factory::getApplication()->input->get('layout');
+		$this->addToolbar($Layout);
+		
 		return parent::display($tpl);
 	}
 
@@ -126,8 +137,49 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   1.6
 	 */
-	protected function addToolbar()
+	protected function addToolbar($Layout = 'default')
 	{
+		// Get the toolbar object instance
+		$toolbar = Toolbar::getInstance('toolbar');
+
+		// on develop show open tasks if existing
+		if (!empty ($this->isDevelop))
+		{
+			echo '<span style="color:red">'
+				. 'Tasks: <br>'
+				. '*  Test ...<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+				. '</span><br><br>';
+		}
+
+		switch ($Layout)
+		{
+			case 'edit':
+			default:
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_GALLERY', 'images'));
+
+				ToolBarHelper::apply('gallery.apply');
+				ToolBarHelper::save('gallery.save');
+				ToolBarHelper::save2new('gallery.save2new');
+				if (empty($this->item->id))
+				{
+					ToolBarHelper::cancel('gallery.cancel');
+				}
+				else
+				{
+					ToolBarHelper::cancel('gallery.cancel');
+				}
+
+				ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
+
+				break;
+		}
+
+		$toolbar->preferences('com_rsgallery2');
+
+		/**
 		$extension = Factory::getApplication()->input->get('extension');
 		$user = Factory::getUser();
 		$userId = $user->id;
@@ -256,7 +308,7 @@ class HtmlView extends BaseHtmlView
 		 * -remotely searching in a language defined dedicated URL: *component*_HELP_URL
 		 * -locally  searching in a component help file if helpURL param exists in the component and is set to ''
 		 * -remotely searching in a component URL if helpURL param exists in the component and is NOT set to ''
-		 */
+		 *
 		if ($lang->hasKey($lang_help_url = strtoupper($component) . '_HELP_URL'))
 		{
 			$debug = $lang->setDebug(false);
@@ -269,5 +321,6 @@ class HtmlView extends BaseHtmlView
 		}
 
 		ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
+		/**/
 	}
 }

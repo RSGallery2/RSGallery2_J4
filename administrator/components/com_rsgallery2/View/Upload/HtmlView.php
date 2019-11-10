@@ -165,10 +165,11 @@ class HtmlView extends BaseHtmlView
 
 		//---  --------------------------------------------------------------------
 
+		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
 		Rsgallery2Helper::addSubmenu('upload');
 		$this->sidebar = \JHtmlSidebar::render();
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
 
+		//$Layout = Factory::getApplication()->input->get('layout');
 		$this->addToolbar();
 
 		return parent::display($tpl);

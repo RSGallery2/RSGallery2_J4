@@ -154,11 +154,14 @@ $tabs = []
                                         </p>
                                     </div>
 
-                                    <?php
+                                </div>
+                            </div>
+                        </div>
+
+	                    <?php
 
 
-
-                        // Specify gallery,  all in one
+	                            // Specify gallery,  all in one
     //					echo $this->form->renderFieldset('upload_drag_and_drop');
                         LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
                         ?>

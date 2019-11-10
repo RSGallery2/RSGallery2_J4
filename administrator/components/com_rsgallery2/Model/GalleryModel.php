@@ -52,7 +52,7 @@ class GalleryModel extends AdminModel
 	 * @var      string
 	 * @since    3.2
 	 */
-	public $typeAlias = null;
+	public $typeAlias = 'com_rsgallery2.gallery';
 
 	/**
 	 * The context used for the associations table
@@ -60,7 +60,7 @@ class GalleryModel extends AdminModel
 	 * @var      string
 	 * @since    3.4.4
 	 */
-	protected $associationsContext = 'com_rsgallery2.item';
+	protected $associationsContext = 'com_rsgallery2.gallery';
 
 	/**
 	 * Override parent constructor.
@@ -70,7 +70,7 @@ class GalleryModel extends AdminModel
 	 *
 	 * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @since   3.2
-	 */
+	 *
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
 		$extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
@@ -81,6 +81,7 @@ class GalleryModel extends AdminModel
 
 		parent::__construct($config, $factory);
 	}
+	/**/
 
 	/**
 	 * Method to test whether a record can be deleted.
@@ -141,7 +142,7 @@ class GalleryModel extends AdminModel
 	 *
 	 * @since   1.6
 	 */
-	public function getTable($type = 'Category', $prefix = 'Administrator', $config = array())
+	public function getTable($type = 'Gallery', $prefix = 'Rsgallery2Table', $config = array())
 	{
 		return parent::getTable($type, $prefix, $config);
 	}
@@ -182,6 +183,39 @@ class GalleryModel extends AdminModel
 	}
 
 	/**
+	 * Method to get a single record.
+	 *
+	 * @param   integer  $pk  The id of the primary key.
+	 *
+	 * @return  mixed  Object on success, false on failure.
+	 *
+	 * @since   1.0
+	 */
+	public function getItem($pk = null)
+	{
+		$item = parent::getItem($pk);
+
+		// Load associated foo items
+		$assoc = Associations::isEnabled();
+
+		if ($assoc)
+		{
+			$item->associations = array();
+
+			if ($item->id != null)
+			{
+				$associations = Associations::getAssociations('com_foos', '#__foos_details', 'com_foos.item', $item->id, 'id', null);
+
+				foreach ($associations as $tag => $association)
+				{
+					$item->associations[$tag] = $association->id;
+				}
+			}
+		}
+
+		return $item;
+	}
+	/**
 	 * Method to get a category.
 	 *
 	 * @param   integer  $pk  An optional id of the object to get, otherwise the id from the model state is used.
@@ -189,7 +223,7 @@ class GalleryModel extends AdminModel
 	 * @return  mixed    Category data object on success, false on failure.
 	 *
 	 * @since   1.6
-	 */
+	 *
 	public function getItem($pk = null)
 	{
 		if ($result = parent::getItem($pk))
@@ -237,6 +271,7 @@ class GalleryModel extends AdminModel
 			}
 		}
 
+		/**
 		$assoc = $this->getAssoc();
 
 		if ($assoc)
@@ -250,9 +285,11 @@ class GalleryModel extends AdminModel
 				$result->associations = array();
 			}
 		}
+		/**
 
 		return $result;
 	}
+	/**/
 
 	/**
 	 * Method to get the row form.
@@ -266,6 +303,7 @@ class GalleryModel extends AdminModel
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
+		/**
 		$extension = $this->getState('category.extension');
 		$jinput = Factory::getApplication()->input;
 
@@ -279,15 +317,17 @@ class GalleryModel extends AdminModel
 			$this->setState('category.component', $parts[0]);
 			$this->setState('category.section', @$parts[1]);
 		}
-
+		/**/
 		// Get the form.
-		$form = $this->loadForm('com_rsgallery2.category' . $extension, 'category', array('control' => 'jform', 'load_data' => $loadData));
+//		$form = $this->loadForm('com_rsgallery2.category' . $extension, 'category', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_rsgallery2.gallery', 'gallery', array('control' => 'jform', 'load_data' => $loadData));
 
 		if (empty($form))
 		{
 			return false;
 		}
 
+		/**
 		// Modify the form based on Edit State access controls.
 		if (empty($data['extension']))
 		{
@@ -309,7 +349,7 @@ class GalleryModel extends AdminModel
 			$form->setFieldAttribute('ordering', 'filter', 'unset');
 			$form->setFieldAttribute('published', 'filter', 'unset');
 		}
-
+		/**/
 		return $form;
 	}
 
@@ -361,7 +401,7 @@ class GalleryModel extends AdminModel
 						((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null)
 					)
 				);
-				$data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
+//				$data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
 				$data->set(
 					'access',
 					$app->input->getInt('access', (!empty($filters['access']) ? $filters['access'] : $app->get('access')))
@@ -386,7 +426,7 @@ class GalleryModel extends AdminModel
 	 * @see     \JFormField
 	 * @since   1.6
 	 * @throws  \Exception if there is an error in the form event.
-	 */
+	 *
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
 		$lang = Factory::getLanguage();
@@ -499,6 +539,7 @@ class GalleryModel extends AdminModel
 		// Trigger the default form events.
 		parent::preprocessForm($form, $data, $group);
 	}
+	/**/
 
 	/**
 	 * Method to save the form data.
@@ -585,14 +626,14 @@ class GalleryModel extends AdminModel
 		}
 
 		// Trigger the before save event.
-		$result = Factory::getApplication()->triggerEvent($this->event_before_save, array($context, &$table, $isNew, $data));
-
-		if (in_array(false, $result, true))
-		{
-			$this->setError($table->getError());
-
-			return false;
-		}
+//		$result = Factory::getApplication()->triggerEvent($this->event_before_save, array($context, &$table, $isNew, $data));
+//
+//		if (in_array(false, $result, true))
+//		{
+//			$this->setError($table->getError());
+//
+//			return false;
+//		}
 
 		// Store the data.
 		if (!$table->store())
@@ -1228,7 +1269,7 @@ class GalleryModel extends AdminModel
 	 * @return  void
 	 *
 	 * @since   1.6
-	 */
+	 *
 	protected function cleanCache($group = null, $client_id = 0)
 	{
 		$extension = Factory::getApplication()->input->get('extension');
@@ -1249,6 +1290,7 @@ class GalleryModel extends AdminModel
 				break;
 		}
 	}
+	/**/
 
 	/**
 	 * Method to change the title & alias.
@@ -1279,7 +1321,7 @@ class GalleryModel extends AdminModel
 	 * Method to determine if a category association is available.
 	 *
 	 * @return  boolean True if a category association is available; false otherwise.
-	 */
+	 *
 	public function getAssoc()
 	{
 		static $assoc = null;
@@ -1319,4 +1361,5 @@ class GalleryModel extends AdminModel
 
 		return $assoc;
 	}
+	/**/
 }
