@@ -29,8 +29,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   
   `parent_id` int(11)  NOT NULL DEFAULT 0,
   `asset_id` int(11)  NOT NULL DEFAULT 0,
-  `access` int(10) NOT NULL DEFAULT 0,   
-  
+  `access` int(10) unsigned NOT NULL DEFAULT 0,   
 --  `rtl` tinyint(4) NOT NULL DEFAULT 0,  
 --  `language` char(7) NOT NULL DEFAULT '', 
 
@@ -42,10 +41,10 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 --  `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
   
   PRIMARY KEY (`id`),
-  KEY `idx_access` (`access`),
+  KEY `idx_access` (`access`),  
   KEY `idx_checkout` (`checked_out`),
   KEY `idx_state` (`published`),
-	KEY `idx_left_right` (`lft`, `rgt`), 
+  KEY `idx_left_right` (`lft`, `rgt`), 
 --  KEY `idx_catid` (`catid`),
 --  KEY `idx_language` (`language`),
   KEY `idx_createdby` (`created_by`)
