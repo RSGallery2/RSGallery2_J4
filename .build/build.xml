@@ -226,10 +226,11 @@
         <!--copy todir="${buildDir}/tmp/plugins">
             <fileset refid="pluginsSet" />
         </copy-->
-        <!-- Copy the manifest.xml -->
+        <!-- Copy the root admin files manifest.xml, install_rsg2.php -->
         <copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/${extensionLower}.xml" />
         <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" />
         <copy file="${root}/install_rsg2.php" tofile="${buildDir}/tmp/install_rsg2.php" />
+        <copy file="${root}/access.xml" tofile="${buildDir}/tmp/access.xml" />
         <copy file="${root}/index.html" tofile="${buildDir}/tmp/index.html" />
         <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" />
 

@@ -79,7 +79,9 @@
 	</section>
 	<!-- define actions for com_rsgallery2 images (permissions at bottom of edit image screen) -->
 	<section name="item">
-		<!--<action name="core.create" title="JACTION_CREATE" description="COM_RSGALLERY2_ACCESS_ITEM_CREATE_DESC" />-->
+		<!--
+		<action name="core.create" title="JACTION_CREATE" description="COM_RSGALLERY2_ACCESS_ITEM_CREATE_DESC" />
+		-->
 		<action name="core.delete"
 		        title="JACTION_DELETE"
 		        description="COM_RSGALLERY2_ACCESS_ITEM_DELETE_DESC"/>

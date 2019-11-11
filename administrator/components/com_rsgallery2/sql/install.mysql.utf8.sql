@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 --  `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
   
   PRIMARY KEY (`id`),
---  KEY `idx_access` (`access`),
+  KEY `idx_access` (`access`),
   KEY `idx_checkout` (`checked_out`),
   KEY `idx_state` (`published`),
 	KEY `idx_left_right` (`lft`, `rgt`), 
@@ -91,32 +91,33 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   PRIMARY KEY  (`id`)
 #  UNIQUE KEY `UK_name` (`name`),
 #  KEY `id` (`id`)
+  KEY `idx_access` (`access`),
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 --
 -- acl permissions
 --
 
-CREATE TABLE IF NOT EXISTS `#__rsgallery2_acl` (
-  `id` serial NOT NULL,
-  `gallery_id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL default '0',
-  `public_view` tinyint(1) NOT NULL default '1',
-  `public_up_mod_img` tinyint(1) NOT NULL default '0',
-  `public_del_img` tinyint(1) NOT NULL default '0',
-  `public_create_mod_gal` tinyint(1) NOT NULL default '0',
-  `public_del_gal` tinyint(1) NOT NULL default '0',
-  `public_vote_view` tinyint( 1 ) NOT NULL default '1',
-  `public_vote_vote` tinyint( 1 ) NOT NULL default '0',
-  `registered_view` tinyint(1) NOT NULL default '1',
-  `registered_up_mod_img` tinyint(1) NOT NULL default '1',
-  `registered_del_img` tinyint(1) NOT NULL default '0',
-  `registered_create_mod_gal` tinyint(1) NOT NULL default '1',
-  `registered_del_gal` tinyint(1) NOT NULL default '0',
-  `registered_vote_view` tinyint( 1 ) NOT NULL default '1',
-  `registered_vote_vote` tinyint( 1 ) NOT NULL default '1',
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+#CREATE TABLE IF NOT EXISTS `#__rsgallery2_acl` (
+#  `id` serial NOT NULL,
+#  `gallery_id` int(11) NOT NULL,
+#  `parent_id` int(11) NOT NULL default '0',
+#  `public_view` tinyint(1) NOT NULL default '1',
+#  `public_up_mod_img` tinyint(1) NOT NULL default '0',
+#  `public_del_img` tinyint(1) NOT NULL default '0',
+#  `public_create_mod_gal` tinyint(1) NOT NULL default '0',
+#  `public_del_gal` tinyint(1) NOT NULL default '0',
+#  `public_vote_view` tinyint( 1 ) NOT NULL default '1',
+#  `public_vote_vote` tinyint( 1 ) NOT NULL default '0',
+#  `registered_view` tinyint(1) NOT NULL default '1',
+#  `registered_up_mod_img` tinyint(1) NOT NULL default '1',
+#  `registered_del_img` tinyint(1) NOT NULL default '0',
+#  `registered_create_mod_gal` tinyint(1) NOT NULL default '1',
+#  `registered_del_gal` tinyint(1) NOT NULL default '0',
+#  `registered_vote_view` tinyint( 1 ) NOT NULL default '1',
+#  `registered_vote_vote` tinyint( 1 ) NOT NULL default '1',
+#  PRIMARY KEY  (`id`)
+#) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 
 --
