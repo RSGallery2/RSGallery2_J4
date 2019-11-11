@@ -10,10 +10,9 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `note` varchar(255) NOT NULL DEFAULT '',  
   `thumb_id` int(11) unsigned NOT NULL default '0',
   `params` text NOT NULL,
-
   `published` tinyint(1) NOT NULL DEFAULT 0, 
   `hits` int(10) unsigned NOT NULL DEFAULT 0, 
-  
+
   `checked_out` int(10) unsigned NOT NULL DEFAULT 0,
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -21,15 +20,14 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `created_by_alias` varchar(255) NOT NULL DEFAULT '',
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(10) unsigned NOT NULL DEFAULT 0, 
-
   `lft` int(11) DEFAULT 0 NOT NULL,
   `rgt` int(11) DEFAULT 0 NOT NULL,
   `level` integer DEFAULT 0 NOT NULL,
   `path` varchar(400) NOT NULL DEFAULT '',
-  
   `parent_id` int(11)  NOT NULL DEFAULT 0,
   `asset_id` int(11)  NOT NULL DEFAULT 0,
-  `access` int(10) unsigned NOT NULL DEFAULT 0,   
+  `access` int(10) unsigned NOT NULL DEFAULT 0,
+
 --  `rtl` tinyint(4) NOT NULL DEFAULT 0,  
 --  `language` char(7) NOT NULL DEFAULT '', 
 
@@ -39,14 +37,15 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 
 --  `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 --  `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
-  
+
+--  KEY `idx_catid` (`catid`),
+--  KEY `idx_language` (`language`),
+
   PRIMARY KEY (`id`),
   KEY `idx_access` (`access`),  
   KEY `idx_checkout` (`checked_out`),
   KEY `idx_state` (`published`),
   KEY `idx_left_right` (`lft`, `rgt`), 
---  KEY `idx_catid` (`catid`),
---  KEY `idx_language` (`language`),
   KEY `idx_createdby` (`created_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
@@ -87,11 +86,12 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `access` int(10) NOT NULL DEFAULT 0,   
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
 #  UNIQUE KEY `UK_name` (`name`),
 #  KEY `id` (`id`)
-  KEY `idx_access` (`access`),
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+  KEY `idx_access` (`access`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
 
 --
 -- acl permissions
