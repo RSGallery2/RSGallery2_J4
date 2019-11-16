@@ -11,6 +11,7 @@
 // No direct access to this file
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
@@ -175,6 +176,8 @@ class Com_Rsgallery2InstallerScript
 		// NO:  COM_RSGALLERY2_POSTFLIGHT_UNINSTALL_TEXT
 		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
 
+		$isGalleryTreeCreated = $this->InitGalleryTree ();
+
 		return true;
 	}
     /*-------------------------------------------------------------------------
@@ -202,4 +205,59 @@ class Com_Rsgallery2InstallerScript
 		return true;
 	}
 
+	public function InitGalleryTree()
+	{
+		$isGalleryTreeCreated = false;
+		
+		try
+		{
+			$db = Factory::getDbo();
+
+			echo '<p>Checking if the root record is already present ...</p>';
+
+			$query = $db->getQuery(true);
+			$query->select('id');
+			$query->from('#__rsg2_galleries');
+			$query->where('id = 1');
+			$query->where('alias = "galleries-root-alias"');
+			$db->setQuery($query);
+			$id = $db->loadResult();
+
+			if ($id == '1')
+			{   // assume tree structure already built
+				echo '<p>Root record already present, install program exiting ...</p>';
+
+				return;
+			}
+
+//		-- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
+//		-- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
+
+			// insert root record
+			$columns = array('id', 'name', 'alias', 'description', 'parent_id', 'level', 'path', 'lft', 'rgt');
+			$values  = array(1, 'galleries root', 'galleries-root-alias', 'startpoint of list', 0, 0, '', 0, 1);
+
+			$query = $db->getQuery(true)
+				->insert('#__rsg2_galleries')
+				->columns($db->quoteName($columns))
+				->values(implode(',', $db->quote($values)));
+			$db->setQuery($query);
+			$result = $db->execute();
+			if ($result)
+			{
+				$isGalleryTreeCreated = true;
+			}
+			else
+			{
+				Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error InitGalleryTree');
+			}
+		}
+		//catch (\RuntimeException $e)
+		catch (\Exception $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error InitGalleryTree');
+		}
+		
+		return $isGalleryTreeCreated;
+	}
 }
