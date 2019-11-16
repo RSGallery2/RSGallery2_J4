@@ -6,10 +6,10 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `description` text NOT NULL,
+  `description` text NOT NULL DEFAULT '',
   `note` varchar(255) NOT NULL DEFAULT '',  
   `thumb_id` int(11) unsigned NOT NULL default '0',
-  `params` text NOT NULL,
+  `params` text NOT NULL DEFAULT '',
   `published` tinyint(1) NOT NULL DEFAULT 0, 
   `hits` int(10) unsigned NOT NULL DEFAULT 0, 
 
@@ -20,11 +20,13 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `created_by_alias` varchar(255) NOT NULL DEFAULT '',
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(10) unsigned NOT NULL DEFAULT 0, 
-  `lft` int(11) DEFAULT 0 NOT NULL,
-  `rgt` int(11) DEFAULT 0 NOT NULL,
+  
+  `parent_id` int(11)  NOT NULL DEFAULT 0,
   `level` integer DEFAULT 0 NOT NULL,
   `path` varchar(400) NOT NULL DEFAULT '',
-  `parent_id` int(11)  NOT NULL DEFAULT 0,
+  `lft` int(11) DEFAULT 0 NOT NULL,
+  `rgt` int(11) DEFAULT 0 NOT NULL,
+
   `asset_id` int(11)  NOT NULL DEFAULT 0,
   `access` int(10) unsigned NOT NULL DEFAULT 0,
 
@@ -48,6 +50,10 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   KEY `idx_left_right` (`lft`, `rgt`), 
   KEY `idx_createdby` (`created_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+-- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
+-- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
+
 
 --
 -- images / files
