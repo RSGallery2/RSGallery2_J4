@@ -215,6 +215,7 @@ class GalleryModel extends AdminModel
 
 		return $item;
 	}
+
 	/**
 	 * Method to get a category.
 	 *
@@ -643,6 +644,7 @@ class GalleryModel extends AdminModel
 			return false;
 		}
 
+		/**
 		$assoc = $this->getAssoc();
 
 		if ($assoc)
@@ -739,6 +741,7 @@ class GalleryModel extends AdminModel
 				}
 			}
 		}
+		/**/
 
 		// Trigger the after save event.
 		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
