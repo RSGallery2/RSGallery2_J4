@@ -86,8 +86,9 @@ class HtmlView extends BaseHtmlView
 		$this->form = $this->get('Form');
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
-		$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
-		$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
+		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
+		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
+		$this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
 		$this->assoc = $this->get('Assoc');
 
 		// Check for errors.

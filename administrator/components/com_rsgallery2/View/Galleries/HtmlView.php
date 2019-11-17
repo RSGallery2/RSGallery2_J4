@@ -91,10 +91,11 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->items = $this->get('Items');
-		$this->filterForm = $this->get('FilterForm');
+		$this->items         = $this->get('Items');
+		$this->filterForm    = $this->get('FilterForm');
+		$this->pagination    = $this->get('Pagination');
+		$this->state         = $this->get('State');
 		$this->activeFilters = $this->get('ActiveFilters');
-		$this->state = $this->get('State');
 
 		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
 		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
@@ -123,19 +124,29 @@ class HtmlView extends BaseHtmlView
 		//	$this->checkTags = true;
 		//}
 
-//		Factory::getApplication()->input->set('hidemainmenu', true);
+		/**
+		// Prepare a mapping from parent id to the ids of its children
+		$this->ordering = array();
+		foreach ($this->items as $item)
+		{
+			$this->ordering[$item->parent_id][] = $item->id;
+		}
+		/**/
 
-		if ($this->getLayout() !== 'modal')
+//		Factory::getApplication()->input->set('hidemainmenu', true);
+		$Layout = $this->getLayout();
+		if ($Layout !== 'modal')
 		{
 			HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
 			Rsgallery2Helper::addSubmenu('galleries');
 			$this->sidebar = \JHtmlSidebar::render();
 
-			$Layout = Factory::getApplication()->input->get('layout');
+			// $Layout = Factory::getApplication()->input->get('layout');
 			$this->addToolbar($Layout);
 		}
 		else
 		{
+			/**
 			// If we are forcing a language in modal (used for associations).
 			if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
 			{
@@ -149,6 +160,7 @@ class HtmlView extends BaseHtmlView
 				// Only allow to select tags with All language or with the forced language.
 				$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
 			}
+			/**/
 		}
 
 		return parent::display($tpl);

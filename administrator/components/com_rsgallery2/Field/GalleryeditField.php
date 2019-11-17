@@ -137,6 +137,7 @@ class GalleryeditField extends ListField
 		// Let's get the id for the current item, either gallery or content item.
 		$jinput = Factory::getApplication()->input;
 
+		/**
 		// Load the gallery options for a given extension.
 
 		// For galleries the old gallery is the gallery id or 0 for new gallery.
@@ -157,14 +158,17 @@ class GalleryeditField extends ListField
 		$oldCat = is_array($oldCat)
 			? (int) reset($oldCat)
 			: (int) $oldCat;
+		/**/
 
 		$db   = Factory::getDbo();
 		$user = Factory::getUser();
 
 		$query = $db->getQuery(true)
-			->select('a.id AS value, a.title AS text, a.level, a.published, a.lft, a.language')
-			->from('#__galleries AS a');
+			//->select('a.id AS value, a.name AS text, a.level, a.published, a.lft, a.language')
+			->select('a.id AS value, a.name AS text, a.level, a.published, a.lft')
+			->from('#__rsg2_galleries AS a');
 
+		/**
 		// Filter by the extension type
 		if ($this->element['parent'] == true || $jinput->get('option') == 'com_rsgallery2')
 		{
@@ -174,7 +178,9 @@ class GalleryeditField extends ListField
 		{
 			$query->where('(a.extension = ' . $db->quote($extension) . ')');
 		}
+		/**/
 
+		/**
 		// Filter language
 		if (!empty($this->element['language']))
 		{
@@ -189,10 +195,12 @@ class GalleryeditField extends ListField
 
 			$query->where($db->quoteName('a.language') . ' IN (' . $language . ')');
 		}
+		/**/
 
 		// Filter on the published state
 		$query->where('a.published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
 
+		/**
 		// Filter galleries on User Access Level
 		// Filter by access level on galleries.
 		if (!$user->authorise('core.admin'))
@@ -200,24 +208,27 @@ class GalleryeditField extends ListField
 			$groups = implode(',', $user->getAuthorisedViewLevels());
 			$query->where('a.access IN (' . $groups . ')');
 		}
+		/**/
 
 		$query->order('a.lft ASC');
 
+		/**
 		// If parent isn't explicitly stated but we are in com_rsgallery2 assume we want parents
 		if ($oldCat != 0 && ($this->element['parent'] == true || $jinput->get('option') == 'com_rsgallery2'))
 		{
 			// Prevent parenting to children of this item.
 			// To rearrange parents and children move the children up, not the parents down.
-			$query->join('LEFT', $db->quoteName('#__galleries') . ' AS p ON p.id = ' . (int) $oldCat)
+			$query->join('LEFT', $db->quoteName('#__rsg2_galleries') . ' AS p ON p.id = ' . (int) $oldCat)
 				->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
 
 			$rowQuery = $db->getQuery(true);
-			$rowQuery->select('a.id AS value, a.title AS text, a.level, a.parent_id')
-				->from('#__galleries AS a')
+			$rowQuery->select('a.id AS value, a.name AS text, a.level, a.parent_id')
+				->from('#__rsg2_galleries AS a')
 				->where('a.id = ' . (int) $oldCat);
 			$db->setQuery($rowQuery);
 			$row = $db->loadObject();
 		}
+		/**/
 
 		// Get the options.
 		$db->setQuery($query);
@@ -252,71 +263,27 @@ class GalleryeditField extends ListField
 				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
 			}
 
+			/**
 			// Displays language code if not set to All
 			if ($options[$i]->language !== '*')
 			{
 				$options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
 			}
+			/**/
 		}
 
-		// For new items we want a list of galleries you are allowed to create in.
-		if ($oldCat == 0)
-		{
-			foreach ($options as $i => $option)
-			{
-				/*
-				 * To take save or create in a gallery you need to have create rights for that gallery unless the item is already in that gallery.
-				 * Unset the option if the user isn't authorised for it. In this field assets are always galleries.
-				 */
-				if ($option->level != 0 && !$user->authorise('core.create', $extension . '.gallery.' . $option->value))
-				{
-					unset($options[$i]);
-				}
-			}
-		}
-		// If you have an existing gallery id things are more complex.
-		else
+		foreach ($options as $i => $option)
 		{
 			/*
-			 * If you are only allowed to edit in this gallery but not edit.state, you should not get any
-			 * option to change the gallery parent for a gallery or the gallery for a content item,
-			 * but you should be able to save in that gallery.
+			 * To take save or create in a gallery you need to have create rights for that gallery unless the item is already in that gallery.
+			 * Unset the option if the user isn't authorised for it. In this field assets are always galleries.
 			 */
-			foreach ($options as $i => $option)
+			if ($option->level != 0 && !$user->authorise('core.create', 'com_rsgallery2' . '.gallery.' . $option->value))
 			{
-				$assetKey = $extension . '.gallery.' . $oldCat;
-
-				if ($option->level != 0 && !isset($oldParent) && $option->value != $oldCat && !$user->authorise('core.edit.state', $assetKey))
-				{
-					unset($options[$i]);
-					continue;
-				}
-
-				if ($option->level != 0	&& isset($oldParent) && $option->value != $oldParent && !$user->authorise('core.edit.state', $assetKey))
-				{
-					unset($options[$i]);
-					continue;
-				}
-
-				/*
-				 * However, if you can edit.state you can also move this to another gallery for which you have
-				 * create permission and you should also still be able to save in the current gallery.
-				 */
-				$assetKey = $extension . '.gallery.' . $option->value;
-
-				if ($option->level != 0 && !isset($oldParent) && $option->value != $oldCat && !$user->authorise('core.create', $assetKey))
-				{
-					unset($options[$i]);
-					continue;
-				}
-
-				if ($option->level != 0	&& isset($oldParent) && $option->value != $oldParent && !$user->authorise('core.create', $assetKey))
-				{
-					unset($options[$i]);
-					continue;
-				}
+				unset($options[$i]);
 			}
 		}
+
 
 		if (($this->element['parent'] == true || $jinput->get('option') == 'com_rsgallery2')
 			&& (isset($row) && !isset($options[0]))
@@ -355,6 +322,7 @@ class GalleryeditField extends ListField
 		$renderer->setComponent('com_rsgallery2');
 		$renderer->setClient(1);
 
+		$test = $renderer->render($data);
 		return $renderer->render($data);
 	}
 }

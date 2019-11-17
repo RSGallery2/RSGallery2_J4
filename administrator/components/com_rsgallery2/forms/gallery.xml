@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form addfieldprefix="Joomla\Component\Galleries\Administrator\Field">
+<!--form addfieldprefix="Joomla\Component\Gallery\Administrator\Field"-->
+<form addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field">
 
 	<field
 		name="id"
@@ -124,6 +125,15 @@
 		type="spacer"
 		label="JGLOBAL_ACTION_PERMISSIONS_LABEL"
 	/>
+
+	<!-- field
+			name="helloworldordering"
+			type="helloworldordering"
+			label="JFIELD_ORDERING_LABEL"
+			description="JFIELD_ORDERING_DESC"
+			filter="int"
+			size="1">
+	</field -->
 
 	<field
 		name="checked_out"

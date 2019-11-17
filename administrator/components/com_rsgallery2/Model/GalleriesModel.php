@@ -41,21 +41,22 @@ class GalleriesModel extends ListModel
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'name', 'a.name',
-				'alias', 'a.alias',
-				'description', 'a.description',
-				'note', 'a.note',
+
 				'published', 'a.published',
-				'access', 'a.access', 'access_level',
-				//'language', 'a.language', 'language_title',
+
 				'checked_out', 'a.checked_out',
 				'checked_out_time', 'a.checked_out_time',
-				'created_time', 'a.created_time',
-				'created_user_id', 'a.created_user_id',
+
+				'created', 'a.created',
+				'created_by', 'a.created_by',
+
+				'modified', 'a.modified',
+				'modified_by', 'a.modified_by',
+
 				'parent_id', 'a.parent_id',
 				'lft', 'a.lft',
-				'rgt', 'a.rgt',
-				'level', 'a.level',
-				'path', 'a.path',
+
+				'hits', 'a.hits',
 				'tag',
 			);
 		}
@@ -84,7 +85,6 @@ class GalleriesModel extends ListModel
 	{
 		$app = Factory::getApplication();
 
-		$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
 
 		// Adjust the context to support modal layouts.
 		if ($layout = $app->input->get('layout'))
@@ -92,31 +92,35 @@ class GalleriesModel extends ListModel
 			$this->context .= '.' . $layout;
 		}
 
-		// Adjust the context to support forced languages.
-		if ($forcedLanguage)
-		{
-			$this->context .= '.' . $forcedLanguage;
-		}
 
-		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
+		//$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
+		//// Adjust the context to support forced languages.
+		//if ($forcedLanguage)
+		//{
+		//	$this->context .= '.' . $forcedLanguage;
+		//}
 
-		$this->setState('filter.extension', $extension);
-		$parts = explode('.', $extension);
+		//$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
+		//$this->setState('filter.extension', $extension);
+		//$parts = explode('.', $extension);
 
-		// Extract the component name
-		$this->setState('filter.component', $parts[0]);
+		//// Extract the component name
+		//$this->setState('filter.component', $parts[0]);
 
-		// Extract the optional section name
-		$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
+		//// Extract the optional section name
+		//$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
+
+		$search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
+		$this->setState('filter.search', $search);
 
 		// List state information.
 		parent::populateState($ordering, $direction);
 
-		// Force a language.
-		if (!empty($forcedLanguage))
-		{
-			$this->setState('filter.language', $forcedLanguage);
-		}
+		//// Force a language.
+		//if (!empty($forcedLanguage))
+		//{
+		//	$this->setState('filter.language', $forcedLanguage);
+		//}
 	}
 
 	/**
@@ -135,12 +139,12 @@ class GalleriesModel extends ListModel
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id .= ':' . $this->getState('filter.extension');
+//		$id .= ':' . $this->getState('filter.extension');
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.access');
-		$id .= ':' . $this->getState('filter.language');
-		$id .= ':' . $this->getState('filter.level');
+//		$id .= ':' . $this->getState('filter.language');
+//		$id .= ':' . $this->getState('filter.level');
 		$id .= ':' . $this->getState('filter.tag');
 
 		return parent::getStoreId($id);
@@ -158,6 +162,7 @@ class GalleriesModel extends ListModel
 		// Create a new query object.
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
+
 		$user = Factory::getUser();
 
 		// Select the required fields from the table.
@@ -170,25 +175,38 @@ class GalleriesModel extends ListModel
 				. 'a.alias, '
 				. 'a.description, '
 				. 'a.note, '
+
+				. 'a.thumb_id, '
 				. 'a.published, '
 				. 'a.access, '
-				. 'a.checked_out, '
-				. 'a.checked_out_time, '
-				. 'a.created_user_id, '
+
+				. 'a.created, '
+				. 'a.created_by, '
+				. 'a.modified, '
+				. 'a.modified_by, '
+
+//				. 'a.checked_out, '
+//				. 'a.checked_out_time, '
+
 				. 'a.parent_id,'
+
 				. 'a.path, '
 				. 'a.level, '
 				. 'a.lft, '
 				. 'a.rgt'
 //				. ', a.language'
-				/**/
 			)
 		);
 		$query->from('#__rsg2_galleries AS a');
 
-		// Join over the language
-		$query->select('l.title AS language_title, l.image AS language_image')
-			->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+		/* Count child images */
+		$query->select('COUNT(img.gallery_id) as image_count')
+			->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id'
+			);
+
+		//// Join over the language
+		//$query->select('l.title AS language_title, l.image AS language_image')
+		//	->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
 
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor')
@@ -200,7 +218,7 @@ class GalleriesModel extends ListModel
 
 		// Join over the users for the author.
 		$query->select('ua.name AS author_name')
-			->join('LEFT', '#__users AS ua ON ua.id = a.created_user_id');
+			->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
 		// Join over the associations.
 		$assoc = $this->getAssoc();
@@ -211,12 +229,6 @@ class GalleriesModel extends ListModel
 				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
 				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
 				->group('a.id, l.title, uc.name, ag.title, ua.name');
-		}
-
-		// Filter by extension
-		if ($extension = $this->getState('filter.extension'))
-		{
-			$query->where('a.extension = ' . $db->quote($extension));
 		}
 
 		// Filter on the level.
@@ -252,27 +264,31 @@ class GalleriesModel extends ListModel
 
 		// Filter by search in title
 		$search = $this->getState('filter.search');
-
 		if (!empty($search))
 		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
-				$search = $db->quote('%' . str_replace(' ', '%', $db->escape(trim($search), true) . '%'));
-				$query->where('(a.title LIKE ' . $search . ' OR a.alias LIKE ' . $search . ' OR a.note LIKE ' . $search . ')');
-			}
+			$search = $db->quote('%' . $db->escape($search, true) . '%');
+			$query->where(
+				'a.name LIKE ' . $search
+				. ' OR a.description LIKE ' . $search
+				. ' OR a.note LIKE ' . $search
+				. ' OR a.created LIKE ' . $search
+				. ' OR a.modified LIKE ' . $search
+			);
 		}
 
+		// exclude root helloworld record
+		$query->where('a.id > 1');
+
+		/**
 		// Filter on the language.
 		if ($language = $this->getState('filter.language'))
 		{
 			$query->where('a.language = ' . $db->quote($language));
 		}
+		/**/
 
 		// Filter by a single tag.
+		/**
 		$tagId = $this->getState('filter.tag');
 
 		if (is_numeric($tagId))
@@ -284,6 +300,7 @@ class GalleriesModel extends ListModel
 					. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
 				);
 		}
+		/**/
 
 		// Add the list ordering clause
 		$listOrdering = $this->getState('list.ordering', 'a.lft');
@@ -299,26 +316,40 @@ class GalleriesModel extends ListModel
 		}
 
 		// Group by on Galleries for \JOIN with component tables to count items
-		$query->group('a.id,
-				a.title,
-				a.alias,
-				a.note,
-				a.published,
-				a.access,
-				a.checked_out,
-				a.checked_out_time,
-				a.created_user_id,
-				a.path,
-				a.parent_id,
-				a.level,
-				a.lft,
-				a.rgt,
-				a.language,
+		$query->group(
+			'a.id, 
+			. a.name, 
+			. a.alias, 
+			. a.description, 
+			. a.note, 
+
+			. a.thumb_id, 
+			. a.published, 
+			. a.access, 
+
+			. a.created, 
+			. a.created_by, 
+			. a.modified, 
+			. a.modified_by, 
+
+//				. a.checked_out, 
+//				. a.checked_out_time, 
+
+			. a.parent_id,
+
+			. a.path, 
+			. a.level, 
+			. a.lft, 
+			. a.rgt,
+//				. , a.language,
+				image_count,
+				
 				l.title,
 				l.image,
 				uc.name,
 				ag.title,
-				ua.name'
+				ua.name
+				'
 		);
 
 		return $query;

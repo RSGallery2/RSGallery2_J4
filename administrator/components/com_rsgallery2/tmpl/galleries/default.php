@@ -30,6 +30,7 @@ $parts     = explode('.', $extension, 2);
 $component = $parts[0];
 $section   = null;
 
+/**/
 if (count($parts) > 1)
 {
 	$section = $parts[1];
@@ -41,6 +42,7 @@ if (count($parts) > 1)
 		$section = $inflector->toPlural($section);
 	}
 }
+/**/
 
 if ($saveOrder && !empty($this->items))
 {
