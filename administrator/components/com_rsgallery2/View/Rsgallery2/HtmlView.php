@@ -27,6 +27,8 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsEnumeration;
 use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsExternal;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel;
 
 /**
  * View class for a list of rsgallery2.
@@ -80,10 +82,11 @@ class HtmlView extends BaseHtmlView
 
 		//---  --------------------------------------------------------------------
 
-		$this->lastGalleries = ["first gallery"];
-		$this->lastImages = ["first image"];
+		$this->lastGalleries = GalleriesModel::latestGalleries(5);
+		$this->lastImages =  ImagesModel::latestImages(5);
 
-		//$this->Rsg2Version = rsg2Common::getRsg2ComponentVersion();
+		//---  --------------------------------------------------------------------
+
 		$oRsg2Version = new rsgallery2Version();
 		$this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 

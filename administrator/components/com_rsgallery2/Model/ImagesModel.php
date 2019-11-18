@@ -19,11 +19,11 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 
 /**
- * RSGallery2 Component Galleries Model
+ * RSGallery2 Component Images Model
  *
  * @since  1.6
  */
-class GalleriesModel extends ListModel
+class ImagesModel extends ListModel
 {
 	/**
 	 * Constructor.
@@ -151,9 +151,9 @@ class GalleriesModel extends ListModel
 	}
 
 	/**
-	 * Method to get a database query to list galleries.
+	 * Method to get a database query to list images.
 	 *
-	 * @return  \DatabaseQuery object.
+	 * @return  \JDatabaseQuery object.
 	 *
 	 * @since   1.6
 	 */
@@ -197,7 +197,7 @@ class GalleriesModel extends ListModel
 //				. ', a.language'
 			)
 		);
-		$query->from('#__rsg2_galleries AS a');
+		$query->from('#__rsg2_images AS a');
 
 		/* Count child images */
 		$query->select('COUNT(img.gallery_id) as image_count')
@@ -315,7 +315,7 @@ class GalleriesModel extends ListModel
 			$query->order($db->escape($listOrdering) . ' ' . $listDirn);
 		}
 
-		// Group by on Galleries for \JOIN with component tables to count items
+		// Group by on Images for \JOIN with component tables to count items
 		$query->group(
 			'a.id, 
 			. a.name, 
@@ -451,6 +451,7 @@ class GalleriesModel extends ListModel
 		}
 	}
 
+
 	/**
 	 * This function will retrieve the data of the n last uploaded images
 	 *
@@ -459,8 +460,9 @@ class GalleriesModel extends ListModel
 	 * @return array rows with image name, gallery name, date, and user name as rows
 	 *
 	 * @since   4.3.0
+	 * @throws Exception
 	 */
-	static function latestGalleries($limit)
+	public static function latestImages($limit)
 	{
 		$latest = array();
 
@@ -470,12 +472,9 @@ class GalleriesModel extends ListModel
 			$db    = Factory::getDBO();
 			$query = $db->getQuery(true);
 
-			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
-			//	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
-
 			$query
 				->select('*')
-				->from($db->quoteName('#__rsg2_galleries'))
+				->from($db->quoteName('#__rsg2_images'))
 				->order($db->quoteName('id') . ' DESC');
 
 			$db->setQuery($query, 0, $limit);
@@ -483,11 +482,12 @@ class GalleriesModel extends ListModel
 
 			foreach ($rows as $row)
 			{
-				$ImgInfo         = array();
-				$ImgInfo['name'] = $row->name;
-				$ImgInfo['id']   = $row->id;
+				$ImgInfo            = array();
+				$ImgInfo['name']    = $row->name;
+				$ImgInfo['gallery'] = rsgallery2ModelImages::getParentGalleryName($row->gallery_id);
+				$ImgInfo['date']    = $row->date;
 
-				//$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
+				//$ImgInfo['user'] = rsgallery2ModelImages::getUsernameFromId($row->userid);
 				$user            = Factory::getUser($row->created_by);
 				$ImgInfo['user'] = $user->get('username');
 
@@ -497,7 +497,7 @@ class GalleriesModel extends ListModel
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -506,9 +506,7 @@ class GalleriesModel extends ListModel
 
 		return $latest;
 	}
-
-
-
+ 
 
 
 }

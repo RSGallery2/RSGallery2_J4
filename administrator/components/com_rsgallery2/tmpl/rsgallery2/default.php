@@ -270,8 +270,52 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	echo '      <div class="card-header">';
 	echo '          ' . JText::_('COM_RSGALLERY2_GALLERIES');
 	echo '      </div>';
+
 	echo '      <div id="credit-card-body" class="card-body">';
-	echo '         lastGalleries: "' . implode("|", $lastGalleries);
+//	echo '         lastGalleries: "' . implode("|", $lastGalleries);
+
+
+	// exit if no data given
+	if (count($lastGalleries) == 0)
+	{
+		echo JText::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
+
+		return;
+	}
+
+	// Header ----------------------------------
+
+	echo '<table class="table table-striped table-condensed">';
+	echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
+	echo '    <thead>';
+	echo '        <tr>';
+	echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
+	echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
+	echo '            <th>' . JText::_('COM_RSGALLERY2_ID') . '</th>';
+	echo '        </tr>';
+	echo '    </thead>';
+
+	//--- data ----------------------------------
+
+	echo '    <tbody>';
+
+	foreach ($lastGalleries as $GalleryInfo)
+	{
+
+		echo '        <tr>';
+		echo '            <td>' . $GalleryInfo['name'] . '</td>';
+		echo '            <td>' . $GalleryInfo['user'] . '</td>';
+		echo '            <td>' . $GalleryInfo['id'] . '</td>';
+		echo '        </tr>';
+	}
+	echo '    </tbody>';
+
+	//--- footer ----------------------------------
+	echo '</table>';
+
+
+
+
 	echo '      </div>';
 //    echo '      <div class="card-footer">Footer</div>';
 	echo '   </div>';
@@ -289,7 +333,46 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	echo '          ' . JText::_('COM_RSGALLERY2_IMAGES');
 	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
-	echo '         lastImages: "' . implode("|", $lastImages);
+//	echo '         lastImages: "' . implode("|", $lastImages);
+
+	if (count($lastImages) == 0)
+	{
+		echo JText::_('COM_RSGALLERY2_NO_NEW_IMAGES');
+
+		return;
+	}
+
+	// Header ----------------------------------
+
+	echo '<table class="table table-striped table-condensed">';
+	echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
+	echo '    <thead>';
+	echo '        <tr>';
+	echo '            <th>' . JText::_('COM_RSGALLERY2_FILENAME') . '</th>';
+	echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
+	echo '            <th>' . JText::_('COM_RSGALLERY2_DATE') . '</th>';
+	echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
+	echo '        </tr>';
+	echo '    </thead>';
+
+	//--- data ----------------------------------
+
+	echo '    <tbody>';
+
+	foreach ($lastImages as $ImgInfo)
+	{
+
+		echo '        <tr>';
+		echo '            <td>' . $ImgInfo['name'] . '</td>';
+		echo '            <td>' . $ImgInfo['gallery'] . '</td>';
+		echo '            <td>' . $ImgInfo['date'] . '</td>';
+		echo '            <td>' . $ImgInfo['user'] . '</td>';
+		echo '        </tr>';
+	}
+	echo '    </tbody>';
+
+	//--- footer ----------------------------------
+	echo '</table>';
 	echo '      </div>';
 //    echo '      <div class="card-footer">Footer</div>';
 	echo '   </div>';
