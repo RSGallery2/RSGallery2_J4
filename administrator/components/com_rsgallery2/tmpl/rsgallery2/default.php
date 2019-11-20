@@ -263,17 +263,18 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 
 	echo '<row>';
 //	echo '   <div class="card bg-light w-25 data-toggle="collapse">';
-	echo '   <div class="col-md-4">';
-	echo '       <div class="custom-column">';
-	echo '           <div class="custom-column-content">';
-	echo '   <div class="card bg-light data-toggle="collapse">';
-	echo '      <div class="card-header">';
-	echo '          ' . JText::_('COM_RSGALLERY2_GALLERIES');
-	echo '      </div>';
+//	echo '   <div class="col-md-4">';
+	echo '    <div>';
+	echo '        <div class="custom-column">';
+	echo '            <div class="custom-column-content">';
+	echo '                <div class="card bg-light data-toggle="collapse">';
+	echo '                    <div class="card-header">';
+	echo '                        ' . JText::_('COM_RSGALLERY2_GALLERIES');
+	echo '                    </div>';
 
-	echo '      <div id="credit-card-body" class="card-body">';
-//	echo '         lastGalleries: "' . implode("|", $lastGalleries);
+	echo '                    <div id="credit-card-body" class="card-body">';
 
+	echo '                        <div class="rsg2-gallery-info-table">';
 
 	// exit if no data given
 	if (count($lastGalleries) == 0)
@@ -285,7 +286,8 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 
 	// Header ----------------------------------
 
-	echo '<table class="table table-striped table-condensed">';
+	//echo '<table class="table table-striped table-condensed">';
+	echo '<table class="table table-striped table-light w-auto table_morecondensed">';
 	echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
 	echo '    <thead>';
 	echo '        <tr>';
@@ -313,27 +315,35 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	//--- footer ----------------------------------
 	echo '</table>';
 
-
-
-
-	echo '      </div>';
+	echo '                        </div>';
 //    echo '      <div class="card-footer">Footer</div>';
-	echo '   </div>';
-	echo '   </div>';
+	echo '                    </div>';
+	echo '                </div>';
 
-	echo '   </div>';
-	echo '   </div>';
+	echo '            </div>';
+	echo '        </div>';
+	echo '    </div>';
+	echo '</row>';
+
+
+	echo "<hr>";
+
+	echo '<row>';
 
 //	echo '   <div class="card bg-light w-50 data-toggle="collapse">';
-	echo '   <div class="col-md-8">';
-	echo '       <div class="custom-column">';
-	echo '               <div class="custom-column-content">';
-	echo '   <div class="card bg-light data-toggle="collapse">';
-	echo '      <div class="card-header">';
-	echo '          ' . JText::_('COM_RSGALLERY2_IMAGES');
-	echo '      </div>';
-	echo '      <div id="credit-card-body" class="card-body">';
-//	echo '         lastImages: "' . implode("|", $lastImages);
+//	echo '   <div class="col-md-8">';
+	echo '    <div>';
+	echo '        <div class="custom-column">';
+	echo '            <div class="custom-column-content">';
+	echo '                <div class="card bg-light data-toggle="collapse">';
+	echo '                    <div class="card-header">';
+	echo '                        ' . JText::_('COM_RSGALLERY2_IMAGES');
+	echo '                    </div>';
+
+	echo '                    <div id="credit-card-body" class="card-body">';
+
+	echo '                        <div class="rsg2-images-info-table">';
+
 
 	if (count($lastImages) == 0)
 	{
@@ -344,7 +354,8 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 
 	// Header ----------------------------------
 
-	echo '<table class="table table-striped table-condensed">';
+//	echo '<table class="table table-striped table-condensed">';
+	echo '<table class="table table-striped table-light w-auto table_morecondensed">';
 	echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
 	echo '    <thead>';
 	echo '        <tr>';
@@ -373,14 +384,15 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 
 	//--- footer ----------------------------------
 	echo '</table>';
-	echo '      </div>';
+
+	echo '                        </div>';
 //    echo '      <div class="card-footer">Footer</div>';
-	echo '   </div>';
-	echo '   </div>';
+	echo '                    </div>';
+	echo '                </div>';
 
-	echo '   </div>';
-	echo '   </div>';
-
+	echo '            </div>';
+	echo '        </div>';
+	echo '    </div>';
 	echo '</row>';
 
 	echo '<div class="clearfix"></div>';
@@ -479,8 +491,6 @@ function DisplayInfoChangeLog ($changelogs)
         echo ('<br>');
     }
     /**/
-	echo ('<hr>');
-	echo ('<hr>');
 
 	$htmlChangelogs = tableFromXml($changelogs);
 

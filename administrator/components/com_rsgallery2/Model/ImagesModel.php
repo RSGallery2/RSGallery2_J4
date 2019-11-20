@@ -493,6 +493,33 @@ class ImagesModel extends ListModel
 
 				$latest[] = $ImgInfo;
 			}
+
+
+			if(count ($rows) == 0)
+			{
+				$ImgInfo            = array();
+				$ImgInfo['name']    = "Image 1";
+				$ImgInfo['gallery'] = "Gallery 01";
+				$ImgInfo['date']    = "2019.11.19.01";
+				$ImgInfo['user']    = "Finnern_";
+
+				$latest[] = $ImgInfo;
+
+				$ImgInfo['name']    = "Image 2";
+				$ImgInfo['gallery'] = "Gallery 01";
+				$ImgInfo['date']    = "2019.11.19.03";
+				$ImgInfo['user']    = "Finnern_";
+
+				$latest[] = $ImgInfo;
+
+				$ImgInfo['name']    = "Image 3";
+				$ImgInfo['gallery'] = "Gallery 02";
+				$ImgInfo['date']    = "2019.11.19.03";
+				$ImgInfo['user']    = "Finnern_";
+
+				$latest[] = $ImgInfo;
+			}
+
 		}
 		catch (RuntimeException $e)
 		{

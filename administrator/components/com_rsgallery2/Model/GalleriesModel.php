@@ -489,7 +489,9 @@ class GalleriesModel extends ListModel
 
 				//$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
 				$user            = Factory::getUser($row->created_by);
-				$ImgInfo['user'] = $user->get('username');
+				//$ImgInfo['user'] = $user->get('username');
+				$ImgInfo['user'] = $user->name;
+				//$ImgInfo['user'] = "*Finnern was auch immer";
 
 				$latest[] = $ImgInfo;
 			}

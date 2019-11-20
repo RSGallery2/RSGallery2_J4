@@ -167,3 +167,8 @@ div.quickicon-icon
 	}
 }
 
+/* ToDo: More specifik add dic with class= gallery/images ... */
+.table caption {
+	caption-side: top;
+
+}
