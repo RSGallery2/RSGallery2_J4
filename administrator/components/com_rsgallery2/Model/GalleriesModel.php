@@ -356,6 +356,51 @@ class GalleriesModel extends ListModel
 	}
 
 	/**
+	 * Prepare and sanitise the table prior to saving.
+	 *
+	 * @param   Table  $table  A Table object.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.6
+	 */
+	protected function prepareTable($table)
+	{
+		$date = Factory::getDate();
+		$user = Factory::getUser();
+
+		if (empty($table->id))
+		{
+			// Set the values
+			$table->created    = $date->toSql();
+			$table->created_by = $user->id;
+
+			// Set ordering to the last item if not set
+			if (empty($table->ordering))
+			{
+				$db = $this->getDbo();
+				$query = $db->getQuery(true)
+					->select('MAX(ordering)')
+					->from('#__banners');
+
+				$db->setQuery($query);
+				$max = $db->loadResult();
+
+				$table->ordering = $max + 1;
+			}
+		}
+		else
+		{
+			// Set the values
+			$table->modified    = $date->toSql();
+			$table->modified_by = $user->id;
+		}
+
+		// Increment the content version number.
+		$table->version++;
+	}
+
+	/**
 	 * Method to determine if an association exists
 	 *
 	 * @return  boolean  True if the association exists
@@ -509,6 +554,66 @@ class GalleriesModel extends ListModel
 		return $latest;
 	}
 
+
+	/**
+	 * This function will retrieve the data of the n last uploaded images
+	 *
+	 * @param int $limit > 0 will limit the number of lines returned
+	 *
+	 * @return array rows with image name, gallery name, date, and user name as rows
+	 *
+	 * @since   4.3.0
+	 */
+	static function allGalleries()
+	{
+		$latest = array();
+
+		try
+		{
+			// Create a new query object.
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
+
+			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
+			//	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
+
+			$query
+				->select('*')
+				->from($db->quoteName('#__rsg2_galleries'))
+				->order($db->quoteName('id') . ' DESC');
+
+			$db->setQuery($query);
+			$rows = $db->loadObjectList();
+
+			/**
+			foreach ($rows as $row)
+			{
+				$ImgInfo         = array();
+				$ImgInfo['name'] = $row->name;
+				$ImgInfo['id']   = $row->id;
+
+				//$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
+				$user            = Factory::getUser($row->created_by);
+				//$ImgInfo['user'] = $user->get('username');
+				$ImgInfo['user'] = $user->name;
+				//$ImgInfo['user'] = "*Finnern was auch immer";
+
+				$latest[] = $ImgInfo;
+			}
+			 /**/
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $rows;
+	}
 
 
 

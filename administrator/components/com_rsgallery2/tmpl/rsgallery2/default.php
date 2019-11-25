@@ -598,7 +598,8 @@ function DisplayInfoExternalLicenses ($externalLicenses)
 
     //            echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
     //            echo '<hr style="height:2px;border-width:0;color:lightgray;background-color:lightgray">';
-                echo '<hr>';
+
+ //               echo '<hr>';
 
                 //--- RSG2 info table -----------------------------
 
@@ -607,7 +608,7 @@ function DisplayInfoExternalLicenses ($externalLicenses)
                 DisplayInfoRsgallery2($this->Rsg2Version);
 
                 //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-                echo '<hr>';
+//                echo '<hr>';
 
                 //--- Last galleries and last uploaded images -----------------------------
 
@@ -616,7 +617,7 @@ function DisplayInfoExternalLicenses ($externalLicenses)
                 DisplayInfoGalleryImages ($this->lastGalleries, $this->lastImages);
 
                 //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-                echo '<hr>';
+//                echo '<hr>';
 
                 //--- Change log -----------------------------
                 /**
@@ -631,7 +632,7 @@ function DisplayInfoExternalLicenses ($externalLicenses)
                 DisplayInfoChangeLog ($this->changelogs);
 
                 //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-                echo '<hr>';
+//                echo '<hr>';
 
                 //--- Credits -----------------------------
 

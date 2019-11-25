@@ -143,6 +143,15 @@ class HtmlView extends BaseHtmlView
 
 			// $Layout = Factory::getApplication()->input->get('layout');
 			$this->addToolbar($Layout);
+
+			// for first debug ToDo: remove ...
+
+			$galleryModel = $this->getModel();
+
+			$this->items         = $galleryModel->allGalleries();
+
+
+
 		}
 		else
 		{
@@ -183,7 +192,8 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '*  Test ...<br>'
+				. '*  Can do ...<br>'
+				. '*  archieved, trashed<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -195,7 +205,7 @@ class HtmlView extends BaseHtmlView
 			case 'galleries_raw':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_VIEW_RAW_DATA'), 'images');
 
-				JToolBarHelper::editList('gallery.edit');
+				ToolBarHelper::editList('gallery.edit');
 
 				// on develop show open tasks if existing
 				if (!empty ($Rsg2DevelopActive))
@@ -204,16 +214,40 @@ class HtmlView extends BaseHtmlView
 				}
 				break;
 
+
 			default:
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_GALLERIES'), 'images');
 
 				ToolBarHelper::addNew('gallery.add');
+
+				$dropdown = $toolbar->dropdownButton('status-group')
+					->text('JTOOLBAR_CHANGE_STATUS')
+					->toggleSplit(false)
+					->icon('fa fa-ellipsis-h')
+					->buttonClass('btn btn-action')
+					->listCheck(true);
+
+				$childBar = $dropdown->getChildToolbar();
+
+				$childBar->publish('categories.publish')->listCheck(true);
+
+				$childBar->unpublish('categories.unpublish')->listCheck(true);
+
+				$childBar->archive('categories.archive')->listCheck(true);
+
+				$childBar->checkin('categories.checkin')->listCheck(true);
+
+				$childBar->trash('categories.trash')->listCheck(true);
+
+				$toolbar->standardButton('refresh')
+					->text('JTOOLBAR_REBUILD')
+					->task('gallery.rebuild');
+
+
+
 				ToolBarHelper::editList('gallery.edit');
 //				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'galleries.delete', 'JTOOLBAR_EMPTY_TRASH');
 				ToolBarHelper::deleteList('', 'galleries.delete', 'JTOOLBAR_DELETE');
-
-				ToolBarHelper::publish('galleries.publish', 'JTOOLBAR_PUBLISH', true);
-				ToolBarHelper::unpublish('galleries.unpublish', 'JTOOLBAR_UNPUBLISH', true);
 
 				// on develop show open tasks if existing
 				if (!empty ($Rsg2DevelopActive))

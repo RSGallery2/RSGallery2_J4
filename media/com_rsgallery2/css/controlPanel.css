@@ -24,6 +24,11 @@ div.rsg2logo
 
 }
 
+div.rsg2logo img {
+	vertical-align: top;
+	/** border: 4px solid blue; /**/
+}
+
 div.quickicon-icon {
 	position: relative;
 	left: -8px;
@@ -31,31 +36,31 @@ div.quickicon-icon {
 
 div.quickicon-icon div.fa-cog
 {
-	color: blue;
+	color: #0d6dab;
 }
 
 
 div.quickicon-icon div.fa-th
 {
-	color: green;
+	color: #58a323;
 }
 
 
 div.quickicon-icon div.fa-upload
 {
-	color: green;
+	color: #58a323;
 }
 
 
 div.quickicon-icon div.fa-image
 {
-	color: green;
+	color: #58a323;
 }
 
 
 div.quickicon-icon div.fa-cogs
 {
-	color: red;
+	color: #e52626;
 }
 
 /* border-radius: 25px; */

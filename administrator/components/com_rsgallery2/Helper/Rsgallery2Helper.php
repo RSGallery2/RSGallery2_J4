@@ -49,7 +49,7 @@ class Rsgallery2Helper extends ContentHelper
 		}
 		/**/
 
-		echo "\$vname: $vName <br>";
+//		echo "\$vname: $vName <br>";
 
 		$link = 'index.php?option=com_rsgallery2&view=rsgallery2';
 		\JHtmlSidebar::addEntry(

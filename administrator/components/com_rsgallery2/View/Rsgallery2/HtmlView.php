@@ -122,7 +122,8 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  Test ...<br>'
+				. '*  Hide content of Changelog until selected<br>'
+				. '*  Hide content of Credits until selected<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
