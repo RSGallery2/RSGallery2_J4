@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `rgt` int(11) DEFAULT 0 NOT NULL,
 
   `asset_id` int(11)  NOT NULL DEFAULT 0,
+-- `access_level` int(10) unsigned NOT NULL DEFAULT 0,
   `access` int(10) unsigned NOT NULL DEFAULT 0,
 
 --  `rtl` tinyint(4) NOT NULL DEFAULT 0,  
