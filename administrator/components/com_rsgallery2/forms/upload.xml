@@ -8,12 +8,10 @@
 		<field
 				id="SelectGalleries_03"
 				name="SelectGalleries03"
-				type="GallerySelectList"
+				type="GallerySelect"
 				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
 				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
 				required="true"
-				class="inputbox span5"
-				size="4"
 		/>
 	</fieldset>
 	<fieldset
@@ -41,12 +39,10 @@
 		<field
 				id="SelectGalleries_01"
 				name="SelectGalleries01"
-				type="GallerySelectList"
+				type="GallerySelect"
 				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
 				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
 				required="true"
-				class="inputbox"
-				size="4"
 		/>
 	</fieldset>
 	<fieldset
@@ -75,12 +71,10 @@
 		<field
 				id="SelectGalleries_02"
 				name="SelectGalleries02"
-				type="GallerySelectList"
+				type="GallerySelect"
 				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
 				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
 				required="true"
-				class="inputbox span5"
-				size="4"
 		/>
 	</fieldset>
 </form>

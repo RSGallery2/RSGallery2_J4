@@ -107,7 +107,7 @@ else
 	// Create a regular list.
 	if (count($options) === 0)
 	{
-		// All Galleries have been deleted, so we need a new gallery (This will create on save if selected).
+		// All Galleries have been deleted, so we need a new gallery (This will create one on save if selected).
 		$options[0]            = new \stdClass;
 		$options[0]->value     = 'Ungallerised';
 		$options[0]->text      = 'Ungallerised';
