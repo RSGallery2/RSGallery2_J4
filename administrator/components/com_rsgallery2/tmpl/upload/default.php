@@ -45,23 +45,23 @@ $tabs = []
                 <?php
                 echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_gallery_must_exist']);
                 ?>
-                <?php if ($this->is1GalleryExisting) : ?>
+                <?php if (!$this->is1GalleryExisting) : ?>
 	                <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_gallery_must_exist', Text::_('COM_RSGALLERY2_DO_UPLOAD')); ?>
 
                     <div class="form-actions">
-                        <p style="width: 150px; text-align: center">
-                        <label for="ToGallery"
-                               class="control-label"><?php echo JText::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
-                        </p>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a class="btn btn-primary"
-                           name="ToGallery"
-                           class="input_box"
-                           title="<?php echo JText::_('COM_RSGALLERY2_GOTO_RSG2_GALLERY_VIEW'); ?>"
-                           href="index.php?option=com_rsgallery2&amp;view=galleries">
-							<?php echo JText::_('COM_RSGALLERY2_MENU_GALLERIES'); ?>
-                        </a>
-                        </p>
+                        <div style="width: 150px; background-color: lightgrey; text-align: center; padding: 20px">
+                            <label for="ToGallery"
+                                   style="padding-bottom: 20px"
+                                   class="control-label"><?php echo JText::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
+                            <a class="btn btn-primary"
+                               id="ToGallery"
+                               class="input_box"
+                               title="<?php echo JText::_('COM_RSGALLERY2_GOTO_RSG2_GALLERIES_VIEW'); ?>"
+                               href="index.php?option=com_rsgallery2&amp;view=galleries">
+                                <i class="icon-images"></i>
+                                <?php echo JText::_('COM_RSGALLERY2_MENU_GALLERIES'); ?>
+                            </a>
+                        </div>
                     </div>
 
 					<?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -78,9 +78,11 @@ $tabs = []
                     Drag and drop
                     ---------------------------------------------------------------------------*/
 
-                    /**/
-
+                    // All in one, specify gallery
+                    echo $this->form->renderFieldset('upload_drag_and_drop');
                     ?>
+
+
                     <?php
                     /**
                     echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => $tabs[0]['name'] ?? '']);
@@ -256,10 +258,27 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
         </div>
         <div>
             <small class="help-block" style="color:darkred;">
-                <?php echo JText::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
+                <?php echo Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
             </small>
         </div>
     </div>
 	<?php
+
+    /**
+    // use footnote ? -> or display none and on hover display: block
+    //                        <label for="ToGallery"
+    //                               style="padding-bottom: 20px"
+    //                               class="control-label"><?php echo JText::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
+    /**/
+	$uploadMaxsTitle = ""
+        . Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit)
+        . Text::sprintf('COM_RSGALLERY2_POST_MAX_SIZE_IS', $PostMaxSize)
+        . Text::sprintf('COM_RSGALLERY2_POST_MEMORY_LIMIT_IS', $MemoryLimit)
+        . Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI')
+    ;
+	/**/
+	echo '<div title="' . $uploadMaxsTitle . '" >test</div>';
+	/**/
 }
+
 

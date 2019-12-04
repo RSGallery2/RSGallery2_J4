@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form enctype="multipart/form-data">
-	<fieldset name="upload_drag_and_drop">
+<form >
+	<fieldset name="upload_drag_and_drop" addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field">
 		<!-- Gallery selection -->
 		<field
 				id="SelectGalleries_03"
@@ -10,7 +10,6 @@
 				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
 				required="true"
 				class="inputbox span5"
-				addfieldpath="/administrator/components/com_rsgallery2/models/fields"
 				size="4"
 		/>
 	</fieldset>
@@ -41,7 +40,6 @@
 				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
 				required="true"
 				class="inputbox"
-				addfieldpath="/administrator/components/com_rsgallery2/models/fields"
 				size="4"
 		/>
 	</fieldset>
@@ -73,7 +71,6 @@
 				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
 				required="true"
 				class="inputbox span5"
-				addfieldpath="/administrator/components/com_rsgallery2/models/fields"
 				size="4"
 		/>
 	</fieldset>

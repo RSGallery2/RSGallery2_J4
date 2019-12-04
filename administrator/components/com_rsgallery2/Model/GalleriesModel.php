@@ -36,6 +36,7 @@ class GalleriesModel extends ListModel
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
+		//  hich fields are needed for filer function
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
@@ -100,15 +101,15 @@ class GalleriesModel extends ListModel
 		//	$this->context .= '.' . $forcedLanguage;
 		//}
 
-		//$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
-		//$this->setState('filter.extension', $extension);
-		//$parts = explode('.', $extension);
+		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
+		$this->setState('filter.extension', $extension);
+		$parts = explode('.', $extension);
 
-		//// Extract the component name
-		//$this->setState('filter.component', $parts[0]);
+		// Extract the component name
+		$this->setState('filter.component', $parts[0]);
 
-		//// Extract the optional section name
-		//$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
+		// Extract the optional section name
+		$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
 
 		$search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -144,7 +145,7 @@ class GalleriesModel extends ListModel
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.access');
 //		$id .= ':' . $this->getState('filter.language');
-//		$id .= ':' . $this->getState('filter.level');
+		$id .= ':' . $this->getState('filter.level');
 		$id .= ':' . $this->getState('filter.tag');
 
 		return parent::getStoreId($id);
@@ -177,11 +178,16 @@ class GalleriesModel extends ListModel
 				. 'a.note, '
 
 				. 'a.thumb_id, '
+				. 'a.params, '
 				. 'a.published, '
-				. 'a.access, '
+				. 'a.hits, '
 
+				. 'a.checked_out, '
+				. 'a.checked_out, '
+				. 'a.checked_out_time, '
 				. 'a.created, '
 				. 'a.created_by, '
+				. 'a.created_by_alias, '
 				. 'a.modified, '
 				. 'a.modified_by, '
 
@@ -189,12 +195,14 @@ class GalleriesModel extends ListModel
 //				. 'a.checked_out_time, '
 
 				. 'a.parent_id,'
-
-				. 'a.path, '
 				. 'a.level, '
+				. 'a.path, '
 				. 'a.lft, '
 				. 'a.rgt'
-//				. ', a.language'
+
+				. 'a.asset_id'
+//				. 'a.access_level'
+				. 'a.access'
 			)
 		);
 		$query->from('#__rsg2_galleries AS a');
@@ -212,24 +220,24 @@ class GalleriesModel extends ListModel
 		$query->select('uc.name AS editor')
 			->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 
-		// Join over the asset groups.
-		$query->select('ag.title AS access_level')
-			->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+//		// Join over the asset groups.
+//		$query->select('ag.title AS access_level')
+//			->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
 		// Join over the users for the author.
 		$query->select('ua.name AS author_name')
 			->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
-		// Join over the associations.
-		$assoc = $this->getAssoc();
-
-		if ($assoc)
-		{
-			$query->select('COUNT(asso2.id)>1 as association')
-				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
-				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
-				->group('a.id, l.title, uc.name, ag.title, ua.name');
-		}
+//		// Join over the associations.
+//		$assoc = $this->getAssoc();
+//
+//		if ($assoc)
+//		{
+//			$query->select('COUNT(asso2.id)>1 as association')
+//				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
+//				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
+//				->group('a.id, l.title, uc.name, ag.title, ua.name');
+//		}
 
 		// Filter on the level.
 		if ($level = $this->getState('filter.level'))
@@ -276,8 +284,8 @@ class GalleriesModel extends ListModel
 			);
 		}
 
-		// exclude root helloworld record
-		$query->where('a.id > 1');
+		// exclude root gallery record
+//		$query->where('a.id > 1');
 
 		/**
 		// Filter on the language.
@@ -324,32 +332,33 @@ class GalleriesModel extends ListModel
 			. a.note, 
 
 			. a.thumb_id, 
+			. a.params, 
 			. a.published, 
-			. a.access, 
+			. a.hits, 
 
+			. a.checked_out, 
+			. a.checked_out_time, 
 			. a.created, 
 			. a.created_by, 
+			. a.created_by_alias, 
 			. a.modified, 
 			. a.modified_by, 
 
-//				. a.checked_out, 
-//				. a.checked_out_time, 
 
 			. a.parent_id,
-
-			. a.path, 
 			. a.level, 
+			. a.path, 
 			. a.lft, 
 			. a.rgt,
 //				. , a.language,
-				image_count,
+			image_count,
 				
-				l.title,
-				l.image,
-				uc.name,
-				ag.title,
-				ua.name
-				'
+			l.title,
+			l.image,
+			uc.name,
+			ag.title,
+			ua.name
+			'
 		);
 
 		return $query;

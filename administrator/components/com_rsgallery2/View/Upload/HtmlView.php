@@ -19,6 +19,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -76,7 +77,20 @@ class HtmlView extends BaseHtmlView
 		$xmlFile = JPATH_COMPONENT . '/models/forms/upload.xml';
 		// $form = Form::getInstance('upload', $xmlFile);
 
-		//---  Limits --------------------------------------------------------------------
+		// Check for errors.
+		/* Must load form before
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new GenericDataException(implode("\n", $errors), 500);
+		}
+		/**/
+
+		//--- Limits --------------------------------------------------------------------
+
+		$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/upload.xml';
+		$form = Form::getInstance('upload', $xmlFile);
+
+		//--- Limits --------------------------------------------------------------------
 
 		// Instantiate the media helper
 		$mediaHelper = new MediaHelper;
@@ -146,7 +160,9 @@ class HtmlView extends BaseHtmlView
 			'SelectGalleries02_02' => $IdGallerySelect
 		);
 
-		//$form->bind($formParam);
+		$form->bind($formParam);
+
+		$this->form = $form;
 
 		/**
 		// Check for errors.
@@ -208,8 +224,9 @@ class HtmlView extends BaseHtmlView
 
 	/**
 	 * Check if at least one gallery exists
+	 * Regards the nested structure (ID=1 is only root of tree and no gallery)
 	 *
-	 * @return string ID of latest gallery
+	 * @return true on galleries found
 	 *
 	 * @since 4.3.0
 	 */
@@ -222,18 +239,22 @@ class HtmlView extends BaseHtmlView
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 
-			// ToDo get row number instead of names
-			$query->select($db->quoteName('id'))
+			// count gallery items
+			$query->select('COUNT(*)')
+				// ignore root item  where id is "1"
+				->where($db->quoteName('id') . ' != 1')
 				->from('#__rsg2_galleries');
 
 			$db->setQuery($query, 0, 1);
 			$IdGallery          = $db->loadResult();
+
+			// > 0 galleries exist
 			$is1GalleryExisting = !empty ($IdGallery);
 		}
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'Error retrieving "__rsg2_galleries" table' . '<br>';
+			$OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = JFactory::getApplication();

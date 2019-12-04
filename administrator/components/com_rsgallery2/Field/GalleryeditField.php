@@ -22,7 +22,7 @@ use Joomla\Utilities\ArrayHelper;
  *
  * @since  1.6
  */
-class GalleryeditField extends ListField
+class GalleryEditField extends ListField
 {
 	/**
 	 * To allow creation of new galleries.
@@ -166,6 +166,7 @@ class GalleryeditField extends ListField
 		$query = $db->getQuery(true)
 			//->select('a.id AS value, a.name AS text, a.level, a.published, a.lft, a.language')
 			->select('a.id AS value, a.name AS text, a.level, a.published, a.lft')
+			->where('a.id != 1' )
 			->from('#__rsg2_galleries AS a');
 
 		/**
