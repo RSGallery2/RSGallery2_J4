@@ -198,10 +198,10 @@ class GalleriesModel extends ListModel
 				. 'a.level, '
 				. 'a.path, '
 				. 'a.lft, '
-				. 'a.rgt'
+				. 'a.rgt,'
 
-				. 'a.asset_id'
-//				. 'a.access_level'
+				. 'a.asset_id,'
+//				. 'a.access_level,'
 				. 'a.access'
 			)
 		);
@@ -350,15 +350,15 @@ class GalleriesModel extends ListModel
 			. a.path, 
 			. a.lft, 
 			. a.rgt,
-//				. , a.language,
-			image_count,
 				
-			l.title,
-			l.image,
 			uc.name,
-			ag.title,
 			ua.name
 			'
+//				. , a.language,
+//			ag.title,
+//			l.title,
+//			l.image,
+//no good			image_count,
 		);
 
 		return $query;
@@ -469,9 +469,11 @@ class GalleriesModel extends ListModel
 
 		if ($items != false)
 		{
+			/**
 			$extension = $this->getState('filter.extension');
 
 			$this->countItems($items, $extension);
+			/**/
 		}
 
 		return $items;
@@ -487,6 +489,7 @@ class GalleriesModel extends ListModel
 	 *
 	 * @since   3.5
 	 */
+	/**
 	public function countItems(&$items, $extension)
 	{
 		$parts     = explode('.', $extension, 2);
@@ -504,7 +507,7 @@ class GalleriesModel extends ListModel
 			$component->countItems($items, $section);
 		}
 	}
-
+	/**/
 	/**
 	 * This function will retrieve the data of the n last uploaded images
 	 *
