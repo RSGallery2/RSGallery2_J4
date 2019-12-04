@@ -74,21 +74,19 @@ class HtmlView extends BaseHtmlView
 
 		//--- Form --------------------------------------------------------------------
 
-		$xmlFile = JPATH_COMPONENT . '/models/forms/upload.xml';
-		// $form = Form::getInstance('upload', $xmlFile);
-
-		// Check for errors.
-		/* Must load form before
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
-		/**/
-
-		//--- Limits --------------------------------------------------------------------
-
 		$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/upload.xml';
 		$form = Form::getInstance('upload', $xmlFile);
+
+		// Check for errors.
+		/* Must load form before */
+		if ($errors = $this->get('Errors'))
+		{
+			if (count($errors))
+			{
+				throw new GenericDataException(implode("\n", $errors), 500);
+			}
+		}
+		/**/
 
 		//--- Limits --------------------------------------------------------------------
 

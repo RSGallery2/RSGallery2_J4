@@ -22,7 +22,6 @@ Text::script('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL');
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
-HTMLHelper::_('behavior.tabstate');
 
 $app = Factory::getApplication();
 
@@ -80,6 +79,7 @@ $tabs = []
 
                     // All in one, specify gallery
                     echo $this->form->renderFieldset('upload_drag_and_drop');
+                    // echo LayoutHelper::render
                     ?>
 
 
@@ -164,7 +164,7 @@ $tabs = []
 
 
 	                            // Specify gallery,  all in one
-    //					echo $this->form->renderFieldset('upload_drag_and_drop');
+    					//echo $this->form->renderFieldset('upload_drag_and_drop');
                         LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
                         ?>
 
@@ -179,7 +179,7 @@ $tabs = []
                         <legend><?php echo JText::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP_FROM_LOCAL_PC'); ?></legend>
 	                    <?php
 	                    // Specify gallery,  all in one
-	                    //					echo $this->form->renderFieldset('upload_drag_and_drop');
+	                    echo $this->form->renderFieldset('upload_zip');
 	                    LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
 	                    ?>
 
@@ -196,7 +196,7 @@ $tabs = []
 
                     <?php
                     // Specify gallery,  all in one
-                    //					echo $this->form->renderFieldset('upload_drag_and_drop');
+                    echo $this->form->renderFieldset('upload_folder');
                     //LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
                     ?>
 
