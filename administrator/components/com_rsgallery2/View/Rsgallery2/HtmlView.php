@@ -17,6 +17,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -86,6 +87,14 @@ class HtmlView extends BaseHtmlView
 		$this->lastImages =  ImagesModel::latestImages(5);
 
 		//---  --------------------------------------------------------------------
+
+		// Check for errors.
+		/* Must load form before
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new GenericDataException(implode("\n", $errors), 500);
+		}
+		/**/
 
 		$oRsg2Version = new rsgallery2Version();
 		$this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
