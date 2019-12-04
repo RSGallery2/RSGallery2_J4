@@ -17,6 +17,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -97,6 +98,13 @@ class HtmlView extends BaseHtmlView
 		$this->state         = $this->get('State');
 		$this->activeFilters = $this->get('ActiveFilters');
 
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new GenericDataException(implode("\n", $errors), 500);
+		}
+
+
 		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
 		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
 		//$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id'));
@@ -148,7 +156,7 @@ class HtmlView extends BaseHtmlView
 
 			$galleryModel = $this->getModel();
 
-			$this->items         = $galleryModel->allGalleries();
+			// $this->items         = $galleryModel->allGalleries();
 
 
 
