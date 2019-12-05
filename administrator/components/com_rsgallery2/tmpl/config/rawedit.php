@@ -114,11 +114,11 @@ function configInputField($name = 'unknown', $value = '')
 
                 <legend><strong><?php echo JText::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'); ?></strong></legend>
 
+                <p><h3>RAW Edit</h3></p>
                 <?php
 
 					try
 					{
-					
 						/**/
 						foreach ($configVars as $name => $value)
 						{
@@ -134,7 +134,6 @@ function configInputField($name = 'unknown', $value = '')
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}
-					
 
 				?>
 

@@ -27,6 +27,14 @@ HTMLHelper::_('bootstrap.framework');
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
+				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ConfigRawView')); ?>
+
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', JText::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW', true)); ?>
+
+                <legend><strong><?php echo JText::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW'); ?></strong></legend>
+
+                <p><h3>RAW view</h3></p>
+
 				<?php
                 /**
 				echo '<pre>';
@@ -52,7 +60,6 @@ HTMLHelper::_('bootstrap.framework');
                             //echo '<dt class="col-sm-2 col-lg-1">' . $key . ':</dt><dd class="col-sm-10 col-lg-11">'  . $value . '</dd>';
 
 
-
                     }
                     echo '</dl>';
     				echo '</div>';
@@ -61,7 +68,16 @@ HTMLHelper::_('bootstrap.framework');
 				echo '</div>';
 				?>
 
+				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
+				<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+
+
+                <?php
+					// <!--input type="hidden" name="option" value="com_rsgallery2" />
+				    // <input type="hidden" name="rsgOption" value="maintenance" /-->
+                    // <input type="hidden" name="task" value="" /> ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 
             </div>
 		</div>
