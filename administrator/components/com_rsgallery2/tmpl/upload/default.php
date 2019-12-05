@@ -17,11 +17,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 JHtml::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'auto', 'relative' => true));
 
 HTMLHelper::_('behavior.core');
-
-Text::script('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL');
-
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
+
+Text::script('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL');
 
 $app = Factory::getApplication();
 
@@ -40,7 +39,7 @@ $tabs = []
 		<?php endif; ?>
 
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
-			<div id="j-main-container" class="j-main-container">
+			<fieldset id="j-main-container" class="j-main-container">
                 <?php
                 echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_gallery_must_exist']);
                 ?>
@@ -69,6 +68,12 @@ $tabs = []
 				<?php else : ?>
 
                     <?php
+                    // specify gallery
+                    // toDO: change name as used for all
+                    echo $this->form->renderFieldset('upload_gallery');
+	                ?>
+
+                    <?php
                     echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_zip_pc']);
                     ?>
 
@@ -76,14 +81,6 @@ $tabs = []
                     /*---------------------------------------------------------------------------
                     Drag and drop
                     ---------------------------------------------------------------------------*/
-
-                    // All in one, specify gallery
-                    echo $this->form->renderFieldset('upload_drag_and_drop');
-                    // echo LayoutHelper::render
-                    ?>
-
-
-                    <?php
                     /**
                     echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => $tabs[0]['name'] ?? '']);
                     // Show installation tabs
@@ -105,6 +102,13 @@ $tabs = []
                     <fieldset class="uploadform">
                         <legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?></legend>
 
+                            <?php
+
+                            // 
+                            // echo $this->form->renderFieldset('upload_drag_and_drop');
+
+                            /**/
+                            ?>
                         <div id="uploader-wrapper">
                             <div id="dragarea" data-state="pending">
                                 <div id="dragarea-content" class="text-center">
@@ -159,14 +163,10 @@ $tabs = []
                                 </div>
                             </div>
                         </div>
-
-	                    <?php
-
-
-	                            // Specify gallery,  all in one
-    					//echo $this->form->renderFieldset('upload_drag_and_drop');
-                        LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
-                        ?>
+	                        <?php
+	                        /**/
+                            ?>
+                        </fieldset>
 
                     <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
@@ -178,9 +178,38 @@ $tabs = []
                     <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_zip_pc', Text::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP')); ?>
                         <legend><?php echo JText::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP_FROM_LOCAL_PC'); ?></legend>
 	                    <?php
-	                    // Specify gallery,  all in one
-	                    echo $this->form->renderFieldset('upload_zip');
-	                    LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
+	                    // 
+	                    //echo $this->form->renderFieldset('upload_zip');
+	                /**/
+	                ?>
+                    <hr>
+                    <div class="control-group">
+                        <label for="zip_upload_directory" class="control-label">
+			                <?php echo Text::_('COM_RSGALLERY2_ZIP_MINUS_FILE'); ?>
+                        </label>
+                        <div class="controls">
+                            <button id="select-file-button" type="button" class="btn btn-success">
+                                <span class="icon-copy" aria-hidden="true"></span>
+		                        <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_ZIP_DESC'); ?>
+                            </button>
+                            <input type="text" id="zip_upload_directory" name="zip_upload_directory" class="form-control"
+                                   value="<?php
+                                   //echo $app->input->get('install_directory', $app->get('tmp_path'));
+                                   echo "d:\...";;
+                                   ?>"
+                            >
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="button" class="btn btn-primary" id="uploadbutton_directory" onclick="XXX_Joomla.submitbuttonfolder()">
+				                <?php echo Text::_('COM_RSGALLERY2_CHECK_AND_UPLOAD'); ?>
+                            </button>
+                        </div>
+                    </div>
+	                <?php
+	                /**/
 	                    ?>
 
                     <?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -192,15 +221,46 @@ $tabs = []
                     ?>
                     <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_folder_server', Text::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER_SERVER')); ?>
                         <legend><?php echo JText::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER_PATH_ON_SERVER'); ?></legend>
-                    <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
                     <?php
-                    // Specify gallery,  all in one
-                    echo $this->form->renderFieldset('upload_folder');
-                    //LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
+                    // 
+                    //echo $this->form->renderFieldset('upload_folder');
+                    /**/
+                    ?>
+                    <hr>
+                    <div class="control-group">
+                        <label for="ftp_upload_directory" class="control-label">
+                            <?php echo Text::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER'); ?>
+                        </label>
+                        <div class="controls">
+                            <input type="text" id="ftp_upload_directory" name="ftp_upload_directory" class="form-control"
+                                   value="<?php echo $app->input->get('install_directory', $app->get('tmp_path')); ?>">
+                                <div style="color:red">
+                                    ToDo:<br>
+                                    Path must start with base path<br>
+                                    FTP base path is:  D:\xampp\htdocs\joomla3xNextRelease
+                                </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="button" class="btn btn-primary" id="uploadbutton_directory" onclick="XXX_Joomla.submitbuttonfolder()">
+                                <?php echo Text::_('COM_RSGALLERY2_CHECK_AND_UPLOAD'); ?>
+                            </button>
+                        </div>
+                    </div>
+                    <?php
+                    /**/
                     ?>
 
+                    <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
                     <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+
+                    <?php
+                    LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
+                    ?>
                 <?php endif; ?>
             </div>
 		</div>
@@ -241,6 +301,7 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
 	<?php
     /**/
     ?>
+    <hr>
     <div style="display-box">
         <!--small class="help-block" style="color:darkred;"-->
         <small style="color:darkred;">
