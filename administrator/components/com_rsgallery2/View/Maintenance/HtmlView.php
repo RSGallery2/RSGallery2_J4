@@ -48,6 +48,8 @@ class HtmlView extends BaseHtmlView
 	protected $isTestActive;
 	protected $developActive;
 
+	protected $intended;
+
 	// ToDo: Use other rights instead of core.admin -> IsRoot ?
 	// core.admin is the permission used to control access to
 	// the global config
@@ -81,6 +83,10 @@ class HtmlView extends BaseHtmlView
 			$this->developActive = true; // false / true;
 		}
 
+		// for prepared but not ready views
+		$input = Factory::getApplication()->input;
+		$this->intended = $input->get('intended', 'not defined', 'STRING');
+
 		// Check for errors.
 		/* Must load form before
 		if (count($errors = $this->get('Errors')))
@@ -109,8 +115,8 @@ class HtmlView extends BaseHtmlView
 		Rsgallery2Helper::addSubmenu('maintenance');
 		$this->sidebar = \JHtmlSidebar::render();
 
-		//$Layout = Factory::getApplication()->input->get('layout');
-		$this->addToolbar();
+		$Layout = Factory::getApplication()->input->get('layout');
+		$this->addToolbar($Layout);
 
 		return parent::display($tpl);
 	}
@@ -122,7 +128,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   1.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar($Layout)
 	{
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
@@ -141,8 +147,23 @@ class HtmlView extends BaseHtmlView
 				. '</span><br><br>';
 		}
 
-		// Set the title
-		ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'screwdriver'); // 'maintenance');
+		switch ($Layout)
+		{
+			case 'Prepared':
+
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+					. ': ' . '<strong>' . $this->intended . '<strong>'
+//					. ': ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY')
+					, 'screwdriver');
+				ToolBarHelper::cancel('config.cancel_rawView');
+				break;
+
+			default:
+				// Set the title
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'screwdriver'); // 'maintenance');
+				break;
+		}
+
 
 		$toolbar->preferences('com_rsgallery2');
 	}

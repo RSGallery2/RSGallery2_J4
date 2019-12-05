@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\View\Config;
+namespace Joomla\Component\Rsgallery2\Administrator\View\MaintenanceJ3x;
 
 defined('_JEXEC') or die;
 
@@ -61,7 +61,7 @@ class HtmlView extends BaseHtmlView
 			$app = JFactory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
-		//---  --------------------------------------------------------------
+			//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
 		/**/

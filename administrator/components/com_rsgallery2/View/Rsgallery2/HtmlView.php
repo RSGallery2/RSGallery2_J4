@@ -131,8 +131,18 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
+				. '*  config link to joomla config<br>'
+				. '*  finish -> DB: Copy old configuration<br>'
+				. '*  finish -> DB: Transfer galleries<br>'
+				. '*  finish -> DB: Transfer images<br>'
+//				. '*  finish -> <br>'
+//				. '*  finish -> <br>'
 				. '*  Hide content of Changelog until selected<br>'
 				. '*  Hide content of Credits until selected<br>'
+				. '*  Install: Improve end view<br>'
+				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -151,8 +161,8 @@ class HtmlView extends BaseHtmlView
 		$buttons = array(
 			array(
 
-				//'link'   => Route::_('index.php?option=com_rsgallery2&task=article.add'),
-				'link'   => Route::_('index.php?option=com_rsgallery2&view=config'),
+				//'link'   => Route::_('index.php?option=com_rsgallery2&view=config'),
+				'link'   => Route::_('index.php?option=com_config&view=component&component=com_rsgallery2'),
 				'image'  => 'fa fa-cog',
 				'text'   => Text::_('COM_RSGALLERY2_MAIN_CONFIGURATION'),
 				'access' => array('core.manage', 'com_rsgallery2', 'core.create', 'com_rsgallery2'),
