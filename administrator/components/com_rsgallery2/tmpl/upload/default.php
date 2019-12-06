@@ -14,11 +14,12 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
-JHtml::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'auto', 'relative' => true));
-
 HTMLHelper::_('behavior.core');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
+
+HTMLHelper::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
 
 Text::script('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL');
 
@@ -338,7 +339,7 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
         . Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI')
     ;
 	/**/
-	echo '<div title="' . $uploadMaxsTitle . '" >test</div>';
+	echo '<div title="' . $uploadMaxsTitle . '" >ToDo: Make /Maximum/ Element with title in hover</div>';
 	/**/
 }
 

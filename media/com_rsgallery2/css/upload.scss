@@ -1,0 +1,159 @@
+
+#upload-icon {
+  font-size: 48px;
+  width: auto;
+  height: auto;
+  margin: 0;
+  line-height: 175%;
+  color: #999;
+  transition: all .2s;
+}
+
+#dragarea {
+  background-color: #fafbfc;
+  /* border: 1px dashed #999; /**/
+  border: 5px dotted darkgreen; /**/
+  /* border: 5px dotted lightgreen; /**/
+  box-sizing: border-box;
+  padding: 5% 0;
+  transition: all 0.2s ease 0s;
+  width: 100%;
+
+  &:hover {
+    border-color: #666;
+//    background-color: #eee;
+    background-color: lightgrey;
+  }
+
+  &.dragareaDisabled {
+    border: 6px dotted red;
+  }
+
+  &[data-state=pending] .upload-progress {
+    display: none;
+  }
+
+  &[data-state=pending] .install-progress {
+    display: none;
+  }
+
+  & #upload-icon,
+  & p.lead {
+    color: #999;
+  }
+}
+
+/**
+#dragarea.hover #upload-icon,
+#dragarea p.lead {
+	color: #666;
+}
+/**/
+
+#dragandrophandler {
+  border: 2px dotted #0B85A1;
+  width: 400px;
+  color: #92AAB0;
+  text-align: left;
+  vertical-align: middle;
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 10px;
+  font-size: 200%;
+}
+
+.progressBar {
+  width: 200px;
+  height: 22px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  display: inline-block;
+  margin: 0px 10px 5px 5px;
+  vertical-align: top;
+
+
+  div {
+    height: 100%;
+    color: #fff;
+    text-align: right;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    background-color: #0ba1b5;
+    border-radius: 3px;
+  }
+}
+
+.statusbar {
+  border-top: 1px solid #A9CCD1;
+  min-height: 25px;
+  width: 700px;
+  padding: 10px 10px 0px 10px;
+  vertical-align: top;
+
+  :nth-child(odd) {
+    background: #EBEFF0;
+  }
+}
+
+.filename {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+}
+
+.filesize {
+  display: inline-block;
+  vertical-align: top;
+  color: #30693D;
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.abort {
+  background-color: #A8352F;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  color: #fff;
+  font-family: arial;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 4px 15px;
+  cursor: pointer;
+  vertical-align: top
+}
+
+/**
+.tmp_order {
+    display:inline-block;
+    vertical-align:top;
+    color:#30693D;
+    margin-left:20px;
+    margin-right:20px;
+}
+/**/
+
+/**
+.thumbnails img {
+    float: left;
+    margin-right: 10px;
+    display: block;
+}
+/**/
+
+/**
+.thumbnail img {
+    margin-top: 2.5%; /** /
+    /*    max-width: 90%; /** /
+    /*    border-radius: 5px; /** /
+    /* object-fit: contain; /** /
+    /*    height: auto; /** /
+    /*    height: 150px; /** /
+    /*    max-height: 150px; /** /
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); /** /
+}
+/**/
+
+
