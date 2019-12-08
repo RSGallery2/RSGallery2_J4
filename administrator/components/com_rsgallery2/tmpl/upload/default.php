@@ -164,10 +164,23 @@ $tabs = []
                                 </div>
                             </div>
                         </div>
-	                        <?php
-	                        /**/
-                            ?>
-                        </fieldset>
+                        <div id="legacy-uploader" style="display: none;">
+                            <div class="control-group">
+                                <label for="install_package" class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
+                                <div class="controls">
+                                    <input class="form-control-file" id="install_package" name="install_package" type="file">
+                                    <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-primary" type="button" id="installbutton_package">
+				                    <?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_UPLOAD_AND_INSTALL'); ?>
+                                </button>
+                            </div>
+
+                            <input id="installer-return" name="return" type="hidden" value="<?php echo $return; ?>">
+                        </div>
+                    </fieldset>
 
                     <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
