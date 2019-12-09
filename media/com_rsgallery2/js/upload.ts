@@ -13,6 +13,10 @@
 
 const Joomla = window.Joomla || {};
 
+/*----------------------------------------------------------------
+   queue with lock
+----------------------------------------------------------------*/
+
 // ToDo: put to and import RSG2 lib ?
 class Queue <T> {
 
@@ -91,7 +95,10 @@ class Queue <T> {
 
 }
 
-// toDO: use "File" type as interface
+/*----------------------------------------------------------------
+   List of droped files (waiting for db request)
+----------------------------------------------------------------*/
+
 interface IDroppedFile {
     file: File;
     galleryId: string;
@@ -115,7 +122,7 @@ class DroppedFiles extends Queue<IDroppedFile> {
         });
 /**/
 
-        for (var idx = 0; idx < files.length; idx++) {
+        for (let idx = 0; idx < files.length; idx++) {
             const file: File = files[idx];
 
             console.log('addFile: ' + files[idx].name);
@@ -123,43 +130,39 @@ class DroppedFiles extends Queue<IDroppedFile> {
             const next : IDroppedFile = {
                 file: file,
                 galleryId: galleryId,
-            }
+            };
 
             this.push (next);
         }
+
     }
-
-
-
-
 }
 
-class UploadHTMLElements {
+/*----------------------------------------------------------------
+  Pointer to used html elements on form
+----------------------------------------------------------------*/
+
+class FormHTMLElements {
     selectGallery: HTMLInputElement;
     dragZone: HTMLElement;
+    progressArea: HTMLElement;
 
-//    progressArea
-
-    // : HTMLElement;
-    // : HTMLElement;
-    // : HTMLElement;
     // : HTMLElement;
     // : HTMLElement;
 
     constructor() {
         this.selectGallery = <HTMLInputElement> document.getElementById('SelectGallery');
         this.dragZone = <HTMLElement> document.getElementById('dragarea');
-
-
+        this.progressArea = <HTMLElement> document.getElementById('#uploadProgressArea');
     }
 
 }
 
 /*----------------------------------------------------------------
-   red / green border of drag area
+   gallery selection defines red / green border of drag area
 ----------------------------------------------------------------*/
 
-class GallerySelected {
+class Border4SelectedGallery {
 //    selectGallery: HTMLElement;
     dragZone: HTMLElement;
 
@@ -188,31 +191,100 @@ class GallerySelected {
     }
 }
 
+
 /*----------------------------------------------------------------
-   red / green border of drag area
+   Ajax request DB items for each file in list
+   First step in transfer of file
 ----------------------------------------------------------------*/
+
 
 enum eSendState {
     idle ,
     busy,
 }
 
-class DropInDragArea {
-    selectGallery: HTMLInputElement;
-    dragZone: HTMLElement;
-//    progressArea: HTMLElement;
-    droppedFiles : DroppedFiles;
-    private sendState: number;
 
-    constructor(dragZone: HTMLElement,
+class DoRequestDbImageId {
+
+    private dragZone: HTMLElement;
+    private progressArea: HTMLElement;
+    private droppedFiles: DroppedFiles;
+    private sendState: eSendState;
+
+    constructor(
+        dragZone: HTMLElement,
+        droppedFiles: DroppedFiles,
+        progressArea: HTMLElement
+        ) {
+            this.dragZone = dragZone;
+            this.droppedFiles = droppedFiles;
+            this.progressArea = progressArea;
+    }
+
+    doRequestDbImageId () {
+
+        // Not busy
+        if (this.sendState == eSendState.idle) {
+
+            if(this.droppedFiles.length > 0)
+            {
+                this.sendState = eSendState.busy;
+            }
+        }
+
+        
+
+        /**
+
+        // for function reserveDbImageId
+        var data = new FormData();
+        // data.append('upload_file', files[idx]);
+        data.append('upload_file', files[idx].name);
+        data.append('imagesDroppedListIdx', imagesDroppedListIdx);
+
+        data.append(Token, '1');
+        data.append('gallery_id', gallery_id);
+        //data.append('idx', idx);
+
+        // Set progress bar
+        var statusBar = new createStatusBar(progressArea);
+        statusBar.setFileNameSize(files[idx].name, files[idx].size);
+
+        /**/
+
+
+    }
+
+
+}
+
+/*----------------------------------------------------------------
+
+----------------------------------------------------------------*/
+
+class DoUploadFile {
+
+
+}
+
+/*----------------------------------------------------------------
+handle dropped files
+----------------------------------------------------------------*/
+
+class DroppingFiles {
+    private selectGallery: HTMLInputElement;
+    private droppedFiles: DroppedFiles;
+    private requestDbImageId: DoRequestDbImageId;
+
+    constructor(
                 selectGallery: HTMLInputElement,
                 droppedFiles: DroppedFiles,
-                //progressArea: HTMLElement
+                requestDbImageId: DoRequestDbImageId
                 ) {
-        this.dragZone = dragZone;
+
         this.selectGallery = selectGallery;
         this.droppedFiles = droppedFiles;
-//        this.progressArea = progressArea;
+        this.requestDbImageId = requestDbImageId;
 
         let buttonManualFile = <HTMLButtonElement> document.querySelector('#select-file-button');
         let fileInput = <HTMLInputElement> document.querySelector('#install_package');
@@ -223,13 +295,7 @@ class DropInDragArea {
         });
         /**/
         buttonManualFile.onclick = () =>  fileInput.click();
-
         fileInput.onchange = (ev) => this.onNewFile(ev);
-
-
-//        selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
-
-//        this.checkSelection (selectGallery.value);
     }
 
     onNewFile(ev: Event) {
@@ -255,47 +321,12 @@ class DropInDragArea {
             }
 
             this.droppedFiles.addFiles (files, gallery_id);
-    //        prepareReserveDbImageId(files, this.progressArea);
 
-            this.requestDbImageId ();
+            // Start first Part of transfer files
+            this.requestDbImageId.doRequestDbImageId ();
 
         }
     }
-
-    requestDbImageId () {
-
-        // Not busy
-        if (this.sendState == 0) {
-
-            if(this.droppedFiles.length > 0)
-            {
-
-            }
-        }
-
-        
-
-
-
-        // for function reserveDbImageId
-        var data = new FormData();
-        // data.append('upload_file', files[idx]);
-        data.append('upload_file', files[idx].name);
-        data.append('imagesDroppedListIdx', imagesDroppedListIdx);
-
-        data.append(Token, '1');
-        data.append('gallery_id', gallery_id);
-        //data.append('idx', idx);
-
-        // Set progress bar
-        var statusBar = new createStatusBar(progressArea);
-        statusBar.setFileNameSize(files[idx].name, files[idx].size);
-
-
-
-
-    }
-
 
     /**
      onNewFile(target: EventTarget) {
@@ -323,7 +354,7 @@ class DropInDragArea {
 document.addEventListener("DOMContentLoaded", function(event) {
 
     // collect html elements
-    let elements = new UploadHTMLElements();
+    let elements = new FormHTMLElements();
 
     // on old browser just show file upload
     if (typeof FormData === 'undefined') {
@@ -340,10 +371,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
     // init red / green border of drag area
-    let gallerySelected = new GallerySelected (elements.selectGallery, elements.dragZone);
+    const gallerySelected = new Border4SelectedGallery (elements.selectGallery, elements.dragZone);
+
+    // ajax request: database image item
+    const requestDbImageId = new DoRequestDbImageId (elements.dragZone, droppedFiles, elements.progressArea);
 
     // init drag, drop and file upload  
-    let droppInDragArea = new DropInDragArea (elements.dragZone, elements.selectGallery, droppedFiles);
+    let droppInDragArea = new DroppingFiles (elements.selectGallery, droppedFiles, requestDbImageId);
 
 
 

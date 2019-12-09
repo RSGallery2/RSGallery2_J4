@@ -24,6 +24,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var Joomla = window.Joomla || {};
+/*----------------------------------------------------------------
+   queue with lock
+----------------------------------------------------------------*/
 // ToDo: put to and import RSG2 lib ?
 var Queue = /** @class */ (function () {
     function Queue() {
@@ -115,35 +118,35 @@ var DroppedFiles = /** @class */ (function (_super) {
     };
     return DroppedFiles;
 }(Queue));
-var UploadHTMLElements = /** @class */ (function () {
-    //    progressArea
+/*----------------------------------------------------------------
+  Pointer to used html elements on form
+----------------------------------------------------------------*/
+var FormHTMLElements = /** @class */ (function () {
     // : HTMLElement;
     // : HTMLElement;
-    // : HTMLElement;
-    // : HTMLElement;
-    // : HTMLElement;
-    function UploadHTMLElements() {
+    function FormHTMLElements() {
         this.selectGallery = document.getElementById('SelectGallery');
         this.dragZone = document.getElementById('dragarea');
+        this.progressArea = document.getElementById('#uploadProgressArea');
     }
-    return UploadHTMLElements;
+    return FormHTMLElements;
 }());
 /*----------------------------------------------------------------
-   red / green border of drag area
+   gallery selection defines red / green border of drag area
 ----------------------------------------------------------------*/
-var GallerySelected = /** @class */ (function () {
-    function GallerySelected(selectGallery, dragZone) {
+var Border4SelectedGallery = /** @class */ (function () {
+    function Border4SelectedGallery(selectGallery, dragZone) {
         var _this = this;
         //        this.selectGallery = selectGallery;
         this.dragZone = dragZone;
         selectGallery.onchange = function (ev) { return _this.onSelectionChange(ev.target); };
         this.checkSelection(selectGallery.value);
     }
-    GallerySelected.prototype.onSelectionChange = function (target) {
+    Border4SelectedGallery.prototype.onSelectionChange = function (target) {
         var selection = target;
         this.checkSelection(selection.value);
     };
-    GallerySelected.prototype.checkSelection = function (value) {
+    Border4SelectedGallery.prototype.checkSelection = function (value) {
         //green
         if (value != "0") {
             this.dragZone.classList.remove('dragareaDisabled');
@@ -153,23 +156,67 @@ var GallerySelected = /** @class */ (function () {
             this.dragZone.classList.add('dragareaDisabled');
         }
     };
-    return GallerySelected;
+    return Border4SelectedGallery;
 }());
 /*----------------------------------------------------------------
-   red / green border of drag area
+   Ajax request DB items for each file in list
+   First step in transfer of file
 ----------------------------------------------------------------*/
 var eSendState;
 (function (eSendState) {
     eSendState[eSendState["idle"] = 0] = "idle";
     eSendState[eSendState["busy"] = 1] = "busy";
 })(eSendState || (eSendState = {}));
-var DropInDragArea = /** @class */ (function () {
-    function DropInDragArea(dragZone, selectGallery, droppedFiles) {
-        var _this = this;
+var DoRequestDbImageId = /** @class */ (function () {
+    function DoRequestDbImageId(dragZone, droppedFiles, progressArea) {
         this.dragZone = dragZone;
+        this.droppedFiles = droppedFiles;
+        this.progressArea = progressArea;
+    }
+    DoRequestDbImageId.prototype.doRequestDbImageId = function () {
+        // Not busy
+        if (this.sendState == eSendState.idle) {
+            if (this.droppedFiles.length > 0) {
+                this.sendState = eSendState.busy;
+            }
+        }
+        /**
+
+        // for function reserveDbImageId
+        var data = new FormData();
+        // data.append('upload_file', files[idx]);
+        data.append('upload_file', files[idx].name);
+        data.append('imagesDroppedListIdx', imagesDroppedListIdx);
+
+        data.append(Token, '1');
+        data.append('gallery_id', gallery_id);
+        //data.append('idx', idx);
+
+        // Set progress bar
+        var statusBar = new createStatusBar(progressArea);
+        statusBar.setFileNameSize(files[idx].name, files[idx].size);
+
+        /**/
+    };
+    return DoRequestDbImageId;
+}());
+/*----------------------------------------------------------------
+
+----------------------------------------------------------------*/
+var DoUploadFile = /** @class */ (function () {
+    function DoUploadFile() {
+    }
+    return DoUploadFile;
+}());
+/*----------------------------------------------------------------
+handle dropped files
+----------------------------------------------------------------*/
+var DroppingFiles = /** @class */ (function () {
+    function DroppingFiles(selectGallery, droppedFiles, requestDbImageId) {
+        var _this = this;
         this.selectGallery = selectGallery;
         this.droppedFiles = droppedFiles;
-        //        this.progressArea = progressArea;
+        this.requestDbImageId = requestDbImageId;
         var buttonManualFile = document.querySelector('#select-file-button');
         var fileInput = document.querySelector('#install_package');
         /**
@@ -179,10 +226,8 @@ var DropInDragArea = /** @class */ (function () {
         /**/
         buttonManualFile.onclick = function () { return fileInput.click(); };
         fileInput.onchange = function (ev) { return _this.onNewFile(ev); };
-        //        selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
-        //        this.checkSelection (selectGallery.value);
     }
-    DropInDragArea.prototype.onNewFile = function (ev) {
+    DroppingFiles.prototype.onNewFile = function (ev) {
         var element = ev.target;
         ev.preventDefault();
         ev.stopPropagation();
@@ -201,36 +246,18 @@ var DropInDragArea = /** @class */ (function () {
                 return;
             }
             this.droppedFiles.addFiles(files, gallery_id);
-            //        prepareReserveDbImageId(files, this.progressArea);
-            this.requestDbImageId();
+            // Start first Part of transfer files
+            this.requestDbImageId.doRequestDbImageId();
         }
     };
-    DropInDragArea.prototype.requestDbImageId = function () {
-        // Not busy
-        if (this.sendState == 0) {
-            if (this.droppedFiles.length > 0) {
-            }
-        }
-        // for function reserveDbImageId
-        var data = new FormData();
-        // data.append('upload_file', files[idx]);
-        data.append('upload_file', files[idx].name);
-        data.append('imagesDroppedListIdx', imagesDroppedListIdx);
-        data.append(Token, '1');
-        data.append('gallery_id', gallery_id);
-        //data.append('idx', idx);
-        // Set progress bar
-        var statusBar = new createStatusBar(progressArea);
-        statusBar.setFileNameSize(files[idx].name, files[idx].size);
-    };
-    return DropInDragArea;
+    return DroppingFiles;
 }());
 //--------------------------------------------------------------------------------------
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function (event) {
     // collect html elements
-    var elements = new UploadHTMLElements();
+    var elements = new FormHTMLElements();
     // on old browser just show file upload
     if (typeof FormData === 'undefined') {
         var legacy_uploader = document.getElementById('legacy-uploader');
@@ -242,9 +269,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // Reserve list for dropped files
     var droppedFiles = new DroppedFiles();
     // init red / green border of drag area
-    var gallerySelected = new GallerySelected(elements.selectGallery, elements.dragZone);
+    var gallerySelected = new Border4SelectedGallery(elements.selectGallery, elements.dragZone);
+    // ajax request: database image item
+    var requestDbImageId = new DoRequestDbImageId(elements.dragZone, droppedFiles, elements.progressArea);
     // init drag, drop and file upload  
-    var droppInDragArea = new DropInDragArea(elements.dragZone, elements.selectGallery, droppedFiles);
+    var droppInDragArea = new DroppingFiles(elements.selectGallery, droppedFiles, requestDbImageId);
     //--------------------------------------------------------------------------------------
     // new functions and new submit buttons
     //--------------------------------------------------------------------------------------
