@@ -32,6 +32,11 @@ class HtmlView extends BaseHtmlView
 {
 	protected $configVars;
 
+	protected $configVarsOld;
+
+	protected $form;
+
+
 	/**
 	 * Method to display the view.
 	 *
@@ -47,6 +52,9 @@ class HtmlView extends BaseHtmlView
 		//echo '$Layout: ' . $Layout . '<br>';
 
 		$this->configVars = array ();
+		$this->configVarsOld = array ();
+
+		$this->form = $this->get('Form');
 
 		try
 		{
@@ -61,11 +69,40 @@ class HtmlView extends BaseHtmlView
 			$app = JFactory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
-			//---  --------------------------------------------------------------
+		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
 		/**/
 		$Layout = Factory::getApplication()->input->get('layout');
+
+		switch ($Layout)
+		{
+			case 'DbCopyOldConfig':
+
+				try
+				{
+					$oldConfigModel      = $this->getModel('MaintenanceJ3x');
+					//$oldConfigModel      = $this->getModel('DbOldConfig');
+					$this->configVarsOld = $oldConfigModel->OldConfigItems();
+					// iterate over all values
+					$this->configVarsMerged = $oldConfigModel->MergeOldAndNew($this->configVarsOld, $this->configVars);
+
+				}
+				catch (RuntimeException $e)
+				{
+					$OutTxt = '';
+					$OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
+					$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+					$app = JFactory::getApplication();
+					$app->enqueueMessage($OutTxt, 'error');
+				}
+
+
+				break;
+		}
+
+
 		Rsgallery2Helper::addSubmenu('maintenance');
 		$this->sidebar = \JHtmlSidebar::render();
 
@@ -103,19 +140,31 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'RawView':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_VIEW'), 'screwdriver');
+			case 'DbCopyOldConfig':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'), 'screwdriver');
+				ToolBarHelper::custom ('copyoldconfig.copyoldconfig','copy','','COM_RSGALLERY2_COPY_OLD_CONFIGURATION', true);
+				ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
+
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 
-			case 'RawEdit':
+			case 'DBTransferOldGalleries':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'), 'screwdriver');
+				ToolBarHelper::cancel('config.cancel_rawView');
+				break;
+			case 'DBTransferOldImages':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'), 'screwdriver');
+				ToolBarHelper::cancel('config.cancel_rawView');
+				break;
+
+				/**
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
 					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'), 'screwdriver');
 				ToolBarHelper::apply('config.apply_rawEdit');
 				ToolBarHelper::save('config.save_rawEdit');
 				ToolBarHelper::cancel('config.cancel_rawEdit');
 				break;
+				 * */
 			default:
 				ToolBarHelper::cancel('config.cancel');
 				break;
@@ -123,6 +172,11 @@ class HtmlView extends BaseHtmlView
 
 		// direct to config
 		$toolbar->preferences('com_rsgallery2');
+	}
+
+	public function getModel($name = 'Associations', $prefix = 'Rsgallery2', $config = array('ignore_request' => true))
+	{
+		return parent::getModel($name, $prefix, $config);
 	}
 
 

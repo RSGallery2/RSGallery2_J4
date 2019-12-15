@@ -42,8 +42,19 @@ HTMLHelper::_('bootstrap.framework');
 
 					try
 					{
+						//todo: iterate over merge and make "table ... old / new / info (equal missing  ... icons)
+
+						//test
 
 
+
+                        foreach ($this->configVarsOld as $oldName => $oldValue)
+                        {
+
+	                        echo "{$oldName} => {$oldName} ";
+
+
+                        }
 
 
 					}
