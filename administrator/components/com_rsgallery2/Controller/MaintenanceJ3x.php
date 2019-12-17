@@ -12,10 +12,18 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Router\Route;
+use Joomla\Input\Input;
+use Joomla\Utilities\ArrayHelper;
+
 
 /**
 global $Rsg2DebugActive;
@@ -30,7 +38,7 @@ if ($Rsg2DebugActive)
 }
 /**/
 
-class MaintenanceJ3xController extends FormController
+class MaintenanceJ3xController extends AdminController
 {
 
 	/**
@@ -88,5 +96,95 @@ class MaintenanceJ3xController extends FormController
 		}
 	*/
 
-}
+	/**
+     * Copies list of selected old configuration items to new configuration
+     *
+     * @since 5.0.0
+	 */
+	public function copyOldItems2New ()
+	{
+		$msg     = "controller.createImageDbItems: ";
+		$msgType = 'notice';
+
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		$canAdmin = JFactory::getUser()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin)
+		{
+			//JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		}
+		else
+		{
+			// yyy
+
+			try
+			{
+
+
+				$model = $this->getModel('MaintenanceJ3x');
+
+				$IsAllCreated = false;
+//				$input     = JFactory::getApplication()->input;
+//				$GalleryId = $input->get('ParentGalleryId', 0, 'INT');
+				$selected = $this->input->get('cfgId', array(), 'array');
+				$allNames = $this->input->get('cfgName', array(), 'array');
+
+				if (empty ($selected))
+				{
+					$msg     = $msg . JText::_('COM_RSGALLERY2_NO_ITEM_SELECTED');
+					$msgType = 'warning';
+				} 
+				else 
+				{
+					// Collect config names to copy
+					$configNames = [];
+					
+					foreach ($idx in $selected)
+					{
+						$configNames[] = $allNames[(int)$idx}];
+					}
+					
+					$isOk = $model->copyOldItems2New ($configNames);
+
+					if ($isOk)
+					{
+						$msg .= "Successful copied items:" . count ($selected);
+					}
+					else
+					{
+						$msg .= "Error at copyOldItems2New items: " . count ($selected);
+						$msgType = 'warning';					
+					}
+				}
+
+
+			}
+			catch (RuntimeException $e)
+			{
+				$OutTxt = '';
+				$OutTxt .= 'Error executing saveOrdering: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = JFactory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+
+		}
+
+		// Message to user ...
+
+		// Create list of CIDS and append to link URL like in PropertiesView above
+		// &ID[]=2&ID[]=3&ID[]=4&ID[]=12
+		$cids = $this->input->get('cid', 0, 'int');
+		$link = 'index.php?option=' . $this->option . '&view=' . $this->view_item . '&' . http_build_query(array('cid' => $cids));
+		$this->setRedirect($link, $msg, $msgType);
+		
+		$this->setRedirect(Route::_('index.php?option=com_content&view=featured', false), $message);
+	} 
+
+} // class
 
