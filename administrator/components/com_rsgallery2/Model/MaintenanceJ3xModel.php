@@ -38,8 +38,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 			$query = $db->getQuery(true);
 
 			$query
-				//->select('*')
-				->select('name' , 'value')
+				->select('*')
+				//->select('name' , 'value')
 				->from($db->quoteName('#__rsgallery2_config'))
 				->order($db->quoteName('name') . ' ASC');
 
@@ -47,15 +47,18 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 			//$rows = $db->loadObjectList();
 			$vars = $db->loadAssocList();
 
+			//--- List of configuration items ----------------------------------------------------
+
 			if ($vars)
 			{
 				foreach ($vars as $v)
 				{
 					if ($v['name'] != "")
 					{
-						// $this->$v['name'] = $v['value'];
-						$k        = $v['name'];
-						$oldItems[$k] = $v['value'];
+						$name  = $v['name'];
+						$value = strlen($v['value']) ? $v['value'] : "";
+
+						$oldItems[$name] = $value;
 					}
 				}
 			}
