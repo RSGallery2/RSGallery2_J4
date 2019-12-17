@@ -9,6 +9,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.framework');
@@ -37,23 +38,80 @@ HTMLHelper::_('bootstrap.framework');
 
                 <legend><strong><?php echo JText::_('COM_RSGALLERY2_COPY_OLD_CONFIG'); ?></strong></legend>
 
-                <p><h3>DbCopyOldConfig</h3></p>
-                <?php
+				<?php if (! count ($this->configVarsOld)) : ?>
+					<div class="alert alert-info">
+						<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
+						<?php echo Text::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
+					</div>
+				<?php else : ?>
+				<table class="table" id="galleryList">
+					<caption id="captionTable" class="sr-only">
+						<?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
+					</caption>
+					<thead>
+                        <tr>
+                            <td style="width:1%" class="text-center">
+                                <?php echo HTMLHelper::_('grid.checkall'); ?>
+                            </td>
+                            <th scope="col" style="width:100px" class="text-center d-none d-md-table-cell">
+                                <?php
+                                // echo HTMLHelper::_('searchtools.sort', '', 'a.lft', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2');
+                                echo 'Old Name';
+                                ?>
+                            </th>
+                            <th scope="col" style="width:5%" class="text-center">
+                                <?php
+                                //echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder);
+                                echo 'Old Value';
+                                ?>
+                            </th>
+                            <th scope="col" style="min-width:100px">
+                                <?php
+                                //echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder);
+                                echo 'New name';
+                                ?>
+                            </th>
+
+                            <th scope="col" style="min-width:5%">
+                                <?php
+                                //echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder);
+                                echo 'New value';
+                                ?>
+                            </th>
+
+                        </tr>
+					</thead>
+					<tbody>
+
+        			<?php
 
 					try
 					{
-						//todo: iterate over merge and make "table ... old / new / info (equal missing  ... icons)
 
-						//test
-
-
-
-                        foreach ($this->configVarsOld as $oldName => $oldValue)
+                        //foreach ($this->configVarsOld as $oldName => $oldValue)
+                        foreach ($this->configVarsMerged as $idx => $mergedName)
                         {
+                            ?>
 
-	                        echo "{$oldName} => {$oldName} ";
-
-
+							<!-- tr class="row<?php echo $idx % 2; ?>" > -->
+							<tr>
+                                <td class="text-center">
+	    							<?php echo HTMLHelper::_('grid.id', $idx, $mergedName); ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell">
+                                    <?php echo "{" . $mergedName . "}"; ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell">
+                                    <?php echo $idx; ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell">
+                                    <?php echo "{" . $mergedName . "}"; ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell">
+	                                <?php echo $idx; ?>
+                                </td>
+                            </tr>
+                            <?php
                         }
 
 
@@ -69,6 +127,10 @@ HTMLHelper::_('bootstrap.framework');
 					}
 
 				?>
+					</tbody>
+				</table>
+
+				<?php endif; ?>
 
 				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
