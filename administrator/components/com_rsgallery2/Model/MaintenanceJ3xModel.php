@@ -97,4 +97,69 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
 
 
+
+	static function copyOldItems2New ()
+	{
+		$isOk = false;
+
+		try
+		{
+			$oldConfigItems = MaintenanceJ3xModel::OldConfigItems();
+			if (count($oldConfigItems))
+			{
+				$isOk = MaintenanceJ3xModel::copyOldItemsList2New ($oldConfigItems);
+			}
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'OldConfigItems: Error in copyOldItems2New: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $isOk;
+	}
+
+	static function copyOldItemsList2New ($configItems)
+	{
+		$isOk = false;
+		$actElement = "No element";
+
+		try
+		{
+			foreach ($configItems as $NameAndValue)
+			{
+				// switch for special indirect behaviour
+				// oldCfgName -> differnt new config name
+				// switch ()
+				// { case , default }
+				//---------------------------------------
+
+
+				// default: id oldName == new Name -> copy value
+
+
+
+			}
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'OldConfigItems: Error in copyOldItemsList2New: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+
+
+		return $isOk;
+	}
+
+
+
 }

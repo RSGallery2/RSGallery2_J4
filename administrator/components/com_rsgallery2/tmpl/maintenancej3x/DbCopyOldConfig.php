@@ -126,7 +126,7 @@ HTMLHelper::_('bootstrap.framework');
 						$app->enqueueMessage($OutTxt, 'error');
 					}
 
-				?>
+				    ?>
 					</tbody>
 				</table>
 
