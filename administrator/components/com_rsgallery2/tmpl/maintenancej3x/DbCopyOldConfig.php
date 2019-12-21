@@ -14,9 +14,8 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.framework');
 
-
-
-
+HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
 
 
 ?>
@@ -50,29 +49,29 @@ HTMLHelper::_('bootstrap.framework');
 					</caption>
 					<thead>
                         <tr>
-                            <td style="width:1%" class="text-center">
+                            <td style="width:3%" class="text-center  configCheck">
                                 <?php echo HTMLHelper::_('grid.checkall'); ?>
                             </td>
-                            <th scope="col" style="width:100px" class="text-center d-none d-md-table-cell">
+                            <th scope="col" class="text-center d-none d-md-table-cell configIndexHeader">
                                 <?php
                                 // echo HTMLHelper::_('searchtools.sort', '', 'a.lft', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2');
-                                echo 'Old Name';
+                                echo 'Index';
                                 ?>
                             </th>
-                            <th scope="col" style="width:5%" class="text-center">
+                            <th scope="col" class="text-center configNameHeader">
                                 <?php
                                 //echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder);
+                                echo 'Name';
+                                ?>
+                            </th>
+                            <th scope="col" class="text-center configValueOldHeader">
+                                <?php
+                                //echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder);
                                 echo 'Old Value';
                                 ?>
                             </th>
-                            <th scope="col" style="min-width:100px">
-                                <?php
-                                //echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder);
-                                echo 'New name';
-                                ?>
-                            </th>
 
-                            <th scope="col" style="min-width:5%">
+                            <th scope="col" class="text-center configValueNewHeader">
                                 <?php
                                 //echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder);
                                 echo 'New value';
@@ -89,31 +88,91 @@ HTMLHelper::_('bootstrap.framework');
 					{
 
                         //foreach ($this->configVarsOld as $oldName => $oldValue)
-                        foreach ($this->configVarsMerged as $idx => $mergedName)
-                        {
-                            ?>
+						$idx = 0;
+						$NotDefined = '{Not defined}';
 
+						// ToDo: only name in $this->configVarsMerged
+                        // ToDo: list for special transfer values
+
+                        // first new config elements ( matching or not matching to old)
+                        foreach ($this->configVarsMerged as $mergedName => $mergedValue )
+                        {
+                        	$valOld = $this->configVarsOld [$mergedName] ?? $NotDefined;
+	                        $valNew = $this->configVars->get($mergedName)  ?? $NotDefined;
+
+	                        if ($valNew == $NotDefined)
+                            {
+                                continue;
+                            }
+
+	                        // Make empty string visible
+	                        $valOld     = strlen ($valOld) > 0  ?  trim($valOld) : '""';
+	                        $valNew     = strlen ($valNew) > 0  ?  $valNew : '""';
+
+	                        ?>
 							<!-- tr class="row<?php echo $idx % 2; ?>" > -->
 							<tr>
                                 <td class="text-center">
 	    							<?php echo HTMLHelper::_('grid.id', $idx, $mergedName); ?>
                                 </td>
-                                <td class="order text-center d-none d-md-table-cell">
-                                    <?php echo "{" . $mergedName . "}"; ?>
+								<td class="order text-center d-none d-md-table-cell">
+									<?php echo $idx; ?>
+								</td>
+                                <td class="order text-center d-none d-md-table-cell configMatching">
+                                    <?php echo $mergedName; ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell configValueOld">
+                                    <?php echo $valOld; ?>
                                 </td>
                                 <td class="order text-center d-none d-md-table-cell">
-                                    <?php echo $idx; ?>
-                                </td>
-                                <td class="order text-center d-none d-md-table-cell">
-                                    <?php echo "{" . $mergedName . "}"; ?>
-                                </td>
-                                <td class="order text-center d-none d-md-table-cell">
-	                                <?php echo $idx; ?>
+	                                <?php echo $valNew; ?>
                                 </td>
                             </tr>
                             <?php
+
+	                        $idx++;
                         }
 
+						// ToDo: List of special transfer ....
+
+						// last old config elements not having new partner
+						foreach ($this->configVarsMerged as $mergedName => $mergedValue )
+						{
+							$valOld     = $this->configVarsOld [$mergedName] ?? $NotDefined;
+							$valNew     = $this->configVars->get($mergedName)  ?? $NotDefined;
+
+							if ($valNew != $NotDefined)
+                            {
+	                            continue;
+                            }
+
+	                        // Make empty string visible
+	                        $valOld     = strlen ($valOld) > 0  ?  $valOld : '""';
+	                        $valNew     = strlen ($valNew) > 0  ?  $valNew : '""';
+
+	                        ?>
+                            <!-- tr class="row<?php echo $idx % 2; ?>" > -->
+                            <tr>
+                                <td class="text-center">
+									<?php // echo HTMLHelper::_('grid.id', $idx, $mergedName); ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell">
+									<?php echo '(' .  $idx . ')'; ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell configNotMatching">
+								<?php echo $mergedName; ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell configValueOld">
+									<?php echo $valOld; ?>
+                                </td>
+                                <td class="order text-center d-none d-md-table-cell">
+									<?php echo $valNew; ?>
+                                </td>
+                            </tr>
+							<?php
+
+	                        $idx++;
+                        }
 
 					}
 					catch (RuntimeException $e)
@@ -125,6 +184,7 @@ HTMLHelper::_('bootstrap.framework');
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}
+
 
 				    ?>
 					</tbody>

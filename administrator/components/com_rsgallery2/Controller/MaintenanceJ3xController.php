@@ -12,6 +12,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -104,13 +105,13 @@ class MaintenanceJ3xController extends AdminController
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
 
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$canAdmin = JFactory::getUser()->authorise('core.manage', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
 			//JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -122,7 +123,7 @@ class MaintenanceJ3xController extends AdminController
 				$cfg3xModel = $this->getModel('MaintenanceJ3x');
 
 				$IsAllCreated = false;
-//				$input     = JFactory::getApplication()->input;
+//				$input     = Factory::getApplication()->input;
 //				$GalleryId = $input->get('ParentGalleryId', 0, 'INT');
 				$selected = $this->input->get('cfgId', array(), 'array');
 				$allNames = $this->input->get('cfgName', array(), 'array');
@@ -161,7 +162,7 @@ class MaintenanceJ3xController extends AdminController
 				$OutTxt .= 'Error executing saveOrdering: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 
@@ -188,13 +189,13 @@ class MaintenanceJ3xController extends AdminController
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
 
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$canAdmin = JFactory::getUser()->authorise('core.manage', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
 			//JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -223,7 +224,7 @@ class MaintenanceJ3xController extends AdminController
 				$OutTxt .= 'Error executing copyOldItems2New: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 
