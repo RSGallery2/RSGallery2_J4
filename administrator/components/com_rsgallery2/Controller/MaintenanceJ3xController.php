@@ -58,22 +58,6 @@ class MaintenanceJ3xController extends AdminController
 
 	}
 
-	/**
-	 * Proxy for getModel.
-	 * @param string $name
-	 * @param string $prefix
-	 * @param array  $config
-	 *
-	 * @return mixed
-	 *
-	 * @since 4.3.0
-	 */
-    public function getModel($name = 'MaintenanceJ3x', $prefix = 'Rsgallery2Model', $config = array('ignore_request' => true))
-    {
-        return parent::getModel($name, $prefix, $config);
-    }
-	/**/
-
 	/*
 		$params = ComponentHelper::getParams('com_rsgallery2');
 
@@ -120,7 +104,8 @@ class MaintenanceJ3xController extends AdminController
 		{
 			try
 			{
-				$cfg3xModel = $this->getModel('MaintenanceJ3x');
+				//$cfg3xModel = $this->getModel('MaintenanceJ3x');
+				$configModel = $this->getModel('ConfigRaw');
 
 				$IsAllCreated = false;
 //				$input     = Factory::getApplication()->input;
@@ -143,7 +128,8 @@ class MaintenanceJ3xController extends AdminController
 						$configNames[] = $allNames[(int)$idx];
 					}
 					
-					$isOk = $cfg3xModel->copyOldItemsList2New ($configNames);
+					//$isOk = $cfg3xModel->copyOldItemsList2New ($configNames);
+					$isOk = $configModel->copyOldItemsList2New ($configNames);
 
 					if ($isOk)
 					{
@@ -168,15 +154,8 @@ class MaintenanceJ3xController extends AdminController
 
 		}
 
-		// Message to user ...
-
-		// Create list of CIDS and append to link URL like in PropertiesView above
-		// &ID[]=2&ID[]=3&ID[]=4&ID[]=12
-		$cids = $this->input->get('cid', 0, 'int');
-		$link = 'index.php?option=' . $this->option . '&view=' . $this->view_item . '&' . http_build_query(array('cid' => $cids));
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldConfig';
 		$this->setRedirect($link, $msg, $msgType);
-		
-//		$this->setRedirect(Route::_('index.php?option=com_content&view=featured', false), $message);
 	} 
 
 	/**
@@ -205,17 +184,29 @@ class MaintenanceJ3xController extends AdminController
 			try
 			{
 				$cfg3xModel = $this->getModel('MaintenanceJ3x');
+				$configModel = $this->getModel('ConfigRaw');
 
-				$isOk = $cfg3xModel->copyOldItems2New ();
+				$oldConfigItems = $cfg3xModel->OldConfigItems();
+//				$isOk = $configModel->copyOldItems2New ($oldConfigItems);
+//				$isOk = $configModel->copyOldItemsList2New ($oldConfigItems);
 
-				if ($isOk)
+				if (count($oldConfigItems))
 				{
-					$msg .= "Successful copied old configuration items";
+					$isOk = $configModel->copyOldItemsList2New ($oldConfigItems);
+					if ($isOk)
+					{
+						$msg .= "Successful copied old configuration items";
+					}
+					else
+					{
+						$msg .= "Error at copyOldItems2New items";
+						$msgType = 'error';
+					}
 				}
 				else
 				{
-					$msg .= "Error at copyOldItems2New items";
-					$msgType = 'error';
+					$msg .= "No old configuration items";
+					$msgType = 'warning';
 				}
 			}
 			catch (RuntimeException $e)
@@ -230,16 +221,9 @@ class MaintenanceJ3xController extends AdminController
 
 		}
 
-		// ToDo: Message to user ...
-
-		// Create list of CIDS and append to link URL like in PropertiesView above
-		// &ID[]=2&ID[]=3&ID[]=4&ID[]=12
-		$cids = $this->input->get('cid', 0, 'int');
-		$link = 'index.php?option=' . $this->option . '&view=' . $this->view_item . '&' . http_build_query(array('cid' => $cids));
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldConfig';
 		$this->setRedirect($link, $msg, $msgType);
-		
-//		$this->setRedirect(Route::_('index.php?option=com_content&view=featured', false), $message);
-	} 
+	}
 
 } // class
 

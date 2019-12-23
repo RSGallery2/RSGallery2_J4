@@ -12,6 +12,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.framework');
+HTMLHelper::_('behavior.formvalidator');
 
 /* Sort config variables */
 $configVars = array();
@@ -98,7 +99,7 @@ function configInputField($name = 'unknown', $value = '')
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'); ?>"
-      method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+      method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="col-md-2">
@@ -144,13 +145,13 @@ function configInputField($name = 'unknown', $value = '')
 				<!--input type="hidden" name="option" value="com_rsgallery2" />
 				<input type="hidden" name="rsgOption" value="maintenance" /-->
 
-				<input type="hidden" name="task" value="" />
-				<?php echo HTMLHelper::_('form.token'); ?>
             </div>
 		</div>
+
+        <input type="hidden" name="task" value="" />
+		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
 
-	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

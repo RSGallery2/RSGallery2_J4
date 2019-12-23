@@ -46,6 +46,7 @@ class HtmlView extends BaseHtmlView
 	protected $isRawDbActive;
 	protected $isUpgradeActive;
 	protected $isTestActive;
+	protected $isJ3xRsg2DataExisting;
 	protected $developActive;
 
 	protected $intended;
@@ -94,6 +95,10 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 		/**/
+
+// model in controller
+		$maintenanceModel      = $this->getModel();
+		$this->isJ3xRsg2DataExisting = $maintenanceModel->J3xConfigTableExist();
 
 		//--- Check user rights ---------------------------------------------
 
@@ -167,6 +172,12 @@ class HtmlView extends BaseHtmlView
 
 		$toolbar->preferences('com_rsgallery2');
 	}
+
+	public function getModel($name = 'Associations', $prefix = 'Rsgallery2', $config = array('ignore_request' => true))
+	{
+		return parent::getModel($name, $prefix, $config);
+	}
+
 
 
 

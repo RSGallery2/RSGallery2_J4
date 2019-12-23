@@ -12,7 +12,10 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -30,7 +33,7 @@ if ($Rsg2DebugActive)
 }
 /**/
 
-class ConfigController extends FormController
+class ConfigController extends AdminController // FormController
 {
 
 	/**
@@ -43,6 +46,7 @@ class ConfigController extends FormController
 	 *
 	 * @since 4.3.0
 	 */
+	/**
     public function getModel($name = 'Config', $prefix = 'Rsgallery2Model', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
@@ -96,26 +100,43 @@ class ConfigController extends FormController
      */
 	public function apply_rawEdit()
     {
-	    Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+	    $msg     = null;
+	    $msgType = 'notice';
 
-	    $msg = "apply_rawEdit: " . '<br>';
-        $msgType = 'notice';
+	    $app   = Factory::getApplication();
+	    $token = Session::getFormToken();
+	    // $tokencheck = $app->input->server->get('HTTP_X_CSRF_TOKEN', '', 'alnum');
 
-        // Access check
-        $canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
-        if (!$canAdmin) {
-            $msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
-            $msgType = 'warning';
-            // replace newlines with html line breaks.
-            str_replace('\n', '<br>', $msg);
-        } else {
-            $model = $this->getModel('ConfigRaw');
-	        $isSaved = $model->save();
+	    //Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+	    //if (!Session::checkToken('get'))
+	    if (false)
+	    {
+		    echo new JsonResponse(null, Text::_('JINVALID_TOKEN'), true);
+	    }
+	    else
+	    {
+		    $msg     = "apply_rawEdit: " . '<br>';
 
-        }
-        $link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
+		    // Access check
+		    $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		    if (!$canAdmin)
+		    {
+			    $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			    $msgType = 'warning';
+			    // replace newlines with html line breaks.
+			    str_replace('\n', '<br>', $msg);
+		    }
+		    else
+		    {
+			    $model   = $this->getModel('ConfigRaw');
+			    $isSaved = $model->save();
+		    }
+	    }
+
+	    $link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
         $this->setRedirect($link, $msg, $msgType);
     }
+
     /**
      * Save changes in raw edit view value by value
      *
@@ -160,7 +181,7 @@ class ConfigController extends FormController
 		$msgType = 'notice';
 
 		// Access check
-		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
 			$msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
@@ -222,7 +243,7 @@ class ConfigController extends FormController
 		$msgType = 'notice';
 
 		// Access check
-		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
 			$msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
@@ -255,7 +276,7 @@ class ConfigController extends FormController
 		$isSaved = false;
 
 			// Access check
-		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
 			$msg .= JText::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';

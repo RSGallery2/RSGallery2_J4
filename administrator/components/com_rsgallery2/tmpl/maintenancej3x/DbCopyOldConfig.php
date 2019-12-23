@@ -40,7 +40,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version
 				<?php if (! count ($this->configVarsOld)) : ?>
 					<div class="alert alert-info">
 						<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
-						<?php echo Text::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
+						<?php echo Text::_('COM_RSGALLERY2_OLD_J3X_RSG2_TABLES_NOT_EXISTING'); // JGLOBAL_NO_MATCHING_RESULTS ?>
 					</div>
 				<?php else : ?>
 				<table class="table" id="galleryList">
@@ -97,13 +97,13 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version
                         // first new config elements ( matching or not matching to old)
                         foreach ($this->configVarsMerged as $mergedName => $mergedValue )
                         {
+	                        if ( ! $this->configVars->exists($mergedName))
+	                        {
+		                        continue;
+	                        }
+
                         	$valOld = $this->configVarsOld [$mergedName] ?? $NotDefined;
 	                        $valNew = $this->configVars->get($mergedName)  ?? $NotDefined;
-
-	                        if ($valNew == $NotDefined)
-                            {
-                                continue;
-                            }
 
 	                        // Make empty string visible
 	                        $valOld     = strlen ($valOld) > 0  ?  trim($valOld) : '""';
@@ -138,13 +138,13 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version
 						// last old config elements not having new partner
 						foreach ($this->configVarsMerged as $mergedName => $mergedValue )
 						{
-							$valOld     = $this->configVarsOld [$mergedName] ?? $NotDefined;
-							$valNew     = $this->configVars->get($mergedName)  ?? $NotDefined;
-
-							if ($valNew != $NotDefined)
+                            if ( $this->configVars->exists($mergedName))
                             {
 	                            continue;
                             }
+
+                            $valOld     = $this->configVarsOld [$mergedName] ?? $NotDefined;
+							$valNew     = $this->configVars->get($mergedName)  ?? $NotDefined;
 
 	                        // Make empty string visible
 	                        $valOld     = strlen ($valOld) > 0  ?  $valOld : '""';

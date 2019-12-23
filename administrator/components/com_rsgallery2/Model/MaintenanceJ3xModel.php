@@ -11,6 +11,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
@@ -33,32 +34,42 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
 		try
 		{
-			// Create a new query object.
-			$db    = Factory::getDBO();
-			$query = $db->getQuery(true);
-
-			$query
-				->select('*')
-				//->select('name' , 'value')
-				->from($db->quoteName('#__rsgallery2_config'))
-				->order($db->quoteName('name') . ' ASC');
-
-			$db->setQuery($query);
-			//$rows = $db->loadObjectList();
-			$vars = $db->loadAssocList();
-
-			//--- List of configuration items ----------------------------------------------------
-
-			if ($vars)
+			//if (MaintenanceJ3xModel::J3xTableExist('#__rsgallery2_config'))
+			if (J3xConfigTableExist())
 			{
-				foreach ($vars as $v)
-				{
-					if ($v['name'] != "")
-					{
-						$name  = $v['name'];
-						$value = strlen($v['value']) ? $v['value'] : "";
+				// Create a new query object.
+				$db    = Factory::getDbo();
+				$query = $db->getQuery(true);
 
-						$oldItems[$name] = $value;
+				$query
+					//->select('*')
+					->select($db->quoteName(array('name', 'value')))
+					->from($db->quoteName('#__rsgallery2_config'))
+					->order($db->quoteName('name') . ' ASC');
+
+				$db->setQuery($query);
+				//$rows = $db->loadObjectList();
+				$vars = $db->loadAssocList('name');
+//	    		$vars = $db->loadAssocList();
+//		    	$vars = $db->loadObjectList();
+
+				//--- List of configuration items ----------------------------------------------------
+
+				if ($vars)
+				{
+					foreach ($vars as $v)
+					{
+						if ($v['name'] != "")
+						{
+							$name = $v['name'];
+
+							if (!array_key_exists($name, $oldItems))
+							{
+								// $value = $v['value'];
+								$value           = strlen($v['value']) ? $v['value'] : "";
+								$oldItems[$name] = $value;
+							}
+						}
 					}
 				}
 			}
@@ -80,75 +91,53 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 	{
 		// component parameters to array
 		$compConfig = [];
+		$mergedConfigItems = [];
 
-		foreach ($configVars as  $key => $value)
+		try
 		{
-			$compConfig [$key] = $value;
+
+			foreach ($configVars as  $key => $value)
+			{
+				$compConfig [$key] = $value;
+			}
+
+			// J3.5 old configuration vars
+			$mergedConfigItems = array_merge($OldConfigItems, $compConfig);
+
+			ksort($mergedConfigItems);
+
 		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'OldConfigItems: Error executing MergeOldAndNew: <br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		// J3.5 old configuration vars
-		// tOdO try ...
-		$mergedConfigItems = array_merge($OldConfigItems, $compConfig);
-
-		ksort($mergedConfigItems);
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
 
 		return $mergedConfigItems;
 	}
 
 
+	static function J3xConfigTableExist () {return MaintenanceJ3xModel::J3xTableExist ('#__rsgallery2_config');}
+	static function J3xGalleriesTableExist () {return MaintenanceJ3xModel::J3xTableExist ('#__rsgallery2_galleries');}
+	static function J3xImagesTableExist () {return MaintenanceJ3xModel::J3xTableExist ('#__rsgallery2_files');}
 
-
-	static function copyOldItems2New ()
+	static function J3xTableExist ($findTable)
 	{
-		$isOk = false;
+		$tableExist = false;
 
 		try
 		{
-			$oldConfigItems = MaintenanceJ3xModel::OldConfigItems();
-			if (count($oldConfigItems))
-			{
-				$isOk = MaintenanceJ3xModel::copyOldItemsList2New ($oldConfigItems);
-			}
+			$existingTables = Factory::getDbo()->setQuery('SHOW TABLES')->loadColumn();
+			$tableExist = array_key_exists($findTable, $existingTables);
 		}
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'OldConfigItems: Error in copyOldItems2New: "' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-		return $isOk;
-	}
-
-	static function copyOldItemsList2New ($configItems)
-	{
-		$isOk = false;
-		$actElement = "No element";
-
-		try
-		{
-			foreach ($configItems as $NameAndValue)
-			{
-				// switch for special indirect behaviour
-				// oldCfgName -> differnt new config name
-				// switch ()
-				// { case , default }
-				//---------------------------------------
-
-
-				// default: id oldName == new Name -> copy value
-
-
-
-			}
-		}
-		catch (RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'OldConfigItems: Error in copyOldItemsList2New: "' . '<br>';
+			$OutTxt .= 'J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -156,10 +145,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 		}
 
 
-
-		return $isOk;
+		return $tableExist;
 	}
-
 
 
 }
