@@ -9,6 +9,16 @@
   background-color: lightyellow;
 }
 
+.configOnlyNew {
+  color: #0d6dab;
+  font-weight: bold;
+}
+
+.configTransfer {
+  color: #ff6600;
+  font-weight: bold;
+}
+
 .configValueOldHeader {
   word-wrap: break-word;
   max-width: 20%;

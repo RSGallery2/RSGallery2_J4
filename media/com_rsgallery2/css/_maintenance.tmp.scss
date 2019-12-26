@@ -1,5 +1,5 @@
 
----------------------------
+//---------------------------
 
 @each $theme in $columnThemes {
   .#{$theme}Zone {
@@ -10,7 +10,7 @@
 
   .#{$theme} {
     border: 1px solid;
-    border-color: ##d00; /**/
+    border-color: #d00; /**/
     border-radius: $panel_border_radius $panel_border_radius 0 0;
   }
 
