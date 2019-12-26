@@ -34,8 +34,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
 		try
 		{
-			//if (MaintenanceJ3xModel::J3xTableExist('#__rsgallery2_config'))
-			if (J3xConfigTableExist())
+			if (MaintenanceJ3xModel::J3xConfigTableExist())
 			{
 				// Create a new query object.
 				$db    = Factory::getDbo();
@@ -46,32 +45,9 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 					->select($db->quoteName(array('name', 'value')))
 					->from($db->quoteName('#__rsgallery2_config'))
 					->order($db->quoteName('name') . ' ASC');
-
 				$db->setQuery($query);
-				//$rows = $db->loadObjectList();
-				$vars = $db->loadAssocList('name');
-//	    		$vars = $db->loadAssocList();
-//		    	$vars = $db->loadObjectList();
 
-				//--- List of configuration items ----------------------------------------------------
-
-				if ($vars)
-				{
-					foreach ($vars as $v)
-					{
-						if ($v['name'] != "")
-						{
-							$name = $v['name'];
-
-							if (!array_key_exists($name, $oldItems))
-							{
-								// $value = $v['value'];
-								$value           = strlen($v['value']) ? $v['value'] : "";
-								$oldItems[$name] = $value;
-							}
-						}
-					}
-				}
+				$oldItems = $db->loadAssocList('name', 'value');
 			}
 		}
 		catch (RuntimeException $e)
@@ -131,8 +107,13 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
 		try
 		{
-			$existingTables = Factory::getDbo()->setQuery('SHOW TABLES')->loadColumn();
-			$tableExist = array_key_exists($findTable, $existingTables);
+			$db = Factory::getDbo();
+			$db->setQuery('SHOW TABLES');
+			$existingTables = $db->loadColumn();
+
+			$checkTable = $db->replacePrefix($findTable);
+
+			$tableExist = in_array($checkTable, $existingTables);
 		}
 		catch (RuntimeException $e)
 		{

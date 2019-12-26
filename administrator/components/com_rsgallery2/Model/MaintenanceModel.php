@@ -11,12 +11,14 @@ namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use JModelLegacy;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 class MaintenanceModel extends BaseDatabaseModel
 {
+	// ToDo: replace all of follwoing functions with call to  MaintenanceJ3xModel
 
 	static function J3xConfigTableExist () {return MaintenanceModel::J3xTableExist ('#__rsgallery2_config');}
 	static function J3xGalleriesTableExist () {return MaintenanceModel::J3xTableExist ('#__rsgallery2_galleries');}
@@ -28,8 +30,13 @@ class MaintenanceModel extends BaseDatabaseModel
 
 		try
 		{
-			$existingTables = Factory::getDbo()->setQuery('SHOW TABLES')->loadColumn();
-			$tableExist = array_key_exists($findTable, $existingTables);
+			$db = Factory::getDbo();
+			$db->setQuery('SHOW TABLES');
+			$existingTables = $db->loadColumn();
+
+			$checkTable = $db->replacePrefix($findTable);
+
+			$tableExist = in_array($checkTable, $existingTables);
 		}
 		catch (RuntimeException $e)
 		{

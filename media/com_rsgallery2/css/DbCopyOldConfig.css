@@ -1,0 +1,22 @@
+.configMatching {
+  color: #58a323;
+  font-weight: bold;
+}
+
+.configNotMatching {
+  color: #e52626;
+  font-weight: bold;
+  background-color: lightyellow;
+}
+
+.configValueOldHeader {
+  word-wrap: break-word;
+  max-width: 20%;
+}
+
+.configValueOld {
+  word-wrap: break-word;
+  max-width: 20%;
+}
+
+/*# sourceMappingURL=DbCopyOldConfig.css.map */

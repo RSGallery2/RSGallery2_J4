@@ -21,7 +21,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldConfig'); ?>"
-      method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+      method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="col-md-2">
@@ -31,11 +31,11 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbCopyOldConfig')); ?>
+				<?php //echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbCopyOldConfig')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOldConfig', JText::_('COM_RSGALLERY2_COPY_OLD_CONFIG', true)); ?>
+				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOldConfig', JText::_('COM_RSGALLERY2_COPY_OLD_CONFIG', true)); ?>
 
-                <legend><strong><?php echo JText::_('COM_RSGALLERY2_COPY_OLD_CONFIG'); ?></strong></legend>
+                <legend><strong><?php echo JText::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_CONFIG'); ?></strong></legend>
 
 				<?php if (! count ($this->configVarsOld)) : ?>
 					<div class="alert alert-info">
@@ -192,19 +192,16 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version
 
 				<?php endif; ?>
 
-				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+				<?php //echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+				<?php //echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-				<!--input type="hidden" name="option" value="com_rsgallery2" />
-				<input type="hidden" name="rsgOption" value="maintenance" /-->
-
-				<input type="hidden" name="task" value="" />
-				<?php echo HTMLHelper::_('form.token'); ?>
             </div>
 		</div>
 	</div>
 
+    <input type="hidden" name="boxchecked" value="0" />
+    <input type="hidden" name="task" value="" />
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 

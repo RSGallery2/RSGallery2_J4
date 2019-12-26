@@ -58,27 +58,6 @@ class MaintenanceJ3xController extends AdminController
 
 	}
 
-	/*
-		$params = ComponentHelper::getParams('com_rsgallery2');
-
-		if ($params->get('', '0'))
-		{
-			$options['format'] = '{DATE}\t{TIME}\t{LEVEL}\t{CODE}\t{MESSAGE}';
-			$options['text_file'] = 'indexer.php';
-			Log::addLogger($options);
-		}
-
-		// Log the start
-		try
-		{
-			Log::add('Starting the indexer', Log::INFO);
-		}
-		catch (\RuntimeException $exception)
-		{
-			// Informational log only
-		}
-	*/
-
 	/**
      * Copies list of selected old configuration items to new configuration
      *
@@ -89,7 +68,7 @@ class MaintenanceJ3xController extends AdminController
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
@@ -104,14 +83,13 @@ class MaintenanceJ3xController extends AdminController
 		{
 			try
 			{
-				//$cfg3xModel = $this->getModel('MaintenanceJ3x');
+				$cfg3xModel = $this->getModel('MaintenanceJ3x');
+				$oldConfigItems = $cfg3xModel->OldConfigItems();
+
 				$configModel = $this->getModel('ConfigRaw');
 
-				$IsAllCreated = false;
-//				$input     = Factory::getApplication()->input;
-//				$GalleryId = $input->get('ParentGalleryId', 0, 'INT');
-				$selected = $this->input->get('cfgId', array(), 'array');
-				$allNames = $this->input->get('cfgName', array(), 'array');
+//				$IsAllCreated = false;
+				$selected = $this->input->get('cid', array(), 'array');
 
 				if (empty ($selected))
 				{
@@ -123,9 +101,9 @@ class MaintenanceJ3xController extends AdminController
 					// Collect config names to copy
 					$configNames = [];
 					
-					foreach ($selected as $idx => $name)
+					foreach ($selected as $name)
 					{
-						$configNames[] = $allNames[(int)$idx];
+						$configNames[$name] = $oldConfigItems[$name];
 					}
 					
 					//$isOk = $cfg3xModel->copyOldItemsList2New ($configNames);
@@ -168,7 +146,7 @@ class MaintenanceJ3xController extends AdminController
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)

@@ -11,6 +11,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\View\Maintenance;
 
 defined('_JEXEC') or die;
 
+//use JModelLegacy;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -22,6 +23,9 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Joomla\Component\Rsgallery2\Administrator\Model;
+
+// JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
 
 /**
  * View class for a list of rsgallery2.
@@ -96,9 +100,15 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
-// model in controller
+		// ToDo: replace all of follwoing functions with call to  MaintenanceJ3xModel
 		$maintenanceModel      = $this->getModel();
 		$this->isJ3xRsg2DataExisting = $maintenanceModel->J3xConfigTableExist();
+//		$maintenanceJ3xModel      = $this->getModel('maintenanceJ3x');
+//		$maintenanceJ3xModel = JModelLegacy::getInstance('maintenanceJ3x', 'rsgallery2Model');
+//		$maintenanceJ3xModel = JModelLegacy::getInstance('maintenanceJ3x');
+//		\Joomla\CMS\MVC\Model\BaseDatabaseModel
+//				$maintenanceJ3xModel = JModelLegacy::getInstance('maintenanceJ3x', 'Administrator');
+//		$this->isJ3xRsg2DataExisting = $maintenanceJ3xModel->J3xConfigTableExist();
 
 		//--- Check user rights ---------------------------------------------
 
@@ -166,6 +176,7 @@ class HtmlView extends BaseHtmlView
 			default:
 				// Set the title
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'screwdriver'); // 'maintenance');
+				ToolBarHelper::cancel('config.cancel');
 				break;
 		}
 
@@ -173,14 +184,12 @@ class HtmlView extends BaseHtmlView
 		$toolbar->preferences('com_rsgallery2');
 	}
 
-	public function getModel($name = 'Associations', $prefix = 'Rsgallery2', $config = array('ignore_request' => true))
+	/**
+	public function getModel($name = '', $prefix = 'Rsgallery2', $config = array('ignore_request' => true))
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
-
-
-
-
+	/**/
 
 }
 

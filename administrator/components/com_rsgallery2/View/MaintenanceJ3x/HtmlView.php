@@ -51,24 +51,14 @@ class HtmlView extends BaseHtmlView
 		$Layout = Factory::getApplication()->input->get('layout');
 		//echo '$Layout: ' . $Layout . '<br>';
 
-		$this->configVars = array ();
+		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		$this->isDevelop = $rsgConfig->get('isDevelop');
+
+		$this->configVars = $rsgConfig;
 		$this->configVarsOld = array ();
 
-		$this->form = $this->get('Form');
+//		$this->form = $this->get('Form');
 
-		try
-		{
-			$this->configVars = ComponentHelper::getParams('com_rsgallery2');
-		}
-		catch (RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
 		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
@@ -81,11 +71,12 @@ class HtmlView extends BaseHtmlView
 
 				try
 				{
-					$oldConfigModel      = $this->getModel('MaintenanceJ3x');
-					//$oldConfigModel      = $this->getModel('DbOldConfig');
-					$this->configVarsOld = $oldConfigModel->OldConfigItems();
+					$j3xModel      = $this->getModel();
+					$this->configVarsOld = $j3xModel->OldConfigItems();
+
+
 					// iterate over all values
-					$this->configVarsMerged = $oldConfigModel->MergeOldAndNew($this->configVarsOld, $this->configVars);
+					$this->configVarsMerged = $j3xModel->MergeOldAndNew($this->configVarsOld, $this->configVars);
 
 				}
 				catch (RuntimeException $e)
@@ -129,13 +120,13 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '*  <br>'
+				. '* Make rows selectable <br>'
+				. '* Make old config column smaller <br>'
+				. '* Secure user input <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-				. '</span><br><br>';
+				. '</span><br>';
 		}
 
 		switch ($Layout)
@@ -175,13 +166,12 @@ class HtmlView extends BaseHtmlView
 		$toolbar->preferences('com_rsgallery2');
 	}
 
+	/**
 	public function getModel($name = 'Associations', $prefix = 'Rsgallery2', $config = array('ignore_request' => true))
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
-
-
-
+	/**/
 
 }
 
