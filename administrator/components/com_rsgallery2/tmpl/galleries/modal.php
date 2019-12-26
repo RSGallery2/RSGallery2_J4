@@ -21,7 +21,7 @@ $app = Factory::getApplication();
 
 if ($app->isClient('site'))
 {
-	Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+	Session::checkToken();
 }
 
 JLoader::register('ContentHelperRoute', JPATH_ROOT . '/components/com_rsgallery2/helpers/route.php');
