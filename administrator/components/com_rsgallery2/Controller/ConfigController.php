@@ -85,7 +85,7 @@ class ConfigController extends AdminController // FormController
      */
 	public function cancel_rawView($key = null)
 	{
-		Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
 		$this->setRedirect($link);
@@ -93,7 +93,44 @@ class ConfigController extends AdminController // FormController
 		return true;
 	}
 
-    /**
+	/**
+	 * On cancel raw exit goto maintenance
+	 * @param null $key
+	 *
+	 * @return bool
+	 *
+	 * @since version 4.3
+	 */
+	public function cancel_rawEdit($key = null)
+	{
+		Session::checkToken();
+
+		$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
+		$this->setRedirect($link);
+
+		return true;
+	}
+
+	/**
+	 * Standard cancel (may not be used)
+	 *
+	 * @param null $key
+	 *
+	 * @return bool
+	 *
+	 * @since version 4.3
+	 */
+	public function cancel($key = null)
+	{
+		Session::checkToken();
+
+		$link = Route::_('index.php?option=com_rsgallery2');
+		$this->setRedirect($link);
+
+		return true;
+	}
+
+	/**
      * Save changes in raw edit view value by value
      *
      * @since version 4.3
@@ -103,34 +140,23 @@ class ConfigController extends AdminController // FormController
 	    $msg     = null;
 	    $msgType = 'notice';
 
-	    $app   = Factory::getApplication();
-	    $token = Session::getFormToken();
-	    // $tokencheck = $app->input->server->get('HTTP_X_CSRF_TOKEN', '', 'alnum');
+	    Session::checkToken();
 
-	    //Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
-	    //if (!Session::checkToken('get'))
-	    if (false)
+	    $msg     = "apply_rawEdit: " . '<br>';
+
+	    // Access check
+	    $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+	    if (!$canAdmin)
 	    {
-		    echo new JsonResponse(null, Text::_('JINVALID_TOKEN'), true);
+		    $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+		    $msgType = 'warning';
+		    // replace newlines with html line breaks.
+		    str_replace('\n', '<br>', $msg);
 	    }
 	    else
 	    {
-		    $msg     = "apply_rawEdit: " . '<br>';
-
-		    // Access check
-		    $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-		    if (!$canAdmin)
-		    {
-			    $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-			    $msgType = 'warning';
-			    // replace newlines with html line breaks.
-			    str_replace('\n', '<br>', $msg);
-		    }
-		    else
-		    {
-			    $model   = $this->getModel('ConfigRaw');
-			    $isSaved = $model->save();
-		    }
+		    $model   = $this->getModel('ConfigRaw');
+		    $isSaved = $model->save();
 	    }
 
 	    $link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
@@ -144,7 +170,7 @@ class ConfigController extends AdminController // FormController
      */
 	public function save_rawEdit()
 	{
-		Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		$msg     = "save_rawEdit: " . '<br>';
 		$msgType = 'notice';
@@ -174,7 +200,7 @@ class ConfigController extends AdminController // FormController
 	/**
 	public function remove_OldConfigData()
 	{
-	Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 
 	$msg     = "remove_OldConfigData: " . '<br>';
@@ -211,98 +237,6 @@ class ConfigController extends AdminController // FormController
 	/**/
 
 	/**
-     * On cancel raw exit goto maintenance
-     * @param null $key
-     *
-     * @return bool
-     *
-     * @since version 4.3
-     */
-	public function cancel_rawEdit($key = null)
-	{
-		Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
-
-		$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
-		$this->setRedirect($link);
-
-		return true;
-	}
-
-	/**
-	 * Save changes in raw edit view value by value and copy items to the
-	 * old configuration  data
-	 *
-	 * @since version 4.3
-	 *
-	public function save_rawEditAndCopyOld()
-	{
-		Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
-
-
-	$msg     = "save_rawEdit: " . '<br>';
-		$msgType = 'notice';
-
-		// Access check
-		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-		if (!$canAdmin) {
-			$msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
-			$msgType = 'warning';
-			// replace newlines with html line breaks.
-			str_replace('\n', '<br>', $msg);
-		} else {
-			$model = $this->getModel('ConfigRaw');
-			$isSaved = $model->save();
-			$isSaved = $model->copyNew2Old();
-		}
-
-	$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEditOld');
-		$this->setRedirect($link, $msg, $msgType);
-	}
-
-	/**
-	 * Save changes in raw edit view value by value and copy items to the
-	 * old configuration  data
-	 *
-	 * @since version 4.3
-	 */
-	/**
-	public function copy_rawEditFromOld()
-	{
-	Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
-
-
-	$msg     = "copy_rawEditFromOld: " . '<br>';
-		$msgType = 'notice';
-		$isSaved = false;
-
-			// Access check
-		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-		if (!$canAdmin) {
-			$msg .= JText::_('JERROR_ALERTNOAUTHOR');
-			$msgType = 'warning';
-			// replace newlines with html line breaks.
-			str_replace('\n', '<br>', $msg);
-		} else {
-			$model = $this->getModel('ConfigRaw');
-			$isSaved = $model->copyOld2New();
-		}
-
-		if ($isSaved)
-		{
-			$msg .= " done";
-		}
-		else
-		{
-			$msg .= " !!! not done !!!";
-		}
-
-	$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
-		$this->setRedirect($link, $msg, $msgType);
-	}
-
-	/*  */
-
-	/**
 	 * Save changes in raw edit view value by value and copy items to the
 	 * old configuration  data
 	 *
@@ -311,7 +245,7 @@ class ConfigController extends AdminController // FormController
 	/**
 	public function save_rawEdit2Text()
 	{
-	Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 
 	$msg     = "save_rawEdit: " . '<br>';
@@ -345,7 +279,7 @@ class ConfigController extends AdminController // FormController
 	/**
 	public function read_rawEdit2Text()
 	{
-	Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 
 	$msg     = "write_rawEdit2Text: " . '<br>';
@@ -367,26 +301,6 @@ class ConfigController extends AdminController // FormController
 		$this->setRedirect($link, $msg, $msgType);
 	}
 	/**/
-	/**
-	 * Standard cancel (may not be used)
-     *
-	 * @param null $key
-	 *
-	 * @return bool
-     *
-     * @since version 4.3
-	 */
-	public function cancel($key = null)
-	{
-		// Session::checkToken('get') or die(Text::_('JINVALID_TOKEN'));
-		// parent::cancel($key);
-
-		$link = Route::_('index.php?option=com_rsgallery2');
-		$this->setRedirect($link);
-
-		return true;
-	}
-
     /**
      * Standard save of configuration
      * @param null $key

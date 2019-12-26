@@ -49,7 +49,7 @@ class GalleriesController extends AdminController
 	 */
 	public function rebuild()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		$extension = $this->input->get('extension');
 		$this->setRedirect(Route::_('index.php?option=com_rsgallery2&view=galleries&extension=' . $extension, false));
@@ -80,7 +80,7 @@ class GalleriesController extends AdminController
 	 */
 	public function delete()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		// Get items to remove from the request.
 		$cid = $this->input->get('cid', array(), 'array');

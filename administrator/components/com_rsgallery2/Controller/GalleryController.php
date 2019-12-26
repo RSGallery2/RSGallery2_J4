@@ -129,7 +129,7 @@ class GalleryController extends FormController
 	 *
 	public function batch($model = null)
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+	Session::checkToken();
 
 		// Set the model
 		/** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
