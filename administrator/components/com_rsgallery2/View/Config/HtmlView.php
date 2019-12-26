@@ -46,21 +46,11 @@ class HtmlView extends BaseHtmlView
 		$Layout = Factory::getApplication()->input->get('layout');
 		//echo '$Layout: ' . $Layout . '<br>';
 
-		$this->configVars = array ();
+		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		try
-		{
-			$this->configVars = ComponentHelper::getParams('com_rsgallery2');
-		}
-		catch (RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+		$this->configVars = $rsgConfig;
 
-			$app = JFactory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
 		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
@@ -92,8 +82,9 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '*  <br>'
-//				. '*  <br>'
+				. '* Secure user input <br>'
+				. '* copy to file <br>'
+				. '* copy to clipboard <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -107,6 +98,8 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
 					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
+
+
 				break;
 
 			case 'RawEdit':
