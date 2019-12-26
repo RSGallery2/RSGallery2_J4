@@ -105,7 +105,7 @@ class UploadController extends AdminController
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
 
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		$canAdmin = JFactory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
@@ -192,7 +192,7 @@ class UploadController extends AdminController
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
 
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken();
 
 		$canAdmin = JFactory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
