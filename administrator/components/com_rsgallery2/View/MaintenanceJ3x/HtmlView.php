@@ -120,9 +120,10 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '* Make rows selectable <br>'
 				. '* Make old config column smaller <br>'
 				. '* Secure user input <br>'
+				. '* List of special transfer old1 -> new2 ....<br>'
+//				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
