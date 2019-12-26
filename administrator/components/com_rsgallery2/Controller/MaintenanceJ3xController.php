@@ -137,7 +137,7 @@ class MaintenanceJ3xController extends AdminController
 	} 
 
 	/**
-     * Copies list of selected old configuration items to new configuration
+     * Copies matching old configuration items to new configuration
      *
      * @since 5.0.0
 	 */
@@ -170,6 +170,10 @@ class MaintenanceJ3xController extends AdminController
 
 				if (count($oldConfigItems))
 				{
+					// J3x config state: 0:not upgraded, 1:upgraded,  -1:upgraded and deleted
+					// Smuggle the J3x config state "upgraded:1" into the list
+					$oldConfigItems ['j3x_config_upgrade'] = "1";
+
 					$isOk = $configModel->copyOldItemsList2New ($oldConfigItems);
 					if ($isOk)
 					{
