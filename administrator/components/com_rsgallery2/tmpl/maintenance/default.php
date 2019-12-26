@@ -339,7 +339,8 @@ function DisplayZone($Zone, $Buttons) {
         </div>
     </div>
 
-    <?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="task" value="" />
+	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 <?php
