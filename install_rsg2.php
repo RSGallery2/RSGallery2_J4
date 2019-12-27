@@ -86,7 +86,7 @@ class Com_Rsgallery2InstallerScript
 
 		// ToDo: minimum RSG2 version
 
-
+		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT'));
 
 
 		// COM_RSGALLERY2_PREFLIGHT_INSTALL_TEXT / COM_RSGALLERY2_PREFLIGHT_UPDATE_TEXT
@@ -118,6 +118,7 @@ class Com_Rsgallery2InstallerScript
 	public function install($parent)
 	{
 		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
+		Log::add(Text::_('COM_RSGALLERY2_INSTALL_TEXT'));
 
 		return true;
 	}
@@ -144,6 +145,7 @@ class Com_Rsgallery2InstallerScript
 	public function update($parent)
 	{
 		echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
+		Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'));
 
 		return true;
 	}
@@ -175,6 +177,7 @@ class Com_Rsgallery2InstallerScript
 		// COM_RSGALLERY2_POSTFLIGHT_UPDATE_TEXT, COM_RSGALLERY2_POSTFLIGHT_INSTALL_TEXT
 		// NO:  COM_RSGALLERY2_POSTFLIGHT_UNINSTALL_TEXT
 		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
+		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
 
 		$isGalleryTreeCreated = $this->InitGalleryTree ();
 
@@ -201,6 +204,7 @@ class Com_Rsgallery2InstallerScript
 	public function uninstall($parent)
 	{
 		echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
+		Log::add(Text::_('COM_RSGALLERY2_UNINSTALL_TEXT'));
 
 		return true;
 	}
@@ -209,47 +213,61 @@ class Com_Rsgallery2InstallerScript
 	{
 		$isGalleryTreeCreated = false;
 		
+		$id_galleries = '#__rsg2_galleries';
+		
 		try
 		{
 			$db = Factory::getDbo();
 
+			Log::add('InitGalleryTree');
 			echo '<p>Checking if the root record is already present ...</p>';
 
-			$query = $db->getQuery(true);
-			$query->select('id');
-			$query->from('#__rsg2_galleries');
-			$query->where('id = 1');
-			$query->where('alias = "galleries-root-alias"');
-			$db->setQuery($query);
-			$id = $db->loadResult();
+			if (Rsg2TableExist ($id_galleries)) {
+			
+				// Id of binary root element
+				$query = $db->getQuery(true);
+				$query->select('id');
+				$query->from($id_galleries);
+				$query->where('id = 1');
+				$query->where('alias = "galleries-root-alias"');
+				$db->setQuery($query);
+				$id = $db->loadResult();
 
-			if ($id == '1')
-			{   // assume tree structure already built
-				echo '<p>Root record already present, install program exiting ...</p>';
+				if ($id == '1')
+				{   // assume tree structure already built
+					echo '<p>Root record already present, install program exiting ...</p>';
+					Log::add('Root record already present, install program exiting ...');
 
-				return;
-			}
+					return;
+				}
 
-//		-- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
-//		-- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
+				// -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
+				// -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 
-			// insert root record
-			$columns = array('id', 'name', 'alias', 'description', 'parent_id', 'level', 'path', 'lft', 'rgt');
-			$values  = array(1, 'galleries root', 'galleries-root-alias', 'startpoint of list', 0, 0, '', 0, 1);
+				// insert root record
+				$columns = array('id', 'name', 'alias', 'description', 'parent_id', 'level', 'path', 'lft', 'rgt');
+				$values  = array(1, 'galleries root', 'galleries-root-alias', 'startpoint of list', 0, 0, '', 0, 1);
 
-			$query = $db->getQuery(true)
-				->insert('#__rsg2_galleries')
-				->columns($db->quoteName($columns))
-				->values(implode(',', $db->quote($values)));
-			$db->setQuery($query);
-			$result = $db->execute();
-			if ($result)
-			{
-				$isGalleryTreeCreated = true;
+				// Create root element
+				$query = $db->getQuery(true)
+					->insert('#__rsg2_galleries')
+					->columns($db->quoteName($columns))
+					->values(implode(',', $db->quote($values)));
+				$db->setQuery($query);
+				$result = $db->execute();
+				if ($result)
+				{
+					$isGalleryTreeCreated = true;
+				}
+				else
+				{
+					Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error InitGalleryTree');
+				}
 			}
 			else
 			{
-				Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error InitGalleryTree');
+				echo '<p>Checking failed: table not existing</p>';
+				Log::add('Checking failed: table not existing');
 			}
 		}
 		//catch (\RuntimeException $e)
@@ -260,4 +278,38 @@ class Com_Rsgallery2InstallerScript
 		
 		return $isGalleryTreeCreated;
 	}
+	
+	public function Rsg2TableExist ($findTable)
+	{
+		$tableExist = false;
+
+		try
+		{
+			$db = Factory::getDbo();
+			$db->setQuery('SHOW TABLES');
+			$existingTables = $db->loadColumn();
+
+			$checkTable = $db->replacePrefix($findTable);
+
+			$tableExist = in_array($checkTable, $existingTables);
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $tableExist;
+	}
+
+
+	
+	
+	
+	
+	
 }
