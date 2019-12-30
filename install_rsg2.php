@@ -235,6 +235,7 @@ class Com_Rsgallery2InstallerScript
 		$isGalleryTreeCreated = false;
 		
 		$id_galleries = '#__rsg2_galleries';
+		$id_j3x_config = '#__rsgallery2_config';
 		
 		try
 		{
@@ -256,43 +257,49 @@ class Com_Rsgallery2InstallerScript
 			{   // assume tree structure already built
 				echo '<p>Root record already present, install program exiting ...</p>';
 				Log::add('Root record already present, install program exiting ...', Log::INFO, 'rsg2');
-
-				return;
-			}
-
-			// -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
-			// -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
-
-			// insert root record
-			$columns = array('id', 'name', 'alias', 'description', 'parent_id', 'level', 'path', 'lft', 'rgt');
-			$values  = array(1, 'galleries root', 'galleries-root-alias', 'startpoint of list', 0, 0, '', 0, 1);
-
-			// Create root element
-			$query = $db->getQuery(true)
-				->insert('#__rsg2_galleries')
-				->columns($db->quoteName($columns))
-				->values(implode(',', $db->quote($values)));
-			$db->setQuery($query);
-			$result = $db->execute();
-			if ($result)
-			{
-				$isGalleryTreeCreated = true;
 			}
 			else
 			{
-				Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error InitGalleryTree');
+				// -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
+				// -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
+
+				// insert root record
+				$columns = array('id', 'name', 'alias', 'description', 'parent_id', 'level', 'path', 'lft', 'rgt');
+				$values  = array(1, 'galleries root', 'galleries-root-alias', 'startpoint of list', 0, 0, '', 0, 1);
+
+				// Create root element
+				$query = $db->getQuery(true)
+					->insert('#__rsg2_galleries')
+					->columns($db->quoteName($columns))
+					->values(implode(',', $db->quote($values)));
+				$db->setQuery($query);
+				$result = $db->execute();
+				if ($result)
+				{
+					$isGalleryTreeCreated = true;
+				}
+				else
+				{
+					Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error InitGalleryTree');
+				}
 			}
 			
+			//---------------------------------------------
+			
+			Log::add('check for existing old J3x Tables', Log::INFO, 'rsg2');
+			
 			// prepare taking over old 
-			if ($this->Rsg2TableExist ($id_galleries)) {
+			if ($this->Rsg2TableExist ($id_j3x_config)) {
 
 				Log::add('Old J3x Tables exist', Log::INFO, 'rsg2');
 				
+				$j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3x;
+				Log::add('after $j3x_model', Log::INFO, 'rsg2');
 				
-				$model = new \Joomla\Component\Cache\Administrator\Model\CacheModel
-				
-				
-			
+				$doesExist = $j3x_model->Rsg2TableExist ($id_j3x_config);
+				//$j3x_model->copyOldItems2New ();
+				Log::add('after copyOldItems2New', Log::INFO, 'rsg2');
+				Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
 			}
 			else
 			{
