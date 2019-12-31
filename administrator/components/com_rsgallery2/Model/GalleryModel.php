@@ -580,6 +580,7 @@ class GalleryModel extends AdminModel
 			$table->setLocation($data['parent_id'], 'last-child');
 		}
 
+		// ToDo: use name instead of title ?
 		// Alter the title for save as copy
 		if ($input->get('task') == 'save2copy')
 		{
@@ -1067,6 +1068,7 @@ class GalleryModel extends AdminModel
 			$this->table->lft = null;
 			$this->table->rgt = null;
 
+			//? title -> ? name
 			// Alter the title & alias
 			list($title, $alias) = $this->generateNewTitle($this->table->parent_id, $this->table->alias, $this->table->title);
 			$this->table->title  = $title;
@@ -1306,6 +1308,7 @@ class GalleryModel extends AdminModel
 	 *
 	 * @since   1.7
 	 */
+	//? title -> ? name
 	protected function generateNewTitle($parent_id, $alias, $title)
 	{
 		// Alter the title & alias

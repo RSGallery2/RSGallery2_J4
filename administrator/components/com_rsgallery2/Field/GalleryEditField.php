@@ -175,7 +175,7 @@ class GalleryEditField extends ListField
 		    $query = $db->getQuery(true)
 			    //->select('a.id AS value, a.name AS text, a.level, a.published, a.lft, a.language')
 			    ->select('a.id AS value, a.name AS text, a.level, a.published, a.lft')
-			    ->where('a.id != 1' )
+//			    ->where('a.id != 1' )
 			    ->from('#__rsg2_galleries AS a');
     
 		    /**

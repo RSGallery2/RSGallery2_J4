@@ -34,6 +34,8 @@ echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
 		</div>
 	</div>
 
+    <input type="hidden" name="boxchecked" value="0" />
+    <input type="hidden" name="boxchecked" value="0" />
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 

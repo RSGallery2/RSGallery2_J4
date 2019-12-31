@@ -45,6 +45,13 @@ class HtmlView extends BaseHtmlView
 	protected $state;
 
 	/**
+	 * The pagination object
+	 *
+	 * @var    Pagination
+	 * @since  3.9.0
+	 */
+	protected $pagination;
+	/**
 	 * Form object for search filters
 	 *
 	 * @var  \JForm
@@ -104,6 +111,11 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
+		// Preprocess the list of items to find ordering divisions.
+		foreach ($this->items as &$item)
+		{
+			$this->ordering[$item->parent_id][] = $item->id;
+		}
 
 		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
 		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);

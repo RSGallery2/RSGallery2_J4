@@ -79,6 +79,7 @@ class GalleryField extends FormField
 
 			if (!isset($scriptSelect[$this->id]))
 			{
+				//? title -> ? name
 				Factory::getDocument()->addScriptDeclaration("
 				function jSelectGallery_" . $this->id . "(id, title, object) {
 					window.processModalSelect('Gallery', '" . $this->id . "', id, title, '', object);

@@ -14,15 +14,13 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.multiselect');
 
-
 $listOrder = '';
 $ListDirn  = '';
 
-echo 'galleries raw<br>';
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_raw'); ?>"
-      method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+      method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="row">
         <div class="col-md-12">
 		<?php if (!empty($this->sidebar)) : ?>
@@ -242,9 +240,10 @@ echo 'galleries raw<br>';
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="task" value="" />
-	        <?php echo HTMLHelper::_('form.token'); ?>
         </div>
     </div>
 
+    <input type="hidden" name="boxchecked" value="0" />
+    <input type="hidden" name="task" value="" />
+	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
