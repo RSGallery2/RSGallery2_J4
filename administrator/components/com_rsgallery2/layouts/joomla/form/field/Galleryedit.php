@@ -109,8 +109,8 @@ else
 	{
 		// All Galleries have been deleted, so we need a new gallery (This will create one on save if selected).
 		$options[0]            = new \stdClass;
-		$options[0]->value     = 'Ungallerised';
-		$options[0]->text      = 'Ungallerised';
+		$options[0]->value     = '0';
+		$options[0]->text      = Text::_('COM_RSGALLERY2_NO_PARENT');
 		$options[0]->level     = '1';
 		$options[0]->published = '1';
 		$options[0]->lft       = '1';

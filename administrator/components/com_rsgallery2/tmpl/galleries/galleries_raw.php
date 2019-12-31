@@ -58,7 +58,7 @@ echo 'galleries raw<br>';
                                             `id`
                                         </th>
                                         <th width="1%" class="text-center">
-                                            `parent_id`
+                                            `parent_gallery_id`
                                         </th>
                                         <th width="1%" class="text-center">
                                             `name/alias/note`
@@ -145,7 +145,7 @@ echo 'galleries raw<br>';
                                             </td>
 
                                             <td width="1%" class="text-center">
-		                                        <?php echo $item->parent_id; ?>
+		                                        <?php echo $item->parent_gallery_id; ?>
                                             </td>
 
                                             <td class="text-center">

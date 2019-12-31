@@ -84,6 +84,15 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+		//--- config --------------------------------------------------------------------
+
+		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+		$this->isDevelop = $rsgConfig->get('isDevelop');
+
+		//--- Form --------------------------------------------------------------------
+
 		$this->form = $this->get('Form');
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
@@ -116,7 +125,7 @@ class HtmlView extends BaseHtmlView
 			$this->form->setFieldAttribute('language', 'readonly', 'true');
 
 			// Only allow to select galleries with All language or with the forced language.
-			$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
+			$this->form->setFieldAttribute('parent_gallery_id', 'language', '*,' . $forcedLanguage);
 
 			// Only allow to select tags with All language or with the forced language.
 			$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
@@ -149,7 +158,11 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '*  Test ...<br>'
+				. '*  ERROR: Save failed with the following error: Invalid `parent_id` [0] in Joomla\Component\Rsgallery2\Administrator\Table\GalleryTable::check()<br>'
+				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'

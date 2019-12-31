@@ -28,7 +28,7 @@
 	/>
 
 	<field
-		name="parent_id"
+		name="parent_gallery_id"
 		type="galleryedit"
 		label="COM_RSGALLERY2_FIELD_PARENT_LABEL"
 	/>

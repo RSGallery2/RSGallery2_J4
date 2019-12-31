@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `description` text NOT NULL DEFAULT '',
   `note` varchar(255) NOT NULL DEFAULT '',  
   `thumb_id` int(11) unsigned NOT NULL default '0',
+  `parent_gallery_id` int(11)  NOT NULL DEFAULT 0,
   `params` text NOT NULL DEFAULT '',
   `published` tinyint(1) NOT NULL DEFAULT 0, 
   `hits` int(10) unsigned NOT NULL DEFAULT 0, 
@@ -54,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   KEY `idx_createdby` (`created_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
--- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
+-- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_gallery_id`, `level`, `path`, `lft`, `rgt`) VALUES
 -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 
 
@@ -109,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 #CREATE TABLE IF NOT EXISTS `#__rsgallery2_acl` (
 #  `id` serial NOT NULL,
 #  `gallery_id` int(11) NOT NULL,
-#  `parent_id` int(11) NOT NULL default '0',
+#  `parent_gallery_id` int(11) NOT NULL default '0',
 #  `public_view` tinyint(1) NOT NULL default '1',
 #  `public_up_mod_img` tinyint(1) NOT NULL default '0',
 #  `public_del_img` tinyint(1) NOT NULL default '0',
@@ -137,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 #  `user_id` int(11) NOT NULL,
 #  `user_name` varchar(100) NOT NULL,
 #  `user_ip` varchar(50) NOT NULL default '0.0.0.0',
-#  `parent_id` int(11) NOT NULL default '0',
+#  `image_id` int(11) NOT NULL default '0',
 #  `item_id` int(11) NOT NULL,
 #  `item_table` varchar(50) default NULL,
 #  `datetime` datetime NOT NULL,
