@@ -366,6 +366,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         return;
     }
 
+    // Exit if no galleries are selectable
+    if ( ! elements.selectGallery)
+    {
+        return;
+    }
+
     // Reserve list for dropped files
     const droppedFiles = new DroppedFiles();
 

@@ -266,6 +266,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         uploader_wrapper.style.display = 'none';
         return;
     }
+    // Exit if no galleries are selectable
+    if (!elements.selectGallery) {
+        return;
+    }
     // Reserve list for dropped files
     var droppedFiles = new DroppedFiles();
     // init red / green border of drag area
