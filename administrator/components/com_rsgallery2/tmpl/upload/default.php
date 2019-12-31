@@ -55,10 +55,10 @@ $tabs = []
                             <a class="btn btn-primary"
                                id="ToGallery"
                                class="input_box"
-                               title="<?php echo JText::_('COM_RSGALLERY2_GOTO_RSG2_GALLERIES_VIEW'); ?>"
-                               href="index.php?option=com_rsgallery2&amp;view=galleries">
+                               title="<?php echo JText::_('COM_RSGALLERY2_CREATE_GALLERY_DESC'); ?>"
+                               href="index.php?option=com_rsgallery2&amp;task=gallery.add">
                                 <i class="icon-images"></i>
-                                <?php echo JText::_('COM_RSGALLERY2_MENU_GALLERIES'); ?>
+		                        <?php echo JText::_('COM_RSGALLERY2_CREATE_GALLERY'); ?>
                             </a>
                         </div>
                     </div>
