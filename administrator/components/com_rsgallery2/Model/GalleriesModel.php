@@ -53,7 +53,6 @@ class GalleriesModel extends ListModel
 
 				'modified', 'a.modified',
 				'modified_by', 'a.modified_by',
-				'parent_gallery_id', 'a.parent_gallery_id',
 
 				'parent_id', 'a.parent_id',
 				'lft', 'a.lft',
@@ -194,7 +193,7 @@ class GalleriesModel extends ListModel
 
 //				. 'a.checked_out, '
 //				. 'a.checked_out_time, '
-				. 'a.parent_gallery_id,'
+
 				. 'a.parent_id,'
 				. 'a.level, '
 				. 'a.path, '
@@ -345,7 +344,6 @@ class GalleriesModel extends ListModel
 			. a.modified, 
 			. a.modified_by, 
 
-			. a.parent_gallery_id,
 
 			. a.parent_id,
 			. a.level, 

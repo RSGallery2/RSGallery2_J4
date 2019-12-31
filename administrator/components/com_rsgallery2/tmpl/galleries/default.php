@@ -114,7 +114,7 @@ if ($saveOrder && !empty($this->items))
                                 </th>
 
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_PARENT_ID', 'a.parent_gallery_id', $listDirn, $listOrder); ?>
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_PARENT_ID', 'a.parent', $listDirn, $listOrder); ?>
                                 </th>
 
 
@@ -179,7 +179,7 @@ if ($saveOrder && !empty($this->items))
 								if ($item->level > 1)
 								{
 									$parentsStr = '';
-									$_currentParentId = $item->parent_gallery_id;
+									$_currentParentId = $item->parent_id;
 									$parentsStr = ' ' . $_currentParentId;
 									for ($i2 = 0; $i2 < $item->level; $i2++)
 									{
@@ -201,7 +201,7 @@ if ($saveOrder && !empty($this->items))
 									$parentsStr = '';
 								}
 								?>
-								<tr class="row<?php echo $i % 2; ?>" data-dragable-group="<?php echo $item->parent_gallery_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
+								<tr class="row<?php echo $i % 2; ?>" data-dragable-group="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
                                     <td class="text-center">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                                     </td>
@@ -333,7 +333,7 @@ if ($saveOrder && !empty($this->items))
 										<?php echo (int) $item->id; ?>
                                     </td>
                                     <td class="d-none d-md-table-cell">
-										<?php echo (int) $item->parent_gallery_id; ?>
+										<?php echo (int) $item->parent_id; ?>
                                     </td>
 
 

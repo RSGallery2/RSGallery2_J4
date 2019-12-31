@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--form addfieldprefix="Joomla\Component\Gallery\Administrator\Field"-->
 <form addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field">
-
+	<fieldset>
 	<field
 		name="id"
 		type="number"
@@ -28,10 +28,12 @@
 	/>
 
 	<field
-		name="parent_gallery_id"
+			name="parent_id"
 		type="galleryedit"
 		label="COM_RSGALLERY2_FIELD_PARENT_LABEL"
-	/>
+			default="1"
+		>
+		</field>
 
 	<field
 		name="lft"
@@ -230,6 +232,7 @@
 		component="com_content"
 		section="gallery"
 	/>
+	</fieldset>
 
 	<fields name="params" label="COM_RSGALLERY2_FIELD_BASIC_LABEL">
 

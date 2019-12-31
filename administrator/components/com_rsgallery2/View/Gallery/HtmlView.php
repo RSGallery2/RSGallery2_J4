@@ -125,7 +125,7 @@ class HtmlView extends BaseHtmlView
 			$this->form->setFieldAttribute('language', 'readonly', 'true');
 
 			// Only allow to select galleries with All language or with the forced language.
-			$this->form->setFieldAttribute('parent_gallery_id', 'language', '*,' . $forcedLanguage);
+			$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
 
 			// Only allow to select tags with All language or with the forced language.
 			$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
