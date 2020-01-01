@@ -228,6 +228,17 @@ $developer_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_DEVELOPER_ZONE'), Te
 
 $developer_ZoneButtons = [];
 
+/**/
+$developer_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&amp;view=develop&amp;layout=InitUpgradeMessage'),
+	Text::_('Test Install/Update message'),
+	Text::_('Check the output result of the install finish and upgrade finish result view part'),
+	array('icon-eye-open', 'icon-expand'),
+	'view___'
+);
+/**/
+
+
 //--- ready for test zone -----------------------------
 
 $ready4Test_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_TEST_ZONE'), Text::_('COM_RSGALLERY2_TEST_ZONE_DESCRIPTION'), 'test', 'testZone');
