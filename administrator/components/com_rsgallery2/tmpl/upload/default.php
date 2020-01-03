@@ -135,7 +135,7 @@ $tabs = []
                                             <span class="uploading-number">0</span><span class="uploading-symbol">%</span>
                                         </p>
                                     </div>
-                                    <div class="install-progress">
+                                    <div class="uploadProgressArea">
                                         <div class="progress progress-striped active">
                                             <div class="bar" style="width: 100%;"></div>
                                         </div>
@@ -145,7 +145,6 @@ $tabs = []
                                             </span>
                                         </p>
                                     </div>
-
 
                                     <div class="upload-actions">
                                         <p class="lead">
@@ -164,6 +163,22 @@ $tabs = []
 
                                 </div>
                             </div>
+
+                            <button id="AssignUploadedFiles" type="button"
+                                    class="btn btn-primary"
+                                    onclick="Joomla.submitAssign2DroppedFiles()"
+                                    title="<?php echo JText::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
+                                >
+                                <span class="icon-copy" aria-hidden="true"></span>
+		                        <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>
+                            </button>
+
+                            <p>
+                                <div id="uploadProgressArea"></div>
+                            </p>
+                            <p>
+                                <div id="uploadErrorArea"></div>
+                            </p>
                         </div>
                         <div id="legacy-uploader" style="display: none;">
                             <div class="control-group">

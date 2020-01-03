@@ -47,6 +47,18 @@ class Queue<T> {
     isPopulated():boolean {return this._store.length > 0; }
 }
 
+
+/*----------------------------------------------------------------
+   ToD0: move to class
+----------------------------------------------------------------*/
+
+const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxReserveDbImageId';
+const urlTransferImages = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxSingleFile';
+
+/*----------------------------------------------------------------
+
+----------------------------------------------------------------*/
+
 async function stall(stallTime = 333) {
     await new Promise(resolve => setTimeout(resolve, stallTime));
 }
@@ -76,6 +88,8 @@ function resolveAfter2Seconds(x) {
 interface IDroppedFile {
     file: File;
     galleryId: string;
+    statusBar: createStatusBar | null;
+
 //    size:number;
 }
 
@@ -91,6 +105,7 @@ class DroppedFiles extends Queue<IDroppedFile> {
             const next : IDroppedFile = {
                 file: file,
                 galleryId: galleryId,
+                statusBar: null,
             };
 
             this.push (next);
@@ -139,7 +154,7 @@ class FormElements {
     constructor() {
         this.selectGallery = <HTMLInputElement> document.getElementById('SelectGallery');
         this.dragZone = <HTMLElement> document.getElementById('dragarea');
-        this.progressArea = <HTMLElement> document.getElementById('#uploadProgressArea');
+        this.progressArea = <HTMLElement> document.getElementById('uploadProgressArea');
     }
 
 }
@@ -240,6 +255,128 @@ class DroppedFilesTask {
 }
 
 
+//=================================================================================
+// Handle status bar for one actual uploading image
+
+class createStatusBar {
+
+    private static imgCount:number = 0;
+
+    private htmlStatusbar: HTMLElement;
+    private htmlFilename: HTMLElement;
+    private htmlSize: HTMLElement;
+    private htmlProgressBarOuter: HTMLElement;
+    private htmlProgressBarInner: HTMLElement;
+    private htmlAbort: HTMLElement;
+
+
+    constructor(
+        progressArea: HTMLElement,
+        file:File,
+    ){
+        createStatusBar.imgCount++;
+        let even_odd = (createStatusBar.imgCount % 2 == 0) ? "odd" : "even";
+
+        // Add all elements. single line in *.css
+        //this.htmlStatusbar = $("<div class='statusbar " + row + "'></div>");
+        this.htmlStatusbar = document.createElement('div');
+        this.htmlStatusbar.classList.add('statusbar');
+
+        //this.htmlFilename = $("<div class='filename'></div>").appendTo(this.statusbar);
+        this.htmlFilename = document.createElement('div');
+        this.htmlFilename.classList.add('filename');
+        this.htmlStatusbar.appendChild (this.htmlFilename);
+
+        //this.htmlSize = $("<div class='filesize'></div>").appendTo(this.statusbar);
+        this.htmlSize = document.createElement('div');
+        this.htmlSize.classList.add('filesize');
+        this.htmlStatusbar.appendChild (this.htmlSize);
+
+        //this.htmlProgressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
+        this.htmlProgressBarOuter = document.createElement('div');
+        this.htmlProgressBarOuter.classList.add('progressBar');
+        this.htmlProgressBarInner = document.createElement('div');
+        this.htmlProgressBarOuter.appendChild(this.htmlProgressBarInner);
+        this.htmlStatusbar.appendChild (this.htmlProgressBarOuter);
+
+        //this.htmlAbort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
+        this.htmlAbort = document.createElement('div');
+        this.htmlAbort.classList.add('abort');
+        //this.htmlAbort.appendChild(document.createTextNode('Abort'));
+        this.htmlAbort.innerHTML = 'Abort';
+        this.htmlStatusbar.appendChild (this.htmlAbort);
+
+        this.setFileNameAndSize (file);
+
+        //// set as first element: Latest file on top to compare if already shown in image area
+        //progressArea.prepend(this.statusbar);
+        // set as last element: Latest file on top to compare if already shown in image area
+        progressArea.appendChild(this.htmlStatusbar);
+
+    }
+
+    //--- file size in KB/MB .... -------------------
+
+    public setFileNameAndSize (file:File) {
+        let sizeStr = "";
+        let sizeKB = file.size / 1024;
+
+        if (sizeKB > 1024) {
+            var sizeMB = sizeKB / 1024;
+            sizeStr = sizeMB.toFixed(2) + " MB";
+        }
+        else {
+            sizeStr = sizeKB.toFixed(2) + " KB";
+        }
+
+        this.htmlFilename.innerHTML = file.name;
+        this.htmlSize.innerHTML = sizeStr;
+    };
+
+    //========================================
+    // Change progress value
+    public setProgress (percentage: number) {
+        let width = parseInt(this.htmlProgressBarOuter.style.width);
+
+        let progressBarWidth = percentage * width  / 100;
+
+        // ToDo: animate change of width
+        // transition:300ms linear; class progressBar ? put to inner ?
+        //this.htmlprogressBar.find('div').animate({width: progressBarWidth}, 10).html(percentage + "%");
+        this.htmlProgressBarInner.style.width = progressBarWidth.toString();
+
+        // do not abort when nearly finished
+        if (percentage >= 99.999) {
+            this.htmlAbort.style.display = 'none';
+        }
+    };
+
+    //========================================
+    // Handle abort click
+    // ToDo: Test for second ajax still working ?
+
+    // ToDo: !!!
+    public setAbort (jqxhr) {
+        let htmlStatusbar = this.htmlStatusbar;
+        this.htmlAbort.addEventListener('click', function () {
+            jqxhr.abort();
+
+            // toDo: file name strikethrough
+            //htmlStatusbar.style.display = 'none';
+            htmlStatusbar.style.textDecoration = 'line-through';
+        });
+    };
+
+    //========================================
+    // Remove item after successful file upload
+    public remove () {
+
+        this.htmlStatusbar.style.display = 'none';
+    };
+}
+
+
+
 /*----------------------------------------------------------------
    Ajax request DB items for each file in list
    First step in transfer of file
@@ -302,6 +439,10 @@ class RequestDbImageIdTask {
         while (this.droppedFiles.length > 0) {
             let nextFile = this.droppedFiles.shift();
             console.log("   @Request File: " + nextFile.file.name);
+
+            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.file);
+//            statusBar.setFileNameSize(files[idx].name, files[idx].size);
+
 
             /* let request = */
             await this.callAjaxRequest(nextFile)
