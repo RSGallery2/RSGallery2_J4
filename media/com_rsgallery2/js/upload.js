@@ -158,13 +158,14 @@ class RequestDbImageIdTask {
             console.log("> callAjaxRequest: " + nextFile.file.name)
         }, 333);
         /**/
-        await stall(500);
+        //        await stall (50);
         console.log("      < callAjaxRequest: ");
         return nextFile;
     }
     /**/
     /**/
     async ajaxRequest() {
+        console.log("    >this.droppedFiles.length: " + this.droppedFiles.length);
         // Already busy
         if (this.isBusy) {
             return;
@@ -173,11 +174,11 @@ class RequestDbImageIdTask {
         /**/
         while (this.droppedFiles.length > 0) {
             let nextFile = this.droppedFiles.shift();
-            console.log("   *Request File: " + nextFile.file.name);
+            console.log("   @Request File: " + nextFile.file.name);
             /* let request = */
             await this.callAjaxRequest(nextFile)
                 .then(() => {
-                console.log("   Request OK: " + nextFile.file.name);
+                console.log("   <Request OK: " + nextFile.file.name);
                 this.transferFiles.add(nextFile.file.name, nextFile.galleryId);
                 // Start ajax transfer of files
                 this.transferImagesTask.ajaxTransfer();
@@ -186,9 +187,10 @@ class RequestDbImageIdTask {
                 console.log("    !!! Error request: " + nextFile.file.name);
             });
             /**/
-            console.log("    this.droppedFiles.length: " + this.droppedFiles.length);
+            console.log("    *this.droppedFiles.length: " + this.droppedFiles.length);
         }
         this.isBusy = false;
+        console.log("    <this.droppedFiles.length: " + this.droppedFiles.length);
     }
 }
 /*----------------------------------------------------------------
@@ -196,7 +198,8 @@ class RequestDbImageIdTask {
 ----------------------------------------------------------------*/
 class TransferImagesTask {
     constructor(dragZone, transferFiles, progressArea) {
-        this.isBusy = false;
+        this.isBusyCount = 0;
+        this.BusyCountLimit = 5;
         this.dragZone = dragZone;
         this.transferFiles = transferFiles;
         this.progressArea = progressArea;
@@ -209,33 +212,34 @@ class TransferImagesTask {
         }, 333);
         /**/
         await stall(3000);
-        //        await resolveAfter2Seconds ("20");
+        //await resolveAfter2Seconds(20, 3000);
         console.log("      < callAjaxTransfer: ");
         return nextFile;
     }
     /**/
     async ajaxTransfer() {
-        // Already busy
-        if (this.isBusy) {
-            return;
-        }
-        this.isBusy = true;
-        /**/
-        while (this.transferFiles.length > 0) {
+        console.log("    >this.transferFiles.length: " + this.transferFiles.length);
+        // check for busy
+        while (this.isBusyCount < this.BusyCountLimit
+            && this.transferFiles.length > 0) {
+            this.isBusyCount++;
             let nextFile = this.transferFiles.shift();
-            console.log("   *Transfer File: " + nextFile.file);
-            /* let request = */
-            await this.callAjaxTransfer(nextFile)
+            console.log("   @Transfer File: " + nextFile.file);
+            //
+            this.callAjaxTransfer(nextFile)
                 .then(() => {
-                console.log("   Transfer OK: " + nextFile.file);
+                console.log("   <Transfer OK: " + nextFile.file);
             })
                 .catch(() => {
                 console.log("    !!! Error transfer: " + nextFile.file);
+            })
+                .finally(() => {
+                this.isBusyCount--;
+                this.ajaxTransfer();
             });
             /**/
-            console.log("    this.transferFiles.length: " + this.transferFiles.length);
         }
-        this.isBusy = false;
+        console.log("    <this.transferFiles.length: " + this.transferFiles.length);
     }
 }
 //--------------------------------------------------------------------------------------

@@ -280,7 +280,7 @@ class RequestDbImageIdTask {
         }, 333);
         /**/
 
-        await stall (500);
+//        await stall (50);
         console.log("      < callAjaxRequest: ");
 
         return nextFile;
@@ -289,6 +289,8 @@ class RequestDbImageIdTask {
 
     /**/
     public async ajaxRequest() {
+
+        console.log("    >this.droppedFiles.length: " + this.droppedFiles.length);
 
         // Already busy
         if (this.isBusy) {
@@ -299,12 +301,12 @@ class RequestDbImageIdTask {
 
         while (this.droppedFiles.length > 0) {
             let nextFile = this.droppedFiles.shift();
-            console.log("   *Request File: " + nextFile.file.name);
+            console.log("   @Request File: " + nextFile.file.name);
 
             /* let request = */
             await this.callAjaxRequest(nextFile)
                 .then(() => {
-                    console.log("   Request OK: " + nextFile.file.name);
+                    console.log("   <Request OK: " + nextFile.file.name);
 
                     this.transferFiles.add(nextFile.file.name, nextFile.galleryId);
 
@@ -317,10 +319,11 @@ class RequestDbImageIdTask {
                 });
             /**/
 
-            console.log("    this.droppedFiles.length: " + this.droppedFiles.length);
+            console.log("    *this.droppedFiles.length: " + this.droppedFiles.length);
         }
 
         this.isBusy = false;
+        console.log("    <this.droppedFiles.length: " + this.droppedFiles.length);
     }
 
     /**
@@ -353,7 +356,9 @@ class TransferImagesTask {
     private transferFiles: TransferFiles;
 
     private request: Promise<ITransferFile>;
-    private isBusy: boolean = false;
+    private isBusyCount: number = 0;
+    private readonly BusyCountLimit: number = 5;
+
 
     constructor(
         dragZone: HTMLElement,
@@ -376,7 +381,7 @@ class TransferImagesTask {
         /**/
 
         await stall (3000);
-//        await resolveAfter2Seconds ("20");
+        //await resolveAfter2Seconds(20, 3000);
 
         console.log("      < callAjaxTransfer: ");
 
@@ -386,36 +391,34 @@ class TransferImagesTask {
     /**/
     public async ajaxTransfer() {
 
-        // Already busy
-        if (this.isBusy) {
-            return;
-        }
-        this.isBusy = true;
-        /**/
+        console.log("    >this.transferFiles.length: " + this.transferFiles.length);
+        // check for busy
+        while (this.isBusyCount < this.BusyCountLimit
+            && this.transferFiles.length > 0)
+        {
+            this.isBusyCount++;
 
-        while (this.transferFiles.length > 0) {
             let nextFile = this.transferFiles.shift();
-            console.log("   *Transfer File: " + nextFile.file);
+            console.log("   @Transfer File: " + nextFile.file);
 
-            /* let request = */
-            await this.callAjaxTransfer(nextFile)
+            //
+            this.callAjaxTransfer(nextFile)
                 .then(() => {
-                    console.log("   Transfer OK: " + nextFile.file);
-
-
-
+                    console.log("   <Transfer OK: " + nextFile.file);
                 })
                 .catch(() => {
                     console.log("    !!! Error transfer: " + nextFile.file);
+                })
+                .finally(() => {
+                    this.isBusyCount--;
+                    this.ajaxTransfer();
                 });
             /**/
 
-            console.log("    this.transferFiles.length: " + this.transferFiles.length);
         }
 
-        this.isBusy = false;
+        console.log("    <this.transferFiles.length: " + this.transferFiles.length);
     }
-
 
 }
 
