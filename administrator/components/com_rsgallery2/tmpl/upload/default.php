@@ -19,9 +19,10 @@ HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('script', 'com_rsgallery2/libQueueStack.js', ['version' => 'auto', 'relative' => true]);
 HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
 
-Text::script('COM_INSTALLER_MSG_INSTALL_ENTER_A_URL');
+Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST');
 
 $app = Factory::getApplication();
 
@@ -75,7 +76,7 @@ $tabs = []
 	                ?>
 
                     <?php
-                    echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_zip_pc']);
+                    echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'upload_drag_and_drop'));
                     ?>
 
                     <?php
@@ -151,7 +152,7 @@ $tabs = []
                                             <?php echo Text::_('COM_RSGALLERY2_DRAG_IMAGES_HERE'); ?>
                                         </p>
                                         <p>
-                                            <button id="select-file-button" type="button" class="btn btn-success">
+                                            <button id="select-file-button-drop" type="button" class="btn btn-success">
                                                 <span class="icon-copy" aria-hidden="true"></span>
                                                 <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_ZIP_DESC'); ?>
                                             </button>
@@ -202,7 +203,7 @@ $tabs = []
 			                <?php echo Text::_('COM_RSGALLERY2_ZIP_MINUS_FILE'); ?>
                         </label>
                         <div class="controls">
-                            <button id="select-file-button" type="button" class="btn btn-success">
+                            <button id="select-file-button-zip" type="button" class="btn btn-success">
                                 <span class="icon-copy" aria-hidden="true"></span>
 		                        <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_ZIP_DESC'); ?>
                             </button>
@@ -217,7 +218,7 @@ $tabs = []
                     <hr>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="button" class="btn btn-primary" id="uploadbutton_directory" onclick="XXX_Joomla.submitbuttonfolder()">
+                            <button type="button" class="btn btn-primary" id="uploadbutton_directory-zip" onclick="XXX_Joomla.submitbuttonfolder()">
 				                <?php echo Text::_('COM_RSGALLERY2_CHECK_AND_UPLOAD'); ?>
                             </button>
                         </div>
@@ -259,7 +260,7 @@ $tabs = []
                     <hr>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="button" class="btn btn-primary" id="uploadbutton_directory" onclick="XXX_Joomla.submitbuttonfolder()">
+                            <button type="button" class="btn btn-primary" id="uploadbutton_directory-server" onclick="XXX_Joomla.submitbuttonfolder()">
                                 <?php echo Text::_('COM_RSGALLERY2_CHECK_AND_UPLOAD'); ?>
                             </button>
                         </div>
