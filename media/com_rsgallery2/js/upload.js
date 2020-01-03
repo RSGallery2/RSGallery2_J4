@@ -27,11 +27,22 @@ class Queue {
     isEmpty() { return this._store.length == 0; }
     isPopulated() { return this._store.length > 0; }
 }
+async function stall(stallTime = 333) {
+    await new Promise(resolve => setTimeout(resolve, stallTime));
+}
+/**/
+function resolveAfter2Seconds(x, time = 2000) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(x);
+        }, time);
+    });
+}
 class DroppedFiles extends Queue {
     addFiles(files, galleryId) {
         for (let idx = 0; idx < files.length; idx++) {
             const file = files[idx];
-            console.log('addFile: ' + files[idx].name);
+            console.log('   +droppedFile: ' + files[idx].name);
             const next = {
                 file: file,
                 galleryId: galleryId,
@@ -41,8 +52,8 @@ class DroppedFiles extends Queue {
     }
 }
 class TransferFiles extends Queue {
-    addFiles(file, imageId) {
-        console.log('addFile: ' + file);
+    add(file, imageId) {
+        console.log('    +TransferFile: ' + file);
         const next = {
             file: file,
             imageId: imageId,
@@ -88,96 +99,13 @@ class Border4SelectedGallery {
     }
 }
 /*----------------------------------------------------------------
-   Ajax request DB items for each file in list
-   First step in transfer of file
-----------------------------------------------------------------*/
-class RequestDbImageId {
-    constructor(dragZone, droppedFiles, progressArea) {
-        this.isBusy = false;
-        this.dragZone = dragZone;
-        this.droppedFiles = droppedFiles;
-        this.progressArea = progressArea;
-    }
-    /**/
-    async callAjaxRequest(nextFile) {
-        let result = await setTimeout(() => {
-            console.log("callAjaxRequest: " + nextFile.file);
-        }, 333);
-        return nextFile;
-    }
-    /**/
-    /**/
-    async doRequestDbImageId() {
-        // Already busy
-        if (this.isBusy) {
-            return;
-        }
-        this.isBusy = true;
-        /**/
-        while (this.droppedFiles.length > 0) {
-            let nextFile = this.droppedFiles.shift();
-            console.log("nextFile: " + nextFile.file);
-            /* let request = */
-            await this.callAjaxRequest(nextFile)
-                .then(() => {
-                console.log("success: " + nextFile.file);
-            })
-                .catch(() => {
-                console.log("error: " + nextFile.file);
-            });
-            /**/
-        }
-        this.isBusy = false;
-    }
-}
-/*----------------------------------------------------------------
-     Ajax transfer files to server
-----------------------------------------------------------------*/
-class TransferImagesAjax {
-    constructor(dragZone, transferFiles, progressArea) {
-        this.isBusy = false;
-        this.dragZone = dragZone;
-        this.transferFiles = transferFiles;
-        this.progressArea = progressArea;
-    }
-    async callAjaxRequest(nextFile) {
-        let result = await setTimeout(() => {
-            console.log("callAjaxRequest: " + nextFile.file);
-        }, 333);
-        return nextFile;
-    }
-    /**/
-    async doRequestDbImageId() {
-        // Already busy
-        if (this.isBusy) {
-            return;
-        }
-        this.isBusy = true;
-        /**/
-        while (this.transferFiles.length > 0) {
-            let nextFile = this.transferFiles.shift();
-            console.log("nextFile: " + nextFile.file);
-            /* let request = */
-            await this.callAjaxRequest(nextFile)
-                .then(() => {
-                console.log("success: " + nextFile.file);
-            })
-                .catch(() => {
-                console.log("error: " + nextFile.file);
-            });
-            /**/
-        }
-        this.isBusy = false;
-    }
-}
-/*----------------------------------------------------------------
 handle dropped files
 ----------------------------------------------------------------*/
-class DroppingFiles {
-    constructor(selectGallery, droppedFiles, requestDbImageId) {
+class DroppedFilesTask {
+    constructor(selectGallery, droppedFiles, requestDbImageIdTask) {
         this.selectGallery = selectGallery;
         this.droppedFiles = droppedFiles;
-        this.requestDbImageId = requestDbImageId;
+        this.requestDbImageIdTask = requestDbImageIdTask;
         let buttonManualFile = document.querySelector('#select-file-button-drop');
         let fileInput = document.querySelector('#install_package');
         buttonManualFile.onclick = () => fileInput.click();
@@ -193,7 +121,8 @@ class DroppingFiles {
         const gallery_id = selectionHTML.value;
         // prevent empty gallery
         if (parseInt(gallery_id) < 1) {
-            alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_CATEGORY_FIRST') + '(5)');
+            alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
+            console.log(">onNewFile: Rejected");
         }
         else {
             const files = element.files || ev.dataTransfer.files;
@@ -201,10 +130,112 @@ class DroppingFiles {
             if (!files.length) {
                 return;
             }
+            console.log(">onNewFile: " + files.length);
             this.droppedFiles.addFiles(files, gallery_id);
-            // Start first Part of transfer files
-            this.requestDbImageId.doRequestDbImageId();
+            // Start ajax request of DB image reservation
+            this.requestDbImageIdTask.ajaxRequest();
         }
+    }
+}
+/*----------------------------------------------------------------
+   Ajax request DB items for each file in list
+   First step in transfer of file
+----------------------------------------------------------------*/
+class RequestDbImageIdTask {
+    constructor(dragZone, droppedFiles, transferFiles, progressArea, transferImagesTask) {
+        this.isBusy = false;
+        this.dragZone = dragZone;
+        this.droppedFiles = droppedFiles;
+        this.transferFiles = transferFiles;
+        this.progressArea = progressArea;
+        this.transferImagesTask = transferImagesTask;
+    }
+    /**/
+    async callAjaxRequest(nextFile) {
+        console.log("      > callAjaxRequest: " + nextFile.file.name);
+        /**
+        let result = await setTimeout(() => {
+            console.log("> callAjaxRequest: " + nextFile.file.name)
+        }, 333);
+        /**/
+        await stall(500);
+        console.log("      < callAjaxRequest: ");
+        return nextFile;
+    }
+    /**/
+    /**/
+    async ajaxRequest() {
+        // Already busy
+        if (this.isBusy) {
+            return;
+        }
+        this.isBusy = true;
+        /**/
+        while (this.droppedFiles.length > 0) {
+            let nextFile = this.droppedFiles.shift();
+            console.log("   *Request File: " + nextFile.file.name);
+            /* let request = */
+            await this.callAjaxRequest(nextFile)
+                .then(() => {
+                console.log("   Request OK: " + nextFile.file.name);
+                this.transferFiles.add(nextFile.file.name, nextFile.galleryId);
+                // Start ajax transfer of files
+                this.transferImagesTask.ajaxTransfer();
+            })
+                .catch(() => {
+                console.log("    !!! Error request: " + nextFile.file.name);
+            });
+            /**/
+            console.log("    this.droppedFiles.length: " + this.droppedFiles.length);
+        }
+        this.isBusy = false;
+    }
+}
+/*----------------------------------------------------------------
+     Ajax transfer files to server
+----------------------------------------------------------------*/
+class TransferImagesTask {
+    constructor(dragZone, transferFiles, progressArea) {
+        this.isBusy = false;
+        this.dragZone = dragZone;
+        this.transferFiles = transferFiles;
+        this.progressArea = progressArea;
+    }
+    async callAjaxTransfer(nextFile) {
+        console.log("      > callAjaxTransfer: " + nextFile.file);
+        /**
+        let result = await setTimeout(() => {
+            console.log("> callAjaxTransfer: " + nextFile.file)
+        }, 333);
+        /**/
+        await stall(3000);
+        //        await resolveAfter2Seconds ("20");
+        console.log("      < callAjaxTransfer: ");
+        return nextFile;
+    }
+    /**/
+    async ajaxTransfer() {
+        // Already busy
+        if (this.isBusy) {
+            return;
+        }
+        this.isBusy = true;
+        /**/
+        while (this.transferFiles.length > 0) {
+            let nextFile = this.transferFiles.shift();
+            console.log("   *Transfer File: " + nextFile.file);
+            /* let request = */
+            await this.callAjaxTransfer(nextFile)
+                .then(() => {
+                console.log("   Transfer OK: " + nextFile.file);
+            })
+                .catch(() => {
+                console.log("    !!! Error transfer: " + nextFile.file);
+            });
+            /**/
+            console.log("    this.transferFiles.length: " + this.transferFiles.length);
+        }
+        this.isBusy = false;
     }
 }
 //--------------------------------------------------------------------------------------
@@ -230,11 +261,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const transferFiles = new TransferFiles();
     // init red / green border of drag area
     const gallerySelected = new Border4SelectedGallery(elements.selectGallery, elements.dragZone);
-    // ajax request: database image item
-    const requestDbImageId = new RequestDbImageId(elements.dragZone, droppedFiles, elements.progressArea);
-    const transferImages = new TransferImagesAjax(elements.dragZone, transferFiles, elements.progressArea);
-    // init drag, drop and file upload  
-    let dropInDragArea = new DroppingFiles(elements.selectGallery, droppedFiles, requestDbImageId);
+    // (3) ajax request: Transfer file to server
+    const transferImagesTask = new TransferImagesTask(elements.dragZone, transferFiles, elements.progressArea);
+    // (2) ajax request: database image item
+    const requestDbImageIdTask = new RequestDbImageIdTask(elements.dragZone, droppedFiles, transferFiles, elements.progressArea, transferImagesTask);
+    // (1) collect dropped files, start request DB image ID
+    let droppedFilesTask = new DroppedFilesTask(elements.selectGallery, droppedFiles, requestDbImageIdTask);
     //--------------------------------------------------------------------------------------
     // Drop init and start
     //--------------------------------------------------------------------------------------
@@ -291,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             console.log(files[i]);
         }
         /**/
-        dropInDragArea.onNewFile(event);
+        droppedFilesTask.onNewFile(event);
     });
     //--------------------------------------------------------------------------------------
     //
@@ -335,7 +367,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         else {
             // Is invalid galleryId selected ?
             if (bOneGalleryName4All && (gallery_id < 1)) {
-                alert(Joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_CATEGORY_FIRST') + '(2)');
+                alert(Joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(2)');
             }
             else {
                 // yes transfer files ...
@@ -377,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         else {
             // Is invalid galleryId selected ?
             if (bOneGalleryName4All && (gallery_id < 1)) {
-                alert(Joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_CATEGORY_FIRST') + '(4)');
+                alert(Joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(4)');
             }
             else {
                 // yes transfer files ...
