@@ -27,6 +27,15 @@
 
   &.dragareaDisabled {
     border: 6px dotted red;
+//    background: linear-gradient(45deg, darkgrey, lightgrey);
+    /**/
+    background: repeating-linear-gradient(
+      45deg,
+      lightgrey,
+      lightgrey 20px,
+      white 20px,
+      white 40px);
+     /**/
   }
 
   &[data-state=pending] .upload-progress {
@@ -40,6 +49,7 @@
   & #upload-icon,
   & p.lead {
     color: #999;
+    color: darkgrey;
   }
 }
 

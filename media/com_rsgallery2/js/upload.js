@@ -10,143 +10,73 @@
  * @author      finnern
  * @since       4.3.0
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Joomla = window.Joomla || {};
+/**/
+//declare var joomla: Joomla;
+//const joomla = window.Joomla || {};
+const joomla = window.Joomla || {};
 /*----------------------------------------------------------------
-   queue with lock
+   queue
 ----------------------------------------------------------------*/
-// ToDo: put to and import RSG2 lib ?
-var Queue = /** @class */ (function () {
-    function Queue() {
-        this.list = new Array();
-        this.lock = false;
+class Queue {
+    constructor() {
+        this._store = [];
     }
-    Object.defineProperty(Queue.prototype, "length", {
-        get: function () {
-            while (this.lock) { }
-            return this.list.length;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    // enqueue()
-    Queue.prototype.push = function (item) {
-        while (this.lock) { }
-        this.lock = true;
-        try {
-            this.list.push(item);
-        }
-        catch (_a) {
-            var outTxt = "error pushing item in queue";
-            console.log(outTxt);
-            alert(outTxt);
-        }
-        this.lock = false;
-    };
-    // dequeue()
-    // returns T or undefined
-    Queue.prototype.shift = function () {
-        while (this.lock) { }
-        var item = undefined;
-        // elements exist
-        if (this.isPopulated()) {
-            this.lock = true;
-            try {
-                item = this.list.shift();
-            }
-            catch (_a) {
-                var outTxt = "error shift item in queue";
-                console.log(outTxt);
-                alert(outTxt);
-            }
-            this.lock = false;
-        }
-        return item;
-    };
-    Queue.prototype.isEmpty = function () {
-        while (this.lock) { }
-        // return true if the queue is empty.
-        return this.list.length == 0;
-    };
-    Queue.prototype.isPopulated = function () {
-        while (this.lock) { }
-        // return true if the queue has elements
-        return this.list.length > 0;
-    };
-    return Queue;
-}());
-var DroppedFiles = /** @class */ (function (_super) {
-    __extends(DroppedFiles, _super);
-    function DroppedFiles() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    DroppedFiles.prototype.addFiles = function (files, galleryId) {
-        /**
-        //        for(let file of files){
-        //        [...files].map(file => {
-        //        Array.from(files).forEach ((file) => {
-                Array.prototype.forEach.call(files, function(file) {
-                    const next : IDroppedFile = {
-                        name: file.,
-                        path: file,
-                    }
-        
-                    this.push (next);
-                });
-        /**/
-        for (var idx = 0; idx < files.length; idx++) {
-            var file = files[idx];
+    push(val) { this._store.push(val); }
+    shift() { return this._store.shift(); }
+    get length() { return this._store.length; }
+    isEmpty() { return this._store.length == 0; }
+    isPopulated() { return this._store.length > 0; }
+}
+class DroppedFiles extends Queue {
+    addFiles(files, galleryId) {
+        for (let idx = 0; idx < files.length; idx++) {
+            const file = files[idx];
             console.log('addFile: ' + files[idx].name);
-            var next = {
+            const next = {
                 file: file,
                 galleryId: galleryId,
             };
             this.push(next);
         }
-    };
-    return DroppedFiles;
-}(Queue));
+    }
+}
+class TransferFiles extends Queue {
+    addFiles(file, imageId) {
+        console.log('addFile: ' + file);
+        const next = {
+            file: file,
+            imageId: imageId,
+        };
+        this.push(next);
+    }
+}
 /*----------------------------------------------------------------
   Pointer to used html elements on form
 ----------------------------------------------------------------*/
-var FormHTMLElements = /** @class */ (function () {
+class FormElements {
     // : HTMLElement;
     // : HTMLElement;
-    function FormHTMLElements() {
+    constructor() {
         this.selectGallery = document.getElementById('SelectGallery');
         this.dragZone = document.getElementById('dragarea');
         this.progressArea = document.getElementById('#uploadProgressArea');
     }
-    return FormHTMLElements;
-}());
+}
 /*----------------------------------------------------------------
    gallery selection defines red / green border of drag area
 ----------------------------------------------------------------*/
-var Border4SelectedGallery = /** @class */ (function () {
-    function Border4SelectedGallery(selectGallery, dragZone) {
-        var _this = this;
+class Border4SelectedGallery {
+    constructor(selectGallery, dragZone) {
         //        this.selectGallery = selectGallery;
         this.dragZone = dragZone;
-        selectGallery.onchange = function (ev) { return _this.onSelectionChange(ev.target); };
+        selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
         this.checkSelection(selectGallery.value);
     }
-    Border4SelectedGallery.prototype.onSelectionChange = function (target) {
-        var selection = target;
+    onSelectionChange(target) {
+        let selection = target;
         this.checkSelection(selection.value);
-    };
-    Border4SelectedGallery.prototype.checkSelection = function (value) {
+    }
+    checkSelection(value) {
         //green
         if (value != "0") {
             this.dragZone.classList.remove('dragareaDisabled');
@@ -155,92 +85,118 @@ var Border4SelectedGallery = /** @class */ (function () {
             // red
             this.dragZone.classList.add('dragareaDisabled');
         }
-    };
-    return Border4SelectedGallery;
-}());
+    }
+}
 /*----------------------------------------------------------------
    Ajax request DB items for each file in list
    First step in transfer of file
 ----------------------------------------------------------------*/
-var eSendState;
-(function (eSendState) {
-    eSendState[eSendState["idle"] = 0] = "idle";
-    eSendState[eSendState["busy"] = 1] = "busy";
-})(eSendState || (eSendState = {}));
-var DoRequestDbImageId = /** @class */ (function () {
-    function DoRequestDbImageId(dragZone, droppedFiles, progressArea) {
+class RequestDbImageId {
+    constructor(dragZone, droppedFiles, progressArea) {
+        this.isBusy = false;
         this.dragZone = dragZone;
         this.droppedFiles = droppedFiles;
         this.progressArea = progressArea;
     }
-    DoRequestDbImageId.prototype.doRequestDbImageId = function () {
-        // Not busy
-        if (this.sendState == eSendState.idle) {
-            if (this.droppedFiles.length > 0) {
-                this.sendState = eSendState.busy;
-            }
-        }
-        /**
-
-        // for function reserveDbImageId
-        var data = new FormData();
-        // data.append('upload_file', files[idx]);
-        data.append('upload_file', files[idx].name);
-        data.append('imagesDroppedListIdx', imagesDroppedListIdx);
-
-        data.append(Token, '1');
-        data.append('gallery_id', gallery_id);
-        //data.append('idx', idx);
-
-        // Set progress bar
-        var statusBar = new createStatusBar(progressArea);
-        statusBar.setFileNameSize(files[idx].name, files[idx].size);
-
-        /**/
-    };
-    return DoRequestDbImageId;
-}());
-/*----------------------------------------------------------------
-
-----------------------------------------------------------------*/
-var DoUploadFile = /** @class */ (function () {
-    function DoUploadFile() {
+    /**/
+    async callAjaxRequest(nextFile) {
+        let result = await setTimeout(() => {
+            console.log("callAjaxRequest: " + nextFile.file);
+        }, 333);
+        return nextFile;
     }
-    return DoUploadFile;
-}());
+    /**/
+    /**/
+    async doRequestDbImageId() {
+        // Already busy
+        if (this.isBusy) {
+            return;
+        }
+        this.isBusy = true;
+        /**/
+        while (this.droppedFiles.length > 0) {
+            let nextFile = this.droppedFiles.shift();
+            console.log("nextFile: " + nextFile.file);
+            /* let request = */
+            await this.callAjaxRequest(nextFile)
+                .then(() => {
+                console.log("success: " + nextFile.file);
+            })
+                .catch(() => {
+                console.log("error: " + nextFile.file);
+            });
+            /**/
+        }
+        this.isBusy = false;
+    }
+}
+/*----------------------------------------------------------------
+     Ajax transfer files to server
+----------------------------------------------------------------*/
+class TransferImagesAjax {
+    constructor(dragZone, transferFiles, progressArea) {
+        this.isBusy = false;
+        this.dragZone = dragZone;
+        this.transferFiles = transferFiles;
+        this.progressArea = progressArea;
+    }
+    async callAjaxRequest(nextFile) {
+        let result = await setTimeout(() => {
+            console.log("callAjaxRequest: " + nextFile.file);
+        }, 333);
+        return nextFile;
+    }
+    /**/
+    async doRequestDbImageId() {
+        // Already busy
+        if (this.isBusy) {
+            return;
+        }
+        this.isBusy = true;
+        /**/
+        while (this.transferFiles.length > 0) {
+            let nextFile = this.transferFiles.shift();
+            console.log("nextFile: " + nextFile.file);
+            /* let request = */
+            await this.callAjaxRequest(nextFile)
+                .then(() => {
+                console.log("success: " + nextFile.file);
+            })
+                .catch(() => {
+                console.log("error: " + nextFile.file);
+            });
+            /**/
+        }
+        this.isBusy = false;
+    }
+}
 /*----------------------------------------------------------------
 handle dropped files
 ----------------------------------------------------------------*/
-var DroppingFiles = /** @class */ (function () {
-    function DroppingFiles(selectGallery, droppedFiles, requestDbImageId) {
-        var _this = this;
+class DroppingFiles {
+    constructor(selectGallery, droppedFiles, requestDbImageId) {
         this.selectGallery = selectGallery;
         this.droppedFiles = droppedFiles;
         this.requestDbImageId = requestDbImageId;
-        var buttonManualFile = document.querySelector('#select-file-button');
-        var fileInput = document.querySelector('#install_package');
-        /**
-        buttonManualFile.addEventListener('click', function () {
-            fileInput.click();
-        });
-        /**/
-        buttonManualFile.onclick = function () { return fileInput.click(); };
-        fileInput.onchange = function (ev) { return _this.onNewFile(ev); };
+        let buttonManualFile = document.querySelector('#select-file-button-drop');
+        let fileInput = document.querySelector('#install_package');
+        buttonManualFile.onclick = () => fileInput.click();
+        fileInput.onchange = (ev) => this.onNewFile(ev);
     }
-    DroppingFiles.prototype.onNewFile = function (ev) {
-        var element = ev.target;
+    onNewFile(ev) {
+        let element = ev.target;
         ev.preventDefault();
         ev.stopPropagation();
         // gallery id
-        var selectionHTML = this.selectGallery;
+        const selectionHTML = this.selectGallery;
         //const gallery_id =  parseInt (selectionHTML.value);
-        var gallery_id = selectionHTML.value;
+        const gallery_id = selectionHTML.value;
         // prevent empty gallery
         if (parseInt(gallery_id) < 1) {
-            alert(Joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_CATEGORY_FIRST') + '(5)');
+            alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_CATEGORY_FIRST') + '(5)');
         }
         else {
-            var files = element.files;
+            const files = element.files || ev.dataTransfer.files;
             // files exist ?
             if (!files.length) {
                 return;
@@ -249,19 +205,18 @@ var DroppingFiles = /** @class */ (function () {
             // Start first Part of transfer files
             this.requestDbImageId.doRequestDbImageId();
         }
-    };
-    return DroppingFiles;
-}());
+    }
+}
 //--------------------------------------------------------------------------------------
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function (event) {
     // collect html elements
-    var elements = new FormHTMLElements();
+    let elements = new FormElements();
     // on old browser just show file upload
     if (typeof FormData === 'undefined') {
-        var legacy_uploader = document.getElementById('legacy-uploader');
-        var uploader_wrapper = document.getElementById('uploader-wrapper');
+        let legacy_uploader = document.getElementById('legacy-uploader');
+        let uploader_wrapper = document.getElementById('uploader-wrapper');
         legacy_uploader.style.display = 'block';
         uploader_wrapper.style.display = 'none';
         return;
@@ -271,36 +226,108 @@ document.addEventListener("DOMContentLoaded", function (event) {
         return;
     }
     // Reserve list for dropped files
-    var droppedFiles = new DroppedFiles();
+    const droppedFiles = new DroppedFiles();
+    const transferFiles = new TransferFiles();
     // init red / green border of drag area
-    var gallerySelected = new Border4SelectedGallery(elements.selectGallery, elements.dragZone);
+    const gallerySelected = new Border4SelectedGallery(elements.selectGallery, elements.dragZone);
     // ajax request: database image item
-    var requestDbImageId = new DoRequestDbImageId(elements.dragZone, droppedFiles, elements.progressArea);
+    const requestDbImageId = new RequestDbImageId(elements.dragZone, droppedFiles, elements.progressArea);
+    const transferImages = new TransferImagesAjax(elements.dragZone, transferFiles, elements.progressArea);
     // init drag, drop and file upload  
-    var droppInDragArea = new DroppingFiles(elements.selectGallery, droppedFiles, requestDbImageId);
+    let dropInDragArea = new DroppingFiles(elements.selectGallery, droppedFiles, requestDbImageId);
+    //--------------------------------------------------------------------------------------
+    // Drop init and start
+    //--------------------------------------------------------------------------------------
+    //--- no other drop on the form ---------------------
+    /**/
+    window.addEventListener('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "copy";
+    });
+    window.addEventListener('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    window.addEventListener('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    /**/
+    //--- drop zone events ---------------------
+    elements.dragZone.addEventListener('dragenter', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        //elements.dragZone.classList.add('hover');
+        elements.dragZone.classList.add('hover');
+        event.dataTransfer.dropEffect = "copy";
+        return false;
+    }); // Notify user when file is over the drop area
+    elements.dragZone.addEventListener('dragover', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        elements.dragZone.classList.add('hover');
+        return false;
+    });
+    elements.dragZone.addEventListener('dragleave', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        elements.dragZone.classList.remove('hover');
+        return false;
+    });
+    elements.dragZone.addEventListener('drop', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        elements.dragZone.classList.remove('hover');
+        /**/
+        const files = event.target.files || event.dataTransfer.files;
+        /**/
+        if (!files.length) {
+            return;
+        }
+        //        Array.from(files).foreach ((File) => {console.log("filename: " + File.name);});
+        for (var i = 0; i < files.length; i++) {
+            console.log("filename: " + files[i].name);
+            console.log(files[i]);
+        }
+        /**/
+        dropInDragArea.onNewFile(event);
+    });
+    //--------------------------------------------------------------------------------------
+    //
+    //--------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------
     // new functions and new submit buttons
     //--------------------------------------------------------------------------------------
     /**
      * call imagesProperties view. There assign properties to dropped files
      */
+    /**
     Joomla.submitAssign2DroppedFiles = function () {
-        // submitAssign2DroppedFiles = function () {
-        //        alert('submitAssignDroppedFiles:  ...');
-        var form = document.getElementById('adminForm');
+    // submitAssign2DroppedFiles = function () {
+    //        alert('submitAssignDroppedFiles:  ...');
+        const form: HTMLFormElement = <HTMLFormElement> document.getElementById('adminForm');
+
         // ToDo: check if one image exists
         form.task.value = 'imagesProperties.PropertiesView';
+
         form.submit();
     };
+
     /**
      * Upload zip file, checks and calls
      */
+    /**
     Joomla.submitButtonManualFileZipPc = function () {
+
         // alert('Upload Manual File Zip from Pc: controller upload.uploadFromZip ...');
+
         var form = document.getElementById('adminForm');
+
         var zip_path = form.zip_file.value;
         var gallery_id = jQuery('#SelectGalleries_01').val();
         var bOneGalleryName4All = jQuery('input[name="all_img_in_step1_01"]').val();
+
         // No file path given
         if (zip_path == "") {
             alert(Joomla.JText._('COM_RSGALLERY2_ZIP_MINUS_UPLOAD_SELECTED_BUT_NO_FILE_CHOSEN'));
@@ -318,8 +345,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 form.xcat.value = gallery_id;
                 form.selcat.value = bOneGalleryName4All;
                 form.rsgOption.value = "";
+
+
                 jQuery('#loading').css('display', 'block');
+
                 form.submit();
+
             }
         }
     };
@@ -327,13 +358,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
     /*
      * Upload server file checks and calls
      */
+    /**
     Joomla.submitButtonManualFileFolderServer = function () {
+
         // alert('Upload Folder server: upload.uploadFromFtpFolder ...');
+
         var form = document.getElementById('adminForm');
+
         //var GalleryId = jQuery('#SelectGalleries_03').chosen().val();
         var gallery_id = jQuery('#SelectGalleries_02').val();
         var ftp_path = form.ftp_path.value;
         var bOneGalleryName4All = jQuery('input[name="all_img_in_step1_02"]').val();
+
         // ftp path is not given
         if (ftp_path == "") {
             alert(Joomla.JText._('COM_RSGALLERY2_FTP_UPLOAD_CHOSEN_BUT_NO_FTP_PATH_PROVIDED'));
@@ -351,10 +387,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 form.xcat.value = gallery_id;
                 form.selcat.value = bOneGalleryName4All;
                 form.rsgOption.value = "";
+
                 //jQuery('#loading').css('display', 'block');
+
                 form.submit();
             }
         }
     };
+    /**/
 });
 /**/
