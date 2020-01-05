@@ -1,10 +1,11 @@
 <?php
 /**
- * @package     Joomla.Administrator
+ * @package     RSGallery2
  * @subpackage  com_rsgallery2
- *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   (C) 2016-2019 RSGallery2 Team
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @author      finnern
+ * RSGallery is Free Software
  */
 
 namespace Joomla\Component\Rsgallery2\Administrator\Model;
