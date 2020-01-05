@@ -14,6 +14,7 @@
 //declare var joomla: Joomla;
 //const joomla = window.Joomla || {};
 const joomla = window.Joomla || {};
+var Token;
 /*----------------------------------------------------------------
    queue
 ----------------------------------------------------------------*/
@@ -28,9 +29,8 @@ class Queue {
     isPopulated() { return this._store.length > 0; }
 }
 /*----------------------------------------------------------------
-   ToD0: move to class
+   ToDo: move to class
 ----------------------------------------------------------------*/
-const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxReserveDbImageId';
 const urlTransferImages = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxSingleFile';
 /*----------------------------------------------------------------
 
@@ -51,6 +51,8 @@ class DroppedFiles extends Queue {
         for (let idx = 0; idx < files.length; idx++) {
             const file = files[idx];
             console.log('   +droppedFile: ' + files[idx].name);
+            //--- ToDo: Check 4 allowed image type ---------------------------------
+            //--- Add file with data ---------------------------------
             const next = {
                 file: file,
                 galleryId: galleryId,
@@ -76,10 +78,12 @@ class TransferFiles extends Queue {
 class FormElements {
     // : HTMLElement;
     // : HTMLElement;
+    // : HTMLElement;
     constructor() {
         this.selectGallery = document.getElementById('SelectGallery');
         this.dragZone = document.getElementById('dragarea');
         this.progressArea = document.getElementById('uploadProgressArea');
+        this.errorZone = document.getElementById('uploadErrorArea');
     }
 }
 /*----------------------------------------------------------------
@@ -239,25 +243,120 @@ createStatusBar.imgCount = 0;
    First step in transfer of file
 ----------------------------------------------------------------*/
 class RequestDbImageIdTask {
-    constructor(dragZone, droppedFiles, transferFiles, progressArea, transferImagesTask) {
+    constructor(dragZone, progressArea, errorZone, droppedFiles, transferFiles, transferImagesTask) {
         this.isBusy = false;
         this.dragZone = dragZone;
         this.droppedFiles = droppedFiles;
+        this.errorZone = errorZone;
         this.transferFiles = transferFiles;
         this.progressArea = progressArea;
         this.transferImagesTask = transferImagesTask;
     }
+    // https://taylor.callsen.me/ajax-multi-file-uploader-with-native-js-and-promises/
+    // https://makandracards.com/makandra/39225-manually-uploading-files-via-ajax
+    // https://www.w3schools.com/js/js_ajax_http.asp
+    // http://html5doctor.com/drag-and-drop-to-server/
+    // -> resize, exif
+    // http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
     /**/
     async callAjaxRequest(nextFile) {
-        console.log("      > callAjaxRequest: " + nextFile.file.name);
+        return new Promise(function (resolve, reject) {
+            const request = new XMLHttpRequest();
+            request.onload = function () {
+                if (this.status === 200) {
+                    resolve(this.response);
+                }
+                else {
+                    /**
+                    let msg = 'Error on load:: state: ' + this.status + ' ' + this.statusText + '\n';
+                    msg += 'responseType: ' + this.responseType + '\n';
+                    //msg += 'responseText: ' + this.responseText  || this.responseJSON + '\n';
+                    msg += 'responseText: ' + this.responseText + '\n';
+
+                    reject(new Error(msg));
+                    /**/
+                    let msg = 'Error on load:: state: ' + this.status + ' ' + this.statusText + '\n';
+                    msg += 'responseType: ' + this.responseType + '\n';
+                    alert(msg);
+                    reject(new Error(this.responseText));
+                }
+            };
+            request.onerror = function () {
+                let msg = 'onError::  state: ' + this.status + ' ' + this.statusText + '\n';
+                msg += 'responseType: ' + this.responseType + '\n';
+                msg += 'responseText: ' + this.responseText + '\n';
+                //                    alert (msg);
+                //                    reject(new Error('XMLHttpRequest Error: ' + this.statusText));
+                reject(new Error(this.responseText));
+            };
+            let data = new FormData();
+            data.append('upload_file', nextFile.file.name);
+            data.append('upload_size', nextFile.file.size.toString());
+            data.append('upload_type', nextFile.file.type);
+            data.append(Token, '1');
+            data.append('gallery_id', nextFile.galleryId);
+            /**
+
+             get:
+            request.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    console.log(e.loaded+  " / " + e.total)
+                }
+            }
+
+            post: upload
+            xhr.upload.addEventListener("progress", function(evt){
+                if (evt.lengthComputable) {
+                    console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
+                }
+            }, false);
+
+            xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    var complete = (event.loaded / event.total * 100 | 0);
+                    progress.value = progress.innerHTML = complete;
+                }
+            };
+
+            post: download
+            xhr.addEventListener("progress", function(evt){
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    //Do something with download progress
+                    console.log(percentComplete);
+                }
+            }, false);
+
+
+            /**
+            xhr.onloadstart = function (e) {
+                console.log("start")
+            }
+            xhr.onloadend = function (e) {
+                console.log("end")
+            }
+            I would advise the use of a
+            HTML <progress> element to
+            display current progress.
+
+            upload with resizing
+            http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
+            /**/
+            const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxReserveDbImageId';
+            request.open('POST', urlRequestDbImageId, true);
+            request.onloadstart = function (e) {
+                console.log("      > callAjaxRequest: " + nextFile.file.name);
+            };
+            request.onloadend = function (e) {
+                console.log("      < callAjaxRequest: ");
+            };
+            request.send(data);
+        });
         /**
         let result = await setTimeout(() => {
             console.log("> callAjaxRequest: " + nextFile.file.name)
         }, 333);
         /**/
-        //        await stall (50);
-        console.log("      < callAjaxRequest: ");
-        return nextFile;
     }
     /**/
     /**/
@@ -275,15 +374,29 @@ class RequestDbImageIdTask {
             nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.file);
             //            statusBar.setFileNameSize(files[idx].name, files[idx].size);
             /* let request = */
-            await this.callAjaxRequest(nextFile)
+            //await this.callAjaxRequest(nextFile)
+            this.callAjaxRequest(nextFile)
                 .then(() => {
                 console.log("   <Request OK: " + nextFile.file.name);
                 this.transferFiles.add(nextFile.file.name, nextFile.galleryId);
                 // Start ajax transfer of files
                 this.transferImagesTask.ajaxTransfer();
             })
-                .catch(() => {
+                .catch((errText) => {
                 console.log("    !!! Error request: " + nextFile.file.name);
+                //                  alert ('errText' + errText);
+                // Let's remove unnecessary HTML
+                // let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
+                //let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
+                //let child = document.createTextNode(message);
+                let child = document.createTextNode(errText);
+                //let child = document.insertAdjacentHTML(errText);
+                /**
+                let child = document.createElement('div');
+                child.innerHTML = errText;
+                /**/
+                this.errorZone.appendChild(child);
+                console.log('!!! errText' + errText);
             });
             /**/
             console.log("    *this.droppedFiles.length: " + this.droppedFiles.length);
@@ -296,10 +409,11 @@ class RequestDbImageIdTask {
      Ajax transfer files to server
 ----------------------------------------------------------------*/
 class TransferImagesTask {
-    constructor(dragZone, transferFiles, progressArea) {
+    constructor(dragZone, progressArea, errorZone, transferFiles) {
         this.isBusyCount = 0;
         this.BusyCountLimit = 5;
         this.dragZone = dragZone;
+        this.errorZone = errorZone;
         this.transferFiles = transferFiles;
         this.progressArea = progressArea;
     }
@@ -365,9 +479,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // init red / green border of drag area
     const gallerySelected = new Border4SelectedGallery(elements.selectGallery, elements.dragZone);
     // (3) ajax request: Transfer file to server
-    const transferImagesTask = new TransferImagesTask(elements.dragZone, transferFiles, elements.progressArea);
+    const transferImagesTask = new TransferImagesTask(elements.dragZone, elements.progressArea, elements.errorZone, transferFiles);
     // (2) ajax request: database image item
-    const requestDbImageIdTask = new RequestDbImageIdTask(elements.dragZone, droppedFiles, transferFiles, elements.progressArea, transferImagesTask);
+    const requestDbImageIdTask = new RequestDbImageIdTask(elements.dragZone, elements.progressArea, elements.errorZone, droppedFiles, transferFiles, transferImagesTask);
     // (1) collect dropped files, start request DB image ID
     let droppedFilesTask = new DroppedFilesTask(elements.selectGallery, droppedFiles, requestDbImageIdTask);
     //--------------------------------------------------------------------------------------

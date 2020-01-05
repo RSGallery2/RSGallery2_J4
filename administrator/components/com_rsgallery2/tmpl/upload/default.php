@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Session\Session;
 
 HTMLHelper::_('behavior.core');
 HTMLHelper::_('behavior.formvalidator');
@@ -23,6 +24,10 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'aut
 HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST');
+
+// Drag and Drop security id on ajax call.
+$script[] = 'var Token = \'' . Session::getFormToken() . '\';';
+Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
 $app = Factory::getApplication();
 
@@ -135,7 +140,7 @@ $tabs = []
                                             <span class="uploading-number">0</span><span class="uploading-symbol">%</span>
                                         </p>
                                     </div>
-                                    <div class="uploadProgressArea">
+                                    <!--div class="uploadProgressArea">
                                         <div class="progress progress-striped active">
                                             <div class="bar" style="width: 100%;"></div>
                                         </div>
@@ -144,7 +149,7 @@ $tabs = []
                                                 <?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_INSTALLING'); ?>
                                             </span>
                                         </p>
-                                    </div>
+                                    </div-->
 
                                     <div class="upload-actions">
                                         <p class="lead">

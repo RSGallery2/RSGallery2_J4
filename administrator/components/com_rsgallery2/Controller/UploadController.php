@@ -12,9 +12,13 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -22,23 +26,22 @@ use Joomla\CMS\Response\JsonResponse;
 use Joomla\Input\Input;
 use Joomla\Utilities\ArrayHelper;
 
-
 /**
 global $Rsg2DebugActive;
 
 if ($Rsg2DebugActive)
 {
-	// Include the JLog class.
+	// Include the Log class.
 //	jimport('joomla.log.log');
 
 	// identify active file
-	JLog::add('==> ctrl.config.php ');
+	Log::add('==> ctrl.config.php ');
 }
 /**/
 
-class UploadController extends AdminController
+//class UploadController extends AdminController
+class UploadController extends FormController
 {
-
 	/**
 	 * Constructor.
 	 *
@@ -72,6 +75,361 @@ class UploadController extends AdminController
         return parent::getModel($name, $prefix, $config);
     }
 	/**/
+
+
+
+	/**
+	 * The database entry for the image will be created here
+	 * It is called for each image for preserving the correct
+	 * ordering before uploading the images
+	 * Reason: The parallel uploaded images may appear unordered
+	 *
+	 * @since 4.3.0
+	 * @throws Exception
+	 */
+	function uploadAjaxReserveDbImageId ()
+	{
+		global $rsgConfig, $Rsg2DebugActive;
+
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$msg = 'uploadAjaxReserveImageInDB';
+
+		$app = Factory::getApplication();
+
+		// ToDo: security check
+
+		try {
+			if ($Rsg2DebugActive) {
+				// identify active file
+				Log::add('==> uploadAjaxInsertInDB');
+			}
+
+			// do check token
+			if ( ! Session::checkToken()) {
+				$errMsg = Text::_('JINVALID_TOKEN') . " (02)";
+				$hasError = 1;
+				echo new JsonResponse($msg, $errMsg, $hasError);
+				$app->close();
+			}
+
+			$input = Factory::getApplication()->input;
+			//$oFile = $input->files->get('upload_file', array(), 'raw');
+			//$uploadFileName    = File::makeSafe($oFile['name']);
+
+			/**
+			 * Form data:
+			 *
+			data.append('upload_file', nextFile.file.name);
+			data.append('upload_size', nextFile.file.size.toString());
+			data.append('upload_type', nextFile.file.type);
+			data.append(Token, '1');
+			data.append('gallery_id', nextFile.galleryId);
+			/**/
+
+			//--- file name  --------------------------------------------
+
+			$uploadFileName = $input->get('upload_file', '', 'string');
+			$fileName = File::makeSafe($uploadFileName);
+
+// ==>			joomla replace spaces in filenames
+// ==>			'file_name' => str_replace(" ", "", $file_name);
+			$baseName = basename($fileName);
+
+			if ($Rsg2DebugActive)
+			{
+				// identify active file
+				Log::add('$uploadFileName: "' . $uploadFileName . '"');
+				Log::add('$fileName: "' . $fileName . '"');
+				Log::add('$baseName: "' . $baseName . '"');
+			}
+
+			// ToDo: Check session id
+			// $session_id      = Factory::getSession();
+
+			$ajaxImgDbObject['fileName'] = $uploadFileName;
+			// some dummy data for error messages
+			$ajaxImgDbObject['cid']  = -1;
+			$ajaxImgDbObject['baseName'] = '$baseName';
+			$ajaxImgDbObject['dstFile'] = '$fileName';
+
+			//--- gallery ID --------------------------------------------
+
+			$galleryId = $input->get('gallery_id', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				//$app->enqueueMessage(Text::_('COM_RSGALLERY2_INVALID_GALLERY_ID'), 'error');
+				//echo new JsonResponse;
+				$msg .= ': Invalid gallery ID at drag and drop upload';
+
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
+
+				echo new JsonResponse($ajaxImgDbObject, $msg, true);
+
+				$app->close();
+				return;
+			}
+
+			//--- Check 4 allowed image type ---------------------------------
+
+			// May be checked when opening file ...
+
+			//----------------------------------------------------
+			// Create image data in db
+			//----------------------------------------------------
+
+			/** start create ... *
+			$modelDb = $this->getModel('image');
+
+			//--- Create Destination file name -----------------------
+
+			// ToDo: use sub folder for each gallery and check within gallery
+			// Each filename is only allowed once so create a new one if file already exist
+			$useFileName = $modelDb->generateNewImageName($baseName, $galleryId);
+			$ajaxImgDbObject['dstFileName'] = $useFileName;
+
+			//--- create image data in DB --------------------------------
+
+			$title = $baseName;
+			$description = '';
+
+			$imgId = $modelDb->createImageDbItem($useFileName, '', $galleryId, $description);
+			if (empty($imgId))
+			{
+				// actual give an error
+				//$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+				$msg     .= 'uploadAjaxReserveImageInDB: Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
+
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
+
+				// replace newlines with html line breaks.
+				//str_replace('\n', '<br>', $msg);
+				echo new JsonResponse($ajaxImgDbObject, $msg, true);
+
+				$app->close();
+				return;
+			}
+
+			if ($Rsg2DebugActive)
+			{
+				Log::add('<== uploadAjax: After createImageDbItem: ' . $imgId );
+			}
+
+			// $this->ajaxDummyAnswerOK (); return; // 05
+
+			$ajaxImgDbObject['imgId']  = $imgId;
+			$isCreated = $imgId > 0;
+
+			//----------------------------------------------------
+			// for debug purposes fetch image order
+			//----------------------------------------------------
+
+			$imageOrder = $this->imageOrderFromId ($imgId);
+			$ajaxImgDbObject['order']  = $imageOrder;
+
+			//----------------------------------------------------
+			// return result
+			//----------------------------------------------------
+
+			if ($Rsg2DebugActive) {
+				Log::add('    $ajaxImgDbObject: ' . json_encode($ajaxImgDbObject));
+				Log::add('    $msg: "' . $msg . '"');
+				Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
+			}
+			/**/
+
+			/**/
+			// simulate
+			$isCreated = true;
+			$imgId = time ( void ) % 3600;
+			$ajaxImgDbObject['imgId']  = $imgId;
+			/**/
+
+			echo new JsonResponse($ajaxImgDbObject, $msg, !$isCreated);
+			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
+
+			if ($Rsg2DebugActive) {
+				Log::add('<== Exit uploadAjaxSingleFile');
+			}
+
+		} catch (Exception $e) {
+			echo new JsonResponse($e);
+		}
+
+		$app->close();
+	}
+
+
+	/**
+	 * The dropped file will be uploaded. The dependent files
+	 * display and thumb will also be created
+	 * The gallery id was created before and is read from the
+	 * ajax parameters
+	 *
+	 * @since 4.3
+	 */
+	function uploadAjaxSingleFile()
+	{
+		global $rsgConfig, $Rsg2DebugActive;
+
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$IsMoved = false;
+		$msg = 'uploadAjaxSingleFile';
+
+		$app = Factory::getApplication();
+
+		try {
+			if ($Rsg2DebugActive) {
+				// identify active file
+				Log::add('==> uploadAjaxSingleFile');
+			}
+
+			// do check token
+			if ( ! Session::checkToken()) {
+				$errMsg = Text::_('JINVALID_TOKEN') . " (01)";
+				$hasError = 1;
+				echo new JsonResponse($msg, $errMsg, $hasError);
+				$app->close();
+			}
+
+			$input = Factory::getApplication()->input;
+			$oFile = $input->files->get('upload_file', array(), 'raw');
+
+			$uploadPathFileName = $oFile['tmp_name'];
+			$fileType    = $oFile['type'];
+			$fileError   = $oFile['error'];
+			$fileSize    = $oFile['size'];
+
+			// Changed name on existing file name
+			$originalFileName = File::makeSafe($oFile['name']);
+			$uploadFileName = $input->get('dstFileName', '', 'string');
+
+			// for next upload tell where to start
+			//$rsgConfig->setLastUpdateType('upload_drag_and_drop');
+			configDb::write2Config ('last_update_type', 'upload_drag_and_drop', $rsgConfig);
+
+			if ($Rsg2DebugActive)
+			{
+				// identify active file
+				Log::add('$uploadPathFileName: "' . $uploadPathFileName . '"');
+				Log::add('$originalFileName: "' . $originalFileName . '"');
+				Log::add('$uploadFileName: "' . $uploadFileName . '"');
+				Log::add('$fileType: "' . $fileType . '"');
+				Log::add('$fileError: "' . $fileError . '"');
+				Log::add('$fileSize: "' . $fileSize . '"');
+			}
+
+			// ToDo: Check session id
+			// $session_id      = Factory::getSession();
+
+			//--- check user ID --------------------------------------------
+
+			$ajaxImgObject['file'] = $uploadFileName; // $dstFile;
+			// some dummy data for error messages
+			$ajaxImgObject['cid']  = -1;
+			$ajaxImgObject['dstFile']  = '';
+			$ajaxImgObject['originalFileName'] = $originalFileName;
+
+			//--- gallery ID --------------------------------------------
+
+			$galleryId = $input->get('gallery_id', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				//$app->enqueueMessage(Text::_('COM_RSGALLERY2_INVALID_GALLERY_ID'), 'error');
+				//echo new JsonResponse;
+				echo new JsonResponse($ajaxImgObject, 'Invalid gallery ID at drag and drop upload', true);
+
+				$app->close();
+				return;
+			}
+
+			//--- image ID --------------------------------------------
+
+			$imgId = $input->get('cid', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				//$app->enqueueMessage(Text::_('COM_RSGALLERY2_INVALID_GALLERY_ID'), 'error');
+				//echo new JsonResponse;
+				echo new JsonResponse($ajaxImgObject, 'Invalid image ID at drag and drop upload', true);
+
+				$app->close();
+				return;
+			}
+
+			$ajaxImgObject['cid']  = $imgId;
+
+			$singleFileName = $uploadFileName;
+
+			//----------------------------------------------------
+			// for debug purposes fetch image order
+			//----------------------------------------------------
+
+			$imageOrder = $this->imageOrderFromId ($imgId);
+			$ajaxImgObject['order']  = $imageOrder;
+
+			//----------------------------------------------------
+			// Move file and create display, thumbs and watermarked images
+			//----------------------------------------------------
+
+			$modelFile = $this->getModel('imageFile');
+			list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images($uploadPathFileName, $singleFileName, $galleryId);
+			if (!$isCreated)
+			{
+				// ToDo: remove $imgId fom image database
+				if ($Rsg2DebugActive)
+				{
+					Log::add('MoveImageAndCreateRSG2Images failed: ' . $uploadFileName . ', ' . $singleFileName);
+				}
+
+				echo new JsonResponse($ajaxImgObject, $msg, true);
+				$app->close();
+				return;
+			}
+
+			if ($Rsg2DebugActive)
+			{
+				Log::add('<== uploadAjax: After MoveImageAndCreateRSG2Images isCreated: ' . $isCreated );
+			}
+
+			$ajaxImgObject['dstFile'] = $urlThumbFile; // $dstFileUrl ???
+
+			if ($Rsg2DebugActive) {
+				Log::add('    $ajaxImgObject: ' . json_encode($ajaxImgObject));
+				Log::add('    $msg: "' . $msg . '"');
+				Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
+			}
+
+			echo new JsonResponse($ajaxImgObject, $msg, !$isCreated);
+			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
+
+			if ($Rsg2DebugActive) {
+				Log::add('<== Exit uploadAjaxSingleFile');
+			}
+
+		} catch (Exception $e) {
+			if ($Rsg2DebugActive) {
+				Log::add('    Exception: ' . $e->getMessage());
+			}
+
+			echo new JsonResponse($e);
+
+		}
+
+		$app->close();
+	}
+
+
+
 
 	/*
 		$params = ComponentHelper::getParams('com_rsgallery2');
@@ -107,11 +465,11 @@ class UploadController extends AdminController
 
 		Session::checkToken();
 
-		$canAdmin = JFactory::getUser()->authorise('core.manage', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
-			//JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -123,7 +481,7 @@ class UploadController extends AdminController
 				$cfg3xModel = $this->getModel('Upload');
 
 				$IsAllCreated = false;
-//				$input     = JFactory::getApplication()->input;
+//				$input     = Factory::getApplication()->input;
 //				$GalleryId = $input->get('ParentGalleryId', 0, 'INT');
 				$selected = $this->input->get('cfgId', array(), 'array');
 				$allNames = $this->input->get('cfgName', array(), 'array');
@@ -162,7 +520,7 @@ class UploadController extends AdminController
 				$OutTxt .= 'Error executing saveOrdering: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 
@@ -194,11 +552,11 @@ class UploadController extends AdminController
 
 		Session::checkToken();
 
-		$canAdmin = JFactory::getUser()->authorise('core.manage', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
-			//JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -227,7 +585,7 @@ class UploadController extends AdminController
 				$OutTxt .= 'Error executing copyOldItems2New: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 
@@ -244,6 +602,14 @@ class UploadController extends AdminController
 //		$this->setRedirect(Route::_('index.php?option=com_content&view=featured', false), $message);
 	} 
 	/**/
+
+
+
+
+
+
+
+
 
 } // class
 
