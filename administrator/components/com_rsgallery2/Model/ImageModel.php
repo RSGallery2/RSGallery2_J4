@@ -138,21 +138,6 @@ class ImageModel extends AdminModel
 	}
 
 	/**
-	 * Returns a reference to the a Table object, always creating it.
-	 *
-	 * @param       string $type   The table type to instantiate
-	 * @param       string $prefix A prefix for the table class name. Optional.
-	 * @param       array  $config Configuration array for model. Optional.
-	 *
-	 * @return      JTable  A database object
-	 * @since       4.3.0
-	 */
-	public function getTable($type = 'Image', $prefix = 'Rsgallery2Table', $config = array())
-	{
-		return Table::getInstance($type, $prefix, $config);
-	}
-
-	/**
 	 * Method to get the record form.
 	 *
 	 * @param       array   $data     Data for the form.

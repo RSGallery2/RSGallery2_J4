@@ -29,11 +29,7 @@ class Queue {
     isPopulated() { return this._store.length > 0; }
 }
 /*----------------------------------------------------------------
-   ToDo: move to class
-----------------------------------------------------------------*/
-const urlTransferImages = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxSingleFile';
-/*----------------------------------------------------------------
-
+    simulate wait
 ----------------------------------------------------------------*/
 async function stall(stallTime = 333) {
     await new Promise(resolve => setTimeout(resolve, stallTime));
@@ -52,6 +48,7 @@ class DroppedFiles extends Queue {
             const file = files[idx];
             console.log('   +droppedFile: ' + files[idx].name);
             //--- ToDo: Check 4 allowed image type ---------------------------------
+            // file.type ...
             //--- Add file with data ---------------------------------
             const next = {
                 file: file,
@@ -63,11 +60,16 @@ class DroppedFiles extends Queue {
     }
 }
 class TransferFiles extends Queue {
-    add(file, imageId) {
-        console.log('    +TransferFile: ' + file);
+    add(nextFile, imageId, fileName, dstFileName) {
+        console.log('    +TransferFile: ' + nextFile.file.name);
         const next = {
-            file: file,
+            file: nextFile.file,
+            galleryId: nextFile.galleryId,
+            statusBar: nextFile.statusBar,
+            errorZone: nextFile.errorZone,
             imageId: imageId,
+            fileName: fileName,
+            dstFileName: dstFileName,
         };
         this.push(next);
     }
@@ -239,9 +241,21 @@ class createStatusBar {
 }
 createStatusBar.imgCount = 0;
 /*----------------------------------------------------------------
-   Ajax request DB items for each file in list
-   First step in transfer of file
+  joomla ajax return
 ----------------------------------------------------------------*/
+// extract json data and other error text
+function separateDataAndError(response) {
+    let data = response;
+    let error = "";
+    var StartIdx = response.indexOf('{"'); // ToDo: {"Success
+    if (StartIdx != 0) {
+        //
+        error = response.substring(0, StartIdx - 1);
+        //
+        data = response.substring(StartIdx);
+    }
+    return [data, error];
+}
 class RequestDbImageIdTask {
     constructor(dragZone, progressArea, errorZone, droppedFiles, transferFiles, transferImagesTask) {
         this.isBusy = false;
@@ -264,84 +278,31 @@ class RequestDbImageIdTask {
             const request = new XMLHttpRequest();
             request.onload = function () {
                 if (this.status === 200) {
+                    // attention joomla may send error data on this channel
                     resolve(this.response);
                 }
                 else {
-                    /**
-                    let msg = 'Error on load:: state: ' + this.status + ' ' + this.statusText + '\n';
-                    msg += 'responseType: ' + this.responseType + '\n';
-                    //msg += 'responseText: ' + this.responseText  || this.responseJSON + '\n';
-                    msg += 'responseText: ' + this.responseText + '\n';
-
-                    reject(new Error(msg));
-                    /**/
                     let msg = 'Error on load:: state: ' + this.status + ' ' + this.statusText + '\n';
                     msg += 'responseType: ' + this.responseType + '\n';
                     alert(msg);
+                    // reject(new Error(this.response));
                     reject(new Error(this.responseText));
                 }
             };
             request.onerror = function () {
                 let msg = 'onError::  state: ' + this.status + ' ' + this.statusText + '\n';
                 msg += 'responseType: ' + this.responseType + '\n';
-                msg += 'responseText: ' + this.responseText + '\n';
-                //                    alert (msg);
-                //                    reject(new Error('XMLHttpRequest Error: ' + this.statusText));
+                //msg += 'responseText: ' + this.responseText + '\n';
+                alert(msg);
+                // reject(new Error(this.response));
                 reject(new Error(this.responseText));
             };
             let data = new FormData();
-            data.append('upload_file', nextFile.file.name);
+            data.append('upload_file_name', nextFile.file.name);
             data.append('upload_size', nextFile.file.size.toString());
             data.append('upload_type', nextFile.file.type);
             data.append(Token, '1');
             data.append('gallery_id', nextFile.galleryId);
-            /**
-
-             get:
-            request.onprogress = function (e) {
-                if (e.lengthComputable) {
-                    console.log(e.loaded+  " / " + e.total)
-                }
-            }
-
-            post: upload
-            xhr.upload.addEventListener("progress", function(evt){
-                if (evt.lengthComputable) {
-                    console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
-                }
-            }, false);
-
-            xhr.upload.onprogress = function (event) {
-                if (event.lengthComputable) {
-                    var complete = (event.loaded / event.total * 100 | 0);
-                    progress.value = progress.innerHTML = complete;
-                }
-            };
-
-            post: download
-            xhr.addEventListener("progress", function(evt){
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    //Do something with download progress
-                    console.log(percentComplete);
-                }
-            }, false);
-
-
-            /**
-            xhr.onloadstart = function (e) {
-                console.log("start")
-            }
-            xhr.onloadend = function (e) {
-                console.log("end")
-            }
-            I would advise the use of a
-            HTML <progress> element to
-            display current progress.
-
-            upload with resizing
-            http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
-            /**/
             const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxReserveDbImageId';
             request.open('POST', urlRequestDbImageId, true);
             request.onloadstart = function (e) {
@@ -353,10 +314,11 @@ class RequestDbImageIdTask {
             request.send(data);
         });
         /**
-        let result = await setTimeout(() => {
-            console.log("> callAjaxRequest: " + nextFile.file.name)
+         console.log("      > callAjaxRequest: " + nextFile.file.name);
+         let result = await setTimeout(() => {
+            console.log("< callAjaxRequest: " + nextFile.file.name)
         }, 333);
-        /**/
+         /**/
     }
     /**/
     /**/
@@ -376,11 +338,28 @@ class RequestDbImageIdTask {
             /* let request = */
             //await this.callAjaxRequest(nextFile)
             this.callAjaxRequest(nextFile)
-                .then(() => {
+                .then((response) => {
+                // attention joomla may send error data on this channel
                 console.log("   <Request OK: " + nextFile.file.name);
-                this.transferFiles.add(nextFile.file.name, nextFile.galleryId);
-                // Start ajax transfer of files
-                this.transferImagesTask.ajaxTransfer();
+                console.log("      response: " + JSON.stringify(response));
+                const [data, error] = separateDataAndError(response);
+                console.log("      response data: " + JSON.stringify(data));
+                console.log("      response error: " + JSON.stringify(error));
+                let AjaxResponse = JSON.parse(data);
+                //console.log("      response data: " + JSON.stringify(data));
+                if (AjaxResponse.success) {
+                    console.log("      success data: " + AjaxResponse.data);
+                    let dbData = AjaxResponse.data;
+                    let fileName = dbData.uploadFileName;
+                    let dstFileName = dbData.dstFileName;
+                    let imageId = dbData.imageId;
+                    this.transferFiles.add(nextFile, imageId.toString(), fileName, dstFileName);
+                    // Start ajax transfer of files
+                    this.transferImagesTask.ajaxTransfer();
+                }
+                else {
+                    // error found ToDo: fill out
+                }
             })
                 .catch((errText) => {
                 console.log("    !!! Error request: " + nextFile.file.name);
@@ -418,16 +397,108 @@ class TransferImagesTask {
         this.progressArea = progressArea;
     }
     async callAjaxTransfer(nextFile) {
+        console.log("      in callAjaxTransfer: " + nextFile.file);
         console.log("      > callAjaxTransfer: " + nextFile.file);
+        return new Promise(function (resolve, reject) {
+            const request = new XMLHttpRequest();
+            request.onload = function () {
+                if (this.status === 200) {
+                    // attention joomla may send error data on this channel
+                    resolve(this.response);
+                }
+                else {
+                    let msg = 'Error on load:: state: ' + this.status + ' ' + this.statusText + '\n';
+                    msg += 'responseType: ' + this.responseType + '\n';
+                    alert(msg);
+                    reject(new Error(this.responseText));
+                }
+            };
+            request.onerror = function () {
+                let msg = 'onError::  state: ' + this.status + ' ' + this.statusText + '\n';
+                msg += 'responseType: ' + this.responseType + '\n';
+                msg += 'responseText: ' + this.responseText + '\n';
+                //                    alert (msg);
+                //                    reject(new Error('XMLHttpRequest Error: ' + this.statusText));
+                reject(new Error(this.responseText));
+            };
+            let data = new FormData();
+            data.append('upload_file', nextFile.file);
+            data.append(Token, '1');
+            data.append('gallery_id', nextFile.galleryId);
+            data.append('imageId', nextFile.imageId);
+            data.append('fileName', nextFile.fileName);
+            console.log('   >fileName: ' + nextFile.fileName);
+            data.append('dstFileName', nextFile.dstFileName);
+            console.log('   >dstFileName: ' + nextFile.dstFileName);
+            /**
+
+             get:
+             request.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    console.log(e.loaded+  " / " + e.total)
+                }
+            }
+
+             post: upload
+             xhr.upload.addEventListener("progress", function(evt){
+                if (evt.lengthComputable) {
+                    console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
+                }
+            }, false);
+
+             xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    var complete = (event.loaded / event.total * 100 | 0);
+                    progress.value = progress.innerHTML = complete;
+                }
+            };
+
+             post: download
+             xhr.addEventListener("progress", function(evt){
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    //Do something with download progress
+                    console.log(percentComplete);
+                }
+            }, false);
+
+
+             /**
+             xhr.onloadstart = function (e) {
+                console.log("start")
+            }
+             xhr.onloadend = function (e) {
+                console.log("end")
+            }
+             I would advise the use of a
+             HTML <progress> element to
+             display current progress.
+
+             upload with resizing
+             http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
+             /**/
+            const urlTransferImages = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxSingleFile';
+            request.open('POST', urlTransferImages, true);
+            request.onloadstart = function (e) {
+                console.log("      > callAjaxTransfer: " + nextFile.file.name);
+            };
+            request.onloadend = function (e) {
+                console.log("      < callAjaxTransfer: ");
+            };
+            request.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    var progress = (event.loaded / event.total * 100 | 0);
+                    console.log("         progress: " + progress);
+                }
+            };
+            request.send(data);
+        });
         /**
-        let result = await setTimeout(() => {
-            console.log("> callAjaxTransfer: " + nextFile.file)
+         console.log("      > callAjaxTransfer: " + nextFile.file.name);
+         let result = await setTimeout(() => {
+            console.log("< callAjaxTransfer: " + nextFile.file.name)
         }, 333);
-        /**/
-        await stall(3000);
-        //await resolveAfter2Seconds(20, 3000);
-        console.log("      < callAjaxTransfer: ");
-        return nextFile;
+         /**/
     }
     /**/
     async ajaxTransfer() {
@@ -440,11 +511,42 @@ class TransferImagesTask {
             console.log("   @Transfer File: " + nextFile.file);
             //
             this.callAjaxTransfer(nextFile)
-                .then(() => {
+                .then((response) => {
+                // attention joomla may send error data on this channel
                 console.log("   <Transfer OK: " + nextFile.file);
+                console.log("       response: " + JSON.stringify(response));
+                const [data, error] = separateDataAndError(response);
+                console.log("      response data: " + JSON.stringify(data));
+                console.log("      response error: " + JSON.stringify(error));
+                let AjaxResponse = JSON.parse(data);
+                //console.log("      response data: " + JSON.stringify(data));
+                if (AjaxResponse.success) {
+                    console.log("      success data: " + AjaxResponse.data);
+                    let transferData = AjaxResponse.data;
+                    console.log("      response data.file: " + transferData.file);
+                    console.log("      response data.imageId: " + transferData.imageId);
+                    console.log("      response data.fileUrl: " + transferData.fileUrl);
+                    console.log("      response data.safeFileName: " + transferData.safeFileName);
+                }
+                else {
+                    // error found ToDo: fill out
+                }
             })
-                .catch(() => {
+                .catch((errText) => {
                 console.log("    !!! Error transfer: " + nextFile.file);
+                //                  alert ('errText' + errText);
+                // Let's remove unnecessary HTML
+                // let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
+                //let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
+                //let child = document.createTextNode(message);
+                let child = document.createTextNode(errText);
+                //let child = document.insertAdjacentHTML(errText);
+                /**
+                 let child = document.createElement('div');
+                 child.innerHTML = errText;
+                 /**/
+                this.errorZone.appendChild(child);
+                console.log('!!! errText' + errText);
             })
                 .finally(() => {
                 this.isBusyCount--;

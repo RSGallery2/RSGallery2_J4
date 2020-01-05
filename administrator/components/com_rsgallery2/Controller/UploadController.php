@@ -24,6 +24,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\Input\Input;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -129,7 +130,7 @@ class UploadController extends FormController
 
 			//--- file name  --------------------------------------------
 
-			$uploadFileName = $input->get('upload_file', '', 'string');
+			$uploadFileName = $input->get('upload_file_name', '', 'string');
 			$fileName = File::makeSafe($uploadFileName);
 
 // ==>			joomla replace spaces in filenames
@@ -147,16 +148,16 @@ class UploadController extends FormController
 			// ToDo: Check session id
 			// $session_id      = Factory::getSession();
 
-			$ajaxImgDbObject['fileName'] = $uploadFileName;
+			$ajaxImgDbObject['uploadFileName'] = $uploadFileName;
 			// some dummy data for error messages
-			$ajaxImgDbObject['cid']  = -1;
-			$ajaxImgDbObject['baseName'] = '$baseName';
-			$ajaxImgDbObject['dstFile'] = '$fileName';
+			$ajaxImgDbObject['imageId']  = -1;
+			$ajaxImgDbObject['baseName'] = $baseName;
+			$ajaxImgDbObject['dstFileName'] = $fileName;
 
 			//--- gallery ID --------------------------------------------
 
 			$galleryId = $input->get('gallery_id', 0, 'INT');
-			// wrong id ?
+			// wrong id ? ToDo: test is number ...
 			if ($galleryId < 1)
 			{
 				//$app->enqueueMessage(Text::_('COM_RSGALLERY2_INVALID_GALLERY_ID'), 'error');
@@ -197,8 +198,8 @@ class UploadController extends FormController
 			$title = $baseName;
 			$description = '';
 
-			$imgId = $modelDb->createImageDbItem($useFileName, '', $galleryId, $description);
-			if (empty($imgId))
+			$imageId = $modelDb->createImageDbItem($useFileName, '', $galleryId, $description);
+			if (empty($imageId))
 			{
 				// actual give an error
 				//$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -219,19 +220,19 @@ class UploadController extends FormController
 
 			if ($Rsg2DebugActive)
 			{
-				Log::add('<== uploadAjax: After createImageDbItem: ' . $imgId );
+				Log::add('<== uploadAjax: After createImageDbItem: ' . $imageId );
 			}
 
 			// $this->ajaxDummyAnswerOK (); return; // 05
 
-			$ajaxImgDbObject['imgId']  = $imgId;
-			$isCreated = $imgId > 0;
+			$ajaxImgDbObject['imageId']  = $imageId;
+			$isCreated = $imageId > 0;
 
 			//----------------------------------------------------
 			// for debug purposes fetch image order
 			//----------------------------------------------------
 
-			$imageOrder = $this->imageOrderFromId ($imgId);
+			$imageOrder = $this->imageOrderFromId ($imageId);
 			$ajaxImgDbObject['order']  = $imageOrder;
 
 			//----------------------------------------------------
@@ -248,11 +249,11 @@ class UploadController extends FormController
 			/**/
 			// simulate
 			$isCreated = true;
-			$imgId = time ( void ) % 3600;
-			$ajaxImgDbObject['imgId']  = $imgId;
+			$imageId = time () % 3600;
+			$ajaxImgDbObject['imageId']  = $imageId;
 			/**/
 
-			echo new JsonResponse($ajaxImgDbObject, $msg, !$isCreated);
+			echo new JsonResponse($ajaxImgDbObject, $msg, !$isCreated, true);
 			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
 
 			if ($Rsg2DebugActive) {
@@ -309,18 +310,18 @@ class UploadController extends FormController
 			$fileSize    = $oFile['size'];
 
 			// Changed name on existing file name
-			$originalFileName = File::makeSafe($oFile['name']);
+			$safeFileName = File::makeSafe($oFile['name']);
 			$uploadFileName = $input->get('dstFileName', '', 'string');
 
 			// for next upload tell where to start
 			//$rsgConfig->setLastUpdateType('upload_drag_and_drop');
-			configDb::write2Config ('last_update_type', 'upload_drag_and_drop', $rsgConfig);
+			// configDb::write2Config ('last_update_type', 'upload_drag_and_drop', $rsgConfig);
 
 			if ($Rsg2DebugActive)
 			{
 				// identify active file
 				Log::add('$uploadPathFileName: "' . $uploadPathFileName . '"');
-				Log::add('$originalFileName: "' . $originalFileName . '"');
+				Log::add('$safeFileName: "' . $safeFileName . '"');
 				Log::add('$uploadFileName: "' . $uploadFileName . '"');
 				Log::add('$fileType: "' . $fileType . '"');
 				Log::add('$fileError: "' . $fileError . '"');
@@ -334,9 +335,9 @@ class UploadController extends FormController
 
 			$ajaxImgObject['file'] = $uploadFileName; // $dstFile;
 			// some dummy data for error messages
-			$ajaxImgObject['cid']  = -1;
-			$ajaxImgObject['dstFile']  = '';
-			$ajaxImgObject['originalFileName'] = $originalFileName;
+			$ajaxImgObject['imageId']  = -1;
+			$ajaxImgObject['fileUrl']  = '';
+			$ajaxImgObject['safeFileName'] = $safeFileName;
 
 			//--- gallery ID --------------------------------------------
 
@@ -354,9 +355,9 @@ class UploadController extends FormController
 
 			//--- image ID --------------------------------------------
 
-			$imgId = $input->get('cid', 0, 'INT');
-			// wrong id ?
-			if ($galleryId < 1)
+			$imageId = $input->get('imageId', 0, 'INT');
+			// wrong id ? ToDo: test is number ...
+			if (!$imageId)
 			{
 				//$app->enqueueMessage(Text::_('COM_RSGALLERY2_INVALID_GALLERY_ID'), 'error');
 				//echo new JsonResponse;
@@ -366,7 +367,7 @@ class UploadController extends FormController
 				return;
 			}
 
-			$ajaxImgObject['cid']  = $imgId;
+			$ajaxImgObject['imageId']  = $imageId;
 
 			$singleFileName = $uploadFileName;
 
@@ -374,18 +375,27 @@ class UploadController extends FormController
 			// for debug purposes fetch image order
 			//----------------------------------------------------
 
-			$imageOrder = $this->imageOrderFromId ($imgId);
-			$ajaxImgObject['order']  = $imageOrder;
+//			$imageOrder = $this->imageOrderFromId ($imageId);
+//			$ajaxImgObject['order']  = $imageOrder;
 
 			//----------------------------------------------------
 			// Move file and create display, thumbs and watermarked images
 			//----------------------------------------------------
 
+			/* simulate $modelFile->MoveImageAndCreateRSG2Images  d:\xampp\htdocs\joomla4x\images\rsgallery2\ */
+			$dstFileName = JPATH_ROOT . '/images/rsgallery2'  . '/'  .  $singleFileName;
+			$isCreated = File::move($uploadPathFileName, $dstFileName);
+			$urlThumbFile = Uri::root() . 'images/rsgallery2'  . '/'  .  $singleFileName;
+			$msg = $isCreated ? "Copied " : 'Not copied';
+			/**/
+
+			/**
 			$modelFile = $this->getModel('imageFile');
 			list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images($uploadPathFileName, $singleFileName, $galleryId);
+			/**/
 			if (!$isCreated)
 			{
-				// ToDo: remove $imgId fom image database
+				// ToDo: remove $imageId fom image database
 				if ($Rsg2DebugActive)
 				{
 					Log::add('MoveImageAndCreateRSG2Images failed: ' . $uploadFileName . ', ' . $singleFileName);
@@ -401,7 +411,7 @@ class UploadController extends FormController
 				Log::add('<== uploadAjax: After MoveImageAndCreateRSG2Images isCreated: ' . $isCreated );
 			}
 
-			$ajaxImgObject['dstFile'] = $urlThumbFile; // $dstFileUrl ???
+			$ajaxImgObject['fileUrl'] = $urlThumbFile; // $dstFileUrl ???
 
 			if ($Rsg2DebugActive) {
 				Log::add('    $ajaxImgObject: ' . json_encode($ajaxImgObject));
@@ -409,7 +419,7 @@ class UploadController extends FormController
 				Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
 			}
 
-			echo new JsonResponse($ajaxImgObject, $msg, !$isCreated);
+			echo new JsonResponse($ajaxImgObject, $msg, !$isCreated, true);
 			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
 
 			if ($Rsg2DebugActive) {
