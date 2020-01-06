@@ -47,7 +47,7 @@ class ConfigController extends AdminController // FormController
 	 * @since 4.3.0
 	 */
 	/**
-    public function getModel($name = 'Config', $prefix = 'Rsgallery2Model', $config = array('ignore_request' => true))
+    public function getModel($name = 'Config', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
     }

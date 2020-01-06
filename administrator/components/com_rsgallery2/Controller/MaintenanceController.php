@@ -60,7 +60,7 @@ class MaintenanceController.php extends BaseController
 	 * @since 4.3.0
 	 */
 	/**
-    public function getModel($name = 'Maintenance', $prefix = 'Rsgallery2Model', $config = array('ignore_request' => true))
+    public function getModel($name = 'Maintenance', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
     }  	

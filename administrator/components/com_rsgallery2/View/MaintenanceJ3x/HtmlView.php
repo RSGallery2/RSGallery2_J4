@@ -168,7 +168,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 	/**
-	public function getModel($name = 'Associations', $prefix = 'Rsgallery2', $config = array('ignore_request' => true))
+	public function getModel($name = 'Associations', $prefix = 'Administrator', $config = array('ignore_request' => true))
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
