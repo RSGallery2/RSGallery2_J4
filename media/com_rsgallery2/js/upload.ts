@@ -111,6 +111,7 @@ class DroppedFiles extends Queue<IDroppedFile> {
                 file: file,
                 galleryId: galleryId,
                 statusBar: null,
+                errorZone: null,
             };
 
             this.push (next);
@@ -391,26 +392,48 @@ class createStatusBar {
 
 
 /*----------------------------------------------------------------
-  joomla ajax return
+  joomla ajax may return pretext to data
 ----------------------------------------------------------------*/
 
-// extract json data and other error text
-function separateDataAndError(response:string):[string,string] {
+// extract json data which may be preceded with unwanted informtion
+function separateDataAndNoise(response:string):[string,string] {
 
     let data:string = response;
     let error:string = "";
 
-    var StartIdx = response.indexOf('{"'); // ToDo: {"Success
-    if (StartIdx != 0) {
+    const StartIdx = response.indexOf('{"'); // ToDo: {"Success
+    if (StartIdx > -1) {
 
-        //
         error = response.substring(0, StartIdx - 1);
-
-        //
         data = response.substring(StartIdx);
+
     }
 
     return [ data, error ];
+}
+
+/*----------------------------------------------------------------
+  joomla ajax error returns complete page
+----------------------------------------------------------------*/
+
+// extract html part of error page
+function separateErrorAndNoise(errMessage:string):[string,string] {
+
+    let errorHtml:string = errMessage;
+    let noise:string = "";
+
+    const StartIdx = errMessage.indexOf('<h1>An error has occurred.</h1>');
+    if (StartIdx > -1) {
+
+        //
+        noise = errMessage.substring(0, StartIdx - 1);
+
+        // End followed by <a href="/Joomla4x/administrator" class="btn btn-secondary">
+        const EndIdx = errMessage.indexOf('<p>');
+        errorHtml = errMessage.substring(StartIdx, EndIdx);
+    }
+
+    return [ errorHtml, noise ];
 }
 
 // jData = jQuery.parseJSON(jsonText);
@@ -496,8 +519,9 @@ class RequestDbImageIdTask {
                         // attention joomla may send error data on this channel
                         resolve(this.response);
                     } else {
-                         let msg = 'Error on load:: state: ' + this.status + ' ' + this.statusText + '\n';
-                         msg += 'responseType: ' + this.responseType + '\n';
+                         let msg = 'Error \'on load\' for ' + nextFile.file.name + ' in DbRequest:\n*'
+                             + 'State: ' + this.status + ' ' + this.statusText + '\n';
+                             + 'responseType: ' + this.responseType + '\n';
                          alert (msg);
 
                         // reject(new Error(this.response));
@@ -572,10 +596,10 @@ class RequestDbImageIdTask {
                     console.log("   <Request OK: " + nextFile.file.name);
                     console.log("      response: " + JSON.stringify(response));
 
-                    const [data, error] = separateDataAndError (response);
+                    const [data, noise] = separateDataAndNoise (response);
 
                     console.log("      response data: " + JSON.stringify(data));
-                    console.log("      response error: " + JSON.stringify(error));
+                    console.log("      response error: " + JSON.stringify(noise));
 
                     let AjaxResponse:IAjaxResponse = JSON.parse(data);
                     //console.log("      response data: " + JSON.stringify(data));
@@ -598,23 +622,34 @@ class RequestDbImageIdTask {
                     }
 
                 })
-                .catch((errText:string) => {
-                    console.log("    !!! Error request: " + nextFile.file.name);
+                .catch((errText:Error) => {
+                     console.log("    !!! Error request: " + nextFile.file.name);
   //                  alert ('errText' + errText);
 
-                    // Let's remove unnecessary HTML
-                    // let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
-                    //let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
-                    //let child = document.createTextNode(message);
+                     // remove unnecessary HTML
+                    const [ errorPart, noise ] = separateErrorAndNoise (errText.message);
 
-                    let child = document.createTextNode(errText);
-                    //let child = document.insertAdjacentHTML(errText);
-                    /**
-                    let child = document.createElement('div');
-                    child.innerHTML = errText;
-                    /**/
-                    this.errorZone.appendChild (child);
-                    console.log('!!! errText' + errText);
+                    console.log("      response noise: " + JSON.stringify(noise));
+                    console.log("      response error: " + JSON.stringify(errorPart));
+
+                    let errorHtml = document.createElement('div');
+                    errorHtml.classList.add('errorContent');
+
+                    if (errorPart.length > 0)
+                    {
+                        errorHtml.innerHTML = errorPart;
+
+                        let errorTitle = document.createElement('h1');
+                        errorTitle.innerHTML = '<strong>' + nextFile.file.name + '</strong>';
+                        errorHtml.prepend (errorTitle);
+
+                    } else {
+                        errorHtml.appendChild(document.createTextNode(errText.message));
+                    }
+
+                    this.errorZone.appendChild (errorHtml);
+
+                     console.log('!!! errText' + errText);
                 })
             ;
             /**/
@@ -690,8 +725,8 @@ class TransferImagesTask {
                         resolve(this.response);
                     } else {
 
-                        let msg = 'Error on load:: state: ' + this.status + ' ' + this.statusText + '\n';
-                        msg += 'responseType: ' + this.responseType + '\n';
+                        let msg = 'Error over \'on load\' for ' + nextFile.file.name + ' in Transfer:\n*'
+                            + 'State: ' + this.status + ' ' + this.statusText + '\n';
                         alert (msg);
 
                         reject(new Error(this.responseText));
@@ -816,7 +851,7 @@ class TransferImagesTask {
                     console.log("   <Transfer OK: " + nextFile.file);
                     console.log("       response: " + JSON.stringify(response));
 
-                    const [data, error]  = separateDataAndError (response);
+                    const [data, error]  = separateDataAndNoise (response);
 
                     console.log("      response data: " + JSON.stringify(data));
                     console.log("      response error: " + JSON.stringify(error));
@@ -839,22 +874,28 @@ class TransferImagesTask {
 
                     }
                 })
-                .catch((errText:string) => {
+                .catch((errText:Error) => {
                     console.log("    !!! Error transfer: " + nextFile.file);
                     //                  alert ('errText' + errText);
 
-                    // Let's remove unnecessary HTML
-                    // let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
-                    //let message = errText.replace(/(<([^>]+)>|\s+)/g, ' ');
-                    //let child = document.createTextNode(message);
+                    // remove unnecessary HTML
+                    const [ errorPart, noise ] = separateErrorAndNoise (errText.message);
 
-                    let child = document.createTextNode(errText);
-                    //let child = document.insertAdjacentHTML(errText);
-                    /**
-                     let child = document.createElement('div');
-                     child.innerHTML = errText;
-                     /**/
-                    this.errorZone.appendChild (child);
+                    console.log("      transfer noise: " + JSON.stringify(noise));
+                    console.log("      transfer error: " + JSON.stringify(errorPart));
+
+                    let errorHtml = document.createElement('div');
+                    errorHtml.classList.add('errorContent');
+
+                    if (errorPart.length > 0)
+                    {
+                        errorHtml.innerHTML = errorPart;
+                    } else {
+                        errorHtml.appendChild(document.createTextNode(errText));
+                    }
+
+                    this.errorZone.appendChild (errorHtml);
+
                     console.log('!!! errText' + errText);
                 })
                 .finally(() => {

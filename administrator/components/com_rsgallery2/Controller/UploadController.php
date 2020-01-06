@@ -27,6 +27,9 @@ use Joomla\Input\Input;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Utilities\ArrayHelper;
 
+use Joomla\Component\Rsgallery2\Administrator\Model\ImageModel;
+
+
 /**
 global $Rsg2DebugActive;
 
@@ -71,7 +74,7 @@ class UploadController extends FormController
 	 *
 	 * @since 4.3.0
 	 */
-    public function getModel($name = 'Upload', $prefix = 'Rsgallery2Model', $config = array('ignore_request' => true))
+    public function getModel($name = 'Upload', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
     }
@@ -128,6 +131,43 @@ class UploadController extends FormController
 			data.append('gallery_id', nextFile.galleryId);
 			/**/
 
+			$test = 2; // 0: normal, 1:error, 2: warning
+
+			if ($test)
+			{
+				$result = "result text";
+				switch ($test)
+				{
+					case 1:
+						echo new JsonResponse($result, JText::_('COM_COMPONENT_MY_TASK_ERROR'), true);
+						break;
+
+					case 2:
+						echo new JsonResponse($result, 'Main response message');
+						break;
+
+					case 3:
+						$app->enqueueMessage('This part was successful');
+						$app->enqueueMessage("Enqueued notice", "notice");
+						$app->enqueueMessage('Here was a small warning'. 'warning');
+						$app->enqueueMessage('Here was a small'. 'error');
+						echo new JsonResponse($result, JText::_('COM_COMPONENT_MY_TASK_ERROR'), true);
+						break;
+
+					case 4:
+						$app->enqueueMessage('This part was successful');
+						$app->enqueueMessage("Enqueued notice", "notice");
+						$app->enqueueMessage('Here was a small warning'. 'warning');
+						$app->enqueueMessage('Here was a small'. 'error');
+						echo new JsonResponse($result, 'Main response message');
+						break;
+
+				}
+
+				$app->close();
+			}
+
+
 			//--- file name  --------------------------------------------
 
 			$uploadFileName = $input->get('upload_file_name', '', 'string');
@@ -183,8 +223,8 @@ class UploadController extends FormController
 			// Create image data in db
 			//----------------------------------------------------
 
-			/** start create ... *
-			$modelDb = $this->getModel('image');
+			/** start create ... */
+			$modelDb = $this->getModel('Image');
 
 			//--- Create Destination file name -----------------------
 
@@ -193,6 +233,7 @@ class UploadController extends FormController
 			$useFileName = $modelDb->generateNewImageName($baseName, $galleryId);
 			$ajaxImgDbObject['dstFileName'] = $useFileName;
 
+			/**
 			//--- create image data in DB --------------------------------
 
 			$title = $baseName;
