@@ -103,24 +103,37 @@
 	.........................................................................
 	-->
 	
-    <!-- Set the directory where the packages should be saved. Relative to the build dir -->
+    <!-- Set the source and destination directory for copy (sources relative to the build dir) -->
     <property name="buildDir" value="./../.packages/" override="true" />
+    <property name="buildDirTemp" value="${buildDir}tmp/" override="true" />
     <!-- Declare Project src files -->
-    <property name="root" value="./.." override="true" />
-    <property name="administrator" value="${root}/administrator" />
-    <property name="components" value="${root}/components" />
-    <!--property name="modules" value="${root}/plugins" / -->
-    <!--property name="plugins" value="${root}/plugins" / -->
-    <property name="media" value="${root}/media" />
+    <property name="srcRoot" value="./../" override="true" />
+	
+    <property name="adminComponent" value="administrator/components/com_${extensionLower}/" override="true" />
+    <property name="siteComponent" value="/components/com_${extensionLower}/" override="true" />
+    <property name="media" value="/media/com_${extensionLower}/" override="true" />
+	
+    <property name="srcAdminCmp" value="${srcRoot}${adminComponent}/" />
+    <property name="srcSiteCmp" value="${srcRoot}${siteComponent}/" />
+    <property name="srcMediaCmp" value="${srcRoot}${media}/" />
+    <!-- ??? property name="modules" value="${srcRoot}/plugins" / -->
+    <!-- ??? property name="plugins" value="${srcRoot}/plugins" / -->
+
+    <property name="dstAdminCmp" value="${buildDirTemp}${adminComponent}/" />
+    <property name="dstSiteCmp" value="${buildDirTemp}${siteComponent}/" />
+    <property name="dstMediaCmp" value="${buildDirTemp}${media}/" />
+	
+    <!--property name="modules" value="${srcRoot}/plugins" / -->
+    <!--property name="plugins" value="${srcRoot}/plugins" / -->
 
 	<!-- 
 	.........................................................................
-	file sets
+	source file sets
 	.........................................................................
 	-->
 	
     <!-- File set administrator folder -->
-    <fileset dir="${administrator}" id="adminSet">
+    <fileset dir="${srcAdminCmp}" id="adminSet">
         <include name="**" />
 		<!-- 2019.10.31 may be accidentally copied from installation server 
         <exclude name="changelog.xml" />
@@ -129,13 +142,13 @@
     </fileset>
 
     <!-- File set site folder -->
-    <fileset dir="${components}" id="siteSet">
+    <fileset dir="${srcSiteCmp}" id="siteSet">
         <include name="**" />
         <exclude name="**/params.ini" />
     </fileset>
 
     <!-- File set media folder -->
-    <fileset dir="${media}" id="mediaSet">
+    <fileset dir="${srcMediaCmp}" id="mediaSet">
         <include name="**" />
     </fileset>
 
@@ -145,12 +158,12 @@
 =========================================================================
 -->
 
-	<target name="build" depends="prepareFolder, copy2Temp, 
+	<target name="build" depends="prepareDstFolder, copy2Temp, 
 	                              manifestFile, zipFiles,
 								  deleteTemp">
 	
 		<!-- 
-		* prepareFolder
+		* prepareDstFolder
 		* copy2Temp
 		* manifestFile
 		* zipFiles
@@ -166,32 +179,31 @@
 		<echo msg="build done" />
 
 		<echo msg="------------------------------------------" />
-		<echo msg="Don't forget to change RSG2_...update and changelog file when releasing" />
+		<echo msg="Don't forget to change RSG2_... update and changelog file when releasing" />
 		<echo msg="------------------------------------------" />
 		<propertyprompt
 			propertyName="reminder"
-			promptText="Don't forget to change RSG2_...update and changelog file when releasing:"
+			promptText="Don't forget to change RSG2_... update and changelog file when releasing:"
 		/>		
 		
 	</target>
 
-    <target name="prepareFolder">
-		<echo msg="prepareFolder start" />
+    <target name="prepareDstFolder">
+		<echo msg="prepareDstFolder start" />
 	
-        <mkdir dir="${buildDir}/tmp/administrator" />
-        <mkdir dir="${buildDir}/tmp/components" />
-        <mkdir dir="${buildDir}/tmp/media" />
+        <mkdir dir="${srcAdminCmp}" />
+        <mkdir dir="${srcSiteCmp}" />
+        <mkdir dir="${srcMediaCmp}" />
         <!-- mkdir dir="${buildDir}/tmp/plugins" / -->
 		
-        <echo msg="prepareFolder end" />
+        <echo msg="prepareDstFolder end" />
     </target>
 
     <target name="zipFiles">
 		<echo msg="zipFiles start" />
 		
-		<!--zip destfile="${buildDir}/RSGallery2_Component.${build.postfix}${build.version}_${build.date.DSTAMP}.zip"-->
 		<zip destfile="${buildDir}/${name}_${type}.${build.postfix}${build.version}_${dateYearMonthDay}.zip">
-			<fileset dir="${buildDir}/tmp">
+			<fileset dir="${buildDirTemp}">
 				<include name="**" />
 			</fileset>
 		</zip>
@@ -202,7 +214,7 @@
     <target name="deleteTemp">
 		<echo msg="deleteTemp start" />
 
-		<delete dir="${buildDir}/tmp" />
+		<delete dir="${buildDirTemp}" />
 		
 		<echo msg="deleteTemp end" />
     </target>
@@ -211,31 +223,31 @@
 		<echo msg="copy2Temp start" />
 
         <!--Copy admin files to tmp folder -->
-        <copy todir="${buildDir}/tmp/administrator">
+        <copy todir="${dstAdminCmp}">
             <fileset refid="adminSet" />
         </copy>
         <!-- Copy site files -->
-        <copy todir="${buildDir}/tmp/components">
+        <copy todir="${dstSiteCmp}">
             <fileset refid="siteSet" />
         </copy>
         <!-- Copy media files -->
-        <copy todir="${buildDir}/tmp/media">
+        <copy todir="${dstMediaCmp}">
             <fileset refid="mediaSet" />
         </copy>
         <!-- copy the plugins -->
-        <!--copy todir="${buildDir}/tmp/plugins">
+        <!--copy todir="${buildDirTemp}plugins">
             <fileset refid="pluginsSet" />
         </copy-->
-        <!-- Copy the root admin files manifest.xml, install_rsg2.php -->
-        <copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/${extensionLower}.xml" />
-        <copy file="${root}/changelog.xml" tofile="${buildDir}/tmp/changelog.xml" />
-        <copy file="${root}/install_rsg2.php" tofile="${buildDir}/tmp/install_rsg2.php" />
-        <copy file="${root}/index.html" tofile="${buildDir}/tmp/index.html" />
-        <copy file="${root}/LICENSE.txt" tofile="${buildDir}/tmp/LICENSE.txt" />
+        <!-- Copy the root admin files manifest.xml, install....php-->
+        <copy file="${srcAdminCmp}${extensionLower}.xml" tofile="${buildDirTemp}${extensionLower}.xml" />
+        <copy file="${srcAdminCmp}changelog.xml" tofile="${buildDirTemp}changelog.xml" />
+        <copy file="${srcAdminCmp}install_rsg2.php" tofile="${buildDirTemp}install_rsg2.php" />
+        <copy file="${srcAdminCmp}config.xml" tofile="${buildDirTemp}config.xml" />
+        <copy file="${srcRoot}/LICENSE.txt" tofile="${buildDirTemp}LICENSE.txt" />
 
         <!-- Update files in administrator folder manifest.xml -->
-        <copy file="${root}/${extensionLower}.xml" tofile="${buildDir}/tmp/administrator/components/com_rsgallery2/${extensionLower}.xml" />
-        <copy file="${root}/install_rsg2.php" tofile="${buildDir}/tmp/administrator/components/com_rsgallery2/install_rsg2.php" />
+        <copy file="${srcRoot}/${extensionLower}.xml" tofile="${buildDirTemp}administrator/components/com_rsgallery2/${extensionLower}.xml" />
+        <copy file="${srcRoot}/install_rsg2.php" tofile="${buildDirTemp}administrator/components/com_rsgallery2/install_rsg2.php" />
  
         <!--copy file="${admin}/install.php" tofile="${buildDir}/tmp/install.php" /-->
         <echo msg="Copy was successful" />
