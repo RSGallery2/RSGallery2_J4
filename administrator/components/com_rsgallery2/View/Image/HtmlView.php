@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
@@ -21,7 +23,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+//use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
  * View class for a list of rsgallery2.
@@ -30,24 +32,61 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
-	protected $buttons = [];
+	/**
+	 * The \JForm object
+	 *
+	 * @var  \JForm
+	 */
+	protected $form;
+
+	/**
+	 * The active item
+	 *
+	 * @var  object
+	 */
+	protected $item;
+
+	/**
+	 * The model state
+	 *
+	 * @var  \JObject
+	 */
+	protected $state;
+
+	/**
+	 * Flag if an association exists
+	 *
+	 * @var  boolean
+	 */
+	protected $assoc;
+
+	/**
+	 * The actions the user is authorised to perform
+	 *
+	 * @var  \JObject
+	 */
+	protected $canDo;
+
+	/**
+	 * Is there a content type associated with this gallery aias
+	 *
+	 * @var    boolean
+	 * @since  4.0.0
+	 */
+	protected $checkTags = false;
 
 	protected $isDebugBackend;
 	protected $isDevelop;
 
 	/**
-	 * Method to display the view.
+	 * Display the view.
 	 *
-	 * @param   string  $tpl  A template file to load. [optional]
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
-	 * @return  mixed  A string if successful, otherwise an \Exception object.
-	 *
-	 * @since   1.0
+	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
 	public function display($tpl = null)
 	{
-
-
 		//--- config --------------------------------------------------------------------
 
 		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -55,9 +94,15 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		//---  --------------------------------------------------------------------
+		//--- Form --------------------------------------------------------------------
 
-		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
+		$this->form = $this->get('Form');
+		$this->item = $this->get('Item');
+		$this->state = $this->get('State');
+		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
+		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
+		$this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
+		$this->assoc = $this->get('Assoc');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -65,11 +110,18 @@ class HtmlView extends BaseHtmlView
 			throw new GenericDataException(implode("\n", $errors), 500);
 		}
 
-		Rsgallery2Helper::addSubmenu('Control');
-		$this->sidebar = \JHtmlSidebar::render();
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
+		// Check if we have a content type for this alias
+		if (!empty(TagsHelper::getTypes('objectList', array($this->state->get('gallery.extension') . '.gallery'), true)))
+		{
+			$this->checkTags = true;
+		}
 
-		$this->addToolbar();
+
+		// different toolbar on different layouts
+		$Layout = Factory::getApplication()->input->get('layout');
+		$this->addToolbar($Layout);
+
+		Factory::getApplication()->input->set('hidemainmenu', true);
 
 		return parent::display($tpl);
 	}
@@ -81,7 +133,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   1.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar($Layout = 'default')
 	{
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
@@ -90,15 +142,39 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  Test ...<br>'
+				. 'Tasks: <br>'
+				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
+				. '*  published_up, published_down<br>'
+//				. '*  <br>'
+//				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 				. '</span><br><br>';
 		}
 
-		// Set the title
-		ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_IMAGE', 'image'));
+		switch ($Layout)
+		{
+			case 'edit':
+			default:
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_IMAGE', 'image'));
+
+				ToolBarHelper::apply('image.apply');
+				ToolBarHelper::save('image.save');
+				ToolBarHelper::save2new('image.save2new');
+				if (empty($this->item->id))
+				{
+					ToolBarHelper::cancel('image.cancel');
+				}
+				else
+				{
+					ToolBarHelper::cancel('image.cancel');
+				}
+
+//				ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
+
+				break;
+		}
 
 		$toolbar->preferences('com_rsgallery2');
 	}

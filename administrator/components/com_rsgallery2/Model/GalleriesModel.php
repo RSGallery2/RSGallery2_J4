@@ -592,6 +592,7 @@ class GalleriesModel extends ListModel
 			$query
 				->select('*')
 				->from($db->quoteName('#__rsg2_galleries'))
+				//->where date ... ???
 				->order($db->quoteName('id') . ' DESC');
 
 			$db->setQuery($query);
@@ -630,4 +631,4 @@ class GalleriesModel extends ListModel
 
 
 
-}
+} // class

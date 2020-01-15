@@ -131,7 +131,7 @@ class UploadController extends FormController
 			data.append('gallery_id', nextFile.galleryId);
 			/**/
 
-			$test = 2; // 0: normal, 1:error, 2: warning
+			$test = 0; // 0: normal, 1:error, 2: warning
 
 			if ($test)
 			{
@@ -139,7 +139,7 @@ class UploadController extends FormController
 				switch ($test)
 				{
 					case 1:
-						echo new JsonResponse($result, JText::_('COM_COMPONENT_MY_TASK_ERROR'), true);
+						echo new JsonResponse($result, Text::_('COM_COMPONENT_MY_TASK_ERROR'), true);
 						break;
 
 					case 2:
@@ -151,7 +151,7 @@ class UploadController extends FormController
 						$app->enqueueMessage("Enqueued notice", "notice");
 						$app->enqueueMessage('Here was a small warning'. 'warning');
 						$app->enqueueMessage('Here was a small'. 'error');
-						echo new JsonResponse($result, JText::_('COM_COMPONENT_MY_TASK_ERROR'), true);
+						echo new JsonResponse($result, Text::_('COM_COMPONENT_MY_TASK_ERROR'), true);
 						break;
 
 					case 4:

@@ -137,7 +137,9 @@ class HtmlView extends BaseHtmlView
 		// different toolbar on different layouts
 		$Layout = Factory::getApplication()->input->get('layout');
 		$this->addToolbar($Layout);
-		
+
+		Factory::getApplication()->input->set('hidemainmenu', true);
+
 		return parent::display($tpl);
 	}
 
@@ -160,7 +162,7 @@ class HtmlView extends BaseHtmlView
 				. 'Tasks: <br>'
 				. '*  ERROR: Save failed with the following error: Invalid `parent_id` [0] in Joomla\Component\Rsgallery2\Administrator\Table\GalleryTable::check()<br>'
 				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
-//				. '*  <br>'
+				. '*  published_up, published_down<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'

@@ -9,8 +9,9 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `description` text NOT NULL DEFAULT '',
-  `note` varchar(255) NOT NULL DEFAULT '',  
   `thumb_id` int(11) unsigned NOT NULL default '0',
+
+  `note` varchar(255) NOT NULL DEFAULT '',
   `params` text NOT NULL DEFAULT '',
   `published` tinyint(1) NOT NULL DEFAULT 0, 
   `hits` int(10) unsigned NOT NULL DEFAULT 0, 
@@ -67,19 +68,20 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `name` varchar(255) NOT NULL default '',
   `alias` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
-  
+
   `gallery_id` int(9) unsigned NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
 
+  `note` varchar(255) NOT NULL DEFAULT '',
   `params` text NOT NULL,
-  
+  `published` tinyint(1) NOT NULL default '1',
+  `hits` int(11) unsigned NOT NULL default '0',
+
+
   `rating` int(10) unsigned NOT NULL default '0',
   `votes` int(10) unsigned NOT NULL default '0',
   `comments` int(10) unsigned NOT NULL default '0',
-  
-  `published` tinyint(1) NOT NULL default '1',
-  `hits` int(11) unsigned NOT NULL default '0',
   
   `checked_out` int(10) unsigned NOT NULL DEFAULT 0,
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
@@ -92,9 +94,9 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `ordering` int(9) unsigned NOT NULL default '0',
   `approved` tinyint(1) unsigned NOT NULL default '1',
 
-  `access` int(10) NOT NULL DEFAULT 0,   
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-  
+  `access` int(10) NOT NULL DEFAULT 0,
+
   PRIMARY KEY  (`id`),
 #  UNIQUE KEY `UK_name` (`name`),
 #  KEY `id` (`id`)

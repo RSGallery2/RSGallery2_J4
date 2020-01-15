@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
@@ -130,14 +131,6 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		/** ToDo: *
-		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new \JViewGenericdataexception(implode("\n", $errors), 500);
-		}
-		/**/
-
 		//// Check if we have a content type for this alias
 		//if (!empty(TagsHelper::getTypes('objectList', array($this->state->get('gallery.extension') . '.gallery'), true)))
 		//{
@@ -153,7 +146,8 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
-//		Factory::getApplication()->input->set('hidemainmenu', true);
+		//--- sidebar --------------------------------------------------------------------
+
 		$Layout = $this->getLayout();
 		if ($Layout !== 'modal')
 		{
@@ -163,15 +157,6 @@ class HtmlView extends BaseHtmlView
 
 			// $Layout = Factory::getApplication()->input->get('layout');
 			$this->addToolbar($Layout);
-
-			// for first debug ToDo: remove ...
-
-			$galleryModel = $this->getModel();
-
-			// $this->items         = $galleryModel->allGalleries();
-
-
-
 		}
 		else
 		{
@@ -191,6 +176,8 @@ class HtmlView extends BaseHtmlView
 			}
 			/**/
 		}
+
+		//--- display --------------------------------------------------------------------
 
 		return parent::display($tpl);
 	}
@@ -426,6 +413,7 @@ class HtmlView extends BaseHtmlView
 		ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
 		/**/
 	}
+
 	/**
 	 * Returns an array of fields the table can be sorted by
 	 *

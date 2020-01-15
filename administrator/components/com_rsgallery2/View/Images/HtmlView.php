@@ -13,8 +13,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -30,23 +31,92 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
-	protected $buttons = [];
+	/**
+	 * An array of items
+	 *
+	 * @var  array
+	 */
+	protected $items;
+
+	/**
+	 * The model state
+	 *
+	 * @var  \JObject
+	 */
+	protected $state;
+
+	/**
+	 * The pagination object
+	 *
+	 * @var    Pagination
+	 * @since  3.9.0
+	 */
+	protected $pagination;
+	/**
+	 * Form object for search filters
+	 *
+	 * @var  \JForm
+	 */
+	public $filterForm;
+
+	/**
+	 * The active search filters
+	 *
+	 * @var  array
+	 */
+	public $activeFilters;
+
+	/**
+	 * The sidebar markup
+	 *
+	 * @var  string
+	 */
+	protected $sidebar;
+
+	/**
+	 * The actions the user is authorised to perform
+	 *
+	 * @var  \JObject
+	 */
+	protected $canDo;
+
+	/**
+	 * Is there a content type associated with this gallery alias
+	 *
+	 * @var    boolean
+	 * @since  4.0.0
+	 */
+	protected $checkTags = false;
 
 	protected $isDebugBackend;
 	protected $isDevelop;
 
-
 	/**
-	 * Method to display the view.
+	 * Display the view.
 	 *
-	 * @param   string  $tpl  A template file to load. [optional]
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
-	 * @return  mixed  A string if successful, otherwise an \Exception object.
-	 *
-	 * @since   1.0
+	 * @return  mixed  A string if successful, otherwise an Error object.
 	 */
 	public function display($tpl = null)
 	{
+		$this->items         = $this->get('Items');
+//		$this->filterForm    = $this->get('FilterForm');
+		$this->pagination    = $this->get('Pagination');
+		$this->state         = $this->get('State');
+		$this->activeFilters = $this->get('ActiveFilters');
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new GenericDataException(implode("\n", $errors), 500);
+		}
+
+		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
+		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
+		//$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id'));
+		$this->canDo = ContentHelper::getActions('com_rsgallery2');
+		//$this->assoc = $this->get('Assoc');
 
 		//--- config --------------------------------------------------------------------
 
@@ -55,21 +125,43 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		//---  --------------------------------------------------------------------
+		//--- sidebar --------------------------------------------------------------------
 
-		// Check for errors.
-		if (count($errors = $this->get('Errors')))
+		$Layout = $this->getLayout();
+		if ($Layout !== 'modal')
 		{
-			throw new GenericDataException(implode("\n", $errors), 500);
+			HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
+			Rsgallery2Helper::addSubmenu('galleries');
+			$this->sidebar = \JHtmlSidebar::render();
+
+			// $Layout = Factory::getApplication()->input->get('layout');
+			$this->addToolbar($Layout);
+
+			// for first debug ToDo: remove ...
+
+			$imageModel = $this->getModel();
+			$dummyItems = $imageModel->allImages();
+		}
+		else
+		{
+			/**
+			// If we are forcing a language in modal (used for associations).
+			if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
+			{
+				// Set the language field to the forcedLanguage and disable changing it.
+				$this->form->setValue('language', null, $forcedLanguage);
+				$this->form->setFieldAttribute('language', 'readonly', 'true');
+
+				// Only allow to select galleries with All language or with the forced language.
+				$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
+
+				// Only allow to select tags with All language or with the forced language.
+				$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
+			}
+			/**/
 		}
 
-		echo 'HtmlView.php: ' . realpath(dirname(__FILE__)) . '<br>';
-
-		Rsgallery2Helper::addSubmenu('images');
-		$this->sidebar = \JHtmlSidebar::render();
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
-
-		$this->addToolbar();
+		//--- display --------------------------------------------------------------------
 
 		return parent::display($tpl);
 	}
@@ -81,7 +173,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since   1.0
 	 */
-	protected function addToolbar()
+	protected function addToolbar($Layout = 'default')
 	{
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
@@ -90,15 +182,73 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  Test ...<br>'
+				. 'Tasks: <br>'
+				. '*  Can do ...<br>'
+				. '*  archieved, trashed<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 				. '</span><br><br>';
 		}
 
-		// Set the title
-		ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'image');
+		switch ($Layout)
+		{
+			case 'imageses_raw':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'images');
+
+				ToolBarHelper::editList('gallery.edit');
+
+				// on develop show open tasks if existing
+				if (!empty ($Rsg2DevelopActive))
+				{
+					echo '<span style="color:red">Task: Add delete function, Test add double name</span><br><br>';
+				}
+				break;
+
+
+			default:
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'images');
+
+				ToolBarHelper::addNew('image.add');
+
+				$dropdown = $toolbar->dropdownButton('status-group')
+					->text('JTOOLBAR_CHANGE_STATUS')
+					->toggleSplit(false)
+					->icon('fa fa-ellipsis-h')
+					->buttonClass('btn btn-action')
+					->listCheck(true);
+
+				$childBar = $dropdown->getChildToolbar();
+
+				$childBar->publish('categories.publish')->listCheck(true);
+
+				$childBar->unpublish('categories.unpublish')->listCheck(true);
+
+				$childBar->archive('categories.archive')->listCheck(true);
+
+				$childBar->checkin('categories.checkin')->listCheck(true);
+
+				$childBar->trash('categories.trash')->listCheck(true);
+
+				$toolbar->standardButton('refresh')
+					->text('JTOOLBAR_REBUILD')
+					->task('image.rebuild');
+
+
+
+				ToolBarHelper::editList('image.edit');
+//				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
+				ToolBarHelper::deleteList('', 'image.delete', 'JTOOLBAR_DELETE');
+
+				// on develop show open tasks if existing
+				if (!empty ($Rsg2DevelopActive))
+				{
+					echo '<span style="color:red">Task:  c) Search tools -> group by parent/ parent child tree ? </span><br><br>';
+				}
+
+				break;
+			
+		}
 
 		$toolbar->preferences('com_rsgallery2');
 	}

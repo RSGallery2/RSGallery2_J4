@@ -42,11 +42,19 @@ class ImagesModel extends ListModel
 			$config['filter_fields'] = array(
 				'id', 'a.id',
 				'name', 'a.name',
-
+				'gallery_id', 'a.gallery_id',
+				'title', 'a.title',
+				'hits', 'a.hits',
+				'date', 'a.date',
+				'rating', 'a.rating',
+				'votes', 'a.votes',
+				'comments', 'a.comments',
 				'published', 'a.published',
 
 				'checked_out', 'a.checked_out',
 				'checked_out_time', 'a.checked_out_time',
+
+				'ordering', 'a.ordering',
 
 				'created', 'a.created',
 				'created_by', 'a.created_by',
@@ -55,9 +63,7 @@ class ImagesModel extends ListModel
 				'modified_by', 'a.modified_by',
 
 				'parent_id', 'a.parent_id',
-				'lft', 'a.lft',
 
-				'hits', 'a.hits',
 				'tag',
 			);
 		}
@@ -82,7 +88,7 @@ class ImagesModel extends ListModel
 	 *
 	 * @since   1.6
 	 */
-	protected function populateState($ordering = 'a.lft', $direction = 'asc')
+	protected function populateState($ordering = 'a.id', $direction = 'desc')
 	{
 		$app = Factory::getApplication();
 
@@ -114,6 +120,9 @@ class ImagesModel extends ListModel
 		$search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
+		$gallery_id = $this->getUserStateFromRequest($this->context . '.filter.gallery_id', 'filter_gallery_id');
+		$this->setState('filter.gallery_id', $gallery_id);
+
 		// List state information.
 		parent::populateState($ordering, $direction);
 
@@ -135,13 +144,14 @@ class ImagesModel extends ListModel
 	 *
 	 * @return  string  A store id.
 	 *
-	 * @since   1.6
+	 * @since   4.3.0
 	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
 //		$id .= ':' . $this->getState('filter.extension');
 		$id .= ':' . $this->getState('filter.search');
+		$id .= ':' . $this->getState('filter.gallery_id');
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.access');
 //		$id .= ':' . $this->getState('filter.language');
@@ -175,10 +185,11 @@ class ImagesModel extends ListModel
 				. 'a.name, '
 				. 'a.alias, '
 				. 'a.description, '
-				. 'a.note, '
+				. 'a.gallery_id, '
 
-				. 'a.thumb_id, '
-				. 'a.published, '
+				. 'a.title, '
+				. 'a.note, '
+				. 'a.published, a.rating, a.votes, a.comments,'
 				. 'a.access, '
 
 				. 'a.created, '
@@ -186,23 +197,19 @@ class ImagesModel extends ListModel
 				. 'a.modified, '
 				. 'a.modified_by, '
 
+				. 'a.hits, '
+
+				. 'a.ordering'
+			)
+//				. ', a.language'
 //				. 'a.checked_out, '
 //				. 'a.checked_out_time, '
-
-				. 'a.parent_id,'
-
-				. 'a.path, '
-				. 'a.level, '
-				. 'a.lft, '
-				. 'a.rgt'
-//				. ', a.language'
-			)
 		);
-		$query->from('#__rsg2_images AS a');
+		$query->from('#__rsg2_images as a');
 
-		/* Count child images */
-		$query->select('COUNT(img.gallery_id) as image_count')
-			->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id'
+		/* parent gallery name */
+		$query->select('gal.name as gallery_name')
+			->join('LEFT', '#__rsg2_galleries AS gal ON gal.id = a.gallery_id'
 			);
 
 		//// Join over the language
@@ -271,6 +278,7 @@ class ImagesModel extends ListModel
 			$query->where(
 				'a.name LIKE ' . $search
 				. ' OR a.description LIKE ' . $search
+				. ' OR gal.name LIKE ' . $search
 				. ' OR a.note LIKE ' . $search
 				. ' OR a.created LIKE ' . $search
 				. ' OR a.modified LIKE ' . $search
@@ -304,12 +312,26 @@ class ImagesModel extends ListModel
 		/**/
 
 		// Add the list ordering clause
-		$listOrdering = $this->getState('list.ordering', 'a.lft');
-		$listDirn = $db->escape($this->getState('list.direction', 'ASC'));
+
+/**
+		// changes need changes above too -> populateState
+		$orderCol  = $this->state->get('list.ordering', 'a.id');
+		$orderDirn = $this->state->get('list.direction', 'desc');
+
+		if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
+		{
+			$orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
+		}
+
+		$query->order($db->escape($orderCol . ' ' . $orderDirn));
+/**/
+
+		$listOrdering = $this->getState('list.ordering', 'a.id');
+		$listDirn = $db->escape($this->getState('list.direction', 'DESC'));
 
 		if ($listOrdering == 'a.access')
 		{
-			$query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
+			$query->order('a.access ' . $listDirn . ', a.id ' . $listDirn);
 		}
 		else
 		{
@@ -318,39 +340,22 @@ class ImagesModel extends ListModel
 
 		// Group by on Images for \JOIN with component tables to count items
 		$query->group(
-			'a.id, 
-			. a.name, 
-			. a.alias, 
-			. a.description, 
-			. a.note, 
+			'a.id, '
+			. 'a.name, '
+			. 'a.alias, '
+			. 'a.description, '
+			. 'a.gallery_id, '
 
-			. a.thumb_id, 
-			. a.published, 
-			. a.access, 
+			. 'a.note, '
+			. 'a.published, '
+			. 'a.access, '
 
-			. a.created, 
-			. a.created_by, 
-			. a.modified, 
-			. a.modified_by, 
+			. 'a.created, '
+			. 'a.created_by, '
+			. 'a.modified, '
+			. 'a.modified_by, '
 
-//				. a.checked_out, 
-//				. a.checked_out_time, 
-
-			. a.parent_id,
-
-			. a.path, 
-			. a.level, 
-			. a.lft, 
-			. a.rgt,
-//				. , a.language,
-				image_count,
-				
-				l.title,
-				l.image,
-				uc.name,
-				ag.title,
-				ua.name
-				'
+			. 'a.ordering'
 		);
 
 		return $query;
@@ -534,7 +539,66 @@ class ImagesModel extends ListModel
 
 		return $latest;
 	}
- 
 
+	/**
+	 * This function will retrieve the data of the n last uploaded images
+	 *
+	 * @param int $limit > 0 will limit the number of lines returned
+	 *
+	 * @return array rows with image name, gallery name, date, and user name as rows
+	 *
+	 * @since   4.3.0
+	 */
+	static function allImages()
+	{
+		$latest = array();
 
-}
+		try
+		{
+			// Create a new query object.
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+
+			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
+			//	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
+
+			$query
+				->select('*')
+				->from($db->quoteName('#__rsg2_images'))
+				//->where date ... ???
+				->order($db->quoteName('id') . ' DESC');
+
+			$db->setQuery($query);
+			$rows = $db->loadObjectList();
+
+			/**
+			foreach ($rows as $row)
+			{
+			$ImgInfo         = array();
+			$ImgInfo['name'] = $row->name;
+			$ImgInfo['id']   = $row->id;
+
+			//$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
+			$user            = Factory::getUser($row->created_by);
+			//$ImgInfo['user'] = $user->get('username');
+			$ImgInfo['user'] = $user->name;
+			//$ImgInfo['user'] = "*Finnern was auch immer";
+
+			$latest[] = $ImgInfo;
+			}
+			/**/
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $rows;
+	}
+
+} // class
