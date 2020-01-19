@@ -131,11 +131,11 @@ class UploadController extends FormController
 			data.append('gallery_id', nextFile.galleryId);
 			/**/
 
-			$test = 0; // 0: normal, 1:error, 2: warning
+			$test = 0; // 0: normal, 1:error, 2: warning ....
 
 			if ($test)
 			{
-				$result = "result text";
+				$result = "Resulting data (simulated)";
 				switch ($test)
 				{
 					case 1:
@@ -147,21 +147,44 @@ class UploadController extends FormController
 						break;
 
 					case 3:
-						$app->enqueueMessage('This part was successful');
-						$app->enqueueMessage("Enqueued notice", "notice");
-						$app->enqueueMessage('Here was a small warning'. 'warning');
-						$app->enqueueMessage('Here was a small'. 'error');
-						echo new JsonResponse($result, Text::_('COM_COMPONENT_MY_TASK_ERROR'), true);
+						$app->enqueueMessage('This part has error 1');
+						$app->enqueueMessage('This part has error 2');
+						$app->enqueueMessage("Enqueued notice 1", "notice");
+						$app->enqueueMessage("Enqueued notice 2", "notice");
+						$app->enqueueMessage('Here was a small warning 1', 'warning');
+						$app->enqueueMessage('Here was a small warning 2', 'warning');
+						$app->enqueueMessage('Here was a small error 1', 'error');
+						$app->enqueueMessage('Here was a small error 2', 'error');
+						echo new JsonResponse($result, Text::_('!!! Response message with error set !!!'), true);
 						break;
 
 					case 4:
-						$app->enqueueMessage('This part was successful');
-						$app->enqueueMessage("Enqueued notice", "notice");
-						$app->enqueueMessage('Here was a small warning'. 'warning');
-						$app->enqueueMessage('Here was a small'. 'error');
-						echo new JsonResponse($result, 'Main response message');
+						$app->enqueueMessage('This part was successful 1');
+						$app->enqueueMessage('This part was successful 2');
+						$app->enqueueMessage("Enqueued notice 1", "notice");
+						$app->enqueueMessage("Enqueued notice 2", "notice");
+						$app->enqueueMessage('Here was a small warning 1', 'warning');
+						$app->enqueueMessage('Here was a small warning 2', 'warning');
+						$app->enqueueMessage('Here was a small error 1', 'error');
+						$app->enqueueMessage('Here was a small error 2', 'error');
+						echo new JsonResponse($result, 'Response message with !!! no !!! error set');
 						break;
+					case 5:
+						$app->enqueueMessage('This part was successful 1');
+						$app->enqueueMessage('This part was successful 2');
+						$app->enqueueMessage("Enqueued notice 1", "notice");
+						$app->enqueueMessage("Enqueued notice 2", "notice");
+						$app->enqueueMessage('Here was a small warning 1', 'warning');
+						$app->enqueueMessage('Here was a small warning 2', 'warning');
+						$app->enqueueMessage('Here was a small error 1', 'error');
+						$app->enqueueMessage('Here was a small error 2', 'error');
 
+						throw new \Exception('Attention: raised exception ');
+//						throw new Notallowed(Text::_('Not allowed thrown'), 403);
+
+
+						echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+						break;
 				}
 
 				$app->close();
