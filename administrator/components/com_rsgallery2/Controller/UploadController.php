@@ -233,7 +233,7 @@ class UploadController extends FormController
 			$useFileName = $modelDb->generateNewImageName($baseName, $galleryId);
 			$ajaxImgDbObject['dstFileName'] = $useFileName;
 
-			/**
+			/**/
 			//--- create image data in DB --------------------------------
 
 			$title = $baseName;

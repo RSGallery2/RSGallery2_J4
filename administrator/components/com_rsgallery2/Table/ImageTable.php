@@ -7,12 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\RsImage2\Administrator\Table;
+namespace Joomla\Component\Rsgallery2\Administrator\Table;
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
  
 /**

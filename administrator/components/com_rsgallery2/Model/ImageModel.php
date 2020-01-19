@@ -14,9 +14,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
+//use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Associations;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
@@ -283,11 +285,11 @@ class ImageModel extends AdminModel
 			{
 				if (JFactory::getConfig()->get('unicodeslugs') == 1)
 				{
-					$data['alias'] = JFilterOutput::stringURLUnicodeSlug($data['name']);
+					$data['alias'] = \JFilterOutput::stringURLUnicodeSlug($data['name']);
 				}
 				else
 				{
-					$data['alias'] = JFilterOutput::stringURLSafe($data['name']);
+					$data['alias'] = \JFilterOutput::stringURLSafe($data['name']);
 				}
 
 				// check for existing alias
@@ -307,7 +309,7 @@ class ImageModel extends AdminModel
 
 				if (isset($msg))
 				{
-					JFactory::getApplication()->enqueueMessage($msg, 'warning');
+					Factory::getApplication()->enqueueMessage($msg, 'warning');
 				}
 
 			}
@@ -423,7 +425,7 @@ class ImageModel extends AdminModel
 
 		$item->title = $this->generateNewImageName($fileName, 0);
 		$item->alias = $item->title;
-		$this->alias = JFilterOutput::stringURLSafe($this->alias);
+		$this->alias = \JFilterOutput::stringURLSafe($this->alias);
 
 		// Create unique alias and title
 		list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
@@ -433,12 +435,12 @@ class ImageModel extends AdminModel
 
 		//--- date -------------------------------------------
 
-		$date       = JFactory::getDate();
+		$date       = Factory::getDate();
 		$item->date = JHtml::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- user id -------------------------------------------
 
-		$user         = JFactory::getUser();
+		$user         = Factory::getUser();
 		$userId       = $user->id;
 		$item->userid = $userId;
 
@@ -457,7 +459,7 @@ class ImageModel extends AdminModel
 		{
 			// ToDo: collect erorrs and display over enque .... with errr type
 			$UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-			JFactory::getApplication()->enqueueMessage(JText::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
+			Factory::getApplication()->enqueueMessage(JText::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
 
 			// $IsImageDbCreated = false;
 
@@ -488,7 +490,7 @@ class ImageModel extends AdminModel
 	/**/
 	public function createImageDbItem($imageName, $title='', $galleryId=0, $description='')
 	{
-		$ImageId = -1;
+		$ImageId = 0;
 
 		//--- Create new item -------------------
 
@@ -517,7 +519,7 @@ class ImageModel extends AdminModel
 			$item->title = $this->generateNewImageName($fileName);
 		}
 		$item->alias = $item->title;
-		$item->alias = JFilterOutput::stringURLSafe($item->alias);
+		$item->alias = \JFilterOutput::stringURLSafe($item->alias);
 
 		// Create unique alias and title
 		list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
@@ -526,8 +528,8 @@ class ImageModel extends AdminModel
 
 		//--- date -------------------------------------------
 
-		$date       = JFactory::getDate();
-		$item->date = JHtml::_('date', $date, 'Y-m-d H:i:s');
+		$date       = Factory::getDate();
+		$item->date = \JHtml::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- gallery -------------------------------------------
 
@@ -539,7 +541,7 @@ class ImageModel extends AdminModel
 
 		//--- user id -------------------------------------------
 
-		$user         = JFactory::getUser();
+		$user         = Factory::getUser();
 		$userId       = $user->id;
 		$item->userid = $userId;
 
@@ -562,9 +564,10 @@ class ImageModel extends AdminModel
 		{
 			// ToDo: collect erorrs and display over enque .... with errr type
 			$UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-			JFactory::getApplication()->enqueueMessage(JText::_('copied image name could not be inserted in database') . $UsedNamesText, 'warning');
+			Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inserted in database') . $UsedNamesText, 'warning');
 
-			$this->setError($this->_db->getErrorMsg());
+			//$this->setError($this->_db->getErrorMsg());
+			$this->setError($item->getError());
 		}
 		else
 		{
@@ -592,7 +595,7 @@ class ImageModel extends AdminModel
 		try
 		{
 			// ToDo: Jinput should be handled in  a controller
-			$input = JFactory::getApplication()->input;
+			$input = Factory::getApplication()->input;
 			$cids  = $input->get('cid', array(), 'ARRAY');
 			ArrayHelper::toInteger($cids);
 
@@ -635,16 +638,16 @@ class ImageModel extends AdminModel
 					// Success
 					$IsMoved = true;
 
-					JFactory::getApplication()->enqueueMessage(JText::_('Move is successful. Please check order of images in destination gallery'), 'notice');
+					Factory::getApplication()->enqueueMessage(JText::_('Move is successful. Please check order of images in destination gallery'), 'notice');
 				}
 				else
 				{
-					JFactory::getApplication()->enqueueMessage(JText::_('No valid image(s) selected'), 'warning');
+					Factory::getApplication()->enqueueMessage(JText::_('No valid image(s) selected'), 'warning');
 				}
 			}
 			else
 			{
-				JFactory::getApplication()->enqueueMessage(JText::_('No valid gallery selected'), 'warning');
+				Factory::getApplication()->enqueueMessage(JText::_('No valid gallery selected'), 'warning');
 			}
 		}
 		catch (RuntimeException $e)
@@ -652,7 +655,7 @@ class ImageModel extends AdminModel
 			$OutTxt = '';
 			$OutTxt .= 'Error executing moveImagesTo: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -691,7 +694,7 @@ class ImageModel extends AdminModel
 			$OutTxt .= 'Error executing nextOrdering for GalleryId: "' . $GalleryId . '"<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -720,7 +723,7 @@ class ImageModel extends AdminModel
 		try
 		{
 			// ToDo: Jinput should be handled in  a controller
-			$input = JFactory::getApplication()->input;
+			$input = Factory::getApplication()->input;
 			$cids  = $input->get('cid', array(), 'ARRAY');
 			ArrayHelper::toInteger($cids);
 
@@ -742,7 +745,7 @@ class ImageModel extends AdminModel
 						/* Item is already in this gallery:
 						if ($item->gallery_id == $NewGalleryId)
 						{
-							JFactory::getApplication()->enqueueMessage(
+							Factory::getApplication()->enqueueMessage(
 								JText::_('Display image could not be copied. It is already assigned to the destination gallery') . $row->title, 'warning');
 							$IsOneNotCopied = true;
 
@@ -775,7 +778,7 @@ class ImageModel extends AdminModel
 						{
 							// ToDo: what ToDo if it fails ?
 							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							JFactory::getApplication()->enqueueMessage(JText::_('Original image could not be copied') . $UsedNamesText, 'warning');
+							Factory::getApplication()->enqueueMessage(JText::_('Original image could not be copied') . $UsedNamesText, 'warning');
 						}
 						else
 						{
@@ -791,7 +794,7 @@ class ImageModel extends AdminModel
 						{
 							// ToDo: what ToDo if it fails ?
 							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							JFactory::getApplication()->enqueueMessage(JText::_('Display image could not be copied') . $UsedNamesText, 'error');
+							Factory::getApplication()->enqueueMessage(JText::_('Display image could not be copied') . $UsedNamesText, 'error');
 
 							$IsOneNotCopied = true;
 						}
@@ -808,7 +811,7 @@ class ImageModel extends AdminModel
 						{
 							// ToDo: what ToDo if it fails ?
 							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							JFactory::getApplication()->enqueueMessage(JText::_('Thumb image could not be copied') . $UsedNamesText, 'warning');
+							Factory::getApplication()->enqueueMessage(JText::_('Thumb image could not be copied') . $UsedNamesText, 'warning');
 						}
 
 						//----------------------------------------------------
@@ -822,7 +825,7 @@ class ImageModel extends AdminModel
 						if (!$item->store())
 						{
 							$UsedNamesText = '<br>SrcImage: ' . $oldName . '<br>DstImage: ' . $item->name;
-							JFactory::getApplication()->enqueueMessage(JText::_('copied image name could not be inseted in database') . $UsedNamesText, 'error');
+							Factory::getApplication()->enqueueMessage(JText::_('copied image name could not be inseted in database') . $UsedNamesText, 'error');
 
 							// return false;
 							$IsOneNotCopied = false;
@@ -831,24 +834,24 @@ class ImageModel extends AdminModel
 
 					if (!$IsOneNotCopied)
 					{
-						JFactory::getApplication()->enqueueMessage(JText::_('Copy is successful. Please check order of images in destination gallery'), 'notice');
+						Factory::getApplication()->enqueueMessage(JText::_('Copy is successful. Please check order of images in destination gallery'), 'notice');
 					}
 					else
 					{
 						if ($IsOneCopied)
 						{
-							JFactory::getApplication()->enqueueMessage(JText::_('Some images were copied. Please check order of images in destination gallery'), 'notice');
+							Factory::getApplication()->enqueueMessage(JText::_('Some images were copied. Please check order of images in destination gallery'), 'notice');
 						}
 					}
 				}
 				else
 				{
-					JFactory::getApplication()->enqueueMessage(JText::_('No valid image(s) selected'), 'warning');
+					Factory::getApplication()->enqueueMessage(JText::_('No valid image(s) selected'), 'warning');
 				}
 			}
 			else
 			{
-				JFactory::getApplication()->enqueueMessage(JText::_('No valid gallery selected'), 'warning');
+				Factory::getApplication()->enqueueMessage(JText::_('No valid gallery selected'), 'warning');
 			}
 		}
 		catch (RuntimeException $e)
@@ -857,7 +860,7 @@ class ImageModel extends AdminModel
 			$OutTxt .= 'Error executing copyImagesTo: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -897,7 +900,7 @@ class ImageModel extends AdminModel
 				$OutTxt = '';
 				$OutTxt .= 'Error executing assignGalleryId: "' . $imageId . '<br>';
 
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 		}
@@ -907,7 +910,7 @@ class ImageModel extends AdminModel
 			$OutTxt .= 'Catched Error executing assignGalleryId: "' . $imageId . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -947,7 +950,7 @@ class ImageModel extends AdminModel
 			$OutTxt .= 'Error executing ImageIdFromName for image name: "' . $imageName . '"<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -987,7 +990,7 @@ class ImageModel extends AdminModel
 			$OutTxt .= 'Error executing deleteImageDbItem for image name: "' . $imageName . '"<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -1039,7 +1042,7 @@ class ImageModel extends AdminModel
                         $OutTxt .= 'Model image: Error executing store in save_imageProperties: for image id: "' . $id . '"<br>';
                         //$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-                        $app = JFactory::getApplication();
+                        $app = Factory::getApplication();
                         $app->enqueueMessage($OutTxt, 'error');
                     }
                 }
@@ -1051,7 +1054,7 @@ class ImageModel extends AdminModel
             $OutTxt .= 'Model image: Error executing save_imageProperties: for image id: "' . $id . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 

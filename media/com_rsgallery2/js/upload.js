@@ -552,6 +552,7 @@ class TransferImagesTask {
                 }
                 else {
                     // error found ToDo: fill out
+                    // AjaxResponse ....
                 }
             })
                 .catch((errText) => {
