@@ -163,7 +163,7 @@ class HtmlView extends BaseHtmlView
 				. '*  ERROR: Save failed with the following error: Invalid `parent_id` [0] in Joomla\Component\Rsgallery2\Administrator\Table\GalleryTable::check()<br>'
 				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
 				. '*  published_up, published_down<br>'
-//				. '*  <br>'
+				. '*  Reduce editor buttons  (sets to be eselected)<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'

@@ -490,7 +490,7 @@ class ImagesModel extends ListModel
 			{
 				$ImgInfo            = array();
 				$ImgInfo['name']    = $row->name;
-				$ImgInfo['gallery'] = rsgallery2ModelImages::getParentGalleryName($row->gallery_id);
+				$ImgInfo['gallery'] = ImagesModel::GalleryName($row->gallery_id);
 				$ImgInfo['date']    = $row->date;
 
 				//$ImgInfo['user'] = rsgallery2ModelImages::getUsernameFromId($row->userid);
@@ -599,6 +599,29 @@ class ImagesModel extends ListModel
 		}
 
 		return $rows;
+	}
+
+	// ToDO: Rename as it may not be parent gallery name :-()
+	protected static function GalleryName($id)
+	{
+		// Create a new query object.
+		$db    = Factory::getDBO();
+		$query = $db->getQuery(true);
+
+		//$sql = 'SELECT `name` FROM `#__rsgallery2_galleries` WHERE `id` = '. (int) $id;
+		$query
+			->select('name')
+			->from('#__rsg2_galleries')
+			->where($db->quoteName('id') . ' = ' . (int) $id);
+
+		$db->setQuery($query);
+		$db->execute();
+
+		// http://docs.joomla.org/Selecting_data_using_JDatabase
+		$name = $db->loadResult();
+		$name = $name ? $name : Text::_('COM_RSGALLERY2_GALLERY_ID_ERROR');
+
+		return $name;
 	}
 
 } // class
