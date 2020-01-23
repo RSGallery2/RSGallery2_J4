@@ -97,7 +97,7 @@ class UploadController extends FormController
 
 		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-		$msg = 'uploadAjaxReserveImageInDB';
+		$msg = 'uploadAjaxReserveImageInDB::';
 
 		$app = Factory::getApplication();
 
@@ -131,7 +131,10 @@ class UploadController extends FormController
 			data.append('gallery_id', nextFile.galleryId);
 			/**/
 
-			$test = 0; // 0: normal, 1:error, 2: warning ....
+			//--- ajax tests --------------------------------------------
+			// ToDo: Remove -> put into own component
+			/**
+			$test = 1; // 0: normal, 1:error, 2: warning ....
 
 			if ($test)
 			{
@@ -189,7 +192,7 @@ class UploadController extends FormController
 
 				$app->close();
 			}
-
+			/**/
 
 			//--- file name  --------------------------------------------
 
@@ -267,7 +270,7 @@ class UploadController extends FormController
 			{
 				// actual give an error
 				//$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-				$msg     .= 'uploadAjaxReserveImageInDB: Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
+				$msg     .= 'Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
 
 				if ($Rsg2DebugActive)
 				{
@@ -308,17 +311,9 @@ class UploadController extends FormController
 				Log::add('    $msg: "' . $msg . '"');
 				Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
 			}
-			/**/
 
-			/**/
-			// simulate
-			$isCreated = true;
-			$imageId = time () % 3600;
-			$ajaxImgDbObject['imageId']  = $imageId;
-			/**/
-
-			echo new JsonResponse($ajaxImgDbObject, $msg, !$isCreated, true);
-			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
+			// No message as otherwise it would be displayed in form
+			echo new JsonResponse($ajaxImgDbObject, "", !$isCreated, true);
 
 			if ($Rsg2DebugActive) {
 				Log::add('<== Exit uploadAjaxSingleFile');
@@ -679,6 +674,32 @@ class UploadController extends FormController
 
 
 
+	private function imageOrderFromId ($imageId)
+	{
+		$imageOrder = -1;
+
+		try
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true)
+				->select('ordering')
+				->from($db->quoteName('#__rsg2_images'))
+				->where($db->quoteName('id') . ' = ' . $db->quote($imageId));
+			$db->setQuery($query);
+			$imageOrder = $db->loadResult();
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing imageOrderFromId for $imageId: "' . $imageId . '"<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $imageOrder;
+	}
 
 
 

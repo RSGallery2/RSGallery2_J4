@@ -23,6 +23,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
+use Joomla\String\StringHelper;
 
 /**
  * RSGallery2 Component Image Model
@@ -537,7 +538,7 @@ class ImageModel extends AdminModel
 
 		//--- description ---------------------------------------
 
-		$item->descr = $description;
+		$item->description = $description;
 
 		//--- user id -------------------------------------------
 
@@ -563,11 +564,22 @@ class ImageModel extends AdminModel
 		if (!$item->store())
 		{
 			// ToDo: collect erorrs and display over enque .... with errr type
-			$UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-			Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inserted in database') . $UsedNamesText, 'warning');
+			$UsedNamesText = '\nSrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
+			$testError = $item->getError();
+			$errBase = Text::_('Copied image name could not be inserted in database. ');
+			$errBase = $errBase . $UsedNamesText;
 
-			//$this->setError($this->_db->getErrorMsg());
-			$this->setError($item->getError());
+			if ($testError)
+			{
+				$errTxt = 'Error:' . $testError . '\n' . $errBase;
+				Factory::getApplication()->enqueueMessage($errTxt, 'error');
+//				$this->setError($testError);
+			}
+			else
+			{
+				$errTxt = Text::_( + 'Copied image name could not be inserted in database. ');
+				Factory::getApplication()->enqueueMessage($errBase, 'warning');
+			}
 		}
 		else
 		{
