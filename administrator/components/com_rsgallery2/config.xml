@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<fieldset 
+	<!-- ... Tab General ................................. -->
+
+	<fieldset
 		name="rsgallery2">
 		label="COM_CONFIG_RSGALLERY2_FIELDSET_LABEL"
 		description="COM_CONFIG_RSGALLERY2_FIELDSET_DESC"
@@ -23,10 +25,12 @@
 				hr="true"
 		/>
 
+		<!-- ... block admin section ... -->
+
 		<field
 				name="noteAdminSection"
 				type="note"
-				class="alert"
+				class="alert alert-primary"
 				close="true"
 				label="COM_RSGALLERY2_CONFIG_NOTE_ADMIN_SECTION"
 				description="COM_RSGALLERY2_CONFIG_NOTE_ADMIN_SECTION_DESC"
@@ -99,6 +103,8 @@
 
 	</fieldset>
 
+	<!-- ... Tab Galleries view ................................. -->
+
 	<fieldset
 		name="GalleriesView"
 		label="COM_RSGALLERY2_FIELD_GALLERIES_VIEW"
@@ -114,21 +120,254 @@
 		/>
 	</fieldset>
 
+	<!-- ... Tab Upload ................................. -->
+
+	<fieldset
+			name="upload"
+			label="COM_RSGALLERY2_FIELD_UPLOAD_OPTIONS_VIEW"
+			description="COM_RSGALLERY2_FIELD_UPLOAD_OPTIONS_VIEW_DESC"
+	>
+		<field
+				type="spacer"
+				name="spacer_upload_01"
+				hr="true"
+		/>
+
+		<!-- ... block images upload ... -->
+
+		<field name="note_images_upload"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
+			   description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
+		/>
+
+		<field
+				name="image_width"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH_DESC"
+				class="">
+		</field>
+		<field
+				name="thumb_width"
+				type="text"
+				default="120"
+				label="COM_RSGALLERY2_THUMBNAIL_WIDTH"
+				description="COM_RSGALLERY2_THUMBNAIL_WIDTH_DESC"
+				class="">
+		</field>
+		<field
+				name="thumb_style"
+				type="list"
+				default="0"
+				label="COM_RSGALLERY2_THUMBNAIL_STYLE"
+				description="COM_RSGALLERY2_THUMBNAIL_STYLE_DESC"
+				class=""
+		>
+			<option value="0">COM_RSGALLERY2_PROPORTIONAL</option>
+			<option value="1">COM_RSGALLERY2_SQUARE</option>
+		</field>
+		<field
+				name="jpegQuality"
+				type="text"
+				default="80"
+				label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE"
+				description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC"
+				class="">
+		</field>
+		<field
+				name="allowedFileTypes"
+				type="text"
+				default="jpg,jpeg,gif,png"
+				label="COM_RSGALLERY2_ALLOWED_FILETYPES"
+				description  = "COM_RSGALLERY2_ALLOWED_FILETYPES_DESC"
+				readonly="true"
+				class="readonly"
+		>
+		</field>
+		<field
+				name="keepOriginalImage"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE"
+				description=""
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<!-- ... block location ... -->
+
+		<field name="note_upload_location"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_IMAGES_LOCATION"
+			   description="COM_RSGALLERY2_CFG_IMAGES_LOCATION_DESC"
+		/>
+
+		<field
+				name="imgPath_root"
+				type="text"
+				default="/images/rsgallery/"
+				label="COM_RSGALLERY2_CFG_ROOT_LOCATION"
+				description="COM_RSGALLERY2_CFG_ROOT_LOCATION_DESC"
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+
+		<!-- ... block  ... -->
+
+		<field name="note_images_outdated"
+			   type="note"
+				   class="alert alert-warning"
+			   close="true"
+			   label="COM_RSGALLERY2_IMAGE_OUTDATED"
+			   description="COM_RSGALLERY2_IMAGE_OUTDATED_DESC"
+		/>
+
+		<field
+				name="useJ3xOldPaths"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_USE_J3X_PATHS"
+				description="COM_RSGALLERY2_USE_J3X_PATHS_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="imgPath_original"
+				type="text"
+				default="/images/rsgallery/original"
+				label="COM_RSGALLERY2_ORIGINAL_IMAGE_PATH"
+				description=""
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+		<field
+				name="imgPath_display"
+				type="text"
+				default="/images/rsgallery/display"
+				label="COM_RSGALLERY2_DISPLAY_IMAGE_PATH"
+				description=""
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+		<field
+				name="imgPath_thumb"
+				type="text"
+				default="/images/rsgallery/thumb"
+				label="COM_RSGALLERY2_THUMB_PATH"
+				description=""
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+	</fieldset>
+
+	<!-- ... Tab Images ................................. -->
+
 	<fieldset
 			name="Images"
 			label="COM_RSGALLERY2_FIELD_IMAGE_OPTIONS_VIEW"
 			description="COM_RSGALLERY2_FIELD_IMAGE_OPTIONS_VIEW_DESC"
 	>
-		<field type="spacer" name="myspacer" hr="true" />
-		<field name="note31" type="note" class="alert" close="true" label="LOREMIPSUM" description="LOREMIPSUM_DESC" />
+	<field
+			type="spacer"
+			name="spacer_images_01"
+			hr="true"
+	/>
+
+		<!-- ... block  ... -->
+
+		<field name="note_images_upload"
+		   type="note"
+		   class="alert alert-primary"
+		   close="true"
+		   label="COM_RSGALLERY2_CFG_IMAGE_UPLOAD"
+		   description="COM_RSGALLERY2_CFG_IMAGE_UPLOAD_DESC"
+	/>
+	</fieldset>
+
+	<!-- ... Tab findings ................................. -->
+
+	<fieldset
+			name="findings"
+			label="findings"
+			description="findings description:  May be needed so i put it here"
+	>
+		<field
+				type="spacer"
+				name="spacer_findings_01"
+				hr="true"
+		/>
+
+		<!-- ... block  ... -->
+
+		<field name="media_query_page_width" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," />
+
+		<!-- ... block  ... -->
+
+		<field name="media_query_" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" />
 
 	</fieldset>
+
+	<!-- ... Tab 01 ................................. -->
+
+	<fieldset
+			name="TestInner01"
+			label="TestInner01"
+			description="Testinner 01 description"
+	>
+		<field type="spacer" name="test_innier_01" hr="true" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_02" type="note" class="alert alert-secondary" close="true" label="LOREMIPSUM" description="secondary " />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_03" type="note" class="alert alert-success" close="true" label="LOREMIPSUM" description="success" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_04" type="note" class="alert alert-danger" close="true" label="LOREMIPSUM" description="danger" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_05" type="note" class="alert alert-warning" close="true" label="LOREMIPSUM" description="warning" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_06" type="note" class="alert alert-info" close="true" label="LOREMIPSUM" description="info" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_07" type="note" class="alert alert-light" close="true" label="LOREMIPSUM" description="light" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />
+		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+
+	</fieldset>
+
+	<!-- ... Tab 02 ................................. -->
+
+	<fieldset
+			name="TestInner02"
+			label="TestInner02"
+			description="TestInner01 description"
+	>
+		<field type="spacer" name="test_innier_02" hr="true" />
+		<!-- ... block  ... -->
+
+		<field name="note31" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="02_LOREMIPSUM_DESC" />
+	</fieldset>
+
+	<!-- ... Tab Permissions ................................. -->
 
 	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"
 		description="JCONFIG_PERMISSIONS_DESC"
 		>
+
+		<!-- ... block  ... -->
+
+		<!-- field name="note31" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="02_LOREMIPSUM_DESC" /-->
 
 		<field
 			name="rules"
