@@ -183,7 +183,6 @@ class GalleriesModel extends ListModel
 				. 'a.hits, '
 
 				. 'a.checked_out, '
-				. 'a.checked_out, '
 				. 'a.checked_out_time, '
 				. 'a.created, '
 				. 'a.created_by, '
@@ -325,40 +324,42 @@ class GalleriesModel extends ListModel
 
 		// Group by on Galleries for \JOIN with component tables to count items
 		$query->group(
-			'a.id, 
-			. a.name, 
-			. a.alias, 
-			. a.description, 
-			. a.note, 
+		/**/
+			'a.id, '
+			. 'a.name, '
+			. 'a.alias, '
+			. 'a.description, '
+			. 'a.note, '
 
-			. a.thumb_id, 
-			. a.params, 
-			. a.published, 
-			. a.hits, 
+			. 'a.thumb_id, '
+			. 'a.params, '
+			. 'a.published, '
+			. 'a.hits, '
 
-			. a.checked_out, 
-			. a.checked_out_time, 
-			. a.created, 
-			. a.created_by, 
-			. a.created_by_alias, 
-			. a.modified, 
-			. a.modified_by, 
+			. 'a.checked_out, '
+			. 'a.checked_out_time, '
+			. 'a.created, '
+			. 'a.created_by, '
+			. 'a.created_by_alias, '
+			. 'a.modified, '
+			. 'a.modified_by, '
 
 
-			. a.parent_id,
-			. a.level, 
-			. a.path, 
-			. a.lft, 
-			. a.rgt,
+			. 'a.parent_id, '
+			. 'a.level, '
+			. 'a.path, '
+			. 'a.lft, '
+			. 'a.rgt, '
 				
-			uc.name,
-			ua.name
-			'
-//				. , a.language,
-//			ag.title,
-//			l.title,
-//			l.image,
-//no good			image_count,
+			. 'uc.name, '
+		    . 'ua.name '
+
+//				. 'a.language, '
+//			. 'ag.title, '
+//			. 'l.title, '
+//			. 'l.image, '
+//no good			. 'image_count '
+		/**/
 		);
 
 		return $query;
