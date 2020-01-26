@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
+use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
@@ -31,6 +32,12 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
+	// ToDo: Use other rights instead of core.admin -> IsRoot ?
+	// core.admin is the permission used to control access to 
+	// the global config
+
+	protected $UserIsRoot;
+
 	/**
 	 * An array of items
 	 *
@@ -91,6 +98,8 @@ class HtmlView extends BaseHtmlView
 	protected $isDebugBackend;
 	protected $isDevelop;
 
+	protected $HtmlPathThumb;
+
 	/**
 	 * Display the view.
 	 *
@@ -100,10 +109,15 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+		//--- get needed form data ------------------------------------------
+
+		// Check rights of user
+//		$this->UserIsRoot = $this->CheckUserIsRoot();
+
 		$this->items         = $this->get('Items');
-//		$this->filterForm    = $this->get('FilterForm');
 		$this->pagination    = $this->get('Pagination');
 		$this->state         = $this->get('State');
+//		$this->filterForm    = $this->get('FilterForm');
 		$this->activeFilters = $this->get('ActiveFilters');
 
 		// Check for errors.
@@ -124,6 +138,15 @@ class HtmlView extends BaseHtmlView
 		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
+
+		//--- thumb --------------------------------------------------------------------
+
+		// ToDo: HtmlPathThumb path must be taken from model (? file model ?)
+		$this->HtmlPathThumb = URI::base() . $rsgConfig->get('???imgPath_thumb') . '/';
+		////echo 'ThumbPath: ' . JPATH_THUMB . '<br>';
+		////echo 'ImagePathThumb: ' . $rsgConfig->imgPath_thumb . '<br>';
+		////echo 'ImagePathThumb: ' . JURI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
+		//echo $this->HtmlPathThumb . '<br>';
 
 		//--- sidebar --------------------------------------------------------------------
 
@@ -178,36 +201,58 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
-		// on develop show open tasks if existing
-		if (!empty ($this->isDevelop))
-		{
-			echo '<span style="color:red">'
-				. 'Tasks: <br>'
-				. '*  Can do ...<br>'
-				. '*  archieved, trashed<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-				. '</span><br><br>';
-		}
-
 		switch ($Layout)
 		{
-			case 'imageses_raw':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'images');
+			case 'images_raw':
+		        // on develop show open tasks if existing
+		        if (!empty ($this->isDevelop))
+		        {
+			        echo '<span style="color:red">'
+				        . 'Tasks: <br>'
+				        . '* Can do ...<br>'
+                        . '* Add pagination<br>'
+				        . '* archieved, trashed<br>'
+                        . '* Add delete function<br>'
+        //				. '*  <br>'
+        //				. '*  <br>'
+        //				. '*  <br>'
+        //				. '*  <br>'
+				        . '</span><br><br>';
+		        }
+        
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'image');
 
-				ToolBarHelper::editList('gallery.edit');
-
-				// on develop show open tasks if existing
-				if (!empty ($Rsg2DevelopActive))
-				{
-					echo '<span style="color:red">Task: Add delete function, Test add double name</span><br><br>';
-				}
+				ToolBarHelper::editList('image.edit');
+				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH'); 
 				break;
 
 
 			default:
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'images');
+		        // on develop show open tasks if existing
+		        if (!empty ($this->isDevelop))
+		        {
+			        echo '<span style="color:red">'
+				        . 'Tasks: <br>'
+				. '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
+				        . '* Can do ...<br>'
+                        . '* Add pagination<br>'
+				        . '* archieved, trashed<br>'
+                        . '* Add delete function<br>'
+                        . '* Delete function needs to delete watermarked too !<br>'
+	                    . '* Search selection has on option too many<br>'
+	                    . '* Search controls ...<br>'
+                        . '* Sort by image count is wrong<br>'
+	                    . '* Image not shown above title (data-original-title?)<br>'
+        				. '* Search tools -> group by ?<br>'
+        				. '* Batch : turn images .... <br>'
+                //				. '*  <br>'
+        //				. '*  <br>'
+        //				. '*  <br>'
+        //				. '*  <br>'
+				        . '</span><br><br>';
+		        }
+        
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'image');
 
 				ToolBarHelper::addNew('image.add');
 
@@ -240,14 +285,28 @@ class HtmlView extends BaseHtmlView
 //				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
 				ToolBarHelper::deleteList('', 'image.delete', 'JTOOLBAR_DELETE');
 
-				// on develop show open tasks if existing
-				if (!empty ($Rsg2DevelopActive))
+				/**
+				// Add a batch button
+				$user = Factory::getUser();
+				if ($user->authorise('core.create', 'com_rsgallery2')
+					&& $user->authorise('core.edit', 'com_rsgallery2')
+					&& $user->authorise('core.edit.state', 'com_rsgallery2')
+				)
 				{
-					echo '<span style="color:red">Task:  c) Search tools -> group by parent/ parent child tree ? </span><br><br>';
+					// Get the toolbar object instance
+					$bar = Toolbar::getInstance('toolbar');
+
+					$title = Text::_('JTOOLBAR_BATCH');
+
+					// Instantiate a new JLayoutFile instance and render the batch button
+					$layout = new LayoutFile('joomla.toolbar.batch');
+
+					$dhtml = $layout->render(array('title' => $title));
+					$bar->appendButton('Custom', $dhtml, 'batch');
 				}
+				/**/
 
 				break;
-			
 		}
 
 		$toolbar->preferences('com_rsgallery2');

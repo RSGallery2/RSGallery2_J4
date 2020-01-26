@@ -62,7 +62,7 @@ if ($saveOrder && !empty($this->items))
 			<div id="j-main-container" class="j-main-container">
 				<?php
 				// Search tools bar
-				echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+//				echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
 				?>
 				<?php if (empty($this->items)) : ?>
                     <div class="alert alert-info">
@@ -80,16 +80,25 @@ if ($saveOrder && !empty($this->items))
 									<?php echo HTMLHelper::_('grid.checkall'); ?>
                                 </td>
 								<th scope="col" style="width:1%" class="text-center d-none d-md-table-cell">
-									<?php echo HTMLHelper::_('searchtools.sort', '', 'a.lft', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
+									<?php echo HTMLHelper::_('searchtools.sort', '', 's.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
 								</th>
 								<th scope="col" style="width:1%" class="text-center">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
 								</th>
+
+
+                                <th scope="col" style="min-width:100px">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_TITLE', 'a.title', $listDirn, $listOrder); ?>
+                                </th>
                                 <th scope="col" style="min-width:100px">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" style="width:3%" class="text-center d-none d-md-table-cell">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_IMAGES', 'image_count', $listDirn, $listOrder); ?>
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_GALLERY', 'gallery_name', $listDirn, $listOrder); ?>
+                                </th>
+
+                                <th scope="col" style="width:3%" class="text-center d-none d-md-table-cell">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_ORDER', 'a.ordering', $listDirn, $listOrder); ?>
                                 </th>
 
                                 <th scope="col" style="width:10%" class="d-none d-md-table-cell">
@@ -109,17 +118,29 @@ if ($saveOrder && !empty($this->items))
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
                                 </th>
 
+
+
+                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_VOTES', 'a.votes', $listDirn, $listOrder); ?>
+                                </th>
+
+                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_RATING', 'a.rating', $listDirn, $listOrder); ?>
+                                </th>
+
+                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_COMMENTS', 'a.comments', $listDirn, $listOrder); ?>
+                                </th>
+
+                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
+                                </th>
+
+
+
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                                 </th>
-
-                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_PARENT_ID', 'a.parent', $listDirn, $listOrder); ?>
-                                </th>
-
-
-
-
                                 <?php
                                 /**
 
@@ -167,42 +188,24 @@ if ($saveOrder && !empty($this->items))
 
                             </tr>
 						</thead>
+
+
+
 						<tbody <?php if ($saveOrder) :?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="false"<?php endif; ?>>
-							<?php foreach ($this->items as $i => $item) : ?>
+							<?php 
+							foreach ($this->items as $i => $item) : ?>
 								<?php
+								// Get permissions
 								$canEdit    = $user->authorise('core.edit',       $extension . '.gallery.' . $item->id);
 								$canCheckin = $user->authorise('core.admin',      'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
 								$canEditOwn = $user->authorise('core.edit.own',   $extension . '.gallery.' . $item->id) && $item->created_by == $userId;
 								$canChange  = $user->authorise('core.edit.state', $extension . '.gallery.' . $item->id) && $canCheckin;
 
-								// Get the parents of item for sorting
-								if ($item->level > 1)
-								{
-									$parentsStr = '';
-									$_currentParentId = $item->parent_id;
-									$parentsStr = ' ' . $_currentParentId;
-									for ($i2 = 0; $i2 < $item->level; $i2++)
-									{
-										foreach ($this->ordering as $k => $v)
-										{
-											$v = implode('-', $v);
-											$v = '-' . $v . '-';
-											if (strpos($v, '-' . $_currentParentId . '-') !== false)
-											{
-												$parentsStr .= ' ' . $k;
-												$_currentParentId = $k;
-												break;
-											}
-										}
-									}
-								}
-								else
-								{
-									$parentsStr = '';
-								}
 								?>
-								<tr class="row<?php echo $i % 2; ?>" data-dragable-group="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
-                                    <td class="text-center">
+
+
+								<tr class="row<?php echo $i % 2; ?>" >
+                                    <td class="text-center d-none d-md-table-cell">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                                     </td>
 									<td class="order text-center d-none d-md-table-cell">
@@ -218,71 +221,32 @@ if ($saveOrder && !empty($this->items))
 										}
 										?>
 										<span class="sortable-handler<?php echo $iconClass ?>">
-											<span class="icon-menu"></span>
+											<span class="fa fa-ellipsis-v" aria-hidden="true"></span> 
 										</span>
 										<?php if ($canChange && $saveOrder) : ?>
-											<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->lft; ?>">
+											<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order">
 										<?php endif; ?>
 									</td>
 									<td class="text-center">
 										<div class="btn-group">
-											<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'galleries.', $canChange); ?>
+											<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'images.', $canChange); ?>
 										</div>
 									</td>
 									<th scope="row">
-										<?php echo LayoutHelper::render('joomla.html.treeprefix', array('level' => $item->level)); ?>
 										<?php if ($item->checked_out) : ?>
-											<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'galleries.', $canCheckin); ?>
+											<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'imgages.', $canCheckin); ?>
 										<?php endif; ?>
 										<?php if ($canEdit || $canEditOwn) : ?>
 											<?php $editIcon = $item->checked_out ? '' : '<span class="fa fa-pencil-square mr-2" aria-hidden="true"></span>'; ?>
-											<a class="hasTooltip" href="<?php echo Route::_('index.php?option=com_rsgallery2&task=gallery.edit&id=' . $item->id . '&extension=' . $extension); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->name)); ?>">
-												<?php echo $editIcon; ?><?php echo $this->escape($item->name); ?></a>
+											<a class="hasTooltip" href="<?php echo Route::_('index.php?option=com_rsgallery2&task=image.edit&id=' . $item->id . '&extension=' . $extension); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->name)); ?>">
+												<?php echo $editIcon; ?><?php echo $this->escape($item->title); ?></a>
 										<?php else : ?>
-											<?php echo $this->escape($item->name); ?>
+											<?php echo $this->escape($item->title); ?>
 										<?php endif; ?>
-
-                                        <?php
-                                        /**
-										<span class="small" title="<?php echo $this->escape($item->path); ?>">
-											<?php if (empty($item->note)) : ?>
-												<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-											<?php else : ?>
-												<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
-											<?php endif; ?>
-										</span>
-									</th>
-									<?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_published')) : ?>
-										<td class="text-center btns d-none d-md-table-cell">
-											<a class="badge <?php echo ($item->count_published > 0) ? 'badge-success' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=1' . '&filter[level]=1'); ?>">
-												<?php echo $item->count_published; ?></a>
-										</td>
-									<?php endif; ?>
-									<?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_unpublished')) : ?>
-										<td class="text-center btns d-none d-md-table-cell">
-											<a class="badge <?php echo ($item->count_unpublished > 0) ? 'badge-danger' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_UNPUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=0' . '&filter[level]=1'); ?>">
-												<?php echo $item->count_unpublished; ?></a>
-										</td>
-									<?php endif; ?>
-									<?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_archived')) : ?>
-										<td class="text-center btns d-none d-md-table-cell">
-											<a class="badge <?php echo ($item->count_archived > 0) ? 'badge-info' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_ARCHIVED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=2' . '&filter[level]=1'); ?>">
-												<?php echo $item->count_archived; ?></a>
-										</td>
-									<?php endif; ?>
-									<?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_trashed')) : ?>
-										<td class="text-center btns d-none d-md-table-cell">
-											<a class="badge <?php echo ($item->count_trashed > 0) ? 'badge-inverse' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_TRASHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=-2' . '&filter[level]=1'); ?>">
-												<?php echo $item->count_trashed; ?></a>
-										</td>
-									<?php endif; ?>
-
-                                    **/
-                                    ?>
-
+                                    </th>
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">
-                                        <?php
-                                        $link = JRoute::_("index.php?option=com_rsgallery2&view=gallery&task=gallery.edit&id=" . $item->id);
+                                       <?php
+										$link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=image.edit&id=" . $item->id);
                                         $count = random_int (0, 2) ;
                                         ?>
                                         <a class="btn <?php echo ($count > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php echo Text::_('COM_CATEGORY_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo $link; ?>">
@@ -327,16 +291,25 @@ if ($saveOrder && !empty($this->items))
 
 
 
+                                    <td class="d-none d-md-table-cell">
+										<?php echo (int) $item->votes; ?>
+                                    </td>
 
+                                    <td class="d-none d-md-table-cell">
+										<?php echo (int) $item->rating; ?>
+                                    </td>
+
+                                    <td class="d-none d-md-table-cell">
+										<?php echo (int) $item->comments; ?>
+                                    </td>
+
+                                    <td class="d-none d-md-table-cell">
+										<?php echo (int) $item->hits; ?>
+                                    </td>
 
                                     <td class="d-none d-md-table-cell">
 										<?php echo (int) $item->id; ?>
                                     </td>
-                                    <td class="d-none d-md-table-cell">
-										<?php echo (int) $item->parent_id; ?>
-                                    </td>
-
-
 
 
                                     <?php
@@ -367,7 +340,7 @@ if ($saveOrder && !empty($this->items))
 					<?php // load the pagination. ?>
 					<?php echo $this->pagination->getListFooter(); ?>
 
-					<?php // Load the batch processing form. ?>
+					<?php /* // Load the batch processing form. ?>
 					<?php if ($user->authorise('core.create', $extension)
 						&& $user->authorise('core.edit', $extension)
 						&& $user->authorise('core.edit.state', $extension)) : ?>
@@ -380,7 +353,7 @@ if ($saveOrder && !empty($this->items))
 							),
 							$this->loadTemplate('batch_body')
 						); ?>
-					<?php endif; ?>
+					<?php endif; */?>
 				<?php endif; ?>
 
 				<input type="hidden" name="extension" value="<?php echo $extension; ?>">
