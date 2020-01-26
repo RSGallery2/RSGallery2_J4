@@ -188,18 +188,28 @@ class ImagesModel extends ListModel
 				. 'a.gallery_id, '
 
 				. 'a.title, '
+				. 'a.date, '
 				. 'a.note, '
-				. 'a.published, a.rating, a.votes, a.comments,'
-				. 'a.access, '
+				. 'a.params, '
+				. 'a.published, '
 
+				. 'a.rating, '
+				. 'a.votes, '
+				. 'a.comments, '
+
+				. 'a.checked_out, '
+				. 'a.checked_out_time, '
 				. 'a.created, '
 				. 'a.created_by, '
+				. 'a.created_by_alias, '
 				. 'a.modified, '
 				. 'a.modified_by, '
 
 				. 'a.hits, '
 
-				. 'a.ordering'
+				. 'a.ordering '
+				. 'a.asset_id '
+				. 'a.access, '
 			)
 //				. ', a.language'
 //				. 'a.checked_out, '
@@ -340,22 +350,36 @@ class ImagesModel extends ListModel
 
 		// Group by on Images for \JOIN with component tables to count items
 		$query->group(
+			/**/
 			'a.id, '
 			. 'a.name, '
 			. 'a.alias, '
 			. 'a.description, '
 			. 'a.gallery_id, '
+			. 'a.title, '
+			. 'a.date, '
 
 			. 'a.note, '
+			. 'a.params, '
 			. 'a.published, '
-			. 'a.access, '
+			. 'a.hits, '
 
+			. 'a.rating, '
+			. 'a.votes, '
+			. 'a.comments, '
+
+			. 'a.checked_out, '
+			. 'a.checked_out_time, '
 			. 'a.created, '
 			. 'a.created_by, '
+			. 'a.created_by_alias, '
 			. 'a.modified, '
 			. 'a.modified_by, '
 
-			. 'a.ordering'
+			. 'a.ordering '
+			. 'a.asset_id '
+			. 'a.access, '
+			/**/
 		);
 
 		return $query;
