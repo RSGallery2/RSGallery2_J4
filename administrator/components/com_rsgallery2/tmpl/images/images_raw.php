@@ -253,7 +253,7 @@ $ListDirn  = '';
 
                                             <td width="1%" class="text-center">
                                                 <?php
-                                                if(!empty($item->asset_id))
+                                                if(!empty($item->approved))
                                                 {
                                                     echo $item->approved;
                                                 } else {

@@ -15,6 +15,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
 //use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Associations;
@@ -143,19 +144,106 @@ class ImageModel extends AdminModel
 	}
 
 	/**
-	 * Method to get the record form.
+	 * Auto-populate the model state.
 	 *
-	 * @param       array   $data     Data for the form.
-	 * @param       boolean $loadData True if the form is to load its own data (default case), false if not.
+	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @return      mixed   A JForm object on success, false on failure
-	 * @since       4.3.0
+	 * @return  void
+	 *
+	 * @since   1.6
 	 */
+	protected function populateState()
+	{
+		$app = Factory::getApplication();
+
+		$parentId = $app->input->getInt('parent_id');
+		$this->setState('category.parent_id', $parentId);
+
+		// Load the User state.
+		$pk = $app->input->getInt('id');
+		$this->setState($this->getName() . '.id', $pk);
+
+		$extension = $app->input->get('extension', 'com_rsgallery2');
+		$this->setState('category.extension', $extension);
+		$parts = explode('.', $extension);
+
+		// Extract the component name
+		$this->setState('category.component', $parts[0]);
+
+		// Extract the optional section name
+		$this->setState('category.section', (count($parts) > 1) ? $parts[1] : null);
+
+		// Load the parameters.
+		$params = ComponentHelper::getParams('com_rsgallery2');
+		$this->setState('params', $params);
+	}
+
 	/**
+	 * Method to get a single record.
+	 *
+	 * @param   integer  $pk  The id of the primary key.
+	 *
+	 * @return  mixed  Object on success, false on failure.
+	 *
+	 * @since   1.0
+	 */
+	public function getItem($pk = null)
+	{
+		$item = parent::getItem($pk);
+
+		// Load associated foo items
+		$assoc = Associations::isEnabled();
+
+		if ($assoc)
+		{
+			$item->associations = array();
+
+			if ($item->id != null)
+			{
+				$associations = Associations::getAssociations('com_foos', '#__foos_details', 'com_foos.item', $item->id, 'id', null);
+
+				foreach ($associations as $tag => $association)
+				{
+					$item->associations[$tag] = $association->id;
+				}
+			}
+		}
+
+		return $item;
+	}
+
+
+
+	/**
+	 * Method to get the row form.
+	 *
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 *
+	 * @return  \JForm|boolean  A JForm object on success, false on failure
+	 *
+	 * @since   1.6
+	 */
 	public function getForm($data = array(), $loadData = true)
 	{
-		$options = array('control' => 'jform', 'load_data' => $loadData);
-		$form    = $this->loadForm('com_rsgallery2.images', 'image', $options);
+		/**
+		$extension = $this->getState('category.extension');
+		$jinput = Factory::getApplication()->input;
+
+		// A workaround to get the extension into the model for save requests.
+		if (empty($extension) && isset($data['extension']))
+		{
+			$extension = $data['extension'];
+			$parts = explode('.', $extension);
+
+			$this->setState('category.extension', $extension);
+			$this->setState('category.component', $parts[0]);
+			$this->setState('category.section', @$parts[1]);
+		}
+		/**/
+		// Get the form.
+//		$form = $this->loadForm('com_rsgallery2.category' . $extension, 'category', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_rsgallery2.image', 'image', array('control' => 'jform', 'load_data' => $loadData));
 
 		if (empty($form))
 		{
@@ -164,29 +252,51 @@ class ImageModel extends AdminModel
 
 		return $form;
 	}
-	/**/
+
 
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
-	 * @return array|bool|JObject|mixed
-	 * @since       4.3.0
-	 * @throws Exception
+	 * @return  mixed  The data for the form.
+	 *
+	 * @since   1.6
 	 */
-	/**
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$app  = JFactory::getApplication();
-		$data = $app->getUserState('com_rsgallery2.edit.image.data', array());
+		$app = Factory::getApplication();
+		$data = $app->getUserState('com_rsgallery2.edit.' . $this->getName() . '.data', array());
+
 		if (empty($data))
 		{
 			$data = $this->getItem();
+
+			// Pre-select some filters (Status, Language, Access) in edit form if those have been selected in Category Manager
+			if (!$data->id)
+			{
+				// Check for which extension the Category Manager is used and get selected fields
+				$extension = substr($app->getUserState('com_rsgallery2.galleries.filter.extension'), 4);
+				$filters = (array) $app->getUserState('com_rsgallery2.galleries.' . $extension . '.filter');
+
+				$data->set(
+					'published',
+					$app->input->getInt(
+						'published',
+						((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null)
+					)
+				);
+//				$data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
+				$data->set(
+					'access',
+					$app->input->getInt('access', (!empty($filters['access']) ? $filters['access'] : $app->get('access')))
+				);
+			}
 		}
+
+		$this->preprocessData('com_rsgallery2.category', $data);
 
 		return $data;
 	}
-	/**/
 
 	/**
      * Transform some data before it is displayed ? Saved ?
@@ -267,75 +377,262 @@ class ImageModel extends AdminModel
 	 *
 	 * @return  boolean  True on success.
      *
-     * @since 4.3.0
-	 * @throws Exception
+	 * @since   1.6
 	 */
-	/**
 	public function save($data)
 	{
-		$input = JFactory::getApplication()->input;
+		$table      = $this->getTable();
+		$input      = Factory::getApplication()->input;
+		$pk         = (!empty($data['id'])) ? $data['id'] : (int) $this->getState($this->getName() . '.id');
+		$isNew      = true;
+		$context    = $this->option . '.' . $this->name;
 
-		$task = $input->get('task');
-
-		// Automatic handling of alias for empty fields
-		if (in_array($task, array('apply', 'save', 'save2new'))
-			// && (!isset($data['id']) || (int) $data['id'] == 0) // <== only for new item
-		)
+		if (!empty($data['tags']) && $data['tags'][0] != '')
 		{
-			if (empty ($data['alias']))
-			{
-				if (JFactory::getConfig()->get('unicodeslugs') == 1)
-				{
-					$data['alias'] = \JFilterOutput::stringURLUnicodeSlug($data['name']);
-				}
-				else
-				{
-					$data['alias'] = \JFilterOutput::stringURLSafe($data['name']);
-				}
-
-				// check for existing alias
-				$table = $this->getTable();
-
-				//if ($table->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
-				// Warning on existing alias
-				if ($table->load(array('alias' => $data['alias'])))
-				{
-					$msg = JText::_('COM_RSGALLERY2_NAME_CHANGED_AS_WAS_EXISTING');
-				}
-
-				// Create unique alias and name
-				list($name, $alias) = $this->generateNewTitle(null, $data['alias'], $data['name']);
-				$data['alias'] = $alias;
-				$data['name']  = $name;
-
-				if (isset($msg))
-				{
-					Factory::getApplication()->enqueueMessage($msg, 'warning');
-				}
-
-			}
+			$table->newTags = $data['tags'];
 		}
 
-		if (parent::save($data))
-		{
-			/**
-			$new_pk = (int) $this->getState($this->getName() . '.id');
+		// Include the plugins for the save events.
+		PluginHelper::importPlugin($this->events_map['save']);
 
-			if ($app->input->get('task') == 'save2copy')
+		// Load the row if saving an existing category.
+		if ($pk > 0)
+		{
+			$table->load($pk);
+			$isNew = false;
+		}
+
+		/**
+		// Set the new parent id if parent id not matched OR while New/Save as Copy .
+		if ($table->parent_id != $data['parent_id'] || $data['id'] == 0)
+		{
+			$table->setLocation($data['parent_id'], 'last-child');
+		}
+		/**/
+
+		/**
+		// ToDo: use name instead of title ?
+		// Alter the title for save as copy
+		if ($input->get('task') == 'save2copy')
+		{
+			$origTable = clone $this->getTable();
+			$origTable->load($input->getInt('id'));
+
+			if ($data['title'] == $origTable->title)
 			{
-				// Reorder table so that new record has a unique ordering value
-				$table->load($new_pk);
-				$conditions_array = $this->getReorderConditions($table);
-				$conditions = implode(' AND ', $conditions_array);
-				$table->reorder($conditions);
+				list($title, $alias) = $this->generateNewTitle($data['parent_id'], $data['alias'], $data['title']);
+				$data['title'] = $title;
+				$data['alias'] = $alias;
 			}
-			/**  /
+			else
+			{
+				if ($data['alias'] == $origTable->alias)
+				{
+					$data['alias'] = '';
+				}
+			}
+
+			$data['published'] = 0;
+		}
+		/**/
+
+		// Bind the data.
+		if (!$table->bind($data))
+		{
+			$this->setError($table->getError());
+
+			return false;
+		}
+
+		// Bind the rules.
+		if (isset($data['rules']))
+		{
+			$rules = new Rules($data['rules']);
+			$table->setRules($rules);
+		}
+
+		// Check the data.
+		if (!$table->check())
+		{
+			$this->setError($table->getError());
+
+			return false;
+		}
+
+		// Trigger the before save event.
+//		$result = Factory::getApplication()->triggerEvent($this->event_before_save, array($context, &$table, $isNew, $data));
+//
+//		if (in_array(false, $result, true))
+//		{
+//			$this->setError($table->getError());
+//
+//			return false;
+//		}
+
+		// Store the data.
+		if (!$table->store())
+		{
+			$this->setError($table->getError());
+
+			return false;
+		}
+
+		/**
+		$assoc = $this->getAssoc();
+
+		if ($assoc)
+		{
+			// Adding self to the association
+			$associations = $data['associations'] ?? array();
+
+			// Unset any invalid associations
+			$associations = ArrayHelper::toInteger($associations);
+
+			foreach ($associations as $tag => $id)
+			{
+				if (!$id)
+				{
+					unset($associations[$tag]);
+				}
+			}
+
+			// Detecting all item menus
+			$allLanguage = $table->language == '*';
+
+			if ($allLanguage && !empty($associations))
+			{
+				Factory::getApplication()->enqueueMessage(Text::_('COM_RSGALLERY2_ERROR_ALL_LANGUAGE_ASSOCIATED'), 'notice');
+			}
+
+			// Get associationskey for edited item
+			$db    = $this->getDbo();
+			$query = $db->getQuery(true)
+				->select($db->quoteName('key'))
+				->from($db->quoteName('#__associations'))
+				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
+				->where($db->quoteName('id') . ' = ' . (int) $table->id);
+			$db->setQuery($query);
+			$oldKey = $db->loadResult();
+
+			// Deleting old associations for the associated items
+			$query = $db->getQuery(true)
+				->delete($db->quoteName('#__associations'))
+				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
+
+			if ($associations)
+			{
+				$query->where('(' . $db->quoteName('id') . ' IN (' . implode(',', $associations) . ') OR '
+					. $db->quoteName('key') . ' = ' . $db->quote($oldKey) . ')');
+			}
+			else
+			{
+				$query->where($db->quoteName('key') . ' = ' . $db->quote($oldKey));
+			}
+
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (\RuntimeException $e)
+			{
+				$this->setError($e->getMessage());
+
+				return false;
+			}
+
+			// Adding self to the association
+			if (!$allLanguage)
+			{
+				$associations[$table->language] = (int) $table->id;
+			}
+
+			if (count($associations) > 1)
+			{
+				// Adding new association for these items
+				$key = md5(json_encode($associations));
+				$query->clear()
+					->insert('#__associations');
+
+				foreach ($associations as $id)
+				{
+					$query->values(((int) $id) . ',' . $db->quote($this->associationsContext) . ',' . $db->quote($key));
+				}
+
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (\RuntimeException $e)
+				{
+					$this->setError($e->getMessage());
+
+					return false;
+				}
+			}
+		}
+		/**/
+
+		// Trigger the after save event.
+		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
+
+		// Rebuild the path for the category:
+		if (!$table->rebuildPath($table->id))
+		{
+			$this->setError($table->getError());
+
+			return false;
+		}
+
+		// Rebuild the paths of the category's children:
+		if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path))
+		{
+			$this->setError($table->getError());
+
+			return false;
+		}
+
+		$this->setState($this->getName() . '.id', $table->id);
+
+		// Clear the cache
+		$this->cleanCache();
+
+		return true;
+	}
+
+	/**
+	 * Method to change the published state of one or more records.
+	 *
+	 * @param   array    &$pks   A list of the primary keys to change.
+	 * @param   integer  $value  The value of the published state.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   2.5
+	 */
+	public function publish(&$pks, $value = 1)
+	{
+		if (parent::publish($pks, $value))
+		{
+			$extension = Factory::getApplication()->input->get('extension');
+
+			// Include the content plugins for the change of category state event.
+			PluginHelper::importPlugin('content');
+
+			// Trigger the onCategoryChangeState event.
+			Factory::getApplication()->triggerEvent('onCategoryChangeState', array($extension, $pks, $value));
+
 			return true;
 		}
-
-		return false;
 	}
-	/**/
+
+
+
+
+
 
 	/**
 	 * Method to change the title & alias.
@@ -1074,11 +1371,4 @@ class ImageModel extends AdminModel
     }
 	/**/
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// TODO: Implement getForm() method.
-	}
 }

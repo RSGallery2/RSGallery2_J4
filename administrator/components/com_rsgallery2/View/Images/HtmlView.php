@@ -213,10 +213,9 @@ class HtmlView extends BaseHtmlView
                         . '* Add pagination<br>'
 				        . '* archieved, trashed<br>'
                         . '* Add delete function<br>'
-        //				. '*  <br>'
-        //				. '*  <br>'
-        //				. '*  <br>'
-        //				. '*  <br>'
+				        //	. '*  <br>'
+				        //	. '*  <br>'
+				        //	. '*  <br>'
 				        . '</span><br><br>';
 		        }
         
@@ -233,22 +232,21 @@ class HtmlView extends BaseHtmlView
 		        {
 			        echo '<span style="color:red">'
 				        . 'Tasks: <br>'
-				. '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
+						. '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
+				        . '* __associations <br>'
+        				. '* Batch : turn images .... <br>'
 				        . '* Can do ...<br>'
                         . '* Add pagination<br>'
 				        . '* archieved, trashed<br>'
                         . '* Add delete function<br>'
+						. '* __associations <br>'
                         . '* Delete function needs to delete watermarked too !<br>'
-	                    . '* Search selection has on option too many<br>'
 	                    . '* Search controls ...<br>'
-                        . '* Sort by image count is wrong<br>'
 	                    . '* Image not shown above title (data-original-title?)<br>'
         				. '* Search tools -> group by ?<br>'
-        				. '* Batch : turn images .... <br>'
-                //				. '*  <br>'
-        //				. '*  <br>'
-        //				. '*  <br>'
-        //				. '*  <br>'
+                    //	. '*  <br>'
+                    //	. '*  <br>'
+				    //	. '*  <br>'
 				        . '</span><br><br>';
 		        }
         

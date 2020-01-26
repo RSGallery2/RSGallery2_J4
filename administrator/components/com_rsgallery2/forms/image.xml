@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--form addfieldprefix="Joomla\Component\Gallery\Administrator\Field"-->
 <form addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field">
-	<fieldset>
+	<fieldset name="image_1st_col"
+	          class="form-horizontal">
 		<field
 			name="id"
 			type="number"

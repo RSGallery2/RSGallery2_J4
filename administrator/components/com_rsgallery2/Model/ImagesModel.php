@@ -207,9 +207,9 @@ class ImagesModel extends ListModel
 
 				. 'a.hits, '
 
-				. 'a.ordering '
-				. 'a.asset_id '
-				. 'a.access, '
+				. 'a.ordering, '
+				. 'a.asset_id, '
+				. 'a.access '
 			)
 //				. ', a.language'
 //				. 'a.checked_out, '
@@ -238,6 +238,7 @@ class ImagesModel extends ListModel
 		$query->select('ua.name AS author_name')
 			->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
+		/**
 		// Join over the associations.
 		$assoc = $this->getAssoc();
 
@@ -248,6 +249,7 @@ class ImagesModel extends ListModel
 				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
 				->group('a.id, l.title, uc.name, ag.title, ua.name');
 		}
+		/**/
 
 		// Filter on the level.
 		if ($level = $this->getState('filter.level'))
@@ -287,6 +289,7 @@ class ImagesModel extends ListModel
 			$search = $db->quote('%' . $db->escape($search, true) . '%');
 			$query->where(
 				'a.name LIKE ' . $search
+				. ' OR a.title LIKE ' . $search
 				. ' OR a.description LIKE ' . $search
 				. ' OR gal.name LIKE ' . $search
 				. ' OR a.note LIKE ' . $search
@@ -336,7 +339,7 @@ class ImagesModel extends ListModel
 		$query->order($db->escape($orderCol . ' ' . $orderDirn));
 /**/
 
-		$listOrdering = $this->getState('list.ordering', 'a.id');
+		$listOrdering = $this->getState('list.ordering', 'a.ordering');
 		$listDirn = $db->escape($this->getState('list.direction', 'DESC'));
 
 		if ($listOrdering == 'a.access')
@@ -376,9 +379,9 @@ class ImagesModel extends ListModel
 			. 'a.modified, '
 			. 'a.modified_by, '
 
-			. 'a.ordering '
-			. 'a.asset_id '
-			. 'a.access, '
+			. 'a.ordering, '
+			. 'a.asset_id, '
+			. 'a.access '
 			/**/
 		);
 

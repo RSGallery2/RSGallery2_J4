@@ -45,12 +45,25 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JCATEGORY')); ?>
 		<div class="row">
 			<div class="col-md-9">
-				<?php echo $this->form->getLabel('description'); ?>
-				<?php echo $this->form->getInput('description'); ?>
-			</div>
+				<fieldset class="adminform">
+					<?php
+					echo $this->form->renderField('name');
+					echo $this->form->renderField('gallery_id');
+					echo $this->form->renderField('description');
+					echo $this->form->renderField('id');
+					?>
+				</fieldset>  			</div>
 			<div class="col-md-3">
 				<div class="card card-light">
 					<div class="card-body">
+						<fieldset class="adminform">
+							<!--?php
+							echo $this->form->renderField('published');
+							echo $this->form->renderField('ordering');
+							echo $this->form->renderField('userid');
+							echo $this->form->renderField('image_2nd_col name');
+							?-->
+						</fieldset>
 						<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
 						<?php //echo $this->form->getLabel('parent_id'); ?>
 						<?php //echo $this->form->getInput('parent_id'); ?>

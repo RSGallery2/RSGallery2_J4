@@ -101,9 +101,9 @@ if ($saveOrder && !empty($this->items))
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_ORDER', 'a.ordering', $listDirn, $listOrder); ?>
                                 </th>
 
-                                <th scope="col" style="width:10%" class="d-none d-md-table-cell">
+                                <!--th scope="col" style="width:10%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
-                                </th>
+                                </th-->
 
                                 <th scope="col" style="width:10%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JAUTHOR', 'a.created_by', $listDirn, $listOrder); ?>
@@ -131,11 +131,6 @@ if ($saveOrder && !empty($this->items))
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_COMMENTS', 'a.comments', $listDirn, $listOrder); ?>
                                 </th>
-
-                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
-                                </th>
-
 
 
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
@@ -245,17 +240,41 @@ if ($saveOrder && !empty($this->items))
 										<?php endif; ?>
                                     </th>
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">
+									<div class="pull-left break-word">
                                        <?php
 										$link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=image.edit&id=" . $item->id);
-                                        $count = random_int (0, 2) ;
-                                        ?>
-                                        <a class="btn <?php echo ($count > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php echo Text::_('COM_CATEGORY_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo $link; ?>">
-											<?php echo $count; ?></a>
+										//$link = JRoute::_("index.php?option=com_rsgallery2&amp;rsgOption=images&amp;task=editA&amp;hidemainmenu=1&amp;id=" . $item->id);
+										if ($canEdit)
+										{
+											echo '<a href="' . $link . '"">' . $this->escape($item->name) . '</a>';
+										}
+										else
+										{
+											echo $this->escape($item->name);
+										}
+										?>
+									</div>
                                     </td>
 
                                     <td class="small d-none d-md-table-cell">
-										<?php echo $this->escape($item->access); ?>
+									<?php
+									$link = JRoute::_("index.php?option=com_rsgallery2&view=gallery&task=gallery.edit&id=" . $item->gallery_id);
+									//$link = JRoute::_("index.php?option=com_rsgallery2&rsgOption=galleries&task=editA&hidemainmenu=1&id=". $item->gallery_id);
+									//echo '<a href="' . $link . '"">' . $item->gallery_id . '</a>';
+									echo '<a href="' . $link . '"">' . $this->escape($item->gallery_name) . '</a>';
+									?>
                                     </td>
+
+                                    <td class="small d-none d-md-table-cell">
+										<?php echo $item->ordering; ?>
+                                    </td>
+
+                                    <!--td class="small d-none d-md-table-cell">
+										<?php echo $item->access; ?>
+                                    </td-->
+
+
+
 
                                     <td class="small d-none d-md-table-cell">
                                         <?php
@@ -283,10 +302,11 @@ if ($saveOrder && !empty($this->items))
 										echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
 										?>
                                     </td>
+
                                     <td class="d-none d-lg-table-cell text-center">
-									<span class="badge badge-info">
-										<?php echo (int) $item->hits; ?>
-									</span>
+									    <span class="badge badge-info">
+										    <?php echo (int) $item->hits; ?>
+									    </span>
                                     </td>
 
 
@@ -301,10 +321,6 @@ if ($saveOrder && !empty($this->items))
 
                                     <td class="d-none d-md-table-cell">
 										<?php echo (int) $item->comments; ?>
-                                    </td>
-
-                                    <td class="d-none d-md-table-cell">
-										<?php echo (int) $item->hits; ?>
                                     </td>
 
                                     <td class="d-none d-md-table-cell">

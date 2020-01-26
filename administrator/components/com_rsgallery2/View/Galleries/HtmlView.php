@@ -194,35 +194,52 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
-		// on develop show open tasks if existing
-		if (!empty ($this->isDevelop))
-		{
-			echo '<span style="color:red">'
-				. 'Tasks: <br>'
-				. '*  Can do ...<br>'
-				. '*  archieved, trashed<br>'
-				. '*  add immage count (read before) <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-				. '</span><br><br>';
-		}
-
 		switch ($Layout)
 		{
 			case 'galleries_raw':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+						. '* Can do ...<br>'
+		                . '* Add pagination<br>'
+						. '* archieved, trashed<br>'
+		                . '* Add delete function<br>'
+						. '* mark element width id 1 <br>'
+						//	. '*  <br>'
+						//	. '*  <br>'
+						//	. '*  <br>'
+						//	. '*  <br>'
+						. '</span><br><br>';
+				}
+
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_VIEW_RAW_DATA'), 'images');
 
 				ToolBarHelper::editList('gallery.edit');
-
-				// on develop show open tasks if existing
-				if (!empty ($Rsg2DevelopActive))
-				{
-					echo '<span style="color:red">Task: Add delete function, Test add double name</span><br><br>';
-				}
+				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH'); 
 				break;
 
 
 			default:
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+						. '*  Can do ...<br>'
+		                . '* Add pagination<br>'
+						. '*  archieved, trashed<br>'
+		                . '* Add delete function<br>'
+						. '*  add immage count (read before) <br>'
+						. '* __associations <br>'
+						. '* don´t show element width id 1 <br>'
+                    //	. '*  <br>'
+                    //	. '*  <br>'
+				    //	. '*  <br>'
+						. '</span><br><br>';
+				}
+
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_GALLERIES'), 'images');
 
 				ToolBarHelper::addNew('gallery.add');

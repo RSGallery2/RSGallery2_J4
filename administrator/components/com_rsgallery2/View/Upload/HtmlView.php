@@ -207,10 +207,12 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '*  Test ...<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+				. '* Test ...<br>'
+				. '* check image db for not set items <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 				. '</span><br><br>';
 		}
 

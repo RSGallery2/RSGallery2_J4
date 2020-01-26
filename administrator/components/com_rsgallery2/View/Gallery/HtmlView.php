@@ -23,7 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 /**
- * HTML View class for the Galleries component
+ * HTML View class for gallery edit
  *
  * @since  1.6
  */
@@ -130,8 +130,6 @@ class HtmlView extends BaseHtmlView
 			// Only allow to select tags with All language or with the forced language.
 			$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
 		}
-
-		$this->addToolbar();
 		/**/
 
 		// different toolbar on different layouts

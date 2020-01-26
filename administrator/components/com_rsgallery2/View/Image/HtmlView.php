@@ -26,7 +26,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 //use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
- * View class for a list of rsgallery2.
+ * HTML View class for image edit
  *
  * @since  1.0
  */
@@ -115,6 +115,8 @@ class HtmlView extends BaseHtmlView
 		{
 			$this->checkTags = true;
 		}
+
+		Factory::getApplication()->input->set('hidemainmenu', true);
 
 
 		/**
