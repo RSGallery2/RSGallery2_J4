@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 
 --  KEY `idx_catid` (`catid`),
 --  KEY `idx_language` (`language`),
+  `use_j3x_location` int(11) DEFAULT 0 NOT NULL,
 
   PRIMARY KEY (`id`),
   KEY `idx_access` (`access`),  
