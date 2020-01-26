@@ -201,7 +201,7 @@ class HtmlView extends BaseHtmlView
 				. 'Tasks: <br>'
 				. '*  Can do ...<br>'
 				. '*  archieved, trashed<br>'
-//				. '*  <br>'
+				. '*  add immage count (read before) <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 				. '</span><br><br>';
