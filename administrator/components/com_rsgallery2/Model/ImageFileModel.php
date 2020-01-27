@@ -12,13 +12,16 @@ namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 //use Joomla\CMS\Image;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\MVC\Model\ListModel;
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
@@ -31,7 +34,7 @@ use Joomla\CMS\MVC\Model\ListModel;
  *
  * @since 4.3.0
  */
-class ImageFileModel extends ListModel // AdminModel
+class ImageFileModel extends BaseModel // AdminModel
 {
 	protected $imagePaths = null;
 	protected $rootPath = '';
@@ -47,7 +50,7 @@ class ImageFileModel extends ListModel // AdminModel
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
-		parent::__construct($config = array());
+//		parent::__construct($config = array());
 
 		if ($Rsg2DebugActive)
 		{
@@ -58,7 +61,7 @@ class ImageFileModel extends ListModel // AdminModel
 		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		//
 		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-		$rsgConfig = JComponentHelper::getParams();
+//		$rsgConfig = ComponentHelper::getParams();
 
 		$this->rootPath = $rsgConfig->get('imgPath_root');
 
@@ -249,25 +252,21 @@ class ImageFileModel extends ListModel // AdminModel
 
 			// ToDo: use joomla image.lib dimensions instead
 			// Is thumb style square // ToDo: Thumb style -> enum  // ToDo: general: Config enums
-			if ($thumbStyle == 1)
-			{
-				$width = $thumbWidth;
-				$height = $thumbWidth;
-			}
-			else
+			$width = $thumbWidth;
+			$height = $thumbWidth;
+
+			if ($thumbStyle != 1)
 			{
 				// ??? $thumbWidth should be max ????
 				if ($imgWidth > $imgHeight)
 				{
 					// landscape
-					$width  = $imgWidth;
 					$height = ($thumbWidth / $imgWidth) * $imgHeight;
 				}
 				else
 				{
 					// portrait or square
 					$width  = ($thumbWidth / $imgHeight) * $imgWidth;
-					$height = $thumbWidth;
 				}
 			}
 
@@ -575,7 +574,7 @@ class ImageFileModel extends ListModel // AdminModel
 				$isMoved = File::upload($srcTempPathFileName, $originalFileName);
 				if ($isMoved)
 				{
-					JPath::setPermissions($originalFileName, '0644');
+					Path::setPermissions($originalFileName, '0644');
 				}
 			} else {
 
@@ -737,13 +736,13 @@ class ImageFileModel extends ListModel // AdminModel
 			$memImage = new image ($srcFileName);
 
 			$srcWidth  = $memImage->getWidth();
-			$srcHeigth = $memImage->getHeigth();
+			$srcHeigth = $memImage->getHeight();
 
 			$isCreated = $this->createThumbImageFile($imagePaths->getThumbPath($targetFileName), $memImage);
 
 			// ? changed toDo: check and remove
 			$afterWidth  = $memImage->getWidth();
-			$afterHeigth = $memImage->getHeigth();
+			$afterHeigth = $memImage->getHeight();
 
 			if ($srcWidth != $afterWidth || $srcHeigth != $afterHeigth) {
 				$memImage->destroy();
@@ -764,7 +763,7 @@ class ImageFileModel extends ListModel // AdminModel
 					$isCreated = $isCreated & $this->createThumbImageFile($imagePaths->getThumbPath($targetFileName), $imageSize, $memImage);
 
 					$afterWidth  = $memImage->getWidth();
-					$afterHeigth = $memImage->getHeigth();
+					$afterHeigth = $memImage->getHeight();
 
 					if ($srcWidth != $afterWidth || $srcHeigth != $afterHeigth) {
 						$memImage->destroy();

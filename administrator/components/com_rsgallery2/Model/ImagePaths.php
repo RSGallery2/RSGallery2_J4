@@ -10,6 +10,9 @@
 
 namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Uri\Uri;
+
 defined('_JEXEC') or die;
 
 //use Joomla\CMS\Factory;
@@ -83,7 +86,7 @@ class ImagePaths {
 			$this->sizeBasePaths[$imageSize] = path_join($this->galleryRoot, $imageSizes);
 		}
 
-		$this->galleryRootUrl = path_join(JUri::root(), $rootPath, $galleryId);
+		$this->galleryRootUrl = path_join(Uri::root(), $rootPath, $galleryId);
 
 		$this->originalUrl = path_join($this->galleryRootUrl, 'original');
 		$this->thumbUrl    = path_join($this->galleryRootUrl, 'thumbs');

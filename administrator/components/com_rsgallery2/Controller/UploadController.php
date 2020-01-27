@@ -669,7 +669,14 @@ class UploadController extends FormController
 	/**/
 
 
-
+	/**
+	 * @param $imageId
+	 *
+	 * @return int|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
 	private function imageOrderFromId ($imageId)
 	{
 		$imageOrder = -1;
