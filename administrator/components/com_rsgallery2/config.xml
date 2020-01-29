@@ -212,7 +212,7 @@
 		<field
 				name="imgPath_root"
 				type="text"
-				default="/images/rsgallery/"
+				default="/images/rsgallery2/"
 				label="COM_RSGALLERY2_CFG_ROOT_LOCATION"
 				description="COM_RSGALLERY2_CFG_ROOT_LOCATION_DESC"
 				class="input-large-text input-xxlarge"

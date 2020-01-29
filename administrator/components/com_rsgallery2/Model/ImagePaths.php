@@ -83,7 +83,7 @@ class ImagePaths {
 
 		$this->imageSizes = $imageSizes;
 		foreach ($imageSizes as $imageSize) {
-			$this->sizeBasePaths[$imageSize] = path_join($this->galleryRoot, $imageSizes);
+			$this->sizeBasePaths[$imageSize] = path_join($this->galleryRoot, $imageSize);
 		}
 
 		$this->galleryRootUrl = path_join(Uri::root(), $rootPath, $galleryId);
@@ -93,7 +93,7 @@ class ImagePaths {
 
 		// $this->imageSizes = $imageSizes;
 		foreach ($imageSizes as $imageSize) {
-			$this->sizeUrls[$imageSize] = path_join($this->galleryRootUrl, $imageSizes);
+			$this->sizeUrls[$imageSize] = path_join($this->galleryRootUrl, $imageSize);
 		}
 
 	}
@@ -104,7 +104,7 @@ class ImagePaths {
 	public function getThumbPath ($fileName=''){
 		return path_join ($this->thumbBasePath, $fileName);
 	}
-	public function getSize ($imageSize, $fileName=''){
+	public function getSizePath ($imageSize, $fileName=''){
 		return path_join ($this->sizeBasePaths [$imageSize], $fileName);
 	}
 

@@ -58,19 +58,20 @@ class ImageFileModel extends BaseModel // AdminModel
 		}
 
 		// JComponentHelper::getParams();
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		// $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		//
 		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 //		$rsgConfig = ComponentHelper::getParams();
 
 		$this->rootPath = $rsgConfig->get('imgPath_root');
-
-		$imageSizes = $rsgConfig->get('image_width');
-		$this->imageSizes = [];
-		foreach ($imageSizes as $imageSize)
+		// Fall back
+		if (empty ($this->rootPath))
 		{
-			$this->imageSizes[] =  $imageSize;
+			$this->rootPath ="/images/rsgallery2/";
 		}
+		$imageSizesText = $rsgConfig->get('image_width');
+		$imageSizes = explode (',', $imageSizesText);
+		$this->imageSizes =  $imageSizes;
 
 		$this->isUseOriginalPath = $rsgConfig->get('keepOriginalImage');
 
@@ -128,23 +129,30 @@ class ImageFileModel extends BaseModel // AdminModel
 				throw new \LogicException('createDisplayImageFile: Wrong target size');
 			}
 
+
+
+
+
+
+
 			//---- target size -------------------------------------
 
 			// source sizes
 			$imgHeight = $memImage->getHeight();
 			$imgWidth  = $memImage->getWidth();
 
+			$width = $targetWidth;
+			$height = $targetWidth;
+
 			if ($imgWidth > $imgHeight)
 			{
 				// landscape
-				$width = $imgWidth;
 				$height = ($targetWidth / $imgWidth) * $imgHeight;
 			}
 			else
 			{
 				// portrait or square
 				$width  = ($targetWidth / $imgHeight) * $imgWidth;
-				$height = $targetWidth;
 			}
 
 			//--- Resize and save -----------------------------------
@@ -154,7 +162,7 @@ class ImageFileModel extends BaseModel // AdminModel
 			{
 				//--- Resize and save -----------------------------------
 				$type = IMAGETYPE_JPEG;
-				$memImage->toFile($targetFileName, $type);
+				$IsImageCreated = $memImage->toFile($targetFileName, $type);
 			}
 
 			/** see above *
@@ -725,51 +733,46 @@ class ImageFileModel extends BaseModel // AdminModel
 		// source file exists
 		if (File::exists($srcFileName))
 		{
-
-			// toDo: Can i load onyl once ?
-			//// Create memory image
-			//$memImage = new image ($srcFileName);
-
 			//--- Create thumb files ----------------------------------
 
 			// Create memory image
 			$memImage = new image ($srcFileName);
 
 			$srcWidth  = $memImage->getWidth();
-			$srcHeigth = $memImage->getHeight();
+			$srcHeight = $memImage->getHeight();
 
 			$isCreated = $this->createThumbImageFile($imagePaths->getThumbPath($targetFileName), $memImage);
 
 			// ? changed toDo: check and remove
 			$afterWidth  = $memImage->getWidth();
-			$afterHeigth = $memImage->getHeight();
+			$afterHeight = $memImage->getHeight();
 
-			if ($srcWidth != $afterWidth || $srcHeigth != $afterHeigth) {
-				$memImage->destroy();
-			} else {
-				$memImage->destroy();
-			}
+			$memImage->destroy ();
 
 			//--- Create display files ----------------------------------
 
-			if ( ! $isCreated)
+			if ($isCreated)
 			{
-				//
+				// toDo: ajax: update state thumb created
+
 				foreach ($imagePaths->imageSizes as $imageSize)
 				{
-
 					$memImage = new image ($srcFileName);
 
-					$isCreated = $isCreated & $this->createThumbImageFile($imagePaths->getThumbPath($targetFileName), $imageSize, $memImage);
+//					$isCreated = $isCreated & $this->createThumbImageFile($imagePaths->getSizeUrl($imageSize, $targetFileName), $imageSize, $memImage);
+					$isCreated = $isCreated & $this->createDisplayImageFile($imagePaths->getSizePath($imageSize, $targetFileName), $imageSize, $memImage);
 
 					$afterWidth  = $memImage->getWidth();
-					$afterHeigth = $memImage->getHeight();
-
-					if ($srcWidth != $afterWidth || $srcHeigth != $afterHeigth) {
+					$afterHeight = $memImage->getHeight();
+					/**
+					if ($srcWidth != $afterWidth || $srcHeight != $afterHeight) {
 						$memImage->destroy();
 					} else {
 						$memImage->destroy();
 					}
+					/**/
+
+					$memImage->destroy ();
 
 					if (!$isCreated)
 					{
@@ -777,6 +780,7 @@ class ImageFileModel extends BaseModel // AdminModel
 					}
 				}
 			}
+
 
 			/**  ToDo: watermark file $isWatermarkActive *
 			//--- Create watermark file ----------------------------------
