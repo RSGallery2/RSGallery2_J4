@@ -350,7 +350,7 @@ class createStatusBar {
     //========================================
     // Change progress value
     public setProgress (percentage: number) {
-        let width = parseInt(this.htmlProgressBarOuter.style.width);
+        let width = parseInt(this.htmlProgressBarOuter.style.width) || 0;
 
         let progressBarWidth = percentage * width  / 100;
 
@@ -983,7 +983,9 @@ class TransferImagesTask {
 
                 request.upload.onprogress = function (event) {
                     if (event.lengthComputable) {
-                        let progress = (event.loaded / event.total * 100 | 0);
+                        const progress = (event.loaded / event.total * 100 | 0);
+
+//                        nextFile.statusBar.setProgress(progress);
                         console.log("         progress: " + progress);
                     }
                 };
