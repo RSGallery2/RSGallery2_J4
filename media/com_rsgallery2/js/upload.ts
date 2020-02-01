@@ -282,7 +282,8 @@ class createStatusBar {
     private htmlProgressBarOuter: HTMLElement;
     private htmlProgressBarInner: HTMLElement;
     private htmlAbort: HTMLElement;
-
+    private htmlIconUpload: HTMLElement;
+    private htmlIconOk: HTMLElement;
 
     constructor(
         progressArea: HTMLElement,
@@ -314,11 +315,25 @@ class createStatusBar {
         this.htmlStatusbar.appendChild (this.htmlProgressBarOuter);
 
         //this.htmlAbort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
-        this.htmlAbort = document.createElement('div');
+        this.htmlAbort = document.createElement('span');
         this.htmlAbort.classList.add('abort');
         //this.htmlAbort.appendChild(document.createTextNode('Abort'));
         this.htmlAbort.innerHTML = 'Abort';
         this.htmlStatusbar.appendChild (this.htmlAbort);
+
+        this.htmlIconUpload = document.createElement('span');
+        this.htmlIconUpload.classList.add('success');
+        //this.htmlIconUpload.appendChild(document.createTextNode('Abort'));
+        this.htmlIconUpload.innerHTML = '<i class="icon-upload"></i>\n';
+        this.htmlIconUpload.style.display = "none";
+        this.htmlStatusbar.appendChild (this.htmlIconUpload);
+
+        this.htmlIconOk = document.createElement('span');
+        this.htmlIconOk.classList.add('class');
+        //this.htmlIconOk.appendChild(document.createTextNode('Abort'));
+        this.htmlIconUpload.style.display = "none";
+        this.htmlIconUpload.innerHTML = '<i class="icon-ok"></i>\n';
+        this.htmlStatusbar.appendChild (this.htmlIconOk);
 
         this.setFileNameAndSize (file);
 
@@ -362,6 +377,8 @@ class createStatusBar {
         // do not abort when nearly finished
         if (percentage >= 99.999) {
             this.htmlAbort.style.display = 'none';
+  //          this.htmlIconUpload.style.display = 'block';
+
         }
     };
 
