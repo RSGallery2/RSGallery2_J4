@@ -4,10 +4,6 @@
 .build/Translations/.idea/
 *.pyc
 
-rsgallery2.org.xml
-
-//administrator/components/com_rsgallery2/rsgallery2.xml
-//administrator/components/com_rsgallery2/install_rsg2.php
 rsgallery2.xml
 install_rsg2.php
 
