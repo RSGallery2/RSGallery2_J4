@@ -119,6 +119,16 @@ $tabs = []
                         <div id="uploader-wrapper">
                             <div id="dragarea" data-state="pending">
                                 <div id="dragarea-content" class="text-center">
+                                    <div id="imagesArea" class="span12">
+                                        <ul id="imagesAreaList" class='thumbnails'>
+
+                                        </ul>
+                                    </div>
+                                    <div id="imagesArea">
+                                        <ul id="imagesAreaList" class='thumbnails'>
+
+                                        </ul>
+                                    </div>
                                     <p>
                                         <span id="upload-icon" class="icon-upload" aria-hidden="true"></span>
                                     </p>

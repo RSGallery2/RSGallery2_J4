@@ -86,6 +86,7 @@ class FormElements {
     constructor() {
         this.selectGallery = document.getElementById('SelectGallery');
         this.dragZone = document.getElementById('dragarea');
+        this.imagesArea = document.getElementById('imagesAreaList');
         this.progressArea = document.getElementById('uploadProgressArea');
         this.errorZone = document.getElementById('uploadErrorArea');
     }
@@ -355,13 +356,15 @@ var JoomlaMessages;
     JoomlaMessages["error"] = "error";
 })(JoomlaMessages || (JoomlaMessages = {}));
 class RequestDbImageIdTask {
-    constructor(dragZone, progressArea, errorZone, droppedFiles, transferFiles, transferImagesTask) {
+    constructor(
+    //        dragZone: HTMLElement,
+    progressArea, errorZone, droppedFiles, transferFiles, transferImagesTask) {
         this.isBusy = false;
-        this.dragZone = dragZone;
-        this.droppedFiles = droppedFiles;
-        this.errorZone = errorZone;
-        this.transferFiles = transferFiles;
+        //      this.dragZone = dragZone;
         this.progressArea = progressArea;
+        this.errorZone = errorZone;
+        this.droppedFiles = droppedFiles;
+        this.transferFiles = transferFiles;
         this.transferImagesTask = transferImagesTask;
     }
     // https://taylor.callsen.me/ajax-multi-file-uploader-with-native-js-and-promises/
@@ -604,10 +607,10 @@ function ajaxMessages2Html(AjaxResponse, nextFile) {
      Ajax transfer files to server
 ----------------------------------------------------------------*/
 class TransferImagesTask {
-    constructor(dragZone, progressArea, errorZone, transferFiles) {
+    constructor(imagesArea, progressArea, errorZone, transferFiles) {
         this.isBusyCount = 0;
         this.BusyCountLimit = 5;
-        this.dragZone = dragZone;
+        this.imagesArea = imagesArea;
         this.errorZone = errorZone;
         this.transferFiles = transferFiles;
         this.progressArea = progressArea;
@@ -792,7 +795,7 @@ class TransferImagesTask {
         // ToDo: images area class:span12 && #imagesAreaList class:thumbnails around ...
         //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
         const imageBox = document.createElement('li');
-        this.dragZone.appendChild(imageBox);
+        this.imagesArea.appendChild(imageBox);
         //this.thumbArea = $("<div class='thumbnail imgProperty'></div>").appendTo(this.imageBox);
         const thumbArea = document.createElement('div');
         thumbArea.classList.add('thumbnail');
@@ -800,6 +803,7 @@ class TransferImagesTask {
         imageBox.appendChild(thumbArea);
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
         const imgContainer = document.createElement('div');
+        imgContainer.classList.add('imgContainer');
         thumbArea.appendChild(imgContainer);
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
@@ -822,14 +826,14 @@ class TransferImagesTask {
         const imageId = document.createElement('small');
         imageId.innerText = '(' + responseData.imageId + ')'; // order
         //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
-        imageName.appendChild(imageId);
+        caption.appendChild(imageId);
         //this.cid = $("<input name='cid[]' class='imageCid' type='hidden' value='" + jData.data.cid + "' />").appendTo(this.imageBox);
         const cid = document.createElement('input');
         cid.classList.add('imageCid');
         cid.name = 'cid[]';
         cid.type = 'hidden';
         cid.innerText = responseData.imageId;
-        imageName.appendChild(imageId);
+        imageBox.appendChild(cid);
     }
 }
 //--------------------------------------------------------------------------------------
@@ -856,9 +860,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // init red / green border of drag area
     const gallerySelected = new Border4SelectedGallery(elements.selectGallery, elements.dragZone);
     // (3) ajax request: Transfer file to server
-    const transferImagesTask = new TransferImagesTask(elements.dragZone, elements.progressArea, elements.errorZone, transferFiles);
+    const transferImagesTask = new TransferImagesTask(elements.imagesArea, elements.progressArea, elements.errorZone, transferFiles);
     // (2) ajax request: database image item
-    const requestDbImageIdTask = new RequestDbImageIdTask(elements.dragZone, elements.progressArea, elements.errorZone, droppedFiles, transferFiles, transferImagesTask);
+    //const requestDbImageIdTask = new RequestDbImageIdTask (elements.dragZone, elements.progressArea, elements.errorZone,
+    //    droppedFiles, transferFiles, transferImagesTask);
+    const requestDbImageIdTask = new RequestDbImageIdTask(elements.progressArea, elements.errorZone, droppedFiles, transferFiles, transferImagesTask);
     // (1) collect dropped files, start request DB image ID
     let droppedFilesTask = new DroppedFilesTask(elements.selectGallery, droppedFiles, requestDbImageIdTask);
     //--------------------------------------------------------------------------------------

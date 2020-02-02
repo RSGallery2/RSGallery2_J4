@@ -66,6 +66,7 @@
   display: inline-block;
   margin: 0px 10px 5px 5px;
   vertical-align: top;
+  transition: all 0.2s ease-in-out;
 }
 .progressBar div {
   height: 100%;
@@ -173,20 +174,63 @@
     margin-right:20px;
 }
 /**/
+.thumbnails > li {
+  float: left;
+  margin-bottom: 18px;
+  margin-left: 20px;
+}
+
 /**/
 .thumbnails img {
   float: left;
   margin-right: 10px;
+  list-style: none;
+}
+
+/**/
+/**/
+.thumbnail {
+  display: block;
+  padding: 4px;
+  line-height: 18px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+  transition: all 0.2s ease-in-out;
+}
+
+.thumbnail img {
+  margin-top: 2.5%;
+  padding: 4px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.imgContainer {
   display: block;
 }
 
 /**/
-/**/
-.thumbnail img {
-  margin-top: 2.5%;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+.imagearea {
+  display: block;
+}
+.imagearea ul, .imagearea ol {
+  padding: 0;
+  margin: 0 0 9px 25px;
+  list-style: none;
+}
+.imagearea li {
+  display: list-item;
+  list-style: none;
 }
 
-/**/
+.caption {
+  display: block;
+}
 
 /*# sourceMappingURL=upload.css.map */
