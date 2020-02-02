@@ -380,7 +380,7 @@ class UploadController extends FormController
 
 			//--- check user ID --------------------------------------------
 
-			$ajaxImgObject['file'] = $targetFileName;
+			$ajaxImgObject['fileName'] = $targetFileName;
 			// some dummy data for error messages
 			$ajaxImgObject['imageId']  = -1;
 			$ajaxImgObject['fileUrl']  = '';

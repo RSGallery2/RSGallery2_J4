@@ -84,7 +84,7 @@
 
   div {
     height: 100%;
-    color: #fff;
+    color: #28a745; // #fff;
     text-align: right;
     line-height: 22px; /* same as #progressBar height if we want text middle aligned */
     width: 0;
@@ -96,13 +96,17 @@
 .statusbar {
   border-top: 1px solid #A9CCD1;
   min-height: 25px;
-  width: 700px;
+  width: 100%;
   padding: 10px 10px 0px 10px;
   vertical-align: top;
 
-  :nth-child(odd) {
+//  :nth-child(odd) {
+//  }
+
+  &:nth-of-type(2n-1) {
     background: #EBEFF0;
   }
+
 }
 
 .filename {
@@ -135,6 +139,51 @@
   vertical-align: top
 }
 
+.OK {
+    background-color: #28a745;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 15px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.error {
+    background-color: #A8352F;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 15px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.upload {
+    background-color: #17a2b8;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 15px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
 /**
 .tmp_order {
     display:inline-block;
@@ -145,7 +194,7 @@
 }
 /**/
 
-/**
+/**/
 .thumbnails img {
     float: left;
     margin-right: 10px;
@@ -153,16 +202,16 @@
 }
 /**/
 
-/**
+/**/
 .thumbnail img {
-    margin-top: 2.5%; /** /
-    /*    max-width: 90%; /** /
-    /*    border-radius: 5px; /** /
-    /* object-fit: contain; /** /
-    /*    height: auto; /** /
-    /*    height: 150px; /** /
-    /*    max-height: 150px; /** /
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5); /** /
+    margin-top: 2.5%;
+    //max-width: 90%;
+    //border-radius: 5px;
+    //object-fit: contain;
+    //height: auto;
+    //height: 150px;
+    //max-height: 150px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
 }
 /**/
 

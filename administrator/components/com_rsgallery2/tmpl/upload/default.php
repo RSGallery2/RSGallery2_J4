@@ -189,7 +189,7 @@ $tabs = []
                             <div class="control-group">
                                 <label for="install_package" class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
                                 <div class="controls">
-                                    <input class="form-control-file" id="install_package" name="install_package" type="file">
+                                    <input class="form-control-file" id="install_package" name="install_package" type="file" multiple="multiple" >
                                     <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
                                 </div>
                             </div>

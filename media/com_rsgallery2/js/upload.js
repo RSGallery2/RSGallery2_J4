@@ -159,43 +159,69 @@ class DroppedFilesTask {
 class createStatusBar {
     constructor(progressArea, file) {
         createStatusBar.imgCount++;
-        let even_odd = (createStatusBar.imgCount % 2 == 0) ? "odd" : "even";
+        //        let even_odd = (createStatusBar.imgCount % 2 == 0) ? "odd" : "even";
         // Add all elements. single line in *.css
         //this.htmlStatusbar = $("<div class='statusbar " + row + "'></div>");
         this.htmlStatusbar = document.createElement('div');
         this.htmlStatusbar.classList.add('statusbar');
+        //        this.htmlStatusbar.classList.add(even_odd);
+        this.htmlStatusbarInner = document.createElement('div');
+        this.htmlStatusbar.appendChild(this.htmlStatusbarInner);
         //this.htmlFilename = $("<div class='filename'></div>").appendTo(this.statusbar);
         this.htmlFilename = document.createElement('div');
         this.htmlFilename.classList.add('filename');
-        this.htmlStatusbar.appendChild(this.htmlFilename);
+        this.htmlStatusbarInner.appendChild(this.htmlFilename);
         //this.htmlSize = $("<div class='filesize'></div>").appendTo(this.statusbar);
         this.htmlSize = document.createElement('div');
         this.htmlSize.classList.add('filesize');
-        this.htmlStatusbar.appendChild(this.htmlSize);
+        this.htmlStatusbarInner.appendChild(this.htmlSize);
         //this.htmlProgressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
         this.htmlProgressBarOuter = document.createElement('div');
         this.htmlProgressBarOuter.classList.add('progressBar');
         this.htmlProgressBarInner = document.createElement('div');
         this.htmlProgressBarOuter.appendChild(this.htmlProgressBarInner);
-        this.htmlStatusbar.appendChild(this.htmlProgressBarOuter);
+        this.htmlStatusbarInner.appendChild(this.htmlProgressBarOuter);
         //this.htmlAbort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
         this.htmlAbort = document.createElement('span');
         this.htmlAbort.classList.add('abort');
         //this.htmlAbort.appendChild(document.createTextNode('Abort'));
         this.htmlAbort.innerHTML = 'Abort';
-        this.htmlStatusbar.appendChild(this.htmlAbort);
-        this.htmlIconUpload = document.createElement('span');
-        this.htmlIconUpload.classList.add('success');
-        //this.htmlIconUpload.appendChild(document.createTextNode('Abort'));
-        this.htmlIconUpload.innerHTML = '<i class="icon-upload"></i>\n';
-        this.htmlIconUpload.style.display = "none";
-        this.htmlStatusbar.appendChild(this.htmlIconUpload);
-        this.htmlIconOk = document.createElement('span');
-        this.htmlIconOk.classList.add('class');
-        //this.htmlIconOk.appendChild(document.createTextNode('Abort'));
-        this.htmlIconUpload.style.display = "none";
-        this.htmlIconUpload.innerHTML = '<i class="icon-ok"></i>\n';
-        this.htmlStatusbar.appendChild(this.htmlIconOk);
+        this.htmlStatusbarInner.appendChild(this.htmlAbort);
+        /**/
+        this.htmlIconUpload = document.createElement('i');
+        this.htmlIconUpload.classList.add('icon-upload');
+        this.htmlIconOk = document.createElement('i');
+        this.htmlIconOk.classList.add('icon-checkmark');
+        this.htmlIconError = document.createElement('i');
+        this.htmlIconError.classList.add('icon-smiley-sad-2');
+        //        this.htmlIconError.classList.add('icon-smiley-sad');
+        this.htmlBadgeUpload = document.createElement('span');
+        this.htmlBadgeUpload.classList.add('upload');
+        this.htmlBadgeUpload.classList.add('label');
+        this.htmlBadgeUpload.classList.add('label-primary');
+        this.htmlBadgeUpload.appendChild(this.htmlIconUpload);
+        this.htmlBadgeUpload.appendChild(document.createTextNode('Uploaded'));
+        //        this.htmlBadgeUpload.appendChild(document.createTextNode('Create images'));
+        this.htmlBadgeUpload.style.display = "none";
+        this.htmlStatusbarInner.appendChild(this.htmlBadgeUpload);
+        this.htmlBadgeOk = document.createElement('span');
+        this.htmlBadgeOk.classList.add('OK');
+        this.htmlBadgeOk.classList.add('label');
+        this.htmlBadgeOk.classList.add('label-success');
+        this.htmlBadgeOk.style.display = "none";
+        this.htmlBadgeOk.appendChild(this.htmlIconOk);
+        //        this.htmlBadgeOk.appendChild(document.createTextNode('OK'));
+        this.htmlBadgeOk.appendChild(document.createTextNode('finished OK'));
+        this.htmlStatusbarInner.appendChild(this.htmlBadgeOk);
+        this.htmlBadgeError = document.createElement('span');
+        this.htmlBadgeError.classList.add('error');
+        this.htmlBadgeError.classList.add('label');
+        this.htmlBadgeError.classList.add('label-error');
+        this.htmlBadgeError.style.display = "none";
+        this.htmlBadgeError.appendChild(this.htmlIconError);
+        //        this.htmlBadgeError.appendChild(document.createTextNode('Error'));
+        this.htmlBadgeError.appendChild(document.createTextNode('finished with ERROR'));
+        this.htmlStatusbarInner.appendChild(this.htmlBadgeError);
         this.setFileNameAndSize(file);
         //// set as first element: Latest file on top to compare if already shown in image area
         //progressArea.prepend(this.statusbar);
@@ -229,7 +255,8 @@ class createStatusBar {
         // do not abort when nearly finished
         if (percentage >= 99.999) {
             this.htmlAbort.style.display = 'none';
-            //          this.htmlIconUpload.style.display = 'block';
+            //          this.htmlProgressBarInner.style.width = "50%";
+            console.log("      *** setProgress: " + 100 + '%');
         }
     }
     ;
@@ -247,6 +274,21 @@ class createStatusBar {
         });
     }
     ;
+    removeAbort() {
+        this.htmlAbort.style.display = 'none';
+    }
+    setUpload(state) {
+        const display = state ? "inline-block" : "none";
+        this.htmlBadgeUpload.style.display = display;
+    }
+    setOK(state) {
+        const display = state ? "inline-block" : "none";
+        this.htmlBadgeOk.style.display = display;
+    }
+    setError(state) {
+        const display = state ? "inline-block" : "none";
+        this.htmlBadgeError.style.display = display;
+    }
     //========================================
     // Remove item after successful file upload
     remove() {
@@ -664,8 +706,12 @@ class TransferImagesTask {
             request.upload.onprogress = function (event) {
                 if (event.lengthComputable) {
                     const progress = (event.loaded / event.total * 100 | 0);
-                    //                        nextFile.statusBar.setProgress(progress);
-                    console.log("         progress: " + progress);
+                    // Can't interrupt uploaded image (still creating thumbs and ...)
+                    nextFile.statusBar.setProgress(progress);
+                    if (progress >= 99.999) {
+                        nextFile.statusBar.removeAbort();
+                        nextFile.statusBar.setUpload(true);
+                    }
                 }
             };
             request.send(data);
@@ -700,13 +746,16 @@ class TransferImagesTask {
                 if (AjaxResponse.success) {
                     console.log("      success data: " + AjaxResponse.data);
                     let transferData = AjaxResponse.data;
-                    console.log("      response data.file: " + transferData.file);
+                    console.log("      response data.file: " + transferData.fileName);
                     console.log("      response data.imageId: " + transferData.imageId);
                     console.log("      response data.fileUrl: " + transferData.fileUrl);
                     console.log("      response data.safeFileName: " + transferData.safeFileName);
+                    nextFile.statusBar.setOK(true);
+                    this.showThumb(transferData);
                 }
                 else {
                     console.log("      failed data: " + AjaxResponse.data);
+                    nextFile.statusBar.setError(true);
                 }
                 if (AjaxResponse.message || AjaxResponse.messages) {
                     const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile);
@@ -726,6 +775,8 @@ class TransferImagesTask {
                 if (errorHtml) {
                     this.errorZone.appendChild(errorHtml);
                 }
+                nextFile.statusBar.removeAbort();
+                nextFile.statusBar.setError(true);
                 console.log('!!! errText' + errText);
             })
                 .finally(() => {
@@ -735,6 +786,50 @@ class TransferImagesTask {
             /**/
         }
         console.log("    <this.transferFiles.length: " + this.transferFiles.length);
+    }
+    showThumb(responseData) {
+        // Add HTML to show thumb of uploaded image
+        // ToDo: images area class:span12 && #imagesAreaList class:thumbnails around ...
+        //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
+        const imageBox = document.createElement('li');
+        this.dragZone.appendChild(imageBox);
+        //this.thumbArea = $("<div class='thumbnail imgProperty'></div>").appendTo(this.imageBox);
+        const thumbArea = document.createElement('div');
+        thumbArea.classList.add('thumbnail');
+        thumbArea.classList.add('imgProperty');
+        imageBox.appendChild(thumbArea);
+        //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
+        const imgContainer = document.createElement('div');
+        thumbArea.appendChild(imgContainer);
+        //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
+        const imageDisplay = document.createElement('img');
+        imageDisplay.classList.add('img-rounded');
+        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
+        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
+        imageDisplay.src = responseData.fileUrl;
+        imgContainer.appendChild(imageDisplay);
+        //
+        //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
+        const caption = document.createElement('div');
+        caption.classList.add('caption');
+        imageBox.appendChild(caption);
+        //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
+        const imageName = document.createElement('small');
+        imageName.innerText = responseData.fileName;
+        caption.appendChild(imageName);
+        // toDo: title ?
+        //this.imageId = $("<small> (" + jData.data.cid + ":" + jData.data.order + ")</small>").appendTo(this.imageDisplay);
+        const imageId = document.createElement('small');
+        imageId.innerText = '(' + responseData.imageId + ')'; // order
+        //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
+        imageName.appendChild(imageId);
+        //this.cid = $("<input name='cid[]' class='imageCid' type='hidden' value='" + jData.data.cid + "' />").appendTo(this.imageBox);
+        const cid = document.createElement('input');
+        cid.classList.add('imageCid');
+        cid.name = 'cid[]';
+        cid.type = 'hidden';
+        cid.innerText = responseData.imageId;
+        imageName.appendChild(imageId);
     }
 }
 //--------------------------------------------------------------------------------------
