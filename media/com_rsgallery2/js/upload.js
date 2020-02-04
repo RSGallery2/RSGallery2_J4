@@ -124,10 +124,24 @@ class DroppedFilesTask {
         this.selectGallery = selectGallery;
         this.droppedFiles = droppedFiles;
         this.requestDbImageIdTask = requestDbImageIdTask;
-        let buttonManualFile = document.querySelector('#select-file-button-drop');
-        let fileInput = document.querySelector('#install_package');
-        buttonManualFile.onclick = () => fileInput.click();
+        let buttonManualFiles = document.querySelector('#select-file-button-drop');
+        let buttonZipFile = document.querySelector('#select-zip-file-button-drop');
+        let buttonFolderImport = document.querySelector('#ftp-upload-folder-button-drop');
+        let fileInput = document.querySelector('#input_files');
+        let fileZip = document.querySelector('#input_zip');
+        buttonManualFiles.onclick = () => fileInput.click();
+        buttonZipFile.onclick = () => fileZip.click();
+        buttonFolderImport.onclick = (ev) => this.onNewFile(ev);
         fileInput.onchange = (ev) => this.onNewFile(ev);
+        fileZip.onchange = (ev) => this.onZipFile(ev);
+    }
+    onZipFile(ev) {
+        let element = ev.target;
+        // transfer zip, tell entpackte files, ajax single files conversion
+    }
+    onImportFolder(ev) {
+        let element = ev.target;
+        // tell folder files, ajax single files conversion
     }
     onNewFile(ev) {
         let element = ev.target;

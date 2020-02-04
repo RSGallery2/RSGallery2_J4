@@ -166,9 +166,24 @@ $tabs = []
                                             <?php echo Text::_('COM_RSGALLERY2_DRAG_IMAGES_HERE'); ?>
                                         </p>
                                         <p>
-                                            <button id="select-file-button-drop" type="button" class="btn btn-success">
+                                            <button id="select-file-button-drop" type="button" class="btn btn-info btn-file"
+                                                    title="<?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_DESC'); ?>">
                                                 <span class="icon-copy" aria-hidden="true"></span>
-                                                <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_ZIP_DESC'); ?>
+			                                    <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES'); ?>
+                                            </button>
+                                        </p>
+                                        <p>
+                                            <button id="select-zip-file-button-drop" type="button" class="btn btn-warning btn-zip"
+                                                    title="<?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE_DESC'); ?>">
+                                                <span class="icon-contract-2" aria-hidden="true"></span>
+			                                    <?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE'); ?>
+                                            </button>
+                                        </p>
+                                        <p>
+                                            <button id="ftp-upload-folder-button-drop" type="button" class="btn btn-secondary btn-folder"
+                                                    title="<?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD_DESC'); ?>">
+                                                <span class="icon-arrow-up-2" aria-hidden="true"></span>
+			                                    <?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD'); ?>
                                             </button>
                                         </p>
                                         <p>
@@ -197,9 +212,16 @@ $tabs = []
                         </div>
                         <div id="legacy-uploader" style="display: none;">
                             <div class="control-group">
-                                <label for="install_package" class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
+                                <label for="input_files" class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
                                 <div class="controls">
-                                    <input class="form-control-file" id="install_package" name="install_package" type="file" multiple="multiple" >
+                                    <input class="form-control-file" id="input_files" name="input_files" type="file" multiple="multiple" >
+                                    <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="input_zip" class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
+                                <div class="controls">
+                                    <input class="form-control-file" id="input_zip" name="input_zip" type="file" multiple="multiple" >
                                     <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
                                 </div>
                             </div>
