@@ -207,7 +207,7 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '* Test ...<br>'
+				. '* Disable buttons before gallery is selected<br>'
 				. '* check image db for not set items <br>'
 				. '* Redesign upload list: flex<br>'
 				. '* typescript: redesing uplod list filling -> use php html prepared blocks and clone them<br>'

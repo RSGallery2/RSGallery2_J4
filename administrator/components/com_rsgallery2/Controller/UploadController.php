@@ -49,12 +49,12 @@ class UploadController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
-	 * Recognized key values include 'name', 'default_task', 'model_path', and
-	 * 'view_path' (this list is not meant to be comprehensive).
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
+	 * @param array               $config  An optional associative array of configuration settings.
+	 *                                     Recognized key values include 'name', 'default_task', 'model_path', and
+	 *                                     'view_path' (this list is not meant to be comprehensive).
+	 * @param MVCFactoryInterface $factory The factory.
+	 * @param CMSApplication      $app     The JApplication for the dispatcher
+	 * @param \JInput             $input   Input
 	 *
 	 * @since   1.0
 	 */
@@ -66,6 +66,7 @@ class UploadController extends FormController
 
 	/**
 	 * Proxy for getModel.
+	 *
 	 * @param string $name
 	 * @param string $prefix
 	 * @param array  $config
@@ -74,12 +75,11 @@ class UploadController extends FormController
 	 *
 	 * @since 4.3.0
 	 */
-    public function getModel($name = 'Upload', $prefix = 'Administrator', $config = array('ignore_request' => true))
-    {
-        return parent::getModel($name, $prefix, $config);
-    }
+	public function getModel($name = 'Upload', $prefix = 'Administrator', $config = array('ignore_request' => true))
+	{
+		return parent::getModel($name, $prefix, $config);
+	}
 	/**/
-
 
 
 	/**
@@ -88,11 +88,13 @@ class UploadController extends FormController
 	 * ordering before uploading the images
 	 * Reason: The parallel uploaded images may appear unordered
 	 *
-	 * @since 4.3.0
 	 * @throws Exception
+	 * @since 4.3.0
 	 */
-	function uploadAjaxReserveDbImageId ()
+	function uploadAjaxReserveDbImageId()
 	{
+		// Todo: Check Authorisation, Jupload , check mime type ...
+
 		global $rsgConfig, $Rsg2DebugActive;
 
 		$msg = 'uploadAjaxReserveImageInDB::';
@@ -100,15 +102,19 @@ class UploadController extends FormController
 
 		// do check token
 		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
-		if ( ! Session::checkToken()) {
-			$errMsg = Text::_('JINVALID_TOKEN') . " (02)";
+		if (!Session::checkToken())
+		{
+			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
 			$hasError = 1;
 			echo new JsonResponse($msg, $errMsg, $hasError);
 			$app->close();
+			return; // ToDo Check on all pre exits
 		}
 
-		try {
-			if ($Rsg2DebugActive) {
+		try
+		{
+			if ($Rsg2DebugActive)
+			{
 				// identify active file
 				Log::add('==> uploadAjaxInsertInDB');
 			}
@@ -120,80 +126,81 @@ class UploadController extends FormController
 			/**
 			 * Form data:
 			 *
-			data.append('upload_file', nextFile.file.name);
-			data.append('upload_size', nextFile.file.size.toString());
-			data.append('upload_type', nextFile.file.type);
-			data.append(Token, '1');
-			data.append('gallery_id', nextFile.galleryId);
-			/**/
+			 * data.append('upload_file', nextFile.file.name);
+			 * data.append('upload_size', nextFile.file.size.toString());
+			 * data.append('upload_type', nextFile.file.type);
+			 * data.append(Token, '1');
+			 * data.append('gallery_id', nextFile.galleryId);
+			 * /**/
 
 			//--- ajax tests --------------------------------------------
+			// ToDo: use as  function to be included i all ajex calls fot tests of errors
 			// ToDo: Remove -> put into own component
 			/**
-			$test = 1; // 0: normal, 1:error, 2: warning ....
-
-			if ($test)
-			{
-				$result = "Resulting data (simulated)";
-				switch ($test)
-				{
-					case 1:
-						echo new JsonResponse($result, Text::_('COM_COMPONENT_MY_TASK_ERROR'), true);
-						break;
-
-					case 2:
-						echo new JsonResponse($result, 'Main response message');
-						break;
-
-					case 3:
-						$app->enqueueMessage('This part has error 1');
-						$app->enqueueMessage('This part has error 2');
-						$app->enqueueMessage("Enqueued notice 1", "notice");
-						$app->enqueueMessage("Enqueued notice 2", "notice");
-						$app->enqueueMessage('Here was a small warning 1', 'warning');
-						$app->enqueueMessage('Here was a small warning 2', 'warning');
-						$app->enqueueMessage('Here was a small error 1', 'error');
-						$app->enqueueMessage('Here was a small error 2', 'error');
-						echo new JsonResponse($result, Text::_('!!! Response message with error set !!!'), true);
-						break;
-
-					case 4:
-						$app->enqueueMessage('This part was successful 1');
-						$app->enqueueMessage('This part was successful 2');
-						$app->enqueueMessage("Enqueued notice 1", "notice");
-						$app->enqueueMessage("Enqueued notice 2", "notice");
-						$app->enqueueMessage('Here was a small warning 1', 'warning');
-						$app->enqueueMessage('Here was a small warning 2', 'warning');
-						$app->enqueueMessage('Here was a small error 1', 'error');
-						$app->enqueueMessage('Here was a small error 2', 'error');
-						echo new JsonResponse($result, 'Response message with !!! no !!! error set');
-						break;
-					case 5:
-						$app->enqueueMessage('This part was successful 1');
-						$app->enqueueMessage('This part was successful 2');
-						$app->enqueueMessage("Enqueued notice 1", "notice");
-						$app->enqueueMessage("Enqueued notice 2", "notice");
-						$app->enqueueMessage('Here was a small warning 1', 'warning');
-						$app->enqueueMessage('Here was a small warning 2', 'warning');
-						$app->enqueueMessage('Here was a small error 1', 'error');
-						$app->enqueueMessage('Here was a small error 2', 'error');
-
-						throw new \Exception('Attention: raised exception ');
-//						throw new Notallowed(Text::_('Not allowed thrown'), 403);
-
-
-						echo new JsonResponse($result, 'Response message with !!! no !!! error set');
-						break;
-				}
-
-				$app->close();
-			}
-			/**/
+			 * $test = 1; // 0: normal, 1:error, 2: warning ....
+			 *
+			 * if ($test)
+			 * {
+			 * $result = "Resulting data (simulated)";
+			 * switch ($test)
+			 * {
+			 * case 1:
+			 * echo new JsonResponse($result, Text::_('COM_COMPONENT_MY_TASK_ERROR'), true);
+			 * break;
+			 *
+			 * case 2:
+			 * echo new JsonResponse($result, 'Main response message');
+			 * break;
+			 *
+			 * case 3:
+			 * $app->enqueueMessage('This part has error 1');
+			 * $app->enqueueMessage('This part has error 2');
+			 * $app->enqueueMessage("Enqueued notice 1", "notice");
+			 * $app->enqueueMessage("Enqueued notice 2", "notice");
+			 * $app->enqueueMessage('Here was a small warning 1', 'warning');
+			 * $app->enqueueMessage('Here was a small warning 2', 'warning');
+			 * $app->enqueueMessage('Here was a small error 1', 'error');
+			 * $app->enqueueMessage('Here was a small error 2', 'error');
+			 * echo new JsonResponse($result, Text::_('!!! Response message with error set !!!'), true);
+			 * break;
+			 *
+			 * case 4:
+			 * $app->enqueueMessage('This part was successful 1');
+			 * $app->enqueueMessage('This part was successful 2');
+			 * $app->enqueueMessage("Enqueued notice 1", "notice");
+			 * $app->enqueueMessage("Enqueued notice 2", "notice");
+			 * $app->enqueueMessage('Here was a small warning 1', 'warning');
+			 * $app->enqueueMessage('Here was a small warning 2', 'warning');
+			 * $app->enqueueMessage('Here was a small error 1', 'error');
+			 * $app->enqueueMessage('Here was a small error 2', 'error');
+			 * echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+			 * break;
+			 * case 5:
+			 * $app->enqueueMessage('This part was successful 1');
+			 * $app->enqueueMessage('This part was successful 2');
+			 * $app->enqueueMessage("Enqueued notice 1", "notice");
+			 * $app->enqueueMessage("Enqueued notice 2", "notice");
+			 * $app->enqueueMessage('Here was a small warning 1', 'warning');
+			 * $app->enqueueMessage('Here was a small warning 2', 'warning');
+			 * $app->enqueueMessage('Here was a small error 1', 'error');
+			 * $app->enqueueMessage('Here was a small error 2', 'error');
+			 *
+			 * throw new \Exception('Attention: raised exception ');
+			 * //                        throw new Notallowed(Text::_('Not allowed thrown'), 403);
+			 *
+			 *
+			 * echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+			 * break;
+			 * }
+			 *
+			 * $app->close();
+			 * }
+			 * /**/
 
 			//--- file name  --------------------------------------------
 
 			$TargetFileName = $input->get('upload_file_name', '', 'string');
-			$fileName = File::makeSafe($TargetFileName);
+			$fileName       = File::makeSafe($TargetFileName);
 
 // ==>			joomla replace spaces in filenames
 // ==>			'file_name' => str_replace(" ", "", $file_name);
@@ -209,8 +216,8 @@ class UploadController extends FormController
 
 			$ajaxImgDbObject['uploadFileName'] = $TargetFileName;
 			// some dummy data for error messages
-			$ajaxImgDbObject['imageId']  = -1;
-			$ajaxImgDbObject['baseName'] = $baseName;
+			$ajaxImgDbObject['imageId']     = -1;
+			$ajaxImgDbObject['baseName']    = $baseName;
 			$ajaxImgDbObject['dstFileName'] = $fileName;
 
 			//--- gallery ID --------------------------------------------
@@ -249,13 +256,13 @@ class UploadController extends FormController
 
 			// ToDo: use sub folder for each gallery and check within gallery
 			// Each filename is only allowed once so create a new one if file already exist
-			$useFileName = $modelDb->generateNewImageName($baseName, $galleryId);
+			$useFileName                    = $modelDb->generateNewImageName($baseName, $galleryId);
 			$ajaxImgDbObject['dstFileName'] = $useFileName;
 
 			/**/
 			//--- create image data in DB --------------------------------
 
-			$title = $baseName;
+			$title       = $baseName;
 			$description = '';
 
 			$imageId = $modelDb->createImageDbItem($useFileName, '', $galleryId, $description);
@@ -263,7 +270,7 @@ class UploadController extends FormController
 			{
 				// actual give an error
 				//$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-				$msg     .= 'Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
+				$msg .= 'Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
 
 				if ($Rsg2DebugActive)
 				{
@@ -280,26 +287,27 @@ class UploadController extends FormController
 
 			if ($Rsg2DebugActive)
 			{
-				Log::add('<== uploadAjax: After createImageDbItem: ' . $imageId );
+				Log::add('<== uploadAjax: After createImageDbItem: ' . $imageId);
 			}
 
 			// $this->ajaxDummyAnswerOK (); return; // 05
 
-			$ajaxImgDbObject['imageId']  = $imageId;
-			$isCreated = $imageId > 0;
+			$ajaxImgDbObject['imageId'] = $imageId;
+			$isCreated                  = $imageId > 0;
 
 			//----------------------------------------------------
 			// for debug purposes fetch image order
 			//----------------------------------------------------
 
-			$imageOrder = $this->imageOrderFromId ($imageId);
-			$ajaxImgDbObject['order']  = $imageOrder;
+			$imageOrder               = $this->imageOrderFromId($imageId);
+			$ajaxImgDbObject['order'] = $imageOrder;
 
 			//----------------------------------------------------
 			// return result
 			//----------------------------------------------------
 
-			if ($Rsg2DebugActive) {
+			if ($Rsg2DebugActive)
+			{
 				Log::add('    $ajaxImgDbObject: ' . json_encode($ajaxImgDbObject));
 				Log::add('    $msg: "' . $msg . '"');
 				Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
@@ -308,11 +316,14 @@ class UploadController extends FormController
 			// No message as otherwise it would be displayed in form
 			echo new JsonResponse($ajaxImgDbObject, "", !$isCreated, true);
 
-			if ($Rsg2DebugActive) {
+			if ($Rsg2DebugActive)
+			{
 				Log::add('<== Exit uploadAjaxSingleFile');
 			}
 
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			echo new JsonResponse($e);
 		}
 
@@ -323,13 +334,16 @@ class UploadController extends FormController
 	/**
 	 * The dropped file will be uploaded. The dependent files
 	 * display and thumb will also be created
-	 * The gallery id was created before and is read from the
+	 * The image id was created before and is read from the
 	 * ajax parameters
 	 *
 	 * @since 4.3
 	 */
 	function uploadAjaxSingleFile()
 	{
+
+		// Todo: Check Authorisation, Jupload , check mime type ...
+
 		global $rsgConfig, $Rsg2DebugActive;
 
 		// $IsMoved = false;
@@ -338,15 +352,18 @@ class UploadController extends FormController
 
 		// do check token
 		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
-		if ( ! Session::checkToken()) {
-			$errMsg = Text::_('JINVALID_TOKEN') . " (01)";
+		if (!Session::checkToken())
+		{
+			$errMsg   = Text::_('JINVALID_TOKEN') . " (01)";
 			$hasError = 1;
 			echo new JsonResponse($msg, $errMsg, $hasError);
 			$app->close();
 		}
 
-		try {
-			if ($Rsg2DebugActive) {
+		try
+		{
+			if ($Rsg2DebugActive)
+			{
 				// identify active file
 				Log::add('==> uploadAjaxSingleFile');
 			}
@@ -355,12 +372,12 @@ class UploadController extends FormController
 			$oFile = $input->files->get('upload_file', array(), 'raw');
 
 			$srcTempPathFileName = $oFile['tmp_name'];
-			$fileType    = $oFile['type'];
-			$fileError   = $oFile['error'];
-			$fileSize    = $oFile['size'];
+			$fileType            = $oFile['type'];
+			$fileError           = $oFile['error'];
+			$fileSize            = $oFile['size'];
 
 			// Changed name of existing file name
-			$safeFileName = File::makeSafe($oFile['name']);
+			$safeFileName   = File::makeSafe($oFile['name']);
 			$targetFileName = $input->get('dstFileName', '', 'string');
 
 			// for next upload tell where to start
@@ -382,8 +399,8 @@ class UploadController extends FormController
 
 			$ajaxImgObject['fileName'] = $targetFileName;
 			// some dummy data for error messages
-			$ajaxImgObject['imageId']  = -1;
-			$ajaxImgObject['fileUrl']  = '';
+			$ajaxImgObject['imageId']      = -1;
+			$ajaxImgObject['fileUrl']      = '';
 			$ajaxImgObject['safeFileName'] = $safeFileName;
 
 			//--- gallery ID --------------------------------------------
@@ -395,6 +412,7 @@ class UploadController extends FormController
 				echo new JsonResponse($ajaxImgObject, 'Invalid gallery ID at drag and drop upload', true);
 
 				$app->close();
+
 				return;
 			}
 
@@ -409,10 +427,11 @@ class UploadController extends FormController
 				echo new JsonResponse($ajaxImgObject, 'Invalid image ID at drag and drop upload', true);
 
 				$app->close();
+
 				return;
 			}
 
-			$ajaxImgObject['imageId']  = $imageId;
+			$ajaxImgObject['imageId'] = $imageId;
 
 			//----------------------------------------------------
 			// for debug purposes fetch image order
@@ -433,20 +452,20 @@ class UploadController extends FormController
 					$srcTempPathFileName, $targetFileName, $galleryId);
 				/**/
 			}
-	        catch (RuntimeException $e)
-	        {
-		        $OutTxt = '';
-		        $OutTxt .= 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
-		        $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+			catch (RuntimeException $e)
+			{
+				$OutTxt = '';
+				$OutTxt .= 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		        $app = Factory::getApplication();
-		        $app->enqueueMessage($OutTxt, 'error');
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
 
-		        if ($Rsg2DebugActive)
-		        {
-			        Log::add($OutTxt);
-		        }
-	        }
+				if ($Rsg2DebugActive)
+				{
+					Log::add($OutTxt);
+				}
+			}
 
 			if (!$isCreated)
 			{
@@ -458,17 +477,19 @@ class UploadController extends FormController
 
 				echo new JsonResponse($ajaxImgObject, $msg, true);
 				$app->close();
+// ToDo ? app close in these cases
 				return;
 			}
 
 			if ($Rsg2DebugActive)
 			{
-				Log::add('<== uploadAjax: After MoveImageAndCreateRSG2Images isCreated: ' . $isCreated );
+				Log::add('<== uploadAjax: After MoveImageAndCreateRSG2Images isCreated: ' . $isCreated);
 			}
 
 			$ajaxImgObject['fileUrl'] = $urlThumbFile; // $dstFileUrl ???
 
-			if ($Rsg2DebugActive) {
+			if ($Rsg2DebugActive)
+			{
 				Log::add('    $ajaxImgObject: ' . json_encode($ajaxImgObject));
 				Log::add('    $msg: "' . $msg . '"');
 				Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
@@ -477,12 +498,342 @@ class UploadController extends FormController
 			echo new JsonResponse($ajaxImgObject, $msg, !$isCreated, true);
 			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
 
-			if ($Rsg2DebugActive) {
+			if ($Rsg2DebugActive)
+			{
 				Log::add('<== Exit uploadAjaxSingleFile');
 			}
 
-		} catch (Exception $e) {
-			if ($Rsg2DebugActive) {
+		}
+		catch (Exception $e)
+		{
+			if ($Rsg2DebugActive)
+			{
+				Log::add('    Exception: ' . $e->getMessage());
+			}
+
+			echo new JsonResponse($e);
+
+		}
+
+		$app->close();
+	}
+
+
+	/**
+	 * Extracts uploaded zip and creates database entries for each file
+	 *
+	 * The database entry for the image will be created here
+	 * It is called for each image for preserving the correct
+	 * ordering before uploading the images
+	 * Reason: The parallel uploaded images may appear unordered
+	 *
+	 * @throws Exception
+	 * @since 4.3.0
+	 */
+	function uploadAjaxZipExtractReserveDbImageId()
+	{
+		// Todo: Check Authorisation, Jupload , check mime type ...
+
+
+		global $rsgConfig, $Rsg2DebugActive;
+
+		$msg = 'uploadAjaxZipExtractReserveDbImageId::';
+		$app = Factory::getApplication();
+
+		// do check token
+		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		if (!Session::checkToken())
+		{
+			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
+		}
+
+		try
+		{
+			if ($Rsg2DebugActive)
+			{
+				// identify active file
+				Log::add('==> uploadAjaxZipExtractReserveDbImageId');
+			}
+
+			$input = Factory::getApplication()->input;
+			$oFile = $input->files->get('upload_zip_name', array(), 'raw');
+
+			$srcTempPathFileName = $oFile['tmp_name'];
+			$fileType            = $oFile['type'];
+			$fileError           = $oFile['error'];
+			$fileSize            = $oFile['size'];
+
+			// Database IDs of created images
+			$cids = array();
+
+			// Prepare variables needed /created inside brackets {} for phpstorm code check
+			$isHasError      = false;
+			$zipPathFileName = '';
+
+
+			/**
+			 * interface IResponseServerFile {
+			 * fileName: string;
+			 * imageId: string; //number
+			 * baseName: string;
+			 * dstFileName: string;
+			 * }
+			 *
+			 * interface IResponseServerFiles {
+			 * // Path ?
+			 * files: IResponseServerFile [];
+			 * }
+			 * /**/
+
+			$file1                 = [];
+			$file1 ['fileName']    = 'file1_name';
+			$file1 ['imageId']     = '1001';
+			$file1 ['baseName']    = 'base1_name';
+			$file1 ['dstFileName'] = 'dest1_name';
+
+			$file2                 = [];
+			$file2 ['fileName']    = 'file2_name';
+			$file2 ['imageId']     = '1002';
+			$file2 ['baseName']    = 'base2_name';
+			$file2 ['dstFileName'] = 'dest2_name';
+
+			$file3                 = [];
+			$file3 ['fileName']    = 'file3_name';
+			$file3 ['imageId']     = '1003';
+			$file3 ['baseName']    = 'base3_name';
+			$file3 ['dstFileName'] = 'dest3_name';
+
+			$ajaxImgObject ['files'] = [$file1, $file2, $file2];
+
+			$isCreated = true;
+
+			/**
+			 * // for next upload tell where to start
+			 * //$rsgConfig->setLastUpdateType('upload_drag_and_drop');
+			 * // configDb::write2Config ('last_update_type', 'upload_drag_and_drop', $rsgConfig);
+			 *
+			 * if ($Rsg2DebugActive)
+			 * {
+			 * // identify active file
+			 * Log::add('$srcTempPathFileName: "' . $srcTempPathFileName . '"');
+			 * Log::add('$safeFileName: "' . $safeFileName . '"');
+			 * Log::add('$targetFileName: "' . $targetFileName . '"');
+			 * Log::add('$fileType: "' . $fileType . '"');
+			 * Log::add('$fileError: "' . $fileError . '"');
+			 * Log::add('$fileSize: "' . $fileSize . '"');
+			 * }
+			 *
+			 * //--- check user ID --------------------------------------------
+			 *
+			 * $ajaxImgObject['fileName'] = $targetFileName;
+			 * // some dummy data for error messages
+			 * $ajaxImgObject['imageId']  = -1;
+			 * $ajaxImgObject['fileUrl']  = '';
+			 * $ajaxImgObject['safeFileName'] = $safeFileName;
+			 * /**/
+
+			//--- gallery ID --------------------------------------------
+
+			$galleryId = $input->get('gallery_id', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				echo new JsonResponse($ajaxImgObject, 'Invalid gallery ID at drag and drop upload', true);
+
+				$app->close();
+
+				return;
+			}
+
+
+
+
+
+
+
+
+
+
+
+			echo new JsonResponse($ajaxImgObject, "", !$isCreated, true);
+			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
+
+			if ($Rsg2DebugActive)
+			{
+				Log::add('<== Exit uploadAjaxSingleFile');
+			}
+
+		}
+		catch (Exception $e)
+		{
+			if ($Rsg2DebugActive)
+			{
+				Log::add('    Exception: ' . $e->getMessage());
+			}
+
+			echo new JsonResponse($e);
+
+		}
+
+		$app->close();
+	}
+
+
+
+	/**
+	 * Extracts uploaded zip and creates database entries for each file
+	 *
+	 * The database entry for the image will be created here
+	 * It is called for each image for preserving the correct
+	 * ordering before uploading the images
+	 * Reason: The parallel uploaded images may appear unordered
+	 *
+	 * @throws Exception
+	 * @since 4.3.0
+	 */
+	function uploadAjaxFilesInFolderReserveDbImageId()
+	{
+		// Todo: Check Authorisation, Jupload , check mime type ...
+
+		global $rsgConfig, $Rsg2DebugActive;
+
+		$msg = 'uploadAjaxZipExtractReserveDbImageId::';
+		$app = Factory::getApplication();
+
+		// do check token
+		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		if (!Session::checkToken())
+		{
+			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
+		}
+
+		try
+		{
+			if ($Rsg2DebugActive)
+			{
+				// identify active file
+				Log::add('==> uploadAjaxZipExtractReserveDbImageId');
+			}
+
+			$input = Factory::getApplication()->input;
+			$oFile = $input->files->get('upload_zip_name', array(), 'raw');
+
+			$srcTempPathFileName = $oFile['tmp_name'];
+			$fileType            = $oFile['type'];
+			$fileError           = $oFile['error'];
+			$fileSize            = $oFile['size'];
+
+			// Database IDs of created images
+			$cids = array();
+
+			// Prepare variables needed /created inside brackets {} for phpstorm code check
+			$isHasError      = false;
+			$zipPathFileName = '';
+
+
+			/**
+			 * interface IResponseServerFile {
+			 * fileName: string;
+			 * imageId: string; //number
+			 * baseName: string;
+			 * dstFileName: string;
+			 * }
+			 *
+			 * interface IResponseServerFiles {
+			 * // Path ?
+			 * files: IResponseServerFile [];
+			 * }
+			 * /**/
+
+			$file1                 = [];
+			$file1 ['fileName']    = 'file1_name';
+			$file1 ['imageId']     = '1001';
+			$file1 ['baseName']    = 'base1_name';
+			$file1 ['dstFileName'] = 'dest1_name';
+
+			$file2                 = [];
+			$file2 ['fileName']    = 'file2_name';
+			$file2 ['imageId']     = '1002';
+			$file2 ['baseName']    = 'base2_name';
+			$file2 ['dstFileName'] = 'dest2_name';
+
+			$file3                 = [];
+			$file3 ['fileName']    = 'file3_name';
+			$file3 ['imageId']     = '1003';
+			$file3 ['baseName']    = 'base3_name';
+			$file3 ['dstFileName'] = 'dest3_name';
+
+			$ajaxImgObject ['files'] = [$file1, $file2, $file2];
+
+			$isCreated = true;
+
+			/**
+			 * // for next upload tell where to start
+			 * //$rsgConfig->setLastUpdateType('upload_drag_and_drop');
+			 * // configDb::write2Config ('last_update_type', 'upload_drag_and_drop', $rsgConfig);
+			 *
+			 * if ($Rsg2DebugActive)
+			 * {
+			 * // identify active file
+			 * Log::add('$srcTempPathFileName: "' . $srcTempPathFileName . '"');
+			 * Log::add('$safeFileName: "' . $safeFileName . '"');
+			 * Log::add('$targetFileName: "' . $targetFileName . '"');
+			 * Log::add('$fileType: "' . $fileType . '"');
+			 * Log::add('$fileError: "' . $fileError . '"');
+			 * Log::add('$fileSize: "' . $fileSize . '"');
+			 * }
+			 *
+			 * //--- check user ID --------------------------------------------
+			 *
+			 * $ajaxImgObject['fileName'] = $targetFileName;
+			 * // some dummy data for error messages
+			 * $ajaxImgObject['imageId']  = -1;
+			 * $ajaxImgObject['fileUrl']  = '';
+			 * $ajaxImgObject['safeFileName'] = $safeFileName;
+			 * /**/
+
+			//--- gallery ID --------------------------------------------
+
+			$galleryId = $input->get('gallery_id', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				echo new JsonResponse($ajaxImgObject, 'Invalid gallery ID at drag and drop upload', true);
+
+				$app->close();
+
+				return;
+			}
+
+
+
+
+
+
+
+
+
+
+
+			echo new JsonResponse($ajaxImgObject, "", !$isCreated, true);
+			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
+
+			if ($Rsg2DebugActive)
+			{
+				Log::add('<== Exit uploadAjaxSingleFile');
+			}
+
+		}
+		catch (Exception $e)
+		{
+			if ($Rsg2DebugActive)
+			{
 				Log::add('    Exception: ' . $e->getMessage());
 			}
 
@@ -496,26 +847,103 @@ class UploadController extends FormController
 
 
 
-	/*
-		$params = ComponentHelper::getParams('com_rsgallery2');
+	/**
+	 * The already uploaded file will be copied,
+	 * display and thumb files created
+	 *
+	 * @throws Exception
+	 * @since 4.3.0
+	 */
+	function uploadAjaxTransferFolderFile()
+	{
+		// Todo: Check Authorisation, Jupload , check mime type ...
 
-		if ($params->get('', '0'))
+		global $rsgConfig, $Rsg2DebugActive;
+
+		$msg = 'uploadAjaxTransferFolderFile::';
+		$app = Factory::getApplication();
+
+		// do check token
+		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		if (!Session::checkToken())
 		{
-			$options['format'] = '{DATE}\t{TIME}\t{LEVEL}\t{CODE}\t{MESSAGE}';
-			$options['text_file'] = 'indexer.php';
-			Log::addLogger($options);
+			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
 		}
 
-		// Log the start
 		try
 		{
-			Log::add('Starting the indexer', Log::INFO);
+			if ($Rsg2DebugActive)
+			{
+				// identify active file
+				Log::add('==> uploadAjaxTransferFolderFile');
+			}
+
+			$input = Factory::getApplication()->input;
+
+			$fileName = $input->get('fileName', '', 'string');
+			$imageId = $input->get('imageId', '', 'string');
+			$baseName = $input->get('baseName', '', 'string');
+			// toDo: rename dstFileName to safe file name ... sio it matches 	function uploadAjaxSingleFile()
+			$safeFileName = $input->get('dstFileName', '', 'string');
+			
+			$ajaxImgDbObject['fileName'] = $fileName;
+			$ajaxImgDbObject['imageId'] = $imageId;
+//			$ajaxImgDbObject['baseName'] = $baseName;
+//			$ajaxImgDbObject['dstFileName'] = $dstFileName;
+
+			$ajaxImgObject['fileUrl']      = '';
+			$ajaxImgObject['safeFileName'] = $safeFileName;
+
+
+			// Prepare variables needed /created inside brackets {} for phpstorm code check
+			$isHasError      = false;
+			$zipPathFileName = '';
+
+
+			$ajaxImgObject ['isTransferred'] = true;
+
+
+
+			$isCreated = true;
+
+
+
+
+
+
+
+
+
+
+
+
+			echo new JsonResponse($ajaxImgObject, "", !$isCreated, true);
+			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
+
+			if ($Rsg2DebugActive)
+			{
+				Log::add('<== Exit uploadAjaxTransferFolderFile');
+			}
+
 		}
-		catch (\RuntimeException $exception)
+		catch (Exception $e)
 		{
-			// Informational log only
+			if ($Rsg2DebugActive)
+			{
+				Log::add('    Exception: ' . $e->getMessage());
+			}
+
+			echo new JsonResponse($e);
+
 		}
-	*/
+
+		$app->close();
+	}
+
+
 
 	/**
      * Copies list of selected old configuration items to new configuration
@@ -685,7 +1113,7 @@ class UploadController extends FormController
 		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
-				->select('ordering')
+				->select($db->quoteName('ordering'))
 				->from($db->quoteName('#__rsg2_images'))
 				->where($db->quoteName('id') . ' = ' . $db->quote($imageId));
 			$db->setQuery($query);
@@ -703,8 +1131,6 @@ class UploadController extends FormController
 
 		return $imageOrder;
 	}
-
-
 
 } // class
 

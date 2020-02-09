@@ -1,3 +1,6 @@
+// ToDo: use save file name in display
+
+
 /**
  * @package     RSGallery2
  *
@@ -85,6 +88,7 @@ function resolveAfter2Seconds(x) {
 interface IDroppedFile {
     file: File;
     galleryId: string;
+
     statusBar: createStatusBar | null;
     errorZone: HTMLElement | null;
 
@@ -120,6 +124,105 @@ class DroppedFiles extends Queue<IDroppedFile> {
 }
 
 /*----------------------------------------------------------------
+   List of FILES ON SERVER (have db requested, waiting to be moved)
+----------------------------------------------------------------*/
+
+interface IZipFile {
+    file: File;
+    galleryId: string;
+
+    statusBar: createStatusBar | null;
+    errorZone: HTMLElement | null;
+}
+
+class ZipFiles extends Queue<IZipFile> {
+
+    addFiles(files: FileList, galleryId: string) {
+
+        for (let idx = 0; idx < files.length; idx++) {
+            const file: File = files[idx];
+
+            console.log('   +ZipFile: ' + files[idx].name);
+
+            //--- ToDo: Check 4 allowed image type ---------------------------------
+
+            // file.type ...
+
+            //--- Add file with data ---------------------------------
+
+            const next : IZipFile = {
+                file: file,
+                galleryId: galleryId,
+                statusBar: null,
+                errorZone: null,
+            };
+
+            this.push (next);
+        }
+
+    }
+}
+
+
+/*----------------------------------------------------------------
+  request check of folder on server
+----------------------------------------------------------------*/
+
+interface IRequestFolderImport {
+    path: string;
+    galleryId: string;
+
+    statusBar: createStatusBar | null;
+    errorZone: HTMLElement | null;
+}
+
+/*----------------------------------------------------------------
+  request check of folder on server
+----------------------------------------------------------------*/
+
+interface IRequestTransferFolderFile {
+    fileName: string;
+    imageId: string; //number
+    baseName: string;
+    dstFileName: string;
+
+    statusBar: createStatusBar | null;
+    errorZone: HTMLElement | null;
+}
+
+
+// Response after checking for files
+/*----------------------------------------------------------------
+   List of FILES ON SERVER after checking for files
+   List of FILES ON SERVER (have db requested, waiting to be moved)
+----------------------------------------------------------------*/
+
+interface IServerFile {
+    serverFile: IResponseServerFile;
+
+    statusBar: createStatusBar | null;
+    errorZone: HTMLElement | null;
+}
+
+
+class ServerFiles extends Queue<IServerFile> {
+
+    addFiles(files: IServerFile[]) {
+
+        for (let idx = 0; idx < files.length; idx++) {
+            const serverFile = files[idx];
+
+            console.log('   +ServerFile: ' + files[idx].serverFile.fileName);
+
+            //--- Add file with data ---------------------------------
+
+            this.push (serverFile);
+        }
+
+    }
+}
+
+/*----------------------------------------------------------------
    List of files (waiting to transfer)
 ----------------------------------------------------------------*/
 
@@ -137,11 +240,12 @@ class TransferFiles extends Queue<ITransferFile> {
         const next : ITransferFile = {
             file: nextFile.file,
             galleryId: nextFile.galleryId,
-            statusBar: nextFile.statusBar,
-            errorZone: nextFile.errorZone,
             imageId: imageId,
             fileName: fileName,
             dstFileName: dstFileName,
+
+            statusBar: nextFile.statusBar,
+            errorZone: nextFile.errorZone,
         };
 
         this.push (next);
@@ -218,16 +322,33 @@ class DroppedFilesTask {
     private readonly selectGallery: HTMLInputElement;
     private droppedFiles: DroppedFiles;
     private requestDbImageIdTask: RequestDbImageIdTask;
+    private zipFiles: ZipFiles;
+    private serverFiles: ServerFiles;
+    private requestZipUploadTask: RequestZipUploadTask;
+    private requestFilesInFolderTask: RequestFilesInFolderTask;
+    private requestTransferFolderFilesTask: RequestTransferFolderFilesTask;
+
+    // needs to be defined extern
+    private serverFolder: IRequestFolderImport;
 
     constructor(
         selectGallery: HTMLInputElement,
         droppedFiles: DroppedFiles,
         requestDbImageIdTask: RequestDbImageIdTask,
+        zipFiles: ZipFiles,
+        requestZipUploadTask: RequestZipUploadTask,
+        serverFiles: ServerFiles,
+        requestFilesInFolderTask: RequestFilesInFolderTask,
+        RequestTransferFolderFilesTask: RequestTransferFolderFilesTask,
     ) {
-
         this.selectGallery = selectGallery;
         this.droppedFiles = droppedFiles;
         this.requestDbImageIdTask = requestDbImageIdTask;
+        this.zipFiles = zipFiles;
+        this.requestZipUploadTask = requestZipUploadTask;
+        this.serverFiles = serverFiles;
+        this.requestFilesInFolderTask = requestFilesInFolderTask;
+        this.requestTransferFolderFilesTask = RequestTransferFolderFilesTask;
 
         let buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
         let buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
@@ -238,23 +359,10 @@ class DroppedFilesTask {
 
         buttonManualFiles.onclick = () =>  fileInput.click();
         buttonZipFile.onclick = () =>  fileZip.click();
-        buttonFolderImport.onclick = (ev: DragEvent) => this.onNewFile(ev);
+        buttonFolderImport.onclick = (ev: DragEvent) => this.onImportFolder(ev);
 
         fileInput.onchange = (ev: DragEvent) => this.onNewFile(ev);
         fileZip.onchange = (ev: DragEvent) => this.onZipFile(ev);
-    }
-
-    onZipFile(ev: DragEvent ) {
-        let element = <HTMLInputElement>ev.target;
-
-        // transfer zip, tell entpackte files, ajax single files conversion
-
-    }
-
-    onImportFolder(ev: DragEvent ) {
-        let element = <HTMLInputElement>ev.target;
-
-        // tell folder files, ajax single files conversion
     }
 
     onNewFile(ev: DragEvent ) {
@@ -289,6 +397,71 @@ class DroppedFilesTask {
         }
     }
 
+    onZipFile(ev: DragEvent ) {
+        let element = <HTMLInputElement>ev.target;
+
+        ev.preventDefault();
+        ev.stopPropagation();
+
+
+        // transfer zip, tell entpackte files, ajax single files conversion
+        // gallery id
+        const selectionHTML = <HTMLInputElement>this.selectGallery;
+        //const gallery_id =  parseInt (selectionHTML.value);
+        const gallery_id =  selectionHTML.value;
+
+        // prevent empty gallery
+        if (parseInt (gallery_id) < 1) {
+            alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
+            console.log(">onZipFile: Rejected");
+        }
+        else {
+            const files: FileList = element.files || ev.dataTransfer.files;
+            // files exist ?
+            if (!files.length) {
+                return;
+            }
+
+            console.log(">onZipFile: " + files.length);
+
+            this.zipFiles.addFiles (files, gallery_id);
+
+            this.requestZipUploadTask.ajaxRequest ();
+        }
+    }
+
+    onImportFolder(ev: DragEvent ) {
+        let element = <HTMLInputElement>ev.target;
+
+        // tell folder files, ajax single files conversion
+
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        // gallery id
+        const selectionHTML = <HTMLInputElement>this.selectGallery;
+        //const gallery_id =  parseInt (selectionHTML.value);
+        const gallery_id = selectionHTML.value;
+
+        // prevent empty gallery
+        if (parseInt(gallery_id) < 1) {
+            alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
+            console.log(">onNewFile: Rejected");
+        } else {
+
+            this.serverFolder = {
+                path: "",
+                galleryId: gallery_id,
+
+                statusBar: null,
+                errorZone: null,
+            };
+
+            console.log(">onImportFolder: " + this.serverFolder.path);
+
+            this.requestFilesInFolderTask.ajaxRequest ();
+        }
+    }
 }
 
 
@@ -315,7 +488,8 @@ class createStatusBar {
 
     constructor(
         progressArea: HTMLElement,
-        file:File,
+        fileName: string,
+        fileSize: number,
     ){
         createStatusBar.imgCount++;
 //        let even_odd = (createStatusBar.imgCount % 2 == 0) ? "odd" : "even";
@@ -396,20 +570,24 @@ class createStatusBar {
         this.htmlBadgeError.appendChild(document.createTextNode('finished with ERROR'));
         this.htmlStatusbarInner.appendChild (this.htmlBadgeError);
 
-        this.setFileNameAndSize (file);
+        this.htmlFilename.innerHTML = fileName;
+        if(fileSize > 0) {
+            this.htmlSize.innerHTML = this.fileSizeText(fileSize);
+        } else {
+            this.htmlSize.innerHTML = '%'; // Not defined
+        }
 
         //// set as first element: Latest file on top to compare if already shown in image area
         //progressArea.prepend(this.statusbar);
         // set as last element: Latest file on top to compare if already shown in image area
         progressArea.appendChild(this.htmlStatusbar);
-
     }
 
     //--- file size in KB/MB .... -------------------
-
-    public setFileNameAndSize (file:File) {
+    // toDo: move to lib file
+    public fileSizeText (fileSize:number) {
         let sizeStr = "";
-        let sizeKB = file.size / 1024;
+        let sizeKB = fileSize / 1024;
 
         if (sizeKB > 1024) {
             let sizeMB = sizeKB / 1024;
@@ -419,8 +597,7 @@ class createStatusBar {
             sizeStr = sizeKB.toFixed(2) + " KB";
         }
 
-        this.htmlFilename.innerHTML = file.name;
-        this.htmlSize.innerHTML = sizeStr;
+        return sizeStr;
     };
 
     //========================================
@@ -598,6 +775,19 @@ interface IResponseTransfer {
     safeFileName: string;
 }
 
+interface IResponseServerFile {
+    fileName: string;
+    imageId: string; //number
+    baseName: string;
+    dstFileName: string;
+    size: number;
+}
+
+interface IResponseServerFiles {
+    // Path ?
+    files: IResponseServerFile [];
+}
+
 class RequestDbImageIdTask {
 
 //    private dragZone: HTMLElement;
@@ -612,7 +802,6 @@ class RequestDbImageIdTask {
     private isBusy: boolean = false;
 
     constructor(
-//        dragZone: HTMLElement,
         progressArea: HTMLElement,
         errorZone: HTMLElement,
 
@@ -620,7 +809,6 @@ class RequestDbImageIdTask {
         transferFiles: TransferFiles,
         transferImagesTask: TransferImagesTask,
         ) {
-//      this.dragZone = dragZone;
         this.progressArea = progressArea;
         this.errorZone = errorZone;
 
@@ -682,10 +870,10 @@ class RequestDbImageIdTask {
                 request.open('POST', urlRequestDbImageId, true);
                 request.onloadstart = function (e) {
                     console.log("      > callAjaxRequest: " + nextFile.file.name);
-                }
+                };
                 request.onloadend = function (e) {
                     console.log("      < callAjaxRequest: ");
-                }
+                };
 
                 request.send(data);
             }
@@ -703,7 +891,7 @@ class RequestDbImageIdTask {
     /**/
     public async ajaxRequest() {
 
-        console.log("    >this.droppedFiles.length: " + this.droppedFiles.length);
+        console.log("    > ajaxRequest droppedFiles: " + this.droppedFiles.length);
 
         // Already busy
         if (this.isBusy) {
@@ -716,9 +904,7 @@ class RequestDbImageIdTask {
             let nextFile = this.droppedFiles.shift();
             console.log("   @Request File: " + nextFile.file.name);
 
-            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.file);
-//            statusBar.setFileNameSize(files[idx].name, files[idx].size);
-
+            nextFile.statusBar = new createStatusBar (this.progressArea, nextFile.file.name, nextFile.file.size);
 
             /* let request = */
             //await this.callAjaxRequest(nextFile)
@@ -753,7 +939,7 @@ class RequestDbImageIdTask {
                     }
 
                     if (AjaxResponse.message || AjaxResponse.messages) {
-                        const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile);
+                        const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile.file.name);
                         if (errorHtml) {
                             this.errorZone.appendChild(errorHtml);
                         }
@@ -768,7 +954,7 @@ class RequestDbImageIdTask {
                     console.log("        error.name: " + errText.name);
                     console.log("        error.message: " + errText.message);
 
-                    const errorHtml = ajaxCatchedMessages2Html(errText, nextFile);
+                    const errorHtml = ajaxCatchedMessages2Html(errText, nextFile.file.name);
 
                     if (errorHtml) {
                         this.errorZone.appendChild(errorHtml);
@@ -779,37 +965,19 @@ class RequestDbImageIdTask {
             ;
             /**/
 
-            console.log("    *this.droppedFiles.length: " + this.droppedFiles.length);
+            console.log("    <Aj:droppedFiles: " + this.droppedFiles.length);
         }
 
         this.isBusy = false;
-        console.log("    <this.droppedFiles.length: " + this.droppedFiles.length);
+        console.log("    <droppedFiles: " + this.droppedFiles.length);
     }
-
-    /**
-     // for function reserveDbImageId
-     let data = new FormData();
-     // data.append('upload_file', files[idx]);
-     data.append('upload_file', files[idx].name);
-     data.append('imagesDroppedListIdx', imagesDroppedListIdx);
-
-     data.append(Token, '1');
-     data.append('gallery_id', gallery_id);
-     //data.append('idx', idx);
-
-     // Set progress bar
-     let statusBar = new createStatusBar(progressArea);
-     statusBar.setFileNameSize(files[idx].name, files[idx].size);
-
-     /**/
-
 }
 
 /*----------------------------------------------------------------
      ajax messages as html elements
 ----------------------------------------------------------------*/
 
-function ajaxCatchedMessages2Html (errText: Error, nextFile: IDroppedFile):  HTMLElement | null {
+function ajaxCatchedMessages2Html (errText: Error, fileName: string):  HTMLElement | null {
 
     let errorHtml:HTMLElement = null;
 
@@ -828,7 +996,7 @@ function ajaxCatchedMessages2Html (errText: Error, nextFile: IDroppedFile):  HTM
         const errorCardHeaderHtml = document.createElement('div');
         errorCardHeaderHtml.classList.add('card-header');
         const errorCardHeaderTitle = document.createElement('h3');
-        errorCardHeaderTitle.appendChild(document.createTextNode(nextFile.file.name));
+        errorCardHeaderTitle.appendChild(document.createTextNode(fileName));
         errorCardHeaderHtml.appendChild(errorCardHeaderTitle);
         errorCardHtml.appendChild(errorCardHeaderHtml);
 
@@ -865,7 +1033,7 @@ function ajaxCatchedMessages2Html (errText: Error, nextFile: IDroppedFile):  HTM
      ajax messages as html elements
 ----------------------------------------------------------------*/
 
-function ajaxMessages2Html (AjaxResponse: IAjaxResponse, nextFile: IDroppedFile): HTMLElement | null
+function ajaxMessages2Html (AjaxResponse: IAjaxResponse, fileName: string): HTMLElement | null
 {
     let errorHtml:HTMLElement = null;
 
@@ -879,7 +1047,7 @@ function ajaxMessages2Html (AjaxResponse: IAjaxResponse, nextFile: IDroppedFile)
         const errorCardHeaderHtml = document.createElement('div');
         errorCardHeaderHtml.classList.add('card-header');
         const errorCardHeaderTitle = document.createElement('h3');
-        errorCardHeaderTitle.appendChild(document.createTextNode(nextFile.file.name));
+        errorCardHeaderTitle.appendChild(document.createTextNode(fileName));
         errorCardHeaderHtml.appendChild(errorCardHeaderTitle);
         errorCardHtml.appendChild(errorCardHeaderHtml);
 
@@ -972,10 +1140,10 @@ class TransferImagesTask {
         transferFiles: TransferFiles,
     ) {
         this.imagesArea = imagesArea;
+        this.progressArea = progressArea;
         this.errorZone = errorZone;
 
         this.transferFiles = transferFiles;
-        this.progressArea = progressArea;
     }
 
     private async callAjaxTransfer(nextFile: ITransferFile) {
@@ -1077,10 +1245,10 @@ class TransferImagesTask {
 
                 request.onloadstart = function (e) {
                     console.log("      > callAjaxTransfer: " + nextFile.file.name);
-                }
+                };
                 request.onloadend = function (e) {
                     console.log("      < callAjaxTransfer: ");
-                }
+                };
 
                 request.upload.onprogress = function (event) {
                     if (event.lengthComputable) {
@@ -1155,7 +1323,7 @@ class TransferImagesTask {
                     }
 
                     if (AjaxResponse.message || AjaxResponse.messages) {
-                        const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile);
+                        const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile.fileName);
                         if (errorHtml) {
                             this.errorZone.appendChild(errorHtml);
                         }
@@ -1171,7 +1339,7 @@ class TransferImagesTask {
                     console.log("        error.name: " + errText.name);
                     console.log("        error.message: " + errText.message);
 
-                    const errorHtml = ajaxCatchedMessages2Html(errText, nextFile);
+                    const errorHtml = ajaxCatchedMessages2Html(errText, nextFile.fileName);
 
                     if (errorHtml) {
                         this.errorZone.appendChild(errorHtml);
@@ -1195,6 +1363,7 @@ class TransferImagesTask {
         console.log("    <this.transferFiles.length: " + this.transferFiles.length);
     }
 
+    // toDo: Html lib or similar
     private showThumb (responseData: IResponseTransfer) {
 
         // Add HTML to show thumb of uploaded image
@@ -1254,6 +1423,578 @@ class TransferImagesTask {
 
 }
 
+//--------------------------------------------------------------------------------------
+// Zip file ...
+//--------------------------------------------------------------------------------------
+
+class RequestZipUploadTask {
+
+    //    private dragZone: HTMLElement;
+    private progressArea: HTMLElement;
+    private errorZone: HTMLElement;
+
+    private zipFiles: ZipFiles;
+    private serverFiles: ServerFiles;
+    private requestTransferFolderFilesTask: RequestTransferFolderFilesTask;
+
+//    private request: Promise<IDroppedFile>;
+    private isBusy: boolean = false;
+
+    constructor(
+        progressArea: HTMLElement,
+        errorZone: HTMLElement,
+
+        zipFiles: ZipFiles,
+        serverFiles: ServerFiles,
+        RequestTransferFolderFilesTask: RequestTransferFolderFilesTask,
+        ) {
+        this.progressArea = progressArea;
+        this.errorZone = errorZone;
+
+        this.zipFiles = zipFiles;
+        this.serverFiles = serverFiles;
+        this.requestTransferFolderFilesTask = RequestTransferFolderFilesTask;
+    }
+
+    /**/
+    private async callAjaxRequest(nextFile: IDroppedFile): Promise<any> {
+        return new Promise<any>(
+            function (resolve, reject) {
+
+                const request = new XMLHttpRequest();
+                request.onload = function () {
+                    if (this.status === 200) {
+                        // attention joomla may send error data on this channel
+                        resolve(this.response);
+                    } else {
+                        let msg = 'Error \'on upload\' for ' + nextFile.file.name + ' in zip:\n*'
+                            + 'State: ' + this.status + ' ' + this.statusText + '\n';
+                        + 'responseType: ' + this.responseType + '\n';
+                        //alert (msg);
+                        console.log (msg);
+
+                        // reject(new Error(this.response));
+                        reject(new Error(this.responseText)); // ToDo: check if there is mor in this
+                    }
+                };
+                request.onerror = function () {
+                    let msg = 'onError::  state: ' + this.status + ' ' + this.statusText + '\n';
+                    msg += 'responseType: ' + this.responseType + '\n';
+                    //msg += 'responseText: ' + this.responseText + '\n';
+                    //alert (msg);
+                    console.log (msg);
+
+                    // reject(new Error(this.response));
+                    reject(new Error(this.responseText));
+                };
+
+                let data = new FormData();
+                data.append('upload_zip_name', nextFile.file.name);
+                data.append('upload_size', nextFile.file.size.toString());
+                data.append('upload_type', nextFile.file.type);
+                data.append(Token, '1');
+                data.append('gallery_id', nextFile.galleryId);
+
+                const urlRequestZipUpload = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxZipExtractReserveDbImageId';
+
+                request.open('POST', urlRequestZipUpload, true);
+                request.onloadstart = function (e) {
+                    console.log("      > callAjaxRequest: " + nextFile.file.name);
+                };
+                request.onloadend = function (e) {
+                    console.log("      < callAjaxRequest: ");
+                };
+
+                request.send(data);
+            }
+        );
+
+        /**
+         console.log("      > callAjaxRequest: " + nextFile.file.name);
+         let result = await setTimeout(() => {
+            console.log("< callAjaxRequest: " + nextFile.file.name)
+        }, 333);
+         /**/
+    }
+    /**/
+
+
+
+    public async ajaxRequest() {
+
+        console.log("    >ajaxRequest Zip: zipFiles: " + this.zipFiles.length);
+
+        // Already busy
+        if (this.isBusy) {
+            return;
+        }
+        this.isBusy = true;
+        /**/
+
+        while (this.zipFiles.length > 0) {
+            let nextFile = this.zipFiles.shift();
+            console.log("   @Request zip File: " + nextFile.file.name);
+
+            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.file.name, nextFile.file.size);
+
+            /* let request = */
+            //await this.callAjaxRequest(nextFile)
+            this.callAjaxRequest(nextFile)
+                .then((response) => {
+                    // attention joomla may send error data on this channel
+                    console.log("   <Request OK: " + nextFile.file.name);
+                    console.log("      response: " + JSON.stringify(response));
+
+                    const [data, noise] = separateDataAndNoise (response);
+
+                    console.log("      response data: " + JSON.stringify(data));
+                    console.log("      response error/noise: " + JSON.stringify(noise));
+
+                    let AjaxResponse:IAjaxResponse = JSON.parse(data);
+                    //console.log("      response data: " + JSON.stringify(data));
+
+                    if (AjaxResponse.success) {
+                        console.log("      success data: " + AjaxResponse.data);
+
+                        let severFiles = <IResponseServerFiles><unknown>AjaxResponse.data;
+
+                        for (let idx = 0; idx < severFiles.files.length; idx++) {
+
+                            const severFile = severFiles.files[idx];
+                            const nextFile: IServerFile = {
+                                serverFile: severFile,
+
+                                // ToDo create statusbar entry
+                                statusBar: null,
+                                errorZone: null,
+                            };
+
+                            this.serverFiles.addFiles([nextFile]);
+                        }
+
+                        // ==> Start ajax transfer of files
+                        this.requestTransferFolderFilesTask.ajaxRequest ();
+                    } else {
+                        console.log("      failed data: " + AjaxResponse.data);
+                    }
+
+                    if (AjaxResponse.message || AjaxResponse.messages) {
+                        const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile.file.name);
+                        if (errorHtml) {
+                            this.errorZone.appendChild(errorHtml);
+                        }
+                    }
+
+                })
+                .catch((errText: Error) => {
+                    console.log("    !!! Error request: " + nextFile.file.name);
+                    //                  alert ('errText' + errText);
+                    //console.log("        error: " + JSON.stringify(errText));
+                    console.log("        error: " + errText);
+                    console.log("        error.name: " + errText.name);
+                    console.log("        error.message: " + errText.message);
+
+                    const errorHtml = ajaxCatchedMessages2Html(errText, nextFile.file.name);
+
+                    if (errorHtml) {
+                        this.errorZone.appendChild(errorHtml);
+                    }
+
+                    console.log('!!! errText' + errText);
+                })
+            ;
+            /**/
+
+            console.log("    <Aj:zipFiles: " + this.zipFiles.length);
+        }
+
+        this.isBusy = false;
+        console.log("    <zipFiles: " + this.zipFiles.length);
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Report list of files in folder on server
+//--------------------------------------------------------------------------------------
+
+class RequestFilesInFolderTask {
+
+    //    private dragZone: HTMLElement;
+    private progressArea: HTMLElement;
+    private errorZone: HTMLElement;
+
+    private serverFiles: ServerFiles;
+    private requestTransferFolderFilesTask: RequestTransferFolderFilesTask;
+
+//    private request: Promise<IDroppedFile>;
+    private isBusy: boolean = false;
+
+    constructor(
+        progressArea: HTMLElement,
+        errorZone: HTMLElement,
+        serverFiles: ServerFiles,
+        requestTransferFolderFilesTask: RequestTransferFolderFilesTask,
+    ) {
+        this.progressArea = progressArea;
+        this.errorZone = errorZone;
+
+        this.serverFiles = serverFiles;
+        this.requestTransferFolderFilesTask = requestTransferFolderFilesTask;
+    }
+
+    // ToDo: do update this part
+    private async callAjaxRequest(nextFile: IRequestTransferFolderFile): Promise<any> {
+        return new Promise<any>(
+            function (resolve, reject) {
+
+                const request = new XMLHttpRequest();
+                request.onload = function () {
+                    if (this.status === 200) {
+                        // attention joomla may send error data on this channel
+                        resolve(this.response);
+                    } else {
+                        let msg = 'Error \'on load\' for ' + nextFile.fileName + ' in DbRequest:\n*'
+                            + 'State: ' + this.status + ' ' + this.statusText + '\n';
+                        + 'responseType: ' + this.responseType + '\n';
+                        //alert (msg);
+                        console.log (msg);
+
+                        // reject(new Error(this.response));
+                        reject(new Error(this.responseText)); // ToDo: check if there is mor in this
+                    }
+                };
+                request.onerror = function () {
+                    let msg = 'onError::  state: ' + this.status + ' ' + this.statusText + '\n';
+                    msg += 'responseType: ' + this.responseType + '\n';
+                    //msg += 'responseText: ' + this.responseText + '\n';
+                    //alert (msg);
+                    console.log (msg);
+
+                    // reject(new Error(this.response));
+                    reject(new Error(this.responseText));
+                };
+
+                let data = new FormData();
+                data.append('fileName', nextFile.fileName);
+                data.append('imageId', nextFile.imageId);
+                data.append('baseName', nextFile.baseName);
+                data.append('dstFileName', nextFile.dstFileName);
+                data.append(Token, '1');
+
+                const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxTransferFolderFile';
+
+                request.open('POST', urlRequestDbImageId, true);
+                request.onloadstart = function (e) {
+                    console.log("      > callAjaxRequest: " + nextFile.fileName);
+                };
+                request.onloadend = function (e) {
+                    console.log("      < callAjaxRequest: ");
+                };
+
+                request.send(data);
+            }
+        );
+
+        /**
+         console.log("      > callAjaxRequest: " + nextFile.file.name);
+         let result = await setTimeout(() => {
+            console.log("< callAjaxRequest: " + nextFile.file.name)
+        }, 333);
+         /**/
+    }
+    /**/
+
+
+
+
+    public async ajaxRequest() {
+
+//        // needs to be defined extern
+//    private serverFolder: IRequestFolderImport;
+
+        //        console.log("    > ajaxRequest FilesInFolder: " + this.serverFolder.path);
+
+
+        // ...
+
+        console.log("    >ajaxRequest Zip: zipFiles: " + this.zipFiles.length);
+
+        // Already busy
+        if (this.isBusy) {
+            return;
+        }
+        this.isBusy = true;
+        /**/
+
+        nextFile: IRequestFolderImport = {
+            path: '',
+            galleryId: ;
+
+            statusBar: createStatusBar | null;
+            errorZone: HTMLElement | null;
+        }
+
+
+
+
+
+
+
+
+        this.isBusy = false;
+        console.log("    <zipFiles: " + this.zipFiles.length);
+
+
+    }
+}
+//--------------------------------------------------------------------------------------
+// Files already on server by ftp or zip upload
+//--------------------------------------------------------------------------------------
+
+class RequestTransferFolderFilesTask {
+
+    private imagesArea: HTMLElement;
+    private progressArea: HTMLElement;
+    private errorZone: HTMLElement;
+
+    private serverFiles: ServerFiles;
+
+    //    private request: Promise<IDroppedFile>;
+    private isBusy: boolean = false;
+
+    constructor(
+        imagesArea: HTMLElement,
+        progressArea: HTMLElement,
+        errorZone: HTMLElement,
+
+        //        zipFiles: ZipFiles,
+        serverFiles: ServerFiles,
+    ) {
+        this.imagesArea = imagesArea;
+        this.progressArea = progressArea;
+        this.errorZone = errorZone;
+
+        this.serverFiles = serverFiles;
+    }
+
+    private async callAjaxRequest(nextFile: IRequestTransferFolderFile): Promise<any> {
+        return new Promise<any>(
+            function (resolve, reject) {
+
+                const request = new XMLHttpRequest();
+                request.onload = function () {
+                    if (this.status === 200) {
+                        // attention joomla may send error data on this channel
+                        resolve(this.response);
+                    } else {
+                        let msg = 'Error \'on load\' for ' + nextFile.fileName + ' in DbRequest:\n*'
+                            + 'State: ' + this.status + ' ' + this.statusText + '\n';
+                            + 'responseType: ' + this.responseType + '\n';
+                        //alert (msg);
+                        console.log (msg);
+
+                        // reject(new Error(this.response));
+                        reject(new Error(this.responseText)); // ToDo: check if there is mor in this
+                    }
+                };
+                request.onerror = function () {
+                    let msg = 'onError::  state: ' + this.status + ' ' + this.statusText + '\n';
+                    msg += 'responseType: ' + this.responseType + '\n';
+                    //msg += 'responseText: ' + this.responseText + '\n';
+                    //alert (msg);
+                    console.log (msg);
+
+                    // reject(new Error(this.response));
+                    reject(new Error(this.responseText));
+                };
+
+                let data = new FormData();
+                data.append('fileName', nextFile.fileName);
+                data.append('imageId', nextFile.imageId);
+                data.append('baseName', nextFile.baseName);
+                data.append('dstFileName', nextFile.dstFileName);
+                data.append(Token, '1');
+
+                const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxTransferFolderFile';
+
+                request.open('POST', urlRequestDbImageId, true);
+                request.onloadstart = function (e) {
+                    console.log("      > callAjaxRequest: " + nextFile.fileName);
+                };
+                request.onloadend = function (e) {
+                    console.log("      < callAjaxRequest: ");
+                };
+
+                request.send(data);
+            }
+        );
+
+        /**
+         console.log("      > callAjaxRequest: " + nextFile.file.name);
+         let result = await setTimeout(() => {
+            console.log("< callAjaxRequest: " + nextFile.file.name)
+        }, 333);
+         /**/
+    }
+    /**/
+
+    /**/
+    public async ajaxRequest() {
+
+        console.log("    > ajaxRequest serverFiles: " + this.serverFiles.length);
+
+        // Already busy
+        if (this.isBusy) {
+            return;
+        }
+        this.isBusy = true;
+        /**/
+
+        while (this.serverFiles.length > 0) {
+            const serverFile = this.serverFiles.shift().serverFile;
+
+            let nextFile: IRequestTransferFolderFile = {
+                fileName: serverFile.fileName,
+                imageId: serverFile.imageId,
+                baseName: serverFile.baseName,
+                dstFileName: serverFile.dstFileName,
+
+                statusBar: null,
+                errorZone: null,
+            };
+
+
+            console.log("   @Request File: " + nextFile.fileName);
+
+            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.fileName, serverFile.size);
+
+            /* let request = */
+            //await this.callAjaxRequest(nextFile)
+            this.callAjaxRequest(nextFile)
+                .then((response) => {
+                    // attention joomla may send error data on this channel
+                    console.log("   <Request OK: " + nextFile.fileName);
+                    console.log("      response: " + JSON.stringify(response));
+
+                    const [data, noise] = separateDataAndNoise (response);
+
+                    console.log("      response data: " + JSON.stringify(data));
+                    console.log("      response error/noise: " + JSON.stringify(noise));
+
+                    let AjaxResponse:IAjaxResponse = JSON.parse(data);
+                    //console.log("      response data: " + JSON.stringify(data));
+
+                    if (AjaxResponse.success) {
+                        console.log("      success data: " + AjaxResponse.data);
+
+                        let transferData = <IResponseTransfer><unknown>AjaxResponse.data;
+
+                        console.log("      response data.file: " + transferData.fileName);
+                        console.log("      response data.imageId: " + transferData.imageId);
+                        console.log("      response data.fileUrl: " + transferData.fileUrl);
+                        console.log("      response data.safeFileName: " + transferData.safeFileName);
+
+                        nextFile.statusBar.setOK(true);
+
+                        this.showThumb(transferData)
+
+                    } else {
+                        console.log("      failed data: " + AjaxResponse.data);
+                    }
+
+                    if (AjaxResponse.message || AjaxResponse.messages) {
+                        const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile.fileName);
+                        if (errorHtml) {
+                            this.errorZone.appendChild(errorHtml);
+                        }
+                    }
+
+                })
+                .catch((errText: Error) => {
+                    console.log("    !!! Error request: " + nextFile.fileName);
+                    //                  alert ('errText' + errText);
+                    //console.log("        error: " + JSON.stringify(errText));
+                    console.log("        error: " + errText);
+                    console.log("        error.name: " + errText.name);
+                    console.log("        error.message: " + errText.message);
+
+                    const errorHtml = ajaxCatchedMessages2Html(errText, nextFile.fileName);
+
+                    if (errorHtml) {
+                        this.errorZone.appendChild(errorHtml);
+                    }
+
+                    console.log('!!! errText' + errText);
+                })
+            ;
+            /**/
+
+            console.log("    <Aj:droppedFiles: " + this.serverFiles.length);
+        }
+
+        this.isBusy = false;
+        console.log("    <droppedFiles: " + this.serverFiles.length);
+    }
+
+    // toDo: Html lib or similar
+    private showThumb (responseData: IResponseTransfer) {
+
+        // Add HTML to show thumb of uploaded image
+
+// ToDo: images area class:span12 && #imagesAreaList class:thumbnails around ...
+
+        //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
+        const imageBox = document.createElement('li');
+        this.imagesArea.appendChild (imageBox);
+
+        //this.thumbArea = $("<div class='thumbnail imgProperty'></div>").appendTo(this.imageBox);
+        const thumbArea = document.createElement('div');
+        thumbArea.classList.add('thumbnail');
+        thumbArea.classList.add('imgProperty');
+        imageBox.appendChild (thumbArea);
+
+        //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
+        const imgContainer = document.createElement('div');
+        imgContainer.classList.add('imgContainer');
+        thumbArea.appendChild (imgContainer);
+
+        //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
+        const imageDisplay = document.createElement('img');
+        imageDisplay.classList.add('img-rounded');
+        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
+        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
+        imageDisplay.src = responseData.fileUrl;
+        imgContainer.appendChild (imageDisplay);
+
+        //
+        //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
+        const caption = document.createElement('div');
+        caption.classList.add('caption');
+        imageBox.appendChild (caption);
+
+        //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
+        const imageName = document.createElement('small');
+        imageName.innerText = responseData.fileName;
+        caption.appendChild (imageName);
+
+        // toDo: title ?
+        //this.imageId = $("<small> (" + jData.data.cid + ":" + jData.data.order + ")</small>").appendTo(this.imageDisplay);
+        const imageId = document.createElement('small');
+        imageId.innerText = '(' + responseData.imageId + ')'; // order
+        //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
+        caption.appendChild (imageId);
+
+        //this.cid = $("<input name='cid[]' class='imageCid' type='hidden' value='" + jData.data.cid + "' />").appendTo(this.imageBox);
+        const cid = document.createElement('input');
+        cid.classList.add('imageCid');
+        cid.name = 'cid[]';
+        cid.type = 'hidden';
+        cid.innerText = responseData.imageId;
+
+        imageBox.appendChild (cid);
+    }
+
+}
 
 //--------------------------------------------------------------------------------------
 // On start:  DOM is loaded and ready
@@ -1283,6 +2024,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // Reserve list for dropped files
     const droppedFiles = new DroppedFiles();
     const transferFiles = new TransferFiles();
+    const zipFiles = new ZipFiles ();
+    const serverFiles = new ServerFiles ();
+
+    // move file on server to rsgallery path (and multiply file)
+    const requestTransferFolderFilesTask = new RequestTransferFolderFilesTask(elements.imagesArea, elements.progressArea,
+        elements.errorZone, serverFiles);
+
+    // Get list of files on server (and create image DB IDs)
+    const requestFilesInFolderTask = new RequestFilesInFolderTask (elements.progressArea, elements.errorZone,
+        serverFiles, requestTransferFolderFilesTask);
+
+    // Upload zip to a server folder, return list of files on server (and create image DB IDs)
+    const requestZipUploadTask = new RequestZipUploadTask(elements.progressArea, elements.errorZone,
+        zipFiles, serverFiles, requestTransferFolderFilesTask);
+
+
 
     // init red / green border of drag area
     const gallerySelected = new Border4SelectedGallery (elements.selectGallery, elements.dragZone);
@@ -1298,11 +2055,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         droppedFiles, transferFiles, transferImagesTask);
 
     // (1) collect dropped files, start request DB image ID
-    let droppedFilesTask = new DroppedFilesTask (elements.selectGallery, droppedFiles, requestDbImageIdTask);
-
-
-
-
+    const droppedFilesTask = new DroppedFilesTask (elements.selectGallery,
+        droppedFiles, requestDbImageIdTask,
+        zipFiles, requestZipUploadTask,
+        serverFiles, requestFilesInFolderTask,
+        requestTransferFolderFilesTask);
 
     //--------------------------------------------------------------------------------------
     // Drop init and start
@@ -1362,122 +2119,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if (!files.length) {
             return;
         }
+
+        // ToDo: decide *.zip or other on both
+        let isImage = false;
+        let isZip = false;
+
 //        Array.from(files).foreach ((File) => {console.log("filename: " + File.name);});
         for (let i = 0; i < files.length; i++) {
             console.log("filename: " + files[i].name);
-            console.log(files[i]);
+            // Zip ?
+            if (files[i].name.toLowerCase().endsWith ('.zip')) {
+                isZip = false;
+            } else {
+                isImage = false;
+            }
         }
         /**/
 
-        droppedFilesTask.onNewFile (event);
+        if (isImage && isZip)
+        {
+            alert ('Zip and image files selected. Please chooes one of both');
+        }
+        if (isImage) {
+            droppedFilesTask.onNewFile(event);
+        } else {
+            droppedFilesTask.onZipFile(event);
+        }
+
     });
-
-    //--------------------------------------------------------------------------------------
-    //
-    //--------------------------------------------------------------------------------------
-
-    //--------------------------------------------------------------------------------------
-    // new functions and new submit buttons
-    //--------------------------------------------------------------------------------------
-
-    /**
-     * call imagesProperties view. There assign properties to dropped files
-     */
-    /**
-    Joomla.submitAssign2DroppedFiles = function () {
-    // submitAssign2DroppedFiles = function () {
-    //        alert('submitAssignDroppedFiles:  ...');
-        const form: HTMLFormElement = <HTMLFormElement> document.getElementById('adminForm');
-
-        // ToDo: check if one image exists
-        form.task.value = 'imagesProperties.PropertiesView';
-
-        form.submit();
-    };
-
-    /**
-     * Upload zip file, checks and calls
-     */
-    /**
-    Joomla.submitButtonManualFileZipPc = function () {
-
-        // alert('Upload Manual File Zip from Pc: controller upload.uploadFromZip ...');
-
-        let form = document.getElementById('adminForm');
-
-        let zip_path = form.zip_file.value;
-        let gallery_id = jQuery('#SelectGalleries_01').val();
-        let bOneGalleryName4All = jQuery('input[name="all_img_in_step1_01"]').val();
-
-        // No file path given
-        if (zip_path == "") {
-            alert(Joomla.JText._('COM_RSGALLERY2_ZIP_MINUS_UPLOAD_SELECTED_BUT_NO_FILE_CHOSEN'));
-        }
-        else {
-            // Is invalid galleryId selected ?
-            if (bOneGalleryName4All && (gallery_id < 1)) {
-                alert(Joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(2)');
-            }
-            else {
-                // yes transfer files ...
-                form.task.value = 'upload.uploadFromZip'; // upload.uploadZipFile
-                form.batchmethod.value = 'zip';
-                form.ftppath.value = "";
-                form.xcat.value = gallery_id;
-                form.selcat.value = bOneGalleryName4All;
-                form.rsgOption.value = "";
-
-
-                jQuery('#loading').css('display', 'block');
-
-                form.submit();
-
-            }
-        }
-    };
-    /**/
-
-    /*
-     * Upload server file checks and calls
-     */
-    /**
-    Joomla.submitButtonManualFileFolderServer = function () {
-
-        // alert('Upload Folder server: upload.uploadFromFtpFolder ...');
-
-        let form = document.getElementById('adminForm');
-
-        //let GalleryId = jQuery('#SelectGalleries_03').chosen().val();
-        let gallery_id = jQuery('#SelectGalleries_02').val();
-        let ftp_path = form.ftp_path.value;
-        let bOneGalleryName4All = jQuery('input[name="all_img_in_step1_02"]').val();
-
-        // ftp path is not given
-        if (ftp_path == "") {
-            alert(Joomla.JText._('COM_RSGALLERY2_FTP_UPLOAD_CHOSEN_BUT_NO_FTP_PATH_PROVIDED'));
-        }
-        else {
-            // Is invalid galleryId selected ?
-            if (bOneGalleryName4All && (gallery_id < 1)) {
-                alert(Joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(4)');
-            }
-            else {
-                // yes transfer files ...
-                form.task.value = 'upload.uploadFromFtpFolder'; // upload.uploadZipFile
-                form.batchmethod.value = 'FTP';
-                form.ftppath.value = ftp_path;
-                form.xcat.value = gallery_id;
-                form.selcat.value = bOneGalleryName4All;
-                form.rsgOption.value = "";
-
-                //jQuery('#loading').css('display', 'block');
-
-                form.submit();
-            }
-        }
-    };
-    /**/
-
 
 });
 
