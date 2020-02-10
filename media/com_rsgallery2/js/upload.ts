@@ -199,6 +199,7 @@ interface IRequestTransferFolderFile {
 
 interface IServerFile {
     serverFile: IResponseServerFile;
+    galleryId: string;
 
     statusBar: createStatusBar | null;
     errorZone: HTMLElement | null;
@@ -455,7 +456,7 @@ class DroppedFilesTask {
 
             console.log(">onImportFolder: " + this.serverFolder.path);
 
-            this.requestFilesInFolderTask.ajaxRequest ();
+            this.requestFilesInFolderTask.ajaxRequest (gallery_id);
         }
     }
 }
@@ -1557,15 +1558,16 @@ class RequestZipUploadTask {
                         for (let idx = 0; idx < severFiles.files.length; idx++) {
 
                             const severFile = severFiles.files[idx];
-                            const nextFile: IServerFile = {
+                            const foundFile: IServerFile = {
                                 serverFile: severFile,
+                                galleryId: nextFile.galleryId,
 
                                 // ToDo create statusbar entry
                                 statusBar: null,
                                 errorZone: null,
                             };
 
-                            this.serverFiles.addFiles([nextFile]);
+                            this.serverFiles.addFiles([foundFile]);
                         }
 
                         // ==> Start ajax transfer of files
@@ -1674,9 +1676,11 @@ class RequestFilesInFolderTask {
                     reject(new Error(this.responseText));
                 };
 
+                console.log("(15) serverFolder.galleryId: " + serverFolder.galleryId);
+
                 let data = new FormData();
                 data.append('folderPath', serverFolder.path);
-                data.append('galleryId', serverFolder.galleryId);
+                data.append('gallery_id', serverFolder.galleryId);
                 data.append(Token, '1');
 
                 const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxFilesInFolderReserveDbImageId';
@@ -1705,9 +1709,10 @@ class RequestFilesInFolderTask {
 
 
 
-    public async ajaxRequest() {
+    public async ajaxRequest(galleryId: string) {
 
         console.log("    >ajaxRequest FilesInFolder: " + this.serverFolder.path);
+        console.log("(10) galleryId: " + galleryId);
 
         // Already busy
         if (this.isBusy) {
@@ -1742,15 +1747,16 @@ class RequestFilesInFolderTask {
                     for (let idx = 0; idx < severFiles.files.length; idx++) {
 
                         const severFile = severFiles.files[idx];
-                        const nextFile: IServerFile = {
+                        const foundFile: IServerFile = {
                             serverFile: severFile,
+                            galleryId: galleryId,
 
                             // ToDo create statusbar entry
                             statusBar: null,
                             errorZone: null,
                         };
 
-                        this.serverFiles.addFiles([nextFile]);
+                        this.serverFiles.addFiles([foundFile]);
                     }
 
                     // ==> Start ajax transfer of files

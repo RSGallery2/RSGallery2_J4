@@ -226,8 +226,6 @@ class UploadController extends FormController
 			// wrong id ? ToDo: test is number ...
 			if ($galleryId < 1)
 			{
-				//$app->enqueueMessage(Text::_('COM_RSGALLERY2_INVALID_GALLERY_ID'), 'error');
-				//echo new JsonResponse;
 				$msg .= ': Invalid gallery ID at drag and drop upload';
 
 				if ($Rsg2DebugActive)
@@ -409,10 +407,16 @@ class UploadController extends FormController
 			// wrong id ?
 			if ($galleryId < 1)
 			{
-				echo new JsonResponse($ajaxImgObject, 'Invalid gallery ID at drag and drop upload', true);
+				$msg .= ': Invalid gallery ID at drag and drop upload';
+
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
+
+				echo new JsonResponse($ajaxImgObject, $msg, true);
 
 				$app->close();
-
 				return;
 			}
 
@@ -566,6 +570,26 @@ class UploadController extends FormController
 			$fileError           = $oFile['error'];
 			$fileSize            = $oFile['size'];
 
+			//--- gallery ID --------------------------------------------
+
+			$galleryId = $input->get('gallery_id', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				$ajaxImgObject = [];
+				$msg .= ': Invalid gallery ID at drag and drop upload';
+
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
+
+				echo new JsonResponse($ajaxImgObject, $msg, true);
+
+				$app->close();
+				return;
+			}
+
 			// Database IDs of created images
 			$cids = array();
 
@@ -593,18 +617,22 @@ class UploadController extends FormController
 			$file1 ['imageId']     = '1001';
 			$file1 ['baseName']    = 'base1_name';
 			$file1 ['dstFileName'] = 'dest1_name';
+			$file1 ['galleryId'] = $galleryId;
+
 
 			$file2                 = [];
 			$file2 ['fileName']    = 'file2_name';
 			$file2 ['imageId']     = '1002';
 			$file2 ['baseName']    = 'base2_name';
 			$file2 ['dstFileName'] = 'dest2_name';
+			$file2 ['galleryId'] = $galleryId;
 
 			$file3                 = [];
 			$file3 ['fileName']    = 'file3_name';
 			$file3 ['imageId']     = '1003';
 			$file3 ['baseName']    = 'base3_name';
 			$file3 ['dstFileName'] = 'dest3_name';
+			$file3 ['galleryId'] = $galleryId;
 
 			$ajaxImgObject ['files'] = [$file1, $file2, $file2];
 
@@ -634,20 +662,6 @@ class UploadController extends FormController
 			 * $ajaxImgObject['fileUrl']  = '';
 			 * $ajaxImgObject['safeFileName'] = $safeFileName;
 			 * /**/
-
-			//--- gallery ID --------------------------------------------
-
-			$galleryId = $input->get('gallery_id', 0, 'INT');
-			// wrong id ?
-			if ($galleryId < 1)
-			{
-				echo new JsonResponse($ajaxImgObject, 'Invalid gallery ID at drag and drop upload', true);
-
-				$app->close();
-
-				return;
-			}
-
 
 
 
@@ -700,7 +714,7 @@ class UploadController extends FormController
 
 		global $rsgConfig, $Rsg2DebugActive;
 
-		$msg = 'uploadAjaxZipExtractReserveDbImageId::';
+		$msg = 'uploadAjaxFilesInFolderReserveDbImageId::';
 		$app = Factory::getApplication();
 
 		// do check token
@@ -718,7 +732,7 @@ class UploadController extends FormController
 			if ($Rsg2DebugActive)
 			{
 				// identify active file
-				Log::add('==> uploadAjaxZipExtractReserveDbImageId');
+				Log::add('==> uploadAjaxFilesInFolderReserveDbImageId');
 			}
 
 			$input = Factory::getApplication()->input;
@@ -728,6 +742,27 @@ class UploadController extends FormController
 			$fileType            = $oFile['type'];
 			$fileError           = $oFile['error'];
 			$fileSize            = $oFile['size'];
+
+			//--- gallery ID --------------------------------------------
+
+			$galleryId = $input->get('gallery_id', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				$ajaxImgObject = [];
+				$msg .= ': Invalid gallery ID at drag and drop upload';
+
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
+
+				echo new JsonResponse($ajaxImgObject, $msg, true);
+
+				$app->close();
+				return;
+			}
+
 
 			// Database IDs of created images
 			$cids = array();
@@ -756,18 +791,21 @@ class UploadController extends FormController
 			$file1 ['imageId']     = '1001';
 			$file1 ['baseName']    = 'base1_name';
 			$file1 ['dstFileName'] = 'dest1_name';
+			$file1 ['galleryId'] = $galleryId;
 
 			$file2                 = [];
 			$file2 ['fileName']    = 'file2_name';
 			$file2 ['imageId']     = '1002';
 			$file2 ['baseName']    = 'base2_name';
 			$file2 ['dstFileName'] = 'dest2_name';
+			$file2 ['galleryId'] = $galleryId;
 
 			$file3                 = [];
 			$file3 ['fileName']    = 'file3_name';
 			$file3 ['imageId']     = '1003';
 			$file3 ['baseName']    = 'base3_name';
 			$file3 ['dstFileName'] = 'dest3_name';
+			$file3 ['galleryId'] = $galleryId;
 
 			$ajaxImgObject ['files'] = [$file1, $file2, $file2];
 
@@ -797,20 +835,6 @@ class UploadController extends FormController
 			 * $ajaxImgObject['fileUrl']  = '';
 			 * $ajaxImgObject['safeFileName'] = $safeFileName;
 			 * /**/
-
-			//--- gallery ID --------------------------------------------
-
-			$galleryId = $input->get('gallery_id', 0, 'INT');
-			// wrong id ?
-			if ($galleryId < 1)
-			{
-				echo new JsonResponse($ajaxImgObject, 'Invalid gallery ID at drag and drop upload', true);
-
-				$app->close();
-
-				return;
-			}
-
 
 
 
