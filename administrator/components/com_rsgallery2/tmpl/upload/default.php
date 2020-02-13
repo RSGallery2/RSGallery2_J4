@@ -88,34 +88,12 @@ $tabs = []
                     /*---------------------------------------------------------------------------
                     Drag and drop
                     ---------------------------------------------------------------------------*/
-                    /**
-                    echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => $tabs[0]['name'] ?? '']);
-                    // Show installation tabs
-                     foreach ($tabs as $tab) :
-                         echo HTMLHelper::_('uitab.addTab', 'myTab', $tab['name'], $tab['label']);
-                        <fieldset class="uploadform option-fieldset options-grid-form-full">
-                             echo $tab['content'];
-                        </fieldset>
-                         echo HTMLHelper::_('uitab.endTab');
-                     endforeach;
-                     if (!$tabs) :
-                         $app->enqueueMessage(Text::_('COM_INSTALLER_NO_INSTALLATION_PLUGINS_FOUND'), 'warning');
-                     endif;
-                    //echo $this->loadTemplate('ftp');
 
-                    /**/
                     ?>
                     <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_drag_and_drop', Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP')); ?>
                     <fieldset class="uploadform">
                         <legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?></legend>
 
-                            <?php
-
-                            // 
-                            // echo $this->form->renderFieldset('upload_drag_and_drop');
-
-                            /**/
-                            ?>
                         <div id="uploader-wrapper">
                             <div id="dragarea" data-state="pending">
                                 <div id="dragarea-content" class="text-center">
@@ -166,28 +144,36 @@ $tabs = []
                                             <?php echo Text::_('COM_RSGALLERY2_DRAG_IMAGES_HERE'); ?>
                                         </p>
                                         <p>
-                                            <button id="select-file-button-drop" type="button" class="btn btn-info btn-file"
+                                            <button id="select-file-button-drop" type="button" class="btn btn-info btn-rsg2 btn-file"
                                                     title="<?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_DESC'); ?>">
                                                 <span class="icon-copy" aria-hidden="true"></span>
 			                                    <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES'); ?>
                                             </button>
                                         </p>
                                         <p>
-                                            <button id="select-zip-file-button-drop" type="button" class="btn btn-warning btn-zip"
+                                            <button id="select-zip-file-button-drop" type="button" class="btn btn-warning btn-rsg2 btn-zip"
                                                     title="<?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE_DESC'); ?>">
                                                 <span class="icon-contract-2" aria-hidden="true"></span>
 			                                    <?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE'); ?>
                                             </button>
                                         </p>
+                                        <hr>
                                         <p>
-                                            <button id="ftp-upload-folder-button-drop" type="button" class="btn btn-secondary btn-folder"
+                                            <button id="ftp-upload-folder-button-drop" type="button" class="btn btn-secondary btn-rsg2 btn-folder"
                                                     title="<?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD_DESC'); ?>">
                                                 <span class="icon-arrow-up-2" aria-hidden="true"></span>
-			                                    <?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD'); ?>
+                                                <?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD'); ?>
                                             </button>
+                                            <div class="form-group">
+                                                <label for="ftp_upload_directory"><?php echo Text::_('COM_RSGALLERY2_PATH'); ?>: </label>
+                                                <input type="text" id="ftp_upload_directory" name="ftp_upload_directory" class="w-50 h-100 mx-auto"
+                                                    value="<?php echo $this->FtpUploadPath;?>"
+                                                >
+                                            </div>
                                         </p>
+                                        <hr>
                                         <p>
-                                            <?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $this->PostMaxSize); ?>
+                                            <?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $this->PostMaxSize); ?> MB
                                         </p>
                                     </div>
 
@@ -241,13 +227,11 @@ $tabs = []
                     /*---------------------------------------------------------------------------
                     Zip upload
                     ---------------------------------------------------------------------------*/
+                    /**
                     ?>
                     <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_zip_pc', Text::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP')); ?>
                         <legend><?php echo JText::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP_FROM_LOCAL_PC'); ?></legend>
 	                    <?php
-	                    // 
-	                    //echo $this->form->renderFieldset('upload_zip');
-	                /**/
 	                ?>
                     <hr>
                     <div class="control-group">
@@ -275,24 +259,22 @@ $tabs = []
                             </button>
                         </div>
                     </div>
-	                <?php
-	                /**/
-	                    ?>
 
                     <?php echo HTMLHelper::_('uitab.endTab'); ?>
+	                <?php
+	                /**/
+	                ?>
 
                     <?php
                     /*---------------------------------------------------------------------------
                     Server folder upload
                     ---------------------------------------------------------------------------*/
-                    ?>
+	                /**
+	                ?>
                     <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_folder_server', Text::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER_SERVER')); ?>
                         <legend><?php echo JText::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER_PATH_ON_SERVER'); ?></legend>
 
                     <?php
-                    // 
-                    //echo $this->form->renderFieldset('upload_folder');
-                    /**/
                     ?>
                     <hr>
                     <div class="control-group">
@@ -317,11 +299,10 @@ $tabs = []
                             </button>
                         </div>
                     </div>
-                    <?php
-                    /**/
-                    ?>
-
                     <?php echo HTMLHelper::_('uitab.endTab'); ?>
+	                <?php
+	                /**/
+	                ?>
 
                     <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 

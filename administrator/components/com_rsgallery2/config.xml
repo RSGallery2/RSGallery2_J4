@@ -3,9 +3,18 @@
 	<!-- ... Tab General ................................. -->
 
 	<fieldset
-		name="rsgallery2">
+		name="rsgallery2"
 		label="COM_CONFIG_RSGALLERY2_FIELDSET_LABEL"
 		description="COM_CONFIG_RSGALLERY2_FIELDSET_DESC"
+	>
+		<!-- needed when more entries are general ...
+				field name="intro_text"
+			   type="editor"
+			   label="COM_RSGALLERY2_INTRODUCTION_TEXT"
+			   description="COM_RSGALLERY2_INTRODUCTION_DESC"
+			   filter="JComponentHelper::filterText"
+			   buttons="false"
+		/-->
 
 		<field
 				id="advancedSef"
@@ -19,11 +28,11 @@
 			<option value="0">JNO</option>
 		</field>
 
-		<field
+		<!--field
 				type="spacer"
 				name="spacer_admin"
 				hr="true"
-		/>
+		/-->
 
 		<!-- ... block admin section ... -->
 
@@ -32,8 +41,8 @@
 				type="note"
 				class="alert alert-primary"
 				close="true"
-				label="COM_RSGALLERY2_CONFIG_NOTE_ADMIN_SECTION"
-				description="COM_RSGALLERY2_CONFIG_NOTE_ADMIN_SECTION_DESC"
+				label="COM_RSGALLERY2_CONFIG_NOTE_DEBUG_SECTION"
+				description="COM_RSGALLERY2_CONFIG_NOTE_DEBUG_SECTION_DESC"
 		/>
 
 		<field
@@ -103,23 +112,6 @@
 
 	</fieldset>
 
-	<!-- ... Tab Galleries view ................................. -->
-
-	<fieldset
-		name="GalleriesView"
-		label="COM_RSGALLERY2_FIELD_GALLERIES_VIEW"
-		description="COM_RSGALLERY2_FIELD_GALLERIES_VIEW_DESC"
-	>
-
-		<field name="intro_text"
-			   type="editor"
-			   label="COM_RSGALLERY2_INTRODUCTION_TEXT"
-			   description="COM_RSGALLERY2_INTRODUCTION_DESC"
-			   filter="JComponentHelper::filterText"
-			   buttons="false"
-		/>
-	</fieldset>
-
 	<!-- ... Tab Upload ................................. -->
 
 	<fieldset
@@ -127,11 +119,11 @@
 			label="COM_RSGALLERY2_FIELD_UPLOAD_OPTIONS_VIEW"
 			description="COM_RSGALLERY2_FIELD_UPLOAD_OPTIONS_VIEW_DESC"
 	>
-		<field
+		<!--field
 				type="spacer"
 				name="spacer_upload_01"
 				hr="true"
-		/>
+		/-->
 
 		<!-- ... block images upload ... -->
 
@@ -199,6 +191,26 @@
 			<option value="0">JNO</option>
 		</field>
 
+		<!-- ... block general section ... -->
+
+		<field
+				name="note_upload_general"
+				type="note"
+				class="alert alert-primary"
+				close="true"
+				label="COM_RSGALLERY2_CFG_UPLOAD_GENERAL"
+				description="COM_RSGALLERY2_CFG_UPLOAD_GENERAL_DESC"
+		/>
+
+		<field
+				name="ftp_path"
+				type="text"
+				default=""
+				label="COM_RSGALLERY2_FTP_PATH"
+				description="COM_RSGALLERY2_FTP_PATH_DESC"
+				class="input-large-text input-xxlarge"
+		>
+		</field>
 		<!-- ... block location ... -->
 
 		<field name="note_upload_location"
@@ -223,10 +235,10 @@
 
 		<field name="note_images_outdated"
 			   type="note"
-				   class="alert alert-warning"
+				   class="alert alert-error"
 			   close="true"
-			   label="COM_RSGALLERY2_IMAGE_OUTDATED"
-			   description="COM_RSGALLERY2_IMAGE_OUTDATED_DESC"
+			   label="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED"
+			   description="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED_DESC"
 		/>
 
 		<field
@@ -267,6 +279,23 @@
 				class="input-large-text input-xxlarge"
 		>
 		</field>
+	</fieldset>
+
+	<!-- ... Tab Galleries view ................................. -->
+
+	<fieldset
+			name="GalleriesView"
+			label="COM_RSGALLERY2_FIELD_GALLERIES_VIEW"
+			description="COM_RSGALLERY2_FIELD_GALLERIES_VIEW_DESC"
+	>
+
+		<field name="intro_text"
+			   type="editor"
+			   label="COM_RSGALLERY2_INTRODUCTION_TEXT"
+			   description="COM_RSGALLERY2_INTRODUCTION_DESC"
+			   filter="JComponentHelper::filterText"
+			   buttons="false"
+		/>
 	</fieldset>
 
 	<!-- ... Tab Images ................................. -->

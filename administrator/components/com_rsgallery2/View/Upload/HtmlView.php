@@ -101,6 +101,10 @@ class HtmlView extends BaseHtmlView
 
 		//--- FtpUploadPath ------------------------
 
+		// ToDo: subtract standard root path
+		// ToDo: red/orange/lila when path does not exist
+		// $app->input->get('install_directory', $app->get('tmp_path'))
+
 		// Retrieve path from config
 		$FtpUploadPath = $rsgConfig->get('ftp_path');
 		// On empty use last successful
