@@ -71,15 +71,6 @@ function resolveAfter2Seconds(x, time = 2000) {
         }, time);
     });
 }
-/**
-function resolveAfter2Seconds(x) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(x);
-        }, 2000);
-    });
-}
-/**/
 
 /*----------------------------------------------------------------
    List of dropped files (waiting for db request)
@@ -265,35 +256,52 @@ class FormElements {
     progressArea: HTMLElement;
     errorZone: HTMLElement;
 
-    // : HTMLElement;
-    // : HTMLElement;
-    // : HTMLElement;
+    buttonManualFiles : HTMLButtonElement;
+    buttonZipFile : HTMLButtonElement;
+    buttonFolderImport : HTMLButtonElement;
 
+    inputFtpFolder : HTMLInputElement;
+
+    // : HTMLElement;
+    // select eElements on form
     constructor() {
         this.selectGallery = <HTMLInputElement> document.getElementById('SelectGallery');
         this.dragZone = <HTMLElement> document.getElementById('dragarea');
         this.imagesArea = <HTMLElement> document.getElementById('imagesAreaList');
         this.progressArea = <HTMLElement> document.getElementById('uploadProgressArea');
         this.errorZone = <HTMLElement> document.getElementById('uploadErrorArea');
-    }
 
+        this.buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
+        this.buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
+        this.buttonFolderImport = <HTMLButtonElement> document.querySelector('#ftp-upload-folder-button-drop');
+
+        this.inputFtpFolder = <HTMLInputElement> document.querySelector('#ftp_upload_directory');
+    }
 }
 
 /*----------------------------------------------------------------
    gallery selection defines red / green border of drag area
 ----------------------------------------------------------------*/
 
-class Border4SelectedGallery {
+class enableDragZone {
 //    selectGallery: HTMLElement;
     dragZone: HTMLElement;
 
-    constructor(selectGallery: HTMLInputElement, dragZone: HTMLElement) {
-//        this.selectGallery = selectGallery;
-        this.dragZone = dragZone;
+    buttonManualFiles : HTMLButtonElement;
+    buttonZipFile : HTMLButtonElement;
+    buttonFolderImport : HTMLButtonElement;
+    inputFtpFolder : HTMLInputElement;
 
-        selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
+    constructor(formElements:FormElements) {
+        this.dragZone = formElements.dragZone;
+        this.buttonManualFiles = formElements.buttonManualFiles;
+        this.buttonZipFile = formElements.buttonZipFile;
+        this.buttonFolderImport = formElements.buttonFolderImport;
+        this.inputFtpFolder = formElements.inputFtpFolder;
 
-        this.checkSelection (selectGallery.value);
+        formElements.selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
+
+        this.checkSelection (formElements.selectGallery.value);
     }
 
     onSelectionChange(target: EventTarget) {
@@ -302,14 +310,22 @@ class Border4SelectedGallery {
     }
 
     checkSelection (value: string) {
-        //green
+        // is selected (green)
         if (value != "0") {
             this.dragZone.classList.remove('dragareaDisabled');
 
+            this.buttonManualFiles.disabled = false;
+            this.buttonZipFile.disabled = false;
+            this.buttonFolderImport.disabled = false;
+            this.inputFtpFolder.disabled = false;
         } else {
-            // red
+            // not selected (red)
             this.dragZone.classList.add('dragareaDisabled');
 
+            this.buttonManualFiles.disabled = true;
+            this.buttonZipFile.disabled = true;
+            this.buttonFolderImport.disabled = true;
+            this.inputFtpFolder.disabled = true;
         }
     }
 }
@@ -330,8 +346,13 @@ class DroppedFilesTask {
     private requestFilesInFolderTask: RequestFilesInFolderTask;
     private requestTransferFolderFilesTask: RequestTransferFolderFilesTask;
 
+    private buttonManualFiles : HTMLButtonElement;
+    private buttonZipFile : HTMLButtonElement;
+    private buttonFolderImport : HTMLButtonElement;
+
     constructor(
-        selectGallery: HTMLInputElement,
+//*        selectGallery: HTMLInputElement,
+        formElements: FormElements,
         droppedFiles: DroppedFiles,
         requestDbImageIdTask: RequestDbImageIdTask,
         zipFiles: ZipFiles,
@@ -341,7 +362,11 @@ class DroppedFilesTask {
         requestFilesInFolderTask: RequestFilesInFolderTask,
         RequestTransferFolderFilesTask: RequestTransferFolderFilesTask,
     ) {
-        this.selectGallery = selectGallery;
+        this.selectGallery = formElements.selectGallery;
+        this.buttonManualFiles = formElements.buttonManualFiles;
+        this.buttonZipFile = formElements.buttonZipFile;
+        this.buttonFolderImport = formElements.buttonFolderImport;
+
         this.droppedFiles = droppedFiles;
         this.requestDbImageIdTask = requestDbImageIdTask;
         this.zipFiles = zipFiles;
@@ -351,16 +376,12 @@ class DroppedFilesTask {
         this.requestFilesInFolderTask = requestFilesInFolderTask;
         this.requestTransferFolderFilesTask = RequestTransferFolderFilesTask;
 
-        let buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
-        let buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
-        let buttonFolderImport = <HTMLButtonElement> document.querySelector('#ftp-upload-folder-button-drop');
-
         let fileInput = <HTMLInputElement> document.querySelector('#input_files');
         let fileZip = <HTMLInputElement> document.querySelector('#input_zip');
 
-        buttonManualFiles.onclick = () =>  fileInput.click();
-        buttonZipFile.onclick = () =>  fileZip.click();
-        buttonFolderImport.onclick = (ev: DragEvent) => this.onImportFolder(ev);
+        this.buttonManualFiles.onclick = () =>  fileInput.click();
+        this.buttonZipFile.onclick = () =>  fileZip.click();
+        this.buttonFolderImport.onclick = (ev: DragEvent) => this.onImportFolder(ev);
 
         fileInput.onchange = (ev: DragEvent) => this.onNewFile(ev);
         fileZip.onchange = (ev: DragEvent) => this.onZipFile(ev);
@@ -2102,7 +2123,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
     // init red / green border of drag area
-    const gallerySelected = new Border4SelectedGallery (elements.selectGallery, elements.dragZone);
+    const onGalleryChange = new enableDragZone (elements);
 
     // (3) ajax request: Transfer file to server
     const transferImagesTask = new TransferImagesTask (elements.imagesArea, elements.progressArea, elements.errorZone,
@@ -2190,9 +2211,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
             console.log("filename: " + files[i].name);
             // Zip ?
             if (files[i].name.toLowerCase().endsWith ('.zip')) {
-                isZip = false;
+                isZip = true;
             } else {
-                isImage = false;
+                isImage = true;
             }
         }
         /**/

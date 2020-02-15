@@ -98,38 +98,52 @@ class TransferFiles extends Queue {
 ----------------------------------------------------------------*/
 class FormElements {
     // : HTMLElement;
-    // : HTMLElement;
-    // : HTMLElement;
+    // select eElements on form
     constructor() {
         this.selectGallery = document.getElementById('SelectGallery');
         this.dragZone = document.getElementById('dragarea');
         this.imagesArea = document.getElementById('imagesAreaList');
         this.progressArea = document.getElementById('uploadProgressArea');
         this.errorZone = document.getElementById('uploadErrorArea');
+        this.buttonManualFiles = document.querySelector('#select-file-button-drop');
+        this.buttonZipFile = document.querySelector('#select-zip-file-button-drop');
+        this.buttonFolderImport = document.querySelector('#ftp-upload-folder-button-drop');
+        this.inputFtpFolder = document.querySelector('#ftp_upload_directory');
     }
 }
 /*----------------------------------------------------------------
    gallery selection defines red / green border of drag area
 ----------------------------------------------------------------*/
-class Border4SelectedGallery {
-    constructor(selectGallery, dragZone) {
-        //        this.selectGallery = selectGallery;
-        this.dragZone = dragZone;
-        selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
-        this.checkSelection(selectGallery.value);
+class enableDragZone {
+    constructor(formElements) {
+        this.dragZone = formElements.dragZone;
+        this.buttonManualFiles = formElements.buttonManualFiles;
+        this.buttonZipFile = formElements.buttonZipFile;
+        this.buttonFolderImport = formElements.buttonFolderImport;
+        this.inputFtpFolder = formElements.inputFtpFolder;
+        formElements.selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
+        this.checkSelection(formElements.selectGallery.value);
     }
     onSelectionChange(target) {
         let selection = target;
         this.checkSelection(selection.value);
     }
     checkSelection(value) {
-        //green
+        // is selected (green)
         if (value != "0") {
             this.dragZone.classList.remove('dragareaDisabled');
+            this.buttonManualFiles.disabled = false;
+            this.buttonZipFile.disabled = false;
+            this.buttonFolderImport.disabled = false;
+            this.inputFtpFolder.disabled = false;
         }
         else {
-            // red
+            // not selected (red)
             this.dragZone.classList.add('dragareaDisabled');
+            this.buttonManualFiles.disabled = true;
+            this.buttonZipFile.disabled = true;
+            this.buttonFolderImport.disabled = true;
+            this.inputFtpFolder.disabled = true;
         }
     }
 }
@@ -137,8 +151,13 @@ class Border4SelectedGallery {
 handle dropped files
 ----------------------------------------------------------------*/
 class DroppedFilesTask {
-    constructor(selectGallery, droppedFiles, requestDbImageIdTask, zipFiles, requestZipUploadTask, serverFolder, serverFiles, requestFilesInFolderTask, RequestTransferFolderFilesTask) {
-        this.selectGallery = selectGallery;
+    constructor(
+    //*        selectGallery: HTMLInputElement,
+    formElements, droppedFiles, requestDbImageIdTask, zipFiles, requestZipUploadTask, serverFolder, serverFiles, requestFilesInFolderTask, RequestTransferFolderFilesTask) {
+        this.selectGallery = formElements.selectGallery;
+        this.buttonManualFiles = formElements.buttonManualFiles;
+        this.buttonZipFile = formElements.buttonZipFile;
+        this.buttonFolderImport = formElements.buttonFolderImport;
         this.droppedFiles = droppedFiles;
         this.requestDbImageIdTask = requestDbImageIdTask;
         this.zipFiles = zipFiles;
@@ -147,14 +166,11 @@ class DroppedFilesTask {
         this.serverFiles = serverFiles;
         this.requestFilesInFolderTask = requestFilesInFolderTask;
         this.requestTransferFolderFilesTask = RequestTransferFolderFilesTask;
-        let buttonManualFiles = document.querySelector('#select-file-button-drop');
-        let buttonZipFile = document.querySelector('#select-zip-file-button-drop');
-        let buttonFolderImport = document.querySelector('#ftp-upload-folder-button-drop');
         let fileInput = document.querySelector('#input_files');
         let fileZip = document.querySelector('#input_zip');
-        buttonManualFiles.onclick = () => fileInput.click();
-        buttonZipFile.onclick = () => fileZip.click();
-        buttonFolderImport.onclick = (ev) => this.onImportFolder(ev);
+        this.buttonManualFiles.onclick = () => fileInput.click();
+        this.buttonZipFile.onclick = () => fileZip.click();
+        this.buttonFolderImport.onclick = (ev) => this.onImportFolder(ev);
         fileInput.onchange = (ev) => this.onNewFile(ev);
         fileZip.onchange = (ev) => this.onZipFile(ev);
     }
@@ -1403,7 +1419,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // Upload zip to a server folder, return list of files on server (and create image DB IDs)
     const requestZipUploadTask = new RequestZipUploadTask(elements.progressArea, elements.errorZone, zipFiles, serverFiles, requestTransferFolderFilesTask);
     // init red / green border of drag area
-    const gallerySelected = new Border4SelectedGallery(elements.selectGallery, elements.dragZone);
+    const onGalleryChange = new enableDragZone(elements);
     // (3) ajax request: Transfer file to server
     const transferImagesTask = new TransferImagesTask(elements.imagesArea, elements.progressArea, elements.errorZone, transferFiles);
     // (2) ajax request: database image item
@@ -1472,10 +1488,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             console.log("filename: " + files[i].name);
             // Zip ?
             if (files[i].name.toLowerCase().endsWith('.zip')) {
-                isZip = false;
+                isZip = true;
             }
             else {
-                isImage = false;
+                isImage = true;
             }
         }
         /**/

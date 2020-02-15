@@ -15,7 +15,7 @@
   /**/
   /* border: 5px dotted lightgreen; /**/
   box-sizing: border-box;
-  padding: 5% 0;
+  padding: 10px 0;
   transition: all 0.2s ease 0s;
   width: 100%;
 }
@@ -233,8 +233,16 @@
   display: block;
 }
 
-.btn-rsg2 {
-  min-width: 220px;
+.btn-rsg2X {
+  /*  min-width: 220px; /**/
+}
+
+.imagesArea {
+  display: block;
+}
+
+ul#imagesAreaList {
+  list-style: none;
 }
 
 /*# sourceMappingURL=upload.css.map */
