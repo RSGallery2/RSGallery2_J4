@@ -111,6 +111,10 @@ class UploadController extends FormController
 			return; // ToDo Check on all pre exits
 		}
 
+		// for debug ajax response errors / notice
+		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+		if ($errorType) { issueError  ($errorType);}
+
 		try
 		{
 			if ($Rsg2DebugActive)
@@ -120,82 +124,6 @@ class UploadController extends FormController
 			}
 
 			$input = Factory::getApplication()->input;
-			//$oFile = $input->files->get('upload_file', array(), 'raw');
-			//$TargetFileName    = File::makeSafe($oFile['name']);
-
-			/**
-			 * Form data:
-			 *
-			 * data.append('upload_file', nextFile.file.name);
-			 * data.append('upload_size', nextFile.file.size.toString());
-			 * data.append('upload_type', nextFile.file.type);
-			 * data.append(Token, '1');
-			 * data.append('gallery_id', nextFile.galleryId);
-			 * /**/
-
-			//--- ajax tests --------------------------------------------
-			// ToDo: use as  function to be included i all ajex calls fot tests of errors
-			// ToDo: Remove -> put into own component
-			/**
-			 * $test = 1; // 0: normal, 1:error, 2: warning ....
-			 *
-			 * if ($test)
-			 * {
-			 * $result = "Resulting data (simulated)";
-			 * switch ($test)
-			 * {
-			 * case 1:
-			 * echo new JsonResponse($result, Text::_('COM_COMPONENT_MY_TASK_ERROR'), true);
-			 * break;
-			 *
-			 * case 2:
-			 * echo new JsonResponse($result, 'Main response message');
-			 * break;
-			 *
-			 * case 3:
-			 * $app->enqueueMessage('This part has error 1');
-			 * $app->enqueueMessage('This part has error 2');
-			 * $app->enqueueMessage("Enqueued notice 1", "notice");
-			 * $app->enqueueMessage("Enqueued notice 2", "notice");
-			 * $app->enqueueMessage('Here was a small warning 1', 'warning');
-			 * $app->enqueueMessage('Here was a small warning 2', 'warning');
-			 * $app->enqueueMessage('Here was a small error 1', 'error');
-			 * $app->enqueueMessage('Here was a small error 2', 'error');
-			 * echo new JsonResponse($result, Text::_('!!! Response message with error set !!!'), true);
-			 * break;
-			 *
-			 * case 4:
-			 * $app->enqueueMessage('This part was successful 1');
-			 * $app->enqueueMessage('This part was successful 2');
-			 * $app->enqueueMessage("Enqueued notice 1", "notice");
-			 * $app->enqueueMessage("Enqueued notice 2", "notice");
-			 * $app->enqueueMessage('Here was a small warning 1', 'warning');
-			 * $app->enqueueMessage('Here was a small warning 2', 'warning');
-			 * $app->enqueueMessage('Here was a small error 1', 'error');
-			 * $app->enqueueMessage('Here was a small error 2', 'error');
-			 * echo new JsonResponse($result, 'Response message with !!! no !!! error set');
-			 * break;
-			 * case 5:
-			 * $app->enqueueMessage('This part was successful 1');
-			 * $app->enqueueMessage('This part was successful 2');
-			 * $app->enqueueMessage("Enqueued notice 1", "notice");
-			 * $app->enqueueMessage("Enqueued notice 2", "notice");
-			 * $app->enqueueMessage('Here was a small warning 1', 'warning');
-			 * $app->enqueueMessage('Here was a small warning 2', 'warning');
-			 * $app->enqueueMessage('Here was a small error 1', 'error');
-			 * $app->enqueueMessage('Here was a small error 2', 'error');
-			 *
-			 * throw new \Exception('Attention: raised exception ');
-			 * //                        throw new Notallowed(Text::_('Not allowed thrown'), 403);
-			 *
-			 *
-			 * echo new JsonResponse($result, 'Response message with !!! no !!! error set');
-			 * break;
-			 * }
-			 *
-			 * $app->close();
-			 * }
-			 * /**/
 
 			//--- file name  --------------------------------------------
 
@@ -357,6 +285,10 @@ class UploadController extends FormController
 			echo new JsonResponse($msg, $errMsg, $hasError);
 			$app->close();
 		}
+
+		// for debug ajax response errors / notice
+		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+		if ($errorType) { issueError  ($errorType);}
 
 		try
 		{
@@ -554,6 +486,10 @@ class UploadController extends FormController
 			$app->close();
 		}
 
+		// for debug ajax response errors / notice
+		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+		if ($errorType) { issueError  ($errorType);}
+
 		try
 		{
 			if ($Rsg2DebugActive)
@@ -727,6 +663,10 @@ class UploadController extends FormController
 			$app->close();
 		}
 
+		// for debug ajax response errors / notice
+		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+		if ($errorType) { issueError  ($errorType);}
+
 		try
 		{
 			if ($Rsg2DebugActive)
@@ -897,6 +837,10 @@ class UploadController extends FormController
 			$app->close();
 		}
 
+		// for debug ajax response errors / notice
+		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+		if ($errorType) { issueError  ($errorType);}
+
 		try
 		{
 			if ($Rsg2DebugActive)
@@ -910,7 +854,7 @@ class UploadController extends FormController
 			$fileName = $input->get('fileName', '', 'string');
 			$imageId = $input->get('imageId', '', 'string');
 			$baseName = $input->get('baseName', '', 'string');
-			// toDo: rename dstFileName to safe file name ... sio it matches 	function uploadAjaxSingleFile()
+			// toDo: rename dstFileName to safe file name ... sio it matches function uploadAjaxSingleFile()
 			$safeFileName = $input->get('dstFileName', '', 'string');
 			
 			$ajaxImgDbObject['fileName'] = $fileName;
@@ -1154,6 +1098,82 @@ class UploadController extends FormController
 		}
 
 		return $imageOrder;
+	}
+
+	/**
+	 * ajax response error tests
+	 * function may be included in all ajax calls for tests of errors
+	 *
+	 * @param $errorType integer
+	 *     1: error
+	 *     2: notice
+	 *     3: enqueueMessage types with error set
+	 *     4: enqueueMessage types with NO error set
+	 *     5: enqueueMessage types with thrown exception
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	private function issueError  ($errorType)
+	{
+		$app = Factory::getApplication();
+
+		//  0: nothing, 1:error, 2:notice, .... see above
+		if ($errorType)
+		{
+			$result = "Resulting data (simulated)";
+			switch ($errorType)
+			{
+				case 1:
+					echo new JsonResponse($result, Text::_('COM_COMPONENT_MY_TASK_ERROR'), true);
+					break;
+
+				case 2:
+					echo new JsonResponse($result, 'Main response message');
+					break;
+
+				case 3:
+					$app->enqueueMessage('This part has error 1');
+					$app->enqueueMessage('This part has error 2');
+					$app->enqueueMessage("Enqueued notice 1", "notice");
+					$app->enqueueMessage("Enqueued notice 2", "notice");
+					$app->enqueueMessage('Here was a small warning 1', 'warning');
+					$app->enqueueMessage('Here was a small warning 2', 'warning');
+					$app->enqueueMessage('Here was a small error 1', 'error');
+					$app->enqueueMessage('Here was a small error 2', 'error');
+					echo new JsonResponse($result, Text::_('!!! Response message with error set !!!'), true);
+					break;
+
+				case 4:
+					$app->enqueueMessage('This part was successful 1');
+					$app->enqueueMessage('This part was successful 2');
+					$app->enqueueMessage("Enqueued notice 1", "notice");
+					$app->enqueueMessage("Enqueued notice 2", "notice");
+					$app->enqueueMessage('Here was a small warning 1', 'warning');
+					$app->enqueueMessage('Here was a small warning 2', 'warning');
+					$app->enqueueMessage('Here was a small error 1', 'error');
+					$app->enqueueMessage('Here was a small error 2', 'error');
+					echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+					break;
+				case 5:
+					$app->enqueueMessage('This part was successful 1');
+					$app->enqueueMessage('This part was successful 2');
+					$app->enqueueMessage("Enqueued notice 1", "notice");
+					$app->enqueueMessage("Enqueued notice 2", "notice");
+					$app->enqueueMessage('Here was a small warning 1', 'warning');
+					$app->enqueueMessage('Here was a small warning 2', 'warning');
+					$app->enqueueMessage('Here was a small error 1', 'error');
+					$app->enqueueMessage('Here was a small error 2', 'error');
+
+					throw new \Exception('Attention: raised exception ');
+
+					echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+					break;
+			}
+
+			$app->close();
+		}
+		/**/
 	}
 
 } // class
