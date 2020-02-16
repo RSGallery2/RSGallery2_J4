@@ -882,6 +882,8 @@ class ImageFileModel extends BaseModel // AdminModel
 				{
 					//--- File information ----------------------
 
+					// ToDo: Mime type check
+
 					// ToDo: getimagesize() sollte nicht verwendet werden, um zu überprüfen,
 					// ToDo: ob eine gegebene Datei ein Bild enthält. Statt dessen sollte
 					// ToDo: eine für diesen Zweck entwickelte Lösung wie die

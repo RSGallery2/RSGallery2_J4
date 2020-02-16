@@ -30,7 +30,7 @@ defined('_JEXEC') or die;
  *
  * @param string $path1
  * @param string $path2
- */
+ *
 function path_join($path1, $path2)
 {
 	$paths    = func_get_args();
@@ -58,6 +58,19 @@ function path_join($path1, $path2)
 
 	return implode('/', $paths);
 }
+/**/
+
+function path_join() {
+
+	$paths = array();
+
+	foreach (func_get_args() as $arg) {
+		if ($arg !== '') { $paths[] = $arg; }
+	}
+
+	return preg_replace('#/+#','/',join('/', $paths));
+}
+
 
 
 class ImagePaths {

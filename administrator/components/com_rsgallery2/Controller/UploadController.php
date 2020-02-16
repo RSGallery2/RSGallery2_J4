@@ -29,6 +29,11 @@ use Joomla\Utilities\ArrayHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Model\ImageModel;
 
+// toDo:
+// toDo:
+// toDo:
+// toDo:
+
 
 /**
 global $Rsg2DebugActive;
@@ -111,6 +116,17 @@ class UploadController extends FormController
 			return; // ToDo Check on all pre exits
 		}
 
+		/* ToDo: // Access check
+		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		if (!$canAdmin)
+		{
+			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
+		}
+		/**/
+
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
 		if ($errorType) { issueError  ($errorType);}
@@ -185,7 +201,6 @@ class UploadController extends FormController
 			$useFileName                    = $modelDb->generateNewImageName($baseName, $galleryId);
 			$ajaxImgDbObject['dstFileName'] = $useFileName;
 
-			/**/
 			//--- create image data in DB --------------------------------
 
 			$title       = $baseName;
@@ -256,6 +271,29 @@ class UploadController extends FormController
 		$app->close();
 	}
 
+/**
+in:
+interface IDroppedFile
+{
+	file: File;
+	galleryId: string;
+	...
+}
+interface ITransferFile extends IDroppedFile {
+	imageId: string;
+	fileName: string;
+	dstFileName: string;
+}
+
+out:
+	interface IResponseTransfer {
+	fileName: string;
+	imageId: string; //number
+	fileUrl: string;
+	safeFileName: string;
+}
+
+/**/
 
 	/**
 	 * The dropped file will be uploaded. The dependent files
@@ -286,6 +324,17 @@ class UploadController extends FormController
 			$app->close();
 		}
 
+		/* ToDo: // Access check
+		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		if (!$canAdmin)
+		{
+			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
+		}
+		/**/
+
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
 		if ($errorType) { issueError  ($errorType);}
@@ -310,10 +359,6 @@ class UploadController extends FormController
 			$safeFileName   = File::makeSafe($oFile['name']);
 			$targetFileName = $input->get('dstFileName', '', 'string');
 
-			// for next upload tell where to start
-			//$rsgConfig->setLastUpdateType('upload_drag_and_drop');
-			// configDb::write2Config ('last_update_type', 'upload_drag_and_drop', $rsgConfig);
-
 			if ($Rsg2DebugActive)
 			{
 				// identify active file
@@ -325,7 +370,7 @@ class UploadController extends FormController
 				Log::add('$fileSize: "' . $fileSize . '"');
 			}
 
-			//--- check user ID --------------------------------------------
+			//--- preset return value --------------------------------------------
 
 			$ajaxImgObject['fileName'] = $targetFileName;
 			// some dummy data for error messages
@@ -370,13 +415,6 @@ class UploadController extends FormController
 			$ajaxImgObject['imageId'] = $imageId;
 
 			//----------------------------------------------------
-			// for debug purposes fetch image order
-			//----------------------------------------------------
-
-//			$imageOrder = $this->imageOrderFromId ($imageId);
-//			$ajaxImgObject['order']  = $imageOrder;
-
-			//----------------------------------------------------
 			// Move file and create display, thumbs and watermarked images
 			//----------------------------------------------------
 
@@ -412,8 +450,8 @@ class UploadController extends FormController
 				}
 
 				echo new JsonResponse($ajaxImgObject, $msg, true);
+
 				$app->close();
-// ToDo ? app close in these cases
 				return;
 			}
 
@@ -486,6 +524,17 @@ class UploadController extends FormController
 			$app->close();
 		}
 
+		/* ToDo: // Access check
+		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		if (!$canAdmin)
+		{
+			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
+		}
+		/**/
+
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
 		if ($errorType) { issueError  ($errorType);}
@@ -499,12 +548,14 @@ class UploadController extends FormController
 			}
 
 			$input = Factory::getApplication()->input;
+
 			$oFile = $input->files->get('upload_zip_name', array(), 'raw');
 
 			$srcTempPathFileName = $oFile['tmp_name'];
 			$fileType            = $oFile['type'];
 			$fileError           = $oFile['error'];
 			$fileSize            = $oFile['size'];
+
 
 			//--- gallery ID --------------------------------------------
 
@@ -525,6 +576,19 @@ class UploadController extends FormController
 				$app->close();
 				return;
 			}
+
+
+			//--- Check zip file name -------------------
+
+			// Clean up filename to get rid of strange characters like spaces etc
+			//$uploadZipName = JFile::makeSafe($zip_file['name']);
+//			$uploadZipName = File::makeSafe($zip_file['name']);
+//			$safeFileName   = File::makeSafe($oFile['name']);
+
+
+
+
+
 
 			// Database IDs of created images
 			$cids = array();
@@ -663,6 +727,18 @@ class UploadController extends FormController
 			$app->close();
 		}
 
+
+		/* ToDo: // Access check
+		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		if (!$canAdmin)
+		{
+			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
+		}
+		/**/
+
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
 		if ($errorType) { issueError  ($errorType);}
@@ -676,12 +752,6 @@ class UploadController extends FormController
 			}
 
 			$input = Factory::getApplication()->input;
-			$oFile = $input->files->get('upload_zip_name', array(), 'raw');
-
-			$srcTempPathFileName = $oFile['tmp_name'];
-			$fileType            = $oFile['type'];
-			$fileError           = $oFile['error'];
-			$fileSize            = $oFile['size'];
 
 			//--- gallery ID --------------------------------------------
 
@@ -703,51 +773,146 @@ class UploadController extends FormController
 				return;
 			}
 
+			//--- ftp path --------------------------------------------
 
-			// Database IDs of created images
-			$cids = array();
+			$ftpPath = $ftp_upload_directory = $input->get('folderPath', null, 'RAW');
 
-			// Prepare variables needed /created inside brackets {} for phpstorm code check
-			$isHasError      = false;
-			$zipPathFileName = '';
+			// toDo: last_used_ftp_path on success or when previous path is empty
+			// configDb::write2Config ('last_used_ftp_path', $ftpPath, $rsgConfig);
 
+			// folder name does not exist
+			if(!$ftpPath)
+			{
+				$ajaxImgObject = [];
+				$app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_DIR_EMPTY'));
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
 
-			/**
-			 * interface IResponseServerFile {
-			 * fileName: string;
-			 * imageId: string; //number
-			 * baseName: string;
-			 * dstFileName: string;
-			 * }
-			 *
-			 * interface IResponseServerFiles {
-			 * // Path ?
-			 * files: IResponseServerFile [];
-			 * }
-			 * /**/
+				echo new JsonResponse($ajaxImgObject, $msg, true);
 
-			$file1                 = [];
-			$file1 ['fileName']    = 'file1_name';
-			$file1 ['imageId']     = '1001';
-			$file1 ['baseName']    = 'base1_name';
-			$file1 ['dstFileName'] = 'dest1_name';
-			$file1 ['galleryId'] = $galleryId;
+				$app->close();
+				return;
+			}
 
-			$file2                 = [];
-			$file2 ['fileName']    = 'file2_name';
-			$file2 ['imageId']     = '1002';
-			$file2 ['baseName']    = 'base2_name';
-			$file2 ['dstFileName'] = 'dest2_name';
-			$file2 ['galleryId'] = $galleryId;
+			// path with joomla root
+			$ftpPathRoot = $this->path_join (JPATH_ROOT, $ftpPath);
+			$ftpPathServer = $ftpPath;
 
-			$file3                 = [];
-			$file3 ['fileName']    = 'file3_name';
-			$file3 ['imageId']     = '1003';
-			$file3 ['baseName']    = 'base3_name';
-			$file3 ['dstFileName'] = 'dest3_name';
-			$file3 ['galleryId'] = $galleryId;
+			$ftpPath = is_dir($ftpPathRoot) ? $ftpPathRoot : $ftpPathServer;
 
-			$ajaxImgObject ['files'] = [$file1, $file2, $file2];
+			// folder does not exist
+			if (!is_dir($ftpPath))
+			{
+				$ajaxImgObject = [];
+
+				$app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_DIR_NOT_EXIST') . '<br>'
+					. '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
+					. '$Ftp path server root based: ' . $ftpPathServer // . '<br>'
+				);
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
+
+				echo new JsonResponse($ajaxImgObject, $msg, true);
+
+				$app->close();
+				return;
+			}
+
+			//--- select valid file names from ftp folder -------------------------------
+			if ($Rsg2DebugActive)
+			{
+				JLog::add('Valid folder:' . strval($ftpPath));
+			}
+
+			$modelFile = $this->getModel('imageFile');
+			list($filesFound, $ignored) = $modelFile->SelectImagesFromFolder ($ftpPath);
+
+			if ($Rsg2DebugActive)
+			{
+				JLog::add('Select Images:' . count($filesFound));
+				JLog::add('Ignored Images:' . count($ignored));
+			}
+
+			$modelDb = $this->getModel('image');
+			$files = [];
+			$ajaxImgDbObject = [];
+
+			foreach ($filesFound as $filePathName)
+			{
+				//--- Create Destination file name -----------------------
+
+				$filePathName = realpath ($filePathName);
+				$baseName = basename($filePathName);
+
+				// ToDo: use sub folder for each gallery and check within gallery
+				// Each filename is only allowed once so create a new one if file already exist
+				$useFileName = $modelDb->generateNewImageName($baseName, $galleryId);
+
+				//----------------------------------------------------
+				// Create image data in db
+				//----------------------------------------------------
+
+				$title = $baseName;
+				$description = '';
+
+				$imageId = $modelDb->createImageDbItem($useFileName, '', $galleryId, $description);
+				if (empty($imageId))
+				{
+					// actual give an error
+					//$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+					$msg .= 'Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
+
+					if ($Rsg2DebugActive)
+					{
+						Log::add($msg);
+					}
+
+					/**
+					// replace newlines with html line breaks.
+					//str_replace('\n', '<br>', $msg);
+					echo new JsonResponse($ajaxImgDbObject, $msg, true);
+
+					$app->close();
+
+					return;
+					/**/
+					continue;
+				}
+
+				$nextFile = [];
+				$nextFile ['fileName']    = $filePathName;
+				$nextFile ['imageId']     = $imageId;
+				$nextFile ['baseName']    = $baseName;
+				$nextFile ['dstFileName'] = $useFileName;
+				$nextFile ['size']   = 4500; // toDO: get size if necessary
+				$files [] = $nextFile;
+			}
+
+			// Images exist
+			if (!$files)
+			{
+				$ajaxImgObject = [];
+
+				$app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_FILES_DO_NOT_EXIST') . '<br>'
+					. '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
+					. '$Ftp path server root based: ' . $ftpPathServer // . '<br>'
+				);
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
+
+				echo new JsonResponse($ajaxImgObject, $msg, true);
+
+				$app->close();
+				return;
+			}
+
+			$ajaxImgObject ['files'] = $files;
 
 			$isCreated = true;
 
@@ -776,17 +941,7 @@ class UploadController extends FormController
 			 * $ajaxImgObject['safeFileName'] = $safeFileName;
 			 * /**/
 
-
-
-
-
-
-
-
-
-
 			echo new JsonResponse($ajaxImgObject, "", !$isCreated, true);
-			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
 
 			if ($Rsg2DebugActive)
 			{
@@ -809,9 +964,33 @@ class UploadController extends FormController
 	}
 
 
+/**
+in:
+interface IRequestTransferFolderFile {
+	fileName: string;
+	imageId: string; //number
+	baseName: string;
+	dstFileName: string;
+	size: number;
 
+	galleryId: string;
+	origin: string; // ftp/server
 
-	/**
+	statusBar: createStatusBar | null;
+	errorZone: HTMLElement | null;
+}
+
+out:
+interface IResponseTransfer {
+	fileName: string;
+	imageId: string; //number
+	fileUrl: string;
+	safeFileName: string;
+}
+
+/**/
+
+/**
 	 * The already uploaded file will be copied,
 	 * display and thumb files created
 	 *
@@ -837,6 +1016,17 @@ class UploadController extends FormController
 			$app->close();
 		}
 
+		/* ToDo: // Access check
+		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		if (!$canAdmin)
+		{
+			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$hasError = 1;
+			echo new JsonResponse($msg, $errMsg, $hasError);
+			$app->close();
+		}
+		/**/
+
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
 		if ($errorType) { issueError  ($errorType);}
@@ -854,41 +1044,111 @@ class UploadController extends FormController
 			$fileName = $input->get('fileName', '', 'string');
 			$imageId = $input->get('imageId', '', 'string');
 			$baseName = $input->get('baseName', '', 'string');
-			// toDo: rename dstFileName to safe file name ... sio it matches function uploadAjaxSingleFile()
-			$safeFileName = $input->get('dstFileName', '', 'string');
-			
-			$ajaxImgDbObject['fileName'] = $fileName;
-			$ajaxImgDbObject['imageId'] = $imageId;
-//			$ajaxImgDbObject['baseName'] = $baseName;
-//			$ajaxImgDbObject['dstFileName'] = $dstFileName;
+			$origin = $input->get('origin', '', 'string'); //zip/server
+			// toDo: rename dstFileName to safe file name ... so it matches function uploadAjaxSingleFile()
+			$targetFileName = $input->get('dstFileName', '', 'string');
+/**
+			fileName: string;
+			imageId: string; //number
+			baseName: string;
+			dstFileName: string;
+			size: number;
 
+			galleryId: string;
+			origin: string; // ftp/server
+/**/
+
+			if ($Rsg2DebugActive)
+			{
+				// identify active file
+				Log::add('$fileName: "' . $fileName . '"');
+				Log::add('$targetFileName: "' . $targetFileName . '"');
+				Log::add('$imageId: "' . $imageId . '"');
+				Log::add('$baseName: "' . $baseName . '"');
+			}
+
+			$ajaxImgObject['fileName'] = $targetFileName;
+			// some dummy data for error messages
+			$ajaxImgObject['imageId']      = $imageId;
 			$ajaxImgObject['fileUrl']      = '';
-			$ajaxImgObject['safeFileName'] = $safeFileName;
+			$ajaxImgObject['safeFileName'] = $fileName;
 
+			//--- gallery ID --------------------------------------------
 
-			// Prepare variables needed /created inside brackets {} for phpstorm code check
-			$isHasError      = false;
-			$zipPathFileName = '';
+			$galleryId = $input->get('gallery_id', 0, 'INT');
+			// wrong id ?
+			if ($galleryId < 1)
+			{
+				$msg .= ': Invalid gallery ID at drag and drop upload';
 
+				if ($Rsg2DebugActive)
+				{
+					Log::add($msg);
+				}
 
-			$ajaxImgObject ['isTransferred'] = true;
+				echo new JsonResponse($ajaxImgObject, $msg, true);
 
+				$app->close();
+				return;
+			}
 
+			//----------------------------------------------------
+			// Move/copy file and create display, thumbs and watermarked images
+			//----------------------------------------------------
 
-			$isCreated = true;
+			try
+			{
+				/**/
+				$modelFile = $this->getModel('imageFile');
+				// toDo check origin and config for copy / or move file call below
+				list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images(
+					$fileName, $targetFileName, $galleryId);
+				/**/
+			}
+			catch (RuntimeException $e)
+			{
+				$OutTxt = '';
+				$OutTxt .= 'moveFile2OrignalDir: "' . $fileName . '" -> "' . $targetFileName . '"<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
 
+				if ($Rsg2DebugActive)
+				{
+					Log::add($OutTxt);
+				}
+			}
 
+			if (!$isCreated)
+			{
+				// ToDo: remove $imageId fom image database
+				if ($Rsg2DebugActive)
+				{
+					Log::add('MoveImageAndCreateRSG2Images failed: ' . $fileName . '" -> "' . $targetFileName);
+				}
 
+				echo new JsonResponse($ajaxImgObject, $msg, true);
 
+				$app->close();
+				return;
+			}
 
+			if ($Rsg2DebugActive)
+			{
+				Log::add('<== uploadAjax: After MoveImageAndCreateRSG2Images isCreated: ' . $isCreated);
+			}
 
+			$ajaxImgObject['fileUrl'] = $urlThumbFile; // $dstFileUrl ???
 
+			if ($Rsg2DebugActive)
+			{
+				Log::add('    $ajaxImgObject: ' . json_encode($ajaxImgObject));
+				Log::add('    $msg: "' . $msg . '"');
+				Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
+			}
 
-
-
-
-			echo new JsonResponse($ajaxImgObject, "", !$isCreated, true);
+			echo new JsonResponse($ajaxImgObject, $msg, !$isCreated, true);
 			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
 
 			if ($Rsg2DebugActive)
@@ -1066,41 +1326,6 @@ class UploadController extends FormController
 
 
 	/**
-	 * @param $imageId
-	 *
-	 * @return int|mixed
-	 *
-	 * @throws \Exception
-	 * @since version
-	 */
-	private function imageOrderFromId ($imageId)
-	{
-		$imageOrder = -1;
-
-		try
-		{
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select($db->quoteName('ordering'))
-				->from($db->quoteName('#__rsg2_images'))
-				->where($db->quoteName('id') . ' = ' . $db->quote($imageId));
-			$db->setQuery($query);
-			$imageOrder = $db->loadResult();
-		}
-		catch (RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error executing imageOrderFromId for $imageId: "' . $imageId . '"<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-		return $imageOrder;
-	}
-
-	/**
 	 * ajax response error tests
 	 * function may be included in all ajax calls for tests of errors
 	 *
@@ -1174,6 +1399,17 @@ class UploadController extends FormController
 			$app->close();
 		}
 		/**/
+	}
+
+	function path_join () {
+
+		$paths = array();
+
+		foreach (func_get_args() as $arg) {
+			if ($arg !== '') { $paths[] = $arg; }
+		}
+
+		return preg_replace('#/+#','/',join('/', $paths));
 	}
 
 } // class

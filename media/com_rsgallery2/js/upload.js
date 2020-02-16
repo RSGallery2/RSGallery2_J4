@@ -68,11 +68,29 @@ class ZipFiles extends Queue {
         }
     }
 }
+/**
+interface IResponseServerFile {
+    fileName: string;
+    imageId: string; //number
+    baseName: string;
+    dstFileName: string;
+    size: number;
+}
+/**/
+/**
+interface IServerFile {
+    serverFile: IResponseServerFile;
+    galleryId: string;
+
+    statusBar: createStatusBar | null;
+    errorZone: HTMLElement | null;
+}
+/**/
 class ServerFiles extends Queue {
     addFiles(files) {
         for (let idx = 0; idx < files.length; idx++) {
             const serverFile = files[idx];
-            console.log('   +ServerFile: ' + files[idx].serverFile.fileName);
+            console.log('   +ServerFile: ' + files[idx].fileName);
             //--- Add file with data ---------------------------------
             this.push(serverFile);
         }
@@ -158,6 +176,7 @@ class DroppedFilesTask {
         this.buttonManualFiles = formElements.buttonManualFiles;
         this.buttonZipFile = formElements.buttonZipFile;
         this.buttonFolderImport = formElements.buttonFolderImport;
+        this.inputFtpFolder = formElements.inputFtpFolder;
         this.droppedFiles = droppedFiles;
         this.requestDbImageIdTask = requestDbImageIdTask;
         this.zipFiles = zipFiles;
@@ -240,7 +259,7 @@ class DroppedFilesTask {
         }
         else {
             // ToDo: add path from (not existing) input control
-            this.serverFolder.path = '';
+            this.serverFolder.path = this.inputFtpFolder.value;
             this.serverFolder.galleryId = gallery_id;
             console.log(">onImportFolder: " + this.serverFolder.path);
             this.requestFilesInFolderTask.ajaxRequest(gallery_id);
@@ -1007,7 +1026,7 @@ class RequestZipUploadTask {
         while (this.zipFiles.length > 0) {
             let nextFile = this.zipFiles.shift();
             console.log("   @Request zip File: " + nextFile.file.name);
-            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.file.name, nextFile.file.size);
+            nextFile.statusBar = new createStatusBar(this.progressArea, "*Zip: " + nextFile.file.name, nextFile.file.size);
             /* let request = */
             //await this.callAjaxRequest(nextFile)
             this.callAjaxRequest(nextFile)
@@ -1022,17 +1041,22 @@ class RequestZipUploadTask {
                 //console.log("      response data: " + JSON.stringify(data));
                 if (AjaxResponse.success) {
                     console.log("      success data: " + AjaxResponse.data);
-                    let severFiles = AjaxResponse.data;
-                    for (let idx = 0; idx < severFiles.files.length; idx++) {
-                        const severFile = severFiles.files[idx];
-                        const foundFile = {
-                            serverFile: severFile,
+                    let foundFiles = AjaxResponse.data;
+                    for (let idx = 0; idx < foundFiles.files.length; idx++) {
+                        const foundFile = foundFiles.files[idx];
+                        const serverFile = {
+                            fileName: foundFile.fileName,
+                            imageId: foundFile.imageId,
+                            baseName: foundFile.baseName,
+                            dstFileName: foundFile.dstFileName,
+                            size: foundFile.size,
                             galleryId: nextFile.galleryId,
+                            origin: 'zip',
                             // ToDo create statusbar entry
                             statusBar: null,
                             errorZone: null,
                         };
-                        this.serverFiles.addFiles([foundFile]);
+                        this.serverFiles.addFiles([serverFile]);
                     }
                     // ==> Start ajax transfer of files
                     this.requestTransferFolderFilesTask.ajaxRequest();
@@ -1140,7 +1164,7 @@ class RequestFilesInFolderTask {
         }
         this.isBusy = true;
         /**/
-        this.serverFolder.statusBar = new createStatusBar(this.progressArea, this.serverFolder.path, 0);
+        this.serverFolder.statusBar = new createStatusBar(this.progressArea, '*Server: ' + this.serverFolder.path, 0);
         /* let request = */
         //await this.callAjaxRequest(nextFile)
         this.callAjaxRequest(this.serverFolder)
@@ -1155,17 +1179,22 @@ class RequestFilesInFolderTask {
             //console.log("      response data: " + JSON.stringify(data));
             if (AjaxResponse.success) {
                 console.log("      success data: " + AjaxResponse.data);
-                let severFiles = AjaxResponse.data;
-                for (let idx = 0; idx < severFiles.files.length; idx++) {
-                    const severFile = severFiles.files[idx];
-                    const foundFile = {
-                        serverFile: severFile,
+                let foundFiles = AjaxResponse.data;
+                for (let idx = 0; idx < foundFiles.files.length; idx++) {
+                    const foundFile = foundFiles.files[idx];
+                    const serverFile = {
+                        fileName: foundFile.fileName,
+                        imageId: foundFile.imageId,
+                        baseName: foundFile.baseName,
+                        dstFileName: foundFile.dstFileName,
+                        size: foundFile.size,
                         galleryId: galleryId,
+                        origin: 'server',
                         // ToDo create statusbar entry
                         statusBar: null,
                         errorZone: null,
                     };
-                    this.serverFiles.addFiles([foundFile]);
+                    this.serverFiles.addFiles([serverFile]);
                 }
                 // ==> Start ajax transfer of files
                 this.requestTransferFolderFilesTask.ajaxRequest();
@@ -1245,6 +1274,8 @@ class RequestTransferFolderFilesTask {
             data.append('imageId', nextFile.imageId);
             data.append('baseName', nextFile.baseName);
             data.append('dstFileName', nextFile.dstFileName);
+            data.append('gallery_id', nextFile.galleryId);
+            data.append('origin', nextFile.origin);
             data.append(Token, '1');
             const urlRequestDbImageId = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxTransferFolderFile';
             request.open('POST', urlRequestDbImageId, true);
@@ -1274,17 +1305,9 @@ class RequestTransferFolderFilesTask {
         this.isBusy = true;
         /**/
         while (this.serverFiles.length > 0) {
-            const serverFile = this.serverFiles.shift().serverFile;
-            let nextFile = {
-                fileName: serverFile.fileName,
-                imageId: serverFile.imageId,
-                baseName: serverFile.baseName,
-                dstFileName: serverFile.dstFileName,
-                statusBar: null,
-                errorZone: null,
-            };
+            const nextFile = this.serverFiles.shift();
             console.log("   @Request File: " + nextFile.fileName);
-            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.fileName, serverFile.size);
+            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.baseName, nextFile.size);
             /* let request = */
             //await this.callAjaxRequest(nextFile)
             this.callAjaxRequest(nextFile)
@@ -1427,7 +1450,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     //    droppedFiles, transferFiles, transferImagesTask);
     const requestDbImageIdTask = new RequestDbImageIdTask(elements.progressArea, elements.errorZone, droppedFiles, transferFiles, transferImagesTask);
     // (1) collect dropped files, start request DB image ID
-    const droppedFilesTask = new DroppedFilesTask(elements.selectGallery, droppedFiles, requestDbImageIdTask, zipFiles, requestZipUploadTask, serverFolder, serverFiles, requestFilesInFolderTask, requestTransferFolderFilesTask);
+    const droppedFilesTask = new DroppedFilesTask(elements, droppedFiles, requestDbImageIdTask, zipFiles, requestZipUploadTask, serverFolder, serverFiles, requestFilesInFolderTask, requestTransferFolderFilesTask);
     //--------------------------------------------------------------------------------------
     // Drop init and start
     //--------------------------------------------------------------------------------------
@@ -1473,8 +1496,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         event.stopPropagation();
         elements.dragZone.classList.remove('hover');
         /**/
-        // const eventFiles: FileList | undefined = event.target.files;
-        //const files = eventFiles || event.dataTransfer.files;
+        // const files = event.target.files || event.dataTransfer.files;
         const files = event.target.files || event.dataTransfer.files;
         /**/
         if (!files.length) {
