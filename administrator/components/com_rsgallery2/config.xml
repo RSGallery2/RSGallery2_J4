@@ -144,11 +144,11 @@
 				class="">
 		</field>
 		<field
-				name="thumb_width"
+				name="thumb_size"
 				type="text"
 				default="120"
-				label="COM_RSGALLERY2_THUMBNAIL_WIDTH"
-				description="COM_RSGALLERY2_THUMBNAIL_WIDTH_DESC"
+				label="COM_RSGALLERY2_THUMBNAIL_SIZE"
+				description="COM_RSGALLERY2_THUMBNAIL_SIZE_DESC"
 				class="">
 		</field>
 		<field
@@ -224,7 +224,7 @@
 		<field
 				name="imgPath_root"
 				type="text"
-				default="/images/rsgallery2/"
+				default="images/rsgallery2"
 				label="COM_RSGALLERY2_CFG_ROOT_LOCATION"
 				description="COM_RSGALLERY2_CFG_ROOT_LOCATION_DESC"
 				class="input-large-text input-xxlarge"

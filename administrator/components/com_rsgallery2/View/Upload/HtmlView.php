@@ -21,7 +21,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
+//use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
@@ -203,9 +203,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar()
 	{
-		// Get the toolbar object instance
-		$toolbar = Toolbar::getInstance('toolbar');
-
 		// on develop show open tasks if existing
 		if (!empty ($this->isDevelop))
 		{
@@ -231,7 +228,9 @@ class HtmlView extends BaseHtmlView
 		// Set the title
 		ToolBarHelper::title(Text::_('COM_RSGALLERY2_DO_UPLOAD'), 'upload');
 
-		$toolbar->preferences('com_rsgallery2');
+//		// Get the toolbar object instance
+//		$toolbar = Toolbar::getInstance('toolbar');
+//		$toolbar->preferences('com_rsgallery2');
 	}
 
 	/**

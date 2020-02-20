@@ -37,8 +37,6 @@ use Joomla\CMS\MVC\Model\ListModel;
 class ImageFileModel extends BaseModel // AdminModel
 {
 	protected $imagePaths = null;
-	protected $rootPath = '';
-	protected $imageSizes = [];
 	protected $isUseOriginalPath = true;
 	
 	/**
@@ -61,17 +59,6 @@ class ImageFileModel extends BaseModel // AdminModel
 		// $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		//
 		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-//		$rsgConfig = ComponentHelper::getParams();
-
-		$this->rootPath = $rsgConfig->get('imgPath_root');
-		// Fall back
-		if (empty ($this->rootPath))
-		{
-			$this->rootPath ="/images/rsgallery2/";
-		}
-		$imageSizesText = $rsgConfig->get('image_width');
-		$imageSizes = explode (',', $imageSizesText);
-		$this->imageSizes =  $imageSizes;
 
 		$this->isUseOriginalPath = $rsgConfig->get('keepOriginalImage');
 
@@ -128,11 +115,6 @@ class ImageFileModel extends BaseModel // AdminModel
 			{
 				throw new \LogicException('createDisplayImageFile: Wrong target size');
 			}
-
-
-
-
-
 
 
 			//---- target size -------------------------------------
@@ -248,7 +230,18 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			//---- target size -------------------------------------
 
-			$thumbWidth = $rsgConfig->get('thumb_width');
+			$thumbSize = $rsgConfig->get('thumb_size');
+
+			// size not in config
+			if (!$thumbSize)
+			{
+				$OutTxt = '';
+				$OutTxt .= 'Error executing createThumbImageFile: No value given for "Thumb Size"  in configuration';
+
+				// Make sure the target width is given
+				throw new \LogicException($OutTxt);
+			}
+
 			// source sizes
 			$imgHeight = $memImage->getHeight();
 			$imgWidth  = $memImage->getWidth();
@@ -260,21 +253,21 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			// ToDo: use joomla image.lib dimensions instead
 			// Is thumb style square // ToDo: Thumb style -> enum  // ToDo: general: Config enums
-			$width = $thumbWidth;
-			$height = $thumbWidth;
+			$width = $thumbSize;
+			$height = $thumbSize;
 
 			if ($thumbStyle != 1)
 			{
-				// ??? $thumbWidth should be max ????
+				// ??? $thumbSize should be max ????
 				if ($imgWidth > $imgHeight)
 				{
 					// landscape
-					$height = ($thumbWidth / $imgWidth) * $imgHeight;
+					$height = ($thumbSize / $imgWidth) * $imgHeight;
 				}
 				else
 				{
 					// portrait or square
-					$width  = ($thumbWidth / $imgHeight) * $imgWidth;
+					$width  = ($thumbSize / $imgHeight) * $imgWidth;
 				}
 			}
 
@@ -316,7 +309,7 @@ class ImageFileModel extends BaseModel // AdminModel
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'Error executing createThumbImageFile for image name: "' . $thumbPathFileName . '" size: ' . $thumbWidth . '"<br>';
+			$OutTxt .= 'Error executing createThumbImageFile for image name: "' . $thumbPathFileName . '" size: ' . $thumbSize . '"<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -543,7 +536,8 @@ class ImageFileModel extends BaseModel // AdminModel
 	 * @throws Exception
 	 *@since 4.3.0
 	 */
-	public function MoveImageAndCreateRSG2Images($srcTempPathFileName, $targetFileName, $galleryId)//: array
+	public function MoveImageAndCreateRSG2Images($srcTempPathFileName, $targetFileName, $galleryId,
+	                                             $uploadOrigin): array
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
@@ -556,7 +550,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
 //		if (false) {
 		$urlThumbFile = '';
-		$isMoved = false; // successful images
+		$isCreated = false; // successful images
 		$msg = '';
 		$isUseOriginalPath = $this->isUseOriginalPath;
 
@@ -567,35 +561,52 @@ class ImageFileModel extends BaseModel // AdminModel
 			// ToDo: ask gallery for old style and use it in imagePaths
 
 			$this->imagePaths =
-			$imagePaths = new ImagePaths ($this->rootPath, $galleryId, $this->imageSizes);
+			$imagePaths = new ImagePaths ($galleryId);
 			$imagePaths->createAllPaths($isUseOriginalPath);
 
 			//--- create files ---------------------------------------------------
 
-			$isMoved = $this->CreateRSG2Images($imagePaths, $srcTempPathFileName, $targetFileName);
+			$isCreated = $this->CreateRSG2Images($imagePaths, $srcTempPathFileName, $targetFileName);
+			$urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
 
-			$urlThumbFile =  $imagePaths->getThumbUrl($targetFileName);
-
-			if($isUseOriginalPath)
+			if ($isCreated)
 			{
-				$originalFileName = path_join($imagePaths->originalBasePath, $targetFileName);
-				$isMoved = File::upload($srcTempPathFileName, $originalFileName);
-				if ($isMoved)
+				if ($isUseOriginalPath)
 				{
-					Path::setPermissions($originalFileName, '0644');
+					$originalFileName = path_join($imagePaths->originalBasePath, $targetFileName);
+					// Move of file on upload and not on ftp folder on server
+					if($uploadOrigin != 'server')
+					{
+						$isCreated = File::upload($srcTempPathFileName, $originalFileName);
+					}
+					else
+					{
+						$isCreated = File::copy($srcTempPathFileName, $originalFileName);
+					}
+					if ($isCreated)
+					{
+						Path::setPermissions($originalFileName, '0644');
+					}
 				}
-			} else {
-
-				if (File::exists($srcTempPathFileName)) {
-					File::delete($srcTempPathFileName);
+				else
+				{
+					// don't delete files on folder upload ToDo: ? config ?
+					if ($uploadOrigin != 'server')
+					{
+						if (File::exists($srcTempPathFileName))
+						{
+							File::delete($srcTempPathFileName);
+						}
+					}
 				}
-			}
 
-			if (!$isMoved)
-			{
-				// File from other user may exist
-				// lead to upload at the end ....
-				$msg .= '<br>' . 'Move for file "' . $targetFileName . '" failed: Other user may have tried to upload with same name at the same moment. Please try again or with different name.';
+				if (!$isCreated)
+				{
+					// File from other user may exist
+					// lead to upload at the end ....
+					$msg .= '<br>' . 'Create for file "' . $targetFileName . '"';
+					// 'failed: Other user may have tried to upload with same name at the same moment. Please try again or with different name.';
+				}
 			}
 		}
 		catch (RuntimeException $e)
@@ -616,11 +627,11 @@ class ImageFileModel extends BaseModel // AdminModel
 		if ($Rsg2DebugActive)
 		{
 			Log::add('<== Exit MoveImageAndCreateRSG2Images: '
-				. (($isMoved) ? 'true' : 'false')
+				. (($isCreated) ? 'true' : 'false')
 				. ' Msg: ' . $msg);
 		}
 
-		return array($isMoved, $urlThumbFile, $msg); // file is moved
+		return array($isCreated, $urlThumbFile, $msg); // file is moved
 	}
 
 	/**
@@ -708,7 +719,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 * @param string $singleFileName  Destination base file name
 	 * @param int $galleryId May be used in destination path
 	 *
-	 * @return array ($isMoved, $urlThumbFile, $msg) Tells about success, the URL to the thumb file and a message on error
+	 * @return array ($isMoved, $msg) Tells about success, the URL to the thumb file and a message on error
 	 *
 	 * @since 4.3.0
 	 * @throws Exception
@@ -717,7 +728,6 @@ class ImageFileModel extends BaseModel // AdminModel
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
-		$urlThumbFile = '';
 		$msg          = ''; // ToDo: Raise errors instead
 
 		if ($Rsg2DebugActive)
@@ -759,8 +769,10 @@ class ImageFileModel extends BaseModel // AdminModel
 				{
 					$memImage = new image ($srcFileName);
 
-//					$isCreated = $isCreated & $this->createThumbImageFile($imagePaths->getSizeUrl($imageSize, $targetFileName), $imageSize, $memImage);
-					$isCreated = $isCreated & $this->createDisplayImageFile($imagePaths->getSizePath($imageSize, $targetFileName), $imageSize, $memImage);
+					$isCreated = false;
+					try
+					{
+					$isCreated = $this->createDisplayImageFile($imagePaths->getSizePath($imageSize, $targetFileName), $imageSize, $memImage);
 
 					$afterWidth  = $memImage->getWidth();
 					$afterHeight = $memImage->getHeight();
@@ -771,8 +783,12 @@ class ImageFileModel extends BaseModel // AdminModel
 						$memImage->destroy();
 					}
 					/**/
-
-					$memImage->destroy ();
+					}
+					catch (RuntimeException $e)
+					{
+						$memImage->destroy ();
+						throw $e;
+					}
 
 					if (!$isCreated)
 					{
@@ -824,11 +840,10 @@ class ImageFileModel extends BaseModel // AdminModel
 		if ($Rsg2DebugActive)
 		{
 			Log::add('<== Exit CreateRSG2Images: '
-				. (($isCreated) ? 'true' : 'false')
-				. ' Msg: ' . $msg);
+				. (($isCreated) ? 'true' : 'false'));
 		}
 
-		return array($isCreated, $urlThumbFile, $msg); // file is moved
+		return $isCreated; // files are created
 	}
 
 	/**

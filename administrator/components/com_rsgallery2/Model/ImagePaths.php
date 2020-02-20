@@ -74,6 +74,7 @@ function path_join() {
 
 
 class ImagePaths {
+	public $rsgImagesBasePath;
 	public $galleryRoot;
 	public $imageSizes;
 
@@ -88,8 +89,29 @@ class ImagePaths {
 	protected $sizeUrls;
 	//	toDo: watermark ...
 
-	public function __construct($rootPath = "", $galleryId = 0, $imageSizes = []) {
-		$this->galleryRoot = path_join(JPATH_ROOT, $rootPath, $galleryId);
+	// root of images, image sizes from configuration build the paths
+	// ToDo: J3x style paths
+	public function __construct($galleryId = 0, $isJ3xStylePaths = false) {
+		global $rsgConfig;
+
+		// activate config
+		if (!$rsgConfig)
+		{
+			$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+		}
+
+		$this->rsgImagesBasePath = $rsgConfig->get('imgPath_root');
+		// Fall back
+		if (empty ($this->rsgImagesBasePath))
+		{
+			$this->rsgImagesBasePath ="images/rsgallery2";
+		}
+
+		$imageSizesText = $rsgConfig->get('image_width');
+		$imageSizes = explode (',', $imageSizesText);
+		$this->imageSizes =  $imageSizes;
+
+		$this->galleryRoot = path_join(JPATH_ROOT, $this->rsgImagesBasePath, $galleryId);
 
 		$this->originalBasePath = path_join($this->galleryRoot, 'original');
 		$this->thumbBasePath    = path_join($this->galleryRoot, 'thumbs');
@@ -99,16 +121,14 @@ class ImagePaths {
 			$this->sizeBasePaths[$imageSize] = path_join($this->galleryRoot, $imageSize);
 		}
 
-		$this->galleryRootUrl = path_join(Uri::root(), $rootPath, $galleryId);
-
-		$this->originalUrl = path_join($this->galleryRootUrl, 'original');
-		$this->thumbUrl    = path_join($this->galleryRootUrl, 'thumbs');
+		$this->galleryRootUrl = Uri::root() . '/' . $this->rsgImagesBasePath . '/' . $galleryId;
+		$this->originalUrl = $this->galleryRootUrl . '/original';
+		$this->thumbUrl    = $this->galleryRootUrl . '/thumbs';
 
 		// $this->imageSizes = $imageSizes;
 		foreach ($imageSizes as $imageSize) {
-			$this->sizeUrls[$imageSize] = path_join($this->galleryRootUrl, $imageSize);
+			$this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
 		}
-
 	}
 
 	public function getOriginal ($fileName=''){
@@ -122,13 +142,13 @@ class ImagePaths {
 	}
 
 	public function getOriginalUrl ($fileName=''){
-		return path_join ($this->OriginalUrl, $fileName);
+		return $this->originalUrl . '/' . $fileName;
 	}
 	public function getThumbUrl ($fileName=''){
-		return path_join ($this->thumbUrl, $fileName);
+		return $this->thumbUrl . '/' . $fileName;
 	}
 	public function getSizeUrl ($imageSize, $fileName=''){
-		return path_join ($this->sizeUrls [$imageSize], $fileName);
+		return $this->sizeUrls [$imageSize] . '/' . $fileName;
 	}
 
 	public function createAllPaths($isCreateOriginal=true) {

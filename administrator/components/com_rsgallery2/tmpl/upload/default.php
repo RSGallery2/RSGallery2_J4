@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Session\Session;
 
-HTMLHelper::_('behavior.core');
+//HTMLHelper::_('behavior.core');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
@@ -34,7 +34,6 @@ $app = Factory::getApplication();
 $tabs = []
 
 ?>
-
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=upload'); ?>"
       method="post" name="adminForm" id="adminForm" enctype="multipart/form-data"
       class="form-validate form-horizontal">
@@ -97,7 +96,7 @@ $tabs = []
                         <div id="uploader-wrapper">
                             <div id="dragarea" data-state="pending">
                                 <div id="dragarea-content" class="text-center">
-                                    <div id="imagesArea" class="span12">
+                                    <div id="imagesArea" class="imagesArea">
                                         <ul id="imagesAreaList" class='thumbnails'>
 
                                         </ul>

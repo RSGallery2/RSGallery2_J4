@@ -7,6 +7,7 @@
   line-height: 175%;
   color: #999;
   transition: all .2s;
+  display:block;
 }
 
 #dragarea {
@@ -185,6 +186,18 @@
     vertical-align: top;
 }
 
+
+.OK.label, .error.label {
+  margin-left: 5px;
+}
+
+abort.label, .upload.label, .OK.label, .error.label {
+  position: relative;
+  top: -2px;;
+}
+
+
+
 /**
 .tmp_order {
     display:inline-block;
@@ -195,13 +208,15 @@
 }
 /**/
 
+/**
 .thumbnails > li {
   float: left;
   margin-bottom: 18px;
   margin-left: 20px;
 }
-
 /**/
+
+/**
 .thumbnails img {
     float: left;
     margin-right: 10px;
@@ -210,41 +225,14 @@
 }
 /**/
 
+/**
+.thumbnails {
+  list-style: none;
+}
 /**/
-.thumbnail {
-  display: block;
-  padding: 4px;
-  line-height: 18px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.055);
-  transition: all .2s ease-in-out;
-}
-
-.thumbnail img {
-  margin-top: 2.5%;
-  padding: 4px;
-
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-
-  // border-radius: 3px;
-  border-radius: 6px;
-
-  max-width: 100%;
-  // width: auto;
-  height: auto;
-  vertical-align: middle;
-  border: 0;
-
-  transition: all .2s ease-in-out;
-}
-
-.imgContainer {
-  display: block;
-}
 
 /**/
-.imagearea {
+.imagesArea {
 
   display: block;
 
@@ -255,29 +243,90 @@
   }
 
   li {
-    // display: block;
-    display: list-item;
-    list-style: none;
+//    // display: block;
+    display: inline-block;
+//    display: list-item;
+//    list-style: none;
+
+    .rsg2_thumbnail {
+      //  display: block;
+      padding: 4px;
+      line-height: 18px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+      transition: all .2s ease-in-out;
+
+      img {
+        margin-top: 2.5%;
+        padding: 4px;
+
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+
+        // border-radius: 3px;
+        border-radius: 6px;
+
+        max-width: 100%;
+        // width: auto;
+        height: auto;
+        vertical-align: middle;
+        border: 0;
+
+        transition: all .2s ease-in-out;
+      }
+    }
+
   }
 
 
 }
 
-.caption {
-
+/**
+.imgContainer {
   display: block;
-
 }
+/**/
 
+
+/**/
+/**/
+
+/**/
+
+
+/**
+.caption {
+  display: block;
+}
+/**/
+
+/**/
 .btn-rsg2X {
-/*  min-width: 220px; /**/
+//  min-width: 220px;
 }
+/**/
 
+/**/
 .imagesArea {
   display: block;
+  width: 100%;
 }
+/**/
 
-
+/**
 ul#imagesAreaList {
   list-style: none;
 }
+/**/
+
+// Hack for removing empty header line
+/**/
+#subhead {
+  height: 0px;
+  min-height: 0px;
+  padding: 0 0;
+  visibility: hidden;
+  margin: 0 0 !important;
+}
+/**/
+

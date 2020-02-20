@@ -12,6 +12,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
@@ -237,13 +238,6 @@ class UploadController extends FormController
 			$isCreated                  = $imageId > 0;
 
 			//----------------------------------------------------
-			// for debug purposes fetch image order
-			//----------------------------------------------------
-
-			$imageOrder               = $this->imageOrderFromId($imageId);
-			$ajaxImgDbObject['order'] = $imageOrder;
-
-			//----------------------------------------------------
 			// return result
 			//----------------------------------------------------
 
@@ -372,11 +366,16 @@ out:
 
 			//--- preset return value --------------------------------------------
 
+			$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+			$thumbSize = $rsgConfig->get('thumb_size');
+
+
 			$ajaxImgObject['fileName'] = $targetFileName;
 			// some dummy data for error messages
 			$ajaxImgObject['imageId']      = -1;
 			$ajaxImgObject['fileUrl']      = '';
 			$ajaxImgObject['safeFileName'] = $safeFileName;
+			$ajaxImgObject['thumbSize']      = $thumbSize;
 
 			//--- gallery ID --------------------------------------------
 
@@ -423,7 +422,7 @@ out:
 				/**/
 				$modelFile = $this->getModel('imageFile');
 				list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images(
-					$srcTempPathFileName, $targetFileName, $galleryId);
+					$srcTempPathFileName, $targetFileName, $galleryId, 'uploadFile');
 				/**/
 			}
 			catch (RuntimeException $e)
@@ -1102,7 +1101,7 @@ interface IResponseTransfer {
 				$modelFile = $this->getModel('imageFile');
 				// toDo check origin and config for copy / or move file call below
 				list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images(
-					$fileName, $targetFileName, $galleryId);
+					$fileName, $targetFileName, $galleryId, $origin);
 				/**/
 			}
 			catch (RuntimeException $e)

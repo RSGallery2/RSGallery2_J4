@@ -260,7 +260,7 @@ class TransferFiles extends Queue<ITransferFile> {
 class FormElements {
     selectGallery: HTMLInputElement;
     dragZone: HTMLElement;
-    imagesArea: HTMLElement;
+    imagesAreaList: HTMLElement;
     progressArea: HTMLElement;
     errorZone: HTMLElement;
 
@@ -275,7 +275,7 @@ class FormElements {
     constructor() {
         this.selectGallery = <HTMLInputElement> document.getElementById('SelectGallery');
         this.dragZone = <HTMLElement> document.getElementById('dragarea');
-        this.imagesArea = <HTMLElement> document.getElementById('imagesAreaList');
+        this.imagesAreaList = <HTMLElement> document.getElementById('imagesAreaList');
         this.progressArea = <HTMLElement> document.getElementById('uploadProgressArea');
         this.errorZone = <HTMLElement> document.getElementById('uploadErrorArea');
 
@@ -552,7 +552,7 @@ class createStatusBar {
         //this.htmlAbort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
         this.htmlAbort = document.createElement('span');
         this.htmlAbort.classList.add('abort');
-        //this.htmlAbort.appendChild(document.createTextNode('Abort'));
+        this.htmlAbort.classList.add('label');
         this.htmlAbort.innerHTML = 'Abort';
         this.htmlStatusbarInner.appendChild (this.htmlAbort);
 /**/
@@ -631,22 +631,14 @@ class createStatusBar {
     //========================================
     // Change progress value
     public setProgress (percentage: number) {
-        let width = parseInt(this.htmlProgressBarOuter.style.width) || 0;
 
-        let progressBarWidth = percentage * width  / 100;
-
-        // ToDo: animate change of width
-        // transition:300ms linear; class progressBar ? put to inner ?
-        //this.htmlprogressBar.find('div').animate({width: progressBarWidth}, 10).html(percentage + "%");
-        this.htmlProgressBarInner.style.width = progressBarWidth.toString();
-
-        // do not abort when nearly finished
+        this.htmlProgressBarInner.style.width = '' + percentage.toString() + '%';
+        // remove abort button when nearly finished
         if (percentage >= 99.999) {
-            this.htmlAbort.style.display = 'none';
-  //          this.htmlProgressBarInner.style.width = "50%";
-            console.log("      *** setProgress: " + 100 + '%');
-
+            //this.htmlAbort.style.display = 'none';
+            this.removeAbort ();
         }
+//        console.log("      *** setProgress: " + percentage + '%');
     };
 
     //========================================
@@ -801,6 +793,7 @@ interface IResponseTransfer {
     imageId: string; //number
     fileUrl: string;
     safeFileName: string;
+    thumbSize:string;
 }
 
 interface IResponseServerFile {
@@ -1150,7 +1143,7 @@ function ajaxMessages2Html (AjaxResponse: IAjaxResponse, fileName: string): HTML
 
 class TransferImagesTask {
 
-    private imagesArea: HTMLElement;
+    private imagesAreaList: HTMLElement;
     private progressArea: HTMLElement;
     private errorZone: HTMLElement;
 
@@ -1161,13 +1154,13 @@ class TransferImagesTask {
     private readonly BusyCountLimit: number = 5;
 
     constructor(
-        imagesArea: HTMLElement,
+        imagesAreaList: HTMLElement,
         progressArea: HTMLElement,
         errorZone: HTMLElement,
 
         transferFiles: TransferFiles,
     ) {
-        this.imagesArea = imagesArea;
+        this.imagesAreaList = imagesAreaList;
         this.progressArea = progressArea;
         this.errorZone = errorZone;
 
@@ -1340,6 +1333,7 @@ class TransferImagesTask {
                         console.log("      response data.imageId: " + transferData.imageId);
                         console.log("      response data.fileUrl: " + transferData.fileUrl);
                         console.log("      response data.safeFileName: " + transferData.safeFileName);
+                        console.log("      response data.thumbSize: " + transferData.thumbSize);
 
                         nextFile.statusBar.setOK(true);
 
@@ -1392,6 +1386,7 @@ class TransferImagesTask {
     }
 
     // toDo: Html lib or similar
+    // ToDO: Extract function and use also otherwise
     private showThumb (responseData: IResponseTransfer) {
 
         // Add HTML to show thumb of uploaded image
@@ -1400,12 +1395,10 @@ class TransferImagesTask {
 
         //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
         const imageBox = document.createElement('li');
-        this.imagesArea.appendChild (imageBox);
+        this.imagesAreaList.appendChild (imageBox);
 
-        //this.thumbArea = $("<div class='thumbnail imgProperty'></div>").appendTo(this.imageBox);
         const thumbArea = document.createElement('div');
-        thumbArea.classList.add('thumbnail');
-        thumbArea.classList.add('imgProperty');
+        thumbArea.classList.add('rsg2_thumbnail');
         imageBox.appendChild (thumbArea);
 
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
@@ -1416,8 +1409,8 @@ class TransferImagesTask {
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
         imageDisplay.classList.add('img-rounded');
-        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
-        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
+        imageDisplay.style.width = responseData.thumbSize + 'px';
+        imageDisplay.style.height = responseData.thumbSize + 'px';
         imageDisplay.src = responseData.fileUrl;
         imgContainer.appendChild (imageDisplay);
 
@@ -1432,10 +1425,12 @@ class TransferImagesTask {
         imageName.innerText = responseData.fileName;
         caption.appendChild (imageName);
 
+//        caption.appendChild(document.createTextNode(' '));
+
         // toDo: title ?
         //this.imageId = $("<small> (" + jData.data.cid + ":" + jData.data.order + ")</small>").appendTo(this.imageDisplay);
         const imageId = document.createElement('small');
-        imageId.innerText = '(' + responseData.imageId + ')'; // order
+        imageId.innerText = ' (' + responseData.imageId + ')'; // order
         //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
         caption.appendChild (imageId);
 
@@ -1848,7 +1843,7 @@ class RequestFilesInFolderTask {
 
 class RequestTransferFolderFilesTask {
 
-    private imagesArea: HTMLElement;
+    private imagesAreaList: HTMLElement;
     private progressArea: HTMLElement;
     private errorZone: HTMLElement;
 
@@ -1858,14 +1853,14 @@ class RequestTransferFolderFilesTask {
     private isBusy: boolean = false;
 
     constructor(
-        imagesArea: HTMLElement,
+        imagesAreaList: HTMLElement,
         progressArea: HTMLElement,
         errorZone: HTMLElement,
 
         //        zipFiles: ZipFiles,
         serverFiles: ServerFiles,
     ) {
-        this.imagesArea = imagesArea;
+        this.imagesAreaList = imagesAreaList;
         this.progressArea = progressArea;
         this.errorZone = errorZone;
 
@@ -2032,12 +2027,10 @@ class RequestTransferFolderFilesTask {
 
         //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
         const imageBox = document.createElement('li');
-        this.imagesArea.appendChild (imageBox);
+        this.imagesAreaList.appendChild (imageBox);
 
-        //this.thumbArea = $("<div class='thumbnail imgProperty'></div>").appendTo(this.imageBox);
         const thumbArea = document.createElement('div');
-        thumbArea.classList.add('thumbnail');
-        thumbArea.classList.add('imgProperty');
+        thumbArea.classList.add('rsg2_thumbnail');
         imageBox.appendChild (thumbArea);
 
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
@@ -2048,8 +2041,8 @@ class RequestTransferFolderFilesTask {
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
         imageDisplay.classList.add('img-rounded');
-        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
-        imageDisplay.setAttribute('data-src', 'holder.js/600x400');
+        imageDisplay.style.width = responseData.thumbSize +'px';
+        imageDisplay.style.height = responseData.thumbSize + 'px';
         imageDisplay.src = responseData.fileUrl;
         imgContainer.appendChild (imageDisplay);
 
@@ -2067,7 +2060,7 @@ class RequestTransferFolderFilesTask {
         // toDo: title ?
         //this.imageId = $("<small> (" + jData.data.cid + ":" + jData.data.order + ")</small>").appendTo(this.imageDisplay);
         const imageId = document.createElement('small');
-        imageId.innerText = '(' + responseData.imageId + ')'; // order
+        imageId.innerText = ' (' + responseData.imageId + ')'; // order
         //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
         caption.appendChild (imageId);
 
@@ -2123,7 +2116,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     };
 
     // move file on server to rsgallery path (and multiply file)
-    const requestTransferFolderFilesTask = new RequestTransferFolderFilesTask(elements.imagesArea, elements.progressArea,
+    const requestTransferFolderFilesTask = new RequestTransferFolderFilesTask(elements.imagesAreaList, elements.progressArea,
         elements.errorZone, serverFiles);
 
     // Get list of files on server (and create image DB IDs)
@@ -2140,7 +2133,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     const onGalleryChange = new enableDragZone (elements);
 
     // (3) ajax request: Transfer file to server
-    const transferImagesTask = new TransferImagesTask (elements.imagesArea, elements.progressArea, elements.errorZone,
+    const transferImagesTask = new TransferImagesTask (elements.imagesAreaList, elements.progressArea, elements.errorZone,
         transferFiles);
 
     // (2) ajax request: database image item
