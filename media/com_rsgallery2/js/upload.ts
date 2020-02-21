@@ -518,6 +518,7 @@ class createStatusBar {
         progressArea: HTMLElement,
         fileName: string,
         fileSize: number,
+        origin: string, // '
     ){
         createStatusBar.imgCount++;
 //        let even_odd = (createStatusBar.imgCount % 2 == 0) ? "odd" : "even";
@@ -533,7 +534,14 @@ class createStatusBar {
         
         //this.htmlFilename = $("<div class='filename'></div>").appendTo(this.statusbar);
         this.htmlFilename = document.createElement('div');
-        this.htmlFilename.classList.add('filename');
+        if (origin == 'image') {
+            this.htmlFilename.classList.add('filename');
+        }
+        else
+        {
+            // ToDo: May be others too
+            this.htmlFilename.classList.add('zip');
+        }
         this.htmlStatusbarInner.appendChild (this.htmlFilename);
 
         //this.htmlSize = $("<div class='filesize'></div>").appendTo(this.statusbar);
@@ -610,6 +618,10 @@ class createStatusBar {
         // set as last element: Latest file on top to compare if already shown in image area
         progressArea.appendChild(this.htmlStatusbar);
     }
+
+
+
+
 
     //--- file size in KB/MB .... -------------------
     // toDo: move to lib file
@@ -925,7 +937,7 @@ class RequestDbImageIdTask {
             let nextFile = this.droppedFiles.shift();
             console.log("   @Request File: " + nextFile.file.name);
 
-            nextFile.statusBar = new createStatusBar (this.progressArea, nextFile.file.name, nextFile.file.size);
+            nextFile.statusBar = new createStatusBar (this.progressArea, nextFile.file.name, nextFile.file.size, 'image');
 
             /* let request = */
             //await this.callAjaxRequest(nextFile)
@@ -1558,7 +1570,7 @@ class RequestZipUploadTask {
             let nextFile = this.zipFiles.shift();
             console.log("   @Request zip File: " + nextFile.file.name);
 
-            nextFile.statusBar = new createStatusBar(this.progressArea, "*Zip: " + nextFile.file.name, nextFile.file.size);
+            nextFile.statusBar = new createStatusBar(this.progressArea, "*Zip: " + nextFile.file.name, nextFile.file.size, 'zip');
 
             /* let request = */
             //await this.callAjaxRequest(nextFile)
@@ -1753,7 +1765,7 @@ class RequestFilesInFolderTask {
         this.isBusy = true;
         /**/
 
-        this.serverFolder.statusBar = new createStatusBar(this.progressArea, '*Server: ' + this.serverFolder.path, 0);
+        this.serverFolder.statusBar = new createStatusBar(this.progressArea, '*Server: ' + this.serverFolder.path, 0, 'server');
 
         /* let request = */
         //await this.callAjaxRequest(nextFile)
@@ -1948,7 +1960,7 @@ class RequestTransferFolderFilesTask {
 
             console.log("   @Request File: " + nextFile.fileName);
 
-            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.baseName, nextFile.size);
+            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.baseName, nextFile.size, 'folder');
 
             /* let request = */
             //await this.callAjaxRequest(nextFile)

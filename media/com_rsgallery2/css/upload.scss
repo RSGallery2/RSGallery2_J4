@@ -1,3 +1,4 @@
+@import "Rsg2";
 
 #upload-icon {
   font-size: 48px;
@@ -117,6 +118,14 @@
   width: 250px;
 }
 
+.zip {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+  background-color: #1DC116;
+}
+
+
 .filesize {
   display: inline-block;
   vertical-align: top;
@@ -188,15 +197,24 @@
 
 
 .OK.label, .error.label {
-  margin-left: 5px;
+//  margin-left: 5px;
 }
 
-abort.label, .upload.label, .OK.label, .error.label {
-  position: relative;
-  top: -2px;;
+abort.label {
+//  background-color: map-get($rsg2-colors, red);
 }
 
+.upload.label {
+//  map-get($rsg2-colors, blue)
+}
 
+.OK.label {
+//  map-get($rsg2-colors, green)
+}
+
+.error.label {
+//  map-get($rsg2-colors, orange)
+}
 
 /**
 .tmp_order {
