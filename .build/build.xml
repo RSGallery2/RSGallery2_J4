@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="RSG2_component" default="build">
 	<description>
-	--- RSGallery2 component build script with phing ---
+		--- RSGallery2 component build script with phing ---
+	
 		The script collects release files in folder 
 		..\.packages\tmp. Then it replaces or changes 
 		text in files. Then these files are zipped and the 
@@ -246,8 +247,8 @@
         <copy file="${srcRoot}/LICENSE.txt" tofile="${buildDirTemp}LICENSE.txt" />
 
         <!-- Update files in administrator folder manifest.xml -->
-        <copy file="${srcRoot}/${extensionLower}.xml" tofile="${buildDirTemp}administrator/components/com_rsgallery2/${extensionLower}.xml" />
-        <copy file="${srcRoot}/install_rsg2.php" tofile="${buildDirTemp}administrator/components/com_rsgallery2/install_rsg2.php" />
+        <!--copy file="${srcRoot}/${extensionLower}.xml" tofile="${buildDirTemp}administrator/components/com_rsgallery2/${extensionLower}.xml" /-->
+        <!--copy file="${srcRoot}/install_rsg2.php" tofile="${buildDirTemp}administrator/components/com_rsgallery2/install_rsg2.php" /-->
  
         <!--copy file="${admin}/install.php" tofile="${buildDir}/tmp/install.php" /-->
         <echo msg="Copy was successful" />

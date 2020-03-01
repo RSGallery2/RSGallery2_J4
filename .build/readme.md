@@ -10,6 +10,7 @@ It will create .packages folder in component root with zip file
 phing
 phing -f build.xml
 phing -logfile .\build.log
+phing -verbose -logfile .\build.log
 Needs setting of version in build.php before
 
 **Update the project files** 
