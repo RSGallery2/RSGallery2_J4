@@ -15,19 +15,22 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
+/**
+ * Class MaintenanceJ3xModel
+ * @package Joomla\Component\Rsgallery2\Administrator\Model
+ *
+ * Handles old J3x RSG23 data structures. Especially for transferring the config data
+ *
+ *
+ */
+
 class MaintenanceJ3xModel extends BaseDatabaseModel
 {
 
-
-	/**
-	 * This function will retrieve the data of the n last uploaded images
-	 *
-	 * @param int $limit > 0 will limit the number of lines returned
-	 *
-	 * @return array rows with image name, gallery name, date, and user name as rows
-	 *
-	 * @since   4.3.0
-	 */
+    /**
+     * @return array|mixed
+     * @throws \Exception
+     */
 	static function OldConfigItems()
 	{
 		$oldItems = array();
@@ -63,6 +66,14 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 		return $oldItems;
 	}
 
+    /**
+     * @param $OldConfigItems
+     * @param $configVars
+     * @return array
+     * @throws \Exception
+     */
+
+    // ToDo: There may other merged operation needed instead of 1:1 copy
 	static function MergeOldAndNew($OldConfigItems, $configVars)
 	{
 		// component parameters to array
@@ -76,6 +87,9 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 			{
 				$compConfig [$key] = $value;
 			}
+
+			// tell about merge
+            $compConfig ['j3x_merged_cfg_version'] = '0.1';
 
 			// J3.5 old configuration vars
 			$mergedConfigItems = array_merge($OldConfigItems, $compConfig);
@@ -92,6 +106,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
+
+		// ToDo: who writes update
 
 		return $mergedConfigItems;
 	}

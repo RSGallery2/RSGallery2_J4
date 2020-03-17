@@ -53,6 +53,13 @@
 		/>
 
 		<field
+				id="j3x_merged_cfg_version"
+				name="j3x_merged_cfg_version"
+				type="hidden"
+				default="0.0.0"
+		/>
+
+		<field
 				id="isDebugBackend"
 				name="isDebugBackend"
 				type="radio"

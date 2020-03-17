@@ -76,18 +76,17 @@ class Com_Rsgallery2InstallerScript
     to execute different checks and responses for the three cases.
     -------------------------------------------------------------------------*/
 
-	/**
-	 * Function called before extension installation/update/removal procedure commences
-	 *
-	 * @param   string            $type    The type of change (install, update or discover_install, not uninstall)
-	 * @param   InstallerAdapter  $parent  The class calling this method
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since  1.0.0
-	 *
-	 */
-	public function preflight($type, $parent)
+    /**
+     * Function to act prior to installation process begins
+     *
+     * @param   string     $action     Which action is happening (install|uninstall|discover_install|update)
+     * @param   Installer  $installer  The class calling this method
+     *
+     * @return  boolean  True on success
+     *
+     * @since   3.7.0
+     */
+    public function preflight($action, $installer)
 	{
 		// Check for the minimum PHP version before continuing
 		if (!empty($this->minimumPhp) && version_compare(PHP_VERSION, $this->minimumPhp, '<'))
@@ -107,12 +106,25 @@ class Com_Rsgallery2InstallerScript
 
 		// ToDo: minimum RSG2 version
 
-		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
+		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $action, Log::INFO, 'rsg2');
 
+        if ($action === 'update')
+        {
+            // Get the version we are updating from
+            if (!empty($installer->extension->manifest_cache))
+            {
+                $manifestValues = json_decode($installer->extension->manifest_cache, true);
 
-		// COM_RSGALLERY2_PREFLIGHT_INSTALL_TEXT / COM_RSGALLERY2_PREFLIGHT_UPDATE_TEXT
+                if ((array_key_exists('version', $manifestValues)))
+                {
+                    $this->oldRelease = $manifestValues['version'];
+                }
+            }
+        }
+
+        // COM_RSGALLERY2_PREFLIGHT_INSTALL_TEXT / COM_RSGALLERY2_PREFLIGHT_UPDATE_TEXT
 		// COM_RSGALLERY2_PREFLIGHT_UNINSTALL_TEXT
-		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT');
+		// echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT');
 
 		return true;
 	}
@@ -138,7 +150,7 @@ class Com_Rsgallery2InstallerScript
 	 */
 	public function install($parent)
 	{
-		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
+//		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALL_TEXT'), Log::INFO, 'rsg2');
 
 		return true;
@@ -194,16 +206,24 @@ class Com_Rsgallery2InstallerScript
 	 */
 	public function postflight($type, $parent)
 	{
+//	    toDo: care for display here
 
 		// COM_RSGALLERY2_POSTFLIGHT_UPDATE_TEXT, COM_RSGALLERY2_POSTFLIGHT_INSTALL_TEXT
 		// NO:  COM_RSGALLERY2_POSTFLIGHT_UNINSTALL_TEXT
-		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
+//		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
+		// ToDo: move installler / update
 		$isGalleryTreeCreated = $this->InitGalleryTree ();
+
+
+//		$changelog = $this->getChangelog();
+//		JFactory::getApplication()->enqueueMessage($changelog, 'notice');
+
 
 		return true;
 	}
+
     /*-------------------------------------------------------------------------
     uninstall
     ---------------------------------------------------------------------------
@@ -230,13 +250,21 @@ class Com_Rsgallery2InstallerScript
 		return true;
 	}
 
+    /**
+     * InitGalleryTree
+     * Intializes the nested tree with a root element
+     *
+     * @return bool
+     * @throws Exception
+     *
+     * @since
+     */
 	public function InitGalleryTree()
 	{
 		$isGalleryTreeCreated = false;
 		
 		$id_galleries = '#__rsg2_galleries';
-		$id_j3x_config = '#__rsgallery2_config';
-		
+
 		try
 		{
 			$db = Factory::getDbo();
@@ -255,8 +283,7 @@ class Com_Rsgallery2InstallerScript
 
 			if ($id == '1')
 			{   // assume tree structure already built
-				echo '<p>Root record already present, install program exiting ...</p>';
-				Log::add('Root record already present, install program exiting ...', Log::INFO, 'rsg2');
+				Log::add('Gallery table root record already present exiting ...', Log::INFO, 'rsg2');
 			}
 			else
 			{
@@ -283,28 +310,66 @@ class Com_Rsgallery2InstallerScript
 					Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error InitGalleryTree');
 				}
 			}
-			
-			//---------------------------------------------
-			
-			Log::add('check for existing old J3x Tables', Log::INFO, 'rsg2');
-			
-			// prepare taking over old 
-			if ($this->Rsg2TableExist ($id_j3x_config)) {
+        }
+            //catch (\RuntimeException $e)
+        catch (\Exception $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error InitGalleryTree');
+        }
 
-				Log::add('Old J3x Tables exist', Log::INFO, 'rsg2');
-				
-				$j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3x;
-				Log::add('after $j3x_model', Log::INFO, 'rsg2');
-				
-				$doesExist = $j3x_model->Rsg2TableExist ($id_j3x_config);
-				//$j3x_model->copyOldItems2New ();
-				Log::add('after copyOldItems2New', Log::INFO, 'rsg2');
-				Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
+        return $isGalleryTreeCreated;
+    }
+
+    /**
+     * are_RSG2_J3x_Tables_Existing
+     * Checks for old config table. If it exists it is assumed that all joomla 3 x and older tables
+     * @return bool
+     * @throws Exception
+     */
+    public function update_config_On_RSG2_J3x_Tables_Existing ()
+    {
+        $isOldGalleryTableExisting = false;
+
+        try
+        {
+			Log::add('check for existing old J3x Tables', Log::INFO, 'rsg2');
+            $j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3x;
+            Log::add('after $j3x_model', Log::INFO, 'rsg2');
+
+            $isOldGalleryTableExisting =  $j3x_model->J3xConfigTableExist();
+
+            // prepare taking over old
+			if ($isOldGalleryTableExisting) {
+
+                Log::add('!!! Old J3x tables exist !!!', Log::INFO, 'rsg2');
+
+			    // already updated ?
+
+                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+                $j3xConfigVersion = $rsgConfig->get('j3x_merged_cfg_version');
+
+                // config not set already
+                if (empty ($j3xConfigVersion)) {
+                    Log::add('Merge J3x config required', Log::INFO, 'rsg2');
+
+
+
+
+                    //$j3x_model->copyOldItems2New ();
+                    Log::add('after copyOldItems2New', Log::INFO, 'rsg2');
+                    Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
+
+
+
+                }
+                else
+                {
+                    Log::add('Merge J3x config already done: cfg version: ' . $j3xConfigVersion, Log::INFO, 'rsg2');
+                }
 			}
 			else
 			{
-				echo '<p>Checking failed: table not existing</p>';
-				Log::add('Checking failed: table not existing', Log::INFO, 'rsg2');
+				Log::add('Old J3x tables do NOT exist', Log::INFO, 'rsg2');
 			}
 		}
 		//catch (\RuntimeException $e)
@@ -313,9 +378,15 @@ class Com_Rsgallery2InstallerScript
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error InitGalleryTree');
 		}
 		
-		return $isGalleryTreeCreated;
+		return $isOldGalleryTableExisting;
 	}
-	
+
+    /**
+     * Rsg2TableExist
+     * @param string $findTable
+     * @return bool
+     * @throws Exception
+     */
 	public function Rsg2TableExist ($findTable)
 	{
 		$tableExist = false;
@@ -343,10 +414,4 @@ class Com_Rsgallery2InstallerScript
 		return $tableExist;
 	}
 
-
-	
-	
-	
-	
-	
 }

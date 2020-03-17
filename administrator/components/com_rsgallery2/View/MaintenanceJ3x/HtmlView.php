@@ -65,7 +65,9 @@ class HtmlView extends BaseHtmlView
 		/**/
 		$Layout = Factory::getApplication()->input->get('layout');
 
-		switch ($Layout)
+		// ToDo: move to controller / model ...
+
+xxx		switch ($Layout)
 		{
 			case 'DbCopyOldConfig':
 
