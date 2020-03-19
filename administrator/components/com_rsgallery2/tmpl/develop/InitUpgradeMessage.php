@@ -66,18 +66,6 @@ JHtml::_('formbehavior.chosen', 'select');
 				<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'InitUpgradeMessage', JText::_('COM_RSGALLERY2_MAINT_REGEN_BUTTON_DISPLAY', true)); ?>
 
 
-                <div class="hero-unit">
-                    <img src="<?php echo JURI::root() . 'media/com_rsgallery2/images/RSG2_logoText.svg' ?>" alt="RSGallery2 Logo" />
-                    <div class="alert alert-success">
-                        <h3>JoomGallery <?php echo $this->version; ?> was installed successfully.</h3>
-                    </div>
-                    <p>You may now start using JoomGallery or download specific language files afore:</p>
-                    <p>
-                        <a title="Start" class="btn" onclick="location.href='index.php?option=com_joomgallery'; return false;" href="#">Start now!</a>
-                        <a title="Languages" class="btn btn-primary" onclick="location.href='index.php?option=com_joomgallery&controller=help'; return false;" href="#">Languages</a>
-                    </p>
-                </div>
-
 
 
 
@@ -97,7 +85,7 @@ JHtml::_('formbehavior.chosen', 'select');
                 </div>
                  */
 
-    echo '====================================================================<br />';
+                echo '====================================================================<br />';
 //                echo $installCompleteMsg;
                 echo '====================================================================<br />';
 //                echo $updateCompleteMsg;

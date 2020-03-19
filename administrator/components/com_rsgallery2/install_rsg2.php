@@ -104,23 +104,50 @@ class Com_Rsgallery2InstallerScript
 			return false;
 		}
 
-		// ToDo: minimum RSG2 version
+		//--- new release version --------------------------------------
 
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $action, Log::INFO, 'rsg2');
 
+	    $manifest      = $installer->getManifest ();
+	    $this->newRelease = (string) $manifest->version;
+
+		Log::add('newRelease:' . $this->newRelease, Log::INFO, 'rsg2');
+
+		//--- old release version --------------------------------------
+
+		$this->oldRelease = '';
+
         if ($action === 'update')
         {
-            // Get the version we are updating from
-            if (!empty($installer->extension->manifest_cache))
-            {
-                $manifestValues = json_decode($installer->extension->manifest_cache, true);
+	        // Get the version we are updating from
+//	        if (!empty($installer->extension->manifest_cache))
 
-                if ((array_key_exists('version', $manifestValues)))
-                {
-                    $this->oldRelease = $manifestValues['version'];
-                }
+//	        $extension = $installer->extension;
+	        // $manifest_cache = new Registry($extension->manifest_cache);
+	        // $manifest_cache = new Registry($extension->manifest_cache);
+//	        $manifest_cache = $extension->get('manifest_cache');
+	        /**
+	        $extraData = array(
+		        'author'       => $manifest->get('author', ''),
+		        'version'      => $manifest->get('version', ''),
+		        'creationDate' => $manifest->get('creationDate', ''),
+		        'authorUrl'    => $manifest->get('authorUrl', '')
+	        );
+			/**/
+			/**
+	        // $manifest_cache = $installer->extension->manifest_cache;
+
+            // Get the version we are updating from
+            if (!empty($manifest_cache))
+            {
+	            // $this->oldRelease = (string) $manifest_cache->version;
+	            $this->oldRelease = (string) $manifest_cache->get('version', '');
             }
+            /**/
+	        $this->oldRelease = '5.0.0.2';
         }
+
+		Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');
 
         // COM_RSGALLERY2_PREFLIGHT_INSTALL_TEXT / COM_RSGALLERY2_PREFLIGHT_UPDATE_TEXT
 		// COM_RSGALLERY2_PREFLIGHT_UNINSTALL_TEXT
@@ -153,6 +180,9 @@ class Com_Rsgallery2InstallerScript
 //		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALL_TEXT'), Log::INFO, 'rsg2');
 
+		//
+		$isGalleryTreeCreated = $this->InitGalleryTree ();
+
 		return true;
 	}
 
@@ -179,6 +209,9 @@ class Com_Rsgallery2InstallerScript
 	{
 		echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
+
+		// ToDo: move installler / update
+		$isGalleryTreeCreated = $this->InitGalleryTree ();
 
 		return true;
 	}
@@ -213,13 +246,13 @@ class Com_Rsgallery2InstallerScript
 //		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
-		// ToDo: move installler / update
-		$isGalleryTreeCreated = $this->InitGalleryTree ();
-
 
 //		$changelog = $this->getChangelog();
 //		JFactory::getApplication()->enqueueMessage($changelog, 'notice');
 
+		$msg = postflightMessage($type);
+		$app = Factory::getApplication();
+		$app->enqueueMessage($msg, 'info');
 
 		return true;
 	}
@@ -332,7 +365,8 @@ class Com_Rsgallery2InstallerScript
 
         try
         {
-			Log::add('check for existing old J3x Tables', Log::INFO, 'rsg2');
+			Log::add('Check for existing old J3x Tables', Log::INFO, 'rsg2');
+
             $j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3x;
             Log::add('after $j3x_model', Log::INFO, 'rsg2');
 
@@ -343,29 +377,29 @@ class Com_Rsgallery2InstallerScript
 
                 Log::add('!!! Old J3x tables exist !!!', Log::INFO, 'rsg2');
 
-			    // already updated ?
-
-                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-                $j3xConfigVersion = $rsgConfig->get('j3x_merged_cfg_version');
-
-                // config not set already
-                if (empty ($j3xConfigVersion)) {
-                    Log::add('Merge J3x config required', Log::INFO, 'rsg2');
-
-
-
-
-                    //$j3x_model->copyOldItems2New ();
-                    Log::add('after copyOldItems2New', Log::INFO, 'rsg2');
-                    Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
-
-
-
-                }
-                else
-                {
-                    Log::add('Merge J3x config already done: cfg version: ' . $j3xConfigVersion, Log::INFO, 'rsg2');
-                }
+//			    // already updated ?
+//
+//                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+//                $j3xConfigVersion = $rsgConfig->get('j3x_merged_cfg_version');
+//
+//                // config not set already
+//                if (empty ($j3xConfigVersion)) {
+//                    Log::add('Merge J3x config required', Log::INFO, 'rsg2');
+//
+//
+//
+//
+//                    //$j3x_model->copyOldItems2New ();
+//                    Log::add('after copyOldItems2New', Log::INFO, 'rsg2');
+//                    Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
+//
+//
+//
+//                }
+//                else
+//                {
+//                    Log::add('Merge J3x config already done: cfg version: ' . $j3xConfigVersion, Log::INFO, 'rsg2');
+//                }
 			}
 			else
 			{
@@ -386,7 +420,7 @@ class Com_Rsgallery2InstallerScript
      * @param string $findTable
      * @return bool
      * @throws Exception
-     */
+     *
 	public function Rsg2TableExist ($findTable)
 	{
 		$tableExist = false;
@@ -413,5 +447,44 @@ class Com_Rsgallery2InstallerScript
 
 		return $tableExist;
 	}
+	/**/
 
+	/**
+	 *
+	 * @param $type 'install' / 'update'
+	 *
+	 *
+	 * @since version
+	 */
+	public function postflightMessage ($type)
+	{
+		$html =<<<EOT
+            <div class="hero-unit">
+                <img src="<?php echo JURI::root() . 'media/com_rsgallery2/images/RSG2_logoText.svg' ?>" height="100" alt="RSGallery2 Logo" />
+                <div class="alert alert-success">
+                    <h3>RSGallery2 $this->newVersion was installed successfully.</h3>
+                </div>
+                <p></p>
+                <p>
+                    <a title="Start" class="btn" onclick="location.href='index.php?option=com_rsgallery2' href="#">Start now!</a>
+                </p>
+            </div>
+EOT;
+
+		//
+		if ( ! empty ($this->oldRelease))
+		{
+
+
+
+
+
+		}
+
+
+
+
+		return html;
+
+	}
 }
