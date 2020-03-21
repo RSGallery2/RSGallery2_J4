@@ -250,7 +250,7 @@ class Com_Rsgallery2InstallerScript
 //		$changelog = $this->getChangelog();
 //		JFactory::getApplication()->enqueueMessage($changelog, 'notice');
 
-		$msg = postflightMessage($type);
+		$msg = $this->postFlightMessage($type);
 		$app = Factory::getApplication();
 		$app->enqueueMessage($msg, 'info');
 
@@ -456,18 +456,48 @@ class Com_Rsgallery2InstallerScript
 	 *
 	 * @since version
 	 */
-	public function postflightMessage ($type)
+	public function postFlightMessage ($type)
 	{
+		$logoLink = JURI::root() . '/media/com_rsgallery2/images/RSG2_logoText.svg';
+
+		$rsg2ControlPanelLink = JURI::root() . '/administrator/index.php?option=com_rsgallery2';
+		$controlPanelText = Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL');
+		$controlPanelTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONTROL_PANEL_TITLE');
+
+		$rsg2ConfigurationLink = JURI::root() . '/administrator/index.php?option=com_config&view=component&component=com_rsgallery2';
+		$configurationText = Text::_('COM_RSGALLERY2_MENU_CONFIG');
+		$configurationTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONFIGURATION_TITLE');
+
+		$rsg2GalleriesLink = JURI::root() . '/administrator/index.php?option=com_rsgallery2&view=galleries';
+		$galleriesText = Text::_('COM_RSGALLERY2_MENU_GALLERIES');
+		$galleriesTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_GALLERIES_TITLE');
+
+		// height="100"  active
 		$html =<<<EOT
             <div class="hero-unit">
-                <img src="<?php echo JURI::root() . 'media/com_rsgallery2/images/RSG2_logoText.svg' ?>" height="100" alt="RSGallery2 Logo" />
+				<div class="text-center">
+	                <img src="$logoLink" alt="RSGallery2 Logo" height="150px" />
+	            </div>
                 <div class="alert alert-success">
-                    <h3>RSGallery2 $this->newVersion was installed successfully.</h3>
+                    <h3>RSGallery2 $this->newRelease was installed successfully.</h3>
                 </div>
                 <p></p>
-                <p>
-                    <a title="Start" class="btn" onclick="location.href='index.php?option=com_rsgallery2' href="#">Start now!</a>
-                </p>
+				<div class="text-center">
+					<div class="Xbtn-group">
+						<a title="$controlPanelTitle" class="btn btn-warning" href="$rsg2ControlPanelLink">
+							<div class="fa fa-home fa-fw" aria-hidden="true"></div>
+							$controlPanelText
+						</a>
+						<a title="$configurationTitle" class="btn btn-info" href="$rsg2ConfigurationLink">
+							<div class="fa fa-cog fa-fw" aria-hidden="true"></div>
+							$configurationText
+						</a>
+						<a title="$galleriesTitle" class="btn btn-success" href="$rsg2GalleriesLink">
+							<div class="fa fa-th fa-fw" aria-hidden="true"></div>
+							$galleriesText
+						</a>
+					</div>
+                </div>
             </div>
 EOT;
 
@@ -484,7 +514,7 @@ EOT;
 
 
 
-		return html;
+		return $html;
 
 	}
 }
