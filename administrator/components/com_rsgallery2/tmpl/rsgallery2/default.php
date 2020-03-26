@@ -435,16 +435,18 @@ function tableFromXml($changelogs)
 
     $html[] = '    <tbody>';
     $html[] = '';
+
     foreach ($changelogs as $xmlElement)
     {
-    $html[] = '        <tr class="">';
-    $html[] = '            <td>' . $xmlElement->asXML() . '</td>';
-//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
-//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
-//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
-//    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
-    $html[] = '        </tr>';
+        $html[] = '        <tr class="">';
+        $html[] = '            <td>' . $xmlElement->asXML() . '</td>';
+    //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+    //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+    //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+    //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
+        $html[] = '        </tr>';
     };
+
     $html[] = '    </tbody>';
     $html[] = '</table>';
 

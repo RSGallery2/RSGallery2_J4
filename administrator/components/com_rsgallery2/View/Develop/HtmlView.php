@@ -21,11 +21,16 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Filesystem\File;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model;
 
-// JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
+//$path = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/install_rsg2.php';
+//if (File::exists($path))
+//{
+//	require_once $path;
+//}
 
 /**
  * View class for a list of rsgallery2.
@@ -97,6 +102,16 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
+		/**
+		$path = JPATH_ADMINISTRATOR . '/components/rsgallery2/install_rsg2.php';
+		if (JFile::exists($path))
+		{
+			require_once $path;
+		}
+		/**/
+
+//		$TestInstall = new Com_Rsgallery2InstallerScript ();
+//		$this->installMessage = $TestInstall->postFlightMessage ('update');
 
 		//--- Check user rights ---------------------------------------------
 

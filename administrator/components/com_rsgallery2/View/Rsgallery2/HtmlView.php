@@ -72,7 +72,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$this->buttons = $this->getRsg2controlButtons();
+		$this->buttons = $this->getRsg2ControlButtons();
 
 		//--- config --------------------------------------------------------------------
 
@@ -164,7 +164,7 @@ class HtmlView extends BaseHtmlView
 	}
 
 
-	private function getRsg2controlButtons()
+	private function getRsg2ControlButtons()
 	{
 		$buttons = array(
 			array(

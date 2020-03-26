@@ -67,7 +67,7 @@ class HtmlView extends BaseHtmlView
 
 		// ToDo: move to controller / model ...
 
-xxx		switch ($Layout)
+		switch ($Layout)
 		{
 			case 'DbCopyOldConfig':
 
@@ -147,6 +147,7 @@ xxx		switch ($Layout)
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
+
 			case 'DBTransferOldImages':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');

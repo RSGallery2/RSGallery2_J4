@@ -2,23 +2,7 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>5.0.0.1</version>
-		<note>
-			<item>Initial</item>
-		</note>
-	</changelog>
-	<changelog>
-		<element>com_rsgallery2</element>
-		<type>component</type>
-		<version>5.0.0.2</version>
-		<note>
-			<item>Add front end view</item>
-		</note>
-	</changelog>
-	<changelog>
-		<element>com_rsgallery2</element>
-		<type>component</type>
-		<version>1.24.0</version>
+		<version>5.0.0.4</version>
 		<security>
 			<item>Item A</item>
 			<item><![CDATA[<h2>You MUST replace this file</h2>]]></item>

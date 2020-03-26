@@ -21,8 +21,7 @@ use Joomla\CMS\Log\Log;
  * @since  1.0.0
  *
  */
- 
- 
+
 class Com_Rsgallery2InstallerScript
 {
 	/**
@@ -207,7 +206,7 @@ class Com_Rsgallery2InstallerScript
 	 */
 	public function update($parent)
 	{
-		echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
+		// echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
 
 		// ToDo: move installler / update
@@ -277,7 +276,7 @@ class Com_Rsgallery2InstallerScript
 	 */
 	public function uninstall($parent)
 	{
-		echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
+		//echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_UNINSTALL_TEXT'), Log::INFO, 'rsg2');
 
 		return true;
@@ -303,7 +302,7 @@ class Com_Rsgallery2InstallerScript
 			$db = Factory::getDbo();
 
 			Log::add('InitGalleryTree', Log::INFO, 'rsg2');
-			echo '<p>Checking if the root record is already present ...</p>';
+			// echo '<p>Checking if the root record is already present ...</p>';
 
 			// Id of binary root element
 			$query = $db->getQuery(true);
@@ -501,18 +500,23 @@ class Com_Rsgallery2InstallerScript
             </div>
 EOT;
 
-		//
-		if ( ! empty ($this->oldRelease))
+		//--- changelog on -----------------------------------------------
+		if ($type == 'update')
 		{
+			if (!empty ($this->oldRelease))
+			{
+				$upgradeText  =<<<EOT
+	            <div class="hero-unit">
+	            </div>
+EOT;
+
+
+			}
 
 
 
-
-
+			$html .= $upgradeText;
 		}
-
-
-
 
 		return $html;
 
