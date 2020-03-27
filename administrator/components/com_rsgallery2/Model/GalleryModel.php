@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_rsgallery2
  *
- * @copyright   Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.
+ * @copyright
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -34,7 +34,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Rsgallery2 Component Gallery Model
  *
- * @since  1.6
+ * @since  5.0.0.4
  */
 class GalleryModel extends AdminModel
 {
@@ -42,7 +42,7 @@ class GalleryModel extends AdminModel
 	 * The prefix to use with controller messages.
 	 *
 	 * @var    string
-	 * @since  1.6
+ * @since  5.0.0.4
 	 */
 	protected $text_prefix = 'COM_RSGALLERY2';
 
@@ -50,7 +50,7 @@ class GalleryModel extends AdminModel
 	 * The type alias for this content type. Used for content version history.
 	 *
 	 * @var      string
-	 * @since    3.2
+	 * @since  5.0.0.4
 	 */
 	public $typeAlias = 'com_rsgallery2.gallery';
 

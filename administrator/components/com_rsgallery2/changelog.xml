@@ -3,6 +3,7 @@
 		<element>com_rsgallery2</element>
 		<type>component</type>
 		<version>5.0.0.4</version>
+		<date>2020.03.24 14:28</date>
 		<security>
 			<item>Item A</item>
 			<item><![CDATA[<h2>You MUST replace this file</h2>]]></item>
@@ -32,5 +33,15 @@
 			<item>Item A</item>
 			<item>Item b</item>
 		</note>
+	</changelog>
+	<changelog>
+		<element>com_rsgallery2</element>
+		<type>component</type>
+		<version>5.0.0.1</version>
+		<date>2020.02.03 22:22</date>
+		<addition>
+			<item>Item A</item>
+			<item>Item b</item>
+		</addition>
 	</changelog>
 </changelogs>

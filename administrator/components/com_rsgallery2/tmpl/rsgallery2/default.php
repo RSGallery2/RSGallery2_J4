@@ -168,7 +168,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 {
 	// First column
 //	echo '<div class="container-fluid">';
-	echo '<div class="clearfix"></div>';
+//	echo '<div class="clearfix"></div>';
 
 	echo '<row>';
 	//echo '<span class="rsg2logo-container col-md-6">';
@@ -259,7 +259,11 @@ function DisplayInfoRsgallery2($Rsg2Version)
 
 function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 {
-	echo '<div class="clearfix"></div>';
+//	echo '<div class="clearfix"></div>';
+
+    //--- galleries -----------------------------------------------------
+
+	echo '<hr>';
 
 	echo '<row>';
 //	echo '   <div class="card bg-light w-25 data-toggle="collapse">';
@@ -276,44 +280,50 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 
 	echo '                        <div class="rsg2-gallery-info-table">';
 
-	// exit if no data given
-	if (count($lastGalleries) == 0)
+	// only root gallery item existing
+	if (count($lastGalleries) < 2)
 	{
-		echo JText::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
-
-		return;
-	}
-
-	// Header ----------------------------------
-
-	//echo '<table class="table table-striped table-condensed">';
-	echo '<table class="table table-striped table-light w-auto table_morecondensed">';
-	echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
-	echo '    <thead>';
-	echo '        <tr>';
-	echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
-	echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
-	echo '            <th>' . JText::_('COM_RSGALLERY2_ID') . '</th>';
-	echo '        </tr>';
-	echo '    </thead>';
-
-	//--- data ----------------------------------
-
-	echo '    <tbody>';
-
-	foreach ($lastGalleries as $GalleryInfo)
-	{
-
 		echo '        <tr>';
-		echo '            <td>' . $GalleryInfo['name'] . '</td>';
-		echo '            <td>' . $GalleryInfo['user'] . '</td>';
-		echo '            <td>' . $GalleryInfo['id'] . '</td>';
+		echo '        %';
+		// echo JText::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
 		echo '        </tr>';
 	}
-	echo '    </tbody>';
+	else
+	{
+        // Header ----------------------------------
 
-	//--- footer ----------------------------------
-	echo '</table>';
+        //echo '<table class="table table-striped table-condensed">';
+        echo '<table class="table table-striped table-light w-auto table_morecondensed">';
+        echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
+        echo '    <thead>';
+        echo '        <tr>';
+        echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
+        echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
+        echo '            <th>' . JText::_('COM_RSGALLERY2_ID') . '</th>';
+        echo '        </tr>';
+        echo '    </thead>';
+
+        //--- data ----------------------------------
+
+        echo '    <tbody>';
+
+            foreach ($lastGalleries as $GalleryInfo)
+            {
+                if ($GalleryInfo['id'] != '1')
+                {
+                    echo '        <tr>';
+                    echo '            <td>' . $GalleryInfo['name'] . '</td>';
+                    echo '            <td>' . $GalleryInfo['user'] . '</td>';
+                    echo '            <td>' . $GalleryInfo['id'] . '</td>';
+                    echo '        </tr>';
+                }
+            }
+
+        echo '    </tbody>';
+
+        //--- footer ----------------------------------
+        echo '</table>';
+    }
 
 	echo '                        </div>';
 //    echo '      <div class="card-footer">Footer</div>';
@@ -325,6 +335,7 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	echo '    </div>';
 	echo '</row>';
 
+    //--- images -----------------------------------------------------
 
 	echo "<hr>";
 
@@ -345,45 +356,50 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 	echo '                        <div class="rsg2-images-info-table">';
 
 
-	if (count($lastImages) == 0)
-	{
-		echo JText::_('COM_RSGALLERY2_NO_NEW_IMAGES');
+    // no image existing
+    if (count($lastImages) == 0)
+    {
+        echo '        <tr>';
+        echo '        %';
+        // echo JText::_('COM_RSGALLERY2_NO_NEW_IMAGES');
+        echo '        </tr>';
+    }
+    else
+    {
 
-		return;
-	}
+        // Header ----------------------------------
 
-	// Header ----------------------------------
+    //	echo '<table class="table table-striped table-condensed">';
+        echo '<table class="table table-striped table-light w-auto table_morecondensed">';
+        echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
+        echo '    <thead>';
+        echo '        <tr>';
+        echo '            <th>' . JText::_('COM_RSGALLERY2_FILENAME') . '</th>';
+        echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
+        echo '            <th>' . JText::_('COM_RSGALLERY2_DATE') . '</th>';
+        echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
+        echo '        </tr>';
+        echo '    </thead>';
 
-//	echo '<table class="table table-striped table-condensed">';
-	echo '<table class="table table-striped table-light w-auto table_morecondensed">';
-	echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
-	echo '    <thead>';
-	echo '        <tr>';
-	echo '            <th>' . JText::_('COM_RSGALLERY2_FILENAME') . '</th>';
-	echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
-	echo '            <th>' . JText::_('COM_RSGALLERY2_DATE') . '</th>';
-	echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
-	echo '        </tr>';
-	echo '    </thead>';
+        //--- data ----------------------------------
 
-	//--- data ----------------------------------
+        echo '    <tbody>';
 
-	echo '    <tbody>';
+        foreach ($lastImages as $ImgInfo)
+        {
 
-	foreach ($lastImages as $ImgInfo)
-	{
+            echo '        <tr>';
+            echo '            <td>' . $ImgInfo['name'] . '</td>';
+            echo '            <td>' . $ImgInfo['gallery'] . '</td>';
+            echo '            <td>' . $ImgInfo['date'] . '</td>';
+            echo '            <td>' . $ImgInfo['user'] . '</td>';
+            echo '        </tr>';
+        }
+        echo '    </tbody>';
 
-		echo '        <tr>';
-		echo '            <td>' . $ImgInfo['name'] . '</td>';
-		echo '            <td>' . $ImgInfo['gallery'] . '</td>';
-		echo '            <td>' . $ImgInfo['date'] . '</td>';
-		echo '            <td>' . $ImgInfo['user'] . '</td>';
-		echo '        </tr>';
-	}
-	echo '    </tbody>';
-
-	//--- footer ----------------------------------
-	echo '</table>';
+        //--- footer ----------------------------------
+        echo '</table>';
+    }
 
 	echo '                        </div>';
 //    echo '      <div class="card-footer">Footer</div>';
@@ -402,7 +418,9 @@ function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
 // Info about supporters of RSGallery 2
 function DisplayInfoCredits ($credits)
 {
-	echo '<div class="clearfix"></div>';
+//	echo '<div class="clearfix"></div>';
+
+	echo '<hr>';
 
 	echo '<row>';
 	echo '   <div class="card bg-light w-auto data-toggle="collapse" data-target="#credit-card-body">';
@@ -436,10 +454,18 @@ function tableFromXml($changelogs)
     $html[] = '    <tbody>';
     $html[] = '';
 
-    foreach ($changelogs as $xmlElement)
+	// foreach ($changelogs as $xmlElement)
+    foreach ($changelogs as $htmlElements)
     {
         $html[] = '        <tr class="">';
-        $html[] = '            <td>' . $xmlElement->asXML() . '</td>';
+//       $html[] = '            <td>' . $xmlElement->asXML() . '</td>';
+	    $html[] = '            <td>';
+	    foreach ($htmlElements as $htmlElement)
+	    {
+		    $html[] = '            ' . $htmlElement;
+	    }
+	    $html[] = '            </td>';
+
     //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
     //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
     //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
@@ -466,7 +492,9 @@ function DisplayInfoChangeLog ($changelogs)
 	$item->version = "5.0.0.2";
     /**/
 
-	echo '<div class="clearfix"></div>';
+//	echo '<div class="clearfix"></div>';
+
+	echo '<hr>';
 
 	/**
 	echo HTMLHelper::_(

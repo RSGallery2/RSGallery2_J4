@@ -64,10 +64,7 @@ li.quickicon-single {
   padding-left: auto;
   padding-right: auto;
   /**/
-  margin-left: auto;
-  margin-right: auto;
-  /*    padding: 4px; /**/
-  margin: 4px;
+  margin: 0 8px 0 0;
   /**/
 }
 
@@ -77,7 +74,14 @@ li.quickicon-single:hover {
   /**/
   border: thick solid darkgray;
   /**/
-  text-color: white;
+}
+
+li.quickicon-single a {
+  text-decoration: none;
+}
+
+li.quickicon-single:hover .quickicon-text {
+  color: black;
   /**/
 }
 
@@ -150,6 +154,23 @@ div.quickicon-icon {
 /* ToDo: More specific add dictionaries with class= gallery/images ... */
 .table caption {
   caption-side: top;
+}
+
+.changelog_area {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.changelog_key {
+  min-width: 100px;
+  border-right: 2px solid red;
+}
+
+.changelog_value_area {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 /*# sourceMappingURL=controlPanel.css.map */

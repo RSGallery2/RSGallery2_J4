@@ -16,22 +16,24 @@ defined('_JEXEC') or die();
 
 class CreditsExternal
 {
-	public const CreditsExternalText = <<<EOT
-
-	<h3>Used external components</h3>
-	<p>Actually (J!4x 2019) there is none used besides libraries provided by joomla! itself. It is expected that qwith the imolementation of slideshows and similar function libraries will appear here </p>
-
+	/** use for external libraries
 	<h4>extension name </h4>
 	<dl>
 		<dt>Name</dt>
-			<dd>link, copyright and License</dd>
+		<dd>link, copyright and License</dd>
 	</dl>
+	/**/
+
+	const CreditsExternalText = <<<EOT
+
+	<h3>Used external components</h3>
+	<p>Actually for RSG2 (J!4x 2019/2020) there is no external component used besides libraries provided by joomla! itself. It is expected that with the implementation of slide shows and similar functions libraries will appear here </p>
 
 	<h3>Honorable mentions go to</h3> 
 	<h4>jetbrains phpstorm</h4>
 	<dl>
 		<dt>phpstorm</dt>
-			<dd>RSGallery2 is developed with <a href="https://www.jetbrains.com/phpstorm/">phpstorm</a> since 2015  </dd>
+		<dd>RSGallery2 is developed with <a href="https://www.jetbrains.com/phpstorm/">phpstorm</a> since 2015  </dd>
 	</dl>
 EOT;
 }

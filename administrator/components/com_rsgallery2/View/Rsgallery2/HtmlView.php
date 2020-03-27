@@ -15,7 +15,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 //use Joomla\CMS\Helper\ContentHelper;
 //use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -30,6 +29,8 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsExternal;
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel;
+
+use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 /**
  * View class for a list of rsgallery2.
@@ -99,8 +100,8 @@ class HtmlView extends BaseHtmlView
 		$oRsg2Version = new rsgallery2Version();
 		$this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 
-		$changelogUrl = Route::_(Uri::root() . '/administrator/components/com_rsgallery2/changelog.xml');
-		$this->changelogs = simplexml_load_file($changelogUrl);
+		$jsonChangelogs = ChangeLogModel::changeLogElements();
+		$this->changelogs = ChangeLogModel::changeLogsData2Html ($jsonChangelogs);
 
 		$this->credits = CreditsEnumeration::CreditsEnumerationText;
 
