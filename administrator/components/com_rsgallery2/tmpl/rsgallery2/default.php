@@ -257,7 +257,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	return;
 }
 
-function DisplayInfoGalleryImages ($lastGalleries, $lastImages)
+function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 {
 //	echo '<div class="clearfix"></div>';
 
@@ -439,6 +439,7 @@ function DisplayInfoCredits ($credits)
 
 function tableFromXml($changelogs)
 {
+    /**
     $html[] = '';
     $html[] = '<table class="table table-striped thead-dark table-bordered">';
     $html[] = '    <thead>';
@@ -453,10 +454,12 @@ function tableFromXml($changelogs)
 
     $html[] = '    <tbody>';
     $html[] = '';
+    /**/
 
 	// foreach ($changelogs as $xmlElement)
     foreach ($changelogs as $htmlElements)
     {
+        /**
         $html[] = '        <tr class="">';
 //       $html[] = '            <td>' . $xmlElement->asXML() . '</td>';
 	    $html[] = '            <td>';
@@ -471,10 +474,15 @@ function tableFromXml($changelogs)
     //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
     //    $html[] = '            <td><?php echo $xmlElement->asXML();</td>';
         $html[] = '        </tr>';
+        /**/
+
+        $html[] = '            ' . $htmlElements;
     };
 
+    /**
     $html[] = '    </tbody>';
     $html[] = '</table>';
+    /**/
 
     // implode($html);
     // implode(' ', $html);
@@ -644,7 +652,7 @@ function DisplayInfoExternalLicenses ($externalLicenses)
 
                 // // Info about last created galleries and last uploaded images
                 // side by side
-                DisplayInfoGalleryImages ($this->lastGalleries, $this->lastImages);
+                DisplayInfoGalleryAndImages ($this->lastGalleries, $this->lastImages);
 
                 //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
 //                echo '<hr>';
