@@ -17,6 +17,12 @@ use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
+
+// $language = Factory::getLanguage();
+$app = Factory::getApplication();
+$isLoaded = $app->getLanguage()->load('com_installer');
+
+
 /**
  * Rsgallery2 Component changelog Model
  *
@@ -41,7 +47,8 @@ class ChangeLogModel extends BaseModel
 	public $typeAlias = 'com_rsgallery2.changelog';
 
 
-	public static function changeLogElements ()
+//	public static function changeLogElements ($lastVersion = '5.0.0.0') // $minVersion = '0.0.0.0' $minVersion = ''
+	public static function changeLogElements ($lastVersion = '') // $minVersion = '0.0.0.0' $minVersion = ''
 	{
 		$changelogUrl = Route::_(Uri::root() . '/administrator/components/com_rsgallery2/changelog.xml');
 		$changelogs = simplexml_load_file($changelogUrl);
@@ -53,7 +60,30 @@ class ChangeLogModel extends BaseModel
 		//Convert it back into an associative array
 		$jsonArray = json_decode($jsonString, true);
 
-		$jsonChangeLogs = $jsonArray;
+		// reduce to version items
+		$jsonChangeLogs = [];
+
+		// standard : change log for each version are sub items
+		//if (count ($jsonArray) == 1) {
+		if (array_key_exists ('changelog', $jsonArray)) {
+
+			$testLogs = $jsonArray ['changelog'];
+
+			foreach ($testLogs as $changeLog) {
+
+				// All versions
+				if ( empty ($lastVersion))
+				{
+					$jsonChangeLogs [] = $changeLog;;
+				} else {
+					// selected last versions
+					$logVersion = $changeLog ['version'];
+					if (version_compare($logVersion, $lastVersion, '>')) {
+						$jsonChangeLogs [] = $changeLog;
+					}
+				}
+			}
+		}
 
 		return $jsonChangeLogs;
 	}
@@ -69,7 +99,7 @@ class ChangeLogModel extends BaseModel
 	{
 		$changeLogsHtml = [];
 
-		foreach ($jsonChangeLogs['changelog'] as $changelog)
+		foreach ($jsonChangeLogs as $changelog)
 		{
 			$changeLogsHtml [] = self::changeLogData2Html ($changelog);
 		}
@@ -99,37 +129,30 @@ class ChangeLogModel extends BaseModel
         /**/
         switch ($key) {
             case ("security"):
-                $keyTranslation = 'Security Fixes';
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_SECURITY');
                 $class = 'badge-danger';
                 break;
             case ("fix"):
-                $keyTranslation = 'Bug Fixes';
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_FIX');
                 $class = 'badge-dark';
                 break;
             case ("language"):
-                $keyTranslation = 'Language';
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_LANGUAGE');
                 $class = 'badge-light';
                 break;
             case ("addition"):
-                $keyTranslation = 'New Features';
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_ADDITION');
                 $class = 'badge-success';
                 break;
             case ("change"):
-                $keyTranslation = 'Changes';
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_CHANGE');
                 $class = 'badge-danger';
                 break;
             case ("remove"):
-                $keyTranslation = 'Removed Features';
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_REMOVE');
                 $class = 'badge-info';
                 break;
             case ("note"):
-                $keyTranslation = 'Notes';
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_NOTE');
                 $class = 'badge-info';
                 break;
@@ -198,8 +221,8 @@ class ChangeLogModel extends BaseModel
 //		<date>2020.03.24 14:28</date>
 
         //$html[] = '<table class="table table-striped table-light w-auto table_morecondensed">';
-        $html[] = '<table class="table table-striped table-light table_morecondensed">';
-        $html[] = '    <caption caption-side="top">';
+        $html[] = '<table class="table table-striped table-light table_morecondensed change-log-table" caption-side="top">';
+        $html[] = '    <caption caption-side="top" class="change-log-caption">';
         $html[] = '    <strong>';
 //        $html[] = '        <div>Version: ' . $jsonChangeLog ['version'] . '</div>';
 //        $html[] = '        <div>Date: ' . $jsonChangeLog ['date'] . '</div>';

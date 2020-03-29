@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 /**
  * Script file of Rsgallery2 Component
@@ -505,15 +506,14 @@ EOT;
 		{
 			if (!empty ($this->oldRelease))
 			{
-				$upgradeText  =<<<EOT
-	            <div class="hero-unit">
-	            </div>
-EOT;
+				$jsonChangelogs = ChangeLogModel::changeLogElements($this->oldRelease);
+				$changelogs = ChangeLogModel::changeLogsData2Html ($jsonChangelogs);
 
-
+				$upgradeText = '';
+				foreach ($changelogs as $htmlElements) {
+					$upgradeText .= $htmlElements;
+				}
 			}
-
-
 
 			$html .= $upgradeText;
 		}

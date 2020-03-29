@@ -173,4 +173,12 @@ div.quickicon-icon {
   flex-wrap: wrap;
 }
 
+.change-log-caption {
+  color: black;
+}
+
+.change-log-table {
+  border-bottom: 2px solid black;
+}
+
 /*# sourceMappingURL=controlPanel.css.map */
