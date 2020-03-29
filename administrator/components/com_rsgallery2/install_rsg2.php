@@ -144,7 +144,10 @@ class Com_Rsgallery2InstallerScript
 	            $this->oldRelease = (string) $manifest_cache->get('version', '');
             }
             /**/
-	        $this->oldRelease = '5.0.0.2';
+	        $this->oldRelease = '5.0.0.1';
+
+	        //$this->oldRelease = $this->getManifestParam('version');
+
         }
 
 		Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');

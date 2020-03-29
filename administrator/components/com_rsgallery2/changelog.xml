@@ -2,16 +2,7 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>4.3.102</version>
-		<date>2018-05-05</date>
-		<addition>
-			<item>Rotate and flip functions for edit image and imaged properties files view</item>
-		</addition>
-	</changelog>
-	<changelog>
-		<element>com_rsgallery2</element>
-		<type>component</type>
-		<version>4.3.101</version>
+		<version>5.0.0.4</version>
 		<date>2018-01-28</date>
 		<fix>
 			<item>Drag and drop was limited to 20 images per drop. It is tested now with drop of 150 images at once</item>
@@ -26,10 +17,10 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>4.3.1</version>
+		<version>5.0.0.3</version>
 		<date>2018-01-28</date>
 		<addition>
-			<item>Added "drag and drop" functionality (working uloads limited to 20 images at once and file size not too big)</item>
+			<item>Added "drag and drop" functionality (working uploads limited to 20 images at once and file size not too big)</item>
 			<item>Redesign of upload form</item>
 		</addition>
 		<change>
@@ -47,51 +38,5 @@
 		<change>
 			<item>Separate include files for new view form and load it all from rsg2 in J1.5/2.5</item>
 		</change>
-	</changelog>
-	
-	<changelog>
-		<element>com_rsgallery2</element>
-		<type>component</type>
-		<version>5.0.0.4</version>
-		<date>2020.03.24 14:28</date>
-		<security>
-			<item>Item A</item>
-			<item><![CDATA[<h2>You MUST replace this file</h2>]]></item>
-		</security>
-		<fix>
-			<item>Item A</item>
-			<item>Item b</item>
-			<item><![CDATA[<h2>HTML, it must be enclosed in CDATA tags as shown in the example</h2>]]></item>
-		</fix>
-		<language>
-			<item>Item A</item>
-			<item>Item b</item>
-		</language>
-		<addition>
-			<item>Item A</item>
-			<item>Item b</item>
-		</addition>
-		<change>
-			<item>Item A</item>
-			<item>Item b</item>
-		</change>
-		<remove>
-			<item>Item A</item>
-			<item>Item b</item>
-		</remove>
-		<note>
-			<item>Item A</item>
-			<item>Item b</item>
-		</note>
-	</changelog>
-	<changelog>
-		<element>com_rsgallery2</element>
-		<type>component</type>
-		<version>5.0.0.1</version>
-		<date>2020.02.03 22:22</date>
-		<addition>
-			<item>Item A</item>
-			<item>Item b</item>
-		</addition>
 	</changelog>
 </changelogs>
