@@ -168,8 +168,16 @@ if ($saveOrder && !empty($this->items))
                             </tr>
 						</thead>
 						<tbody <?php if ($saveOrder) :?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="false"<?php endif; ?>>
+
 							<?php foreach ($this->items as $i => $item) : ?>
 								<?php
+
+                                // ignore the root element of the nested table
+                                if ($item->id == 1) {
+	                                continue;
+                                }
+
+                                // access rights of this gallery
 								$canEdit    = $user->authorise('core.edit',       $extension . '.gallery.' . $item->id);
 								$canCheckin = $user->authorise('core.admin',      'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
 								$canEditOwn = $user->authorise('core.edit.own',   $extension . '.gallery.' . $item->id) && $item->created_by == $userId;
