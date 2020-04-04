@@ -255,7 +255,7 @@ class Com_Rsgallery2InstallerScript
 
 		$msg = $this->postFlightMessage($type);
 		$app = Factory::getApplication();
-		$app->enqueueMessage($msg, 'info');
+		$app->enqueueMessage($msg, 'Notice');
 
 		return true;
 	}
@@ -327,8 +327,9 @@ class Com_Rsgallery2InstallerScript
 				// -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 
 				// insert root record
-				$columns = array('id', 'name', 'alias', 'description', 'parent_id', 'level', 'path', 'lft', 'rgt');
-				$values  = array(1, 'galleries root', 'galleries-root-alias', 'startpoint of list', 0, 0, '', 0, 1);
+				// Missing
+				$columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id', 'level', 'path', 'lft', 'rgt');
+				$values  = array(1, 'galleries root', 'galleries-root-alias', 'root element of nested list', '', '', 0, 0, '', 0, 1);
 
 				// Create root element
 				$query = $db->getQuery(true)
@@ -343,14 +344,14 @@ class Com_Rsgallery2InstallerScript
 				}
 				else
 				{
-					Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error InitGalleryTree');
+					Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
 				}
 			}
         }
             //catch (\RuntimeException $e)
         catch (\Exception $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error InitGalleryTree');
+	        throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
         }
 
         return $isGalleryTreeCreated;
@@ -412,7 +413,7 @@ class Com_Rsgallery2InstallerScript
 		//catch (\RuntimeException $e)
 		catch (\Exception $e)
 		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error InitGalleryTree');
+			throw new \RuntimeException($e->getMessage() . ' from update_config_On_RSG2_J3x_Tables_Existing');
 		}
 		
 		return $isOldGalleryTableExisting;
