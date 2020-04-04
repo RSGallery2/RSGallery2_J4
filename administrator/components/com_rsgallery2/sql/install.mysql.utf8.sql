@@ -8,11 +8,11 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `description` text NOT NULL DEFAULT '',
+  `description` text NOT NULL,
   `thumb_id` int(11) unsigned NOT NULL default '0',
 
-  `note` varchar(255) NOT NULL DEFAULT '',
-  `params` text NOT NULL DEFAULT '',
+  `note` varchar(255) NOT NULL,
+  `params` text NOT NULL,
   `published` tinyint(1) NOT NULL DEFAULT 0, 
   `hits` int(10) unsigned NOT NULL DEFAULT 0, 
 
