@@ -83,7 +83,7 @@ class GalleriesController extends AdminController
 		Session::checkToken();
 
 		// Get items to remove from the request.
-		$cid = $this->input->get('cid', array(), 'array');
+		$cid       = $this->input->get('cid', array(), 'array');
 		$extension = $this->input->getCmd('extension', null);
 
 		if (!is_array($cid) || count($cid) < 1)
@@ -110,7 +110,9 @@ class GalleriesController extends AdminController
 			}
 		}
 
-		$this->setRedirect(Route::_('index.php?option=' . $this->option . '&extension=' . $extension, false));
+	    $this->setRedirect(Route::_('index.php?option=com_rsgallery2&amp;view=galleries'));
+		                // Route::_('index.php?option=com_rsgallery2&view=galleries')
+		//
 	}
 
 	/**
@@ -122,15 +124,18 @@ class GalleriesController extends AdminController
 	 *
 	 * @since   3.6.0
 	 */
+	/* ToDo try to remove */
 	public function checkin()
 	{
 		// Process parent checkin method.
 		$result = parent::checkin();
 
 		// Override the redirect Uri.
-		$redirectUri = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&extension=' . $this->input->get('extension', '', 'CMD');
-		$this->setRedirect(Route::_($redirectUri, false), $this->message, $this->messageType);
+//		$redirectUri = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&extension=' . $this->input->get('extension', '', 'CMD');
+//		$this->setRedirect(Route::_($redirectUri, false), $this->message, $this->messageType);
+		$this->setRedirect(Route::_('index.php?option=com_rsgallery2&view=galleries'));
 
 		return $result;
 	}
+	/**/
 }
