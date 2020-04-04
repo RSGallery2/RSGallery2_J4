@@ -564,6 +564,7 @@ class GalleryModel extends AdminModel
 			$table->newTags = $data['tags'];
 		}
 
+		/** -> table *
 		// no default value
 		if (empty($data['description']))
 		{
@@ -575,7 +576,7 @@ class GalleryModel extends AdminModel
 		{
 			$data['params'] = '';
 		}
-
+		/**/
 
 		// Include the plugins for the save events.
 		PluginHelper::importPlugin($this->events_map['save']);

@@ -71,8 +71,13 @@ class ImageTable extends Table
 			$this->params = (string) $registry;
 		}
 
-//		if ($this->description == null) {$this->description = '';};
-		if ($this->params == null) {$this->params = '';};
+		// Text must be preset
+		if ($this->description == null) {
+			$this->description = '';
+		}
+		if ($this->params == null) {
+			$this->params = '';
+		}
 
 		return parent::store($updateNulls);
 	}
@@ -116,5 +121,4 @@ class ImageTable extends Table
 		return $IsDeleted;
 	}
 	/**/
-
 } // class

@@ -50,4 +50,35 @@ class GalleryTable extends Nested
 	{
 		return parent::delete($pk, $children);
 	}
+
+	/**
+	 * Stores a contact.
+	 *
+	 * @param   boolean  $updateNulls  True to update fields even if they are null.
+	 *
+	 * @return  boolean  True on success, false on failure.
+	 *
+	 * @since   1.0
+	 */
+	public function store($updateNulls = false)
+	{
+		// Transform the params field
+		if (is_array($this->params))
+		{
+			$registry = new Registry($this->params);
+			$this->params = (string) $registry;
+		}
+
+		// Text must be preset
+		if ($this->description == null) {
+			$this->description = '';
+		}
+		if ($this->params == null) {
+			$this->params = '';
+		}
+
+		return parent::store($updateNulls);
+	}
+
+
 }
