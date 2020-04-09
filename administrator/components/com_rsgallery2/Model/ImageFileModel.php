@@ -229,13 +229,13 @@ class ImageFileModel extends BaseModel // AdminModel
 			}
 
 			//---- target size -------------------------------------
-
+            
 			$thumbSize = $rsgConfig->get('thumb_size');
 
 			// Make sure the target width is given thumb_size
 			// size not in config
 			//if ( ! $thumbSize)
-			if (emtpy($thumbSize))
+			if (empty($thumbSize))
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing createThumbImageFile: No value given for "Thumb Size"  in configuration';

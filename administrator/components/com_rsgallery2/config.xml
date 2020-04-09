@@ -9,11 +9,11 @@
 	>
 		<!-- needed when more entries are general ...
 				field name="intro_text"
-			   type="editor"
-			   label="COM_RSGALLERY2_INTRODUCTION_TEXT"
-			   description="COM_RSGALLERY2_INTRODUCTION_DESC"
-			   filter="JComponentHelper::filterText"
-			   buttons="false"
+                type="editor"
+                label="COM_RSGALLERY2_INTRODUCTION_TEXT"
+	            description="COM_RSGALLERY2_INTRODUCTION_DESC"
+				filter="JComponentHelper::filterText"
+				buttons="false"
 		/-->
 
 		<field
@@ -34,7 +34,7 @@
 				hr="true"
 		/-->
 
-		<!-- ... block admin section ... -->
+		<!-- ... block debug section ... -->
 
 		<field
 				name="noteAdminSection"
