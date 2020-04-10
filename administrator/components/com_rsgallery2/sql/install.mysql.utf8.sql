@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 -- acl permissions
 --
 
-#CREATE TABLE IF NOT EXISTS `#__rsgallery2_acl` (
+#CREATE TABLE IF NOT EXISTS `#__rsg2_acl` (
 #  `id` serial NOT NULL,
 #  `gallery_id` int(11) NOT NULL,
 #  `parent_id` int(11) NOT NULL default '0',
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 -- comments
 --
 
-#CREATE TABLE IF NOT EXISTS `#__rsgallery2_comments` (
+#CREATE TABLE IF NOT EXISTS `#__rsg2_comments` (
 #  `id` serial NOT NULL,
 #  `user_id` int(11) NOT NULL,
 #  `user_name` varchar(100) NOT NULL,
