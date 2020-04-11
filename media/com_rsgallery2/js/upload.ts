@@ -1,6 +1,5 @@
 // ToDo: use save file name in display
 
-
 /**
  * @package     RSGallery2
  *
@@ -11,7 +10,7 @@
  * @copyright   (C) 2016-2019 RSGallery2 Team
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @author      finnern
- * @since       4.3.0
+ * @since       5.0.0.2
  */
 
 /**
@@ -19,9 +18,6 @@
 /// <reference path="./libQueueStack.ts" /> #
 /**/
 
-/**
- * Created by ericfernance on 27/11/2015.
- */
 /**/
 interface Joomla {
     JText: {
