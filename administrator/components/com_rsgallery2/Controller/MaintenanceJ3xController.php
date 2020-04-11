@@ -65,7 +65,7 @@ class MaintenanceJ3xController extends AdminController
 	 */
 	public function copySelectedOldItems2New ()
 	{
-		$msg     = "controller.createImageDbItems: ";
+		$msg     = "MaintenanceJ3xController.copySelectedOldItems2New: ";
 		$msgType = 'notice';
 
 		Session::checkToken();
@@ -74,7 +74,7 @@ class MaintenanceJ3xController extends AdminController
 		if (!$canAdmin)
 		{
 			//JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -93,7 +93,7 @@ class MaintenanceJ3xController extends AdminController
 
 				if (empty ($selected))
 				{
-					$msg     = $msg . Text::_('COM_RSGALLERY2_NO_ITEM_SELECTED');
+					$msg     .= Text::_('COM_RSGALLERY2_NO_ITEM_SELECTED');
 					$msgType = 'warning';
 				} 
 				else 
@@ -123,7 +123,7 @@ class MaintenanceJ3xController extends AdminController
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing saveOrdering: "' . '<br>';
+				$OutTxt .= 'Error executing copySelectedOldItems2New: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();
@@ -143,7 +143,7 @@ class MaintenanceJ3xController extends AdminController
 	 */
 	public function copyOldItems2New ()
 	{
-		$msg     = "controller.createImageDbItems: ";
+		$msg     = "MaintenanceJ3xController.copyOldItems2New: ";
 		$msgType = 'notice';
 
 		Session::checkToken();
@@ -152,7 +152,7 @@ class MaintenanceJ3xController extends AdminController
 		if (!$canAdmin)
 		{
 			//JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);

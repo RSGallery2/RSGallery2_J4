@@ -148,7 +148,7 @@ class ConfigController extends AdminController // FormController
 	    $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 	    if (!$canAdmin)
 	    {
-		    $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+		    $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 		    $msgType = 'warning';
 		    // replace newlines with html line breaks.
 		    str_replace('\n', '<br>', $msg);
