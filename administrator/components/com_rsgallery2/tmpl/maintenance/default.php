@@ -16,15 +16,25 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Response\JsonResponse;
 /**/
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\HTML\HTMLHelper;
-
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Session\Session;
 
 
 JHtml::_('stylesheet', 'com_rsgallery2/maintenance.css', array('version' => 'auto', 'relative' => true));
 
-HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
+// HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
+HTMLHelper::_('script', 'com_rsgallery2/maintenance.js', ['version' => 'auto', 'relative' => true]);
+
+Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
+
+
+//$script = 'var Token = \'' . Session::getFormToken() . '\';';
+//Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
+
+
 
 
 class zoneContainer {
@@ -142,6 +152,8 @@ $rawDatabase_ZoneButtons[] =  new zoneButtons(
 
 $repair_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_REPAIR_ZONE'), Text::_('COM_RSGALLERY2_FUNCTIONS_MAY_CHANGE_DATA'), 'repair', 'repairZone');
 
+$repair_ZoneButtons = [];
+
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
 	//Route::_('index.php?option=com_rsgallery2&amp;view=maintConsolidateImages'),
@@ -169,6 +181,33 @@ $repair_ZoneButtons[] =  new zoneButtons(
 $danger_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_DANGER_ZONE'), Text::_('COM_RSGALLERY2_DANGER_ZONE_DESCRIPTION'), 'danger', 'dangerZone');
 
 $danger_ZoneButtons = [];
+
+/**/
+$danger_ZoneButtons[] = new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&amp;task=MaintCleanUp.purgeImagesAndData'),
+	Text::_('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES'),
+	Text::_('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES_DESC'),
+	array('icon-database', 'icon-purge'),
+	'purgeImagesAndData'
+);
+/**/
+
+/**/
+$danger_ZoneButtons[] = new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&amp;view=MaintenanceJ3x&amp;layout=DBTransferOldGalleries'),
+	Text::_('COM_RSGALLERY2_PREPARE_REMOVE_RSGALLERY2'),
+	Text::_('COM_RSGALLERY2_PREPARE_REMOVE_RSGALLERY2_DESC'),
+	array('icon-database', 'icon-delete'),
+	'uninstallDataTables'
+);
+/**/
+
+
+
+
+
+
+
 
 //--- upgrade zone -----------------------------
 

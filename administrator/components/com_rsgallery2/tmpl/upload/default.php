@@ -23,7 +23,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'aut
 //HTMLHelper::_('script', 'com_rsgallery2/libQueueStack.js', ['version' => 'auto', 'relative' => true]);
 HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
 
-Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST');
+Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
 // Drag and Drop security id on ajax call.
 $script[] = 'var Token = \'' . Session::getFormToken() . '\';';
