@@ -21,20 +21,10 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Response\JsonResponse;
-use Joomla\Input\Input;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Utilities\ArrayHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Model\ImageModel;
-
-// toDo:
-// toDo:
-// toDo:
-// toDo:
-
 
 /**
 global $Rsg2DebugActive;
@@ -211,7 +201,7 @@ class UploadController extends FormController
 			if (empty($imageId))
 			{
 				// actual give an error
-				//$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+				//$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 				$msg .= 'Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
 
 				if ($Rsg2DebugActive)
@@ -862,7 +852,7 @@ out:
 				if (empty($imageId))
 				{
 					// actual give an error
-					//$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+					//$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 					$msg .= 'Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
 
 					if ($Rsg2DebugActive)
@@ -1180,7 +1170,7 @@ interface IResponseTransfer {
 	/**
 	public function copySelectedOldItems2New ()
 	{
-		$msg     = "controller.createImageDbItems: ";
+		$msg     = "controller.copySelectedOldItems2New: ";
 		$msgType = 'notice';
 
 		Session::checkToken();
@@ -1189,7 +1179,7 @@ interface IResponseTransfer {
 		if (!$canAdmin)
 		{
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -1208,7 +1198,7 @@ interface IResponseTransfer {
 
 				if (empty ($selected))
 				{
-					$msg     = $msg . Text::_('COM_RSGALLERY2_NO_ITEM_SELECTED');
+					$msg     .= Text::_('COM_RSGALLERY2_NO_ITEM_SELECTED');
 					$msgType = 'warning';
 				} 
 				else 
@@ -1237,7 +1227,7 @@ interface IResponseTransfer {
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing saveOrdering: "' . '<br>';
+				$OutTxt .= 'Error executing copySelectedOldItems2New: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();
@@ -1276,7 +1266,7 @@ interface IResponseTransfer {
 		if (!$canAdmin)
 		{
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
