@@ -18,7 +18,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
  *
  * @since  1.0
  */
-class MaintenanceController.php extends BaseController
+class MaintenanceController extends BaseController
 {
 	/**
 	 * The default view.
