@@ -392,6 +392,20 @@ class ImageModel extends AdminModel
 			$table->newTags = $data['tags'];
 		}
 
+		/** -> table *
+		// no default value
+		if (empty($data['description']))
+		{
+			$data['description'] = '';
+		}
+
+		// no default value
+		if (empty($data['params']))
+		{
+			$data['params'] = '';
+		}
+		/**/
+
 		// Include the plugins for the save events.
 		PluginHelper::importPlugin($this->events_map['save']);
 
