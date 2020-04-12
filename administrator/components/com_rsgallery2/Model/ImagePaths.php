@@ -15,123 +15,109 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
-//use Joomla\CMS\Factory;
-
-
-/**
- * Merge several parts of URL or filesystem path in one path
- * Examples:
- *  echo merge_paths('stackoverflow.com', 'questions');           // 'stackoverflow.com/questions' (slash added between parts)
- *  echo merge_paths('usr/bin/', '/perl/');                       // 'usr/bin/perl/' (double slashes are removed)
- *  echo merge_paths('en.wikipedia.org/', '/wiki', ' Sega_32X');  // 'en.wikipedia.org/wiki/Sega_32X' (accidental space fixed)
- *  echo merge_paths('etc/apache/', '', '/php');                  // 'etc/apache/php' (empty path element is removed)
- *  echo merge_paths('/', '/webapp/api');                         // '/webapp/api' slash is preserved at the beginnnig
- *  echo merge_paths('http://google.com', '/', '/');              // 'http://google.com/' slash is preserved at the end
- *
- * @param string $path1
- * @param string $path2
- *
-function path_join($path1, $path2)
-{
-	$paths    = func_get_args();
-	$last_key = func_num_args() - 1;
-	array_walk($paths, function (&$val, $key) use ($last_key) {
-		switch ($key)
-		{
-			case 0:
-				$val = rtrim($val, '/ ');
-				break;
-			case $last_key:
-				$val = ltrim($val, '/ ');
-				break;
-			default:
-				$val = trim($val, '/ ');
-				break;
-		}
-	});
-
-	$first = array_shift($paths);
-	$last  = array_pop($paths);
-	$paths = array_filter($paths); // clean empty elements to prevent double slashes
-	array_unshift($paths, $first);
-	$paths[] = $last;
-
-	return implode('/', $paths);
-}
-/**/
-
-function path_join() {
-
-	$paths = array();
-
-	foreach (func_get_args() as $arg) {
-		if ($arg !== '') { $paths[] = $arg; }
-	}
-
-	return preg_replace('#/+#','/',join('/', $paths));
-}
-
-
 
 class ImagePaths {
+	// from config
 	public $rsgImagesBasePath;
-	public $galleryRoot;
 	public $imageSizes;
 
+	// includes galleryid
+	public $galleryRoot;
+
+	// files gallery defined
 	public $originalBasePath;
 	public $thumbBasePath;
 	public $sizeBasePaths; // 800x6000, ..., ? display:J3x
-	//	toDo: watermark ...
+	//	ToDo: watermark ...
 
+	// URIs gallery defined
 	protected $galleryRootUrl;
 	protected $originalUrl;
 	protected $thumbUrl;
 	protected $sizeUrls;
-	//	toDo: watermark ...
+	//	ToDo: watermark ...
 
 	// root of images, image sizes from configuration build the paths
-	// ToDo: J3x style paths
-	public function __construct($galleryId = 0, $isJ3xStylePaths = false) {
+	// ToDo: J3x style paths // , $isJ3xStylePaths = false or own path class similar
+	public function __construct($galleryId = 0) {
 		global $rsgConfig;
 
-		// activate config
-		if (!$rsgConfig)
+		try
 		{
-			$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-		}
+			// activate config
+			if (!$rsgConfig)
+			{
+				$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+			}
 
-		$this->rsgImagesBasePath = $rsgConfig->get('imgPath_root');
-		// Fall back
-		if (empty ($this->rsgImagesBasePath))
+			//--- config root path --------------------------------------------
+
+			$this->rsgImagesBasePath = $rsgConfig->get('imgPath_root');
+			// Fall back
+			if (empty ($this->rsgImagesBasePath))
+			{
+				$this->rsgImagesBasePath = "images/rsgallery2";
+			}
+
+			//--- config image sizes --------------------------------------------
+
+			$imageSizesText   = $rsgConfig->get('image_width');
+			$imageSizes       = explode(',', $imageSizesText);
+			$this->imageSizes = $imageSizes;
+
+			/*--------------------------------------------------------------------
+			File paths
+			--------------------------------------------------------------------*/
+
+			//--- paths gallery based  --------------------------------------------
+
+			$this->galleryRoot = path_join(JPATH_ROOT, $this->rsgImagesBasePath, $galleryId);
+
+			$this->originalBasePath = path_join($this->galleryRoot, 'original');
+			$this->thumbBasePath    = path_join($this->galleryRoot, 'thumbs');
+
+			//--- paths for image sizes locations ---------------------------------------
+
+			$this->imageSizes = $imageSizes;
+			foreach ($imageSizes as $imageSize)
+			{
+				$this->sizeBasePaths[$imageSize] = path_join($this->galleryRoot, $imageSize);
+			}
+
+			/*--------------------------------------------------------------------
+			URIs
+			--------------------------------------------------------------------*/
+
+			//---  URIs gallery based --------------------------------------------
+
+			$this->galleryRootUrl = Uri::root() . '/' . $this->rsgImagesBasePath . '/' . $galleryId;
+
+			$this->originalUrl = $this->galleryRootUrl . '/original';
+			$this->thumbUrl    = $this->galleryRootUrl . '/thumbs';
+
+			//--- URIs for image sizes locations ---------------------------------------
+
+			foreach ($imageSizes as $imageSize)
+			{
+				$this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
+			}
+		}
+		catch (RuntimeException $e)
 		{
-			$this->rsgImagesBasePath ="images/rsgallery2";
-		}
+			$OutTxt = '';
+			$OutTxt .= 'ImagePaths: Error executing __construct: <br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		$imageSizesText = $rsgConfig->get('image_width');
-		$imageSizes = explode (',', $imageSizesText);
-		$this->imageSizes =  $imageSizes;
-
-		$this->galleryRoot = path_join(JPATH_ROOT, $this->rsgImagesBasePath, $galleryId);
-
-		$this->originalBasePath = path_join($this->galleryRoot, 'original');
-		$this->thumbBasePath    = path_join($this->galleryRoot, 'thumbs');
-
-		$this->imageSizes = $imageSizes;
-		foreach ($imageSizes as $imageSize) {
-			$this->sizeBasePaths[$imageSize] = path_join($this->galleryRoot, $imageSize);
-		}
-
-		$this->galleryRootUrl = Uri::root() . '/' . $this->rsgImagesBasePath . '/' . $galleryId;
-		$this->originalUrl = $this->galleryRootUrl . '/original';
-		$this->thumbUrl    = $this->galleryRootUrl . '/thumbs';
-
-		// $this->imageSizes = $imageSizes;
-		foreach ($imageSizes as $imageSize) {
-			$this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
 		}
 	}
 
-	public function getOriginal ($fileName=''){
+	/*--------------------------------------------------------------------
+	File paths
+	--------------------------------------------------------------------*/
+
+	public function getOriginalPath ($fileName=''){
 		return path_join ($this->originalBasePath, $fileName);
 	}
 	public function getThumbPath ($fileName=''){
@@ -140,6 +126,10 @@ class ImagePaths {
 	public function getSizePath ($imageSize, $fileName=''){
 		return path_join ($this->sizeBasePaths [$imageSize], $fileName);
 	}
+
+	/*--------------------------------------------------------------------
+	URIs
+	--------------------------------------------------------------------*/
 
 	public function getOriginalUrl ($fileName=''){
 		return $this->originalUrl . '/' . $fileName;
@@ -151,22 +141,83 @@ class ImagePaths {
 		return $this->sizeUrls [$imageSize] . '/' . $fileName;
 	}
 
+	/*--------------------------------------------------------------------
+	URIs
+	--------------------------------------------------------------------*/
+
+	/**
+	 *
+	 * @param bool $isCreateOriginal: Original folder may not be needed (see config)
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
 	public function createAllPaths($isCreateOriginal=true) {
-		$isDone = Folder::create($this->galleryRoot);
-		if($isDone) {
+		$isCreated = false;
 
-			$isDone = $isDone & Folder::create($this->originalBasePath);
-			$isDone = $isDone & Folder::create($this->thumbBasePath);
-
-			foreach ($this->sizeBasePaths as $sizePath)
+		try
+		{
+			$isCreated = Folder::create($this->galleryRoot);
+			if ($isCreated)
 			{
-				$isDone = $isDone & Folder::create($sizePath);
+				// Original images will be kept
+				if ($isCreateOriginal)
+				{
+					$isCreated = $isCreated & Folder::create($this->originalBasePath);
+				}
+
+				$isCreated = $isCreated & Folder::create($this->thumbBasePath);
+
+				foreach ($this->sizeBasePaths as $sizePath)
+				{
+					$isCreated = $isCreated & Folder::create($sizePath);
+				}
 			}
 		}
-		
-		return $isDone;
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $isCreated;
 	}
 
 }
+
+/**
+ * Merge several parts of URL or filesystem path in one path
+ * Examples:
+ *  echo merge_paths('stackoverflow.com', 'questions');           // 'stackoverflow.com/questions' (slash added between parts)
+ *  echo merge_paths('usr/bin/', '/perl/');                       // 'usr/bin/perl/' (double slashes are removed)
+ *  echo merge_paths('en.wikipedia.org/', '/wiki', ' Sega_32X');  // 'en.wikipedia.org/wiki/Sega_32X' (accidental space fixed)
+ *  echo merge_paths('etc/apache/', '', '/php');                  // 'etc/apache/php' (empty path element is removed)
+ *  echo merge_paths('/', '/webapp/api');                         // '/webapp/api' slash is preserved at the beginnnig
+ *  echo merge_paths('http://google.com', '/', '/');              // 'http://google.com/' slash is preserved at the end
+/**/
+
+/**
+ * Joins paths for files or url
+ * Attention: may not be perfect so check once in a while
+ * @return string|string[]|null
+ *
+ * @since version
+ */
+function path_join() {
+
+	$paths = array();
+
+	foreach (func_get_args() as $arg) {
+		if ($arg !== '') { $paths[] = $arg; }
+	}
+
+	return preg_replace('#/+#','/',join('/', $paths));
+}
+
 
 

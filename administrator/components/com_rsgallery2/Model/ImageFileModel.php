@@ -559,6 +559,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			//--- destination image paths ---------------------------------------------------
 
+			// ToDo: J3x style paths -> other class ? // , $isJ3xStylePaths = false or own path class similar
 			// ToDo: ask gallery for old style and use it in imagePaths
 
 			$this->imagePaths =

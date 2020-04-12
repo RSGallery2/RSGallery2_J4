@@ -12,14 +12,13 @@
 /**/
 //declare var joomla: Joomla;
 //const joomla = window.Joomla || {};
-var joomla = window.Joomla || {};
+const joomla = window.Joomla || {};
 // Joomla form token
 var Token;
 //--------------------------------------------------------------------------------------
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function (event) {
-    var _this = this;
     joomla.submitbutton = function (pressbutton) {
         if (pressbutton === 'associations.purge') {
             // eslint-disable-next-line no-restricted-globals
@@ -41,9 +40,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     //    this.buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
     //    this.buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
     //    this.buttonFolderImport = <HTMLButtonElement> document.querySelector('#ftp-upload-folder-button-drop');
-    this.buttonManualFiles.onclick = function () { return joomla.submitbutton('yyyy'); };
+    this.buttonManualFiles.onclick = () => joomla.submitbutton('yyyy');
     ;
-    this.buttonZipFile.onclick = function () { return fileZip.click(); };
-    this.buttonFolderImport.onclick = function (ev) { return _this.onImportFolder(ev); };
+    this.buttonZipFile.onclick = () => fileZip.click();
+    this.buttonFolderImport.onclick = (ev) => this.onImportFolder(ev);
     //    <button id="applyBtn" type="button" class="hidden" onclick="Joomla.submitbutton('plugin.apply');"></button>
 });

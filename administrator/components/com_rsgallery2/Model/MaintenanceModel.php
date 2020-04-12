@@ -51,5 +51,5 @@ class MaintenanceModel extends BaseDatabaseModel
 		return $tableExist;
 	}
 
-
 }
+

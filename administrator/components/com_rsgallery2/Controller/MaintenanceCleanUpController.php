@@ -12,6 +12,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\File;
@@ -63,7 +64,7 @@ class MaintenanceCleanUpController extends BaseController
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin)
         {
-            //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
@@ -73,8 +74,34 @@ class MaintenanceCleanUpController extends BaseController
         {
             try
             {
+                $msg .= 'is prepared but not activated and tested yet';
 
-                $msg .= 'is not developed yet';
+	            //--- Delete images references in database --------------
+
+	            $imageModel = $this->getModel('MaintRemoveAllData');
+	            [$isRemoved, $msgTmp] = $imageModel->removeDataInTables();
+	            $msg .= $msgTmp;
+
+	            //--- Delete all images --------------------------------
+
+	            if ($isRemoved)
+	            {
+		            [$isRemoved, $msgTmp] = $imageModel->removeAllImageFiles();
+		            $msg .= $msgTmp;
+
+		            if ($isRemoved)
+		            {
+			            //--- purge message -----------------------------------
+			            $msg .= '<br><br>' . Text::_('COM_RSGALLERY2_PURGED', true);
+		            }
+	            }
+
+	            if ( ! $isRemoved) {
+
+		            //$msgType = 'warning';
+		            $msgType = 'error';
+
+	            }
 
             }
             catch (RuntimeException $e)
@@ -109,7 +136,7 @@ class MaintenanceCleanUpController extends BaseController
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin)
         {
-            //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
@@ -165,7 +192,7 @@ class MaintenanceCleanUpController extends BaseController
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin)
         {
-            //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg    .=  Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
