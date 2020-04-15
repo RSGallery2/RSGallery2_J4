@@ -8,7 +8,7 @@ import subprocess
 from datetime import datetime
 
 HELP_MSG = """
- dumps RSG2 tables from given database 
+Exports dump of RSG2 tables from given database 
 
 usage: Rsg2TablesDump.py d database -u user -p password -f dumpFileName -m mySqlPath -j isUseJ3xTables  [-h]
     -d database Name of database for dump
@@ -32,7 +32,9 @@ usage: Rsg2TablesDump.py d database -u user -p password -f dumpFileName -m mySql
 
 ------------------------------------
 ToDo:
-  * 
+  * user configparser for init of class https://wiki.python.org/moin/ConfigParserExamples
+  * doImportDumpTables -> add database parameter
+  * create ..\..\data for exchange of sql ...
   * 
   * 
   * 
@@ -84,6 +86,16 @@ class Rsg2TablesDump:
     def database(self, database):
         self.__database = database
 
+    #--- user ---
+
+    @property
+    def user(self):
+        return self.__user
+
+    @user.setter
+    def user(self, user):
+        self.__user = user
+
     #--- password ---
 
     @property
@@ -125,17 +137,16 @@ class Rsg2TablesDump:
         self.__isUseJ3xTables = isUseJ3xTables
 
     #--------------------------------------------------------------------
-    #
+    # do dump tables
     #--------------------------------------------------------------------
-    # https://wiki.python.org/moin/ConfigParserExamples
 
-    def doDumpTables (self, dumpFileName=''):
+    def doDumpTables (self, dumpFileName='', dumpDatabase=''):
         # ToDo: Check if name exists otherwise standard
         # ToDo: try catch ...
         try:
             print('*********************************************************')
             print('doDumpTables')
-            print('dumpFileName: ' + dumpFileName)
+            print('dumpFileName (in): ' + dumpFileName)
             print('---------------------------------------------------------')
 
             #--- save dump file name if given  -------------------------------
@@ -145,19 +156,24 @@ class Rsg2TablesDump:
 
             self.__dumpFileName = dumpFileName
 
+            print('dumpFileName (used): ' + self.__dumpFileName)
+
+            # --- save dump dumpDatabase name if given  -------------------------------
+
+            if (dumpDatabase == ''):
+                dumpDatabase = self.__dumpDatabase
+
+            self.__dumpDatabase = dumpDatabase
+
+            print('dumpDatabase (used): ' + self.__dumpDatabase)
+
             #--- check for mysqlDump exe ------------------------------
 
-#            mySqlPath = "d:\\xampp\\mysql\\bin\\"
-#            mySqlExe = self.__mySqlPath + "mysql.exe"
-#            print("mySqlExe: " + mySqlExe)
-#
-#            if (not os.path.isfile(mySqlExe)):
+            mySqlDumpExe = mySqlPath + "mysqldump.exe"
+            print("mySqlDump: " + mySqlDumpExe)
 
-            mySqlDump = mySqlPath + "mysqldump.exe"
-            print("mySqlDump: " + mySqlDump)
-
-            if (not os.path.isfile(mySqlDump)):
-                msg = 'mysqldump.exe file did not exist: "' + mySqlDump
+            if (not os.path.isfile(mySqlDumpExe)):
+                msg = 'mysqldump.exe file did not exist: "' + mySqlDumpExe
                 print(msg)
                 raise RuntimeError(msg) from os.error
 
@@ -187,7 +203,7 @@ class Rsg2TablesDump:
 
             #---  dump command -------------------------------
 
-            dumpCmd = mySqlDump + ' ' + userCmd + ' ' + passwordCmd + ' ' + database  + ' ' + tablesCmd
+            dumpCmd = mySqlDumpExe + ' ' + userCmd + ' ' + passwordCmd + ' ' + database  + ' ' + tablesCmd
             print("cmd: " + dumpCmd)
 
             #-------------------------------------------
