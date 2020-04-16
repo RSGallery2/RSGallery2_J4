@@ -63,34 +63,43 @@ class TranslationFile:
 
 	#---------------------------------------------
 	def __init__ (self, translationFile=''):
+
 		print( "Init TranslationFile: ")
 		print ("translationFile: " + translationFile)
+
 		self.translationFile = translationFile
 #		self.LocalPath = LocalPath
 		self.translations = {}
 		self.doubles = {}
 
+		# ---------------------------------------------
+		# assign translations from file
+		# ---------------------------------------------
+
 		if (os.path.isfile(translationFile)):
-			self.load ()
+			self.readTranslations ()
 
 
-	def load (self, fileName=''):
+	def readTranslations (self, fileName=''):
 		try:
 			print ('*********************************************************')
 			print ('load')
 			print ('fileName: ' + fileName)
-
 			print ('---------------------------------------------------------')
 
 			self.translations = {}
 			self.doubles = {}
 
-			#---------------------------------------------
-			# Read file
-			#---------------------------------------------
+			# --- use class file name if given  -------------------------------
 
 			if fileName == '' :
 				fileName = self.translationFile
+
+			print('fileName (used): ' + fileName)
+
+			#---------------------------------------------
+			# Read file
+			#---------------------------------------------
 
 			if (os.path.isfile(fileName)):
 				print ('Found fileName: ' + fileName)
@@ -116,6 +125,7 @@ class TranslationFile:
 
 						transText = line[idx+1:].strip ()
 						#print ('transText (1): ' + transText)
+
 						# Remove ""
 						transText = transText [1:-1]
 						#print ('transText (2): ' + transText)
@@ -135,17 +145,6 @@ class TranslationFile:
 
 
 			return
-
-
-			#--------------------------------------------------------------------
-			#
-			#--------------------------------------------------------------------
-
-
-
-			#--------------------------------------------------------------------
-			#
-			#--------------------------------------------------------------------
 
 
 			#--------------------------------------------------------------------
