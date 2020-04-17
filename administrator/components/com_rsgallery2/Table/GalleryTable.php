@@ -14,7 +14,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Table\Nested;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
- 
+use Joomla\Registry\Registry;
+
 /**
  * Gallery table
  *
