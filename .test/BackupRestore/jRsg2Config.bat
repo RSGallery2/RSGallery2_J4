@@ -1,13 +1,17 @@
 @ECHO OFF
-REM Imports dump of RSG2 tables from given database
+REM <What it does>
 
 CLS
 
 Set CmdArgs=
-ECHO python Rsg2TablesImportDump.py
+ECHO python jRsg2Config.py 
 
 REM database
 Call :AddNextArg -d ""
+
+REM database prefix
+REM Call :AddNextArg -e "j4x_"
+Call :AddNextArg -e "j4_"
 
 REM password
 Call :AddNextArg -p ""
@@ -18,18 +22,25 @@ Call :AddNextArg -u ""
 REM dumpFileName
 Call :AddNextArg -f ""
 
-REM
-REM Call :AddNextArg -p ""
+REM isUseJ3xTables
+Call :AddNextArg -j ""
 
-REM add command line
+
+REM 
+Call :AddNextArg -p "\pr004\entwickl\Schleif.nt"
+                     
+REM 
+Call :AddNextArg -n "modules"
+ 
+REM add command line 
 REM Call :AddNextArg %*
 
 ECHO.
 ECHO ------------------------------------------------------------------------------
 ECHO Start cmd:
 ECHO.
-ECHO python Rsg2TablesImportDump.py %CmdArgs% %*
-     python Rsg2TablesDump.py %CmdArgs% %*
+ECHO python jRsg2Config.py %CmdArgs% %* 
+     python jRsg2Config.py %CmdArgs% %* 
 
 GOTO :EOF
 

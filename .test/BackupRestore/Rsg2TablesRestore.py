@@ -8,9 +8,9 @@ import subprocess
 from datetime import datetime
 
 HELP_MSG = """
-Imports dump of RSG2 tables from given database 
+Restores dump of RSG2 tables from given database 
 
-usage: Rsg2TablesImportDump.py d database -u user -p password -f dumpFileName -m mySqlPath -j isUseJ3xTables  [-h]
+usage: Rsg2TablesRestore.py -d database -u user -p password -f dumpFileName -m mySqlPath -j isUseJ3xTables  [-h]
     -d database Name of database for dump
     -u user User name of database for dump
     -p password Password of database for dump
@@ -32,7 +32,7 @@ usage: Rsg2TablesImportDump.py d database -u user -p password -f dumpFileName -m
 ------------------------------------
 ToDo:
   * user configparser for init of class https://wiki.python.org/moin/ConfigParserExamples
-  * doImportDumpTables -> add database parameter
+  * doRestoreDumpTables -> add database parameter
   * create ..\..\data for exchange of sql ...
   * 
   * 
@@ -50,20 +50,24 @@ LeaveOut_05 = False
 
 
 # ================================================================================
-# Rsg2TablesImportDump
+# Rsg2TablesRestore
 # ================================================================================
 
-class Rsg2TablesImportDump:
+class Rsg2TablesRestore:
     """ dumps RSG2 tables from given database """
 
     def __init__(self,
                  database='test',  # 'joomla4x',
+                 dbPrefix='rest_',  # restore, 
                  user='root',
                  password='',
                  dumpFileName='Rsg2_TablesDump.20200414_215456.sql',  # 'Rsg2_TablesDump',
                  mySqlPath='d:\\xampp\\mysql\\bin\\'):
 
+        print("Init Rsg2TablesRestore: ")
+
         self.__database = database
+        self.__dbPrefix = dbPrefix
         self.__password = password
         self.__user = user
         self.__dumpFileName = dumpFileName
@@ -134,58 +138,112 @@ class Rsg2TablesImportDump:
     # do import dump tables
     # --------------------------------------------------------------------
 
-    def doImportDumpTables(self, dumpFileName='', dumpDatabase=''):
+    def doRestoreDumpTables(self, dumpFileName='', dumpDatabase='', dbPrefix=''):
         # ToDo: Check if name exists otherwise standard
         # ToDo: try catch ...
         try:
             print('*********************************************************')
-            print('doImportDumpTables')
+            print('doRestoreDumpTables')
             print('dumpFileName (in): ' + dumpFileName)
             print('---------------------------------------------------------')
 
             # --- save dump file name if given  -------------------------------
 
-            if (dumpFileName == ''):
-                dumpFileName = self.__dumpFileName
-
-            self.__dumpFileName = dumpFileName
+            if (dumpFileName != ''):
+                self.__dumpFileName = dumpFileName
 
             print('dumpFileName (used): ' + self.__dumpFileName)
 
-            # --- save dump dumpDatabase name if given  -------------------------------
+            # --- save dump database name if given  -------------------------------
 
             if (dumpDatabase == ''):
-                dumpDatabase = self.__dumpDatabase
+                dumpDatabase = self.__database
 
-            self.__dumpDatabase = dumpDatabase
+            self.__database = dumpDatabase
 
-            print('dumpDatabase (used): ' + self.__dumpDatabase)
+            print('dumpDatabase (used): ' + self.__database)
+
+            # --- save dump dbPrefix name if given  -------------------------------
+
+            if (dbPrefix == ''):
+                dbPrefix = self.__dbPrefix
+
+            self.__dbPrefix = dbPrefix
+
+            print('dbPrefix (used): ' + self.__dbPrefix)
+
+            #------------------------------------------------------------------
+            # read and patch sql file data
+            #------------------------------------------------------------------
 
             # --- read dump file sql data -------------------------------
 
             print("Read %s" % self.__dumpFileName)
 
-            # display first lines (ToDo: may be commented later )
+            #--- Detect dumped joomla dbPrefix ------------------------------------
+
+            # fall back
+            oldPrefix = dbPrefix
+
+            # first lines until old prefix can be determined
+            with open(self.__dumpFileName, encoding="utf-8") as sqlFile:
+
+                # -- Table structure for table `j4_rsg2_galleries`
+                toCheck = 'Table structure for table `'
+                separator = '_'
+
+                for line in sqlFile:
+                    # line contains check part
+                    idxCheck = line.find(toCheck)
+
+                    # found: extract
+                    if (idxCheck > -1):
+                        # remove check string
+                        partLine = line[idxCheck + len(toCheck):]
+
+                        # seek end of preIndex
+                        sepIdx = partLine.index(separator)
+
+                        # extract old db
+                        oldPrefix = partLine [:sepIdx + 1]
+                        break
+
+            #--- read sql file, exchange prefix ---------------------------------
+
             with open(self.__dumpFileName, encoding="utf-8") as sqlFile:
                 sqlLines = sqlFile.read()
 
-                lines = sqlLines.split('\n', 20)
+                # exchange joomla db prefix
+                sqlLines = sqlLines.replace(oldPrefix, dbPrefix)
+
+                # display first lines (ToDo: may be commented later )
+
+                lines = sqlLines.split('\n', 30)
                 # for line in lines:
                 for index, line in enumerate(lines):
                     print(index + 1, line)
-                    if index > 10:
+                    if index > 25:
                         break
 
                 lines = ""
 
-            # read sql content as byte
-            with open(self.__dumpFileName, 'rb') as sqlFile:
-                sqlBytes = sqlFile.read()
+            #--- file lines as bytes needed ---------------------------------
+
+            # did work but not needed
+            # # read sql content as byte
+            # with open(self.__dumpFileName, 'rb') as sqlFile:
+            #    sqlBytes = sqlFile.read()
+
+            sqlBytes = sqlLines.encode()
+
+            #------------------------------------------------------------------
+            # prepare sql command
+            #------------------------------------------------------------------
 
             # --- check for mysql exe ------------------------------
 
-            mySqlExe = mySqlPath + "mysql.exe"
-            print("mySqlDump: " + mySqlExe)
+            mySqlExe = os.path.join(self.__mySqlPath, "mysql.exe")
+            print("mySqlExe: " + mySqlExe)
 
             if (not os.path.isfile(mySqlExe)):
                 msg = 'mysql.exe file did not exist: "' + mySqlExe
@@ -195,7 +253,7 @@ class Rsg2TablesImportDump:
             # ---  database -------------------------------
 
             database = self.__database
-            print("Inserting into %s" % database)
+            print("Using database %s" % database)
 
             # --- user  -------------------------------
 
@@ -220,7 +278,8 @@ class Rsg2TablesImportDump:
             # do import dump
             # -------------------------------------------
 
-            proc = subprocess.Popen(insertCmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            proc = subprocess.Popen(insertCmd, shell=True, stdin=subprocess.PIPE,
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             proc.stdin.write(sqlBytes)
             proc.communicate()[0]
             proc.stdin.close()
@@ -233,7 +292,7 @@ class Rsg2TablesImportDump:
         # --------------------------------------------------------------------
 
         finally:
-            print('exit doImportDumpTables')
+            print('exit doRestoreDumpTables')
 
         return
 
@@ -310,12 +369,19 @@ if __name__ == '__main__':
 
     start = datetime.today()
 
-    optlist, args = getopt.getopt(sys.argv[1:], 'l:r:12345h')
+    optlist, args = getopt.getopt(sys.argv[1:], 'd:p:u:f:m:12345h')
 
     database = 'test'  # 'joomla4x'
+    database = 'testrestore'  # 'joomla4x'
+    dbPrefix = 'rest_' # restore
+
     user = 'root'
     password = ''
+    backupBasePath = '../../../RSG2_Backup'
+
     dumpFileName = 'Rsg2_TablesDump.20200414_215456.sql' # 'Rsg2_TablesDump'
+    dumpFileName = os.path.join(backupBasePath, 'testRestore\Rsg2_TablesDump.sql') # 'Rsg2_TablesDump'
+
     mySqlPath = 'd:\\xampp\\mysql\\bin\\'
 
     for i, j in optlist:
@@ -352,9 +418,9 @@ if __name__ == '__main__':
 
     print_header(start)
 
-    Rsg2TablesImportDump = Rsg2TablesImportDump(database, user, password, dumpFileName, mySqlPath)
+    rsg2TablesRestore = Rsg2TablesRestore(database, dbPrefix, user, password, dumpFileName, mySqlPath)
 
-    Rsg2TablesImportDump.doImportDumpTables()
+    rsg2TablesRestore.doRestoreDumpTables()
 
     print_end(start)
 

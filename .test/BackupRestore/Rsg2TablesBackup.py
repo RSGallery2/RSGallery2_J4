@@ -7,16 +7,22 @@ import subprocess
 
 from datetime import datetime
 
+from jRsg2Tables import jRsg2Tables
+
+#from .jRsg2Tables import jRsg2Tables
+
+
+
 HELP_MSG = """
 Exports dump of RSG2 tables from given database 
+Seperate file for J3x and j4x tables
 
-usage: Rsg2TablesDump.py d database -u user -p password -f dumpFileName -m mySqlPath -j isUseJ3xTables  [-h]
+usage: Rsg2TablesBackup.py d database -u user -p password -f dumpPathFileName -m mySqlPath [-h]
     -d database Name of database for dump
     -u user User name of database for dump
     -p password Password of database for dump
-    -f dumpFileName destination file where the dump will be written into
+    -f dumpPathFileName destination file where the dump will be written into
     -m mySqlPath Path to the folder of the exe mysqldump.exe
-    -j isUseJ3xTables dump also the old outdated J3x tables
 
 	-h shows this message
 
@@ -51,30 +57,29 @@ LeaveOut_05 = False
 
 
 # ================================================================================
-# Rsg2TablesDump
+# Rsg2TablesBackup
 # ================================================================================
 
-class Rsg2TablesDump:
+class Rsg2TablesBackup:
     """ dumps RSG2 tables from given database """
 
     def __init__(self,
                  database='joomla4x',
                  user='root',
                  password='',
-                 dumpFileName='Rsg2_TablesDump.sql',
-                 mySqlPath='',
-                 isUseJ3xTables=True):
+                 dumpPathFileName='Rsg2_TablesDump.sql',
+                 mySqlPath=''):
 
         self.__database = database
         self.__password = password
         self.__user = user
-        self.__dumpFileName = dumpFileName
+        self.__dumpPathFileName = dumpPathFileName
         self.__mySqlPath = mySqlPath
-        self.__isUseJ3xTables = isUseJ3xTables
 
-        #self.__rsg2Tables = ['', 'j4_rsg2_galleries', 'j4_rsg2_images', '']
-        self.__rsg2Tables = ['j4_rsg2_galleries', 'j4_rsg2_images']
-        self.__rsg2_j3x_Tables = ['j4_rsgallery2_acl', 'j4_rsgallery2_comments', 'j4_rsgallery2_config', 'j4_rsgallery2_files', 'j4_rsgallery2_galleries']
+        #--- RSG2 table names (existing) ----------------------------
+
+        # Read from database
+        self.__jRsg2TableNames = jRsg2Tables(database, user, password, mySqlPath)
 
     #--- database ---
 
@@ -85,6 +90,16 @@ class Rsg2TablesDump:
     @database.setter
     def database(self, database):
         self.__database = database
+
+    # #--- dbPrefix ---
+    #
+    # @property
+    # def dbPrefix(self):
+    #     return self.__dbPrefix
+    #
+    # @dbPrefix.setter
+    # def database(self, dbPrefix):
+    #     self.__dbPrefix = dbPrefix
 
     #--- user ---
 
@@ -106,15 +121,15 @@ class Rsg2TablesDump:
     def password(self, password):
         self.__password = password
 
-    #--- dumpFileName ---
+    #--- dumpPathFileName ---
 
     @property
-    def dumpFileName(self):
-        return self.__dumpFileName
+    def dumpPathFileName(self):
+        return self.__dumpPathFileName
 
-    @dumpFileName.setter
-    def dumpFileName(self, dumpFileName):
-        self.__dumpFileName = dumpFileName
+    @dumpPathFileName.setter
+    def dumpPathFileName(self, dumpPathFileName):
+        self.__dumpPathFileName = dumpPathFileName
 
     #--- mySqlPath ---
 
@@ -126,50 +141,35 @@ class Rsg2TablesDump:
     def mySqlPath(self, mySqlPath):
         self.__mySqlPath = mySqlPath
 
-    #--- isWriteEmptyTranslations ---
-
-    @property
-    def isUseJ3xTables(self):
-        return self.__isUseJ3xTables
-
-    @isUseJ3xTables.setter
-    def isUseJ3xTables(self, isUseJ3xTables):
-        self.__isUseJ3xTables = isUseJ3xTables
 
     #--------------------------------------------------------------------
     # do dump tables
     #--------------------------------------------------------------------
 
-    def doDumpTables (self, dumpFileName='', dumpDatabase=''):
-        # ToDo: Check if name exists otherwise standard
-        # ToDo: try catch ...
+    def doBackupTables (self, dumpPathFileName='', dumpDatabase=''):
         try:
             print('*********************************************************')
-            print('doDumpTables')
-            print('dumpFileName (in): ' + dumpFileName)
+            print('doBackupTables')
+            print('dumpPathFileName (in): ' + dumpPathFileName)
             print('---------------------------------------------------------')
 
             #--- save dump file name if given  -------------------------------
             
-            if (dumpFileName == ''):
-                dumpFileName = self.__dumpFileName 
+            if (dumpPathFileName != ''):
+                self.__dumpPathFileName = dumpPathFileName
 
-            self.__dumpFileName = dumpFileName
-
-            print('dumpFileName (used): ' + self.__dumpFileName)
+            print('dumpPathFileName (used): ' + self.__dumpPathFileName)
 
             # --- save dump dumpDatabase name if given  -------------------------------
 
-            if (dumpDatabase == ''):
-                dumpDatabase = self.__dumpDatabase
+            if (dumpDatabase != ''):
+                self.__database = dumpDatabase
 
-            self.__dumpDatabase = dumpDatabase
-
-            print('dumpDatabase (used): ' + self.__dumpDatabase)
+            print('dumpDatabase (used): ' + self.__database)
 
             #--- check for mysqlDump exe ------------------------------
 
-            mySqlDumpExe = mySqlPath + "mysqldump.exe"
+            mySqlDumpExe = os.path.join (self.__mySqlPath, "mysqldump.exe")
             print("mySqlDump: " + mySqlDumpExe)
 
             if (not os.path.isfile(mySqlDumpExe)):
@@ -180,7 +180,7 @@ class Rsg2TablesDump:
             #---  database -------------------------------
 
             database = self.__database
-            print("Dumping to %s" % database)
+            print("Dumping of db %s" % database)
 
             #--- user  -------------------------------
 
@@ -193,35 +193,77 @@ class Rsg2TablesDump:
 
             passwordCmd = ' '
             if (password != ''):
-                passwordCmd = '-p' + password            
+                passwordCmd = '-p' + password
 
-            #--- tables command -------------------------------
+            #--- filenames for J4x and j3x tables
+            parts = self.__dumpPathFileName.rsplit('.', 1)
 
-            tablesCmd = ' '.join (self.__rsg2Tables)
-#            if (self.__isUseJ3xTables):
-#                tablesCmd +=  ' ' + ' '.join(self.__rsg2_j3x_Tables)
-
-            #---  dump command -------------------------------
-
-            dumpCmd = mySqlDumpExe + ' ' + userCmd + ' ' + passwordCmd + ' ' + database  + ' ' + tablesCmd
-            print("cmd: " + dumpCmd)
+            dumpPathFileName_j4x = parts[0] + '.' + 'j4x' + '.' + parts[1]
+            dumpPathFileName_j3x = parts[0] + '.' + 'j3x' + '.' + parts[1]
 
             #-------------------------------------------
-            # do dump
+            # do dump j4x
             #-------------------------------------------
 
-            with open(dumpFileName, 'w') as dumpFile:
+            try:
+                # tables may not exist
+                if (not self.__jRsg2TableNames.hasJ4xTables):
+                    print('   > NO j4x tables found')
 
-                proc = subprocess.Popen(dumpCmd,
-                                        stdout=dumpFile)
-                proc.communicate()
+                # j4x tables exist
+                if (self.__jRsg2TableNames.hasJ4xTables):
 
-#            dumpFile = open(dumpFileName, 'w')
-#            proc = subprocess.Popen(dumpCmd,
-#                                    stdout=dumpFile)
-#            proc.communicate()
+                    print('do dump j4x tables')
 
-            dumpFile.close()
+                    #--- tables command j4x -------------------------------
+
+                    tablesCmd = ' '.join (self.__jRsg2TableNames.tables_j4x)
+
+                    #---  dump command -------------------------------
+
+                    dumpCmd = mySqlDumpExe + ' ' + userCmd + ' ' + passwordCmd + ' ' + database  + ' ' + tablesCmd
+                    print("cmd: " + dumpCmd)
+
+                    #--- do dump --------------------------------------
+
+                    with open(dumpPathFileName_j4x, 'w') as dumpFile:
+
+                        proc = subprocess.Popen(dumpCmd,
+                                                stdout=dumpFile)
+                        proc.communicate()
+            finally:
+                pass
+            
+            #-------------------------------------------
+            # do dump j3x
+            #-------------------------------------------
+
+            try:
+                if (not self.__jRsg2TableNames.hasJ3xTables):
+                    print('   > NO j3x tables found')
+
+                # j3x tables exist
+                if (self.__jRsg2TableNames.hasJ3xTables):
+                    print('do dump j3x tables')
+
+                    #--- tables command j3x -------------------------------
+
+                    tablesCmd = ' '.join (self.__jRsg2TableNames.tables_j3x)
+
+                    #---  dump command -------------------------------
+
+                    dumpCmd = mySqlDumpExe + ' ' + userCmd + ' ' + passwordCmd + ' ' + database  + ' ' + tablesCmd
+                    print("cmd: " + dumpCmd)
+
+                    #--- do dump --------------------------------------
+
+                    with open(dumpPathFileName_j3x, 'w') as dumpFile:
+
+                        proc = subprocess.Popen(dumpCmd,
+                                                stdout=dumpFile)
+                        proc.communicate()
+            finally:
+                pass
 
         except Exception as ex:
             print(ex)
@@ -231,7 +273,7 @@ class Rsg2TablesDump:
         #--------------------------------------------------------------------
 
         finally:
-            print('exit doDumpTables')
+            print('exit doBackupTables')
 
         return
 
@@ -309,14 +351,14 @@ if __name__ == '__main__':
 
     start = datetime.today()
 
-    optlist, args = getopt.getopt(sys.argv[1:], 'l:r:12345h')
+    optlist, args = getopt.getopt(sys.argv[1:], 'd:p:u:f:m:j:12345h')
 
     database = 'joomla4x'
     user = 'root'
     password = ''
-    dumpFileName = 'Rsg2_TablesDump.sql'
+    backupBasePath = '../../../RSG2_Backup'
+    dumpPathFileName = 'Rsg2_TablesDump.sql'
     mySqlPath = 'd:\\xampp\\mysql\\bin\\'
-    isUseJ3xTables = True
 
     for i, j in optlist:
         if i == "-d":
@@ -326,11 +368,9 @@ if __name__ == '__main__':
         if i == "-u":
             user = j
         if i == "-f":
-            dumpFileName = j
+            dumpPathFileName = j
         if i == "-m":
             mySqlPath = j
-        if i == "-j":
-            isUseJ3xTables = j
 
         if i == "-h":
             print(HELP_MSG)
@@ -354,10 +394,10 @@ if __name__ == '__main__':
 
     print_header(start)
 
-    dumpFileName = AddDateToFileName (dumpFileName)
-    Rsg2TablesDump = Rsg2TablesDump(database, user, password, dumpFileName, mySqlPath, isUseJ3xTables)
+    dumpPathFileName = AddDateToFileName (dumpPathFileName)
+    rsg2TablesBackup = Rsg2TablesBackup (database, user, password, dumpPathFileName, mySqlPath)
 
-    Rsg2TablesDump.doDumpTables()
+    rsg2TablesBackup.doBackupTables()
 
     print_end(start)
 

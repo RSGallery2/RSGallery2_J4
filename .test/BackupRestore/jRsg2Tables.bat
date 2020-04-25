@@ -1,38 +1,32 @@
 @ECHO OFF
-REM Exports dump of RSG2 tables from given database
+REM <What it does>
 
 CLS
 
 Set CmdArgs=
-ECHO python Rsg2TablesDump.py 
+ECHO python jRsg2Tables.py 
 
 REM database
 Call :AddNextArg -d ""
-                     
+
 REM password
 Call :AddNextArg -p ""
- 
+
 REM user
 Call :AddNextArg -u ""
 
 REM dumpFileName
 Call :AddNextArg -f ""
 
-REM isUseJ3xTables
-Call :AddNextArg -j ""
-
-REM
-REM Call :AddNextArg -p ""
-
-REM add command line
+REM add command line 
 REM Call :AddNextArg %*
 
 ECHO.
 ECHO ------------------------------------------------------------------------------
 ECHO Start cmd:
 ECHO.
-ECHO python Rsg2TablesDump.py %CmdArgs% %* 
-     python Rsg2TablesDump.py %CmdArgs% %* 
+ECHO python jRsg2Tables.py %CmdArgs% %* 
+     python jRsg2Tables.py %CmdArgs% %* 
 
 GOTO :EOF
 
