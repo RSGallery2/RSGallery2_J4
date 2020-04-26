@@ -55,6 +55,8 @@ class ConfigRawModel extends BaseDatabaseModel
 	 */
 	public function SaveItems($configurationItems): bool
 	{
+        $isSaved = false;
+
 		// ToDo: Remove bad injected code (Read xml -> type / check xml ..
 
 		// ToDo: Try ...
@@ -92,7 +94,40 @@ class ConfigRawModel extends BaseDatabaseModel
 		return $isSaved;
 	}
 
-	/**
+    // ToDo: replace all of followoing functions with call to  MaintenanceJ3xModel
+
+    static function J3xConfigTableExist () {return self::J3xTableExist ('#__rsgallery2_config');}
+    //static function J3xGalleriesTableExist () {return self::J3xTableExist ('#__rsgallery2_galleries');}
+    //static function J3xImagesTableExist () {return self::J3xTableExist ('#__rsgallery2_files');}
+
+    static function J3xTableExist ($findTable)
+    {
+        $tableExist = false;
+
+        try
+        {
+            $db = Factory::getDbo();
+            $db->setQuery('SHOW TABLES');
+            $existingTables = $db->loadColumn();
+
+            $checkTable = $db->replacePrefix($findTable);
+
+            $tableExist = in_array($checkTable, $existingTables);
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $tableExist;
+    }
+
+    /**
 	function copyOldItems2New ($oldConfigItems)
 	{
 		$isSaved = false;
@@ -171,6 +206,77 @@ class ConfigRawModel extends BaseDatabaseModel
 
 		return $isSaved;
 	}
+
+    static function readRsg2ManifestData ()
+    {
+        $manifest = [];
+
+        try
+        {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select('manifest_cache')
+                ->from($db->quoteName('#__extensions'))
+                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+            $db->setQuery($query);
+
+            $jsonStr = $db->loadResult();
+            // $result = $db->loadObjectList()
+
+            if ( ! empty ($jsonStr))
+            {
+                $manifest = json_decode($jsonStr, true);
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'readRsg2ManifestData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $manifest;
+    }
+
+
+    static function readRsg2Config_FromExtensionTable ()
+    {
+        $params = [];
+
+        try
+        {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select('params')
+                ->from($db->quoteName('#__extensions'))
+                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+            $db->setQuery($query);
+
+            $jsonStr = $db->loadResult();
+            if ( ! empty ($jsonStr))
+            {
+                $params = json_decode($jsonStr, true);
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'readConfigFromExtensionTable: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $params;
+    }
+
+
 
 }
 

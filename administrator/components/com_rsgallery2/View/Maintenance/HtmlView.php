@@ -24,6 +24,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model;
+use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
 // JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
 
@@ -100,17 +102,12 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
-		// ToDo: replace all of follwoing functions with call to  MaintenanceJ3xModel
-		$maintenanceModel      = $this->getModel();
-		$this->isJ3xRsg2DataExisting = $maintenanceModel->J3xConfigTableExist();
-//		$maintenanceJ3xModel      = $this->getModel('maintenanceJ3x');
-//		$maintenanceJ3xModel = JModelLegacy::getInstance('maintenanceJ3x', 'rsgallery2Model');
-//		$maintenanceJ3xModel = JModelLegacy::getInstance('maintenanceJ3x');
-//		\Joomla\CMS\MVC\Model\BaseDatabaseModel
-//				$maintenanceJ3xModel = JModelLegacy::getInstance('maintenanceJ3x', 'Administrator');
-//		$this->isJ3xRsg2DataExisting = $maintenanceJ3xModel->J3xConfigTableExist();
 
-		//--- Check user rights ---------------------------------------------
+
+        $this->isJ3xRsg2DataExisting = ConfigRawModel::J3xConfigTableExist();
+
+
+        //--- Check user rights ---------------------------------------------
 
 		// toDo: More detailed for rsgallery admin
 		$app       = Factory::getApplication();
@@ -131,6 +128,11 @@ class HtmlView extends BaseHtmlView
 		$this->sidebar = \JHtmlSidebar::render();
 
 		$Layout = Factory::getApplication()->input->get('layout');
+
+
+
+
+
 		$this->addToolbar($Layout);
 
 		return parent::display($tpl);
@@ -164,7 +166,7 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'Prepared':
+			case 'prepared':
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
 					. ': ' . '<strong>' . $this->intended . '<strong>'

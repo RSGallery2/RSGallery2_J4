@@ -25,6 +25,7 @@ use Joomla\CMS\Filesystem\File;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model;
+use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 //$path = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/install_rsg2.php';
 //if (File::exists($path))
@@ -50,6 +51,8 @@ class HtmlView extends BaseHtmlView
 
 	protected $isDebugBackend;
 	protected $isDevelop;
+
+	protected $rsg2Manifest = [];
 
 	/**
 	protected $isDangerActive;
@@ -128,16 +131,24 @@ class HtmlView extends BaseHtmlView
 		$Layout = Factory::getApplication()->input->get('layout');
 
 		// collect data dependent on layout
-		/**
 		switch ($Layout) {
+		    /**
 			case 'DebugGalleryOrder':
 
 				$this->GalleriesOrderModel = JModelLegacy::getInstance('GalleriesOrder', 'rsgallery2Model');
 				$this->OrderedGalleries = $this->GalleriesOrderModel->OrderedGalleries();
 				$this->LeftJoinGalleries = $this->GalleriesOrderModel->LeftJoinGalleries();
 				break;
+            /**/
+
+            case 'ManifestInfo':
+
+                $rsg2Manifest = ConfigRawModel::readRsg2ManifestData ();
+                $this->rsg2Manifest = $rsg2Manifest;
+
+                break;
 		}
-		/**/
+
 
 		//		Factory::getApplication()->input->set('hidemainmenu', true);
 

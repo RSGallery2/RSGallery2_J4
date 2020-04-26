@@ -46,26 +46,25 @@ HTMLHelper::_('bootstrap.framework');
 				// echo '<pre>';
 				// Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
 
-                echo '<div class="container-fluid">';
-                    echo '<div class="row">';
-                    //echo '<dl class="row">';
-                    echo '<dl class="dl-horizontal">';
+                echo '<section class="config_raw">';
 
-                    foreach ($this->configVars as  $key => $value)  {
+                echo '<dl class="row">';
+                foreach ($this->configVars as  $key => $value)  {
 
-                            // echo '<div>Key: <strong>' . $key . '</strong> value:'  . $value . '</div>';
-    	    				echo '<dt>' . $key . '</dt> <dd>'  . $value . '</dd>';
-                            //echo '<dt class="col-sm-2">' . $key . ':</dt><dd class="col-sm-10">'  . $value . '</dd>';
-                            //echo '<dt class="col-sm-2 col-md-1">' . $key . ':</dt><dd class="col-sm-10 col-md-11">'  . $value . '</dd>';
-                            //echo '<dt class="col-sm-2 col-lg-1">' . $key . ':</dt><dd class="col-sm-10 col-lg-11">'  . $value . '</dd>';
-
-
+                    // Handle empty string
+                    if (strlen($value) == 0) {
+                        // $value = "''";
+                        $value = '""';
                     }
-                    echo '</dl>';
-    				echo '</div>';
 
-				//echo '</pre>';
-				echo '</div>';
+                    echo '    <dt class="col-sm-3">' . $key . '</dt>';
+                    echo '    <dd class="col-sm-9">' . $value . '</dd>';
+
+                }
+                echo '</dl>';
+
+                echo '</div>';
+
 				?>
 
 				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
