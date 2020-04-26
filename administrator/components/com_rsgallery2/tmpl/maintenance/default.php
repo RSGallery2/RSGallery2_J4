@@ -159,7 +159,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
 	Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared&intended=ConsolidateImages'),
 	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES'),
 	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES_TXT'),
-	array('icon-database', 'icon-checkbox-checked'),
+	array('icon-database', 'icon-images', 'icon-checkbox-checked'),
 	'viewConsolidateDB'
 );
 /**/
@@ -170,6 +170,16 @@ $repair_ZoneButtons[] =  new zoneButtons(
 	Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'),
 	Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'),
 	array('icon-equalizer', 'icon-edit'),
+	'viewEditConfigRaw'
+);
+/**/
+
+/**/
+$repair_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=developer&amp;layout=CollectInfo'),
+	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO'),
+	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO_DESC'),
+	array('icon-eye-open', 'icon-briefcase'),
 	'viewEditConfigRaw'
 );
 /**/
@@ -188,6 +198,16 @@ $danger_ZoneButtons[] = new zoneButtons(
 	Text::_('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES_DESC'),
 	array('icon-database', 'icon-purge'),
 	'purgeImagesAndData'
+);
+/**/
+
+/**/
+$danger_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=Config.ResetToDefault'),
+    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT'),
+    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT_DESC'),
+    array('icon-equalizer', 'icon-undo'),
+    'uninstallDataTables'
 );
 /**/
 
@@ -283,6 +303,16 @@ $developer_ZoneButtons[] =  new zoneButtons(
 	Text::_('Test Install/Update message'),
 	Text::_('Check the output result of the install finish and upgrade finish result view part'),
 	array('icon-eye-open', 'icon-expand'),
+	'view___'
+);
+/**/
+
+/**/
+$developer_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=ManifestInfo'),
+	Text::_('COM_RSGALLERY2_MANIFEST_INFO'),
+	Text::_('COM_RSGALLERY2_MANIFEST_INFO_DESC'),
+	array('icon-eye-open', 'icon-briefcase'),
 	'view___'
 );
 /**/
