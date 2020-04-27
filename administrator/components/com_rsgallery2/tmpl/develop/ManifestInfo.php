@@ -9,6 +9,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.framework');
@@ -26,16 +27,21 @@ HTMLHelper::_('bootstrap.framework');
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'PreparedButNotReady')); ?>
+				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ManifestInfoView')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', $this->intended . ':  ' . JText::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
+                <!--?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', $this->intended . ':  ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?-->
+                <!--?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'manifest_info_view', Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true)); ?-->
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ManifestInfoView', Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true)); ?>
+
                 <p></p>
-                <legend><strong><?php echo JText::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
+                <p><h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
 
                 <?php
 
 					try
 					{
+                        echo '<p>DL DT DD definition</p>';
+
                         echo '<section class="manifest_definition">';
 
 //                        echo '<div class="container">';
@@ -63,10 +69,11 @@ HTMLHelper::_('bootstrap.framework');
 
                         echo '</section';
 
+                        //--- show json string formatted ----------------------------------------------
+
+                        echo '<p>As jason</p>';
 
                         $json_string = json_encode($this->rsg2Manifest, JSON_PRETTY_PRINT);
-
-                        echo $json_string;
 
                         echo '<div class="form-group  purple-border">';
                         echo '    <label for="usr">RSGallery2 manifest</label>';
@@ -75,7 +82,13 @@ HTMLHelper::_('bootstrap.framework');
                         echo '     </textarea>';
                         echo '</div>';
 
-					}
+                        //--- show json string formatted ----------------------------------------------
+
+                        echo '<p>As jason</p>';
+                        //echo '<p> RSG2 Version: ' . $this->rsg2Manifest->version . '</p>';
+                        echo '<p> RSG2 Version: ' . $this->rsg2Manifest['version'] . '</p>';
+
+                    }
 					catch (RuntimeException $e)
 					{
 						$OutTxt = '';

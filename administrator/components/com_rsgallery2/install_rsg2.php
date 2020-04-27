@@ -25,6 +25,8 @@ use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 class Com_Rsgallery2InstallerScript
 {
+
+
 	/**
 	 * Extension script constructor.
 	 *
@@ -60,6 +62,8 @@ class Com_Rsgallery2InstallerScript
     protected $oldRelease;
     protected $minimum_joomla_release;
     protected $actual_joomla_release;
+
+    protected $oldManifestData;
 
     // 	protected $;
     // 	protected $;
@@ -119,34 +123,13 @@ class Com_Rsgallery2InstallerScript
 
         if ($action === 'update')
         {
-	        // Get the version we are updating from
-//	        if (!empty($installer->extension->manifest_cache))
+            //--- Read manifest  with old version ------------------------
 
-//	        $extension = $installer->extension;
-	        // $manifest_cache = new Registry($extension->manifest_cache);
-	        // $manifest_cache = new Registry($extension->manifest_cache);
-//	        $manifest_cache = $extension->get('manifest_cache');
-	        /**
-	        $extraData = array(
-		        'author'       => $manifest->get('author', ''),
-		        'version'      => $manifest->get('version', ''),
-		        'creationDate' => $manifest->get('creationDate', ''),
-		        'authorUrl'    => $manifest->get('authorUrl', '')
-	        );
-			/**/
-			/**
-	        // $manifest_cache = $installer->extension->manifest_cache;
-
-            // Get the version we are updating from
-            if (!empty($manifest_cache))
-            {
-	            // $this->oldRelease = (string) $manifest_cache->version;
-	            $this->oldRelease = (string) $manifest_cache->get('version', '');
+            $this->oldManifestData = readRsg2ManifestData ();
+            if ( ! empty ($this->oldManifestData['version'])) {
+                $this->oldRelease = $this->oldManifestData['version'];
             }
-            /**/
-	        $this->oldRelease = '5.0.0.1';
 
-	        //$this->oldRelease = $this->getManifestParam('version');
 
         }
 
@@ -525,4 +508,47 @@ EOT;
 		return $html;
 
 	}
+
+
+    static function readRsg2ManifestData ()
+    {
+        $manifest = [];
+
+        try
+        {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select('manifest_cache')
+                ->from($db->quoteName('#__extensions'))
+                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+            $db->setQuery($query);
+
+            $jsonStr = $db->loadResult();
+            // $result = $db->loadObjectList()
+
+            if ( ! empty ($jsonStr))
+            {
+                $manifest = json_decode($jsonStr, true);
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'readRsg2ManifestData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $manifest;
+    }
+
+
+
+
+
+
+
 }

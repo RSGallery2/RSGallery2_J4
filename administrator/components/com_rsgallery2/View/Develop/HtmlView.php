@@ -193,12 +193,10 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'yyy':
+			case 'ManifestInfo':
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . '<strong>' . $this->intended . '<strong>'
-//					. ': ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY')
-					, 'screwdriver');
+                    . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 

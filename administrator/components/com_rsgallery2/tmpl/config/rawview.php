@@ -9,6 +9,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.framework');
@@ -29,11 +30,10 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ConfigRawView')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', JText::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW', true)); ?>
 
-                <legend><strong><?php echo JText::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW'); ?></strong></legend>
-
-                <p><h3>RAW view</h3></p>
+                <p></p>
+                <p><h3><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW'); ?></h3></p>
 
 				<?php
                 /**
@@ -47,6 +47,9 @@ HTMLHelper::_('bootstrap.framework');
 				// Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
 
                 echo '<section class="config_raw">';
+
+                echo '<div class="card-body">';
+                echo '<div class="card-text">';
 
                 echo '<dl class="row">';
                 foreach ($this->configVars as  $key => $value)  {
@@ -64,8 +67,24 @@ HTMLHelper::_('bootstrap.framework');
                 echo '</dl>';
 
                 echo '</div>';
+                echo '</div>';
 
-				?>
+                echo '</section>';
+
+                //--- show json string formatted ----------------------------------------------
+
+                $json_string = json_encode($this->configVars, JSON_PRETTY_PRINT);
+
+                echo '<p>As jason</p>';
+
+                echo '<div class="form-group  purple-border">';
+                echo '    <label for="usr">RSGallery2 manifest</label>';
+                echo '    <textarea class="form-control manifest_input" id="manifest_input"  cols="40" rows="40" readonly >';
+                echo             $json_string . '";';
+                echo '     </textarea>';
+                echo '</div>';
+
+                ?>
 
 				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
