@@ -125,7 +125,7 @@ class Com_Rsgallery2InstallerScript
         {
             //--- Read manifest  with old version ------------------------
 
-            $this->oldManifestData = readRsg2ManifestData ();
+            $this->oldManifestData = readRsg2ExtensionManifest ();
             if ( ! empty ($this->oldManifestData['version'])) {
                 $this->oldRelease = $this->oldManifestData['version'];
             }
@@ -510,7 +510,7 @@ EOT;
 	}
 
 
-    static function readRsg2ManifestData ()
+    static function readRsg2ExtensionManifest ()
     {
         $manifest = [];
 
@@ -535,7 +535,7 @@ EOT;
         catch (RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'readRsg2ManifestData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

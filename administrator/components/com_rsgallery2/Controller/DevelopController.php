@@ -58,11 +58,11 @@ class DevelopController extends BaseController
 	 * @return mixed
 	 *
 	 * @since 4.3.0
-	 */
+	 *
 
     public function getModel($name = 'Develop', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
     }
-
+    /**/
 }

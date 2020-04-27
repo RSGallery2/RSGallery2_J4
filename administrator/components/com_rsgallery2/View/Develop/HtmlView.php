@@ -26,6 +26,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model;
 use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
 //$path = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/install_rsg2.php';
 //if (File::exists($path))
@@ -143,8 +144,25 @@ class HtmlView extends BaseHtmlView
 
             case 'ManifestInfo':
 
-                $rsg2Manifest = ConfigRawModel::readRsg2ManifestData ();
+                $rsg2Manifest = ConfigRawModel::readRsg2ExtensionManifest ();
                 $this->rsg2Manifest = $rsg2Manifest;
+
+                break;
+
+            case 'Rsg2GeneralInfo':
+
+                $rsg2Manifest = ConfigRawModel::readRsg2ExtensionManifest ();
+                $this->rsg2Manifest = $rsg2Manifest;
+
+                $rsg2configuration = ConfigRawModel::readRsg2ExtensionConfiguration ();
+                $this->rsg2Configuration = $rsg2configuration;
+
+                $this->rsg2Configuration_j3x = [];
+                if (ConfigRawModel::J3xConfigTableExist ()) {
+
+                    $rsg2configuration_j3x = MaintenanceJ3xModel::OldConfigItems ();
+                    $this->rsg2Configuration_j3x = $rsg2configuration_j3x;
+                }
 
                 break;
 		}
@@ -175,33 +193,58 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
-		// on develop show open tasks if existing
-		if (!empty ($this->isDevelop))
-		{
-			echo '<span style="color:red">'
-				. '*  <br>'
-				. '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
-				. '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
-				. '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-				. '</span><br><br>';
-		}
-
 		switch ($Layout)
 		{
 			case 'ManifestInfo':
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
                     . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 
+            case 'Rsg2GeneralInfo':
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . '* Button for copy to clipboard -> add typescript copy<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                    . ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
+				ToolBarHelper::cancel('config.cancel_rawView');
+				break;
+
 			default:
-				// Set the title
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . '*  <br>'
+                        . '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
+                        . '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
+                        . '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br><br>';
+                }
+
+                // Set the title
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'screwdriver'); // 'maintenance');
 				ToolBarHelper::cancel('config.cancel');
 				break;

@@ -207,7 +207,7 @@ class ConfigRawModel extends BaseDatabaseModel
 		return $isSaved;
 	}
 
-    static function readRsg2ManifestData ()
+    static function readRsg2ExtensionManifest ()
     {
         $manifest = [];
 
@@ -232,7 +232,7 @@ class ConfigRawModel extends BaseDatabaseModel
         catch (RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'readRsg2ManifestData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -243,7 +243,7 @@ class ConfigRawModel extends BaseDatabaseModel
     }
 
 
-    static function readRsg2Config_FromExtensionTable ()
+    static function readRsg2ExtensionConfiguration ()
     {
         $params = [];
 

@@ -176,7 +176,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
 
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=developer&amp;layout=CollectInfo'),
+	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=Rsg2GeneralInfo'),
 	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO'),
 	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO_DESC'),
 	array('icon-eye-open', 'icon-briefcase'),

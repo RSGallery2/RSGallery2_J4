@@ -67,14 +67,14 @@ HTMLHelper::_('bootstrap.framework');
 
                         echo '</section';
 
-                        //--- show json string formatted ----------------------------------------------
+                        //--- manifest data json string formatted ----------------------------------------------
 
                         echo '<p><strong>As json</strong></p>';
 
                         $json_string = json_encode($this->rsg2Manifest, JSON_PRETTY_PRINT);
 
                         echo '<div class="form-group  purple-border">';
-                        echo '    <label for="usr">RSGallery2 manifest</label>';
+                        echo '    <label for="manifest_input">RSGallery2 manifest</label>';
                         echo '    <textarea class="form-control manifest_input" id="manifest_input"  cols="40" rows="15" readonly >';
                         echo             $json_string . '";';
                         echo '     </textarea>';
