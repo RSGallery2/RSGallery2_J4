@@ -50,14 +50,14 @@ $tabs = []
                         <div style="width: 150px; background-color: lightgrey; text-align: center; padding: 20px">
                             <label for="ToGallery"
                                    style="padding-bottom: 20px"
-                                   class="control-label"><?php echo TEXT::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
+                                   class="control-label"><?php echo Text::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
                             <a class="btn btn-primary"
                                id="ToGallery"
                                class="input_box"
-                               title="<?php echo TEXT::_('COM_RSGALLERY2_GOTO_RSG2_GALLERIES_VIEW'); ?>"
+                               title="<?php echo Text::_('COM_RSGALLERY2_GOTO_RSG2_GALLERIES_VIEW'); ?>"
                                href="index.php?option=com_rsgallery2&amp;view=galleries">
                                 <i class="icon-images"></i>
-                                <?php echo TEXT::_('COM_RSGALLERY2_MENU_GALLERIES'); ?>
+                                <?php echo Text::_('COM_RSGALLERY2_MENU_GALLERIES'); ?>
                             </a>
                         </div>
                     </div>
@@ -176,7 +176,7 @@ $tabs = []
                     ---------------------------------------------------------------------------*/
                     ?>
                     <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_zip_pc', Text::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP')); ?>
-                        <legend><?php echo TEXT::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP_FROM_LOCAL_PC'); ?></legend>
+                        <legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_FROM_PC_ZIP_FROM_LOCAL_PC'); ?></legend>
 	                    <?php
 	                    // 
 	                    //echo $this->form->renderFieldset('upload_zip');
@@ -190,7 +190,7 @@ $tabs = []
                     ---------------------------------------------------------------------------*/
                     ?>
                     <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_folder_server', Text::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER_SERVER')); ?>
-                        <legend><?php echo TEXT::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER_PATH_ON_SERVER'); ?></legend>
+                        <legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_FROM_FOLDER_PATH_ON_SERVER'); ?></legend>
 
                         <?php
                     // 
@@ -252,17 +252,17 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
             <div>
                 <!--small class="help-block" style="color:darkred;"-->
                 <small style="color:darkred;">
-					<?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit) . ' ' . TEXT::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
+					<?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit) . ' ' . Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
                 </small>
             </div>
             <div>
                 <small class="help-block" style="color:darkred;">
-					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MAX_SIZE_IS', $PostMaxSize) . ' ' . TEXT::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
+					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MAX_SIZE_IS', $PostMaxSize) . ' ' . Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
                 </small>
             </div>
             <div>
                 <small class="help-block" style="color:darkred;">
-					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MEMORY_LIMIT_IS', $MemoryLimit) . ' ' . TEXT::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
+					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MEMORY_LIMIT_IS', $MemoryLimit) . ' ' . Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
                 </small>
             </div>
         </div>
@@ -299,7 +299,7 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
     // use footnote ? -> or display none and on hover display: block
     //                        <label for="ToGallery"
     //                               style="padding-bottom: 20px"
-    //                               class="control-label"><?php echo TEXT::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
+    //                               class="control-label"><?php echo Text::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
     /**/
 	$uploadMaxsTitle = ""
         . Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit)

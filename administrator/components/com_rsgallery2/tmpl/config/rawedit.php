@@ -112,9 +112,9 @@ function configInputField($name = 'unknown', $value = '')
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ConfigRawView')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', TEXT::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT', true)); ?>
 
-                <legend><strong><?php echo TEXT::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'); ?></strong></legend>
 
                 <p><h3>RAW Edit</h3></p>
                 <?php

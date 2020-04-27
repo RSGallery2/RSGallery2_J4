@@ -73,7 +73,7 @@ class MaintenanceJ3xController extends AdminController
 		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
-			//JFactory::getApplication()->enqueueMessage(TEXT::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			//JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
@@ -151,7 +151,7 @@ class MaintenanceJ3xController extends AdminController
 		$canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
-			//JFactory::getApplication()->enqueueMessage(TEXT::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			//JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.

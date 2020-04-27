@@ -34,9 +34,9 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferOldGalleries')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldGalleries', TEXT::_('COM_RSGALLERY2_TRANSFER_GALLERIES', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldGalleries', Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES', true)); ?>
 
-                <legend><strong><?php echo TEXT::_('COM_RSGALLERY2_TRANSFER_GALLERIES'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'); ?></strong></legend>
 
                 <p><h3>DBTransferOldGalleries</h3></p>
                 <?php

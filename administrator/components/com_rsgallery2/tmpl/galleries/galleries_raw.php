@@ -36,7 +36,7 @@ $ListDirn  = '';
                         <?php if (empty($this->items)) : ?>
                             <div class="alert alert-info">
                                 <span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
-                                <?php echo TEXT::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
+                                <?php echo Text::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
                             </div>
                         <?php else : ?>
                             <?php // echo 'galleries: ' . count($this->items); ?>
