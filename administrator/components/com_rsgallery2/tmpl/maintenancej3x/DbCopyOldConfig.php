@@ -32,9 +32,9 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldConfig.css', array('version
 
 				<?php //echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbCopyOldConfig')); ?>
 
-				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOldConfig', JText::_('COM_RSGALLERY2_COPY_OLD_CONFIG', true)); ?>
+				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOldConfig', TEXT::_('COM_RSGALLERY2_COPY_OLD_CONFIG', true)); ?>
 
-                <legend><strong><?php echo JText::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_CONFIG'); ?></strong></legend>
+                <legend><strong><?php echo TEXT::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_CONFIG'); ?></strong></legend>
 
 				<?php if (! count ($this->configVarsOld)) : ?>
 					<div class="alert alert-info">

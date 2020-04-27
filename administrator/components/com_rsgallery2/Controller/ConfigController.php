@@ -209,7 +209,7 @@ class ConfigController extends AdminController // FormController
 		// Access check
 		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
-			$msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msg = $msg . TEXT::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -254,7 +254,7 @@ class ConfigController extends AdminController // FormController
 		// Access check
 		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
-			$msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msg = $msg . TEXT::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
@@ -288,7 +288,7 @@ class ConfigController extends AdminController // FormController
 		// Access check
 		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
-			$msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msg = $msg . TEXT::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);

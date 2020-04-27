@@ -56,14 +56,14 @@ $tabs = []
                         <div style="width: 150px; background-color: lightgrey; text-align: center; padding: 20px">
                             <label for="ToGallery"
                                    style="padding-bottom: 20px"
-                                   class="control-label"><?php echo JText::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
+                                   class="control-label"><?php echo TEXT::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
                             <a class="btn btn-primary"
                                id="ToGallery"
                                class="input_box"
-                               title="<?php echo JText::_('COM_RSGALLERY2_CREATE_GALLERY_DESC'); ?>"
+                               title="<?php echo TEXT::_('COM_RSGALLERY2_CREATE_GALLERY_DESC'); ?>"
                                href="index.php?option=com_rsgallery2&amp;task=gallery.add">
                                 <i class="icon-images"></i>
-		                        <?php echo JText::_('COM_RSGALLERY2_CREATE_GALLERY'); ?>
+		                        <?php echo TEXT::_('COM_RSGALLERY2_CREATE_GALLERY'); ?>
                             </a>
                         </div>
                     </div>
@@ -173,7 +173,7 @@ $tabs = []
                             <button id="AssignUploadedFiles" type="button"
                                     class="btn btn-primary mx-auto mt-2"
                                     onclick="Joomla.submitAssign2DroppedFiles()"
-                                    title="<?php echo JText::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
+                                    title="<?php echo TEXT::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
                                     disabled
                                 >
                                 <span class="icon-copy" aria-hidden="true"></span>
@@ -229,17 +229,17 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
             <div>
                 <!--small class="help-block" style="color:darkred;"-->
                 <small style="color:darkred;">
-					<?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit) . ' ' . JText::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
+					<?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit) . ' ' . TEXT::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
                 </small>
             </div>
             <div>
                 <small class="help-block" style="color:darkred;">
-					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MAX_SIZE_IS', $PostMaxSize) . ' ' . JText::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
+					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MAX_SIZE_IS', $PostMaxSize) . ' ' . TEXT::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
                 </small>
             </div>
             <div>
                 <small class="help-block" style="color:darkred;">
-					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MEMORY_LIMIT_IS', $MemoryLimit) . ' ' . JText::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
+					<?php echo Text::sprintf('COM_RSGALLERY2_POST_MEMORY_LIMIT_IS', $MemoryLimit) . ' ' . TEXT::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI'); ?>
                 </small>
             </div>
         </div>
@@ -276,7 +276,7 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
     // use footnote ? -> or display none and on hover display: block
     //                        <label for="ToGallery"
     //                               style="padding-bottom: 20px"
-    //                               class="control-label"><?php echo JText::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
+    //                               class="control-label"><?php echo TEXT::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
     /**/
 	$uploadMaxsTitle = ""
         . Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit)

@@ -10,6 +10,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('bootstrap.framework');
 
@@ -33,9 +34,9 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferOldImages')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldImages', JText::_('COM_RSGALLERY2_TRANSFER_IMAGES', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldImages', TEXT::_('COM_RSGALLERY2_TRANSFER_IMAGES', true)); ?>
 
-                <legend><strong><?php echo JText::_('COM_RSGALLERY2_TRANSFER_IMAGES'); ?></strong></legend>
+                <legend><strong><?php echo TEXT::_('COM_RSGALLERY2_TRANSFER_IMAGES'); ?></strong></legend>
 
                 <p><h3>DBTransferOldImages</h3></p>
                 <?php

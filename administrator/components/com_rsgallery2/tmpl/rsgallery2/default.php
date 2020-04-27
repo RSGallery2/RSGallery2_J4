@@ -174,7 +174,7 @@ function DisplayInfoRsgallery2($Rsg2Version)
 
 	echo '   <div class="card bg-light data-toggle="collapse">';
 	echo '      <div class="card-header">';
-	echo '          ' . JText::_('COM_RSGALLERY2_GALLERY_INFORMATION');
+	echo '          ' . TEXT::_('COM_RSGALLERY2_GALLERY_INFORMATION');
 	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
 
@@ -192,10 +192,10 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	/**/
 	/**/
 	echo '        <tr>';
-	echo '            <td>' . JText::_('COM_RSGALLERY2_INSTALLED_VERSION') . ': ' . '</td>';
+	echo '            <td>' . TEXT::_('COM_RSGALLERY2_INSTALLED_VERSION') . ': ' . '</td>';
 	echo '            <td>';
 //	echo '                <a href="' . JRoute::_('index.php?option=com_rsgallery2&view=rsgallery2&layout=ChangeLog') . '"';
-//	echo '                   title="' . JText::_('COM_RSGALLERY2_VIEW_CHANGE_LOG') . '""';
+//	echo '                   title="' . TEXT::_('COM_RSGALLERY2_VIEW_CHANGE_LOG') . '""';
 //	echo '                   class="modal">' . $Rsg2Version . '</a>';
 	echo '                   <strong>' . $Rsg2Version . '</strong>';
 	echo '            </td>';
@@ -203,37 +203,37 @@ function DisplayInfoRsgallery2($Rsg2Version)
 	/**/
 	// License
 	echo '        <tr>';
-	echo '            <td>' . JText::_('COM_RSGALLERY2_LICENSE') . ': ' . '</td>';
+	echo '            <td>' . TEXT::_('COM_RSGALLERY2_LICENSE') . ': ' . '</td>';
 	echo '            <td>';
 	echo '               <a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"'
-		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
+		. ' title="' . TEXT::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
 	echo '            </td>';
 	echo '        </tr>';
 	/**/
 	// Home page
 	echo '        <tr>';
-	echo '            <td>' . JText::_('COM_RSGALLERY2_HOME_PAGE') . '</td>';
+	echo '            <td>' . TEXT::_('COM_RSGALLERY2_HOME_PAGE') . '</td>';
 	echo '            <td>';
 	echo '                <a href="http://www.rsgallery2.org/" target="_blank" '
-		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
+		. ' title="' . TEXT::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
 	echo '            </td>';
 	echo '        </tr>';
 	/**/
 	// Forum
 	echo '        <tr>';
-	echo '            <td>' . JText::_('COM_RSGALLERY2_FORUM') . '</td>';
+	echo '            <td>' . TEXT::_('COM_RSGALLERY2_FORUM') . '</td>';
 	echo '            <td>';
 	echo '                <a href="http://www.forum.rsgallery2.org/" target="_blank" '
-		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
+		. ' title="' . TEXT::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
 	echo '            </td>';
 	echo '        </tr>';
 	/**/
 	// Documentation
 	echo '        <tr>';
-	echo '            <td>' . JText::_('COM_RSGALLERY2_DOCUMENTATION') . '</td>';
+	echo '            <td>' . TEXT::_('COM_RSGALLERY2_DOCUMENTATION') . '</td>';
 	echo '            <td>';
 	echo '                <a href="http://www.rsgallery2.org/index.php/documentation" target="_blank"'
-		. ' title="' . JText::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
+		. ' title="' . TEXT::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
 	echo '            </td>';
 	echo '        </tr>';
 
@@ -272,7 +272,7 @@ function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 	echo '            <div class="custom-column-content">';
 	echo '                <div class="card bg-light data-toggle="collapse">';
 	echo '                    <div class="card-header">';
-	echo '                        ' . JText::_('COM_RSGALLERY2_GALLERIES');
+	echo '                        ' . TEXT::_('COM_RSGALLERY2_GALLERIES');
 	echo '                    </div>';
 
 	echo '                    <div id="credit-card-body" class="card-body">';
@@ -284,7 +284,7 @@ function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 	{
 		echo '        <tr>';
 		echo '        %';
-		// echo JText::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
+		// echo TEXT::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
 		echo '        </tr>';
 	}
 	else
@@ -293,12 +293,12 @@ function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 
         //echo '<table class="table table-striped table-condensed">';
         echo '<table class="table table-striped table-light w-auto table_morecondensed">';
-        echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
+        echo '    <caption>' . TEXT::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
         echo '    <thead>';
         echo '        <tr>';
-        echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
-        echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
-        echo '            <th>' . JText::_('COM_RSGALLERY2_ID') . '</th>';
+        echo '            <th>' . TEXT::_('COM_RSGALLERY2_GALLERY') . '</th>';
+        echo '            <th>' . TEXT::_('COM_RSGALLERY2_USER') . '</th>';
+        echo '            <th>' . TEXT::_('COM_RSGALLERY2_ID') . '</th>';
         echo '        </tr>';
         echo '    </thead>';
 
@@ -347,7 +347,7 @@ function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 	echo '            <div class="custom-column-content">';
 	echo '                <div class="card bg-light data-toggle="collapse">';
 	echo '                    <div class="card-header">';
-	echo '                        ' . JText::_('COM_RSGALLERY2_IMAGES');
+	echo '                        ' . TEXT::_('COM_RSGALLERY2_IMAGES');
 	echo '                    </div>';
 
 	echo '                    <div id="credit-card-body" class="card-body">';
@@ -360,7 +360,7 @@ function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
     {
         echo '        <tr>';
         echo '        %';
-        // echo JText::_('COM_RSGALLERY2_NO_NEW_IMAGES');
+        // echo TEXT::_('COM_RSGALLERY2_NO_NEW_IMAGES');
         echo '        </tr>';
     }
     else
@@ -370,13 +370,13 @@ function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 
     //	echo '<table class="table table-striped table-condensed">';
         echo '<table class="table table-striped table-light w-auto table_morecondensed">';
-        echo '    <caption>' . JText::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
+        echo '    <caption>' . TEXT::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
         echo '    <thead>';
         echo '        <tr>';
-        echo '            <th>' . JText::_('COM_RSGALLERY2_FILENAME') . '</th>';
-        echo '            <th>' . JText::_('COM_RSGALLERY2_GALLERY') . '</th>';
-        echo '            <th>' . JText::_('COM_RSGALLERY2_DATE') . '</th>';
-        echo '            <th>' . JText::_('COM_RSGALLERY2_USER') . '</th>';
+        echo '            <th>' . TEXT::_('COM_RSGALLERY2_FILENAME') . '</th>';
+        echo '            <th>' . TEXT::_('COM_RSGALLERY2_GALLERY') . '</th>';
+        echo '            <th>' . TEXT::_('COM_RSGALLERY2_DATE') . '</th>';
+        echo '            <th>' . TEXT::_('COM_RSGALLERY2_USER') . '</th>';
         echo '        </tr>';
         echo '    </thead>';
 
@@ -424,7 +424,7 @@ function DisplayInfoCredits ($credits)
 	echo '<row>';
 	echo '   <div class="card bg-light w-auto data-toggle="collapse" data-target="#credit-card-body">';
 	echo '      <div class="card-header">';
-	echo '          ' . JText::_('COM_RSGALLERY2_CREDITS');
+	echo '          ' . TEXT::_('COM_RSGALLERY2_CREDITS');
    	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
 //	echo '         credits: ' . implode("|", $credits);
@@ -534,7 +534,7 @@ function DisplayInfoChangeLog ($changelogs)
 	echo '<row>';
 	echo '   <div class="card bg-light w-auto data-toggle="collapse" data-target="#credit-card-body">';
 	echo '      <div class="card-header">';
-	echo '          ' . JText::_('COM_RSGALLERY2_CHANGELOG');
+	echo '          ' . TEXT::_('COM_RSGALLERY2_CHANGELOG');
 	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
 	//echo '         htmlChangelogs: ' . $htmlChangelogs;
@@ -601,7 +601,7 @@ function DisplayInfoExternalLicenses ($externalLicenses)
 	echo '<row>';
 	echo '   <div class="card bg-light w-auto data-toggle="collapse" data-target="#credit-card-body">';
 	echo '      <div class="card-header">';
-	echo '          ' . JText::_('COM_RSGALLERY2_EXTERNAL_LICENSES');
+	echo '          ' . TEXT::_('COM_RSGALLERY2_EXTERNAL_LICENSES');
 	echo '      </div>';
 	echo '      <div id="credit-card-body" class="card-body">';
 	echo '         ' . $externalLicenses;

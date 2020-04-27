@@ -10,6 +10,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('bootstrap.framework');
 
@@ -33,9 +34,9 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'PreparedButNotReady')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', $this->intended . ':  ' . JText::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', $this->intended . ':  ' . TEXT::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
                 <p></p>
-                <legend><strong><?php echo JText::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
+                <legend><strong><?php echo TEXT::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
 
                 <?php
 

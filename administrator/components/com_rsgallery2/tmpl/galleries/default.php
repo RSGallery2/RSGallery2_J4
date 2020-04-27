@@ -67,7 +67,7 @@ if ($saveOrder && !empty($this->items))
 				<?php if (empty($this->items)) : ?>
                     <div class="alert alert-info">
                         <span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
-						<?php echo JText::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
+						<?php echo TEXT::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
                     </div>
 				<?php else : ?>
 					<table class="table" id="galleryList">

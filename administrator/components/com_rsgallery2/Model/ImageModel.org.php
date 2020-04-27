@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Associations;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
 
 /**
  * RSGallery2 Component Image Model
@@ -295,7 +296,7 @@ class ImageModel extends AdminModel
 				// Warning on existing alias
 				if ($table->load(array('alias' => $data['alias'])))
 				{
-					$msg = JText::_('COM_RSGALLERY2_NAME_CHANGED_AS_WAS_EXISTING');
+					$msg = TEXT::_('COM_RSGALLERY2_NAME_CHANGED_AS_WAS_EXISTING');
 				}
 
 				// Create unique alias and name
@@ -455,7 +456,7 @@ class ImageModel extends AdminModel
 		{
 			// ToDo: collect erorrs and display over enque .... with errr type
 			$UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-			JFactory::getApplication()->enqueueMessage(JText::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
+			JFactory::getApplication()->enqueueMessage(TEXT::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
 
 			// $IsImageDbCreated = false;
 
@@ -560,7 +561,7 @@ class ImageModel extends AdminModel
 		{
 			// ToDo: collect erorrs and display over enque .... with errr type
 			$UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-			JFactory::getApplication()->enqueueMessage(JText::_('copied image name could not be inserted in database') . $UsedNamesText, 'warning');
+			JFactory::getApplication()->enqueueMessage(TEXT::_('copied image name could not be inserted in database') . $UsedNamesText, 'warning');
 
 			$this->setError($this->_db->getErrorMsg());
 		}
@@ -633,16 +634,16 @@ class ImageModel extends AdminModel
 					// Success
 					$IsMoved = true;
 
-					JFactory::getApplication()->enqueueMessage(JText::_('Move is successful. Please check order of images in destination gallery'), 'notice');
+					JFactory::getApplication()->enqueueMessage(TEXT::_('Move is successful. Please check order of images in destination gallery'), 'notice');
 				}
 				else
 				{
-					JFactory::getApplication()->enqueueMessage(JText::_('No valid image(s) selected'), 'warning');
+					JFactory::getApplication()->enqueueMessage(TEXT::_('No valid image(s) selected'), 'warning');
 				}
 			}
 			else
 			{
-				JFactory::getApplication()->enqueueMessage(JText::_('No valid gallery selected'), 'warning');
+				JFactory::getApplication()->enqueueMessage(TEXT::_('No valid gallery selected'), 'warning');
 			}
 		}
 		catch (RuntimeException $e)
@@ -741,7 +742,7 @@ class ImageModel extends AdminModel
 						if ($item->gallery_id == $NewGalleryId)
 						{
 							JFactory::getApplication()->enqueueMessage(
-								JText::_('Display image could not be copied. It is already assigned to the destination gallery') . $row->title, 'warning');
+								TEXT::_('Display image could not be copied. It is already assigned to the destination gallery') . $row->title, 'warning');
 							$IsOneNotCopied = true;
 
 							continue;
@@ -773,7 +774,7 @@ class ImageModel extends AdminModel
 						{
 							// ToDo: what ToDo if it fails ?
 							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							JFactory::getApplication()->enqueueMessage(JText::_('Original image could not be copied') . $UsedNamesText, 'warning');
+							JFactory::getApplication()->enqueueMessage(TEXT::_('Original image could not be copied') . $UsedNamesText, 'warning');
 						}
 						else
 						{
@@ -789,7 +790,7 @@ class ImageModel extends AdminModel
 						{
 							// ToDo: what ToDo if it fails ?
 							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							JFactory::getApplication()->enqueueMessage(JText::_('Display image could not be copied') . $UsedNamesText, 'error');
+							JFactory::getApplication()->enqueueMessage(TEXT::_('Display image could not be copied') . $UsedNamesText, 'error');
 
 							$IsOneNotCopied = true;
 						}
@@ -806,7 +807,7 @@ class ImageModel extends AdminModel
 						{
 							// ToDo: what ToDo if it fails ?
 							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							JFactory::getApplication()->enqueueMessage(JText::_('Thumb image could not be copied') . $UsedNamesText, 'warning');
+							JFactory::getApplication()->enqueueMessage(TEXT::_('Thumb image could not be copied') . $UsedNamesText, 'warning');
 						}
 
 						//----------------------------------------------------
@@ -820,7 +821,7 @@ class ImageModel extends AdminModel
 						if (!$item->store())
 						{
 							$UsedNamesText = '<br>SrcImage: ' . $oldName . '<br>DstImage: ' . $item->name;
-							JFactory::getApplication()->enqueueMessage(JText::_('copied image name could not be inseted in database') . $UsedNamesText, 'error');
+							JFactory::getApplication()->enqueueMessage(TEXT::_('copied image name could not be inseted in database') . $UsedNamesText, 'error');
 
 							// return false;
 							$IsOneNotCopied = false;
@@ -829,24 +830,24 @@ class ImageModel extends AdminModel
 
 					if (!$IsOneNotCopied)
 					{
-						JFactory::getApplication()->enqueueMessage(JText::_('Copy is successful. Please check order of images in destination gallery'), 'notice');
+						JFactory::getApplication()->enqueueMessage(TEXT::_('Copy is successful. Please check order of images in destination gallery'), 'notice');
 					}
 					else
 					{
 						if ($IsOneCopied)
 						{
-							JFactory::getApplication()->enqueueMessage(JText::_('Some images were copied. Please check order of images in destination gallery'), 'notice');
+							JFactory::getApplication()->enqueueMessage(TEXT::_('Some images were copied. Please check order of images in destination gallery'), 'notice');
 						}
 					}
 				}
 				else
 				{
-					JFactory::getApplication()->enqueueMessage(JText::_('No valid image(s) selected'), 'warning');
+					JFactory::getApplication()->enqueueMessage(TEXT::_('No valid image(s) selected'), 'warning');
 				}
 			}
 			else
 			{
-				JFactory::getApplication()->enqueueMessage(JText::_('No valid gallery selected'), 'warning');
+				JFactory::getApplication()->enqueueMessage(TEXT::_('No valid gallery selected'), 'warning');
 			}
 		}
 		catch (RuntimeException $e)
