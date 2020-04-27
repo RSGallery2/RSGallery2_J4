@@ -1,7 +1,7 @@
 <?php // no direct access
 /**
  * @package       RSGallery2
- * @copyright (C) 2003-2018 RSGallery2 Team
+ * @copyright (C) 2003-2020 RSGallery2 Team
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * RSGallery is Free Software
  */
@@ -9,15 +9,10 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.framework');
-
-
-
-
-
 
 ?>
 
@@ -34,9 +29,10 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'PreparedButNotReady')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', $this->intended . ':  ' . TEXT::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
                 <p></p>
-                <legend><strong><?php echo TEXT::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
+                <p><h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
 
                 <?php
 

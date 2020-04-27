@@ -75,10 +75,10 @@ HTMLHelper::_('bootstrap.framework');
 
                 $json_string = json_encode($this->configVars, JSON_PRETTY_PRINT);
 
-                echo '<p>As jason</p>';
+                echo '<p><strong>As json</strong></p>';
 
                 echo '<div class="form-group  purple-border">';
-                echo '    <label for="usr">RSGallery2 manifest</label>';
+                echo '    <label for="usr">RSGallery2 Configuration</label>';
                 echo '    <textarea class="form-control manifest_input" id="manifest_input"  cols="40" rows="40" readonly >';
                 echo             $json_string . '";';
                 echo '     </textarea>';

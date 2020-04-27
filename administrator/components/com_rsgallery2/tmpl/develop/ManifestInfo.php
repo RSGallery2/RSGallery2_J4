@@ -29,8 +29,6 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ManifestInfoView')); ?>
 
-                <!--?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', $this->intended . ':  ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?-->
-                <!--?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'manifest_info_view', Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true)); ?-->
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ManifestInfoView', Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true)); ?>
 
                 <p></p>
@@ -40,7 +38,7 @@ HTMLHelper::_('bootstrap.framework');
 
 					try
 					{
-                        echo '<p>DL DT DD definition</p>';
+                        echo '<p><strong>DL DT DD definition</strong></p>';
 
                         echo '<section class="manifest_definition">';
 
@@ -71,7 +69,7 @@ HTMLHelper::_('bootstrap.framework');
 
                         //--- show json string formatted ----------------------------------------------
 
-                        echo '<p>As jason</p>';
+                        echo '<p><strong>As json</strong></p>';
 
                         $json_string = json_encode($this->rsg2Manifest, JSON_PRETTY_PRINT);
 
@@ -84,9 +82,8 @@ HTMLHelper::_('bootstrap.framework');
 
                         //--- show json string formatted ----------------------------------------------
 
-                        echo '<p>As jason</p>';
                         //echo '<p> RSG2 Version: ' . $this->rsg2Manifest->version . '</p>';
-                        echo '<p> RSG2 Version: ' . $this->rsg2Manifest['version'] . '</p>';
+                        echo '<p> RSG2 Version: <strong>' . $this->rsg2Manifest['version'] . '</strong></p>';
 
                     }
 					catch (RuntimeException $e)
