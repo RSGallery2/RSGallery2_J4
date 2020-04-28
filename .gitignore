@@ -1,13 +1,21 @@
 //.build/
-.packages/
 .build/*.log
+.build/*.*.log
 .build/Translations/.idea/
-*.pyc
 
+.packages/
+
+.test/BackupRestore/.idea/
+.test/RSG2_Backup/
+
+# moved files 
 rsgallery2.xml
 install_rsg2.php
 changelog.xml
 
-.test/BackupRestore/.idea/
-.test/RSG2_Backup/
+# python
+**/__pycache__
+**/*.pyc
+
+
 
