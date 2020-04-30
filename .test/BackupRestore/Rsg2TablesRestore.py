@@ -383,9 +383,9 @@ if __name__ == '__main__':
 
     backupBasePath = '../../../RSG2_Backup'
 
-    dumpFileName = 'Rsg2_TablesDump.20200414_215456.sql' # 'Rsg2_TablesDump'
-    dumpFileName = os.path.join(backupBasePath, 'testRestore\Rsg2_TablesDump.sql') # 'Rsg2_TablesDump'
-    #dumpFileName = "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.sql"
+    #dumpFileName = 'Rsg2_TablesDump.20200414_215456.sql' # 'Rsg2_TablesDump'
+    #dumpFileName = os.path.join(backupBasePath, 'testRestore\Rsg2_TablesDump.sql') # 'Rsg2_TablesDump'
+    dumpFileName = "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.sql"
 
     for i, j in optlist:
         if i == "-p":
