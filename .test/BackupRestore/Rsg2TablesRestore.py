@@ -424,7 +424,8 @@ if __name__ == '__main__':
 
     # --- do restore ----------------------------
 
-    rsg2TablesRestore = Rsg2TablesRestore(joomlaCfg.database, joomlaCfg.dbPrefix, joomlaCfg.user, joomlaCfg.password, dumpFileName, mySqlPath)
+    rsg2TablesRestore = Rsg2TablesRestore(joomlaCfg.database, joomlaCfg.dbPrefix, joomlaCfg.user, joomlaCfg.password,
+                                          dumpFileName, mySqlPath)
 
     rsg2TablesRestore.doRestoreDumpTables()
 

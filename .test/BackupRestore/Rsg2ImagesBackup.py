@@ -8,6 +8,10 @@ import traceback
 
 from datetime import datetime
 
+from jConfigFile import jConfigFile
+from jRsg2Config import jRsg2Config
+
+
 HELP_MSG = """
 Reads config from external file LangManager.ini
 The segment selection tells which segment(s) to use for configuration
@@ -273,13 +277,17 @@ if __name__ == '__main__':
 
     start = datetime.today()
 
-    optlist, args = getopt.getopt(sys.argv[1:], 'b:j:s:r:o:d:t:w:12345h')
+    optlist, args = getopt.getopt(sys.argv[1:], 'b:p:n:12345h')
 
     backupPath = '../../../RSG2_Backup' # ? Joomla4 +  date ?
-    joomlaPath = 'd:/xampp/htdocs/joomla4x'
-    # joomlaPath = 'd:/xampp/htdocs/joomla3x'
-    # joomlaPath = 'e:/xampp_J2xJ3x/htdocs/Joomla25'
-    # joomlaPath = 'e:/xampp_J2xJ3x/htdocs/Joomla35'
+    joomlaPath = 'd:/xampp/htdocs'
+    # joomlaPath = 'e:/xampp/htdocs'
+    # joomlaPath = 'f:/xampp/htdocs'
+    # joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
+    # joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
+
+    # joomlaName = 'joomla4x'
+    joomlaName = 'joomla3x'
 
     image_width = '' # sizes
     imgPath_root = '/images/rsgallery2'
@@ -289,22 +297,12 @@ if __name__ == '__main__':
     imgPath_watermarked = '/images/rsgallery/watermarked'
 
     for i, j in optlist:
-        if i == "-b":
-            backupPath = j
-        if i == "-j":
+        if i == "-p":
             joomlaPath = j
-        if i == "-s":
-            image_width = j
-        if i == "-r":
-            imgPath_root = j
-        if i == "-o":
-            imgPath_original = j
-        if i == "-d":
-            imgPath_display = j
-        if i == "-t":
-            imgPath_thumb = j
-        if i == "-w":
-            imgPath_watermarked = j
+        if i == "-n":
+            joomlaName = j
+        if i == "-b":
+            backupBasePath = j
 
         if i == "-h":
             print(HELP_MSG)
@@ -328,15 +326,34 @@ if __name__ == '__main__':
 
     print_header(start)
 
+    # --- Joomla configuration parameter ----------------------------
+
+    jConfigPathFileName = os.path.join(joomlaPath, joomlaName, 'configuration.php')
+    joomlaCfg = jConfigFile(jConfigPathFileName)
+
+    mySqlPath = os.path.join(os.path.dirname(joomlaPath), 'mysql', 'bin')
+
+    # --- RSG2 database configuration parameter ----------------------------
+
+    rsg2Cfg = jRsg2Config(
+        joomlaCfg.database,
+        joomlaCfg.user,
+        joomlaCfg.password,
+        mySqlPath
+    )
+
+    joomlaPath = os.path.join(joomlaPath, joomlaName)
+
     rsg2ImagesBackup = Rsg2ImagesBackup(
                                          backupPath,
                                          joomlaPath,
-                                         image_width,
-                                         imgPath_root,
-                                         imgPath_original,
-                                         imgPath_display,
-                                         imgPath_thumb,
-                                         imgPath_watermarked)
+
+                                         rsg2Cfg.image_width,
+                                         rsg2Cfg.imgPath_root,
+                                         rsg2Cfg.imgPath_original,
+                                         rsg2Cfg.imgPath_display,
+                                         rsg2Cfg.imgPath_thumb,
+                                         rsg2Cfg.imgPath_watermarked)
 
     rsg2ImagesBackup.doCopy ()
 

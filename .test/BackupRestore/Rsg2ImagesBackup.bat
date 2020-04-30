@@ -6,12 +6,18 @@ CLS
 Set CmdArgs=
 ECHO python Rsg2ImagesBackup.py 
 
-REM 
-Call :AddNextArg -p "\pr004\entwickl\Schleif.nt"
-                     
-REM 
-Call :AddNextArg -n "modules"
- 
+REM JoomlaPath
+Call :AddNextArg -p "d:\xampp\htdocs"
+REM Call :AddNextArg -p "e:\xampp_J2xJ3x\htdocs"
+
+REM JoomlaName
+Call :AddNextArg -n "joomla4x"
+REM Call :AddNextArg -n "joomla3x"
+REM Call :AddNextArg -n "joomla25"
+
+REM BackupPath
+Call :AddNextArg -b "..\..\..\RSG2_Backup"
+
 REM add command line 
 REM Call :AddNextArg %*
 

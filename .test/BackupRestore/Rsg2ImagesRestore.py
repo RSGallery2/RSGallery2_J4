@@ -3,11 +3,16 @@
 import os
 import getopt
 import sys
+import shutil
 import traceback
 
 from datetime import datetime
 
+
 HELP_MSG = """
+
+yyy
+
 Reads config from external file LangManager.ini
 The segment selection tells which segment(s) to use for configuration
 
@@ -58,147 +63,53 @@ LeaveOut_05 = False
 class Rsg2ImagesRestore:
     """ config read from file. First segment in file defines the used segment with configuration items """
 
-    def __init__(self, configPathFileName=''):
+    def __init__(self,
+                 backupPath = '../../../RSG2_Backup',
+                 joomlaPath = 'd:/xampp/htdocs/joomla4x'):
 
-        print("Init Rsg2ImagesRestore: ")
-        print("configPathFileName: " + configPathFileName)
+        print("Init Rsg2ImagesBackup: ")
+        print("backupPath: " + backupPath)
+        print("joomlaPath: " + joomlaPath)
 
-        self.__configPathFileName  = './LangManager.ini'
-        if (len(configPathFileName) > 0):
-            self.__configPathFileName = configPathFileName
+        self.__backupPath =          backupPath
+        self.__joomlaPath =          joomlaPath
 
-        self.__isWriteEmptyTranslations = False
+        # --- create path to image and dump file ----------------------------------
 
-        self.__iniFileName = ""
+        self.__SrcImagePath = os.path.join(self.__backupPath, 'image')
+        self.__DstImagePath = os.path.join(self.__joomlaPath, 'image')
 
-        self.__baseSrcPath = ""
-        self.__baseTrgPath = ""
-
-        self.__comparePaths = {} # compare multiple paths
-        self.__configurations = {}  # dictionary of name / value pairs
-
-        # ---------------------------------------------
-        # assign variables from config file
-        # ---------------------------------------------
-
-        self.readConfigFile (self.__configPathFileName)
-
-    # --- propName ---
-
-    @property
-    def propName(self):
-        return self.__propName
-
-    @propName.setter
-    def propName(self, propName):
-        self.__propName = propName
-
-    # # --- propName ---
-    #
-    # @property
-    # def propName(self):
-    #     return self.__propName
-    #
-    # @propName.setter
-    # def propName(self, propName):
-    #     self.__propName = propName
-    #
-    # # --- propName ---
-    #
-    # @property
-    # def propName(self):
-    #     return self.__propName
-    #
-    # @propName.setter
-    # def propName(self, propName):
-    #     self.__propName = propName
-    #
 
     # --------------------------------------------------------------------
-    # readConfigFile
+    # doCopy
     # --------------------------------------------------------------------
-    # https://wiki.python.org/moin/ConfigParserExamples
 
-    def readConfigFile (self, iniFileName=''):
+    def doCopy(self):
 
         try:
             print('*********************************************************')
-            print('readConfigFile')
-            print('iniFileName: ' + iniFileName)
+            print('doCopy')
+            print("src path: " + self.__SrcImagePath)
+            print("dst path: " + self.__DstImagePath )
             print('---------------------------------------------------------')
 
-            # --- save config file name if given  -------------------------------
+            # --- copy -----------------------------------------------------------------
 
-            if (iniFileName != ''):
-                self.__iniFileName = iniFileName
+            shutil.copytree(self.__SrcImagePath, self.__DstImagePath )
 
-            print('configFileName (used): ' + self.__configFileName)
-
-            #--- define used segments -------------------------------
-
-            configFile = configparser.ConfigParser()
-            configFile.read(iniFileName)
-
-            sourcePath = configFile['selection']['sourcePath']
-            task = configFile['selection']['task']
-
-            #--- in selected segments ----------------------------------------------
-
-            self.__isWriteEmptyTranslations = configFile.getboolean(task, 'isWriteEmptyTranslations', fallback=False)
-            print('__isWriteEmptyTranslations: ', str(self.__isWriteEmptyTranslations))
-
-            self.__isOverwriteSrcFiles = configFile.getboolean(sourcePath, 'isOverwriteSrcFiles', fallback=False)
-            print('__isOverwriteSrcFiles: ', str(self.__isOverwriteSrcFiles))
-
-            self.__isDoBackup = configFile.getboolean(sourcePath, 'isDoBackup', fallback=False)
-            print('__isDoBackup: ', str(self.__isDoBackup))
-
-
-            self.__baseSrcPath = configFile.get (sourcePath, 'sourceFolder')
-            print('__baseSrcPath: ', str(self.__baseSrcPath))
-
-            self.__baseTrgPath = configFile.get (sourcePath, 'targetFolder')
-            print('__baseTrgPath: ', str(self.__baseTrgPath))
-
-            #--- folder list ---------------------------------
-
-            self.__comparePaths = {}
-
-            if (sourcePath == 'jgerman_wip_all'):
-
-                options = configFile.options(sourcePath)
-                for option in options:
-                    try:
-                        if ('sourcefolder' in option):
-                            sourceFolder = configFile.get(sourcePath, option)
-                        if ('targetfolder' in option):
-                            targetFolder = configFile.get(sourcePath, option)
-                            self.__comparePaths[sourceFolder] = targetFolder
-                            print('All: sourcePath: ' + sourceFolder + ' targetPath: ' + targetFolder)
-
-                    except:
-                        print("exception on %s!" % option)
-
-            else:
-                # standard
-                self.__comparePaths [self.__baseSrcPath] = self.__baseTrgPath
-                print('All: sourcPath: ' + self.__baseSrcPath + ' targetPath: ' + self.__baseTrgPath)
 
         except Exception as ex:
             print('x Exception:' + ex)
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
-        #
-        # --------------------------------------------------------------------
 
         finally:
-            print('exit readConfigFile')
+            print('exit doCopy')
 
         return
 
-
-##-------------------------------------------------------------------------------
+    ##-------------------------------------------------------------------------------
 
     def dummyFunction(self):
 
@@ -265,14 +176,25 @@ if __name__ == '__main__':
 
     optlist, args = getopt.getopt(sys.argv[1:], 'l:r:12345h')
 
-    LeftPath = ''
-    RightPath = ''
+    joomlaPath = 'd:/xampp/htdocs'
+    # joomlaPath = 'e:/xampp/htdocs'
+    # joomlaPath = 'f:/xampp/htdocs'
+    # joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
+    # joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
+
+    # joomlaName = 'joomla4x'
+    joomlaName = 'joomla3x'
+
+    backupPath = '../../../RSG2_Backup'
+
 
     for i, j in optlist:
-        if i == "-l":
-            LeftPath = j
-        if i == "-r":
-            RightPath = j
+        if i == "-p":
+            joomlaPath = j
+        if i == "-n":
+            joomlaName = j
+        if i == "-b":
+            backupPath = j
 
         if i == "-h":
             print(HELP_MSG)
@@ -296,7 +218,10 @@ if __name__ == '__main__':
 
     print_header(start)
 
-    Rsg2ImagesRestore = Rsg2ImagesRestore()
+    joomlaPath = os.path.join(joomlaPath, joomlaName)
+
+    rsg2ImagesRestore = Rsg2ImagesRestore(joomlaPath, backupPath)
+    rsg2ImagesRestore.doCopy()
 
     print_end(start)
 

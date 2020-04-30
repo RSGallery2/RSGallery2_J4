@@ -7,6 +7,12 @@ import traceback
 
 from datetime import datetime
 
+from jConfigFile import jConfigFile
+from jRsg2Config import jRsg2Config
+from Rsg2ImagesRestore import Rsg2ImagesRestore
+from Rsg2TablesRestore import Rsg2TablesRestore
+
+
 HELP_MSG = """
 Reads config from external file LangManager.ini
 The segment selection tells which segment(s) to use for configuration
@@ -53,23 +59,44 @@ LeaveOut_05 = False
 class RestoreRsg2:
     """ config read from file. First segment in file defines the used segment with configuration items """
 
-    def __init__(self, configPathFileName=''):
+    def __init__(self,
+                 joomlaPath='d:/xampp/htdocs',
+                 joomlaName='joomla4x',
+                 backupPath='unknown'):
 
         print("Init RestoreRsg2: ")
-        print("configPathFileName: " + configPathFileName)
+        print("joomlaPath: " + joomlaPath)
+        print("joomlaName: " + joomlaName)
+        print("backupPath: " + backupPath)
 
-        self.__configPathFileName  = './LangManager.ini'
-        if (len(configPathFileName) > 0):
-            self.__configPathFileName = configPathFileName
+        self.__joomlaPath = joomlaPath
+        self.__joomlaName = joomlaName
+        self.__backupPath = backupPath
 
-        self.__isWriteEmptyTranslations = False
-        self.__isOverwriteSrcFiles = False
-        self.__isDoBackup = False
+        mySqlPath = os.path.join(os.path.dirname(joomlaPath), 'mysql', 'bin')
+        self.__mySqlPath = mySqlPath
 
-        self.__baseSrcPath = ""
-        self.__baseTrgPath = ""
+        # ---------------------------------------------
+        # Read variables from config files
+        # ---------------------------------------------
 
-        self.__comparePaths = {} # compare multiple paths
+        try:
+            #--- Joomla configuration parameter ----------------------------
+
+            jConfigPathFileName = os.path.join (self.__joomlaPath, self.__joomlaName, 'configuration.php')
+            self.__joomlaCfg = jConfigFile(jConfigPathFileName)
+
+            #--- RSG2 database configuration parameter ----------------------------
+
+            self.__rsg2Cfg = jRsg2Config(
+                self.__joomlaCfg.database,
+                self.__joomlaCfg.user,
+                self.__joomlaCfg.password,
+                self.__mySqlPath
+            )
+
+        finally:
+            pass
 
         # ---------------------------------------------
         # assign variables from config file
@@ -142,64 +169,42 @@ class RestoreRsg2:
     # --------------------------------------------------------------------
     # https://wiki.python.org/moin/ConfigParserExamples
 
-    def readConfigFile (self, iniFileName):
-        # ToDo: Check if name exists otherwise standard
-        # ToDo: try catch ...
+    def doRestore (self, backupPath=''):
+
         try:
             print('*********************************************************')
-            print('readConfigFile')
-            print('iniFileName: ' + iniFileName)
+            print('doRestore')
+            print('backupPath='': ' + backupPath)
             print('---------------------------------------------------------')
 
-            #--- define used segments -------------------------------
+            # --- create auto backup path ----------------------------------------
 
-            configFile = configparser.ConfigParser()
-            configFile.read(iniFileName)
+            if (backupPath != ''):
+                self.__backupPath = backupPath
 
-            sourcePath = configFile['selection']['sourcePath']
-            task = configFile['selection']['task']
+            print('backupPath (used): ' + self.__backupPath)
 
-            #--- in selected segments ----------------------------------------------
+            # --- do restore image filkes ----------------------------
 
-            self.__isWriteEmptyTranslations = configFile.getboolean(task, 'isWriteEmptyTranslations', fallback=False)
-            print('__isWriteEmptyTranslations: ', str(self.__isWriteEmptyTranslations))
+            rsg2ImagesRestore = Rsg2ImagesRestore(joomlaPath, backupPath)
+            rsg2ImagesRestore.doCopy()
 
-            self.__isOverwriteSrcFiles = configFile.getboolean(sourcePath, 'isOverwriteSrcFiles', fallback=False)
-            print('__isOverwriteSrcFiles: ', str(self.__isOverwriteSrcFiles))
+            # --- do restore rsg2 tables ----------------------------
 
-            self.__isDoBackup = configFile.getboolean(sourcePath, 'isDoBackup', fallback=False)
-            print('__isDoBackup: ', str(self.__isDoBackup))
+            dumpFileName = 'FileNotFound.sql'
+
+            for file in os.listdir(self.__backupPath):
+                # Rsg2_TablesDump.j3x.sql
+                if file.startswith("Rsg2_TablesDump"):
+                    dumpFileName = os.path.join(self.__backupPath, file)
 
 
-            self.__baseSrcPath = configFile.get (sourcePath, 'sourceFolder')
-            print('__baseSrcPath: ', str(self.__baseSrcPath))
+            rsg2TablesRestore = Rsg2TablesRestore(self.__joomlaCfg .database, self.__joomlaCfg .dbPrefix, self.__joomlaCfg .user,
+                                                  self.__joomlaCfg .password, dumpFileName, self.__mySqlPath)
 
-            self.__baseTrgPath = configFile.get (sourcePath, 'targetFolder')
-            print('__baseTrgPath: ', str(self.__baseTrgPath))
+            rsg2TablesRestore.doRestoreDumpTables()
 
-            #--- folder list ---------------------------------
-
-            self.__comparePaths = {}
-
-            if (sourcePath == 'jgerman_wip_all'):
-
-                options = configFile.options(sourcePath)
-                for option in options:
-                    try:
-                        if ('sourcefolder' in option):
-                            sourceFolder = configFile.get(sourcePath, option)
-                        if ('targetfolder' in option):
-                            targetFolder = configFile.get(sourcePath, option)
-                            self.__comparePaths[sourceFolder] = targetFolder
-                            print('All: sourcePath: ' + sourceFolder + ' targetPath: ' + targetFolder)
-
-                    except:
-                        print("exception on %s!" % option)
-
-            else:
-                # standard
-                self.__comparePaths [self.__baseSrcPath] = self.__baseTrgPath
-                print('All: sourcPath: ' + self.__baseSrcPath + ' targetPath: ' + self.__baseTrgPath)
+            # ---- ... -----------------------------------------------------------
 
         except Exception as ex:
             print('x Exception:' + ex)
@@ -280,16 +285,19 @@ if __name__ == '__main__':
 
     start = datetime.today()
 
-    optlist, args = getopt.getopt(sys.argv[1:], 'l:r:12345h')
+    optlist, args = getopt.getopt(sys.argv[1:], 'p:n:b:m:12345h')
 
-    LeftPath = ''
-    RightPath = ''
+    joomlaPath = 'd:/xampp/htdocs'
+    joomlaName = 'joomla3x'
+    backupPath = '../../../RSG2_Backup'
 
     for i, j in optlist:
-        if i == "-l":
-            LeftPath = j
-        if i == "-r":
-            RightPath = j
+        if i == "-p":
+            joomlaPath = j
+        if i == "-n":
+            joomlaName = j
+        if i == "-b":
+            backupPath = j
 
         if i == "-h":
             print(HELP_MSG)
@@ -313,7 +321,8 @@ if __name__ == '__main__':
 
     print_header(start)
 
-    RestoreRsg2 = RestoreRsg2()
+    RestoreRsg2 = RestoreRsg2(joomlaPath, joomlaName, backupPath)
+    RestoreRsg2.doRestore ()
 
     print_end(start)
 
