@@ -378,10 +378,8 @@ if __name__ == '__main__':
     optlist, args = getopt.getopt(sys.argv[1:], 'p:n:f:m:12345h')
 
     joomlaPath = 'd:/xampp/htdocs'
-
     joomlaName = 'joomla3x'
-
-    backupBasePath = '../../../RSG2_Backup'
+    #backupBasePath = '../../../RSG2_Backup'
 
     #dumpFileName = 'Rsg2_TablesDump.20200414_215456.sql' # 'Rsg2_TablesDump'
     #dumpFileName = os.path.join(backupBasePath, 'testRestore\Rsg2_TablesDump.sql') # 'Rsg2_TablesDump'

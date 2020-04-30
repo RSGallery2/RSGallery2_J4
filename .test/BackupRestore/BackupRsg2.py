@@ -344,5 +344,6 @@ if __name__ == '__main__':
 
     BackupRsg2 = BackupRsg2(joomlaPath, joomlaName, backupBasePath)
     BackupRsg2.doBackup ()
+
     print_end(start)
 
