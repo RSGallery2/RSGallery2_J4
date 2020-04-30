@@ -5,6 +5,7 @@ import getopt
 import sys
 import json
 import subprocess
+import traceback
 
 from datetime import datetime
 from jRsg2Tables import jRsg2Tables
@@ -131,7 +132,14 @@ class jRsg2Config:
 
     @property
     def image_width(self):
-        return self.__configurations ['image_width']
+        image_width = '-9999999.9999'
+        if 'image_width' in self.__configurations:
+            image_width =  self.__configurations ['image_width']
+        else:
+            if 'image_width' in self.__configurations_j3x:
+                image_width = self.__configurations_j3x['image_width']
+
+        return image_width
 
     # --- imgPath_root ---
 
@@ -158,6 +166,13 @@ class jRsg2Config:
             # path may not start with root of disk
             if (path[0] == '/' or path[0] == '\\'):
                 path = path [1:]
+        else:
+            if 'imgPath_original' in self.__configurations_j3x:
+                path = self.__configurations_j3x['imgPath_original']
+
+                # path may not start with root of disk
+                if (path[0] == '/' or path[0] == '\\'):
+                    path = path [1:]
 
         return path
 
@@ -172,6 +187,13 @@ class jRsg2Config:
             # path may not start with root of disk
             if (path[0] == '/' or path[0] == '\\'):
                 path = path [1:]
+        else:
+            if 'imgPath_display' in self.__configurations_j3x:
+                path = self.__configurations_j3x['imgPath_display']
+
+                # path may not start with root of disk
+                if (path[0] == '/' or path[0] == '\\'):
+                    path = path[1:]
 
         return path
 
@@ -186,6 +208,13 @@ class jRsg2Config:
             # path may not start with root of disk
             if (path[0] == '/' or path[0] == '\\'):
                 path = path [1:]
+        else:
+            if 'imgPath_thumb' in self.__configurations_j3x:
+                path = self.__configurations_j3x['imgPath_thumb']
+
+                # path may not start with root of disk
+                if (path[0] == '/' or path[0] == '\\'):
+                    path = path[1:]
 
         return path
 
@@ -200,6 +229,14 @@ class jRsg2Config:
             # path may not start with root of disk
             if (path[0] == '/' or path[0] == '\\'):
                 path = path [1:]
+        else:
+            path = '-9999999.9999'
+            if 'imgPath_watermarked' in self.__configurations_j3x:
+                path = self.__configurations_j3x['imgPath_watermarked']
+
+                # path may not start with root of disk
+                if (path[0] == '/' or path[0] == '\\'):
+                    path = path[1:]
 
         return path
 
@@ -442,7 +479,8 @@ class jRsg2Config:
 
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
         #
@@ -501,7 +539,8 @@ class jRsg2Config:
                         configFile.write(key + " = '" + value + "'\n")
 
         except Exception as ex:
-                print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
     # -------------------------------------------------------------------------------
     # ToDo: Return string instead of print
@@ -525,7 +564,8 @@ class jRsg2Config:
                 print("   " + key + " = '" + value + "'")
 
         except Exception as ex:
-                print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------
 

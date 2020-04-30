@@ -4,16 +4,18 @@ import os
 import getopt
 import sys
 import subprocess
+import traceback
 
 from datetime import datetime
+from jConfigFile import jConfigFile
 
 HELP_MSG = """
 Restores dump of RSG2 tables from given database 
 
 usage: Rsg2TablesRestore.py -d database -u user -p password -f dumpFileName -m mySqlPath -j isUseJ3xTables  [-h]
-    -d database Name of database for dump
-    -u user User name of database for dump
-    -p password Password of database for dump
+    -d database Name of database for restore
+    -u user User name of database for restore
+    -p password Password of database for restore
     -f dumpFileName source file of the dump 
     -m mySqlPath Path to the folder of the exe mysql.exe
 
@@ -35,7 +37,7 @@ ToDo:
   * doRestoreDumpTables -> add database parameter
   * create ..\..\data for exchange of sql ...
   * 
-  * 
+  * Destination prefix could be read automaticakly
   * 
   * 
 
@@ -71,6 +73,9 @@ class Rsg2TablesRestore:
         self.__password = password
         self.__user = user
         self.__dumpFileName = dumpFileName
+
+        mySqlPath = os.path.join(os.path.dirname(joomlaPath), 'mysql', 'bin')
+
         self.__mySqlPath = mySqlPath
 
 
@@ -285,7 +290,8 @@ class Rsg2TablesRestore:
             proc.stdin.close()
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
         #
@@ -369,32 +375,25 @@ if __name__ == '__main__':
 
     start = datetime.today()
 
-    optlist, args = getopt.getopt(sys.argv[1:], 'd:p:u:f:m:12345h')
+    optlist, args = getopt.getopt(sys.argv[1:], 'p:n:f:m:12345h')
 
-    database = 'test'  # 'joomla4x'
-    database = 'testrestore'  # 'joomla4x'
-    dbPrefix = 'rest_' # restore
+    joomlaPath = 'd:/xampp/htdocs'
 
-    user = 'root'
-    password = ''
+    joomlaName = 'joomla3x'
+
     backupBasePath = '../../../RSG2_Backup'
 
     dumpFileName = 'Rsg2_TablesDump.20200414_215456.sql' # 'Rsg2_TablesDump'
     dumpFileName = os.path.join(backupBasePath, 'testRestore\Rsg2_TablesDump.sql') # 'Rsg2_TablesDump'
-
-    mySqlPath = 'd:\\xampp\\mysql\\bin\\'
+    #dumpFileName = "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.sql"
 
     for i, j in optlist:
-        if i == "-d":
-            database = j
         if i == "-p":
-            password = j
-        if i == "-u":
-            user = j
+            joomlaPath = j
+        if i == "-n":
+            joomlaName = j
         if i == "-f":
             dumpFileName = j
-        if i == "-m":
-            mySqlPath = j
 
         if i == "-h":
             print(HELP_MSG)
@@ -418,7 +417,16 @@ if __name__ == '__main__':
 
     print_header(start)
 
-    rsg2TablesRestore = Rsg2TablesRestore(database, dbPrefix, user, password, dumpFileName, mySqlPath)
+    # --- Joomla configuration parameter ----------------------------
+
+    jConfigPathFileName = os.path.join(joomlaPath, joomlaName, 'configuration.php')
+    joomlaCfg = jConfigFile(jConfigPathFileName)
+
+    mySqlPath = os.path.join(os.path.dirname(joomlaPath), 'mysql', 'bin')
+
+    # --- do restore ----------------------------
+
+    rsg2TablesRestore = Rsg2TablesRestore(joomlaCfg.database, joomlaCfg.dbPrefix, joomlaCfg.user, joomlaCfg.password, dumpFileName, mySqlPath)
 
     rsg2TablesRestore.doRestoreDumpTables()
 

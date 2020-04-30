@@ -4,6 +4,7 @@ import os
 import getopt
 import sys
 import shutil
+import traceback
 
 from datetime import datetime
 
@@ -196,7 +197,8 @@ class Rsg2ImagesBackup:
 
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
 

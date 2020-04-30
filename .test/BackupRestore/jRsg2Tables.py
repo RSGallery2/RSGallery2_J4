@@ -4,6 +4,7 @@ import os
 import getopt
 import sys
 import subprocess
+import traceback
 
 from datetime import datetime
 
@@ -321,7 +322,8 @@ class jRsg2Tables:
                         self.__dbPrefix = dbPrefix + searchStr
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
         #
@@ -361,7 +363,8 @@ class jRsg2Tables:
             print()
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------
 

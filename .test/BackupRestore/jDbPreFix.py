@@ -4,6 +4,7 @@ import os
 import getopt
 import sys
 import subprocess
+import traceback
 
 from datetime import datetime
 
@@ -194,7 +195,8 @@ class jDbPreFix:
                         self.__dbPrefix = dbPrefix + searchStr
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
         #
@@ -217,7 +219,8 @@ class jDbPreFix:
             print("dbPrefix: " + self.__dbPrefix)
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------
 

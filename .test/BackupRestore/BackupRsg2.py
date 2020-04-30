@@ -3,6 +3,7 @@
 import os
 import getopt
 import sys
+import traceback
 
 from datetime import datetime
 
@@ -203,7 +204,8 @@ class BackupRsg2:
 
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
         #
@@ -293,11 +295,12 @@ if __name__ == '__main__':
     joomlaPath = 'd:/xampp/htdocs'
     #joomlaPath = 'e:/xampp/htdocs'
     #joomlaPath = 'f:/xampp/htdocs'
+    #joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
     #joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
 
 
-    joomlaName = 'joomla4x'
-    #joomlaName = 'joomla3x'
+    #joomlaName = 'joomla4x'
+    joomlaName = 'joomla3x'
     
     ##joomlaName = 'joomla3x'
     ##joomlaName = 'joomla3xMyGallery'

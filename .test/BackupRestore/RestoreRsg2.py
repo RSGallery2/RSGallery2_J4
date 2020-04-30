@@ -3,6 +3,7 @@
 import os
 import getopt
 import sys
+import traceback
 
 from datetime import datetime
 
@@ -201,7 +202,8 @@ class RestoreRsg2:
                 print('All: sourcPath: ' + self.__baseSrcPath + ' targetPath: ' + self.__baseTrgPath)
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
         #

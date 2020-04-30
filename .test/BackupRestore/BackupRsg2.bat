@@ -4,15 +4,17 @@ REM Backups RSG2 database tables and RSG2 files
 CLS
 
 Set CmdArgs=
-ECHO python BackupRsg2.py 
+ECHO python BackupRsg2.py
 
 REM JoomlaPath
 Call :AddNextArg -p "d:\xampp\htdocs"
-                     
+REM Call :AddNextArg -p "e:\xampp_J2xJ3x\htdocs"
+
 REM JoomlaName
 Call :AddNextArg -n "joomla4x"
 REM Call :AddNextArg -n "joomla3x"
- 
+REM Call :AddNextArg -n "joomla25"
+
 REM BackupPath
 Call :AddNextArg -b "..\..\..\RSG2_Backup"
 
@@ -23,14 +25,14 @@ ECHO.
 ECHO ------------------------------------------------------------------------------
 ECHO Start cmd:
 ECHO.
-ECHO python BackupRsg2.py %CmdArgs% %* 
-     python BackupRsg2.py %CmdArgs% %* 
+ECHO python BackupRsg2.py %CmdArgs% %*
+     python BackupRsg2.py %CmdArgs% %*
 
 GOTO :EOF
 
 REM ------------------------------------------
 REM Adds given argument to the already known command arguments
-:AddNextArg 
+:AddNextArg
 Set NextArg=%*
 Set CmdArgs=%CmdArgs% %NextArg%
 ECHO  '%NextArg%'

@@ -6,22 +6,18 @@ CLS
 Set CmdArgs=
 ECHO python Rsg2TablesRestore.py
 
-REM database
-Call :AddNextArg -d ""
+REM JoomlaPath
+Call :AddNextArg -p "d:\xampp\htdocs"
+REM Call :AddNextArg -p "e:\xampp_J2xJ3x\htdocs"
 
-REM database prefix
-REM Call :AddNextArg -e "j4x_"
-REM Call :AddNextArg -e "j4_"
-Call :AddNextArg -e "restore_"
-
-REM password
-Call :AddNextArg -p ""
-
-REM user
-Call :AddNextArg -u ""
+REM JoomlaName
+REM Call :AddNextArg -n "joomla4x"
+Call :AddNextArg -n "joomla4x_Sim3x"
+REM Call :AddNextArg -n "joomla3x"
+REM Call :AddNextArg -n "joomla25"
 
 REM dumpFileName
-Call :AddNextArg -f ""
+Call :AddNextArg -f "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.sql"
 
 REM
 REM Call :AddNextArg -p ""

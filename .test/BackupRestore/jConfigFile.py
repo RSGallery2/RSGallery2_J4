@@ -3,6 +3,7 @@
 import os
 import getopt
 import sys
+import traceback
 
 from datetime import datetime
 
@@ -157,7 +158,8 @@ class jConfigFile:
                         self.__configurations[cfgName] = cfgText
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         # --------------------------------------------------------------------
         #
@@ -182,7 +184,8 @@ class jConfigFile:
                 print("   " + key + " = '" + value + "'")
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------
 
@@ -205,7 +208,8 @@ class jConfigFile:
                 print ('!!! warning value "%s" does not exist in configuration list !!!' % cfgName)
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         print ('       intValue: "' + intValue + '"')
         print('    >>> Exit asInt: ')
@@ -232,7 +236,8 @@ class jConfigFile:
                 print ('!!! warning value "%s" does not exist in configuration list !!!' % cfgName)
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         print ('       floatValue: "' + floatValue + '"')
         print('    >>> Exit asFloat: ')
@@ -256,7 +261,8 @@ class jConfigFile:
                 print ('!!! warning value "%s" does not exist in configuration list !!!' % cfgName)
 
         except Exception as ex:
-            print(ex)
+            print('x Exception:' + ex)
+            print(traceback.format_exc())
 
         print ('       strValue: "' + strValue + '"')
         print('    >>> Exit asText: ')
