@@ -67,7 +67,7 @@ class Rsg2ImagesRestore:
                  backupPath = '../../../RSG2_Backup',
                  joomlaPath = 'd:/xampp/htdocs/joomla4x'):
 
-        print("Init Rsg2ImagesBackup: ")
+        print("Init Rsg2ImagesRestore: ")
         print("backupPath: " + backupPath)
         print("joomlaPath: " + joomlaPath)
 
