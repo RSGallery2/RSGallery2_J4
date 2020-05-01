@@ -7,17 +7,17 @@ import subprocess
 import traceback
 
 from datetime import datetime
+
 from jConfigFile import jConfigFile
 
 HELP_MSG = """
-Restores dump of RSG2 tables from given database 
+Restores dump of RSG2 tables from sql backup file to given database
+Configuration and pathes will be taken from configuration.php of referenced joomla installation
 
-usage: Rsg2TablesRestore.py -d database -u user -p password -f dumpFileName -m mySqlPath -j isUseJ3xTables  [-h]
-    -d database Name of database for restore
-    -u user User name of database for restore
-    -p password Password of database for restore
-    -f dumpFileName source file of the dump 
-    -m mySqlPath Path to the folder of the exe mysql.exe
+usage: Rsg2TablesRestore.py -p joomlaPath -n joomlaName -f dumpPathFileName  [-h]
+	-p joomlaPath Path to joomla installation without last folder
+	-n joomlaName folder and project name
+    -f dumpPathFileName destination file where the dump will be taken from
 
 	-h shows this message
 
@@ -33,12 +33,8 @@ usage: Rsg2TablesRestore.py -d database -u user -p password -f dumpFileName -m m
 
 ------------------------------------
 ToDo:
-  * user configparser for init of class https://wiki.python.org/moin/ConfigParserExamples
-  * doRestoreDumpTables -> add database parameter
-  * create ..\..\data for exchange of sql ...
-  * 
-  * Destination prefix could be read automaticakly
-  * 
+  *
+  *
   * 
 
 """
@@ -383,7 +379,7 @@ if __name__ == '__main__':
 
     #dumpFileName = 'Rsg2_TablesDump.20200414_215456.sql' # 'Rsg2_TablesDump'
     #dumpFileName = os.path.join(backupBasePath, 'testRestore\Rsg2_TablesDump.sql') # 'Rsg2_TablesDump'
-    dumpFileName = "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.sql"
+    dumpPathFileName = "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.sql"
 
     for i, j in optlist:
         if i == "-p":
@@ -391,7 +387,7 @@ if __name__ == '__main__':
         if i == "-n":
             joomlaName = j
         if i == "-f":
-            dumpFileName = j
+            dumpPathFileName = j
 
         if i == "-h":
             print(HELP_MSG)
@@ -425,7 +421,7 @@ if __name__ == '__main__':
     # --- do restore ----------------------------
 
     rsg2TablesRestore = Rsg2TablesRestore(joomlaCfg.database, joomlaCfg.dbPrefix, joomlaCfg.user, joomlaCfg.password,
-                                          dumpFileName, mySqlPath)
+                                          dumpPathFileName, mySqlPath)
 
     rsg2TablesRestore.doRestoreDumpTables()
 

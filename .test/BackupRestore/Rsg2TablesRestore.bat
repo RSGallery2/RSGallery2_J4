@@ -1,6 +1,6 @@
 @ECHO OFF
 REM Imports dump of RSG2 tables from given database
-
+REM Configuration and pathes will be taken from configuration.php of referenced joomla installation
 CLS
 
 Set CmdArgs=

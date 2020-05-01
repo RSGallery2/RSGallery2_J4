@@ -9,6 +9,7 @@ import traceback
 from datetime import datetime
 
 from jRsg2Tables import jRsg2Tables
+from jConfigFile import jConfigFile
 
 #from .jRsg2Tables import jRsg2Tables
 
@@ -17,13 +18,12 @@ from jRsg2Tables import jRsg2Tables
 HELP_MSG = """
 Exports dump of RSG2 tables from given database 
 Seperate file for J3x and j4x tables
+Configuration and pathes will be taken from configuration.php of referenced joomla installation
 
 usage: Rsg2TablesBackup.py d database -u user -p password -f dumpPathFileName -m mySqlPath [-h]
-    -d database Name of database for dump
-    -u user User name of database for dump
-    -p password Password of database for dump
+	-p joomlaPath Path to joomla installation without last folder
+	-n joomlaName folder and project name
     -f dumpPathFileName destination file where the dump will be written into
-    -m mySqlPath Path to the folder of the exe mysqldump.exe
 
 	-h shows this message
 
@@ -41,9 +41,8 @@ usage: Rsg2TablesBackup.py d database -u user -p password -f dumpPathFileName -m
 ToDo:
   * user configparser for init of class https://wiki.python.org/moin/ConfigParserExamples
   * doImportDumpTables -> add database parameter
-  * create ..\..\data for exchange of sql ...
-  * 
-  * 
+  *
+  *  use joomla path for mysql ...   joomlaPath = 'd:/xampp/htdocs'
   * 
   * 
 
@@ -353,27 +352,35 @@ if __name__ == '__main__':
 
     start = datetime.today()
 
-    optlist, args = getopt.getopt(sys.argv[1:], 'd:p:u:f:m:j:12345h')
+    # optlist, args = getopt.getopt(sys.argv[1:], 'd:p:u:f:m:j:12345h')
+    #
+    # database = 'joomla4x'
+    # user = 'root'
+    # password = ''
+    # backupBasePath = '../../../RSG2_Backup'
+    # dumpPathFileName = 'Rsg2_TablesDump.sql'
+    # mySqlPath = 'd:\\xampp\\mysql\\bin\\'
 
-    database = 'joomla4x'
-    user = 'root'
-    password = ''
-    backupBasePath = '../../../RSG2_Backup'
-    dumpPathFileName = 'Rsg2_TablesDump.sql'
-    mySqlPath = 'd:\\xampp\\mysql\\bin\\'
+
+    optlist, args = getopt.getopt(sys.argv[1:], 'p:n:f:m:12345h')
+
+    joomlaPath = 'd:/xampp/htdocs'
+    joomlaName = 'joomla3x'
+    #backupBasePath = '../../../RSG2_Backup'
+
+    #dumpFileName = 'Rsg2_TablesDump.20200414_215456.sql' # 'Rsg2_TablesDump'
+    #dumpFileName = os.path.join(backupBasePath, 'testRestore\Rsg2_TablesDump.sql') # 'Rsg2_TablesDump'
+    dumpPathFileName = "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.ttt.sql"
+
 
     for i, j in optlist:
-        if i == "-d":
-            database = j
         if i == "-p":
-            password = j
-        if i == "-u":
-            user = j
+            joomlaPath = j
+        if i == "-n":
+            joomlaName = j
         if i == "-f":
             dumpPathFileName = j
-        if i == "-m":
-            mySqlPath = j
-
+            
         if i == "-h":
             print(HELP_MSG)
             sys.exit(0)
@@ -396,8 +403,21 @@ if __name__ == '__main__':
 
     print_header(start)
 
+#    mySqlPath = os.path.join(os.path.dirname(joomlaPath), 'mysql', 'bin')
+
+
+    # --- Joomla configuration parameter ----------------------------
+
+    jConfigPathFileName = os.path.join(joomlaPath, joomlaName, 'configuration.php')
+    joomlaCfg = jConfigFile(jConfigPathFileName)
+
+    mySqlPath = os.path.join(os.path.dirname(joomlaPath), 'mysql', 'bin')
+
+    # --- do backup ----------------------------
+
     dumpPathFileName = AddDateToFileName (dumpPathFileName)
-    rsg2TablesBackup = Rsg2TablesBackup (database, user, password, dumpPathFileName, mySqlPath)
+    rsg2TablesBackup = Rsg2TablesBackup (joomlaCfg.database, joomlaCfg.user, joomlaCfg.password,
+                                         dumpPathFileName, mySqlPath)
 
     rsg2TablesBackup.doBackupTables()
 

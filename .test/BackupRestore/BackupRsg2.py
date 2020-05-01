@@ -295,7 +295,7 @@ if __name__ == '__main__':
     joomlaPath = 'd:/xampp/htdocs'
     #joomlaPath = 'e:/xampp/htdocs'
     #joomlaPath = 'f:/xampp/htdocs'
-    #joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
+    joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
     #joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
 
 

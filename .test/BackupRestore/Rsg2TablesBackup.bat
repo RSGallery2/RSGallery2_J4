@@ -1,29 +1,24 @@
 @ECHO OFF
 REM Exports dump of RSG2 tables from given database
+REM Configuration and pathes will be taken from configuration.php of referenced joomla installation
 
 CLS
 
 Set CmdArgs=
 ECHO python Rsg2TablesBackup.py 
 
-REM database
-Call :AddNextArg -d ""
-                     
-REM database prefix
-REM Call :AddNextArg -e "j4x_"
-Call :AddNextArg -e "j4_"
+REM JoomlaPath
+Call :AddNextArg -p "d:\xampp\htdocs"
+REM Call :AddNextArg -p "e:\xampp_J2xJ3x\htdocs"
 
-REM password
-Call :AddNextArg -p ""
- 
-REM user
-Call :AddNextArg -u ""
+REM JoomlaName
+REM Call :AddNextArg -n "joomla4x"
+Call :AddNextArg -n "joomla4x"
+REM Call :AddNextArg -n "joomla3x"
+REM Call :AddNextArg -n "joomla25"
 
 REM dumpFileName
-Call :AddNextArg -f ""
-
-REM isUseJ3xTables
-Call :AddNextArg -j ""
+Call :AddNextArg -f "..\..\..\RSG2_Backup\\joomla3x.20200430_171320\Rsg2_TablesDump.j3x.ttt1.sql"
 
 REM
 REM Call :AddNextArg -p ""
