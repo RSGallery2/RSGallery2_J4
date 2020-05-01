@@ -266,7 +266,7 @@ class Rsg2TablesBackup:
                 pass
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         #--------------------------------------------------------------------

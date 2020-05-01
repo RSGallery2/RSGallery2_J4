@@ -349,88 +349,93 @@ class jRsg2Config:
                 print()
 
             else:
+                # tables exist ?
+                if (len(output) > 0):
 
+                    test1 = "path\\sub".replace ("\\", "/")
+                    test2 = "path\\/sub".replace ("\\/", "/")
 
-                test1 = "path\\sub".replace ("\\", "/")
-                test2 = "path\\/sub".replace ("\\/", "/")
+                    # remove any backslash to forward slash for folder
+                    # "\\\\/" -> '/'
+                    output = output.replace("\\\\/", "/")
 
-                # remove any backslash to forward slash for folder
-                # "\\\\/" -> '/'
-                output = output.replace("\\\\/", "/")
-
-                params = output.splitlines()
-
-                # remove first introduction line like 'Tables_in_joomla4x'
-                headerLine = params.pop (0)
-
-                # valid result ?
-                if (headerLine.lower().startswith('params')):
-
-                    # configurations exist
-                    if (len(params) > 0):
-
-                        # json params string from array
-                        strParams1 = params[0]
-                        strParams2 = strParams1.replace("\\/", "/")
-                        strParams = strParams2
-
-                        # to dictionary
-                        self.__configurations = json.loads(strParams)
-
-            # -------------------------------------------
-            # do extract com_rsgallery2 manifest as dictionary
-            # -------------------------------------------
-
-                # Table __extensions:
-                # {"name":"com_rsgallery2","type":"component","creationDate":"18. Dec. 2018","author":"RSGallery2 Team","copyright":"(c) 2005-2018 RSGallery2 Team","authorEmail":"team@rsgallery2.org","authorUrl":"http:\/\/www.rsgallery2.org","version":"4.4.100","description":"COM_RSGALLERY2_XML_DESCRIPTION","group":"","filename":"rsgallery2"}
-                # {"name":"COM_RSGALLERY2","type":"component","creationDate":"17. Apr. 2020","author":"RSGallery2 Team","copyright":"(c) 2003-2020 RSGallery2 Team","authorEmail":"team2@rsgallery2.org","authorUrl":"https:\/\/www.rsgallery2.org","version":"5.0.0.4","description":"COM_RSGALLERY2_XML_DESCRIPTION","group":"","filename":"rsgallery2"}
-
-                # --- extensions table name  -------------------------------
-
-                tableName = self.__dbPrefix + 'extensions'
-
-                # --- sql command  -------------------------------
-
-                sqlCmd = "SELECT * FROM " + tableName + " WHERE name='COM_RSGALLERY2';"
-                #sqlCmd = "SELECT * FROM " + tableName + " WHERE element='com_rsgallery2';"
-
-                # ---  command -------------------------------
-
-                mySqlCmd = mySqlExe + ' ' + userCmd + ' ' + passwordCmd + ' ' + database + ' -e "' + sqlCmd + '"'
-                print("mySqlCmd: " + mySqlCmd)
-
-                proc = subprocess.Popen(mySqlCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
-                output, errors = proc.communicate()
-
-
-                # errors found ?
-                if (len(errors) > 0):
-
-                    print()
-                    print('!!! Error on SQL command. Errors: "' + errors + '"')
-                    print()
-
-                else:
-
-                    dbRows = output.splitlines()
+                    params = output.splitlines()
 
                     # remove first introduction line like 'Tables_in_joomla4x'
-                    headerLine = dbRows [0].split('\t')[0]
+                    headerLine = params.pop (0)
 
                     # valid result ?
-                    if (headerLine.lower().startswith('extension_id')):
+                    if (headerLine.lower().startswith('params')):
 
                         # configurations exist
-                        if (len(dbRows) > 1):
+                        if (len(params) > 0):
 
-                            colNames = dbRows [0].split('\t')
-                            colValues = dbRows [1].split('\t')
+                            # json params string from array
+                            strParams1 = params[0]
+                            strParams2 = strParams1.replace("\\/", "/")
+                            strParams = strParams2
 
-                            for idx, name in enumerate(colNames): #, start=1):
-                                value = colValues [idx]
+                            # to dictionary
+                            self.__configurations = json.loads(strParams)
 
-                                self.__manifestParams[name] = value
+                    # -------------------------------------------
+                    # do extract com_rsgallery2 manifest as dictionary
+                    # -------------------------------------------
 
+                    # Table __extensions:
+                    # {"name":"com_rsgallery2","type":"component","creationDate":"18. Dec. 2018","author":"RSGallery2 Team","copyright":"(c) 2005-2018 RSGallery2 Team","authorEmail":"team@rsgallery2.org","authorUrl":"http:\/\/www.rsgallery2.org","version":"4.4.100","description":"COM_RSGALLERY2_XML_DESCRIPTION","group":"","filename":"rsgallery2"}
+                    # {"name":"COM_RSGALLERY2","type":"component","creationDate":"17. Apr. 2020","author":"RSGallery2 Team","copyright":"(c) 2003-2020 RSGallery2 Team","authorEmail":"team2@rsgallery2.org","authorUrl":"https:\/\/www.rsgallery2.org","version":"5.0.0.4","description":"COM_RSGALLERY2_XML_DESCRIPTION","group":"","filename":"rsgallery2"}
+
+                    # --- extensions table name  -------------------------------
+
+                    tableName = self.__dbPrefix + 'extensions'
+
+                    # --- sql command  -------------------------------
+
+                    sqlCmd = "SELECT * FROM " + tableName + " WHERE name='COM_RSGALLERY2';"
+                    #sqlCmd = "SELECT * FROM " + tableName + " WHERE element='com_rsgallery2';"
+
+                    # ---  command -------------------------------
+
+                    mySqlCmd = mySqlExe + ' ' + userCmd + ' ' + passwordCmd + ' ' + database + ' -e "' + sqlCmd + '"'
+                    print("mySqlCmd: " + mySqlCmd)
+
+                    proc = subprocess.Popen(mySqlCmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+                    output, errors = proc.communicate()
+
+
+                    # errors found ?
+                    if (len(errors) > 0):
+
+                        print()
+                        print('!!! Error on SQL command. Errors: "' + errors + '"')
+                        print()
+
+                    else:
+
+                        dbRows = output.splitlines()
+
+                        # remove first introduction line like 'Tables_in_joomla4x'
+                        headerLine = dbRows [0].split('\t')[0]
+
+                        # valid result ?
+                        if (headerLine.lower().startswith('extension_id')):
+
+                            # configurations exist
+                            if (len(dbRows) > 1):
+
+                                colNames = dbRows [0].split('\t')
+                                colValues = dbRows [1].split('\t')
+
+                                for idx, name in enumerate(colNames): #, start=1):
+                                    value = colValues [idx]
+
+                                    self.__manifestParams[name] = value
+                else: # tables exist ?  if (len(output) > 0):
+
+                    print()
+                    print('!!! Error: No params for RSGallery2  (extension table, parallel to manifest ...')
+                    print()
 
             # -------------------------------------------
             # do extract j3x version from table rsgallery2_config
@@ -479,7 +484,7 @@ class jRsg2Config:
 
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -539,7 +544,7 @@ class jRsg2Config:
                         configFile.write(key + " = '" + value + "'\n")
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
     # -------------------------------------------------------------------------------
@@ -564,7 +569,7 @@ class jRsg2Config:
                 print("   " + key + " = '" + value + "'")
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------

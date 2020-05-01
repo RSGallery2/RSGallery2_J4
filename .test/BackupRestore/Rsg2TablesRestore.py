@@ -70,8 +70,6 @@ class Rsg2TablesRestore:
         self.__user = user
         self.__dumpFileName = dumpFileName
 
-        mySqlPath = os.path.join(os.path.dirname(joomlaPath), 'mysql', 'bin')
-
         self.__mySqlPath = mySqlPath
 
 
@@ -286,7 +284,7 @@ class Rsg2TablesRestore:
             proc.stdin.close()
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------

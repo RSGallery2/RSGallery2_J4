@@ -195,7 +195,7 @@ class jDbPreFix:
                         self.__dbPrefix = dbPrefix + searchStr
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -219,7 +219,7 @@ class jDbPreFix:
             print("dbPrefix: " + self.__dbPrefix)
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------

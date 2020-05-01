@@ -8,7 +8,7 @@ import traceback
 from datetime import datetime
 
 from jConfigFile import jConfigFile
-from jRsg2Config import jRsg2Config
+#from jRsg2Config import jRsg2Config
 from Rsg2ImagesRestore import Rsg2ImagesRestore
 from Rsg2TablesRestore import Rsg2TablesRestore
 
@@ -86,23 +86,12 @@ class RestoreRsg2:
             jConfigPathFileName = os.path.join (self.__joomlaPath, self.__joomlaName, 'configuration.php')
             self.__joomlaCfg = jConfigFile(jConfigPathFileName)
 
-            #--- RSG2 database configuration parameter ----------------------------
 
-            self.__rsg2Cfg = jRsg2Config(
-                self.__joomlaCfg.database,
-                self.__joomlaCfg.user,
-                self.__joomlaCfg.password,
-                self.__mySqlPath
-            )
 
         finally:
             pass
 
-        # ---------------------------------------------
-        # assign variables from config file
-        # ---------------------------------------------
-
-        self.readConfigFile (self.__configPathFileName)
+        return
 
     # --- isWriteEmptyTranslations ---
 
@@ -186,7 +175,9 @@ class RestoreRsg2:
 
             # --- do restore image filkes ----------------------------
 
-            rsg2ImagesRestore = Rsg2ImagesRestore(joomlaPath, backupPath)
+            joomlaPath = os.path.join(self.__joomlaPath, self.__joomlaName)
+
+            rsg2ImagesRestore = Rsg2ImagesRestore(self.__backupPath, joomlaPath)
             rsg2ImagesRestore.doCopy()
 
             # --- do restore rsg2 tables ----------------------------
@@ -197,7 +188,7 @@ class RestoreRsg2:
                 # Rsg2_TablesDump.j3x.sql
                 if fileName.startswith("Rsg2_TablesDump"):
                     dumpFileName = os.path.join(self.__backupPath, fileName)
-
+                    break
 
             rsg2TablesRestore = Rsg2TablesRestore(self.__joomlaCfg .database, self.__joomlaCfg .dbPrefix, self.__joomlaCfg .user,
                                                   self.__joomlaCfg .password, dumpFileName, self.__mySqlPath)
@@ -207,7 +198,7 @@ class RestoreRsg2:
             # ---- ... -----------------------------------------------------------
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -288,8 +279,23 @@ if __name__ == '__main__':
     optlist, args = getopt.getopt(sys.argv[1:], 'p:n:b:m:12345h')
 
     joomlaPath = 'd:/xampp/htdocs'
-    joomlaName = 'joomla3x'
-    backupPath = '../../../RSG2_Backup'
+    # joomlaPath = 'e:/xampp/htdocs'
+    # joomlaPath = 'f:/xampp/htdocs'
+    # joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
+    # joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
+
+    #joomlaName = 'joomla4x'
+    joomlaName = 'joomla4x_Sim3x'
+    #joomlaName = 'joomla3x'
+    ##joomlaName = 'joomla3x'
+    ##joomlaName = 'joomla3xMyGallery'
+    #joomlaName = 'joomla3xNextRelease'
+    #joomlaName = 'joomla3xRelease'
+    #joomlaName = 'joomla4x'
+    #joomlaName = 'joomla4xfrom3x'
+    #joomlaName = 'joomla4xInstall'
+
+    backupPath = '..\..\..\RSG2_Backup\\joomla3x.20200430_171320'
 
     for i, j in optlist:
         if i == "-p":

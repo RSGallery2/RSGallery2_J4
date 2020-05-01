@@ -76,8 +76,8 @@ class Rsg2ImagesRestore:
 
         # --- create path to image and dump file ----------------------------------
 
-        self.__SrcImagePath = os.path.join(self.__backupPath, 'image')
-        self.__DstImagePath = os.path.join(self.__joomlaPath, 'image')
+        self.__SrcImagePath = os.path.join(self.__backupPath, 'images')
+        self.__DstImagePath = os.path.join(self.__joomlaPath, 'images')
 
 
     # --------------------------------------------------------------------
@@ -93,13 +93,18 @@ class Rsg2ImagesRestore:
             print("dst path: " + self.__DstImagePath )
             print('---------------------------------------------------------')
 
+            # Make sure it is not the root directory
+            if (len(self.__DstImagePath) > 10):
+                if ('xampp' in self.__DstImagePath):
+                    shutil.rmtree(self.__DstImagePath)
+
             # --- copy -----------------------------------------------------------------
 
-            shutil.copytree(self.__SrcImagePath, self.__DstImagePath )
+            shutil.copytree(self.__SrcImagePath, self.__DstImagePath)
 
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -182,10 +187,18 @@ if __name__ == '__main__':
     # joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
     # joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
 
-    # joomlaName = 'joomla4x'
-    joomlaName = 'joomla3x'
+    #joomlaName = 'joomla4x'
+    joomlaName = 'joomla4x_Sim3x'
+    #joomlaName = 'joomla3x'
+    ##joomlaName = 'joomla3x'
+    ##joomlaName = 'joomla3xMyGallery'
+    #joomlaName = 'joomla3xNextRelease'
+    #joomlaName = 'joomla3xRelease'
+    #joomlaName = 'joomla4x'
+    #joomlaName = 'joomla4xfrom3x'
+    #joomlaName = 'joomla4xInstall'
 
-    backupPath = '../../../RSG2_Backup'
+    backupPath = '..\..\..\RSG2_Backup\\joomla3x.20200430_171320'
 
 
     for i, j in optlist:

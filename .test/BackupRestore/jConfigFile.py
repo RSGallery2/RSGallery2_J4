@@ -158,7 +158,7 @@ class jConfigFile:
                         self.__configurations[cfgName] = cfgText
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -184,7 +184,7 @@ class jConfigFile:
                 print("   " + key + " = '" + value + "'")
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ class jConfigFile:
                 print ('!!! warning value "%s" does not exist in configuration list !!!' % cfgName)
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         print ('       intValue: "' + intValue + '"')
@@ -236,7 +236,7 @@ class jConfigFile:
                 print ('!!! warning value "%s" does not exist in configuration list !!!' % cfgName)
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         print ('       floatValue: "' + floatValue + '"')
@@ -261,7 +261,7 @@ class jConfigFile:
                 print ('!!! warning value "%s" does not exist in configuration list !!!' % cfgName)
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         print ('       strValue: "' + strValue + '"')

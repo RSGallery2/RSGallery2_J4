@@ -222,7 +222,7 @@ class BackupRsg2:
 
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -318,8 +318,8 @@ if __name__ == '__main__':
 
 
     joomlaName = 'joomla4x'
+    joomlaName = 'joomla4x_Sim3x'
     #joomlaName = 'joomla3x'
-    
     ##joomlaName = 'joomla3x'
     ##joomlaName = 'joomla3xMyGallery'
     #joomlaName = 'joomla3xNextRelease'

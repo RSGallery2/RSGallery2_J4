@@ -201,7 +201,7 @@ class Rsg2ImagesBackup:
 
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -279,22 +279,24 @@ if __name__ == '__main__':
 
     optlist, args = getopt.getopt(sys.argv[1:], 'b:p:n:12345h')
 
-    backupPath = '../../../RSG2_Backup' # ? Joomla4 +  date ?
     joomlaPath = 'd:/xampp/htdocs'
     # joomlaPath = 'e:/xampp/htdocs'
     # joomlaPath = 'f:/xampp/htdocs'
     # joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
     # joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
 
-    # joomlaName = 'joomla4x'
-    joomlaName = 'joomla3x'
+    #joomlaName = 'joomla4x'
+    joomlaName = 'joomla4x_Sim3x'
+    #joomlaName = 'joomla3x'
+    ##joomlaName = 'joomla3x'
+    ##joomlaName = 'joomla3xMyGallery'
+    #joomlaName = 'joomla3xNextRelease'
+    #joomlaName = 'joomla3xRelease'
+    #joomlaName = 'joomla4x'
+    #joomlaName = 'joomla4xfrom3x'
+    #joomlaName = 'joomla4xInstall'
 
-    image_width = '' # sizes
-    imgPath_root = '/images/rsgallery2'
-    imgPath_original = '/images/rsgallery/original'
-    imgPath_display = '/images/rsgallery/display'
-    imgPath_thumb = '/images/rsgallery/thumb'
-    imgPath_watermarked = '/images/rsgallery/watermarked'
+    backupPath = '../../../RSG2_Backup' # ? Joomla4 +  date ?
 
     for i, j in optlist:
         if i == "-p":

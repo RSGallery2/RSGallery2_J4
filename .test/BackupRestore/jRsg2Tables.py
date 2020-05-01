@@ -322,7 +322,7 @@ class jRsg2Tables:
                         self.__dbPrefix = dbPrefix + searchStr
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
         # --------------------------------------------------------------------
@@ -363,7 +363,7 @@ class jRsg2Tables:
             print()
 
         except Exception as ex:
-            print('x Exception:' + ex)
+            print('!!! Exception: "' + str(ex) + '" !!!')
             print(traceback.format_exc())
 
     ##-------------------------------------------------------------------------------
