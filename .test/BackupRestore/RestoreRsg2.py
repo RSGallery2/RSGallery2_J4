@@ -193,10 +193,10 @@ class RestoreRsg2:
 
             dumpFileName = 'FileNotFound.sql'
 
-            for file in os.listdir(self.__backupPath):
+            for fileName in os.listdir(self.__backupPath):
                 # Rsg2_TablesDump.j3x.sql
-                if file.startswith("Rsg2_TablesDump"):
-                    dumpFileName = os.path.join(self.__backupPath, file)
+                if fileName.startswith("Rsg2_TablesDump"):
+                    dumpFileName = os.path.join(self.__backupPath, fileName)
 
 
             rsg2TablesRestore = Rsg2TablesRestore(self.__joomlaCfg .database, self.__joomlaCfg .dbPrefix, self.__joomlaCfg .user,
