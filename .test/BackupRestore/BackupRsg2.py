@@ -4,6 +4,7 @@ import os
 import getopt
 import sys
 import traceback
+import platform
 
 from datetime import datetime
 
@@ -145,11 +146,28 @@ class BackupRsg2:
             print('backupPath (used): ' + backupPath)
             print('backupPath (abspath): ' + os.path.abspath(backupPath))
 
+            
 
             #--- Create path if not already exists -------------------------------
 
             if (not os.path.isdir(backupPath)):
                 os.makedirs(backupPath)
+
+
+            #--- Create filename with source PC name -------------------------------
+
+            hostName = str(platform.node())
+            print("HostName (PC): " + hostName)
+
+            hostPathFileName = os.path.join (backupPath, hostName + '.txt')
+            with open(hostPathFileName, 'w') as manifestFile:
+
+                #manifestFile.write("RSG2 backup on " + hostName + "\n")
+                manifestFile.write("hostName " + hostName + "\n")
+                manifestFile.write("date: " + '{0:%Y%m%d_%H%M%S}'.format(datetime.now()) + "\n")
+                manifestFile.write("joomlaPath: " + self.__joomlaPath + "\n")
+                manifestFile.write("joomlaName: " + self.__joomlaName + "\n")
+                manifestFile.write("backupBasePath: " + os.path.abspath(backupBasePath) + "\n")
 
             # --------------------------------------------------------------------
             # Backup RSG2 configurations from database
@@ -295,12 +313,12 @@ if __name__ == '__main__':
     joomlaPath = 'd:/xampp/htdocs'
     #joomlaPath = 'e:/xampp/htdocs'
     #joomlaPath = 'f:/xampp/htdocs'
-    joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
+    #joomlaPath = 'e:/xampp_J2xJ3x/htdocs'
     #joomlaPath = 'f:/xampp_J2xJ3x/htdocs'
 
 
-    #joomlaName = 'joomla4x'
-    joomlaName = 'joomla3x'
+    joomlaName = 'joomla4x'
+    #joomlaName = 'joomla3x'
     
     ##joomlaName = 'joomla3x'
     ##joomlaName = 'joomla3xMyGallery'
