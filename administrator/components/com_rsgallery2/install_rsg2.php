@@ -125,7 +125,7 @@ class Com_Rsgallery2InstallerScript
         {
             //--- Read manifest  with old version ------------------------
 
-            $this->oldManifestData = readRsg2ExtensionManifest ();
+            $this->oldManifestData = $this->readRsg2ExtensionManifest ();
             if ( ! empty ($this->oldManifestData['version'])) {
                 $this->oldRelease = $this->oldManifestData['version'];
             }
