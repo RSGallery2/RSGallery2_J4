@@ -66,7 +66,7 @@ if ($readonly || $disabled)
 }
 
 $attr2 .= !empty($class) ? ' class="' . $class . '"' : '';
-$attr2 .= ' search-placeholder="' . $this->escape(Text::_('JGLOBAL_TYPE_OR_SELECT_GALLERY')) . '" ';
+$attr2 .= ' search-placeholder="' . $this->escape(Text::_('COM_RSGALLERY2_TYPE_OR_SELECT_GALLERY')) . '" ';
 
 if ($allowCustom)
 {
