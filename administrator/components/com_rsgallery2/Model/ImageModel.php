@@ -25,7 +25,6 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\String\StringHelper;
-use Joomla\CMS\Language\Text;
 
 /**
  * RSGallery2 Component Image Model
