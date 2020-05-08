@@ -291,10 +291,17 @@ if ($saveOrder && !empty($this->items))
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">
                                         <?php
                                         $link = JRoute::_("index.php?option=com_rsgallery2&view=gallery&task=gallery.edit&id=" . $item->id);
-                                        $count = random_int (0, 2) ;
+                                        //$count = random_int (0, 2) ;
+                                        $imageCount = 0;
+                                        if (!empty($item->image_count))
+                                        {
+	                                        $imageCount = $item->image_count;
+                                        }
+
+
                                         ?>
-                                        <a class="btn <?php echo ($count > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php echo Text::_('COM_CATEGORY_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo $link; ?>">
-											<?php echo $count; ?></a>
+                                        <a class="btn <?php echo ($imageCount > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php echo Text::_('COM_CATEGORY_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo $link; ?>">
+											<?php echo $imageCount; ?></a>
                                     </td>
 
                                     <td class="small d-none d-md-table-cell">
