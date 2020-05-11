@@ -164,6 +164,7 @@ class HtmlView extends BaseHtmlView
 				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
 				. '*  published_up, published_down<br>'
 				. '*  Reduce editor buttons (sets to be eselected) <br>'
+                . '*  description to each input parameter "_DESC"<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
