@@ -259,6 +259,49 @@
 				label="COM_RSGALLERY2_FIELD_IMAGE_ALT_LABEL"
 				size="20"
 			/>
+			
+			<field 
+				name="gallery_sort_order" 
+				type="list" 
+				default="0" 
+				label="COM_RSGALLERY2_FIELD_SORT_ORDER_LABEL" 
+				description="COM_RSGALLERY2_FIELD_SORT_ORDER_DESC"
+				>
+				<option value="global">Use Global</option>
+				<option value="ordering">Order by ordering field</option>
+				<option value="desc">Date ascending</option>
+				<option value="asc">Date descending</option>
+			</field> 
+		</fieldset>
+		
+		<fieldset name="voting" label="COM_RSGALLERY2_FIELD_VOTING_LABEL">
+
+			<field 
+				name="voting_view" 
+				type="list" 
+				default="0" 
+				label="Voting - View Results" 
+				description="Choose who can view the voting results."
+				>
+				<option value="global">Use Global</option>
+				<option value="anyone">Anyone</option>
+				<option value="registered">Registered</option>
+				<option value="off">Nobody</option>
+			</field>
+			<field 
+				name="voting_vote" 
+				type="list" 
+				default="0" 
+				label="Voting - Suffrage" 
+				description="Choose who can vote for images in this gallery."
+				>
+				<option value="global">Use Global</option>
+				<option value="anyone">Anyone Can Vote</option>
+				<option value="registered">Registered Only</option>
+				<option value="off">No Voting</option>
+			</field>
+
+		
 		</fieldset>
 	</fields>
 
