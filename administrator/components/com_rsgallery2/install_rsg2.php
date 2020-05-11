@@ -125,12 +125,14 @@ class Com_Rsgallery2InstallerScript
         {
             //--- Read manifest  with old version ------------------------
 
-            $this->oldManifestData = $this->readRsg2ExtensionManifest ();
-            if ( ! empty ($this->oldManifestData['version'])) {
-                $this->oldRelease = $this->oldManifestData['version'];
+            $this->oldManifestData = $this->getVersionFromManifestParam ();
+
+            // old release not found but rsgallery2 data still kept in database -> error message
+            if (empty ($this->oldRelease)) {
+                JFactory::getApplication()->enqueueMessage('Can not install: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts', 'error');
+
+                return false;
             }
-
-
         }
 
 		Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');
@@ -509,6 +511,20 @@ EOT;
 
 	}
 
+	function getVersionFromManifestParam ()
+	{
+        //$oldRelease = '1.0.0.999';
+        $oldRelease = '';
+
+		
+		$this->oldManifestData = $this->readRsg2ExtensionManifest ();
+		if ( ! empty ($this->oldManifestData['version'])) {
+			$oldRelease = $this->oldManifestData['version'];
+		}
+		
+		return $oldRelease;
+	}
+	
 
     static function readRsg2ExtensionManifest ()
     {
