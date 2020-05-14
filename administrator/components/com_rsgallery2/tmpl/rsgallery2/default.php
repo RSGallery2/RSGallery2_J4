@@ -27,6 +27,82 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
 
 HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
 
+
+
+?>
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
+      method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+    <div class="row">
+        <?php if (false) : // ToDo: Remove this quick hack. do not show sidebar
+            //if (!empty($this->sidebar)) :
+            ?>
+        <div id="j-sidebar-container" class="col-md-2">
+            <?php echo $this->sidebar; ?>
+        </div>
+        <?php endif; ?>
+        <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
+            <div id="j-main-container" class="j-main-container">
+
+                <?php
+
+                //--- Logo -----------------------------
+
+                DisplayRSG2Logo();
+
+                //--- Control buttons ------------------
+
+                DisplayRSG2ControlButtons($this->buttons);
+
+ //               echo '<hr>';
+
+                //--- RSG2 info table -----------------------------
+
+                // DisplayInfoRsgallery2($this->Rsg2Version);
+                // ToDo: use real version
+                DisplayInfoRsgallery2($this->Rsg2Version);
+
+//                echo '<hr>';
+
+                //--- Last galleries and last uploaded images -----------------------------
+
+                // Info about last created galleries and last uploaded images
+                // side by side
+                DisplayInfoGalleryAndImages ($this->lastGalleries, $this->lastImages);
+
+//                echo '<hr>';
+
+                //--- Change log -----------------------------
+
+                // Info about the change log of RSG3 sources
+                DisplayInfoChangeLog ($this->changelogs);
+
+                echo '<hr>';
+
+                //--- Credits -----------------------------
+
+                // Info about supporters of RSGallery 2
+                DisplayInfoCredits ($this->credits);
+
+                echo '<hr>';
+
+                //--- External component licenses -----------------------------
+
+                DisplayInfoExternalLicenses ($this->externalLicenses);
+
+                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
+                echo '<hr>';
+
+                ?>
+            </div>
+        </div>
+    </div>
+
+    <?php echo HTMLHelper::_('form.token'); ?>
+</form>
+
+<?php
+
+
 //--- Logo -----------------------------
 
 function DisplayRSG2Logo()
@@ -610,87 +686,3 @@ function DisplayInfoExternalLicenses ($externalLicenses)
 	echo '   </div>';
 	echo '</row>';
 }
-
-?>
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
-      method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
-    <div class="row">
-        <?php if (!empty($this->sidebar)) : ?>
-        <div id="j-sidebar-container" class="col-md-2">
-            <?php echo $this->sidebar; ?>
-        </div>
-        <?php endif; ?>
-        <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
-            <div id="j-main-container" class="j-main-container">
-
-                <?php
-
-                //--- Logo -----------------------------
-
-                DisplayRSG2Logo();
-
-                //--- Control buttons ------------------
-
-                DisplayRSG2ControlButtons($this->buttons);
-
-    //            echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-    //            echo '<hr style="height:2px;border-width:0;color:lightgray;background-color:lightgray">';
-
- //               echo '<hr>';
-
-                //--- RSG2 info table -----------------------------
-
-                // DisplayInfoRsgallery2($this->Rsg2Version);
-                // ToDo: use real version
-                DisplayInfoRsgallery2($this->Rsg2Version);
-
-                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-//                echo '<hr>';
-
-                //--- Last galleries and last uploaded images -----------------------------
-
-                // // Info about last created galleries and last uploaded images
-                // side by side
-                DisplayInfoGalleryAndImages ($this->lastGalleries, $this->lastImages);
-
-                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-//                echo '<hr>';
-
-                //--- Change log -----------------------------
-                /**
-                $db = Factory::getDBO();
-                $com_articles = $db->setQuery("SELECT * FROM #__extensions WHERE name = 'com_directory'");
-                $com_articles = $com_articles->loadObject();
-                print_r($com_articles);
-                /**/
-
-                // Info about the change log og RSG3 sources
-                // DisplayInfoChangeLog ($this->extension_id);
-                DisplayInfoChangeLog ($this->changelogs);
-
-                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-//                echo '<hr>';
-
-                //--- Credits -----------------------------
-
-                // Info about supporters of RSGallery 2
-                DisplayInfoCredits ($this->credits);
-
-                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-                echo '<hr>';
-
-                //--- External component licenses -----------------------------
-
-                DisplayInfoExternalLicenses ($this->externalLicenses);
-
-                //echo '<hr style="height:2px;border-width:0;color:gray;background-color:gray">';
-                echo '<hr>';
-
-                ?>
-            </div>
-        </div>
-    </div>
-
-    <?php echo HTMLHelper::_('form.token'); ?>
-</form>
-
