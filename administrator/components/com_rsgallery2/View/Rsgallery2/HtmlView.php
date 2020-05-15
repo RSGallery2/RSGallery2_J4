@@ -100,6 +100,7 @@ class HtmlView extends BaseHtmlView
 		$oRsg2Version = new rsgallery2Version();
 		$this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 
+        // ToDo: Changelogs HTMl should be created at install (? build process) and handled like credits
 		$jsonChangelogs = ChangeLogModel::changeLogElements();
 		$this->changelogs = ChangeLogModel::changeLogsData2Html ($jsonChangelogs);
 
@@ -132,26 +133,11 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  config link to joomla config<br>'
-				. '*  scss with rsg2 colors and for control view<br>'
-				. '*  <br>'
-				. '*  finish -> DB: Transfer galleries<br>'
-				. '*  finish -> DB: Transfer images<br>'
-//				. '*  finish -> <br>'
-//				. '*  finish -> <br>'
-				. '*  Hide content of Changelog until selected<br>'
-				. '*  Hide content of Credits until selected<br>'
-				. '*  Install: Improve end view<br>'
-				. '*  Install: Check and handle J3x configuration<br>'
-				. '*  Install: Check and handle J3x galleries<br>'
-				. '*  Install: Check and handle J3x images<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+                . '*  Install: see maintenance<br>'
 				. '*  --- Config -------<br>'
-				. '*  Use _CFG_ in names<br>'
-				. '*  <br>'
-				. '*  <br>'
+				. '*  Use _CFG_ in ?variable? names<br>'
+//				. '*  <br>'
+//				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
