@@ -129,7 +129,7 @@ class HtmlView extends BaseHtmlView
 
 		$Layout = Factory::getApplication()->input->get('layout');
 
-		
+
 
 		$this->addToolbar($Layout);
 

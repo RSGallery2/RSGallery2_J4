@@ -252,7 +252,7 @@ class HtmlView extends BaseHtmlView
         
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'image');
 
-				ToolBarHelper::addNew('image.add');
+				//ToolBarHelper::addNew('image.add');
 
 				$dropdown = $toolbar->dropdownButton('status-group')
 					->text('JTOOLBAR_CHANGE_STATUS')
@@ -273,10 +273,9 @@ class HtmlView extends BaseHtmlView
 
 				$childBar->trash('categories.trash')->listCheck(true);
 
-				$toolbar->standardButton('refresh')
-					->text('JTOOLBAR_REBUILD')
-					->task('image.rebuild');
-
+				// $toolbar->standardButton('refresh')
+                // 	->text('JTOOLBAR_REBUILD')
+                // 	->task('image.rebuild');
 
 
 				ToolBarHelper::editList('image.edit');
