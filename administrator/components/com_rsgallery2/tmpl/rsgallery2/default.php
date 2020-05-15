@@ -25,7 +25,7 @@ use Joomla\CMS\Language\Text;
 
 JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'auto', 'relative' => true));
 
-HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
+// HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
 
 
 
@@ -57,9 +57,9 @@ HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 
 
                 //--- RSG2 info table -----------------------------
 
-                // DisplayInfoRsgallery2($this->Rsg2Version);
+                // About RSG2 
                 // ToDo: use real version
-                DisplayInfoRsgallery2($this->Rsg2Version);
+                DisplayAboutRsgallery2($this->Rsg2Version);
 
 //                echo '<hr>';
 
@@ -239,98 +239,144 @@ function DisplayRSG2ControlButtons($buttons)
 }
 
 
-function DisplayInfoRsgallery2($Rsg2Version)
+function DisplayAboutRsgallery2($Rsg2Version)
 {
-	// First column
-//	echo '<div class="container-fluid">';
-//	echo '<div class="clearfix"></div>';
+    $title = Text::_('COM_RSGALLERY2_ABOUT') . ' ' . $Rsg2Version;
+    $content = rsg2InfoHtml ($Rsg2Version);
+    $content = '<div>About content</div>div>';
+    $id = 'rsg2_info';
 
-	echo '<row>';
-	//echo '<span class="rsg2logo-container col-md-6">';
+    collapseContent ($title, $content, $id);
+}
 
-	echo '   <div class="card bg-light data-toggle="collapse">';
-	echo '      <div class="card-header">';
-	echo '          ' . Text::_('COM_RSGALLERY2_GALLERY_INFORMATION');
-	echo '      </div>';
-	echo '      <div id="credit-card-body" class="card-body">';
 
-	echo '<div class="rsg2-panel-info">';
-	/**/
-//    echo '<table class="table table-striped">';
-//	echo '<table class="table table-bordered table-striped w-auto text-xsmall table-hover table-light">';
-//	echo '<table class="table table-sm w-auto text-xsmall table-hover table-light">';
-//	echo '<table class="table w-auto text-xsmall table-hover table-sm table-condensed table-light">';
-	echo '<table class="table table-light w-auto table_morecondensed">';
-//    echo '<table class="table">';
-//    echo '<table>';
-//    echo '<table>';
-	echo '    <tbody>';
-	/**/
-	/**/
-	echo '        <tr>';
-	echo '            <td>' . Text::_('COM_RSGALLERY2_INSTALLED_VERSION') . ': ' . '</td>';
-	echo '            <td>';
-//	echo '                <a href="' . JRoute::_('index.php?option=com_rsgallery2&view=rsgallery2&layout=ChangeLog') . '"';
-//	echo '                   title="' . Text::_('COM_RSGALLERY2_VIEW_CHANGE_LOG') . '""';
-//	echo '                   class="modal">' . $Rsg2Version . '</a>';
-	echo '                   <strong>' . $Rsg2Version . '</strong>';
-	echo '            </td>';
-	echo '        </tr>';
-	/**/
-	// License
-	echo '        <tr>';
-	echo '            <td>' . Text::_('COM_RSGALLERY2_LICENSE') . ': ' . '</td>';
-	echo '            <td>';
-	echo '               <a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"'
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
-	echo '            </td>';
-	echo '        </tr>';
-	/**/
-	// Home page
-	echo '        <tr>';
-	echo '            <td>' . Text::_('COM_RSGALLERY2_HOME_PAGE') . '</td>';
-	echo '            <td>';
-	echo '                <a href="http://www.rsgallery2.org/" target="_blank" '
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
-	echo '            </td>';
-	echo '        </tr>';
-	/**/
-	// Forum
-	echo '        <tr>';
-	echo '            <td>' . Text::_('COM_RSGALLERY2_FORUM') . '</td>';
-	echo '            <td>';
-	echo '                <a href="http://www.forum.rsgallery2.org/" target="_blank" '
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
-	echo '            </td>';
-	echo '        </tr>';
-	/**/
-	// Documentation
-	echo '        <tr>';
-	echo '            <td>' . Text::_('COM_RSGALLERY2_DOCUMENTATION') . '</td>';
-	echo '            <td>';
-	echo '                <a href="http://www.rsgallery2.org/index.php/documentation" target="_blank"'
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
-	echo '            </td>';
-	echo '        </tr>';
+function collapseContent ($title, $content, $id)
+{
+    echo '<row>';
 
-	/**/
-	echo '    </tbody>';
-	echo '</table>';
-	/**/
-	//echo '</span>';
-	echo '</div>';
+    //--- header ----------------------------------------------------
 
-	echo '      </div>';
-//    echo '      <div class="card-footer">Footer</div>';
-	echo '   </div>';
+    echo '   <div id="' . $id . '_card" >';
+    echo '      <div class="card bg-light data-toggle="collapse">';
+	echo '         <div class="card-header" id="' . $id . '_header">';
 
-	echo '</row>';
+//    echo '         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#' . $id . '_collapse" aria-expanded="false" aria-controls="' . $id . '_collapse">';
+    echo '            <button class="btn collapsed" data-toggle="collapse" data-target="#' . $id . '_collapse" aria-expanded="false" aria-controls="' . $id . '_collapse" href="#">';
+
+    echo '	             <span class="icon-arrow-down" aria-hidden="true"></span>';
+	echo '                  ' . $title;
+
+    echo '            </button>';
+
+	echo '         </div>';
+
+    //--- body ----------------------------------------------------
+
+    //echo '      <div id="' . $id . '_collapse" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">';
+    echo '         <div id="' . $id . '_collapse" class="collapse" aria-labelledby="info_header" data-parent="#' . $id . '_card">';
+
+    echo '            <div id="' . $id . '_card_body" class="card-body">';
+
+	echo '               <div class="rsg2-panel-info">';
+
+	//--- content --------------------------------------------------
+
+    echo $content;
+
+	//--- --------------------------------------------------
+
+	echo '               </div>'; // rsg2-panel-info
+
+	echo '            </div>'; // card-body
+
+	echo '         </div>'; // collapseOne
+
+    echo '      </div>'; // card
+
+    echo '   </div>'; // outer
+
+//    echo '</div>'; // outer
+
+    echo '</row>';
 //	echo '</div>'; // container fluid
 
 	echo '<div class="clearfix"></div>';
 
 	return;
 }
+
+function rsg2InfoHtml ($Rsg2Version) {
+
+
+    $html[] = '';
+    
+
+//    $html[] = '<table class="table table-striped">';
+//	$html[] = '<table class="table table-bordered table-striped w-auto text-xsmall table-hover table-light">';
+//	$html[] = '<table class="table table-sm w-auto text-xsmall table-hover table-light">';
+//	$html[] = '<table class="table w-auto text-xsmall table-hover table-sm table-condensed table-light">';
+    $html[] = '<table class="table table-light w-auto table_morecondensed">';
+//    $html[] = '<table class="table">';
+//    $html[] = '<table>';
+//    $html[] = '<table>';
+    $html[] = '    <tbody>';
+
+
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_INSTALLED_VERSION') . ': ' . '</td>';
+    $html[] = '            <td>';
+//	$html[] = '                <a href="' . JRoute::_('index.php?option=com_rsgallery2&view=rsgallery2&layout=ChangeLog') . '"';
+//	$html[] = '                   title="' . Text::_('COM_RSGALLERY2_VIEW_CHANGE_LOG') . '""';
+//	$html[] = '                   class="modal">' . $Rsg2Version . '</a>';
+    $html[] = '                   <strong>' . $Rsg2Version . '</strong>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+    // License
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_LICENSE') . ': ' . '</td>';
+    $html[] = '            <td>';
+    $html[] = '               <a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"'
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+    // Home page
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_HOME_PAGE') . '</td>';
+    $html[] = '            <td>';
+    $html[] = '                <a href="http://www.rsgallery2.org/" target="_blank" '
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+    // Forum
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_FORUM') . '</td>';
+    $html[] = '            <td>';
+    $html[] = '                <a href="http://www.forum.rsgallery2.org/" target="_blank" '
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+    // Documentation
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_DOCUMENTATION') . '</td>';
+    $html[] = '            <td>';
+    $html[] = '                <a href="http://www.rsgallery2.org/index.php/documentation" target="_blank"'
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+
+    $html[] = '    </tbody>';
+    $html[] = '</table>';
+
+    return implode($html);
+}
+
+
+
 
 function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 {
@@ -493,6 +539,14 @@ function DisplayInfoGalleryAndImages ($lastGalleries, $lastImages)
 // Info about supporters of RSGallery 2
 function DisplayInfoCredits ($credits)
 {
+    $title = Text::_('COM_RSGALLERY2_CREDITS');
+//    $content = CreditsHtml ($credits);
+    $id = 'rsg2_credits';
+
+    collapseContent ($title, $credits, $id);
+}
+
+/**
 //	echo '<div class="clearfix"></div>';
 
 	echo '<hr>';
@@ -510,7 +564,7 @@ function DisplayInfoCredits ($credits)
 	echo '   </div>';
 	echo '</row>';
 
-}
+/**/
 
 function tableFromXml($changelogs)
 {
