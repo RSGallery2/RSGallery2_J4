@@ -30,9 +30,9 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
                     <?php echo $this->sidebar; ?>
                 </div>
             <?php endif; ?>
-            <div class="<?php 
-                // if (!empty($this->sidebar)) {
-                if (false) {
+            <div class="<?php
+            // if (!empty($this->sidebar)) {
+            if (false) {
                 echo 'col-md-10';
             } else {
                 echo 'col-md-12';
@@ -57,27 +57,27 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
                     // ToDo: use real version
                     DisplayAboutRsgallery2($this->Rsg2Version);
 
-                    echo '<hr>';
+                    // echo '<hr>';
 
                     //--- Last galleries and last uploaded images -----------------------------
 
                     DisplayLastGalleriesAndImages($this->lastGalleries, $this->lastImages);
 
-                    echo '<hr>';
+                    //echo '<hr>';
 
                     //--- Change log -----------------------------
 
                     // Info about the change log of RSG3 sources
                     DisplayChangeLog($this->changelogs);
 
-                    echo '<hr>';
+                    //echo '<hr>';
 
                     //--- Credits -----------------------------
 
                     // Info about supporters of RSGallery 2
                     DisplayCredits($this->credits);
 
-                    echo '<hr>';
+                    //echo '<hr>';
 
                     //--- External component licenses -----------------------------
 
@@ -90,7 +90,7 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
             </div>
         </div>
 
-	    <input type="hidden" name="task" value="" />
+        <input type="hidden" name="task" value=""/>
         <?php echo HTMLHelper::_('form.token'); ?>
     </form>
 
@@ -230,28 +230,40 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
 
     echo '<row>';
 
+    echo '    <div id="GalImg_outer">';
+
     echo '    <div>';
     echo '        <div class="custom-column">';
     echo '            <div class="custom-column-content">';
-    echo '                <div class="card bg-light data-toggle="collapse">';
+    echo '                <div class="card bg-light" id="galleriesCard" >';
     echo '                    <div class="card-header">';
     echo '                        ' . Text::_('COM_RSGALLERY2_GALLERIES');
     echo '                    </div>';
 
     echo '                    <div id="credit-card-body" class="card-body">';
-
     echo '                        <div class="rsg2-gallery-info-table">';
 
     // only root gallery item existing
     if (count($lastGalleries) < 2) {
+        echo '<table class="table table-striped table-sm table_morecondensed" id="galleriesTable" >';
+        echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
+
+        echo '    <tbody>';
+
         echo '        <tr>';
         echo '        %';
         // echo Text::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
         echo '        </tr>';
+        echo '    </tbody>';
+
+        //--- footer ----------------------------------
+        echo '</table>';
     } else {
+
         // Header ----------------------------------
 
-        echo '<table class="table table-striped table-light w-auto table_morecondensed">';
+//        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="galleriesTable" >';
+        echo '<table class="table table-striped table-sm table_morecondensed" id="galleriesTable" >';
         echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
         echo '    <thead>';
         echo '        <tr>';
@@ -288,18 +300,19 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '            </div>';
     echo '        </div>';
     echo '    </div>';
-    echo '</row>';
+
+    // echo '</row>';
 
     //--- images -----------------------------------------------------
 
-    echo "<hr>";
+//    echo "<hr>";
 
-    echo '<row>';
+//    echo '<row>';
 
     echo '    <div>';
     echo '        <div class="custom-column">';
     echo '            <div class="custom-column-content">';
-    echo '                <div class="card bg-light data-toggle="collapse">';
+    echo '                <div class="card bg-light" id="imagesCard" >';
     echo '                    <div class="card-header">';
     echo '                        ' . Text::_('COM_RSGALLERY2_IMAGES');
     echo '                    </div>';
@@ -310,15 +323,23 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
 
     // no image existing
     if (count($lastImages) == 0) {
+        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
+        echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
+        echo '    <tbody>';
+
         echo '        <tr>';
         echo '        %';
         // echo Text::_('COM_RSGALLERY2_NO_NEW_IMAGES');
         echo '        </tr>';
+        echo '    </tbody>';
+
+        //--- footer ----------------------------------
+        echo '</table>';
     } else {
 
         // Header ----------------------------------
 
-        echo '<table class="table table-striped table-light w-auto table_morecondensed">';
+        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
         echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
         echo '    <thead>';
         echo '        <tr>';
@@ -355,6 +376,8 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '            </div>';
     echo '        </div>';
     echo '    </div>';
+
+    echo '    </div>'; // id="GalImg_outer"
 
 
     echo '</row>';
@@ -449,7 +472,7 @@ function collapseContent($title, $content, $id)
 
     $collapsed = <<<EOT
         <row>
-            <div class="card">
+            <div class="card forCollapse">
                 <h5 class="card-header">
                     <button class="btn collapsed " type="button" data-toggle="collapse" data-target="#collapse-collapsed-$id" 
                         aria-expanded="false" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">

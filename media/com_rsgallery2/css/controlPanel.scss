@@ -139,6 +139,8 @@ div.quickicon-icon
 
 }
 
+//----------------------------------------------------------------------------------
+
 .table_morecondensed>thead>tr>th,
 .table_morecondensed>tbody>tr>th,
 .table_morecondensed>tfoot>tr>th,
@@ -148,25 +150,6 @@ div.quickicon-icon
 {
 	padding: 4px;
 }
-
-.rsg2-panel-info {
-/*	border: thick solid lightgray; /**/
-
-/*	background: white; /**/
-
-	padding: 4px; /**/
-	margin: 4px; /**/
-}
-
-.rsg2-panel-info .table {
-
-/*	background: lightgrey; /**/
-/*	box-shadow: none; /**/
-/*	border: none; /**/
-/*	padding: 4px; /**/
-/*	margin: 4px; /**/
-}
-
 
 /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
 
@@ -197,8 +180,14 @@ div.quickicon-icon
 /* ToDo: More specific add dictionaries with class= gallery/images ... */
 .table caption {
 	caption-side: top;
-
+	white-space: nowrap;
+//	overflow: hidden;
 }
+
+
+
+
+//----------------------------------------------------------------------------------
 
 .changelog_area {
 	display: flex;
@@ -227,3 +216,35 @@ div.quickicon-icon
 	border-bottom: 2px solid black;
 }
 
+//----------------------------------------------------------------------------------
+
+.card-header .fa {
+	transition: .3s transform ease-in-out;
+}
+
+.card-header .collapsed .fa {
+	transform: rotate(-90deg);
+}
+
+//----------------------------------------------------------------------------------
+
+#GalImg_outer {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: stretch;
+
+	margin-bottom: 15px;
+}
+
+#galleriesCard {
+	margin-right: 10px;
+}
+
+row > .card {
+	margin-bottom: 15px;
+}
+
+//.card.forCollapse {
+//	padding: 10px;
+//}
