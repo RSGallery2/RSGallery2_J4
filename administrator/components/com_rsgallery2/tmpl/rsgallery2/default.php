@@ -9,25 +9,14 @@
 
 defined('_JEXEC') or die;
 
-/**
- * use Joomla\CMS\Changelog\Changelog;
- * use Joomla\CMS\Factory;
- * use Joomla\CMS\Layout\FileLayout;
- * use Joomla\CMS\Response\JsonResponse;
- * /**/
-
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
 use Joomla\CMS\Language\Text;
 
-//HTMLHelper::_('behavior.formvalidator');
-//HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('bootstrap.framework');
 
 JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'auto', 'relative' => true));
-
-// HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
-
 
 ?>
 
@@ -41,7 +30,9 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
                     <?php echo $this->sidebar; ?>
                 </div>
             <?php endif; ?>
-            <div class="<?php if (!empty($this->sidebar)) {
+            <div class="<?php 
+                // if (!empty($this->sidebar)) {
+                if (false) {
                 echo 'col-md-10';
             } else {
                 echo 'col-md-12';
@@ -99,6 +90,7 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
             </div>
         </div>
 
+	    <input type="hidden" name="task" value="" />
         <?php echo HTMLHelper::_('form.token'); ?>
     </form>
 
@@ -161,6 +153,7 @@ function DisplayRSG2ControlButtons($buttons)
  */
 function DisplayAboutRsgallery2($Rsg2Version)
 {
+    //$title = Text::_('COM_RSGALLERY2_ABOUT') . ' <strong>' . $Rsg2Version . ' </strong>';
     $title = Text::_('COM_RSGALLERY2_ABOUT') . ' ' . $Rsg2Version;
     $content = rsg2InfoHtml($Rsg2Version);
     $id = 'rsg2_info';
@@ -228,7 +221,7 @@ function rsg2InfoHtml($Rsg2Version)
 }
 
 
-//--- About RSG2 ------------------
+//--- Latest galleries images ------------------
 
 function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
 {
@@ -236,6 +229,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     //--- galleries -----------------------------------------------------
 
     echo '<row>';
+
     echo '    <div>';
     echo '        <div class="custom-column">';
     echo '            <div class="custom-column-content">';
@@ -361,6 +355,8 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '            </div>';
     echo '        </div>';
     echo '    </div>';
+
+
     echo '</row>';
 
     echo '<div class="clearfix"></div>';
@@ -450,55 +446,28 @@ function DisplayExternalLicenses($externalLicenses)
  */
 function collapseContent($title, $content, $id)
 {
-    echo '<row>';
 
-    //--- header ----------------------------------------------------
+    $collapsed = <<<EOT
+        <row>
+            <div class="card">
+                <h5 class="card-header">
+                    <button class="btn collapsed " type="button" data-toggle="collapse" data-target="#collapse-collapsed-$id" 
+                        aria-expanded="false" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">
+                        <i class="fa fa-chevron-down pull-right"></i>
+                        $title
+                    </button>
+                </h5>
+                <div id="collapse-collapsed-$id" class="collapse" aria-labelledby="heading-collapsed-$id">
+                    <div class="card-body">
+                        $content
+                    </div>
+                </div>
+            </div>
+        </row>
+EOT;
 
-    echo '   <div id="' . $id . '_card" >';
-    echo '      <div class="card bg-light data-toggle="collapse">';
-    echo '         <div class="card-header" id="' . $id . '_header">';
-
-//    echo '         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#' . $id . '_collapse" aria-expanded="false" aria-controls="' . $id . '_collapse">';
-    echo '            <button class="btn collapsed" data-toggle="collapse" data-target="#' . $id . '_collapse" aria-expanded="false" aria-controls="' . $id . '_collapse" href="#">';
-
-    echo '	             <span class="icon-arrow-down" aria-hidden="true"></span>';
-    echo '                  ' . $title;
-
-    echo '            </button>';
-
-    echo '         </div>';
-
-    //--- body ----------------------------------------------------
-
-    //echo '      <div id="' . $id . '_collapse" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">';
-    echo '         <div id="' . $id . '_collapse" class="collapse" aria-labelledby="info_header" data-parent="#' . $id . '_card">';
-
-    echo '            <div id="' . $id . '_card_body" class="card-body">';
-
-    echo '               <div class="rsg2-panel-info">';
-
-    //--- content --------------------------------------------------
-
-    echo $content;
-
-    //--- --------------------------------------------------
-
-    echo '               </div>'; // rsg2-panel-info
-
-    echo '            </div>'; // card-body
-
-    echo '         </div>'; // collapseOne
-
-    echo '      </div>'; // card
-
-    echo '   </div>'; // outer
-
-//    echo '</div>'; // outer
-
-    echo '</row>';
-//	echo '</div>'; // container fluid
-
-    echo '<div class="clearfix"></div>';
+    echo $collapsed;
 
     return;
 }
+
