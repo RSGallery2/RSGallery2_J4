@@ -211,7 +211,7 @@ class HtmlView extends BaseHtmlView
 				        . 'Tasks: <br>'
 				        . '* Can do ...<br>'
                         . '* Add pagination<br>'
-				        . '* archieved, trashed<br>'
+				        . '* Test: archived, trashed, (delete)<br>'
                         . '* Add delete function<br>'
 				        //	. '*  <br>'
 				        //	. '*  <br>'
@@ -232,13 +232,14 @@ class HtmlView extends BaseHtmlView
 		        {
 			        echo '<span style="color:red">'
 				        . 'Tasks: <br>'
+                        . '* Test: archived, trashed, (delete)<br>'
 						. '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
+                        . '* display thumb'
+                        . '*  <br>'
 				        . '* __associations <br>'
         				. '* Batch : turn images .... <br>'
 				        . '* Can do ...<br>'
                         . '* Add pagination<br>'
-				        . '* archieved, trashed<br>'
-                        . '* Add delete function<br>'
 						. '* __associations <br>'
                         . '* Delete function needs to delete watermarked too !<br>'
 	                    . '* Search controls ...<br>'
@@ -280,7 +281,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::editList('image.edit');
 //				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
-				ToolBarHelper::deleteList('', 'image.delete', 'JTOOLBAR_DELETE');
+//				ToolBarHelper::deleteList('', 'image.delete', 'JTOOLBAR_DELETE');
 
 				/**
 				// Add a batch button
