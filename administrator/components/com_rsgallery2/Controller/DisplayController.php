@@ -11,7 +11,9 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
 /**
  * Rsgallery2 master display controller.
@@ -28,7 +30,25 @@ class DisplayController extends BaseController
 	 */
 	protected $default_view = 'rsgallery2';
 
-	/**
+    /**
+     * Constructor.
+     *
+     * @param   array                $config   An optional associative array of configuration settings.
+     * Recognized key values include 'name', 'default_task', 'model_path', and
+     * 'view_path' (this list is not meant to be comprehensive).
+     * @param   MVCFactoryInterface  $factory  The factory.
+     * @param   CMSApplication       $app      The JApplication for the dispatcher
+     * @param   \JInput              $input    Input
+     *
+     * @since   1.0
+     */
+    public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+    {
+        parent::__construct($config, $factory, $app, $input);
+
+    }
+
+    /**
 	 * Method to display a view.
 	 *
 	 * @param   boolean  $cachable   If true, the view output will be cached

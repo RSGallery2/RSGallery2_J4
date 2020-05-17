@@ -11,7 +11,11 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 
 /**
  * Rsgallery2 master display controller.
@@ -20,7 +24,25 @@ use Joomla\CMS\MVC\Controller\BaseController;
  */
 class MaintenanceController extends BaseController
 {
-	/**
+    /**
+     * Constructor.
+     *
+     * @param   array                $config   An optional associative array of configuration settings.
+     * Recognized key values include 'name', 'default_task', 'model_path', and
+     * 'view_path' (this list is not meant to be comprehensive).
+     * @param   MVCFactoryInterface  $factory  The factory.
+     * @param   CMSApplication       $app      The JApplication for the dispatcher
+     * @param   \JInput              $input    Input
+     *
+     * @since   1.0
+     */
+    public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+    {
+        parent::__construct($config, $factory, $app, $input);
+
+    }
+
+    /**
 	 * The default view.
 	 *
 	 * @var    string
@@ -65,4 +87,24 @@ class MaintenanceController extends BaseController
         return parent::getModel($name, $prefix, $config);
     }  	
 	/**/
+
+
+
+    /**
+     * On cancel goto maintenance
+     *
+     * @return bool
+     *
+     * @since version 4.3
+     */
+    public function cancel()
+    {
+        Session::checkToken();
+
+        $link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
+        $this->setRedirect($link);
+
+        return true;
+    }
+
 }

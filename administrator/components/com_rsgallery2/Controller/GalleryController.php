@@ -34,6 +34,16 @@ class GalleryController extends FormController
 	 */
 	protected $extension;
 
+    public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+    {
+        parent::__construct($config, $factory, $app, $input);
+
+        if (empty($this->extension))
+        {
+            $this->extension = $this->input->get('extension', 'com_rsgallery2');
+        }
+    }
+
 	/**
 	 * Constructor.
 	 *
@@ -45,15 +55,6 @@ class GalleryController extends FormController
 	 * @since  1.6
 	 * @see    \JControllerLegacy
 	 *
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
-	{
-		parent::__construct($config, $factory, $app, $input);
-
-		if (empty($this->extension))
-		{
-			$this->extension = $this->input->get('extension', 'com_rsgallery2');
-		}
-	}
 	/**/
 
 	/**
