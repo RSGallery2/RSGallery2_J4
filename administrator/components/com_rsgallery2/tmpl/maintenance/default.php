@@ -317,6 +317,16 @@ $developer_ZoneButtons[] =  new zoneButtons(
 );
 /**/
 
+/**/
+$developer_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=develop'),
+	Text::_('COM_RSGALLERY2_DEVELOP_VIEW'),
+	Text::_('COM_RSGALLERY2_DEVELOP_VIEW_DESC'),
+	array('icon-enter', 'icon-compass'),
+	'view___'
+);
+/**/
+
 
 //--- ready for test zone -----------------------------
 
