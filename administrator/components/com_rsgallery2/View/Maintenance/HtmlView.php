@@ -176,13 +176,14 @@ class HtmlView extends BaseHtmlView
 					. ': ' . '<strong>' . $this->intended . '<strong>'
 //					. ': ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY')
 					, 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView');
+				ToolBarHelper::cancel('maintenance.cancel');
 				break;
 
 			default:
 				// Set the title
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'screwdriver'); // 'maintenance');
-				ToolBarHelper::cancel('config.cancel');
+				ToolBarHelper::cancel('maintenance.cancel');
+				// ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 		}
 
