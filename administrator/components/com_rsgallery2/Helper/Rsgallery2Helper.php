@@ -56,21 +56,21 @@ class Rsgallery2Helper extends ContentHelper
 			'<span class="icon-home-2" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL'),
 			$link,
-			$vName != 'control');
+			$vName == 'control');
 
 		$link = 'index.php?option=com_rsgallery2&view=galleries';
 		\JHtmlSidebar::addEntry(
 			'<span class="icon-images" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_GALLERIES'),
 			$link,
-			$vName != 'galleries');
+			$vName == 'galleries');
 
 		$link = 'index.php?option=com_rsgallery2&view=upload';
 		\JHtmlSidebar::addEntry(
 			'<span class="icon-upload" >  </span>' .
 			Text::_('COM_RSGALLERY2_MENU_UPLOAD'),
 			$link,
-			$vName != 'upload');
+			$vName == 'upload');
 
 		//--- Add images view link ------------------------------------
 
@@ -80,20 +80,38 @@ class Rsgallery2Helper extends ContentHelper
 			Text::_('COM_RSGALLERY2_MENU_IMAGES'),
 			// 'index.php?option=com_rsgallery2&rsgOption=images',
 			$link,
-			$vName != 'images');
+			$vName == 'images');
 			//false);
 
-		//--- Add maintenance view link ------------------------------------
+        //--- Add maintenance view link ------------------------------------
 
-		$link = 'index.php?option=com_rsgallery2&view=maintenance';
-		// In config add maintenance
-		\JHtmlSidebar::addEntry(
-			'<span class="icon-screwdriver" >  </span>' .
-			Text::_('COM_RSGALLERY2_MENU_MAINTENANCE'),
-			$link,
-			$vName != 'maintenance');
+        $link = 'index.php?option=com_rsgallery2&view=maintenance';
+        // In config add maintenance
+        \JHtmlSidebar::addEntry(
+            '<span class="icon-screwdriver" >  </span>' .
+            Text::_('COM_RSGALLERY2_MENU_MAINTENANCE'),
+            $link,
+            $vName == 'maintenance');
 
-		//--- config ------------------------------------
+
+
+        //--- Add develop view link ------------------------------------
+
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $isDevelop = $rsgConfig->get('isDevelop');
+
+        if ($isDevelop) {
+
+            $link = 'index.php?option=com_rsgallery2&view=develop';
+            // In config add maintenance
+            \JHtmlSidebar::addEntry(
+                '<span class="icon-screwdriver" >  </span>' .
+                Text::_('COM_RSGALLERY2_MENU_DEVELOP'),
+                $link,
+                $vName == 'develop');
+        }
+
+        //--- config ------------------------------------
 		/**
 		$link = 'index.php?option=com_rsgallery2&view=config&task=config.edit';
 		// In maintenance add config
