@@ -27,6 +27,7 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model;
 use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 
 //$path = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/install_rsg2.php';
 //if (File::exists($path))
@@ -116,6 +117,11 @@ class HtmlView extends BaseHtmlView
 
 //		$TestInstall = new Com_Rsgallery2InstallerScript ();
 //		$this->installMessage = $TestInstall->postFlightMessage ('update');
+
+        $installMessage = new InstallMessage;
+        //$this->installMessage = InstallMessage::installMessageText;
+        $this->installMessage = $installMessage->installMessageText();
+
 
 		//--- Check user rights ---------------------------------------------
 

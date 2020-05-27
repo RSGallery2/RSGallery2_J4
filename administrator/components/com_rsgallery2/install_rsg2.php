@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+
+use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 /**
@@ -125,11 +127,11 @@ class Com_Rsgallery2InstallerScript
         {
             //--- Read manifest  with old version ------------------------
 
-            $this->oldManifestData = $this->getVersionFromManifestParam ();
+            $this->oldRelease = $this->getVersionFromManifestParam ();
 
             // old release not found but rsgallery2 data still kept in database -> error message
             if (empty ($this->oldRelease)) {
-                JFactory::getApplication()->enqueueMessage('Can not install: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts', 'error');
+                JFactory::getApplication()->enqueueMessage('Can not install RSG2: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts', 'error');
 
                 return false;
             }
@@ -234,13 +236,15 @@ class Com_Rsgallery2InstallerScript
 //		echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
-
 //		$changelog = $this->getChangelog();
 //		JFactory::getApplication()->enqueueMessage($changelog, 'notice');
 
-		$msg = $this->postFlightMessage($type);
-		$app = Factory::getApplication();
-		$app->enqueueMessage($msg, 'Notice');
+		//$msg = $this->postFlightMessage($type);
+        $msg = InstallMessage::installMessageText;
+		echo $msg;
+
+//		$app = Factory::getApplication();
+//		$app->enqueueMessage($msg, 'Notice');
 
 		return true;
 	}

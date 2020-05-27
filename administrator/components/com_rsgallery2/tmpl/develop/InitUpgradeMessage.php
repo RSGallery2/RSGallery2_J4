@@ -65,75 +65,26 @@ JHtml::_('formbehavior.chosen', 'select');
 
 				<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'InitUpgradeMessage')); ?>
 
-				<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'InitUpgradeMessage', Text::_('COM_RSGALLERY2_MAINT_REGEN_BUTTON_DISPLAY', true)); ?>
-
-
-
-
-
+				<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'DevelopInstallMessage', Text::_('COM_RSGALLERY2_DEVELOP_INSTALL_MSG', true)); ?>
 
 
                 <?php
-                // ToDo: Check JoomGallery bootstrap 2 hero output
-                /**
-                <div class="hero-unit">
-                  <h1>Heading</h1>
-                  <p>Tagline</p>
-                  <p>
-                    <a class="btn btn-primary btn-large">
-                            Learn more
-                            </a>
-                  </p>
-                </div>
-                 */
+                ?>
+
+
+                <?php
 
                 echo '====================================================================<br />';
-//                echo $installCompleteMsg;
-//                echo $this->installMessage;
-
+                echo $this->installMessage;
                 echo '====================================================================<br />';
 //                echo $updateCompleteMsg;
                 echo '====================================================================<br />';
-                /**
-				<fieldset class="regenerateImages">
-					<legend><?php echo Text::_('COM_RSGALLERY2_MAINT_REGEN_BUTTON_DISPLAY'); ?></legend>
 
-					<!-- List info  -->
-					<div class="control-group">
-						<label for="zip_file" class="control-label"> </label>
-						<div class="controls">
-							<!--input type="text" id="zip_file" name="zip_file" class="span5 input_box" size="70" value="http://" /-->
-							<div class="span5">
-								<strong><?php echo Text::_('COM_RSGALLERY2_SELECT_GALLERIES_TO_REGENERATE_THUMBNAILS_FROM'); ?></strong>
-							</div>
-						</div>
-					</div>
-
-					<!-- Specify galleries  -->
-					<?php
-					echo $this->form->renderFieldset('regenerateGallerySelection');
-					?>
-
-					<div class="control-group">
-						<label for="xxx" class="control-label"><?php echo Text::_('COM_RSGALLERY2_CONFIGURATION'); ?>:</label>
-						<div class="controls" class="span5">
-							<?php echo Text::sprintf('COM_RSGALLERY2_NEW_WIDTH_DISPLAY', $this->imageWidth) ?>.
-							<?php echo Text::sprintf('COM_RSGALLERY2_NEW_WIDTH_THUMB', $this->thumbWidth) ?>
-						</div>
-					</div>
-
-					<!-- Action button -->
-					<div class="form-actions">
-						<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('maintRegenerate.RegenerateImagesDisplay')"><?php echo Text::_('COM_RSGALLERY2_MAINT_REGEN_BUTTON_DISPLAY'); ?></button>
-						&nbsp;&nbsp;&nbsp;
-						<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('maintRegenerate.RegenerateImagesThumb')"><?php echo Text::_('COM_RSGALLERY2_MAINT_REGEN_THUMBS'); ?></button>
-					</div>
-				</fieldset>
-                 */
                 ?>
 				<?php echo JHtml::_('bootstrap.endTab'); ?>
 
 				<?php echo JHtml::_('bootstrap.endTabSet'); ?>
+
 
 				<input type="hidden" value="" name="task">
 
