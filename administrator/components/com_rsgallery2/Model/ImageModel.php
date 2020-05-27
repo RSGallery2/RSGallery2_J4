@@ -23,6 +23,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
+//use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\String\StringHelper;
 
@@ -392,6 +393,10 @@ class ImageModel extends AdminModel
 			$table->newTags = $data['tags'];
 		}
 
+//        Column 'checked_out_time' cannot be null
+
+
+
 		/** -> table *
 		// no default value
 		if (empty($data['description']))
@@ -406,10 +411,8 @@ class ImageModel extends AdminModel
 		}
 		/**/
 
-		// Include the plugins for the save events.
-		PluginHelper::importPlugin($this->events_map['save']);
 
-		// Load the row if saving an existing category.
+        // Load the row if saving an existing category.
 		if ($pk > 0)
 		{
 			$table->load($pk);
@@ -424,33 +427,49 @@ class ImageModel extends AdminModel
 		}
 		/**/
 
-		/**
-		// ToDo: use name instead of title ?
-		// Alter the title for save as copy
-		if ($input->get('task') == 'save2copy')
-		{
-			$origTable = clone $this->getTable();
-			$origTable->load($input->getInt('id'));
 
-			if ($data['title'] == $origTable->title)
-			{
-				list($title, $alias) = $this->generateNewTitle($data['parent_id'], $data['alias'], $data['title']);
-				$data['title'] = $title;
-				$data['alias'] = $alias;
-			}
-			else
-			{
-				if ($data['alias'] == $origTable->alias)
-				{
-					$data['alias'] = '';
-				}
-			}
 
-			$data['published'] = 0;
-		}
-		/**/
 
-		// Bind the data.
+		/* ToDo: uise following */
+        /**
+        // Automatic handling of alias for empty fields
+        if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
+        {
+            if ($data['alias'] == null)
+            {
+                if (Factory::getApplication()->get('unicodeslugs') == 1)
+                {
+                    $data['alias'] = \JFilterOutput::stringURLUnicodeSlug($data['title']);
+                }
+                else
+                {
+                    $data['alias'] = \JFilterOutput::stringURLSafe($data['title']);
+                }
+
+                $table = Table::getInstance('Content', 'JTable');
+
+                if ($table->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
+                {
+                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
+                }
+
+                list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
+                $data['alias'] = $alias;
+
+                if (isset($msg))
+                {
+                    Factory::getApplication()->enqueueMessage($msg, 'warning');
+                }
+            }
+        }
+
+        /**/
+
+
+
+
+
+        // Bind the data.
 		if (!$table->bind($data))
 		{
 			$this->setError($table->getError());
@@ -593,6 +612,7 @@ class ImageModel extends AdminModel
 		// Trigger the after save event.
 		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
 
+		/**
 		// Rebuild the path for the category:
 		if (!$table->rebuildPath($table->id))
 		{
@@ -600,7 +620,9 @@ class ImageModel extends AdminModel
 
 			return false;
 		}
+        /**/
 
+		/**
 		// Rebuild the paths of the category's children:
 		if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path))
 		{
@@ -608,6 +630,7 @@ class ImageModel extends AdminModel
 
 			return false;
 		}
+        /**/
 
 		$this->setState($this->getName() . '.id', $table->id);
 
@@ -633,8 +656,8 @@ class ImageModel extends AdminModel
 		{
 			$extension = Factory::getApplication()->input->get('extension');
 
-			// Include the content plugins for the change of category state event.
-			PluginHelper::importPlugin('content');
+//			// Include the content plugins for the change of category state event.
+//			PluginHelper::importPlugin('content');
 
 			// Trigger the onCategoryChangeState event.
 			Factory::getApplication()->triggerEvent('onCategoryChangeState', array($extension, $pks, $value));
