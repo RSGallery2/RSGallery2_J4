@@ -181,7 +181,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::apply('image.apply');
 				ToolBarHelper::save('image.save');
-				ToolBarHelper::save2new('image.save2new');
+				//ToolBarHelper::save2new('image.save2new');
 				if (empty($this->item->id))
 				{
 					ToolBarHelper::cancel('image.cancel');
