@@ -47,24 +47,23 @@ class ChangeLogModel extends BaseModel
 	public $typeAlias = 'com_rsgallery2.changelog';
 
 
-//	public static function changeLogElements ($lastVersion = '5.0.0.0') // $minVersion = '0.0.0.0' $minVersion = ''
 	public static function changeLogElements ($lastVersion = '') // $minVersion = '0.0.0.0' $minVersion = ''
 	{
+	    //--- read xml to json ---------------------------------------------------
+
 		$changelogUrl = Route::_(Uri::root() . '/administrator/components/com_rsgallery2/changelog.xml');
 		$changelogs = simplexml_load_file($changelogUrl);
-
-//		$jsonChangeLogs = json_encode(, true);
 
 		//Encode the SimpleXMLElement object into a JSON string.
 		$jsonString = json_encode($changelogs);
 		//Convert it back into an associative array
 		$jsonArray = json_decode($jsonString, true);
 
-		// reduce to version items
+		//--- reduce to version items -------------------------------------------
+
 		$jsonChangeLogs = [];
 
 		// standard : change log for each version are sub items
-		//if (count ($jsonArray) == 1) {
 		if (array_key_exists ('changelog', $jsonArray)) {
 
 			$testLogs = $jsonArray ['changelog'];
@@ -261,18 +260,9 @@ class ChangeLogModel extends BaseModel
 
 	//--- general collapse function ------------------------
 
-        /**
-         * @param $title
-         * @param $content
-         * @param $id
-         *
-         *
-         * @since version
-         */
-
     /**
      * @param string $title
-     * @param string $content
+     * @param string [] $changelogTables
      * @param string $id
      * @param bool $isCollapsed
      *
@@ -280,8 +270,18 @@ class ChangeLogModel extends BaseModel
      *
      * @since version
      */
-    public static function collapseContent($title, $content, $id, $isCollapsed=true)
+    public static function collapseContent($title, $changelogTables, $id, $isCollapsed=true)
     {
+
+        //--- table html(s) to one string --------------
+
+        foreach ($changelogTables as $htmlEle) {
+            $html[] = '            ' . $htmlEle;
+        }
+        $changelogsHtml = implode('</br>', $html);
+
+        //--- collapsable frame around content ---------------------------------------------
+
         $show = $isCollapsed ? '' : 'show';
         $collapsed = $isCollapsed ? 'collapsed' : 'collapsed';
         $ariaExpanded = $isCollapsed ? 'false' : 'true';
@@ -298,7 +298,7 @@ class ChangeLogModel extends BaseModel
                 </h5>
                 <div id="collapse-collapsed-$id" class="collapse $show" aria-labelledby="heading-collapsed-$id">
                     <div class="card-body">
-                        $content
+                        $changelogsHtml
                     </div>
                 </div>
             </div>

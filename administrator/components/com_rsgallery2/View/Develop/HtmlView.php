@@ -144,13 +144,19 @@ class HtmlView extends BaseHtmlView
 
             case 'InstallMessage':
 
+                // actual (new) version
                 $oRsg2Version = new rsgallery2Version();
                 $this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
                 $this->Rsg2Version = $oRsg2Version->getVersion(); // getLongVersion, getVersion
 
+                // show all
                 $installMessage = new InstallMessage ($this->Rsg2Version);
                 //$this->installMessage = InstallMessage::installMessageText;
                 $this->installMessage = $installMessage->installMessageText('update');
+
+                // ausschnitt
+                $installMessage = new InstallMessage ($this->Rsg2Version, '5.0.0.3');
+                $this->installMessage2 = $installMessage->installMessageText('update');
 
                 break;
 

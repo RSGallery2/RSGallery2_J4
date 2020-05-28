@@ -37,10 +37,11 @@ use Joomla\CMS\Language\Text;
                 echo $this->installMessage;
                 //echo '<br />';
                 echo '====================================================================<br />';
-//                echo $updateCompleteMsg;
-//                echo '====================================================================<br />';
+                echo $this->installMessage2;
+                echo '====================================================================<br />';
 
                 ?>
+
 				<?php echo JHtml::_('bootstrap.endTab'); ?>
 
 				<?php echo JHtml::_('bootstrap.endTabSet'); ?>

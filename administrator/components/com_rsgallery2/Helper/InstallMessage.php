@@ -25,22 +25,28 @@ class InstallMessage
     public $newRelease =  '-1.0.0.1';
     public $oldRelease =  '-1.0.0.1';
 
-/**
-	public const installMessageText = <<<EOT
-    !!! Da tut was !!!!
-EOT;
-/**/
-
+    /**
+     * InstallMessage constructor.
+     * @param string $newRelease
+     * @param string $oldRelease
+     *
+     * @since version
+     */
     public function __construct($newRelease, $oldRelease = '-1.0.0.2')
     {
         $this->newRelease = $newRelease;
         $this->oldRelease = $oldRelease;
 
         $this->linksHtml = $this->createLinksHtml();
-
-
     }
 
+    /**
+     * @param string $upgradeId
+     *
+     * @return string
+     *
+     * @since version
+     */
     public function installMessageText ($upgradeId = '') {
 
         $instMessage = "";
@@ -57,7 +63,8 @@ EOT;
     }
 
     /**
-     *
+     * Base construct containing logo and links to config-, control-, galleries page
+     *      *
      * @param $type 'install' / 'update'
      *
      *
@@ -116,7 +123,13 @@ EOT;
         return $html;
     }
 
-
+    /**
+     * Fetch changelog and provide a table in collapsible
+     *
+     * @return string
+     *
+     * @since version
+     */
     private function ChangeLogHtml () {
 
         $changeLogText = '';
@@ -124,21 +137,19 @@ EOT;
         try {
             if (!empty ($this->oldRelease))
             {
+                //--- fetch changelog and create a table each -----------------------------
+
                 $jsonChangelogs = ChangeLogModel::changeLogElements($this->oldRelease);
                 // Array: Html table each log item
                 $changelogTables= ChangeLogModel::changeLogsData2Html ($jsonChangelogs);
 
-                // html to string
-                foreach ($changelogTables as $htmlElements) {
-                    $html[] = '            ' . $htmlElements;
-                }
-                $changelogsHtml2 = implode('</br>', $html);
+                //--- enclose by collapsible ----------------------------------------------
 
                 $title = Text::_('COM_RSGALLERY2_CHANGELOG');
                 $id = 'rsg2_changelog';
                 $collapsed = false;
                 // Cord display collapser or not
-                $changeLogText = ChangeLogModel::collapseContent ($title, $changelogsHtml2, $id, $collapsed);
+                $changeLogText = ChangeLogModel::collapseContent ($title, $changelogTables, $id, $collapsed);
             }
         }
         catch (RuntimeException $e)
@@ -154,6 +165,13 @@ EOT;
         return $changeLogText;
     }
 
+    /**
+     * style for installation message
+     *
+     * @return string
+     *
+     * @since version
+     */
     private function changelogCss () {
 
         $html =<<<EOT
