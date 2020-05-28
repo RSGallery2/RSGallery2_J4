@@ -115,14 +115,6 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
-//		$TestInstall = new Com_Rsgallery2InstallerScript ();
-//		$this->installMessage = $TestInstall->postFlightMessage ('update');
-
-        $installMessage = new InstallMessage ();
-        //$this->installMessage = InstallMessage::installMessageText;
-        $this->installMessage = $installMessage->installMessageText();
-
-
 		//--- Check user rights ---------------------------------------------
 
 		// toDo: More detailed for rsgallery admin
@@ -154,6 +146,15 @@ class HtmlView extends BaseHtmlView
                 $this->rsg2Manifest = $rsg2Manifest;
 
                 break;
+
+            case 'InitUpgradeMessage':
+
+                $installMessage = new InstallMessage ();
+                //$this->installMessage = InstallMessage::installMessageText;
+                $this->installMessage = $installMessage->installMessageText();
+
+                break;
+
 
             case 'Rsg2GeneralInfo':
 
@@ -233,7 +234,23 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
                     . ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
-				break;
+                break;
+
+            case 'InitUpgradeMessage':
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . '* <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br><br>';
+                }
+
+                ToolBarHelper::title(Text::_('xCOM_RSGALLERY2_MAINTENANCE')
+                    . ': ' . Text::_('xCOM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
+                ToolBarHelper::cancel('config.cancel_rawView');
+            break;
 
 			default:
                 // on develop show open tasks if existing
