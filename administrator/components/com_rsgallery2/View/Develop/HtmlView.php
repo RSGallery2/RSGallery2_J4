@@ -147,7 +147,7 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
-            case 'InitUpgradeMessage':
+            case 'InstallMessage':
 
                 $installMessage = new InstallMessage ();
                 //$this->installMessage = InstallMessage::installMessageText;
@@ -214,7 +214,7 @@ class HtmlView extends BaseHtmlView
                         . '</span><br><br>';
                 }
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
                     . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
@@ -231,12 +231,12 @@ class HtmlView extends BaseHtmlView
                         . '</span><br><br>';
                 }
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
                     . ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
                 break;
 
-            case 'InitUpgradeMessage':
+            case 'InstallMessage':
                 if (!empty ($this->isDevelop))
                 {
                     echo '<span style="color:red">'
@@ -247,8 +247,8 @@ class HtmlView extends BaseHtmlView
                         . '</span><br><br>';
                 }
 
-                ToolBarHelper::title(Text::_('xCOM_RSGALLERY2_MAINTENANCE')
-                    . ': ' . Text::_('xCOM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+                    . ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
                 ToolBarHelper::cancel('config.cancel_rawView');
             break;
 

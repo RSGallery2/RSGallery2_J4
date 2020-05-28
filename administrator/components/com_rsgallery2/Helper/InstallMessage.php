@@ -43,8 +43,7 @@ EOT;
 
         $instMessage = "";
 
-        //$instMessage .= $this->linksHtml;
-        $instMessage .= 'Welcomt to RSG2';
+        $instMessage .= $this->linksHtml;
 
         return $instMessage;
     }
@@ -72,15 +71,23 @@ EOT;
         $galleriesText = Text::_('COM_RSGALLERY2_MENU_GALLERIES');
         $galleriesTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_GALLERIES_TITLE');
 
-        // height="100"  active
-        $html =<<<EOT
+
+        /**
+        <h3>RSGallery2 $this->newRelease was installed successfully.</h3>
+        <p >
+        RSGallery2 $this->newRelease was installed successfully
+        </p>
+
+        /**/
+
+    $html =<<<EOT
+                <div class="alert alert-success" style="text-align:center;">
+                    <strong>RSGallery2 $this->newRelease was installed successfully</strong>
+                </div>
             <div class="hero-unit">
 				<div class="text-center">
 	                <img src="$logoLink" alt="RSGallery2 Logo" height="150px" />
 	            </div>
-                <div class="alert alert-success">
-                    <h3>RSGallery2 $this->newRelease was installed successfully.</h3>
-                </div>
                 <p></p>
 				<div class="text-center">
 					<div class="Xbtn-group">
@@ -99,7 +106,9 @@ EOT;
 					</div>
                 </div>
             </div>
+            <br />
 EOT;
+        // height="100"  active
 
         /**
         //--- changelog on -----------------------------------------------

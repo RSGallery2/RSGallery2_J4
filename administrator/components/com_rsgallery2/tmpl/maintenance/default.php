@@ -299,7 +299,7 @@ $developer_ZoneButtons = [];
 
 /**/
 $developer_ZoneButtons[] =  new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=InitUpgradeMessage'),
+	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=InstallMessage'),
 	Text::_('Test Install/Update message'),
 	Text::_('Check the output result of the install finish and upgrade finish result view part'),
 	array('icon-eye-open', 'icon-expand'),
@@ -399,51 +399,6 @@ function DisplayZone($Zone, $Buttons) {
 	echo '</div>';
 }
 
-?>
-
-
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
-      method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
-    <div class="row">
-        <?php if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="col-md-2">
-                <?php echo $this->sidebar; ?>
-            </div>
-        <?php endif; ?>
-        <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
-            <div id="j-main-container" class="j-main-container">
-
-                <div class="flex-main-row">
-
-                    <?php
-
-                    //---  -----------------------------
-
-                    DisplayZone($RSG2_Zone, $RSG2_ZoneButtons);
-                    DisplayZone($rawDatabase_Zone, $rawDatabase_ZoneButtons);
-
-                    // DisplayZone($outdated_Zone, $outdated_ZoneButtons);
-                    /**/
-                    DisplayZone($repair_Zone, $repair_ZoneButtons);
-                    DisplayZone($danger_Zone, $danger_ZoneButtons);
-                    DisplayZone($upgrade_Zone, $upgrade_ZoneButtons);
-
-                    DisplayZone($ready4Test_Zone, $ready4Test_ZoneButtons);
-                    DisplayZone($developer_Zone, $developer_ZoneButtons);
-                    /**/
-
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <input type="hidden" name="task" value="" />
-	<?php echo HTMLHelper::_('form.token'); ?>
-</form>
-
-<?php
-
 
 
 
@@ -477,3 +432,47 @@ function zoneInfo ($info='Unknown zone info')
     return implode($html);
     return $html;
 }
+?>
+
+    <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
+          method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+        <div class="row">
+            <?php if (!empty($this->sidebar)) : ?>
+                <div id="j-sidebar-container" class="col-md-2">
+                    <?php echo $this->sidebar; ?>
+                </div>
+            <?php endif; ?>
+            <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
+                <div id="j-main-container" class="j-main-container">
+
+                    <div class="flex-main-row">
+
+                        <?php
+
+                        //---  -----------------------------
+
+                        DisplayZone($RSG2_Zone, $RSG2_ZoneButtons);
+                        DisplayZone($rawDatabase_Zone, $rawDatabase_ZoneButtons);
+
+                        // DisplayZone($outdated_Zone, $outdated_ZoneButtons);
+                        /**/
+                        DisplayZone($repair_Zone, $repair_ZoneButtons);
+                        DisplayZone($danger_Zone, $danger_ZoneButtons);
+                        //DisplayZone($upgrade_Zone, $upgrade_ZoneButtons);
+
+                        // DisplayZone($ready4Test_Zone, $ready4Test_ZoneButtons);
+                        DisplayZone($developer_Zone, $developer_ZoneButtons);
+                        /**/
+
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="task" value="" />
+        <?php echo HTMLHelper::_('form.token'); ?>
+    </form>
+
+<?php
+
