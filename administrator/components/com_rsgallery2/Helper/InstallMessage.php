@@ -43,8 +43,8 @@ EOT;
 
         $instMessage = "";
 
-        $instMessage .= $this->linksHtml;
-
+        //$instMessage .= $this->linksHtml;
+        $instMessage .= 'Welcomt to RSG2';
 
         return $instMessage;
     }

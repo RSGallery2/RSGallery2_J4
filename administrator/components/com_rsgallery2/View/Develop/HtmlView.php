@@ -118,7 +118,7 @@ class HtmlView extends BaseHtmlView
 //		$TestInstall = new Com_Rsgallery2InstallerScript ();
 //		$this->installMessage = $TestInstall->postFlightMessage ('update');
 
-        $installMessage = new InstallMessage;
+        $installMessage = new InstallMessage ();
         //$this->installMessage = InstallMessage::installMessageText;
         $this->installMessage = $installMessage->installMessageText();
 

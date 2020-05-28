@@ -240,7 +240,10 @@ class Com_Rsgallery2InstallerScript
 //		JFactory::getApplication()->enqueueMessage($changelog, 'notice');
 
 		//$msg = $this->postFlightMessage($type);
-        $msg = InstallMessage::installMessageText;
+        $msg = InstallMessage::installMessageText();
+        
+        $installMessage = new InstallMessage;
+        $msg = $installMessage->installMessageText();        
 		echo $msg;
 
 //		$app = Factory::getApplication();
