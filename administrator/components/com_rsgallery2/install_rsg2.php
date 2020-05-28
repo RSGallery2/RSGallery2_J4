@@ -242,7 +242,7 @@ class Com_Rsgallery2InstallerScript
 		//$msg = $this->postFlightMessage($type);
         //$msg = InstallMessage::installMessageText();
         
-        $installMessage = new InstallMessage ();
+        $installMessage = new InstallMessage ($this->newRelease);
         $msg = $installMessage->installMessageText($type);
 		echo $msg;
 

@@ -150,7 +150,7 @@ class HtmlView extends BaseHtmlView
 
                 $installMessage = new InstallMessage ($this->Rsg2Version);
                 //$this->installMessage = InstallMessage::installMessageText;
-                $this->installMessage = $installMessage->installMessageText('upgrade');
+                $this->installMessage = $installMessage->installMessageText('update');
 
                 break;
 

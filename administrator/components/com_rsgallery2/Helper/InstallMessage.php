@@ -47,7 +47,7 @@ EOT;
 
         $instMessage .= $this->linksHtml;
 
-        if ($upgradeId == 'upgrade') {
+        if ($upgradeId == 'update') {
 
             $instMessage .= $this->changelogCss ();
             $instMessage .= $this->ChangeLogHtml();
@@ -109,6 +109,7 @@ EOT;
 					</div>
                 </div>
             </div>
+            <br />
             <br />
 EOT;
 
