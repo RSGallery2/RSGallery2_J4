@@ -223,7 +223,7 @@ class Com_Rsgallery2InstallerScript
     {
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
-        $installMessage = new InstallMessage ($this->newRelease);
+        $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
         $msg = $installMessage->installMessageText($type);
         echo $msg;
 
