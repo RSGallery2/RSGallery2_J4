@@ -243,7 +243,7 @@ class Com_Rsgallery2InstallerScript
         //$msg = InstallMessage::installMessageText();
         
         $installMessage = new InstallMessage ();
-        $msg = $installMessage->installMessageText();        
+        $msg = $installMessage->installMessageText($type);
 		echo $msg;
 
 //		$app = Factory::getApplication();

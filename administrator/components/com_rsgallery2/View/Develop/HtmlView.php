@@ -23,17 +23,12 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Filesystem\File;
 
+use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Joomla\Component\Rsgallery2\Administrator\Model;
+use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
+
 use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
-
-//$path = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/install_rsg2.php';
-//if (File::exists($path))
-//{
-//	require_once $path;
-//}
 
 /**
  * View class for a list of rsgallery2.
@@ -149,9 +144,13 @@ class HtmlView extends BaseHtmlView
 
             case 'InstallMessage':
 
-                $installMessage = new InstallMessage ();
+                $oRsg2Version = new rsgallery2Version();
+                $this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
+                $this->Rsg2Version = $oRsg2Version->getVersion(); // getLongVersion, getVersion
+
+                $installMessage = new InstallMessage ($this->Rsg2Version);
                 //$this->installMessage = InstallMessage::installMessageText;
-                $this->installMessage = $installMessage->installMessageText();
+                $this->installMessage = $installMessage->installMessageText('upgrade');
 
                 break;
 

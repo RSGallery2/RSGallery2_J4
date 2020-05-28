@@ -258,4 +258,58 @@ class ChangeLogModel extends BaseModel
 
 		return join ('', $html);
 	}
+
+	//--- general collapse function ------------------------
+
+        /**
+         * @param $title
+         * @param $content
+         * @param $id
+         *
+         *
+         * @since version
+         */
+
+    /**
+     * @param string $title
+     * @param string $content
+     * @param string $id
+     * @param bool $isCollapsed
+     *
+     * @return string
+     *
+     * @since version
+     */
+    public static function collapseContent($title, $content, $id, $isCollapsed=true)
+    {
+        $show = $isCollapsed ? '' : 'show';
+        $collapsed = $isCollapsed ? 'collapsed' : 'collapsed';
+        $ariaExpanded = $isCollapsed ? 'false' : 'true';
+
+        $collapsed = <<<EOT
+        <row>
+            <div class="card forCollapse">
+                <h5 class="card-header">
+                    <button class="btn $collapsed" type="button" data-toggle="collapse" data-target="#collapse-collapsed-$id" 
+                        aria-expanded="$ariaExpanded" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">
+                        <i class="fa fa-chevron-down pull-right"></i>
+                        $title
+                    </button>
+                </h5>
+                <div id="collapse-collapsed-$id" class="collapse $show" aria-labelledby="heading-collapsed-$id">
+                    <div class="card-body">
+                        $content
+                    </div>
+                </div>
+            </div>
+        </row>
+EOT;
+
+
+
+        return $collapsed;
+    }
 }
+
+?>
+

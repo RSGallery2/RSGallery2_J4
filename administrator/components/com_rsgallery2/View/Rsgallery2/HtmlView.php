@@ -22,15 +22,15 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Component\ComponentHelper;
 
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsEnumeration;
 use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsExternal;
-
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
+
+use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel;
 
-use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 /**
  * View class for a list of rsgallery2.
@@ -102,6 +102,7 @@ class HtmlView extends BaseHtmlView
 
         // ToDo: Changelogs HTMl should be created at install (? build process) and handled like credits
 		$jsonChangelogs = ChangeLogModel::changeLogElements();
+		// Array: Html table each log item
 		$this->changelogs = ChangeLogModel::changeLogsData2Html ($jsonChangelogs);
 
 		$this->credits = CreditsEnumeration::CreditsEnumerationText;
