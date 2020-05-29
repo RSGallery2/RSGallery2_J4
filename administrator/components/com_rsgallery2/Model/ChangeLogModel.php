@@ -11,122 +11,203 @@ namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\BaseModel;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-
-
-// $language = Factory::getLanguage();
-$app = Factory::getApplication();
-$isLoaded = $app->getLanguage()->load('com_installer');
-
 
 /**
- * Rsgallery2 Component changelog Model
+ * Rsgallery2 Component changelog model
+ * Reads a joomla changelog file and returns the json elements
+ * The result can be converted to a array of html tables per version
+ * these may be surrounded by a
  *
  * @since  5.0.0.4
  */
-class ChangeLogModel extends BaseModel
+class ChangeLogModel
 {
-	/**
-	 * The prefix to use with controller messages.
-	 *
-	 * @var    string
-     * @since  5.0.0.4
-	 */
-	protected $text_prefix = 'COM_RSGALLERY2';
-
-	/**
-	 * The type alias for this content type. Used for content version history.
-	 *
-	 * @var    string
-	 * @since  5.0.0.4
-	 */
-	public $typeAlias = 'com_rsgallery2.changelog';
-
-
-	public static function changeLogElements ($lastVersion = '') // $minVersion = '0.0.0.0' $minVersion = ''
-	{
-	    //--- read xml to json ---------------------------------------------------
-
-		$changelogUrl = Route::_(Uri::root() . '/administrator/components/com_rsgallery2/changelog.xml');
-		$changelogs = simplexml_load_file($changelogUrl);
-
-		//Encode the SimpleXMLElement object into a JSON string.
-		$jsonString = json_encode($changelogs);
-		//Convert it back into an associative array
-		$jsonArray = json_decode($jsonString, true);
-
-		//--- reduce to version items -------------------------------------------
-
-		$jsonChangeLogs = [];
-
-		// standard : change log for each version are sub items
-		if (array_key_exists ('changelog', $jsonArray)) {
-
-			$testLogs = $jsonArray ['changelog'];
-
-			foreach ($testLogs as $changeLog) {
-
-				// All versions
-				if ( empty ($lastVersion))
-				{
-					$jsonChangeLogs [] = $changeLog;;
-				} else {
-					// selected last versions
-					$logVersion = $changeLog ['version'];
-					if (version_compare($logVersion, $lastVersion, '>')) {
-						$jsonChangeLogs [] = $changeLog;
-					}
-				}
-			}
-		}
-
-		return $jsonChangeLogs;
-	}
+    public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
 
     /**
-	 * @param $jsonChangeLogs json formed changelog xml file
-	 *
-	 * @return array
-	 *
-	 * @since version
-	 */
-	public static function changeLogsData2Html ($jsonChangeLogs)
-	{
-		$changeLogsHtml = [];
-
-		foreach ($jsonChangeLogs as $changelog)
-		{
-			$changeLogsHtml [] = self::changeLogData2Html ($changelog);
-		}
-
-		return $changeLogsHtml;
-	}
-
-    /**
-    COM_INSTALLER_CHANGELOG="Changelog"
-    COM_INSTALLER_CHANGELOG_ADDITION="New Features"
-    COM_INSTALLER_CHANGELOG_CHANGE="Changes"
-    COM_INSTALLER_CHANGELOG_FIX="Bug Fixes"
-    COM_INSTALLER_CHANGELOG_LANGUAGE="Language"
-    COM_INSTALLER_CHANGELOG_NOTE="Notes"
-    COM_INSTALLER_CHANGELOG_REMOVE="Removed Features"
-    COM_INSTALLER_CHANGELOG_SECURITY="Security Fixes"
-    COM_INSTALLER_CHANGELOG_TITLE="Changelog - %s - %s"
-    /**/
-
-    public static function changeLogSectionTitle2Html ($key)
+     * ChangeLogModel constructor.
+     * @param null $changeLogFile path to changelog file different from standard
+     *
+     * @throws Exception
+     * @since version
+     */
+    public function __construct($changeLogFile = null)
     {
+        if ( ! empty ($changeLogFile)) {
+            $this->changeLogFile = $changeLogFile;
+        }
+
+        // standard joomla texts fopr title
+        $app = Factory::getApplication();
+        $app->getLanguage()->load('com_installer');
+    }
+
+    /**
+     * Selects array of changelog sections
+     * On given previous version all older are omitted
+     *
+     * @param string $previousVersion leave out this and older
+     *
+     * @return array associative array of changelog items per release version
+     *
+     * @since version
+     */
+    public function changeLogElements($previousVersion = '')
+    {
+        //--- read xml to json ---------------------------------------------------
+
+        $changelogs = simplexml_load_file($this->changeLogFile);
+
+        //Encode the SimpleXMLElement object into a JSON string.
+        $jsonString = json_encode($changelogs);
+        //Convert it back into an associative array
+        $jsonArray = json_decode($jsonString, true);
+
+        //--- reduce to version items -------------------------------------------
+
+        $jsonChangeLogs = [];
+
+        // standard : change log for each version are sub items
+        if (array_key_exists('changelog', $jsonArray)) {
+
+            $testLogs = $jsonArray ['changelog'];
+
+            foreach ($testLogs as $changeLog) {
+
+                // all versions
+                if (empty ($previousVersion)) {
+                    $jsonChangeLogs [] = $changeLog;
+                } else {
+                    // selected last versions
+                    $logVersion = $changeLog ['version'];
+                    if (version_compare($logVersion, $previousVersion, '>')) {
+                        $jsonChangeLogs [] = $changeLog;
+                    }
+                }
+            }
+        }
+
+        return $jsonChangeLogs;
+    }
+
+    /**
+     *
+     * @param array $jsonChangeLogs associative array of changelog items per release version
+     *
+     * @return string [] array of html tables per release version
+     *
+     * @since version
+     */
+    public static function changeLogsData2Html($jsonChangeLogs)
+    {
+        $changeLogsHtml = [];
+
+        foreach ($jsonChangeLogs as $changelog) {
+            $changeLogsHtml [] = self::changeLogData2Html($changelog);
+        }
+
+        return $changeLogsHtml;
+    }
+
+    /**
+     * Creates a striped table for this version
+     *
+     * @param array $versionChangeLog associative array of changelog items of one version
+     *
+     * @return string html: striped table with header from version and date.
+     *                rows containing the elements column title and text
+     *                titles get badge css from type of item
+     *
+     * @since version
+     */
+    public static function changeLogData2Html($versionChangeLog)
+    {
+        $html = [];
+
+        // table header
+        $html[] = '<table class="table table-striped table-light table_morecondensed change-log-table" caption-side="top">';
+        $html[] = '    <caption caption-side="top" class="change-log-caption">';
+        $html[] = '    <strong>';
+        $html[] = '        Version: ' . $versionChangeLog ['version'] . '&nbsp;' . 'Date: ' . $versionChangeLog ['date'];
+        $html[] = '    </strong>';
+        $html[] = '    </caption>';
+
+
+        foreach ($versionChangeLog as $key => $value) {
+
+            // create badge title (May not exist)
+            $sectionTitle = self::changeLogSectionTitle2Html($key);
+
+            // valid item
+            if (!empty ($sectionTitle)) {
+
+                // item texts
+                $sectionDtaList = self::changeLogSectionData2Html($value);
+            }
+
+            //--- create row ----------------------------------------------
+
+            // valid item
+            if (!empty ($sectionTitle)) {
+
+                $html[] = '<tr>';
+
+                // key
+                $html[] = '    <td class="changelog_key">';
+                $html[] = '        ' . $sectionTitle;
+                $html[] = '    </td>';
+
+                // values
+                $html[] = '    <td class="changelog_values_area">';
+                $html[] = '        ' . $sectionDtaList;
+                $html[] = '    </td>';
+
+                $html[] = '</tr>';
+            }
+        }
+
+        $html[] = '</table>';
+
+        return join('', $html);
+    }
+
+
+    /**
+     * Returns html string of a bootstrap badge depending of the given type.
+     * The title text is also depending on given type. standard joomla translations are used
+     *
+     * @param string $type defines the type of badge.
+     *
+     * @return string html of a bootstrap badge.
+     *                If type is like version then an empty string will be returned
+     *
+     * @since version
+     */
+    public static function changeLogSectionTitle2Html($type)
+    {
+        /**
+         * Standard joomla text enabled in constructor
+         * COM_INSTALLER_CHANGELOG="Changelog"
+         * COM_INSTALLER_CHANGELOG_ADDITION="New Features"
+         * COM_INSTALLER_CHANGELOG_CHANGE="Changes"
+         * COM_INSTALLER_CHANGELOG_FIX="Bug Fixes"
+         * COM_INSTALLER_CHANGELOG_LANGUAGE="Language"
+         * COM_INSTALLER_CHANGELOG_NOTE="Notes"
+         * COM_INSTALLER_CHANGELOG_REMOVE="Removed Features"
+         * COM_INSTALLER_CHANGELOG_SECURITY="Security Fixes"
+         * COM_INSTALLER_CHANGELOG_TITLE="Changelog - %s - %s"
+         * /**/
+
         $html = '';
 
         $keyTranslation = '';
         $class = '';
 
         /**/
-        switch ($key) {
+        switch ($type) {
             case ("security"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_SECURITY');
                 $class = 'badge-danger';
@@ -166,41 +247,50 @@ class ChangeLogModel extends BaseModel
         return $html;
     }
 
-    public static function changeLogSectionData2Html ($values) {
-        $html =  [];
+    /**
+     * A nested list of items is used for a html unsigned list
+     * The hierarchy is ignored
+     *
+     * @param string [[]] $values array of string variables, nested depth is two
+     *
+     * @return string html: unsigned list of changelog texts
+     *
+     * @since version
+     */
+    public static function changeLogSectionData2Html($values)
+    {
+        $html = [];
         $itemId = 'item';
 
         //--- extract list of items --------------------
 
+        $items = [];
+
+        // item in first column of array
         if (array_key_exists($itemId, $values)) {
-            $items =  $values [$itemId];
+            $items [] = $values [$itemId];
         } else {
 
-            $items = [];
-
+            // items in nested column
             foreach ($values as $value) {
+                // still nested
                 $subItems = $value [$itemId];
-                if ( ! is_array ($subItems)){
-                    $subItems = array($subItems);
+                if (!is_array($subItems)) {
+                    $subItems = array ($subItems);
                 }
+
                 foreach ($subItems as $item) {
                     $items [] = $item;
                 }
             }
         }
 
-        if ( ! is_array ($items)){
-            $items = array($items);
-        }
-
         //--- collect item html --------------------
 
         $html [] = '<ul>';
 
-        foreach ($items as $item)
-        {
-            if (!empty ($item))
-            {
+        foreach ($items as $item) {
+            if (!empty ($item)) {
                 $html [] = '    <li>';
                 $html [] = '        <div class="changelog_value">' . $item . '</div>';
                 $html [] = '    </li>';
@@ -209,69 +299,27 @@ class ChangeLogModel extends BaseModel
 
         $html [] = '</ul>';
 
-        return join ('', $html);
+        return join('', $html);
     }
 
-    public static function changeLogData2Html ($jsonChangeLog)
-	{
-		$html = [];
-
-//		$html = [] <version>5.0.0.4</version>
-//		<date>2020.03.24 14:28</date>
-
-        //$html[] = '<table class="table table-striped table-light w-auto table_morecondensed">';
-        $html[] = '<table class="table table-striped table-light table_morecondensed change-log-table" caption-side="top">';
-        $html[] = '    <caption caption-side="top" class="change-log-caption">';
-        $html[] = '    <strong>';
-//        $html[] = '        <div>Version: ' . $jsonChangeLog ['version'] . '</div>';
-//        $html[] = '        <div>Date: ' . $jsonChangeLog ['date'] . '</div>';
-        $html[] = '        Version: ' . $jsonChangeLog ['version'] . '&nbsp;' . 'Date: ' . $jsonChangeLog ['date'];
-        $html[] = '    </strong>';
-        $html[] = '    </caption>';
-
-
-		foreach ($jsonChangeLog as $key => $value)
-		{
-		    $sectionTitle = self::changeLogSectionTitle2Html ($key);
-            if ( ! empty ($sectionTitle)) {
-
-                $sectionDtaList = self::changeLogSectionData2Html ($value);
-
-                $html[] = '<tr>';
-
-                // key
-                $html[] = '    <td class="changelog_key">';
-                $html[] = '        ' . $sectionTitle;
-                $html[] = '    </td>';
-
-                // values
-                $html[] = '    <td class="changelog_values_area">';
-                $html[] = '        ' . $sectionDtaList;
-                $html[] = '    </td>';
-
-                $html[] = '</tr>';
-            }
-		}
-
-        $html[] = '</table>';
-
-		return join ('', $html);
-	}
-
-	//--- general collapse function ------------------------
+    //--- general collapse function ------------------------
 
     /**
+     * surround given html in collapse html string
+     *
      * @param string $title
      * @param string [] $changelogTables
      * @param string $id
      * @param bool $isCollapsed
      *
-     * @return string
+     * @return string html: collapsable element
      *
      * @since version
      */
-    public static function collapseContent($title, $changelogTables, $id, $isCollapsed=true)
+    public static function collapseContent($changelogTables, $id, $isCollapsed = true)
     {
+
+        $changelogCss = self::changelogCss ();
 
         //--- table html(s) to one string --------------
 
@@ -280,13 +328,14 @@ class ChangeLogModel extends BaseModel
         }
         $changelogsHtml = implode('</br>', $html);
 
-        //--- collapsable frame around content ---------------------------------------------
+        //--- collapsable frame around content ------------------------------------------
 
+        $title = Text::_('COM_INSTALLER_CHANGELOG');
         $show = $isCollapsed ? '' : 'show';
         $collapsed = $isCollapsed ? 'collapsed' : 'collapsed';
         $ariaExpanded = $isCollapsed ? 'false' : 'true';
 
-        $collapsed = <<<EOT
+        $collapsedHtml = <<<EOT
         <row>
             <div class="card forCollapse">
                 <h5 class="card-header">
@@ -305,11 +354,66 @@ class ChangeLogModel extends BaseModel
         </row>
 EOT;
 
-
-
-        return $collapsed;
+        $collapsedContent = $changelogCss . $collapsedHtml;
+        return $collapsedContent;
     }
-}
 
-?>
+    /**
+     * css style for collapsed changelogs
+     *
+     * @return string
+     *
+     * @since version
+     */
+    private static function changelogCss () {
+
+        $html =<<<EOT
+            <style>
+            /* ToDo: More specific add dictionaries with class= gallery/images ... */
+            .table caption {
+                caption-side: top;
+              white-space: nowrap;
+            }
+            
+            .changelog_area {
+                        display: flex;
+                        flex-direction: row;
+              justify-content: flex-start;
+            }
+            
+            .changelog_key {
+                        min-width: 100px;
+              border-right: 2px solid red;
+            }
+            
+            .changelog_value_area {
+                        display: flex;
+                        flex-direction: column;
+              flex-wrap: wrap;
+            }
+            
+            .change-log-caption {
+                        color: black;
+                    }
+            
+            .change-log-table {
+                        border-bottom: 2px solid black;
+            }
+            
+            .card-header .fa {
+                        transition: 0.3s transform ease-in-out;
+            }
+            
+            .card-header .collapsed .fa {
+                        transform: rotate(-90deg);
+            }
+            </style>
+EOT;
+
+        return $html;
+    }
+
+} // class
+
+
 

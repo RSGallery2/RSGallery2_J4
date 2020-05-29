@@ -16,7 +16,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
-use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 /**
  * Script file of Rsgallery2 Component

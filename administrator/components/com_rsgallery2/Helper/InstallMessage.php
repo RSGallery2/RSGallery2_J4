@@ -23,7 +23,7 @@ class InstallMessage
 
     protected $linksHtml = '';
     public $newRelease =  '-1.0.0.1';
-    public $oldRelease =  '-1.0.0.1';
+    public $oldRelease =  '';
 
     /**
      * InstallMessage constructor.
@@ -32,7 +32,7 @@ class InstallMessage
      *
      * @since version
      */
-    public function __construct($newRelease, $oldRelease = '-1.0.0.2')
+    public function __construct($newRelease, $oldRelease = '')
     {
         $this->newRelease = $newRelease;
         $this->oldRelease = $oldRelease;
@@ -55,8 +55,7 @@ class InstallMessage
 
         if ($upgradeId == 'update') {
 
-            $instMessage .= $this->changelogCss ();
-            $instMessage .= $this->ChangeLogHtml();
+            $instMessage .= $this->changeLogHtml();
         }
 
         return $instMessage;
@@ -67,6 +66,7 @@ class InstallMessage
      *      *
      * @param $type 'install' / 'update'
      *
+     * @return string
      *
      * @since version
      */
@@ -130,27 +130,30 @@ EOT;
      *
      * @since version
      */
-    private function ChangeLogHtml () {
+    private function changeLogHtml () {
 
         $changeLogText = '';
 
         try {
-            if (!empty ($this->oldRelease))
-            {
-                //--- fetch changelog and create a table each -----------------------------
-
-                $jsonChangelogs = ChangeLogModel::changeLogElements($this->oldRelease);
-                // Array: Html table each log item
-                $changelogTables= ChangeLogModel::changeLogsData2Html ($jsonChangelogs);
-
-                //--- enclose by collapsible ----------------------------------------------
-
-                $title = Text::_('COM_RSGALLERY2_CHANGELOG');
-                $id = 'rsg2_changelog';
-                $collapsed = false;
-                // Cord display collapser or not
-                $changeLogText = ChangeLogModel::collapseContent ($title, $changelogTables, $id, $collapsed);
+            // ToDo: Save old when not same and use in new class ...
+            // fallback: Since J!4
+            if (empty ($this->oldRelease)) {
+                $this->oldRelease =  '5.0.0.1';
             }
+
+            //--- fetch changelog and create html tables each -----------------------------
+
+            $ChangeLogModel = new ChangeLogModel ();
+            $jsonChangelogs = $ChangeLogModel->changeLogElements($this->oldRelease);
+            // Array: Html table each log item
+            $changelogTables= $ChangeLogModel->changeLogsData2Html ($jsonChangelogs);
+
+            //--- enclose by collapsible ----------------------------------------------
+
+            $id = 'rsg2_changelog';
+            $collapsed = false;
+            // Cord display collapser or not
+            $changeLogText = ChangeLogModel::collapseContent ($changelogTables, $id, $collapsed);
         }
         catch (RuntimeException $e)
         {
@@ -163,61 +166,6 @@ EOT;
         }
 
         return $changeLogText;
-    }
-
-    /**
-     * style for installation message
-     *
-     * @return string
-     *
-     * @since version
-     */
-    private function changelogCss () {
-
-        $html =<<<EOT
-            <style>
-            /* ToDo: More specific add dictionaries with class= gallery/images ... */
-            .table caption {
-                caption-side: top;
-              white-space: nowrap;
-            }
-            
-            .changelog_area {
-                        display: flex;
-                        flex-direction: row;
-              justify-content: flex-start;
-            }
-            
-            .changelog_key {
-                        min-width: 100px;
-              border-right: 2px solid red;
-            }
-            
-            .changelog_value_area {
-                        display: flex;
-                        flex-direction: column;
-              flex-wrap: wrap;
-            }
-            
-            .change-log-caption {
-                        color: black;
-                    }
-            
-            .change-log-table {
-                        border-bottom: 2px solid black;
-            }
-            
-            .card-header .fa {
-                        transition: 0.3s transform ease-in-out;
-            }
-            
-            .card-header .collapsed .fa {
-                        transform: rotate(-90deg);
-            }
-            </style>
-EOT;
-
-        return $html;
     }
 
 } // class

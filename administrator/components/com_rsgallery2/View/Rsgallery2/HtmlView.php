@@ -100,10 +100,11 @@ class HtmlView extends BaseHtmlView
 		$oRsg2Version = new rsgallery2Version();
 		$this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 
-        // ToDo: Changelogs HTMl should be created at install (? build process) and handled like credits
-		$jsonChangelogs = ChangeLogModel::changeLogElements();
+        $ChangeLogModel = new ChangeLogModel ();
+        // ToDo: add previous version
+		$jsonChangelogs = $ChangeLogModel->changeLogElements();
 		// Array: Html table each log item
-		$this->changelogs = ChangeLogModel::changeLogsData2Html ($jsonChangelogs);
+		$this->changelogs = $ChangeLogModel->changeLogsData2Html ($jsonChangelogs);
 
 		$this->credits = CreditsEnumeration::CreditsEnumerationText;
 
