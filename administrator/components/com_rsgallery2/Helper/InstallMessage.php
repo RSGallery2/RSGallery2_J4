@@ -12,18 +12,25 @@
 
 namespace Joomla\Component\Rsgallery2\Administrator\Helper;
 
+use Exception;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 use JUri;
+use RuntimeException;
 
 defined('_JEXEC') or die();
 
+/**
+ * @package     Joomla\Component\Rsgallery2\Administrator\Helper
+ *
+ * @since version
+ */
 class InstallMessage
 {
-
     protected $linksHtml = '';
-    public $newRelease =  '-1.0.0.1';
-    public $oldRelease =  '';
+    public $newRelease = '-1.0.0.1';
+    public $oldRelease = '';
 
     /**
      * InstallMessage constructor.
@@ -41,19 +48,23 @@ class InstallMessage
     }
 
     /**
-     * @param string $upgradeId
+     * Add part with standard icon and buttons together with changelog information
+     * On a 'second' installation the changelog will be displayed
+     *
+     * @param string $updateId tells with 'upgrade' that it is not the first installation
      *
      * @return string
      *
      * @since version
      */
-    public function installMessageText ($upgradeId = '') {
+    public function installMessageText($updateId = '')
+    {
 
         $instMessage = "";
 
         $instMessage .= $this->linksHtml;
 
-        if ($upgradeId == 'update') {
+        if ($updateId == 'update') {
 
             $instMessage .= $this->changeLogHtml();
         }
@@ -63,14 +74,12 @@ class InstallMessage
 
     /**
      * Base construct containing logo and links to config-, control-, galleries page
-     *      *
-     * @param $type 'install' / 'update'
      *
-     * @return string
+     * @return string html of loo and buttons
      *
      * @since version
      */
-    private function createLinksHtml ($type='')
+    private function createLinksHtml()
     {
         //--- preprae lings and text in variables --------------------------------------------
 
@@ -90,7 +99,7 @@ class InstallMessage
 
         //--- html outpu --------------------------------------------
 
-        $html =<<<EOT
+        $html = <<<EOT
                 <div class="alert alert-success" style="text-align:center;">
                     <strong>RSGallery2 $this->newRelease was installed successfully</strong>
                 </div>
@@ -124,13 +133,15 @@ EOT;
     }
 
     /**
-     * Fetch changelog and provide a table in collapsible
+     * Fetch changelog and provide version information in collapsible cards
      *
-     * @return string
+     * @return string html card containing tables for each version
      *
+     * @throws Exception
      * @since version
      */
-    private function changeLogHtml () {
+    private function changeLogHtml()
+    {
 
         $changeLogText = '';
 
@@ -138,7 +149,7 @@ EOT;
             // ToDo: Save old when not same and use in new class ...
             // fallback: Since J!4
             if (empty ($this->oldRelease)) {
-                $this->oldRelease =  '5.0.0.1';
+                $this->oldRelease = '5.0.0.1';
             }
 
             //--- fetch changelog and create html tables each -----------------------------
@@ -146,23 +157,22 @@ EOT;
             $ChangeLogModel = new ChangeLogModel ();
             $jsonChangelogs = $ChangeLogModel->changeLogElements($this->oldRelease);
             // Array: Html table each log item
-            $changelogTables= $ChangeLogModel->changeLogsData2Html ($jsonChangelogs);
+            $changelogTables = $ChangeLogModel->changeLogsData2Html($jsonChangelogs);
 
             //--- enclose by collapsible ----------------------------------------------
 
             $id = 'rsg2_changelog';
             $collapsed = false;
-            // Cord display collapser or not
-            $changeLogText = ChangeLogModel::collapseContent ($changelogTables, $id, $collapsed);
-        }
-        catch (RuntimeException $e)
-        {
+            // Cord display collapsed or not
+            $changeLogText = ChangeLogModel::collapseContent($changelogTables, $id, $collapsed);
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error in InstallMessage view: "' . 'ChangeLogHtml' . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
+        } catch (Exception $e) {
         }
 
         return $changeLogText;

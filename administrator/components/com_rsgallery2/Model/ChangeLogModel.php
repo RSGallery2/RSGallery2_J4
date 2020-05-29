@@ -36,7 +36,7 @@ class ChangeLogModel
      */
     public function __construct($changeLogFile = null)
     {
-        if ( ! empty ($changeLogFile)) {
+        if (!empty ($changeLogFile)) {
             $this->changeLogFile = $changeLogFile;
         }
 
@@ -276,7 +276,7 @@ class ChangeLogModel
                 // still nested
                 $subItems = $value [$itemId];
                 if (!is_array($subItems)) {
-                    $subItems = array ($subItems);
+                    $subItems = array($subItems);
                 }
 
                 foreach ($subItems as $item) {
@@ -307,24 +307,24 @@ class ChangeLogModel
     /**
      * surround given html in collapse html string
      *
-     * @param string $title
-     * @param string [] $changelogTables
-     * @param string $id
-     * @param bool $isCollapsed
+     * @param string [] $changelogHtmlTables array of html tables per release version
+     * @param string $id added to aria and div ids
+     * @param bool $isCollapsed start state
      *
-     * @return string html: collapsable element
+     * @return string html: collapsible element
      *
      * @since version
      */
-    public static function collapseContent($changelogTables, $id, $isCollapsed = true)
+    public static function collapseContent($changelogHtmlTables, $id, $isCollapsed = true)
     {
 
-        $changelogCss = self::changelogCss ();
+        $changelogCss = self::changelogCss();
 
         //--- table html(s) to one string --------------
 
-        foreach ($changelogTables as $htmlEle) {
-            $html[] = '            ' . $htmlEle;
+        $html = [];
+        foreach ($changelogHtmlTables as $htmlTable) {
+            $html[] = '            ' . $htmlTable;
         }
         $changelogsHtml = implode('</br>', $html);
 
@@ -332,7 +332,7 @@ class ChangeLogModel
 
         $title = Text::_('COM_INSTALLER_CHANGELOG');
         $show = $isCollapsed ? '' : 'show';
-        $collapsed = $isCollapsed ? 'collapsed' : 'collapsed';
+        $collapsed = $isCollapsed ? 'collapsed' : '';
         $ariaExpanded = $isCollapsed ? 'false' : 'true';
 
         $collapsedHtml = <<<EOT
@@ -361,52 +361,53 @@ EOT;
     /**
      * css style for collapsed changelogs
      *
-     * @return string
+     * @return string html style element
      *
      * @since version
      */
-    private static function changelogCss () {
+    private static function changelogCss()
+    {
 
-        $html =<<<EOT
+        $html = <<<EOT
             <style>
-            /* ToDo: More specific add dictionaries with class= gallery/images ... */
-            .table caption {
-                caption-side: top;
-              white-space: nowrap;
-            }
-            
-            .changelog_area {
-                        display: flex;
-                        flex-direction: row;
-              justify-content: flex-start;
-            }
-            
-            .changelog_key {
-                        min-width: 100px;
-              border-right: 2px solid red;
-            }
-            
-            .changelog_value_area {
-                        display: flex;
-                        flex-direction: column;
-              flex-wrap: wrap;
-            }
-            
-            .change-log-caption {
-                        color: black;
-                    }
-            
-            .change-log-table {
-                        border-bottom: 2px solid black;
-            }
-            
-            .card-header .fa {
-                        transition: 0.3s transform ease-in-out;
-            }
-            
-            .card-header .collapsed .fa {
-                        transform: rotate(-90deg);
-            }
+                /* ToDo: More specific add dictionaries with class= gallery/images ... */
+                .table caption {
+                    caption-side: top;
+                  white-space: nowrap;
+                }
+                
+                .changelog_area {
+                            display: flex;
+                            flex-direction: row;
+                  justify-content: flex-start;
+                }
+                
+                .changelog_key {
+                            min-width: 100px;
+                  border-right: 2px solid red;
+                }
+                
+                .changelog_value_area {
+                            display: flex;
+                            flex-direction: column;
+                  flex-wrap: wrap;
+                }
+                
+                .change-log-caption {
+                            color: black;
+                        }
+                
+                .change-log-table {
+                            border-bottom: 2px solid black;
+                }
+                
+                .card-header .fa {
+                            transition: 0.3s transform ease-in-out;
+                }
+                
+                .card-header .collapsed .fa {
+                            transform: rotate(-90deg);
+                }
             </style>
 EOT;
 

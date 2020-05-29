@@ -20,17 +20,32 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 /**
  * Script file of Rsgallery2 Component
  *
- * @since  1.0.0
+ * @since  version
  *
  */
 class Com_Rsgallery2InstallerScript
 {
+    protected $newRelease;
+    protected $oldRelease;
+
+    protected $oldManifestData;
+
+    /**
+     * @var string
+     * @since version
+     */
+    private $minimumJoomla;
+    /**
+     * @var string
+     * @since version
+     */
+    private $minimumPhp;
 
 
     /**
      * Extension script constructor.
      *
-     * @since  1.0.0
+     * @since  version
      *
      */
     public function __construct()
@@ -54,17 +69,6 @@ class Com_Rsgallery2InstallerScript
         }
     }
 
-    protected $newRelease;
-    protected $oldRelease;
-    protected $minimum_joomla_release;
-    protected $actual_joomla_release;
-
-    protected $oldManifestData;
-
-    // 	protected $;
-    // 	protected $;
-    // 	protected $;
-
     /*-------------------------------------------------------------------------
     preflight
     ---------------------------------------------------------------------------
@@ -84,6 +88,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
+     * @throws Exception
      * @since   3.7.0
      */
     public function preflight($action, $installer)
@@ -153,7 +158,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  1.0.0
+     * @since  version
      *
      */
     public function install($parent)
@@ -183,7 +188,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  1.0.0
+     * @since  version
      *
      */
     public function update($parent)
@@ -215,7 +220,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  1.0.0
+     * @since  version
      *
      */
     public function postflight($type, $parent)
@@ -244,7 +249,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  1.0.0
+     * @since  version
      *
      */
     public function uninstall($parent)
@@ -322,6 +327,8 @@ class Com_Rsgallery2InstallerScript
      * Checks for old config table. If it exists it is assumed that all joomla 3 x and older tables
      * @return bool
      * @throws Exception
+     *
+     * @since version
      */
     public function update_config_On_RSG2_J3x_Tables_Existing()
     {
@@ -330,7 +337,7 @@ class Com_Rsgallery2InstallerScript
         try {
             Log::add('Check for existing old J3x Tables', Log::INFO, 'rsg2');
 
-            $j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3x;
+            $j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
             Log::add('after $j3x_model', Log::INFO, 'rsg2');
 
             $isOldGalleryTableExisting = $j3x_model->J3xConfigTableExist();
@@ -338,7 +345,7 @@ class Com_Rsgallery2InstallerScript
             // prepare taking over old
             if ($isOldGalleryTableExisting) {
 
-                Log::add('!!! Old J3x tables exist !!!', Log::INFO, 'rsg2');
+                Log::add('!!! Old J3x tables do exist !!!', Log::INFO, 'rsg2');
 
 //			    // already updated ?
 //
