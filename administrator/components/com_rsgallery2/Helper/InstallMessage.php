@@ -147,8 +147,15 @@ EOT;
 
         try {
             // ToDo: Save old when not same and use in new class ...
+
             // fallback: Since J!4
             if (empty ($this->oldRelease)) {
+                $this->oldRelease = '5.0.0.1';
+            }
+
+            // Installed same a second time show all
+            // ToDo: fetch previous installeed version
+            if ($this->oldRelease == $this->newRelease) {
                 $this->oldRelease = '5.0.0.1';
             }
 
