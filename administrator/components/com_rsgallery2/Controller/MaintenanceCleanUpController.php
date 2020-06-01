@@ -31,81 +31,73 @@ class MaintenanceCleanUpController extends BaseController
     /**
      * Constructor.
      *
-     * @param   array                $config   An optional associative array of configuration settings.
+     * @param array $config An optional associative array of configuration settings.
      * Recognized key values include 'name', 'default_task', 'model_path', and
      * 'view_path' (this list is not meant to be comprehensive).
-     * @param   MVCFactoryInterface  $factory  The factory.
-     * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   Input                $input    Input
+     * @param MVCFactoryInterface $factory The factory.
+     * @param CMSApplication $app The JApplication for the dispatcher
+     * @param Input $input Input
      *
      * @since   3.0
      *
-    public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
-    {
-        parent::__construct($config, $factory, $app, $input);
-
-//        // Map the apply task to the save method.
-//        $this->registerTask('apply', 'save');
-    }
-    /**/
+     * public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+     * {
+     * parent::__construct($config, $factory, $app, $input);
+     *
+     * //        // Map the apply task to the save method.
+     * //        $this->registerTask('apply', 'save');
+     * }
+     * /**/
 
     /**
      * Change file uninstall.mysql.utf8.sql so it does remove the RSG2 Tables
      *
      * @since 5.0.0
      */
-    public function purgeImagesAndData ()
+    public function purgeImagesAndData()
     {
-        $msg     = "MaintenanceCleanUp.purgeImagesAndData: ";
+        $msg = "MaintenanceCleanUp.purgeImagesAndData: ";
         $msgType = 'notice';
 
         Session::checkToken();
 
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
-        if (!$canAdmin)
-        {
+        if (!$canAdmin) {
             //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 $msg .= 'is prepared but not activated and tested yet';
 
-	            //--- Delete images references in database --------------
+                //--- Delete images references in database --------------
 
-	            $imageModel = $this->getModel('MaintRemoveAllData');
-	            [$isRemoved, $msgTmp] = $imageModel->removeDataInTables();
-	            $msg .= $msgTmp;
+                $imageModel = $this->getModel('MaintRemoveAllData');
+                [$isRemoved, $msgTmp] = $imageModel->removeDataInTables();
+                $msg .= $msgTmp;
 
-	            //--- Delete all images --------------------------------
+                //--- Delete all images --------------------------------
 
-	            if ($isRemoved)
-	            {
-		            [$isRemoved, $msgTmp] = $imageModel->removeAllImageFiles();
-		            $msg .= $msgTmp;
+                if ($isRemoved) {
+                    [$isRemoved, $msgTmp] = $imageModel->removeAllImageFiles();
+                    $msg .= $msgTmp;
 
-		            if ($isRemoved)
-		            {
-			            //--- purge message -----------------------------------
-			            $msg .= '<br><br>' . Text::_('COM_RSGALLERY2_PURGED', true);
-		            }
-	            }
+                    if ($isRemoved) {
+                        //--- purge message -----------------------------------
+                        $msg .= '<br><br>' . Text::_('COM_RSGALLERY2_PURGED', true);
+                    }
+                }
 
-	            if ( ! $isRemoved) {
+                if (!$isRemoved) {
 
-		            //$msgType = 'warning';
-		            $msgType = 'error';
+                    //$msgType = 'warning';
+                    $msgType = 'error';
 
-	            }
+                }
 
-            }
-            catch (RuntimeException $e)
-            {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing purgeImagesAndData: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -126,42 +118,33 @@ class MaintenanceCleanUpController extends BaseController
      *
      * @since 5.0.0
      */
-    public function prepareRemoveTables ()
+    public function prepareRemoveTables()
     {
-        $msg     = "MaintenanceCleanUp.prepareRemoveTables: ";
+        $msg = "MaintenanceCleanUp.prepareRemoveTables: ";
         $msgType = 'notice';
 
         Session::checkToken();
 
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
-        if (!$canAdmin)
-        {
+        if (!$canAdmin) {
             //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
 
-                $isUpdated = $this->activateDrop4RSG2Tables (true);
+                $isUpdated = $this->activateDrop4RSG2Tables(true);
 
-                if ($isUpdated)
-                {
-                        $msg .= "Successful activated drop of tables on uninstall";
-                }
-                else
-                {
+                if ($isUpdated) {
+                    $msg .= "Successful activated drop of tables on uninstall";
+                } else {
                     $msg .= "Error at activation 'drop of tables on uninstall'";
                     $msgType = 'error';
                 }
 
-            }
-            catch (RuntimeException $e)
-            {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing prepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -182,44 +165,33 @@ class MaintenanceCleanUpController extends BaseController
      *
      * @since 5.0.0
      */
-    public function undoPrepareRemoveTables ()
+    public function undoPrepareRemoveTables()
     {
-        $msg     = "MaintenanceCleanUp.undoPrepareRemoveTables: ";
+        $msg = "MaintenanceCleanUp.undoPrepareRemoveTables: ";
         $msgType = 'notice';
 
         Session::checkToken();
 
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
-        if (!$canAdmin)
-        {
+        if (!$canAdmin) {
             //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg    .=  Text::_('JERROR_ALERTNOAUTHOR');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
 
-                $msg .= 'is not developed yet';
+                $isUpdated = $this->activateDrop4RSG2Tables(false);
 
-                $isUpdated = $this->activateDrop4RSG2Tables (false);
-
-                if ($isUpdated)
-                {
+                if ($isUpdated) {
                     $msg .= "Successful prevented drop of tables on uninstall";
-                }
-                else
-                {
+                } else {
                     $msg .= "Error at prevent 'drop of tables on uninstall'";
                     $msgType = 'error';
                 }
 
-            }
-            catch (RuntimeException $e)
-            {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing undoPrepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -236,15 +208,15 @@ class MaintenanceCleanUpController extends BaseController
 
     // uninstall.mysql.utf8.sql
 
-    private function activateDrop4RSG2Tables ($DoDrop = true) {
+    private function activateDrop4RSG2Tables($DoDrop = true)
+    {
 
         $isOk = false;
 
         $dropText = 'DROP TABLE IF EXISTS `';
         $doNotDropText = '#DROP TABLE IF EXISTS `';
 
-        try
-        {
+        try {
             $sqlUninstallFile = JPATH_COMPONENT_ADMINISTRATOR . '/sql/uninstall.mysql.utf8.sql';
 
             // file found
@@ -254,7 +226,7 @@ class MaintenanceCleanUpController extends BaseController
                 $lines = file($sqlUninstallFile);
 
                 // content found
-                if ( ! empty ($lines)) {
+                if (!empty ($lines)) {
 
                     /*-------------------------------------------------------------------
                     Write back all (changed) lines
@@ -290,9 +262,7 @@ class MaintenanceCleanUpController extends BaseController
                     $isOk = true;
                 }
             }
-        }
-        catch (RuntimeException $e)
-        {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing activateDrop4RSG2Tables: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -305,9 +275,93 @@ class MaintenanceCleanUpController extends BaseController
         return $isOk;
     }
 
+    public function ResetConfigToDefault()
+    {
+        $isOk = false;
+
+        $msg = "MaintenanceCleanUp.ResetConfigToDefault: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+
+            try {
+
+                $msg .= 'is prepared but not activated and tested yet. <br>';
+
+                //$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/Xchangelog.xml';
+                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/config.xml';
+
+                // Attempt to load the XML file.
+                $xmlOuter = simplexml_load_file($xmlFile);
+                // If there is nothing to load return
+                if (empty($xmlOuter))
+                {
+                    $msg .= Text::_('Could not find config.xml file. No change applied');
+                    $msgType = 'error';
+
+                    $link = 'index.php?option=com_rsgallery2&view=Maintenance';
+                    $this->setRedirect($link, $msg, $msgType);
+                    return;
+                }
+
+                // test if it is an config xml file
+                $xpath ="/config";
+                $xmlConfig = $xmlOuter->xpath($xpath);
+
+                // If there is nothing to load return
+                if (empty($xmlConfig))
+                {
+                    $msg .= Text::_('Could not read config.xml contents. No change applied');
+                    $msgType = 'warning';
+                }
+                else
+                {
+// ToDo: put in model
+
+                        $result = $xmlOuter->xpath("//field");
+
+                        //echo "<pre>";print_r($result);die;
+                        foreach ($result as $item) {
+
+                            $properties = $item->attributes ();
+
+
+                            echo "Name " . $item['Name'] . " and result " . $item['Result'];
+                            echo "<hr>";
+                        }
 
 
 
+                        /**/
+
+                    $msg .= Text::_('<br>------------------------------------<br>');
+                }
+
+
+
+
+            } catch (RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing ResetConfigToDefault: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=Maintenance';
+        $this->setRedirect($link, $msg, $msgType);
+    }
 
 
 } // class
