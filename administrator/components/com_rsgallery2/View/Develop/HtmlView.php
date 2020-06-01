@@ -94,24 +94,6 @@ class HtmlView extends BaseHtmlView
 			$this->developActive = true; // false / true;
 		}
 
-		// Check for errors.
-		/* Must load form before
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
-		/**/
-
-        /**
-         *
-         */
-		$path = JPATH_COMPONENT_ADMINISTRATOR . '/install_rsg2.php';
-		if (JFile::exists($path))
-		{
-			require_once $path;
-		}
-		/**/
-
 		//--- Check user rights ---------------------------------------------
 
 		// toDo: More detailed for rsgallery admin
