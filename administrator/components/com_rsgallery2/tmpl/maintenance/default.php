@@ -77,13 +77,14 @@ class zoneButtons
 
 $RSG2_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_RSGALLERY2_ZONE'), Text::_('COM_RSGALLERY2_RSGALLERY2_ZONE_DESC'), 'rsg2', 'rsg2Zone');
 
-
+$RSG2_ZoneButtons = [];
+    /**
 // maint. templates
 $RSG2_ZoneButtons[] = new zoneButtons(
     //Route::_('index.php?option=com_rsgallery2&view=maintTemplates'),
     Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared&intended=TemplateConfiguration'),
-    Text::_('COM_RSGALLERY2_TEMPLATE_CONFIGURATION'),
-    Text::_('COM_RSGALLERY2_TEMPLATES_CONFIGURATION_DESC'),
+    '<del>' . Text::_('COM_RSGALLERY2_TEMPLATE_CONFIGURATION') . '</del>',
+    '<del>' . Text::_('COM_RSGALLERY2_TEMPLATES_CONFIGURATION_DESC') . '</del>',
     array ('icon-equalizer', 'icon-out-3'),
     'viewConfigTemplate'
 );
@@ -92,11 +93,12 @@ $RSG2_ZoneButtons[] = new zoneButtons(
 $RSG2_ZoneButtons[] = new zoneButtons(
     //Route::_('index.php?option=com_rsgallery2&view=maintslideshows'),
     Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared&intended=SlideshowConfiguration'),
-    Text::_('COM_RSGALLERY2_SLIDESHOW_CONFIGURATION'),
-    Text::_('COM_RSGALLERY2_SLIDESHOWS_CONFIGURATION_DESC'),
+    '<del>' . Text::_('COM_RSGALLERY2_SLIDESHOW_CONFIGURATION') . '</del>',
+    '<del>' . Text::_('COM_RSGALLERY2_SLIDESHOWS_CONFIGURATION_DESC') . '</del>',
     array ('icon-equalizer', 'icon-play'),
     'viewConfigSlideshow'
 );
+/**/
 
 //--- Raw database zone -----------------------------
 
