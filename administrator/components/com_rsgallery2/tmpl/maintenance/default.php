@@ -178,6 +178,16 @@ $repair_ZoneButtons[] =  new zoneButtons(
 
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=MaintenanceCleanUp.ResetConfigToDefault'),
+    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT'),
+    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT_DESC'),
+    array('icon-equalizer', 'icon-undo'),
+    'uninstallDataTables'
+);
+/**/
+
+/**/
+$repair_ZoneButtons[] =  new zoneButtons(
 	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=Rsg2GeneralInfo'),
 	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO'),
 	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO_DESC'),
@@ -203,13 +213,8 @@ $danger_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
-/**/
+/**
 $danger_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&task=Config.ResetToDefault'),
-    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT'),
-    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT_DESC'),
-    array('icon-equalizer', 'icon-undo'),
-    'uninstallDataTables'
 );
 /**/
 
