@@ -50,6 +50,7 @@ class GalleriesHelper
 
 		// Try to find the component helper.
 		$eName = str_replace('com_', '', $component);
+		// ? JPATH_COMPONENT_ADMINISTRATOR
 		$file = Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component . '/helpers/' . $eName . '.php');
 
 		if (file_exists($file))

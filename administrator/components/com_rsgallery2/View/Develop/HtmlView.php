@@ -102,8 +102,10 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
-		/**
-		$path = JPATH_ADMINISTRATOR . '/components/rsgallery2/install_rsg2.php';
+        /**
+         *
+         */
+		$path = JPATH_COMPONENT_ADMINISTRATOR . '/install_rsg2.php';
 		if (JFile::exists($path))
 		{
 			require_once $path;
