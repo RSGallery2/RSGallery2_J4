@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 
@@ -94,7 +95,101 @@ class ConfigRawModel extends BaseDatabaseModel
 		return $isSaved;
 	}
 
-    // ToDo: replace all of followoing functions with call to  MaintenanceJ3xModel
+
+    /**
+     * Extract configuration variables from RSG2 config file to reset to original values
+     *
+     * @throws \Exception
+     *
+     * @since version
+     */
+    public function ResetConfigToDefault()
+    {
+        $isSaved = false;
+
+        try {
+
+            //$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/Xchangelog.xml';
+            $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/config.xml';
+
+            // Attempt to load the XML file.
+            $xmlOuter = simplexml_load_file($xmlFile);
+            // If there is nothing to load return
+            if (empty($xmlOuter)) {
+                $OutTxt = '';
+                $OutTxt .= Text::_('Could not find config.xml file. No change applied');;
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+            else {
+                // attribArray if it is an config xml file
+                $xpath = "/config";
+                $xmlConfig = $xmlOuter->xpath($xpath);
+
+                // If there is nothing to load return
+                if (empty($xmlConfig)) {
+                    $OutTxt = Text::_('Could not read config.xml contents. No change applied');
+
+                    $app = Factory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'error');
+                } else {
+                    //
+                    $configFromXml = [];
+
+                    // fetch fields
+                    $result = $xmlOuter->xpath("//field");
+
+                    // extract name and value from all fields
+                    foreach ($result as $item) {
+
+                        // convert to array
+                        $fieldAttributes = current($item->attributes());
+
+                        $type = $fieldAttributes ['type'];
+
+                        // Valid data ?
+                        if ($type != 'spacer' && $type != 'note') {
+
+                            $name = $fieldAttributes ['name'];
+                            // default existing ?
+                            if (isset ($fieldAttributes ['default'])) {
+                                $value = $fieldAttributes ['default'];
+                            } else {
+                                $value = "";
+                            }
+
+                            $configFromXml[$name] = $value;
+                        }
+                    };
+
+
+                    // Save parameter
+                    $isSaved = $this->saveItems($configFromXml);
+                }
+            }
+        }
+        catch (RuntimeException $e)
+		{
+            $OutTxt = '';
+            $OutTxt .= 'ConfigRawModel: Error in ResetConfigToDefault: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+
+		return $isSaved;
+    }
+
+
+
+
+
+
+
+        // ToDo: replace all of followoing functions with call to  MaintenanceJ3xModel
 
     static function J3xConfigTableExist () {return self::J3xTableExist ('#__rsgallery2_config');}
     //static function J3xGalleriesTableExist () {return self::J3xTableExist ('#__rsgallery2_galleries');}
@@ -117,7 +212,7 @@ class ConfigRawModel extends BaseDatabaseModel
         catch (RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
+            $OutTxt .= 'ConfigRawModel: J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -142,7 +237,7 @@ class ConfigRawModel extends BaseDatabaseModel
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'OldConfigItems: Error in copyOldItems2New: "' . '<br>';
+			$OutTxt .= 'ConfigRawModel: Error in copyOldItems2New: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -196,7 +291,7 @@ class ConfigRawModel extends BaseDatabaseModel
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'OldConfigItems: Error in copyOldItemsList2New: "' . '<br>';
+			$OutTxt .= 'ConfigRawModel: Error in copyOldItemsList2New: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -232,7 +327,7 @@ class ConfigRawModel extends BaseDatabaseModel
         catch (RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'ConfigRawModel: readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -266,7 +361,7 @@ class ConfigRawModel extends BaseDatabaseModel
         catch (RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'readConfigFromExtensionTable: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'ConfigRawModel: readConfigFromExtensionTable: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

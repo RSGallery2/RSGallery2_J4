@@ -18,6 +18,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 
+use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
 
 /**
  * Clean up and prepare for uninstall of RSG2
@@ -115,6 +116,8 @@ class MaintenanceCleanUpController extends BaseController
 
     /**
      * Change file uninstall.mysql.utf8.sql so it does remove the RSG2 Tables
+     *
+     * @throws \Exception
      *
      * @since 5.0.0
      */
@@ -275,6 +278,13 @@ class MaintenanceCleanUpController extends BaseController
         return $isOk;
     }
 
+    /**
+     * Extract configuration variables from RSG2 config file to reset to original values
+     *
+     * @throws \Exception
+     *
+     * @since version
+     */
     public function ResetConfigToDefault()
     {
         $isOk = false;
@@ -286,7 +296,6 @@ class MaintenanceCleanUpController extends BaseController
 
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
@@ -295,76 +304,18 @@ class MaintenanceCleanUpController extends BaseController
 
             try {
 
-                $msg .= 'is prepared but not activated and tested yet. <br>';
+                $configModel = $this->getModel('ConfigRaw');
+                $isSaved = $configModel->ResetConfigToDefault();
 
-                //$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/Xchangelog.xml';
-                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/config.xml';
-
-                // Attempt to load the XML file.
-                $xmlOuter = simplexml_load_file($xmlFile);
-                // If there is nothing to load return
-                if (empty($xmlOuter))
-                {
-                    $msg .= Text::_('Could not find config.xml file. No change applied');
-                    $msgType = 'error';
-
-                    $link = 'index.php?option=com_rsgallery2&view=Maintenance';
-                    $this->setRedirect($link, $msg, $msgType);
-                    return;
-                }
-
-                // attribArray if it is an config xml file
-                $xpath ="/config";
-                $xmlConfig = $xmlOuter->xpath($xpath);
-
-                // If there is nothing to load return
-                if (empty($xmlConfig))
-                {
-                    $msg .= Text::_('Could not read config.xml contents. No change applied');
-                    $msgType = 'warning';
+                if ($isSaved) {
+                    // config saved message
+                    $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
                 }
                 else
                 {
-// ToDo: put in model
-                        //
-                        $configFromXml = [];
-
-                        // fetch fields
-                        $result = $xmlOuter->xpath("//field");
-
-                        // extract name and value from all fields
-                        foreach ($result as $item) {
-
-                            // convert to array
-                            $fieldAttributes = current($item->attributes());
-
-                            $type = $fieldAttributes ['type'];
-
-                            // Valid data ?
-                            if ($type != 'spacer' && $type != 'note') {
-
-                                $name =  $fieldAttributes ['name'];
-                                // default existing ?
-                                if (isset ($fieldAttributes ['default'])) {
-                                    $value = $fieldAttributes ['default'];
-                                } else {
-                                    $value = "";
-                                }
-
-                                $configFromXml[$name] = $value;
-                            }
-                        }
-
-                        ;
-
-
-                        /**/
-
-                    $msg .= Text::_('<br>------------------------------------<br>');
+                    $msg .= "Error at resetting configuration to default'";
+                    $msgType = 'warning';
                 }
-
-
-
 
             } catch (RuntimeException $e) {
                 $OutTxt = '';
