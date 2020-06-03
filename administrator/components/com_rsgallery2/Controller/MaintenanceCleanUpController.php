@@ -313,7 +313,7 @@ class MaintenanceCleanUpController extends BaseController
                     return;
                 }
 
-                // test if it is an config xml file
+                // attribArray if it is an config xml file
                 $xpath ="/config";
                 $xmlConfig = $xmlOuter->xpath($xpath);
 
@@ -326,19 +326,36 @@ class MaintenanceCleanUpController extends BaseController
                 else
                 {
 // ToDo: put in model
+                        //
+                        $configFromXml = [];
 
+                        // fetch fields
                         $result = $xmlOuter->xpath("//field");
 
-                        //echo "<pre>";print_r($result);die;
+                        // extract name and value from all fields
                         foreach ($result as $item) {
 
-                            $properties = $item->attributes ();
+                            // convert to array
+                            $fieldAttributes = current($item->attributes());
 
+                            $type = $fieldAttributes ['type'];
 
-                            echo "Name " . $item['Name'] . " and result " . $item['Result'];
-                            echo "<hr>";
+                            // Valid data ?
+                            if ($type != 'spacer' && $type != 'note') {
+
+                                $name =  $fieldAttributes ['name'];
+                                // default existing ?
+                                if (isset ($fieldAttributes ['default'])) {
+                                    $value = $fieldAttributes ['default'];
+                                } else {
+                                    $value = "";
+                                }
+
+                                $configFromXml[$name] = $value;
+                            }
                         }
 
+                        ;
 
 
                         /**/
