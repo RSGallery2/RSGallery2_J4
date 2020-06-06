@@ -230,15 +230,15 @@ class Com_Rsgallery2InstallerScript
     {
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
-        $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
-        $msg = $installMessage->installMessageText($type);
-        echo $msg;
-
         switch ($type)
         {
 
             case 'install':
-                // insert configuration standard values
+                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
+                $msg = $installMessage->installMessageText($type);
+                echo $msg;
+
+            // insert configuration standard values
 /**
                 //$configModel = $this->getModel('ConfigRaw');
                 $configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
@@ -258,6 +258,13 @@ class Com_Rsgallery2InstallerScript
                 break;
 /**/
             case 'update':
+                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
+                $msg = $installMessage->installMessageText($type);
+                echo $msg;
+
+                break;
+
+            case 'uninstall':
 
                 break;
 
