@@ -25,7 +25,8 @@ use Joomla\CMS\Language\Text;
  */
 class ChangeLogModel
 {
-    public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
+    // no on install (com_installer) public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
+    public $changeLogFile = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/changelog.xml';
 
     /**
      * ChangeLogModel constructor.
@@ -57,34 +58,44 @@ class ChangeLogModel
      */
     public function changeLogElements($previousVersion = '')
     {
-        //--- read xml to json ---------------------------------------------------
-
-        $changelogs = simplexml_load_file($this->changeLogFile);
-
-        //Encode the SimpleXMLElement object into a JSON string.
-        $jsonString = json_encode($changelogs);
-        //Convert it back into an associative array
-        $jsonArray = json_decode($jsonString, true);
-
-        //--- reduce to version items -------------------------------------------
-
         $jsonChangeLogs = [];
 
-        // standard : change log for each version are sub items
-        if (array_key_exists('changelog', $jsonArray)) {
+        if ( ! file_exists($this->changeLogFile))
+        {
+            $OutTxt = 'changeLogFile not found ' . $this->changeLogFile . '"';
+            Factory::getApplication()->enqueueMessage($OutTxt, 'error');
+        }
+        else {
 
-            $testLogs = $jsonArray ['changelog'];
+            //--- read xml to json ---------------------------------------------------
 
-            foreach ($testLogs as $changeLog) {
+            $changelogs = simplexml_load_file($this->changeLogFile);
 
-                // all versions
-                if (empty ($previousVersion)) {
-                    $jsonChangeLogs [] = $changeLog;
-                } else {
-                    // selected last versions
-                    $logVersion = $changeLog ['version'];
-                    if (version_compare($logVersion, $previousVersion, '>')) {
-                        $jsonChangeLogs [] = $changeLog;
+            if (!empty ($changelogs)) {
+                //Encode the SimpleXMLElement object into a JSON string.
+                $jsonString = json_encode($changelogs);
+                //Convert it back into an associative array
+                $jsonArray = json_decode($jsonString, true);
+
+                //--- reduce to version items -------------------------------------------
+
+                // standard : change log for each version are sub items
+                if (array_key_exists('changelog', $jsonArray)) {
+
+                    $testLogs = $jsonArray ['changelog'];
+
+                    foreach ($testLogs as $changeLog) {
+
+                        // all versions
+                        if (empty ($previousVersion)) {
+                            $jsonChangeLogs [] = $changeLog;
+                        } else {
+                            // selected last versions
+                            $logVersion = $changeLog ['version'];
+                            if (version_compare($logVersion, $previousVersion, '>')) {
+                                $jsonChangeLogs [] = $changeLog;
+                            }
+                        }
                     }
                 }
             }

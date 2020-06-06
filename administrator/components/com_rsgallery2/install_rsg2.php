@@ -16,6 +16,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
+use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
+
+// ToDo: More logs after action
 
 /**
  * Script file of Rsgallery2 Component
@@ -83,7 +86,7 @@ class Com_Rsgallery2InstallerScript
     /**
      * Function to act prior to installation process begins
      *
-     * @param string $action Which action is happening (install|uninstall|discover_install|update)
+     * @param string $type Which action is happening (install|uninstall|discover_install|update)
      * @param Installer $installer The class calling this method
      *
      * @return  boolean  True on success
@@ -91,7 +94,7 @@ class Com_Rsgallery2InstallerScript
      * @throws Exception
      * @since   3.7.0
      */
-    public function preflight($action, $installer)
+    public function preflight($type, $installer)
     {
         // Check for the minimum PHP version before continuing
         if (!empty($this->minimumPhp) && version_compare(PHP_VERSION, $this->minimumPhp, '<')) {
@@ -109,7 +112,7 @@ class Com_Rsgallery2InstallerScript
 
         //--- new release version --------------------------------------
 
-        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $action, Log::INFO, 'rsg2');
+        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
         $manifest = $installer->getManifest();
         $this->newRelease = (string)$manifest->version;
@@ -120,7 +123,7 @@ class Com_Rsgallery2InstallerScript
 
         $this->oldRelease = '';
 
-        if ($action === 'update') {
+        if ($type === 'update') {
             //--- Read manifest  with old version ------------------------
 
             $this->oldRelease = $this->getVersionFromManifestParam();
@@ -230,6 +233,47 @@ class Com_Rsgallery2InstallerScript
         $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
         $msg = $installMessage->installMessageText($type);
         echo $msg;
+
+        switch ($type)
+        {
+
+            case 'install':
+                // insert configuration standard values
+/**
+                //$configModel = $this->getModel('ConfigRaw');
+                $configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
+                $isSaved = $configModel->ResetConfigToDefault();
+
+                if ($isSaved) {
+                    // config saved message
+                    $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
+                }
+                else
+                {
+                    $msg .= "Error at resetting configuration to default'";
+                    $msgType = 'warning';
+                }
+                echo $msg;
+
+                break;
+/**/
+            case 'update':
+
+                break;
+
+            case 'discover_install':
+
+                break;
+
+            default:
+
+                break;
+        }
+
+
+
+        echo '<br>&oplus;&infin;&omega;';
+
 
         return true;
     }
