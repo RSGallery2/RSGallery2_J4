@@ -46,20 +46,6 @@
 		/>
 
 		<field
-				id="config_version"
-				name="config_version"
-				type="hidden"
-				default="0.0.0"
-		/>
-
-		<field
-				id="j3x_merged_cfg_version"
-				name="j3x_merged_cfg_version"
-				type="hidden"
-				default="0.0.0"
-		/>
-
-		<field
 				id="isDebugBackend"
 				name="isDebugBackend"
 				type="radio"
@@ -93,30 +79,6 @@
 			<option value="0">JNO</option>
 		</field>
 		
-		<!-- Old J3x upgrade info -->
-		
-		<!-- config state: 0:not upgraded, 1:upgraded,  -1:upgraded and deleted -->
-		<field
-			id="j3x_config_upgrade"
-			name="j3x_config_upgrade"
-			type="hidden"
-			default="0"
-		/>
-
-		<field
-			id="j3x_gallery_upgrade"
-			name="j3x_gallery_upgrade"
-			type="hidden"
-			default="0"
-		/>
-
-		<field
-			id="j3x_image_upgrade"
-			name="j3x_image_upgrade"
-			type="hidden"
-			default="0"
-		/>
-
 	</fieldset>
 
 	<!-- ... Tab Upload ................................. -->

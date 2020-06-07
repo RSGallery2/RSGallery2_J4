@@ -106,6 +106,30 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 
 
 --
+-- state of RSG data
+--    (
+--       __rsg2_data_version (One for all tables)
+--       
+--       j3x_config_upgrade:  config state: 0:not upgraded, 1:upgraded,  -1:upgraded and deleted
+--       j3x_gallery_upgrade: states see config
+--       j3x_image_upgrade:
+--       ??? j3x_comments_upgrade ???
+--       ??? j3x_ACL_upgrade ???
+--       ??? j3x_merged_cfg_version ???
+--       
+--       
+--    )
+--
+
+CREATE TABLE IF NOT EXISTS `#__rsg2_state` (
+  `id` int(9) unsigned NOT NULL auto_increment,
+  `name` text NOT NULL,
+  `value` text NOT NULL,
+ PRIMARY KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+
+--
 -- acl permissions
 --
 
