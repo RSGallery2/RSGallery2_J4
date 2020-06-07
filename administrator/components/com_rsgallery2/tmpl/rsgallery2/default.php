@@ -45,6 +45,13 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
 
                     DisplayRSG2Logo();
 
+
+                    //--- tell config must be initialized ---------------------------------
+
+                    if ( ! $this->isConfigSavedOnce) {
+                        DisplayRequestSaveConfigOnce();
+                    }
+
                     //--- Control buttons ------------------
 
                     DisplayRSG2ControlButtons($this->buttons);
@@ -115,6 +122,39 @@ function DisplayRSG2Logo()
 
     echo '<div class="clearfix"></div>';
 }
+
+//--- Request to user: Save config -----------------------------
+
+/**
+ * Just displays the logo as svg
+ *
+ * @since version
+ */
+function DisplayRequestSaveConfigOnce()
+{
+    $rsg2ConfigurationLink = Route::_('index.php?option=com_config&view=component&component=com_rsgallery2');
+
+
+    echo '    <div class="rsg2requestSaveConfig">';
+//	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+//    echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+
+//    echo '        <button type="button" class="btn btn-primary"';
+    echo '        <button type="button" class="btn btn-warning"';
+    echo '               onclick="location.href=\'' . $rsg2ConfigurationLink . '\'">';
+//    echo '            <span class="badge badge-pill badge-info">' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</span>';
+    echo '            <strong >' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</strong>';
+    echo '        </button>';
+    echo '    </div>';
+    echo '    <br>';
+
+//	echo '<p class="test">';
+//	echo '</p>
+
+    echo '<div class="clearfix"></div>';
+}
+
+
 
 //--- Control buttons ------------------
 

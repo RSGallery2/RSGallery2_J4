@@ -61,6 +61,7 @@ class HtmlView extends BaseHtmlView
 
 	protected $isDebugBackend;
 	protected $isDevelop;
+	protected $isConfigSavedOnce;
 
 	/**
 	 * Method to display the view.
@@ -77,10 +78,15 @@ class HtmlView extends BaseHtmlView
 
 		//--- config --------------------------------------------------------------------
 
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+		// $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
+
+		// configuration must be saved once to be initialized
+		$this->isConfigSavedOnce = ! empty ($rsgConfig->get('image_width'));
 
 		//---  --------------------------------------------------------------------
 
