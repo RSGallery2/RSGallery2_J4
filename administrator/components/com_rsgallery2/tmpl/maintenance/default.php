@@ -465,7 +465,11 @@ function zoneInfo ($info='Unknown zone info')
                         /**/
                         DisplayZone($repair_Zone, $repair_ZoneButtons);
                         DisplayZone($danger_Zone, $danger_ZoneButtons);
-                        //DisplayZone($upgrade_Zone, $upgrade_ZoneButtons);
+
+                        if ($this->isJ3xRsg2DataExisting)
+                        {
+	                        DisplayZone($upgrade_Zone, $upgrade_ZoneButtons);
+                        }
 
                         // DisplayZone($ready4Test_Zone, $ready4Test_ZoneButtons);
                         DisplayZone($developer_Zone, $developer_ZoneButtons);
