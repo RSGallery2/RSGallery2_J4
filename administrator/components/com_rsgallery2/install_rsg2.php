@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package    com_rsgallery2
  *
@@ -15,8 +14,16 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
-use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
-use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
+//use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
+//require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
+$localDir = str_replace("\\","/",dirname(__FILE__));
+$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
+$rsg2ClassName = 'InstallMessage';
+require_once($rsg2FileName);
+\JLoader::register($rsg2ClassName, $rsg2FileName);
+\JLoader::load($rsg2ClassName);
+
+//use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
 
 // ToDo: More logs after action
 
@@ -110,9 +117,9 @@ class Com_Rsgallery2InstallerScript
             return false;
         }
 
-        //--- new release version --------------------------------------
+		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
-        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
+        //--- new release version --------------------------------------
 
         $manifest = $installer->getManifest();
         $this->newRelease = (string)$manifest->version;
@@ -124,6 +131,7 @@ class Com_Rsgallery2InstallerScript
         $this->oldRelease = '';
 
         if ($type === 'update') {
+
             //--- Read manifest  with old version ------------------------
 
             $this->oldRelease = $this->getVersionFromManifestParam();
@@ -132,15 +140,12 @@ class Com_Rsgallery2InstallerScript
             if (empty ($this->oldRelease)) {
                 JFactory::getApplication()->enqueueMessage('Can not install RSG2: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts', 'error');
 
-                return false;
+				// May be error on install ?
+				// return false;
             }
         }
 
         Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');
-
-        // COM_RSGALLERY2_PREFLIGHT_INSTALL_TEXT / COM_RSGALLERY2_PREFLIGHT_UPDATE_TEXT
-        // COM_RSGALLERY2_PREFLIGHT_UNINSTALL_TEXT
-        // echo Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT');
 
         return true;
     }
@@ -199,7 +204,7 @@ class Com_Rsgallery2InstallerScript
         // echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
         Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
 
-        // ToDo: move installler / update
+        // ToDo: move installer / update
         $isGalleryTreeCreated = $this->InitGalleryTree();
 
         return true;
@@ -234,8 +239,11 @@ class Com_Rsgallery2InstallerScript
         {
 
             case 'install':
-                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
-                $msg = $installMessage->installMessageText($type);
+            case 'update':
+//                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
+//                //$msg = $installMessage->installMessageText($type);
+//                $msg = $installMessage->installMessageText('install');
+                $msg = InstallMessage::createLinksHtml($this->newRelease);
                 echo $msg;
 
             // insert configuration standard values
@@ -257,14 +265,13 @@ class Com_Rsgallery2InstallerScript
 
                 break;
 /**/
-            case 'update':
-                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
-                $msg = $installMessage->installMessageText($type);
-                echo $msg;
+				echo $type . ' install finished';
 
                 break;
 
             case 'uninstall':
+				echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>CGalleries and images table will still exist';
+                // ToDo: uninstall Message
 
                 break;
 
@@ -278,8 +285,8 @@ class Com_Rsgallery2InstallerScript
         }
 
 
-
-        echo '<br>&oplus;&infin;&omega;';
+        // wonderworld good by icons
+        echo '<br>&oplus;&infin;&omega;<br>';
 
 
         return true;
@@ -339,6 +346,7 @@ class Com_Rsgallery2InstallerScript
             $query->where('id = 1');
             $query->where('alias = "galleries-root-alias"');
             $db->setQuery($query);
+
             $id = $db->loadResult();
 
             if ($id == '1') {   // assume tree structure already built
@@ -460,13 +468,14 @@ class Com_Rsgallery2InstallerScript
             $db->setQuery($query);
 
             $jsonStr = $db->loadResult();
-            // $result = $db->loadObjectList()
 
             if (!empty ($jsonStr)) {
                 $manifest = json_decode($jsonStr, true);
             }
 
-        } catch (RuntimeException $e) {
+        } 
+        catch (RuntimeException $e) 
+        {
             $OutTxt = '';
             $OutTxt .= 'readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

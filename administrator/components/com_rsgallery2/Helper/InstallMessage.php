@@ -15,9 +15,10 @@ namespace Joomla\Component\Rsgallery2\Administrator\Helper;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 use JUri;
 use RuntimeException;
+
+use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 defined('_JEXEC') or die();
 
@@ -44,7 +45,7 @@ class InstallMessage
         $this->newRelease = $newRelease;
         $this->oldRelease = $oldRelease;
 
-        $this->linksHtml = $this->createLinksHtml();
+        $this->linksHtml = $this->createLinksHtml($this->newRelease);
     }
 
     /**
@@ -79,9 +80,9 @@ class InstallMessage
      *
      * @since version
      */
-    private function createLinksHtml()
+    public static function createLinksHtml($newRelease)
     {
-        //--- preprae lings and text in variables --------------------------------------------
+        //--- prepare links and text in variables --------------------------------------------
 
         $logoLink = JURI::root() . '/media/com_rsgallery2/images/RSG2_logoText.svg';
 
@@ -97,11 +98,11 @@ class InstallMessage
         $galleriesText = Text::_('COM_RSGALLERY2_MENU_GALLERIES');
         $galleriesTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_GALLERIES_TITLE');
 
-        //--- html outpu --------------------------------------------
+        //--- html output --------------------------------------------
 
         $html = <<<EOT
                 <div class="alert alert-success" style="text-align:center;">
-                    <strong>RSGallery2 $this->newRelease was installed successfully</strong>
+                    <strong>RSGallery2 $newRelease was installed successfully</strong>
                 </div>
             <div class="hero-unit">
 				<div class="text-center">
@@ -172,6 +173,7 @@ EOT;
             $collapsed = false;
             // Cord display collapsed or not
             $changeLogText = ChangeLogModel::collapseContent($changelogTables, $id, $collapsed);
+
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error in InstallMessage view: "' . 'ChangeLogHtml' . '"<br>';
