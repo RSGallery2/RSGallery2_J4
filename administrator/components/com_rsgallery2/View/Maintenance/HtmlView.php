@@ -24,7 +24,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model;
-use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\Rsg2J3xTablesBootModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
 // JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
@@ -104,7 +104,7 @@ class HtmlView extends BaseHtmlView
 
 
 
-        $this->isJ3xRsg2DataExisting = ConfigRawModel::J3xConfigTableExist();
+        $this->isJ3xRsg2DataExisting = Rsg2J3xTablesBootModel::J3xConfigTableExist();
 
 
         //--- Check user rights ---------------------------------------------

@@ -26,6 +26,8 @@ use Joomla\CMS\Factory;
 class Rsg2J3xTablesBootModel
 {
 
+    // ToDo: attention a double of this function exist. Remove either of them
+
     static function J3xConfigTableExist () {return self::J3xTableExist ('#__rsgallery2_config');}
     //static function J3xGalleriesTableExist () {return self::J3xTableExist ('#__rsgallery2_galleries');}
     //static function J3xImagesTableExist () {return self::J3xTableExist ('#__rsgallery2_files');}

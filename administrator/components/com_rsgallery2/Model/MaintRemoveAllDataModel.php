@@ -209,41 +209,6 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 	}
 
 	/**
-	static function J3xConfigTableExist () {return MaintenanceJ3xModel::J3xTableExist ('#__rsgallery2_config');}
-	static function J3xGalleriesTableExist () {return MaintenanceJ3xModel::J3xTableExist ('#__rsgallery2_galleries');}
-	static function J3xImagesTableExist () {return MaintenanceJ3xModel::J3xTableExist ('#__rsgallery2_files');}
-
-	static function J3xTableExist ($findTable)
-	{
-		$tableExist = false;
-
-		try
-		{
-			$db = Factory::getDbo();
-			$db->setQuery('SHOW TABLES');
-			$existingTables = $db->loadColumn();
-
-			$checkTable = $db->replacePrefix($findTable);
-
-			$tableExist = in_array($checkTable, $existingTables);
-		}
-		catch (RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'MaintRemoveAllDataModel::J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-
-		return $tableExist;
-	}
-
-	/**/
-
-	/**
 	 * Delete data in given table from RSG2
 	 *
 	 * @param string $tableId
