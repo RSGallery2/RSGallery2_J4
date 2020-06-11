@@ -179,7 +179,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
     Route::_('index.php?option=com_rsgallery2&task=MaintenanceCleanUp.ResetConfigToDefault'),
-    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT'),
+    Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT') . '</del>',
     Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT_DESC'),
     array('icon-equalizer', 'icon-undo'),
     'uninstallDataTables'
@@ -196,6 +196,24 @@ $repair_ZoneButtons[] =  new zoneButtons(
 );
 /**/
 
+/**/
+$repair_ZoneButtons[] =  new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=config.config'),
+    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE') . '</del>',
+    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE_DESC') . '</del>',
+    array('icon-equalizer', 'icon-file', 'icon-download'),
+    'viewEditConfigRaw'
+);
+/**/
+/**/
+$repair_ZoneButtons[] =  new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=config.config'),
+    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE') . '</del>',
+    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC') . '</del>',
+    array('icon-equalizer', 'icon-file', 'icon-upload'),
+    'viewEditConfigRaw'
+);
+/**/
 
 //--- danger zone  -----------------------------
 
@@ -351,10 +369,10 @@ function DisplayButton($button)
     /** 01 */
     echo '<a href="' . $button->link . '" class="' . $button->classButton . '">';
     echo '    <figure class="rsg2-icon">';
-            foreach ($button->classIcons as $Idx => $imageClass )
-            {
-    echo '            <span class="' . $imageClass . ' icoMoon icoMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
-            }
+    foreach ($button->classIcons as $Idx => $imageClass )
+    {
+        echo '            <span class="' . $imageClass . ' icoMoon icoMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
+    }
     echo '        <figcaption class="rsg2-text">';
     echo '            <div class="maint-title">' . $button->textTitle  . '</div>';
     echo '            <div class="maint-text">' . $button->textInfo  . '</div>';
@@ -368,10 +386,10 @@ function DisplayButton($button)
     echo '        <li class="quickicon quickicon-single col mb-3">';
     echo '            <a href="' . $button->link . '">';
     echo '                <div class="quickicon-icon d-flex align-items-end big">';
-            foreach ($button->classIcons as $Idx => $imageClass )
-            {
+    foreach ($button->classIcons as $Idx => $imageClass )
+    {
     echo '            <span class="' . $imageClass . ' iconMoon0' . $Idx . '" ></span>'; // style="font-size:30px;"
-            }
+    }
     echo '                </div>';
     echo '                <div class="quickicon-text d-flex align-items-center">';
     echo '                    <span class="j-links-link">' . $button->textTitle  . '</span>';
@@ -459,6 +477,9 @@ function zoneInfo ($info='Unknown zone info')
                         //---  -----------------------------
 
                         DisplayZone($RSG2_Zone, $RSG2_ZoneButtons);
+
+                        DisplayZone($ready4Test_Zone, $ready4Test_ZoneButtons);
+
                         DisplayZone($rawDatabase_Zone, $rawDatabase_ZoneButtons);
 
                         // DisplayZone($outdated_Zone, $outdated_ZoneButtons);
@@ -471,7 +492,7 @@ function zoneInfo ($info='Unknown zone info')
 	                        DisplayZone($upgrade_Zone, $upgrade_ZoneButtons);
                         }
 
-                        // DisplayZone($ready4Test_Zone, $ready4Test_ZoneButtons);
+
                         DisplayZone($developer_Zone, $developer_ZoneButtons);
                         /**/
 

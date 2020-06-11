@@ -44,8 +44,7 @@ HTMLHelper::_('bootstrap.framework');
 					try
 					{
 
-
-
+                        echo $this->j3x_galleriesHtml;
 
 					}
 					catch (RuntimeException $e)

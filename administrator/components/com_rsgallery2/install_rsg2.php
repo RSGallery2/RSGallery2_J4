@@ -14,16 +14,16 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
-//use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
-//require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
-$localDir = str_replace("\\","/",dirname(__FILE__));
-$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
-$rsg2ClassName = 'InstallMessage';
-require_once($rsg2FileName);
-\JLoader::register($rsg2ClassName, $rsg2FileName);
-\JLoader::load($rsg2ClassName);
-
-//use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
+////use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
+////require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
+//$localDir = str_replace("\\","/",dirname(__FILE__));
+//$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
+//$rsg2ClassName = 'InstallMessage';
+//require_once($rsg2FileName);
+//\JLoader::register($rsg2ClassName, $rsg2FileName);
+//\JLoader::load($rsg2ClassName);
+//
+////use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
 
 // ToDo: More logs after action
 
@@ -240,11 +240,11 @@ class Com_Rsgallery2InstallerScript
 
             case 'install':
             case 'update':
-//                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
-//                //$msg = $installMessage->installMessageText($type);
-//                $msg = $installMessage->installMessageText('install');
-                $msg = InstallMessage::createLinksHtml($this->newRelease);
-                echo $msg;
+////                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
+////                //$msg = $installMessage->installMessageText($type);
+////                $msg = $installMessage->installMessageText('install');
+//                $msg = InstallMessage::createLinksHtml($this->newRelease);
+//                echo $msg;
 
             // insert configuration standard values
 /**
@@ -265,7 +265,7 @@ class Com_Rsgallery2InstallerScript
 
                 break;
 /**/
-				echo $type . ' install finished';
+				echo $type . ' finished';
 
                 break;
 

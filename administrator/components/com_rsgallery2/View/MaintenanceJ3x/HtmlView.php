@@ -36,6 +36,8 @@ class HtmlView extends BaseHtmlView
 
 	protected $form;
 
+	protected $j3x_galleriesHtml;
+
 
 	/**
 	 * Method to display the view.
@@ -78,7 +80,7 @@ class HtmlView extends BaseHtmlView
 
 
 					// iterate over all values
-					$this->configVarsMerged = $j3xModel->MergeOldAndNew($this->configVarsOld, $this->configVars);
+					$this->configVarsMerged = $j3xModel->MergeJ3xConfiguration($this->configVarsOld, $this->configVars);
 
 				}
 				catch (RuntimeException $e)
@@ -91,9 +93,52 @@ class HtmlView extends BaseHtmlView
 					$app->enqueueMessage($OutTxt, 'error');
 				}
 
-
 				break;
-		}
+
+            case 'DBTransferOldGalleries':
+                try
+                {
+                    $j3xModel      = $this->getModel();
+
+                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML();
+
+                }
+                catch (RuntimeException $e)
+                {
+                    $OutTxt = '';
+                    $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
+                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                    $app = JFactory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'error');
+                }
+
+                break;
+
+            case 'DBTransferOldImages':
+                try
+                {
+                    $j3xModel      = $this->getModel();
+//                    $this->configVarsOld = $j3xModel->OldConfigItems();
+
+
+                    // iterate over all values
+//                    $this->configVarsMerged = $j3xModel->MergeJ3xConfiguration($this->configVarsOld, $this->configVars);
+
+                }
+                catch (RuntimeException $e)
+                {
+                    $OutTxt = '';
+                    $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
+                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                    $app = JFactory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'error');
+                }
+
+                break;
+
+        }
 
 
 		Rsgallery2Helper::addSubmenu('maintenance');
