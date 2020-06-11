@@ -29,6 +29,7 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 
 use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use Joomla\Component\RSGallery2\Administrator\Model\Rsg2ExtensionModel;
 
 /**
  * View class for a list of rsgallery2.
@@ -121,7 +122,7 @@ class HtmlView extends BaseHtmlView
 
             case 'ManifestInfo':
 
-                $rsg2Manifest = ConfigRawModel::readRsg2ExtensionManifest ();
+                $rsg2Manifest = Rsg2ExtensionModel::readRsg2ExtensionManifest ();
                 $this->rsg2Manifest = $rsg2Manifest;
 
                 break;
@@ -147,10 +148,10 @@ class HtmlView extends BaseHtmlView
 
             case 'Rsg2GeneralInfo':
 
-                $rsg2Manifest = ConfigRawModel::readRsg2ExtensionManifest ();
+                $rsg2Manifest = Rsg2ExtensionModel::readRsg2ExtensionManifest ();
                 $this->rsg2Manifest = $rsg2Manifest;
 
-                $rsg2configuration = ConfigRawModel::readRsg2ExtensionConfiguration ();
+                $rsg2configuration = Rsg2ExtensionModel::readRsg2ExtensionConfiguration ();
                 $this->rsg2Configuration = $rsg2configuration;
 
                 $this->rsg2Configuration_j3x = [];
