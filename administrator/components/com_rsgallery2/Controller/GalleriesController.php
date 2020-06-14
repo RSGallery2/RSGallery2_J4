@@ -12,6 +12,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -22,7 +23,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * The Galleries List Controller
  *
- * @since  1.6
+ * @since version
  */
 class GalleriesController extends AdminController
 {
@@ -72,6 +73,7 @@ class GalleriesController extends AdminController
 		Session::checkToken();
 
 		$extension = $this->input->get('extension');
+		// ???
 		$this->setRedirect(Route::_('index.php?option=com_rsgallery2&view=galleries&extension=' . $extension, false));
 
 		/** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
@@ -158,4 +160,66 @@ class GalleriesController extends AdminController
 		return $result;
 	}
 	/**/
+
+
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public function resetNestedGalleryTable()
+    {
+        $isOk = false;
+
+        $msg = "MaintenanceCleanUp.ResetConfigToDefault: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+
+            try {
+
+                // Get the model.
+                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+                $model = $this->getModel('Galleries');
+
+                // Remove the items.
+                $isOk = $model->resetNestedGalleryTable();
+                if ($isOk) {
+                    $msg .= Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_SUCCESS');
+                } else {
+                    $msg .= Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_ERROR') . $model->getError();
+                }
+
+            } catch (RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing ResetConfigToDefault: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        // $this->setRedirect(Route::_('index.php?option=com_rsgallery2&view=galleries&amp;layout=galleries_tree'));
+
+        $link = 'index.php?option=com_rsgallery2&view=galleries&layout=galleries_tree';
+        $this->setRedirect($link, $msg, $msgType);
+
+        return $isOk;
+    }
+
+
+
+
+
 }

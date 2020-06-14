@@ -629,6 +629,67 @@ class GalleriesModel extends ListModel
 		return $rows;
 	}
 
+    /**
+     * Reset gallery table to orignal state
+     * Deletes all galleries and initialises the root of the nested tree
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public static function resetNestedGalleryTable()
+    {
+        $isGalleryTreeResetted = false;
+
+        $id_galleries = '#__rsg2_galleries';
+
+        try {
+            $db = Factory::getDbo();
+
+            //--- delete ald rows -----------------------------------------------
+
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName($id_galleries));
+            // all rows
+            //$query->where($conditions);
+
+            $db->setQuery($query);
+
+            $isRowsDeleted = $db->execute();
+
+            //--- insert root of nested list ------------------------------------
+
+            // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
+            // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
+
+            // insert root record
+            // Missing
+            $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id', 'level', 'path', 'lft', 'rgt');
+            $values = array(1, 'galleries root', 'galleries-root-alias', 'root element of nested list', '', '', 0, 0, '', 0, 1);
+
+            // Create root element
+            $query = $db->getQuery(true)
+                ->insert('#__rsg2_galleries')
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $db->quote($values)));
+            $db->setQuery($query);
+
+            $result = $db->execute();
+            if ($result) {
+                $isGalleryTreeResetted = true;
+            } else {
+                Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
+            }
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
+        }
+
+        return $isGalleryTreeResetted;
+    }
+
 
 
 
