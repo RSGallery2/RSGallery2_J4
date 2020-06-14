@@ -149,6 +149,17 @@ $rawDatabase_ZoneButtons[] =  new zoneButtons(
 );
 /**/
 
+$rawDatabase_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&view=galleries&amp;layout=galleries_tree'),
+    Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'),
+    Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'),
+    array('icon-images', 'icon-tree-2'),
+    'viewGalleriesRaw'
+);
+
+
+
+
 //--- Repair zone -----------------------------
 
 $repair_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_REPAIR_ZONE'), Text::_('COM_RSGALLERY2_FUNCTIONS_MAY_CHANGE_DATA'), 'repair', 'repairZone');
@@ -161,7 +172,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
 	Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared&intended=ConsolidateImages'),
 	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES'),
 	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES_TXT'),
-	array('icon-database', 'icon-images', 'icon-checkbox-checked'),
+	array('icon-database', 'icon-images', 'icon-checkbox-checked', 'icon-notification-2'),
 	'viewConsolidateDB'
 );
 /**/
@@ -201,7 +212,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
     Route::_('index.php?option=com_rsgallery2&task=config.config'),
     '<del>' . Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE') . '</del>',
     '<del>' . Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE_DESC') . '</del>',
-    array('icon-equalizer', 'icon-file', 'icon-download'),
+    array('icon-equalizer', 'icon-file', 'icon-download', 'icon-notification-2'),
     'viewEditConfigRaw'
 );
 /**/
@@ -210,10 +221,19 @@ $repair_ZoneButtons[] =  new zoneButtons(
     Route::_('index.php?option=com_rsgallery2&task=config.config'),
     '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE') . '</del>',
     '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC') . '</del>',
-    array('icon-equalizer', 'icon-file', 'icon-upload'),
+    array('icon-equalizer', 'icon-file', 'icon-upload', 'icon-notification-2'),
     'viewEditConfigRaw'
 );
 /**/
+
+$repair_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=Galleries.resetNestedGalleryTable'),
+    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET'),
+    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_DESC'),
+    array('icon-images', 'icon-database', 'icon-undo'),
+    'viewGalleriesRaw'
+);
+
 
 //--- danger zone  -----------------------------
 
@@ -226,7 +246,7 @@ $danger_ZoneButtons[] = new zoneButtons(
 	Route::_('index.php?option=com_rsgallery2&task=MaintenanceCleanUp.purgeImagesAndData'),
 	Text::_('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES'),
 	Text::_('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES_DESC'),
-	array('icon-database', 'icon-purge'),
+	array('icon-database', 'icon-purge', 'icon-notification-2'),
 	'purgeImagesAndData'
 );
 /**/
@@ -283,7 +303,7 @@ if ($this->isJ3xRsg2DataExisting)
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DbCopyOldConfig'),
 		Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'),
 		Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG_DESC'),
-		array('icon-new-tab', 'icon-equalizer'),
+		array('icon-new-tab', 'icon-equalizer', 'icon-notification-2'),
 		'viewDbCopyOldConfig'
 	);
 	/**/
@@ -293,7 +313,7 @@ if ($this->isJ3xRsg2DataExisting)
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldGalleries'),
 		Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES_DESC'),
-		array('icon-new-tab', 'icon-images'),
+		array('icon-new-tab', 'icon-images', 'icon-notification-2'),
 		'viewDBTransferOldGalleries'
 	);
 	/**/
@@ -303,7 +323,7 @@ if ($this->isJ3xRsg2DataExisting)
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldImages'),
 		Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_IMAGES_DESC'),
-		array('icon-new-tab', 'icon-image'),
+		array('icon-new-tab', 'icon-image', 'icon-notification-2'),
 		'viewDBTransferOldImages'
 	);
 	/**/
@@ -353,11 +373,29 @@ $developer_ZoneButtons[] =  new zoneButtons(
 /**/
 
 
-//--- ready for test zone -----------------------------
+//--- developer test zone -----------------------------
 
-$ready4Test_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_TEST_ZONE'), Text::_('COM_RSGALLERY2_TEST_ZONE_DESCRIPTION'), 'test', 'testZone');
+$developer4Test_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_DEVELOP_TEST_ZONE'), Text::_('COM_RSGALLERY2_DEVELOP_TEST_ZONE_DESCRIPTION'), 'devTest', 'devTestZone');
 
-$ready4Test_ZoneButtons = [];
+$developer4Test_ZoneButtons = [];
+
+//$developer4Test_ZoneButtons[] = new zoneButtons(
+//    Route::_('index.php?option=com_rsgallery2&view=galleries&amp;layout=galleries_tree'),
+//    Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'),
+//    Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'),
+//    array('icon-images', 'icon-tree-2', 'icon-notification-2'),
+//    'viewGalleriesRaw'
+//);
+//
+//$developer4Test_ZoneButtons[] = new zoneButtons(
+//    Route::_('index.php?option=com_rsgallery2&task=Galleries.resetNestedGalleryTable'),
+//    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET'),
+//    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_DESC'),
+//    array('icon-images', 'icon-database', 'icon-undo', 'icon-notification-2'),
+//    'viewGalleriesRaw'
+//);
+//
+
 
 //---  -----------------------------
 
@@ -478,7 +516,9 @@ function zoneInfo ($info='Unknown zone info')
 
                         DisplayZone($RSG2_Zone, $RSG2_ZoneButtons);
 
-                        DisplayZone($ready4Test_Zone, $ready4Test_ZoneButtons);
+                        if ($this->isDevelop) {
+                            DisplayZone($developer4Test_Zone, $developer4Test_ZoneButtons);
+                        }
 
                         DisplayZone($rawDatabase_Zone, $rawDatabase_ZoneButtons);
 
@@ -492,8 +532,9 @@ function zoneInfo ($info='Unknown zone info')
 	                        DisplayZone($upgrade_Zone, $upgrade_ZoneButtons);
                         }
 
-
-                        DisplayZone($developer_Zone, $developer_ZoneButtons);
+                        if ($this->isDevelop) {
+                            DisplayZone($developer_Zone, $developer_ZoneButtons);
+                        }
                         /**/
 
                         ?>
