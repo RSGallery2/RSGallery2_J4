@@ -100,7 +100,10 @@ class HtmlView extends BaseHtmlView
                 {
                     $j3xModel      = $this->getModel();
 
-                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML();
+                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j3xModel->j3x_galleriesList());
+
+                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($j3xModel->j4x_galleriesList());
+                    $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
 
                 }
                 catch (RuntimeException $e)
@@ -214,13 +217,6 @@ class HtmlView extends BaseHtmlView
 		// direct to config
 		$toolbar->preferences('com_rsgallery2');
 	}
-
-	/**
-	public function getModel($name = 'Associations', $prefix = 'Administrator', $config = array('ignore_request' => true))
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
-	/**/
 
 }
 

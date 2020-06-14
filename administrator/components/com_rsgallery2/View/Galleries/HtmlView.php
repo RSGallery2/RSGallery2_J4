@@ -146,9 +146,30 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
-		//--- sidebar --------------------------------------------------------------------
+        $Layout = $this->getLayout();
 
-		$Layout = $this->getLayout();
+        switch ($Layout)
+        {
+            case 'galleries_raw':
+
+
+                break;
+
+            case 'galleries_tree':
+                $galleriesModel      = $this->getModel();
+                $this->items = $galleriesModel->allGalleries ();
+
+                break;
+
+            default:
+
+
+                break;
+
+        }
+
+                //--- sidebar --------------------------------------------------------------------
+
 		if ($Layout !== 'modal')
 		{
 			HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
@@ -220,8 +241,25 @@ class HtmlView extends BaseHtmlView
 				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH'); 
 				break;
 
+            case 'galleries_tree':
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . 'Tasks: <br>'
+                        . '* Improve tree design<br>'
+                        //	. '*  <br>'
+                        //	. '*  <br>'
+                        //	. '*  <br>'
+                        . '</span><br><br>';
+                }
 
-			default:
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'), 'images');
+
+                break;
+
+
+            default:
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
@@ -448,4 +486,5 @@ class HtmlView extends BaseHtmlView
 			'a.id'           => Text::_('JGRID_HEADING_ID'),
 		);
 	}
+
 }

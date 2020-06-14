@@ -46,6 +46,11 @@ HTMLHelper::_('bootstrap.framework');
 
                         echo $this->j3x_galleriesHtml;
 
+                        echo '<hr>';
+                        echo $this->j4x_galleriesHtml;
+
+                        echo '<hr>';
+
 					}
 					catch (RuntimeException $e)
 					{

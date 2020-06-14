@@ -186,16 +186,74 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return $galleries;
     }
 
-    public function GalleriesListAsHTML()
+    public function j4x_galleriesList()
+    {
+        $galleries = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
+                ->from('#__rsg2_galleries AS a')
+                ->order('a.level ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $galleries = $db->loadObjectList();
+
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $galleries;
+    }
+
+
+    public function j4_GalleriesToJ3Form($j4x_galleries)
+    {
+        $j3x_galleries = [];
+
+        try {
+            foreach ($j4x_galleries as $j4x_gallery) {
+
+                // leave out root gallery in nested form
+                if ($j4x_gallery->id != 1) {
+                    $j3x_gallery = new \stdClass();
+
+                    $j3x_gallery->id = $j4x_gallery->id;
+                    $j3x_gallery->name = $j4x_gallery->name;
+
+                    // parent 1 is going to root
+                    if($j4x_gallery->parent_id == 1) {
+                        $j4x_gallery->parent_id = 0;
+                    }
+                    $j3x_gallery->parent = $j4x_gallery->parent_id;
+                    $j3x_gallery->ordering = $j4x_gallery->level;
+
+                    $j3x_galleries[] = $j3x_gallery;
+                }
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $j3x_galleries;
+    }
+
+    public function GalleriesListAsHTML($galleries)
     {
         $html = '';
 
         try {
-            $galleries = $this->j3x_galleriesList();
 
             if ( ! empty ($galleries)) {
                 // all root galleries and nested ones
-                $html = $this->GalleriesOfLevelHTML($galleries, 0);
+                $html = $this->GalleriesOfLevelHTML($galleries, 0, 0);
             }
         } catch (RuntimeException $e) {
             JFactory::getApplication()->enqueueMessage($e->getMessage());
@@ -204,7 +262,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return $html;
     }
 
-    private function GalleriesOfLevelHTML($galleries, $level)
+    private function GalleriesOfLevelHTML($galleries, $parentId, $level)
     {
         $html = [];
 
@@ -214,11 +272,12 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
             foreach ($galleries as $gallery) {
 
-                if ($gallery->parent == $level) {
+                if ($gallery->parent == $parentId) {
+
                     // html of this gallery
                     $galleryHTML [] = $this->GalleryHTML($gallery, $level);
 
-                    $subHtml = $this->GalleriesOfLevelHTML($galleries, $gallery->id);
+                    $subHtml = $this->GalleriesOfLevelHTML($galleries, $gallery->id, $level+1);
                     if (!empty ($subHtml)) {
                         $galleryHTML [] = $subHtml;
                     }
@@ -228,7 +287,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             // surround with <ul>
             if ( ! empty ($galleryHTML)) {
 
-                $lineStart = str_repeat(" ", 3*($level));
+                $lineStart = str_repeat(" ", 3*($parentId));
 
                 array_unshift ($galleryHTML,  $lineStart . '<ul class="list-group">');
                 $galleryHTML [] = $lineStart . '</ul>';
@@ -243,11 +302,21 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return implode($html);
     }
 
+    // ToDo use styling for nested from https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap
+
+
     private function GalleryHTML($gallery, $level)
     {
         $html = [];
 
         $lineStart = str_repeat(" ", 3*($level+1));
+        $identHtml = '';
+        if ($level > 0) {
+            $identHtml = '<span class="text-muted">';
+            $identHtml .= str_repeat('⋮&nbsp;&nbsp;&nbsp;', $level - 1);
+            $identHtml .= '</span>';
+            $identHtml .= '-&nbsp;';
+        }
 
         $id = $gallery->id;
         $parent = $gallery->parent;
@@ -258,7 +327,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
             $html = <<<EOT
 $lineStart<li class="list-group-item">
-$lineStart   <span> id: </span><span>$id</span>
+$lineStart   $identHtml<span> id: </span><span>$id</span>
 $lineStart   <span> parent: </span><span>$parent</span>
 $lineStart   <span> order: </span><span>$order</span>
 $lineStart   <span> name:</span><span>$name</span>
