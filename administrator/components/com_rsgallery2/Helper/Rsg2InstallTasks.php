@@ -19,7 +19,7 @@ use Joomla\CMS\Log\Log;
 // !!! needed by install
 
 // require_once(JPATH_ADMINISTRATOR . 'com_rsgallery2/helper/installMessage.php');
-require_once(JPATH_ADMINISTRATOR . 'com_rsgallery2/Model/Rsg2ExtensionModel.php');
+//require_once(JPATH_ADMINISTRATOR . 'com_rsgallery2/Model/Rsg2ExtensionModel.php');
 
 /**
  * Tasks needed on new/update installation of RSG2
@@ -47,37 +47,29 @@ class Rsg2InstallTasks
 
         // insert config
 
-
+		echo '<br>!!! Rsg2InstallTasks !!!<br>';
 
         // write back Read extension manifest data
 
+		// insert configuration standard values
+		/**
+		//$configModel = $this->getModel('ConfigRaw');
+		$configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
+		$isSaved = $configModel->ResetConfigToDefault();
 
-
-
-// insert configuration standard values
-/**
-//$configModel = $this->getModel('ConfigRaw');
-$configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
-$isSaved = $configModel->ResetConfigToDefault();
-
-if ($isSaved) {
-// config saved message
-$msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
-}
-else
-{
-$msg .= "Error at resetting configuration to default'";
-$msgType = 'warning';
-}
-echo $msg;
-/**/
-
-
+		if ($isSaved) {
+		// config saved message
+		$msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
+		}
+		else
+		{
+		$msg .= "Error at resetting configuration to default'";
+		$msgType = 'warning';
+		}
+		echo $msg;
+		/**/
 
     }
-
-
-
 
 } // class
 

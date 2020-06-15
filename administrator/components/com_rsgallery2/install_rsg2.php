@@ -18,6 +18,7 @@ use Joomla\CMS\Log\Log;
 ////require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
 //$localDir = str_replace("\\","/",dirname(__FILE__));
 //$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
+//$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
 //$rsg2ClassName = 'InstallMessage';
 //require_once($rsg2FileName);
 //\JLoader::register($rsg2ClassName, $rsg2FileName);
@@ -265,6 +266,12 @@ class Com_Rsgallery2InstallerScript
 
                 break;
 /**/
+
+		        $this->basePath = '/administrator/components/com_rsgallery2';
+		        $path = JPATH_SITE . $this->basePath . '/Helper/Rsg2InstallTasks.php';
+		        JLoader::register('Rsg2InstallTasks', $path);
+		        Rsg2InstallTasks::initConfigFromXmlFile ();
+
 				echo $type . ' finished';
 
                 break;
