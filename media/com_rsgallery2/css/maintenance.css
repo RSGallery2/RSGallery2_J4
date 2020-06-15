@@ -83,7 +83,7 @@
   color: white;
   background-color: #3056ff;
 }
-.icons-panel .testZone {
+.icons-panel .devTestZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
@@ -167,15 +167,15 @@
 .icons-panel.developer .rsg2-icon-bar a:hover {
   border-color: #3056ff;
 }
-.icons-panel.test {
+.icons-panel.devTest {
   border: 3px solid;
   border-color: #96a918;
   border-radius: 2px 2px 0 0;
 }
-.icons-panel.test span.icoMoon {
+.icons-panel.devTest span.icoMoon {
   color: #96a918;
 }
-.icons-panel.test .rsg2-icon-bar a:hover {
+.icons-panel.devTest .rsg2-icon-bar a:hover {
   border-color: #96a918;
 }
 .icons-panel.outdated {
