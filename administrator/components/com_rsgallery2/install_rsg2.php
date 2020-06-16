@@ -53,6 +53,9 @@ class Com_Rsgallery2InstallerScript
     private $minimumPhp;
 
 
+    private $rsg2_basePath = '';
+
+
     /**
      * Extension script constructor.
      *
@@ -78,6 +81,10 @@ class Com_Rsgallery2InstallerScript
                 // Informational log only
             }
         }
+
+        // when component files are copied
+        $this->rsg2_basePath = JPATH_SITE . '/administrator/components/com_rsgallery2';
+
     }
 
     /*-------------------------------------------------------------------------
@@ -266,8 +273,8 @@ class Com_Rsgallery2InstallerScript
                  * break;
                  * /**/
 
-                $this->basePath = '/administrator/components/com_rsgallery2';
-                $path = JPATH_SITE . $this->basePath . '/Helper/Rsg2InstallTasks.php';
+                $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
+                // JLoader::registerPrefix() or JLoader::registerNamespace()
                 JLoader::register('Rsg2InstallTasks', $path);
                 Rsg2InstallTasks::initConfigFromXmlFile();
 
