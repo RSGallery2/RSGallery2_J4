@@ -247,6 +247,27 @@ class Com_Rsgallery2InstallerScript
 
             case 'install':
             case 'update':
+                //// No namespace in destination file
+                //$path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
+                //// JLoader::registerPrefix() or JLoader::registerNamespace()
+                //JLoader::register('Rsg2InstallTasks', $path);
+                //Rsg2InstallTasks::initConfigFromXmlFile();
+
+            // JLoader::registerPrefix() or JLoader::registerNamespace()
+            $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
+            $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
+            JLoader::registerNamespace($nameSpace, $path);
+            // call initConfigFromXmlFile
+            Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
+
+//            // JLoader::registerPrefix() or JLoader::registerNamespace()
+//            $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
+//            $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
+//            JLoader::registerNamespace($nameSpace, $path);
+//
+//            Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
+
+//-----------------------------------------------------------------------
 ////                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
 ////                //$msg = $installMessage->installMessageText($type);
 ////                $msg = $installMessage->installMessageText('install');
@@ -272,11 +293,6 @@ class Com_Rsgallery2InstallerScript
                  *
                  * break;
                  * /**/
-
-                $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
-                // JLoader::registerPrefix() or JLoader::registerNamespace()
-                JLoader::register('Rsg2InstallTasks', $path);
-                Rsg2InstallTasks::initConfigFromXmlFile();
 
                 echo $type . ' finished';
 
