@@ -8,6 +8,9 @@
  * @link       https://www.rsgallery2.org
  */
 
+//namespace Joomla\Component\Rsgallery2\Administrator\Helper;
+//namespace Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks;
+
 // No direct access to this file
 defined('_JEXEC') or die;
 

@@ -118,7 +118,7 @@ class Com_Rsgallery2InstallerScript
             return false;
         }
 
-		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
+        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
         //--- new release version --------------------------------------
 
@@ -141,8 +141,8 @@ class Com_Rsgallery2InstallerScript
             if (empty ($this->oldRelease)) {
                 JFactory::getApplication()->enqueueMessage('Can not install RSG2: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts', 'error');
 
-				// May be error on install ?
-				// return false;
+                // May be error on install ?
+                // return false;
             }
         }
 
@@ -236,8 +236,7 @@ class Com_Rsgallery2InstallerScript
     {
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
-        switch ($type)
-        {
+        switch ($type) {
 
             case 'install':
             case 'update':
@@ -247,37 +246,37 @@ class Com_Rsgallery2InstallerScript
 //                $msg = InstallMessage::createLinksHtml($this->newRelease);
 //                echo $msg;
 
-            // insert configuration standard values
-/**
-                //$configModel = $this->getModel('ConfigRaw');
-                $configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
-                $isSaved = $configModel->ResetConfigToDefault();
+                // insert configuration standard values
+                /**
+                 * //$configModel = $this->getModel('ConfigRaw');
+                 * $configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
+                 * $isSaved = $configModel->ResetConfigToDefault();
+                 *
+                 * if ($isSaved) {
+                 * // config saved message
+                 * $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
+                 * }
+                 * else
+                 * {
+                 * $msg .= "Error at resetting configuration to default'";
+                 * $msgType = 'warning';
+                 * }
+                 * echo $msg;
+                 *
+                 * break;
+                 * /**/
 
-                if ($isSaved) {
-                    // config saved message
-                    $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
-                }
-                else
-                {
-                    $msg .= "Error at resetting configuration to default'";
-                    $msgType = 'warning';
-                }
-                echo $msg;
+                $this->basePath = '/administrator/components/com_rsgallery2';
+                $path = JPATH_SITE . $this->basePath . '/Helper/Rsg2InstallTasks.php';
+                JLoader::register('Rsg2InstallTasks', $path);
+                Rsg2InstallTasks::initConfigFromXmlFile();
 
-                break;
-/**/
-
-		        $this->basePath = '/administrator/components/com_rsgallery2';
-		        $path = JPATH_SITE . $this->basePath . '/Helper/Rsg2InstallTasks.php';
-		        JLoader::register('Rsg2InstallTasks', $path);
-		        Rsg2InstallTasks::initConfigFromXmlFile ();
-
-				echo $type . ' finished';
+                echo $type . ' finished';
 
                 break;
 
             case 'uninstall':
-				echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>CGalleries and images table will still exist';
+                echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>CGalleries and images table will still exist';
                 // ToDo: uninstall Message
 
                 break;
@@ -480,9 +479,7 @@ class Com_Rsgallery2InstallerScript
                 $manifest = json_decode($jsonStr, true);
             }
 
-        } 
-        catch (RuntimeException $e) 
-        {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
