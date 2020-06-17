@@ -14,6 +14,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
+//JLoader::registerNamespace('Rsgallery2', __DIR__ .'/administrator/components/com_rsgallery2');
+//JLoader::registerNamespace('Rsgallery2',  JPATH_ADMINISTRATOR .'/components/com_rsgallery2');
+
+// https://github.com/asikart/windwalker-template/blob/master/admin/flower.php
+//use Rsgallery2\Helper\Rsg2InstallTasks;
+
+
 ////use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 ////require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
 //$localDir = str_replace("\\","/",dirname(__FILE__));
@@ -182,9 +189,6 @@ class Com_Rsgallery2InstallerScript
 //		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
         Log::add(Text::_('COM_RSGALLERY2_INSTALL_TEXT'), Log::INFO, 'rsg2');
 
-        //
-        $isGalleryTreeCreated = $this->InitGalleryTree();
-
         return true;
     }
 
@@ -211,9 +215,6 @@ class Com_Rsgallery2InstallerScript
     {
         // echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
         Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
-
-        // ToDo: move installer / update
-        $isGalleryTreeCreated = $this->InitGalleryTree();
 
         return true;
     }
@@ -247,25 +248,42 @@ class Com_Rsgallery2InstallerScript
 
             case 'install':
             case 'update':
+
+                //
+                $isGalleryTreeCreated = $this->InitGalleryTree();
+
+
+//                Rsg2InstallTasks::initConfigFromXmlFile();
                 //// No namespace in destination file
                 //$path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
                 //// JLoader::registerPrefix() or JLoader::registerNamespace()
                 //JLoader::register('Rsg2InstallTasks', $path);
                 //Rsg2InstallTasks::initConfigFromXmlFile();
 
-            // JLoader::registerPrefix() or JLoader::registerNamespace()
-            $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
-            $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
-            JLoader::registerNamespace($nameSpace, $path);
-            // call initConfigFromXmlFile
-            Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
-
-//            // JLoader::registerPrefix() or JLoader::registerNamespace()
-//            $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
-//            $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
-//            JLoader::registerNamespace($nameSpace, $path);
+//                // JLoader::registerNamespace()
+//                $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
+//                $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
+//                JLoader::registerNamespace($nameSpace, $path);
+//                // call initConfigFromXmlFile
+//                Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
 //
-//            Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
+//                // JLoader::registerPrefix()
+//                $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
+//                //$nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper';
+//                $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
+//                JLoader::registerPrefix($nameSpace, $path);
+//
+//                Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
+//                //Rsg2InstallTasks::initConfigFromXmlFile();
+
+//                // JLoader::registerPrefix()
+//                // $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
+//                $path = $this->rsg2_basePath . '/Helper';
+//                $prefix = 'rsg2installtasksflat';
+//                JLoader::registerPrefix($prefix, $path);
+//
+//                rsg2installtasksflat\rsg2installtasksflat::initConfigFromXmlFile();
+//                //Rsg2InstallTasks::initConfigFromXmlFile();
 
 //-----------------------------------------------------------------------
 ////                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
@@ -282,7 +300,7 @@ class Com_Rsgallery2InstallerScript
                  *
                  * if ($isSaved) {
                  * // config saved message
-                 * $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
+                 * $msg .= '<br><br>' . Text::_('Configuration parameters have been reset to default', true);
                  * }
                  * else
                  * {
