@@ -43,13 +43,12 @@ HTMLHelper::_('bootstrap.framework');
 					try
 					{
 
-                        echo $this->j3x_galleriesHtml;
+                        echo json_encode($this->j3x_galleriesHtml);
 
                         echo '<hr>';
-                        echo $this->j4x_galleriesHtml;
+                        echo json_encode($this->j4x_galleriesHtml);
 
                         echo '<hr>';
-
 					}
 					catch (RuntimeException $e)
 					{

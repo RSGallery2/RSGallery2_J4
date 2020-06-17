@@ -100,10 +100,13 @@ class HtmlView extends BaseHtmlView
                 {
                     $j3xModel      = $this->getModel();
 
-                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j3xModel->j3x_galleriesList());
-
-                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($j3xModel->j4x_galleriesList());
-                    $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
+//                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j3xModel->j3x_galleriesList());
+//
+//                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($j3xModel->j4x_galleriesList());
+//                    $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
+//
+                    $this->j3x_galleriesHtml = $j3xModel->j3x_galleriesList();
+                    $this->j4x_galleriesHtml = $j3xModel->j4x_galleriesList();
 
                 }
                 catch (RuntimeException $e)
