@@ -71,7 +71,7 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'DbCopyOldConfig':
+			case 'DbCopyOld3xConfig':
 
 				try
 				{
@@ -95,7 +95,7 @@ class HtmlView extends BaseHtmlView
 
 				break;
 
-            case 'DBTransferOldGalleries':
+            case 'DBTransferOldJ3xGalleries':
                 try
                 {
                     $j3xModel      = $this->getModel();
@@ -118,7 +118,7 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
-            case 'DBTransferOldImages':
+            case 'DBTransferJ3xOldImages':
                 try
                 {
                     $j3xModel      = $this->getModel();
@@ -182,7 +182,7 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'DbCopyOldConfig':
+			case 'DbCopyOld3xConfig':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'), 'screwdriver');
 				ToolBarHelper::custom ('MaintenanceJ3x.copyOldItems2New','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_CONFIGURATION', false);
 				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldItems2New','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_CONFIGURATION', true);
@@ -191,12 +191,12 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 
-			case 'DBTransferOldGalleries':
+			case 'DBTransferOldJ3xGalleries':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 
-			case 'DBTransferOldImages':
+			case 'DBTransferJ3xOldImages':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;

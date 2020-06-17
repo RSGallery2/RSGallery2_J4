@@ -18,10 +18,9 @@ HTMLHelper::_('bootstrap.framework');
 
 
 
-
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldImages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries'); ?>"
       method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
@@ -32,26 +31,30 @@ HTMLHelper::_('bootstrap.framework');
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferOldImages')); ?>
+				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferOldJ3xGalleries')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldImages', Text::_('COM_RSGALLERY2_TRANSFER_IMAGES', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldJ3xGalleries', Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'); ?></strong></legend>
 
-                <p><h3>DBTransferOldImages</h3></p>
+                <p><h3>YYY DBTransferOldJ3xGalleries</h3></p>
                 <?php
 
 					try
 					{
 
+                        echo $this->j3x_galleriesHtml;
 
+                        echo '<hr>';
+                        echo $this->j4x_galleriesHtml;
 
+                        echo '<hr>';
 
 					}
 					catch (RuntimeException $e)
 					{
 						$OutTxt = '';
-						$OutTxt .= 'Error rawEdit view: "' . 'DBTransferOldImages' . '"<br>';
+						$OutTxt .= 'Error rawEdit view: "' . 'DBTransferOldJ3xGalleries' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 					
 						$app = Factory::getApplication();

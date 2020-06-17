@@ -300,31 +300,31 @@ if ($this->isJ3xRsg2DataExisting)
 {
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DbCopyOldConfig'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DbCopyOld3xConfig'),
 		Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'),
 		Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG_DESC'),
 		array('icon-new-tab', 'icon-equalizer', 'icon-notification-2'),
-		'viewDbCopyOldConfig'
+		'viewDbCopyOld3xConfig'
 	);
 	/**/
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldGalleries'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldJ3xGalleries'),
 		Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES_DESC'),
 		array('icon-new-tab', 'icon-images', 'icon-notification-2'),
-		'viewDBTransferOldGalleries'
+		'viewDBTransferOldJ3xGalleries'
 	);
 	/**/
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferJ3xOldImages'),
 		Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_IMAGES_DESC'),
 		array('icon-new-tab', 'icon-image', 'icon-notification-2'),
-		'viewDBTransferOldImages'
+		'viewDBTransferJ3xOldImages'
 	);
 	/**/
 }
@@ -395,6 +395,16 @@ $developer4Test_ZoneButtons = [];
 //    'viewGalleriesRaw'
 //);
 //
+
+/**/
+$developer4Test_ZoneButtons[] = new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldJ3xGalleries'),
+	Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'),
+	Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES_DESC'),
+	array('icon-new-tab', 'icon-images', 'icon-notification-2'),
+	'viewDBTransferOldJ3xGalleries'
+);
+/**/
 
 
 //---  -----------------------------

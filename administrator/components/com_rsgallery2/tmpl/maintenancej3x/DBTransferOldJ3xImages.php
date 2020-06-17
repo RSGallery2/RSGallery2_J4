@@ -21,7 +21,7 @@ HTMLHelper::_('bootstrap.framework');
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldGalleries'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xOldImages'); ?>"
       method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
@@ -32,30 +32,26 @@ HTMLHelper::_('bootstrap.framework');
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferOldGalleries')); ?>
+				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferJ3xOldImages')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldGalleries', Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xOldImages', Text::_('COM_RSGALLERY2_TRANSFER_IMAGES', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'); ?></strong></legend>
 
-                <p><h3>DBTransferOldGalleries</h3></p>
+                <p><h3>DBTransferJ3xOldImages</h3></p>
                 <?php
 
 					try
 					{
 
-                        echo $this->j3x_galleriesHtml;
 
-                        echo '<hr>';
-                        echo $this->j4x_galleriesHtml;
 
-                        echo '<hr>';
 
 					}
 					catch (RuntimeException $e)
 					{
 						$OutTxt = '';
-						$OutTxt .= 'Error rawEdit view: "' . 'DBTransferOldGalleries' . '"<br>';
+						$OutTxt .= 'Error rawEdit view: "' . 'DBTransferJ3xOldImages' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 					
 						$app = Factory::getApplication();
