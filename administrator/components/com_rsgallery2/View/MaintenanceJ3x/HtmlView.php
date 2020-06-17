@@ -192,12 +192,12 @@ class HtmlView extends BaseHtmlView
 				break;
 
 			case 'DBTransferOldJ3xGalleries':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_GALLERIES'), 'screwdriver');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 
 			case 'DBTransferJ3xOldImages':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'), 'screwdriver');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 

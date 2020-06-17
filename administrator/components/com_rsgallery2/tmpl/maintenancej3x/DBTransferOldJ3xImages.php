@@ -34,9 +34,9 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferJ3xOldImages')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xOldImages', Text::_('COM_RSGALLERY2_TRANSFER_IMAGES', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xOldImages', Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_IMAGES'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'); ?></strong></legend>
 
                 <p><h3>DBTransferJ3xOldImages</h3></p>
                 <?php

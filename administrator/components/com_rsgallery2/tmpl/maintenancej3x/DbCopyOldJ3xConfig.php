@@ -34,7 +34,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOld3xConfig.css', array('versi
 
 				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOld3xConfig', Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_CONFIG'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_J3X_CONFIG'); ?></strong></legend>
 
 				<?php if (! count ($this->configVarsOld)) : ?>
 					<div class="alert alert-info">
