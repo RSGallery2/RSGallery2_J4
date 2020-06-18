@@ -203,7 +203,7 @@ class ConfigRawModel extends BaseDatabaseModel
 		{
 			if (count($oldConfigItems))
 			{
-				$isSaved = $this->copyOldItemsList2New ($oldConfigItems);
+				$isSaved = $this->copyJ3xConfigItems2J4xOptions ($oldConfigItems);
 			}
 		}
 		catch (RuntimeException $e)
@@ -220,7 +220,7 @@ class ConfigRawModel extends BaseDatabaseModel
 	}
 	/**/
 
-	public function copyOldItemsList2New ($configItems)
+	public function copyJ3xConfigItems2J4xOptions ($configItems)
 	{
 		$isSaved = false;
 		// $actElement = "No element";
@@ -233,19 +233,22 @@ class ConfigRawModel extends BaseDatabaseModel
 			{
 				// switch for special indirect behaviour
 				// oldCfgName -> different new config name
-				// switch ()
-				// { case , default }
-				//---------------------------------------
-//				$name = $NameAndValue->name;
-//				$value = $NameAndValue->value;
+                switch ($name) {
 
-				// $valNew = $this->configVars->get($name)  ?? null;
-				if ($actConfig->exists($name)) {
+                    case '';
 
-					$actConfig->set($name, $value);
+                    break;
 
-				}
-				// default: id oldName == new Name -> copy value
+
+                    default:
+                        // replace j4x value
+                        if ($actConfig->exists($name)) {
+
+                            $actConfig->set($name, $value);
+
+                        }
+                    break;
+                }
 			}
 
 			$mergedConfig = [];
@@ -263,7 +266,7 @@ class ConfigRawModel extends BaseDatabaseModel
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'ConfigRawModel: Error in copyOldItemsList2New: "' . '<br>';
+			$OutTxt .= 'ConfigRawModel: Error in copyJ3xConfigItems2J4xOptions: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();

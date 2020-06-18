@@ -385,8 +385,6 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
     }
 
     // ToDo use styling for nested from https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap
-
-
     private function GalleryHTML($gallery, $level)
     {
         $html = [];
@@ -423,5 +421,79 @@ EOT;
         return $html;
     }
 
+    public function copyJ3xItems2J4x ($J3xGalleryItemsSorted) {
+        $isOk = false;
 
+        try {
+            // fetch existing galleries
+
+
+            // galleries of given level
+            foreach ($J3xGalleryItemsSorted as $j3xGallery) {
+
+
+                $J4GalleryItem = convertJ3xGallery($j3xGallery);
+
+
+
+            }
+
+            $isOk = True;
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+
+    private function convertJ3xGallery ($j3xGallery) {
+
+        $J4GalleryItem = new stdClass();
+
+        // `id` int(11) NOT NULL auto_increment,
+        $J4GalleryItem->id = $j3xGallery->id;
+        // `parent` int(11) NOT NULL default 0,
+        $J4GalleryItem->parent = $j3xGallery->parent;
+        // `name` varchar(255) NOT NULL default '',
+        $J4GalleryItem->name = $j3xGallery->name;
+        // `alias` varchar(255) NOT NULL DEFAULT '',
+        $J4GalleryItem->alias = $j3xGallery->alias;
+        // `description` text NOT NULL,
+        $J4GalleryItem->description = $j3xGallery->description;
+        // `published` tinyint(1) NOT NULL default '0',
+        $J4GalleryItem->published = $j3xGallery->published;
+        // `checked_out` int(11) unsigned NOT NULL default '0',
+        $J4GalleryItem->checked_out = $j3xGallery->checked_out;
+        // `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
+        $J4GalleryItem->checked_out_time = $j3xGallery->checked_out_time;
+        // `ordering` int(11) NOT NULL default '0',
+        $J4GalleryItem->ordering = $j3xGallery->ordering;
+        // `date` datetime NOT NULL default '0000-00-00 00:00:00',
+        $J4GalleryItem->date= $j3xGallery->date;
+        // `hits` int(11) NOT NULL default '0',
+        $J4GalleryItem->hits = $j3xGallery->hits;
+        // `params` text NOT NULL,
+        $J4GalleryItem->params = $j3xGallery->params;
+        // `user` tinyint(4) NOT NULL default '0',
+        $J4GalleryItem->user = $j3xGallery->user;
+        // `uid` int(11) unsigned NOT NULL default '0',
+        $J4GalleryItem->uid = $j3xGallery->uid;
+        // `allowed` varchar(100) NOT NULL default '0',
+        $J4GalleryItem->allowed = $j3xGallery->allowed;
+        // `thumb_id` int(11) unsigned NOT NULL default '0',
+        $J4GalleryItem->thumb_id = $j3xGallery->thumb_id;
+        // `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+        $J4GalleryItem->asset_id = $j3xGallery->asset_id;
+        // `access` int(10) unsigned DEFAULT NULL,
+        $J4GalleryItem->access = $j3xGallery->access;
+
+
+
+        return $J4GalleryItem;
+    }
+
+    /**/
 }

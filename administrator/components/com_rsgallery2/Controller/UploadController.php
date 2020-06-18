@@ -1211,7 +1211,7 @@ interface IResponseTransfer {
 						$configNames[] = $allNames[(int)$idx];
 					}
 					
-					$isOk = $cfg3xModel->copyOldItemsList2New ($configNames);
+					$isOk = $cfg3xModel->copyJ3xConfigItems2J4xOptions ($configNames);
 
 					if ($isOk)
 					{
@@ -1219,7 +1219,7 @@ interface IResponseTransfer {
 					}
 					else
 					{
-						$msg .= "Error at copyOldItemsList2New items. Expected: " . count ($selected);
+						$msg .= "Error at copyJ3xConfigItems2J4xOptions items. Expected: " . count ($selected);
 						$msgType = 'warning';					
 					}
 				}
