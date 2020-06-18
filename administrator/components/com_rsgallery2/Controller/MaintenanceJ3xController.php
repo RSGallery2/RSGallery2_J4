@@ -63,9 +63,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
 	 */
-	public function copySelectedOldItems2New ()
+	public function copySelectedOldIJ3xConfig2J4xOptions ()
 	{
-		$msg     = "MaintenanceJ3xController.copySelectedOldItems2New: ";
+		$msg     = "MaintenanceJ3xController.copySelectedOldIJ3xConfig2J4xOptions: ";
 		$msgType = 'notice';
 
 		Session::checkToken();
@@ -123,7 +123,7 @@ class MaintenanceJ3xController extends AdminController
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing copySelectedOldItems2New: "' . '<br>';
+				$OutTxt .= 'Error executing copySelectedOldIJ3xConfig2J4xOptions: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();
@@ -141,9 +141,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
 	 */
-	public function copyOldItems2New ()
+	public function copyOldIJ3xConfig2J4xOptions ()
 	{
-		$msg     = "MaintenanceJ3xController.copyOldItems2New: ";
+		$msg     = "MaintenanceJ3xController.copyOldIJ3xConfig2J4xOptions: ";
 		$msgType = 'notice';
 
 		Session::checkToken();
@@ -165,7 +165,7 @@ class MaintenanceJ3xController extends AdminController
 				$configModel = $this->getModel('ConfigRaw');
 
 				$oldConfigItems = $cfg3xModel->OldConfigItems();
-//				$isOk = $configModel->copyOldItems2New ($oldConfigItems);
+//				$isOk = $configModel->copyOldIJ3xConfig2J4xOptions ($oldConfigItems);
 //				$isOk = $configModel->copyOldItemsList2New ($oldConfigItems);
 
 				if (count($oldConfigItems))
@@ -181,7 +181,7 @@ class MaintenanceJ3xController extends AdminController
 					}
 					else
 					{
-						$msg .= "Error at copyOldItems2New items";
+						$msg .= "Error at copyOldIJ3xConfig2J4xOptions items";
 						$msgType = 'error';
 					}
 				}
@@ -194,7 +194,7 @@ class MaintenanceJ3xController extends AdminController
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing copyOldItems2New: "' . '<br>';
+				$OutTxt .= 'Error executing copyOldIJ3xConfig2J4xOptions: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();

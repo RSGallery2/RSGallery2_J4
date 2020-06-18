@@ -301,8 +301,8 @@ if ($this->isJ3xRsg2DataExisting)
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DbCopyOld3xConfig'),
-		Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'),
-		Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG_DESC'),
+		Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'),
+		Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG_DESC'),
 		array('icon-new-tab', 'icon-equalizer', 'icon-notification-2'),
 		'viewDbCopyOld3xConfig'
 	);

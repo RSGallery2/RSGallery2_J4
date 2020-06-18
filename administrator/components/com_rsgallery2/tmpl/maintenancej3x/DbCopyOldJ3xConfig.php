@@ -32,7 +32,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOld3xConfig.css', array('versi
 
 				<?php //echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbCopyOld3xConfig')); ?>
 
-				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOld3xConfig', Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG', true)); ?>
+				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOld3xConfig', Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG', true)); ?>
 
                 <legend><strong><?php echo Text::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_J3X_CONFIG'); ?></strong></legend>
 

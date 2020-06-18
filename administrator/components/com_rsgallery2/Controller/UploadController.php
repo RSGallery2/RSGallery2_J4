@@ -1168,9 +1168,9 @@ interface IResponseTransfer {
      * @since 5.0.0
 	 */
 	/**
-	public function copySelectedOldItems2New ()
+	public function copySelectedOldIJ3xConfig2J4xOptions ()
 	{
-		$msg     = "controller.copySelectedOldItems2New: ";
+		$msg     = "controller.copySelectedOldIJ3xConfig2J4xOptions: ";
 		$msgType = 'notice';
 
 		Session::checkToken();
@@ -1227,7 +1227,7 @@ interface IResponseTransfer {
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing copySelectedOldItems2New: "' . '<br>';
+				$OutTxt .= 'Error executing copySelectedOldIJ3xConfig2J4xOptions: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();
@@ -1255,7 +1255,7 @@ interface IResponseTransfer {
      * @since 5.0.0
 	 */
 	/**
-	public function copyOldItems2New ()
+	public function copyOldIJ3xConfig2J4xOptions ()
 	{
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
@@ -1277,7 +1277,7 @@ interface IResponseTransfer {
 			{
 				$cfg3xModel = $this->getModel('Upload');
 
-				$isOk = $cfg3xModel->copyOldItems2New ();
+				$isOk = $cfg3xModel->copyOldIJ3xConfig2J4xOptions ();
 
 				if ($isOk)
 				{
@@ -1285,14 +1285,14 @@ interface IResponseTransfer {
 				}
 				else
 				{
-					$msg .= "Error at copyOldItems2New items";
+					$msg .= "Error at copyOldIJ3xConfig2J4xOptions items";
 					$msgType = 'error';
 				}
 			}
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing copyOldItems2New: "' . '<br>';
+				$OutTxt .= 'Error executing copyOldIJ3xConfig2J4xOptions: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();

@@ -187,9 +187,9 @@ class HtmlView extends BaseHtmlView
                         . '</span><br>';
                 }
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'), 'screwdriver');
-				ToolBarHelper::custom ('MaintenanceJ3x.copyOldItems2New','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_CONFIGURATION', false);
-				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldItems2New','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_CONFIGURATION', true);
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'), 'screwdriver');
+				ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_CONFIGURATION', false);
+				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_CONFIGURATION', true);
 				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
 
 				ToolBarHelper::cancel('config.cancel_rawView');
@@ -217,7 +217,7 @@ class HtmlView extends BaseHtmlView
                 }
 
 
-                ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldItems2New','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_CONFIGURATION', true);
+                ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_CONFIGURATION', true);
 
 				break;
 
