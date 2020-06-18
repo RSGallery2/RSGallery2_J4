@@ -100,13 +100,17 @@ class HtmlView extends BaseHtmlView
                 {
                     $j3xModel      = $this->getModel();
 
-//                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j3xModel->j3x_galleriesList());
-//
-//                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($j3xModel->j4x_galleriesList());
-//                    $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
-//
-                    $this->j3x_galleriesHtml = $j3xModel->j3x_galleriesList();
-                    $this->j4x_galleriesHtml = $j3xModel->j4x_galleriesList();
+                    // html
+                    $this->j3x_galleriesHtmlHtml = $j3xModel->GalleriesListAsHTML($j3xModel->j3x_galleriesList());
+                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($j3xModel->j4x_galleriesList());
+                    $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
+
+                    // gallery list
+                    $this->j3x_galleries = $j3xModel->j3x_galleriesList();
+                    $this->j4x_galleries = $j3xModel->j4x_galleriesList();
+
+                    // gallery list
+                    $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesListSorted();
 
                 }
                 catch (RuntimeException $e)
@@ -168,25 +172,22 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
-		// on develop show open tasks if existing
-		if (!empty ($this->isDevelop))
-		{
-			echo '<span style="color:red">'
-				. 'Tasks: <br>'
-				. '* Make old config column smaller <br>'
-				. '* Secure user input <br>'
-				. '* List of special transfer old1 -> new2 ....<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-				. '</span><br>';
-		}
-
 		switch ($Layout)
 		{
 			case 'DbCopyOld3xConfig':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'), 'screwdriver');
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . 'Tasks: <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_CONFIG'), 'screwdriver');
 				ToolBarHelper::custom ('MaintenanceJ3x.copyOldItems2New','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_CONFIGURATION', false);
 				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldItems2New','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_CONFIGURATION', true);
 				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
@@ -195,12 +196,45 @@ class HtmlView extends BaseHtmlView
 				break;
 
 			case 'DBTransferOldJ3xGalleries':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'), 'screwdriver');
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . 'Tasks: <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
+
+
+				if(count ($this->j4x_galleries) > 1) {
+                    ToolBarHelper::custom ('Galleries.resetNestedGalleryTable','copy','','COM_RSGALLERY2_GALLERIES_TABLE_RESET', false);
+                }
+
+
+                ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldItems2New','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_CONFIGURATION', true);
+
 				break;
 
 			case 'DBTransferJ3xOldImages':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . 'Tasks: <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 

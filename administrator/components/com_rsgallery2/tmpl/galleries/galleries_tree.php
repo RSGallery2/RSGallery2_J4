@@ -132,7 +132,7 @@ EOT;
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferOldJ3xGalleries')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldJ3xGalleries', Text::_('COM_RSGALLERY2_MANAGE_GALLERIES', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldJ3xGalleries', Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE', true)); ?>
 
                 <legend><strong><?php echo Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'); ?></strong></legend>
 
@@ -140,8 +140,25 @@ EOT;
 
 					try
 					{
+                        if (count ($this->items) == 1) {
+                            $keyTranslation = Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_IS_EMPTY');
+                            echo '   <h2><span class="badge badge-pill badge-success">' . $keyTranslation . '</span></h2>';
+                        }
+
+                        if (count ($this->items) == 0) {
+                            $keyTranslation = Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_TABLE_EMPTY');
+                            echo '   <h2><span class="badge badge-pill badge-error">' . $keyTranslation . '</span></h2>';
+                        }
+
                         echo GalleriesListAsHTML($this->items);
 
+
+                        if (count ($this->items) == 1) {
+                            $keyTranslation = Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_JUMP_TO_J3x_GALLERIES');
+                            $link = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries');
+                            echo  '<a  class="badge badge-pill badge-notice" href="' . $link . '" target="_blank" '
+                                . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >' . $keyTranslation . '</a>';;
+                        }
 
 
 //

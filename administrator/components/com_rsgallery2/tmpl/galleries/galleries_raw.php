@@ -234,7 +234,7 @@ $ListDirn  = '';
                                     }
                                 ?>
                                 </tbody>
-
+                            </table>
                         <?php endif; ?>
 
                     </div>

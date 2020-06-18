@@ -489,7 +489,6 @@ function zoneTitle ($title='Unknown title', $zoneClass='')
     // implode(' ', $html);
     // implode('< /br>', $html);
     return implode($html);
-    return $html;
 }
 
 //---  -----------------------------
@@ -503,7 +502,6 @@ function zoneInfo ($info='Unknown zone info')
     // implode(' ', $html);
     // implode('< /br>', $html);
     return implode($html);
-    return $html;
 }
 ?>
 

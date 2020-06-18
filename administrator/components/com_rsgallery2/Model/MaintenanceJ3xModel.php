@@ -167,7 +167,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         try {
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+                ->select('*')
                 ->from('#__rsgallery2_galleries AS a')
                 ->order('a.ordering ASC');
 
@@ -186,6 +187,86 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return $galleries;
     }
 
+    public function j3x_galleriesListSorted()
+    {
+        $galleries = array();
+
+        try {
+            // fetch from db
+            $dbGalleries = $this->j3x_galleriesList();
+
+            // sort recursively
+            $galleries = $this->j3x_galleriesSortedByParent($dbGalleries, 0, 0);
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $galleries;
+    }
+
+    private static function cmpJ3xGalleries($aGallery, $bGallery)
+    {
+        $a = $aGallery->ordering;
+        $b = $bGallery->ordering;
+
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a < $b) ? -1 : 1;
+    }
+
+    public function j3x_galleriesSortedByParent($dbGalleries, $parentId=0, $level=0)
+    {
+        $sortedGalleries = [];
+
+        try {
+            // parent galleries
+            $galleries = [];
+
+            // galleries of given level
+            foreach ($dbGalleries as $gallery) {
+
+                if ($gallery->parent == $parentId) {
+
+                    $gallery->level = $level;
+
+                    // collect gallery
+                    $galleries [] = $gallery;
+
+                    // add childs recursively
+                    $id = $gallery->id;
+                    $subGalleries [$id] = $this->j3x_galleriesSortedByParent($dbGalleries, $id, $level+1);
+                }
+            }
+
+            // Sort galleries of level
+            if ( count ($galleries) > 1) {
+                usort($galleries, array ($this, 'cmpJ3xGalleries'));
+            }
+
+            // Collect sorted list with childs
+            foreach ($galleries as $gallery) {
+                $sortedGalleries[] = $gallery;
+
+                // Add childs
+                $id = $gallery->id;
+                //echo 'array_push: $id' . $id . '<br>';
+
+                foreach ($subGalleries [$id] as $subGallery) {
+                    $sortedGalleries[] = $subGallery;
+                }
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $sortedGalleries;
+    }
+
     public function j4x_galleriesList()
     {
         $galleries = array();
@@ -193,7 +274,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         try {
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
+//                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
+                ->select('*')
                 ->from('#__rsg2_galleries AS a')
                 ->order('a.level ASC');
 
