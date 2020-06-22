@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Table\Table;
+use JTableNested;
 
 /**
  * Class MaintenanceJ3xModel
@@ -169,8 +171,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('*')
-                ->from('#__rsgallery2_galleries AS a')
-                ->order('a.ordering ASC');
+                ->from('#__rsgallery2_galleries')
+                ->order('ordering ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -276,8 +278,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
                 ->select('*')
-                ->from('#__rsg2_galleries AS a')
-                ->order('a.level ASC');
+                ->from('#__rsg2_galleries')
+                ->order('level ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -294,38 +296,38 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
     }
 
 
-    public function j4_GalleriesToJ3Form($j4x_galleries)
-    {
-        $j3x_galleries = [];
-
-        try {
-            foreach ($j4x_galleries as $j4x_gallery) {
-
-                // leave out root gallery in nested form
-                if ($j4x_gallery->id != 1) {
-                    $j3x_gallery = new \stdClass();
-
-                    $j3x_gallery->id = $j4x_gallery->id;
-                    $j3x_gallery->name = $j4x_gallery->name;
-
-                    // parent 1 is going to root
-                    if($j4x_gallery->parent_id == 1) {
-                        $j4x_gallery->parent_id = 0;
-                    }
-                    $j3x_gallery->parent = $j4x_gallery->parent_id;
-                    $j3x_gallery->ordering = $j4x_gallery->level;
-
-                    $j3x_galleries[] = $j3x_gallery;
-                }
-            }
-        }
-        catch (RuntimeException $e)
-        {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
-        }
-
-        return $j3x_galleries;
-    }
+//    public function j4_GalleriesToJ3Form($j4x_galleries)
+//    {
+//        $j3x_galleries = [];
+//
+//        try {
+//            foreach ($j4x_galleries as $j4x_gallery) {
+//
+//                // leave out root gallery in nested form
+//                if ($j4x_gallery->id != 1) {
+//                    $j3x_gallery = new \stdClass();
+//
+//                    $j3x_gallery->id = $j4x_gallery->id;
+//                    $j3x_gallery->name = $j4x_gallery->name;
+//
+//                    // parent 1 is going to root
+//                    if($j4x_gallery->parent_id == 1) {
+//                        $j4x_gallery->parent_id = 0;
+//                    }
+//                    $j3x_gallery->parent = $j4x_gallery->parent_id;
+//                    $j3x_gallery->ordering = $j4x_gallery->level;
+//
+//                    $j3x_galleries[] = $j3x_gallery;
+//                }
+//            }
+//        }
+//        catch (RuntimeException $e)
+//        {
+//            JFactory::getApplication()->enqueueMessage($e->getMessage());
+//        }
+//
+//        return $j3x_galleries;
+//    }
 
     public function GalleriesListAsHTML($galleries)
     {
@@ -424,6 +426,9 @@ EOT;
     public function copyJ3xItems2J4x ($J3xGalleryItemsSorted) {
         $isOk = false;
 
+        Table::addIncludePath();
+
+
         try {
             // fetch existing galleries
 
@@ -435,6 +440,13 @@ EOT;
                 $J4GalleryItem = convertJ3xGallery($j3xGallery);
 
 
+                Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_rsgallery2/tables');
+//                $categoryTable = Table::getInstance('Gallery', 'JTable');
+//                $contentTable = $typeTable->getContentTable();
+//
+//                $menuTable = JTableNested::getInstance('Gallery');
+//
+//                $keyValue = Factory::getApplication()->input->getInteger('item_id', 0);
 
             }
 

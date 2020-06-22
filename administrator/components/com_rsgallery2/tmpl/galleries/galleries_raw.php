@@ -56,9 +56,7 @@ $ListDirn  = '';
                                             `id`
                                         </th>
                                         <th width="1%" class="text-center">
-                                            `parent_id`
-                                        </th>
-                                        <th width="1%" class="text-center">
+                                            <? // ToDo: add tag ?>
                                             `name/alias/note`
                                         </th>
                                         <th width="1%" class="text-center">
@@ -142,12 +140,6 @@ $ListDirn  = '';
 		                                        <?php echo $item->id; ?>
                                             </td>
 
-                                            <td width="1%" class="text-center">
-		                                        <?php 
-													// ToDo: Name of parent gallery as title
-													echo $item->parent_id; ?>
-                                            </td>
-
                                             <td class="text-center">
     	                                        <?php echo $this->escape($item->name); ?>
                                                 <span class="small" title="<?php echo $this->escape($item->path); ?>">
@@ -167,7 +159,7 @@ $ListDirn  = '';
 		                                        <?php echo $item->thumb_id; ?>
                                             </td>
 
-                                            <td class="text-center">
+                                            <td class="text-center" style="width:200px; word-wrap:break-word; display:inline-block;">
 		                                        "<?php echo $item->params; ?>"
                                             </td>
 
@@ -202,7 +194,8 @@ $ListDirn  = '';
                                             </td>
 
                                             <td width="1%" class="text-center">
-		                                        <?php echo $item->parent_id; ?>
+                                                <?php // ToDo: Name of parent gallery as title ?>
+                                                <?php echo $item->parent_id; ?>
                                             </td>
 
                                             <td width="1%" class="text-center">

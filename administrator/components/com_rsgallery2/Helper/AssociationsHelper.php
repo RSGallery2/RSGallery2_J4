@@ -179,7 +179,7 @@ class AssociationsHelper extends AssociationExtensionHelper
 					$title = 'rsgallery2';
 					break;
 
-				case 'category':
+				case 'category': // ??? galleries ...
 					$fields['created_user_id'] = 'a.created_user_id';
 					$fields['ordering'] = 'a.lft';
 					$fields['level'] = 'a.level';

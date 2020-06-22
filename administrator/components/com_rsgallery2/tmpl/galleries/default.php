@@ -113,11 +113,6 @@ if ($saveOrder && !empty($this->items))
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                                 </th>
 
-                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_PARENT_ID', 'a.parent', $listDirn, $listOrder); ?>
-                                </th>
-
-
 
 
                                 <?php
@@ -208,6 +203,10 @@ if ($saveOrder && !empty($this->items))
 								{
 									$parentsStr = '';
 								}
+
+                                $created_by = Factory::getUser($item->created_by);
+                                $modified_by = Factory::getUser($item->modified_by);
+
 								?>
 								<tr class="row<?php echo $i % 2; ?>" data-dragable-group="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
                                     <td class="text-center">
@@ -226,7 +225,7 @@ if ($saveOrder && !empty($this->items))
 										}
 										?>
 										<span class="sortable-handler<?php echo $iconClass ?>">
-											<span class="icon-menu"></span>
+											<span class="fas fa-ellipsis-v"></span>
 										</span>
 										<?php if ($canChange && $saveOrder) : ?>
 											<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->lft; ?>">
@@ -250,8 +249,6 @@ if ($saveOrder && !empty($this->items))
 											<?php echo $this->escape($item->name); ?>
 										<?php endif; ?>
 
-                                        <?php
-                                        /**
 										<span class="small" title="<?php echo $this->escape($item->path); ?>">
 											<?php if (empty($item->note)) : ?>
 												<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
@@ -260,13 +257,18 @@ if ($saveOrder && !empty($this->items))
 											<?php endif; ?>
 										</span>
 									</th>
+                                    <?php
+                                    /**
+                                    Images published, unpublished, archived, trashed
 									<?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_published')) : ?>
 										<td class="text-center btns d-none d-md-table-cell">
 											<a class="badge <?php echo ($item->count_published > 0) ? 'badge-success' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=1' . '&filter[level]=1'); ?>">
 												<?php echo $item->count_published; ?></a>
 										</td>
 									<?php endif; ?>
-									<?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_unpublished')) : ?>
+									<?php if (isset($this->items[0]) && property_exists($this->items[0], '                                        <?php
+                                    /**
+                                    ')) : ?>
 										<td class="text-center btns d-none d-md-table-cell">
 											<a class="badge <?php echo ($item->count_unpublished > 0) ? 'badge-danger' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_UNPUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=0' . '&filter[level]=1'); ?>">
 												<?php echo $item->count_unpublished; ?></a>
@@ -305,7 +307,8 @@ if ($saveOrder && !empty($this->items))
                                     </td>
 
                                     <td class="small d-none d-md-table-cell">
-										<?php echo $this->escape($item->access); ?>
+										<?php // echo $this->escape($item->access); ?>
+                                        <?php echo $this->escape($item->access_level); ?>
                                     </td>
 
                                     <td class="small d-none d-md-table-cell">
@@ -324,7 +327,8 @@ if ($saveOrder && !empty($this->items))
 										<?php endif; ?>
                                         /**/
                                         ?>
-                                        <?php echo $this->escape($item->created_by); ?>
+                                        <?php echo $this->escape($created_by->name); ?>
+                                        <?php // echo $this->escape($modified_by->name); ?>
                                     </td>
 
                                     <td class="small d-none d-md-table-cell text-center">
@@ -347,11 +351,6 @@ if ($saveOrder && !empty($this->items))
                                     <td class="d-none d-md-table-cell">
 										<?php echo (int) $item->id; ?>
                                     </td>
-                                    <td class="d-none d-md-table-cell">
-										<?php echo (int) $item->parent_id; ?>
-                                    </td>
-
-
 
 
                                     <?php

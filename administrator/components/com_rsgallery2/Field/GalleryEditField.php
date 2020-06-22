@@ -55,81 +55,10 @@ class GalleryEditField extends ListField
 	 */
 	protected $layout = 'joomla.form.field.galleryedit';
 
-	/**
-	 * Method to attach a JForm object to the field.
-	 *
-	 * @param   \SimpleXMLElement  $element  The SimpleXMLElement object representing the <field /> tag for the form field object.
-	 * @param   mixed              $value    The form field value to validate.
-	 * @param   string             $group    The field name group control value. This acts as an array container for the field.
-	 *                                       For example if the field has name="foo" and the group value is set to "bar" then the
-	 *                                       full field name would end up being "bar[foo]".
-	 *
-	 * @return  boolean  True on success.
-	 *
-	 * @see     FormField::setup()
-	 * @since   3.2
-	 */
-	public function setup(\SimpleXMLElement $element, $value, $group = null)
-	{
-		$return = parent::setup($element, $value, $group);
-
-		if ($return)
-		{
-			$this->allowAdd = $this->element['allowAdd'] ?? '';
-		}
-
-		return $return;
-	}
 
 	/**
-	 * Method to get certain otherwise inaccessible properties from the form field object.
-	 *
-	 * @param   string  $name  The property name for which to get the value.
-	 *
-	 * @return  mixed  The property value or null.
-	 *
-	 * @since   3.6
-	 */
-	public function __get($name)
-	{
-		switch ($name)
-		{
-			case 'allowAdd':
-				return $this->$name;
-		}
-
-		return parent::__get($name);
-	}
-
-	/**
-	 * Method to set certain otherwise inaccessible properties of the form field object.
-	 *
-	 * @param   string  $name   The property name for which to set the value.
-	 * @param   mixed   $value  The value of the property.
-	 *
-	 * @return  void
-	 *
-	 * @since   3.6
-	 */
-	public function __set($name, $value)
-	{
-		$value = (string) $value;
-
-		switch ($name)
-		{
-			case 'allowAdd':
-				$value = (string) $value;
-				$this->$name = ($value === 'true' || $value === $name || $value === '1');
-				break;
-			default:
-				parent::__set($name, $value);
-		}
-	}
-
-	/**
-	 * Method to get a list of galleries that respects access controls and can be used for
-	 * either gallery assignment or parent gallery assignment in edit screens.
-	 * Use the parent element to indicate that the field will be used for assigning parent galleries.
+	 * Method to get a list of galleries (?that respects access controls and can be used for
+	 * either gallery assignment or parent gallery assignment in edit screens?).
 	 *
 	 * @return  array  The field option objects.
 	 *
@@ -137,124 +66,45 @@ class GalleryEditField extends ListField
 	 */
 	protected function getOptions()
 	{
-		$options = array();
-		$published = $this->element['published'] ? explode(',', (string) $this->element['published']) : array(0, 1);
-		$name = (string) $this->element['name'];
+        $galleries = array();
 
-		// Let's get the id for the current item, either gallery or content item.
-		$jinput = Factory::getApplication()->input;
+        $ActGalleryId = (string) $this->element['id'];
 
-		/**
-		// Load the gallery options for a given extension.
+        try
+        {
+            // $name = (string) $this->element['name'];
 
-		// For galleries the old gallery is the gallery id or 0 for new gallery.
-		if ($this->element['parent'] || $jinput->get('option') == 'com_rsgallery2')
-		{
-			$oldCat = $jinput->get('id', 0);
-			$oldParent = $this->form->getValue($name, 0);
-			$extension = $this->element['extension'] ? (string) $this->element['extension'] : (string) $jinput->get('extension', 'com_content');
-		}
-		else
-			// For items the old gallery is the gallery they are in when opened or 0 if new.
-		{
-			$oldCat = $this->form->getValue($name, 0);
-			$extension = $this->element['extension'] ? (string) $this->element['extension'] : (string) $jinput->get('option', 'com_content');
-		}
-
-		// Account for case that a submitted form has a multi-value gallery id field (e.g. a filtering form), just use the first gallery
-		$oldCat = is_array($oldCat)
-			? (int) reset($oldCat)
-			: (int) $oldCat;
-		/**/
-
-		try
-		{
 		    $db   = Factory::getDbo();
-		    $user = Factory::getUser();
-    
+
 		    $query = $db->getQuery(true)
 			    //->select('a.id AS value, a.name AS text, a.level, a.published, a.lft, a.language')
-			    ->select('a.id AS value, a.name AS text, a.level, a.published, a.lft')
-//			    ->where('a.id != 1' )
-			    ->from('#__rsg2_galleries AS a');
-    
-		    /**
-		    // Filter by the extension type
-		    if ($this->element['parent'] == true || $jinput->get('option') == 'com_rsgallery2')
-		    {
-			    $query->where('(a.extension = ' . $db->quote($extension) . ' OR a.parent_id = 0)');
-		    }
-		    else
-		    {
-			    $query->where('(a.extension = ' . $db->quote($extension) . ')');
-		    }
-		    /**/
-    
-		    /**
-		    // Filter language
-		    if (!empty($this->element['language']))
-		    {
-			    if (strpos($this->element['language'], ',') !== false)
-			    {
-				    $language = implode(',', $db->quote(explode(',', $this->element['language'])));
-			    }
-			    else
-			    {
-				    $language = $db->quote($this->element['language']);
-			    }
-    
-			    $query->where($db->quoteName('a.language') . ' IN (' . $language . ')');
-		    }
-		    /**/
-    
+			    ->select('id AS value, name AS text, level')
+                ->from('#__rsg2_galleries AS a')
+			    ->where('a.id != 1' )
+                ->where('a.id !=' . (int) $ActGalleryId);
+
 		    // Filter on the published state
-		    $query->where('a.published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
-    
-		    /**
-		    // Filter galleries on User Access Level
-		    // Filter by access level on galleries.
-		    if (!$user->authorise('core.admin'))
-		    {
-			    $groups = implode(',', $user->getAuthorisedViewLevels());
-			    $query->where('a.access IN (' . $groups . ')');
-		    }
-		    /**/
+		    // $query->where('a.published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
     
 		    $query->order('a.lft ASC');
-    
-		    /**
-		    // If parent isn't explicitly stated but we are in com_rsgallery2 assume we want parents
-		    if ($oldCat != 0 && ($this->element['parent'] == true || $jinput->get('option') == 'com_rsgallery2'))
-		    {
-			    // Prevent parenting to children of this item.
-			    // To rearrange parents and children move the children up, not the parents down.
-			    $query->join('LEFT', $db->quoteName('#__rsg2_galleries') . ' AS p ON p.id = ' . (int) $oldCat)
-				    ->where('NOT(a.lft >= p.lft AND a.rgt <= p.rgt)');
-    
-			    $rowQuery = $db->getQuery(true);
-			    $rowQuery->select('a.id AS value, a.name AS text, a.level, a.parent_id')
-				    ->from('#__rsg2_galleries AS a')
-				    ->where('a.id = ' . (int) $oldCat);
-			    $db->setQuery($rowQuery);
-			    $row = $db->loadObject();
-		    }
-		    /**/
-    
+
 		    // Get the options.
 		    $db->setQuery($query);
 
-			$options = $db->loadObjectList();
-		}
+            $galleries = $db->loadObjectList();
+        }
 		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
 
+        $options = $galleries;
+
 		// Pad the option text with spaces using depth level as a multiplier.
 		for ($i = 0, $n = count($options); $i < $n; $i++)
 		{
 			// Translate ROOT
-			if ($this->element['parent'] == true || $jinput->get('option') == 'com_rsgallery2')
+			if ($this->element['parent'] == true)
 			{
 				if ($options[$i]->level == 0)
 				{
@@ -262,14 +112,14 @@ class GalleryEditField extends ListField
 				}
 			}
 
-			if ($options[$i]->published == 1)
-			{
+//			if ($options[$i]->published == 1)
+//			{
 				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . $options[$i]->text;
-			}
-			else
-			{
-				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
-			}
+//			}
+//			else
+//			{
+//				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
+//			}
 
 			/**
 			// Displays language code if not set to All
@@ -280,34 +130,25 @@ class GalleryEditField extends ListField
 			/**/
 		}
 
-		foreach ($options as $i => $option)
-		{
-			/*
-			 * To take save or create in a gallery you need to have create rights for that gallery unless the item is already in that gallery.
-			 * Unset the option if the user isn't authorised for it. In this field assets are always galleries.
-			 */
-			if ($option->level != 0 && !$user->authorise('core.create', 'com_rsgallery2' . '.gallery.' . $option->value))
-			{
-				unset($options[$i]);
-			}
-		}
+//		foreach ($options as $i => $option)
+//		{
+//			/*
+//			 * To take save or create in a gallery you need to have create rights for that gallery unless the item is already in that gallery.
+//			 * Unset the option if the user isn't authorised for it. In this field assets are always galleries.
+//			 */
+//			if ($option->level != 0 && !$user->authorise('core.create', 'com_rsgallery2' . '.gallery.' . $option->value))
+//			{
+//				unset($options[$i]);
+//			}
+//		}
 
+        // Tell about no parent
+        //$parent = new \stdClass;
+        //$parent->text = Text::_('JGLOBAL_ROOT_PARENT');
+        //array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT')));
+        array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT_PARENT')));
 
-		if (($this->element['parent'] == true || $jinput->get('option') == 'com_rsgallery2')
-			&& (isset($row) && !isset($options[0]))
-			&& isset($this->element['show_root']))
-		{
-			if ($row->parent_id == '1')
-			{
-				$parent = new \stdClass;
-				$parent->text = Text::_('JGLOBAL_ROOT_PARENT');
-				array_unshift($options, $parent);
-			}
-
-			array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT')));
-		}
-
-		// Merge any additional options in the XML definition.
+        // Merge any additional options in the XML definition.
 		return array_merge(parent::getOptions(), $options);
 	}
 

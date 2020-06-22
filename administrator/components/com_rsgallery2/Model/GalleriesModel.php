@@ -219,9 +219,9 @@ class GalleriesModel extends ListModel
 		$query->select('uc.name AS editor')
 			->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 
-//		// Join over the asset groups.
-//		$query->select('ag.title AS access_level')
-//			->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+		// Join over the asset groups.
+		$query->select('ag.title AS access_level')
+			->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
 		// Join over the users for the author.
 		$query->select('ua.name AS author_name')

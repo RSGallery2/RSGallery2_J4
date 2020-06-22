@@ -34,7 +34,7 @@ HTMLHelper::_('bootstrap.framework');
         return $html;
     }
 
-    function GalleriesOfLevelHTML($galleries, $parentId, $level)
+    function GalleriesOfLevelHTML($galleries, $parentId, $indent)
     {
         $html = [];
 
@@ -47,9 +47,9 @@ HTMLHelper::_('bootstrap.framework');
                 if ($gallery->parent_id == $parentId) {
 
                     // html of this gallery
-                    $galleryHTML [] = GalleryHTML($gallery, $level);
+                    $galleryHTML [] = GalleryHTML($gallery, $indent);
 
-                    $subHtml = GalleriesOfLevelHTML($galleries, $gallery->id, $level+1);
+                    $subHtml = GalleriesOfLevelHTML($galleries, $gallery->id, $indent+1);
                     if (!empty ($subHtml)) {
                         $galleryHTML [] = $subHtml;
                     }
@@ -77,23 +77,24 @@ HTMLHelper::_('bootstrap.framework');
     // ToDo use styling for nested from https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap
 
 
-    function GalleryHTML($gallery, $level)
+    function GalleryHTML($gallery, $indent)
     {
         $html = [];
 
-        $lineStart = str_repeat(" ", 3*($level+1));
+        $lineStart = str_repeat(" ", 3*($indent+1));
         $identHtml = '';
-        if ($level > 0) {
+        if ($indent > 0) {
             $identHtml = '<span class="text-muted">';
-            $identHtml .= str_repeat('⋮&nbsp;&nbsp;&nbsp;', $level - 1);
+            $identHtml .= str_repeat('⋮&nbsp;&nbsp;&nbsp;', $indent - 1);
             $identHtml .= '</span>';
             $identHtml .= '-&nbsp;';
         }
 
         $id = $gallery->id;
         $parent = $gallery->parent_id;
-        $order = $gallery->level;
+        $level = $gallery->level;
         $name = $gallery->name;
+        $path = '   [' . $gallery->path . ']';
 
         try {
 
@@ -101,8 +102,9 @@ HTMLHelper::_('bootstrap.framework');
 $lineStart<li class="list-group-item">
 $lineStart   $identHtml<span> id: </span><span>$id</span>
 $lineStart   <span> parent: </span><span>$parent</span>
-$lineStart   <span> order: </span><span>$order</span>
+$lineStart   <span> level: </span><span>$level</span>
 $lineStart   <span> name:</span><span>$name</span>
+$lineStart   <span> path: </span><span>$path</span>
 $lineStart</li>
 EOT;
 

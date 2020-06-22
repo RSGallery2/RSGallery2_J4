@@ -220,7 +220,7 @@ class HtmlView extends BaseHtmlView
 				. '* check image db for not set items <br>'
 				. '* touch ?<br>'
 				. '* use makeSafeUrlNameRSG2 see b_Release_4_5_1\admin\models\image.php<br>'
-//				. '* <br>'
+				. '* GallerySelectField: a) Trashed deleted ?  b) ? published  <br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'

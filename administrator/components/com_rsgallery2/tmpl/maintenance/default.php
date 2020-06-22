@@ -234,6 +234,14 @@ $repair_ZoneButtons[] = new zoneButtons(
     'viewGalleriesRaw'
 );
 
+$repair_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=Galleries.rebuild'),
+    Text::_('COM_RSGALLERY2_REBUILD_GALLERY_ORDER'),
+    Text::_('COM_RSGALLERY2_REBUILD_GALLERY_ORDER_DESC'),
+    array('icon-images', 'icon-database', 'icon-tree'),
+    'viewGalleriesRaw'
+);
+
 
 //--- danger zone  -----------------------------
 

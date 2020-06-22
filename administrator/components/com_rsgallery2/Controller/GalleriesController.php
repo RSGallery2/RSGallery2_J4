@@ -69,29 +69,48 @@ class GalleriesController extends AdminController
 	 * @since   1.6
 	 */
 	public function rebuild()
-	{
-		Session::checkToken();
+    {
+        $isOk = false;
 
-		$extension = $this->input->get('extension');
-		// ???
-		$this->setRedirect(Route::_('index.php?option=com_rsgallery2&view=galleries&extension=' . $extension, false));
+        $msg = "GalleriesController.rebuild: ";
+        $msgType = 'notice';
 
-		/** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
-		$model = $this->getModel();
+        Session::checkToken();
 
-		if ($model->rebuild())
-		{
-			// Rebuild succeeded.
-			$this->setMessage(Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS'));
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
 
-			return true;
-		}
+            try {
+                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+                $model = $this->getModel();
 
-		// Rebuild failed.
-		$this->setMessage(Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE'));
+                $isOk = $model->rebuild();
+                if ($isOk) {
+                    $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+                } else {
+                    $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+                }
 
-		return false;
-	}
+            } catch (RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing rebuild: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=galleries&layout=galleries_tree';
+        $this->setRedirect($link, $msg, $msgType);
+
+        return $isOk;
+    }
 
 	/**
 	 * Deletes and returns correctly.
@@ -102,40 +121,61 @@ class GalleriesController extends AdminController
 	 */
 	public function delete()
 	{
-		Session::checkToken();
+        $isOk = false;
 
-		// Get items to remove from the request.
-		$cid       = $this->input->get('cid', array(), 'array');
-		$extension = $this->input->getCmd('extension', null);
+        $msg = "GalleriesController.rebuild: ";
+        $msgType = 'notice';
 
-		if (!is_array($cid) || count($cid) < 1)
-		{
-			$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
-		}
-		else
-		{
-			// Get the model.
-			/** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
-			$model = $this->getModel();
+        Session::checkToken();
 
-			// Make sure the item ids are integers
-			$cid = ArrayHelper::toInteger($cid);
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
 
-			// Remove the items.
-			if ($model->delete($cid))
-			{
-				$this->setMessage(Text::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
-			}
-			else
-			{
-				$this->setMessage($model->getError());
-			}
-		}
+            try {
+                // Get items to remove from the request.
+                $cid = $this->input->get('cid', array(), 'array');
+                $extension = $this->input->getCmd('extension', null);
 
-	    $this->setRedirect(Route::_('index.php?option=com_rsgallery2&amp;view=galleries'));
-		                // Route::_('index.php?option=com_rsgallery2&view=galleries')
-		//
-	}
+                if (!is_array($cid) || count($cid) < 1) {
+                    $this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
+                } else {
+                    // Get the model.
+                    /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+                    $model = $this->getModel();
+
+                    // Make sure the item ids are integers
+                    $cid = ArrayHelper::toInteger($cid);
+
+                    // Remove the items.
+                    $isOk = $model->delete($cid);
+                    if ($isOk) {
+                        $msg .= Text::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid));
+                    } else {
+                        $msg .= Text::_('COM_RSGALLERY2_GALLERIES_DELETE_FAILURE: ') . ': ' . $model->getError();
+                    }
+                }
+
+            } catch (RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing ResetConfigToDefault: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $link = Route::_('index.php?option=com_rsgallery2&view=galleries');
+        $this->setRedirect($link, $msg, $msgType);
+
+        return $isOk;
+    }
+
 
 	/**
 	 * Check in of one or more records.
@@ -172,7 +212,7 @@ class GalleriesController extends AdminController
     {
         $isOk = false;
 
-        $msg = "MaintenanceCleanUp.ResetConfigToDefault: ";
+        $msg = "GalleriesController.resetNestedGalleryTable: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -186,7 +226,6 @@ class GalleriesController extends AdminController
         } else {
 
             try {
-
                 // Get the model.
                 /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
                 $model = $this->getModel('Galleries');
@@ -196,12 +235,12 @@ class GalleriesController extends AdminController
                 if ($isOk) {
                     $msg .= Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_SUCCESS');
                 } else {
-                    $msg .= Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_ERROR') . $model->getError();
+                    $msg .= Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_ERROR') . ': ' . $model->getError();
                 }
 
             } catch (RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing ResetConfigToDefault: "' . '<br>';
+                $OutTxt .= 'Error executing resetNestedGalleryTable: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -209,8 +248,6 @@ class GalleriesController extends AdminController
             }
 
         }
-
-        // $this->setRedirect(Route::_('index.php?option=com_rsgallery2&view=galleries&amp;layout=galleries_tree'));
 
         $link = 'index.php?option=com_rsgallery2&view=galleries&layout=galleries_tree';
         $this->setRedirect($link, $msg, $msgType);
