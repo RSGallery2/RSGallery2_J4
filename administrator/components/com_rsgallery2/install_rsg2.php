@@ -367,9 +367,9 @@ class Com_Rsgallery2InstallerScript
 
     /**
      * InitGalleryTree
-     * Intializes the nested tree with a root element
+     * Intializes the nested tree with a root element if not already exists
      *
-     * @return bool
+     * @return boolroot element
      * @throws Exception
      *
      * @since
@@ -378,7 +378,6 @@ class Com_Rsgallery2InstallerScript
     {
         $isGalleryTreeCreated = false;
 
-        $id_galleries = '#__rsg2_galleries';
 
         try {
             $db = Factory::getDbo();
@@ -389,9 +388,9 @@ class Com_Rsgallery2InstallerScript
             // Id of binary root element
             $query = $db->getQuery(true);
             $query->select('id');
-            $query->from($id_galleries);
+            $query->from('#__rsg2_galleries');
             $query->where('id = 1');
-            $query->where('alias = "galleries-root-alias"');
+            $query->where('alias = "n-root"');
             $db->setQuery($query);
 
             $id = $db->loadResult();
@@ -402,10 +401,15 @@ class Com_Rsgallery2InstallerScript
                 // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
                 // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 
+				$date = Factory::getDate();
+                $user = Factory::getUser();
+
                 // insert root record
                 // Missing
-                $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id', 'level', 'path', 'lft', 'rgt');
-                $values = array(1, 'galleries root', 'galleries-root-alias', 'root element of nested list', '', '', 0, 0, '', 0, 1);
+                $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id', 
+								 'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', );
+                $values =  array(1, 'galleries root', 'n-root', 'root element of nested list', '', '', 0,
+				                 0, '', 0, 1, $date, $user, $date, $user);
 
                 // Create root element
                 $query = $db->getQuery(true)

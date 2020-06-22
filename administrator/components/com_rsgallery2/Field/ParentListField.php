@@ -29,7 +29,7 @@ use Joomla\Utilities\ArrayHelper;
  *
  * @since 4.3.0
  */
-class GalleryEditField extends ListField
+class ParentListField extends ListField
 {
 	/**
 	 * To allow creation of new galleries.
@@ -45,7 +45,7 @@ class GalleryEditField extends ListField
 	 * @var    string
 	 * @since  1.6
 	 */
-	public $type = 'GalleryEdit';
+	public $type = 'ParentList';
 
 	/**
 	 * Name of the layout being used to render the field
@@ -53,7 +53,7 @@ class GalleryEditField extends ListField
 	 * @var    string
 	 * @since  __DEPLOY_VERSION__
 	 */
-	protected $layout = 'joomla.form.field.galleryedit';
+//	protected $layout = 'joomla.form.field.ParentList';
 
 
 	/**
@@ -68,7 +68,7 @@ class GalleryEditField extends ListField
 	{
         $galleries = array();
 
-        $ActGalleryId = (string) $this->element['id'];
+        $galleryId = (string) $this->form->getValue('id');
 
         try
         {
@@ -80,8 +80,7 @@ class GalleryEditField extends ListField
 			    //->select('a.id AS value, a.name AS text, a.level, a.published, a.lft, a.language')
 			    ->select('id AS value, name AS text, level')
                 ->from('#__rsg2_galleries AS a')
-			    ->where('a.id != 1' )
-                ->where('a.id !=' . (int) $ActGalleryId);
+			    ->where('a.id != 1 AND a.id != ' . (int) $galleryId);
 
 		    // Filter on the published state
 		    // $query->where('a.published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
@@ -146,32 +145,32 @@ class GalleryEditField extends ListField
         //$parent = new \stdClass;
         //$parent->text = Text::_('JGLOBAL_ROOT_PARENT');
         //array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT')));
-        array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT_PARENT')));
+        //array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT_PARENT')));
 
         // Merge any additional options in the XML definition.
 		return array_merge(parent::getOptions(), $options);
 	}
 
-	/**
-	 * Method to get the field input markup for a generic list.
-	 * Use the multiple attribute to enable multiselect.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since   3.6
-	 */
-	protected function getInput()
-	{
-		$data = $this->getLayoutData();
-
-		$data['options']     = $this->getOptions();
-		$data['allowCustom'] = $this->allowAdd;
-
-		$renderer = $this->getRenderer($this->layout);
-		$renderer->setComponent('com_rsgallery2');
-		$renderer->setClient(1);
-
-		$test = $renderer->render($data);
-		return $renderer->render($data);
-	}
+//	/**
+//	 * Method to get the field input markup for a generic list.
+//	 * Use the multiple attribute to enable multiselect.
+//	 *
+//	 * @return  string  The field input markup.
+//	 *
+//	 * @since   3.6
+//	 */
+//	protected function getInput()
+//	{
+//		$data = $this->getLayoutData();
+//
+//		$data['options']     = $this->getOptions();
+//		$data['allowCustom'] = $this->allowAdd;
+//
+//		$renderer = $this->getRenderer($this->layout);
+//		$renderer->setComponent('com_rsgallery2');
+//		$renderer->setClient(1);
+//
+////		$test = $renderer->render($data);
+//		return $renderer->render($data);
+//	}
 }

@@ -646,7 +646,7 @@ class GalleriesModel extends ListModel
         try {
             $db = Factory::getDbo();
 
-            //--- delete ald rows -----------------------------------------------
+            //--- delete old rows -----------------------------------------------
 
             $query = $db->getQuery(true);
 
@@ -660,13 +660,32 @@ class GalleriesModel extends ListModel
 
             //--- insert root of nested list ------------------------------------
 
+            // ToDo: adjust columns to below and use this form
             // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
             // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 
             // insert root record
+//            $query = $db->getQuery(true)
+//                ->insert('#__profiles')
+//                ->set('parent_id = 0')
+//                ->set('lft = 0')
+//                ->set('rgt = 1')
+//                ->set('level = 0')
+//                ->set('title = ' . $db->quote('galleries root'))
+//                ->set('alias = ' . $db->quote('galleries root'))
+//                ->set('access = 1')
+//                ->set('path = ' . $db->quote(''));
+//
+
+            $date = Factory::getDate();
+            $user = Factory::getUser();
+
+            // insert root record
             // Missing
-            $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id', 'level', 'path', 'lft', 'rgt');
-            $values = array(1, 'galleries root', 'galleries-root-alias', 'root element of nested list', '', '', 0, 0, '', 0, 1);
+            $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id',
+                'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', );
+            $values =  array(1, 'galleries root', 'n-root', 'root element of nested list', '', '', 0,
+                0, '', 0, 1, $date, $user, $date, $user);
 
             // Create root element
             $query = $db->getQuery(true)

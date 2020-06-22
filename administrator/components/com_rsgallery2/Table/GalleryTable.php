@@ -62,7 +62,6 @@ class GalleryTable extends Nested
             $array['params'] = (string) $registry;
         }
 
-
         return parent::bind($array, $ignore);
     }
 
@@ -135,12 +134,6 @@ class GalleryTable extends Nested
         }
 
         // Clean up description -- eliminate quotes and <> brackets
-//        if (!empty($this->metadesc))
-//        {
-//            // Only process if not empty
-//            $bad_characters = array("\"", '<', '>');
-//            $this->metadesc = StringHelper::str_ireplace($bad_characters, '', $this->metadesc);
-//        }
 
         if (!empty($this->description))
         {
@@ -151,6 +144,12 @@ class GalleryTable extends Nested
             $this->description = '';
         }
 
+//        if (!empty($this->metadesc))
+//        {
+//            // Only process if not empty
+//            $bad_characters = array("\"", '<', '>');
+//            $this->metadesc = StringHelper::str_ireplace($bad_characters, '', $this->metadesc);
+//        }
 //        if (empty($this->metadesc))
 //        {
 //            $this->metadesc = '';
@@ -215,7 +214,7 @@ class GalleryTable extends Nested
             }
 
             if (!(int)$this->modified) {
-                $this->modified = $this->created_time;
+                $this->modified = $this->created;
             }
 
             if (empty($this->modified_by)) {

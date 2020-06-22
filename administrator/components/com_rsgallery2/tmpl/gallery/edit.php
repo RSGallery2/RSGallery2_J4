@@ -51,9 +51,13 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
 			<div class="col-md-3">
 				<div class="card card-light">
 					<div class="card-body">
-						<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
-						<?php //echo $this->form->getLabel('parent_id'); ?>
-						<?php //echo $this->form->getInput('parent_id'); ?>
+                        <?php // echo $this->form->getLabel('thumb_id'); ?>
+                        <?php // echo $this->form->getInput('thumb_id'); ?>
+
+                        <?php //echo LayoutHelper::render('thumb_id', $this); ?>
+                        <?php echo $this->getForm()->renderField('thumb_id') ?>
+
+                        <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
 					</div>
 				</div>
 			</div>

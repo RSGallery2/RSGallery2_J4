@@ -11,11 +11,15 @@ namespace Joomla\Component\Rsgallery2\Administrator\Table;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\ApplicationHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
- 
+use Joomla\String\StringHelper;
+
 /**
  * Image table
  *
@@ -51,9 +55,113 @@ class ImageTable extends Table
 		$this->typeAlias = 'com_rsgallery2.image';
 
 		parent::__construct('#__rsg2_images', 'id', $db);
+
+        $this->access = (int) Factory::getApplication()->get('access');
 	}
 
-	/**
+    /**
+     * Overloaded bind function
+     *
+     * @param   array  $array   Named array
+     * @param   mixed  $ignore  An optional array or space separated list of properties
+     *          to ignore while binding.
+     *
+     * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
+     *
+     * @see     \JTable::bind
+     * @since   version
+     */
+    public function bind($array, $ignore = '')
+    {
+        if (isset($array['params']) && is_array($array['params']))
+        {
+            $registry = new Registry($array['params']);
+            $array['params'] = (string) $registry;
+        }
+
+
+        return parent::bind($array, $ignore);
+    }
+
+    /**
+     * Overloaded check method to ensure data integrity.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   3.1
+     * @throws  \UnexpectedValueException
+     */
+    public function check()
+    {
+        try {
+            parent::check();
+        } catch (\Exception $e) {
+            $this->setError($e->getMessage());
+
+            return false;
+        }
+
+        // Check for valid name.
+        if (trim($this->name) == '') {
+            throw new \UnexpectedValueException(sprintf('The name is empty'));
+        }
+
+        //--- alias -------------------------------------------------------------
+
+        // ToDo: aliase must be singular see below store ?
+        if (empty($this->alias)) {
+            $this->alias = $this->name;
+        }
+
+        $this->alias = ApplicationHelper::stringURLSafe($this->alias, $this->language);
+
+        // just minuses -A use date
+        if (trim(str_replace('-', '', $this->alias)) == '')
+        {
+            $this->alias = Factory::getDate()->format('Y-m-d-H-i-s');
+        }
+
+        // Check the publish down date is not earlier than publish up.
+        if (!empty($this->publish_down) && !empty($this->publish_up) && $this->publish_down < $this->publish_up)
+        {
+            throw new \UnexpectedValueException(sprintf('End publish date is before start publish date.'));
+        }
+
+        if (!empty($this->description))
+        {
+            // Only process if not empty
+            $bad_characters = array("\"", '<', '>');
+            $this->description = StringHelper::str_ireplace($bad_characters, '', $this->description);
+        }        else         {
+            $this->description = '';
+        }
+
+        if (empty($this->params))
+        {
+            $this->params = '{}';
+        }
+
+
+        if (!(int) $this->checked_out_time)
+        {
+            $this->checked_out_time = null;
+        }
+
+        if (!(int) $this->publish_up)
+        {
+            $this->publish_up = null;
+        }
+
+        if (!(int) $this->publish_down)
+        {
+            $this->publish_down = null;
+        }
+
+        return true;
+    }
+
+
+    /**
 	 * Stores a image reference.
 	 *
 	 * @param   boolean  $updateNulls  True to update fields even if they are null.
@@ -64,6 +172,47 @@ class ImageTable extends Table
 	 */
 	public function store($updateNulls = false)
 	{
+        $date = Factory::getDate();
+        $user = Factory::getUser();
+
+        if ($this->id)
+        {
+            // Existing item
+            $this->modified = $date->toSql();
+            $this->modified_by = $user->get('id');
+        }
+        else {
+            // New tag. A tag created and created_by field can be set by the user,
+            // so we don't touch either of these if they are set.
+            if (!(int)$this->created) {
+                $this->created = $date->toSql();
+            }
+
+            if (empty($this->created_by)) {
+                $this->created_by = $user->get('id');
+            }
+
+            if (!(int)$this->modified) {
+                $this->modified = $this->created;
+            }
+
+            if (empty($this->modified_by)) {
+                $this->modified_by = $this->created_user_id;
+            }
+        }
+
+        // Verify that the alias is unique
+        $table = new static($this->getDbo());
+
+        if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
+        {
+            $this->setError(Text::_('COM_TAGS_ERROR_UNIQUE_ALIAS'));
+
+            return false;
+        }
+
+        return parent::store($updateNulls);
+
 		// Transform the params field
 		if (is_array($this->params))
 		{

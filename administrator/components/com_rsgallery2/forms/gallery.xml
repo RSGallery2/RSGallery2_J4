@@ -29,11 +29,22 @@
 
 		<field
 			name="parent_id"
-			type="galleryedit"
+			type="ParentList"
 			label="COM_RSGALLERY2_FIELD_PARENT_LABEL"
 			default="0"
 		>
+			<option value="0">JGLOBAL_ROOT_PARENT</option>
 		</field>
+
+		<field
+			name="thumb_id"
+			type="ThumbList"
+			label="COM_RSGALLERY2_GALLERY_THUMBNAIL"
+			default="0"
+		>
+			<option value="0">COM_RSGALLERY2_MINUS_RANDOM_THUMBNAIL_MINUS</option>
+		</field>
+
 
 		<field
 			name="lft"

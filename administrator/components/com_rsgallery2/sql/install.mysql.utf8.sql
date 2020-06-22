@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `description` text NOT NULL,
-  `thumb_id` int(11) unsigned NOT NULL default '0',
+  `thumb_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `published` tinyint(1) NOT NULL DEFAULT 1,
 
   `note` varchar(255) NOT NULL,
   `params` text NOT NULL,
@@ -32,7 +33,6 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `rgt` int(11) DEFAULT 0 NOT NULL,
 
   `asset_id` int(11)  NOT NULL DEFAULT 0,
--- `access_level` int(10) unsigned NOT NULL DEFAULT 0,
   `access` int(10) unsigned NOT NULL DEFAULT 0,
 
 --  `rtl` tinyint(4) NOT NULL DEFAULT 0,  
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 
 --  KEY `idx_catid` (`catid`),
 --  KEY `idx_language` (`language`),
-  `use_j3x_location` int(11) DEFAULT 0 NOT NULL,
+  `use_j3x_location` tinyint(1) DEFAULT 0 NOT NULL,
 
   PRIMARY KEY (`id`),
   KEY `idx_access` (`access`),  
