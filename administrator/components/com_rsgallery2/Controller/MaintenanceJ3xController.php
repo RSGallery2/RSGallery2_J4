@@ -132,7 +132,7 @@ class MaintenanceJ3xController extends AdminController
 
 		}
 
-		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOld3xConfig';
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig';
 		$this->setRedirect($link, $msg, $msgType);
 	} 
 
@@ -203,7 +203,7 @@ class MaintenanceJ3xController extends AdminController
 
 		}
 
-		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOld3xConfig';
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig';
 		$this->setRedirect($link, $msg, $msgType);
 	}
 

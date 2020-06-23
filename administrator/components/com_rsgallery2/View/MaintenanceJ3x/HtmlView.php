@@ -71,7 +71,7 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'DbCopyOld3xConfig':
+			case 'DbCopyOldJ3xConfig':
 
 				try
 				{
@@ -178,7 +178,7 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'DbCopyOld3xConfig':
+			case 'DbCopyOldJ3xConfig':
                 // on develop show open tasks if existing
                 if (!empty ($this->isDevelop))
                 {

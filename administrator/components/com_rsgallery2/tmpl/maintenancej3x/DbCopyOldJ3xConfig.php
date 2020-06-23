@@ -14,12 +14,12 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('bootstrap.framework');
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOld3xConfig.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOld3xConfig'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
@@ -30,9 +30,9 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOld3xConfig.css', array('versi
 		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php //echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbCopyOld3xConfig')); ?>
+				<?php //echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbCopyOldJ3xConfig')); ?>
 
-				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOld3xConfig', Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG', true)); ?>
+				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOldJ3xConfig', Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG', true)); ?>
 
                 <legend><strong><?php echo Text::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_J3X_CONFIG'); ?></strong></legend>
 
@@ -240,7 +240,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOld3xConfig.css', array('versi
 					catch (RuntimeException $e)
 					{
 						$OutTxt = '';
-						$OutTxt .= 'Error rawEdit view: "' . 'DbCopyOld3xConfig' . '"<br>';
+						$OutTxt .= 'Error rawEdit view: "' . 'DbCopyOldJ3xConfig' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 					
 						$app = Factory::getApplication();
