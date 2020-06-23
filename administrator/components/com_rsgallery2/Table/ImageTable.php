@@ -206,7 +206,7 @@ class ImageTable extends Table
 
         if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
         {
-            $this->setError(Text::_('COM_TAGS_ERROR_UNIQUE_ALIAS'));
+            $this->setError(Text::_('COM_RSGALLERY2_ERROR_UNIQUE_ALIAS'));
 
             return false;
         }

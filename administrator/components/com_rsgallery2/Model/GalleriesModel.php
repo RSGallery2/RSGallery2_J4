@@ -685,7 +685,7 @@ class GalleriesModel extends ListModel
             $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id',
                 'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', );
             $values =  array(1, 'galleries root', 'n-root', 'root element of nested list', '', '', 0,
-                0, '', 0, 1, $date, $user, $date, $user);
+                0, '', 0, 1, $date, $user->id, $date, $user->id);
 
             // Create root element
             $query = $db->getQuery(true)

@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Nested;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
@@ -218,7 +219,7 @@ class GalleryTable extends Nested
             }
 
             if (empty($this->modified_by)) {
-                $this->modified_by = $this->created_user_id;
+                $this->modified_by = $this->created_by;
             }
         }
 
@@ -227,7 +228,7 @@ class GalleryTable extends Nested
 
         if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
         {
-            $this->setError(Text::_('COM_TAGS_ERROR_UNIQUE_ALIAS'));
+            $this->setError(Text::_('COM_RSGALLERY2_ERROR_UNIQUE_ALIAS'));
 
             return false;
         }

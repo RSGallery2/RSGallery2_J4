@@ -100,9 +100,13 @@ class HtmlView extends BaseHtmlView
                 {
                     $j3xModel      = $this->getModel();
 
+                    // gallery list
+                    $this->j3x_galleries = $j3xModel->j3x_galleriesList();
+                    $this->j4x_galleries = $j3xModel->j4x_galleriesList();
+
                     // html
-                    $this->j3x_galleriesHtmlHtml = $j3xModel->GalleriesListAsHTML($j3xModel->j3x_galleriesList());
-                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($j3xModel->j4x_galleriesList());
+                    $this->j3x_galleriesHtmlHtml = $j3xModel->GalleriesListAsHTML($this->j3x_galleries);
+                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($this->j4x_galleries);
                     $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
 
                     // gallery list
@@ -217,7 +221,7 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
-                ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
+                ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
 
 				break;
 

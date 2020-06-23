@@ -78,7 +78,7 @@ class ParentListField extends ListField
 
 		    $query = $db->getQuery(true)
 			    //->select('a.id AS value, a.name AS text, a.level, a.published, a.lft, a.language')
-			    ->select('id AS value, name AS text, level')
+			    ->select('a.id AS value, a.name AS text, level, a.lft')
                 ->from('#__rsg2_galleries AS a')
 			    ->where('a.id != 1 AND a.id != ' . (int) $galleryId);
 

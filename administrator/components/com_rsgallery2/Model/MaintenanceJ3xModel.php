@@ -11,11 +11,17 @@ namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use JModelLegacy;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
 use JTableNested;
+use Joomla\CMS\Helper\ModuleHelper;
+
+//use Joomla\CMS\Extension\Service\Provider\MVCFactory;
+//use Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel;
+
 
 /**
  * Class MaintenanceJ3xModel
@@ -296,38 +302,40 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
     }
 
 
-//    public function j4_GalleriesToJ3Form($j4x_galleries)
-//    {
-//        $j3x_galleries = [];
-//
-//        try {
-//            foreach ($j4x_galleries as $j4x_gallery) {
-//
-//                // leave out root gallery in nested form
-//                if ($j4x_gallery->id != 1) {
-//                    $j3x_gallery = new \stdClass();
-//
-//                    $j3x_gallery->id = $j4x_gallery->id;
-//                    $j3x_gallery->name = $j4x_gallery->name;
-//
+    public function j4_GalleriesToJ3Form($j4x_galleries)
+    {
+        $j3x_galleries = [];
+
+        try {
+            foreach ($j4x_galleries as $j4x_gallery) {
+
+                // leave out root gallery in nested form
+                if ($j4x_gallery->id != 1) {
+                    $j3x_gallery = new \stdClass();
+
+                    $j3x_gallery->id = $j4x_gallery->id;
+                    $j3x_gallery->name = $j4x_gallery->name;
+
 //                    // parent 1 is going to root
 //                    if($j4x_gallery->parent_id == 1) {
 //                        $j4x_gallery->parent_id = 0;
 //                    }
-//                    $j3x_gallery->parent = $j4x_gallery->parent_id;
-//                    $j3x_gallery->ordering = $j4x_gallery->level;
-//
-//                    $j3x_galleries[] = $j3x_gallery;
-//                }
-//            }
-//        }
-//        catch (RuntimeException $e)
-//        {
-//            JFactory::getApplication()->enqueueMessage($e->getMessage());
-//        }
-//
-//        return $j3x_galleries;
-//    }
+
+                    $j3x_gallery->parent = $j4x_gallery->parent_id;
+                    // $j3x_gallery->ordering = $j4x_gallery->level;
+                    $j3x_gallery->ordering = $j4x_gallery->lft;
+
+                    $j3x_galleries[] = $j3x_gallery;
+                }
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $j3x_galleries;
+    }
 
     public function GalleriesListAsHTML($galleries)
     {
@@ -423,86 +431,102 @@ EOT;
         return $html;
     }
 
-    public function copyJ3xItems2J4x ($J3xGalleryItemsSorted) {
-        $isOk = false;
+//    public function copyJ3xItems2J4x ($J3xGalleryItemsSorted) {
+//        $isOk = false;
+//
+//        try {
+//
+//            //$test = new BaseDatabaseModel (array());
+//
+//            //$galleryModel =  new GalleryModel ();
+//            //$galleryModel = new \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel(array('ignore_request' => true));
+////            $galleryModel = new \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel(['ignore_request' => true]);
+////            $galleryModel =
+////            $galleryModel = JModelLegacy::getInstance('GalleryModel', 'RSGallery2Model');
+//            $galleryModel = $this->getInsconvertJ3xGallertance('gallerymodel', 'RSGallery2Model');
+//
+//            $isOk = True;
+//
+//            // galleries of given level
+//            foreach ($J3xGalleryItemsSorted as $j3xGallery) {
+//
+//                $J4GalleryItem = $this->convertJ3xGallery($j3xGallery);
+//
+//                // do save
+//                $isOk &= $galleryModel->save($J4GalleryItem);
+//            }
+//
+//        }
+//        catch (RuntimeException $e)
+//        {
+//            JFactory::getApplication()->enqueueMessage($e->getMessage());
+//        }
+//
+//        return $isOk;
+//    }
+//
+    public function convertJ3xGalleriesToJ4x ($J3xGalleryItemsSorted) {
 
-        Table::addIncludePath();
-
+        $J4Galleries = [];
 
         try {
-            // fetch existing galleries
-
 
             // galleries of given level
             foreach ($J3xGalleryItemsSorted as $j3xGallery) {
 
-
-                $J4GalleryItem = convertJ3xGallery($j3xGallery);
-
-
-                Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_rsgallery2/tables');
-//                $categoryTable = Table::getInstance('Gallery', 'JTable');
-//                $contentTable = $typeTable->getContentTable();
-//
-//                $menuTable = JTableNested::getInstance('Gallery');
-//
-//                $keyValue = Factory::getApplication()->input->getInteger('item_id', 0);
-
+                $J4Galleries[] = $this->convertJ3xGallery($j3xGallery);
             }
 
-            $isOk = True;
         }
         catch (RuntimeException $e)
         {
             JFactory::getApplication()->enqueueMessage($e->getMessage());
         }
 
-        return $isOk;
+        return $J4Galleries;
     }
 
 
     private function convertJ3xGallery ($j3xGallery) {
 
-        $J4GalleryItem = new stdClass();
+        $J4GalleryItem = []; //new \stdClass();
 
         // `id` int(11) NOT NULL auto_increment,
-        $J4GalleryItem->id = $j3xGallery->id;
+        $J4GalleryItem['id'] = $j3xGallery->id;
         // `parent` int(11) NOT NULL default 0,
-        $J4GalleryItem->parent = $j3xGallery->parent;
+        $J4GalleryItem['parent_id'] = $j3xGallery->parent;
         // `name` varchar(255) NOT NULL default '',
-        $J4GalleryItem->name = $j3xGallery->name;
+        $J4GalleryItem['name'] = $j3xGallery->name;
         // `alias` varchar(255) NOT NULL DEFAULT '',
-        $J4GalleryItem->alias = $j3xGallery->alias;
+        $J4GalleryItem['alias'] = $j3xGallery->alias;
         // `description` text NOT NULL,
-        $J4GalleryItem->description = $j3xGallery->description;
+        $J4GalleryItem['description'] = $j3xGallery->description;
         // `published` tinyint(1) NOT NULL default '0',
-        $J4GalleryItem->published = $j3xGallery->published;
+        $J4GalleryItem['published'] = $j3xGallery->published;
         // `checked_out` int(11) unsigned NOT NULL default '0',
-        $J4GalleryItem->checked_out = $j3xGallery->checked_out;
+        $J4GalleryItem['checked_out'] = $j3xGallery->checked_out;
         // `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
-        $J4GalleryItem->checked_out_time = $j3xGallery->checked_out_time;
+        $J4GalleryItem['checked_out_time'] = $j3xGallery->checked_out_time;
         // `ordering` int(11) NOT NULL default '0',
-        $J4GalleryItem->ordering = $j3xGallery->ordering;
+        $J4GalleryItem['ordering'] = $j3xGallery->ordering;
         // `date` datetime NOT NULL default '0000-00-00 00:00:00',
-        $J4GalleryItem->date= $j3xGallery->date;
+        $J4GalleryItem['date']= $j3xGallery->date;
         // `hits` int(11) NOT NULL default '0',
-        $J4GalleryItem->hits = $j3xGallery->hits;
+        $J4GalleryItem['hits'] = $j3xGallery->hits;
         // `params` text NOT NULL,
-        $J4GalleryItem->params = $j3xGallery->params;
+        $J4GalleryItem['params'] = $j3xGallery->params;
         // `user` tinyint(4) NOT NULL default '0',
-        $J4GalleryItem->user = $j3xGallery->user;
+        $J4GalleryItem['user'] = $j3xGallery->user;
         // `uid` int(11) unsigned NOT NULL default '0',
-        $J4GalleryItem->uid = $j3xGallery->uid;
+        $J4GalleryItem['uid'] = $j3xGallery->uid;
         // `allowed` varchar(100) NOT NULL default '0',
-        $J4GalleryItem->allowed = $j3xGallery->allowed;
+        $J4GalleryItem['allowed'] = $j3xGallery->allowed;
         // `thumb_id` int(11) unsigned NOT NULL default '0',
-        $J4GalleryItem->thumb_id = $j3xGallery->thumb_id;
+        $J4GalleryItem['thumb_id'] = $j3xGallery->thumb_id;
         // `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-        $J4GalleryItem->asset_id = $j3xGallery->asset_id;
+        $J4GalleryItem['asset_id'] = $j3xGallery->asset_id;
         // `access` int(10) unsigned DEFAULT NULL,
-        $J4GalleryItem->access = $j3xGallery->access;
-
-
+        $J4GalleryItem['access'] = $j3xGallery->access;
 
         return $J4GalleryItem;
     }

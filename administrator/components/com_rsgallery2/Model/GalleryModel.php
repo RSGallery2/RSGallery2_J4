@@ -26,10 +26,11 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\UCM\UCMType;
-use Joomla\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+
+use Joomla\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
 
 /**
  * Rsgallery2 Component Gallery Model
@@ -554,10 +555,13 @@ class GalleryModel extends AdminModel
 	public function save($data)
 	{
 		$table      = $this->getTable();
-		$input      = Factory::getApplication()->input;
+		$test1= $data['name'];
+
+
 		$pk         = (!empty($data['id'])) ? $data['id'] : (int) $this->getState($this->getName() . '.id');
 		$isNew      = true;
 		$context    = $this->option . '.' . $this->name;
+        $input      = Factory::getApplication()->input;
 
 		if (!empty($data['tags']) && $data['tags'][0] != '')
 		{
@@ -1382,4 +1386,20 @@ class GalleryModel extends AdminModel
 		return $assoc;
 	}
 	/**/
+
+
+    public function saveItems($J4Galleries = [])
+    {
+        $isOk = True;
+
+        // galleries of given level
+        foreach ($J4Galleries as $j4gallery) {
+
+            $isOk &= $this->save($j4gallery);
+        }
+
+
+        return $isOk;
+    }
+
 }

@@ -12,7 +12,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 
-HTMLHelper::_('bootstrap.framework');
+//HTMLHelper::_('bootstrap.framework');
+HTMLHelper::_('behavior.multiselect');
+
 
 function jsonArray2Lines($lines)
 {

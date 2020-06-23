@@ -233,6 +233,7 @@ class MaintenanceJ3xController extends AdminController
 			try
 			{
 				$cfg3xModel = $this->getModel('MaintenanceJ3x');
+				$galleryModel = $this->getModel('Gallery');
 
 				$J3xGalleryItemsSorted = $cfg3xModel->j3x_galleriesListSorted();
 
@@ -241,7 +242,9 @@ class MaintenanceJ3xController extends AdminController
 
 //					$J3xGalleryItemsSorted ['j3x_config_upgrade'] = "1";
 
-					$isOk = $cfg3xModel->copyJ3xItems2J4x ($J3xGalleryItemsSorted);
+                    $J4Galleries = $cfg3xModel->convertJ3xGalleriesToJ4x ($J3xGalleryItemsSorted);
+
+                    $isOk = $galleryModel->saveItems($J4Galleries);
 					if ($isOk)
 					{
 						$msg .= "Successful copied old gallery items items";
