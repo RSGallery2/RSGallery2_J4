@@ -87,9 +87,9 @@ if ($saveOrder && !empty($this->items))
 								</th>
 
 
-                                <th scope="col" style="min-width:100px">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_TITLE', 'a.title', $listDirn, $listOrder); ?>
-                                </th>
+                                <!--th scope="col" style="min-width:100px">
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_TITLE', 'a.name', $listDirn, $listOrder); ?>
+                                </th-->
                                 <th scope="col" style="min-width:100px">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder); ?>
                                 </th>
@@ -234,9 +234,9 @@ if ($saveOrder && !empty($this->items))
 										<?php if ($canEdit || $canEditOwn) : ?>
 											<?php $editIcon = $item->checked_out ? '' : '<span class="fa fa-pencil-square mr-2" aria-hidden="true"></span>'; ?>
 											<a class="hasTooltip" href="<?php echo Route::_('index.php?option=com_rsgallery2&task=image.edit&id=' . $item->id . '&extension=' . $extension); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->name)); ?>">
-												<?php echo $editIcon; ?><?php echo $this->escape($item->title); ?></a>
+												<?php echo $editIcon; ?><?php echo $this->escape($item->name); ?></a>
 										<?php else : ?>
-											<?php echo $this->escape($item->title); ?>
+											<?php echo $this->escape($item->name); ?>
 										<?php endif; ?>
                                     </th>
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">

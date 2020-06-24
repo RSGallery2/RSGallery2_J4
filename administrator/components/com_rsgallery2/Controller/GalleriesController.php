@@ -227,7 +227,7 @@ class GalleriesController extends AdminController
 
             try {
                 // Get the model.
-                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel $model */
                 $model = $this->getModel('Galleries');
 
                 // Remove the items.

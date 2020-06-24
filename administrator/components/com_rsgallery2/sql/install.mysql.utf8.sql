@@ -84,7 +84,10 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `rating` int(10) unsigned NOT NULL default '0',
   `votes` int(10) unsigned NOT NULL default '0',
   `comments` int(10) unsigned NOT NULL default '0',
-  
+
+  `publish_up` datetime,
+  `publish_down` datetime,
+
   `checked_out` int(10) unsigned NOT NULL DEFAULT 0,
   `checked_out_time` datetime, 
   `created` datetime NOT NULL,

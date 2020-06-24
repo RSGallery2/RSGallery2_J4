@@ -44,27 +44,21 @@ class ImagesModel extends ListModel
 				'id', 'a.id',
 				'name', 'a.name',
 				'gallery_id', 'a.gallery_id',
-				'title', 'a.title',
-				'hits', 'a.hits',
-				'date', 'a.date',
-				'rating', 'a.rating',
-				'votes', 'a.votes',
-				'comments', 'a.comments',
-				'published', 'a.published',
 
-				'checked_out', 'a.checked_out',
-				'checked_out_time', 'a.checked_out_time',
+                'published', 'a.published',
 
-				'ordering', 'a.ordering',
+                'created', 'a.created',
+                'created_by', 'a.created_by',
 
-				'created', 'a.created',
-				'created_by', 'a.created_by',
+                'modified', 'a.modified',
+                'modified_by', 'a.modified_by',
 
-				'modified', 'a.modified',
-				'modified_by', 'a.modified_by',
+                'ordering', 'a.ordering',
 
-				'parent_id', 'a.parent_id',
-
+                'hits', 'a.hits',
+                'rating', 'a.rating',
+                'votes', 'a.votes',
+                'comments', 'a.comments',
 				'tag',
 			);
 		}
@@ -186,11 +180,9 @@ class ImagesModel extends ListModel
 				. 'a.name, '
 				. 'a.alias, '
 				. 'a.description, '
+                . 'a.note, '
 				. 'a.gallery_id, '
 
-				. 'a.title, '
-				. 'a.date, '
-				. 'a.note, '
 				. 'a.params, '
 				. 'a.published, '
 
@@ -198,7 +190,10 @@ class ImagesModel extends ListModel
 				. 'a.votes, '
 				. 'a.comments, '
 
-				. 'a.checked_out, '
+ //               . 'a.publish_up,'
+ //               . 'a.publish_down,'
+
+                . 'a.checked_out, '
 				. 'a.checked_out_time, '
 				. 'a.created, '
 				. 'a.created_by, '
@@ -209,12 +204,13 @@ class ImagesModel extends ListModel
 				. 'a.hits, '
 
 				. 'a.ordering, '
-				. 'a.asset_id, '
-				. 'a.access '
-			)
-//				. ', a.language'
+
 //				. 'a.checked_out, '
 //				. 'a.checked_out_time, '
+
+                . 'a.asset_id, '
+				. 'a.access '
+			)
 		);
 		$query->from('#__rsg2_images as a');
 
@@ -283,7 +279,7 @@ class ImagesModel extends ListModel
 			$query->where('(a.published IN (0, 1))');
 		}
 
-		// Filter by search in title
+        // Filter by search in name and others
 		$search = $this->getState('filter.search');
 		if (!empty($search))
 		{
@@ -361,7 +357,6 @@ class ImagesModel extends ListModel
 			. 'a.description, '
 			. 'a.gallery_id, '
 			. 'a.title, '
-			. 'a.date, '
 
 			. 'a.note, '
 			. 'a.params, '
@@ -624,5 +619,43 @@ class ImagesModel extends ListModel
 
 		return $name;
 	}
+
+    /**
+     * Reset gallery table to empty state
+     * Deletes all galleries and initialises the root of the nested tree
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public static function resetImagesTable()
+    {
+        $isImagesReset = false;
+
+        $id_galleries = '#__rsg2_images';
+
+        try {
+            $db = Factory::getDbo();
+
+            //--- delete old rows -----------------------------------------------
+
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName($id_galleries));
+            // all rows
+            //$query->where($conditions);
+
+            $db->setQuery($query);
+
+            $isImagesReset = $db->execute();
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
+        }
+
+        return $isImagesReset;
+    }
+
 
 } // class

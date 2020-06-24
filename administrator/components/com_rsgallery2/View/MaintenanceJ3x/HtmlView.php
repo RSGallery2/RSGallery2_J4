@@ -136,7 +136,9 @@ class HtmlView extends BaseHtmlView
                     $this->j3x_images = $j3xModel->j3x_imagesList();
                     $this->j4x_images = $j3xModel->j4x_imagesList();
 
-                    // ToDo: order by ID
+                    // ToDo: order by gallery id
+                    //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
+                    //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
 
                     // iterate over all values
 //                    $this->configVarsMerged = $j3xModel->MergeJ3xConfiguration($this->configVarsOld, $this->configVars);
@@ -207,6 +209,7 @@ class HtmlView extends BaseHtmlView
                 {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
+                        . '*  Separate code for galleries raw view -> import into views<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -223,7 +226,7 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
-                ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
+                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
 
 				break;
 
@@ -233,7 +236,7 @@ class HtmlView extends BaseHtmlView
                 {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
-//				. '*  <br>'
+				. '*  Separate code for images raw view -> import into views<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -242,16 +245,15 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
+
+                if(count ($this->j4x_images) > 1) {
+                    ToolBarHelper::custom ('MaintenanceJ3x.resetImagesTable','copy','','COM_RSGALLERY2_IMAGES_TABLE_RESET', false);
+                }
+
+                ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xImageses2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_IMAGES', false);
+                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_IMAGES', true);
 				break;
 
-				/**
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'), 'screwdriver');
-				ToolBarHelper::apply('config.apply_rawEdit');
-				ToolBarHelper::save('config.save_rawEdit');
-				ToolBarHelper::cancel('config.cancel_rawEdit');
-				break;
-				 * */
 			default:
 				ToolBarHelper::cancel('config.cancel');
 				break;

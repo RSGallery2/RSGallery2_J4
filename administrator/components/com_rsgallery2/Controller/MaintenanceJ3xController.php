@@ -278,5 +278,59 @@ class MaintenanceJ3xController extends AdminController
 		$this->setRedirect($link, $msg, $msgType);
 	}
 
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public function resetImagesTable()
+    {
+        $isOk = false;
+
+        $msg = "ImagesController.resetImagesTable: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+
+            try {
+                // Get the model.
+                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\Imagesodel $model */
+                $model = $this->getModel('Images');
+
+                // Remove the items.
+                $isOk = $model->resetImagesTable();
+                if ($isOk) {
+                    $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_SUCCESS');
+                } else {
+                    $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_ERROR') . ': ' . $model->getError();
+                }
+
+            } catch (RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing resetImagesTable: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferOldJ3xImages';
+        $this->setRedirect($link, $msg, $msgType);
+
+        return $isOk;
+    }
+
+
 } // class
 

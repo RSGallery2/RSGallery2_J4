@@ -242,13 +242,14 @@ function jsonArray2Lines($lines)
                     --------------------------------------------------------------------------------*/
 
 //
-                    echo '<hr>';
-                    echo '<hr>';
-                    echo '<h3>COM_RSGALLERY2_J4X_GALLERY_LIST</h3>';
+                    echo '<hr style="height:1px;border:none;color:#333;background-color:#333;" />';
+                    echo '<hr style="height:1px;border:none;color:#333;background-color:#333;" />';
+
+                    echo '<h3>' . 'J4x ' . Text::_('COM_RSGALLERY2_GALLERIES_LIST') . '</h3>';
 
 //                    if (true) {
-                        if (count ($this->j4x_galleries) > 1) {
-                        ?>
+                    if (count ($this->j4x_galleries) > 1) {
+                    ?>
 
                         <table class="table table-striped" id="galleryList">
 
@@ -457,7 +458,7 @@ function jsonArray2Lines($lines)
                         echo jsonArray2Lines($this->j4x_galleries);
                     } // count (j4x_galleries) > 1
                     else {
-                        $keyTranslation = Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_IS_EMPTY');
+                        $keyTranslation = 'J4x ' . Text::_('COM_RSGALLERY2_GALLERIES_LIST_IS_EMPTY');
                         echo '   <h2><span class="badge badge-pill badge-success">' . $keyTranslation . '</span></h2>';
                     }
 

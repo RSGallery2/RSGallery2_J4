@@ -45,9 +45,6 @@ class GalleriesModel extends ListModel
 
 				'published', 'a.published',
 
-				'checked_out', 'a.checked_out',
-				'checked_out_time', 'a.checked_out_time',
-
 				'created', 'a.created',
 				'created_by', 'a.created_by',
 
@@ -182,6 +179,9 @@ class GalleriesModel extends ListModel
 				. 'a.published, '
 				. 'a.hits, '
 
+                . 'a.publish_up,'
+                . 'a.publish_down,'
+
 				. 'a.checked_out, '
 				. 'a.checked_out_time, '
 				. 'a.created, '
@@ -190,16 +190,16 @@ class GalleriesModel extends ListModel
 				. 'a.modified, '
 				. 'a.modified_by, '
 
-//				. 'a.checked_out, '
-//				. 'a.checked_out_time, '
-
 				. 'a.parent_id,'
 				. 'a.level, '
 				. 'a.path, '
 				. 'a.lft, '
 				. 'a.rgt,'
 
-				. 'a.asset_id,'
+//				. 'a.checked_out, '
+//				. 'a.checked_out_time, '
+
+                . 'a.asset_id,'
 //				. 'a.access_level,'
 				. 'a.access'
 			)
@@ -269,7 +269,7 @@ class GalleriesModel extends ListModel
 			$query->where('(a.published IN (0, 1))');
 		}
 
-		// Filter by search in title
+		// Filter by search in name and others
 		$search = $this->getState('filter.search');
 		if (!empty($search))
 		{
@@ -630,7 +630,7 @@ class GalleriesModel extends ListModel
 	}
 
     /**
-     * Reset gallery table to orignal state
+     * Reset gallery table to empty state
      * Deletes all galleries and initialises the root of the nested tree
      *
      * @return bool
@@ -639,7 +639,7 @@ class GalleriesModel extends ListModel
      */
     public static function resetNestedGalleryTable()
     {
-        $isGalleryTreeResetted = false;
+        $isGalleryTreeReset = false;
 
         $id_galleries = '#__rsg2_galleries';
 
@@ -696,7 +696,7 @@ class GalleriesModel extends ListModel
 
             $result = $db->execute();
             if ($result) {
-                $isGalleryTreeResetted = true;
+                $isGalleryTreeReset = true;
             } else {
                 Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
             }
@@ -706,7 +706,7 @@ class GalleriesModel extends ListModel
             throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
         }
 
-        return $isGalleryTreeResetted;
+        return $isGalleryTreeReset;
     }
 
 
