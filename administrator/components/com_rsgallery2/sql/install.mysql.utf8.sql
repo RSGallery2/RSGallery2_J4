@@ -73,7 +73,6 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 
   `gallery_id` int(9) unsigned NOT NULL default '0',
   `title` varchar(255) NOT NULL default '',
---  `img_date` datetime NOT NULL,
 
   `note` varchar(255) NOT NULL DEFAULT '',
   `params` text NOT NULL,

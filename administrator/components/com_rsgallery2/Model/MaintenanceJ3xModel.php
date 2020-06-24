@@ -464,6 +464,7 @@ EOT;
 //        return $isOk;
 //    }
 //
+
     public function convertJ3xGalleriesToJ4x ($J3xGalleryItemsSorted) {
 
         $J4Galleries = [];
@@ -486,48 +487,48 @@ EOT;
     }
 
 
-    private function convertJ3xGallery ($j3xGallery) {
+    private function convertJ3xGallery ($j3x_gallery) {
 
-        $J4GalleryItem = []; //new \stdClass();
+        $j4_GalleryItem = []; //new \stdClass();
 
         // `id` int(11) NOT NULL auto_increment,
-        $J4GalleryItem['id'] = $j3xGallery->id;
+        $j4_GalleryItem['id'] = $j3x_gallery->id;
         // `parent` int(11) NOT NULL default 0,
-        $J4GalleryItem['parent_id'] = $j3xGallery->parent;
+        $j4_GalleryItem['parent_id'] = $j3x_gallery->parent;
         // `name` varchar(255) NOT NULL default '',
-        $J4GalleryItem['name'] = $j3xGallery->name;
+        $j4_GalleryItem['name'] = $j3x_gallery->name;
         // `alias` varchar(255) NOT NULL DEFAULT '',
-        $J4GalleryItem['alias'] = $j3xGallery->alias;
+        $j4_GalleryItem['alias'] = $j3x_gallery->alias;
         // `description` text NOT NULL,
-        $J4GalleryItem['description'] = $j3xGallery->description;
+        $j4_GalleryItem['description'] = $j3x_gallery->description;
         // `published` tinyint(1) NOT NULL default '0',
-        $J4GalleryItem['published'] = $j3xGallery->published;
+        $j4_GalleryItem['published'] = $j3x_gallery->published;
         // `checked_out` int(11) unsigned NOT NULL default '0',
-        $J4GalleryItem['checked_out'] = $j3xGallery->checked_out;
+        $j4_GalleryItem['checked_out'] = $j3x_gallery->checked_out;
         // `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
-        $J4GalleryItem['checked_out_time'] = $j3xGallery->checked_out_time;
+        $j4_GalleryItem['checked_out_time'] = $j3x_gallery->checked_out_time;
         // `ordering` int(11) NOT NULL default '0',
-        $J4GalleryItem['ordering'] = $j3xGallery->ordering;
+        $j4_GalleryItem['ordering'] = $j3x_gallery->ordering;
         // `date` datetime NOT NULL default '0000-00-00 00:00:00',
-        $J4GalleryItem['date']= $j3xGallery->date;
+        $j4_GalleryItem['date']= $j3x_gallery->date;
         // `hits` int(11) NOT NULL default '0',
-        $J4GalleryItem['hits'] = $j3xGallery->hits;
+        $j4_GalleryItem['hits'] = $j3x_gallery->hits;
         // `params` text NOT NULL,
-        $J4GalleryItem['params'] = $j3xGallery->params;
+        $j4_GalleryItem['params'] = $j3x_gallery->params;
         // `user` tinyint(4) NOT NULL default '0',
-        $J4GalleryItem['user'] = $j3xGallery->user;
+        $j4_GalleryItem['user'] = $j3x_gallery->user;
         // `uid` int(11) unsigned NOT NULL default '0',
-        $J4GalleryItem['uid'] = $j3xGallery->uid;
+        $j4_GalleryItem['uid'] = $j3x_gallery->uid;
         // `allowed` varchar(100) NOT NULL default '0',
-        $J4GalleryItem['allowed'] = $j3xGallery->allowed;
+        $j4_GalleryItem['allowed'] = $j3x_gallery->allowed;
         // `thumb_id` int(11) unsigned NOT NULL default '0',
-        $J4GalleryItem['thumb_id'] = $j3xGallery->thumb_id;
+        $j4_GalleryItem['thumb_id'] = $j3x_gallery->thumb_id;
         // `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-        $J4GalleryItem['asset_id'] = $j3xGallery->asset_id;
+        $j4_GalleryItem['asset_id'] = $j3x_gallery->asset_id;
         // `access` int(10) unsigned DEFAULT NULL,
-        $J4GalleryItem['access'] = $j3xGallery->access;
+        $j4_GalleryItem['access'] = $j3x_gallery->access;
 
-        return $J4GalleryItem;
+        return $j4_GalleryItem;
     }
 
     public function j3x_imagesList()
@@ -581,6 +582,97 @@ EOT;
         }
 
         return $galleries;
+    }
+
+    public function convertJ3xImagesToJ4x ($J3xImagesItems) {
+
+        $J4Galleries = [];
+
+        try {
+
+            // galleries of given level
+            foreach ($J3xImagesItems as $j3xImage) {
+
+                $J4Galleries[] = $this->convertJ3xImage($j3xImage);
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $J4Galleries;
+    }
+
+
+    private function convertJ3xImage ($j3x_image) {
+
+        $j4_imageItem = []; //new \stdClass();
+
+        //`id` serial NOT NULL,
+        $j4_imageItem['id'] = $j3x_image->id;
+        //`name` varchar(255) NOT NULL default '',
+        $j4_imageItem['name'] = $j3x_image->name;
+        //`alias` varchar(255) NOT NULL DEFAULT '',
+        $j4_imageItem['alias'] = $j3x_image->alias;
+        //`description` text NOT NULL,
+        $j4_imageItem['description'] = $j3x_image->desc;
+
+        //`gallery_id` int(9) unsigned NOT NULL default '0',
+        $j4_imageItem['gallery_id'] = $j3x_image->gallery_id;
+        //`title` varchar(255) NOT NULL default '',
+        $j4_imageItem['title'] = $j3x_image->title;
+
+        //`note` varchar(255) NOT NULL DEFAULT '',
+        $j4_imageItem['note'] = ''; // $j3x_image->note;
+        //`params` text NOT NULL,
+        $j4_imageItem['params'] = $j3x_image->params;
+        //`published` tinyint(1) NOT NULL default '1',
+        $j4_imageItem['published'] = $j3x_image->published;
+        //`hits` int(11) unsigned NOT NULL default '0',
+        $j4_imageItem['hits'] = $j3x_image->hits;
+
+        //`rating` int(10) unsigned NOT NULL default '0',
+        $j4_imageItem['rating'] = $j3x_image->rating;
+        //`votes` int(10) unsigned NOT NULL default '0',
+        $j4_imageItem['votes'] = $j3x_image->votes;
+        //`comments` int(10) unsigned NOT NULL default '0',
+        $j4_imageItem['comments'] = $j3x_image->comments;
+
+        //`publish_up` datetime,
+        $j4_imageItem['publish_up'] = $j3x_image->publish_up;
+
+//        $pub = new DateTime($item->publish_up);
+//        $item->publish_down = $pub->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
+        //`publish_down` datetime,
+//        $j4_imageItem['publish_down'] = $j3x_image->publish_down;
+
+        //`checked_out` int(10) unsigned NOT NULL DEFAULT 0,
+        $j4_imageItem['checked_out'] = $j3x_image->checked_out;
+        //`checked_out_time` datetime,
+        $j4_imageItem['checked_out_time'] = $j3x_image->checked_out_time;
+        //`created` datetime NOT NULL,
+        $j4_imageItem['created'] = $j3x_image->date;
+        //`created_by` int(10) unsigned NOT NULL DEFAULT 0,
+        $j4_imageItem['created_by'] = $j3x_image->userid;
+        //`created_by_alias` varchar(255) NOT NULL DEFAULT '',
+        //$j4_imageItem['created_by_alias'] = $j3x_image->created_by_alias;
+        //`modified` datetime NOT NULL,
+        $j4_imageItem['modified'] = $j3x_image->date;;
+        //`modified_by` int(10) unsigned NOT NULL DEFAULT 0,
+        $j4_imageItem['modified_by'] = $j3x_image->userid;;
+
+        //`ordering` int(9) unsigned NOT NULL default '0',
+        $j4_imageItem['ordering'] = $j3x_image->ordering;
+        //`approved` tinyint(1) unsigned NOT NULL default '1',
+        $j4_imageItem['approved'] = $j3x_image->approved;
+
+        //`asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+        $j4_imageItem['asset_id'] = $j3x_image->asset_id;
+        //`access` int(10) NOT NULL DEFAULT 0,
+        $j4_imageItem['access'] = $j3x_image->access;
+        return $j4_imageItem;
     }
 
     /**/

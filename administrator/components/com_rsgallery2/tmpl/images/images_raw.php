@@ -66,11 +66,22 @@ $ListDirn  = '';
                                             `gallery_id`
                                         </th>
                                         <th width="1%" class="text-center">
+                                            `title`
+                                        </th>
+
+                                        <th width="1%" class="text-center">
                                             `params`
                                         </th>
                                         <th width="1%" class="text-center">
                                             `published`
                                         </th>
+                                        <th width="1%" class="text-center">
+                                            `publish_up`
+                                        </th>
+                                        <th width="1%" class="text-center">
+                                            `publish_down`
+                                        </th>
+
                                         <th width="1%" class="text-center">
                                             `hits`
                                         </th>
@@ -85,9 +96,6 @@ $ListDirn  = '';
                                         <th width="1%" class="text-center">
                                             `comments`
                                         </th>
-
-
-
 
                                         <th width="1%" class="text-center">
                                             `checked_out`
@@ -165,6 +173,10 @@ $ListDirn  = '';
                                             </td>
 
                                             <td class="text-center">
+                                                <?php echo $item->title; ?>
+                                            </td>
+
+                                            <td class="text-center">
                                                 <?php
                                                 if (!empty($item->params))
                                                 {
@@ -178,6 +190,14 @@ $ListDirn  = '';
                                             <td width="1%" class="text-center">
                                                 <?php echo $item->published; ?>
                                             </td>
+                                            <td width="1%" class="text-center">
+                                                <?php echo $item->publish_up; ?>
+                                            </td>
+                                            <td width="1%" class="text-center">
+                                                <?php echo $item->publish_down; ?>
+                                            </td>
+
+
                                             <td width="1%" class="text-center">
                                                 <?php echo $item->hits; ?>
                                             </td>

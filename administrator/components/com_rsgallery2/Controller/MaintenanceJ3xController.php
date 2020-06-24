@@ -331,6 +331,77 @@ class MaintenanceJ3xController extends AdminController
         return $isOk;
     }
 
+    /**
+     * Copies all old J3x gallery items to J4 galleries
+     *
+     * @since 5.0.0
+     */
+    public function copyOldIJ3xImages2J4x ()
+    {
+        $msg     = "MaintenanceJ3xController.copyOldIJ3xImages2J4x: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin)
+        {
+            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        }
+        else
+        {
+            try
+            {
+                $cfg3xModel = $this->getModel('MaintenanceJ3x');
+                $ImageModel = $this->getModel('Image');
+
+                $J3xImageItems = $cfg3xModel->j3x_imagesList();
+
+                if (count($J3xImageItems))
+                {
+
+//					$J3xImageItems ['j3x_config_upgrade'] = "1";
+
+                    $J4Galleries = $cfg3xModel->convertJ3xImagesToJ4x ($J3xImageItems);
+
+                    $isOk = $ImageModel->saveItems($J4Galleries);
+                    if ($isOk)
+                    {
+                        $msg .= "Successful copied old gallery items items";
+                    }
+                    else
+                    {
+                        $msg .= "Error at copyOldIJ3xImages2J4x items";
+                        $msgType = 'error';
+                    }
+                }
+                else
+                {
+                    $msg .= "No old configuration items";
+                    $msgType = 'warning';
+                }
+            }
+            catch (RuntimeException $e)
+            {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing copyOldIJ3xImages2J4x: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        //$link = 'index.php?option=com_rsgallery2&view=galleries';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
 
 } // class
 

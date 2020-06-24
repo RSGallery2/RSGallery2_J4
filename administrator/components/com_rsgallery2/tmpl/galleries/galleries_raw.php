@@ -73,6 +73,12 @@ $ListDirn  = '';
                                             `published`
                                         </th>
                                         <th width="1%" class="text-center">
+                                            `publish_up`
+                                        </th>
+                                        <th width="1%" class="text-center">
+                                            `publish_down`
+                                        </th>
+                                        <th width="1%" class="text-center">
                                             `hits`
                                         </th>
 
@@ -121,6 +127,10 @@ $ListDirn  = '';
                                             `access`
                                         </th>
 
+                                        <th width="1%" class="text-center">
+                                            `use_j3x_location`
+                                        </th>
+
                                     </tr>
                                 </thead>
 
@@ -165,6 +175,12 @@ $ListDirn  = '';
 
                                             <td width="1%" class="text-center">
 		                                        <?php echo $item->published; ?>
+                                            </td>
+                                            <td width="1%" class="text-center">
+		                                        <?php echo $item->publish_up; ?>
+                                            </td>
+                                            <td width="1%" class="text-center">
+		                                        <?php echo $item->publish_down; ?>
                                             </td>
                                             <td width="1%" class="text-center">
 		                                        <?php echo $item->hits; ?>
@@ -220,6 +236,10 @@ $ListDirn  = '';
 
                                             <td width="1%" class="text-center">
 		                                        <?php echo $item->access; ?>
+                                            </td>
+
+                                            <td width="1%" class="text-center">
+                                                <?php echo $item->use_j3x_location; ?>
                                             </td>
 
                                         </tr>
