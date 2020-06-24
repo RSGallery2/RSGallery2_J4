@@ -129,12 +129,14 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
-            case 'DBTransferJ3xOldImages':
+            case 'DbTransferOldJ3xImages':
                 try
                 {
                     $j3xModel      = $this->getModel();
-//                    $this->configVarsOld = $j3xModel->OldConfigItems();
+                    $this->j3x_images = $j3xModel->j3x_imagesList();
+                    $this->j4x_images = $j3xModel->j4x_imagesList();
 
+                    // ToDo: order by ID
 
                     // iterate over all values
 //                    $this->configVarsMerged = $j3xModel->MergeJ3xConfiguration($this->configVarsOld, $this->configVars);
@@ -225,7 +227,7 @@ class HtmlView extends BaseHtmlView
 
 				break;
 
-			case 'DBTransferJ3xOldImages':
+			case 'DbTransferOldJ3xImages':
                 // on develop show open tasks if existing
                 if (!empty ($this->isDevelop))
                 {

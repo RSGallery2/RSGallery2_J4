@@ -163,7 +163,6 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-
         return $tableExist;
     }
 
@@ -529,6 +528,59 @@ EOT;
         $J4GalleryItem['access'] = $j3xGallery->access;
 
         return $J4GalleryItem;
+    }
+
+    public function j3x_imagesList()
+    {
+        $galleries = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+                ->select('*')
+                ->from('#__rsgallery2_files')
+                ->order('id ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $galleries = $db->loadObjectList();
+
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+
+        return $galleries;
+    }
+
+    public function j4x_imagesList()
+    {
+        $galleries = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
+                ->select('*')
+                ->from('#__rsg2_images')
+                ->order('id ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $galleries = $db->loadObjectList();
+
+        }
+        catch (RuntimeException $e)
+        {
+            JFactory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $galleries;
     }
 
     /**/

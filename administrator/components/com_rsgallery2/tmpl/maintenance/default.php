@@ -105,7 +105,7 @@ $RSG2_ZoneButtons[] = new zoneButtons(
 $rawDatabase_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_RAW_DB_ZONE'), Text::_('COM_RSGALLERY2_RAW_DB_ZONE_DESCRIPTION'), 'rawDb', 'rawDbZone');
 
 $rawDatabase_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=config&amp;layout=RawView'),
+    Route::_('index.php?option=com_rsgallery2&view=config&layout=RawView'),
     Text::_('COM_RSGALLERY2_CONFIGURATION_VARIABLES'),
     Text::_('COM_RSGALLERY2_CONFIG_MINUS_VIEW_TXT') . '                        ',
     array('icon-equalizer', 'icon-eye'),
@@ -114,7 +114,7 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
 
 //$link = Route::_('index.php?option=com_rsgallery2&view=images');
 $rawDatabase_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=images&amp;layout=images_raw'),
+    Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'),
     Text::_('COM_RSGALLERY2_IMAGES_LIST'),
     Text::_('COM_RSGALLERY2_RAW_IMAGES_TXT'),
     array('icon-image', 'icon-list-2'),
@@ -122,7 +122,7 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
 );
 
 $rawDatabase_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=galleries&amp;layout=galleries_raw'),
+    Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_raw'),
     Text::_('COM_RSGALLERY2_GALLERIES_LIST'),
     Text::_('COM_RSGALLERY2_RAW_GALLERIES_TXT'),
     array('icon-images', 'icon-list-2'),
@@ -131,7 +131,7 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
 
 /**
 $rawDatabase_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=comments&amp;layout=comments_raw'),
+    Route::_('index.php?option=com_rsgallery2&view=comments&layout=comments_raw'),
     Text::_('COM_RSGALLERY2_COMMENTS_LIST'),
     Text::_('COM_RSGALLERY2_RAW_COMMENTS_TXT'),
     array('icon-comment', 'icon-list-2'),
@@ -141,7 +141,7 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
 
 /**
 $rawDatabase_ZoneButtons[] =  new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=acl_items&amp;layout=acls_raw'),
+    Route::_('index.php?option=com_rsgallery2&view=acl_items&layout=acls_raw'),
     Text::_('COM_RSGALLERY2_ACLS_LIST'),
     Text::_('COM_RSGALLERY2_RAW_ACLS_TXT'),
     array('icon-eye-close', 'icon-list-2'),
@@ -150,7 +150,7 @@ $rawDatabase_ZoneButtons[] =  new zoneButtons(
 /**/
 
 $rawDatabase_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=galleries&amp;layout=galleries_tree'),
+    Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_tree'),
     Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'),
     Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'),
     array('icon-images', 'icon-tree-2'),
@@ -179,7 +179,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
 
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=config&amp;layout=RawEdit'),
+	Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'),
 	Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'),
 	Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'),
 	array('icon-equalizer', 'icon-edit'),
@@ -199,7 +199,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
 
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=Rsg2GeneralInfo'),
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=Rsg2GeneralInfo'),
 	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO'),
 	Text::_('COM_RSGALLERY2_COLLECT_RSG2_INFO_DESC'),
 	array('icon-eye-open', 'icon-briefcase'),
@@ -308,7 +308,7 @@ if ($this->isJ3xRsg2DataExisting)
 {
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DbCopyOldJ3xConfig'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig'),
 		Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'),
 		Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG_DESC'),
 		array('icon-new-tab', 'icon-equalizer', 'icon-notification-2'),
@@ -318,7 +318,7 @@ if ($this->isJ3xRsg2DataExisting)
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldJ3xGalleries'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES_DESC'),
 		array('icon-new-tab', 'icon-images', 'icon-notification-2'),
@@ -328,11 +328,11 @@ if ($this->isJ3xRsg2DataExisting)
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferJ3xOldImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferOldJ3xImages'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES_DESC'),
 		array('icon-new-tab', 'icon-image', 'icon-notification-2'),
-		'viewDBTransferJ3xOldImages'
+		'viewDbTransferOldJ3xImages'
 	);
 	/**/
 }
@@ -352,7 +352,7 @@ $developer_ZoneButtons = [];
 
 /**/
 $developer_ZoneButtons[] =  new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=InstallMessage'),
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=InstallMessage'),
 	Text::_('Test Install/Update message'),
 	Text::_('Check the output result of the install finish and upgrade finish result view part'),
 	array('icon-eye-open', 'icon-expand'),
@@ -362,7 +362,7 @@ $developer_ZoneButtons[] =  new zoneButtons(
 
 /**/
 $developer_ZoneButtons[] =  new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=develop&amp;layout=ManifestInfo'),
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'),
 	Text::_('COM_RSGALLERY2_MANIFEST_INFO'),
 	Text::_('COM_RSGALLERY2_MANIFEST_INFO_DESC'),
 	array('icon-eye-open', 'icon-briefcase'),
@@ -388,7 +388,7 @@ $developer4Test_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_DEVELOP_TEST_ZO
 $developer4Test_ZoneButtons = [];
 
 //$developer4Test_ZoneButtons[] = new zoneButtons(
-//    Route::_('index.php?option=com_rsgallery2&view=galleries&amp;layout=galleries_tree'),
+//    Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_tree'),
 //    Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'),
 //    Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'),
 //    array('icon-images', 'icon-tree-2', 'icon-notification-2'),
@@ -406,7 +406,7 @@ $developer4Test_ZoneButtons = [];
 
 /**/
 $developer4Test_ZoneButtons[] = new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&amp;layout=DBTransferOldJ3xGalleries'),
+	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries'),
 	Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'),
 	Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES_DESC'),
 	array('icon-new-tab', 'icon-images', 'icon-notification-2'),

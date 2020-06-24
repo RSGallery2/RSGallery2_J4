@@ -12,7 +12,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('bootstrap.framework');
+//HTMLHelper::_('bootstrap.framework');
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
