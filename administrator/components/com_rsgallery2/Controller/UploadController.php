@@ -1168,9 +1168,9 @@ interface IResponseTransfer {
      * @since 5.0.0
 	 */
 	/**
-	public function copySelectedOldIJ3xConfig2J4xOptions ()
+	public function copySelectedOldJ3xConfig2J4xOptions ()
 	{
-		$msg     = "controller.copySelectedOldIJ3xConfig2J4xOptions: ";
+		$msg     = "controller.copySelectedOldJ3xConfig2J4xOptions: ";
 		$msgType = 'notice';
 
 		Session::checkToken();
@@ -1227,7 +1227,7 @@ interface IResponseTransfer {
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing copySelectedOldIJ3xConfig2J4xOptions: "' . '<br>';
+				$OutTxt .= 'Error executing copySelectedOldJ3xConfig2J4xOptions: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();

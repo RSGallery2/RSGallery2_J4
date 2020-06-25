@@ -89,7 +89,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 			$errMsg = Text::_('COM_RSGALLERY2_FOLDER_DOES_NOT_EXIST');
 			$msg    .= "\n" . $errMsg;
 
-			JFactory::getApplication()->enqueueMessage($msg, 'error');
+			Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			return $msg;
 		}
@@ -100,7 +100,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 			$errMsg = Text::_('COM_RSGALLERY2_FOLDER_DOES_NOT_EXIST') . ': "' . $fullPath . '""';
 			$msg    .= "\n" . $errMsg;
 
-			JFactory::getApplication()->enqueueMessage($msg, 'error');
+			Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			return $msg;
 		}
@@ -111,7 +111,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 			$errMsg = Text::_('COM_RSGALLERY2_FOLDER_DOES_NOT_EXIST') . ': "' . $fullPath . '""';
 			$msg .= "\n" . $errMsg;
 
-			JFactory::getApplication()->enqueueMessage($msg, 'error');
+			Factory::getApplication()->enqueueMessage($msg, 'error');
 			return $msg;
 		}
 		/**/

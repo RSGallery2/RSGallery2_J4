@@ -64,7 +64,7 @@ class MaintenanceCleanUpController extends BaseController
 
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
@@ -130,7 +130,7 @@ class MaintenanceCleanUpController extends BaseController
 
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
@@ -177,7 +177,7 @@ class MaintenanceCleanUpController extends BaseController
 
         $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            //JFactory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.

@@ -89,7 +89,7 @@ class HtmlView extends BaseHtmlView
 					$OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
 					$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-					$app = JFactory::getApplication();
+					$app = Factory::getApplication();
 					$app->enqueueMessage($OutTxt, 'error');
 				}
 
@@ -123,7 +123,7 @@ class HtmlView extends BaseHtmlView
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-                    $app = JFactory::getApplication();
+                    $app = Factory::getApplication();
                     $app->enqueueMessage($OutTxt, 'error');
                 }
 
@@ -140,9 +140,6 @@ class HtmlView extends BaseHtmlView
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
                     //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
 
-                    // iterate over all values
-//                    $this->configVarsMerged = $j3xModel->MergeJ3xConfiguration($this->configVarsOld, $this->configVars);
-
                 }
                 catch (RuntimeException $e)
                 {
@@ -150,7 +147,7 @@ class HtmlView extends BaseHtmlView
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-                    $app = JFactory::getApplication();
+                    $app = Factory::getApplication();
                     $app->enqueueMessage($OutTxt, 'error');
                 }
 
@@ -197,7 +194,7 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'), 'screwdriver');
 				ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_CONFIGURATION', false);
-				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_CONFIGURATION', true);
+				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_CONFIGURATION', true);
 				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
 
 				ToolBarHelper::cancel('config.cancel_rawView');
@@ -226,7 +223,7 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
-                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
+                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
 
 				break;
 
@@ -250,8 +247,8 @@ class HtmlView extends BaseHtmlView
                     ToolBarHelper::custom ('MaintenanceJ3x.resetImagesTable','copy','','COM_RSGALLERY2_IMAGES_TABLE_RESET', false);
                 }
 
-                ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xImageses2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_IMAGES', false);
-                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldIJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_IMAGES', true);
+                ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xImages2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_IMAGES', false);
+                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_IMAGES', false);
 				break;
 
 			default:

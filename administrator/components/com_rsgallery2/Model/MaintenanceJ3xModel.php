@@ -16,6 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Table\Table;
+use Joomla\Utilities\ArrayHelper;
 use JTableNested;
 use Joomla\CMS\Helper\ModuleHelper;
 
@@ -187,7 +188,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
 
@@ -207,7 +208,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $galleries;
@@ -268,7 +269,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $sortedGalleries;
@@ -284,7 +285,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
                 ->select('*')
                 ->from('#__rsg2_galleries')
-                ->order('level ASC');
+                ->order('lft ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -294,7 +295,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $galleries;
@@ -330,7 +331,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $j3x_galleries;
@@ -347,7 +348,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 $html = $this->GalleriesOfLevelHTML($galleries, 0, 0);
             }
         } catch (RuntimeException $e) {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $html;
@@ -387,7 +388,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             }
 
         } catch (RuntimeException $e) {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return implode($html);
@@ -424,7 +425,7 @@ $lineStart</li>
 EOT;
 
         } catch (RuntimeException $e) {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $html;
@@ -458,7 +459,7 @@ EOT;
 //        }
 //        catch (RuntimeException $e)
 //        {
-//            JFactory::getApplication()->enqueueMessage($e->getMessage());
+//            Factory::getApplication()->enqueueMessage($e->getMessage());
 //        }
 //
 //        return $isOk;
@@ -480,7 +481,7 @@ EOT;
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $J4Galleries;
@@ -508,7 +509,7 @@ EOT;
         // `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
         $j4_GalleryItem['checked_out_time'] = $j3x_gallery->checked_out_time;
         // `ordering` int(11) NOT NULL default '0',
-        $j4_GalleryItem['ordering'] = $j3x_gallery->ordering;
+        $j4_GalleryItem['ordering'] = $j3x_gallery->ordering; // ToDo: wrong assignment
         // `date` datetime NOT NULL default '0000-00-00 00:00:00',
         $j4_GalleryItem['date']= $j3x_gallery->date;
         // `hits` int(11) NOT NULL default '0',
@@ -533,7 +534,7 @@ EOT;
 
     public function j3x_imagesList()
     {
-        $galleries = array();
+        $images = array();
 
         try {
             $db = Factory::getDbo();
@@ -546,16 +547,46 @@ EOT;
             // Get the options.
             $db->setQuery($query);
 
-            $galleries = $db->loadObjectList();
+            $images = $db->loadObjectList();
 
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
 
-        return $galleries;
+        return $images;
+    }
+
+   public function j3x_imagesListOfIds($selectedIds)
+    {
+        $images = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+                ->select('*')
+                // https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
+                //->where($db->quoteName('status') . ' IN (' . implode(',', ArrayHelper::toInteger($array)) . ')')
+                ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($selectedIds)) . ')')
+                ->from('#__rsgallery2_files')
+                ->order('id ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $images = $db->loadObjectList();
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+
+        return $images;
     }
 
     public function j4x_imagesList()
@@ -578,31 +609,220 @@ EOT;
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
         return $galleries;
     }
 
+    public function copyAllOldJ3xImages2J4x () {
+
+        $isOk = false;
+
+        try {
+
+            $j3xImageItems = $this->j3x_imagesList();
+
+            $isOk = $this->copyOldJ3xImages2J4x ($j3xImageItems);
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+    public function copySelectedldJ3xImages2J4x ($selectedIds) {
+
+        $isOk = false;
+
+        try {
+
+            $j3xImageItems = $this->j3x_imagesListOfIds($selectedIds);
+
+            $isOk = $this-copyOldJ3xImages2J4x ($j3xImageItems);
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+    public function copyOldJ3xImages2J4x ($j3xImageItems) {
+
+        $isOk = false;
+
+        try {
+
+            // items exist ?
+            if (count($j3xImageItems)) {
+
+                $j4ImageItems = $this->convertJ3xImagesToJ4x($j3xImageItems);
+
+                $isOk = $this->writeImageList2Db($j4ImageItems);
+            } else {
+
+                Factory::getApplication()->enqueueMessage(Text::_('No items to instert into db'), 'warning');
+                //Factory::getApplication()->enqueueMessage('No items to instert into db', 'warning');
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+
     public function convertJ3xImagesToJ4x ($J3xImagesItems) {
 
-        $J4Galleries = [];
+        $j4ImageItems = [];
 
         try {
 
             // galleries of given level
             foreach ($J3xImagesItems as $j3xImage) {
 
-                $J4Galleries[] = $this->convertJ3xImage($j3xImage);
+                $j4ImageItems[] = $this->convertJ3xImage($j3xImage);
+
+                break;
             }
 
         }
         catch (RuntimeException $e)
         {
-            JFactory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
-        return $J4Galleries;
+        return $j4ImageItems;
+    }
+
+
+    public function writeImageList2Db ($j4ImageItems) {
+
+        $isOk = true;
+
+        try {
+
+            // all image objects
+            foreach ($j4ImageItems as $j4xImageItem) {
+
+                $isOk &= $this->writeImageItem2Db($j4xImageItem);
+
+                // ToDo: remove break
+                break;
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+
+    public function writeImageItem2Db ($j4ImageItem) {
+
+        $isOk = false;
+
+        try {
+
+            // https://stackoverflow.com/questions/22373852/how-to-use-prepared-statements-in-joomla
+            $columns = [];
+            $values = [];
+
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
+
+            $columns[] = 'id';
+            $values[] = $j4ImageItem['id'];
+            $columns[] = 'name';
+            $values[] = $j4ImageItem['name'];
+            $columns[] = 'alias';
+            $values[] = $j4ImageItem['alias'];
+            $columns[] = 'description';
+            $values[] = $j4ImageItem['description'];
+
+            $columns[] = 'gallery_id';
+            $values[] = $j4ImageItem['gallery_id'];
+            $columns[] = 'title';
+            $values[] = $j4ImageItem['title'];
+
+//            $columns[] = 'note';
+//            $values[] = $j4ImageItem['note'];
+            $columns[] = 'params';
+            $values[] = $j4ImageItem['params'];
+//            $columns[] = 'published';
+//            $values[] = $j4ImageItem['published'];
+//            $columns[] = 'hits';
+//            $values[] = $j4ImageItem['hits'];
+//
+//
+//            $columns[] = 'rating';
+//            $values[] = $j4ImageItem['rating'];
+//            $columns[] = 'votes';
+//            $values[] = $j4ImageItem['votes'];
+//            $columns[] = 'comments';
+//            $values[] = $j4ImageItem['comments'];
+//
+//            $columns[] = 'publish_up';
+//            $values[] = $j4ImageItem['publish_up'];
+//            $columns[] = 'publish_down';
+//            $values[] = $j4ImageItem['publish_down'];
+
+//            $columns[] = 'checked_out';
+//            $values[] = $j4ImageItem['checked_out'];
+//            $columns[] = 'checked_out_time';
+//            $values[] = $j4ImageItem['checked_out_time'];
+            $columns[] = 'created';
+//            $test01 = $j4ImageItem['created'];
+            $test02 = $j4ImageItem['created']->toSql();
+//            $values[] = $j4ImageItem['created'];
+            $values[] = $j4ImageItem['created']->toSql();
+//            $columns[] = 'created_by';
+//            $values[] = $j4ImageItem['created_by'];
+//            $columns[] = 'created_by_alias';
+//            $values[] = $j4ImageItem['created_by_alias'];
+            $columns[] = 'modified';
+            $values[] = $j4ImageItem['modified'];
+//            $columns[] = 'modified_by';
+//            $values[] = $j4ImageItem['modified_by'];
+
+//            $columns[] = 'ordering';
+//            $values[] = $j4ImageItem['ordering'];
+//            $columns[] = 'approved';
+//            $values[] = $j4ImageItem['approved'];
+//
+//            $columns[] = 'asset_id';
+//            $values[] = $j4ImageItem['asset_id'];
+//            $columns[] = 'access';
+//            $values[] = $j4ImageItem['access'];
+
+            // Prepare the insert query.
+            $query
+                ->insert($db->quoteName('#__rsg2_images')) //make sure you keep #__
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $db->quote($values)));
+            $db->setQuery($query);
+            $db->execute();
+
+            $isOk = true;
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
     }
 
 
@@ -617,7 +837,7 @@ EOT;
         //`alias` varchar(255) NOT NULL DEFAULT '',
         $j4_imageItem['alias'] = $j3x_image->alias;
         //`description` text NOT NULL,
-        $j4_imageItem['description'] = $j3x_image->desc;
+        $j4_imageItem['description'] = $j3x_image->desc == null ? '' : $j3x_image->desc;
 
         //`gallery_id` int(9) unsigned NOT NULL default '0',
         $j4_imageItem['gallery_id'] = $j3x_image->gallery_id;
@@ -653,7 +873,8 @@ EOT;
         //`checked_out_time` datetime,
         $j4_imageItem['checked_out_time'] = $j3x_image->checked_out_time;
         //`created` datetime NOT NULL,
-        $j4_imageItem['created'] = $j3x_image->date;
+        $test = Factory::getDate($j3x_image->date);
+        $j4_imageItem['created'] = Factory::getDate($j3x_image->date);
         //`created_by` int(10) unsigned NOT NULL DEFAULT 0,
         $j4_imageItem['created_by'] = $j3x_image->userid;
         //`created_by_alias` varchar(255) NOT NULL DEFAULT '',

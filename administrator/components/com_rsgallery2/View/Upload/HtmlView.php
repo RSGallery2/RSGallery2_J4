@@ -271,7 +271,7 @@ class HtmlView extends BaseHtmlView
 			$OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 

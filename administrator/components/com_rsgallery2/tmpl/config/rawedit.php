@@ -86,7 +86,7 @@ function configInputField($name = 'unknown', $value = '')
 		$OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';
 		$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$app->enqueueMessage($OutTxt, 'error');
 	}
 

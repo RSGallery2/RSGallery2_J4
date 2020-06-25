@@ -263,7 +263,7 @@ class ImageTable extends Table
 			$OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
