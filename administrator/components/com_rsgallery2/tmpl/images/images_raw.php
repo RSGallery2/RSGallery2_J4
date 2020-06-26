@@ -41,10 +41,10 @@ $ListDirn  = '';
                         <?php else : ?>
                             <?php // echo 'images: ' . count($this->items); ?>
 
-                            <table class="table table-striped" id="galleryList">
+                            <table class="table table-striped" id="imageList">
 
                                 <caption id="captionTable" class="sr-only">
-		                            <?php echo Text::_('COM_CATEGORICOM_RSGALLERY2_TABLE_CAPTIONES_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
+		                            <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
                                 </caption>
                                 <thead>
                                     <tr>
@@ -85,8 +85,6 @@ $ListDirn  = '';
                                         <th width="1%" class="text-center">
                                             `hits`
                                         </th>
-
-
                                         <th width="1%" class="text-center">
                                             `rating`
                                         </th>
@@ -165,7 +163,7 @@ $ListDirn  = '';
                                             </td>
 
                                             <td class="text-center">
-                                                <?php echo $item->description; ?>
+                                                <?php echo '"' . $item->description . '"'; ?>
                                             </td>
 
                                             <td class="text-center">
@@ -173,7 +171,14 @@ $ListDirn  = '';
                                             </td>
 
                                             <td class="text-center">
-                                                <?php echo $item->title; ?>
+                                                <?php
+                                                if (!empty($item->title))
+                                                {
+                                                    echo '"' . $item->title . '"';
+                                                } else {
+                                                    echo '???';
+                                                }
+                                                ?>
                                             </td>
 
                                             <td class="text-center">
@@ -191,12 +196,25 @@ $ListDirn  = '';
                                                 <?php echo $item->published; ?>
                                             </td>
                                             <td width="1%" class="text-center">
-                                                <?php echo $item->publish_up; ?>
+                                                <?php
+                                                if (!empty($item->publish_up))
+                                                {
+                                                    echo '"' . $item->publish_up . '"';
+                                                } else {
+                                                    echo '???';
+                                                }
+                                                ?>
                                             </td>
                                             <td width="1%" class="text-center">
-                                                <?php echo $item->publish_down; ?>
+                                                <?php
+                                                if (!empty($item->publish_down))
+                                                {
+                                                    echo '"' . $item->publish_down . '"';
+                                                } else {
+                                                    echo '???';
+                                                }
+                                                ?>
                                             </td>
-
 
                                             <td width="1%" class="text-center">
                                                 <?php echo $item->hits; ?>

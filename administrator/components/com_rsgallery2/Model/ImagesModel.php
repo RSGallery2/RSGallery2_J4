@@ -182,10 +182,14 @@ class ImagesModel extends ListModel
 				. 'a.description, '
                 . 'a.note, '
 				. 'a.gallery_id, '
+                . 'a.title, '
 
 				. 'a.params, '
 				. 'a.published, '
+				. 'a.published_up, '
+				. 'a.published_down, '
 
+                . 'a.hits, '
 				. 'a.rating, '
 				. 'a.votes, '
 				. 'a.comments, '
@@ -201,13 +205,8 @@ class ImagesModel extends ListModel
 				. 'a.modified, '
 				. 'a.modified_by, '
 
-				. 'a.hits, '
-
 				. 'a.ordering, '
-
-//				. 'a.checked_out, '
-//				. 'a.checked_out_time, '
-
+                . 'a.approved, '
                 . 'a.asset_id, '
 				. 'a.access '
 			)
@@ -296,7 +295,7 @@ class ImagesModel extends ListModel
 		}
 
 		// exclude root helloworld record
-		$query->where('a.id > 1');
+		// $query->where('a.id > 1');
 
 		/**
 		// Filter on the language.
@@ -361,8 +360,10 @@ class ImagesModel extends ListModel
 			. 'a.note, '
 			. 'a.params, '
 			. 'a.published, '
-			. 'a.hits, '
+            . 'a.published_up, '
+            . 'a.published_down, '
 
+			. 'a.hits, '
 			. 'a.rating, '
 			. 'a.votes, '
 			. 'a.comments, '
@@ -376,6 +377,7 @@ class ImagesModel extends ListModel
 			. 'a.modified_by, '
 
 			. 'a.ordering, '
+            . 'a.approved, '
 			. 'a.asset_id, '
 			. 'a.access '
 			/**/
@@ -587,7 +589,7 @@ class ImagesModel extends ListModel
 		catch (RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'allImages: Error executing query: "' . $query . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -621,7 +623,7 @@ class ImagesModel extends ListModel
 	}
 
     /**
-     * Reset gallery table to empty state
+     * Reset image table to empty state
      * Deletes all galleries and initialises the root of the nested tree
      *
      * @return bool
@@ -651,7 +653,7 @@ class ImagesModel extends ListModel
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
+            throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
         }
 
         return $isImagesReset;

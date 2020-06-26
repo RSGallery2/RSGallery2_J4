@@ -43,7 +43,7 @@ use Joomla\CMS\Language\Text;
                 <table class="table table-striped" id="galleryList">
 
                     <caption id="captionTable" class="sr-only">
-                        <?php echo Text::_('COM_CATEGORICOM_RSGALLERY2_TABLE_CAPTIONES_TABLE_CAPTION'); ?>
+                        <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
                         , <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
                     </caption>
                     <thead>
@@ -218,13 +218,13 @@ use Joomla\CMS\Language\Text;
 
                 //if (true) {
                 //if (false) {
-                if (count ($this->j4x_images) > 1) {
+                if (count ($this->j4x_images) > 0) {
                 ?>
 
-                <table class="table table-striped" id="galleryList">
+                <table class="table table-striped" id="imageList">
 
                     <caption id="captionTable" class="sr-only">
-                        <?php echo Text::_('COM_CATEGORICOM_RSGALLERY2_TABLE_CAPTIONES_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
+                        <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
                     </caption>
                     <thead>
                     <tr>
@@ -246,16 +246,25 @@ use Joomla\CMS\Language\Text;
                             `gallery_id`
                         </th>
                         <th width="1%" class="text-center">
+                            `title`
+                        </th>
+
+                        <th width="1%" class="text-center">
                             `params`
                         </th>
                         <th width="1%" class="text-center">
                             `published`
                         </th>
                         <th width="1%" class="text-center">
-                            `hits`
+                            `publish_up`
+                        </th>
+                        <th width="1%" class="text-center">
+                            `publish_down`
                         </th>
 
-
+                        <th width="1%" class="text-center">
+                            `hits`
+                        </th>
                         <th width="1%" class="text-center">
                             `rating`
                         </th>
@@ -265,9 +274,6 @@ use Joomla\CMS\Language\Text;
                         <th width="1%" class="text-center">
                             `comments`
                         </th>
-
-
-
 
                         <th width="1%" class="text-center">
                             `checked_out`
@@ -328,20 +334,31 @@ use Joomla\CMS\Language\Text;
                                 <?php echo $this->escape($item->name); ?>
                                 <span class="small" title="<?php // echo $this->escape($item->path);
                                 ?>">
-                                                <?php if (empty($item->note)) : ?>
-                                                    (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>)
-                                                <?php else : ?>
-                                                    (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>)
-                                                <?php endif; ?>
-                                                </span>
+                                    <?php if (empty($item->note)) : ?>
+                                        (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>)
+                                    <?php else : ?>
+                                        (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>)
+                                    <?php endif; ?>
+                                    </span>
                             </td>
 
                             <td class="text-center">
-                                <?php echo $item->description; ?>
+                                <?php echo '"' . $item->description . '"'; ?>
                             </td>
 
                             <td class="text-center">
                                 <?php echo $item->gallery_id; ?>
+                            </td>
+
+                            <td class="text-center">
+                                <?php
+                                if (!empty($item->title))
+                                {
+                                    echo '"' . $item->title . '"';
+                                } else {
+                                    echo '???';
+                                }
+                                ?>
                             </td>
 
                             <td class="text-center">
@@ -359,9 +376,29 @@ use Joomla\CMS\Language\Text;
                                 <?php echo $item->published; ?>
                             </td>
                             <td width="1%" class="text-center">
-                                <?php echo $item->hits; ?>
+                                <?php
+                                if (!empty($item->publish_up))
+                                {
+                                    echo '"' . $item->publish_up . '"';
+                                } else {
+                                    echo '???';
+                                }
+                                ?>
+                            </td>
+                            <td width="1%" class="text-center">
+                                <?php
+                                if (!empty($item->publish_down))
+                                {
+                                    echo '"' . $item->publish_down . '"';
+                                } else {
+                                    echo '???';
+                                }
+                                ?>
                             </td>
 
+                            <td width="1%" class="text-center">
+                                <?php echo $item->hits; ?>
+                            </td>
                             <td class="text-center">
                                 <?php echo $item->rating; ?>
                             </td>

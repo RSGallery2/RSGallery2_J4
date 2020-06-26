@@ -168,7 +168,7 @@ class HtmlView extends BaseHtmlView
 
         }
 
-                //--- sidebar --------------------------------------------------------------------
+        //--- sidebar --------------------------------------------------------------------
 
 		if ($Layout !== 'modal')
 		{
@@ -265,13 +265,17 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+                        . '* Test: archived, trashed, (delete)<br>'
 						. '* Can do ...<br>'
 		                . '* Add pagination<br>'
-						. '* Test: archived, trashed, (delete)<br>'
 		                . '* Add delete function<br>'
 						. '* __associations <br>'
+                        . '* Search controls ...<br>'
+                    	. '* c) Search tools -> group by parent/ parent child tree ? <br>'
                     //	. '*  <br>'
-                    //	. '*  <br>'
+				    //	. '*  <br>'
+				    //	. '*  <br>'
+				    //	. '*  <br>'
 				    //	. '*  <br>'
 						. '</span><br><br>';
 				}
@@ -309,11 +313,6 @@ class HtmlView extends BaseHtmlView
 //				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'galleries.delete', 'JTOOLBAR_EMPTY_TRASH');
 				ToolBarHelper::deleteList('', 'galleries.delete', 'JTOOLBAR_DELETE');
 
-				// on develop show open tasks if existing
-				if (!empty ($Rsg2DevelopActive))
-				{
-					echo '<span style="color:red">Task:  c) Search tools -> group by parent/ parent child tree ? </span><br><br>';
-				}
 
 				break;
 			

@@ -243,7 +243,7 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 
-                if(count ($this->j4x_images) > 1) {
+                if(count ($this->j4x_images) > 0) {
                     ToolBarHelper::custom ('MaintenanceJ3x.resetImagesTable','copy','','COM_RSGALLERY2_IMAGES_TABLE_RESET', false);
                 }
 

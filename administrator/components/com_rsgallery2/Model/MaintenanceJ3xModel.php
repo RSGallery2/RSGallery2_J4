@@ -591,7 +591,7 @@ EOT;
 
     public function j4x_imagesList()
     {
-        $galleries = array();
+        $images = array();
 
         try {
             $db = Factory::getDbo();
@@ -604,7 +604,7 @@ EOT;
             // Get the options.
             $db->setQuery($query);
 
-            $galleries = $db->loadObjectList();
+            $images = $db->loadObjectList();
 
         }
         catch (RuntimeException $e)
@@ -612,7 +612,7 @@ EOT;
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
-        return $galleries;
+        return $images;
     }
 
     public function copyAllOldJ3xImages2J4x () {
@@ -761,10 +761,10 @@ EOT;
 //            $values[] = $j4ImageItem['note'];
             $columns[] = 'params';
             $values[] = $j4ImageItem['params'];
-//            $columns[] = 'published';
-//            $values[] = $j4ImageItem['published'];
-//            $columns[] = 'hits';
-//            $values[] = $j4ImageItem['hits'];
+            $columns[] = 'published';
+            $values[] = $j4ImageItem['published'];
+            $columns[] = 'hits';
+            $values[] = $j4ImageItem['hits'];
 //
 //
 //            $columns[] = 'rating';

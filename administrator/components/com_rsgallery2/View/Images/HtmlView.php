@@ -151,7 +151,29 @@ class HtmlView extends BaseHtmlView
 		//--- sidebar --------------------------------------------------------------------
 
 		$Layout = $this->getLayout();
-		if ($Layout !== 'modal')
+
+
+        switch ($Layout)
+        {
+            case 'images_raw':
+
+
+                break;
+
+//            case '':
+//                $imageModel = $this->getModel();
+//                $dummyItems = $imageModel->allImages();
+//
+//                break;
+
+            default:
+
+
+                break;
+
+        }
+
+        if ($Layout !== 'modal')
 		{
 			HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
 			Rsgallery2Helper::addSubmenu('galleries');
@@ -159,11 +181,6 @@ class HtmlView extends BaseHtmlView
 
 			// $Layout = Factory::getApplication()->input->get('layout');
 			$this->addToolbar($Layout);
-
-			// for first debug ToDo: remove ...
-
-			$imageModel = $this->getModel();
-			$dummyItems = $imageModel->allImages();
 		}
 		else
 		{
@@ -233,9 +250,11 @@ class HtmlView extends BaseHtmlView
 			        echo '<span style="color:red">'
 				        . 'Tasks: <br>'
                         . '* Test: archived, trashed, (delete)<br>'
+                        . '* Can do ...<br>'
+                        . '* Add pagination<br>'
+                        . '* Add delete function<br>'
 						. '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
                         . '* display thumb'
-                        . '*  <br>'
 				        . '* __associations <br>'
         				. '* Batch : turn images .... <br>'
 				        . '* Can do ...<br>'

@@ -60,7 +60,7 @@ function jsonArray2Lines($lines)
                 <table class="table table-striped" id="galleryList">
 
                     <caption id="captionTable" class="sr-only">
-                        <?php echo Text::_('COM_CATEGORICOM_RSGALLERY2_TABLE_CAPTIONES_TABLE_CAPTION'); ?>
+                        <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
                         , <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
                     </caption>
                     <thead>
@@ -254,7 +254,7 @@ function jsonArray2Lines($lines)
                         <table class="table table-striped" id="galleryList">
 
                             <caption id="captionTable" class="sr-only">
-                                <?php echo Text::_('COM_CATEGORICOM_RSGALLERY2_TABLE_CAPTIONES_TABLE_CAPTION'); ?>
+                                <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
                                 , <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
                             </caption>
                             <thead>
