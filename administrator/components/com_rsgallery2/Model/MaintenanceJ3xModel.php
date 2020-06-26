@@ -692,7 +692,6 @@ EOT;
 
                 $j4ImageItems[] = $this->convertJ3xImage($j3xImage);
 
-                break;
             }
 
         }
@@ -716,8 +715,6 @@ EOT;
 
                 $isOk &= $this->writeImageItem2Db($j4xImageItem);
 
-                // ToDo: remove break
-                break;
             }
 
         }
@@ -763,47 +760,46 @@ EOT;
             $values[] = $j4ImageItem['params'];
             $columns[] = 'published';
             $values[] = $j4ImageItem['published'];
-            $columns[] = 'hits';
-            $values[] = $j4ImageItem['hits'];
-//
-//
-//            $columns[] = 'rating';
-//            $values[] = $j4ImageItem['rating'];
-//            $columns[] = 'votes';
-//            $values[] = $j4ImageItem['votes'];
-//            $columns[] = 'comments';
-//            $values[] = $j4ImageItem['comments'];
-//
+
 //            $columns[] = 'publish_up';
 //            $values[] = $j4ImageItem['publish_up'];
 //            $columns[] = 'publish_down';
 //            $values[] = $j4ImageItem['publish_down'];
 
-//            $columns[] = 'checked_out';
-//            $values[] = $j4ImageItem['checked_out'];
-//            $columns[] = 'checked_out_time';
-//            $values[] = $j4ImageItem['checked_out_time'];
+            $columns[] = 'hits';
+            $values[] = $j4ImageItem['hits'];
+            $columns[] = 'rating';
+            $values[] = $j4ImageItem['rating'];
+            $columns[] = 'votes';
+            $values[] = $j4ImageItem['votes'];
+            $columns[] = 'comments';
+            $values[] = $j4ImageItem['comments'];
+
+            $columns[] = 'checked_out';
+            $values[] = $j4ImageItem['checked_out'];
+            $columns[] = 'checked_out_time';
+            $values[] = $j4ImageItem['checked_out_time'];
             $columns[] = 'created';
 //            $test01 = $j4ImageItem['created'];
-            $test02 = $j4ImageItem['created']->toSql();
-//            $values[] = $j4ImageItem['created'];
-            $values[] = $j4ImageItem['created']->toSql();
-//            $columns[] = 'created_by';
-//            $values[] = $j4ImageItem['created_by'];
-//            $columns[] = 'created_by_alias';
-//            $values[] = $j4ImageItem['created_by_alias'];
+//            $test02 = $j4ImageItem['created']->toSql();
+//            $values[] = $j4ImageItem['created']->toSql();
+            $values[] = $j4ImageItem['created'];
+            $columns[] = 'created_by';
+            $values[] = $j4ImageItem['created_by'];
+            $columns[] = 'created_by_alias';
+            $values[] = $j4ImageItem['created_by_alias'];
             $columns[] = 'modified';
             $values[] = $j4ImageItem['modified'];
-//            $columns[] = 'modified_by';
-//            $values[] = $j4ImageItem['modified_by'];
+            $columns[] = 'modified_by';
+            $values[] = $j4ImageItem['modified_by'];
 
-//            $columns[] = 'ordering';
-//            $values[] = $j4ImageItem['ordering'];
-//            $columns[] = 'approved';
-//            $values[] = $j4ImageItem['approved'];
-//
-//            $columns[] = 'asset_id';
-//            $values[] = $j4ImageItem['asset_id'];
+            $columns[] = 'ordering';
+            $values[] = $j4ImageItem['ordering'];
+            $columns[] = 'approved';
+            $values[] = $j4ImageItem['approved'];
+
+            $columns[] = 'asset_id';
+            $values[] = $j4ImageItem['asset_id'];
 //            $columns[] = 'access';
 //            $values[] = $j4ImageItem['access'];
 
@@ -850,9 +846,15 @@ EOT;
         $j4_imageItem['params'] = $j3x_image->params;
         //`published` tinyint(1) NOT NULL default '1',
         $j4_imageItem['published'] = $j3x_image->published;
+//        //`publish_up` datetime,
+//        $j4_imageItem['publish_up'] = $j3x_image->publish_up;
+//        $pub = new DateTime($item->publish_up);
+//        $item->publish_down = $pub->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
+        //`publish_down` datetime,
+//        $j4_imageItem['publish_down'] = $j3x_image->publish_down;
+
         //`hits` int(11) unsigned NOT NULL default '0',
         $j4_imageItem['hits'] = $j3x_image->hits;
-
         //`rating` int(10) unsigned NOT NULL default '0',
         $j4_imageItem['rating'] = $j3x_image->rating;
         //`votes` int(10) unsigned NOT NULL default '0',
@@ -860,21 +862,13 @@ EOT;
         //`comments` int(10) unsigned NOT NULL default '0',
         $j4_imageItem['comments'] = $j3x_image->comments;
 
-        //`publish_up` datetime,
-        $j4_imageItem['publish_up'] = $j3x_image->publish_up;
-
-//        $pub = new DateTime($item->publish_up);
-//        $item->publish_down = $pub->add(new DateInterval('P30D'))->format('Y-m-d H:i:s');
-        //`publish_down` datetime,
-//        $j4_imageItem['publish_down'] = $j3x_image->publish_down;
-
         //`checked_out` int(10) unsigned NOT NULL DEFAULT 0,
         $j4_imageItem['checked_out'] = $j3x_image->checked_out;
         //`checked_out_time` datetime,
         $j4_imageItem['checked_out_time'] = $j3x_image->checked_out_time;
         //`created` datetime NOT NULL,
-        $test = Factory::getDate($j3x_image->date);
-        $j4_imageItem['created'] = Factory::getDate($j3x_image->date);
+        //$j4_imageItem['created'] = Factory::getDate($j3x_image->date);
+        $j4_imageItem['created'] = $j3x_image->date;
         //`created_by` int(10) unsigned NOT NULL DEFAULT 0,
         $j4_imageItem['created_by'] = $j3x_image->userid;
         //`created_by_alias` varchar(255) NOT NULL DEFAULT '',

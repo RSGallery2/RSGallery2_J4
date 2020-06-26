@@ -145,8 +145,8 @@ class HtmlView extends BaseHtmlView
 				. '*  --- Config -------<br>'
 				. '*  Use _CFG_ in ?variable? names<br>'
 				. '*  Last... ? trashed or not published ? <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+				. '*  !!! call auto setup config if not exist<br>'
+				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 				. '</span><br><br>';

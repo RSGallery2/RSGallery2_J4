@@ -115,8 +115,11 @@ class HtmlView extends BaseHtmlView
 //		$this->UserIsRoot = $this->CheckUserIsRoot();
 
 		$this->items         = $this->get('Items');
-		$this->pagination    = $this->get('Pagination');
-		$this->state         = $this->get('State');
+        $errors = $this->get('Errors');
+        $this->pagination    = $this->get('Pagination');
+        $errors = $this->get('Errors');
+        $this->state         = $this->get('State');
+        $errors = $this->get('Errors');
 //		$this->filterForm    = $this->get('FilterForm');
 		$this->activeFilters = $this->get('ActiveFilters');
 

@@ -186,8 +186,8 @@ class ImagesModel extends ListModel
 
 				. 'a.params, '
 				. 'a.published, '
-				. 'a.published_up, '
-				. 'a.published_down, '
+//				. 'a.published_up, '
+//				. 'a.published_down, '
 
                 . 'a.hits, '
 				. 'a.rating, '
@@ -294,9 +294,6 @@ class ImagesModel extends ListModel
 			);
 		}
 
-		// exclude root helloworld record
-		// $query->where('a.id > 1');
-
 		/**
 		// Filter on the language.
 		if ($language = $this->getState('filter.language'))
@@ -360,8 +357,8 @@ class ImagesModel extends ListModel
 			. 'a.note, '
 			. 'a.params, '
 			. 'a.published, '
-            . 'a.published_up, '
-            . 'a.published_down, '
+//            . 'a.published_up, '
+//            . 'a.published_down, '
 
 			. 'a.hits, '
 			. 'a.rating, '
@@ -516,7 +513,7 @@ class ImagesModel extends ListModel
 				$ImgInfo            = array();
 				$ImgInfo['name']    = $row->name;
 				$ImgInfo['gallery'] = ImagesModel::GalleryName($row->gallery_id);
-				$ImgInfo['date']    = $row->date;
+				$ImgInfo['date']    = $row->created;
 
 				//$ImgInfo['user'] = rsgallery2ModelImages::getUsernameFromId($row->userid);
 				$user            = Factory::getUser($row->created_by);

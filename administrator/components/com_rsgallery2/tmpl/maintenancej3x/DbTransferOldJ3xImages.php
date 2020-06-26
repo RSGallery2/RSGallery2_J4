@@ -192,6 +192,7 @@ use Joomla\CMS\Language\Text;
                         </tr>
 
                         <?php
+
                     }
                     ?>
                     </tbody>
@@ -334,7 +335,7 @@ use Joomla\CMS\Language\Text;
                                 <?php echo $this->escape($item->name); ?>
                                 <span class="small" title="<?php // echo $this->escape($item->path);
                                 ?>">
-                                    <?php if (empty($item->note)) : ?>
+                                    <?php if ( ! isset($item->note)) : ?>
                                         (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>)
                                     <?php else : ?>
                                         (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>)
@@ -352,7 +353,7 @@ use Joomla\CMS\Language\Text;
 
                             <td class="text-center">
                                 <?php
-                                if (!empty($item->title))
+                                if (! ! isset($item->title))
                                 {
                                     echo '"' . $item->title . '"';
                                 } else {
@@ -363,7 +364,7 @@ use Joomla\CMS\Language\Text;
 
                             <td class="text-center">
                                 <?php
-                                if (!empty($item->params))
+                                if (! ! isset($item->params))
                                 {
                                     echo '"' . $item->params . '"';
                                 } else {
@@ -377,7 +378,7 @@ use Joomla\CMS\Language\Text;
                             </td>
                             <td width="1%" class="text-center">
                                 <?php
-                                if (!empty($item->publish_up))
+                                if (! ! isset($item->publish_up))
                                 {
                                     echo '"' . $item->publish_up . '"';
                                 } else {
@@ -387,7 +388,7 @@ use Joomla\CMS\Language\Text;
                             </td>
                             <td width="1%" class="text-center">
                                 <?php
-                                if (!empty($item->publish_down))
+                                if (! ! isset($item->publish_down))
                                 {
                                     echo '"' . $item->publish_down . '"';
                                 } else {
@@ -414,7 +415,7 @@ use Joomla\CMS\Language\Text;
 
                             <td width="1%" class="text-center">
                                 <?php
-                                if(!empty($item->asset_id))
+                                if(! ! isset($item->checked_out))
                                 {
                                     echo $item->checked_out;
                                 } else {
@@ -424,7 +425,7 @@ use Joomla\CMS\Language\Text;
                             </td>
                             <td width="1%" class="text-center">
                                 <?php
-                                if(!empty($item->asset_id))
+                                if(! ! isset($item->checked_out_time))
                                 {
                                     echo $item->checked_out_time;
                                 } else {
@@ -438,7 +439,7 @@ use Joomla\CMS\Language\Text;
                             </td>
                             <td width="1%" class="text-center">
                                 <?php
-                                if(!empty($item->asset_id))
+                                if(! ! isset($item->created_by))
                                 {
                                     echo $item->created_by;
                                 } else {
@@ -448,7 +449,7 @@ use Joomla\CMS\Language\Text;
                             </td>
                             <td width="1%" class="text-center">
                                 "<?php
-                                if(!empty($item->asset_id))
+                                if(! ! isset($item->created_by_alias))
                                 {
                                     echo $item->created_by_alias;
                                 } else {
@@ -470,7 +471,7 @@ use Joomla\CMS\Language\Text;
 
                             <td width="1%" class="text-center">
                                 <?php
-                                if(!empty($item->approved))
+                                if(! ! isset($item->approved))
                                 {
                                     echo $item->approved;
                                 } else {
@@ -481,7 +482,7 @@ use Joomla\CMS\Language\Text;
 
                             <td width="1%" class="text-center">
                                 <?php
-                                if(!empty($item->asset_id))
+                                if(! ! isset($item->asset_id))
                                 {
                                     echo $item->asset_id;
                                 } else {
@@ -509,10 +510,6 @@ use Joomla\CMS\Language\Text;
                     $keyTranslation = 'J4x ' . Text::_('COM_RSGALLERY2_IMAGES_LIST_IS_EMPTY');
                     echo '   <h2><span class="badge badge-pill badge-success">' . $keyTranslation . '</span></h2>';
                 }
-
-
-
-
 
 
                 try {
