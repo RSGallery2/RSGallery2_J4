@@ -213,7 +213,7 @@ class MaintenanceJ3xController extends AdminController
 //                if ($isOk) {
 //                    // $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_SUCCESS');
 
-                $isOk = $maint3xModel->copyOldJ3xGalleries2J4x();
+                $isOk = $maint3xModel->copyAllOldJ3xGalleries2J4x();
 
                     if ($isOk) {
                         $msg .= "Successful copied old gallery items items";

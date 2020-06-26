@@ -1387,19 +1387,4 @@ class GalleryModel extends AdminModel
 	}
 	/**/
 
-
-    public function saveItems($J4Galleries = [])
-    {
-        $isOk = True;
-
-        // galleries of given level
-        foreach ($J4Galleries as $j4gallery) {
-
-            $isOk &= $this->save($j4gallery);
-        }
-
-
-        return $isOk;
-    }
-
 }

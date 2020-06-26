@@ -195,6 +195,17 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return $galleries;
     }
 
+    private static function cmpJ4xGalleries($aGallery, $bGallery)
+    {
+        $a = $aGallery->ordering;
+        $b = $bGallery->ordering;
+
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a < $b) ? -1 : 1;
+    }
+
     public function j3x_galleriesListSorted()
     {
         $galleries = array();
@@ -214,16 +225,6 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return $galleries;
     }
 
-    private static function cmpJ3xGalleries($aGallery, $bGallery)
-    {
-        $a = $aGallery->ordering;
-        $b = $bGallery->ordering;
-
-        if ($a == $b) {
-            return 0;
-        }
-        return ($a < $b) ? -1 : 1;
-    }
 
     public function j3x_galleriesSortedByParent($dbGalleries, $parentId=0, $level=0)
     {
@@ -251,7 +252,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
             // Sort galleries of level
             if ( count ($galleries) > 1) {
-                usort($galleries, array ($this, 'cmpJ3xGalleries'));
+                usort($galleries, array ($this, 'cmpJ4xGalleries'));
             }
 
             // Collect sorted list with childs
@@ -273,6 +274,95 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
 
         return $sortedGalleries;
+    }
+
+    public function j4x_galleriesSortedByParent($dbGalleries, $parentId=0, $level=0)
+    {
+        $sortedGalleries = [];
+
+        try {
+            // parent galleries
+            $galleries = [];
+
+            // collects galleries of given level
+            foreach ($dbGalleries as $gallery) {
+
+                if ($gallery->parent == $parentId) {
+
+                    $gallery->level = $level;
+
+                    // collect gallery
+                    $galleries [] = $gallery;
+
+                    // add childs recursively
+                    $id = $gallery->id;
+                    $subGalleries [$id] = $this->j4x_galleriesSortedByParent($dbGalleries, $id, $level+1);
+                }
+            }
+
+            // Sort galleries of level (Needs additional ordering from j3x gallery data
+            if ( count ($galleries) > 1) {
+                usort($galleries, array ($this, 'cmpJ4xGalleries'));
+            }
+
+            // Collect sorted list with childs
+            foreach ($galleries as $gallery) {
+                $sortedGalleries[] = $gallery;
+
+                // Add childs
+                $id = $gallery->id;
+                //echo 'array_push: $id' . $id . '<br>';
+
+                foreach ($subGalleries [$id] as $subGallery) {
+                    $sortedGalleries[] = $subGallery;
+                }
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $sortedGalleries;
+    }
+
+
+    // Expected: List is already is sorted
+    public function setNestingNodes2J4xGalleries($sortedGalleries, $parentId=0, $level=0, $lastNodeIdx=1)
+    {
+//        $stackGalleries = [];
+
+        try {
+            // parent galleries
+            $galleries = [];
+
+            // collect galleries of given level
+            foreach ($sortedGalleries as $gallery) {
+
+                if ($gallery->parent_id == $parentId) {
+
+                    $gallery->level = $level;
+                    $gallery->lft = $lastNodeIdx;
+
+                    $lastNodeIdx++;
+
+                    $test = $gallery->id;
+                    $gallery_id = $gallery ['id'];
+                    // add node ids recursively
+                    $lastNodeIdx = $this->setNestingNodes2J4xGalleries($sortedGalleries, $gallery_id, $level+1, $lastNodeIdx);
+
+                    $gallery->lft = $lastNodeIdx;
+                    $lastNodeIdx++;
+                }
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $lastNodeIdx;
     }
 
     public function j4x_galleriesList()
@@ -431,41 +521,6 @@ EOT;
         return $html;
     }
 
-//    public function copyJ3xItems2J4x ($J3xGalleryItemsSorted) {
-//        $isOk = false;
-//
-//        try {
-//
-//            //$test = new BaseDatabaseModel (array());
-//
-//            //$galleryModel =  new GalleryModel ();
-//            //$galleryModel = new \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel(array('ignore_request' => true));
-////            $galleryModel = new \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel(['ignore_request' => true]);
-////            $galleryModel =
-////            $galleryModel = JModelLegacy::getInstance('GalleryModel', 'RSGallery2Model');
-//            $galleryModel = $this->getInsconvertJ3xGallertance('gallerymodel', 'RSGallery2Model');
-//
-//            $isOk = True;
-//
-//            // galleries of given level
-//            foreach ($J3xGalleryItemsSorted as $j3xGallery) {
-//
-//                $J4GalleryItem = $this->convertJ3xGallery($j3xGallery);
-//
-//                // do save
-//                $isOk &= $galleryModel->save($J4GalleryItem);
-//            }
-//
-//        }
-//        catch (RuntimeException $e)
-//        {
-//            Factory::getApplication()->enqueueMessage($e->getMessage());
-//        }
-//
-//        return $isOk;
-//    }
-//
-
     public function convertJ3xGalleriesToJ4x ($J3xGalleryItemsSorted) {
 
         $J4Galleries = [];
@@ -490,46 +545,47 @@ EOT;
 
     private function convertJ3xGallery ($j3x_gallery) {
 
-        $j4_GalleryItem = []; //new \stdClass();
+        $j4x_GalleryItem = []; //new \stdClass();
 
         // `id` int(11) NOT NULL auto_increment,
-        $j4_GalleryItem['id'] = $j3x_gallery->id;
+        $j4x_GalleryItem['id'] = $j3x_gallery->id;
+        $test = $j3x_gallery->id;
         // `parent` int(11) NOT NULL default 0,
-        $j4_GalleryItem['parent_id'] = $j3x_gallery->parent;
+        $j4x_GalleryItem['parent_id'] = $j3x_gallery->parent;
         // `name` varchar(255) NOT NULL default '',
-        $j4_GalleryItem['name'] = $j3x_gallery->name;
+        $j4x_GalleryItem['name'] = $j3x_gallery->name;
         // `alias` varchar(255) NOT NULL DEFAULT '',
-        $j4_GalleryItem['alias'] = $j3x_gallery->alias;
+        $j4x_GalleryItem['alias'] = $j3x_gallery->alias;
         // `description` text NOT NULL,
-        $j4_GalleryItem['description'] = $j3x_gallery->description;
+        $j4x_GalleryItem['description'] = $j3x_gallery->description;
         // `published` tinyint(1) NOT NULL default '0',
-        $j4_GalleryItem['published'] = $j3x_gallery->published;
+        $j4x_GalleryItem['published'] = $j3x_gallery->published;
         // `checked_out` int(11) unsigned NOT NULL default '0',
-        $j4_GalleryItem['checked_out'] = $j3x_gallery->checked_out;
+        $j4x_GalleryItem['checked_out'] = $j3x_gallery->checked_out;
         // `checked_out_time` datetime NOT NULL default '0000-00-00 00:00:00',
-        $j4_GalleryItem['checked_out_time'] = $j3x_gallery->checked_out_time;
+        $j4x_GalleryItem['checked_out_time'] = $j3x_gallery->checked_out_time;
         // `ordering` int(11) NOT NULL default '0',
-        $j4_GalleryItem['ordering'] = $j3x_gallery->ordering; // ToDo: wrong assignment
+        $j4x_GalleryItem['ordering'] = $j3x_gallery->ordering; // Needed for sorting (Not for database)
         // `date` datetime NOT NULL default '0000-00-00 00:00:00',
-        $j4_GalleryItem['date']= $j3x_gallery->date;
+        $j4x_GalleryItem['created']= $j3x_gallery->date;
         // `hits` int(11) NOT NULL default '0',
-        $j4_GalleryItem['hits'] = $j3x_gallery->hits;
+        $j4x_GalleryItem['hits'] = $j3x_gallery->hits;
         // `params` text NOT NULL,
-        $j4_GalleryItem['params'] = $j3x_gallery->params;
+        $j4x_GalleryItem['params'] = $j3x_gallery->params;
         // `user` tinyint(4) NOT NULL default '0',
-        $j4_GalleryItem['user'] = $j3x_gallery->user;
+        $j4x_GalleryItem['created_by_alias'] = $j3x_gallery->user;
         // `uid` int(11) unsigned NOT NULL default '0',
-        $j4_GalleryItem['uid'] = $j3x_gallery->uid;
+        $j4x_GalleryItem['created_by'] = $j3x_gallery->uid;
         // `allowed` varchar(100) NOT NULL default '0',
-        $j4_GalleryItem['allowed'] = $j3x_gallery->allowed;
+        $j4x_GalleryItem['approved'] = $j3x_gallery->allowed;
         // `thumb_id` int(11) unsigned NOT NULL default '0',
-        $j4_GalleryItem['thumb_id'] = $j3x_gallery->thumb_id;
+        $j4x_GalleryItem['thumb_id'] = $j3x_gallery->thumb_id;
         // `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-        $j4_GalleryItem['asset_id'] = $j3x_gallery->asset_id;
+        $j4x_GalleryItem['asset_id'] = $j3x_gallery->asset_id;
         // `access` int(10) unsigned DEFAULT NULL,
-        $j4_GalleryItem['access'] = $j3x_gallery->access;
+        $j4x_GalleryItem['access'] = $j3x_gallery->access;
 
-        return $j4_GalleryItem;
+        return $j4x_GalleryItem;
     }
 
 //>>>yyyy===================================================================================================
@@ -580,14 +636,19 @@ EOT;
             // items exist ?
             if (count($j3xGalleriesItems)) {
 
-                // ToDo: check following
-                //$J3xGalleryItemsSorted = $maint3xModel->j3x_galleriesListSorted();
-                //$isOk = $this->copyOldJ3xGalleries2J4x ($J3xGalleryItemsSorted);
-                // ...
+                $j4xGalleriesItems = $this->convertJ3xGalleriesToJ4x($j3xGalleriesItems);
 
-                $j4xGalleriesItems = $this->convertJ3xImagesToJ4x($j3xGalleriesItems);
+                // sort by parent and id recursively
+                $j4xGalleryItemsSorted = $this->j4x_galleriesSortedByParent($j3xGalleriesItems, 0, 0);
 
-                $isOk = $this->writeGalleriesList2Db($j4xGalleriesItems);
+                // set nested tree ()
+                // last $lastNodeIdx needed for root ???
+                $lastNodeIdx = $this->setNestingNodes2J4xGalleries ($j4xGalleriesItems, 0, 0, 1);
+
+                $isOk = $this->writeGalleryList2Db($j4xGalleryItemsSorted);
+
+                // ToDo: rebuild nested ....
+
             } else {
 
                 Factory::getApplication()->enqueueMessage(Text::_('No items to insert into db'), 'warning');
@@ -609,15 +670,10 @@ EOT;
 
         try {
 
-//                     $isOk = $galleryModel->saveItems($J4Galleries);
-
-            // set nested tree ()
-
-
-            // all image objects
+            // all gallery objects
             foreach ($j4xGalleriesItems as $j4xImageItem) {
 
-                $isOk &= $this->writeImageItem2Db($j4xImageItem);
+                $isOk &= $this->writeGalleryItem2Db($j4xImageItem);
 
                 // ToDo remove
                 break;
@@ -632,7 +688,7 @@ EOT;
         return $isOk;
     }
 
-    public function writeGalleryItem2Db ($j4xImageItem) {
+    public function writeGalleryItem2Db ($j4x_GalleryItem) {
 
         $isOk = false;
 
@@ -646,25 +702,24 @@ EOT;
             $query = $db->getQuery(true);
 
             $columns[] = 'id';
-            $values[] = $j4xImageItem['id'];
-            $columns[] = 'name';
-            $values[] = $j4xImageItem['name'];
-            $columns[] = 'alias';
-            $values[] = $j4xImageItem['alias'];
-            $columns[] = 'description';
-            $values[] = $j4xImageItem['description'];
+            $values[] = 0;
+            $test1 = $j4x_GalleryItem->id;
+            $test2 = $j4x_GalleryItem['id'];
+            $values[] = $j4x_GalleryItem['id'];
 
-            $columns[] = 'gallery_id';
-            $values[] = $j4xImageItem['gallery_id'];
-            $columns[] = 'title';
-            $values[] = $j4xImageItem['title'];
+            $columns[] = 'name';
+            $values[] = $j4x_GalleryItem['name'];
+            $columns[] = 'alias';
+            $values[] = $j4x_GalleryItem['alias'];
+            $columns[] = 'description';
+            $values[] = $j4x_GalleryItem['description'];
 
 //            $columns[] = 'note';
 //            $values[] = $j4ImageItem['note'];
             $columns[] = 'params';
-            $values[] = $j4xImageItem['params'];
+            $values[] = $j4x_GalleryItem['params'];
             $columns[] = 'published';
-            $values[] = $j4xImageItem['published'];
+            $values[] = $j4x_GalleryItem['published'];
 
 //            $columns[] = 'publish_up';
 //            $values[] = $j4ImageItem['publish_up'];
@@ -672,39 +727,43 @@ EOT;
 //            $values[] = $j4ImageItem['publish_down'];
 
             $columns[] = 'hits';
-            $values[] = $j4xImageItem['hits'];
-            $columns[] = 'rating';
-            $values[] = $j4xImageItem['rating'];
-            $columns[] = 'votes';
-            $values[] = $j4xImageItem['votes'];
-            $columns[] = 'comments';
-            $values[] = $j4xImageItem['comments'];
+            $values[] = $j4x_GalleryItem['hits'];
 
             $columns[] = 'checked_out';
-            $values[] = $j4xImageItem['checked_out'];
+            $values[] = $j4x_GalleryItem['checked_out'];
             $columns[] = 'checked_out_time';
-            $values[] = $j4xImageItem['checked_out_time'];
+            $values[] = $j4x_GalleryItem['checked_out_time'];
             $columns[] = 'created';
 //            $test01 = $j4ImageItem['created'];
 //            $test02 = $j4ImageItem['created']->toSql();
 //            $values[] = $j4ImageItem['created']->toSql();
-            $values[] = $j4xImageItem['created'];
+            $values[] = $j4x_GalleryItem['created'];
             $columns[] = 'created_by';
-            $values[] = $j4xImageItem['created_by'];
+            $values[] = $j4x_GalleryItem['created_by'];
             $columns[] = 'created_by_alias';
-            $values[] = $j4xImageItem['created_by_alias'];
-            $columns[] = 'modified';
-            $values[] = $j4xImageItem['modified'];
-            $columns[] = 'modified_by';
-            $values[] = $j4xImageItem['modified_by'];
+            $values[] = $j4x_GalleryItem['created_by_alias'];
+//            $columns[] = 'modified';
+//            $values[] = $j4x_GalleryItem['modified'];
+//            $columns[] = 'modified_by';
+//            $values[] = $j4x_GalleryItem['modified_by'];
 
-            $columns[] = 'ordering';
-            $values[] = $j4xImageItem['ordering'];
+            $columns[] = 'parent_id';
+            $values[] = $j4x_GalleryItem['parent_id'];
+
+            $columns[] = 'level';
+            $values[] = $j4x_GalleryItem['level'];
+//            $columns[] = 'path';
+//            $values[] = $j4x_GalleryItem['path'];
+            $columns[] = 'lft';
+            $values[] = $j4x_GalleryItem['lft'];
+            $columns[] = 'rgt';
+            $values[] = $j4x_GalleryItem['rgt'];
+
             $columns[] = 'approved';
-            $values[] = $j4xImageItem['approved'];
+            $values[] = $j4x_GalleryItem['approved'];
 
             $columns[] = 'asset_id';
-            $values[] = $j4xImageItem['asset_id'];
+            $values[] = $j4x_GalleryItem['asset_id'];
 //            $columns[] = 'access';
 //            $values[] = $j4ImageItem['access'];
 

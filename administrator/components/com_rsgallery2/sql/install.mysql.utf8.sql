@@ -10,12 +10,13 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `thumb_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `published` tinyint(1) NOT NULL DEFAULT 1,
 
   `note` varchar(255) NOT NULL,
   `params` text NOT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '1',
   `publish_up` datetime,
-  `publish_down` datetime, 
+  `publish_down` datetime,
+
   `hits` int(10) unsigned NOT NULL DEFAULT 0, 
 
   `checked_out` int(10) unsigned NOT NULL DEFAULT 0,
@@ -32,11 +33,11 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `lft` int(11) DEFAULT 0 NOT NULL,
   `rgt` int(11) DEFAULT 0 NOT NULL,
 
+  `approved` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `asset_id` int(11)  NOT NULL DEFAULT 0,
   `access` int(10) unsigned NOT NULL DEFAULT 0,
 
---  `rtl` tinyint(4) NOT NULL DEFAULT 0,  
---  `language` char(7) NOT NULL DEFAULT '', 
+
 
 --  `metakey` text NOT NULL,
 --  `metadesc` text NOT NULL,
@@ -77,8 +78,8 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `note` varchar(255) NOT NULL DEFAULT '',
   `params` text NOT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '1',
-  `hits` int(11) unsigned NOT NULL DEFAULT '0',
 
+  `hits` int(11) unsigned NOT NULL DEFAULT '0',
   `rating` int(10) unsigned NOT NULL DEFAULT '0',
   `votes` int(10) unsigned NOT NULL DEFAULT '0',
   `comments` int(10) unsigned NOT NULL DEFAULT '0',
@@ -95,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `modified_by` int(10) unsigned NOT NULL DEFAULT 0, 
 
   `ordering` int(9) unsigned NOT NULL DEFAULT '0',
-  `approved` tinyint(1) unsigned NOT NULL DEFAULT '1',
 
+  `approved` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `access` int(10) NOT NULL DEFAULT 0,
 
