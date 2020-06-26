@@ -469,8 +469,8 @@ class Com_Rsgallery2InstallerScript
 //
 //
 //
-//                    //$j3x_model->copyOldIJ3xConfig2J4xOptions ();
-//                    Log::add('after copyOldIJ3xConfig2J4xOptions', Log::INFO, 'rsg2');
+//                    //$j3x_model->copyOldJ3xConfig2J4xOptions ();
+//                    Log::add('after copyOldJ3xConfig2J4xOptions', Log::INFO, 'rsg2');
 //                    Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
 //
 //

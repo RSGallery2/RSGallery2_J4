@@ -1255,7 +1255,7 @@ interface IResponseTransfer {
      * @since 5.0.0
 	 */
 	/**
-	public function copyOldIJ3xConfig2J4xOptions ()
+	public function copyOldJ3xConfig2J4xOptions ()
 	{
 		$msg     = "controller.createImageDbItems: ";
 		$msgType = 'notice';
@@ -1277,7 +1277,7 @@ interface IResponseTransfer {
 			{
 				$cfg3xModel = $this->getModel('Upload');
 
-				$isOk = $cfg3xModel->copyOldIJ3xConfig2J4xOptions ();
+				$isOk = $cfg3xModel->copyOldJ3xConfig2J4xOptions ();
 
 				if ($isOk)
 				{
@@ -1285,14 +1285,14 @@ interface IResponseTransfer {
 				}
 				else
 				{
-					$msg .= "Error at copyOldIJ3xConfig2J4xOptions items";
+					$msg .= "Error at copyOldJ3xConfig2J4xOptions items";
 					$msgType = 'error';
 				}
 			}
 			catch (RuntimeException $e)
 			{
 				$OutTxt = '';
-				$OutTxt .= 'Error executing copyOldIJ3xConfig2J4xOptions: "' . '<br>';
+				$OutTxt .= 'Error executing copyOldJ3xConfig2J4xOptions: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();

@@ -127,9 +127,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
      */
-    public function copyOldIJ3xConfig2J4xOptions()
+    public function copyOldJ3xConfig2J4xOptions()
     {
-        $msg = "MaintenanceJ3xController.copyOldIJ3xConfig2J4xOptions: ";
+        $msg = "MaintenanceJ3xController.copyOldJ3xConfig2J4xOptions: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -147,7 +147,7 @@ class MaintenanceJ3xController extends AdminController
                 $configModel = $this->getModel('ConfigRaw');
 
                 $oldConfigItems = $maint3xModel->OldConfigItems();
-//				$isOk = $configModel->copyOldIJ3xConfig2J4xOptions ($oldConfigItems);
+//				$isOk = $configModel->copyOldJ3xConfig2J4xOptions ($oldConfigItems);
 //				$isOk = $configModel->copyJ3xConfigItems2J4xOptions ($oldConfigItems);
 
                 if (count($oldConfigItems)) {
@@ -159,7 +159,7 @@ class MaintenanceJ3xController extends AdminController
                     if ($isOk) {
                         $msg .= "Successful copied old configuration items";
                     } else {
-                        $msg .= "Error at copyOldIJ3xConfig2J4xOptions items";
+                        $msg .= "Error at copyOldJ3xConfig2J4xOptions items";
                         $msgType = 'error';
                     }
                 } else {
@@ -168,7 +168,7 @@ class MaintenanceJ3xController extends AdminController
                 }
             } catch (RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyOldIJ3xConfig2J4xOptions: "' . '<br>';
+                $OutTxt .= 'Error executing copyOldJ3xConfig2J4xOptions: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -186,9 +186,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
      */
-    public function copyOldIJ3xGalleries2J4x()
+    public function copyOldJ3xGalleries2J4x()
     {
-        $msg = "MaintenanceJ3xController.copyOldIJ3xGalleries2J4x: ";
+        $msg = "MaintenanceJ3xController.copyOldJ3xGalleries2J4x: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -203,30 +203,32 @@ class MaintenanceJ3xController extends AdminController
         } else {
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
-                $galleryModel = $this->getModel('Gallery');
 
-                $J3xGalleryItemsSorted = $maint3xModel->j3x_galleriesListSorted();
+                // ??? ToDo: Reset images table may be necessary (in controller)
+//                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel */
+//                $imagesModel = $this->getModel('Images');
+//
+//                // Remove the items.
+//                $isOk = $imagesModel->resetImagesTable();
+//                if ($isOk) {
+//                    // $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_SUCCESS');
 
-                if (count($J3xGalleryItemsSorted)) {
+                $isOk = $maint3xModel->copyOldJ3xGalleries2J4x();
 
-//					$J3xGalleryItemsSorted ['j3x_config_upgrade'] = "1";
-
-                    $J4Galleries = $maint3xModel->convertJ3xGalleriesToJ4x($J3xGalleryItemsSorted);
-
-                    $isOk = $galleryModel->saveItems($J4Galleries);
                     if ($isOk) {
                         $msg .= "Successful copied old gallery items items";
                     } else {
-                        $msg .= "Error at copyOldIJ3xGalleries2J4x items";
+                        $msg .= "Error at copyOldJ3xGalleries2J4x items";
                         $msgType = 'error';
                     }
-                } else {
-                    $msg .= "No old configuration items";
-                    $msgType = 'warning';
-                }
+//                } else {
+//                    $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_ERROR') . ': ' . $imagesModel->getError();
+//                }
+
+
             } catch (RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyOldIJ3xGalleries2J4x: "' . '<br>';
+                $OutTxt .= 'Error executing copyOldJ3xGalleries2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -316,7 +318,7 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                // ??? ToDO: Reset images table may be necessary (in controller)
+                // ??? ToDo: Reset images table may be necessary (in controller)
 //                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel */
 //                $imagesModel = $this->getModel('Images');
 //
@@ -383,7 +385,7 @@ class MaintenanceJ3xController extends AdminController
                     $msgType = 'warning';
                 } else {
 
-                    $isOk = $maint3xModel->copySelectedldJ3xImages2J4x($selectedIds);
+                    $isOk = $maint3xModel->copySelectedOldJ3xImages2J4x($selectedIds);
 
                     if ($isOk) {
                         $msg .= "Successful copied items:" . count($selectedIds);

@@ -193,7 +193,7 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'), 'screwdriver');
-				ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_CONFIGURATION', false);
+				ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_CONFIGURATION', false);
 				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_CONFIGURATION', true);
 				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
 
@@ -208,9 +208,9 @@ class HtmlView extends BaseHtmlView
                         . 'Tasks: <br>'
                         . '*  Separate code for galleries raw view -> import into views<br>'
                         . '* check table : if empty .. -> use isset ??? <br>'
-                        . '* !! asset id !!! <br>'
-                        . '*  access db variable ???<br>'
-                        . '*  <br>'
+                        . '* !!! asset id !!! <br>'
+                        . '* db variable "access". how to use ???<br>'
+                        . '* Fix: Copy selected images / galleries -> greyed button, Ids in cotroller'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -226,7 +226,7 @@ class HtmlView extends BaseHtmlView
                     ToolBarHelper::custom ('Galleries.resetNestedGalleryTable','copy','','COM_RSGALLERY2_GALLERIES_TABLE_RESET', false);
                 }
 
-                ToolBarHelper::custom ('MaintenanceJ3x.copyOldIJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
+                ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
                 //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
 
 				break;

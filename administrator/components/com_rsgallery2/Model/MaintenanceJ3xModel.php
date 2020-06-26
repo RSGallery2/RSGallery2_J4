@@ -532,6 +532,204 @@ EOT;
         return $j4_GalleryItem;
     }
 
+//>>>yyyy===================================================================================================
+
+    public function copyAllOldJ3xGalleries2J4x () {
+
+        $isOk = false;
+
+        try {
+
+            $j3xGalleriesItems = $this->j3x_galleriesList();
+            $isOk = $this->copyOldJ3xGalleries2J4x ($j3xGalleriesItems);
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+    public function copySelectedOldJ3xGalleries2J4x ($selectedIds) {
+
+        $isOk = false;
+
+        try {
+
+            $j3xGalleriesItems = $this->j3x_galleriesListOfIds($selectedIds);
+
+            $isOk = $this-copyOldJ3xGalleries2J4x ($j3xGalleriesItems);
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+    public function copyOldJ3xGalleries2J4x ($j3xGalleriesItems) {
+
+        $isOk = false;
+
+        try {
+
+            // items exist ?
+            if (count($j3xGalleriesItems)) {
+
+                // ToDo: check following
+                //$J3xGalleryItemsSorted = $maint3xModel->j3x_galleriesListSorted();
+                //$isOk = $this->copyOldJ3xGalleries2J4x ($J3xGalleryItemsSorted);
+                // ...
+
+                $j4xGalleriesItems = $this->convertJ3xImagesToJ4x($j3xGalleriesItems);
+
+                $isOk = $this->writeGalleriesList2Db($j4xGalleriesItems);
+            } else {
+
+                Factory::getApplication()->enqueueMessage(Text::_('No items to insert into db'), 'warning');
+                //Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+    public function writeGalleryList2Db ($j4xGalleriesItems) {
+
+        $isOk = true;
+
+        try {
+
+//                     $isOk = $galleryModel->saveItems($J4Galleries);
+
+            // set nested tree ()
+
+
+            // all image objects
+            foreach ($j4xGalleriesItems as $j4xImageItem) {
+
+                $isOk &= $this->writeImageItem2Db($j4xImageItem);
+
+                // ToDo remove
+                break;
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+    public function writeGalleryItem2Db ($j4xImageItem) {
+
+        $isOk = false;
+
+        try {
+
+            // https://stackoverflow.com/questions/22373852/how-to-use-prepared-statements-in-joomla
+            $columns = [];
+            $values = [];
+
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
+
+            $columns[] = 'id';
+            $values[] = $j4xImageItem['id'];
+            $columns[] = 'name';
+            $values[] = $j4xImageItem['name'];
+            $columns[] = 'alias';
+            $values[] = $j4xImageItem['alias'];
+            $columns[] = 'description';
+            $values[] = $j4xImageItem['description'];
+
+            $columns[] = 'gallery_id';
+            $values[] = $j4xImageItem['gallery_id'];
+            $columns[] = 'title';
+            $values[] = $j4xImageItem['title'];
+
+//            $columns[] = 'note';
+//            $values[] = $j4ImageItem['note'];
+            $columns[] = 'params';
+            $values[] = $j4xImageItem['params'];
+            $columns[] = 'published';
+            $values[] = $j4xImageItem['published'];
+
+//            $columns[] = 'publish_up';
+//            $values[] = $j4ImageItem['publish_up'];
+//            $columns[] = 'publish_down';
+//            $values[] = $j4ImageItem['publish_down'];
+
+            $columns[] = 'hits';
+            $values[] = $j4xImageItem['hits'];
+            $columns[] = 'rating';
+            $values[] = $j4xImageItem['rating'];
+            $columns[] = 'votes';
+            $values[] = $j4xImageItem['votes'];
+            $columns[] = 'comments';
+            $values[] = $j4xImageItem['comments'];
+
+            $columns[] = 'checked_out';
+            $values[] = $j4xImageItem['checked_out'];
+            $columns[] = 'checked_out_time';
+            $values[] = $j4xImageItem['checked_out_time'];
+            $columns[] = 'created';
+//            $test01 = $j4ImageItem['created'];
+//            $test02 = $j4ImageItem['created']->toSql();
+//            $values[] = $j4ImageItem['created']->toSql();
+            $values[] = $j4xImageItem['created'];
+            $columns[] = 'created_by';
+            $values[] = $j4xImageItem['created_by'];
+            $columns[] = 'created_by_alias';
+            $values[] = $j4xImageItem['created_by_alias'];
+            $columns[] = 'modified';
+            $values[] = $j4xImageItem['modified'];
+            $columns[] = 'modified_by';
+            $values[] = $j4xImageItem['modified_by'];
+
+            $columns[] = 'ordering';
+            $values[] = $j4xImageItem['ordering'];
+            $columns[] = 'approved';
+            $values[] = $j4xImageItem['approved'];
+
+            $columns[] = 'asset_id';
+            $values[] = $j4xImageItem['asset_id'];
+//            $columns[] = 'access';
+//            $values[] = $j4ImageItem['access'];
+
+            // Prepare the insert query.
+            $query
+                ->insert($db->quoteName('#__rsg2_images')) //make sure you keep #__
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $db->quote($values)));
+            $db->setQuery($query);
+            $db->execute();
+
+            $isOk = true;
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
+
+
+
+//<<<yyyy===================================================================================================
+
     public function j3x_imagesList()
     {
         $images = array();
@@ -634,7 +832,7 @@ EOT;
         return $isOk;
     }
 
-    public function copySelectedldJ3xImages2J4x ($selectedIds) {
+    public function copySelectedOldJ3xImages2J4x ($selectedIds) {
 
         $isOk = false;
 
@@ -667,8 +865,8 @@ EOT;
                 $isOk = $this->writeImageList2Db($j4ImageItems);
             } else {
 
-                Factory::getApplication()->enqueueMessage(Text::_('No items to instert into db'), 'warning');
-                //Factory::getApplication()->enqueueMessage('No items to instert into db', 'warning');
+                Factory::getApplication()->enqueueMessage(Text::_('No items to insert into db'), 'warning');
+                //Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
             }
 
         }
