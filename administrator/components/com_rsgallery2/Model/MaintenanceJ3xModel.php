@@ -40,7 +40,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
      * @return array|mixed
      * @throws \Exception
      */
-    static function OldConfigItems()
+    static function j3xConfigItems()
     {
         $oldItems = array();
 
@@ -79,41 +79,55 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
      * @throws \Exception
      */
 
-    // ToDo: There may other merged operation needed instead of 1:1 copy
-    static function MergeJ3xConfiguration($J3xConfigItems, $configVars)
+
+    // Configuration test lists of variables:
+    //      a) untouchedRsg2Config, b) untouchedJ3xConfig, c) 1:1 merged, d) assisted merges
+    static function MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems)
     {
         // component parameters to array
-        $compConfig = [];
-        $mergedConfigItems = [];
+        $assistedJ3xItems = [];  // j3x tp j4x
+        $assistedJ4xItems = [];  // j4x to j3x
+        $mergedItems = [];
+        $untouchedJ3xItems = [];
+        $untouchedJ4xItems = [];
 
         try {
 
-//			foreach ($configVars as  $key => $value)
-//			{
-//				$compConfig [$key] = $value;
-//			}
-//
-//			// tell about merge version
-//            // ToDo: use state table
-//            $compConfig ['j3x_merged_cfg_version'] = '0.1';
-//
-//			// J3.5 old configuration vars
-//            // ToDo instead: foreach ($configVars as  $key => $value) -> if 4key in J3 use J3 otherwise use J4 version
-//			$mergedConfigItems = array_merge($J3xConfigItems, $compConfig);
+            // Manual list of assisted merges (items which need special handling for merge j3x to j4x
 
-            foreach ($configVars as $key => $value) {
-                // Is J3x item ?
-                if (array_key_exists($key, $J3xConfigItems)) {
-                    $compConfig [$key] = $J3xConfigItems [$key];
-                } else {
-                    $compConfig [$key] = $value;
+            $assistedItems ['testJ3xNmae'] = array ('testJ4xname', 'testJ3xValue'); // To Be defined when used
+            $assistedItems ['testJ4xName'] = array ('testJ3xname', 'testJ34OldValue'); // ? new Value may be different ...To Be defined when used
+
+
+
+            foreach ($j3xConfigItems as $name => $value) {
+                // Not handled manually
+                if (!array_key_exists($name, $assistedJ3xItems)) {
+                    // 1:1 copy
+                    if (array_key_exists($name, $j4xConfigItems)) {
+                        $mergedItems [$name] = $value; // array ($value, $j4xConfigItems[$name]);
+                    } else {
+                        $untouchedJ3xItems [$name] = $value;
+                    }
                 }
             }
 
-            // ToDo: transfer special cases
+            // untouched J4x item ?
+            foreach ($j4xConfigItems as  $name => $value) {
+                // Not handled manually
+                if (!array_key_exists($name, $assistedJ4xItems)) {
+                    if ( ! array_key_exists($name, $mergedItems)) {
+                        $untouchedJ4xItems [$name] = $value;
+                    }
+                }
+            }
 
+            ksort($assistedJ3xItems);
+            ksort($assistedJ4xItems);
+            ksort($mergedItems);
+            ksort($untouchedJ3xItems);
+            ksort($untouchedJ4xItems);
 
-            ksort($mergedConfigItems);
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'OldConfigItems: Error executing MergeJ3xConfiguration: <br>';
@@ -123,7 +137,13 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return $mergedConfigItems;
+        return array (
+            $assistedJ3xItems,
+            $assistedJ4xItems,
+            $mergedItems,
+            $untouchedJ3xItems,
+            $untouchedJ4xItems
+        );
     }
 
     // ToDo: attention a double of this function exist. Remove either of them

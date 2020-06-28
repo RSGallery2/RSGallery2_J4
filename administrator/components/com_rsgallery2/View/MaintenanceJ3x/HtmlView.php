@@ -56,18 +56,12 @@ class HtmlView extends BaseHtmlView
 		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		$this->configVars = $rsgConfig;
-		$this->configVarsOld = array ();
-
-//		$this->form = $this->get('Form');
-
 		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
 		/**/
-		$Layout = Factory::getApplication()->input->get('layout');
 
-		// ToDo: move to controller / model ...
+		$Layout = Factory::getApplication()->input->get('layout');
 
 		switch ($Layout)
 		{
@@ -76,12 +70,17 @@ class HtmlView extends BaseHtmlView
 				try
 				{
 					$j3xModel      = $this->getModel();
-					$this->configVarsOld = $j3xModel->OldConfigItems();
+					$this->j3xConfigItems = $j3xModel->j3xConfigItems();
+					$this->j4xConfigItems = $rsgConfig->toArray();
 
-
-					// iterate over all values
-					$this->configVarsMerged = $j3xModel->MergeJ3xConfiguration($this->configVarsOld, $this->configVars);
-
+					// Configuration test lists: untouchedRsg2Config, untouchedJ3xConfig, 1:1 merged, assisted merges
+                    list(
+                    $this->assistedJ3xItems,
+                        $this->assistedJ4xItems,
+                        $this->mergedItems,
+                        $this->untouchedJ3xItems,
+                        $this->untouchedJ4xItems
+                        ) = $j3xModel->MergeJ3xConfigTestLists($this->j3xConfigItems, $this->j4xConfigItems );
 				}
 				catch (RuntimeException $e)
 				{
@@ -194,7 +193,7 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'), 'screwdriver');
 				ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_CONFIGURATION', false);
-				ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_CONFIGURATION', true);
+				//  ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_CONFIGURATION', true);
 				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
 
 				ToolBarHelper::cancel('config.cancel_rawView');

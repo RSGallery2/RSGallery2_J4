@@ -220,47 +220,31 @@ class ConfigRawModel extends BaseDatabaseModel
 	}
 	/**/
 
-	public function copyJ3xConfigItems2J4xOptions ($configItems)
+	public function copyJ3xConfigItems2J4xOptions ($j4xConfigItems,
+                                                   $assistedJ3xItems,
+//                                                   $assistedJ4xItems,
+                                                   $mergedItems)
 	{
 		$isSaved = false;
 		// $actElement = "No element";
 
-		$actConfig = ComponentHelper::getParams('com_rsgallery2');
-
 		try
 		{
-			foreach ($configItems as $name => $value)
+		    // copy 1:1 items
+			foreach ($mergedItems as $name => $value)
 			{
-				// switch for special indirect behaviour
-				// oldCfgName -> different new config name
-                switch ($name) {
-
-                    case '';
-
-                    break;
-
-
-                    default:
-                        // replace j4x value
-                        if ($actConfig->exists($name)) {
-
-                            $actConfig->set($name, $value);
-
-                        }
-                    break;
-                }
+                $j4xConfigItems [$name] = $value;
 			}
 
-			$mergedConfig = [];
-
-			foreach ($actConfig as $key => $value)
+            // assisted copying
+			foreach ($assistedJ3xItems as $j3xName => $var)
 			{
-				$mergedConfig [$key] = $value;
-
+			    list($j4xName, $j4xNewValue) = $var;
+                $j4xConfigItems [$j4xName] = $j4xNewValue;
 			}
 
 			// Save parameter
-			$isSaved = $this->saveItems($mergedConfig);
+			$isSaved = $this->saveItems($j4xConfigItems);
 
 		}
 		catch (RuntimeException $e)

@@ -157,7 +157,7 @@ class HtmlView extends BaseHtmlView
                 $this->rsg2Configuration_j3x = [];
                 if (ConfigRawModel::J3xConfigTableExist ()) {
 
-                    $rsg2configuration_j3x = MaintenanceJ3xModel::OldConfigItems ();
+                    $rsg2configuration_j3x = MaintenanceJ3xModel::j3xConfigItems ();
                     $this->rsg2Configuration_j3x = $rsg2configuration_j3x;
                 }
 

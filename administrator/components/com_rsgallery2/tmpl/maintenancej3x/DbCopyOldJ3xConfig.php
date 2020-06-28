@@ -36,7 +36,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('vers
 
                 <legend><strong><?php echo Text::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_J3X_CONFIG'); ?></strong></legend>
 
-				<?php if (! count ($this->configVarsOld)) : ?>
+				<?php if (! count ($this->j3xConfigItems)) : ?>
 					<div class="alert alert-info">
 						<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
 						<?php echo Text::_('COM_RSGALLERY2_OLD_J3X_RSG2_TABLES_NOT_EXISTING'); // JGLOBAL_NO_MATCHING_RESULTS ?>
@@ -85,34 +85,42 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('vers
 
 					try
 					{
+                        echo '<tr>';
+                        echo '    <th colspan="4">';
+                        echo '       ' . Text::_('COM_RSGALLERY2_CFG_J3X_ASSISTED');
+                        echo '    </th>';
+                        echo '</tr>';
 
-                        //foreach ($this->configVarsOld as $oldName => $oldValue)
+                        // ToDo: Section ? List of special transfer ....
+                        // for all ...
+
+                        echo '<tr>';
+                        echo '    <th colspan="4">';
+                        echo '       ' . Text::_('COM_RSGALLERY2_CFG_J3X_MERGE_1TO1');
+                        echo '    </th>';
+                        echo '</tr>';
+
+                        //foreach ($this->j3xConfigItems as $oldName => $oldValue)
 						$idx = 0;
 						$NotDefined = '{Not defined}';
 
-						// ToDo: only name in $this->configVarsMerged
+						// ToDo: only name in $this->j4xConfigItemsMerged
                         // ToDo: list for special transfer values
 
                         // section new config elements (matching to old)
-                        foreach ($this->configVarsMerged as $mergedName => $mergedValue )
+                        foreach ($this->mergedItems as $mergedName => $mergedValue )
                         {
-                            // Must exist in new config to be merged
-	                        if ( ! $this->configVars->exists($mergedName))
-	                        {
-		                        continue;
-	                        }
-
-	                        if (! isset ($this->configVarsOld[$mergedName]))
-	                        {
-		                        continue;
-	                        }
+//	                        if (! isset ($this->j3xConfigItems[$mergedName]))
+//	                        {
+//		                        continue;
+//	                        }
 
 	                        /**
-	                        $valOld = $this->configVarsOld [$mergedName] ?? $NotDefined;
-	                        $valNew = $this->configVars->get($mergedName)  ?? $NotDefined;
+	                        $valOld = $this->j3xConfigItems [$mergedName] ?? $NotDefined;
+	                        $valNew = $this->j4xConfigItems[$mergedName]  ?? $NotDefined;
                             /**/
-	                        $valOld = $this->configVarsOld [$mergedName];
-	                        $valNew = $this->configVars->get($mergedName);
+	                        $valOld = $this->j3xConfigItems [$mergedName];
+	                        $valNew = $this->j4xConfigItems[$mergedName];
                             /**/
 	                        // Make empty string visible
 	                        $valOld     = strlen ($valOld) > 0  ?  trim($valOld) : '""';
@@ -143,21 +151,22 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('vers
 	                        $idx++;
                         }
 
-						// ToDo: Section ? List of special transfer ....
 
-						// Section old config elements not having new partner
-						foreach ($this->configVarsMerged as $mergedName => $mergedValue )
+                        echo '<tr>';
+                        echo '    <th colspan="4">';
+                        echo '       ' . Text::_('COM_RSGALLERY2_CFG_J3X_UNTOUCHED');
+                        echo '    </th>';
+                        echo '</tr>';
+
+
+                        // Section old config elements not having new partner
+						foreach ($this->untouchedJ3xItems as $mergedName => $mergedValue )
 						{
-							if ($this->configVars->exists($mergedName))
-							{
-								continue;
-							}
-
 							/**
-							 * $valOld     = $this->configVarsOld [$mergedName] ?? $NotDefined;
-							 * $valNew     = $this->configVars->get($mergedName)  ?? $NotDefined;
+							 * $valOld     = $this->j3xConfigItems [$mergedName] ?? $NotDefined;
+							 * $valNew     = $this->j4xConfigItems[$mergedName]  ?? $NotDefined;
 							/**/
-							$valOld     = $valOld     = $this->configVarsOld [$mergedName];
+							$valOld     = $valOld     = $this->j3xConfigItems [$mergedName];
 							$valNew     = '%';
 
 							// Make empty string visible
@@ -188,25 +197,22 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('vers
 							$idx++;
 						}
 
-						// Section old config elements not having new partner
-						foreach ($this->configVarsMerged as $mergedName => $mergedValue )
+                        echo '<tr>';
+                        echo '    <th colspan="4">';
+                        echo '       ' . Text::_('COM_RSGALLERY2_CFG_J4X_UNTOUCHED');
+                        echo '    </th>';
+                        echo '</tr>';
+
+
+                        // Section old config elements not having new partner
+						foreach ($this->untouchedJ4xItems as $mergedName => $mergedValue )
 						{
-							if ( ! $this->configVars->exists($mergedName))
-							{
-								continue;
-							}
-
-							if (isset ($this->configVarsOld[$mergedName]))
-							{
-								continue;
-							}
-
 							/**
-							 * $valOld     = $this->configVarsOld [$mergedName] ?? $NotDefined;
-							 * $valNew     = $this->configVars->get($mergedName)  ?? $NotDefined;
+							 * $valOld     = $this->j3xConfigItems [$mergedName] ?? $NotDefined;
+							 * $valNew     = $this->j4xConfigItems[$mergedName] ?? $NotDefined;
 							/**/
 							$valOld     = '%';
-							$valNew     = $this->configVars->get($mergedName);
+							$valNew     = $this->j4xConfigItems[$mergedName];
 
 							// Make empty string visible
 							$valOld     = strlen ($valOld) > 0  ?  $valOld : '""';
