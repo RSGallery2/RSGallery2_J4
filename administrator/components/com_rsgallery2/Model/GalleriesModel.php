@@ -637,7 +637,8 @@ class GalleriesModel extends ListModel
      *
      * @since version
      */
-    public static function resetNestedGalleryTable()
+    /**
+    public static function reinitNestedGalleryTable($rgt=1)
     {
         $isGalleryTreeReset = false;
 
@@ -660,6 +661,9 @@ class GalleriesModel extends ListModel
 
             //--- insert root of nested list ------------------------------------
 
+            $lft = 0;
+            $path = '';
+
             // ToDo: adjust columns to below and use this form
             // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
             // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
@@ -676,6 +680,8 @@ class GalleriesModel extends ListModel
 //                ->set('access = 1')
 //                ->set('path = ' . $db->quote(''));
 //
+            $name = 'galleries root';
+            $alias = 'groot';
 
             $date = Factory::getDate();
             $user = Factory::getUser();
@@ -684,8 +690,8 @@ class GalleriesModel extends ListModel
             // Missing
             $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id',
                 'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', );
-            $values =  array(1, 'galleries root', 'n-root', 'root element of nested list', '', '', 0,
-                0, '', 0, 1, $date, $user->id, $date, $user->id);
+            $values =  array(1, $name, $alias, 'root element of nested gallery list', '', '', 0,
+                0, $path, $lft, $rgt, $date, $user->id, $date, $user->id);
 
             // Create root element
             $query = $db->getQuery(true)
@@ -708,7 +714,7 @@ class GalleriesModel extends ListModel
 
         return $isGalleryTreeReset;
     }
-
+/**/
 
 
 

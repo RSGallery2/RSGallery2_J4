@@ -208,11 +208,11 @@ class GalleriesController extends AdminController
      *
      * @since version
      */
-    public function resetNestedGalleryTable()
+    public function reinitNestedGalleryTable()
     {
         $isOk = false;
 
-        $msg = "GalleriesController.resetNestedGalleryTable: ";
+        $msg = "GalleriesController.reinitNestedGalleryTable: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -227,11 +227,10 @@ class GalleriesController extends AdminController
 
             try {
                 // Get the model.
-                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel $model */
-                $model = $this->getModel('Galleries');
+                $model = $this->getModel('GalleryTree');
 
                 // Remove the items.
-                $isOk = $model->resetNestedGalleryTable();
+                $isOk = $model->reinitNestedGalleryTable();
                 if ($isOk) {
                     $msg .= Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_SUCCESS');
                 } else {
@@ -240,7 +239,7 @@ class GalleriesController extends AdminController
 
             } catch (RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing resetNestedGalleryTable: "' . '<br>';
+                $OutTxt .= 'Error executing reinitNestedGalleryTable: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -255,6 +254,7 @@ class GalleriesController extends AdminController
         return $isOk;
     }
 
+    /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryTreeModel $model */
 
 
 

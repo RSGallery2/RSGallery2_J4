@@ -21,7 +21,7 @@ use JTableNested;
 use Joomla\CMS\Helper\ModuleHelper;
 
 //use Joomla\CMS\Extension\Service\Provider\MVCFactory;
-//use Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\GalleryTreeModel;
 
 
 /**
@@ -287,15 +287,15 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             // collects galleries of given level
             foreach ($dbGalleries as $gallery) {
 
-                if ($gallery->parent == $parentId) {
+                if ($gallery['parent'] == $parentId) {
 
-                    $gallery->level = $level;
+                    $gallery['level'] = $level;
 
                     // collect gallery
                     $galleries [] = $gallery;
 
                     // add childs recursively
-                    $id = $gallery->id;
+                    $id = $gallery['id'];
                     $subGalleries [$id] = $this->j4x_galleriesSortedByParent($dbGalleries, $id, $level+1);
                 }
             }
@@ -310,7 +310,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 $sortedGalleries[] = $gallery;
 
                 // Add childs
-                $id = $gallery->id;
+                $id = $gallery['id'];
                 //echo 'array_push: $id' . $id . '<br>';
 
                 foreach ($subGalleries [$id] as $subGallery) {
@@ -328,30 +328,28 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
 
     // Expected: List is already is sorted
-    public function setNestingNodes2J4xGalleries($sortedGalleries, $parentId=0, $level=0, $lastNodeIdx=1)
+    public function setNestingNodes2J4xGalleries(&$sortedGalleries, $parentId=0, $level=0, $lastNodeIdx=1)
     {
-//        $stackGalleries = [];
+        // $changedGalleries = [];
 
         try {
             // parent galleries
             $galleries = [];
 
             // collect galleries of given level
-            foreach ($sortedGalleries as $gallery) {
+            foreach ($sortedGalleries as $idx => $gallery) {
 
-                if ($gallery->parent_id == $parentId) {
+                if ($gallery['parent_id'] == $parentId) {
 
-                    $gallery->level = $level;
-                    $gallery->lft = $lastNodeIdx;
+                    $sortedGalleries [$idx]['level'] = $level;
+                    $sortedGalleries [$idx]['lft'] = $lastNodeIdx;
 
                     $lastNodeIdx++;
 
-                    $test = $gallery->id;
-                    $gallery_id = $gallery ['id'];
                     // add node ids recursively
-                    $lastNodeIdx = $this->setNestingNodes2J4xGalleries($sortedGalleries, $gallery_id, $level+1, $lastNodeIdx);
+                    $lastNodeIdx = $this->setNestingNodes2J4xGalleries($sortedGalleries, $gallery ['id'], $level+1, $lastNodeIdx);
 
-                    $gallery->lft = $lastNodeIdx;
+                    $sortedGalleries [$idx]['rgt'] = $lastNodeIdx;
                     $lastNodeIdx++;
                 }
             }
@@ -400,7 +398,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             foreach ($j4x_galleries as $j4x_gallery) {
 
                 // leave out root gallery in nested form
-                if ($j4x_gallery->id != 1) {
+                { // if ($j4x_gallery->id != 1) {
                     $j3x_gallery = new \stdClass();
 
                     $j3x_gallery->id = $j4x_gallery->id;
@@ -545,7 +543,7 @@ EOT;
 
     private function convertJ3xGallery ($j3x_gallery) {
 
-        $j4x_GalleryItem = []; //new \stdClass();
+        $j4x_GalleryItem = [];
 
         // `id` int(11) NOT NULL auto_increment,
         $j4x_GalleryItem['id'] = $j3x_gallery->id;
@@ -639,11 +637,15 @@ EOT;
                 $j4xGalleriesItems = $this->convertJ3xGalleriesToJ4x($j3xGalleriesItems);
 
                 // sort by parent and id recursively
-                $j4xGalleryItemsSorted = $this->j4x_galleriesSortedByParent($j3xGalleriesItems, 0, 0);
+                $j4xGalleryItemsSorted = $this->j4x_galleriesSortedByParent($j4xGalleriesItems, 0, 0);
 
                 // set nested tree ()
                 // last $lastNodeIdx needed for root ???
-                $lastNodeIdx = $this->setNestingNodes2J4xGalleries ($j4xGalleriesItems, 0, 0, 1);
+                $lastNodeIdx = $this->setNestingNodes2J4xGalleries ($j4xGalleryItemsSorted, 0, 0, 1);
+
+                // re-init nested gallery table
+                $galleryTreeModel =  new GalleryTreeModel ();
+                $galleryTreeModel->reinitNestedGalleryTable($lastNodeIdx);
 
                 $isOk = $this->writeGalleryList2Db($j4xGalleryItemsSorted);
 
@@ -675,8 +677,6 @@ EOT;
 
                 $isOk &= $this->writeGalleryItem2Db($j4xImageItem);
 
-                // ToDo remove
-                break;
             }
 
         }
@@ -702,10 +702,7 @@ EOT;
             $query = $db->getQuery(true);
 
             $columns[] = 'id';
-            $values[] = 0;
-            $test1 = $j4x_GalleryItem->id;
-            $test2 = $j4x_GalleryItem['id'];
-            $values[] = $j4x_GalleryItem['id'];
+            $values[] = 1 + (int) $j4x_GalleryItem['id'];
 
             $columns[] = 'name';
             $values[] = $j4x_GalleryItem['name'];
@@ -714,8 +711,9 @@ EOT;
             $columns[] = 'description';
             $values[] = $j4x_GalleryItem['description'];
 
-//            $columns[] = 'note';
+            $columns[] = 'note';
 //            $values[] = $j4ImageItem['note'];
+            $values[] = '';
             $columns[] = 'params';
             $values[] = $j4x_GalleryItem['params'];
             $columns[] = 'published';
@@ -742,16 +740,16 @@ EOT;
             $values[] = $j4x_GalleryItem['created_by'];
             $columns[] = 'created_by_alias';
             $values[] = $j4x_GalleryItem['created_by_alias'];
-//            $columns[] = 'modified';
-//            $values[] = $j4x_GalleryItem['modified'];
+            $columns[] = 'modified';
+            $values[] = $j4x_GalleryItem['created'];
 //            $columns[] = 'modified_by';
 //            $values[] = $j4x_GalleryItem['modified_by'];
 
             $columns[] = 'parent_id';
-            $values[] = $j4x_GalleryItem['parent_id'];
+            $values[] = 1 + (int) $j4x_GalleryItem['parent_id'];
 
             $columns[] = 'level';
-            $values[] = $j4x_GalleryItem['level'];
+            $values[] = 1 + (int) $j4x_GalleryItem['level'];
 //            $columns[] = 'path';
 //            $values[] = $j4x_GalleryItem['path'];
             $columns[] = 'lft';
@@ -759,8 +757,8 @@ EOT;
             $columns[] = 'rgt';
             $values[] = $j4x_GalleryItem['rgt'];
 
-            $columns[] = 'approved';
-            $values[] = $j4x_GalleryItem['approved'];
+//            $columns[] = 'approved';
+//            $values[] = $j4x_GalleryItem['approved'];
 
             $columns[] = 'asset_id';
             $values[] = $j4x_GalleryItem['asset_id'];
@@ -769,7 +767,7 @@ EOT;
 
             // Prepare the insert query.
             $query
-                ->insert($db->quoteName('#__rsg2_images')) //make sure you keep #__
+                ->insert($db->quoteName('#__rsg2_galleries')) //make sure you keep #__
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $db->quote($values)));
             $db->setQuery($query);
@@ -878,9 +876,11 @@ EOT;
 
         try {
 
+            $isOk = $this->resetImagesTable();
+
             $j3xImageItems = $this->j3x_imagesList();
 
-            $isOk = $this->copyOldJ3xImages2J4x ($j3xImageItems);
+            $isOk &= $this->copyOldJ3xImages2J4x ($j3xImageItems);
 
         }
         catch (RuntimeException $e)
@@ -1007,7 +1007,7 @@ EOT;
             $values[] = $j4ImageItem['description'];
 
             $columns[] = 'gallery_id';
-            $values[] = $j4ImageItem['gallery_id'];
+            $values[] = 1 + (int) $j4ImageItem['gallery_id'];
             $columns[] = 'title';
             $values[] = $j4ImageItem['title'];
 
@@ -1145,6 +1145,43 @@ EOT;
         //`access` int(10) NOT NULL DEFAULT 0,
         $j4_imageItem['access'] = $j3x_image->access;
         return $j4_imageItem;
+    }
+
+    /**
+     * Reset image table to empty state
+     * Deletes all galleries and initialises the root of the nested tree
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public static function resetImagesTable()
+    {
+        $isImagesReset = false;
+
+        $id_galleries = '#__rsg2_images';
+
+        try {
+            $db = Factory::getDbo();
+
+            //--- delete old rows -----------------------------------------------
+
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName($id_galleries));
+            // all rows
+            //$query->where($conditions);
+
+            $db->setQuery($query);
+
+            $isImagesReset = $db->execute();
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
+        }
+
+        return $isImagesReset;
     }
 
     /**/

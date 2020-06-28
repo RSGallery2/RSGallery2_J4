@@ -204,27 +204,14 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                // ??? ToDo: Reset images table may be necessary (in controller)
-//                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel */
-//                $imagesModel = $this->getModel('Images');
-//
-//                // Remove the items.
-//                $isOk = $imagesModel->resetImagesTable();
-//                if ($isOk) {
-//                    // $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_SUCCESS');
-
                 $isOk = $maint3xModel->copyAllOldJ3xGalleries2J4x();
 
-                    if ($isOk) {
-                        $msg .= "Successful copied old gallery items items";
-                    } else {
-                        $msg .= "Error at copyOldJ3xGalleries2J4x items";
-                        $msgType = 'error';
-                    }
-//                } else {
-//                    $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_ERROR') . ': ' . $imagesModel->getError();
-//                }
-
+                if ($isOk) {
+                    $msg .= "Successful copied old gallery items items";
+                } else {
+                    $msg .= "Error at copyOldJ3xGalleries2J4x items";
+                    $msgType = 'error';
+                }
 
             } catch (RuntimeException $e) {
                 $OutTxt = '';
@@ -237,7 +224,6 @@ class MaintenanceJ3xController extends AdminController
 
         }
 
-        //$link = 'index.php?option=com_rsgallery2&view=galleries';
         $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
@@ -267,15 +253,15 @@ class MaintenanceJ3xController extends AdminController
 
             try {
                 // Get the model.
-                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel */
-                $imagesModel = $this->getModel('Images');
+                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+                $maint3xModel = $this->getModel('MaintenanceJ3x');
 
                 // Remove the items.
-                $isOk = $imagesModel->resetImagesTable();
+                $isOk = $maint3xModel->resetImagesTable();
                 if ($isOk) {
-                    $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_SUCCESS');
+                    $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_SUCCESS');
                 } else {
-                    $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_ERROR') . ': ' . $imagesModel->getError();
+                    $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_ERROR') ;
                 }
 
             } catch (RuntimeException $e) {
@@ -318,26 +304,13 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                // ??? ToDo: Reset images table may be necessary (in controller)
-//                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel */
-//                $imagesModel = $this->getModel('Images');
-//
-//                // Remove the items.
-//                $isOk = $imagesModel->resetImagesTable();
-//                if ($isOk) {
-//                    // $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_SUCCESS');
-
-                    $isOk = $maint3xModel->copyAllOldJ3xImages2J4x();
-                    if ($isOk) {
-                        $msg .= "Successful copied old gallery items items";
-                    } else {
-                        $msg .= "Error at copyOldJ3xImages2J4x items";
-                        $msgType = 'error';
-                    }
-//                } else {
-//                    $msg .= Text::_('COM_RSGALLERY2_Images_TABLE_RESET_ERROR') . ': ' . $imagesModel->getError();
-//                }
-
+                $isOk = $maint3xModel->copyAllOldJ3xImages2J4x();
+                if ($isOk) {
+                    $msg .= "Successful copied old gallery items items";
+                } else {
+                    $msg .= "Error at copyOldJ3xImages2J4x items";
+                    $msgType = 'error';
+                }
 
             } catch (RuntimeException $e) {
                 $OutTxt = '';

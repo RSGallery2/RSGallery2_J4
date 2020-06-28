@@ -221,11 +221,6 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 
-
-				if(count ($this->j4x_galleries) > 1) {
-                    ToolBarHelper::custom ('Galleries.resetNestedGalleryTable','copy','','COM_RSGALLERY2_GALLERIES_TABLE_RESET', false);
-                }
-
                 ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
                 //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
 
@@ -246,10 +241,6 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
-
-                if(count ($this->j4x_images) > 0) {
-                    ToolBarHelper::custom ('MaintenanceJ3x.resetImagesTable','copy','','COM_RSGALLERY2_IMAGES_TABLE_RESET', false);
-                }
 
                 ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xImages2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_IMAGES', false);
                 //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_IMAGES', false);

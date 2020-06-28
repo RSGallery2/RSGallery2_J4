@@ -250,7 +250,7 @@ class Com_Rsgallery2InstallerScript
             case 'update':
 
                 //
-                $isGalleryTreeCreated = $this->InitGalleryTree();
+                $isGalleryTreeCreated = $this->initGalleryTree();
 
 
 //                Rsg2InstallTasks::initConfigFromXmlFile();
@@ -374,7 +374,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @since
      */
-    public function InitGalleryTree()
+    public function initGalleryTree()
     {
         $isGalleryTreeCreated = false;
 
@@ -398,6 +398,14 @@ class Com_Rsgallery2InstallerScript
             if ($id == '1') {   // assume tree structure already built
                 Log::add('Gallery table root record already present exiting ...', Log::INFO, 'rsg2');
             } else {
+
+                // ToDo: call general init of nested tree gallery table
+                // reinitNestedGalleryTable
+                // re-init nested gallery table
+//                $galleryTreeModel =  new GalleryTreeModel ();
+//                $galleryTreeModel->reinitNestedGalleryTable($lastNodeIdx);
+
+
                 // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
                 // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 

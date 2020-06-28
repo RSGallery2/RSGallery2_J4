@@ -227,7 +227,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
 /**/
 
 $repair_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&task=Galleries.resetNestedGalleryTable'),
+    Route::_('index.php?option=com_rsgallery2&task=Galleries.reinitNestedGalleryTable'),
     Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET'),
     Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_DESC'),
     array('icon-images', 'icon-database', 'icon-undo'),
@@ -396,7 +396,7 @@ $developer4Test_ZoneButtons = [];
 //);
 //
 //$developer4Test_ZoneButtons[] = new zoneButtons(
-//    Route::_('index.php?option=com_rsgallery2&task=Galleries.resetNestedGalleryTable'),
+//    Route::_('index.php?option=com_rsgallery2&task=Galleries.reinitNestedGalleryTable'),
 //    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET'),
 //    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_DESC'),
 //    array('icon-images', 'icon-database', 'icon-undo', 'icon-notification-2'),
