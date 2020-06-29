@@ -188,6 +188,68 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
     }
 
 
+    public function applyExistingJ3xData()
+    {
+        $isOk = true;
+
+        //--- configuration ---------------------------------------------
+
+        try {
+
+            $isOkConfig = $this->copyOldJ3xConfig2J4xOptions();
+            $isOk &= $isOkConfig;
+
+            if ( ! $isOkConfig) {
+                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        //--- galleries ---------------------------------------------
+
+        try {
+            $isOkGalleries = $this->copyAllOldJ3xGalleries2J4x();
+            $isOk &= $isOkGalleries;
+
+            if ( ! $isOkGalleries) {
+                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x galleries failed'), 'error');
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        //--- images ---------------------------------------------
+
+        try {
+
+            $isOkImages = $this->copyAllOldJ3xImages2J4x ();
+            $isOk &= $isOkImages;
+
+            if ( ! $isOkImages) {
+                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x images failed'), 'error');
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+
+        // ....
+        // ? ACL, assets ...
+
+
+
+
+        return $isOk;
+    }
+
     public function j3x_galleriesList()
     {
         $galleries = array();
@@ -607,6 +669,52 @@ EOT;
     }
 
 //>>>yyyy===================================================================================================
+
+    public function copyOldJ3xConfig2J4xOptions () {
+
+        $isOk = false;
+
+        try {
+
+            $configModel = new ConfigRawModel ();
+
+            $j3xConfigItems = $this->j3xConfigItems();
+            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+            $j4xConfigItems = $rsgConfig->toArray();
+
+            // Configuration test lists: untouchedRsg2Config, untouchedJ3xConfig, 1:1 merged, assisted merges
+            list(
+                $assistedJ3xItems,
+                $assistedJ4xItems,
+                $mergedItems,
+                $untouchedJ3xItems,
+                $untouchedJ4xItems
+                ) = $this->MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems );
+
+            if (count($mergedItems)) {
+                // ToDo: write later
+                // J3x config state: 0:not upgraded, 1:upgraded,  -1:upgraded and deleted
+                // Smuggle the J3x config state "upgraded:1" into the list
+                //$oldConfigItems ['j3x_config_upgrade'] = "1";
+
+                $isOk = $configModel->copyJ3xConfigItems2J4xOptions(
+                    $j4xConfigItems,
+                    $assistedJ3xItems,
+//                        $assistedJ4xItems,
+                    $mergedItems);
+
+            } else {
+                Factory::getApplication()->enqueueMessage(Text::_('No old configuration items'), 'warning');
+            }
+
+        }
+        catch (RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $isOk;
+    }
 
     public function copyAllOldJ3xGalleries2J4x () {
 

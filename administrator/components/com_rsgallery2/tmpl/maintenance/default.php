@@ -286,12 +286,6 @@ $danger_ZoneButtons[] = new zoneButtons(
 /**/
 
 
-
-
-
-
-
-
 //--- upgrade zone -----------------------------
 
 if ($this->isJ3xRsg2DataExisting)
@@ -306,6 +300,17 @@ $upgrade_ZoneButtons = [];
 
 if ($this->isJ3xRsg2DataExisting)
 {
+
+	/**/
+	$upgrade_ZoneButtons[] = new zoneButtons(
+		Route::_('index.php?option=com_rsgallery2&task=MaintenanceJ3x.applyExistingJ3xData'),
+		Text::_('COM_RSGALLERY2_APPLY_EXISTING_J3X_DATA'),
+		Text::_('COM_RSGALLERY2_APPLY_EXISTING_J3X_DATA_DESC'),
+		array('icon-new-tab', 'icon-new-tab', 'icon-new-tab'),
+		'viewApplyExistingJ3xData'
+	);
+	/**/
+
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig'),

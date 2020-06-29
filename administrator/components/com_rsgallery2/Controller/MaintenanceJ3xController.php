@@ -20,9 +20,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Response\JsonResponse;
-use Joomla\Input\Input;
-use Joomla\Utilities\ArrayHelper;
 
 
 /**
@@ -59,6 +56,54 @@ class MaintenanceJ3xController extends AdminController
     }
 
     /**
+     * applyExistingJ3xData
+     * J3x Configuration-, galleries, images and more data will be adjusted to RSG2 J4x form
+     *
+     * @since 5.0.0
+     */
+    public function applyExistingJ3xData()
+    {
+        $msg = "MaintenanceJ3xController.applyExistingJ3xData: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+            try {
+                $maint3xModel = $this->getModel('MaintenanceJ3x');
+
+                $isOk = $maint3xModel->applyExistingJ3xData();
+
+                if ($isOk) {
+                    $msg .= "Successful copied old gallery items";
+                } else {
+                    $msg .= "Error at copyOldJ3xGalleries2J4x items";
+                    $msgType = 'error';
+                }
+
+            } catch (RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing applyExistingJ3xData: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=Maintenance';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
+    /**
      * Copies all old configuration items to new configuration
      *
      * @since 5.0.0
@@ -79,43 +124,17 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                $j3xModel = $this->getModel('MaintenanceJ3x');
-                $configModel = $this->getModel('ConfigRaw');
+                $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                $j3xConfigItems = $j3xModel->j3xConfigItems();
-                $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-                $j4xConfigItems = $rsgConfig->toArray();
+                $isOk = $maint3xModel->copyOldJ3xConfig2J4xOptions();
 
-                // Configuration test lists: untouchedRsg2Config, untouchedJ3xConfig, 1:1 merged, assisted merges
-                list(
-                    $assistedJ3xItems,
-                    $assistedJ4xItems,
-                    $mergedItems,
-                    $untouchedJ3xItems,
-                    $untouchedJ4xItems
-                    ) = $j3xModel->MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems );
-
-                if (count($mergedItems)) {
-                    // ToDo: write later
-                    // J3x config state: 0:not upgraded, 1:upgraded,  -1:upgraded and deleted
-                    // Smuggle the J3x config state "upgraded:1" into the list
-                    //$oldConfigItems ['j3x_config_upgrade'] = "1";
-
-                    $isOk = $configModel->copyJ3xConfigItems2J4xOptions(
-                        $j4xConfigItems,
-                        $assistedJ3xItems,
-//                        $assistedJ4xItems,
-                        $mergedItems);
-                    if ($isOk) {
-                        $msg .= "Successful copied old configuration items";
-                    } else {
-                        $msg .= "Error at copyOldJ3xConfig2J4xOptions items";
-                        $msgType = 'error';
-                    }
+                if ($isOk) {
+                    $msg .= "Successful applied J3x configuration items";
                 } else {
-                    $msg .= "No old configuration items";
-                    $msgType = 'warning';
+                    $msg .= "Error at copyOldJ3xConfig2J4xOptions items";
+                    $msgType = 'error';
                 }
+
             } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyOldJ3xConfig2J4xOptions: "' . '<br>';
@@ -157,7 +176,7 @@ class MaintenanceJ3xController extends AdminController
                 $isOk = $maint3xModel->copyAllOldJ3xGalleries2J4x();
 
                 if ($isOk) {
-                    $msg .= "Successful copied old gallery items items";
+                    $msg .= "Successful applied J3x gallery items";
                 } else {
                     $msg .= "Error at copyOldJ3xGalleries2J4x items";
                     $msgType = 'error';
@@ -256,7 +275,7 @@ class MaintenanceJ3xController extends AdminController
 
                 $isOk = $maint3xModel->copyAllOldJ3xImages2J4x();
                 if ($isOk) {
-                    $msg .= "Successful copied old gallery items items";
+                    $msg .= "Successful applied J3x image items";
                 } else {
                     $msg .= "Error at copyOldJ3xImages2J4x items";
                     $msgType = 'error';

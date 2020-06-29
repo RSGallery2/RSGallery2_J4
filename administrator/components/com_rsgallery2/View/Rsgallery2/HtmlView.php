@@ -28,8 +28,10 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 
 use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel;
+use Joomla\Component\RSGallery2\Administrator\Model\Rsg2J3xTablesBootModel;
 
 
 /**
@@ -81,14 +83,37 @@ class HtmlView extends BaseHtmlView
 		// $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 
+        /*-------------------------------------------------------------------------------
+        first run checks
+        -------------------------------------------------------------------------------*/
+
+		//--- auto save config after install ------------------------------
+
+        // Is configuration not initialized ?
+		if (empty ($rsgConfig->get('image_width'))) {
+
+            // configuration must be saved once to be initialized
+            $configRawModel = new ConfigRawModel ();
+            $isSaved = $configRawModel->ResetConfigToDefault();
+
+            // attention: configuration is not updated for this run
+            // $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+        }
+
+        //--- Check for J3x parts ------------------------------
+
+        $isJ3xRsg2DataExisting = Rsg2J3xTablesBootModel::J3xConfigTableExist();
+
+
+        /*-------------------------------------------------------------------------------
+        standard
+        -------------------------------------------------------------------------------*/
+
         //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
-		$this->isDevelop = $rsgConfig->get('isDevelop');
+        $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+        $this->isDevelop = $rsgConfig->get('isDevelop');
 
-		// configuration must be saved once to be initialized
-		$this->isConfigSavedOnce = ! empty ($rsgConfig->get('image_width'));
-
-		//---  --------------------------------------------------------------------
+        //---  --------------------------------------------------------------------
 
 		$this->lastGalleries = GalleriesModel::latestGalleries(5);
 		$this->lastImages =  ImagesModel::latestImages(5);

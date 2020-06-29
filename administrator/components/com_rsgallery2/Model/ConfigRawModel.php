@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Table\Table;
 
 use Joomla\Component\RSGallery2\Administrator\Model\Rsg2ExtensionModel;
@@ -25,7 +25,7 @@ use Joomla\Component\RSGallery2\Administrator\Model\Rsg2ExtensionModel;
  *
  * @since  1.0
  */
-class ConfigRawModel extends BaseDatabaseModel
+class ConfigRawModel extends BaseModel // BaseDatabaseModel
 {
 
 	/**

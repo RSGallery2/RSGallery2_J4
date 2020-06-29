@@ -48,10 +48,10 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
 
                     //--- tell config must be initialized ---------------------------------
 
-                    if ( ! $this->isConfigSavedOnce) {
-                        DisplayRequestSaveConfigOnce();
-                    }
-
+//                    if ( ! $this->isConfigSavedOnce) {
+//                        DisplayRequestSaveConfigOnce();
+//                    }
+//
                     //--- Control buttons ------------------
 
                     DisplayRSG2ControlButtons($this->buttons);
