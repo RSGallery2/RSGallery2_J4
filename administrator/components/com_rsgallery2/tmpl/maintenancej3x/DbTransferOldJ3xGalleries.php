@@ -463,7 +463,7 @@ function jsonArray2Lines($lines)
                     }
 
                     echo '<hr>';
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'DBTransferOldJ3xGalleries' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

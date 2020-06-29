@@ -88,7 +88,7 @@ class MaintenanceJ3xController extends AdminController
                     $msgType = 'error';
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing applyExistingJ3xData: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -135,7 +135,7 @@ class MaintenanceJ3xController extends AdminController
                     $msgType = 'error';
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyOldJ3xConfig2J4xOptions: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -182,7 +182,7 @@ class MaintenanceJ3xController extends AdminController
                     $msgType = 'error';
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyOldJ3xGalleries2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -233,7 +233,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_ERROR') ;
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing resetImagesTable: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -281,7 +281,7 @@ class MaintenanceJ3xController extends AdminController
                     $msgType = 'error';
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyOldJ3xImages2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

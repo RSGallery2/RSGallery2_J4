@@ -174,14 +174,14 @@ EOT;
             // Cord display collapsed or not
             $changeLogText = ChangeLogModel::collapseContent($changelogTables, $id, $collapsed);
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error in InstallMessage view: "' . 'ChangeLogHtml' . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
         }
 
         return $changeLogText;

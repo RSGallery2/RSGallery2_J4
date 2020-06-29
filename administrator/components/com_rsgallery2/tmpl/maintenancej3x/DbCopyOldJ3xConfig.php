@@ -243,7 +243,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('vers
 						}
 
 					}
-					catch (RuntimeException $e)
+					catch (\RuntimeException $e)
 					{
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'DbCopyOldJ3xConfig' . '"<br>';

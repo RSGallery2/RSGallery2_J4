@@ -54,7 +54,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 //			$this->removeImagesInFolder($removePath);
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'MaintRemoveAllDataModel: Error executing removeAllImageFiles: <br>';
@@ -130,7 +130,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 
 			$msg .= ' successful';
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$msg .= '. error found: ' . $e->getMessage();
 		}
@@ -194,7 +194,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'MaintRemoveAllDataModel: Error executing removeDataInTables: <br>';
@@ -230,7 +230,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 
 			$isPurged = true;
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$msg = 'Purge table failure: "' . $tableId . '" ' . $e->getCode() . ':' . $e->getMessage() . '\n';
 		}

@@ -86,7 +86,7 @@ HTMLHelper::_('bootstrap.framework');
                         echo '<p> RSG2 Version: <strong>' . $this->rsg2Manifest['version'] . '</strong></p>';
 
                     }
-					catch (RuntimeException $e)
+					catch (\RuntimeException $e)
 					{
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';

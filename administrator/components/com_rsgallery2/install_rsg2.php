@@ -84,7 +84,7 @@ class Com_Rsgallery2InstallerScript
 
             try {
                 Log::add(Text::_('Installer construct'), Log::INFO, 'rsg2');
-            } catch (RuntimeException $exception) {
+            } catch (\RuntimeException $exception) {
                 // Informational log only
             }
         }
@@ -532,7 +532,7 @@ class Com_Rsgallery2InstallerScript
                 $manifest = json_decode($jsonStr, true);
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

@@ -102,7 +102,7 @@ class ImagePaths {
 				$this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'ImagePaths: Error executing __construct: <br>';
@@ -175,7 +175,7 @@ class ImagePaths {
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';

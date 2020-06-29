@@ -59,7 +59,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
                 $oldItems = $db->loadAssocList('name', 'value');
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'OldConfigItems: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -128,7 +128,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             ksort($untouchedJ3xItems);
             ksort($untouchedJ4xItems);
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'OldConfigItems: Error executing MergeJ3xConfiguration: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -175,7 +175,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $checkTable = $db->replacePrefix($findTable);
 
             $tableExist = in_array($checkTable, $existingTables);
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -203,7 +203,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -218,7 +218,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x galleries failed'), 'error');
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -235,7 +235,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -268,7 +268,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $galleries = $db->loadObjectList();
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -299,7 +299,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             // sort recursively
             $galleries = $this->j3x_galleriesSortedByParent($dbGalleries, 0, 0);
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -350,7 +350,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 }
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -400,7 +400,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 }
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -437,7 +437,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -463,7 +463,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $galleries = $db->loadObjectList();
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -499,7 +499,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 }
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -517,7 +517,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 // all root galleries and nested ones
                 $html = $this->GalleriesOfLevelHTML($galleries, 0, 0);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
@@ -557,7 +557,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 $html = $galleryHTML;
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
@@ -594,7 +594,7 @@ $lineStart   <span> name:</span><span>$name</span>
 $lineStart</li>
 EOT;
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
@@ -614,7 +614,7 @@ EOT;
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -708,7 +708,7 @@ EOT;
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -726,7 +726,7 @@ EOT;
             $isOk = $this->copyOldJ3xGalleries2J4x ($j3xGalleriesItems);
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -745,7 +745,7 @@ EOT;
             $isOk = $this-copyOldJ3xGalleries2J4x ($j3xGalleriesItems);
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -786,7 +786,7 @@ EOT;
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -808,7 +808,7 @@ EOT;
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -903,7 +903,7 @@ EOT;
 
             $isOk = true;
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -933,7 +933,7 @@ EOT;
             $images = $db->loadObjectList();
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -963,7 +963,7 @@ EOT;
             $images = $db->loadObjectList();
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -990,7 +990,7 @@ EOT;
             $images = $db->loadObjectList();
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -1011,7 +1011,7 @@ EOT;
             $isOk &= $this->copyOldJ3xImages2J4x ($j3xImageItems);
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -1030,7 +1030,7 @@ EOT;
             $isOk = $this-copyOldJ3xImages2J4x ($j3xImageItems);
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -1057,7 +1057,7 @@ EOT;
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -1080,7 +1080,7 @@ EOT;
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -1103,7 +1103,7 @@ EOT;
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
@@ -1198,7 +1198,7 @@ EOT;
 
             $isOk = true;
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }

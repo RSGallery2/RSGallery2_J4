@@ -257,7 +257,7 @@ class ImageTable extends Table
 				$IsDeleted = parent::delete($pk);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';

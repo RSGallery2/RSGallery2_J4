@@ -27,7 +27,7 @@ HTMLHelper::_('bootstrap.framework');
                 // all root galleries and nested ones
                 $html = GalleriesOfLevelHTML($galleries, 0, 0);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
@@ -67,7 +67,7 @@ HTMLHelper::_('bootstrap.framework');
                 $html = $galleryHTML;
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
@@ -108,7 +108,7 @@ $lineStart   <span> path: </span><span>$path</span>
 $lineStart</li>
 EOT;
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
@@ -172,7 +172,7 @@ EOT;
                         echo '<hr>';
 
 					}
-					catch (RuntimeException $e)
+					catch (\RuntimeException $e)
 					{
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'DBTransferOldJ3xGalleries' . '"<br>';

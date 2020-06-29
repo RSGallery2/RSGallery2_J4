@@ -522,7 +522,7 @@ class ImagesModel extends ListModel
 				$latest[] = $ImgInfo;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
@@ -583,7 +583,7 @@ class ImagesModel extends ListModel
 			}
 			/**/
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'allImages: Error executing query: "' . $query . '"' . '<br>';

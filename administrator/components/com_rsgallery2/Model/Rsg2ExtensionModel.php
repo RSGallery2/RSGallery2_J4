@@ -47,7 +47,7 @@ class Rsg2ExtensionModel
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'ConfigRawModel: readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
@@ -82,7 +82,7 @@ class Rsg2ExtensionModel
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'ConfigRawModel: readConfigFromExtensionTable: Error executing query: "' . "" . '"' . '<br>';

@@ -265,7 +265,7 @@ class HtmlView extends BaseHtmlView
 			// > 0 galleries exist
 			$is1GalleryExisting = !empty ($IdGallery);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';

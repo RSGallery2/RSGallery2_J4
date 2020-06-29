@@ -93,7 +93,7 @@ HTMLHelper::_('bootstrap.framework');
                         }
 
                     }
-					catch (RuntimeException $e)
+					catch (\RuntimeException $e)
 					{
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';

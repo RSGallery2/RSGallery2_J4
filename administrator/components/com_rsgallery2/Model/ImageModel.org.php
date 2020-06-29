@@ -646,7 +646,7 @@ class ImageModel extends AdminModel
 				Factory::getApplication()->enqueueMessage(Text::_('No valid gallery selected'), 'warning');
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing moveImagesTo: "' . $e->getMessage() . '"' . '<br>';
@@ -684,7 +684,7 @@ class ImageModel extends AdminModel
 			$db->setQuery($query);
             $max = $db->loadResult();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing nextOrdering for GalleryId: "' . $GalleryId . '"<br>';
@@ -850,7 +850,7 @@ class ImageModel extends AdminModel
 				Factory::getApplication()->enqueueMessage(Text::_('No valid gallery selected'), 'warning');
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing copyImagesTo: "' . '<br>';
@@ -900,7 +900,7 @@ class ImageModel extends AdminModel
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Catched Error executing assignGalleryId: "' . $imageId . '<br>';
@@ -940,7 +940,7 @@ class ImageModel extends AdminModel
 
 			$imageId = $db->loadResult();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing ImageIdFromName for image name: "' . $imageName . '"<br>';
@@ -980,7 +980,7 @@ class ImageModel extends AdminModel
 			$db->setQuery($query);
 			$IsRowDeleted = $db->execute();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing deleteImageDbItem for image name: "' . $imageName . '"<br>';
@@ -1044,7 +1044,7 @@ class ImageModel extends AdminModel
                 }
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'Model image: Error executing save_imageProperties: for image id: "' . $id . '"<br>';

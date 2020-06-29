@@ -46,7 +46,7 @@ class Rsg2J3xTablesBootModel
 
             $tableExist = in_array($checkTable, $existingTables);
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'ConfigRawModel: J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';

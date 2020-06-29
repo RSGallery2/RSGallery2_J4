@@ -80,7 +80,7 @@ function configInputField($name = 'unknown', $value = '')
 		</td>
 		*/
 	}
-	catch (RuntimeException $e)
+	catch (\RuntimeException $e)
 	{
 		$OutTxt = '';
 		$OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';
@@ -127,7 +127,7 @@ function configInputField($name = 'unknown', $value = '')
 							configInputField($name, $value);
 						}
 					}
-					catch (RuntimeException $e)
+					catch (\RuntimeException $e)
 					{
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';

@@ -82,7 +82,7 @@ class HtmlView extends BaseHtmlView
                         $this->untouchedJ4xItems
                         ) = $j3xModel->MergeJ3xConfigTestLists($this->j3xConfigItems, $this->j4xConfigItems );
 				}
-				catch (RuntimeException $e)
+				catch (\RuntimeException $e)
 				{
 					$OutTxt = '';
 					$OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
@@ -116,7 +116,7 @@ class HtmlView extends BaseHtmlView
                     $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesListSorted();
 
                 }
-                catch (RuntimeException $e)
+                catch (\RuntimeException $e)
                 {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
@@ -140,7 +140,7 @@ class HtmlView extends BaseHtmlView
                     //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
 
                 }
-                catch (RuntimeException $e)
+                catch (\RuntimeException $e)
                 {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';

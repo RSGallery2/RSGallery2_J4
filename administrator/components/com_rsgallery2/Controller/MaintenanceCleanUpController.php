@@ -98,7 +98,7 @@ class MaintenanceCleanUpController extends BaseController
 
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing purgeImagesAndData: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -147,7 +147,7 @@ class MaintenanceCleanUpController extends BaseController
                     $msgType = 'error';
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing prepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -194,7 +194,7 @@ class MaintenanceCleanUpController extends BaseController
                     $msgType = 'error';
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing undoPrepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -265,7 +265,7 @@ class MaintenanceCleanUpController extends BaseController
                     $isOk = true;
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing activateDrop4RSG2Tables: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -317,7 +317,7 @@ class MaintenanceCleanUpController extends BaseController
                     $msgType = 'warning';
                 }
 
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing ResetConfigToDefault: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

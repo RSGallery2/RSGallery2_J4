@@ -159,7 +159,7 @@ class ImageFileModel extends BaseModel // AdminModel
 			}
 			/**/
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing createDisplayImageFile for image name: "' . $targetFileName . '" size: ' . $targetWidth . '"<br>';
@@ -307,7 +307,7 @@ class ImageFileModel extends BaseModel // AdminModel
 			}
 			/**/
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing createThumbImageFile for image name: "' . $thumbPathFileName . '" size: ' . $thumbSize . '"<br>';
@@ -367,7 +367,7 @@ class ImageFileModel extends BaseModel // AdminModel
 		        JPath::setPermissions($dstFileName, '0644');
 	        }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'copyFile2OrignalDir: "' . $srcFileName . '" -> "' . $dstFileName . '"<br>';
@@ -462,7 +462,7 @@ class ImageFileModel extends BaseModel // AdminModel
                 // $IsImagesDeleted = false;
             }
         }
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing deleteRowItemImages: "' . '<br>';
@@ -506,7 +506,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				$IsImageDeleted = true;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing DeleteImage for image name: "' . $filename . '"<br>';
@@ -611,7 +611,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			if ($Rsg2DebugActive)
 			{
@@ -689,7 +689,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			if ($Rsg2DebugActive)
 			{
@@ -786,7 +786,7 @@ class ImageFileModel extends BaseModel // AdminModel
 					}
 					/**/
 					}
-					catch (RuntimeException $e)
+					catch (\RuntimeException $e)
 					{
 						$memImage->destroy ();
 						throw $e;
@@ -935,7 +935,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing SelectImagesFromFolder: "' . $file . '"<br>';
@@ -1026,7 +1026,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				list($isRotated, $urlThumbFile, $msg) = $this->rotate_image($fileName, $galleryId);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing rotate_image: "' . $fileName . '"<br>';
@@ -1117,7 +1117,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				list($isRotated, $urlThumbFile, $msg) = $this->CreateRSG2Images($fileName, $galleryId);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing flip_image: "' . $fileName . '"<br>';

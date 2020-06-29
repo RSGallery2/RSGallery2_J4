@@ -172,7 +172,7 @@ class ConfigRawModel extends BaseModel // BaseDatabaseModel
                 }
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
 		{
             $OutTxt = '';
             $OutTxt .= 'ConfigRawModel: Error in ResetConfigToDefault: "' . '<br>';
@@ -206,7 +206,7 @@ class ConfigRawModel extends BaseModel // BaseDatabaseModel
 				$isSaved = $this->copyJ3xConfigItems2J4xOptions ($oldConfigItems);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'ConfigRawModel: Error in copyOldJ3xConfig2J4xOptions: "' . '<br>';
@@ -247,7 +247,7 @@ class ConfigRawModel extends BaseModel // BaseDatabaseModel
 			$isSaved = $this->saveItems($j4xConfigItems);
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'ConfigRawModel: Error in copyJ3xConfigItems2J4xOptions: "' . '<br>';

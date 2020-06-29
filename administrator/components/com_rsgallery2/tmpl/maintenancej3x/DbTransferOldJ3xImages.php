@@ -516,7 +516,7 @@ use Joomla\CMS\Language\Text;
 
 
                     echo '<hr>';
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'DbTransferOldJ3xImages' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

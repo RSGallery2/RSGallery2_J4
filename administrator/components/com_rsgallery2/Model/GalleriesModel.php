@@ -554,7 +554,7 @@ class GalleriesModel extends ListModel
 				$latest[] = $ImgInfo;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
@@ -616,7 +616,7 @@ class GalleriesModel extends ListModel
 			}
 			 /**/
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';

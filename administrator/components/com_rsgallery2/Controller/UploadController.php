@@ -247,7 +247,7 @@ class UploadController extends FormController
 			}
 
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			echo new JsonResponse($e);
 		}
@@ -415,7 +415,7 @@ out:
 					$srcTempPathFileName, $targetFileName, $galleryId, 'uploadFile');
 				/**/
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
@@ -467,7 +467,7 @@ out:
 			}
 
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			if ($Rsg2DebugActive)
 			{
@@ -670,7 +670,7 @@ out:
 			}
 
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			if ($Rsg2DebugActive)
 			{
@@ -938,7 +938,7 @@ out:
 			}
 
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			if ($Rsg2DebugActive)
 			{
@@ -1094,7 +1094,7 @@ interface IResponseTransfer {
 					$fileName, $targetFileName, $galleryId, $origin);
 				/**/
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'moveFile2OrignalDir: "' . $fileName . '" -> "' . $targetFileName . '"<br>';
@@ -1146,7 +1146,7 @@ interface IResponseTransfer {
 			}
 
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			if ($Rsg2DebugActive)
 			{
@@ -1224,7 +1224,7 @@ interface IResponseTransfer {
 					}
 				}
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing copySelectedOldJ3xConfig2J4xOptions: "' . '<br>';
@@ -1289,7 +1289,7 @@ interface IResponseTransfer {
 					$msgType = 'error';
 				}
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing copyOldJ3xConfig2J4xOptions: "' . '<br>';
