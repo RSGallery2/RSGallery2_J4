@@ -25,6 +25,7 @@ use Joomla\CMS\Log\Log;
 ////require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
 //$localDir = str_replace("\\","/",dirname(__FILE__));
 //$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
+
 //$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
 //$rsg2ClassName = 'InstallMessage';
 //require_once($rsg2FileName);
@@ -158,9 +159,10 @@ class Com_Rsgallery2InstallerScript
                 // May be error on install ?
                 // return false;
             }
+
+            Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');
         }
 
-        Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');
 
         return true;
     }
@@ -187,7 +189,7 @@ class Com_Rsgallery2InstallerScript
     public function install($parent)
     {
 //		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
-        Log::add(Text::_('COM_RSGALLERY2_INSTALL_TEXT'), Log::INFO, 'rsg2');
+        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_INSTALL'), Log::INFO, 'rsg2');
 
         return true;
     }
@@ -214,7 +216,8 @@ class Com_Rsgallery2InstallerScript
     public function update($parent)
     {
         // echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
-        Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
+        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UPDATE'), Log::INFO, 'rsg2');
+        //Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
 
         return true;
     }
@@ -317,7 +320,9 @@ class Com_Rsgallery2InstallerScript
                 break;
 
             case 'uninstall':
-                echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>CGalleries and images table will still exist';
+
+                // toDo: check existance of galleries/images table and then write
+                echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>Galleries and images table will still exist';
                 // ToDo: uninstall Message
 
                 break;
@@ -360,19 +365,19 @@ class Com_Rsgallery2InstallerScript
     public function uninstall($parent)
     {
         //echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
-        Log::add(Text::_('COM_RSGALLERY2_UNINSTALL_TEXT'), Log::INFO, 'rsg2');
+        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL'), Log::INFO, 'rsg2');
 
         return true;
     }
 
     /**
      * InitGalleryTree
-     * Intializes the nested tree with a root element if not already exists
+     * Initializes the nested tree with a root element if not already exists
      *
-     * @return boolroot element
+     * @return bool
      * @throws Exception
      *
-     * @since
+     * @since version
      */
     public function initGalleryTree()
     {
@@ -380,65 +385,31 @@ class Com_Rsgallery2InstallerScript
 
 
         try {
-            $db = Factory::getDbo();
+            $GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Model/GalleryTreeModel.php';
+            include ($GalleryTreeModelFileName);
+            $galleryTreeModel =  new Joomla\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
 
-            Log::add('InitGalleryTree', Log::INFO, 'rsg2');
-            // echo '<p>Checking if the root record is already present ...</p>';
+            // check for root item
+            $isRootItemExisting = $galleryTreeModel->isRootItemExisting();
 
-            // Id of binary root element
-            $query = $db->getQuery(true);
-            $query->select('id');
-            $query->from('#__rsg2_galleries');
-            $query->where('id = 1');
-//            $query->where('alias = "n-root"');
-            $db->setQuery($query);
-
-            $id = $db->loadResult();
-
-            if ($id == '1') {   // assume tree structure already built
-                Log::add('Gallery table root record already present exiting ...', Log::INFO, 'rsg2');
+            if ($isRootItemExisting) {   // assume tree structure already built
+                Log::add('Gallery table root record is already present', Log::INFO, 'rsg2');
+                $isGalleryTreeCreated = true;
             } else {
 
-                Log::add('DO INIT GALLERY TABLE ', Log::INFO, 'rsg2');
+                Log::add('init nested gallery root item', Log::INFO, 'rsg2');
 
-                // ToDo: call general init of nested tree gallery table
-                // GalleryTreeModel::reinitNestedGalleryTable
-                // re-init nested gallery table
+                $isGalleryTreeCreated = $galleryTreeModel->reinitNestedGalleryTable();
 
-//                $galleryTreeModel =  new GalleryTreeModel ();
-//                $galleryTreeModel->reinitNestedGalleryTable($lastNodeIdx);
-
-
-                // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
-                // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
-
-                $name = 'galleries root';
-                $alias = 'groot';
-
-                $date = Factory::getDate();
-                $user = Factory::getUser();
-
-                // insert root record
-                // Missing
-                $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id', 
-								 'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', );
-                $values =  array(1, 'galleries root', 'n-root', 'root element of nested list', '', '', 0,
-				                 0, '', 0, 1, $date, $user->id, $date, $user->id);
-
-                // Create root element
-                $query = $db->getQuery(true)
-                    ->insert('#__rsg2_galleries')
-                    ->columns($db->quoteName($columns))
-                    ->values(implode(',', $db->quote($values)));
-                $db->setQuery($query);
-                $result = $db->execute();
-                if ($result) {
-                    $isGalleryTreeCreated = true;
+                if ($isGalleryTreeCreated) {
+                    $isGalleryTreeReset = true;
+                    Log::add('Success writing tree root item into gallery database', Log::INFO, 'rsg2');
                 } else {
-                    Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
-                    Log::add('Failed writing root into gallery database', Log::INFO, 'rsg2');
+                    //Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
+                    Log::add('Failed writing tree root item into gallery database', Log::INFO, 'rsg2');
                 }
             }
+
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
@@ -447,64 +418,64 @@ class Com_Rsgallery2InstallerScript
         return $isGalleryTreeCreated;
     }
 
-    /**
-     * are_RSG2_J3x_Tables_Existing
-     * Checks for old config table. If it exists it is assumed that all joomla 3 x and older tables
-     * @return bool
-     * @throws Exception
-     *
-     * @since version
-     */
-    public function update_config_On_RSG2_J3x_Tables_Existing()
-    {
-        $isOldGalleryTableExisting = false;
-
-        try {
-            Log::add('Check for existing old J3x Tables', Log::INFO, 'rsg2');
-
-            $j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-            Log::add('after $j3x_model', Log::INFO, 'rsg2');
-
-            $isOldGalleryTableExisting = $j3x_model->J3xConfigTableExist();
-
-            // prepare taking over old
-            if ($isOldGalleryTableExisting) {
-
-                Log::add('!!! Old J3x tables do exist !!!', Log::INFO, 'rsg2');
-
-//			    // already updated ?
+//    /**
+//     * are_RSG2_J3x_Tables_Existing
+//     * Checks for old config table. If it exists it is assumed that all joomla 3 x and older tables
+//     * @return bool
+//     * @throws Exception
+//     *
+//     * @since version
+//     */
+//    public function update_config_On_RSG2_J3x_Tables_Existing()
+//    {
+//        $isOldGalleryTableExisting = false;
 //
-//                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-//                $j3xConfigVersion = $rsgConfig->get('j3x_merged_cfg_version');
+//        try {
+//            Log::add('Check for existing old J3x Tables', Log::INFO, 'rsg2');
 //
-//                // config not set already
-//                if (empty ($j3xConfigVersion)) {
-//                    Log::add('Merge J3x config required', Log::INFO, 'rsg2');
+//            $j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+//            Log::add('after $j3x_model', Log::INFO, 'rsg2');
 //
+//            $isOldGalleryTableExisting = $j3x_model->J3xConfigTableExist();
 //
+//            // prepare taking over old
+//            if ($isOldGalleryTableExisting) {
 //
+//                Log::add('!!! Old J3x tables do exist !!!', Log::INFO, 'rsg2');
 //
-//                    //$j3x_model->copyOldJ3xConfig2J4xOptions ();
-//                    Log::add('after copyOldJ3xConfig2J4xOptions', Log::INFO, 'rsg2');
-//                    Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
+////			    // already updated ?
+////
+////                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+////                $j3xConfigVersion = $rsgConfig->get('j3x_merged_cfg_version');
+////
+////                // config not set already
+////                if (empty ($j3xConfigVersion)) {
+////                    Log::add('Merge J3x config required', Log::INFO, 'rsg2');
+////
+////
+////
+////
+////                    //$j3x_model->copyOldJ3xConfig2J4xOptions ();
+////                    Log::add('after copyOldJ3xConfig2J4xOptions', Log::INFO, 'rsg2');
+////                    Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
+////
+////
+////
+////                }
+////                else
+////                {
+////                    Log::add('Merge J3x config already done: cfg version: ' . $j3xConfigVersion, Log::INFO, 'rsg2');
+////                }
+//            } else {
+//                Log::add('Old J3x tables do NOT exist', Log::INFO, 'rsg2');
+//            }
+//        } //catch (\RuntimeException $e)
+//        catch (\Exception $e) {
+//            throw new \RuntimeException($e->getMessage() . ' from update_config_On_RSG2_J3x_Tables_Existing');
+//        }
 //
-//
-//
-//                }
-//                else
-//                {
-//                    Log::add('Merge J3x config already done: cfg version: ' . $j3xConfigVersion, Log::INFO, 'rsg2');
-//                }
-            } else {
-                Log::add('Old J3x tables do NOT exist', Log::INFO, 'rsg2');
-            }
-        } //catch (\RuntimeException $e)
-        catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage() . ' from update_config_On_RSG2_J3x_Tables_Existing');
-        }
-
-        return $isOldGalleryTableExisting;
-    }
+//        return $isOldGalleryTableExisting;
+//    }
 
     function getVersionFromManifestParam()
     {

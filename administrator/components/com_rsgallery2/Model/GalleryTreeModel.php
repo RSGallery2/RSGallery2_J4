@@ -30,6 +30,48 @@ class GalleryTreeModel extends BaseModel
 {
 
     /**
+     * Check if at least one gallery exists
+     * Regards the nested structure (ID=1 is only root of tree and no gallery)
+     *
+     * @return true on galleries found
+     *
+     * @since 4.3.0
+     */
+    public function isRootItemExisting()
+    {
+        $is1GalleryExisting = false;
+
+        try
+        {
+            $db    = Factory::getDbo();
+            $query = $db->getQuery(true);
+
+            // count gallery items
+            $query->select('COUNT(*)')
+                // ignore root item  where id is "1"
+                ->where($db->quoteName('id') . ' = 1')
+                ->from('#__rsg2_galleries');
+
+            $db->setQuery($query, 0, 1);
+            $IdGallery          = $db->loadResult();
+
+            // > 0 galleries exist
+            $is1GalleryExisting = !empty ($IdGallery);
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleryTreeModel::is1GalleryRootItemExisting: Error count in "__rsg2_galleries" table' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $is1GalleryExisting;
+    }
+
+    /**
      * Reset gallery table to empty state
      * Deletes all galleries and initialises the root item of the nested tree
      *
@@ -105,7 +147,7 @@ class GalleryTreeModel extends BaseModel
             if ($result) {
                 $isGalleryTreeReset = true;
             } else {
-                Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
+                Factory::getApplication()->enqueueMessage("Failed writing tree root item into gallery database", 'error');
             }
 
         } //catch (\RuntimeException $e)
@@ -227,7 +269,7 @@ class GalleryTreeModel extends BaseModel
 
 //    /**
 //     * ResetGalleryTree
-//     * Delete content of gallery table and init with nesetd ...
+//     * Delete content of gallery table and init with nested ...
 //     *
 //     * @return bool
 //     * @throws Exception
