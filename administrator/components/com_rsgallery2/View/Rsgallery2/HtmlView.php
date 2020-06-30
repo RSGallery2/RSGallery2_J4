@@ -171,7 +171,7 @@ class HtmlView extends BaseHtmlView
 				. '*  Use _CFG_ in ?variable? names<br>'
 				. '*  Last... ? trashed or not published ? <br>'
 				. '*  !!! call auto setup config if not exist<br>'
-				. '*  <br>'
+				. '*  deprecated Factory::getUser() ==> $app->getIdentity()<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 				. '</span><br><br>';

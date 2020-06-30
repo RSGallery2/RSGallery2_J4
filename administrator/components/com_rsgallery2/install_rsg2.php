@@ -383,7 +383,6 @@ class Com_Rsgallery2InstallerScript
     {
         $isGalleryTreeCreated = false;
 
-
         try {
             $GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Model/GalleryTreeModel.php';
             include ($GalleryTreeModelFileName);

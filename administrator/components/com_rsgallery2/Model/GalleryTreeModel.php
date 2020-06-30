@@ -35,15 +35,14 @@ class GalleryTreeModel extends BaseModel
      *
      * @return true on galleries found
      *
-     * @since 4.3.0
+     * @since version
      */
     public function isRootItemExisting()
     {
         $is1GalleryExisting = false;
 
-        try
-        {
-            $db    = Factory::getDbo();
+        try {
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
 
             // count gallery items
@@ -53,13 +52,11 @@ class GalleryTreeModel extends BaseModel
                 ->from('#__rsg2_galleries');
 
             $db->setQuery($query, 0, 1);
-            $IdGallery          = $db->loadResult();
+            $IdGallery = $db->loadResult();
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleryTreeModel::is1GalleryRootItemExisting: Error count in "__rsg2_galleries" table' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -81,7 +78,7 @@ class GalleryTreeModel extends BaseModel
      *
      * @since version
      */
-    public static function reinitNestedGalleryTable($rgt=1)
+    public static function reinitNestedGalleryTable($rgt = 1)
     {
         $isGalleryTreeReset = false;
 
@@ -132,8 +129,8 @@ class GalleryTreeModel extends BaseModel
             // insert root record
             // Missing
             $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id',
-                'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', );
-            $values =  array(1, $name, $alias, 'root element of nested gallery list', '', '', 0,
+                'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by',);
+            $values = array(1, $name, $alias, 'root element of nested gallery list', '', '', 0,
                 0, $path, $lft, $rgt, $date, $user->id, $date, $user->id);
 
             // Create root element
@@ -158,150 +155,4 @@ class GalleryTreeModel extends BaseModel
         return $isGalleryTreeReset;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //    /**
-//     * InitGalleryTree
-//     * Intializes the nested tree with a root element
-//     *
-//     * @return bool
-//     * @throws Exception
-//     *
-//     * @since
-//     */
-//    public static function InitGalleryTree()
-//    {
-//        $isGalleryTreeCreated = false;
-//
-//        $id_galleries = '#__rsg2_galleries';
-//
-//        try {
-//            $db = Factory::getDbo();
-//
-//            Log::add('InitGalleryTree', Log::INFO, 'rsg2');
-//            // echo '<p>Checking if the root record is already present ...</p>';
-//
-//            // Check Id of binary root element existing
-//            $query = $db->getQuery(true);
-//            $query->select('id');
-//            $query->from($id_galleries);
-//            $query->where('id = 1');
-//            $query->where('alias = "galleries-root-alias"');
-//            $db->setQuery($query);
-//
-//            $id = $db->loadResult();
-//
-//            // tree structure already built ?
-//            if ($id == '1') {
-//                Log::add('Gallery table root record already present exiting ...', Log::INFO, 'rsg2');
-//            } else {
-//
-//                // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
-//                // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
-//
-//                // insert root record
-//                // Missing
-//                $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id', 'level', 'path', 'lft', 'rgt');
-//                $values = array(1, 'galleries root', 'galleries-root-alias', 'root element of nested list', '', '', 0, 0, '', 0, 1);
-//
-//                // Create root element
-//                $query = $db->getQuery(true)
-//                    ->insert('#__rsg2_galleries')
-//                    ->columns($db->quoteName($columns))
-//                    ->values(implode(',', $db->quote($values)));
-//                $db->setQuery($query);
-//
-//                $result = $db->execute();
-//                if ($result) {
-//                    $isGalleryTreeCreated = true;
-//                } else {
-//                    Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
-//                }
-//            }
-//        } //catch (\RuntimeException $e)
-//        catch (\Exception $e) {
-//            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
-//        }
-//
-//        return $isGalleryTreeCreated;
-//    }
-
-//    /**
-//     * ResetGalleryTree
-//     * Delete content of gallery table and init with nested ...
-//     *
-//     * @return bool
-//     * @throws Exception
-//     *
-//     * @since
-//     */
-//    public static function ResetGalleryTree()
-//    {
-//        $isGalleryTreeResetted = false;
-//
-//
-//        try {
-//            $db = Factory::getDbo();
-//
-//            Log::add('ResetGalleryTree', Log::INFO, 'rsg2');
-//            // echo '<p>Checking if the root record is already present ...</p>';
-//
-//            // ToDO: fillout ResetGalleryTree()
-//
-//
-//
-//
-//        } //catch (\RuntimeException $e)
-//        catch (\Exception $e) {
-//            throw new \RuntimeException($e->getMessage() . ' from ResetGalleryTree');
-//        }
-//
-//        return $isGalleryTreeResetted;
-//    }
-
-
-
 } // class
-
-
