@@ -62,9 +62,6 @@ class GalleryTreeModel extends BaseModel
 
             //--- insert root of nested list ------------------------------------
 
-            $lft = 0;
-            $path = '';
-
             // ToDo: adjust columns to below and use this form
             // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
             // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
@@ -80,6 +77,9 @@ class GalleryTreeModel extends BaseModel
 //                ->set('alias = ' . $db->quote('galleries root'))
 //                ->set('access = 1')
 //                ->set('path = ' . $db->quote(''));
+
+            $lft = 0;
+            $path = '';
 
             $name = 'galleries root';
             $alias = 'groot';

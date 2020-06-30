@@ -390,7 +390,7 @@ class Com_Rsgallery2InstallerScript
             $query->select('id');
             $query->from('#__rsg2_galleries');
             $query->where('id = 1');
-            $query->where('alias = "n-root"');
+//            $query->where('alias = "n-root"');
             $db->setQuery($query);
 
             $id = $db->loadResult();
@@ -399,9 +399,12 @@ class Com_Rsgallery2InstallerScript
                 Log::add('Gallery table root record already present exiting ...', Log::INFO, 'rsg2');
             } else {
 
+                Log::add('DO INIT GALLERY TABLE ', Log::INFO, 'rsg2');
+
                 // ToDo: call general init of nested tree gallery table
-                // reinitNestedGalleryTable
+                // GalleryTreeModel::reinitNestedGalleryTable
                 // re-init nested gallery table
+
 //                $galleryTreeModel =  new GalleryTreeModel ();
 //                $galleryTreeModel->reinitNestedGalleryTable($lastNodeIdx);
 
@@ -409,7 +412,10 @@ class Com_Rsgallery2InstallerScript
                 // -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
                 // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 
-				$date = Factory::getDate();
+                $name = 'galleries root';
+                $alias = 'groot';
+
+                $date = Factory::getDate();
                 $user = Factory::getUser();
 
                 // insert root record
@@ -430,6 +436,7 @@ class Com_Rsgallery2InstallerScript
                     $isGalleryTreeCreated = true;
                 } else {
                     Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
+                    Log::add('Failed writing root into gallery database', Log::INFO, 'rsg2');
                 }
             }
         } //catch (\RuntimeException $e)
