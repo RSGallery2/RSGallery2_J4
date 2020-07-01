@@ -258,9 +258,9 @@ class Com_Rsgallery2InstallerScript
                 // Nested gallery table needs a root item
                 $isGalleryTreeCreated = $this->initGalleryTree();
 
-                $installMsg = installMessage($type);
+                $installMsg = $this->installMessage($type);
                 echo $installMsg;
-                
+
 //-----------------------------------------------------------------------
 ////                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
 ////                //$msg = $installMessage->installMessageText($type);
