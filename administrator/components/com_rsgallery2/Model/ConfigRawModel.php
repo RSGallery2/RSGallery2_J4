@@ -112,8 +112,8 @@ class ConfigRawModel extends BaseModel // BaseDatabaseModel
 
         try {
 
-            //$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/Xchangelog.xml';
-            $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/config.xml';
+            //$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/config.xml';
+            $xmlFile = JPATH_ADMINISTRATOR . '/component/com_rsgallery2/config.xml';
 
             // Attempt to load the XML file.
             $xmlOuter = simplexml_load_file($xmlFile);

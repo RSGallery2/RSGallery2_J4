@@ -250,43 +250,15 @@ class Com_Rsgallery2InstallerScript
         switch ($type) {
 
             case 'install':
+                // install: insert configuration standard values  ??? update 3x to 4x ???
+                //ToDo: $isConfigSavedOnce; ConfigRawModel->ResetConfigToDefault();
+
             case 'update':
 
-                //
+                // Nested gallery table needs a root item
                 $isGalleryTreeCreated = $this->initGalleryTree();
 
 
-//                Rsg2InstallTasks::initConfigFromXmlFile();
-                //// No namespace in destination file
-                //$path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
-                //// JLoader::registerPrefix() or JLoader::registerNamespace()
-                //JLoader::register('Rsg2InstallTasks', $path);
-                //Rsg2InstallTasks::initConfigFromXmlFile();
-
-//                // JLoader::registerNamespace()
-//                $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
-//                $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
-//                JLoader::registerNamespace($nameSpace, $path);
-//                // call initConfigFromXmlFile
-//                Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
-//
-//                // JLoader::registerPrefix()
-//                $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
-//                //$nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper';
-//                $nameSpace = 'Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks';
-//                JLoader::registerPrefix($nameSpace, $path);
-//
-//                Joomla\Component\Rsgallery2\Administrator\Helper\Rsg2InstallTasks::initConfigFromXmlFile();
-//                //Rsg2InstallTasks::initConfigFromXmlFile();
-
-//                // JLoader::registerPrefix()
-//                // $path = $this->rsg2_basePath . '/Helper/Rsg2InstallTasks.php';
-//                $path = $this->rsg2_basePath . '/Helper';
-//                $prefix = 'rsg2installtasksflat';
-//                JLoader::registerPrefix($prefix, $path);
-//
-//                rsg2installtasksflat\rsg2installtasksflat::initConfigFromXmlFile();
-//                //Rsg2InstallTasks::initConfigFromXmlFile();
 
 //-----------------------------------------------------------------------
 ////                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
@@ -295,25 +267,6 @@ class Com_Rsgallery2InstallerScript
 //                $msg = InstallMessage::createLinksHtml($this->newRelease);
 //                echo $msg;
 
-                // insert configuration standard values
-                /**
-                 * //$configModel = $this->getModel('ConfigRaw');
-                 * $configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
-                 * $isSaved = $configModel->ResetConfigToDefault();
-                 *
-                 * if ($isSaved) {
-                 * // config saved message
-                 * $msg .= '<br><br>' . Text::_('Configuration parameters have been reset to default', true);
-                 * }
-                 * else
-                 * {
-                 * $msg .= "Error at resetting configuration to default'";
-                 * $msgType = 'warning';
-                 * }
-                 * echo $msg;
-                 *
-                 * break;
-                 * /**/
 
                 echo $type . ' finished';
 
@@ -415,6 +368,36 @@ class Com_Rsgallery2InstallerScript
         }
 
         return $isGalleryTreeCreated;
+    }
+
+
+    /**
+     * InitGalleryTree
+     * Initializes the nested tree with a root element if not already exists
+     *
+     * @return bool
+     * @throws Exception
+     *
+     * @since version
+     */
+    public function installMessage($type)
+    {
+        $installMsg = false;
+
+        try {
+
+            $installMsgHelperFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Helper/InstallMessage.php';
+            include ($installMsgHelperFileName);
+            $InstallMessageHelper =  new Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage ($this->newRelease, $this->oldRelease);
+
+            $installMsg = $InstallMessageHelper->installMessageText($type);
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
+        }
+
+        return $installMsg;
     }
 
 //    /**
