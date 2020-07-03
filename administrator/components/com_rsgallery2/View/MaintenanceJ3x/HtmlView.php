@@ -179,20 +179,20 @@ class HtmlView extends BaseHtmlView
 		switch ($Layout)
 		{
 			case 'DbCopyOldJ3xConfig':
-                // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
-                    echo '<span style="color:red">'
-                        . 'Tasks: <br>'
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-                        . '</span><br>';
-                }
+						. '</span><br>';
+				}
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'), 'screwdriver');
-				ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_CONFIGURATION', false);
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'), 'screwdriver');
+				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xConfig2J4xOptions', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_CONFIGURATION', false);
 				//  ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_CONFIGURATION', true);
 				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
 
@@ -200,49 +200,49 @@ class HtmlView extends BaseHtmlView
 				break;
 
 			case 'DBTransferOldJ3xGalleries':
-                // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
-                    echo '<span style="color:red">'
-                        . 'Tasks: <br>'
-                        . '*  Separate code for galleries raw view -> import into views<br>'
-                        . '* check table : if empty .. -> use isset ??? <br>'
-                        . '* !!! asset id !!! <br>'
-                        . '* db variable "access". how to use ???<br>'
-                        . '* Fix: Copy selected images / galleries -> greyed button, Ids in cotroller'
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+						. '*  Separate code for galleries raw view -> import into views<br>'
+						. '* check table : if empty .. -> use isset ??? <br>'
+						. '* !!! asset id !!! <br>'
+						. '* db variable "access". how to use ???<br>'
+						. '* Fix: Copy selected images / galleries -> greyed button, Ids in cotroller'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-                        . '</span><br>';
-                }
+						. '</span><br>';
+				}
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'), 'screwdriver');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 
-                ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xGalleries2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
-                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
+				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
+				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
 
 				break;
 
 			case 'DbTransferOldJ3xImages':
-                // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
-                    echo '<span style="color:red">'
-                        . 'Tasks: <br>'
-				. '*  Separate code for images raw view -> import into views<br>'
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+						. '*  Separate code for images raw view -> import into views<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-                        . '</span><br>';
-                }
+						. '</span><br>';
+				}
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 
-                ToolBarHelper::custom ('MaintenanceJ3x.copyOldJ3xImages2J4x','copy','','COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_IMAGES', false);
-                //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_IMAGES', false);
+				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_IMAGES', false);
 				break;
 
 			default:
@@ -250,8 +250,11 @@ class HtmlView extends BaseHtmlView
 				break;
 		}
 
-		// direct to config
-		$toolbar->preferences('com_rsgallery2');
+		// Options button.
+		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		{
+			$toolbar->preferences('com_rsgallery2');
+		}
 	}
 
 }

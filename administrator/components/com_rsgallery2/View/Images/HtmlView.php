@@ -224,55 +224,55 @@ class HtmlView extends BaseHtmlView
 		switch ($Layout)
 		{
 			case 'images_raw':
-		        // on develop show open tasks if existing
-		        if (!empty ($this->isDevelop))
-		        {
-			        echo '<span style="color:red">'
-				        . 'Tasks: <br>'
-				        . '* Can do ...<br>'
-                        . '* Add pagination<br>'
-				        . '* Test: archived, trashed, (delete)<br>'
-                        . '* Add delete function<br>'
-				        //	. '*  <br>'
-				        //	. '*  <br>'
-				        //	. '*  <br>'
-				        . '</span><br><br>';
-		        }
-        
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+						. '* Can do ...<br>'
+						. '* Add pagination<br>'
+						. '* Test: archived, trashed, (delete)<br>'
+						. '* Add delete function<br>'
+						//	. '*  <br>'
+						//	. '*  <br>'
+						//	. '*  <br>'
+						. '</span><br><br>';
+				}
+
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'image');
 
 				ToolBarHelper::editList('image.edit');
-				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH'); 
+				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
 				break;
 
 
 			default:
-		        // on develop show open tasks if existing
-		        if (!empty ($this->isDevelop))
-		        {
-			        echo '<span style="color:red">'
-				        . 'Tasks: <br>'
-                        . '* Test: archived, trashed, (delete)<br>'
-                        . '* Can do ...<br>'
-                        . '* Add pagination<br>'
-                        . '* Add delete function<br>'
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+						. '* Test: archived, trashed, (delete)<br>'
+						. '* Can do ...<br>'
+						. '* Add pagination<br>'
+						. '* Add delete function<br>'
 						. '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
-                        . '* display thumb'
-				        . '* __associations <br>'
-        				. '* Batch : turn images .... <br>'
-				        . '* Can do ...<br>'
-                        . '* Add pagination<br>'
+						. '* display thumb'
 						. '* __associations <br>'
-                        . '* Delete function needs to delete watermarked too !<br>'
-	                    . '* Search controls ...<br>'
-	                    . '* Image not shown above title (data-original-title?)<br>'
-        				. '* Search tools -> group by ?<br>'
-                    //	. '*  <br>'
-                    //	. '*  <br>'
-				    //	. '*  <br>'
-				        . '</span><br><br>';
-		        }
-        
+						. '* Batch : turn images .... <br>'
+						. '* Can do ...<br>'
+						. '* Add pagination<br>'
+						. '* __associations <br>'
+						. '* Delete function needs to delete watermarked too !<br>'
+						. '* Search controls ...<br>'
+						. '* Image not shown above title (data-original-title?)<br>'
+						. '* Search tools -> group by ?<br>'
+						//	. '*  <br>'
+						//	. '*  <br>'
+						//	. '*  <br>'
+						. '</span><br><br>';
+				}
+
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'image');
 
 				//ToolBarHelper::addNew('image.add');
@@ -297,8 +297,8 @@ class HtmlView extends BaseHtmlView
 				$childBar->trash('categories.trash')->listCheck(true);
 
 				// $toolbar->standardButton('refresh')
-                // 	->text('JTOOLBAR_REBUILD')
-                // 	->task('image.rebuild');
+				// 	->text('JTOOLBAR_REBUILD')
+				// 	->task('image.rebuild');
 
 
 				ToolBarHelper::editList('image.edit');
@@ -306,32 +306,35 @@ class HtmlView extends BaseHtmlView
 //				ToolBarHelper::deleteList('', 'image.delete', 'JTOOLBAR_DELETE');
 
 				/**
-				// Add a batch button
-				$user = Factory::getUser();
-				if ($user->authorise('core.create', 'com_rsgallery2')
-					&& $user->authorise('core.edit', 'com_rsgallery2')
-					&& $user->authorise('core.edit.state', 'com_rsgallery2')
-				)
-				{
-					// Get the toolbar object instance
-					$bar = Toolbar::getInstance('toolbar');
-
-					$title = Text::_('JTOOLBAR_BATCH');
-
-					// Instantiate a new JLayoutFile instance and render the batch button
-					$layout = new LayoutFile('joomla.toolbar.batch');
-
-					$dhtml = $layout->render(array('title' => $title));
-					$bar->appendButton('Custom', $dhtml, 'batch');
-				}
-				/**/
+				 * // Add a batch button
+				 * $user = Factory::getUser();
+				 * if ($user->authorise('core.create', 'com_rsgallery2')
+				 * && $user->authorise('core.edit', 'com_rsgallery2')
+				 * && $user->authorise('core.edit.state', 'com_rsgallery2')
+				 * )
+				 * {
+				 * // Get the toolbar object instance
+				 * $bar = Toolbar::getInstance('toolbar');
+				 *
+				 * $title = Text::_('JTOOLBAR_BATCH');
+				 *
+				 * // Instantiate a new JLayoutFile instance and render the batch button
+				 * $layout = new LayoutFile('joomla.toolbar.batch');
+				 *
+				 * $dhtml = $layout->render(array('title' => $title));
+				 * $bar->appendButton('Custom', $dhtml, 'batch');
+				 * }
+				 * /**/
 
 				break;
 		}
 
-		$toolbar->preferences('com_rsgallery2');
+		// Options button.
+		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		{
+			$toolbar->preferences('com_rsgallery2');
+		}
 	}
-
 
 
 

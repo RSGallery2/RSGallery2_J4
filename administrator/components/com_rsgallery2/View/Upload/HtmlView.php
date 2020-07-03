@@ -233,9 +233,13 @@ class HtmlView extends BaseHtmlView
 
 //		// Get the toolbar object instance
 //		$toolbar = Toolbar::getInstance('toolbar');
-//		$toolbar->preferences('com_rsgallery2');
-	}
 
+//		// Options button.
+//		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+//		{
+//	    	$toolbar->preferences('com_rsgallery2');
+//		}
+	}
 	/**
 	 * Check if at least one gallery exists
 	 * Regards the nested structure (ID=1 is only root of tree and no gallery)

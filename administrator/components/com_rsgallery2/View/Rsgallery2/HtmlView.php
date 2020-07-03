@@ -11,6 +11,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\View\Rsgallery2;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 //use Joomla\CMS\Helper\ContentHelper;
 //use Joomla\CMS\Factory;
@@ -165,7 +166,7 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-                . '*  Install: see maintenance<br>'
+				. '*  Install: see maintenance<br>'
 				. '*  --- Config -------<br>'
 				. '*  Use _CFG_ in ?variable? names<br>'
 				. '*  Last... ? trashed or not published ? <br>'
@@ -179,9 +180,12 @@ class HtmlView extends BaseHtmlView
 		// Set the title
 		ToolBarHelper::title(Text::_('COM_RSGALLERY2_SUBMENU_CONTROL_PANEL'), 'home-2');
 
-		$toolbar->preferences('com_rsgallery2');
+		// Options button.
+		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		{
+			$toolbar->preferences('com_rsgallery2');
+		}
 	}
-
 
 	private function getRsg2ControlButtons()
 	{

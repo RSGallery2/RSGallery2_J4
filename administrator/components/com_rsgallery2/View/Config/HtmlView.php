@@ -114,10 +114,12 @@ class HtmlView extends BaseHtmlView
 				break;
 		}
 
-		// direct to config
-		$toolbar->preferences('com_rsgallery2');
+		// Options button.
+		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		{
+			$toolbar->preferences('com_rsgallery2');
+		}
 	}
-
 
 
 

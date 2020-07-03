@@ -148,14 +148,14 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-                . '*  Install: finish -> DB: Transfer galleries<br>'
-                . '*  Install: finish -> DB: Transfer images<br>'
-                . '*  Install: Improve end view<br>'
-                . '*  Install: Check and handle J3x configuration<br>'
-                . '*  Install: Check and handle J3x galleries<br>'
-                . '*  Install: Check and handle J3x images<br>'
+				. '*  Install: finish -> DB: Transfer galleries<br>'
+				. '*  Install: finish -> DB: Transfer images<br>'
+				. '*  Install: Improve end view<br>'
+				. '*  Install: Check and handle J3x configuration<br>'
+				. '*  Install: Check and handle J3x galleries<br>'
+				. '*  Install: Check and handle J3x images<br>'
 				. '*  <br>'
-                . '* Purge / delete of database variables should be confirmed<br>'
+				. '* Purge / delete of database variables should be confirmed<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -184,7 +184,11 @@ class HtmlView extends BaseHtmlView
 		}
 
 
-		$toolbar->preferences('com_rsgallery2');
+		// Options button.
+		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		{
+			$toolbar->preferences('com_rsgallery2');
+		}
 	}
 
 	/**

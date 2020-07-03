@@ -164,7 +164,7 @@ class HtmlView extends BaseHtmlView
 				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
 				. '*  published_up, published_down<br>'
 				. '*  Reduce editor buttons (sets to be eselected) <br>'
-                . '*  description to each input parameter "_DESC"<br>'
+				. '*  description to each input parameter "_DESC"<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -196,9 +196,12 @@ class HtmlView extends BaseHtmlView
 				break;
 		}
 
-		$toolbar->preferences('com_rsgallery2');
+		// Options button.
+		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		{
+			$toolbar->preferences('com_rsgallery2');
+		}
 	}
-
 
 
 

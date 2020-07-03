@@ -194,70 +194,70 @@ class HtmlView extends BaseHtmlView
 		{
 			case 'ManifestInfo':
 
-                // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
-                    echo '<span style="color:red">'
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-                        . '</span><br><br>';
-                }
+						. '</span><br><br>';
+				}
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
-                    . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+					. ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 
-            case 'Rsg2GeneralInfo':
-                // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
-                    echo '<span style="color:red">'
-                        . '* Button for copy to clipboard -> add typescript copy<br>'
+			case 'Rsg2GeneralInfo':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. '* Button for copy to clipboard -> add typescript copy<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-                        . '</span><br><br>';
-                }
+						. '</span><br><br>';
+				}
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
-                    . ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+					. ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView');
-                break;
+				break;
 
-            case 'InstallMessage':
-                if (!empty ($this->isDevelop))
-                {
-                    echo '<span style="color:red">'
-                        . '* <br>'
+			case 'InstallMessage':
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. '* <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-                        . '</span><br><br>';
-                }
+						. '</span><br><br>';
+				}
 
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
-                    . ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
-                ToolBarHelper::cancel('config.cancel_rawView');
-            break;
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+					. ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
+				ToolBarHelper::cancel('config.cancel_rawView');
+				break;
 
 			default:
-                // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
-                    echo '<span style="color:red">'
-                        . '*  <br>'
-                        . '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
-                        . '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
-                        . '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. '*  <br>'
+						. '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
+						. '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
+						. '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
-                        . '</span><br><br>';
-                }
+						. '</span><br><br>';
+				}
 
-                // Set the title
+				// Set the title
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP_VIEW'), 'screwdriver'); // 'maintenance');
 				//ToolBarHelper::cancel('config.cancel_rawEdit');
 				//ToolBarHelper::cancel('maintenance.cancel');
@@ -266,7 +266,11 @@ class HtmlView extends BaseHtmlView
 		}
 
 
-		$toolbar->preferences('com_rsgallery2');
+		// Options button.
+		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		{
+			$toolbar->preferences('com_rsgallery2');
+		}
 	}
 
 	/**
