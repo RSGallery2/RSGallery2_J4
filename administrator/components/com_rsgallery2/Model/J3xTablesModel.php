@@ -17,8 +17,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Table\Table;
 
-// use Joomla\Component\RSGallery2\Administrator\Model\Rsg2ExtensionModel;
-
 
 /**
  * Item Model for a Configuration items (options).

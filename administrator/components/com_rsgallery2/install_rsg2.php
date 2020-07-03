@@ -394,65 +394,17 @@ class Com_Rsgallery2InstallerScript
         return $installMsg;
     }
 
-//    /**
-//     * are_RSG2_J3x_Tables_Existing
-//     * Checks for old config table. If it exists it is assumed that all joomla 3 x and older tables
-//     * @return bool
-//     * @throws Exception
-//     *
-//     * @since version
-//     */
-//    public function update_config_On_RSG2_J3x_Tables_Existing()
-//    {
-//        $isOldGalleryTableExisting = false;
-//
-//        try {
-//            Log::add('Check for existing old J3x Tables', Log::INFO, 'rsg2');
-//
-//            $j3x_model = new \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-//            Log::add('after $j3x_model', Log::INFO, 'rsg2');
-//
-//            $isOldGalleryTableExisting = $j3x_model->J3xConfigTableExist();
-//
-//            // prepare taking over old
-//            if ($isOldGalleryTableExisting) {
-//
-//                Log::add('!!! Old J3x tables do exist !!!', Log::INFO, 'rsg2');
-//
-////			    // already updated ?
-////
-////                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-////                $j3xConfigVersion = $rsgConfig->get('j3x_merged_cfg_version');
-////
-////                // config not set already
-////                if (empty ($j3xConfigVersion)) {
-////                    Log::add('Merge J3x config required', Log::INFO, 'rsg2');
-////
-////
-////
-////
-////                    //$j3x_model->copyOldJ3xConfig2J4xOptions ();
-////                    Log::add('after copyOldJ3xConfig2J4xOptions', Log::INFO, 'rsg2');
-////                    Log::add('$doesExist: ' .  $doesExist, Log::INFO, 'rsg2');
-////
-////
-////
-////                }
-////                else
-////                {
-////                    Log::add('Merge J3x config already done: cfg version: ' . $j3xConfigVersion, Log::INFO, 'rsg2');
-////                }
-//            } else {
-//                Log::add('Old J3x tables do NOT exist', Log::INFO, 'rsg2');
-//            }
-//        } //catch (\RuntimeException $e)
-//        catch (\Exception $e) {
-//            throw new \RuntimeException($e->getMessage() . ' from update_config_On_RSG2_J3x_Tables_Existing');
-//        }
-//
-//        return $isOldGalleryTableExisting;
-//    }
 
+    /**
+     *
+     * Used in preflight update when the 'new' rsg2 files are not copied
+     * Can not use standard function therefore
+
+     * @return mixed|string
+     *
+     * @throws Exception
+     * @since version
+     */
     function getVersionFromManifestParam()
     {
         //$oldRelease = '1.0.0.999';
@@ -468,7 +420,17 @@ class Com_Rsgallery2InstallerScript
     }
 
 
-    static function readRsg2ExtensionManifest()
+    /**
+     * readRsg2ExtensionManifest
+     * Used in preflight update when the 'new' rsg2 files are not copied
+     * Can not use standard function therefore
+     *
+     * @return array
+     *
+     * @throws Exception
+     * @since version
+     */
+    function readRsg2ExtensionManifest()
     {
         $manifest = [];
 

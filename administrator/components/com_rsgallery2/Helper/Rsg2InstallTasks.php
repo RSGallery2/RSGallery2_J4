@@ -22,9 +22,6 @@ use Joomla\CMS\Log\Log;
 // required is used as classes may not be loaded on  fresh install
 // !!! needed by install
 
-// require_once(JPATH_ADMINISTRATOR . 'com_rsgallery2/helper/installMessage.php');
-//require_once(JPATH_ADMINISTRATOR . 'com_rsgallery2/Model/Rsg2ExtensionModel.php');
-
 /**
  * Tasks needed on new/update installation of RSG2
  *

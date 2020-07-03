@@ -15,7 +15,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -23,11 +22,8 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Joomla\Component\Rsgallery2\Administrator\Model;
-use Joomla\Component\Rsgallery2\Administrator\Model\Rsg2J3xTablesBootModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\J3xTablesModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-
-// JModelLegacy::addIncludePath(JPATH_COMPONENT . '/models');
 
 /**
  * View class for a list of rsgallery2.
@@ -104,7 +100,7 @@ class HtmlView extends BaseHtmlView
 
 
 
-        $this->isJ3xRsg2DataExisting = Rsg2J3xTablesBootModel::J3xConfigTableExist();
+        $this->isJ3xRsg2DataExisting = J3xTablesModel::J3xConfigTableExist();
 
 
         //--- Check user rights ---------------------------------------------
