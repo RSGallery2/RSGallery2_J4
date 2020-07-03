@@ -1,29 +1,31 @@
 <?php
 /**
- * @package    com_rsgallery2
+ * @package     Joomla.Administrator
+ * @subpackage  com_foos
  *
- * @author     RSGallery2 Team <team2@rsgallery2.org>
- * @copyright  (c) 2020-2020 RSGallery2 Team
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       https://www.rsgallery2.org
+ * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Component\RSGallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\CMS\Table\Table;
 
-// required is used as classes may not be loaded on  fresh install
-// !!! needed by install
+// use Joomla\Component\RSGallery2\Administrator\Model\Rsg2ExtensionModel;
+
 
 /**
- * Handles bootstrap of legacy j3x tables
+ * Item Model for a Configuration items (options).
  *
- * @since version
- *
+ * @since  1.0
  */
-class Rsg2J3xTablesBootModel
+class J3xTablesModel extends BaseModel
 {
 
     // ToDo: attention a double of this function exist. Remove either of them
@@ -61,6 +63,6 @@ class Rsg2J3xTablesBootModel
 
 
 
-} // class
 
+}
 

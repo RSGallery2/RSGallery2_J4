@@ -261,22 +261,15 @@ class Com_Rsgallery2InstallerScript
                 $installMsg = $this->installMessage($type);
                 echo $installMsg;
 
-//-----------------------------------------------------------------------
-////                $installMessage = new InstallMessage ($this->newRelease, $this->oldRelease);
-////                //$msg = $installMessage->installMessageText($type);
-////                $msg = $installMessage->installMessageText('install');
-//                $msg = InstallMessage::createLinksHtml($this->newRelease);
-//                echo $msg;
-
-
                 echo $type . ' finished';
 
                 break;
 
             case 'uninstall':
 
-                // toDo: check existance of galleries/images table and then write
-                echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>Galleries and images table will still exist';
+                // ToDo: check existence of galleries/images table and then write
+                echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>'
+                    . 'Galleries and images table will still exist';
                 // ToDo: uninstall Message
 
                 break;
