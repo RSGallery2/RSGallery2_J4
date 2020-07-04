@@ -195,7 +195,7 @@ class ImageModel extends AdminModel
 	/**
 	protected function prepareTable($table)
 	{
-		$date = JFactory::getDate()->toSql();
+		$date = Factory::getDate()->toSql();
 		$table->name = htmlspecialchars_decode($table->name, ENT_QUOTES);
 
 		if (empty($table->id))
@@ -215,7 +215,7 @@ class ImageModel extends AdminModel
 
                 // Set the values
                 $table->date = $date;
-                $table->userid = JFactory::getUser()->id;
+                $table->userid = Factory::getUser()->id;
             }
 	        /**  *
 
@@ -223,13 +223,13 @@ class ImageModel extends AdminModel
 
             // Set the values
             $table->date = $date;
-            $table->uid  = JFactory::getUser()->id;
+            $table->uid  = Factory::getUser()->id;
 		}
 		else
 		{
 			// Set the values
 			$table->date   = $date;
-			$table->userid = JFactory::getUser()->id;
+			$table->userid = Factory::getUser()->id;
 		}
 
 		// Increment the content version number.
@@ -280,7 +280,7 @@ class ImageModel extends AdminModel
 		{
 			if (empty ($data['alias']))
 			{
-				if (JFactory::getConfig()->get('unicodeslugs') == 1)
+				if (Factory::getConfig()->get('unicodeslugs') == 1)
 				{
 					$data['alias'] = JFilterOutput::stringURLUnicodeSlug($data['name']);
 				}
@@ -432,12 +432,12 @@ class ImageModel extends AdminModel
 
 		//--- date -------------------------------------------
 
-		$date       = JFactory::getDate();
+		$date       = Factory::getDate();
 		$item->date = JHtml::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- user id -------------------------------------------
 
-		$user         = JFactory::getUser();
+		$user         = Factory::getUser();
 		$userId       = $user->id;
 		$item->userid = $userId;
 
@@ -525,7 +525,7 @@ class ImageModel extends AdminModel
 
 		//--- date -------------------------------------------
 
-		$date       = JFactory::getDate();
+		$date       = Factory::getDate();
 		$item->date = JHtml::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- gallery -------------------------------------------
@@ -538,7 +538,7 @@ class ImageModel extends AdminModel
 
 		//--- user id -------------------------------------------
 
-		$user         = JFactory::getUser();
+		$user         = Factory::getUser();
 		$userId       = $user->id;
 		$item->userid = $userId;
 

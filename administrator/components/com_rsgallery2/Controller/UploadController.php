@@ -108,7 +108,7 @@ class UploadController extends FormController
 		}
 
 		/* ToDo: // Access check
-		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.admin', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
 			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -309,7 +309,7 @@ out:
 		}
 
 		/* ToDo: // Access check
-		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.admin', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
 			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -514,7 +514,7 @@ out:
 		}
 
 		/* ToDo: // Access check
-		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.admin', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
 			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -718,7 +718,7 @@ out:
 
 
 		/* ToDo: // Access check
-		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.admin', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
 			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -1006,7 +1006,7 @@ interface IResponseTransfer {
 		}
 
 		/* ToDo: // Access check
-		$canAdmin = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.admin', 'com_rsgallery2');
 		if (!$canAdmin)
 		{
 			$errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');

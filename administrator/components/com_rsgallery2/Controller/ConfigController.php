@@ -273,7 +273,7 @@ class ConfigController extends AdminController // FormController
 		$msgType = 'notice';
 
 		// Access check
-		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
 			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
@@ -307,7 +307,7 @@ class ConfigController extends AdminController // FormController
 		$msgType = 'notice';
 
 		// Access check
-		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
 			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';

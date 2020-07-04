@@ -79,7 +79,7 @@ class GallerySelectField extends ListField
 
 		try
 		{
-			// $user = JFactory::getUser(); // Todo: Restrict to accessible galleries
+			// $user = Factory::getUser(); // Todo: Restrict to accessible galleries
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
 				->select('id As value, name As text')

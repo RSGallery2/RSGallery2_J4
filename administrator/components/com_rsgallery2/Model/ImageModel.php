@@ -307,22 +307,22 @@ class ImageModel extends AdminModel
      *
      * @since 4.3.0
      */
-	/**
+	/**/
 	protected function prepareTable($table)
 	{
-		$date = JFactory::getDate()->toSql();
+		$date = Factory::getDate()->toSql();
 		$table->name = htmlspecialchars_decode($table->name, ENT_QUOTES);
 
 		if (empty($table->id))
 		{
-			/**
+			/**/
             // Set ordering to the last item if not set
             if (empty($table->ordering))
             {
                 $db = $this->getDbo();
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
-                    ->from($db->quoteName('#__rsgallery2_files'));
+                    ->from($db->quoteName('#__rsg2_images'));
                 $db->setQuery($query);
                 $max = $db->loadResult();
 
@@ -330,21 +330,21 @@ class ImageModel extends AdminModel
 
                 // Set the values
                 $table->date = $date;
-                $table->userid = JFactory::getUser()->id;
+                $table->userid = Factory::getUser()->id;
             }
-	        /**  *
+	        /**  */
 
 			$table->ordering = $table->getNextOrder('gallery_id = ' . (int) $table->gallery_id); // . ' AND state >= 0');
 
             // Set the values
-            $table->date = $date;
-            $table->uid  = JFactory::getUser()->id;
+            $table->created = $date;
+            $table->created_by  = Factory::getUser()->id;
 		}
 		else
 		{
 			// Set the values
-			$table->date   = $date;
-			$table->userid = JFactory::getUser()->id;
+			$table->modified   = $date;
+			$table->modified_by = Factory::getUser()->id;
 		}
 
 		// Increment the content version number.
@@ -428,9 +428,7 @@ class ImageModel extends AdminModel
 		/**/
 
 
-
-
-		/* ToDo: uise following */
+		/* ToDo: use following */
         /**
         // Automatic handling of alias for empty fields
         if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
@@ -829,8 +827,8 @@ class ImageModel extends AdminModel
 
 		//--- Create new item -------------------
 
-		$item = $this->getTable();
-		$item->load(0);
+		$table = $this->getTable();
+		$table->load(0);
 
 		//----------------------------------------------------
 		// image properties
@@ -838,7 +836,7 @@ class ImageModel extends AdminModel
 
 		//--- image name -------------------------------------
 
-		$item->name = $imageName; // ToDo: check for unique or remove unique. It may already be there
+		$table->name = $imageName; // ToDo: check for unique or remove unique. It may already be there
 
 		//--- unique image title and alias -------------------
 		$path_parts = pathinfo($imageName);
@@ -847,38 +845,41 @@ class ImageModel extends AdminModel
 		//--- title, alias -------------------------------------------
 
 		if(! empty($title)) {
-			$item->title = $title;
+			$table->title = $title;
 		}
 		else
 		{
-			$item->title = $this->generateNewImageName($fileName);
+			$table->title = $this->generateNewImageName($fileName);
 		}
-		$item->alias = $item->title;
-		$item->alias = \JFilterOutput::stringURLSafe($item->alias);
+		$table->alias = $table->title;
+		$table->alias = \JFilterOutput::stringURLSafe($table->alias);
 
 		// Create unique alias and title
-		list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
-		$item->title = $title;
-		$item->alias = $alias;
+		list($title, $alias) = $this->generateNewTitle(null, $table->alias, $table->title);
+		$table->title = $title;
+		$table->alias = $alias;
 
-		//--- date -------------------------------------------
+        $this-> prepareTable($table);
+
+        //--- date -------------------------------------------
 
 		$date       = Factory::getDate();
-		$item->date = \JHtml::_('date', $date, 'Y-m-d H:i:s');
+		//$item->date = \JHtml::_('date', $date, 'Y-m-d H:i:s');
+		$table->created = \JHtml::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- gallery -------------------------------------------
 
-		$item->gallery_id = $galleryId;
+		$table->gallery_id = $galleryId;
 
 		//--- description ---------------------------------------
 
-		$item->description = $description;
+		$table->description = $description;
 
-		//--- user id -------------------------------------------
+        //--- user id -------------------------------------------
 
 		$user         = Factory::getUser();
 		$userId       = $user->id;
-		$item->userid = $userId;
+		$table->userid = $userId;
 
 		//--- ordering -------------------------------------------
 
@@ -886,20 +887,20 @@ class ImageModel extends AdminModel
 
 		//---  -------------------------------------------
 
-		$item->approved = 0; // don't know why, all images end up with zero ....
+		$table->approved = 0; // don't know why, all images end up with zero ....
 
 		//----------------------------------------------------
 		// save new object
 		//----------------------------------------------------
 
 		// Lets store it!
-		$item->check();
+		$table->check();
 
-		if (!$item->store())
+		if (!$table->store())
 		{
 			// ToDo: collect erorrs and display over enque .... with errr type
-			$UsedNamesText = '\nSrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-			$testError = $item->getError();
+			$UsedNamesText = '\nSrcImage: ' . $fileName . '<br>DstImage: ' . $table->name;
+			$testError = $table->getError();
 			$errBase = Text::_('Copied image name could not be inserted in database. ');
 			$errBase = $errBase . $UsedNamesText;
 
@@ -918,7 +919,7 @@ class ImageModel extends AdminModel
 		else
 		{
 
-            $ImageId= $item->id;
+            $ImageId= $table->id;
 		}
 
 		return $ImageId;
