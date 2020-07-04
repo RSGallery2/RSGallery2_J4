@@ -334,7 +334,7 @@ class ImageModel extends AdminModel
             }
 	        /**  */
 
-			$table->ordering = $table->getNextOrder('gallery_id = ' . (int) $table->gallery_id); // . ' AND state >= 0');
+			//$table->ordering = $table->getNextOrder('gallery_id = ' . (int) $table->gallery_id); // . ' AND state >= 0');
 
             // Set the values
             $table->created = $date;

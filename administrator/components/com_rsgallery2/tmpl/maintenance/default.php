@@ -242,6 +242,14 @@ $repair_ZoneButtons[] = new zoneButtons(
     'viewGalleriesRaw'
 );
 
+$repair_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=Images.reinitImagesTable'),
+    Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET'),
+    Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_DESC'),
+    array('icon-image', 'icon-database', 'icon-undo'),
+    'viewImagesRaw'
+);
+
 
 //--- danger zone  -----------------------------
 

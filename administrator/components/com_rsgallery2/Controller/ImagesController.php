@@ -88,6 +88,59 @@ class ImagesController extends AdminController
 	/**/
 
 
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public function reinitImagesTable()
+    {
+        $isOk = false;
+
+        $msg = "ImagesController.reinitImagesTable: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+
+            try {
+                // Get the model.
+                $model = $this->getModel('images');
+
+                // Remove the items.
+                $isOk = $model->reinitImagesTable();
+                if ($isOk) {
+                    $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_SUCCESS');
+                } else {
+                    $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_ERROR') . ': ' . $model->getError();
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing reinitImagesTable: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        //$link = 'index.php?option=com_rsgallery2&view=images&layout=images_raw';
+        $link = 'index.php?option=com_rsgallery2&view=maintenance';
+        $this->setRedirect($link, $msg, $msgType);
+
+        return $isOk;
+    }
+
 
 
 }

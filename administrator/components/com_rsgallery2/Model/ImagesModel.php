@@ -619,5 +619,45 @@ class ImagesModel extends ListModel
 		return $name;
 	}
 
+    /**
+     * Reset images table to empty state
+     * Deletes all galleries and initialises the root item of the nested tree
+     *
+     * @param int $rgt
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public static function reinitImagesTable($rgt = 1)
+    {
+        $isImagesReset = false;
+
+        $id_images = '#__rsg2_images';
+
+        try {
+            $db = Factory::getDbo();
+
+            //--- delete old rows -----------------------------------------------
+
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName($id_images));
+            // all rows
+            //$query->where($conditions);
+
+            $db->setQuery($query);
+
+            $isImagesReset = $db->execute();
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from InitImages');
+        }
+
+        return $isImagesReset;
+    }
+
+
 
 } // class
