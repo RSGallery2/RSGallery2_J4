@@ -333,7 +333,6 @@ if ($saveOrder && !empty($this->items))
 
                                     <td class="small d-none d-md-table-cell text-center">
 										<?php
-										//$date = $item->{$orderingColumn};
 										$date = $item->created;
 										echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
 										?>
@@ -343,9 +342,6 @@ if ($saveOrder && !empty($this->items))
 										<?php echo (int) $item->hits; ?>
 									</span>
                                     </td>
-
-
-
 
 
                                     <td class="d-none d-md-table-cell">

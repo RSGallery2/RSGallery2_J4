@@ -82,23 +82,25 @@ if ($saveOrder && !empty($this->items))
 								<th scope="col" style="width:1%" class="text-center d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', '', 's.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
 								</th>
-								<th scope="col" style="width:1%" class="text-center">
+
+                                <th scope="col" style="width:3%" class="text-center d-none d-md-table-cell">
+                                    <span class="small" title="<?php echo $this->escape("Remove when order is fixed"); ?>">
+                                        <?php echo Text::_('COM_RSGALLERY2_ORDER'); ?>
+									</span>
+                                </th>
+
+                                <th scope="col" style="width:1%" class="text-center">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
-								</th>
+                                </th>
 
-
-                                <!--th scope="col" style="min-width:100px">
+                                <th scope="col" style="min-width:100px">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_TITLE', 'a.name', $listDirn, $listOrder); ?>
-                                </th-->
+                                </th>
                                 <th scope="col" style="min-width:100px">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" style="width:3%" class="text-center d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_GALLERY', 'gallery_name', $listDirn, $listOrder); ?>
-                                </th>
-
-                                <th scope="col" style="width:3%" class="text-center d-none d-md-table-cell">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_ORDER', 'a.ordering', $listDirn, $listOrder); ?>
                                 </th>
 
                                 <!--th scope="col" style="width:10%" class="d-none d-md-table-cell">
@@ -119,6 +121,8 @@ if ($saveOrder && !empty($this->items))
                                 </th>
 
 
+                                <!-- only when user settings ...
+
 
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_VOTES', 'a.votes', $listDirn, $listOrder); ?>
@@ -136,6 +140,13 @@ if ($saveOrder && !empty($this->items))
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                                 </th>
+
+                                -->
+
+                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+                                    <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+                                </th>
+
                                 <?php
                                 /**
 
@@ -196,8 +207,15 @@ if ($saveOrder && !empty($this->items))
 								$canEditOwn = $user->authorise('core.edit.own',   $extension . '.gallery.' . $item->id) && $item->created_by == $userId;
 								$canChange  = $user->authorise('core.edit.state', $extension . '.gallery.' . $item->id) && $canCheckin;
 
-								?>
+								$editLink = Route::_('index.php?option=com_rsgallery2&task=image.edit&id=' . $item->id);
+                                $editGalleryLink = Route::_("index.php?option=com_rsgallery2&task=gallery.edit&id=" . $item->gallery_id);
 
+                                $created_by = Factory::getUser($item->created_by);
+                                $modified_by = Factory::getUser($item->modified_by);
+                                if (empty($modified_by->name)) {
+                                    $modified_by = $created_by;
+                                }
+                                ?>
 
 								<tr class="row<?php echo $i % 2; ?>" >
                                     <td class="text-center d-none d-md-table-cell">
@@ -222,7 +240,10 @@ if ($saveOrder && !empty($this->items))
 											<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order">
 										<?php endif; ?>
 									</td>
-									<td class="text-center">
+                                    <td class="small d-none d-md-table-cell">
+                                        <?php echo $item->ordering; ?>
+                                    </td>
+                                    <td class="text-center">
 										<div class="btn-group">
 											<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'images.', $canChange); ?>
 										</div>
@@ -233,48 +254,48 @@ if ($saveOrder && !empty($this->items))
 										<?php endif; ?>
 										<?php if ($canEdit || $canEditOwn) : ?>
 											<?php $editIcon = $item->checked_out ? '' : '<span class="fa fa-pencil-square mr-2" aria-hidden="true"></span>'; ?>
-											<a class="hasTooltip" href="<?php echo Route::_('index.php?option=com_rsgallery2&task=image.edit&id=' . $item->id . '&extension=' . $extension); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->name)); ?>">
-												<?php echo $editIcon; ?><?php echo $this->escape($item->name); ?></a>
+											<a class="hasTooltip" href="<?php echo $editLink; ?>"
+                                               title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->title)); ?>">
+												<?php echo $editIcon; ?>
+                                                <?php echo $this->escape($item->title); ?></a>
 										<?php else : ?>
-											<?php echo $this->escape($item->name); ?>
+											<?php echo $this->escape($item->title); ?>
 										<?php endif; ?>
+
+                                        <span class="small" title="<?php echo $this->escape(""); ?>">
+											<?php if (empty($item->note)) : ?>
+                                                <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
+                                            <?php else : ?>
+                                                <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
+                                            <?php endif; ?>
+										</span>
                                     </th>
+
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">
-									<div class="pull-left break-word">
-                                       <?php
-										$link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=image.edit&id=" . $item->id);
-										//$link = JRoute::_("index.php?option=com_rsgallery2&amp;rsgOption=images&amp;task=editA&amp;hidemainmenu=1&amp;id=" . $item->id);
-										if ($canEdit)
-										{
-											echo '<a href="' . $link . '"">' . $this->escape($item->name) . '</a>';
-										}
-										else
-										{
-											echo $this->escape($item->name);
-										}
-										?>
-									</div>
+    									<div class="pull-left break-word">
+                                            <?php if ($canEdit || $canEditOwn) : ?>
+                                                <a class="hasTooltip" href="<?php echo $editLink; ?>"
+                                                   title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->title)); ?>">
+                                                    <?php echo $this->escape($item->name); ?></a>
+                                            <?php else : ?>
+                                                <?php echo $this->escape($item->name); ?>
+                                            <?php endif; ?>
+    									</div>
                                     </td>
 
                                     <td class="small d-none d-md-table-cell">
-									<?php
-									$link = JRoute::_("index.php?option=com_rsgallery2&view=gallery&task=gallery.edit&id=" . $item->gallery_id);
-									//$link = JRoute::_("index.php?option=com_rsgallery2&rsgOption=galleries&task=editA&hidemainmenu=1&id=". $item->gallery_id);
-									//echo '<a href="' . $link . '"">' . $item->gallery_id . '</a>';
-									echo '<a href="' . $link . '"">' . $this->escape($item->gallery_name) . '</a>';
-									?>
-                                    </td>
-
-                                    <td class="small d-none d-md-table-cell">
-										<?php echo $item->ordering; ?>
+                                        <?php if ($canEdit || $canEditOwn) : ?>
+                                            <a class="hasTooltip" href="<?php echo $editGalleryLink; ?>"
+                                               title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->gallery_name)); ?>">
+                                                <?php echo $this->escape($item->gallery_name); ?></a>
+                                        <?php else : ?>
+                                            <?php echo $this->escape($item->gallery_name); ?>
+                                        <?php endif; ?>
                                     </td>
 
                                     <!--td class="small d-none d-md-table-cell">
 										<?php echo $item->access; ?>
                                     </td-->
-
-
-
 
                                     <td class="small d-none d-md-table-cell">
                                         <?php
@@ -292,15 +313,27 @@ if ($saveOrder && !empty($this->items))
 										<?php endif; ?>
                                         /**/
                                         ?>
-                                        <?php echo $this->escape($item->created_by); ?>
+                                        <?php
+                                        echo $this->escape($created_by->name);
+                                        if ($modified_by->name != $created_by->name) {
+                                            echo '<br>(' . $modified_by->name . ')';
+                                        }
+                                        ?>
+
                                     </td>
 
                                     <td class="small d-none d-md-table-cell text-center">
 										<?php
-										//$date = $item->{$orderingColumn};
 										$date = $item->created;
 										echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
-										?>
+
+                                        if ($item->modified != $item->created) {
+                                            echo '<br>(';
+                                            $date = $item->modified;
+                                            echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
+                                           echo ')';
+                                        }
+                                        ?>
                                     </td>
 
                                     <td class="d-none d-lg-table-cell text-center">
@@ -309,7 +342,7 @@ if ($saveOrder && !empty($this->items))
 									    </span>
                                     </td>
 
-
+                                    <!-- only when user settings ...
 
                                     <td class="d-none d-md-table-cell">
 										<?php echo (int) $item->votes; ?>
@@ -326,7 +359,12 @@ if ($saveOrder && !empty($this->items))
                                     <td class="d-none d-md-table-cell">
 										<?php echo (int) $item->id; ?>
                                     </td>
+                                    -->
 
+
+                                    <td class="d-none d-md-table-cell">
+                                        <?php echo (int) $item->id; ?>
+                                    </td>
 
                                     <?php
                                     /**
