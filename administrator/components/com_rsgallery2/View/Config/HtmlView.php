@@ -97,7 +97,7 @@ class HtmlView extends BaseHtmlView
 			case 'RawView':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
 					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_VIEW'), 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView');
+				ToolBarHelper::cancel('config.cancel_rawView', , 'JTOOLBAR_CLOSE');
 
 
 				break;
@@ -107,10 +107,10 @@ class HtmlView extends BaseHtmlView
 					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'), 'screwdriver');
 				ToolBarHelper::apply('config.apply_rawEdit');
 				ToolBarHelper::save('config.save_rawEdit');
-				ToolBarHelper::cancel('config.cancel_rawEdit');
+				ToolBarHelper::cancel('config.cancel_rawEdit', , 'JTOOLBAR_CLOSE');
 				break;
 			default:
-				ToolBarHelper::cancel('config.cancel');
+				ToolBarHelper::cancel('config.cancel', , , 'JTOOLBAR_CLOSE');
 				break;
 		}
 

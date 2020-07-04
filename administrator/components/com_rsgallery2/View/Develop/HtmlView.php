@@ -206,7 +206,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
 					. ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView');
+				ToolBarHelper::cancel('config.cancel_rawView', ;
 				break;
 
 			case 'Rsg2GeneralInfo':

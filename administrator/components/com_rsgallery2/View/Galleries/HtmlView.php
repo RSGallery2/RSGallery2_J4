@@ -394,7 +394,7 @@ class HtmlView extends BaseHtmlView
 				'btn-success'
 			);
 
-			ToolbarHelper::cancel('gallery.cancel');
+			ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
 		}
 
 		// If not checked out, can save the item.

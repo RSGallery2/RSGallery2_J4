@@ -163,7 +163,7 @@ class HtmlView extends BaseHtmlView
 				. 'Tasks: <br>'
 				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
 				. '*  published_up, published_down<br>'
-				. '*  Reduce editor buttons (sets to be eselected) <br>'
+				. '*  Reduce editor buttons (sets to be selected) <br>'
 				. '*  description to each input parameter "_DESC"<br>'
                 . '*  Options: title + ... see article<br>'
                 . '*  Publishing: Start/Finish + ... see article<br>'
@@ -185,11 +185,11 @@ class HtmlView extends BaseHtmlView
 				//ToolBarHelper::save2new('image.save2new');
 				if (empty($this->item->id))
 				{
-					ToolBarHelper::cancel('image.cancel');
+					ToolBarHelper::cancel('image.cancel', JTOOLBAR_CLOSE);
 				}
 				else
 				{
-					ToolBarHelper::cancel('image.cancel');
+					ToolBarHelper::cancel('image.cancel', JTOOLBAR_CLOSE);
 				}
 
 //				ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);

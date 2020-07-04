@@ -183,11 +183,11 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::save2new('gallery.save2new');
 				if (empty($this->item->id))
 				{
-					ToolBarHelper::cancel('gallery.cancel');
+					ToolBarHelper::cancel('gallery.cancel',  , 'JTOOLBAR_CLOSE');
 				}
 				else
 				{
-					ToolBarHelper::cancel('gallery.cancel');
+					ToolBarHelper::cancel('gallery.cancel', , 'JTOOLBAR_CLOSE');
 				}
 
 				ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
@@ -269,7 +269,7 @@ class HtmlView extends BaseHtmlView
 				'btn-success'
 			);
 
-			ToolbarHelper::cancel('gallery.cancel');
+			ToolbarHelper::cancel('gallery.cancel', , 'JTOOLBAR_CLOSE');
 		}
 
 		// If not checked out, can save the item.
