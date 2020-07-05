@@ -161,13 +161,11 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-				. '*  ? Table header COM_RSGALLERY2_FIELDSET_RULES ? permissions ?<br>'
-				. '*  published_up, published_down<br>'
-				. '*  Reduce editor buttons (sets to be selected) <br>'
+				. '*  published_up, published_down: preset on first save with published <br>'
 				. '*  description to each input parameter "_DESC"<br>'
-                . '*  Options: title + ... see article<br>'
-                . '*  Publishing: Start/Finish + ... see article<br>'
-//				. '*  <br>'
+                . '*  options: Values not defined and add params<br>'
+                . '*  options: show user, layout ... see article<br>'
+				. '*  Save and goto prev/next<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -185,11 +183,11 @@ class HtmlView extends BaseHtmlView
 				//ToolBarHelper::save2new('image.save2new');
 				if (empty($this->item->id))
 				{
-					ToolBarHelper::cancel('image.cancel', JTOOLBAR_CLOSE);
+					ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
 				}
 				else
 				{
-					ToolBarHelper::cancel('image.cancel', JTOOLBAR_CLOSE);
+					ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
 				}
 
 //				ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);

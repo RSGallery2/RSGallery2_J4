@@ -36,30 +36,30 @@ $layout  = $isModal ? 'modal' : 'edit';
 $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=component' : '';
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&extension=' . $input->getCmd('extension', 'com_rsgallery2') . '&layout=' . $layout . $tmpl . '&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="item-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&extension=' . $input->getCmd('extension', 'com_rsgallery2') . '&layout=' . $layout . $tmpl . '&id=' . (int) $this->item->id); ?>"
+      method="post" name="adminForm" id="item-form" class="form-validate">
 
 	<?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
 
 	<div>
 		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'general')); ?>
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('JCATEGORY')); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('COM_RSGALLERY2_GENERAL')); ?>
 		<div class="row">
-			<div class="col-md-9">
-				<?php echo $this->form->getLabel('description'); ?>
-				<?php echo $this->form->getInput('description'); ?>
+			<div class="col-lg-9">
+                <div>
+                    <div class="card-body">
+                        <fieldset class="adminform">
+                            <?php echo $this->form->getLabel('description'); ?>
+                            <?php echo $this->form->getInput('description'); ?>
+                        </fieldset>
+                    </div>
+                </div>
 			</div>
-			<div class="col-md-3">
-				<div class="card card-light">
-					<div class="card-body">
-                        <?php // echo $this->form->getLabel('thumb_id'); ?>
-                        <?php // echo $this->form->getInput('thumb_id'); ?>
-
-                        <?php //echo LayoutHelper::render('thumb_id', $this); ?>
-                        <?php echo $this->getForm()->renderField('thumb_id') ?>
-
-                        <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
-					</div>
-				</div>
+            <div class="col-lg-3">
+                <div class="bg-white px-3">
+                    <?php echo $this->getForm()->renderField('thumb_id') ?>
+                    <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
+ 				</div>
 			</div>
 		</div>
 
@@ -68,15 +68,24 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
 		<?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('COM_RSGALLERY2_FIELDSET_PUBLISHING')); ?>
-		<div class="row">
-			<div class="col-md-6">
-				<?php echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
-			</div>
-			<div class="col-md-6">
-				<?php echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
-			</div>
-		</div>
-
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <fieldset id="fieldset-publishingdata" class="options-form">
+                    <legend><?php echo Text::_('JGLOBAL_FIELDSET_PUBLISHING'); ?></legend>
+                    <div>
+                        <?php echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-12 col-lg-6">
+                <fieldset id="fieldset-metadata" class="options-form">
+                    <legend><?php echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
+                    <div>
+                        <?php echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
 		<?php if ( ! $isModal && $assoc && $extensionassoc) : ?>
@@ -89,7 +98,7 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
 
 		<?php if ($this->canDo->get('core.admin')) : ?>
 
-			<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'rules', Text::_('COM_RSGALLERY2_FIELDSET_RULES')); ?>
+			<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'rules', Text::_('JGLOBAL_ACTION_PERMISSIONS_LABEL')); ?>
 			<?php echo $this->form->getInput('rules'); ?>
 			<?php echo HTMLHelper::_('uitab.endTab'); ?>
 		<?php endif; ?>

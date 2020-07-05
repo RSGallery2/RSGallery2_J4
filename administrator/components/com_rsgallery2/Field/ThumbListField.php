@@ -85,35 +85,40 @@ class ThumbListField extends ListField
             // $user = Factory::getUser(); // Todo: Restrict to accessible galleries
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->quoteName('a.id') . ' As idx, a.name As text')
-                ->from('#__rsg2_images AS a')
+//                ->select($db->quoteName('id') . ' As idx, name As text')
+                ->select($db->quoteName('id') . ' as value, name As text')
+                ->from('#__rsg2_images')
                 ->where($db->quoteName('gallery_id') . '=' . (int)$galleryId)
 //				->where($db->quoteName('published') . ' = 1')
-                ->order('a.id');
+                ->order('id');
 
             // Get the options.
             $images = $db->setQuery($query)->loadObjectList();
 
-            // Create row number to Text = "Row number -> image name" assignment
-            foreach ($images as $image) {
+//            // Create row number to Text = "Row number -> image name" assignment
+//            foreach ($images as $image) {
+//
+//                $option = new \stdClass;
+//                $option->value = $image->idx;
+//                $option->text = $image->text; // ToDo escape text see gallery list / image list names
+//
+//                $option->style="background-image:url(male.png);";
+//
+//                $options[] = $option;
+//            }
 
-                $option = new \stdClass;
-                $option->value = $image->idx;
-                $option->text = $image->text; // ToDo escape text see gallery list / image list names
 
-                $option->style="background-image:url(male.png);";
+            $options = $images;
 
-                $options[] = $option;
-            }
+
+
         }
 		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
 
-        // Add first '- Random thumbnail -' on the top of the list. () -> done in xml definition
-		//array_unshift($options, JHtml::_('select.option', '0', Text::_('COM_RSGALLERY2_MINUS_RANDOM_THUMBNAIL_MINUS')));
-
+        // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
 
         return $options;

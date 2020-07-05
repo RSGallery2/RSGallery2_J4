@@ -12,6 +12,7 @@ namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
 //use Joomla\CMS\HTML\HTMLHelper;
@@ -25,6 +26,7 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\ListModel;
 //use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 
 /**
@@ -347,7 +349,18 @@ class ImageModel extends AdminModel
 			$table->modified_by = Factory::getUser()->id;
 		}
 
-		// Increment the content version number.
+        // Set the publish date to now
+        if ($table->published == Workflow::CONDITION_PUBLISHED && (int) $table->publish_up == 0)
+        {
+            $table->publish_up = Factory::getDate()->toSql();
+        }
+
+        if ($table->published == Workflow::CONDITION_PUBLISHED && intval($table->publish_down) == 0)
+        {
+            $table->publish_down = null;
+        }
+
+        // Increment the content version number.
 		// $table->version++;
 	}
 	/**/

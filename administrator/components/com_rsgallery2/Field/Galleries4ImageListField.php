@@ -29,7 +29,7 @@ use Joomla\Utilities\ArrayHelper;
  *
  * @since 4.3.0
  */
-class ParentListField extends ListField
+class Galleries4ImageListField extends ListField
 {
 	/**
 	 * To allow creation of new galleries.
@@ -45,7 +45,7 @@ class ParentListField extends ListField
 	 * @var    string
 	 * @since  1.6
 	 */
-	public $type = 'ParentList';
+	public $type = 'Galleries4ImageList';
 
 	/**
 	 * Name of the layout being used to render the field
@@ -73,24 +73,21 @@ class ParentListField extends ListField
         try
         {
             // $name = (string) $this->element['name'];
-
+            // $user = Factory::getUser(); // Todo: Restrict to accessible galleries
 		    $db   = Factory::getDbo();
 
 		    $query = $db->getQuery(true)
-			    //->select('a.id AS value, a.name AS text, a.level, a.published, a.lft, a.language')
-			    ->select('a.id AS value, a.name AS text, level, a.lft')
-                ->from('#__rsg2_galleries AS a')
-			    ->where('a.id != 1 AND a.id != ' . (int) $galleryId);
+			    //->select('id AS value, name AS text, level, published, lft, language')
+			    ->select('id AS value, name AS text, level')
+                ->from($db->quoteName('#__rsg2_galleries'))
+                ->where($db->quoteName('id') . ' != 1' )
+                // Filter on the published state
+                // ->where('published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
+                // ToDo: Use option in XML to select ASC/DESC
+                ->order('lft ASC');
 
-		    // Filter on the published state
-		    // $query->where('a.published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
-    
-		    $query->order('a.lft ASC');
-
-		    // Get the options.
-		    $db->setQuery($query);
-
-            $galleries = $db->loadObjectList();
+            // Get the options.
+            $galleries = $db->setQuery($query)->loadObjectList();
         }
 		catch (\RuntimeException $e)
 		{
@@ -102,14 +99,15 @@ class ParentListField extends ListField
 		// Pad the option text with spaces using depth level as a multiplier.
 		for ($i = 0, $n = count($options); $i < $n; $i++)
 		{
-			// Translate ROOT
-			if ($this->element['parent'] == true)
-			{
-				if ($options[$i]->level == 0)
-				{
-					$options[$i]->text = Text::_('JGLOBAL_ROOT_PARENT');
-				}
-			}
+//			// Translate ROOT
+//			if ($this->element['parent'] == true)
+//			{
+//				if ($options[$i]->level == 0)
+//				{
+//				    // -- No Root parent --
+//					$options[$i]->text = Text::_('JGLOBAL_ROOT_PARENT');
+//				}
+//			}
 
 //			if ($options[$i]->published == 1)
 //			{
@@ -141,36 +139,11 @@ class ParentListField extends ListField
 //			}
 //		}
 
-        // Tell about no parent
-        //$parent = new \stdClass;
-        //$parent->text = Text::_('JGLOBAL_ROOT_PARENT');
-        //array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT')));
-        //array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('JGLOBAL_ROOT_PARENT')));
 
         // Merge any additional options in the XML definition.
-		return array_merge(parent::getOptions(), $options);
+        $options = array_merge(parent::getOptions(), $options);
+
+        return $options;
 	}
 
-//	/**
-//	 * Method to get the field input markup for a generic list.
-//	 * Use the multiple attribute to enable multiselect.
-//	 *
-//	 * @return  string  The field input markup.
-//	 *
-//	 * @since   3.6
-//	 */
-//	protected function getInput()
-//	{
-//		$data = $this->getLayoutData();
-//
-//		$data['options']     = $this->getOptions();
-//		$data['allowCustom'] = $this->allowAdd;
-//
-//		$renderer = $this->getRenderer($this->layout);
-//		$renderer->setComponent('com_rsgallery2');
-//		$renderer->setClient(1);
-//
-////		$test = $renderer->render($data);
-//		return $renderer->render($data);
-//	}
 }

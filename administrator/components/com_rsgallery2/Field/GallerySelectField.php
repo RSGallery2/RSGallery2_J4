@@ -81,11 +81,12 @@ class GallerySelectField extends ListField
 		{
 			// $user = Factory::getUser(); // Todo: Restrict to accessible galleries
 			$db    = Factory::getDbo();
+
 			$query = $db->getQuery(true)
-				->select('id As value, name As text')
+                ->select('id AS value, name AS text, level')
+                ->from($db->quoteName('#__rsg2_galleries'))
 				->where($db->quoteName('id') . ' != 1' )
 //				->where($db->quoteName('published') . ' = 1')
-				->from($db->quoteName('#__rsg2_galleries'))
 				// ToDo: Use option in XML to select ASC/DESC
 				->order('lft ASC');
 
@@ -99,9 +100,15 @@ class GallerySelectField extends ListField
 
 		$options = $galleries;
 
+        // Pad the option text with spaces using depth level as a multiplier.
+        for ($i = 0, $n = count($options); $i < $n; $i++) {
+            $options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . $options[$i]->text;
+        }
+
         // Put "Select an option" on the top of the list.
 		array_unshift($options, JHtml::_('select.option', '0', Text::_('COM_RSGALLERY2_SELECT_GALLERY')));
 
+        // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
 
         return $options;
