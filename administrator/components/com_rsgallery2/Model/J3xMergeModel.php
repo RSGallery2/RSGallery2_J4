@@ -148,7 +148,7 @@ class J3xMergeModel extends BaseDatabaseModel
 
         try {
 
-            $isOkConfig = $this->copyOldJ3xConfig2J4xOptions();
+            $isOkConfig = $this->copyJ3xConfig2J4xOptions();
             $isOk &= $isOkConfig;
 
             if ( ! $isOkConfig) {
@@ -163,7 +163,7 @@ class J3xMergeModel extends BaseDatabaseModel
         //--- galleries ---------------------------------------------
 
         try {
-            $isOkGalleries = $this->copyAllOldJ3xGalleries2J4x();
+            $isOkGalleries = $this->copyAllJ3xGalleries2J4x();
             $isOk &= $isOkGalleries;
 
             if ( ! $isOkGalleries) {
@@ -179,7 +179,7 @@ class J3xMergeModel extends BaseDatabaseModel
 
         try {
 
-            $isOkImages = $this->copyAllOldJ3xImages2J4x ();
+            $isOkImages = $this->copyAllJ3xImages2J4x ();
             $isOk &= $isOkImages;
 
             if ( ! $isOkImages) {
@@ -622,7 +622,7 @@ EOT;
 
 //>>>yyyy===================================================================================================
 
-    public function copyOldJ3xConfig2J4xOptions () {
+    public function copyJ3xConfig2J4xOptions () {
 
         $isOk = false;
 
@@ -668,14 +668,14 @@ EOT;
         return $isOk;
     }
 
-    public function copyAllOldJ3xGalleries2J4x () {
+    public function copyAllJ3xGalleries2J4x () {
 
         $isOk = false;
 
         try {
 
             $j3xGalleriesItems = $this->j3x_galleriesList();
-            $isOk = $this->copyOldJ3xGalleries2J4x ($j3xGalleriesItems);
+            $isOk = $this->copyJ3xGalleries2J4x ($j3xGalleriesItems);
 
         }
         catch (\RuntimeException $e)
@@ -686,7 +686,7 @@ EOT;
         return $isOk;
     }
 
-    public function copySelectedOldJ3xGalleries2J4x ($selectedIds) {
+    public function copySelectedJ3xGalleries2J4x ($selectedIds) {
 
         $isOk = false;
 
@@ -694,7 +694,7 @@ EOT;
 
             $j3xGalleriesItems = $this->j3x_galleriesListOfIds($selectedIds);
 
-            $isOk = $this-copyOldJ3xGalleries2J4x ($j3xGalleriesItems);
+            $isOk = $this-copyJ3xGalleries2J4x ($j3xGalleriesItems);
 
         }
         catch (\RuntimeException $e)
@@ -705,7 +705,7 @@ EOT;
         return $isOk;
     }
 
-    public function copyOldJ3xGalleries2J4x ($j3xGalleriesItems) {
+    public function copyJ3xGalleries2J4x ($j3xGalleriesItems) {
 
         $isOk = false;
 
@@ -950,7 +950,7 @@ EOT;
         return $images;
     }
 
-    public function copyAllOldJ3xImages2J4x () {
+    public function copyAllJ3xImages2J4x () {
 
         $isOk = false;
 
@@ -960,7 +960,7 @@ EOT;
 
             $j3xImageItems = $this->j3x_imagesList();
 
-            $isOk &= $this->copyOldJ3xImages2J4x ($j3xImageItems);
+            $isOk &= $this->copyJ3xImages2J4x ($j3xImageItems);
 
         }
         catch (\RuntimeException $e)
@@ -971,7 +971,7 @@ EOT;
         return $isOk;
     }
 
-    public function copySelectedOldJ3xImages2J4x ($selectedIds) {
+    public function copySelectedJ3xImages2J4x ($selectedIds) {
 
         $isOk = false;
 
@@ -979,7 +979,7 @@ EOT;
 
             $j3xImageItems = $this->j3x_imagesListOfIds($selectedIds);
 
-            $isOk = $this-copyOldJ3xImages2J4x ($j3xImageItems);
+            $isOk = $this-copyJ3xImages2J4x ($j3xImageItems);
 
         }
         catch (\RuntimeException $e)
@@ -990,7 +990,7 @@ EOT;
         return $isOk;
     }
 
-    public function copyOldJ3xImages2J4x ($j3xImageItems) {
+    public function copyJ3xImages2J4x ($j3xImageItems) {
 
         $isOk = false;
 

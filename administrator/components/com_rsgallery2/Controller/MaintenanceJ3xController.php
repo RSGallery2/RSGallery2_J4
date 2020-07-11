@@ -84,7 +84,7 @@ class MaintenanceJ3xController extends AdminController
                 if ($isOk) {
                     $msg .= "Successful copied old gallery items";
                 } else {
-                    $msg .= "Error at copyOldJ3xGalleries2J4x items";
+                    $msg .= "Error at copyJ3xGalleries2J4x items";
                     $msgType = 'error';
                 }
 
@@ -108,9 +108,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
      */
-    public function copyOldJ3xConfig2J4xOptions()
+    public function copyJ3xConfig2J4xOptions()
     {
-        $msg = "MaintenanceJ3xController.copyOldJ3xConfig2J4xOptions: ";
+        $msg = "MaintenanceJ3xController.copyJ3xConfig2J4xOptions: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -126,18 +126,18 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyOldJ3xConfig2J4xOptions();
+                $isOk = $maint3xModel->copyJ3xConfig2J4xOptions();
 
                 if ($isOk) {
                     $msg .= "Successful applied J3x configuration items";
                 } else {
-                    $msg .= "Error at copyOldJ3xConfig2J4xOptions items";
+                    $msg .= "Error at copyJ3xConfig2J4xOptions items";
                     $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyOldJ3xConfig2J4xOptions: "' . '<br>';
+                $OutTxt .= 'Error executing copyJ3xConfig2J4xOptions: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -146,7 +146,7 @@ class MaintenanceJ3xController extends AdminController
 
         }
 
-        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyJ3xConfig';
         $this->setRedirect($link, $msg, $msgType);
     }
 
@@ -155,9 +155,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
      */
-    public function copyOldJ3xGalleries2J4x()
+    public function copyJ3xGalleries2J4x()
     {
-        $msg = "MaintenanceJ3xController.copyOldJ3xGalleries2J4x: ";
+        $msg = "MaintenanceJ3xController.copyJ3xGalleries2J4x: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -173,18 +173,18 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyAllOldJ3xGalleries2J4x();
+                $isOk = $maint3xModel->copyAllJ3xGalleries2J4x();
 
                 if ($isOk) {
                     $msg .= "Successful applied J3x gallery items";
                 } else {
-                    $msg .= "Error at copyOldJ3xGalleries2J4x items";
+                    $msg .= "Error at copyJ3xGalleries2J4x items";
                     $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyOldJ3xGalleries2J4x: "' . '<br>';
+                $OutTxt .= 'Error executing copyJ3xGalleries2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -193,7 +193,7 @@ class MaintenanceJ3xController extends AdminController
 
         }
 
-        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
 
@@ -244,7 +244,7 @@ class MaintenanceJ3xController extends AdminController
 
         }
 
-        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferOldJ3xImages';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages';
         $this->setRedirect($link, $msg, $msgType);
 
         return $isOk;
@@ -255,9 +255,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
      */
-    public function copyOldJ3xImages2J4x() // copyOldJ3xImages2J4x
+    public function copyJ3xImages2J4x() // copyJ3xImages2J4x
     {
-        $msg = "MaintenanceJ3xController.copyOldJ3xImages2J4x: ";
+        $msg = "MaintenanceJ3xController.copyJ3xImages2J4x: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -273,17 +273,17 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyAllOldJ3xImages2J4x();
+                $isOk = $maint3xModel->copyAllJ3xImages2J4x();
                 if ($isOk) {
                     $msg .= "Successful applied J3x image items";
                 } else {
-                    $msg .= "Error at copyOldJ3xImages2J4x items";
+                    $msg .= "Error at copyJ3xImages2J4x items";
                     $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyOldJ3xImages2J4x: "' . '<br>';
+                $OutTxt .= 'Error executing copyJ3xImages2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -293,7 +293,7 @@ class MaintenanceJ3xController extends AdminController
         }
 
         //$link = 'index.php?option=com_rsgallery2&view=galleries';
-        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferOldJ3xImages';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages';
         $this->setRedirect($link, $msg, $msgType);
     }
 

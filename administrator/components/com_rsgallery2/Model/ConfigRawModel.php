@@ -193,7 +193,7 @@ class ConfigRawModel extends BaseModel
         // ToDo: replace all of followoing functions with call to  J3xMergeModel
 
     /**
-	function copyOldJ3xConfig2J4xOptions ($oldConfigItems)
+	function copyJ3xConfig2J4xOptions ($oldConfigItems)
 	{
 		$isSaved = false;
 
@@ -207,7 +207,7 @@ class ConfigRawModel extends BaseModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'ConfigRawModel: Error in copyOldJ3xConfig2J4xOptions: "' . '<br>';
+			$OutTxt .= 'ConfigRawModel: Error in copyJ3xConfig2J4xOptions: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();

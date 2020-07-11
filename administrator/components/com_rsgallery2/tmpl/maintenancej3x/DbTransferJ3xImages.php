@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferOldJ3xImages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'); ?>"
       method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
     <div class="row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -32,9 +32,9 @@ use Joomla\CMS\Language\Text;
         } ?>">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbTransferOldJ3xImages')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbTransferJ3xImages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbTransferOldJ3xImages', Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbTransferJ3xImages', Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES', true)); ?>
 
                 <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'); ?></strong></legend>
 
@@ -518,7 +518,7 @@ use Joomla\CMS\Language\Text;
                     echo '<hr>';
                 } catch (\RuntimeException $e) {
                     $OutTxt = '';
-                    $OutTxt .= 'Error rawEdit view: "' . 'DbTransferOldJ3xImages' . '"<br>';
+                    $OutTxt .= 'Error rawEdit view: "' . 'DbTransferJ3xImages' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                     $app = Factory::getApplication();

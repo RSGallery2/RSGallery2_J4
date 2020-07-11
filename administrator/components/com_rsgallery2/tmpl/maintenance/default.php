@@ -321,31 +321,31 @@ if ($this->isJ3xRsg2DataExisting)
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyJ3xConfig'),
 		Text::_('COM_RSGALLERY2_COPY_J3X_CONFIG'),
 		Text::_('COM_RSGALLERY2_COPY_J3X_CONFIG_DESC'),
 		array('icon-new-tab', 'icon-equalizer', 'icon-notification-2'),
-		'viewDbCopyOldJ3xConfig'
+		'viewDbCopyJ3xConfig'
 	);
 	/**/
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES_DESC'),
 		array('icon-new-tab', 'icon-images', 'icon-notification-2'),
-		'viewDBTransferOldJ3xGalleries'
+		'viewDBTransferJ3xGalleries'
 	);
 	/**/
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferOldJ3xImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'),
 		Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES_DESC'),
 		array('icon-new-tab', 'icon-image', 'icon-notification-2'),
-		'viewDbTransferOldJ3xImages'
+		'viewDbTransferJ3xImages'
 	);
 	/**/
 }
@@ -419,11 +419,11 @@ $developer4Test_ZoneButtons = [];
 
 /**/
 $developer4Test_ZoneButtons[] = new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries'),
+	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'),
 	Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'),
 	Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES_DESC'),
 	array('icon-new-tab', 'icon-images', 'icon-notification-2'),
-	'viewDBTransferOldJ3xGalleries'
+	'viewDBTransferJ3xGalleries'
 );
 /**/
 

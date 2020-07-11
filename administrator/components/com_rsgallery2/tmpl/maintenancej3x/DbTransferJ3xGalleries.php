@@ -34,7 +34,7 @@ function jsonArray2Lines($lines)
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferOldJ3xGalleries'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'); ?>"
       method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
     <div class="row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -49,9 +49,9 @@ function jsonArray2Lines($lines)
         } ?>">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferOldJ3xGalleries')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferJ3xGalleries')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferOldJ3xGalleries', Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xGalleries', Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES', true)); ?>
 
                 <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES_DESC'); ?></strong></legend>
 
@@ -465,7 +465,7 @@ function jsonArray2Lines($lines)
                     echo '<hr>';
                 } catch (\RuntimeException $e) {
                     $OutTxt = '';
-                    $OutTxt .= 'Error rawEdit view: "' . 'DBTransferOldJ3xGalleries' . '"<br>';
+                    $OutTxt .= 'Error rawEdit view: "' . 'DBTransferJ3xGalleries' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                     $app = Factory::getApplication();
