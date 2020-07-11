@@ -190,7 +190,7 @@ class ConfigRawModel extends BaseModel
 
 
 
-        // ToDo: replace all of followoing functions with call to  MaintenanceJ3xModel
+        // ToDo: replace all of followoing functions with call to  J3xMergeModel
 
     /**
 	function copyOldJ3xConfig2J4xOptions ($oldConfigItems)

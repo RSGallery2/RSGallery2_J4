@@ -32,7 +32,7 @@ use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\J3xTablesModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 
 
 /**
@@ -103,7 +103,7 @@ class HtmlView extends BaseHtmlView
 
         //--- Check for J3x parts ------------------------------
 
-        $isJ3xDataExisting = J3xTablesModel::J3xConfigTableExist();
+        $isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
 
         /*-------------------------------------------------------------------------------
         standard

@@ -23,21 +23,31 @@ use Joomla\CMS\Table\Table;
  *
  * @since  1.0
  */
-class J3xTablesModel extends BaseModel
+class J3xExistModel extends BaseModel
 {
 
     // ToDo: attention a double of this function exist. Remove either of them
 
-    static function J3xConfigTableExist () {return self::J3xTableExist ('#__rsgallery2_config');}
-    //static function J3xGalleriesTableExist () {return self::J3xTableExist ('#__rsgallery2_galleries');}
-    //static function J3xImagesTableExist () {return self::J3xTableExist ('#__rsgallery2_files');}
+    static function J3xConfigTableExist()
+    {
+        return self::J3xTableExist('#__rsgallery2_config');
+    }
 
-    static function J3xTableExist ($findTable)
+    static function J3xGalleriesTableExist()
+    {
+        return self::J3xTableExist('#__rsgallery2_galleries');
+    }
+
+    static function J3xImagesTableExist()
+    {
+        return self::J3xTableExist('#__rsgallery2_files');
+    }
+
+    static function J3xTableExist($findTable)
     {
         $tableExist = false;
 
-        try
-        {
+        try {
             $db = Factory::getDbo();
             $db->setQuery('SHOW TABLES');
             $existingTables = $db->loadColumn();
@@ -45,11 +55,9 @@ class J3xTablesModel extends BaseModel
             $checkTable = $db->replacePrefix($findTable);
 
             $tableExist = in_array($checkTable, $existingTables);
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'ConfigRawModel: J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
+            $OutTxt .= 'J3xExistModel: J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -58,8 +66,6 @@ class J3xTablesModel extends BaseModel
 
         return $tableExist;
     }
-
-
 
 
 }

@@ -28,7 +28,7 @@ use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 
 use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\J3xMergeModel;
 use Joomla\Component\RSGallery2\Administrator\Model\Rsg2ExtensionModel;
 
 /**
@@ -157,7 +157,7 @@ class HtmlView extends BaseHtmlView
                 $this->rsg2Configuration_j3x = [];
                 if (ConfigRawModel::J3xConfigTableExist ()) {
 
-                    $rsg2configuration_j3x = MaintenanceJ3xModel::j3xConfigItems ();
+                    $rsg2configuration_j3x = J3xMergeModel::j3xConfigItems ();
                     $this->rsg2Configuration_j3x = $rsg2configuration_j3x;
                 }
 

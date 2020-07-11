@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 /**
- * Class MaintenanceJ3xModel
+ * Class MaintRemoveAllDataModel
  * @package Joomla\Component\Rsgallery2\Administrator\Model
  *
  * used for removing image files and remove of all data
@@ -137,18 +137,6 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 
 		return $msg;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 	/**
      * @param $OldConfigItems

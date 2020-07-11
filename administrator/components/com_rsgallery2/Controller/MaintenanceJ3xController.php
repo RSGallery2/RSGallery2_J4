@@ -222,7 +222,7 @@ class MaintenanceJ3xController extends AdminController
 
             try {
                 // Get the model.
-                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\J3xMergeModel */
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
                 // Remove the items.
