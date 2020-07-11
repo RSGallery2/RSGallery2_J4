@@ -32,14 +32,14 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/DbCopyOldJ3xConfig.css', array('vers
 
 				<?php //echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbCopyOldJ3xConfig')); ?>
 
-				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOldJ3xConfig', Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG', true)); ?>
+				<?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbCopyOldJ3xConfig', Text::_('COM_RSGALLERY2_COPY_J3X_CONFIG', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_COMPARE_AND_COPY_OLD_J3X_CONFIG'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_COMPARE_AND_COPY_J3X_CONFIG'); ?></strong></legend>
 
 				<?php if (! count ($this->j3xConfigItems)) : ?>
 					<div class="alert alert-info">
 						<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
-						<?php echo Text::_('COM_RSGALLERY2_OLD_J3X_RSG2_TABLES_NOT_EXISTING'); // JGLOBAL_NO_MATCHING_RESULTS ?>
+						<?php echo Text::_('COM_RSGALLERY2_J3X_RSG2_TABLES_NOT_EXISTING'); // JGLOBAL_NO_MATCHING_RESULTS ?>
 					</div>
 				<?php else : ?>
 				<table class="table" id="galleryList">

@@ -300,7 +300,7 @@ if ($this->isJ3xRsg2DataExisting)
 {
 	$upgrade_ZoneInfo = Text::_('COM_RSGALLERY2_UPGRADE_ZONE_DESCRIPTION');
 } else {
-	$upgrade_ZoneInfo = Text::_('COM_RSGALLERY2_OLD_J3X_RSG2_TABLES_NOT_EXISTING');
+	$upgrade_ZoneInfo = Text::_('COM_RSGALLERY2_J3X_RSG2_TABLES_NOT_EXISTING');
 }
 $upgrade_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_UPGRADE_ZONE'), $upgrade_ZoneInfo, 'upgrade', 'upgradeZone');
 
@@ -322,8 +322,8 @@ if ($this->isJ3xRsg2DataExisting)
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyOldJ3xConfig'),
-		Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'),
-		Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG_DESC'),
+		Text::_('COM_RSGALLERY2_COPY_J3X_CONFIG'),
+		Text::_('COM_RSGALLERY2_COPY_J3X_CONFIG_DESC'),
 		array('icon-new-tab', 'icon-equalizer', 'icon-notification-2'),
 		'viewDbCopyOldJ3xConfig'
 	);

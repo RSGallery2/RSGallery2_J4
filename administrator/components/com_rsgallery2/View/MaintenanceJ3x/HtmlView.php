@@ -191,9 +191,9 @@ class HtmlView extends BaseHtmlView
 						. '</span><br>';
 				}
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_OLD_J3X_CONFIG'), 'screwdriver');
-				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xConfig2J4xOptions', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_CONFIGURATION', false);
-				//  ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_CONFIGURATION', true);
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_COPY_J3X_CONFIG'), 'screwdriver');
+				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xConfig2J4xOptions', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
+				//  ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_J3X_CONFIGURATION', true);
 				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
 
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
@@ -220,8 +220,8 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_GALLERIES', false);
-				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_GALLERIES', true);
+				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_GALLERIES', false);
+				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
 
 				break;
 
@@ -241,8 +241,8 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_OLD_J3X_IMAGES', false);
-				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_OLD_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyOldJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
+				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedOldJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
 				break;
 
 			default:
