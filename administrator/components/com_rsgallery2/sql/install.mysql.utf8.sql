@@ -48,7 +48,6 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 
 --  KEY `idx_catid` (`catid`),
 --  KEY `idx_language` (`language`),
-  `use_j3x_location` tinyint(1) DEFAULT 0 NOT NULL,
 
   PRIMARY KEY (`id`),
   KEY `idx_access` (`access`),  
@@ -100,6 +99,8 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `approved` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `access` int(10) NOT NULL DEFAULT 0,
+
+  `use_j3x_location` tinyint(1) DEFAULT 0 NOT NULL,
 
   PRIMARY KEY  (`id`),
 #  UNIQUE KEY `UK_name` (`name`),
