@@ -18,7 +18,7 @@ echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
 
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
-      method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+      method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="col-md-2">

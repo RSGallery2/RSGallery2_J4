@@ -21,7 +21,7 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
 ?>
 
     <form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
-          method="post" name="adminForm" id="rsgallery2-main" class="form-validate">
+          method="post" name="adminForm" id="adminForm" class="form-validate">
         <div class="row">
             <?php if (false) : // ToDo: Remove this quick hack. do not show sidebar
                 //if (!empty($this->sidebar)) :
