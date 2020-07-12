@@ -18,7 +18,7 @@ use Joomla\Utilities\ArrayHelper;
 
 
 /**
- * Class J3xMergeModel
+ * Class MaintenanceJ3xModel
  * @package Joomla\Component\Rsgallery2\Administrator\Model
  *
  * Handles old J3x RSG23 data structures. Especially for transferring the config data
@@ -26,7 +26,7 @@ use Joomla\Utilities\ArrayHelper;
  *
  */
 
-class J3xMergeModel extends BaseDatabaseModel
+class MaintenanceJ3xModel extends BaseDatabaseModel
 {
 
     /**
@@ -38,21 +38,18 @@ class J3xMergeModel extends BaseDatabaseModel
         $oldItems = array();
 
         try {
-            // ToDo: No need to check again ?
-            //if (J3xExistModel::J3xConfigTableExist()) {
-                // Create a new query object.
-                $db = Factory::getDbo();
-                $query = $db->getQuery(true);
+            // Create a new query object.
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
 
-                $query
-                    //->select('*')
-                    ->select($db->quoteName(array('name', 'value')))
-                    ->from($db->quoteName('#__rsgallery2_config'))
-                    ->order($db->quoteName('name') . ' ASC');
-                $db->setQuery($query);
+            $query
+                //->select('*')
+                ->select($db->quoteName(array('name', 'value')))
+                ->from($db->quoteName('#__rsgallery2_config'))
+                ->order($db->quoteName('name') . ' ASC');
+            $db->setQuery($query);
 
-                $oldItems = $db->loadAssocList('name', 'value');
-            //}
+            $oldItems = $db->loadAssocList('name', 'value');
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'OldConfigItems: Error executing query: "' . $query . '"' . '<br>';

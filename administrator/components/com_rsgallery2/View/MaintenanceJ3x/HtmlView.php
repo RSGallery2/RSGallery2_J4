@@ -152,6 +152,30 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
+            case 'TransferJ3xImages':
+                try
+                {
+                    $j3xModel      = $this->getModel();
+                    $this->j3x_images = $j3xModel->j3x_imagesList();
+                    $this->j4x_images = $j3xModel->j4x_imagesList();
+
+                    // ToDo: order by gallery id
+                    //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
+                    //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
+
+                }
+                catch (\RuntimeException $e)
+                {
+                    $OutTxt = '';
+                    $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
+                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                    $app = Factory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'error');
+                }
+
+                break;
+
         }
 
 
@@ -226,6 +250,26 @@ class HtmlView extends BaseHtmlView
 				break;
 
 			case 'DbTransferJ3xImages':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+						. '*  Separate code for images raw view -> import into views<br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+						. '</span><br>';
+				}
+
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+
+				ToolBarHelper::custom('MaintenanceJ3x.copyJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
+				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
+				break;
+
+			case 'TransferJ3xImages':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{

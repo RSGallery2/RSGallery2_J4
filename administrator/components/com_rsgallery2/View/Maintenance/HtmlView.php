@@ -23,7 +23,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Joomla\Component\Rsgallery2\Administrator\Model\J3xExistModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\J3xMergeModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
 /**
  * View class for a list of rsgallery2.
