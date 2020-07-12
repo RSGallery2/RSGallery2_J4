@@ -61,15 +61,15 @@ class HtmlView extends BaseHtmlView
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
 		/**/
 
-		$Layout = Factory::getApplication()->input->get('layout');
+        $j3xModel      = $this->getModel();
 
+		$Layout = Factory::getApplication()->input->get('layout');
 		switch ($Layout)
 		{
 			case 'DbCopyJ3xConfig':
 
 				try
 				{
-					$j3xModel      = $this->getModel();
 					$this->j3xConfigItems = $j3xModel->j3xConfigItems();
 					$this->j4xConfigItems = $rsgConfig->toArray();
 
@@ -97,8 +97,6 @@ class HtmlView extends BaseHtmlView
             case 'DBTransferJ3xGalleries':
                 try
                 {
-                    $j3xModel      = $this->getModel();
-
                     // gallery list
                     $this->j3x_galleries = $j3xModel->j3x_galleriesList();
                     $this->j4x_galleries = $j3xModel->j4x_galleriesList();
@@ -131,7 +129,6 @@ class HtmlView extends BaseHtmlView
             case 'DbTransferJ3xImages':
                 try
                 {
-                    $j3xModel      = $this->getModel();
                     $this->j3x_images = $j3xModel->j3x_imagesList();
                     $this->j4x_images = $j3xModel->j4x_imagesList();
 
@@ -155,9 +152,8 @@ class HtmlView extends BaseHtmlView
             case 'TransferJ3xImages':
                 try
                 {
-                    $j3xModel      = $this->getModel();
-                    $this->j3x_images = $j3xModel->j3x_imagesList();
-                    $this->j4x_images = $j3xModel->j4x_imagesList();
+                    $this->j3x_images = $j3xModel->j3x_imagesMergeList();
+                    $this->j4x_images = $j3xModel->j4x_imagesMergeList();
 
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();

@@ -126,18 +126,18 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyJ3xConfig2J4xOptions();
+                $isOk = $maint3xModel->collectAndCopyJ3xConfig2J4xOptions();
 
                 if ($isOk) {
                     $msg .= "Successful applied J3x configuration items";
                 } else {
-                    $msg .= "Error at copyJ3xConfig2J4xOptions items";
+                    $msg .= "Error at collectAndCopyJ3xConfig2J4xOptions items";
                     $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyJ3xConfig2J4xOptions: "' . '<br>';
+                $OutTxt .= 'Error executing collectAndCopyJ3xConfig2J4xOptions: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();

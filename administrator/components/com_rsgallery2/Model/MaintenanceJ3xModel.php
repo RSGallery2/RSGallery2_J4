@@ -15,7 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Utilities\ArrayHelper;
-
+use Joomla\Component\RSGallery2\Administrator\Model\ConfigRaw;
 
 /**
  * Class MaintenanceJ3xModel
@@ -28,6 +28,68 @@ use Joomla\Utilities\ArrayHelper;
 
 class MaintenanceJ3xModel extends BaseDatabaseModel
 {
+
+    public function applyExistingJ3xData()
+    {
+        $isOk = true;
+
+        //--- configuration ---------------------------------------------
+
+        try {
+
+            $isOkConfig = $this->collectAndCopyJ3xConfig2J4xOptions();
+            $isOk &= $isOkConfig;
+
+            if ( ! $isOkConfig) {
+                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        //--- galleries ---------------------------------------------
+
+        try {
+            $isOkGalleries = $this->copyAllJ3xGalleries2J4x();
+            $isOk &= $isOkGalleries;
+
+            if ( ! $isOkGalleries) {
+                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x galleries failed'), 'error');
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        //--- images ---------------------------------------------
+
+        try {
+
+            $isOkImages = $this->copyAllJ3xImages2J4x ();
+            $isOk &= $isOkImages;
+
+            if ( ! $isOkImages) {
+                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x images failed'), 'error');
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+
+        // ....
+        // ? ACL, assets ...
+
+
+
+
+        return $isOk;
+    }
 
     /**
      * @return array|mixed
@@ -69,8 +131,6 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
      * @return array
      * @throws \Exception
      */
-
-
     // Configuration test lists of variables:
     //      a) untouchedRsg2Config, b) untouchedJ3xConfig, c) 1:1 merged, d) assisted merges
     static function MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems)
@@ -135,68 +195,6 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             $untouchedJ3xItems,
             $untouchedJ4xItems
         );
-    }
-
-    public function applyExistingJ3xData()
-    {
-        $isOk = true;
-
-        //--- configuration ---------------------------------------------
-
-        try {
-
-            $isOkConfig = $this->copyJ3xConfig2J4xOptions();
-            $isOk &= $isOkConfig;
-
-            if ( ! $isOkConfig) {
-                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
-            }
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
-        }
-
-        //--- galleries ---------------------------------------------
-
-        try {
-            $isOkGalleries = $this->copyAllJ3xGalleries2J4x();
-            $isOk &= $isOkGalleries;
-
-            if ( ! $isOkGalleries) {
-                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x galleries failed'), 'error');
-            }
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
-        }
-
-        //--- images ---------------------------------------------
-
-        try {
-
-            $isOkImages = $this->copyAllJ3xImages2J4x ();
-            $isOk &= $isOkImages;
-
-            if ( ! $isOkImages) {
-                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x images failed'), 'error');
-            }
-
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
-        }
-
-
-        // ....
-        // ? ACL, assets ...
-
-
-
-
-        return $isOk;
     }
 
     public function j3x_galleriesList()
@@ -404,7 +402,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
                 ->select('*')
                 ->from('#__rsg2_galleries')
-                ->order('lft ASC');
+                ->order($db->quoteName('lft') . ' ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -619,13 +617,21 @@ EOT;
 
 //>>>yyyy===================================================================================================
 
-    public function copyJ3xConfig2J4xOptions () {
+    /**
+     * collectAndCopyJ3xConfig2J4xOptions
+     * Collects copy lists of type:
+     *     merged: 1:1 tranferable items
+     *     assisted: J3x old name -> j4x new name
+     * @return bool
+     *
+     * @throws \Exception
+     * @since version
+     */
+    public function collectAndCopyJ3xConfig2J4xOptions () {
 
         $isOk = false;
 
         try {
-
-            $configModel = new ConfigRawModel ();
 
             $j3xConfigItems = $this->j3xConfigItems();
             $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -646,7 +652,7 @@ EOT;
                 // Smuggle the J3x config state "upgraded:1" into the list
                 //$oldConfigItems ['j3x_config_upgrade'] = "1";
 
-                $isOk = $configModel->copyJ3xConfigItems2J4xOptions(
+                $isOk = $this->copyJ3xConfigItems2J4xOptions(
                     $j4xConfigItems,
                     $assistedJ3xItems,
 //                        $assistedJ4xItems,
@@ -664,6 +670,62 @@ EOT;
 
         return $isOk;
     }
+
+    /**
+     * copyJ3xConfigItems2J4xOptions
+     * Bundles the merged items and the assisted items to a list and saves it
+     * as the new j4x configuration parameters
+     * @param $j4xConfigItems
+     * @param $assistedJ3xItems
+     * @param $mergedItems
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     * @since version
+     */
+    public function copyJ3xConfigItems2J4xOptions ($j4xConfigItems,
+                                                   $assistedJ3xItems,
+//                                                   $assistedJ4xItems,
+                                                   $mergedItems) {
+        $isSaved = false;
+
+        try
+        {
+
+            // copy 1:1 items
+            foreach ($mergedItems as $name => $value)
+            {
+                $j4xConfigItems [$name] = $value;
+            }
+
+            // assisted copying
+            foreach ($assistedJ3xItems as $j3xName => $var)
+            {
+                list($j4xName, $j4xNewValue) = $var;
+                $j4xConfigItems [$j4xName] = $j4xNewValue;
+            }
+
+            // Save parameter
+            $configModel = new ConfigRawModel ();
+            $isSaved = $configModel->saveItems($j4xConfigItems);
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'MaintenanceJ3xModel: Error in copyJ3xConfigItems2J4xOptions: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+
+        return $isSaved;
+    }
+
+
 
     public function copyAllJ3xGalleries2J4x () {
 
@@ -938,6 +1000,54 @@ EOT;
 
             $images = $db->loadObjectList();
 
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $images;
+    }
+
+    public function j3x_imagesMergeList()
+    {
+        $images = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName(array('id', 'name', 'title')))
+                ->from('#__rsgallery2_files')
+                ->order($db->quoteName(array('parent_id', 'ordering')) . ' ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $images = $db->loadObjectList();
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $images;
+    }
+
+    public function j4x_imagesMergeList()
+    {
+        $images = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName(array('id', 'name', 'title', 'use_j3x_location')))
+                ->from('#__rsg2_images')
+                ->order($db->quoteName('ordering') . ' ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $images = $db->loadObjectList();
         }
         catch (\RuntimeException $e)
         {
