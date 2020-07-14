@@ -51,9 +51,9 @@ function jsonArray2Lines($lines)
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferJ3xGalleries')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xGalleries', Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xGalleries', Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_GALLERIES_DESC'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'); ?></strong></legend>
 
                 <h3><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h3>
 

@@ -34,9 +34,9 @@ use Joomla\CMS\Language\Text;
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbTransferJ3xImages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbTransferJ3xImages', Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbTransferJ3xImages', Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'); ?></strong></legend>
 
                 <h3><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h3>
 
