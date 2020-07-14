@@ -68,6 +68,9 @@ class InstallMessage
         if ($updateId == 'update') {
 
             $instMessage .= $this->changeLogHtml();
+        } else {
+            //
+            $instMessage .= "ToDo: Welcome to first use of RSGallery2 ....."; // ? state , possible functions
         }
 
         return $instMessage;
