@@ -23,7 +23,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 /**
  * RSGallery2 Component Images Model
  *
- * @since  1.6
+ * @since  1.6ASC
  */
 class ImagesModel extends ListModel
 {
@@ -208,7 +208,8 @@ class ImagesModel extends ListModel
 				. 'a.ordering, '
                 . 'a.approved, '
                 . 'a.asset_id, '
-				. 'a.access '
+				. 'a.access, '
+				. 'a.use_j3x_location '
 			)
 		);
 		$query->from('#__rsg2_images as a');
@@ -376,7 +377,8 @@ class ImagesModel extends ListModel
 			. 'a.ordering, '
             . 'a.approved, '
 			. 'a.asset_id, '
-			. 'a.access '
+			. 'a.access, '
+			. 'a.use_j3x_location '
 			/**/
 		);
 

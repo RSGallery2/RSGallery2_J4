@@ -109,7 +109,9 @@ use Joomla\CMS\Language\Text;
                         <th width="1%" class="center">
                             `asset_id`
                         </th>
-
+                        <th width="1%" class="text-center">
+                            `use_j3x_location`
+                        </th>
 
 					</tr>
                     </thead>
@@ -188,6 +190,9 @@ use Joomla\CMS\Language\Text;
                             </td>
                             <td width="1%" class="center">
                                 <?php echo $item->asset_id; ?>
+                            </td>
+                            <td width="1%" class="text-center">
+                                <?php echo $item->use_j3x_location; ?>
                             </td>
                         </tr>
 

@@ -1018,7 +1018,9 @@ EOT;
             $query = $db->getQuery(true)
                 ->select($db->quoteName(array('id', 'name', 'title')))
                 ->from('#__rsgallery2_files')
-                ->order($db->quoteName(array('parent_id', 'ordering')) . ' ASC');
+                ->order('parent_id ordering ASC');
+//                ->order($db->quoteName(array('parent_id', 'ordering')) . ' ASC');
+//                ->order($db->quoteName('parent_id') . ' ' . $db->quoteName('ordering') . ' ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -1331,6 +1333,12 @@ EOT;
         $j4_imageItem['asset_id'] = $j3x_image->asset_id;
         //`access` int(10) NOT NULL DEFAULT 0,
         $j4_imageItem['access'] = $j3x_image->access;
+
+        // Mark as to be found in old directory
+        $j4_imageItem['use_j3x_location'] = 1;
+
+
+
         return $j4_imageItem;
     }
 
