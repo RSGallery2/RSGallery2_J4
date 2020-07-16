@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\AbstractView;
 use Joomla\Component\Admin\Administrator\Model\SysinfoModel;
+use Joomla\Component\Rsgallery2\Administrator\Helper\rsgallery2Version;
 
 /**
  * Sysinfo View class for the Admin component
@@ -77,9 +78,15 @@ class JsonView extends AbstractView
 //			'extensions'  => $model->getSafeData('extensions')
 //		];
 
+        // ToDO: RSG2 version !!!
+        $oRsg2Version = new rsgallery2Version();
+        $Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
+
+
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         $withInfo = [
             'RSG2_configuration' => $rsgConfig,
+            'RSG2_version' => $Rsg2Version,
             'time_created' => date('c')
             ];
 
