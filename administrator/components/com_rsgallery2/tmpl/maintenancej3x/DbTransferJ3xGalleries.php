@@ -32,6 +32,35 @@ function jsonArray2Lines($lines)
     return implode($html);
 }
 
+
+function isOKIconHtml ($title) {
+
+	$html = <<<EOT
+                    <div class="btn-group">
+                        <a class="tbody-icon" href="javascript:void(0);" aria-labelledby="cbpublish1-desc">
+                            <span class="fas fa-check" aria-hidden="true"/>
+                        </a>
+                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 300px max-width: 400% !important;">$title</div>
+                    </div>
+EOT;
+
+    return $html;
+}
+
+function isNotOkIconHtml ($title) {
+
+	$html = <<<EOT
+                    <div class="btn-group">
+                        <a class="tbody-icon active" href="javascript:void(0);" aria-labelledby="cbunpublish2-desc">
+                            <span class="fas fa-times" aria-hidden="true"/>
+                        </a>
+                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 100% max-width: 100% !important;">$title</div>
+                    </div>
+EOT;
+
+    return $html;
+}
+
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'); ?>"
@@ -69,6 +98,9 @@ function jsonArray2Lines($lines)
                             <?php echo HTMLHelper::_('grid.checkall'); ?>
                         </td>
 
+                        <th width="1%" class="text-center">
+                            <?php echo Text::_('JSTATUS'); ?>
+                        </th>
                         <th width="1%" class="text-center">
                             `id`
                         </th>
@@ -131,11 +163,21 @@ function jsonArray2Lines($lines)
                     foreach ($this->j3x_galleriesSorted as $i => $item) {
                         $identHtml = str_repeat('⋮&nbsp;&nbsp;&nbsp;', $item->level);
 
+                        if (in_array ($item->id, $this->j3x_galleryIdsMerged)){
+                            $isMergedHtml =  isOKIconHtml ('Gallery is merged');
+                        } else {
+                            $isMergedHtml =  isNotOkIconHtml ('Gallery is not merged');
+                        }
+
                         ?>
                         <tr class="row<?php echo $i % 2; ?>">
 
                             <td class="text-center">
                                 <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                            </td>
+
+                            <td class="text-center">
+                                <?php echo $isMergedHtml; ?>
                             </td>
 
                             <td class="text-center">
@@ -227,7 +269,7 @@ function jsonArray2Lines($lines)
                 try {
                     echo '<hr>';
                     echo '<h3>J3x ' . Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE') . '</h3>';
-                    echo $this->j3x_galleriesHtmlHtml;
+                    echo $this->j3x_galleriesHtml;
 
                     echo '<hr>';
                     echo '<h3>J3x ' . Text::_('COM_RSGALLERY2_RAW_GALLERIES_TXT') . '</h3>';

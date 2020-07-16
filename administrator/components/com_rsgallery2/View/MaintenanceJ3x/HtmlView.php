@@ -101,8 +101,10 @@ class HtmlView extends BaseHtmlView
                     $this->j3x_galleries = $j3xModel->j3x_galleriesList();
                     $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
-                    // html
-                    $this->j3x_galleriesHtmlHtml = $j3xModel->GalleriesListAsHTML($this->j3x_galleries);
+                    $this->j3x_galleryIdsMerged = $j3xModel->MergedJ3xIdsDbGalleries ($this->j3x_galleries, $this->j4x_galleries);
+
+                        // html
+                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML($this->j3x_galleries);
                     $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($this->j4x_galleries);
                     $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
 
@@ -132,6 +134,8 @@ class HtmlView extends BaseHtmlView
                     $this->j3x_images = $j3xModel->j3x_imagesList();
                     $this->j4x_images = $j3xModel->j4x_imagesList();
 
+                    $this->j3x_imagesIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
+
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
                     //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
@@ -154,6 +158,9 @@ class HtmlView extends BaseHtmlView
                 {
                     $this->j3x_images = $j3xModel->j3x_imagesMergeList();
                     $this->j4x_images = $j3xModel->j4x_imagesMergeList();
+
+                    $this->j3x_imagesIdsMerged = $j3xModel->MergedJ3xIdsImages ($this->j3x_images, $this->j4x_images);
+                    //[$this->j3x_imagesMerged, $this->j4x_imagesMerged] = $j3xModel->J3xJ4x_imagesMergedLists ();
 
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();

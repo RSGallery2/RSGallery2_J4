@@ -14,6 +14,34 @@ use Joomla\CMS\Language\Text;
 
 //HTMLHelper::_('bootstrap.framework');
 
+function isOKIconHtml ($title) {
+
+    $html = <<<EOT
+                    <div class="btn-group">
+                        <a class="tbody-icon" href="javascript:void(0);" aria-labelledby="cbpublish1-desc">
+                            <span class="fas fa-check" aria-hidden="true"/>
+                        </a>
+                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 300px max-width: 400% !important;">$title</div>
+                    </div>
+EOT;
+
+    return $html;
+}
+
+function isNotOkIconHtml ($title) {
+
+    $html = <<<EOT
+                    <div class="btn-group">
+                        <a class="tbody-icon active" href="javascript:void(0);" aria-labelledby="cbunpublish2-desc">
+                            <span class="fas fa-times" aria-hidden="true"/>
+                        </a>
+                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 100% max-width: 100% !important;">$title</div>
+                    </div>
+EOT;
+
+    return $html;
+}
+
 
 ?>
 
@@ -52,6 +80,9 @@ use Joomla\CMS\Language\Text;
                             <?php echo HTMLHelper::_('grid.checkall'); ?>
                         </td>
 
+                        <th width="1%" class="text-center">
+                            <?php echo Text::_('JSTATUS'); ?>
+                        </th>
                         <th width="1%" class="center">
                             `id`
                         </th>
@@ -119,11 +150,21 @@ use Joomla\CMS\Language\Text;
                     <?php
                     foreach ($this->j3x_images as $i => $item) {
 
+                        if (in_array ($item->id, $this->j3x_imagesIdsMerged)){
+                            $isMergedHtml =  isOKIconHtml ('Image is merged');
+                        } else {
+                            $isMergedHtml =  isNotOkIconHtml ('Image is not merged');
+                        }
+
                         ?>
                         <tr class="row<?php echo $i % 2; ?>">
 
                             <td class="text-center">
                                 <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                            </td>
+
+                            <td class="text-center">
+                                <?php echo $isMergedHtml; ?>
                             </td>
 
                             <td width="1%" class="center">

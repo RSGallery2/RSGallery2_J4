@@ -127,10 +127,6 @@ $ListDirn  = '';
                                             `access`
                                         </th>
 
-                                        <th width="1%" class="text-center">
-                                            `use_j3x_location`
-                                        </th>
-
                                     </tr>
                                 </thead>
 
@@ -236,10 +232,6 @@ $ListDirn  = '';
 
                                             <td width="1%" class="text-center">
 		                                        <?php echo $item->access; ?>
-                                            </td>
-
-                                            <td width="1%" class="text-center">
-                                                <?php echo $item->use_j3x_location; ?>
                                             </td>
 
                                         </tr>

@@ -33,7 +33,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
     {
         $isOk = true;
 
-        //--- configuration ---------------------------------------------
+        //--- DB configuration ---------------------------------------------
 
         try {
 
@@ -49,7 +49,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
-        //--- galleries ---------------------------------------------
+        //--- DB galleries ---------------------------------------------
 
         try {
             $isOkGalleries = $this->copyAllJ3xGalleries2J4x();
@@ -64,7 +64,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
-        //--- images ---------------------------------------------
+        //--- DB images ---------------------------------------------
 
         try {
 
@@ -83,10 +83,10 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
 
         // ....
-        // ? ACL, assets ...
+        // ? ToDo: ACL, assets ...
 
 
-
+        // Left out: coipy of images as would be exceeding allkowed execution times
 
         return $isOk;
     }
@@ -235,6 +235,91 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return ($a < $b) ? -1 : 1;
     }
 
+    public function MergedJ3xIdsDbImages($j3xItems, $j4xItems)
+    {
+        $mergedId = [];
+
+        try {
+
+            foreach ($j3xItems as $j3xitem) {
+
+                // fetch from db
+                foreach ($j4xItems as $j4xItem) {
+
+//                    if ($j3xitem->title == $j4xitem->title)
+                    if ($j3xitem->title == $j4xItem->title) {
+                        $mergedId [] = $j3xitem->id;
+                        break;
+                    }
+                }
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $mergedId;
+    }
+
+    public function MergedJ3xIdsImages($j3xItems, $j4xItems)
+    {
+        $mergedId = [];
+
+        try {
+
+            foreach ($j3xItems as $j3xitem) {
+
+                // fetch from db
+                foreach ($j4xItems as $j4xItem) {
+
+//                    if ($j3xitem->title == $j4xitem->title)
+                    if ($j3xitem->title == $j4xItem->title) {
+                        if ($j4xItem->use_j3x_location) {
+                            $mergedId [] = $j3xitem->id;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $mergedId;
+    }
+
+
+    public function MergedJ3xIdsDbGalleries($j3xItems, $j4xItems)
+    {
+        $mergedId = [];
+
+        try {
+
+            foreach ($j3xItems as $j3xitem) {
+
+                // fetch from db
+                foreach ($j4xItems as $j4xItem) {
+
+//                    if ($j3xitem->title == $j4xitem->title)
+                    if ($j3xitem->name == $j4xItem->name) {
+                        $mergedId [] = $j3xitem->id;
+                        break;
+                    }
+                }
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $mergedId;
+    }
+
+
     public function j3x_galleriesListSorted()
     {
         $galleries = array();
@@ -253,6 +338,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
         return $galleries;
     }
+
 
 
     public function j3x_galleriesSortedByParent($dbGalleries, $parentId=0, $level=0)
@@ -1018,9 +1104,8 @@ EOT;
             $query = $db->getQuery(true)
                 ->select($db->quoteName(array('id', 'name', 'title')))
                 ->from('#__rsgallery2_files')
-                ->order('parent_id ordering ASC');
-//                ->order($db->quoteName(array('parent_id', 'ordering')) . ' ASC');
-//                ->order($db->quoteName('parent_id') . ' ' . $db->quoteName('ordering') . ' ASC');
+//                ->order('gallery_id ASC, ordering ASC');
+                ->order($db->quoteName('gallery_id') . ' ASC, ' . $db->quoteName('ordering') . ' ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -1336,8 +1421,6 @@ EOT;
 
         // Mark as to be found in old directory
         $j4_imageItem['use_j3x_location'] = 1;
-
-
 
         return $j4_imageItem;
     }
