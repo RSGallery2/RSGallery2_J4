@@ -209,16 +209,17 @@ $repair_ZoneButtons[] =  new zoneButtons(
 
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&task=config.config'),
-    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE') . '</del>',
-    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE_DESC') . '</del>',
+    Route::_('index.php?option=com_rsgallery2&view=config&format=json'),
+    Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE'),
+    Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE_DESC'),
     array('icon-equalizer', 'icon-file', 'icon-download', 'icon-notification-2'),
     'viewEditConfigRaw'
 );
 /**/
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&task=config.config'),
+//    Route::_('index.php?option=com_rsgallery2&task=config.config'),
+    Route::_('index.php?option=com_rsgallery2&view=config'),
     '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE') . '</del>',
     '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC') . '</del>',
     array('icon-equalizer', 'icon-file', 'icon-upload', 'icon-notification-2'),
