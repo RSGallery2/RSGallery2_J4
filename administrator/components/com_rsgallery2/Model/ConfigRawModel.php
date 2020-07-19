@@ -41,7 +41,7 @@ class ConfigRawModel extends BaseModel
 		$input = Factory::getApplication()->input;
 		$data    = $input->post->get('jform', array(), 'array');
 
-		$isSaved = $this->saveItems($data);
+        $isSaved = $this->saveItems($data);
 
 		return $isSaved;
 	}
@@ -63,7 +63,9 @@ class ConfigRawModel extends BaseModel
 
 		// ToDo: Try ...
 
-		//$row = $this->getTable();
+// ToDo: JFilterInput::clean
+
+        //$row = $this->getTable();
 		$Rsg2Id = ComponentHelper::getComponent('com_rsgallery2')->id;
 		$table  = Table::getInstance('extension');
 		// Load the previous Data

@@ -212,7 +212,7 @@ $repair_ZoneButtons[] =  new zoneButtons(
     Route::_('index.php?option=com_rsgallery2&view=config&format=json'),
     Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE'),
     Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE_DESC'),
-    array('icon-equalizer', 'icon-file', 'icon-download', 'icon-notification-2'),
+    array('icon-equalizer', 'icon-file', 'icon-download'),
     'viewEditConfigRaw'
 );
 /**/
@@ -220,8 +220,8 @@ $repair_ZoneButtons[] =  new zoneButtons(
 $repair_ZoneButtons[] =  new zoneButtons(
 //    Route::_('index.php?option=com_rsgallery2&task=config.config'),
     Route::_('index.php?option=com_rsgallery2&view=config'),
-    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE') . '</del>',
-    '<del>' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC') . '</del>',
+    Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE'),
+    Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC'),
     array('icon-equalizer', 'icon-file', 'icon-upload', 'icon-notification-2'),
     'viewEditConfigRaw'
 );
@@ -548,7 +548,8 @@ function zoneInfo ($info='Unknown zone info')
 ?>
 
     <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
-          method="post" name="adminForm" id="adminForm" class="form-validate">
+          method="post" name="adminForm" id="adminForm" class="form-validate"
+          enctype="multipart/form-data">
         <div class="row">
             <?php if (!empty($this->sidebar)) : ?>
                 <div id="j-sidebar-container" class="col-md-2">
@@ -590,6 +591,18 @@ function zoneInfo ($info='Unknown zone info')
                         ?>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="hidden-input-buttons" style="display: XYnone;">
+            <div class="control-group">
+                <label for="config_file" class="control-label"><?php echo Text::_('RSG2 import configuration from file'); ?></label>
+                <div class="controls">
+                    <input class="form-control-file" id="config_file" name="config_file" type="file" >
+                </div>
+                <button class="btn btn-success" type="submit" id="importConfigfile" onclick="Joomla.submitbutton('maintenance.importConfigFile');">
+                    <?php echo Text::_('do import config file'); ?>
+                </button>x
             </div>
         </div>
 
