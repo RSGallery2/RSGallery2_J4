@@ -33,7 +33,7 @@ class ConfigRawModel extends BaseModel
 	 *
 	 * @since 4.3.0
 	 */
-	public function save()
+	public function saveFromForm()
 	{
 		// $msg = "Rsgallery2ModelConfigRaw: ";
 		$isSaved = false;
@@ -63,8 +63,6 @@ class ConfigRawModel extends BaseModel
 
 		// ToDo: Try ...
 
-// ToDo: JFilterInput::clean
-
         //$row = $this->getTable();
 		$Rsg2Id = ComponentHelper::getComponent('com_rsgallery2')->id;
 		$table  = Table::getInstance('extension');
@@ -74,8 +72,11 @@ class ConfigRawModel extends BaseModel
 			throw new \RuntimeException($table->getError());
 		}
 
-		//$table->bind(array('params' => $data->toString()));
-		$table->bind(array('params' => $configurationItems));
+		// ToDo: Use result
+        $SecuredItems = $this->SecureConfigurationItems ($configurationItems);
+
+        $table->bind(array('params' => $configurationItems));
+		//$table->bind(array('params' => $SecuredItems));
 
 		// check for error
 		if (!$table->check())
@@ -99,6 +100,65 @@ class ConfigRawModel extends BaseModel
 	}
 
 
+    public function SecureConfigurationItems($configurationItems)
+    {
+        $securedItems = [];
+
+        $filter         = \JFilterInput::getInstance();
+        //$filter         = FilterInput::getInstance();
+
+// ToDo: JFilterInput::clean Check other types in joomla doc
+
+        foreach ($configurationItems as $key => $value) {
+
+            $secured = ''; // preset
+
+            // Test types in different way
+            switch ($key) {
+                case 'advancedSef':
+                case 'isDebugBackend':
+                case 'isDebugSite':
+                case 'isDevelop':
+                case 'thumb_size':
+                case 'thumb_style':
+                case 'jpegQuality':
+                case 'keepOriginalImage':
+                case 'useJ3xOldPaths':
+
+                    $secured = $filter->clean ($value, 'INT');
+                    break;
+
+                case 'ftp_path': // '\'images\/rsgallery2\',',
+                case 'imgPath_root': //'images\/rsgallery2',
+                case 'imgPath_original': //'\/images\/rsgallery\/original',
+                case 'imgPath_display': //'\/images\/rsgallery\/display',
+                case 'imgPath_thumb': //'\/images\/rsgallery\/thumb',
+
+                    $secured = $filter->clean ($value, 'INT');
+                    break;
+
+                case 'intro_text': // ''
+                    $secured = $filter->clean ($value, 'html');
+                    break;
+
+                case 'image_width': // '800,600,400',
+                    $secured = $filter->clean ($value, 'STRING');
+                    break;
+
+                case 'allowedFileTypes':// 'jpg,jpeg,gif,png',
+                default:
+
+                    $secured = $filter->clean ($value, 'STRING');
+                break;
+
+
+            }
+
+            $securedItems [$key] = $secured;
+        }
+
+        return $securedItems;
+    }
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *

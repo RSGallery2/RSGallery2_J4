@@ -126,7 +126,8 @@ class ConfigController extends AdminController // FormController
 	{
 		Session::checkToken();
 
-		$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
+		//$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
+		$link = 'index.php?option=com_rsgallery2&view=maintenance';
 		$this->setRedirect($link);
 
 		return true;
@@ -145,7 +146,8 @@ class ConfigController extends AdminController // FormController
 	{
 		Session::checkToken();
 
-		$link = Route::_('index.php?option=com_rsgallery2');
+		//$link = Route::_('index.php?option=com_rsgallery2');
+		$link = 'index.php?option=com_rsgallery2';
 		$this->setRedirect($link);
 
 		return true;
@@ -177,10 +179,17 @@ class ConfigController extends AdminController // FormController
 	    else
 	    {
 		    $model   = $this->getModel('ConfigRaw');
-		    $isSaved = $model->save();
-	    }
 
-	    $link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
+		    $isSaved = $model->saveFromForm();
+            if ($isSaved) {
+                $msg .= Text::_('Saved configuration parameters successfully');
+            } else {
+                $msg .= Text::_('Error on saving configuration parameters: ');
+            }
+        }
+
+	    //$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
+	    $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEdit';
         $this->setRedirect($link, $msg, $msgType);
     }
 
@@ -205,10 +214,17 @@ class ConfigController extends AdminController // FormController
             str_replace('\n', '<br>', $msg);
         } else {
             $model = $this->getModel('ConfigRaw');
-	        $isSaved = $model->save();
+
+	        $isSaved = $model->saveFromForm();
+            if ($isSaved) {
+                $msg .= Text::_('Saved configuration parameters successfully');
+            } else {
+                $msg .= Text::_('Error on saving configuration parameters: ');
+            }
         }
 
-		$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
+		//$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
+		$link ='index.php?option=com_rsgallery2&view=maintenance';
 		$this->setRedirect($link, $msg, $msgType);
 	}
 
@@ -251,97 +267,12 @@ class ConfigController extends AdminController // FormController
 			}
 		}
 
-	$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEditOld');
+	    //$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEditOld');
+	    $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEditOld';
 		// $link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
 		$this->setRedirect($link, $msg, $msgType);
 	}
 	/**/
 
-	/**
-	 * Save changes in raw edit view value by value and copy items to the
-	 * old configuration  data
-	 *
-	 * @since version 4.3
-	 */
-	/**
-	public function save_rawEdit2Text()
-	{
-		Session::checkToken();
-
-
-	$msg     = "save_rawEdit: " . '<br>';
-		$msgType = 'notice';
-
-		// Access check
-		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-		if (!$canAdmin) {
-			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-			$msgType = 'warning';
-			// replace newlines with html line breaks.
-			str_replace('\n', '<br>', $msg);
-		} else {
-			$ConfigParameter = JComponentHelper::getParams('com_rsgallery2');
-			$ConfigParameter = $ConfigParameter->toArray();
-
-			$model = $this->getModel('ConfigRaw');
-			$isSaved = $model->save();
-			$isSaved = $model->createConfigTextFile($ConfigParameter);
-		}
-
-	$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
-		$this->setRedirect($link, $msg, $msgType);
-	}
-
-	/**
-	 * Read text file and copy items to the configuration  data
-	 *
-	 * @since version 4.3
-	 */
-	/**
-	public function read_rawEdit2Text()
-	{
-		Session::checkToken();
-
-
-	$msg     = "write_rawEdit2Text: " . '<br>';
-		$msgType = 'notice';
-
-		// Access check
-		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-		if (!$canAdmin) {
-			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-			$msgType = 'warning';
-			// replace newlines with html line breaks.
-			str_replace('\n', '<br>', $msg);
-		} else {
-			$model = $this->getModel('ConfigRaw');
-			$isSaved = $model->readConfigTextFile();
-		}
-
-	$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
-		$this->setRedirect($link, $msg, $msgType);
-	}
-	/**/
-    /**
-     * Standard save of configuration
-     * @param null $key
-     * @param null $urlVar
-     *
-     * @since version 4.3
-     */
-    /**
-	function save($key = null, $urlVar = null)
-	{
-		parent::save($key, $urlVar);
-
-		$inTask = $this->getTask();
-
-		if ($inTask != "apply")
-		{
-			// Don't go to default ...
-			$this->setredirect('index.php?option=com_rsgallery2');
-		}
-	}
-	/**/
 }
 
