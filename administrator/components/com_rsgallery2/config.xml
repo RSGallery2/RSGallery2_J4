@@ -114,7 +114,7 @@
 		</field>
 		<field
 				name="thumb_size"
-				type="text"
+				type="number"
 				default="120"
 				label="COM_RSGALLERY2_THUMBNAIL_SIZE"
 				description="COM_RSGALLERY2_THUMBNAIL_SIZE_DESC"
@@ -133,7 +133,7 @@
 		</field>
 		<field
 				name="jpegQuality"
-				type="text"
+				type="number"
 				default="80"
 				label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE"
 				description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC"
@@ -322,23 +322,23 @@
 			description="Testinner 01 description"
 	>
 		<field type="spacer" name="test_innier_01" hr="true" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_02" type="note" class="alert alert-secondary" close="true" label="LOREMIPSUM" description="secondary " />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_03" type="note" class="alert alert-success" close="true" label="LOREMIPSUM" description="success" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_04" type="note" class="alert alert-danger" close="true" label="LOREMIPSUM" description="danger" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_05" type="note" class="alert alert-warning" close="true" label="LOREMIPSUM" description="warning" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_06" type="note" class="alert alert-info" close="true" label="LOREMIPSUM" description="info" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_07" type="note" class="alert alert-light" close="true" label="LOREMIPSUM" description="light" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
-		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />
-		<field name="jpegQuality" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>
+<!--		<field name="jpegQuality_01" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />-->
+<!--		<field name="jpegQuality_02" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_02" type="note" class="alert alert-secondary" close="true" label="LOREMIPSUM" description="secondary " />-->
+<!--		<field name="jpegQuality_03" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_03" type="note" class="alert alert-success" close="true" label="LOREMIPSUM" description="success" />-->
+<!--		<field name="jpegQuality_04" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_04" type="note" class="alert alert-danger" close="true" label="LOREMIPSUM" description="danger" />-->
+<!--		<field name="jpegQuality_05" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_05" type="note" class="alert alert-warning" close="true" label="LOREMIPSUM" description="warning" />-->
+<!--		<field name="jpegQuality_06" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_06" type="note" class="alert alert-info" close="true" label="LOREMIPSUM" description="info" />-->
+<!--		<field name="jpegQuality_07" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_07" type="note" class="alert alert-light" close="true" label="LOREMIPSUM" description="light" />-->
+<!--		<field name="jpegQuality_08" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+<!--		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />-->
+<!--		<field name="jpegQuality_09" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
 
 	</fieldset>
 
