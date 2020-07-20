@@ -13,6 +13,7 @@ namespace Joomla\Component\RSGallery2\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\BaseModel;
 
 // required is used as classes may not be loaded on  fresh install
 // !!! needed by install
@@ -23,7 +24,8 @@ use Joomla\CMS\Factory;
  * @since version
  *
  */
-class Rsg2ExtensionModel
+//class Rsg2ExtensionModel
+class Rsg2ExtensionModel extends BaseModel
 {
 
     static function readRsg2ExtensionManifest ()

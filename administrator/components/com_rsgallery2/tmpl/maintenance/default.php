@@ -219,11 +219,14 @@ $repair_ZoneButtons[] =  new zoneButtons(
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
 //    Route::_('index.php?option=com_rsgallery2&task=config.config'),
-    Route::_('index.php?option=com_rsgallery2&view=config'),
+    Route::_('index.php?option=com_rsgallery2&task=config.importConfigFile'),
+//    Route::_('index.php?option=com_rsgallery2&view=config'),
+//    'javascript:alert(\'Hello\');',
+//    '#',
     Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE'),
     Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC'),
-    array('icon-equalizer', 'icon-file', 'icon-upload', 'icon-notification-2'),
-    'viewEditConfigRaw'
+    array('icon-equalizer', 'icon-file', 'icon-upload'),
+    'ConfigRawReadFromFile'
 );
 /**/
 
@@ -594,15 +597,12 @@ function zoneInfo ($info='Unknown zone info')
             </div>
         </div>
 
-        <div id="hidden-input-buttons" style="display: XYnone;">
+        <div id="hidden-input-buttons" style="display: none;">
             <div class="control-group">
                 <label for="config_file" class="control-label"><?php echo Text::_('RSG2 import configuration from file'); ?></label>
                 <div class="controls">
                     <input class="form-control-file" id="config_file" name="config_file" type="file" >
                 </div>
-                <button class="btn btn-success" type="submit" id="importConfigfile" onclick="Joomla.submitbutton('maintenance.importConfigFile');">
-                    <?php echo Text::_('do import config file'); ?>
-                </button>x
             </div>
         </div>
 

@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     joomla.submitbutton = function (pressbutton) {
 
+        let confirmMessage:string = '';
+        // ToDo: switch for sveral pressbutton s _> change text, on not empty text let confirm
+
         if (pressbutton === 'associations.purge') {
             // eslint-disable-next-line no-restricted-globals
             if (confirm(joomla.JText._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT'))) {
@@ -56,20 +59,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         return true;
     };
 
-//    buttonManualFiles : HTMLButtonElement;
-//    buttonZipFile : HTMLButtonElement;
-//    buttonFolderImport : HTMLButtonElement;
+    buttonManualFiles : HTMLAnchorElement;
+    fileInput : HTMLButtonElement;
 
-//    this.buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
-//    this.buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
-//    this.buttonFolderImport = <HTMLButtonElement> document.querySelector('#ftp-upload-folder-button-drop');
+    let buttonManualFiles = <HTMLButtonElement> document.querySelector('.ConfigRawReadFromFile');
+    let fileInput = <HTMLInputElement> document.querySelector('#config_file');
 
-
-    this.buttonManualFiles.onclick = () => joomla.submitbutton('yyyy');;
-    this.buttonZipFile.onclick = () =>  fileZip.click();
-    this.buttonFolderImport.onclick = (ev: DragEvent) => this.onImportFolder(ev);
-
-//    <button id="applyBtn" type="button" class="hidden" onclick="Joomla.submitbutton('plugin.apply');"></button>
-
+    buttonManualFiles.onclick = () => {fileInput.click(); joomla.submitbutton(buttonManualFiles.getAttribute('href'));}
 
 });

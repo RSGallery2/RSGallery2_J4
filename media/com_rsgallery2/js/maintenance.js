@@ -20,6 +20,8 @@ var Token;
 //--------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function (event) {
     joomla.submitbutton = function (pressbutton) {
+        let confirmMessage = '';
+        // ToDo: switch for sveral pressbutton s _> change text, on not empty text let confirm
         if (pressbutton === 'associations.purge') {
             // eslint-disable-next-line no-restricted-globals
             if (confirm(joomla.JText._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT'))) {
@@ -34,15 +36,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         return true;
     };
-    //    buttonManualFiles : HTMLButtonElement;
-    //    buttonZipFile : HTMLButtonElement;
-    //    buttonFolderImport : HTMLButtonElement;
-    //    this.buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
-    //    this.buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
-    //    this.buttonFolderImport = <HTMLButtonElement> document.querySelector('#ftp-upload-folder-button-drop');
-    this.buttonManualFiles.onclick = () => joomla.submitbutton('yyyy');
-    ;
-    this.buttonZipFile.onclick = () => fileZip.click();
-    this.buttonFolderImport.onclick = (ev) => this.onImportFolder(ev);
-    //    <button id="applyBtn" type="button" class="hidden" onclick="Joomla.submitbutton('plugin.apply');"></button>
+    buttonManualFiles: HTMLAnchorElement;
+    fileInput: HTMLButtonElement;
+    let buttonManualFiles = document.querySelector('.ConfigRawReadFromFile');
+    let fileInput = document.querySelector('#config_file');
+    buttonManualFiles.onclick = () => { fileInput.click(); joomla.submitbutton(buttonManualFiles.getAttribute('href')); };
 });

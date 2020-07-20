@@ -75,8 +75,8 @@ class ConfigRawModel extends BaseModel
 		// ToDo: Use result
         $SecuredItems = $this->SecureConfigurationItems ($configurationItems);
 
-        $table->bind(array('params' => $configurationItems));
-		//$table->bind(array('params' => $SecuredItems));
+        //$table->bind(array('params' => $configurationItems));
+		$table->bind(array('params' => $SecuredItems));
 
 		// check for error
 		if (!$table->check())
@@ -125,7 +125,7 @@ class ConfigRawModel extends BaseModel
                 case 'keepOriginalImage':
                 case 'useJ3xOldPaths':
 
-                    $secured = $filter->clean ($value, 'INT');
+                    $secured = $filter->clean ($value, 'int');
                     break;
 
                 case 'ftp_path': // '\'images\/rsgallery2\',',
@@ -134,7 +134,7 @@ class ConfigRawModel extends BaseModel
                 case 'imgPath_display': //'\/images\/rsgallery\/display',
                 case 'imgPath_thumb': //'\/images\/rsgallery\/thumb',
 
-                    $secured = $filter->clean ($value, 'INT');
+                    $secured = $filter->clean ($value, 'STRING');
                     break;
 
                 case 'intro_text': // ''
@@ -154,11 +154,15 @@ class ConfigRawModel extends BaseModel
 
             }
 
-            $securedItems [$key] = $secured;
+            $inType = gettype ($value);
+            $outype = gettype ($secured);
+
+            $securedItems [$key] = strval($secured);
         }
 
         return $securedItems;
     }
+
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
