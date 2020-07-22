@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
@@ -134,7 +135,7 @@ class HtmlView extends BaseHtmlView
                     $this->j3x_images = $j3xModel->j3x_imagesList();
                     $this->j4x_images = $j3xModel->j4x_imagesList();
 
-                    $this->j3x_imagesIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
+                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
 
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
@@ -156,15 +157,41 @@ class HtmlView extends BaseHtmlView
             case 'TransferJ3xImages':
                 try
                 {
+
+
+
+
                     $this->j3x_images = $j3xModel->j3x_imagesMergeList();
                     $this->j4x_images = $j3xModel->j4x_imagesMergeList();
 
-                    $this->j3x_imagesIdsMerged = $j3xModel->MergedJ3xIdsImages ($this->j3x_images, $this->j4x_images);
+                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsImages ($this->j3x_images, $this->j4x_images);
                     //[$this->j3x_imagesMerged, $this->j4x_imagesMerged] = $j3xModel->J3xJ4x_imagesMergedLists ();
 
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
                     //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
+
+                    //--- Form --------------------------------------------------------------------
+
+                    $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/transferJ3xImages.xml';
+                    $form = Form::getInstance('transferJ3xImages', $xmlFile);
+
+                    // Check for errors.
+                    /* Must load form before */
+                    if ($errors = $this->get('Errors'))
+                    {
+                        if (count($errors))
+                        {
+                            throw new GenericDataException(implode("\n", $errors), 500);
+                        }
+                    }
+
+
+
+                    $this->form = $form;
+
+                    /**/
+
 
                 }
                 catch (\RuntimeException $e)
@@ -247,7 +274,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_GALLERIES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_GALLERIES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
 
 				break;
@@ -268,7 +295,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
 				break;
 
@@ -288,7 +315,8 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.moveSelectedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGESES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.moveJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
 				break;
 

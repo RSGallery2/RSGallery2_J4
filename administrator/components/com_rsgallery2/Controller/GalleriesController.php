@@ -142,7 +142,9 @@ class GalleriesController extends AdminController
                 $extension = $this->input->getCmd('extension', null);
 
                 if (!is_array($cid) || count($cid) < 1) {
-                    $this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
+                    // $this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
+                    $msg .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
+                    $msgType = 'warning';
                 } else {
                     // Get the model.
                     /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */

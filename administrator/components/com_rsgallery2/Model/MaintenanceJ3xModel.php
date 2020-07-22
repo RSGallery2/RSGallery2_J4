@@ -52,7 +52,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         //--- DB galleries ---------------------------------------------
 
         try {
-            $isOkGalleries = $this->copyAllJ3xGalleries2J4x();
+            $isOkGalleries = $this->copyDbAllJ3xGalleries2J4x();
             $isOk &= $isOkGalleries;
 
             if ( ! $isOkGalleries) {
@@ -68,7 +68,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
         try {
 
-            $isOkImages = $this->copyAllJ3xImages2J4x ();
+            $isOkImages = $this->copyDbAllJ3xImages2J4x ();
             $isOk &= $isOkImages;
 
             if ( ! $isOkImages) {
@@ -268,15 +268,15 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 
         try {
 
-            foreach ($j3xItems as $j3xitem) {
+            foreach ($j3xItems as $j3xItem) {
 
                 // fetch from db
                 foreach ($j4xItems as $j4xItem) {
 
-//                    if ($j3xitem->title == $j4xitem->title)
-                    if ($j3xitem->title == $j4xItem->title) {
+//                    if ($j3xItem->title == $j4xItem->title)
+                    if ($j3xItem->name == $j4xItem->name) {
                         if ($j4xItem->use_j3x_location) {
-                            $mergedId [] = $j3xitem->id;
+                            $mergedId [] = $j3xItem->id;
                             break;
                         }
                     }
@@ -813,14 +813,14 @@ EOT;
 
 
 
-    public function copyAllJ3xGalleries2J4x () {
+    public function copyDbAllJ3xGalleries2J4x () {
 
         $isOk = false;
 
         try {
 
             $j3xGalleriesItems = $this->j3x_galleriesList();
-            $isOk = $this->copyJ3xGalleries2J4x ($j3xGalleriesItems);
+            $isOk = $this->copyDbJ3xGalleries2J4x ($j3xGalleriesItems);
 
         }
         catch (\RuntimeException $e)
@@ -839,7 +839,7 @@ EOT;
 
             $j3xGalleriesItems = $this->j3x_galleriesListOfIds($selectedIds);
 
-            $isOk = $this-copyJ3xGalleries2J4x ($j3xGalleriesItems);
+            $isOk = $this-copyDbJ3xGalleries2J4x ($j3xGalleriesItems);
 
         }
         catch (\RuntimeException $e)
@@ -850,7 +850,7 @@ EOT;
         return $isOk;
     }
 
-    public function copyJ3xGalleries2J4x ($j3xGalleriesItems) {
+    public function copyDbJ3xGalleries2J4x ($j3xGalleriesItems) {
 
         $isOk = false;
 
@@ -1040,7 +1040,7 @@ EOT;
     }
 
    public function j3x_imagesListOfIds($selectedIds)
-    {
+   {
         $images = array();
 
         try {
@@ -1099,13 +1099,36 @@ EOT;
     {
         $images = array();
 
+        $select = [
+            'id',
+            'name',
+//            'alias',
+//            'descr',
+            'gallery_id',
+            'title',
+//            'hits',
+//            'date',
+//            'rating',
+//            'votes',
+//            'comments',
+//            'published',
+//            'checked_out',
+//            'checked_out_time',
+            'ordering',
+//            'approved',
+//            'userid',
+//            'params',
+//            'asset_id'
+        ];
+
         try {
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->quoteName(array('id', 'name', 'title')))
+                ->select($db->quoteName($select))
                 ->from('#__rsgallery2_files')
 //                ->order('gallery_id ASC, ordering ASC');
-                ->order($db->quoteName('gallery_id') . ' ASC, ' . $db->quoteName('ordering') . ' ASC');
+                ->order($db->quoteName('gallery_id') . ' ASC, '
+                    . $db->quoteName('ordering') . ' ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -1124,12 +1147,52 @@ EOT;
     {
         $images = array();
 
+        $select = [
+            'id',
+            'name',
+//            'alias',
+//            'description',
+
+            'gallery_id',
+            'title',
+
+            'note',
+//            'params',
+//            'published',
+//
+//            'hits',
+//            'rating',
+//            'votes',
+//            'comments',
+//
+//            'publish_up',
+//            'publish_down',
+//
+//            'checked_out',
+//            'checked_out_time',
+//            'created',
+//            'created_by',
+//            'created_by_alias',
+//            'modified',
+//            'modified_by',
+//
+            'ordering',
+//
+//            'approved',
+//            'asset_id',
+//            'access',
+
+            'use_j3x_location'
+
+        ];
+
         try {
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->quoteName(array('id', 'name', 'title', 'use_j3x_location')))
+                ->select($db->quoteName($select))
                 ->from('#__rsg2_images')
-                ->order($db->quoteName('ordering') . ' ASC');
+                ->order($db->quoteName('gallery_id') . ' ASC, '
+                    . $db->quoteName('ordering') . ' ASC');
 
             // Get the options.
             $db->setQuery($query);
@@ -1144,7 +1207,7 @@ EOT;
         return $images;
     }
 
-    public function copyAllJ3xImages2J4x () {
+    public function copyDbAllJ3xImages2J4x () {
 
         $isOk = false;
 
@@ -1154,7 +1217,7 @@ EOT;
 
             $j3xImageItems = $this->j3x_imagesList();
 
-            $isOk &= $this->copyJ3xImages2J4x ($j3xImageItems);
+            $isOk &= $this->copyDbJ3xImages2J4x ($j3xImageItems);
 
         }
         catch (\RuntimeException $e)
@@ -1173,7 +1236,7 @@ EOT;
 
             $j3xImageItems = $this->j3x_imagesListOfIds($selectedIds);
 
-            $isOk = $this-copyJ3xImages2J4x ($j3xImageItems);
+            $isOk = $this-copyDbJ3xImages2J4x ($j3xImageItems);
 
         }
         catch (\RuntimeException $e)
@@ -1184,7 +1247,7 @@ EOT;
         return $isOk;
     }
 
-    public function copyJ3xImages2J4x ($j3xImageItems) {
+    public function copyDbJ3xImages2J4x ($j3xImageItems) {
 
         $isOk = false;
 
@@ -1193,7 +1256,7 @@ EOT;
             // items exist ?
             if (count($j3xImageItems)) {
 
-                $j4ImageItems = $this->convertJ3xImagesToJ4x($j3xImageItems);
+                $j4ImageItems = $this->convertDbJ3xImagesToJ4x($j3xImageItems);
 
                 $isOk = $this->writeImageList2Db($j4ImageItems);
             } else {
@@ -1212,7 +1275,7 @@ EOT;
     }
 
 
-    public function convertJ3xImagesToJ4x ($J3xImagesItems) {
+    public function convertDbJ3xImagesToJ4x ($J3xImagesItems) {
 
         $j4ImageItems = [];
 
@@ -1221,7 +1284,7 @@ EOT;
             // galleries of given level
             foreach ($J3xImagesItems as $j3xImage) {
 
-                $j4ImageItems[] = $this->convertJ3xImage($j3xImage);
+                $j4ImageItems[] = $this->convertDbJ3xImage($j3xImage);
 
             }
 
@@ -1333,6 +1396,8 @@ EOT;
             $values[] = $j4ImageItem['asset_id'];
 //            $columns[] = 'access';
 //            $values[] = $j4ImageItem['access'];
+            $columns[] = 'use_j3x_location';
+            $values[] = $j4ImageItem['use_j3x_location'];
 
             // Prepare the insert query.
             $query
@@ -1353,7 +1418,7 @@ EOT;
     }
 
 
-    private function convertJ3xImage ($j3x_image) {
+    private function convertDbJ3xImage ($j3x_image) {
 
         $j4_imageItem = []; //new \stdClass();
 
@@ -1437,7 +1502,7 @@ EOT;
     {
         $isImagesReset = false;
 
-        $id_galleries = '#__rsg2_images';
+        $imgTableName = '#__rsg2_images';
 
         try {
             $db = Factory::getDbo();
@@ -1446,7 +1511,7 @@ EOT;
 
             $query = $db->getQuery(true);
 
-            $query->delete($db->quoteName($id_galleries));
+            $query->delete($db->quoteName($imgTableName));
             // all rows
             //$query->where($conditions);
 
@@ -1460,6 +1525,96 @@ EOT;
         }
 
         return $isImagesReset;
+    }
+
+    public function moveImagesJ3x2J4xById($cids)
+    {
+        $isImagesMoved = false;
+
+        try {
+
+            //--- image names -----------------------------------------------
+
+            $imgNamesById = $this->imageNamesById ($cids);
+
+            //--- move images -----------------------------------------------
+
+            $movedIds = $this->moveOriginalOrDisplayImage($imgNamesById);
+
+            //--- update db -------------------------------------------------
+
+            // All transferred ?
+            if (count ($movedIds) == count ($cids)) {
+                $isImagesMoved = true;
+            }
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
+        }
+
+        return $isImagesMoved;
+    }
+
+    public function imageNamesById ($cids)
+    {
+        $imageNamesById= array();
+
+        $dbImages = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+                //->select('*')
+                ->select($db->quoteName(array('name', 'id')))
+                // https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
+                //->where($db->quoteName('status') . ' IN (' . implode(',', ArrayHelper::toInteger($array)) . ')')
+                ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($cids)) . ')')
+                ->from('#__rsgallery2_files')
+                ->order('id ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $dbImages = $db->loadObjectList();
+
+            if ( ! empty ($dbImages)) {
+
+                foreach ($dbImages as $dbImage){
+                    $imageNamesById[$dbImage->id] = $dbImage->name;
+                }
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $imageNamesById;
+    }
+
+
+    public function moveOriginalOrDisplayImage ($imgNamesById)
+    {
+        $movedIds= array();
+
+        try {
+
+
+
+
+
+
+
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return $movedIds;
     }
 
     /**/

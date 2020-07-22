@@ -13,7 +13,10 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 
 //HTMLHelper::_('bootstrap.framework');
+//HTMLHelper::_('stylesheet', 'com_rsgallery2/???.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'com_rsgallery2/J3xImageTransfer.js', ['version' => 'auto', 'relative' => true]);
 
+Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
 function isOKIconHtml ($title) {
 
@@ -64,11 +67,32 @@ EOT;
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'TransferJ3xImages', Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'); ?></strong></legend>
+                <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'); ?></strong></legend-->
+
+                <p>
+                    <?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES_USE'); ?>
+
+                </p>
+                <p>
+                    <button id="select-images-set-by-gallery" type="button" class="btn btn-info btn-rsg2 btn-file w-25"
+                            title="<?php echo Text::_('Next gallery will be found by the file with lowest order which is not already transferred '); ?>"
+
+                    >
+                        <span class="icon-copy" aria-hidden="false"></span>
+                        <?php echo Text::_('Preset next set of files by gallery'); ?>
+                    </button>
+                </p>
+                <?php
+                // specify gallery
+                // toDO: change name as used for all
+                echo $this->form->renderFieldset('j3x_gallery');
+                ?>
+                <hr>
+                <hr>
 
                 <h3><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h3>
 
-                <table class="table table-striped" id="galleryList">
+                <table class="table table-striped" id="imageList_j3x">
 
                     <caption id="captionTable" class="sr-only">
                         <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
@@ -89,16 +113,16 @@ EOT;
                         <th width="1%" class="center">
                             `name`
                         </th>
-                        <th width="1%" class="center">
+                        <!--th width="1%" class="center">
                             `alias`
                         </th>
                         <th width="1%" class="center">
                             `descr`
-                        </th>
+                        </th-->
                         <th width="1%" class="center">
                             `gallery_id`
                         </th>
-                        <th width="1%" class="center">
+                        <!--th width="1%" class="center">
                             `title`
                         </th>
                         <th width="1%" class="center">
@@ -124,11 +148,11 @@ EOT;
                         </th>
                         <th width="1%" class="center">
                             `checked_out_time`
-                        </th>
+                        </th-->
                         <th width="1%" class="center">
                             `ordering`
                         </th>
-                        <th width="1%" class="center">
+                        <!--th width="1%" class="center">
                             `approved`
                         </th>
                         <th width="1%" class="center">
@@ -139,10 +163,7 @@ EOT;
                         </th>
                         <th width="1%" class="center">
                             `asset_id`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `use_j3x_location`
-                        </th>
+                        </th-->
 
 					</tr>
                     </thead>
@@ -152,10 +173,10 @@ EOT;
                     <?php
                     foreach ($this->j3x_images as $i => $item) {
 
-                        if (in_array ($item->id, $this->j3x_imagesIdsMerged)){
-                            $isMergedHtml =  isOKIconHtml ('Gallery is merged');
+                        if ( ! in_array ($item->id, $this->j3x_imageIdsMerged)){
+                            $isMergedHtml =  isOKIconHtml ('Image is moved');
                         } else {
-                            $isMergedHtml =  isNotOkIconHtml ('Gallery is not merged');
+                            $isMergedHtml =  isNotOkIconHtml ('Image is not moved');
                         }
 
                         ?>
@@ -186,11 +207,11 @@ EOT;
                             </td>
                             <td width="1%" class="center">
                                 <?php echo $item->descr; ?>
-                            </td>
+                            </td-->
                             <td width="1%" class="center">
                                 <?php echo $item->gallery_id; ?>
                             </td>
-                            <td width="1%" class="center">
+                            <!--td width="1%" class="center">
                                 <?php echo $item->title; ?>
                             </td>
                             <td width="1%" class="center">
@@ -216,11 +237,11 @@ EOT;
                             </td>
                             <td width="1%" class="center">
                                 <?php echo $item->checked_out_time; ?>
-                            </td>
+                            </td-->
                             <td width="1%" class="center">
                                 <?php echo $item->ordering; ?>
                             </td>
-                            <td width="1%" class="center">
+                            <!--td width="1%" class="center">
                                 <?php echo $item->approved; ?>
                             </td>
                             <td width="1%" class="center">
@@ -231,9 +252,6 @@ EOT;
                             </td>
                             <td width="1%" class="center">
                                 <?php echo $item->asset_id; ?>
-                            </td>
-                            <td width="1%" class="text-center">
-                                <?php echo $item->use_j3x_location; ?>
                             </td-->
                         </tr>
 
@@ -268,7 +286,7 @@ EOT;
                 if (count ($this->j4x_images) > 0) {
                 ?>
 
-                <table class="table table-striped" id="imageList">
+                <table class="table table-striped" id="imageList_j4x">
 
                     <caption id="captionTable" class="sr-only">
                         <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
@@ -285,14 +303,14 @@ EOT;
                         <th width="1%" class="text-center">
                             `name/alias/note`
                         </th>
-                        <th width="1%" class="text-center">
+                        <!--th width="1%" class="text-center">
                             `description`
-                        </th>
+                        </th-->
 
                         <th width="1%" class="text-center">
                             `gallery_id`
                         </th>
-                        <th width="1%" class="text-center">
+                        <!--th width="1%" class="text-center">
                             `title`
                         </th>
 
@@ -342,12 +360,12 @@ EOT;
                         </th>
                         <th width="1%" class="text-center">
                             `modified_by`
-                        </th>
+                        </th-->
 
                         <th width="1%" class="text-center">
                             `ordering`
                         </th>
-                        <th width="1%" class="text-center">
+                        <!--th width="1%" class="text-center">
                             `approved`
                         </th>
 
@@ -356,6 +374,9 @@ EOT;
                         </th>
                         <th width="1%" class="text-center">
                             `access`
+                        </th-->
+                        <th width="1%" class="text-center">
+                            `use_j3x_location`
                         </th>
 
                     </tr>
@@ -364,8 +385,14 @@ EOT;
                     <tbody>
                     <?php
 
-                    foreach ($this->j4x_images as $i => $item)
-                    {
+                    foreach ($this->j4x_images as $i => $item) {
+
+                        if (in_array ($item->id, $this->j3x_imageIdsMerged)){
+                            $isMergedHtml =  isOKIconHtml ('Image is merged');
+                        } else {
+                            $isMergedHtml =  isNotOkIconHtml ('Image is not merged');
+                        }
+
                         ?>
                         <tr class="row<?php echo $i % 2; ?>">
 
@@ -391,13 +418,13 @@ EOT;
 
                             <!--td class="text-center">
                                 <?php echo '"' . $item->description . '"'; ?>
-                            </td>
+                            </td-->
 
                             <td class="text-center">
                                 <?php echo $item->gallery_id; ?>
                             </td>
 
-                            <td class="text-center">
+                            <!--td class="text-center">
                                 <?php
                                 if (! ! isset($item->title))
                                 {
@@ -508,14 +535,14 @@ EOT;
                             </td>
                             <td width="1%" class="text-center">
                                 <?php echo $item->modified_by; ?>
-                            </td>
+                            </td-->
 
 
                             <td width="1%" class="text-center">
                                 <?php echo $item->ordering; ?>
                             </td>
 
-                            <td width="1%" class="text-center">
+                            <!--td width="1%" class="text-center">
                                 <?php
                                 if(! ! isset($item->approved))
                                 {
@@ -540,6 +567,9 @@ EOT;
                             <td width="1%" class="text-center">
                                 <?php echo $item->access; ?>
                             </td-->
+                            <td width="1%" class="text-center">
+                                <?php echo $item->use_j3x_location; ?>
+                            </td>
 
                         </tr>
                         <?php

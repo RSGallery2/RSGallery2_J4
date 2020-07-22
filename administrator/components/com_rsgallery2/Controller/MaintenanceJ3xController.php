@@ -84,7 +84,7 @@ class MaintenanceJ3xController extends AdminController
                 if ($isOk) {
                     $msg .= "Successful copied old gallery items";
                 } else {
-                    $msg .= "Error at copyJ3xGalleries2J4x items";
+                    $msg .= "Error at copyDbJ3xGalleries2J4x items";
                     $msgType = 'error';
                 }
 
@@ -155,9 +155,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since 5.0.0
      */
-    public function copyJ3xGalleries2J4x()
+    public function copyDbJ3xGalleries2J4x()
     {
-        $msg = "MaintenanceJ3xController.copyJ3xGalleries2J4x: ";
+        $msg = "MaintenanceJ3xController.copyDbJ3xGalleries2J4x: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -173,18 +173,18 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyAllJ3xGalleries2J4x();
+                $isOk = $maint3xModel->copyDbAllJ3xGalleries2J4x();
 
                 if ($isOk) {
                     $msg .= "Successful applied J3x gallery items";
                 } else {
-                    $msg .= "Error at copyJ3xGalleries2J4x items";
+                    $msg .= "Error at copyDbJ3xGalleries2J4x items";
                     $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyJ3xGalleries2J4x: "' . '<br>';
+                $OutTxt .= 'Error executing copyDbJ3xGalleries2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -251,13 +251,13 @@ class MaintenanceJ3xController extends AdminController
     }
 
     /**
-     * Copies all old J3x gallery items to J4 galleries
+     * Copies all old J3x image items to J4 images
      *
      * @since 5.0.0
      */
-    public function copyJ3xImages2J4x() // copyJ3xImages2J4x
+    public function copyDbJ3xImages2J4x()
     {
-        $msg = "MaintenanceJ3xController.copyJ3xImages2J4x: ";
+        $msg = "MaintenanceJ3xController.copyDbJ3xImages2J4x: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -273,17 +273,17 @@ class MaintenanceJ3xController extends AdminController
             try {
                 $maint3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyAllJ3xImages2J4x();
+                $isOk = $maint3xModel->copyDbAllJ3xImages2J4x();
                 if ($isOk) {
                     $msg .= "Successful applied J3x image items";
                 } else {
-                    $msg .= "Error at copyJ3xImages2J4x items";
+                    $msg .= "Error at copyDbJ3xImages2J4x items";
                     $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyJ3xImages2J4x: "' . '<br>';
+                $OutTxt .= 'Error executing copyDbJ3xImages2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -294,6 +294,64 @@ class MaintenanceJ3xController extends AdminController
 
         //$link = 'index.php?option=com_rsgallery2&view=galleries';
         $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
+    /**
+     * Copies all old J3x image items to J4 images
+     *
+     * @since 5.0.0
+     */
+    public function moveSelectedJ3xImages2J4x()
+    {
+        $msg = "MaintenanceJ3xController.moveSelectedJ3xImages2J4x: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+            try {
+                // Get items to remove from the request.
+                $cids = $this->input->get('cid', array(), 'array');
+                $extension = $this->input->getCmd('extension', null);
+
+                if (!is_array($cids) || count($cids) < 1) {
+                    //$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
+                    $msg .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
+                    $msgType = 'warning';
+                } else {
+
+                    $maint3xModel = $this->getModel('MaintenanceJ3x');
+
+                    $isOk = $maint3xModel->moveImagesJ3x2J4xById($cids);
+                    if ($isOk) {
+                        $msg .= "Successful moved J3x images";
+                    } else {
+                        $msg .= "Error at moveSelectedJ3xImages2J4x images";
+                        $msgType = 'error';
+                    }
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing moveSelectedJ3xImages2J4x: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        //$link = 'index.php?option=com_rsgallery2&view=galleries';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages';
         $this->setRedirect($link, $msg, $msgType);
     }
 

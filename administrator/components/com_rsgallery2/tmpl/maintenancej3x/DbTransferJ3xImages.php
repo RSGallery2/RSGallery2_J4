@@ -150,7 +150,7 @@ EOT;
                     <?php
                     foreach ($this->j3x_images as $i => $item) {
 
-                        if (in_array ($item->id, $this->j3x_imagesIdsMerged)){
+                        if (in_array ($item->id, $this->j3x_imageIdsMerged)){
                             $isMergedHtml =  isOKIconHtml ('Image is merged');
                         } else {
                             $isMergedHtml =  isNotOkIconHtml ('Image is not merged');
