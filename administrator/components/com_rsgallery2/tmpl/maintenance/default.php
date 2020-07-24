@@ -170,8 +170,8 @@ $repair_ZoneButtons = [];
 $repair_ZoneButtons[] =  new zoneButtons(
 	//Route::_('index.php?option=com_rsgallery2&view=maintConsolidateImages'),
 	Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared&intended=ConsolidateImages'),
-	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES'),
-	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES_TXT'),
+	'<del>' . Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES') . '<del>',
+    '<del>' . Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES_TXT') . '<del>',
 	array('icon-database', 'icon-images', 'icon-checkbox-checked', 'icon-notification-2'),
 	'viewConsolidateDB'
 );

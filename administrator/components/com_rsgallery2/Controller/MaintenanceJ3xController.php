@@ -333,6 +333,7 @@ class MaintenanceJ3xController extends AdminController
                     $isOk = $maint3xModel->moveImagesJ3x2J4xById($cids);
                     if ($isOk) {
                         $msg .= "Successful moved J3x images";
+                        $msgType = 'success'; // ToDo: use in all controllers
                     } else {
                         $msg .= "Error at moveSelectedJ3xImages2J4x images";
                         $msgType = 'error';

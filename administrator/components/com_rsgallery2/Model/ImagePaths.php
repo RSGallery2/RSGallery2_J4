@@ -10,6 +10,7 @@
 
 namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 
@@ -35,10 +36,13 @@ class ImagePaths {
 	protected $originalUrl;
 	protected $thumbUrl;
 	protected $sizeUrls;
+
+	protected $rsgConfig;
+
 	//	ToDo: watermark ...
 
 	// root of images, image sizes from configuration build the paths
-	// ToDo: J3x style paths // , $isJ3xStylePaths = false or own path class similar
+    // ToDo: watermarked path
 	public function __construct($galleryId = 0) {
 		global $rsgConfig;
 
@@ -65,43 +69,10 @@ class ImagePaths {
 			$imageSizes       = explode(',', $imageSizesText);
 			$this->imageSizes = $imageSizes;
 
-			/*--------------------------------------------------------------------
-			File paths
-			--------------------------------------------------------------------*/
+			// file paths and URIs derived by gallery ID
+            $this->setPathsURIs_byGalleryId($galleryId);
 
-			//--- paths gallery based  --------------------------------------------
-
-			$this->galleryRoot = path_join(JPATH_ROOT, $this->rsgImagesBasePath, $galleryId);
-
-			$this->originalBasePath = path_join($this->galleryRoot, 'original');
-			$this->thumbBasePath    = path_join($this->galleryRoot, 'thumbs');
-
-			//--- paths for image sizes locations ---------------------------------------
-
-			$this->imageSizes = $imageSizes;
-			foreach ($imageSizes as $imageSize)
-			{
-				$this->sizeBasePaths[$imageSize] = path_join($this->galleryRoot, $imageSize);
-			}
-
-			/*--------------------------------------------------------------------
-			URIs
-			--------------------------------------------------------------------*/
-
-			//---  URIs gallery based --------------------------------------------
-
-			$this->galleryRootUrl = Uri::root() . '/' . $this->rsgImagesBasePath . '/' . $galleryId;
-
-			$this->originalUrl = $this->galleryRootUrl . '/original';
-			$this->thumbUrl    = $this->galleryRootUrl . '/thumbs';
-
-			//--- URIs for image sizes locations ---------------------------------------
-
-			foreach ($imageSizes as $imageSize)
-			{
-				$this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
-			}
-		}
+        }
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
@@ -118,13 +89,13 @@ class ImagePaths {
 	--------------------------------------------------------------------*/
 
 	public function getOriginalPath ($fileName=''){
-		return path_join ($this->originalBasePath, $fileName);
+		return $this->path_join ($this->originalBasePath, $fileName);
 	}
 	public function getThumbPath ($fileName=''){
-		return path_join ($this->thumbBasePath, $fileName);
+		return $this->path_join ($this->thumbBasePath, $fileName);
 	}
 	public function getSizePath ($imageSize, $fileName=''){
-		return path_join ($this->sizeBasePaths [$imageSize], $fileName);
+		return $this->path_join ($this->sizeBasePaths [$imageSize], $fileName);
 	}
 
 	/*--------------------------------------------------------------------
@@ -140,10 +111,6 @@ class ImagePaths {
 	public function getSizeUrl ($imageSize, $fileName=''){
 		return $this->sizeUrls [$imageSize] . '/' . $fileName;
 	}
-
-	/*--------------------------------------------------------------------
-	URIs
-	--------------------------------------------------------------------*/
 
 	/**
 	 *
@@ -188,6 +155,68 @@ class ImagePaths {
 		return $isCreated;
 	}
 
+    /**
+     * @param int $galleryId
+     * @param array $imageSizes
+     *
+     *
+     * @since version
+     */
+    public function setPathsURIs_byGalleryId(int $galleryId): void
+    {
+        /*--------------------------------------------------------------------
+        File paths
+        --------------------------------------------------------------------*/
+
+        //--- paths gallery based  --------------------------------------------
+
+        $this->galleryRoot = $this->path_join(JPATH_ROOT, $this->rsgImagesBasePath, $galleryId);
+
+        $this->originalBasePath = $this->path_join($this->galleryRoot, 'original');
+        $this->thumbBasePath = $this->path_join($this->galleryRoot, 'thumbs');
+
+        //--- paths for image sizes locations ---------------------------------------
+
+        foreach ($this->imageSizes as $imageSize) {
+            $this->sizeBasePaths[$imageSize] = $this->path_join($this->galleryRoot, $imageSize);
+        }
+
+        /*--------------------------------------------------------------------
+        URIs
+        --------------------------------------------------------------------*/
+
+        //---  URIs gallery based --------------------------------------------
+
+        $this->galleryRootUrl = Uri::root() . '/' . $this->rsgImagesBasePath . '/' . $galleryId;
+
+        $this->originalUrl = $this->galleryRootUrl . '/original';
+        $this->thumbUrl = $this->galleryRootUrl . '/thumbs';
+
+        //--- URIs for image sizes locations ---------------------------------------
+
+        foreach ($this->imageSizes as $imageSize) {
+            $this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
+        }
+    }
+
+    /**
+     * Joins paths for files or url
+     * Attention: may not be perfect so check once in a while
+     * @return string|string[]|null
+     *
+     * @since version
+     */
+    function path_join() {
+
+        $paths = array();
+
+        foreach (func_get_args() as $arg) {
+            if ($arg !== '') { $paths[] = $arg; }
+        }
+
+        return preg_replace('#/+#','/',join('/', $paths));
+    }
+
 }
 
 /**
@@ -200,24 +229,6 @@ class ImagePaths {
  *  echo merge_paths('/', '/webapp/api');                         // '/webapp/api' slash is preserved at the beginnnig
  *  echo merge_paths('http://google.com', '/', '/');              // 'http://google.com/' slash is preserved at the end
 /**/
-
-/**
- * Joins paths for files or url
- * Attention: may not be perfect so check once in a while
- * @return string|string[]|null
- *
- * @since version
- */
-function path_join() {
-
-	$paths = array();
-
-	foreach (func_get_args() as $arg) {
-		if ($arg !== '') { $paths[] = $arg; }
-	}
-
-	return preg_replace('#/+#','/',join('/', $paths));
-}
 
 
 

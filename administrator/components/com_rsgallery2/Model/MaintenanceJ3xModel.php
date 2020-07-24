@@ -13,9 +13,13 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\Utilities\ArrayHelper;
 use Joomla\Component\RSGallery2\Administrator\Model\ConfigRaw;
+use Joomla\Utilities\ArrayHelper;
+
+use Joomla\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Joomla\Component\Rsgallery2\Administrator\Model\ImageJ3xPaths;
 
 /**
  * Class MaintenanceJ3xModel
@@ -1535,14 +1539,18 @@ EOT;
 
             //--- image names -----------------------------------------------
 
-            $imgNamesById = $this->imageNamesById ($cids);
+            // name, id, gallery_id
+            $imgObjectsById = $this->imageNamesById ($cids);
 
             //--- move images -----------------------------------------------
 
-            $movedIds = $this->moveOriginalOrDisplayImage($imgNamesById);
+            $movedIds = $this->moveOriginalOrDisplayImage($imgObjectsById);
 
             //--- update db -------------------------------------------------
 
+            $isDbWritten = $this->dbMarkImagesAstransferred ($movedIds);
+
+            //--- check ... -------------------------------------------------
             // All transferred ?
             if (count ($movedIds) == count ($cids)) {
                 $isImagesMoved = true;
@@ -1565,11 +1573,7 @@ EOT;
         try {
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
-                //->select('*')
-                ->select($db->quoteName(array('name', 'id')))
-                // https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
-                //->where($db->quoteName('status') . ' IN (' . implode(',', ArrayHelper::toInteger($array)) . ')')
+                ->select($db->quoteName(array('name', 'id', 'gallery_id')))
                 ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($cids)) . ')')
                 ->from('#__rsgallery2_files')
                 ->order('id ASC');
@@ -1582,7 +1586,7 @@ EOT;
             if ( ! empty ($dbImages)) {
 
                 foreach ($dbImages as $dbImage){
-                    $imageNamesById[$dbImage->id] = $dbImage->name;
+                    $imageNamesById[$dbImage->id] = ['id'=>$dbImage->id, 'name'=>$dbImage->name, 'gallery_id'=>$dbImage->gallery_id];
                 }
             }
 
@@ -1596,16 +1600,52 @@ EOT;
     }
 
 
-    public function moveOriginalOrDisplayImage ($imgNamesById)
+    public function moveOriginalOrDisplayImage ($imgObjects)
     {
         $movedIds= array();
 
         try {
 
+            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+
+            $bigImageWidth = explode($rsgConfig->get('image_width'), ',')[0];
+
+            $j4xImagePath = new ImagePaths ();
+            $j3xImagePath = new ImageJ3xPaths ();
 
 
+            // ToDo: Watermarked
+            foreach ($imgObjects as $imgObject) {
+                $id = $imgObject['id'];
+                $name = $imgObject['name'];
+                $galleryId = $imgObject['gallery_id'];
 
+                // J4x has path depending on gallery id
+                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
 
+                $j3xOrgFile = $j3xImagePath->getOriginalPath ($name);
+                $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
+
+                if (file_exists ($j3xOrgFile)) {
+                    rename($j3xOrgFile, $j4xOrgFile);
+                }
+
+                $j3xDisFile = $j3xImagePath->getDisplayPath ($name);
+                $j4xDisFile = $j4xImagePath->getSizePath ($bigImageWidth, $name);
+
+                if (file_exists ($j3xDisFile)) {
+                    rename($j3xDisFile, $j4xDisFile);
+                    $movedIds [] = $id;
+                }
+
+                $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
+                $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
+
+                if (file_exists ($j3xTmbFile)) {
+                    rename($j3xTmbFile, $j4xTmbFile);
+                }
+
+            }
 
 
         }
@@ -1616,6 +1656,57 @@ EOT;
 
         return $movedIds;
     }
+
+    protected function dbMarkImagesAstransferred ($movedIds)
+    {
+        $successful = array();
+
+        try {
+
+            $db = $this->getDbo();
+            $query = $db->getQuery(true);
+
+//            /**
+//             * For each category get the max ordering value
+//             * Re-order with max - ordering
+//             */
+//            foreach ($pks as $id)
+//            {
+//                $query->select('MAX(ordering)')
+//                    ->from('#__content')
+//                    ->where($db->quoteName('catid') . ' = ' . $db->quote($id));
+//
+//                $db->setQuery($query);
+//
+//                $max = (int) $db->loadresult();
+//                $max++;
+//
+//                $query->clear();
+//
+//                $query->update('#__content')
+//                    ->set($db->quoteName('ordering') . ' = ' . $max . ' - ' . $db->quoteName('ordering'))
+//                    ->where($db->quoteName('catid') . ' = ' . $db->quote($id));
+//
+//                $db->setQuery($query);
+//
+//                if ($db->execute())
+//                {
+//                    $successful[] = $id;
+//                }
+//            }
+//    
+
+
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return empty($successful) ? false : $successful;
+    }
+
+
 
     /**/
 }

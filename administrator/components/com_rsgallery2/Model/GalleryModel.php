@@ -881,43 +881,50 @@ class GalleryModel extends AdminModel
 	 *
 	 * @since   3.6.3
 	 */
-	protected function batchFlipordering($value, $pks, $contexts)
+	protected function batchFlipOrdering($value, $pks, $contexts)
 	{
 		$successful = array();
 
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
+        try {
 
-		/**
-		 * For each category get the max ordering value
-		 * Re-order with max - ordering
-		 */
-		foreach ($pks as $id)
-		{
-			$query->select('MAX(ordering)')
-				->from('#__content')
-				->where($db->quoteName('catid') . ' = ' . $db->quote($id));
+            $db = $this->getDbo();
+            $query = $db->getQuery(true);
 
-			$db->setQuery($query);
+            /**
+             * For each category get the max ordering value
+             * Re-order with max - ordering
+             */
+            foreach ($pks as $id) {
+                $query->select('MAX(ordering)')
+                    ->from('#__content')
+                    ->where($db->quoteName('catid') . ' = ' . $db->quote($id));
 
-			$max = (int) $db->loadresult();
-			$max++;
+                $db->setQuery($query);
 
-			$query->clear();
+                $max = (int)$db->loadresult();
+                $max++;
 
-			$query->update('#__content')
-				->set($db->quoteName('ordering') . ' = ' . $max . ' - ' . $db->quoteName('ordering'))
-				->where($db->quoteName('catid') . ' = ' . $db->quote($id));
+                $query->clear();
 
-			$db->setQuery($query);
+                $query->update('#__content')
+                    ->set($db->quoteName('ordering') . ' = ' . $max . ' - ' . $db->quoteName('ordering'))
+                    ->where($db->quoteName('catid') . ' = ' . $db->quote($id));
 
-			if ($db->execute())
-			{
-				$successful[] = $id;
-			}
-		}
+                $db->setQuery($query);
 
-		return empty($successful) ? false : $successful;
+                if ($db->execute()) {
+                    $successful[] = $id;
+                }
+            }
+
+
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return empty($successful) ? false : $successful;
 	}
 
 	/**

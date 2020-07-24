@@ -148,14 +148,9 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  Install: finish -> DB: Transfer galleries<br>'
-				. '*  Install: finish -> DB: Transfer images<br>'
-				. '*  Install: Improve end view<br>'
-				. '*  Install: Check and handle J3x configuration<br>'
-				. '*  Install: Check and handle J3x galleries<br>'
-				. '*  Install: Check and handle J3x images<br>'
-				. '*  <br>'
-				. '* Purge / delete of database variables should be confirmed<br>'
+				. '*  Install: finish -> Move J3x images<br>'
+				. '*  Repair: Consolidade images<br>'
+				. '* !!! Purge / delete of database variables should be confirmed !!!<br>'
 //				. '*  <br>'
 //				. '*  <br>'
 //				. '*  <br>'
