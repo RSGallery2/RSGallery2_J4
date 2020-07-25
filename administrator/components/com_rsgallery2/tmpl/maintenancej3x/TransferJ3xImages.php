@@ -65,12 +65,12 @@ EOT;
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'TransferJ3xImages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'TransferJ3xImages', Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'TransferJ3xImages', Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES', true)); ?>
 
-                <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'); ?></strong></legend-->
+                <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'); ?></strong></legend-->
 
                 <p>
-                    <?php echo Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES_USE'); ?>
+                    <?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?>
 
                 </p>
                 <p>
@@ -173,7 +173,11 @@ EOT;
                     <?php
                     foreach ($this->j3x_images as $i => $item) {
 
-                        if ( ! in_array ($item->id, $this->j3x_imageIdsMerged)){
+                        // a) Must be transferred b) check
+
+
+                        if (in_array ($item->id, $this->j3x_imageIdsMerged)){
+                            // Search in J4 liat, check is used ...
                             $isMergedHtml =  isOKIconHtml ('Image is moved');
                         } else {
                             $isMergedHtml =  isNotOkIconHtml ('Image is not moved');

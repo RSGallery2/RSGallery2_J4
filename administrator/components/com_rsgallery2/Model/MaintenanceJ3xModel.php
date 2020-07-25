@@ -266,20 +266,21 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         return $mergedId;
     }
 
-    public function MergedJ3xIdsImages($j3xItems, $j4xItems)
+    public function MergedJ3xImageIds($j3xItems, $j4xItems)
     {
         $mergedId = [];
 
         try {
-
+            // All J3x db items
             foreach ($j3xItems as $j3xItem) {
 
-                // fetch from db
+                // against all j4x db itemsAll
                 foreach ($j4xItems as $j4xItem) {
-
-//                    if ($j3xItem->title == $j4xItem->title)
+                    // Same name / title
+                    //if ($j3xItem->title == $j4xItem->title)
                     if ($j3xItem->name == $j4xItem->name) {
-                        if ($j4xItem->use_j3x_location) {
+                        // Still old place
+                        if ( ! $j4xItem->use_j3x_location) {
                             $mergedId [] = $j3xItem->id;
                             break;
                         }
@@ -1531,7 +1532,7 @@ EOT;
         return $isImagesReset;
     }
 
-    public function moveImagesJ3x2J4xById($cids)
+    public function moveImagesJ3x2J4xById($j3xImageIds)
     {
         $isImagesMoved = false;
 
@@ -1540,19 +1541,20 @@ EOT;
             //--- image names -----------------------------------------------
 
             // name, id, gallery_id
-            $imgObjectsById = $this->imageNamesById ($cids);
+            $imgObjectsById = $this->imageNamesById ($j3xImageIds);
 
             //--- move images -----------------------------------------------
 
             $movedIds = $this->moveOriginalOrDisplayImage($imgObjectsById);
 
             //--- update db -------------------------------------------------
-
-            $isDbWritten = $this->dbMarkImagesAstransferred ($movedIds);
+            if (count ($movedIds)) {
+                $isDbWritten = $this->dbMarkImagesAsTransferred($movedIds);
+            }
 
             //--- check ... -------------------------------------------------
             // All transferred ?
-            if (count ($movedIds) == count ($cids)) {
+            if (count ($movedIds) == count ($j3xImageIds) && $isDbWritten) {
                 $isImagesMoved = true;
             }
 
@@ -1602,13 +1604,16 @@ EOT;
 
     public function moveOriginalOrDisplayImage ($imgObjects)
     {
-        $movedIds= array();
+        $movedIds = [];
+        $notMovedIds = [];
 
         try {
 
             $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
-            $bigImageWidth = explode($rsgConfig->get('image_width'), ',')[0];
+            $ImageWidths = $rsgConfig->get('image_width');
+            $exploded = explode(',', $ImageWidths);
+            $bigImageWidth = $exploded[0];
 
             $j4xImagePath = new ImagePaths ();
             $j3xImagePath = new ImageJ3xPaths ();
@@ -1636,6 +1641,14 @@ EOT;
                 if (file_exists ($j3xDisFile)) {
                     rename($j3xDisFile, $j4xDisFile);
                     $movedIds [] = $id;
+                }else {
+                    // already done
+                    if (file_exists ($j4xDisFile)) {
+                        $movedIds [] = $id;
+                    }else {
+                        // Mark as not found
+                        $notMovedIds [] = $id . ':' . $name;
+                    }
                 }
 
                 $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
@@ -1647,7 +1660,10 @@ EOT;
 
             }
 
-
+            if (count($notMovedIds)) {
+                $notImgList = implode ($notMovedIds, '<br>');
+                Factory::getApplication()->enqueueMessage('Files may have already be moved ? No files found for ' . $notImgList);
+            }
         }
         catch (\RuntimeException $e)
         {
@@ -1657,45 +1673,31 @@ EOT;
         return $movedIds;
     }
 
-    protected function dbMarkImagesAstransferred ($movedIds)
+    protected function dbMarkImagesAsTransferred ($movedIds, $isUse_j3x_location=false)
     {
-        $successful = array();
+        $isIdsMarked = false;
 
         try {
 
             $db = $this->getDbo();
             $query = $db->getQuery(true);
 
-//            /**
-//             * For each category get the max ordering value
-//             * Re-order with max - ordering
-//             */
-//            foreach ($pks as $id)
-//            {
-//                $query->select('MAX(ordering)')
-//                    ->from('#__content')
-//                    ->where($db->quoteName('catid') . ' = ' . $db->quote($id));
-//
-//                $db->setQuery($query);
-//
-//                $max = (int) $db->loadresult();
-//                $max++;
-//
-//                $query->clear();
-//
-//                $query->update('#__content')
-//                    ->set($db->quoteName('ordering') . ' = ' . $max . ' - ' . $db->quoteName('ordering'))
-//                    ->where($db->quoteName('catid') . ' = ' . $db->quote($id));
-//
-//                $db->setQuery($query);
-//
-//                if ($db->execute())
-//                {
-//                    $successful[] = $id;
-//                }
-//            }
-//    
+            // $testImplode = implode(',', ArrayHelper::toInteger($movedIds));
 
+            $query->update('#__rsg2_images')
+                ->set($db->quoteName('use_j3x_location') . ' = ' . (int) $isUse_j3x_location)
+                ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($movedIds)) . ')')
+                ;
+
+            //$queryDump = $query->dump();
+            //Factory::getApplication()->enqueueMessage(Text::_('Test: \$queryDump' . $queryDump), 'notice');
+
+            $db->setQuery($query);
+
+            if ($db->execute())
+            {
+                $isIdsMarked = true;
+            }
 
         }
         catch (\RuntimeException $e)
@@ -1703,9 +1705,103 @@ EOT;
             Factory::getApplication()->enqueueMessage($e->getMessage());
         }
 
-        return empty($successful) ? false : $successful;
+        return $isIdsMarked;
     }
 
+
+    public function updateMovedJ3xImages2J4x($j3xImageIds)
+    {
+        $isDbUpdated = false;
+
+        try {
+
+            //--- image names -----------------------------------------------
+
+            // name, id, gallery_id
+            $imgObjectsById = $this->imageNamesById($j3xImageIds);
+
+            //--- check for j4x images existing images -----------------------------------------------
+
+            [$idsExisting, $idsNotExisting] = $this->check4ExistingDisplayImage($imgObjectsById);
+
+            //--- update db -------------------------------------------------
+
+            $isDbWritten = true;
+            if (count($idsExisting) > 0) {
+                $isDbWritten &= $this->dbMarkImagesAsTransferred($idsExisting, false);
+            }
+
+            if (count($idsNotExisting) > 0) {
+                $isDbWritten &= $this->dbMarkImagesAsTransferred($idsNotExisting, true);
+            }
+
+            // either list must be existing
+            if ((count($idsExisting) > 0 || count($idsNotExisting) > 0) && $isDbWritten) {
+                $isDbUpdated = true;
+            }
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
+        }
+
+        return $isDbUpdated;
+    }
+
+    public function check4ExistingDisplayImage ($imgObjects)
+    {
+        $idsExisting = [];
+        $idsNotExisting = [];
+
+        try {
+
+            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+
+            $ImageWidths = $rsgConfig->get('image_width');
+            $exploded = explode(',', $ImageWidths);
+            $bigImageWidth = $exploded[0];
+
+            $j4xImagePath = new ImagePaths ();
+            //$j3xImagePath = new ImageJ3xPaths ();
+
+
+            // ToDo: Watermarked
+            foreach ($imgObjects as $imgObject) {
+                $id = $imgObject['id'];
+                $name = $imgObject['name'];
+                $galleryId = $imgObject['gallery_id'];
+
+                // J4x has path depending on gallery id
+                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+
+//                $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
+//                if (file_exists ($j4xOrgFile)) {
+//                    ???;
+//                }
+
+                $j4xDisFile = $j4xImagePath->getSizePath ($bigImageWidth, $name);
+
+                if (file_exists ($j4xDisFile)) {
+                    $idsExisting [] = $id;
+                } else {
+                    $idsNotExisting [] = $id;
+                }
+
+//                $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
+//                if (file_exists ($j4xTmbFile)) {
+//                    ???;
+//                }
+
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+        }
+
+        return [$idsExisting, $idsNotExisting];
+    }
 
 
     /**/

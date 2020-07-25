@@ -158,13 +158,10 @@ class HtmlView extends BaseHtmlView
                 try
                 {
 
-
-
-
                     $this->j3x_images = $j3xModel->j3x_imagesMergeList();
                     $this->j4x_images = $j3xModel->j4x_imagesMergeList();
 
-                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsImages ($this->j3x_images, $this->j4x_images);
+                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xImageIds ($this->j3x_images, $this->j4x_images);
                     //[$this->j3x_imagesMerged, $this->j4x_imagesMerged] = $j3xModel->J3xJ4x_imagesMergedLists ();
 
                     // ToDo: order by gallery id
@@ -301,22 +298,23 @@ class HtmlView extends BaseHtmlView
 
 			case 'TransferJ3xImages':
 				// on develop show open tasks if existing
-				if (!empty ($this->isDevelop))
-				{
-					echo '<span style="color:red">'
-						. 'Tasks: <br>'
-						. '*  Separate code for images raw view -> import into views<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-						. '</span><br>';
-				}
+//				if (!empty ($this->isDevelop))
+//				{
+//					echo '<span style="color:red">'
+//						. 'Tasks: <br>'
+//						. '* <br>'
+////				. '*  <br>'
+////				. '*  <br>'
+////				. '*  <br>'
+//						. '</span><br>';
+//				}
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_TRANSFER_J3X_IMAGES'), 'screwdriver');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.moveSelectedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGESES', false);
-				ToolBarHelper::custom('MaintenanceJ3x.moveJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.moveSelectedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES', false);
+				//ToolBarHelper::custom('MaintenanceJ3x.moveJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_COMPLETE_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.updateMovedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_CHECK_MOVED_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
 				break;
 

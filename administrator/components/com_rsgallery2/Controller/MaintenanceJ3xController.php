@@ -77,9 +77,9 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                $maint3xModel = $this->getModel('MaintenanceJ3x');
+                $j3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->applyExistingJ3xData();
+                $isOk = $j3xModel->applyExistingJ3xData();
 
                 if ($isOk) {
                     $msg .= "Successful copied old gallery items";
@@ -124,9 +124,9 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                $maint3xModel = $this->getModel('MaintenanceJ3x');
+                $j3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->collectAndCopyJ3xConfig2J4xOptions();
+                $isOk = $j3xModel->collectAndCopyJ3xConfig2J4xOptions();
 
                 if ($isOk) {
                     $msg .= "Successful applied J3x configuration items";
@@ -171,9 +171,9 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                $maint3xModel = $this->getModel('MaintenanceJ3x');
+                $j3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyDbAllJ3xGalleries2J4x();
+                $isOk = $j3xModel->copyDbAllJ3xGalleries2J4x();
 
                 if ($isOk) {
                     $msg .= "Successful applied J3x gallery items";
@@ -223,10 +223,10 @@ class MaintenanceJ3xController extends AdminController
             try {
                 // Get the model.
                 /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
-                $maint3xModel = $this->getModel('MaintenanceJ3x');
+                $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 // Remove the items.
-                $isOk = $maint3xModel->resetImagesTable();
+                $isOk = $j3xModel->resetImagesTable();
                 if ($isOk) {
                     $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_SUCCESS');
                 } else {
@@ -271,9 +271,9 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                $maint3xModel = $this->getModel('MaintenanceJ3x');
+                $j3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $maint3xModel->copyDbAllJ3xImages2J4x();
+                $isOk = $j3xModel->copyDbAllJ3xImages2J4x();
                 if ($isOk) {
                     $msg .= "Successful applied J3x image items";
                 } else {
@@ -298,7 +298,63 @@ class MaintenanceJ3xController extends AdminController
     }
 
     /**
-     * Copies all old J3x image items to J4 images
+     * Copies all old J3x image to J4 images path
+     *
+     * @since 5.0.0
+     */
+    public function moveAllJ3xImages2J4x()
+    {
+        $msg = "MaintenanceJ3xController.moveAllJ3xImages2J4x: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+            try {
+                $j3xModel = $this->getModel('MaintenanceJ3x');
+
+                // Collect image Ids  (ToDo: collect ids by db query in $j3xModel)
+                $j3x_images = $j3xModel->j3x_imagesMergeList();
+                $j3x_imageIds = [];
+                foreach ($j3x_images as $j3x_image) {
+
+                    $j3x_imageIds [] = $j3x_image->id;
+                }
+
+                $isOk = $j3xModel->moveImagesJ3x2J4xById($j3x_imageIds);
+                if ($isOk) {
+                    $msg .= "Successful moved all J3x image files";
+                    $msgType = 'success'; // ToDo: use in all controllers
+                } else {
+                    $msg .= "Error at moveAllJ3xImages2J4x images";
+                    $msgType = 'error';
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing moveAllJ3xImages2J4x: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        //$link = 'index.php?option=com_rsgallery2&view=galleries';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
+    /**
+     * Copies selected old J3x image items to J4 images path
      *
      * @since 5.0.0
      */
@@ -328,11 +384,11 @@ class MaintenanceJ3xController extends AdminController
                     $msgType = 'warning';
                 } else {
 
-                    $maint3xModel = $this->getModel('MaintenanceJ3x');
+                    $j3xModel = $this->getModel('MaintenanceJ3x');
 
-                    $isOk = $maint3xModel->moveImagesJ3x2J4xById($cids);
+                    $isOk = $j3xModel->moveImagesJ3x2J4xById($cids);
                     if ($isOk) {
-                        $msg .= "Successful moved J3x images";
+                        $msg .= "Successful moved J3x image files";
                         $msgType = 'success'; // ToDo: use in all controllers
                     } else {
                         $msg .= "Error at moveSelectedJ3xImages2J4x images";
@@ -355,6 +411,62 @@ class MaintenanceJ3xController extends AdminController
         $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages';
         $this->setRedirect($link, $msg, $msgType);
     }
+
+    /**
+     * Copies all old J3x image to J4 images path
+     *
+     * @since 5.0.0
+     */
+    public function updateMovedJ3xImages2J4x()
+    {
+        $msg = "MaintenanceJ3xController.updateMovedJ3xImages2J4x: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+            try {
+                $j3xModel = $this->getModel('MaintenanceJ3x');
+
+                // Collect image Ids (ToDo: collect ids by db query in $j3xModel)
+                $j3x_images = $j3xModel->j3x_imagesMergeList();
+                $j3x_imageIds = [];
+                foreach ($j3x_images as $j3x_image) {
+
+                    $j3x_imageIds [] = $j3x_image->id;
+                }
+
+                $isOk = $j3xModel->updateMovedJ3xImages2J4x($j3x_imageIds);
+                if ($isOk) {
+                    $msg .= "Successful updated database for J3x -> J4x image files";
+                } else {
+                    $msg .= "Error at updateMovedJ3xImages2J4x: Update database for J3x -> J4x image files ";
+                    $msgType = 'error';
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing updateMovedJ3xImages2J4x: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        //$link = 'index.php?option=com_rsgallery2&view=galleries';
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
 
 
 } // class

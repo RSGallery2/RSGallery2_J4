@@ -328,7 +328,7 @@ if ($this->isJ3xRsg2DataExisting)
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyJ3xConfig'),
 		Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'),
 		Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC'),
-		array('icon-new-tab', 'icon-database', 'icon-equalizer', 'icon-notification-2'),
+		array('icon-new-tab', 'icon-database', 'icon-equalizer'),
 		'viewDbCopyJ3xConfig'
 	);
 	/**/
@@ -338,7 +338,7 @@ if ($this->isJ3xRsg2DataExisting)
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC'),
-		array('icon-new-tab', 'icon-images', 'icon-notification-2'),
+		array('icon-new-tab', 'icon-images'),
 		'viewDBTransferJ3xGalleries'
 	);
 	/**/
@@ -348,7 +348,7 @@ if ($this->isJ3xRsg2DataExisting)
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC'),
-		array('icon-new-tab', 'icon-database', 'icon-image', 'icon-notification-2'),
+		array('icon-new-tab', 'icon-database', 'icon-image'),
 		'viewDbTransferJ3xImages'
 	);
 	/**/
@@ -356,8 +356,8 @@ if ($this->isJ3xRsg2DataExisting)
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages'),
-		Text::_('COM_RSGALLERY2_COPY_J3X_IMAGES'),
-		Text::_('COM_RSGALLERY2_COPY_J3X_IMAGES_DESC'),
+        Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
+        Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
 		array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
 		'viewDbTransferJ3xImages'
 	);
@@ -436,16 +436,26 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
 	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'),
 	Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'),
 	Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC'),
-	array('icon-new-tab', 'icon-images', 'icon-notification-2'),
+	array('icon-new-tab', 'icon-images'),
 	'viewDBTransferJ3xGalleries'
 );
 /**/
 
 /**/
 $developer4Test_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'),
+    Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'),
+    Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC'),
+    array('icon-new-tab', 'icon-database', 'icon-image'),
+    'viewDbTransferJ3xImages'
+);
+/**/
+
+/**/
+$developer4Test_ZoneButtons[] = new zoneButtons(
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages'),
-    Text::_('COM_RSGALLERY2_COPY_J3X_IMAGES'),
-    Text::_('COM_RSGALLERY2_COPY_J3X_IMAGES_DESC'),
+    Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
+    Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
     array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
     'viewDbTransferJ3xImages'
 );
