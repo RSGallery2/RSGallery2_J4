@@ -37,8 +37,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 class ImageFileModel extends BaseModel // AdminModel
 {
 	protected $imagePaths = null;
-	protected $isUseOriginalPath = true;
-	
+
 	/**
 	 * Constructor.
 	 *
@@ -59,8 +58,6 @@ class ImageFileModel extends BaseModel // AdminModel
 		// $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		//
 		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-
-		$this->isUseOriginalPath = $rsgConfig->get('keepOriginalImage');
 
 //		$this->imagePaths = new imagePaths ($rootPath, $galleryId, , 'false');
 
@@ -553,7 +550,6 @@ class ImageFileModel extends BaseModel // AdminModel
 		$urlThumbFile = '';
 		$isCreated = false; // successful images
 		$msg = '';
-		$isUseOriginalPath = $this->isUseOriginalPath;
 
 		try {
 
@@ -564,7 +560,9 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			$this->imagePaths =
 			$imagePaths = new ImagePaths ($galleryId);
-			$imagePaths->createAllPaths($isUseOriginalPath);
+			$imagePaths->createAllPaths();
+
+            $isUsePath_Original = $imagePaths->isUsePath_Original;
 
 			//--- create files ---------------------------------------------------
 
@@ -573,7 +571,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			if ($isCreated)
 			{
-				if ($isUseOriginalPath)
+				if ($isUsePath_Original)
 				{
 					$originalFileName = path_join($imagePaths->originalBasePath, $targetFileName);
 					// Move of file on upload and not on ftp folder on server
@@ -730,7 +728,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
-		$msg          = ''; // ToDo: Raise errors instead
+		$msg          = ''; // ToDo: Raise (throw) errors instead
 
 		if ($Rsg2DebugActive)
 		{
@@ -827,7 +825,7 @@ class ImageFileModel extends BaseModel // AdminModel
 		}
 		else
 		{
-			$OutTxt = ''; // ToDo: Raise errors instead
+			$OutTxt = ''; // ToDo: Raise (throw) errors instead
 			$OutTxt .= 'CreateRSG2Images Error. Could not find original file: "' . $srcFileName . '"';
 
 			$app = Factory::getApplication();

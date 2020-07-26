@@ -19,10 +19,6 @@ defined('_JEXEC') or die;
 
 class ImageJ3xPaths {
 	// from config
-	public $rsgImagesBasePath;
-
-	// includes galleryid
-	public $galleryRoot;
 
 	// files gallery defined
 	public $originalBasePath;
@@ -30,7 +26,10 @@ class ImageJ3xPaths {
     public $thumbBasePath;
 	//	ToDo: watermark ...
 
-	// URIs gallery defined
+    // Original folder may not be needed (see config)
+    public $isUsePath_Original;
+
+    // URIs gallery defined
 	protected $originalUrl;
     protected $displayUrl;
 	protected $thumbUrl;
@@ -52,6 +51,10 @@ class ImageJ3xPaths {
 				$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 			}
 
+            //--- user may keep original image --------------------------------------------
+
+            $this->isUsePath_Original = $rsgConfig->get('keepOriginalImage');
+
             /*--------------------------------------------------------------------
             File paths
             --------------------------------------------------------------------*/
@@ -59,7 +62,6 @@ class ImageJ3xPaths {
             $this->originalBasePath = path_join(JPATH_ROOT, $rsgConfig->get('imgPath_original'));
             $this->displayBasePath = path_join(JPATH_ROOT, $rsgConfig->get('imgPath_display'));
             $this->thumbBasePath = path_join(JPATH_ROOT, $rsgConfig->get('imgPath_thumb'));
-
 
             /*--------------------------------------------------------------------
             URIs
@@ -109,49 +111,80 @@ class ImageJ3xPaths {
 		return $this->thumbUrl . '/' . $fileName;
 	}
 
-//	/**
-//	 *
-//	 * @param bool $isCreateOriginal: Original folder may not be needed (see config)
-//	 *
-//	 * @return bool
-//	 *
-//	 * @since version
-//	 */
-//	public function createAllPaths($isCreateOriginal=true) {
-//		$isCreated = false;
-//
-//		try
-//		{
-//			$isCreated = Folder::create($this->galleryRoot);
-//			if ($isCreated)
-//			{
-//				// Original images will be kept
-//				if ($isCreateOriginal)
-//				{
-//					$isCreated = $isCreated & Folder::create($this->originalBasePath);
-//				}
-//
-//				$isCreated = $isCreated & Folder::create($this->thumbBasePath);
-//
-//				foreach ($this->sizeBasePaths as $sizePath)
-//				{
-//					$isCreated = $isCreated & Folder::create($sizePath);
-//				}
-//			}
-//		}
-//		catch (\RuntimeException $e)
-//		{
-//			$OutTxt = '';
-//			$OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';
-//			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-//
-//			$app = Factory::getApplication();
-//			$app->enqueueMessage($OutTxt, 'error');
-//		}
-//
-//		return $isCreated;
-//	}
-//
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public function createAllPaths() {
+        $isCreated = false;
+
+        try
+        {
+            $isCreated = Folder::create($this->displayBasePath);
+            if ($isCreated)
+            {
+                // Original images will be kept
+                if ($this->isUsePath_Original)
+                {
+                    $isCreated = $isCreated & Folder::create($this->originalBasePath);
+                }
+
+                $isCreated = $isCreated & Folder::create($this->thumbBasePath);
+
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $isCreated;
+    }
+
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public function isPathsExisting() {
+        $isPathsExisting = false;
+
+        try
+        {
+            {
+                $isPathsExisting = $isPathsExisting & is_dir($this->displayBasePath);
+
+                // Original images will be kept
+                if ($this->isUsePath_Original)
+                {
+                    $isPathsExisting = $isPathsExisting & is_dir($this->originalBasePath);
+                }
+
+                $isPathsExisting = $isPathsExisting & is_dir($this->thumbBasePath);
+
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'ImagePaths: Error executing isPathsExisting: <br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $isPathsExisting;
+    }
+
 
 }
 

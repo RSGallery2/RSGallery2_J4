@@ -20,7 +20,6 @@ defined('_JEXEC') or die;
 class ImagePaths {
 	// from config
 	public $rsgImagesBasePath;
-	public $imageSizes;
 
 	// includes galleryid
 	public $galleryRoot;
@@ -31,7 +30,11 @@ class ImagePaths {
 	public $sizeBasePaths; // 800x6000, ..., ? display:J3x
 	//	ToDo: watermark ...
 
-	// URIs gallery defined
+    public $imageSizes;
+    // Original folder may not be needed (see config)
+    public $isUsePath_Original;
+
+    // URIs gallery defined
 	protected $galleryRootUrl;
 	protected $originalUrl;
 	protected $thumbUrl;
@@ -57,6 +60,7 @@ class ImagePaths {
 			//--- config root path --------------------------------------------
 
 			$this->rsgImagesBasePath = $rsgConfig->get('imgPath_root');
+
 			// Fall back
 			if (empty ($this->rsgImagesBasePath))
 			{
@@ -69,7 +73,13 @@ class ImagePaths {
 			$imageSizes       = explode(',', $imageSizesText);
 			$this->imageSizes = $imageSizes;
 
-			// file paths and URIs derived by gallery ID
+            //--- user may keep original image --------------------------------------------
+
+            $this->isUsePath_Original = $rsgConfig->get('keepOriginalImage');
+
+            //--- prepare path / URI names ------------------------------------------
+
+            // file paths and URIs derived by gallery ID
             $this->setPathsURIs_byGalleryId($galleryId);
 
         }
@@ -82,77 +92,6 @@ class ImagePaths {
 			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
-	}
-
-	/*--------------------------------------------------------------------
-	File paths
-	--------------------------------------------------------------------*/
-
-	public function getOriginalPath ($fileName=''){
-		return $this->path_join ($this->originalBasePath, $fileName);
-	}
-	public function getThumbPath ($fileName=''){
-		return $this->path_join ($this->thumbBasePath, $fileName);
-	}
-	public function getSizePath ($imageSize, $fileName=''){
-		return $this->path_join ($this->sizeBasePaths [$imageSize], $fileName);
-	}
-
-	/*--------------------------------------------------------------------
-	URIs
-	--------------------------------------------------------------------*/
-
-	public function getOriginalUrl ($fileName=''){
-		return $this->originalUrl . '/' . $fileName;
-	}
-	public function getThumbUrl ($fileName=''){
-		return $this->thumbUrl . '/' . $fileName;
-	}
-	public function getSizeUrl ($imageSize, $fileName=''){
-		return $this->sizeUrls [$imageSize] . '/' . $fileName;
-	}
-
-	/**
-	 *
-	 * @param bool $isCreateOriginal: Original folder may not be needed (see config)
-	 *
-	 * @return bool
-	 *
-	 * @since version
-	 */
-	public function createAllPaths($isCreateOriginal=true) {
-		$isCreated = false;
-
-		try
-		{
-			$isCreated = Folder::create($this->galleryRoot);
-			if ($isCreated)
-			{
-				// Original images will be kept
-				if ($isCreateOriginal)
-				{
-					$isCreated = $isCreated & Folder::create($this->originalBasePath);
-				}
-
-				$isCreated = $isCreated & Folder::create($this->thumbBasePath);
-
-				foreach ($this->sizeBasePaths as $sizePath)
-				{
-					$isCreated = $isCreated & Folder::create($sizePath);
-				}
-			}
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-		return $isCreated;
 	}
 
     /**
@@ -197,6 +136,117 @@ class ImagePaths {
         foreach ($this->imageSizes as $imageSize) {
             $this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
         }
+    }
+
+    /*--------------------------------------------------------------------
+    File paths
+    --------------------------------------------------------------------*/
+
+	public function getOriginalPath ($fileName=''){
+		return $this->path_join ($this->originalBasePath, $fileName);
+	}
+	public function getThumbPath ($fileName=''){
+		return $this->path_join ($this->thumbBasePath, $fileName);
+	}
+	public function getSizePath ($imageSize, $fileName=''){
+		return $this->path_join ($this->sizeBasePaths [$imageSize], $fileName);
+	}
+
+	/*--------------------------------------------------------------------
+	URIs
+	--------------------------------------------------------------------*/
+
+	public function getOriginalUrl ($fileName=''){
+		return $this->originalUrl . '/' . $fileName;
+	}
+	public function getThumbUrl ($fileName=''){
+		return $this->thumbUrl . '/' . $fileName;
+	}
+	public function getSizeUrl ($imageSize, $fileName=''){
+		return $this->sizeUrls [$imageSize] . '/' . $fileName;
+	}
+
+	/**
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
+	public function createAllPaths() {
+		$isCreated = false;
+
+		try
+		{
+			$isCreated = Folder::create($this->galleryRoot);
+			if ($isCreated)
+			{
+				// Original images will be kept
+				if ($this->isUsePath_Original)
+				{
+					$isCreated = $isCreated & Folder::create($this->originalBasePath);
+				}
+
+				$isCreated = $isCreated & Folder::create($this->thumbBasePath);
+
+				foreach ($this->sizeBasePaths as $sizePath)
+				{
+					$isCreated = $isCreated & Folder::create($sizePath);
+				}
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $isCreated;
+	}
+
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public function isPathsExisting() {
+        $isPathsExisting = false;
+
+        try
+        {
+
+            $isPathsExisting = is_dir($this->galleryRoot);
+            if ($isPathsExisting)
+            {
+                // Original images will be kept
+                if ($this->isUsePath_Original)
+                {
+                    $isPathsExisting = $isPathsExisting & is_dir($this->originalBasePath);
+                }
+
+                $isPathsExisting = $isPathsExisting & is_dir($this->thumbBasePath);
+
+                foreach ($this->sizeBasePaths as $sizePath)
+                {
+                    $isPathsExisting = $isPathsExisting & is_dir($sizePath);
+                }
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'ImagePaths: Error executing isPathsExisting: <br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $isPathsExisting;
     }
 
     /**
