@@ -50,7 +50,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         //--- DB galleries ---------------------------------------------
@@ -65,7 +65,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         //--- DB images ---------------------------------------------
@@ -82,7 +82,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
 
@@ -221,7 +221,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
 
@@ -260,7 +260,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $mergedId;
@@ -290,7 +290,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $mergedId;
@@ -318,7 +318,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $mergedId;
@@ -338,7 +338,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $galleries;
@@ -390,7 +390,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $sortedGalleries;
@@ -440,7 +440,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $sortedGalleries;
@@ -477,7 +477,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $lastNodeIdx;
@@ -503,7 +503,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $galleries;
@@ -539,7 +539,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $j3x_galleries;
@@ -556,7 +556,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 $html = $this->GalleriesOfLevelHTML($galleries, 0, 0);
             }
         } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $html;
@@ -596,7 +596,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
             }
 
         } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return implode($html);
@@ -633,7 +633,7 @@ $lineStart</li>
 EOT;
 
         } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $html;
@@ -654,7 +654,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $J4Galleries;
@@ -756,7 +756,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -830,7 +830,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -849,7 +849,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -890,7 +890,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -912,7 +912,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -1007,7 +1007,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -1037,7 +1037,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
 
@@ -1067,7 +1067,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
 
@@ -1094,7 +1094,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $images;
@@ -1142,7 +1142,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $images;
@@ -1206,7 +1206,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $images;
@@ -1227,7 +1227,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -1246,7 +1246,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -1273,7 +1273,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -1296,7 +1296,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $j4ImageItems;
@@ -1319,7 +1319,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -1416,7 +1416,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
@@ -1588,14 +1588,20 @@ EOT;
             if ( ! empty ($dbImages)) {
 
                 foreach ($dbImages as $dbImage){
-                    $imageNamesById[$dbImage->id] = ['id'=>$dbImage->id, 'name'=>$dbImage->name, 'gallery_id'=>$dbImage->gallery_id];
+                    $imageNamesById[$dbImage->id] =
+                        [
+                            'id' => $dbImage->id,
+                            'name' => $dbImage->name,
+                            // J4x gallery id is one higher as j3x
+                            'gallery_id' => 1 + $dbImage->gallery_id
+                        ];
                 }
             }
 
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $imageNamesById;
@@ -1627,6 +1633,12 @@ EOT;
 
                 // J4x has path depending on gallery id
                 $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+
+                $isPathsExisting = $j4xImagePath->isPathsExisting ();
+                if ( ! $isPathsExisting) {
+
+                    throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
+                }
 
                 $j3xOrgFile = $j3xImagePath->getOriginalPath ($name);
                 $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
@@ -1667,7 +1679,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $movedIds;
@@ -1702,7 +1714,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isIdsMarked;
@@ -1774,6 +1786,12 @@ EOT;
                 // J4x has path depending on gallery id
                 $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
 
+                $isPathsExisting = $j4xImagePath->isPathsExisting ();
+                if ( ! $isPathsExisting) {
+
+                    throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
+                }
+
 //                $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
 //                if (file_exists ($j4xOrgFile)) {
 //                    ???;
@@ -1797,7 +1815,7 @@ EOT;
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return [$idsExisting, $idsNotExisting];

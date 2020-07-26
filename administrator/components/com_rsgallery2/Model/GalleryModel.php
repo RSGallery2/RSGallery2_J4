@@ -921,7 +921,7 @@ class GalleryModel extends AdminModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return empty($successful) ? false : $successful;

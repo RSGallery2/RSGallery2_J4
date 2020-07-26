@@ -28,7 +28,7 @@ HTMLHelper::_('bootstrap.framework');
                 $html = GalleriesOfLevelHTML($galleries, 0, 0);
             }
         } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $html;
@@ -68,7 +68,7 @@ HTMLHelper::_('bootstrap.framework');
             }
 
         } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return implode($html);
@@ -109,7 +109,7 @@ $lineStart</li>
 EOT;
 
         } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage());
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $html;
