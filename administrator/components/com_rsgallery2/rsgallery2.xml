@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>14. Jul. 2020</creationDate>
+	<creationDate>28. Jul. 2020</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
@@ -51,7 +51,7 @@
 			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_CONFIG"
-			      link="option=com_rsgallery2&amp;view=config&amp;task=config.edit">COM_RSGALLERY2_MENU_CONFIG
+			      link="option=com_config&amp;view=component&amp;component=com_rsgallery2">COM_RSGALLERY2_MENU_CONFIG
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_MAINTENANCE"
 			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE
