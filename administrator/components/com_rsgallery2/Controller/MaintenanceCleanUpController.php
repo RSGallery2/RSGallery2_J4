@@ -51,7 +51,7 @@ class MaintenanceCleanUpController extends BaseController
      * /**/
 
     /**
-     * Change file uninstall.mysql.utf8.sql so it does remove the RSG2 Tables
+     * remove data in  tables
      *
      * @since 5.0.0
      */
@@ -216,8 +216,8 @@ class MaintenanceCleanUpController extends BaseController
 
         $isOk = false;
 
-        $dropText = 'DROP TABLE IF EXISTS `';
-        $doNotDropText = '#DROP TABLE IF EXISTS `';
+        $dropText = 'DROP TABLE IF EXISTS ';
+        $doNotDropText = '#DROP TABLE IF EXISTS ';
 
         try {
             $sqlUninstallFile = JPATH_COMPONENT_ADMINISTRATOR . '/sql/uninstall.mysql.utf8.sql';

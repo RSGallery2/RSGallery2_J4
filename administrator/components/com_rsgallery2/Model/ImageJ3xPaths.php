@@ -160,7 +160,7 @@ class ImageJ3xPaths {
         try
         {
             {
-                $isPathsExisting = $isPathsExisting & is_dir($this->displayBasePath);
+                $isPathsExisting = is_dir($this->displayBasePath);
 
                 // Original images will be kept
                 if ($this->isUsePath_Original)

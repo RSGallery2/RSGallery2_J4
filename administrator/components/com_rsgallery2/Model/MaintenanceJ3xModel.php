@@ -1631,7 +1631,7 @@ EOT;
                 $name = $imgObject['name'];
                 $galleryId = $imgObject['gallery_id'];
 
-                // J4x has path depending on gallery id
+                // galleryJ4x path is depending on gallery id
                 $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
 
                 $isPathsExisting = $j4xImagePath->isPathsExisting ();
@@ -1783,7 +1783,7 @@ EOT;
                 $name = $imgObject['name'];
                 $galleryId = $imgObject['gallery_id'];
 
-                // J4x has path depending on gallery id
+                // galleryJ4x path is depending on gallery id
                 $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
 
                 $isPathsExisting = $j4xImagePath->isPathsExisting ();
@@ -1819,6 +1819,40 @@ EOT;
         }
 
         return [$idsExisting, $idsNotExisting];
+    }
+
+
+    public function CheckImagePaths ()
+    {
+        $isPathsExisting = false;
+
+        try {
+
+            $j3xImagePath = new ImageJ3xPaths ();
+            $isPathsExisting = $j3xImagePath->isPathsExisting ();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $isPathsExisting;
+    }
+
+
+    public function RepairImagePaths ()
+    {
+        $isPathsRepaired = false;
+
+        try {
+
+            $j3xImagePath = new ImageJ3xPaths ();
+            $isPathsRepaired = $j3xImagePath->createAllPaths ();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $isPathsRepaired;
     }
 
 

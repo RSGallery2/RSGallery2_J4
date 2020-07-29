@@ -1127,5 +1127,6 @@ class ImageFileModel extends BaseModel // AdminModel
 
 		return $isRotated;
 	}
+
 }
 

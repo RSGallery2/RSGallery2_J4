@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
@@ -42,6 +43,114 @@ class MaintenanceController extends BaseController
         parent::__construct($config, $factory, $app, $input);
 
     }
+
+
+    /**
+     * Extract configuration variables from RSG2 config file to reset to original values
+     *
+     * @throws \Exception
+     *
+     * @since version
+     */
+    public function CheckImagePaths()
+    {
+        $isOk = false;
+
+        $msg = "MaintenanceCleanUp.CheckImagePaths: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+
+            try {
+
+                $MaintModel = $this->getModel('Maintenance');
+                $isPathsExisting = $MaintModel->CheckImagePaths();
+                if ($isPathsExisting) {
+                    // config saved message
+                    $msg .= Text::_('All paths to images exist', true);
+                }
+                else
+                {
+                    $msg .= "Missing pathes for images found (dependend on gallery id or size)'";
+                    $msgType = 'warning';
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing CheckImagePaths: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=Maintenance';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
+
+    /**
+     * Extract configuration variables from RSG2 config file to reset to original values
+     *
+     * @throws \Exception
+     *
+     * @since version
+     */
+    public function RepairImagePaths()
+    {
+        $isOk = false;
+
+        $msg = "MaintenanceCleanUp.RepairImagePaths: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+
+            try {
+
+                $MaintModel = $this->getModel('Maintenance');
+                $isSaved = $MaintModel->RepairImagePaths();
+
+                if ($isSaved) {
+                    // config saved message
+                    $msg .= Text::_('Image paths are created', true);
+                }
+                else
+                {
+                    $msg .= "Error at repair image paths'";
+                    $msgType = 'warning';
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing RepairImagePaths: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=Maintenance';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
 
     /**
 	 * The default view.
