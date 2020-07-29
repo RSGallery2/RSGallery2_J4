@@ -406,6 +406,26 @@ $developer_ZoneButtons[] =  new zoneButtons(
 	'view___'
 );
 /**/
+/**/
+$developer_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=createGalleries'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_GALLERIES'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_GALLERIES_DESC'),
+	array('icon-copy', 'icon-images', 'icon-notification-2'),
+	'view___'
+);
+/**/
+
+/**/
+$developer_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=createImage'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_IMAGES'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_IMAGES_DESC'),
+	array('icon-copy', 'icon-image', 'icon-notification-2'),
+	'view___'
+);
+/**/
+
 
 
 //--- developer test zone -----------------------------
@@ -431,7 +451,7 @@ $developer4Test_ZoneButtons = [];
 //);
 //
 
-/**/
+/**
 $developer4Test_ZoneButtons[] = new zoneButtons(
 	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'),
 	Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'),
@@ -441,7 +461,7 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
-/**/
+/**
 $developer4Test_ZoneButtons[] = new zoneButtons(
     Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'),
     Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'),
@@ -451,13 +471,33 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
-/**/
+/**
 $developer4Test_ZoneButtons[] = new zoneButtons(
 		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
     array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
     'viewDbTransferJ3xImages'
+);
+/**/
+
+/**/
+$developer4Test_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=createGalleries'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_GALLERIES'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_GALLERIES_DESC'),
+	array('icon-copy', 'icon-images', 'icon-notification-2'),
+	'view___'
+);
+/**/
+
+/**/
+$developer4Test_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=createImage'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_IMAGES'),
+	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_IMAGES_DESC'),
+	array('icon-copy', 'icon-image', 'icon-notification-2'),
+	'view___'
 );
 /**/
 

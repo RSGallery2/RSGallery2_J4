@@ -152,7 +152,7 @@
 		<field
 				name="keepOriginalImage"
 				type="radio"
-				default="0"
+				default="1"
 				label="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE"
 				description=""
 				class="btn-group btn-group-yesno">
