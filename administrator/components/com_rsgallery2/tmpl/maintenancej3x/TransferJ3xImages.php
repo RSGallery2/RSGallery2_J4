@@ -297,9 +297,9 @@ EOT;
                     </caption>
                     <thead>
                     <tr>
-                        <td style="width:1%" class="text-center">
+                        <!--td style="width:1%" class="text-center">
                             <?php echo HTMLHelper::_('grid.checkall'); ?>
-                        </td>
+                        </td-->
 
                         <th width="1%" class="text-center">
                             `id`
@@ -400,9 +400,9 @@ EOT;
                         ?>
                         <tr class="row<?php echo $i % 2; ?>">
 
-                            <td class="text-center">
+                            <!--td class="text-center">
                                 <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
-                            </td>
+                            </td-->
 
                             <td class="text-center">
                                 <?php echo $item->id; ?>

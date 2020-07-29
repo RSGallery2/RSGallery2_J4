@@ -254,6 +254,25 @@ $repair_ZoneButtons[] = new zoneButtons(
     'viewImagesRaw'
 );
 
+/**/
+$repair_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=Maintenance.CheckImagePaths'),
+    Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS'),
+    Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS_DESC'),
+    array('icon-search', 'icon-folder', 'icon-image'),
+    'viewImagePaths'
+);
+/**/
+
+/**/
+$repair_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&task=Maintenance.RepairImagePaths'),
+    Text::_('COM_RSGALLERY2_REPAIR_IMAGE_PATHS'),
+    Text::_('COM_RSGALLERY2_REPAIR_IMAGE_PATHS_DESC'),
+    array('icon-undo', 'icon-folder', 'icon-image'),
+    'viewImagePaths'
+);
+/**/
 
 //--- danger zone  -----------------------------
 
@@ -362,6 +381,27 @@ if ($this->isJ3xRsg2DataExisting)
 		'viewDbTransferJ3xImages'
 	);
 	/**/
+
+    /**/
+    $upgrade_ZoneButtons[] = new zoneButtons(
+        Route::_('index.php?option=com_rsgallery2&task=MaintenanceJ3x.CheckImagePathsJ3x'),
+        Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS_J3X'),
+        Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS_J3X_DESC'),
+        array('icon-search', 'icon-folder', 'icon-image'),
+        'viewImagePaths'
+    );
+    /**/
+
+    /**/
+    $upgrade_ZoneButtons[] = new zoneButtons(
+        Route::_('index.php?option=com_rsgallery2&task=MaintenanceJ3x.RepairImagePathsJ3x'),
+        Text::_('COM_RSGALLERY2_REPAIR_IMAGE_PATHS_J3X'),
+        Text::_('COM_RSGALLERY2_REPAIR_IMAGE_PATHS_J3X_DESC'),
+        array('icon-undo', 'icon-folder', 'icon-image'),
+        'viewImagePaths'
+    );
+    /**/
+
 }
 
 
