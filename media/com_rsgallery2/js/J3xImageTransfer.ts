@@ -33,21 +33,147 @@ const joomla:Joomla = window.Joomla || {};
 // Joomla form token
 var Token:string;
 
+
+
+// function onSelectionChange(target: EventTarget) {
+//     let selection = <HTMLInputElement>target;
+//     this.markImagesBySelection (selection.value);
+//}
+
+function markbyGallerySelection(doCheck: boolean) {
+
+    let selectGallery = <HTMLInputElement> document.getElementById('SelectGallery');
+    let galleryId = selectGallery.value;
+
+    this.markImagesBySelection (galleryId, doCheck);
+
+}
+
+
+
+// Required gallery ID
+function markImagesBySelection (reqGalleryId: string, doCheck: boolean) {
+
+    // needs ref gallery refstate=active/deactive)
+    // j3x_rows: HTMLTableRowElement []; // = [];
+
+    let j3x_rows: HTMLElement [];
+    let checkbox: HTMLInputElement;
+
+    // let j3x_rows: HTMLElement [] = <HTMLElement []> Array.from(document.getElementsByName("j3x_img_row")));
+    j3x_rows = <HTMLElement []> Array.from(document.getElementsByName("j3x_img_row[]"));
+
+    //j3x_images
+    j3x_rows.forEach ((j3x_row) => {
+        let isMerged = j3x_row.getAttribute("isMerged");
+
+        if (!isMerged) {
+
+            let galleryId = j3x_row.getAttribute("galleryId");
+
+            checkbox = <HTMLInputElement>j3x_row.querySelector('input[type="checkbox"]');
+
+            if (reqGalleryId == galleryId) {
+
+                // Assign if necessary
+                if (checkbox.checked != doCheck) {
+                    checkbox.checked = doCheck;
+                }
+            }
+        }
+    });
+
+}
+
+
+// Required gallery ID
+function markImages_nGalleryTimes (maxGalleries: number) {
+
+    // needs ref gallery refstate=active/deactive)
+    // j3x_rows: HTMLTableRowElement []; // = [];
+
+    let j3x_rows: HTMLElement [];
+    let checkbox: HTMLInputElement;
+    let galleryId: string;
+    let doCheck: boolean = true;
+
+    let galleries: string[] = [];
+
+    // let j3x_rows: HTMLElement [] = <HTMLElement []> Array.from(document.getElementsByName("j3x_img_row")));
+    j3x_rows = <HTMLElement []> Array.from(document.getElementsByName("j3x_img_row[]"));
+
+    //j3x_images
+    j3x_rows.forEach ((j3x_row) => {
+        let isMerged = j3x_row.getAttribute("isMerged");
+
+        // count not merged galleries
+        if (!isMerged) {
+
+            galleryId = j3x_row.getAttribute("galleryId");
+            checkbox = <HTMLInputElement>j3x_row.querySelector('input[type="checkbox"]');
+
+            // Assign if necessary
+            if (checkbox.checked != doCheck) {
+
+                // within range ? add to enabled list
+                if (galleries.length < maxGalleries) {
+                    if (!galleries.includes(galleryId)) {
+                        galleries.push(galleryId);
+                    }
+                }
+
+                // Mark if gallery is in range
+                if (galleries.includes(galleryId)) {
+                    checkbox.checked = doCheck;
+                }
+            }
+        }
+    });
+
+}
+
+
+
 //--------------------------------------------------------------------------------------
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
+//    selectGallery : HTMLInputElement;
 
-    buttonManualFiles : HTMLAnchorElement;
-    fileInput : HTMLButtonElement;
+    // buttonPresetNextGallery : HTMLAnchorElement;
+    // fileInput : HTMLButtonElement;
 
-    let buttonManualFiles = <HTMLButtonElement> document.querySelector('.ConfigRawReadFromFile');
-    let fileInput = <HTMLInputElement> document.querySelector('#config_file');
+    // let selectGallery = <HTMLInputElement> document.getElementById('SelectGallery');
+    // selectGallery.onclick = (ev) => onSelectionChange (ev.target);
 
-    buttonManualFiles.onclick = () => {fileInput.click(); joomla.submitbutton(buttonManualFiles.getAttribute('href'));}
+    //
+    let btnSelectGalleryFiles = <HTMLButtonElement> document.getElementById('selectGallery');
+    btnSelectGalleryFiles.onclick = (ev) => markbyGallerySelection (true);
+    let btnDeSelectGalleryFiles = <HTMLButtonElement> document.getElementById('deSelectGallery');
+    btnDeSelectGalleryFiles.onclick = (ev) => markbyGallerySelection (false);
 
+    let btnSelectNextGalleryFiles = <HTMLButtonElement> document.getElementById('selectNextGallery');
+    btnSelectNextGalleryFiles.onclick = (ev) => markImages_nGalleryTimes (1);
+    let btnSelectNext10GalleryFiles = <HTMLButtonElement> document.getElementById('selectNextGalleries10');
+    btnSelectNext10GalleryFiles.onclick = (ev) => markImages_nGalleryTimes (2);
+    let btnSelectNext100GalleryFiles = <HTMLButtonElement> document.getElementById('selectNextGalleries100');
+    btnSelectNext100GalleryFiles.onclick = (ev) => markImages_nGalleryTimes (100);
+
+
+
+//    buttonSetNextGalleryFiles.onclick = (ev) => onSelectionChange (ev.target);
+    //let fileInput = <HTMLInputElement> document.querySelector('#config_file');
+
+    // buttonManualFiles.onclick = () => {
+    //     alert ("buttonManualFiles.onclick href:" + buttonManualFiles.getAttribute('href'));
+    //     //fileInput.click();
+    //     //joomla.submitbutton(buttonManualFiles.getAttribute('href'));
+    //
+    // }
+
+//    selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
 
 
 });

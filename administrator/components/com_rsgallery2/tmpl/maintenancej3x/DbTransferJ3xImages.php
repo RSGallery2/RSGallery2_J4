@@ -150,21 +150,22 @@ EOT;
                     <?php
                     foreach ($this->j3x_images as $i => $item) {
 
-                        if (in_array ($item->id, $this->j3x_imageIdsMerged)){
-                            $isMergedHtml =  isOKIconHtml ('Image is merged');
+                        $isMerged =in_array ($item->id, $this->j3x_imageIdsMerged);
+                        if ($isMerged){
+                            $mergedStatusHtml =  isOKIconHtml ('Image is merged');
                         } else {
-                            $isMergedHtml =  isNotOkIconHtml ('Image is not merged');
+                            $mergedStatusHtml =  isNotOkIconHtml ('Image is not merged');
                         }
 
                         ?>
-                        <tr class="row<?php echo $i % 2; ?>">
+                        <tr class="row<?php echo $i % 2; ?>" >
 
                             <td class="text-center">
                                 <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                             </td>
 
                             <td class="text-center">
-                                <?php echo $isMergedHtml; ?>
+                                <?php echo $mergedStatusHtml; ?>
                             </td>
 
                             <td width="1%" class="center">
