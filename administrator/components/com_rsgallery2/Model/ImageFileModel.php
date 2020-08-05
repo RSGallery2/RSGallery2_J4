@@ -1067,7 +1067,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
 	/**
 	 * flip_images directs the master image to be flipped in given mode
-	 * All dependent images will be created anwew from the flipped image
+	 * All dependent images will be created anew from the flipped image
 	 *
 	 * @param string $fileName File name of image to be flipped
 	 * @param int $galleryId May be used in destination path

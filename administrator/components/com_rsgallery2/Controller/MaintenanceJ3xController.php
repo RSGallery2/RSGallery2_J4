@@ -82,7 +82,7 @@ class MaintenanceJ3xController extends AdminController
                 $isOk = $j3xModel->applyExistingJ3xData();
 
                 if ($isOk) {
-                    $msg .= "Successful copied old gallery items";
+                    $msg .= "Successful copied J3x DB galleries, J3x DB images and J3x configuration items";
                 } else {
                     $msg .= "Error at copyDbJ3xGalleries2J4x items";
                     $msgType = 'error';

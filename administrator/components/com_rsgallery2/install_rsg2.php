@@ -269,7 +269,7 @@ class Com_Rsgallery2InstallerScript
 
                 // ToDo: check existence of galleries/images table and then write
                 echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>'
-                    . 'Galleries and images table will still exist';
+                    . 'Galleries and images table may still exist';
                 // ToDo: uninstall Message
 
                 break;
@@ -284,9 +284,8 @@ class Com_Rsgallery2InstallerScript
         }
 
 
-        // wonderworld good by icons
-        echo '<br>&oplus;&infin;&omega;<br>';
-
+        // wonderworld 'good by' icons finnern
+        echo '<br><h4>&oplus;&infin;&omega;<h4></h4><br>';
 
         return true;
     }

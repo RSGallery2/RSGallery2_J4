@@ -427,6 +427,17 @@ $developer_ZoneButtons[] =  new zoneButtons(
 );
 /**/
 
+/**
+$developer_ZoneButtons[] =  new zoneButtons(
+//	Route::_('index.php?option=com_rsgallery2&view=develop&layout=InstallMessage'),
+    Route::_('index.php?option=com_rsgallery2&task=Develop.autoUpgradeJ3xDbs'),
+    Text::_('Test Install/Update message'),
+	Text::_('Test auto upgrade J3x DBs '),
+	array('icon-eye-open', 'icon-expand'),
+	'view___'
+);
+/**/
+
 /**/
 $developer_ZoneButtons[] =  new zoneButtons(
 	Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'),
