@@ -69,14 +69,14 @@ class ImageModel extends AdminModel
 	 *
 	 * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
 	 * @since   3.2
-	 *
+	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
-		$extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
-		$this->typeAlias = $extension . '.category';
-
-		// Add a new batch command
-		$this->batch_commands['flip_ordering'] = 'batchFlipordering';
+//		$extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
+//		$this->typeAlias = $extension . '.category';
+//
+//		// Add a new batch command
+//		$this->batch_commands['flip_ordering'] = 'batchFlipordering';
 
 		parent::__construct($config, $factory);
 	}

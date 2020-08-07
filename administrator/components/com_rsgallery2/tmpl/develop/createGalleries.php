@@ -29,19 +29,24 @@ HTMLHelper::_('bootstrap.framework');
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'PreparedButNotReady')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', Text::_('Create galleries', true)); ?>
                 <p></p>
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
-                <p><h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
+                <legend><strong><?php
+                        // echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC');
+                        echo 'Create galleries for testing purposes: Use button above, no further functionality';
+
+
+                        ?></strong></legend>
+                <p><h3><?php
+                   // echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW');
+                    ?></h3></p>
 
                 <?php
 
 					try
 					{
 
-                        ?>
-                        <h1>create Galleries </h1>
-                        <?php
+                        // ?><h1>---</h1>  <?php
 
 
 					}

@@ -24,6 +24,7 @@ use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\UCM\UCMType;
 use Joomla\Registry\Registry;
@@ -658,6 +659,7 @@ class GalleryModel extends AdminModel
 		// Store the data.
 		if (!$table->store())
 		{
+
 			$this->setError($table->getError());
 
 			return false;
@@ -788,6 +790,50 @@ class GalleryModel extends AdminModel
 
 		return true;
 	}
+
+	// expected name/alias  is unique
+	public function createGallery ($galleryName, $parentId=1, $description='')
+    {
+        $isCreated = false;
+
+        try {
+
+            $data = [];
+
+            $data ['name'] = $galleryName;
+            $data ['alias'] = $galleryName;
+            $data ['parent_id'] = $parentId;
+            $data ['description'] = $description;
+
+            $data ['note'] = '';
+
+
+            $isCreated = $this->save ($data);
+            // $isCreated = true;
+
+
+            // Check for errors.
+            if (count($errors = $this->get('_errors')))
+            {
+                throw new GenericDataException(implode("\n", $errors), 500);
+            }
+
+
+
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+
+
+
+        return $isCreated;
+    }
+
+
+
+
 
 	/**
 	 * Method to change the published state of one or more records.

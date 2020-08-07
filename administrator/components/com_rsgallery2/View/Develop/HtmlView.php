@@ -242,7 +242,51 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 
-			default:
+            case 'createGalleries':
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . '* <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+                        . '</span><br><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create galleries');
+
+                ToolBarHelper::custom ('develop.createGalleries_001','upload','','Create 1 ', false);
+                ToolBarHelper::custom ('develop.createGalleries_010','upload','','Create 10 ', false);
+                ToolBarHelper::custom ('develop.createGalleries_100','upload','','Create 100 ', false);
+                ToolBarHelper::custom ('develop.createGalleries_random','upload','','Create random (>10) ', false);
+
+                ToolBarHelper::cancel('config.cancel_rawView');
+                break;
+
+            case 'createImages':
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . '* Implement gallery list<br>'
+                        . '* Create funny image<br>'
+//                        . '*  <br>'
+//                        . '*  <br>'
+//                        . '*  <br>'
+//                        . '*  <br>'
+//                        . '*  <br>'
+                        . '</span><br><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create images');
+                ToolBarHelper::custom ('develop.createImages_001','upload','','Create 1 ', false);
+                ToolBarHelper::custom ('develop.createImages_010','upload','','Create 10 ', false);
+                ToolBarHelper::custom ('develop.createImages_100','upload','','Create 100 ', false);
+                ToolBarHelper::custom ('develop.createImages_random','upload','','Create random (>10) ', false);
+
+                ToolBarHelper::cancel('config.cancel_rawView');
+                break;
+
+            default:
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
