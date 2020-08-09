@@ -42,6 +42,7 @@ class ImagesModel extends ListModel
 		{
 			$config['filter_fields'] = array(
 				'id', 'a.id',
+				'title', 'a.title',
 				'name', 'a.name',
 				'gallery_id', 'a.gallery_id',
 
@@ -102,15 +103,15 @@ class ImagesModel extends ListModel
 		//	$this->context .= '.' . $forcedLanguage;
 		//}
 
-		//$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
-		//$this->setState('filter.extension', $extension);
-		//$parts = explode('.', $extension);
+		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
+		$this->setState('filter.extension', $extension);
+		$parts = explode('.', $extension);
 
-		//// Extract the component name
-		//$this->setState('filter.component', $parts[0]);
+		// Extract the component name
+		$this->setState('filter.component', $parts[0]);
 
-		//// Extract the optional section name
-		//$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
+		// Extract the optional section name
+		$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
 
 		$search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -186,8 +187,6 @@ class ImagesModel extends ListModel
 
 				. 'a.params, '
 				. 'a.published, '
-//				. 'a.published_up, '
-//				. 'a.published_down, '
 
                 . 'a.hits, '
 				. 'a.rating, '
@@ -248,11 +247,13 @@ class ImagesModel extends ListModel
 		}
 		/**/
 
+        /**
 		// Filter on the level.
 		if ($level = $this->getState('filter.level'))
 		{
 			$query->where('a.level <= ' . (int) $level);
 		}
+        /**/
 
 		// Filter by access level.
 		if ($access = $this->getState('filter.access'))
@@ -286,7 +287,7 @@ class ImagesModel extends ListModel
 			$search = $db->quote('%' . $db->escape($search, true) . '%');
 			$query->where(
 				'a.name LIKE ' . $search
-				. ' OR a.title LIKE ' . $search
+//				. ' OR a.title LIKE ' . $search
 				. ' OR a.description LIKE ' . $search
 				. ' OR gal.name LIKE ' . $search
 				. ' OR a.note LIKE ' . $search
@@ -385,7 +386,52 @@ class ImagesModel extends ListModel
 		return $query;
 	}
 
-	/**
+    /**
+     * Prepare and sanitise the table prior to saving.
+     *
+     * @param   Table  $table  A Table object.
+     *
+     * @return  void
+     *
+     * @since   1.6
+     */
+    protected function prepareTable($table)
+    {
+        $date = Factory::getDate();
+        $user = Factory::getUser();
+
+        if (empty($table->id))
+        {
+            // Set the values
+            $table->created    = $date->toSql();
+            $table->created_by = $user->id;
+
+            // Set ordering to the last item if not set
+            if (empty($table->ordering))
+            {
+                $db = $this->getDbo();
+                $query = $db->getQuery(true)
+                    ->select('MAX(ordering)')
+                    ->from('#__rsg2_images');
+
+                $db->setQuery($query);
+                $max = $db->loadResult();
+
+                $table->ordering = $max + 1;
+            }
+        }
+        else
+        {
+            // Set the values
+            $table->modified    = $date->toSql();
+            $table->modified_by = $user->id;
+        }
+
+        // Increment the content version number.
+        $table->version++;
+    }
+
+    /**
 	 * Method to determine if an association exists
 	 *
 	 * @return  boolean  True if the association exists
@@ -445,9 +491,11 @@ class ImagesModel extends ListModel
 
 		if ($items != false)
 		{
+		    /**
 			$extension = $this->getState('filter.extension');
 
 			$this->countItems($items, $extension);
+            /**/
 		}
 
 		return $items;
@@ -463,6 +511,7 @@ class ImagesModel extends ListModel
 	 *
 	 * @since   3.5
 	 */
+	/**
 	public function countItems(&$items, $extension)
 	{
 		$parts     = explode('.', $extension, 2);
@@ -480,7 +529,7 @@ class ImagesModel extends ListModel
 			$component->countItems($items, $section);
 		}
 	}
-
+    /**/
 
 	/**
 	 * This function will retrieve the data of the n last uploaded images
@@ -598,7 +647,6 @@ class ImagesModel extends ListModel
 		return $rows;
 	}
 
-	// ToDO: Rename as it may not be parent gallery name :-()
 	protected static function GalleryName($id)
 	{
 		// Create a new query object.

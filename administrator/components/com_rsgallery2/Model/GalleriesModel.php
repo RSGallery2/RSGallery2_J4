@@ -385,19 +385,19 @@ class GalleriesModel extends ListModel
 			$table->created    = $date->toSql();
 			$table->created_by = $user->id;
 
-			// Set ordering to the last item if not set
-			if (empty($table->ordering))
-			{
-				$db = $this->getDbo();
-				$query = $db->getQuery(true)
-					->select('MAX(ordering)')
-					->from('#__banners');
-
-				$db->setQuery($query);
-				$max = $db->loadResult();
-
-				$table->ordering = $max + 1;
-			}
+//			// Set ordering to the last item if not set
+//			if (empty($table->ordering))
+//			{
+//				$db = $this->getDbo();
+//				$query = $db->getQuery(true)
+//					->select('MAX(ordering)')
+//					->from('#__banners');
+//
+//				$db->setQuery($query);
+//				$max = $db->loadResult();
+//
+//				$table->ordering = $max + 1;
+//			}
 		}
 		else
 		{
@@ -509,6 +509,7 @@ class GalleriesModel extends ListModel
 		}
 	}
 	/**/
+
 	/**
 	 * This function will retrieve the data of the n last uploaded images
 	 *

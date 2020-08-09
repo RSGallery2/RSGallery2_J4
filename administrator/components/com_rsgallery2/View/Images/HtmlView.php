@@ -116,11 +116,12 @@ class HtmlView extends BaseHtmlView
 
 		$this->items         = $this->get('Items');
         $errors = $this->get('Errors');
+        $this->filterForm    = $this->get('FilterForm');
+        $errors = $this->get('Errors');
         $this->pagination    = $this->get('Pagination');
         $errors = $this->get('Errors');
         $this->state         = $this->get('State');
         $errors = $this->get('Errors');
-//		$this->filterForm    = $this->get('FilterForm');
 		$this->activeFilters = $this->get('ActiveFilters');
 
 		// Check for errors.
