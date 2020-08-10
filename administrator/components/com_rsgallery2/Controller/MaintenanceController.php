@@ -212,7 +212,7 @@ class MaintenanceController extends BaseController
     {
         Session::checkToken();
 
-        $link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
+        $link = 'index.php?option=com_rsgallery2&view=maintenance';
         $this->setRedirect($link);
 
         return true;

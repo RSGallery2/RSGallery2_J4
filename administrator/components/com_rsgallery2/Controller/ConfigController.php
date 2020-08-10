@@ -107,7 +107,6 @@ class ConfigController extends AdminController // FormController
 	{
 		Session::checkToken();
 
-		//$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
         $link = 'index.php?option=com_rsgallery2&view=maintenance';
 		$this->setRedirect($link);
 
@@ -126,7 +125,6 @@ class ConfigController extends AdminController // FormController
 	{
 		Session::checkToken();
 
-		//$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
 		$link = 'index.php?option=com_rsgallery2&view=maintenance';
 		$this->setRedirect($link);
 
@@ -146,7 +144,6 @@ class ConfigController extends AdminController // FormController
 	{
 		Session::checkToken();
 
-		//$link = Route::_('index.php?option=com_rsgallery2');
 		$link = 'index.php?option=com_rsgallery2';
 		$this->setRedirect($link);
 
@@ -189,7 +186,6 @@ class ConfigController extends AdminController // FormController
             }
         }
 
-	    //$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit');
 	    $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEdit';
         $this->setRedirect($link, $msg, $msgType);
     }
@@ -225,7 +221,6 @@ class ConfigController extends AdminController // FormController
             }
         }
 
-		//$link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
 		$link ='index.php?option=com_rsgallery2&view=maintenance';
 		$this->setRedirect($link, $msg, $msgType);
 	}
@@ -334,9 +329,7 @@ class ConfigController extends AdminController // FormController
 			}
 		}
 
-	    //$link = Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEditOld');
 	    $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEditOld';
-		// $link = Route::_('index.php?option=com_rsgallery2&view=maintenance');
 		$this->setRedirect($link, $msg, $msgType);
 	}
 	/**/

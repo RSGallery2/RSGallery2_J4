@@ -266,13 +266,12 @@ class HtmlView extends BaseHtmlView
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
                         . '* Test: archived, trashed, (delete)<br>'
+                        . '* Test Search controls ...<br>'
+                        . '* Search tools -> group by parent/ parent child tree ? <br>'
 						. '* Can do ...<br>'
 		                . '* Add delete function<br>'
 						. '* __associations <br>'
-                        . '* Search controls ...<br>'
-                    	. '* c) Search tools -> group by parent/ parent child tree ? <br>'
-                    	. '* Table like categories Published _< images , unpublished trashed, archieved ... <br>'
-				    	. '* Status (title and side text like article <br>'
+                    	. '* Badges array like in categories for images: Published, unpublished, trashed, archieved ... <br>'
                         . '* On develop show order left right level<br>'
 				    //	. '*  <br>'
 				    //	. '*  <br>'
@@ -294,15 +293,15 @@ class HtmlView extends BaseHtmlView
 
 				$childBar = $dropdown->getChildToolbar();
 
-				$childBar->publish('categories.publish')->listCheck(true);
+				$childBar->publish('galleries.publish')->listCheck(true);
 
-				$childBar->unpublish('categories.unpublish')->listCheck(true);
+				$childBar->unpublish('galleries.unpublish')->listCheck(true);
 
-				$childBar->archive('categories.archive')->listCheck(true);
+				$childBar->archive('galleries.archive')->listCheck(true);
 
-				$childBar->checkin('categories.checkin')->listCheck(true);
+				$childBar->checkin('galleries.checkin')->listCheck(true);
 
-				$childBar->trash('categories.trash')->listCheck(true);
+				$childBar->trash('galleries.trash')->listCheck(true);
 
 				$toolbar->standardButton('refresh')
 					->text('JTOOLBAR_REBUILD')

@@ -173,7 +173,7 @@ class HtmlView extends BaseHtmlView
 			echo '<span style="color:red">'
 				. '*  Install: documentation<br>'
 				. '*  Use _CFG_ in ?variable? names<br>'
-				. '*  deprecated Factory::getApplication()->getIdentity() ==> $app->getIdentity()<br>'
+// May have to be checked again ?:	. '*  deprecated Factory::getApplication()->getIdentity() ==> $app->getIdentity()<br>'
 //        Factory::getApplication()->getIdentity()
 //	      $app  = Factory::getApplication();
 //        $user = $app->getIdentity();

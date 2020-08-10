@@ -287,15 +287,15 @@ class HtmlView extends BaseHtmlView
 
 				$childBar = $dropdown->getChildToolbar();
 
-				$childBar->publish('categories.publish')->listCheck(true);
+				$childBar->publish('images.publish')->listCheck(true);
 
-				$childBar->unpublish('categories.unpublish')->listCheck(true);
+				$childBar->unpublish('images.unpublish')->listCheck(true);
 
-				$childBar->archive('categories.archive')->listCheck(true);
+				$childBar->archive('images.archive')->listCheck(true);
 
-				$childBar->checkin('categories.checkin')->listCheck(true);
+				$childBar->checkin('images.checkin')->listCheck(true);
 
-				$childBar->trash('categories.trash')->listCheck(true);
+				$childBar->trash('images.trash')->listCheck(true);
 
 				// $toolbar->standardButton('refresh')
 				// 	->text('JTOOLBAR_REBUILD')

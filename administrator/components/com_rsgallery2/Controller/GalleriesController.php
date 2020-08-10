@@ -119,11 +119,12 @@ class GalleriesController extends AdminController
 	 *
 	 * @since   3.1.2
 	 */
+	/**
 	public function delete()
 	{
         $isOk = false;
 
-        $msg = "GalleriesController.rebuild: ";
+        $msg = "GalleriesController.delete: ";
         $msgType = 'notice';
 
         Session::checkToken();
@@ -147,7 +148,8 @@ class GalleriesController extends AdminController
                     $msgType = 'warning';
                 } else {
                     // Get the model.
-                    /** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+                    // @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model
+                    //$model = $this->getModel('Gallery');
                     $model = $this->getModel();
 
                     // Make sure the item ids are integers
@@ -172,12 +174,13 @@ class GalleriesController extends AdminController
             }
         }
 
-        $link = Route::_('index.php?option=com_rsgallery2&view=galleries');
+        $link = 'index.php?option=com_rsgallery2&view=galleries';
+
         $this->setRedirect($link, $msg, $msgType);
 
         return $isOk;
     }
-
+    /**/
 
 	/**
 	 * Check in of one or more records.

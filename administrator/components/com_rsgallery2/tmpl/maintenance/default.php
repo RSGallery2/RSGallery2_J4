@@ -112,7 +112,6 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
     'viewConfigRaw'
 );
 
-//$link = Route::_('index.php?option=com_rsgallery2&view=images');
 $rawDatabase_ZoneButtons[] = new zoneButtons(
     Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'),
     Text::_('COM_RSGALLERY2_IMAGES_LIST'),
