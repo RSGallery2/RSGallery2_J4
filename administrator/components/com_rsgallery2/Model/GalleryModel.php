@@ -101,7 +101,7 @@ class GalleryModel extends AdminModel
 			return false;
 		}
 
-		return Factory::getUser()->authorise('core.delete', $record->extension . '.category.' . (int) $record->id);
+		return Factory::getApplication()->getIdentity()->authorise('core.delete', $record->extension . '.category.' . (int) $record->id);
 	}
 
 	/**
@@ -115,7 +115,8 @@ class GalleryModel extends AdminModel
 	 */
 	protected function canEditState($record)
 	{
-		$user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
 		// Check for existing category.
 		if (!empty($record->id))
@@ -341,7 +342,7 @@ class GalleryModel extends AdminModel
 		$parts      = explode('.', $extension);
 		$assetKey   = $categoryId ? $extension . '.category.' . $categoryId : $parts[0];
 
-		if (!Factory::getUser()->authorise('core.edit.state', $assetKey))
+		if (!Factory::getApplication()->getIdentity()->authorise('core.edit.state', $assetKey))
 		{
 			// Disable fields for display.
 			$form->setFieldAttribute('ordering', 'disabled', 'true');

@@ -168,8 +168,9 @@ class ConfigController extends AdminController // FormController
 	    $msg     = "apply_rawEdit: " . '<br>';
 
 	    // Access check
-	    $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-	    if (!$canAdmin)
+	    $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
+
+        if (!$canAdmin)
 	    {
 		    $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 		    $msgType = 'warning';
@@ -206,7 +207,8 @@ class ConfigController extends AdminController // FormController
 		$msgType = 'notice';
 
         // Access check
-        $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
+
         if (!$canAdmin) {
             $msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
@@ -242,7 +244,7 @@ class ConfigController extends AdminController // FormController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -309,7 +311,7 @@ class ConfigController extends AdminController // FormController
 		$msgType = 'notice';
 
 		// Access check
-		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
 			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';

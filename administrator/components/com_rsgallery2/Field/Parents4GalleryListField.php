@@ -73,7 +73,7 @@ class Parents4GalleryListField extends ListField
         try
         {
             // $name = (string) $this->element['name'];
-            // $user = Factory::getUser(); // Todo: Restrict to accessible galleries
+            // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
 		    $db   = Factory::getDbo();
 
 		    $query = $db->getQuery(true)

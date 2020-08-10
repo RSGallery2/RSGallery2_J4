@@ -171,12 +171,13 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  Install: see maintenance<br>'
-				. '*  --- Config -------<br>'
+				. '*  Install: documentation<br>'
 				. '*  Use _CFG_ in ?variable? names<br>'
-				. '*  Last... ? trashed or not published ? <br>'
-				. '*  !!! call auto setup config if not exist<br>'
-				. '*  deprecated Factory::getUser() ==> $app->getIdentity()<br>'
+				. '*  deprecated Factory::getApplication()->getIdentity() ==> $app->getIdentity()<br>'
+//        Factory::getApplication()->getIdentity()
+//	      $app  = Factory::getApplication();
+//        $user = $app->getIdentity();
+
 //				. '*  <br>'
 //				. '*  <br>'
 				. '</span><br><br>';
@@ -186,7 +187,7 @@ class HtmlView extends BaseHtmlView
 		ToolBarHelper::title(Text::_('COM_RSGALLERY2_SUBMENU_CONTROL_PANEL'), 'home-2');
 
 		// Options button.
-		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
 		{
 			$toolbar->preferences('com_rsgallery2');
 		}

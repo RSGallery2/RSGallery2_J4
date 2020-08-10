@@ -173,7 +173,8 @@ class ImageTable extends Table
 	public function store($updateNulls = false)
 	{
         $date = Factory::getDate();
-        $user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
         if ($this->id)
         {

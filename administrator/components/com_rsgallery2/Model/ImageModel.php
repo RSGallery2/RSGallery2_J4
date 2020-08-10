@@ -98,7 +98,7 @@ class ImageModel extends AdminModel
 			return false;
 		}
 
-		return Factory::getUser()->authorise('core.delete', $record->extension . '.category.' . (int) $record->id);
+		return Factory::getApplication()->getIdentity()->authorise('core.delete', $record->extension . '.category.' . (int) $record->id);
 	}
 
 	/**
@@ -112,7 +112,8 @@ class ImageModel extends AdminModel
 	 */
 	protected function canEditState($record)
 	{
-		$user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
 		// Check for existing category.
 		if (!empty($record->id))
@@ -332,7 +333,7 @@ class ImageModel extends AdminModel
 
                 // Set the values
                 $table->date = $date;
-                $table->userid = Factory::getUser()->id;
+                $table->userid = Factory::getApplication()->getIdentity()->id;
             }
 	        /**  */
 
@@ -340,13 +341,13 @@ class ImageModel extends AdminModel
 
             // Set the values
             $table->created = $date;
-            $table->created_by  = Factory::getUser()->id;
+            $table->created_by  = Factory::getApplication()->getIdentity()->id;
 		}
 		else
 		{
 			// Set the values
 			$table->modified   = $date;
-			$table->modified_by = Factory::getUser()->id;
+			$table->modified_by = Factory::getApplication()->getIdentity()->id;
 		}
 
         // Set the publish date to now
@@ -786,7 +787,7 @@ class ImageModel extends AdminModel
 
 		//--- user id -------------------------------------------
 
-		$user         = Factory::getUser();
+		$user         = Factory::getApplication()->getIdentity();
 		$userId       = $user->id;
 		$item->userid = $userId;
 
@@ -890,7 +891,7 @@ class ImageModel extends AdminModel
 
         //--- user id -------------------------------------------
 
-		$user         = Factory::getUser();
+		$user         = Factory::getApplication()->getIdentity();
 		$userId       = $user->id;
 		$table->userid = $userId;
 

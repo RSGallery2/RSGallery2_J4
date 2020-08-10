@@ -68,7 +68,8 @@ class GalleryController extends FormController
 	 *
 	protected function allowAdd($data = array())
 	{
-		$user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
 		return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
 	}
@@ -87,7 +88,8 @@ class GalleryController extends FormController
 	protected function allowEdit($data = array(), $key = 'parent_id')
 	{
 		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
-		$user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
 		// Check "edit" permission on record asset (explicit or inherited)
 		if ($user->authorise('core.edit', $this->extension . '.gallery.' . $recordId))

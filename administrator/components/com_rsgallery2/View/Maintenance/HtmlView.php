@@ -109,7 +109,6 @@ class HtmlView extends BaseHtmlView
 		$app       = Factory::getApplication();
 
 		$user = $app->getIdentity();
-		//$user     = Factory::getUser();
 		$canAdmin = $user->authorise('core.admin');
 		$this->UserIsRoot = $canAdmin;
 
@@ -180,7 +179,7 @@ class HtmlView extends BaseHtmlView
 
 
 		// Options button.
-		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
 		{
 			$toolbar->preferences('com_rsgallery2');
 		}

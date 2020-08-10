@@ -61,7 +61,7 @@ class MaintenanceController extends BaseController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
@@ -114,7 +114,7 @@ class MaintenanceController extends BaseController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';

@@ -89,7 +89,7 @@ class GalleriesHelper
 	{
 		$langAssociations = Associations::getAssociations($extension, '#__galleries', 'com_rsgallery2.item', $pk, 'id', 'alias', '');
 		$associations     = array();
-		$user             = Factory::getUser();
+		$user             = Factory::getApplication()->getIdentity();
 		$groups           = implode(',', $user->getAuthorisedViewLevels());
 
 		foreach ($langAssociations as $langAssociation)

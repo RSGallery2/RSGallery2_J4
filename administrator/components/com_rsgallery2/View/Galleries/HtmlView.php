@@ -267,7 +267,6 @@ class HtmlView extends BaseHtmlView
 						. 'Tasks: <br>'
                         . '* Test: archived, trashed, (delete)<br>'
 						. '* Can do ...<br>'
-		                . '* Add pagination<br>'
 		                . '* Add delete function<br>'
 						. '* __associations <br>'
                         . '* Search controls ...<br>'
@@ -321,14 +320,14 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Options button.
-		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
 		{
 			$toolbar->preferences('com_rsgallery2');
 		}
 
 		/** ? joomla media .... ?
 		$extension = Factory::getApplication()->input->get('extension');
-		$user = Factory::getUser();
+		$user = Factory::getApplication()->getIdentity();
 		$userId = $user->id;
 
 		$isNew = ($this->item->id == 0);

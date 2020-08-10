@@ -170,7 +170,8 @@ class ImagesModel extends ListModel
 		$db = $this->getDbo();
 		$query = $db->getQuery(true);
 
-		$user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
 		// Select the required fields from the table.
 		$query->select(
@@ -398,7 +399,8 @@ class ImagesModel extends ListModel
     protected function prepareTable($table)
     {
         $date = Factory::getDate();
-        $user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
         if (empty($table->id))
         {

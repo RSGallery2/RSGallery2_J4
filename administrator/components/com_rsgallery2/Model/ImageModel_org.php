@@ -90,7 +90,7 @@ class ImageModel_Org extends AdminModel
 			return false;
 		}
 
-		return Factory::getUser()->authorise('core.delete', $record->extension . '.category.' . (int) $record->id);
+		return Factory::getApplication()->getIdentity()->authorise('core.delete', $record->extension . '.category.' . (int) $record->id);
 	}
 
 	/**
@@ -104,7 +104,8 @@ class ImageModel_Org extends AdminModel
 	 */
 	protected function canEditState($record)
 	{
-		$user = Factory::getUser();
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
 
 		// Check for existing category.
 		if (!empty($record->id))
@@ -215,7 +216,7 @@ class ImageModel_Org extends AdminModel
 
                 // Set the values
                 $table->date = $date;
-                $table->userid = Factory::getUser()->id;
+                $table->userid = Factory::getApplication()->getIdentity()->id;
             }
 	        /**  *
 
@@ -223,13 +224,13 @@ class ImageModel_Org extends AdminModel
 
             // Set the values
             $table->date = $date;
-            $table->uid  = Factory::getUser()->id;
+            $table->uid  = Factory::getApplication()->getIdentity()->id;
 		}
 		else
 		{
 			// Set the values
 			$table->date   = $date;
-			$table->userid = Factory::getUser()->id;
+			$table->userid = Factory::getApplication()->getIdentity()->id;
 		}
 
 		// Increment the content version number.
@@ -437,7 +438,7 @@ class ImageModel_Org extends AdminModel
 
 		//--- user id -------------------------------------------
 
-		$user         = Factory::getUser();
+		$user         = Factory::getApplication()->getIdentity();
 		$userId       = $user->id;
 		$item->userid = $userId;
 
@@ -538,7 +539,7 @@ class ImageModel_Org extends AdminModel
 
 		//--- user id -------------------------------------------
 
-		$user         = Factory::getUser();
+		$user         = Factory::getApplication()->getIdentity();
 		$userId       = $user->id;
 		$item->userid = $userId;
 

@@ -68,7 +68,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -115,7 +115,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -162,7 +162,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -212,7 +212,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
@@ -262,7 +262,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -309,7 +309,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -365,7 +365,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -424,7 +424,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
@@ -484,7 +484,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
@@ -538,7 +538,7 @@ class MaintenanceJ3xController extends AdminController
 
         Session::checkToken();
 
-        $canAdmin = Factory::getUser()->authorise('core.manage', 'com_rsgallery2');
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';

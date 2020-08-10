@@ -324,7 +324,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Options button.
-		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
 		{
 			$toolbar->preferences('com_rsgallery2');
 		}

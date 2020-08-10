@@ -85,7 +85,7 @@ class MaintenanceModel extends BaseDatabaseModel
 
         try {
         // $name = (string) $this->element['name'];
-        // $user = Factory::getUser(); // Todo: Restrict to accessible galleryIds
+        // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleryIds
         $db   = Factory::getDbo();
 
         $query = $db->getQuery(true)

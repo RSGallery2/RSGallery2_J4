@@ -255,7 +255,6 @@ class HtmlView extends BaseHtmlView
                         . 'Tasks: <br>'
                         . '* Test: archived, trashed, (delete)<br>'
                         . '* Can do ...<br>'
-                        . '* Add pagination<br>'
                         . '* __associations <br>'
                         . '* Add delete function<br>'
                         . '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
@@ -309,7 +308,9 @@ class HtmlView extends BaseHtmlView
 
 				/**
 				 * // Add a batch button
-				 * $user = Factory::getUser();
+				 * $user = Factory::getApplication()->getIdentity();
+                 * $app  = Factory::getApplication();
+                 * $user = $app->getIdentity();
 				 * if ($user->authorise('core.create', 'com_rsgallery2')
 				 * && $user->authorise('core.edit', 'com_rsgallery2')
 				 * && $user->authorise('core.edit.state', 'com_rsgallery2')
@@ -332,7 +333,7 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Options button.
-		if (Factory::getUser()->authorise('core.admin', 'com_rsgallery2'))
+		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
 		{
 			$toolbar->preferences('com_rsgallery2');
 		}
