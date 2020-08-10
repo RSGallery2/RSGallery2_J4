@@ -230,6 +230,7 @@ class HtmlView extends BaseHtmlView
 				if (!empty ($this->isDevelop))
 				{
 					echo '<span style="color:red">'
+                        . '* button goto "create galleries"<br>'
 						. '* <br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -246,10 +247,13 @@ class HtmlView extends BaseHtmlView
                 if (!empty ($this->isDevelop))
                 {
                     echo '<span style="color:red">'
-                        . '* <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+                        . '* Implement parent gallery selection<br>'
+                        . '* button goto "create images"<br>'
+                        . '* count indicator -> badge<br>'
+//                        . '*  <br>'
+//                        . '*  <br>'
+//                        . '*  <br>'
+//                        . '*  <br>'
                         . '</span><br><br>';
                 }
 
@@ -267,8 +271,9 @@ class HtmlView extends BaseHtmlView
                 if (!empty ($this->isDevelop))
                 {
                     echo '<span style="color:red">'
-                        . '* Implement gallery list<br>'
-                        . '* Create funny image<br>'
+                        . '* Implement parent gallery selection<br>'
+                        . '* button goto "create images"<br>'
+                        . '* count indicator -> badge<br>'
 //                        . '*  <br>'
 //                        . '*  <br>'
 //                        . '*  <br>'

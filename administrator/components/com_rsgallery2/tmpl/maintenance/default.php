@@ -468,7 +468,7 @@ $developer_ZoneButtons[] =  new zoneButtons(
 
 /**/
 $developer_ZoneButtons[] =  new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=develop&layout=createImage'),
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=createImages'),
 	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_IMAGES'),
 	Text::_('COM_RSGALLERY2_DEVELOP_CREATE_IMAGES_DESC'),
 	array('icon-copy', 'icon-image', 'icon-notification-2'),

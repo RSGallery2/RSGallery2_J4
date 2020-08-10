@@ -96,14 +96,15 @@ if ($saveOrder && !empty($this->items))
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
                                 </th>
 
+
                                 <th scope="col" style="width:10%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JAUTHOR', 'a.created_by', $listDirn, $listOrder); ?>
                                 </th>
 
-
                                 <th scope="col" style="width:10%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_DATE_CREATED', 'a.created', $listDirn, $listOrder); ?>
                                 </th>
+                                
 
                                 <th scope="col" style="width:3%" class="d-none d-lg-table-cell text-center">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
@@ -206,6 +207,9 @@ if ($saveOrder && !empty($this->items))
 
                                 $created_by = Factory::getUser($item->created_by);
                                 $modified_by = Factory::getUser($item->modified_by);
+                                if (empty($modified_by->name)) {
+                                    $modified_by = $created_by;
+                                }
 
 								?>
 								<tr class="row<?php echo $i % 2; ?>" data-dragable-group="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>" parents="<?php echo $parentsStr ?>" level="<?php echo $item->level ?>">
@@ -327,16 +331,30 @@ if ($saveOrder && !empty($this->items))
 										<?php endif; ?>
                                         /**/
                                         ?>
-                                        <?php echo $this->escape($created_by->name); ?>
-                                        <?php // echo $this->escape($modified_by->name); ?>
+                                        <?php
+                                        echo $this->escape($created_by->name);
+
+                                        if ($modified_by->name != $created_by->name) {
+                                            echo '<br>(' . $modified_by->name . ')';
+                                        }
+                                        ?>
+
                                     </td>
 
                                     <td class="small d-none d-md-table-cell text-center">
 										<?php
 										$date = $item->created;
 										echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
+
+                                        if ($item->modified != $item->created) {
+                                            echo '<br>(';
+                                            $date = $item->modified;
+                                            echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
+                                            echo ')';
+                                        }
 										?>
                                     </td>
+
                                     <td class="d-none d-lg-table-cell text-center">
 									<span class="badge badge-info">
 										<?php echo (int) $item->hits; ?>

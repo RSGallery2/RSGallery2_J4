@@ -269,7 +269,7 @@ class HtmlView extends BaseHtmlView
                         . '* Test Search controls ...<br>'
                         . '* Search tools -> group by parent/ parent child tree ? <br>'
 						. '* Can do ...<br>'
-		                . '* Add delete function<br>'
+		                . '* Add delete function: needs internal trash (published=-2) befor parent->delete()<br>'
 						. '* __associations <br>'
                     	. '* Badges array like in categories for images: Published, unpublished, trashed, archieved ... <br>'
                         . '* On develop show order left right level<br>'

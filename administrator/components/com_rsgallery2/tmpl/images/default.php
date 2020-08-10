@@ -94,7 +94,7 @@ if ($saveOrder && !empty($this->items))
                                 </th>
 
                                 <th scope="col" style="min-width:100px">
-									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_TITLE', 'a.name', $listDirn, $listOrder); ?>
+									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_TITLE', 'a.title', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" style="min-width:100px">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder); ?>
@@ -107,19 +107,19 @@ if ($saveOrder && !empty($this->items))
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
                                 </th-->
 
+
                                 <th scope="col" style="width:10%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JAUTHOR', 'a.created_by', $listDirn, $listOrder); ?>
                                 </th>
-
 
                                 <th scope="col" style="width:10%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_DATE_CREATED', 'a.created', $listDirn, $listOrder); ?>
                                 </th>
 
+
                                 <th scope="col" style="width:3%" class="d-none d-lg-table-cell text-center">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
                                 </th>
-
 
                                 <!-- only when user settings ...
 
@@ -315,6 +315,7 @@ if ($saveOrder && !empty($this->items))
                                         ?>
                                         <?php
                                         echo $this->escape($created_by->name);
+
                                         if ($modified_by->name != $created_by->name) {
                                             echo '<br>(' . $modified_by->name . ')';
                                         }
@@ -334,12 +335,6 @@ if ($saveOrder && !empty($this->items))
                                            echo ')';
                                         }
                                         ?>
-                                    </td>
-
-                                    <td class="d-none d-lg-table-cell text-center">
-									    <span class="badge badge-info">
-										    <?php echo (int) $item->hits; ?>
-									    </span>
                                     </td>
 
                                     <!-- only when user settings ...
