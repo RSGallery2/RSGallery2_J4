@@ -15,6 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Component\RSGallery2\Administrator\Model\ConfigRaw;
 use Joomla\Utilities\ArrayHelper;
 
@@ -30,7 +31,7 @@ use Joomla\Component\Rsgallery2\Administrator\Model\ImageJ3xPaths;
  *
  */
 
-class MaintenanceJ3xModel extends BaseDatabaseModel
+class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseModel
 {
 
     public function applyExistingJ3xData()
@@ -50,7 +51,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy j3x DB config', 'error');
         }
 
         //--- DB galleries ---------------------------------------------
@@ -65,7 +66,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy j3x DB galleries', 'error');
         }
 
         //--- DB images ---------------------------------------------
@@ -82,9 +83,8 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
         }
         catch (\RuntimeException $e)
         {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy j3x DB images', 'error');
         }
-
 
         // ....
         // ? ToDo: ACL, assets ...

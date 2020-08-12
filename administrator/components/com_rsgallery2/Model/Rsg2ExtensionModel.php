@@ -63,7 +63,6 @@ class Rsg2ExtensionModel extends BaseModel
     }
 
 
-
     static function readRsg2ExtensionConfiguration ()
     {
         $params = [];
@@ -97,19 +96,19 @@ class Rsg2ExtensionModel extends BaseModel
         return $params;
     }
 
-    static function getVersionFromManifestParam()
-    {
-        //$oldRelease = '1.0.0.999';
-        $oldRelease = '';
-
-
-        $oldManifestData = self::readRsg2ExtensionManifest();
-        if (!empty ($oldManifestData['version'])) {
-            $oldRelease = $oldManifestData['version'];
-        }
-
-        return $oldRelease;
-    }
+//    static function getVersionFromManifestParam()
+//    {
+//        //$version = '1.0.0.999';
+//        $version = '';
+//
+//
+//        $ManifestData = self::readRsg2ExtensionManifest();
+//        if (!empty ($ManifestData['version'])) {
+//            $version = $ManifestData['version'];
+//        }
+//
+//        return $version;
+//    }
 
 
 } // class

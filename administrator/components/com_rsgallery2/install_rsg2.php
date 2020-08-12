@@ -250,13 +250,24 @@ class Com_Rsgallery2InstallerScript
         switch ($type) {
 
             case 'install':
-                // install: insert configuration standard values  ??? update 3x to 4x ???
-                //ToDo: $isConfigSavedOnce; ConfigRawModel->ResetConfigToDefault();
+
+                // Nested gallery table needs a root item
+                $isGalleryTreeCreated = $this->initGalleryTree();
+
+                $installMsg = $this->installMessage($type);
+                echo $installMsg;
+
+                echo $type . ' finished';
+
+                break;
 
             case 'update':
 
                 // Nested gallery table needs a root item
                 $isGalleryTreeCreated = $this->initGalleryTree();
+
+                // Old J3x config, galleries, images
+//                $this->checkAndHandleJ3xTables();
 
                 $installMsg = $this->installMessage($type);
                 echo $installMsg;
@@ -285,7 +296,7 @@ class Com_Rsgallery2InstallerScript
 
 
         // wonderworld 'good by' icons finnern
-        echo '<br><h4>&oplus;&infin;&omega;<h4></h4><br>';
+        echo '<br><h4>&oplus;&infin;&omega;</h4><br>';
 
         return true;
     }
@@ -325,7 +336,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @since version
      */
-    public function initGalleryTree()
+    protected  function initGalleryTree()
     {
         $isGalleryTreeCreated = false;
 
@@ -373,7 +384,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @since version
      */
-    public function installMessage($type)
+    protected function installMessage($type)
     {
         $installMsg = false;
 
@@ -381,13 +392,14 @@ class Com_Rsgallery2InstallerScript
 
             $installMsgHelperFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Helper/InstallMessage.php';
             include ($installMsgHelperFileName);
-            $InstallMessageHelper =  new Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage ($this->newRelease, $this->oldRelease);
+            $InstallMessageHelper =  new Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage
+                ($this->newRelease, $this->oldRelease);
 
             $installMsg = $InstallMessageHelper->installMessageText($type);
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
+            throw new \RuntimeException($e->getMessage() . ' from installMessage');
         }
 
         return $installMsg;
@@ -404,7 +416,7 @@ class Com_Rsgallery2InstallerScript
      * @throws Exception
      * @since version
      */
-    function getVersionFromManifestParam()
+    protected function getVersionFromManifestParam()
     {
         //$oldRelease = '1.0.0.999';
         $oldRelease = '';
@@ -429,7 +441,7 @@ class Com_Rsgallery2InstallerScript
      * @throws Exception
      * @since version
      */
-    function readRsg2ExtensionManifest()
+    protected function readRsg2ExtensionManifest()
     {
         $manifest = [];
 
@@ -457,6 +469,157 @@ class Com_Rsgallery2InstallerScript
         }
 
         return $manifest;
+    }
+
+
+    /**
+     *
+     * Checks for RSG2 version j3x db tables existence
+     *
+     * @return bool
+     * @throws Exception
+     *
+     * @since version
+     */
+    protected function isJ3xRsg2DataExisting()
+    {
+        $isJ3xTableExisting = false;
+
+        try {
+
+            $J3xExistModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Model/J3xExistModel.php';
+            include ($J3xExistModelFileName);
+            $j3xExistModel =  new Joomla\Component\Rsgallery2\Administrator\Model\J3xExistModel();
+
+            $isJ3xTableExisting = $j3xExistModel->J3xConfigTableExist();
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from isJ3xRsg2DataExisting');
+        }
+
+        return $isJ3xTableExisting;
+    }
+
+
+    /**
+     *
+     * Checks for RSG2 version j3x db tables existence
+     *
+     * @return bool
+     * @throws Exception
+     *
+     * @since version
+     */
+    protected function copyJ3xDbTables()
+    {
+        $isJ3xDbCopied = false;
+
+        try {
+
+            $j3xModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Model/MaintenanceJ3xModel.php';
+            include ($j3xModelFileName);
+            $j3xModel =  new Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel();
+
+            //--- DB configuration ---------------------------------------------
+
+            try {
+
+                $isCopiedConfig = $j3xModel->collectAndCopyJ3xConfig2J4xOptions();
+                $isJ3xDbCopied &= $isCopiedConfig;
+
+                if ( ! $isCopiedConfig) {
+                    Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
+                }
+            }
+            catch (\RuntimeException $e)
+            {
+                Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy j3x DB config', 'error');
+            }
+
+            //--- DB galleries ---------------------------------------------
+
+            try {
+                $isCopiedGalleries = $j3xModel->copyDbAllJ3xGalleries2J4x();
+                $isJ3xDbCopied &= $isCopiedGalleries;
+
+                if ( ! $isCopiedGalleries) {
+                    Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x galleries failed'), 'error');
+                }
+            }
+            catch (\RuntimeException $e)
+            {
+                Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy j3x DB galleries', 'error');
+            }
+
+            //--- DB images ---------------------------------------------
+
+            try {
+
+                $isCopiedImages = $j3xModel->copyDbAllJ3xImages2J4x ();
+                $isJ3xDbCopied &= $isCopiedImages;
+
+                if ( ! $isCopiedImages) {
+                    Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x images failed'), 'error');
+                }
+
+            }
+            catch (\RuntimeException $e)
+            {
+                Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy j3x DB images', 'error');
+            }
+
+
+        } //catch (\RuntimeException $e)
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from copyJ3xDbTables');
+        }
+
+        return [$isJ3xDbCopied, $isCopiedConfig, $isCopiedGalleries, $isCopiedImages];
+    }
+
+    protected function checkAndHandleJ3xTables(): void
+    {
+// check and handle old J3x tables (Moving DB data ...)
+        $isJ3xTableExisting = $this->isJ3xRsg2DataExisting();
+
+        // Handle old RSG2 J3x DB data
+        if ($isJ3xTableExisting) {
+
+            //--- Not already handled ? -----------------------
+
+            $isJ3xDbsCopied = '';
+
+            $manifestData = $this->readRsg2ExtensionManifest();
+            if (!empty ($manifestData['j3x_dbs_copied'])) {
+                $isJ3xDbsCopied = $manifestData['j3x_dbs_copied'];
+            }
+
+            // do copy DB data
+            if (empty ($isJ3xDbsCopied)) {
+
+                [$isJ3xDbCopied, $isCopiedConfig, $isCopiedGalleries, $isCopiedImages]
+                    = $this->copyJ3xDbTables();
+
+                if (!empty ($isJ3xDbCopied)) {
+                    // Update Config info
+
+                } else {
+                    //$isCopiedGalleries,
+                    if (empty ($isCopiedConfig)) {
+                        Factory::getApplication()->enqueueMessage('J3x DB table: Failed copying configuration');
+                    }
+                    if (empty ($isCopiedGalleries)) {
+                        Factory::getApplication()->enqueueMessage('J3x DB table: Failed copying galleries');
+                    }
+                    if (empty ($isCopiedImages)) {
+                        Factory::getApplication()->enqueueMessage('J3x DB table: Failed copying images');
+                    }
+
+                }
+
+            }
+        }
     }
 
 

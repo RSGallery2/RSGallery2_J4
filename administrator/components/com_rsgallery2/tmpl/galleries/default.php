@@ -104,7 +104,7 @@ if ($saveOrder && !empty($this->items))
                                 <th scope="col" style="width:10%" class="d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_DATE_CREATED', 'a.created', $listDirn, $listOrder); ?>
                                 </th>
-                                
+
 
                                 <th scope="col" style="width:3%" class="d-none d-lg-table-cell text-center">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>

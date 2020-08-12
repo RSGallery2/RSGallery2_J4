@@ -4,8 +4,8 @@
 
 	<fieldset
 		name="rsgallery2"
-		label="COM_CONFIG_RSGALLERY2_FIELDSET_LABEL"
-		description="COM_CONFIG_RSGALLERY2_FIELDSET_DESC"
+		label="COM_RSGALLERY2_CONFIG_TAB_GENERAL"
+		description="COM_RSGALLERY2_CONFIG_TAB_GENERAL_DESC"
 	>
 		<!-- needed when more entries are general ...
 				field name="intro_text"
@@ -28,65 +28,21 @@
 			<option value="0">JNO</option>
 		</field>
 
-		<!--field
+		<field
 				type="spacer"
 				name="spacer_admin"
 				hr="true"
-		/-->
-
-		<!-- ... block debug section ... -->
-
-		<field
-				name="noteAdminSection"
-				type="note"
-				class="alert alert-primary"
-				close="true"
-				label="COM_RSGALLERY2_CONFIG_NOTE_DEBUG_SECTION"
-				description="COM_RSGALLERY2_CONFIG_NOTE_DEBUG_SECTION_DESC"
 		/>
 
-		<field
-				id="isDebugBackend"
-				name="isDebugBackend"
-				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_DEBUG_BACKEND"
-				description="COM_RSGALLERY2_DEBUG_BACKEND_DESC"
-				class="btn-group btn-group-yesno">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<field
-				id="isDebugSite"
-				name="isDebugSite"
-				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_DEBUG_SITE"
-				description="COM_RSGALLERY2_DEBUG_SITE_DESC"
-				class="btn-group btn-group-yesno">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<field
-				id="isDevelop"
-				name="isDevelop"
-				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_DEVELOP"
-				description="COM_RSGALLERY2_DEVELOP_DESC"
-				class="btn-group btn-group-yesno">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		
+
 	</fieldset>
 
 	<!-- ... Tab Upload ................................. -->
 
 	<fieldset
 			name="upload"
-			label="COM_RSGALLERY2_FIELD_UPLOAD_OPTIONS_VIEW"
-			description="COM_RSGALLERY2_FIELD_UPLOAD_OPTIONS_VIEW_DESC"
+			label="COM_RSGALLERY2_CONFIG_TAB_UPLOAD"
+			description="COM_RSGALLERY2_CONFIG_TAB_UPLOAD_DESC"
 	>
 		<!--field
 				type="spacer"
@@ -163,6 +119,12 @@
 		<!-- ... block general section ... -->
 
 		<field
+				type="spacer"
+				name="spacer_upload_ftp_01"
+				hr="true"
+		/>
+
+		<field
 				name="note_upload_general"
 				type="note"
 				class="alert alert-primary"
@@ -180,7 +142,14 @@
 				class="input-large-text input-xxlarge"
 		>
 		</field>
+
 		<!-- ... block location ... -->
+
+		<field
+				type="spacer"
+				name="spacer_upload_location_01"
+				hr="true"
+		/>
 
 		<field name="note_upload_location"
 			   type="note"
@@ -200,11 +169,11 @@
 		>
 		</field>
 
-		<!-- ... block  ... -->
+		<!-- ... block J3x ... -->
 
 		<field name="note_images_outdated"
 			   type="note"
-				   class="alert alert-error"
+			   class="alert alert-error"
 			   close="true"
 			   label="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED"
 			   description="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED_DESC"
@@ -254,8 +223,8 @@
 
 	<fieldset
 			name="GalleriesView"
-			label="COM_RSGALLERY2_FIELD_GALLERIES_VIEW"
-			description="COM_RSGALLERY2_FIELD_GALLERIES_VIEW_DESC"
+			label="COM_RSGALLERY2_CONFIG_TAB_GALLERIES"
+			description="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_DESC"
 	>
 
 		<field name="intro_text"
@@ -271,8 +240,8 @@
 
 	<fieldset
 			name="Images"
-			label="COM_RSGALLERY2_FIELD_IMAGE_OPTIONS_VIEW"
-			description="COM_RSGALLERY2_FIELD_IMAGE_OPTIONS_VIEW_DESC"
+			label="COM_RSGALLERY2_CONFIG_TAB_IMAGES"
+			description="COM_RSGALLERY2_CONFIG_TAB_IMAGES_DESC"
 	>
 	<field
 			type="spacer"
@@ -291,6 +260,65 @@
 	/>
 	</fieldset>
 
+	<!-- ... Tab Debug ................................. -->
+
+	<fieldset
+			name="debug"
+			label="COM_RSGALLERY2_CONFIG_TAB_DEBUG"
+			description="COM_RSGALLERY2_CONFIG_TAB_DEBUG_DESC"
+	>
+		<field type="spacer" name="test_inner_02" hr="true" />
+		<!-- ... block  ... -->
+
+		<field
+				id="j3x_dbs_copied"
+				name="j3x_DBs_copied"
+				type="hidden"
+				default="0.0.0"
+		/>
+
+		<field
+				id="j3x_images_copied"
+				name="j3x_DBs_copied"
+				type="hidden"
+				default="0.0.0"
+		/>
+
+		<field
+				id="isDebugBackend"
+				name="isDebugBackend"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEBUG_BACKEND"
+				description="COM_RSGALLERY2_DEBUG_BACKEND_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+				id="isDebugSite"
+				name="isDebugSite"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEBUG_SITE"
+				description="COM_RSGALLERY2_DEBUG_SITE_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+				id="isDevelop"
+				name="isDevelop"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEVELOP"
+				description="COM_RSGALLERY2_DEVELOP_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+	</fieldset>
 	<!-- ... Tab findings ................................. -->
 
 	<fieldset
@@ -321,7 +349,7 @@
 			label="TestInner01"
 			description="Testinner 01 description"
 	>
-		<field type="spacer" name="test_innier_01" hr="true" />
+		<field type="spacer" name="test_inner_01" hr="true" />
 <!--		<field name="jpegQuality_01" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
 <!--		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />-->
 <!--		<field name="jpegQuality_02" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
@@ -349,7 +377,7 @@
 			label="TestInner02"
 			description="TestInner01 description"
 	>
-		<field type="spacer" name="test_innier_02" hr="true" />
+		<field type="spacer" name="test_inner_02" hr="true" />
 		<!-- ... block  ... -->
 
 		<field name="note31" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="02_LOREMIPSUM_DESC" />
@@ -378,4 +406,7 @@
 		/>
 
 	</fieldset>
+
+
+
 </config>
