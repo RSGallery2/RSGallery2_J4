@@ -33,7 +33,7 @@ use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel;
 use Joomla\Component\Rsgallery2\Administrator\Model\J3xExistModel;
-//use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
 
 /**
@@ -66,6 +66,11 @@ class HtmlView extends BaseHtmlView
 	protected $isDebugBackend;
 	protected $isDevelop;
 	protected $isConfigSavedOnce;
+
+    protected $isJ3xDataExisting;
+    protected $isIsMissingJ3xDbGalleries;
+    protected $isIsMissingJ3xDbImages;
+    protected $isIsMissingJ3xImages;
 
 	/**
 	 * Method to display the view.
@@ -104,10 +109,24 @@ class HtmlView extends BaseHtmlView
 
         //--- Check for J3x parts ------------------------------
 
-        $isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
-        if($isJ3xDataExisting) {
+        $this->isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
+        if($this->isJ3xDataExisting) {
 
-            // MaintenanceJ3xModel:: ... ;
+            // j3x configuration will be copied immediately
+            $isj3xDbConfigCopied = $rsgConfig->get('j3x_db_config_copied');
+            if ( ! $isj3xDbConfigCopied) {
+                $j3xModel = new MaintenanceJ3xModel ();
+
+                $isCopied = $j3xModel->collectAndCopyJ3xConfig2J4xOptions ();
+                if ($isCopied) {
+                    $rsgConfig->set('j3x_db_config_copied', true);
+                }
+            }
+
+            $this->isMissingJ3xDbGalleries = ! $rsgConfig->get('j3x_db_galleries_copied');
+            $this->isMissingJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
+            $this->isMissingJ3xImages = ! $rsgConfig->get('j3x_images_copied');
+
         }
 
         /*-------------------------------------------------------------------------------

@@ -1636,8 +1636,11 @@ EOT;
 
                 $isPathsExisting = $j4xImagePath->isPathsExisting ();
                 if ( ! $isPathsExisting) {
+                    // throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
 
-                    throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
+                    // create path
+                    $j4xImagePath->createAllPaths();
+
                 }
 
                 $j3xOrgFile = $j3xImagePath->getOriginalPath ($name);
@@ -1691,7 +1694,7 @@ EOT;
 
         try {
 
-            $db = $this->getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
 
             // $testImplode = implode(',', ArrayHelper::toInteger($movedIds));

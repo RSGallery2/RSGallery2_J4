@@ -45,13 +45,22 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
 
                     DisplayRSG2Logo();
 
+                    //--- tell j3x galleries must be initialized ---------------------------
 
-                    //--- tell config must be initialized ---------------------------------
+                    if ($this->isJ3xDataExisting) {
 
-//                    if ( ! $this->isConfigSavedOnce) {
-//                        DisplayRequestSaveConfigOnce();
-//                    }
-//
+                        if ($this->isMissingJ3xDbGalleries
+                            || $this->isMissingJ3xDbImages
+                            || $this->isMissingJ3xImages) {
+
+                            echo DisplayRequestJ3xActions (
+                                    $this->isMissingJ3xDbGalleries,
+                                    $this->isMissingJ3xDbImages,
+                                    $this->isMissingJ3xImages
+                            );
+                        }
+                    }
+
                     //--- Control buttons ------------------
 
                     DisplayRSG2ControlButtons($this->buttons);
@@ -123,35 +132,110 @@ function DisplayRSG2Logo()
     echo '<div class="clearfix"></div>';
 }
 
+////--- Request to user: Save config -----------------------------
+//
+///**
+// * Displays
+// *
+// * @since version
+// */
+//function DisplayRequestSaveConfigOnce()
+//{
+//    $rsg2ConfigurationLink = Route::_('index.php?option=com_config&view=component&component=com_rsgallery2');
+//
+//
+//    echo '    <div class="rsg2requestSaveConfig">';
+////	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+////    echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+//
+////    echo '        <button type="button" class="btn btn-primary"';
+//    echo '        <button type="button" class="btn btn-warning"';
+//    echo '               onclick="location.href=\'' . $rsg2ConfigurationLink . '\'">';
+////    echo '            <span class="badge badge-pill badge-info">' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</span>';
+//    echo '            <strong >' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</strong>';
+//    echo '        </button>';
+//    echo '    </div>';
+//    echo '    <br>';
+//
+////	echo '<p class="test">';
+////	echo '</p>
+//
+//    echo '<div class="clearfix"></div>';
+//}
+
 //--- Request to user: Save config -----------------------------
 
 /**
- * Just displays the logo as svg
+ * Displays info and links to needed j3x action
  *
  * @since version
  */
-function DisplayRequestSaveConfigOnce()
+function DisplayRequestJ3xActions($isMissingJ3xDbGalleries=false,
+                                    $isMissingJ3xDbImages=false,
+                                    $isMissingJ3xImages=false)
 {
-    $rsg2ConfigurationLink = Route::_('index.php?option=com_config&view=component&component=com_rsgallery2');
+    $html = '';
 
+    $rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries');
+    $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages');
+    $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages');
 
-    echo '    <div class="rsg2requestSaveConfig">';
-//	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
-//    echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+    $CopyDbGalleries = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES');
+    $CopyDbGalleriesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC');
+    $CopyDbImages = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES');
+    $CopyDbImagesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC');
+    $CopyImages = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES');
+    $CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
 
-//    echo '        <button type="button" class="btn btn-primary"';
-    echo '        <button type="button" class="btn btn-warning"';
-    echo '               onclick="location.href=\'' . $rsg2ConfigurationLink . '\'">';
-//    echo '            <span class="badge badge-pill badge-info">' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</span>';
-    echo '            <strong >' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</strong>';
-    echo '        </button>';
-    echo '    </div>';
-    echo '    <br>';
+    $header = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
+    $headerDesc = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED_DESC');
 
-//	echo '<p class="test">';
-//	echo '</p>
+    $link1 = '';
+    if ($isMissingJ3xDbGalleries) {
+        $link1 = <<<EOT
+                                <span class="badge badge-pill badge-success">1</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
+EOT;
+    }
+    $link2 = '';
+    if ($isMissingJ3xDbImages) {
+        $link2 = <<<EOT
+                                <span class="badge badge-pill badge-success">2</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
+EOT;
+    }
+    $link3 = '';
+    if ($isMissingJ3xImages) {
+        $link3 = <<<EOT
+                                <span class="badge badge-pill badge-success">3</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm" Title="$CopyImagesDesc" role="button">$CopyImages</a>
+EOT;
+    }
 
-    echo '<div class="clearfix"></div>';
+    $html = <<<EOT
+            <div class="rsg2requestJ3xActions">
+            
+                <div class="card w-30" >                
+                    <h5 class="card-header">$header</h5>
+                    <div class="card-body">
+                        <p class="card-text">$headerDesc</p>
+                        <ul>
+                            <li style="list-style: none; margin-bottom: 10px">
+                            $link1
+                            </li>
+                            <li style="list-style: none; margin-bottom: 10px">
+                            $link2                               
+                            </li>
+                            <li style="list-style: none; margin-bottom: 0px">
+                            $link3
+                            </li>
+                        </ul>
+                    </div>
+            
+                </div>
+            </div>
+            
+            <br />
+EOT;
+
+    return $html;
 }
 
 

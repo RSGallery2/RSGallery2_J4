@@ -256,15 +256,15 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-						. '*  Separate code for galleries raw view -> import into views<br>'
+                        . '* user should only see what is necessary: use debug / develop for others<br>'
+                        . '* Fix: Copy selected images / galleries -> greyed button, Ids in controller'
+						. '* Use separate code for galleries raw view -> import into views<br>'
 						. '* check table : if empty .. -> use isset ??? <br>'
 						. '* !!! asset id !!! <br>'
 						. '* db variable "access". how to use ???<br>'
-						. '* Fix: Copy selected images / galleries -> greyed button, Ids in cotroller'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//		        		. '*  <br>'
+//				        . '*  <br>'
+//     	    			. '*  <br>'
 						. '</span><br>';
 				}
 
@@ -282,6 +282,7 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+                        . '* user should only see what is necessary: use debug / develop for others<br>'
 						. '*  Separate code for images raw view -> import into views<br>'
 //				. '*  <br>'
 //				. '*  <br>'
@@ -298,16 +299,17 @@ class HtmlView extends BaseHtmlView
 
 			case 'TransferJ3xImages':
 				// on develop show open tasks if existing
-//				if (!empty ($this->isDevelop))
-//				{
-//					echo '<span style="color:red">'
-//						. 'Tasks: <br>'
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+                        . '* user should only see what is necessary: use debug / develop for others<br>'
 //						. '* <br>'
-////				. '*  <br>'
-////				. '*  <br>'
-////				. '*  <br>'
-//						. '</span><br>';
-//				}
+//				. '*  <br>'
+//				. '*  <br>'
+//				. '*  <br>'
+						. '</span><br>';
+				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');

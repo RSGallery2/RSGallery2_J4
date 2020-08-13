@@ -270,18 +270,32 @@
 		<field type="spacer" name="test_inner_02" hr="true" />
 		<!-- ... block  ... -->
 
-		<field
-				id="j3x_dbs_copied"
-				name="j3x_DBs_copied"
+		<!--field
+				id="j3x_db_config_copied"
+				name="j3x_db_config_copied"
 				type="hidden"
-				default="0.0.0"
+				default="0"
+		/-->
+
+		<field
+				id="j3x_db_galleries_copied"
+				name="j3x_db_galleries_copied"
+				type="hidden"
+				default="0"
+		/>
+
+		<field
+				id="j3x_db_images_copied"
+				name="j3x_db_images_copied"
+				type="hidden"
+				default="0"
 		/>
 
 		<field
 				id="j3x_images_copied"
-				name="j3x_DBs_copied"
+				name="j3x_images_copied"
 				type="hidden"
-				default="0.0.0"
+				default="0"
 		/>
 
 		<field

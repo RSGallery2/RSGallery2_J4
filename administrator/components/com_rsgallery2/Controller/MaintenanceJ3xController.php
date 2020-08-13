@@ -20,6 +20,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\Table\Table;
 
 
 /**
@@ -84,7 +85,7 @@ class MaintenanceJ3xController extends AdminController
                 if ($isOk) {
                     $msg .= "Successful copied J3x DB galleries, J3x DB images and J3x configuration items";
                 } else {
-                    $msg .= "Error at copyDbJ3xGalleries2J4x items";
+                    $msg .= "Error at applyExistingJ3xData items";
                     $msgType = 'error';
                 }
 
@@ -176,6 +177,9 @@ class MaintenanceJ3xController extends AdminController
                 $isOk = $j3xModel->copyDbAllJ3xGalleries2J4x();
 
                 if ($isOk) {
+
+                    $isOk = $this ->writeConfigParam ('j3x_db_galleries_copied',true);
+
                     $msg .= "Successful applied J3x gallery items";
                 } else {
                     $msg .= "Error at copyDbJ3xGalleries2J4x items";
@@ -275,6 +279,8 @@ class MaintenanceJ3xController extends AdminController
 
                 $isOk = $j3xModel->copyDbAllJ3xImages2J4x();
                 if ($isOk) {
+                    $isOk = $this ->writeConfigParam ('j3x_db_images_copied',true);
+
                     $msg .= "Successful applied J3x image items";
                 } else {
                     $msg .= "Error at copyDbJ3xImages2J4x items";
@@ -330,6 +336,8 @@ class MaintenanceJ3xController extends AdminController
 
                 $isOk = $j3xModel->moveImagesJ3x2J4xById($j3x_imageIds);
                 if ($isOk) {
+                    $isOk = $this ->writeConfigParam ('j3x_images_copied',true);
+
                     $msg .= "Successful moved all J3x image files";
                     $msgType = 'success'; // ToDo: use in all controllers
                 } else {
@@ -576,6 +584,32 @@ class MaintenanceJ3xController extends AdminController
     }
 
 
+    protected function writeConfigParam ($param='', $value='')
+    {
+
+        // Load the current component params.
+        $params = ComponentHelper::getParams('com_rsgallery2');
+        // Set new value of param(s)
+        $params->set($param, $value);
+
+        // Save the parameters
+        $componentid = ComponentHelper::getComponent('com_rsgallery2')->id;
+        $table = Table::getInstance('extension');
+        $table->load($componentid);
+        $table->bind(array('params' => $params->toString()));
+
+        // check for error
+        if (!$table->check()) {
+            echo $table->getError();
+            return false;
+        }
+        // Save to database
+        if (!$table->store()) {
+            echo $table->getError();
+            return false;
+        }
+        return true;
+    }
 
 } // class
 
