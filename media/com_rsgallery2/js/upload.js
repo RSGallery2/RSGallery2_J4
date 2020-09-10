@@ -1,4 +1,15 @@
-// ToDo: use save file name in display
+/**
+ * @package     RSGallery2
+ *
+ * supports zip/ftp upload buttons
+ * supports ajax drag and drop file upload wit two calls
+ *
+ * @subpackage  com_rsgallery2
+ * @copyright   (C) 2016-2019 RSGallery2 Team
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @author      finnern
+ * @since       5.0.0.2
+ */
 /**/
 //declare var joomla: Joomla;
 //const joomla = window.Joomla || {};
@@ -421,12 +432,18 @@ createStatusBar.imgCount = 0;
 ----------------------------------------------------------------*/
 // extract json data which may be preceded with unwanted informtion
 function separateDataAndNoise(response) {
-    let data = response;
+    let data = "";
     let error = "";
-    const StartIdx = response.indexOf('{"'); // ToDo: {"Success
+    const query = '{"success';
+    // const StartIdx = response.indexOf('{"'); // ToDo: {"Success
+    const StartIdx = response.indexOf(query);
     if (StartIdx > -1) {
         error = response.substring(0, StartIdx - 1);
         data = response.substring(StartIdx);
+    }
+    else {
+        error = response;
+        data = "{}";
     }
     return [data, error];
 }
@@ -1518,7 +1535,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         /**/
         if (isImage && isZip) {
-            alert('Zip and image files selected. Please chooes one of both');
+            alert('Zip and image files selected. Please choose only one of both');
         }
         if (isImage) {
             droppedFilesTask.onNewFile(event);

@@ -234,9 +234,9 @@ class HtmlView extends BaseHtmlView
 						. '* Add pagination<br>'
 						. '* Test: archived, trashed, (delete)<br>'
 						. '* Add delete function<br>'
-						//	. '*  <br>'
-						//	. '*  <br>'
-						//	. '*  <br>'
+						//	. '* <br>'
+						//	. '* <br>'
+						//	. '* <br>'
 						. '</span><br><br>';
 				}
 
@@ -268,9 +268,9 @@ class HtmlView extends BaseHtmlView
                         . '* Vote and others only when user enabled<br>'
                         . '* Put gallery name beside alias. Only when sorting by galleris is otherwise possible<br>'
                         . '* On develop show order<br>'
-                        //	. '*  <br>'
-                        //	. '*  <br>'
-                        //	. '*  <br>'
+                        //	. '* <br>'
+                        //	. '* <br>'
+                        //	. '* <br>'
                         . '</span><br><br>';
 				}
 

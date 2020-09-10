@@ -1,5 +1,3 @@
-// ToDo: use save file name in display
-
 /**
  * @package     RSGallery2
  *
@@ -701,20 +699,26 @@ class createStatusBar {
 ----------------------------------------------------------------*/
 
 // extract json data which may be preceded with unwanted informtion
-function separateDataAndNoise(response:string):[string,string] {
+function separateDataAndNoise(response: string): [string, string] {
 
-    let data:string = response;
-    let error:string = "";
+    let data: string = "";
+    let error: string = "";
+    const query = '{"success';
 
-    const StartIdx = response.indexOf('{"'); // ToDo: {"Success
+    // const StartIdx = response.indexOf('{"'); // ToDo: {"Success
+    const StartIdx = response.indexOf(query);
     if (StartIdx > -1) {
 
         error = response.substring(0, StartIdx - 1);
         data = response.substring(StartIdx);
 
+    } else {
+
+        error = response;
+        data = "{}";
     }
 
-    return [ data, error ];
+    return [data, error];
 }
 
 /*----------------------------------------------------------------
@@ -2140,6 +2144,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // init red / green border of drag area
     const onGalleryChange = new enableDragZone (elements);
 
+
+
     // (3) ajax request: Transfer file to server
     const transferImagesTask = new TransferImagesTask (elements.imagesAreaList, elements.progressArea, elements.errorZone,
         transferFiles);
@@ -2234,7 +2240,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         if (isImage && isZip)
         {
-            alert ('Zip and image files selected. Please chooes one of both');
+            alert ('Zip and image files selected. Please choose only one of both');
         }
         if (isImage) {
             droppedFilesTask.onNewFile(event);

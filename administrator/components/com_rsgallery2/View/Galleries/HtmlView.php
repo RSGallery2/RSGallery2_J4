@@ -228,10 +228,10 @@ class HtmlView extends BaseHtmlView
 						. '* Test: archived, trashed, (delete)<br>'
 		                . '* Add delete function<br>'
 						. '* mark element width id 1 <br>'
-						//	. '*  <br>'
-						//	. '*  <br>'
-						//	. '*  <br>'
-						//	. '*  <br>'
+						//	. '* <br>'
+						//	. '* <br>'
+						//	. '* <br>'
+						//	. '* <br>'
 						. '</span><br><br>';
 				}
 
@@ -248,9 +248,9 @@ class HtmlView extends BaseHtmlView
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
                         . '* Improve tree design<br>'
-                        //	. '*  <br>'
-                        //	. '*  <br>'
-                        //	. '*  <br>'
+                        //	. '* <br>'
+                        //	. '* <br>'
+                        //	. '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -273,10 +273,10 @@ class HtmlView extends BaseHtmlView
 						. '* __associations <br>'
                     	. '* Badges array like in categories for images: Published, unpublished, trashed, archieved ... <br>'
                         . '* On develop show order left right level<br>'
-				    //	. '*  <br>'
-				    //	. '*  <br>'
-				    //	. '*  <br>'
-				    //	. '*  <br>'
+				    //	. '* <br>'
+				    //	. '* <br>'
+				    //	. '* <br>'
+				    //	. '* <br>'
 						. '</span><br><br>';
 				}
 

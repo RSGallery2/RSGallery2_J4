@@ -316,7 +316,7 @@ $danger_ZoneButtons[] = new zoneButtons(
 /**/
 
 
-//--- upgrade zone -----------------------------
+//--- J3x upgrade zone -----------------------------
 
 if ($this->isJ3xRsg2DataExisting)
 {
@@ -373,7 +373,7 @@ if ($this->isJ3xRsg2DataExisting)
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'),
         Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
         Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
 		array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
@@ -523,7 +523,17 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
 
 /**
 $developer4Test_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'),
+    Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
+    Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
+    array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
+    'viewDbTransferJ3xImages'
+);
+/**/
+
+/**/
+$developer4Test_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
     array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),

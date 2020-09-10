@@ -150,11 +150,11 @@ class HtmlView extends BaseHtmlView
 				. '*  Install: finish -> Move J3x images<br>'
 				. '*  Repair: Consolidade images<br>'
 				. '* !!! Purge / delete of database variables should be confirmed !!!<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 				. '</span><br><br>';
 		}
 

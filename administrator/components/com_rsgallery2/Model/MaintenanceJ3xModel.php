@@ -1100,117 +1100,207 @@ EOT;
         return $images;
     }
 
-    public function j3x_imagesMergeList()
-    {
-        $images = array();
 
-        $select = [
-            'id',
-            'name',
-//            'alias',
-//            'descr',
-            'gallery_id',
-            'title',
-//            'hits',
-//            'date',
-//            'rating',
-//            'votes',
-//            'comments',
-//            'published',
-//            'checked_out',
-//            'checked_out_time',
-            'ordering',
-//            'approved',
-//            'userid',
-//            'params',
-//            'asset_id'
-        ];
+//    // ToDo: May be useful with gallery id
+//    public function j3x_imagesMergeList()
+//    {
+//        $images = array();
+//
+//        $select = [
+//            'id',
+//            'name',
+////            'alias',
+////            'descr',
+//            'gallery_id',
+//            'title',
+////            'hits',
+////            'date',
+////            'rating',
+////            'votes',
+////            'comments',
+////            'published',
+////            'checked_out',
+////            'checked_out_time',
+//            'ordering',
+////            'approved',
+////            'userid',
+////            'params',
+////            'asset_id'
+//        ];
+//
+//        try {
+//            $db = Factory::getDbo();
+//            $query = $db->getQuery(true)
+//                ->select($db->quoteName($select))
+//                ->from('#__rsgallery2_files')
+////                ->order('gallery_id ASC, ordering ASC');
+//                ->order($db->quoteName('gallery_id') . ' ASC, '
+//                    . $db->quoteName('ordering') . ' ASC');
+//
+//            // Get the options.
+//            $db->setQuery($query);
+//
+//            $images = $db->loadObjectList();
+//        }
+//        catch (\RuntimeException $e)
+//        {
+//            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+//        }
+//
+//        return $images;
+//    }
+
+//    // ToDo: May be useful with gallery id
+//    public function j4x_imagesMergeList()
+//    {
+//        $images = array();
+//
+//        $select = [
+//            'id',
+//            'name',
+////            'alias',
+////            'description',
+//
+//            'gallery_id',
+//            'title',
+//
+//            'note',
+////            'params',
+////            'published',
+////
+////            'hits',
+////            'rating',
+////            'votes',
+////            'comments',
+////
+////            'publish_up',
+////            'publish_down',
+////
+////            'checked_out',
+////            'checked_out_time',
+////            'created',
+////            'created_by',
+////            'created_by_alias',
+////            'modified',
+////            'modified_by',
+////
+//            'ordering',
+////
+////            'approved',
+////            'asset_id',
+////            'access',
+//
+//            'use_j3x_location'
+//
+//        ];
+//
+//        try {
+//            $db = Factory::getDbo();
+//            $query = $db->getQuery(true)
+//                ->select($db->quoteName($select))
+//                ->from('#__rsg2_images')
+//                ->order($db->quoteName('gallery_id') . ' ASC, '
+//                    . $db->quoteName('ordering') . ' ASC');
+//
+//            // Get the options.
+//            $db->setQuery($query);
+//
+//            $images = $db->loadObjectList();
+//        }
+//        catch (\RuntimeException $e)
+//        {
+//            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+//        }
+//
+//        return $images;
+//    }
+
+
+    public function j3x_galleries4ImageMove ($j3x_galleries)
+    {
+        $galleryIds4ImgsToBeMoved = []; // ToDo: array() ==> []
 
         try {
+            $j4xGalleryIds = [];
+
+            foreach ($j3x_galleries as $j3x_gallery) {
+                $j4xGalleryIds[] = $j3x_gallery->id + 1;
+            }
+
+            $db = Factory::getDbo();
+            $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
+            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
+
+
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->quoteName($select))
-                ->from('#__rsgallery2_files')
-//                ->order('gallery_id ASC, ordering ASC');
-                ->order($db->quoteName('gallery_id') . ' ASC, '
-                    . $db->quoteName('ordering') . ' ASC');
-
-            // Get the options.
-            $db->setQuery($query);
-
-            $images = $db->loadObjectList();
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-        }
-
-        return $images;
-    }
-
-    public function j4x_imagesMergeList()
-    {
-        $images = array();
-
-        $select = [
-            'id',
-            'name',
-//            'alias',
-//            'description',
-
-            'gallery_id',
-            'title',
-
-            'note',
-//            'params',
-//            'published',
-//
-//            'hits',
-//            'rating',
-//            'votes',
-//            'comments',
-//
-//            'publish_up',
-//            'publish_down',
-//
-//            'checked_out',
-//            'checked_out_time',
-//            'created',
-//            'created_by',
-//            'created_by_alias',
-//            'modified',
-//            'modified_by',
-//
-            'ordering',
-//
-//            'approved',
-//            'asset_id',
-//            'access',
-
-            'use_j3x_location'
-
-        ];
-
-        try {
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true)
-                ->select($db->quoteName($select))
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+                ->select('distinct `gallery_id`')
+//                ->select('distinct ' . $db->qn(array('gallery_id')))
+//                  ->select($fieldlist)
                 ->from('#__rsg2_images')
-                ->order($db->quoteName('gallery_id') . ' ASC, '
-                    . $db->quoteName('ordering') . ' ASC');
+                ->where($db->quoteName('use_j3x_location') . ' = 1')
+                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")
+                ->order('id ASC');
 
             // Get the options.
             $db->setQuery($query);
 
-            $images = $db->loadObjectList();
+            //$galleryIds4ImgsToBeMoved = $db->loadObjectList();
+            $galleryIds4ImgsToBeMoved = $db->loadColumn();
+
         }
         catch (\RuntimeException $e)
         {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
-        return $images;
+
+        return $galleryIds4ImgsToBeMoved;
     }
+
+
+    // ToDo: may be rewritten to se all galleries of a list
+    public function j3x_imagesToBeMovedByGallery ($j4xGalleryIds)
+    {
+        $imagesToBeMoved = []; // ToDo: array() ==> []
+
+        try {
+//            $j4xGalleryIds = [];
+//
+//            foreach ($j3x_galleries as $j3x_gallery) {
+//                $j4xGalleryIds[] = $j3x_gallery->id + 1;
+//            }
+
+            $db = Factory::getDbo();
+
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->qn(array('id', 'name')))
+                ->from('#__rsg2_images')
+                ->where($db->quoteName('use_j3x_location') . ' = 1')
+                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")
+                //->order('id ASC');
+                ;
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $imagesToBeMoved = $db->loadObjectList();
+            // $imagesToBeMoved = $db->loadColumn();
+
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            throw $e;
+        }
+
+        return $imagesToBeMoved;
+    }
+
+
+
 
     public function copyDbAllJ3xImages2J4x () {
 

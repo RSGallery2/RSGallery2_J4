@@ -197,8 +197,8 @@ class HtmlView extends BaseHtmlView
 //	      $app  = Factory::getApplication();
 //        $user = $app->getIdentity();
 
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
 				. '</span><br><br>';
 		}
 

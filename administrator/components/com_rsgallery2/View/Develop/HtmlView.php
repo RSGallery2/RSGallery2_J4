@@ -198,9 +198,9 @@ class HtmlView extends BaseHtmlView
 				if (!empty ($this->isDevelop))
 				{
 					echo '<span style="color:red">'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 						. '</span><br><br>';
 				}
 
@@ -215,9 +215,9 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. '* Button for copy to clipboard -> add typescript copy<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 						. '</span><br><br>';
 				}
 
@@ -232,9 +232,9 @@ class HtmlView extends BaseHtmlView
 					echo '<span style="color:red">'
                         . '* button goto "create galleries"<br>'
 						. '* <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 						. '</span><br><br>';
 				}
 
@@ -250,10 +250,10 @@ class HtmlView extends BaseHtmlView
                         . '* Implement parent gallery selection<br>'
                         . '* button goto "create images"<br>'
                         . '* count indicator -> badge<br>'
-//                        . '*  <br>'
-//                        . '*  <br>'
-//                        . '*  <br>'
-//                        . '*  <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -274,11 +274,11 @@ class HtmlView extends BaseHtmlView
                         . '* Implement parent gallery selection<br>'
                         . '* button goto "create images"<br>'
                         . '* count indicator -> badge<br>'
-//                        . '*  <br>'
-//                        . '*  <br>'
-//                        . '*  <br>'
-//                        . '*  <br>'
-//                        . '*  <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -296,13 +296,13 @@ class HtmlView extends BaseHtmlView
 				if (!empty ($this->isDevelop))
 				{
 					echo '<span style="color:red">'
-						. '*  <br>'
+						. '* <br>'
 						. '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
 						. '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
 						. '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 						. '</span><br><br>';
 				}
 

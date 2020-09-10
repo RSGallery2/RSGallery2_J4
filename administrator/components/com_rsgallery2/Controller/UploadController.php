@@ -243,7 +243,7 @@ class UploadController extends FormController
 
 			if ($Rsg2DebugActive)
 			{
-				Log::add('<== Exit uploadAjaxSingleFile');
+				Log::add('<== Exit uploadAjaxReserveDbImageId');
 			}
 
 		}

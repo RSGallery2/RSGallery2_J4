@@ -26,11 +26,15 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
 // Drag and Drop security id on ajax call.
 $script[] = 'var Token = \'' . Session::getFormToken() . '\';';
-Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
+// Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 $app = Factory::getApplication();
+$app->getDocument()->addScriptDeclaration(implode("\n", $script));
 
-$tabs = []
+$tabs = [];
+
+//$maxSize = min($this->UploadLimit, $this->PostMaxSize);
+$maxSize = $this->UploadLimit;
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=upload'); ?>"
@@ -60,7 +64,7 @@ $tabs = []
                                id="ToGallery"
                                class="input_box"
                                title="<?php echo Text::_('COM_RSGALLERY2_CREATE_GALLERY_DESC'); ?>"
-                               href="index.php?option=com_rsgallery2&amp;task=gallery.add">
+                               href="<?php echo Route::_('index.php?option=com_rsgallery2&amp;task=gallery.add');?>">
                                 <i class="icon-images"></i>
 		                        <?php echo Text::_('COM_RSGALLERY2_CREATE_GALLERY'); ?>
                             </a>
@@ -74,9 +78,9 @@ $tabs = []
 
                     <!--legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?></legend-->
                     <h2>
-                        <div class="mb-2">
+                        <span class="mb-2">
                             <?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?>
-                        </div>
+                        </span>
                     </h2>
 
                     <?php

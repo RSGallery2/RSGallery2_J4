@@ -166,9 +166,9 @@ class HtmlView extends BaseHtmlView
                 . '*  options: Values not defined and add params<br>'
                 . '*  options: show user, layout ... see article<br>'
 				. '*  Save and goto prev/next<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 				. '</span><br><br>';
 		}
 

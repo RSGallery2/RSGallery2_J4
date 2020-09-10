@@ -86,9 +86,9 @@ class HtmlView extends BaseHtmlView
 				. '* copy to file <br>'
 				. '* copy to clipboard <br>'
 				. '* RawView: dt dl dd definition on small width will interleap <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 				. '</span><br><br>';
 		}
 

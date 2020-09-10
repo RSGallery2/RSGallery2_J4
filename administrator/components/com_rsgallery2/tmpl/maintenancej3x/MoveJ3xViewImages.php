@@ -8,47 +8,26 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 
-//HTMLHelper::_('bootstrap.framework');
-//HTMLHelper::_('stylesheet', 'com_rsgallery2/???.css', array('version' => 'auto', 'relative' => true));
-HTMLHelper::_('script', 'com_rsgallery2/J3xImageTransfer.js', ['version' => 'auto', 'relative' => true]);
+HTMLHelper::_('stylesheet', 'com_rsgallery2/moveJ3xImages.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'com_rsgallery2/moveJ3xImages.js', ['version' => 'auto', 'relative' => true]);
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
-function isOKIconHtml ($title) {
+// Drag and Drop security id on ajax call.
+$script[] = 'var Token = \'' . Session::getFormToken() . '\';';
+Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
-    $html = <<<EOT
-                    <div class="btn-group">
-                        <a class="tbody-icon" href="javascript:void(0);" aria-labelledby="cbpublish1-desc">
-                            <span class="fas fa-check" aria-hidden="true"/>
-                        </a>
-                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 300px max-width: 400% !important;">$title</div>
-                    </div>
-EOT;
-
-    return $html;
-}
-
-function isNotOkIconHtml ($title) {
-
-    $html = <<<EOT
-                    <div class="btn-group">
-                        <a class="tbody-icon active" href="javascript:void(0);" aria-labelledby="cbunpublish2-desc">
-                            <span class="fas fa-times" aria-hidden="true"/>
-                        </a>
-                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 100% max-width: 100% !important;">$title</div>
-                    </div>
-EOT;
-
-    return $html;
-}
+// $app = Factory::getApplication();
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -63,9 +42,9 @@ EOT;
         } ?>">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'TransferJ3xImages')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'MoveJ3xImages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'TransferJ3xImages', Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'MoveJ3xImages', Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES', true)); ?>
 
                 <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'); ?></strong></legend-->
 
@@ -79,40 +58,59 @@ EOT;
                 echo $this->form->renderFieldset('j3x_gallery');
                 ?>
                 <button id="selectGallery" type="button" class="btn btn-success btn-rsg2"
-                        title="<?php echo Text::_('Next gallery will be found by the file with lowest order which is not already transferred '); ?>"
+                        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_BY_GALLERY_DEC'); ?>"
 
                 >
-                    <span class="icon-copy" aria-hidden="false"></span>
-                    <?php echo Text::_('Select by gallery'); ?>
+                    <span class="icon-checkbox" aria-hidden="false"></span>
+                    <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_BY_GALLERY'); ?>
                 </button>
                 <button id="deSelectGallery" type="button" class="btn btn-success btn-rsg2"
-                        title="<?php echo Text::_('Next gallery will be found by the file with lowest order which is not already transferred '); ?>"
+                        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY_DEC'); ?>"
 
                 >
-                    <span class="icon-copy" aria-hidden="false"></span>
-                    <?php echo Text::_('Deselect by gallery'); ?>
+                    <span class="icon-checkbox-unchecked" aria-hidden="false"></span>
+                    <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY'); ?>
                 </button>
                 <button id="selectNextGallery" type="button" class="btn btn-info btn-rsg2"
-                        title="<?php echo Text::_('Next gallery will be found by the file with lowest order which is not already transferred '); ?>"
+                        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY_DESC'); ?>"
 
                 >
-                    <span class="icon-copy" aria-hidden="false"></span>
-                    <?php echo Text::_('Select next gallery'); ?>
+                    <span class="icon-checkbox" aria-hidden="false"></span>
+                    <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY'); ?>
                 </button>
                 <button id="selectNextGalleries10" type="button" class="btn btn-info btn-rsg2"
-                        title="<?php echo Text::_('Next gallery will be found by the file with lowest order which is not already transferred '); ?>"
+                        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
 
                 >
-                    <span class="icon-copy" aria-hidden="false"></span>
-                    <?php echo Text::_('Select next 10 galleries'); ?>
+                    <span class="icon-checkbox" aria-hidden="false"></span>
+                    <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_10_GALLERIES'); ?>
                 </button>
                 <button id="selectNextGalleries100" type="button" class="btn btn-info btn-rsg2 "
-                        title="<?php echo Text::_('Next gallery will be found by the file with lowest order which is not already transferred '); ?>"
+                        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
                 >
-                    <span class="icon-copy" aria-hidden="false"></span>
-                    <?php echo Text::_('Select next 100 galleries'); ?>
+                    <span class="icon-checkbox" aria-hidden="false"></span>
+                    <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERIES'); ?>
                 </button>
                 <hr>
+
+                    <button id="ftp-upload-folder-button-drop" type="button" class="btn btn-secondary btn-rsg2"
+                            title="<?php echo Text::_('COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES_DESC'); ?>"
+                            disabled
+                    >
+                        <span class="icon-out-2" aria-hidden="false"></span>
+                        <span class="icon-image" aria-hidden="false"></span>
+                        <?php echo Text::_('COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES'); ?>
+                    </button>
+                    <button id="select-zip-file-button-drop" type="button" class="btn btn-warning btn-rsg2"
+                            title="<?php echo Text::_('COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES_DESC'); ?>"
+                    >
+                        <span class="icon-out-2" aria-hidden="false"></span>
+                        <span class="icon-images" aria-hidden="false"></span>
+                        <?php echo Text::_('COM_RSGALLERY2_MOVE_ALL_J3X_IMAGES'); ?>
+                    </button>
+                <p>
+                </p>
+
                 <hr>
 
                 <h3><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h3>
@@ -129,11 +127,11 @@ EOT;
                             <?php echo HTMLHelper::_('grid.checkall'); ?>
                         </td>
 
-                        <th width="1%" class="text-center">
+                        <!--th width="1%" class="text-center">
                             <?php echo Text::_('JSTATUS'); ?>
-                        </th>
+                        </th-->
                         <th width="1%" class="center">
-                            `id`
+                            `gallery_id`
                         </th>
                         <th width="1%" class="center">
                             `name`
@@ -144,9 +142,6 @@ EOT;
                         <th width="1%" class="center">
                             `descr`
                         </th-->
-                        <th width="1%" class="center">
-                            `gallery_id`
-                        </th>
                         <!--th width="1%" class="center">
                             `title`
                         </th>
@@ -173,11 +168,11 @@ EOT;
                         </th>
                         <th width="1%" class="center">
                             `checked_out_time`
-                        </th-->
+                        </th>
                         <th width="1%" class="center">
                             `ordering`
                         </th>
-                        <!--th width="1%" class="center">
+                        <th width="1%" class="center">
                             `approved`
                         </th>
                         <th width="1%" class="center">
@@ -196,42 +191,41 @@ EOT;
                     <tbody>
 
                     <?php
-                    foreach ($this->j3x_images as $i => $item) {
+                    foreach ($this->j4x_galleries as $i => $item) {
 
-                        // a) Must be transferred b) check
+//                        // a) Must be transferred b) check
+//
+//                        $isMerged =in_array ($item->id, $this->j3x_imageIdsMerged);
+//                        if ($isMerged){
+//                            $mergedStatusHtml =  isOKIconHtml ('Image is merged');
+//                        } else {
+//                            $mergedStatusHtml =  isNotOkIconHtml ('Image is not merged');
+//                        }
 
-                        $isMerged =in_array ($item->id, $this->j3x_imageIdsMerged);
-                        if ($isMerged){
-                            $mergedStatusHtml =  isOKIconHtml ('Image is merged');
-                        } else {
-                            $mergedStatusHtml =  isNotOkIconHtml ('Image is not merged');
-                        }
+                        $isToBeMoved = in_array ($item->id, $this->j3x_galleries4ImageMove);
+                        if ( ! $isToBeMoved){
+                            continue;
 
                         ?>
-                        <tr
-                                name="j3x_img_row[]"
-                                isMerged="<?php echo $isMerged; ?>"
-                                galleryId="<?php echo $item->gallery_id; ?>"
-                                class="row<?php echo $i % 2; ?>"
-                        >
+                        <tr>
 
                             <td class="text-center">
                                 <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                             </td>
 
-                            <td class="text-center">
+                            <!--td class="text-center">
                                 <?php echo $mergedStatusHtml; ?>
-                            </td>
+                            </td-->
 
                             <td width="1%" class="center">
                                 <?php
-                                $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=image.edit&id=" . $item->id);
+                                $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
                                 echo '<a href="' . $link . '"">' . $item->id . '</a>';
                                 ?>
                             </td>
                             <td width="1%" class="center">
                                 <?php
-                                $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=image.edit&id=" . $item->id);
+                                $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
                                 echo '<a href="' . $link . '"">' . $item->name . '</a>';
                                 ?>
                             </td>
@@ -627,7 +621,7 @@ EOT;
                     echo '<hr>';
                 } catch (\RuntimeException $e) {
                     $OutTxt = '';
-                    $OutTxt .= 'Error rawEdit view: "' . 'TransferJ3xImages' . '"<br>';
+                    $OutTxt .= 'Error rawEdit view: "' . 'MoveJ3xImages' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                     $app = Factory::getApplication();
@@ -651,6 +645,39 @@ EOT;
 
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
+
+
+<?php
+
+function isOKIconHtml ($title) {
+
+    $html = <<<EOT
+                    <div class="btn-group">
+                        <a class="tbody-icon" href="javascript:void(0);" aria-labelledby="cbpublish1-desc">
+                            <span class="fas fa-check" aria-hidden="true"/>
+                        </a>
+                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 300px max-width: 400% !important;">$title</div>
+                    </div>
+EOT;
+
+    return $html;
+}
+
+function isNotOkIconHtml ($title) {
+
+    $html = <<<EOT
+                    <div class="btn-group">
+                        <a class="tbody-icon active" href="javascript:void(0);" aria-labelledby="cbunpublish2-desc">
+                            <span class="fas fa-times" aria-hidden="true"/>
+                        </a>
+                        <div role="tooltip" id="cbpublish1-desc" style="min-width: 100% max-width: 100% !important;">$title</div>
+                    </div>
+EOT;
+
+    return $html;
+}
+
+
 
 
 

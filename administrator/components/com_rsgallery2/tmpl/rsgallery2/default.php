@@ -178,7 +178,7 @@ function DisplayRequestJ3xActions($isMissingJ3xDbGalleries=false,
 
     $rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries');
     $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages');
-    $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=TransferJ3xImages');
+    $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages');
 
     $CopyDbGalleries = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES');
     $CopyDbGalleriesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC');

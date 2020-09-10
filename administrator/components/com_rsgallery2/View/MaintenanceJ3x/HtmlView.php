@@ -154,24 +154,31 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
-            case 'TransferJ3xImages':
+            case 'MoveJ3xImages':
                 try
                 {
 
-                    $this->j3x_images = $j3xModel->j3x_imagesMergeList();
-                    $this->j4x_images = $j3xModel->j4x_imagesMergeList();
-
-                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xImageIds ($this->j3x_images, $this->j4x_images);
+//                    $this->j3x_images = $j3xModel->j3x_imagesMergeList();
+//                    $this->j4x_images = $j3xModel->j4x_imagesMergeList();
+//
+//                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xImageIds ($this->j3x_images, $this->j4x_images);
                     //[$this->j3x_imagesMerged, $this->j4x_imagesMerged] = $j3xModel->J3xJ4x_imagesMergedLists ();
 
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
                     //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
 
+                    //-----------------
+                    $this->j3x_galleries = $j3xModel->j3x_galleriesList();
+                    $this->j4x_galleries = $j3xModel->j4x_galleriesList();
+
+                    $this->galleryIds4ImgsToBeMoved = $j3xModel->j3x_galleries4ImageMove ($this->j3x_galleries);
+
+
                     //--- Form --------------------------------------------------------------------
 
-                    $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/transferJ3xImages.xml';
-                    $form = Form::getInstance('transferJ3xImages', $xmlFile);
+                    $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/moveJ3xImages.xml';
+                    $form = Form::getInstance('moveJ3xImages', $xmlFile);
 
                     // Check for errors.
                     /* Must load form before */
@@ -235,10 +242,10 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+//      				. '* <br>'
+//		        		. '* <br>'
+//				        . '* <br>'
+//      				. '* <br>'
 						. '</span><br>';
 				}
 
@@ -256,15 +263,19 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+                        . '* use "name/alias" in J3x galliers overview <br>'
                         . '* user should only see what is necessary: use debug / develop for others<br>'
                         . '* Fix: Copy selected images / galleries -> greyed button, Ids in controller'
-						. '* Use separate code for galleries raw view -> import into views<br>'
+						. '* Remove double code parts: See also galleries raw view -> import into views<br>'
 						. '* check table : if empty .. -> use isset ??? <br>'
 						. '* !!! asset id !!! <br>'
 						. '* db variable "access". how to use ???<br>'
-//		        		. '*  <br>'
-//				        . '*  <br>'
-//     	    			. '*  <br>'
+//				        . '* !!! Test resume of partly copied galleries !!! <br>'
+//     	    			. '* <br>'
+//				        . '* <br>'
+//     	    			. '* <br>'
+//				        . '* <br>'
+//     	    			. '* <br>'
 						. '</span><br>';
 				}
 
@@ -283,39 +294,49 @@ class HtmlView extends BaseHtmlView
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
                         . '* user should only see what is necessary: use debug / develop for others<br>'
-						. '*  Separate code for images raw view -> import into views<br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+						. '* Remove double code parts: See also images raw view -> import into views<br>'
+        				. '* ? pagination <br>'
+		        		. '* <br>'
+//				        . '* <br>'
+//      				. '* <br>'
+//		        		. '* <br>'
+//				        . '* <br>'
+//      				. '* <br>'
 						. '</span><br>';
 				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_ALL_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
 				break;
 
-			case 'TransferJ3xImages':
+			case 'MoveJ3xImages':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
                         . '* user should only see what is necessary: use debug / develop for others<br>'
-//						. '* <br>'
-//				. '*  <br>'
-//				. '*  <br>'
-//				. '*  <br>'
+						. '* test partly moved images and <br>'
+	        			. '* a file already transferred should not result as false<br>'
+//      				. '* <br>'
+//		        		. '* <br>'
+//				        . '* <br>'
+//      				. '* <br>'
+//		        		. '* <br>'
+//				        . '* <br>'
+//      				. '* <br>'
+//		        		. '* <br>'
 						. '</span><br>';
 				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.moveSelectedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES', false);
-				//ToolBarHelper::custom('MaintenanceJ3x.moveJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_COMPLETE_J3X_IMAGES', false);
+//				ToolBarHelper::custom('MaintenanceJ3x.moveSelectedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES', false);
+				//ToolBarHelper::custom('MaintenanceJ3x.moveJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_ALL_J3X_IMAGES', false);
 				ToolBarHelper::custom('MaintenanceJ3x.updateMovedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_CHECK_MOVED_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
 				break;
