@@ -53,15 +53,15 @@ function resolveAfter2Seconds(x, time = 2000) {
     });
 }
 class J3xImages2Move extends Queue {
-    addImages(files, galleryId) {
-        for (let idx = 0; idx < files.length; idx++) {
-            console.log('   +J3x Image: ' + files[idx].name);
+    addImages(image_ids, galleryId) {
+        for (let idx = 0; idx < image_ids.length; idx++) {
+            console.log('   +J3x Image: ' + image_ids[idx].name);
             //--- ToDo: Check 4 allowed image type ---------------------------------
             // file.type ...
             //--- Add file with data ---------------------------------
             const next = {
-                name: files[idx].name,
-                id: files[idx].id,
+                name: image_ids[idx].name,
+                id: image_ids[idx].id,
                 galleryId: galleryId
             };
             this.push(next);
@@ -73,8 +73,6 @@ class J3xGalleries extends Queue {
         for (let idx = 0; idx < galleries.length; idx++) {
             const gallery = galleries[idx];
             console.log('   +Gallery: ' + galleries[idx].name);
-            //--- ToDo: Check 4 allowed image type ---------------------------------
-            // file.type ...
             //--- Add file with data ---------------------------------
             const next = {
                 galleryId: gallery.galleryId,
@@ -342,6 +340,18 @@ var JoomlaMessages;
     JoomlaMessages["warning"] = "warning";
     JoomlaMessages["error"] = "error";
 })(JoomlaMessages || (JoomlaMessages = {}));
+// interface IResponseServerFile {
+//     fileName: string;
+//     imageId: string; //number
+//     baseName: string;
+//     dstFileName: string;
+//     size: number;
+// }
+//
+// interface IResponseServerFiles {
+//     // Path ?
+//     files: IResponseServerFile [];
+// }
 //---  -----------------------------------------------------------------------------------
 class RequestImageIdsTask {
     constructor(formElements, 
@@ -376,8 +386,6 @@ class RequestImageIdsTask {
                         + 'responseType: ' + this.responseType + '\n';
                     //alert (msg);
                     console.log(msg);
-                    // reject(new Error(this.response));
-                    let testError = new Error(this.responseText);
                     reject(new Error(this.responseText)); // ToDo: check if there is more in this
                 }
             };
@@ -463,7 +471,7 @@ class RequestImageIdsTask {
                     let gallery_name = dbData.gallery_name;
                     let gallery_id = dbData.gallery_id;
                     let image_ids = dbData.image_ids;
-                    this.j3xImages2Move.add(j3xGallery, imageId.toString(), fileName, dstFileName);
+                    this.j3xImages2Move.addImages(image_ids, gallery_id);
                     // ==> Start ajax transfer of files
                     this.moveImagesTask.ajaxTransfer();
                 }
@@ -690,18 +698,191 @@ function ajaxMessages2Html(AjaxResponse, fileName) {
      Ajax transfer files to server
 ----------------------------------------------------------------*/
 class MoveImagesTask {
-    // private request: Promise<ITransferFile>;
-    // private isBusyCount: number = 0;
-    // private readonly BusyCountLimit: number = 5;
     constructor(formElements, 
     // imagesAreaList: HTMLElement,
     // progressArea: HTMLElement,
     // errorZone: HTMLElement,
     j3xImages2Move) {
+        this.isBusyCount = 0;
+        this.BusyCountLimit = 5;
         // this.imagesAreaList = imagesAreaList;
         // this.progressArea = progressArea;
         this.errorZone = formElements.moveImageArea; // errorZone;
         this.j3xImages2Move = j3xImages2Move;
+    }
+    async callAjaxTransfer(j3xImage2Move) {
+        console.log("      in callAjaxTransfer: " + j3xImage2Move.name);
+        console.log("      > callAjaxTransfer: " + j3xImage2Move.name);
+        return new Promise(function (resolve, reject) {
+            const request = new XMLHttpRequest();
+            request.onload = function () {
+                if (this.status === 200) {
+                    // attention joomla may send error data on this channel
+                    resolve(this.response);
+                }
+                else {
+                    let msg = 'Error over \'on load\' for ' + j3xImage2Move.name + ' in Move:\n*'
+                        + 'State: ' + this.status + ' ' + this.statusText + '\n';
+                    //alert (msg);
+                    console.log(msg);
+                    reject(new Error(this.responseText)); // ToDo: check if there is mor in this
+                }
+            };
+            request.onerror = function () {
+                let msg = 'onError::  state: ' + this.status + ' ' + this.statusText + '\n';
+                msg += 'responseType: ' + this.responseType + '\n';
+                msg += 'responseText: ' + this.responseText + '\n';
+                //alert (msg);
+                console.log(msg);
+                //                    reject(new Error('XMLHttpRequest Error: ' + this.statusText));
+                reject(new Error(this.responseText));
+            };
+            let data = new FormData();
+            data.append(Token, '1');
+            data.append('gallery_id', j3xImage2Move.galleryId);
+            data.append('imageId', j3xImage2Move.id);
+            data.append('name', j3xImage2Move.name);
+            console.log('   >image name: ' + j3xImage2Move.name);
+            /**
+
+             get:
+             request.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    console.log(e.loaded+  " / " + e.total)
+                }
+            }
+
+             post: upload
+             xhr.upload.addEventListener("progress", function(evt){
+                if (evt.lengthComputable) {
+                    console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
+                }
+            }, false);
+
+             xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    let complete = (event.loaded / event.total * 100 | 0);
+                    progress.value = progress.innerHTML = complete;
+                }
+            };
+
+             post: download
+             xhr.addEventListener("progress", function(evt){
+                if (evt.lengthComputable) {
+                    let percentComplete = evt.loaded / evt.total;
+                    //Do something with download progress
+                    console.log(percentComplete);
+                }
+            }, false);
+
+
+             /**
+             xhr.onloadstart = function (e) {
+                console.log("start")
+            }
+             xhr.onloadend = function (e) {
+                console.log("end")
+            }
+             I would advise the use of a
+             HTML <progress> element to
+             display current progress.
+
+             upload with resizing
+             http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
+             /**/
+            const urlTransferImages = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxSingleFile';
+            request.open('POST', urlTransferImages, true);
+            request.onloadstart = function (e) {
+                console.log("      > callAjaxTransfer: " + j3xImage2Move.name);
+            };
+            request.onloadend = function (e) {
+                console.log("      < callAjaxTransfer: ");
+            };
+            // request.upload.onprogress = function (event) {
+            //     if (event.lengthComputable) {
+            //         const progress = (event.loaded / event.total * 100 | 0);
+            //
+            //         // Can't interrupt uploaded image (still creating thumbs and ...)
+            //         nextFile.statusBar.setProgress(progress);
+            //         if (progress >= 99.999) {
+            //             nextFile.statusBar.removeAbort();
+            //             nextFile.statusBar.setUpload(true);
+            //         }
+            //     }
+            // };
+            request.send(data);
+        });
+        /**
+         console.log("      > callAjaxTransfer: " + nextFile.file.name);
+         let result = await setTimeout(() => {
+            console.log("< callAjaxTransfer: " + nextFile.file.name)
+        }, 333);
+         /**/
+    }
+    /**/
+    async ajaxTransfer() {
+        console.log("    >this.j3xImages2Move.length: " + this.j3xImages2Move.length);
+        // check for busy
+        while (this.isBusyCount < this.BusyCountLimit
+            && this.j3xImages2Move.length > 0) {
+            this.isBusyCount++;
+            let nextFile = this.j3xImages2Move.shift();
+            console.log("   @Move File: " + nextFile.name);
+            //
+            this.callAjaxTransfer(nextFile)
+                .then((response) => {
+                // attention joomla may send error data on this channel
+                console.log("   <Transfer OK: " + nextFile.name);
+                console.log("       response: " + JSON.stringify(response));
+                const [data, error] = separateDataAndNoise(response);
+                console.log("      response data: " + JSON.stringify(data));
+                console.log("      response error: " + JSON.stringify(error));
+                let AjaxResponse = JSON.parse(data);
+                //console.log("      response data: " + JSON.stringify(data));
+                if (AjaxResponse.success) {
+                    console.log("      success data: " + AjaxResponse.data);
+                    let transferData = AjaxResponse.data;
+                    console.log("      response data.file: " + transferData.fileName);
+                    console.log("      response data.imageId: " + transferData.imageId);
+                    console.log("      response data.fileUrl: " + transferData.fileUrl);
+                    console.log("      response data.safeFileName: " + transferData.safeFileName);
+                    console.log("      response data.thumbSize: " + transferData.thumbSize);
+                    nextFile.statusBar.setOK(true);
+                    this.showThumb(transferData);
+                }
+                else {
+                    console.log("      failed data: " + AjaxResponse.data);
+                    nextFile.statusBar.setError(true);
+                }
+                if (AjaxResponse.message || AjaxResponse.messages) {
+                    const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile.fileName);
+                    if (errorHtml) {
+                        this.errorZone.appendChild(errorHtml);
+                    }
+                }
+            })
+                .catch((errText) => {
+                console.log("    !!! Error transfer: " + nextFile.file);
+                //                  alert ('errText' + errText);
+                //console.log("        error: " + JSON.stringify(errText));
+                console.log("        error: " + errText);
+                console.log("        error.name: " + errText.name);
+                console.log("        error.message: " + errText.message);
+                const errorHtml = ajaxCatchedMessages2Html(errText, nextFile.fileName);
+                if (errorHtml) {
+                    this.errorZone.appendChild(errorHtml);
+                }
+                nextFile.statusBar.removeAbort();
+                nextFile.statusBar.setError(true);
+                console.log('!!! errText' + errText);
+            })
+                .finally(() => {
+                this.isBusyCount--;
+                this.ajaxTransfer();
+            });
+            /**/
+        }
+        console.log("    <this.j3xImages2Move.length: " + this.j3xImages2Move.length);
     }
 }
 //======================================================================================
