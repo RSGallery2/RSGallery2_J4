@@ -30,6 +30,7 @@ interface Joomla {
 
 //const joomla = window.Joomla || {};
 const joomla: Joomla = window.Joomla || {};
+//const joomla: Joomla = ((Joomla) window.Joomla) || {};
 
 // Joomla form token
 var Token: string;
@@ -88,6 +89,8 @@ interface Ij3xFile {
     name: string;
     id: string;
     galleryId: string;
+
+    imgFlagArea: HTMLElement | null;
 }
 
 interface Ij3xFileDb {
@@ -100,7 +103,7 @@ interface Ij3xFileDb {
 
 class J3xImages2Move extends Queue<Ij3xFile> {
 
-    addImages(image_ids: IImageIds [], galleryId: string) {
+    addImages(image_ids: IImageIds [], gallery: Ij3xGallery) {
 
         for (let idx = 0; idx < image_ids.length; idx++) {
 
@@ -115,7 +118,9 @@ class J3xImages2Move extends Queue<Ij3xFile> {
             const next: Ij3xFile = {
                 name: image_ids[idx].name,
                 id: image_ids[idx].id,
-                galleryId: galleryId
+                galleryId: gallery.galleryId,
+
+                imgFlagArea: gallery.imgFlagArea
             };
 
             this.push(next);
@@ -128,31 +133,33 @@ class J3xImages2Move extends Queue<Ij3xFile> {
    List of activated galleries
 ----------------------------------------------------------------*/
 
-interface Ij3xGalleries {
+interface Ij3xGallery {
     galleryId: string;
     name: string;
 
-    statusBar: createStatusBar | null;
+    imgFlagArea: HTMLElement | null;
+//    statusBar: createStatusBar | null;
     errorZone: HTMLElement | null;
 }
 
-class J3xGalleries extends Queue<Ij3xGalleries> {
+class J3xGalleries extends Queue<Ij3xGallery> {
 
-    addGalleries(galleries: Ij3xGalleries[]) {
+    addGalleries(galleries: Ij3xGallery[]) {
 
         for (let idx = 0; idx < galleries.length; idx++) {
-            const gallery: Ij3xGalleries = galleries[idx];
+            const gallery: Ij3xGallery = galleries[idx];
 
             console.log('   +Gallery: ' + galleries[idx].name);
 
 
             //--- Add file with data ---------------------------------
 
-            const next: Ij3xGalleries = {
+            const next: Ij3xGallery = {
                 galleryId: gallery.galleryId,
                 name: gallery.name,
 
-                statusBar: gallery.statusBar,
+                //statusBar: gallery.statusBar,
+                imgFlagArea: gallery.imgFlagArea,
                 errorZone: gallery.errorZone
             };
 
@@ -339,7 +346,7 @@ class GalleriesListTask {
 
 //    onMoveByGallery(ev: MouseEvent) {
     onMoveByGallery(ev: MouseEvent, selectGallery: HTMLSelectElement) {
-        let element = <HTMLInputElement>ev.target;
+        // let element = <HTMLInputElement>ev.target;
 
         ev.preventDefault();
         ev.stopPropagation();
@@ -357,12 +364,14 @@ class GalleriesListTask {
         } else {
 
             console.log(">onMoveByGallery: (" + gallery_id + ") " + "\"" + gallery_name + "\"");
+            const imgFlagArea = <HTMLElement>document.getElementById('ImgFlagsArea_' + gallery_id);
 
-            const actGallery: Ij3xGalleries = {
+            const actGallery: Ij3xGallery = {
                 galleryId: gallery_id,
                 name: gallery_name,
 
-                statusBar: null,
+                // statusBar: null,
+                imgFlagArea: imgFlagArea,
                 errorZone: null
             };
 
@@ -375,7 +384,7 @@ class GalleriesListTask {
 
 
     onMoveByCheckedGalleries(ev: MouseEvent) {
-        let element = <HTMLInputElement>ev.target;
+        //let element = <HTMLInputElement>ev.target;
 
         ev.preventDefault();
         ev.stopPropagation();
@@ -578,7 +587,7 @@ class RequestImageIdsTask {
     private j3xImages2Move: J3xImages2Move;
     private moveImagesTask: MoveImagesTask;
 
-    private request: Promise<Ij3xGalleries>;
+    private request: Promise<Ij3xGallery>;
     private isBusy: boolean = false;
 
     constructor(
@@ -608,7 +617,7 @@ class RequestImageIdsTask {
     // http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
 
     /**/
-    private async callAjaxRequest(j3xGalleries: Ij3xGalleries): Promise<any> {
+    private async callAjaxRequest(j3xGalleries: Ij3xGallery): Promise<any> {
         return new Promise<any>(
             function (resolve, reject) {
 
@@ -681,11 +690,12 @@ class RequestImageIdsTask {
         /**/
 
         while (this.j3xGalleries.length > 0) {
+
             let j3xGallery = this.j3xGalleries.shift();
             console.log("   @Request File: " + j3xGallery.name);
 
-            // j3xGallery.statusBar = new createStatusBar(this.progressArea,
-            //     j3xGallery.file.name, j3xGallery.file.size, 'image');
+            const startBadge = createGalleryStartBadge (j3xGallery.galleryId);
+            j3xGallery.imgFlagArea.appendChild(startBadge);
 
             /* let request = */
             //await this.callAjaxRequest(j3xGallery)
@@ -705,6 +715,10 @@ class RequestImageIdsTask {
                     if (data.length) {
                         AjaxResponse = JSON.parse(data);
                     } else {
+
+                        const errorBadge = createImageErrorBadge (j3xGallery.galleryId);
+                        j3xGallery.imgFlagArea.appendChild(errorBadge);
+
                         let serverError = new Error(noise);
 
                         const errorHtml = ajaxCatchedMessages2Html(serverError, j3xGallery.name);
@@ -727,13 +741,16 @@ class RequestImageIdsTask {
                             let dbData = <IResponseRequest><unknown>AjaxResponse.data;
 
                             let gallery_name = dbData.gallery_name;
-                            let gallery_id = dbData.gallery_id;
+                            // let gallery_id = dbData.gallery_id;
                             let image_ids = dbData.image_ids;
-                            this.j3xImages2Move.addImages(image_ids, gallery_id);
+                            this.j3xImages2Move.addImages(image_ids, j3xGallery);
 
                             // ==> Start ajax transfer of files
                             this.moveImagesTask.ajaxTransfer();
                     } else {
+
+                        const errorBadge = createImageErrorBadge (j3xGallery.galleryId);
+                        j3xGallery.imgFlagArea.appendChild(errorBadge);
 
                         if (AjaxResponse.message || AjaxResponse.messages) {
 
@@ -821,8 +838,92 @@ class RequestImageIdsTask {
 //=================================================================================
 // Handle status bar for one actual uploading image
 
-class createStatusBar {
+// function createStatusBar {
+//
+//     let errorHtml: HTMLElement;
+//
+//
+//
+//     return errorHtml;
+//
+// }
 
+function createGalleryStartBadge (galleryId:string){
+
+    let galleryStartBadge: HTMLElement;
+
+    let htmlIcon= document.createElement('i');
+    htmlIcon.classList.add('icon-images');
+
+    galleryStartBadge = document.createElement('span');
+    galleryStartBadge.classList.add('galleryStart');
+    galleryStartBadge.classList.add('label');
+    galleryStartBadge.classList.add('label-info');
+    galleryStartBadge.appendChild (htmlIcon);
+    galleryStartBadge.appendChild(document.createTextNode(' ' + galleryId));
+//        galleryStartBadge.appendChild(document.createTextNode('Create images'));
+//    galleryStartBadge.style.display = "none";
+
+
+    return galleryStartBadge;
+}
+
+function createImageMoveBadge (imageId:string) {
+
+    let imageMoveBadge: HTMLElement;
+
+    let htmlIcon= document.createElement('i');
+    htmlIcon.classList.add('icon-arrow-right-4');
+
+    imageMoveBadge = document.createElement('span');
+    imageMoveBadge.classList.add('imageMove');
+    imageMoveBadge.classList.add('label');
+    imageMoveBadge.classList.add('label-primary');
+    imageMoveBadge.appendChild (htmlIcon);
+    imageMoveBadge.appendChild(document.createTextNode(' ' + imageId));
+//        imageMoveBadge.appendChild(document.createTextNode('Create images'));
+//    imageMoveBadge.style.display = "none";
+
+    return imageMoveBadge;
+}
+
+function createImageFinishedBadge (imageId:string){
+
+    let imageFinishBadge: HTMLElement;
+
+    let htmlIcon= document.createElement('i');
+    htmlIcon.classList.add('icon-checkmark');
+
+    imageFinishBadge = document.createElement('span');
+    imageFinishBadge.classList.add('imageFinish');
+    imageFinishBadge.classList.add('label');
+    imageFinishBadge.classList.add('label-success');
+    imageFinishBadge.appendChild (htmlIcon);
+    imageFinishBadge.appendChild(document.createTextNode(' ' + imageId));
+//        imageFinishBadge.appendChild(document.createTextNode('Create images'));
+//    imageFinishBadge.style.display = "none";
+
+
+    return imageFinishBadge;
+}
+
+function createImageErrorBadge (imageId:string){
+
+    let imageErrorBadge: HTMLElement;
+
+    let htmlIcon= document.createElement('i');
+    htmlIcon.classList.add('icon-warning-2');
+
+    imageErrorBadge = document.createElement('span');
+    imageErrorBadge.classList.add('imageFinish');
+    imageErrorBadge.classList.add('label');
+    imageErrorBadge.classList.add('label-error');
+    imageErrorBadge.appendChild (htmlIcon);
+    imageErrorBadge.appendChild(document.createTextNode(' ' + imageId));
+//        imageErrorBadge.appendChild(document.createTextNode('Create images'));
+//    imageErrorBadge.style.display = "none";
+
+    return imageErrorBadge;
 }
 
 /*----------------------------------------------------------------
@@ -1168,77 +1269,124 @@ class MoveImagesTask {
 
     /**/
     public async ajaxTransfer() {
+        let AjaxResponse: IAjaxResponse;
 
         console.log("    >this.j3xImages2Move.length: " + this.j3xImages2Move.length);
+
         // check for busy
         while (this.isBusyCount < this.BusyCountLimit
             && this.j3xImages2Move.length > 0) {
 
             this.isBusyCount++;
 
-            let nextFile = this.j3xImages2Move.shift();
-            console.log("   @Move File: " + nextFile.name);
+            let j3xImage = this.j3xImages2Move.shift();
+            console.log("   @Move File: " + j3xImage.name);
+
+            const startBadge = createImageMoveBadge (j3xImage.id);
+            j3xImage.imgFlagArea.appendChild(startBadge);
 
             //
-            this.callAjaxTransfer(nextFile)
+            this.callAjaxTransfer(j3xImage)
                 .then((response) => {
                     // attention joomla may send error data on this channel
-                    console.log("   <Transfer OK: " + nextFile.name);
+                    console.log("   <Transfer OK: " + j3xImage.name);
                     console.log("       response: " + JSON.stringify(response));
 
-                    const [data, error] = separateDataAndNoise(response);
+                    const [data, noise] = separateDataAndNoise(response);
 
                     console.log("      response data: " + JSON.stringify(data));
-                    console.log("      response error: " + JSON.stringify(error));
+                    console.log("      response error: " + JSON.stringify(noise));
 
-                    let AjaxResponse: IAjaxResponse = JSON.parse(data);
-                    //console.log("      response data: " + JSON.stringify(data));
+                    // Json object exist
+                    // {\"success\":true,\"message\":\"Copied \",\"messages\":null,\"data\":.....
+                    if (data.length) {
+                        AjaxResponse = JSON.parse(data);
+                    } else {
+
+                        const errorBadge = createImageErrorBadge (j3xImage.id);
+                        j3xImage.imgFlagArea.appendChild(errorBadge);
+
+                        let serverError = new Error(noise);
+
+                        const errorHtml = ajaxCatchedMessages2Html(serverError, j3xImage.name);
+                        if (errorHtml) {
+                            this.errorZone.appendChild(errorHtml);
+                        } else {
+                            const msg = "Error result in ajaxRequestImageIds: Undefined type: \"" + noise + "\"";
+                            const msgHtml = ajaxMessages2CardHtml(msg, j3xImage.name);
+                            if (msgHtml) {
+                                this.errorZone.appendChild(msgHtml);
+                            }
+                        }
+
+                        return;
+                    }
 
                     if (AjaxResponse.success) {
                         console.log("      success data: " + AjaxResponse.data);
 
+                        const successBadge = createImageFinishedBadge (j3xImage.id);
+                        j3xImage.imgFlagArea.appendChild(successBadge);
+
                         let transferData = <IResponseTransfer><unknown>AjaxResponse.data;
 
-                        console.log("      response data.file: " + transferData.fileName);
-                        console.log("      response data.imageId: " + transferData.imageId);
-                        console.log("      response data.fileUrl: " + transferData.fileUrl);
-                        console.log("      response data.safeFileName: " + transferData.safeFileName);
-                        console.log("      response data.thumbSize: " + transferData.thumbSize);
-
-                        nextFile.statusBar.setOK(true);
-
-                        this.showThumb(transferData)
+                        // console.log("      response data.file: " + transferData.fileName);
+                        // console.log("      response data.imageId: " + transferData.imageId);
+                        // console.log("      response data.fileUrl: " + transferData.fileUrl);
+                        // console.log("      response data.safeFileName: " + transferData.safeFileName);
+                        // console.log("      response data.thumbSize: " + transferData.thumbSize);
 
                     } else {
-                        console.log("      failed data: " + AjaxResponse.data);
-                        nextFile.statusBar.setError(true);
-                    }
 
-                    if (AjaxResponse.message || AjaxResponse.messages) {
-                        const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile.fileName);
-                        if (errorHtml) {
-                            this.errorZone.appendChild(errorHtml);
+                        const errorBadge = createImageErrorBadge (j3xImage.id);
+                        j3xImage.imgFlagArea.appendChild(errorBadge);
+
+                        if (AjaxResponse.message || AjaxResponse.messages) {
+
+                            const errorHtml = ajaxMessages2Html(AjaxResponse, j3xImage.name);
+                            if (errorHtml) {
+                                this.errorZone.appendChild(errorHtml);
+                            } else {
+                                console.log("      failed data: " + AjaxResponse.data);
+                            }
+                        } else {
+                            // No message given use noise
+                            if (noise.length > 0) {
+                                let serverError = new Error(noise);
+
+// ToDo: rename all catched ==> caught
+                                const errorHtml = ajaxCatchedMessages2Html(serverError, j3xImage.name);
+                                if (errorHtml) {
+                                    this.errorZone.appendChild(errorHtml);
+                                }
+                            }
+                            else
+                            {
+                                const msg = "Unsuccessful ajax call in ajaxRequestImageIds: Resulting data: " + JSON.stringify(AjaxResponse.data);
+                                const msgHtml = ajaxMessages2CardHtml(msg, j3xImage.name);
+                                if (msgHtml) {
+                                    this.errorZone.appendChild(msgHtml);
+                                }
+                            }
                         }
-                    }
 
+
+                    }
                 })
 
                 .catch((errText: Error) => {
-                    console.log("    !!! Error transfer: " + nextFile.file);
+                    console.log("    !!! Error transfer: " + j3xImage.id);
                     //                  alert ('errText' + errText);
                     //console.log("        error: " + JSON.stringify(errText));
                     console.log("        error: " + errText);
                     console.log("        error.name: " + errText.name);
                     console.log("        error.message: " + errText.message);
 
-                    const errorHtml = ajaxCatchedMessages2Html(errText, nextFile.fileName);
+                    const errorHtml = ajaxCatchedMessages2Html(errText, j3xImage.name);
 
                     if (errorHtml) {
                         this.errorZone.appendChild(errorHtml);
                     }
-
-                    nextFile.statusBar.removeAbort();
-                    nextFile.statusBar.setError(true);
 
                     console.log('!!! errText' + errText);
                 })
@@ -1290,7 +1438,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     // (1) collect galleries, start request galleries from DB
     const galleriesListTask = new GalleriesListTask(elements,
-        j3xGalleries, requestImageIdsTask) //,
+        j3xGalleries, requestImageIdsTask); //,
     // zipFiles, requestZipUploadTask,
     // serverFolder,
     // serverFiles, requestFilesInFolderTask,

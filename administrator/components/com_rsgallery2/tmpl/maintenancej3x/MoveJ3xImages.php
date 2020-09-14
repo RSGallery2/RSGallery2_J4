@@ -141,8 +141,11 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                         <th width="1%" class="center">
                             `gallery_id`
                         </th>
-                        <th width="1%" class="center">
+                        <th width="10%" class="center">
                             `name`
+                        </th>
+                        <th width="40%" class="center">
+                            `%`
                         </th>
                         <!--th width="1%" class="center">
                             `alias`
@@ -244,6 +247,9 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                                 $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
                                 echo '<a href="' . $link . '"">' . $item->name . '</a>';
                                 ?>
+                            </td>
+                            <td width="1%" class="center">
+                                <?php echo createImgFlagsArea($item->id); ?>
                             </td>
                             <!--td width="1%" class="center">
                                 <?php //echo $item->alias; ?>
@@ -377,44 +383,15 @@ EOT;
 }
 
 
+function createImgFlagsArea($id) {
 
+    $html = <<<EOT
+            <div id="ImgFlagsArea_$id" class="imgFlagArea">
+            </div>
+EOT;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return $html;
+}
 
 
 

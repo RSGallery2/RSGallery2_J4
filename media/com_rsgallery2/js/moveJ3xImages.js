@@ -13,6 +13,7 @@
 //declare var joomla: Joomla;
 //const joomla = window.Joomla || {};
 const joomla = window.Joomla || {};
+//const joomla: Joomla = ((Joomla) window.Joomla) || {};
 // Joomla form token
 var Token;
 /*----------------------------------------------------------------
@@ -53,7 +54,7 @@ function resolveAfter2Seconds(x, time = 2000) {
     });
 }
 class J3xImages2Move extends Queue {
-    addImages(image_ids, galleryId) {
+    addImages(image_ids, gallery) {
         for (let idx = 0; idx < image_ids.length; idx++) {
             console.log('   +J3x Image: ' + image_ids[idx].name);
             //--- ToDo: Check 4 allowed image type ---------------------------------
@@ -62,7 +63,8 @@ class J3xImages2Move extends Queue {
             const next = {
                 name: image_ids[idx].name,
                 id: image_ids[idx].id,
-                galleryId: galleryId
+                galleryId: gallery.galleryId,
+                imgFlagArea: gallery.imgFlagArea
             };
             this.push(next);
         }
@@ -77,7 +79,8 @@ class J3xGalleries extends Queue {
             const next = {
                 galleryId: gallery.galleryId,
                 name: gallery.name,
-                statusBar: gallery.statusBar,
+                //statusBar: gallery.statusBar,
+                imgFlagArea: gallery.imgFlagArea,
                 errorZone: gallery.errorZone
             };
             this.push(next);
@@ -202,7 +205,7 @@ class GalleriesListTask {
     }
     //    onMoveByGallery(ev: MouseEvent) {
     onMoveByGallery(ev, selectGallery) {
-        let element = ev.target;
+        // let element = <HTMLInputElement>ev.target;
         ev.preventDefault();
         ev.stopPropagation();
         // gallery id
@@ -217,10 +220,12 @@ class GalleriesListTask {
         }
         else {
             console.log(">onMoveByGallery: (" + gallery_id + ") " + "\"" + gallery_name + "\"");
+            const imgFlagArea = document.getElementById('ImgFlagsArea_' + gallery_id);
             const actGallery = {
                 galleryId: gallery_id,
                 name: gallery_name,
-                statusBar: null,
+                // statusBar: null,
+                imgFlagArea: imgFlagArea,
                 errorZone: null
             };
             this.j3xGalleries.addGalleries([actGallery]);
@@ -229,7 +234,7 @@ class GalleriesListTask {
         }
     }
     onMoveByCheckedGalleries(ev) {
-        let element = ev.target;
+        //let element = <HTMLInputElement>ev.target;
         ev.preventDefault();
         ev.stopPropagation();
         console.log(">onMoveByCheckedGalleries: ");
@@ -433,8 +438,8 @@ class RequestImageIdsTask {
         while (this.j3xGalleries.length > 0) {
             let j3xGallery = this.j3xGalleries.shift();
             console.log("   @Request File: " + j3xGallery.name);
-            // j3xGallery.statusBar = new createStatusBar(this.progressArea,
-            //     j3xGallery.file.name, j3xGallery.file.size, 'image');
+            const startBadge = createGalleryStartBadge(j3xGallery.galleryId);
+            j3xGallery.imgFlagArea.appendChild(startBadge);
             /* let request = */
             //await this.callAjaxRequest(j3xGallery)
             this.callAjaxRequest(j3xGallery)
@@ -451,6 +456,8 @@ class RequestImageIdsTask {
                     AjaxResponse = JSON.parse(data);
                 }
                 else {
+                    const errorBadge = createImageErrorBadge(j3xGallery.galleryId);
+                    j3xGallery.imgFlagArea.appendChild(errorBadge);
                     let serverError = new Error(noise);
                     const errorHtml = ajaxCatchedMessages2Html(serverError, j3xGallery.name);
                     if (errorHtml) {
@@ -469,13 +476,15 @@ class RequestImageIdsTask {
                     console.log("      success data: " + AjaxResponse.data);
                     let dbData = AjaxResponse.data;
                     let gallery_name = dbData.gallery_name;
-                    let gallery_id = dbData.gallery_id;
+                    // let gallery_id = dbData.gallery_id;
                     let image_ids = dbData.image_ids;
-                    this.j3xImages2Move.addImages(image_ids, gallery_id);
+                    this.j3xImages2Move.addImages(image_ids, j3xGallery);
                     // ==> Start ajax transfer of files
                     this.moveImagesTask.ajaxTransfer();
                 }
                 else {
+                    const errorBadge = createImageErrorBadge(j3xGallery.galleryId);
+                    j3xGallery.imgFlagArea.appendChild(errorBadge);
                     if (AjaxResponse.message || AjaxResponse.messages) {
                         const errorHtml = ajaxMessages2Html(AjaxResponse, j3xGallery.name);
                         if (errorHtml) {
@@ -550,7 +559,70 @@ class RequestImageIdsTask {
 }
 //=================================================================================
 // Handle status bar for one actual uploading image
-class createStatusBar {
+// function createStatusBar {
+//
+//     let errorHtml: HTMLElement;
+//
+//
+//
+//     return errorHtml;
+//
+// }
+function createGalleryStartBadge(galleryId) {
+    let galleryStartBadge;
+    let htmlIcon = document.createElement('i');
+    htmlIcon.classList.add('icon-images');
+    galleryStartBadge = document.createElement('span');
+    galleryStartBadge.classList.add('galleryStart');
+    galleryStartBadge.classList.add('label');
+    galleryStartBadge.classList.add('label-info');
+    galleryStartBadge.appendChild(htmlIcon);
+    galleryStartBadge.appendChild(document.createTextNode(' ' + galleryId));
+    //        galleryStartBadge.appendChild(document.createTextNode('Create images'));
+    //    galleryStartBadge.style.display = "none";
+    return galleryStartBadge;
+}
+function createImageMoveBadge(imageId) {
+    let imageMoveBadge;
+    let htmlIcon = document.createElement('i');
+    htmlIcon.classList.add('icon-arrow-right-4');
+    imageMoveBadge = document.createElement('span');
+    imageMoveBadge.classList.add('imageMove');
+    imageMoveBadge.classList.add('label');
+    imageMoveBadge.classList.add('label-primary');
+    imageMoveBadge.appendChild(htmlIcon);
+    imageMoveBadge.appendChild(document.createTextNode(' ' + imageId));
+    //        imageMoveBadge.appendChild(document.createTextNode('Create images'));
+    //    imageMoveBadge.style.display = "none";
+    return imageMoveBadge;
+}
+function createImageFinishedBadge(imageId) {
+    let imageFinishBadge;
+    let htmlIcon = document.createElement('i');
+    htmlIcon.classList.add('icon-checkmark');
+    imageFinishBadge = document.createElement('span');
+    imageFinishBadge.classList.add('imageFinish');
+    imageFinishBadge.classList.add('label');
+    imageFinishBadge.classList.add('label-success');
+    imageFinishBadge.appendChild(htmlIcon);
+    imageFinishBadge.appendChild(document.createTextNode(' ' + imageId));
+    //        imageFinishBadge.appendChild(document.createTextNode('Create images'));
+    //    imageFinishBadge.style.display = "none";
+    return imageFinishBadge;
+}
+function createImageErrorBadge(imageId) {
+    let imageErrorBadge;
+    let htmlIcon = document.createElement('i');
+    htmlIcon.classList.add('icon-warning-2');
+    imageErrorBadge = document.createElement('span');
+    imageErrorBadge.classList.add('imageFinish');
+    imageErrorBadge.classList.add('label');
+    imageErrorBadge.classList.add('label-error');
+    imageErrorBadge.appendChild(htmlIcon);
+    imageErrorBadge.appendChild(document.createTextNode(' ' + imageId));
+    //        imageErrorBadge.appendChild(document.createTextNode('Create images'));
+    //    imageErrorBadge.style.display = "none";
+    return imageErrorBadge;
 }
 /*----------------------------------------------------------------
      ajax messages as html elements
@@ -821,59 +893,101 @@ class MoveImagesTask {
     }
     /**/
     async ajaxTransfer() {
+        let AjaxResponse;
         console.log("    >this.j3xImages2Move.length: " + this.j3xImages2Move.length);
         // check for busy
         while (this.isBusyCount < this.BusyCountLimit
             && this.j3xImages2Move.length > 0) {
             this.isBusyCount++;
-            let nextFile = this.j3xImages2Move.shift();
-            console.log("   @Move File: " + nextFile.name);
+            let j3xImage = this.j3xImages2Move.shift();
+            console.log("   @Move File: " + j3xImage.name);
+            const startBadge = createImageMoveBadge(j3xImage.id);
+            j3xImage.imgFlagArea.appendChild(startBadge);
             //
-            this.callAjaxTransfer(nextFile)
+            this.callAjaxTransfer(j3xImage)
                 .then((response) => {
                 // attention joomla may send error data on this channel
-                console.log("   <Transfer OK: " + nextFile.name);
+                console.log("   <Transfer OK: " + j3xImage.name);
                 console.log("       response: " + JSON.stringify(response));
-                const [data, error] = separateDataAndNoise(response);
+                const [data, noise] = separateDataAndNoise(response);
                 console.log("      response data: " + JSON.stringify(data));
-                console.log("      response error: " + JSON.stringify(error));
-                let AjaxResponse = JSON.parse(data);
-                //console.log("      response data: " + JSON.stringify(data));
-                if (AjaxResponse.success) {
-                    console.log("      success data: " + AjaxResponse.data);
-                    let transferData = AjaxResponse.data;
-                    console.log("      response data.file: " + transferData.fileName);
-                    console.log("      response data.imageId: " + transferData.imageId);
-                    console.log("      response data.fileUrl: " + transferData.fileUrl);
-                    console.log("      response data.safeFileName: " + transferData.safeFileName);
-                    console.log("      response data.thumbSize: " + transferData.thumbSize);
-                    nextFile.statusBar.setOK(true);
-                    this.showThumb(transferData);
+                console.log("      response error: " + JSON.stringify(noise));
+                // Json object exist
+                // {\"success\":true,\"message\":\"Copied \",\"messages\":null,\"data\":.....
+                if (data.length) {
+                    AjaxResponse = JSON.parse(data);
                 }
                 else {
-                    console.log("      failed data: " + AjaxResponse.data);
-                    nextFile.statusBar.setError(true);
-                }
-                if (AjaxResponse.message || AjaxResponse.messages) {
-                    const errorHtml = ajaxMessages2Html(AjaxResponse, nextFile.fileName);
+                    const errorBadge = createImageErrorBadge(j3xImage.id);
+                    j3xImage.imgFlagArea.appendChild(errorBadge);
+                    let serverError = new Error(noise);
+                    const errorHtml = ajaxCatchedMessages2Html(serverError, j3xImage.name);
                     if (errorHtml) {
                         this.errorZone.appendChild(errorHtml);
+                    }
+                    else {
+                        const msg = "Error result in ajaxRequestImageIds: Undefined type: \"" + noise + "\"";
+                        const msgHtml = ajaxMessages2CardHtml(msg, j3xImage.name);
+                        if (msgHtml) {
+                            this.errorZone.appendChild(msgHtml);
+                        }
+                    }
+                    return;
+                }
+                if (AjaxResponse.success) {
+                    console.log("      success data: " + AjaxResponse.data);
+                    const successBadge = createImageFinishedBadge(j3xImage.id);
+                    j3xImage.imgFlagArea.appendChild(successBadge);
+                    let transferData = AjaxResponse.data;
+                    // console.log("      response data.file: " + transferData.fileName);
+                    // console.log("      response data.imageId: " + transferData.imageId);
+                    // console.log("      response data.fileUrl: " + transferData.fileUrl);
+                    // console.log("      response data.safeFileName: " + transferData.safeFileName);
+                    // console.log("      response data.thumbSize: " + transferData.thumbSize);
+                }
+                else {
+                    const errorBadge = createImageErrorBadge(j3xImage.id);
+                    j3xImage.imgFlagArea.appendChild(errorBadge);
+                    if (AjaxResponse.message || AjaxResponse.messages) {
+                        const errorHtml = ajaxMessages2Html(AjaxResponse, j3xImage.name);
+                        if (errorHtml) {
+                            this.errorZone.appendChild(errorHtml);
+                        }
+                        else {
+                            console.log("      failed data: " + AjaxResponse.data);
+                        }
+                    }
+                    else {
+                        // No message given use noise
+                        if (noise.length > 0) {
+                            let serverError = new Error(noise);
+                            // ToDo: rename all catched ==> caught
+                            const errorHtml = ajaxCatchedMessages2Html(serverError, j3xImage.name);
+                            if (errorHtml) {
+                                this.errorZone.appendChild(errorHtml);
+                            }
+                        }
+                        else {
+                            const msg = "Unsuccessful ajax call in ajaxRequestImageIds: Resulting data: " + JSON.stringify(AjaxResponse.data);
+                            const msgHtml = ajaxMessages2CardHtml(msg, j3xImage.name);
+                            if (msgHtml) {
+                                this.errorZone.appendChild(msgHtml);
+                            }
+                        }
                     }
                 }
             })
                 .catch((errText) => {
-                console.log("    !!! Error transfer: " + nextFile.file);
+                console.log("    !!! Error transfer: " + j3xImage.id);
                 //                  alert ('errText' + errText);
                 //console.log("        error: " + JSON.stringify(errText));
                 console.log("        error: " + errText);
                 console.log("        error.name: " + errText.name);
                 console.log("        error.message: " + errText.message);
-                const errorHtml = ajaxCatchedMessages2Html(errText, nextFile.fileName);
+                const errorHtml = ajaxCatchedMessages2Html(errText, j3xImage.name);
                 if (errorHtml) {
                     this.errorZone.appendChild(errorHtml);
                 }
-                nextFile.statusBar.removeAbort();
-                nextFile.statusBar.setError(true);
                 console.log('!!! errText' + errText);
             })
                 .finally(() => {
