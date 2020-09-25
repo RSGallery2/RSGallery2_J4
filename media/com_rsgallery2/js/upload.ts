@@ -1179,7 +1179,7 @@ class TransferImagesTask {
         this.transferFiles = transferFiles;
     }
 
-    private async callAjaxTransfer(nextFile: ITransferFile) {
+    private async callAjaxTransfer(nextFile: ITransferFile): Promise<any>  {
 
         console.log("      in callAjaxTransfer: " + nextFile.file);
         console.log("      > callAjaxTransfer: " + nextFile.file);

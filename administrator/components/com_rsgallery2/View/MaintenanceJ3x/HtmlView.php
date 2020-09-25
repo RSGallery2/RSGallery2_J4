@@ -321,7 +321,7 @@ class HtmlView extends BaseHtmlView
                         . '* user should only see what is necessary: use debug / develop for others<br>'
 						. '* test partly moved images and <br>'
 	        			. '* a file already transferred should not result as false<br>'
-//      				. '* <br>'
+        				. '* User message when config is on j3x image path <br>'
 //		        		. '* <br>'
 //				        . '* <br>'
 //      				. '* <br>'

@@ -17,10 +17,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Component\RSGallery2\Administrator\Model\ConfigRaw;
-use Joomla\Utilities\ArrayHelper;
-
-use Joomla\Component\Rsgallery2\Administrator\Model\ImagePaths;
 use Joomla\Component\Rsgallery2\Administrator\Model\ImageJ3xPaths;
+use Joomla\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class MaintenanceJ3xModel
@@ -45,12 +44,10 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
             $isOkConfig = $this->collectAndCopyJ3xConfig2J4xOptions();
             $isOk &= $isOkConfig;
 
-            if ( ! $isOkConfig) {
+            if (!$isOkConfig) {
                 Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy j3x DB config', 'error');
         }
 
@@ -60,12 +57,10 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
             $isOkGalleries = $this->copyDbAllJ3xGalleries2J4x();
             $isOk &= $isOkGalleries;
 
-            if ( ! $isOkGalleries) {
+            if (!$isOkGalleries) {
                 Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x galleries failed'), 'error');
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy j3x DB galleries', 'error');
         }
 
@@ -73,16 +68,14 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
         try {
 
-            $isOkImages = $this->copyDbAllJ3xImages2J4x ();
+            $isOkImages = $this->copyDbAllJ3xImages2J4x();
             $isOk &= $isOkImages;
 
-            if ( ! $isOkImages) {
+            if (!$isOkImages) {
                 Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x images failed'), 'error');
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy j3x DB images', 'error');
         }
 
@@ -150,9 +143,8 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
             // Manual list of assisted merges (items which need special handling for merge j3x to j4x
 
-            $assistedItems ['testJ3xNmae'] = array ('testJ4xname', 'testJ3xValue'); // To Be defined when used
-            $assistedItems ['testJ4xName'] = array ('testJ3xname', 'testJ34OldValue'); // ? new Value may be different ...To Be defined when used
-
+            $assistedItems ['testJ3xNmae'] = array('testJ4xname', 'testJ3xValue'); // To Be defined when used
+            $assistedItems ['testJ4xName'] = array('testJ3xname', 'testJ34OldValue'); // ? new Value may be different ...To Be defined when used
 
 
             foreach ($j3xConfigItems as $name => $value) {
@@ -168,10 +160,10 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
             }
 
             // untouched J4x item ?
-            foreach ($j4xConfigItems as  $name => $value) {
+            foreach ($j4xConfigItems as $name => $value) {
                 // Not handled manually
                 if (!array_key_exists($name, $assistedJ4xItems)) {
-                    if ( ! array_key_exists($name, $mergedItems)) {
+                    if (!array_key_exists($name, $mergedItems)) {
                         $untouchedJ4xItems [$name] = $value;
                     }
                 }
@@ -192,7 +184,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return array (
+        return array(
             $assistedJ3xItems,
             $assistedJ4xItems,
             $mergedItems,
@@ -218,9 +210,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
             $galleries = $db->loadObjectList();
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -257,9 +247,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     }
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -280,16 +268,14 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     //if ($j3xItem->title == $j4xItem->title)
                     if ($j3xItem->name == $j4xItem->name) {
                         // Still old place
-                        if ( ! $j4xItem->use_j3x_location) {
+                        if (!$j4xItem->use_j3x_location) {
                             $mergedId [] = $j3xItem->id;
                             break;
                         }
                     }
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -315,9 +301,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     }
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -335,9 +319,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
             // sort recursively
             $galleries = $this->j3x_galleriesSortedByParent($dbGalleries, 0, 0);
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -345,8 +327,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
     }
 
 
-
-    public function j3x_galleriesSortedByParent($dbGalleries, $parentId=0, $level=0)
+    public function j3x_galleriesSortedByParent($dbGalleries, $parentId = 0, $level = 0)
     {
         $sortedGalleries = [];
 
@@ -366,13 +347,13 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
                     // add childs recursively
                     $id = $gallery->id;
-                    $subGalleries [$id] = $this->j3x_galleriesSortedByParent($dbGalleries, $id, $level+1);
+                    $subGalleries [$id] = $this->j3x_galleriesSortedByParent($dbGalleries, $id, $level + 1);
                 }
             }
 
             // Sort galleries of level
-            if ( count ($galleries) > 1) {
-                usort($galleries, array ($this, 'cmpJ4xGalleries'));
+            if (count($galleries) > 1) {
+                usort($galleries, array($this, 'cmpJ4xGalleries'));
             }
 
             // Collect sorted list with childs
@@ -387,16 +368,14 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     $sortedGalleries[] = $subGallery;
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $sortedGalleries;
     }
 
-    public function j4x_galleriesSortedByParent($dbGalleries, $parentId=0, $level=0)
+    public function j4x_galleriesSortedByParent($dbGalleries, $parentId = 0, $level = 0)
     {
         $sortedGalleries = [];
 
@@ -416,13 +395,13 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
                     // add childs recursively
                     $id = $gallery['id'];
-                    $subGalleries [$id] = $this->j4x_galleriesSortedByParent($dbGalleries, $id, $level+1);
+                    $subGalleries [$id] = $this->j4x_galleriesSortedByParent($dbGalleries, $id, $level + 1);
                 }
             }
 
             // Sort galleries of level (Needs additional ordering from j3x gallery data
-            if ( count ($galleries) > 1) {
-                usort($galleries, array ($this, 'cmpJ4xGalleries'));
+            if (count($galleries) > 1) {
+                usort($galleries, array($this, 'cmpJ4xGalleries'));
             }
 
             // Collect sorted list with childs
@@ -437,9 +416,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     $sortedGalleries[] = $subGallery;
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -448,7 +425,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
 
     // Expected: List is already is sorted
-    public function setNestingNodes2J4xGalleries(&$sortedGalleries, $parentId=0, $level=0, $lastNodeIdx=1)
+    public function setNestingNodes2J4xGalleries(&$sortedGalleries, $parentId = 0, $level = 0, $lastNodeIdx = 1)
     {
         // $changedGalleries = [];
 
@@ -467,16 +444,14 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     $lastNodeIdx++;
 
                     // add node ids recursively
-                    $lastNodeIdx = $this->setNestingNodes2J4xGalleries($sortedGalleries, $gallery ['id'], $level+1, $lastNodeIdx);
+                    $lastNodeIdx = $this->setNestingNodes2J4xGalleries($sortedGalleries, $gallery ['id'], $level + 1, $lastNodeIdx);
 
                     $sortedGalleries [$idx]['rgt'] = $lastNodeIdx;
                     $lastNodeIdx++;
                 }
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -500,9 +475,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
             $galleries = $db->loadObjectList();
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -536,9 +509,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     $j3x_galleries[] = $j3x_gallery;
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -551,7 +522,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
         try {
 
-            if ( ! empty ($galleries)) {
+            if (!empty ($galleries)) {
                 // all root galleries and nested ones
                 $html = $this->GalleriesOfLevelHTML($galleries, 0, 0);
             }
@@ -577,7 +548,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
                     // html of this gallery
                     $galleryHTML [] = $this->GalleryHTML($gallery, $level);
 
-                    $subHtml = $this->GalleriesOfLevelHTML($galleries, $gallery->id, $level+1);
+                    $subHtml = $this->GalleriesOfLevelHTML($galleries, $gallery->id, $level + 1);
                     if (!empty ($subHtml)) {
                         $galleryHTML [] = $subHtml;
                     }
@@ -585,11 +556,11 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
             }
 
             // surround with <ul>
-            if ( ! empty ($galleryHTML)) {
+            if (!empty ($galleryHTML)) {
 
-                $lineStart = str_repeat(" ", 3*($parentId));
+                $lineStart = str_repeat(" ", 3 * ($parentId));
 
-                array_unshift ($galleryHTML,  $lineStart . '<ul class="list-group">');
+                array_unshift($galleryHTML, $lineStart . '<ul class="list-group">');
                 $galleryHTML [] = $lineStart . '</ul>';
 
                 $html = $galleryHTML;
@@ -607,7 +578,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
     {
         $html = [];
 
-        $lineStart = str_repeat(" ", 3*($level+1));
+        $lineStart = str_repeat(" ", 3 * ($level + 1));
         $identHtml = '';
         if ($level > 0) {
             $identHtml = '<span class="text-muted">';
@@ -639,7 +610,8 @@ EOT;
         return $html;
     }
 
-    public function convertJ3xGalleriesToJ4x ($J3xGalleryItemsSorted) {
+    public function convertJ3xGalleriesToJ4x($J3xGalleryItemsSorted)
+    {
 
         $J4Galleries = [];
 
@@ -651,9 +623,7 @@ EOT;
                 $J4Galleries[] = $this->convertJ3xGallery($j3xGallery);
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -661,7 +631,8 @@ EOT;
     }
 
 
-    private function convertJ3xGallery ($j3x_gallery) {
+    private function convertJ3xGallery($j3x_gallery)
+    {
 
         $j4x_GalleryItem = [];
 
@@ -685,7 +656,7 @@ EOT;
         // `ordering` int(11) NOT NULL default '0',
         $j4x_GalleryItem['ordering'] = $j3x_gallery->ordering; // Needed for sorting (Not for database)
         // `date` datetime NOT NULL default '0000-00-00 00:00:00',
-        $j4x_GalleryItem['created']= $j3x_gallery->date;
+        $j4x_GalleryItem['created'] = $j3x_gallery->date;
         // `hits` int(11) NOT NULL default '0',
         $j4x_GalleryItem['hits'] = $j3x_gallery->hits;
         // `params` text NOT NULL,
@@ -718,7 +689,8 @@ EOT;
      * @throws \Exception
      * @since version
      */
-    public function collectAndCopyJ3xConfig2J4xOptions () {
+    public function collectAndCopyJ3xConfig2J4xOptions()
+    {
 
         $isOk = false;
 
@@ -735,7 +707,7 @@ EOT;
                 $mergedItems,
                 $untouchedJ3xItems,
                 $untouchedJ4xItems
-                ) = $this->MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems );
+                ) = $this->MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems);
 
             if (count($mergedItems)) {
                 // ToDo: write later
@@ -753,9 +725,7 @@ EOT;
                 Factory::getApplication()->enqueueMessage(Text::_('No old configuration items'), 'warning');
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -775,24 +745,22 @@ EOT;
      * @throws \Exception
      * @since version
      */
-    public function copyJ3xConfigItems2J4xOptions ($j4xConfigItems,
-                                                   $assistedJ3xItems,
+    public function copyJ3xConfigItems2J4xOptions($j4xConfigItems,
+                                                  $assistedJ3xItems,
 //                                                   $assistedJ4xItems,
-                                                   $mergedItems) {
+                                                  $mergedItems)
+    {
         $isSaved = false;
 
-        try
-        {
+        try {
 
             // copy 1:1 items
-            foreach ($mergedItems as $name => $value)
-            {
+            foreach ($mergedItems as $name => $value) {
                 $j4xConfigItems [$name] = $value;
             }
 
             // assisted copying
-            foreach ($assistedJ3xItems as $j3xName => $var)
-            {
+            foreach ($assistedJ3xItems as $j3xName => $var) {
                 list($j4xName, $j4xNewValue) = $var;
                 $j4xConfigItems [$j4xName] = $j4xNewValue;
             }
@@ -801,9 +769,7 @@ EOT;
             $configModel = new ConfigRawModel ();
             $isSaved = $configModel->saveItems($j4xConfigItems);
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'MaintenanceJ3xModel: Error in copyJ3xConfigItems2J4xOptions: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -817,26 +783,25 @@ EOT;
     }
 
 
-
-    public function copyDbAllJ3xGalleries2J4x () {
+    public function copyDbAllJ3xGalleries2J4x()
+    {
 
         $isOk = false;
 
         try {
 
             $j3xGalleriesItems = $this->j3x_galleriesList();
-            $isOk = $this->copyDbJ3xGalleries2J4x ($j3xGalleriesItems);
+            $isOk = $this->copyDbJ3xGalleries2J4x($j3xGalleriesItems);
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
     }
 
-    public function copySelectedJ3xGalleries2J4x ($selectedIds) {
+    public function copySelectedJ3xGalleries2J4x($selectedIds)
+    {
 
         $isOk = false;
 
@@ -844,18 +809,17 @@ EOT;
 
             $j3xGalleriesItems = $this->j3x_galleriesListOfIds($selectedIds);
 
-            $isOk = $this-copyDbJ3xGalleries2J4x ($j3xGalleriesItems);
+            $isOk = $this - copyDbJ3xGalleries2J4x($j3xGalleriesItems);
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
     }
 
-    public function copyDbJ3xGalleries2J4x ($j3xGalleriesItems) {
+    public function copyDbJ3xGalleries2J4x($j3xGalleriesItems)
+    {
 
         $isOk = false;
 
@@ -871,10 +835,10 @@ EOT;
 
                 // set nested tree ()
                 // last $lastNodeIdx needed for root ???
-                $lastNodeIdx = $this->setNestingNodes2J4xGalleries ($j4xGalleryItemsSorted, 0, 0, 1);
+                $lastNodeIdx = $this->setNestingNodes2J4xGalleries($j4xGalleryItemsSorted, 0, 0, 1);
 
                 // re-init nested gallery table
-                $galleryTreeModel =  new GalleryTreeModel ();
+                $galleryTreeModel = new GalleryTreeModel ();
                 $galleryTreeModel->reinitNestedGalleryTable($lastNodeIdx);
 
                 $isOk = $this->writeGalleryList2Db($j4xGalleryItemsSorted);
@@ -887,16 +851,15 @@ EOT;
                 //Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
     }
 
-    public function writeGalleryList2Db ($j4xGalleriesItems) {
+    public function writeGalleryList2Db($j4xGalleriesItems)
+    {
 
         $isOk = true;
 
@@ -909,16 +872,15 @@ EOT;
 
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
     }
 
-    public function writeGalleryItem2Db ($j4x_GalleryItem) {
+    public function writeGalleryItem2Db($j4x_GalleryItem)
+    {
 
         $isOk = false;
 
@@ -932,7 +894,7 @@ EOT;
             $query = $db->getQuery(true);
 
             $columns[] = 'id';
-            $values[] = 1 + (int) $j4x_GalleryItem['id'];
+            $values[] = 1 + (int)$j4x_GalleryItem['id'];
 
             $columns[] = 'name';
             $values[] = $j4x_GalleryItem['name'];
@@ -976,10 +938,10 @@ EOT;
 //            $values[] = $j4x_GalleryItem['modified_by'];
 
             $columns[] = 'parent_id';
-            $values[] = 1 + (int) $j4x_GalleryItem['parent_id'];
+            $values[] = 1 + (int)$j4x_GalleryItem['parent_id'];
 
             $columns[] = 'level';
-            $values[] = 1 + (int) $j4x_GalleryItem['level'];
+            $values[] = 1 + (int)$j4x_GalleryItem['level'];
 //            $columns[] = 'path';
 //            $values[] = $j4x_GalleryItem['path'];
             $columns[] = 'lft';
@@ -1004,18 +966,12 @@ EOT;
             $db->execute();
 
             $isOk = true;
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
     }
-
-
-
-//<<<yyyy===================================================================================================
 
     public function j3x_imagesList()
     {
@@ -1034,9 +990,7 @@ EOT;
 
             $images = $db->loadObjectList();
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1044,8 +998,8 @@ EOT;
         return $images;
     }
 
-   public function j3x_imagesListOfIds($selectedIds)
-   {
+    public function j3x_imagesListOfIds($selectedIds)
+    {
         $images = array();
 
         try {
@@ -1064,9 +1018,7 @@ EOT;
 
             $images = $db->loadObjectList();
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1091,9 +1043,7 @@ EOT;
 
             $images = $db->loadObjectList();
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1216,93 +1166,8 @@ EOT;
 //    }
 
 
-    public function j3x_galleries4ImageMove ($j3x_galleries)
+    public function copyDbAllJ3xImages2J4x()
     {
-        $galleryIds4ImgsToBeMoved = []; // ToDo: array() ==> []
-
-        try {
-            $j4xGalleryIds = [];
-
-            foreach ($j3x_galleries as $j3x_gallery) {
-                $j4xGalleryIds[] = $j3x_gallery->id + 1;
-            }
-
-            $db = Factory::getDbo();
-            $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
-            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
-
-
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true)
-//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
-                ->select('distinct `gallery_id`')
-//                ->select('distinct ' . $db->qn(array('gallery_id')))
-//                  ->select($fieldlist)
-                ->from('#__rsg2_images')
-                ->where($db->quoteName('use_j3x_location') . ' = 1')
-                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")
-                ->order('id ASC');
-
-            // Get the options.
-            $db->setQuery($query);
-
-            //$galleryIds4ImgsToBeMoved = $db->loadObjectList();
-            $galleryIds4ImgsToBeMoved = $db->loadColumn();
-
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-        }
-
-
-        return $galleryIds4ImgsToBeMoved;
-    }
-
-
-    // ToDo: may be rewritten to se all galleries of a list
-    public function j3x_imagesToBeMovedByGallery ($j4xGalleryIds)
-    {
-        $imagesToBeMoved = []; // ToDo: array() ==> []
-
-        try {
-//            $j4xGalleryIds = [];
-//
-//            foreach ($j3x_galleries as $j3x_gallery) {
-//                $j4xGalleryIds[] = $j3x_gallery->id + 1;
-//            }
-
-            $db = Factory::getDbo();
-
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true)
-                ->select($db->qn(array('id', 'name')))
-                ->from('#__rsg2_images')
-                ->where($db->quoteName('use_j3x_location') . ' = 1')
-                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")
-                //->order('id ASC');
-                ;
-
-            // Get the options.
-            $db->setQuery($query);
-
-            $imagesToBeMoved = $db->loadObjectList();
-            // $imagesToBeMoved = $db->loadColumn();
-
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-            throw $e;
-        }
-
-        return $imagesToBeMoved;
-    }
-
-
-
-
-    public function copyDbAllJ3xImages2J4x () {
 
         $isOk = false;
 
@@ -1312,18 +1177,17 @@ EOT;
 
             $j3xImageItems = $this->j3x_imagesList();
 
-            $isOk &= $this->copyDbJ3xImages2J4x ($j3xImageItems);
+            $isOk &= $this->copyDbJ3xImages2J4x($j3xImageItems);
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
     }
 
-    public function copySelectedJ3xImages2J4x ($selectedIds) {
+    public function copySelectedJ3xImages2J4x($selectedIds)
+    {
 
         $isOk = false;
 
@@ -1331,18 +1195,17 @@ EOT;
 
             $j3xImageItems = $this->j3x_imagesListOfIds($selectedIds);
 
-            $isOk = $this-copyDbJ3xImages2J4x ($j3xImageItems);
+            $isOk = $this - copyDbJ3xImages2J4x($j3xImageItems);
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $isOk;
     }
 
-    public function copyDbJ3xImages2J4x ($j3xImageItems) {
+    public function copyDbJ3xImages2J4x($j3xImageItems)
+    {
 
         $isOk = false;
 
@@ -1360,9 +1223,7 @@ EOT;
                 //Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1370,7 +1231,8 @@ EOT;
     }
 
 
-    public function convertDbJ3xImagesToJ4x ($J3xImagesItems) {
+    public function convertDbJ3xImagesToJ4x($J3xImagesItems)
+    {
 
         $j4ImageItems = [];
 
@@ -1383,9 +1245,7 @@ EOT;
 
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1393,7 +1253,8 @@ EOT;
     }
 
 
-    public function writeImageList2Db ($j4ImageItems) {
+    public function writeImageList2Db($j4ImageItems)
+    {
 
         $isOk = true;
 
@@ -1406,9 +1267,7 @@ EOT;
 
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1416,7 +1275,8 @@ EOT;
     }
 
 
-    public function writeImageItem2Db ($j4ImageItem) {
+    public function writeImageItem2Db($j4ImageItem)
+    {
 
         $isOk = false;
 
@@ -1439,7 +1299,7 @@ EOT;
             $values[] = $j4ImageItem['description'];
 
             $columns[] = 'gallery_id';
-            $values[] = 1 + (int) $j4ImageItem['gallery_id'];
+            $values[] = 1 + (int)$j4ImageItem['gallery_id'];
             $columns[] = 'title';
             $values[] = $j4ImageItem['title'];
 
@@ -1503,9 +1363,7 @@ EOT;
             $db->execute();
 
             $isOk = true;
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1513,7 +1371,8 @@ EOT;
     }
 
 
-    private function convertDbJ3xImage ($j3x_image) {
+    private function convertDbJ3xImage($j3x_image)
+    {
 
         $j4_imageItem = []; //new \stdClass();
 
@@ -1622,43 +1481,9 @@ EOT;
         return $isImagesReset;
     }
 
-    public function moveImagesJ3x2J4xById($j3xImageIds)
+    public function imageNamesById($cids)
     {
-        $isImagesMoved = false;
-
-        try {
-
-            //--- image names -----------------------------------------------
-
-            // name, id, gallery_id
-            $imgObjectsById = $this->imageNamesById ($j3xImageIds);
-
-            //--- move images -----------------------------------------------
-
-            $movedIds = $this->moveOriginalOrDisplayImage($imgObjectsById);
-
-            //--- update db -------------------------------------------------
-            if (count ($movedIds)) {
-                $isDbWritten = $this->dbMarkImagesAsTransferred($movedIds);
-            }
-
-            //--- check ... -------------------------------------------------
-            // All transferred ?
-            if (count ($movedIds) == count ($j3xImageIds) && $isDbWritten) {
-                $isImagesMoved = true;
-            }
-
-        } //catch (\RuntimeException $e)
-        catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
-        }
-
-        return $isImagesMoved;
-    }
-
-    public function imageNamesById ($cids)
-    {
-        $imageNamesById= array();
+        $imageNamesById = array();
 
         $dbImages = array();
 
@@ -1675,9 +1500,9 @@ EOT;
 
             $dbImages = $db->loadObjectList();
 
-            if ( ! empty ($dbImages)) {
+            if (!empty ($dbImages)) {
 
-                foreach ($dbImages as $dbImage){
+                foreach ($dbImages as $dbImage) {
                     $imageNamesById[$dbImage->id] =
                         [
                             'id' => $dbImage->id,
@@ -1688,129 +1513,11 @@ EOT;
                 }
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $imageNamesById;
-    }
-
-
-    public function moveOriginalOrDisplayImage ($imgObjects)
-    {
-        $movedIds = [];
-        $notMovedIds = [];
-
-        try {
-
-            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-
-            $ImageWidths = $rsgConfig->get('image_width');
-            $exploded = explode(',', $ImageWidths);
-            $bigImageWidth = $exploded[0];
-
-            $j4xImagePath = new ImagePaths ();
-            $j3xImagePath = new ImageJ3xPaths ();
-
-
-            // ToDo: Watermarked
-            foreach ($imgObjects as $imgObject) {
-                $id = $imgObject['id'];
-                $name = $imgObject['name'];
-                $galleryId = $imgObject['gallery_id'];
-
-                // galleryJ4x path is depending on gallery id
-                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
-
-                $isPathsExisting = $j4xImagePath->isPathsExisting ();
-                if ( ! $isPathsExisting) {
-                    // throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
-
-                    // create path
-                    $j4xImagePath->createAllPaths();
-
-                }
-
-                $j3xOrgFile = $j3xImagePath->getOriginalPath ($name);
-                $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
-
-                if (file_exists ($j3xOrgFile)) {
-                    rename($j3xOrgFile, $j4xOrgFile);
-                }
-
-                $j3xDisFile = $j3xImagePath->getDisplayPath ($name);
-                $j4xDisFile = $j4xImagePath->getSizePath ($bigImageWidth, $name);
-
-                if (file_exists ($j3xDisFile)) {
-                    rename($j3xDisFile, $j4xDisFile);
-                    $movedIds [] = $id;
-                }else {
-                    // already done
-                    if (file_exists ($j4xDisFile)) {
-                        $movedIds [] = $id;
-                    }else {
-                        // Mark as not found
-                        $notMovedIds [] = $id . ':' . $name;
-                    }
-                }
-
-                $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
-                $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
-
-                if (file_exists ($j3xTmbFile)) {
-                    rename($j3xTmbFile, $j4xTmbFile);
-                }
-
-            }
-
-            if (count($notMovedIds)) {
-                $notImgList = implode ($notMovedIds, '<br>');
-                Factory::getApplication()->enqueueMessage('Files may have already be moved ? No files found for ' . $notImgList);
-            }
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-        }
-
-        return $movedIds;
-    }
-
-    protected function dbMarkImagesAsTransferred ($movedIds, $isUse_j3x_location=false)
-    {
-        $isIdsMarked = false;
-
-        try {
-
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true);
-
-            // $testImplode = implode(',', ArrayHelper::toInteger($movedIds));
-
-            $query->update('#__rsg2_images')
-                ->set($db->quoteName('use_j3x_location') . ' = ' . (int) $isUse_j3x_location)
-                ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($movedIds)) . ')')
-                ;
-
-            //$queryDump = $query->dump();
-            //Factory::getApplication()->enqueueMessage(Text::_('Test: \$queryDump' . $queryDump), 'notice');
-
-            $db->setQuery($query);
-
-            if ($db->execute())
-            {
-                $isIdsMarked = true;
-            }
-
-        }
-        catch (\RuntimeException $e)
-        {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-        }
-
-        return $isIdsMarked;
     }
 
 
@@ -1853,7 +1560,270 @@ EOT;
         return $isDbUpdated;
     }
 
-    public function check4ExistingDisplayImage ($imgObjects)
+
+    public function CheckImagePaths()
+    {
+        $isPathsExisting = false;
+
+        try {
+
+            $j3xImagePath = new ImageJ3xPaths ();
+            $isPathsExisting = $j3xImagePath->isPathsExisting();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $isPathsExisting;
+    }
+
+
+    public function RepairImagePaths()
+    {
+        $isPathsRepaired = false;
+
+        try {
+
+            $j3xImagePath = new ImageJ3xPaths ();
+            $isPathsRepaired = $j3xImagePath->createAllPaths();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $isPathsRepaired;
+    }
+
+
+    /*===================================================================================================
+    J3x image physical move
+    ===================================================================================================*/
+
+    public function j3x_galleries4ImageMove($j3x_galleries)
+    {
+        $galleryIds4ImgsToBeMoved = []; // ToDo: array() ==> []
+
+        try {
+            $j4xGalleryIds = [];
+
+            foreach ($j3x_galleries as $j3x_gallery) {
+                $j4xGalleryIds[] = $j3x_gallery->id + 1;
+            }
+
+            $db = Factory::getDbo();
+            $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
+            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
+
+
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+                ->select('distinct `gallery_id`')
+//                ->select('distinct ' . $db->qn(array('gallery_id')))
+//                  ->select($fieldlist)
+                ->from('#__rsg2_images')
+                ->where($db->quoteName('use_j3x_location') . ' = 1')
+                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")
+                ->order('id ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            //$galleryIds4ImgsToBeMoved = $db->loadObjectList();
+            $galleryIds4ImgsToBeMoved = $db->loadColumn();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+
+        return $galleryIds4ImgsToBeMoved;
+    }
+
+
+    // ToDo: may be rewritten to se all galleries of a list
+    public function j3x_imagesToBeMovedByGallery($j4xGalleryIds)
+    {
+        $imagesToBeMoved = []; // ToDo: array() ==> []
+
+        try {
+//            $j4xGalleryIds = [];
+//
+//            foreach ($j3x_galleries as $j3x_gallery) {
+//                $j4xGalleryIds[] = $j3x_gallery->id + 1;
+//            }
+
+            $db = Factory::getDbo();
+
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->qn(array('id', 'name')))
+                ->from('#__rsg2_images')
+                ->where($db->quoteName('use_j3x_location') . ' = 1')
+                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")//->order('id ASC');
+            ;
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $imagesToBeMoved = $db->loadObjectList();
+            // $imagesToBeMoved = $db->loadColumn();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            throw $e;
+        }
+
+        return $imagesToBeMoved;
+    }
+
+//    public function moveImagesJ3x2J4xById($j3xImageIds)
+//    {
+//        $isImagesMoved = false;
+//
+//        try {
+//
+//            //--- image names -----------------------------------------------
+//
+//            // name, id, gallery_id
+//            $imgObjectsById = $this->imageNamesById ($j3xImageIds);
+//
+//            //--- move images -----------------------------------------------
+//
+//            $movedIds = $this->moveOriginalOrDisplayImage($imgObjectsById);
+//
+//            //--- update db -------------------------------------------------
+//            if (count ($movedIds)) {
+//                $isDbWritten = $this->dbMarkImagesAsTransferred($movedIds);
+//            }
+//
+//            //--- check ... -------------------------------------------------
+//            // All transferred ?
+//            if (count ($movedIds) == count ($j3xImageIds) && $isDbWritten) {
+//                $isImagesMoved = true;
+//            }
+//
+//        } //catch (\RuntimeException $e)
+//        catch (\Exception $e) {
+//            throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
+//        }
+//
+//        return $isImagesMoved;
+//    }
+
+//    public function moveOriginalOrDisplayImage ($imgObjects)
+//    {
+//        $movedIds = [];
+//        $notMovedIds = [];
+//
+//        try {
+//
+//            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+//
+//            $ImageWidths = $rsgConfig->get('image_width');
+//            $exploded = explode(',', $ImageWidths);
+//            $bigImageWidth = $exploded[0];
+//
+//            $j4xImagePath = new ImagePaths ();
+//            $j3xImagePath = new ImageJ3xPaths ();
+//
+//
+//            // ToDo: Watermarked
+//            foreach ($imgObjects as $imgObject) {
+//                $id = $imgObject['id'];
+//                $name = $imgObject['name'];
+//                $galleryId = $imgObject['gallery_id'];
+//
+//                // galleryJ4x path is depending on gallery id
+//                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+//
+//                $isPathsExisting = $j4xImagePath->isPathsExisting ();
+//                if ( ! $isPathsExisting) {
+//                    // throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
+//
+//                    // create path
+//                    $j4xImagePath->createAllPaths();
+//
+//                }
+//
+//                $j3xOrgFile = $j3xImagePath->getOriginalPath ($name);
+//                $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
+//
+//                if (file_exists ($j3xOrgFile)) {
+//                    rename($j3xOrgFile, $j4xOrgFile);
+//                }
+//
+//                $j3xDisFile = $j3xImagePath->getDisplayPath ($name);
+//                $j4xDisFile = $j4xImagePath->getSizePath ($bigImageWidth, $name);
+//
+//                if (file_exists ($j3xDisFile)) {
+//                    rename($j3xDisFile, $j4xDisFile);
+//                    $movedIds [] = $id;
+//                }else {
+//                    // already done
+//                    if (file_exists ($j4xDisFile)) {
+//                        $movedIds [] = $id;
+//                    }else {
+//                        // Mark as not found
+//                        $notMovedIds [] = $id . ':' . $name;
+//                    }
+//                }
+//
+//                $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
+//                $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
+//
+//                if (file_exists ($j3xTmbFile)) {
+//                    rename($j3xTmbFile, $j4xTmbFile);
+//                }
+//
+//            }
+//
+//            if (count($notMovedIds)) {
+//                $notImgList = implode ($notMovedIds, '<br>');
+//                Factory::getApplication()->enqueueMessage('Files may have already be moved ? No files found for ' . $notImgList);
+//            }
+//        }
+//        catch (\RuntimeException $e)
+//        {
+//            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+//        }
+//
+//        return $movedIds;
+//    }
+
+    protected function dbMarkImagesAsTransferred($movedIds, $isUse_j3x_location = false)
+    {
+        $isIdsMarked = false;
+
+        try {
+
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
+
+            // $testImplode = implode(',', ArrayHelper::toInteger($movedIds));
+
+            $query->update('#__rsg2_images')
+                ->set($db->quoteName('use_j3x_location') . ' = ' . (int)$isUse_j3x_location)
+                ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($movedIds)) . ')');
+
+            //$queryDump = $query->dump();
+            //Factory::getApplication()->enqueueMessage(Text::_('Test: \$queryDump' . $queryDump), 'notice');
+
+            $db->setQuery($query);
+
+            if ($db->execute()) {
+                $isIdsMarked = true;
+            }
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $isIdsMarked;
+    }
+
+
+    public function check4ExistingDisplayImage($imgObjects)
     {
         $idsExisting = [];
         $idsNotExisting = [];
@@ -1879,8 +1849,8 @@ EOT;
                 // galleryJ4x path is depending on gallery id
                 $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
 
-                $isPathsExisting = $j4xImagePath->isPathsExisting ();
-                if ( ! $isPathsExisting) {
+                $isPathsExisting = $j4xImagePath->isPathsExisting();
+                if (!$isPathsExisting) {
 
                     throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
                 }
@@ -1890,9 +1860,9 @@ EOT;
 //                    ???;
 //                }
 
-                $j4xDisFile = $j4xImagePath->getSizePath ($bigImageWidth, $name);
+                $j4xDisFile = $j4xImagePath->getSizePath($bigImageWidth, $name);
 
-                if (file_exists ($j4xDisFile)) {
+                if (file_exists($j4xDisFile)) {
                     $idsExisting [] = $id;
                 } else {
                     $idsNotExisting [] = $id;
@@ -1905,49 +1875,165 @@ EOT;
 
             }
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return [$idsExisting, $idsNotExisting];
     }
 
+    // Image moving stage -> separate for original, display, thumb, ...
+    const J3X_IMG_NOT_FOUND       = 0;
+    const J3X_IMG_MOVED           = 1;
+    const J3X_IMG_ALREADY_MOVED   = 2;
+    const J3X_IMG_MOVING_FAILED   = 3;
+    const J3X_IMG_MOVED_AND_DB    = 4;
 
-    public function CheckImagePaths ()
-    {
-        $isPathsExisting = false;
 
-        try {
+    public function j3x_moveImage ($id, $name, $galleryId) {
 
-            $j3xImagePath = new ImageJ3xPaths ();
-            $isPathsExisting = $j3xImagePath->isPathsExisting ();
+        // [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb]
 
-        } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        //--- display image width --------------------------------------
+
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+
+        $ImageWidths = $rsgConfig->get('image_width');
+        $exploded = explode(',', $ImageWidths);
+        $bigImageWidth = $exploded[0];
+
+        //--- image paths ----------------------------------------
+
+        $j4xImagePath = new ImagePaths ();
+        $j3xImagePath = new ImageJ3xPaths ();
+
+        $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+
+        $isPathsExisting = $j4xImagePath->isPathsExisting ();
+        if ( ! $isPathsExisting) {
+            // throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
+
+            // create path
+            $j4xImagePath->createAllPaths();
+
         }
 
-        return $isPathsExisting;
-    }
+        //--- original -----------------------------
 
+        $stateOriginal = self::J3X_IMG_NOT_FOUND;
 
-    public function RepairImagePaths ()
-    {
-        $isPathsRepaired = false;
+        $j3xOrgFile = $j3xImagePath->getOriginalPath ($name);
+        $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
 
-        try {
+        if (file_exists ($j3xOrgFile)) {
 
-            $j3xImagePath = new ImageJ3xPaths ();
-            $isPathsRepaired = $j3xImagePath->createAllPaths ();
+            $stateOriginal = J3X_IMG_FOUND_NOT_MOVED;
 
-        } catch (\RuntimeException $e) {
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+            // !!! do Move !!!
+            $isMoved = rename($j3xOrgFile, $j4xOrgFile);
+
+            if($isMoved) {
+                $stateOriginal = J3X_IMG_MOVED;
+            } else {
+                $stateOriginal = J3X_IMG_MOVING_FAILED;
+            }
+        } else {
+            // destination exists
+            if (file_exists ($j4xOrgFile)) {
+                $stateOriginal = J3X_IMG_ALREADY_MOVED;
+            }
         }
 
-        return $isPathsRepaired;
+        //--- display -----------------------------
+
+        // ToDo: check if does  regard resolution
+        $stateDisplay = self::J3X_IMG_NOT_FOUND;
+
+        $j3xDisFile = $j3xImagePath->getDisplayPath ($name);
+        $j4xDisFile = $j4xImagePath->getSizePath ($bigImageWidth, $name);
+
+        if (file_exists ($j3xDisFile)) {
+
+            $stateDisplay = J3X_IMG_FOUND_NOT_MOVED;
+
+            // !!! do Move !!!
+            $isMoved = rename($j3xDisFile, $j4xDisFile);
+
+            if($isMoved) {
+                $stateDisplay = J3X_IMG_MOVED;
+            } else {
+                $stateDisplay = J3X_IMG_MOVING_FAILED;
+            }
+        } else {
+            // destination exists
+            if (file_exists ($j4xDisFile)) {
+                $stateDisplay = J3X_IMG_ALREADY_MOVED;
+            }
+        }
+
+        //--- thumb -----------------------------
+
+        $stateThumb = self::J3X_IMG_NOT_FOUND;
+
+        $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
+        $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
+
+        if (file_exists ($j3xTmbFile)) {
+
+            $stateThumb = J3X_IMG_FOUND_NOT_MOVED;
+
+            // !!! do Move !!!
+            $isMoved = rename($j3xTmbFile, $j4xTmbFile);
+
+            if($isMoved) {
+                $stateThumb = J3X_IMG_MOVED;
+            } else {
+                $stateThumb = J3X_IMG_MOVING_FAILED;
+            }
+        } else {
+            // destination exists
+            if (file_exists ($j4xTmbFile)) {
+                $stateThumb = J3X_IMG_ALREADY_MOVED;
+            }
+        }
+
+
+        //--- watermarked -----------------------------
+
+        $stateWatermarked = self::J3X_IMG_NOT_FOUND;
+
+//        $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
+//        $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
+//
+//        if (file_exists ($j3xTmbFile)) {
+//            rename($j3xTmbFile, $j4xTmbFile);
+//        }
+//
+
+        //--- Update image DB -----------------------------
+
+        $stateImageDb = self::J3X_IMG_NOT_FOUND; // J3X_IMG_MOVED_AND_DB = 4;
+
+        // Is mved when all destionation images exist
+        $isMoved = true;
+        $isMoved &= ($stateOriginal == J3X_IMG_MOVED || $stateOriginal == J3X_IMG_ALREADY_MOVED);
+        $isMoved &= ($stateDisplay == J3X_IMG_MOVED || $stateDisplay == J3X_IMG_ALREADY_MOVED);
+        $isMoved &= ($stateThumb == J3X_IMG_MOVED || $stateThumb == J3X_IMG_ALREADY_MOVED);
+        // watermak exists and is copied ...
+        //$isMoved &= ($stateOriginal == J3X_IMG_MOVED || $stateOriginal == J3X_IMG_ALREADY_MOVED);
+
+        // ready for DB update ?
+        if ($isMoved) {
+            $isDBUpdated = $this->dbMarkImagesAsTransferred([$id]);
+
+            if ($isDBUpdated) {
+                $stateImageDb = self::J3X_IMG_MOVED_AND_DB;
+            }
+        }
+
+        return [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb];
     }
 
 
     /**/
-}
+} // class

@@ -612,21 +612,15 @@ class MaintenanceJ3xController extends AdminController
         return true;
     }
 
-
-
     /**
-     * The database entry for the image will be created here
-     * It is called for each image for preserving the correct
-     * ordering before uploading the images
-     * Reason: The parallel uploaded images may appear unordered
+     * From given gallery id all matching images are collected
+     * Returns id and names of all found images
      *
      * @throws Exception
      * @since 4.3.0
      */
     function ajaxRequestImageIds()
     {
-        // Todo: Check Authorisation, Jupload , check mime type ...
-
         global $rsgConfig, $Rsg2DebugActive;
 
         $msg = 'ajaxRequestImageIds::';
@@ -640,6 +634,7 @@ class MaintenanceJ3xController extends AdminController
             $hasError = 1;
             echo new JsonResponse($msg, $errMsg, $hasError);
             $app->close();
+
             return; // ToDo Check on all pre exits
         }
 
@@ -680,7 +675,7 @@ class MaintenanceJ3xController extends AdminController
             // wrong id ? ToDo: test is number ...
             if ($galleryId < 1)
             {
-                $msg .= ': Invalid gallery ID at drag and drop upload';
+                $msg .= ': Invalid gallery ID at request image ids';
 
                 if ($Rsg2DebugActive)
                 {
@@ -692,6 +687,7 @@ class MaintenanceJ3xController extends AdminController
                 $app->close();
                 return;
             }
+
             $ajaxImgDbObject['gallery_id']     = $galleryId;
 
             //----------------------------------------------------
@@ -703,7 +699,7 @@ class MaintenanceJ3xController extends AdminController
             $j3xModel = $this->getModel('MaintenanceJ3x');
 
 
-            // Collect image Ids (ToDo: collect ids by db query in $j3xModel)
+            // Collect image Ids
             $j3x_images = $j3xModel->j3x_imagesToBeMovedByGallery([$galleryId]);
 
 //            $j3x_imageIds = [];
@@ -711,7 +707,6 @@ class MaintenanceJ3xController extends AdminController
 //
 //                $j3x_imageIds [] = $j3x_image->id;
 //            }
-
 
             if ($Rsg2DebugActive)
             {
@@ -735,11 +730,182 @@ class MaintenanceJ3xController extends AdminController
             }
 
             // No message as otherwise it would be displayed in form
-            echo new JsonResponse($ajaxImgDbObject, "", !$isCreated, true);
+            echo new JsonResponse($ajaxImgDbObject, "", !$isCreated, false); // true);
 
             if ($Rsg2DebugActive)
             {
                 Log::add('<== Exit ajaxRequestImageIds');
+            }
+
+        }
+        catch (\Exception $e)
+        {
+            echo new JsonResponse($e);
+        }
+
+        $app->close();
+    }
+
+    /** enum ==>
+    abstract class DaysOfWeek
+    {
+        const Sunday = 0;
+        const Monday = 1;
+        // etc.
+    }
+    /**/
+
+
+    /**
+     * Moves siblings of given image to new rsgallery2 folder structure
+     * single J3x image
+     *
+     *
+     * @throws Exception
+     * @since 4.3.0
+     */
+    function ajaxMoveJ3xImage()
+    {
+        // Todo: Check Authorisation, Jupload , check mime type ...
+
+        global $rsgConfig, $Rsg2DebugActive;
+
+        $msg = '::';
+        $app = Factory::getApplication();
+
+        // do check token
+        // Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        if (!Session::checkToken())
+        {
+            $errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
+            $hasError = 1;
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            $app->close();
+            return; // ToDo Check on all pre exits
+        }
+
+        /* ToDo: // Access check
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2');
+        if (!$canAdmin)
+        {
+            $errMsg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+            $hasError = 1;
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            $app->close();
+        }
+        /**/
+
+        // for debug ajax response errors / notice
+        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+        if ($errorType) { issueError  ($errorType); }
+
+        try
+        {
+            if ($Rsg2DebugActive)
+            {
+                // identify active file
+                Log::add('==> ');
+            }
+
+            $input = Factory::getApplication()->input;
+
+            //--- image data  --------------------------------------------
+
+            $galleryId = $input->get('gallery_id', '', 'string');
+            $imageId = $input->get('image_id', '', 'string');
+            $imageName = $input->get('image_name', '', 'string');
+
+//            $ajaxImgDbObject['gallery_name'] = $galleryName;
+//
+//
+//            //--- gallery ID --------------------------------------------
+//
+//            $galleryId = $input->get('gallery_id', 0, 'INT');
+//            // wrong id ? ToDo: test is number ...
+//            if ($galleryId < 1)
+//            {
+//                $msg .= ': Invalid gallery ID at drag and drop upload';
+//
+//                if ($Rsg2DebugActive)
+//                {
+//                    Log::add($msg);
+//                }
+//
+//                echo new JsonResponse($ajaxImgDbObject, $msg, true);
+//
+//                $app->close();
+//                return;
+//            }
+            $ajaxImgDbObject['gallery_id'] = $galleryId;
+            $ajaxImgDbObject['image_id']   = $imageId;
+            $ajaxImgDbObject['image_name'] = $imageName;
+
+            //----------------------------------------------------
+            // move j3x image(s)
+            //----------------------------------------------------
+
+            $isMovedDb = false;
+
+            // Get the model.
+            /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+            $j3xModel = $this->getModel('MaintenanceJ3x');
+
+            //  = self::J3X_IMG_NOT_FOUND;
+            [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb] =
+                $j3xModel->j3x_moveImage ($imageId, $imageName, $galleryId);
+
+            $hasError = false;
+            $isMovedDb = true;
+
+
+//            // Get the model.
+//            /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+//            $j3xModel = $this->getModel('MaintenanceJ3x');
+//
+//
+//            // Collect image Ids (ToDo: collect ids by db query in $j3xModel)
+//            $j3x_images = $j3xModel->j3x_imagesToBeMovedByGallery([$galleryId]);
+//
+////            $j3x_imageIds = [];
+////            foreach ($j3x_images as $j3x_image) {
+////
+////                $j3x_imageIds [] = $j3x_image->id;
+////            }
+//
+
+            if ($Rsg2DebugActive)
+            {
+//                Log::add('<== uploadAjax: After : ' . count($j3x_images));
+            }
+
+            // $this->ajaxDummyAnswerOK (); return; // 05
+
+            $ajaxImgDbObject['state_original']    = $stateOriginal;
+            $ajaxImgDbObject['state_display']     = $stateDisplay;
+            $ajaxImgDbObject['state_thumb']       = $stateThumb;
+            $ajaxImgDbObject['state_watermarked'] = $stateWatermarked;
+            $ajaxImgDbObject['state_image_db']    = $stateImageDb;
+
+
+
+            //----------------------------------------------------
+            // return result
+            //----------------------------------------------------
+
+            if ($Rsg2DebugActive)
+            {
+//                Log::add('    $ajaxImgDbObject: ' . json_encode($ajaxImgDbObject));
+//                Log::add('    $msg: "' . $msg . '"');
+//                Log::add('    !$isCreated (error):     ' . ((!$isCreated) ? 'true' : 'false'));
+            }
+
+            // No message as otherwise it would be displayed in form
+            //echo new JsonResponse($ajaxImgDbObject, "", !$isMovedDb, false); // true);
+            echo new JsonResponse($ajaxImgDbObject, "", $hasError, false); // true);
+
+            if ($Rsg2DebugActive)
+            {
+                Log::add('<== Exit ');
             }
 
         }
