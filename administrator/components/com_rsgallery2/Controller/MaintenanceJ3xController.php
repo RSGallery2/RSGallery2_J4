@@ -836,9 +836,9 @@ class MaintenanceJ3xController extends AdminController
 //                $app->close();
 //                return;
 //            }
-            $ajaxImgDbObject['gallery_id'] = $galleryId;
             $ajaxImgDbObject['image_id']   = $imageId;
             $ajaxImgDbObject['image_name'] = $imageName;
+            $ajaxImgDbObject['gallery_id'] = $galleryId;
 
             //----------------------------------------------------
             // move j3x image(s)

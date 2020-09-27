@@ -94,7 +94,7 @@ class J3xGalleries extends Queue {
 ----------------------------------------------------------------*/
 // Required gallery ID
 function markImages_nGalleryTimes(maxGalleries) {
-    // needs ref gallery refstate=active/deactive)
+    // needs ref gallery refstate=active/deactivate)
     // j3x_rows: HTMLTableRowElement []; // = [];
     let j3x_rows;
     let checkbox;
@@ -178,7 +178,7 @@ class GalleriesListTask {
     // private serverFiles: ServerFiles;
     // private requestZipUploadTask: RequestZipUploadTask;
     // private requestFilesInFolderTask: RequestFilesInFolderTask;
-    // private requestTransferFolderFilesTask: RequestTransferFolderFilesTask;
+    // private requestMoveFolderFilesTask: RequestMoveFolderFilesTask;
     //
     // private buttonManualFiles : HTMLButtonElement;
     // private buttonZipFile : HTMLButtonElement;
@@ -335,7 +335,7 @@ function separateErrorAndAlerts(errMessage) {
 }
 /*----------------------------------------------------------------
    Ajax request DB items for each file in list
-   First step in transfer of file
+   First step in move of file
 ----------------------------------------------------------------*/
 // {\"success\":true,\"message\":\"Copied \",\"messages\":null,\"data\":.....
 // {\"success\":false,\"message\":\"COM_COMPONENT_MY_TASK_ERROR\",\"messages\":{\"info\":[\"This part has error\"],\"notice\":[\"Enqueued notice 1\",\"Enqueued notice 2\"],\"warning\":[\"Here was a small warning 1\",\"Here was a small warning 2\"],\"error\":[\"Here was a small error 1\",\"Here was a small error 2\"]},\"data\":\"result text\"}"
@@ -448,10 +448,10 @@ class RequestImageIdsTask {
                 .then((response) => {
                 // attention joomla may send error data on this channel
                 console.log("   <Request OK: " + j3xGallery.name);
-                console.log("      response: " + JSON.stringify(response).substring(0, 64));
+                console.log("      response: " + JSON.stringify(response).substring(0, 256));
                 const [data, noise] = separateDataAndNoise(response);
-                console.log("      response data: " + JSON.stringify(data).substring(0, 64));
-                console.log("      response error/noise: " + JSON.stringify(noise).substring(0, 64));
+                console.log("      response data: " + JSON.stringify(data).substring(0, 256));
+                console.log("      response error/noise: " + JSON.stringify(noise).substring(0, 256));
                 // Json object exist
                 // {\"success\":true,\"message\":\"Copied \",\"messages\":null,\"data\":.....
                 if (data.length) {
@@ -461,7 +461,7 @@ class RequestImageIdsTask {
                     const errorBadge = createGalleryErrorBadge(j3xGallery.galleryId);
                     j3xGallery.imgFlagArea.appendChild(errorBadge);
                     let serverError = new Error(noise);
-                    const errorHtml = ajaxCatchedMessages2Html(serverError, j3xGallery.name);
+                    const errorHtml = ajaxCaughtMessages2Html(serverError, j3xGallery.name);
                     if (errorHtml) {
                         this.errorZone.appendChild(errorHtml);
                     }
@@ -477,14 +477,14 @@ class RequestImageIdsTask {
                 if (AjaxResponse.success) {
                     console.log("      success data: " + AjaxResponse.data);
                     let dbData = AjaxResponse.data;
-                    let gallery_name = dbData.gallery_name;
+                    // let gallery_name = dbData.gallery_name;
                     // let gallery_id = dbData.gallery_id;
                     let image_ids = dbData.image_ids;
                     this.j3xImages2Move.addImages(image_ids, j3xGallery);
                     // badge gallery success
                     const successBadge = createIconsBadge(["images"], "success", j3xGallery.galleryId + ': ' + image_ids.length);
                     j3xGallery.imgFlagArea.appendChild(successBadge);
-                    // ==> Start ajax transfer of files
+                    // ==> Start ajax move of files
                     this.moveImagesTask.ajaxMove();
                 }
                 else {
@@ -503,8 +503,7 @@ class RequestImageIdsTask {
                         // No message given use noise
                         if (noise.length > 0) {
                             let serverError = new Error(noise);
-                            // ToDo: rename all catched ==> caught
-                            const errorHtml = ajaxCatchedMessages2Html(serverError, j3xGallery.name);
+                            const errorHtml = ajaxCaughtMessages2Html(serverError, j3xGallery.name);
                             if (errorHtml) {
                                 this.errorZone.appendChild(errorHtml);
                             }
@@ -532,7 +531,7 @@ class RequestImageIdsTask {
                     console.log("        error.name: " + error.name);
                     console.log("        error.message: " + error.message);
 
-                    const errorHtml = ajaxCatchedMessages2Html(error.value, j3xGallery.name);
+                    const errorHtml = ajaxCaughtMessages2Html(error.value, j3xGallery.name);
 
                     if (errorHtml) {
                         this.errorZone.appendChild(errorHtml);
@@ -551,7 +550,7 @@ class RequestImageIdsTask {
                 console.log("        error: " + errText);
                 console.log("        error.name: " + errText.name);
                 console.log("        error.message: " + errText.message);
-                const errorHtml = ajaxCatchedMessages2Html(errText, j3xGallery.name);
+                const errorHtml = ajaxCaughtMessages2Html(errText, j3xGallery.name);
                 if (errorHtml) {
                     this.errorZone.appendChild(errorHtml);
                 }
@@ -615,7 +614,7 @@ function createIconsBadge(icons, labelClass, info) {
      ajax messages as html elements
 ----------------------------------------------------------------*/
 // ToDo: call title and body from  seperate functions
-function ajaxCatchedMessages2Html(errText, title) {
+function ajaxCaughtMessages2Html(errText, title) {
     let errorHtml = null;
     // remove unnecessary HTML
     const [errorPart, alertPart] = separateErrorAndAlerts(errText.message);
@@ -754,7 +753,7 @@ function ajaxMessages2Html(AjaxResponse, fileName) {
     return errorHtml;
 }
 /*----------------------------------------------------------------
-     Ajax transfer files to server
+     Ajax move files to server
 ----------------------------------------------------------------*/
 class MoveImagesTask {
     constructor(formElements, 
@@ -849,7 +848,7 @@ class MoveImagesTask {
              upload with resizing
              http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
              /**/
-            //const urlTransferImages = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxSingleFile';
+            //const urlMoveImages = 'index.php?option=com_rsgallery2&task=upload.uploadAjaxSingleFile';
             const urlMoveImage = 'index.php?option=com_rsgallery2&task=MaintenanceJ3x.ajaxMoveJ3xImage';
             request.open('POST', urlMoveImage, true);
             request.onloadstart = function (e) {
@@ -896,11 +895,11 @@ class MoveImagesTask {
             this.callAjaxMove(j3xImage)
                 .then((response) => {
                 // attention joomla may send error data on this channel
-                console.log("   <Transfer OK: " + j3xImage.name);
-                console.log("       response: " + JSON.stringify(response).substring(0, 64));
+                console.log("   <Move OK: " + j3xImage.name);
+                console.log("       response: " + JSON.stringify(response).substring(0, 256));
                 const [data, noise] = separateDataAndNoise(response);
-                console.log("      response data: " + JSON.stringify(data).substring(0, 64));
-                console.log("      response error: " + JSON.stringify(noise).substring(0, 64));
+                console.log("      response data: " + JSON.stringify(data).substring(0, 256));
+                console.log("      response error/noise: " + JSON.stringify(noise).substring(0, 256));
                 // Json object exist
                 // {\"success\":true,\"message\":\"Copied \",\"messages\":null,\"data\":.....
                 if (data.length) {
@@ -911,7 +910,7 @@ class MoveImagesTask {
                     const errorBadge = createImageErrorBadge(j3xImage.id);
                     j3xImage.imgFlagArea.appendChild(errorBadge);
                     let serverError = new Error(noise);
-                    const errorHtml = ajaxCatchedMessages2Html(serverError, j3xImage.name);
+                    const errorHtml = ajaxCaughtMessages2Html(serverError, j3xImage.name);
                     if (errorHtml) {
                         this.errorZone.appendChild(errorHtml);
                     }
@@ -927,13 +926,18 @@ class MoveImagesTask {
                 if (AjaxResponse.success) {
                     console.log("      success data: " + AjaxResponse.data);
                     let moveData = AjaxResponse.data;
-                    const startBadge = createImageFinishedBadge(j3xImage.id);
-                    j3xImage.imgFlagArea.appendChild(startBadge);
-                    // console.log("      response data.file: " + transferData.fileName);
-                    // console.log("      response data.imageId: " + transferData.imageId);
-                    // console.log("      response data.fileUrl: " + transferData.fileUrl);
-                    // console.log("      response data.safeFileName: " + transferData.safeFileName);
-                    // console.log("      response data.thumbSize: " + transferData.thumbSize);
+                    console.log("      response data.imageId: " + moveData.imageId);
+                    console.log("      response data.imageName: " + moveData.imageName);
+                    console.log("      response data.gallery_id: " + moveData.gallery_id);
+                    console.log("      response data.state_original: " + moveData.state_original);
+                    console.log("      response data.state_display: " + moveData.state_display);
+                    console.log("      response data.state_thumb: " + moveData.state_thumb);
+                    console.log("      response data.state_watermarked: " + moveData.state_watermarked);
+                    console.log("      response data.state_image_db: " + moveData.state_image_db);
+                    // badge gallery success
+                    const successBadge = createIconsBadge(["checkmark"], "success", j3xImage.id);
+                    j3xImage.imgFlagArea.appendChild(successBadge);
+                    // yyy reraction to states
                 }
                 else {
                     const errorBadge = createImageErrorBadge(j3xImage.id);
@@ -951,8 +955,7 @@ class MoveImagesTask {
                         // No message given use noise
                         if (noise.length > 0) {
                             let serverError = new Error(noise);
-                            // ToDo: rename all catched ==> caught
-                            const errorHtml = ajaxCatchedMessages2Html(serverError, j3xImage.name);
+                            const errorHtml = ajaxCaughtMessages2Html(serverError, j3xImage.name);
                             if (errorHtml) {
                                 this.errorZone.appendChild(errorHtml);
                             }
@@ -976,7 +979,7 @@ class MoveImagesTask {
                 console.log("        error: " + errText);
                 console.log("        error.name: " + errText.name);
                 console.log("        error.message: " + errText.message);
-                const errorHtml = ajaxCatchedMessages2Html(errText, j3xImage.name);
+                const errorHtml = ajaxCaughtMessages2Html(errText, j3xImage.name);
                 if (errorHtml) {
                     this.errorZone.appendChild(errorHtml);
                 }
@@ -1005,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const j3xImages2Move = new J3xImages2Move();
     const j3xGalleries = new J3xGalleries();
     // assign click event for check boxes
-    // (3) ajax request: Transfer file to server
+    // (3) ajax request: Move file to server
     const moveImagesTask = new MoveImagesTask(elements, j3xImages2Move);
     // (2) ajax request: database
     const requestImageIdsTask = new RequestImageIdsTask(elements, j3xGalleries, j3xImages2Move, moveImagesTask);
@@ -1015,7 +1018,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // zipFiles, requestZipUploadTask,
     // serverFolder,
     // serverFiles, requestFilesInFolderTask,
-    // requestTransferFolderFilesTask);
+    // requestMoveFolderFilesTask);
     //    selectGallery : HTMLInputElement;
     // buttonPresetNextGallery : HTMLAnchorElement;
     // fileInput : HTMLButtonElement;
