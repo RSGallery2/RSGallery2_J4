@@ -107,7 +107,7 @@ class Rsgallery2Helper extends ContentHelper
         $link = 'index.php?option=com_rsgallery2&view=maintenance';
         // In config add maintenance
         \JHtmlSidebar::addEntry(
-            '<span class="icon-screwdriver" ></span>&nbsp;' .
+            '<span class="icon-cogs" ></span>&nbsp;' .
             '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_MAINTENANCE') . '</span>',
             $link,
             $vName == 'maintenance');

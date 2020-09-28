@@ -171,7 +171,7 @@ class HtmlView extends BaseHtmlView
 
 			default:
 				// Set the title
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'screwdriver'); // 'maintenance');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
 				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 				// ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 				break;
