@@ -24,7 +24,7 @@ $ListDirn  = '';
     <div class="row">
         <div class="col-md-12">
 		<?php if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="col-md-2">
+            <div id="j-sidebar-container" class="">
 				<?php echo $this->sidebar; ?>
             </div>
 		<?php endif; ?>

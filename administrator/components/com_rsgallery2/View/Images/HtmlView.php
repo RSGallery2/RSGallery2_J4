@@ -180,7 +180,7 @@ class HtmlView extends BaseHtmlView
         if ($Layout !== 'modal')
 		{
 			HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
-			Rsgallery2Helper::addSubmenu('galleries');
+			Rsgallery2Helper::addSubmenu('images');
 			$this->sidebar = \JHtmlSidebar::render();
 
 			// $Layout = Factory::getApplication()->input->get('layout');
@@ -253,6 +253,7 @@ class HtmlView extends BaseHtmlView
 				{
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
+                        . '* column width by css<br>'
                         . '* Test: archived, trashed, (delete)<br>'
                         . '* Can do ...<br>'
                         . '* __associations <br>'

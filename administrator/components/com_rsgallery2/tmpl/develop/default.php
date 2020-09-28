@@ -19,11 +19,11 @@ HTMLHelper::_('bootstrap.framework');
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="row">
         <?php if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="col-md-2">
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
 
                 <div class="row">
-                    <div id="j-sidebar-container" class="col-md-2">
+                    <div id="j-sidebar-container" class="">
                         <div id="j-toggle-sidebar-wrapper">
                             <div id="sidebar" class="sidebar">
 
@@ -100,7 +100,7 @@ HTMLHelper::_('bootstrap.framework');
 
 
     <div class="row">
-        <div id="j-sidebar-container" class="col-md-2">
+        <div id="j-sidebar-container" class="">
             <div id="j-toggle-sidebar-wrapper">
                 <div id="sidebar" class="sidebar">
 

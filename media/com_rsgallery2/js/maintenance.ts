@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     joomla.submitbutton = function (buttonName) {
 
         let confirmMessage:string = '';
-        // ToDo: switch for sveral pressbutton s -> change text, on not empty text let confirm
+        // ToDo: switch for several pressbutton s -> change text, on not empty text let confirm
 
         switch (buttonName) {
 			case '':

@@ -280,6 +280,7 @@ class MaintenanceJ3xController extends AdminController
 
                 $isOk = $j3xModel->copyDbAllJ3xImages2J4x();
                 if ($isOk) {
+                    // Tell
                     $isOk = $this ->writeConfigParam ('j3x_db_images_copied',true);
 
                     $msg .= "Successful applied J3x image items";

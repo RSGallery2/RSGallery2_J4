@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 
 <div id="installer-install" class="clearfix">
 	<?php if (!empty($this->sidebar)) : ?>
-	<div id="j-sidebar-container" class="span2">
+	<div id="j-sidebar-container" class="">
 		<?php echo $this->sidebar; ?>
 	</div>
 	<div id="j-main-container" class="span10">

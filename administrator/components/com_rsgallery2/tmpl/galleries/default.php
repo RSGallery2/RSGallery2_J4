@@ -54,7 +54,8 @@ if ($saveOrder && !empty($this->items))
        method="post" name="adminForm" id="adminForm">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
-		<div id="j-sidebar-container" class="col-md-2">
+		<!--div id="j-sidebar-container" class="col-md-1"-->
+		<div id="j-sidebar-container" class="">
 			<?php echo $this->sidebar; ?>
 		</div>
 		<?php endif; ?>
@@ -356,9 +357,9 @@ if ($saveOrder && !empty($this->items))
                                     </td>
 
                                     <td class="d-none d-lg-table-cell text-center">
-									<span class="badge badge-info">
-										<?php echo (int) $item->hits; ?>
-									</span>
+                                        <span class="badge badge-info">
+                                            <?php echo (int) $item->hits; ?>
+                                        </span>
                                     </td>
 
 

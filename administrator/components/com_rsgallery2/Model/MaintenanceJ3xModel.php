@@ -1051,54 +1051,54 @@ EOT;
     }
 
 
-//    // ToDo: May be useful with gallery id
-//    public function j3x_imagesMergeList()
-//    {
-//        $images = array();
-//
-//        $select = [
-//            'id',
-//            'name',
-////            'alias',
-////            'descr',
-//            'gallery_id',
-//            'title',
-////            'hits',
-////            'date',
-////            'rating',
-////            'votes',
-////            'comments',
-////            'published',
-////            'checked_out',
-////            'checked_out_time',
-//            'ordering',
-////            'approved',
-////            'userid',
-////            'params',
-////            'asset_id'
-//        ];
-//
-//        try {
-//            $db = Factory::getDbo();
-//            $query = $db->getQuery(true)
-//                ->select($db->quoteName($select))
-//                ->from('#__rsgallery2_files')
-////                ->order('gallery_id ASC, ordering ASC');
-//                ->order($db->quoteName('gallery_id') . ' ASC, '
-//                    . $db->quoteName('ordering') . ' ASC');
-//
-//            // Get the options.
-//            $db->setQuery($query);
-//
-//            $images = $db->loadObjectList();
-//        }
-//        catch (\RuntimeException $e)
-//        {
-//            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-//        }
-//
-//        return $images;
-//    }
+    // ToDo: May be useful with gallery id
+    public function j3x_imagesMergeList()
+    {
+        $images = array();
+
+        $select = [
+            'id',
+            'name',
+//            'alias',
+//            'descr',
+            'gallery_id',
+            'title',
+//            'hits',
+//            'date',
+//            'rating',
+//            'votes',
+//            'comments',
+//            'published',
+//            'checked_out',
+//            'checked_out_time',
+            'ordering',
+//            'approved',
+//            'userid',
+//            'params',
+//            'asset_id'
+        ];
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName($select))
+                ->from('#__rsgallery2_files')
+//                ->order('gallery_id ASC, ordering ASC');
+                ->order($db->quoteName('gallery_id') . ' ASC, '
+                    . $db->quoteName('ordering') . ' ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $images = $db->loadObjectList();
+        }
+        catch (\RuntimeException $e)
+        {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $images;
+    }
 
 //    // ToDo: May be useful with gallery id
 //    public function j4x_imagesMergeList()
@@ -1928,6 +1928,14 @@ EOT;
         if (file_exists ($j3xOrgFile)) {
 
             $stateOriginal = J3X_IMG_FOUND_NOT_MOVED;
+
+            // destination exists
+            if (file_exists ($j4xOrgFile)) {
+                $stateOriginal = J3X_IMG_ALREADY_MOVED;
+
+                // Delete original
+
+            }
 
             // !!! do Move !!!
             $isMoved = rename($j3xOrgFile, $j4xOrgFile);

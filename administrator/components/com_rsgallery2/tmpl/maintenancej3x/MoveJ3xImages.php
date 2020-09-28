@@ -31,7 +31,7 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="row">
         <?php if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="col-md-2">
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
             </div>
         <?php endif; ?>

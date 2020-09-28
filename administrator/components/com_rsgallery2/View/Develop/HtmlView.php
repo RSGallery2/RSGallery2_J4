@@ -170,7 +170,7 @@ class HtmlView extends BaseHtmlView
 		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
-		Rsgallery2Helper::addSubmenu('maintenance');
+		Rsgallery2Helper::addSubmenu('develop');
 		$this->sidebar = \JHtmlSidebar::render();
 
 		$this->addToolbar($Layout);
@@ -307,7 +307,7 @@ class HtmlView extends BaseHtmlView
 				}
 
 				// Set the title
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP_VIEW'), 'screwdriver'); // 'maintenance');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP_VIEW'), 'cube'); // 'maintenance');
 				//ToolBarHelper::cancel('config.cancel_rawEdit');
 				//ToolBarHelper::cancel('maintenance.cancel');
 				ToolBarHelper::cancel('develop.cancel');

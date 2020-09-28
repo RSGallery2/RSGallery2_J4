@@ -56,7 +56,7 @@ class HtmlView extends BaseHtmlView
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
 		/**/
 		$Layout = Factory::getApplication()->input->get('layout');
-		Rsgallery2Helper::addSubmenu('maintenance');
+		Rsgallery2Helper::addSubmenu('config');
 		$this->sidebar = \JHtmlSidebar::render();
 
 		$this->addToolbar($Layout);

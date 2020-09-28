@@ -231,7 +231,6 @@ class HtmlView extends BaseHtmlView
 						//	. '* <br>'
 						//	. '* <br>'
 						//	. '* <br>'
-						//	. '* <br>'
 						. '</span><br><br>';
 				}
 
@@ -266,6 +265,7 @@ class HtmlView extends BaseHtmlView
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
                         . '* Test: archived, trashed, (delete)<br>'
+                        . '* column width by css<br>'
                         . '* Test Search controls ...<br>'
                         . '* Search tools -> group by parent/ parent child tree ? <br>'
 						. '* Can do ...<br>'

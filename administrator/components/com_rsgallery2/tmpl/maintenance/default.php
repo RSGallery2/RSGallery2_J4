@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Session\Session;
 
-JHtml::_('stylesheet', 'com_rsgallery2/maintenance.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/maintenance.css', array('version' => 'auto', 'relative' => true));
 
 // HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
 HTMLHelper::_('script', 'com_rsgallery2/maintenance.js', ['version' => 'auto', 'relative' => true]);
@@ -665,7 +665,7 @@ function zoneInfo ($info='Unknown zone info')
           enctype="multipart/form-data">
         <div class="row">
             <?php if (!empty($this->sidebar)) : ?>
-                <div id="j-sidebar-container" class="col-md-2">
+                <div id="j-sidebar-container" class="">
                     <?php echo $this->sidebar; ?>
                 </div>
             <?php endif; ?>

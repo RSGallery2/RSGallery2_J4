@@ -54,7 +54,7 @@ if ($saveOrder && !empty($this->items))
        method="post" name="adminForm" id="adminForm">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="col-md-2">
+			<div id="j-sidebar-container" class="">
 				<?php echo $this->sidebar; ?>
 			</div>
 		<?php endif; ?>
@@ -96,7 +96,7 @@ if ($saveOrder && !empty($this->items))
                                 <th scope="col" style="min-width:100px">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_TITLE', 'a.title', $listDirn, $listOrder); ?>
                                 </th>
-                                <th scope="col" style="min-width:100px">
+                                <th scope="col" style="min-width:30px"  class="text-left">
 									<?php echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_NAME', 'a.name', $listDirn, $listOrder); ?>
                                 </th>
                                 <th scope="col" style="width:3%" class="text-center d-none d-md-table-cell">
@@ -271,7 +271,7 @@ if ($saveOrder && !empty($this->items))
 										</span>
                                     </th>
 
-                                    <td class="text-center btns d-none d-md-table-cell itemnumber">
+                                    <td class="text-left btns d-none d-md-table-cell itemnumber">
     									<div class="pull-left break-word">
                                             <?php if ($canEdit || $canEditOwn) : ?>
                                                 <a class="hasTooltip" href="<?php echo $editLink; ?>"
@@ -284,13 +284,15 @@ if ($saveOrder && !empty($this->items))
                                     </td>
 
                                     <td class="small d-none d-md-table-cell">
-                                        <?php if ($canEdit || $canEditOwn) : ?>
-                                            <a class="hasTooltip" href="<?php echo $editGalleryLink; ?>"
-                                               title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->gallery_name)); ?>">
-                                                <?php echo $this->escape($item->gallery_name); ?></a>
-                                        <?php else : ?>
-                                            <?php echo $this->escape($item->gallery_name); ?>
-                                        <?php endif; ?>
+                                        <div class="pull-left break-word">
+                                            <?php if ($canEdit || $canEditOwn) : ?>
+                                                <a class="hasTooltip" href="<?php echo $editGalleryLink; ?>"
+                                                   title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape(addslashes($item->gallery_name)); ?>">
+                                                    <?php echo $this->escape($item->gallery_name); ?></a>
+                                            <?php else : ?>
+                                                <?php echo $this->escape($item->gallery_name); ?>
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
 
                                     <!--td class="small d-none d-md-table-cell">
@@ -314,8 +316,14 @@ if ($saveOrder && !empty($this->items))
                                         /**/
                                         ?>
                                         <?php
-                                        echo $this->escape($created_by->name);
-
+                                        // User not found
+                                        if (strlen($created_by->name) > 0) {
+                                            echo $this->escape($created_by->name);
+                                        } else {
+                                            //echo $this->escape($created_by->id);
+                                            echo '%';
+                                        }
+                                        // modified when different
                                         if ($modified_by->name != $created_by->name) {
                                             echo '<br>(' . $modified_by->name . ')';
                                         }
@@ -356,6 +364,11 @@ if ($saveOrder && !empty($this->items))
                                     </td>
                                     -->
 
+                                    <td class="d-none d-lg-table-cell text-center">
+                                        <span class="badge badge-info">
+                                            <?php echo (int) $item->hits; ?>
+                                        </span>
+                                    </td>
 
                                     <td class="d-none d-md-table-cell">
                                         <?php echo (int) $item->id; ?>

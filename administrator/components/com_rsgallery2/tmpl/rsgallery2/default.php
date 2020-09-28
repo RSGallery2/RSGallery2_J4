@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('bootstrap.framework');
 
-JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'auto', 'relative' => true));
 
 ?>
 
@@ -26,7 +26,7 @@ JHtml::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'au
             <?php if (false) : // ToDo: Remove this quick hack. do not show sidebar
                 //if (!empty($this->sidebar)) :
                 ?>
-                <div id="j-sidebar-container" class="col-md-2">
+                <div id="j-sidebar-container" class="">
                     <?php echo $this->sidebar; ?>
                 </div>
             <?php endif; ?>
