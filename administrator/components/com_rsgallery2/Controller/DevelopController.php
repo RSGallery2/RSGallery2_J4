@@ -608,6 +608,40 @@ class DevelopController extends BaseController
                     Factory::getApplication()->enqueueMessage($msg, 'error');
                 }
 
+                /* ???? moddel
+                header("Content-type: image/png");
+                $im = @imagecreate(50, 100)
+                or die("Kann keinen neuen GD-Bild-Stream erzeugen");
+                $background_color = imagecolorallocate($im, 0, 0, 0);
+                $text_color = imagecolorallocate($im, 233, 14, 91);
+                imagestring($im, 1, 5, 5, "Ein Test-String", $text_color);
+                imagepng($im);
+                imagedestroy($im);
+                /**/
+
+                /**
+                // Erzeut ein leeres Bild und fügt ein wenig Text hinzu
+                $im = imagecreatetruecolor(120, 20);
+                $text_color = imagecolorallocate($im, 233, 14, 91);
+                imagestring($im, 1, 5, 5,  'A Simple Text String', $text_color);
+
+                // Die Content-Type-Kopfzeile senden, in diesem Fall image/jpeg
+                header('Content-Type: image/jpeg');
+
+                //// Das Bild ausgeben
+                //imagejpeg($im);
+
+                // Das Bild als 'simpletext.jpg' speichern
+                imagejpeg($im, 'simpletext.jpg');
+
+                // sets background to red
+                $red = imagecolorallocate($im, 255, 0, 0);
+                imagefill($im, 0, 0, $red);
+
+                // Den Speicher freigeben
+                imagedestroy($im);
+
+                /**/
             }
 
             $isCreated = $allCreated;

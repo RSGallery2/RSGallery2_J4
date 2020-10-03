@@ -1886,8 +1886,9 @@ EOT;
     const J3X_IMG_NOT_FOUND       = 0;
     const J3X_IMG_MOVED           = 1;
     const J3X_IMG_ALREADY_MOVED   = 2;
-    const J3X_IMG_MOVING_FAILED   = 3;
-    const J3X_IMG_MOVED_AND_DB    = 4;
+    const J3X_IMG_J3X_DELETED     = 3; //J4 exists and j3 is actively deleted
+    const J3X_IMG_MOVING_FAILED   = 4;
+    const J3X_IMG_MOVED_AND_DB    = 5;
 
 
     public function j3x_moveImage ($id, $name, $galleryId) {
@@ -1925,32 +1926,7 @@ EOT;
         $j3xOrgFile = $j3xImagePath->getOriginalPath ($name);
         $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
 
-        if (file_exists ($j3xOrgFile)) {
-
-            $stateOriginal = J3X_IMG_FOUND_NOT_MOVED;
-
-            // destination exists
-            if (file_exists ($j4xOrgFile)) {
-                $stateOriginal = J3X_IMG_ALREADY_MOVED;
-
-                // Delete original
-
-            }
-
-            // !!! do Move !!!
-            $isMoved = rename($j3xOrgFile, $j4xOrgFile);
-
-            if($isMoved) {
-                $stateOriginal = J3X_IMG_MOVED;
-            } else {
-                $stateOriginal = J3X_IMG_MOVING_FAILED;
-            }
-        } else {
-            // destination exists
-            if (file_exists ($j4xOrgFile)) {
-                $stateOriginal = J3X_IMG_ALREADY_MOVED;
-            }
-        }
+        $stateOriginal = $this->RenameJ3xImageFile($j3xOrgFile, $j4xOrgFile);
 
         //--- display -----------------------------
 
@@ -1960,25 +1936,8 @@ EOT;
         $j3xDisFile = $j3xImagePath->getDisplayPath ($name);
         $j4xDisFile = $j4xImagePath->getSizePath ($bigImageWidth, $name);
 
-        if (file_exists ($j3xDisFile)) {
-
-            $stateDisplay = J3X_IMG_FOUND_NOT_MOVED;
-
-            // !!! do Move !!!
-            $isMoved = rename($j3xDisFile, $j4xDisFile);
-
-            if($isMoved) {
-                $stateDisplay = J3X_IMG_MOVED;
-            } else {
-                $stateDisplay = J3X_IMG_MOVING_FAILED;
-            }
-        } else {
-            // destination exists
-            if (file_exists ($j4xDisFile)) {
-                $stateDisplay = J3X_IMG_ALREADY_MOVED;
-            }
-        }
-
+        $stateDisplay = $this->RenameJ3xImageFile($j3xDisFile, $j4xDisFile);
+        
         //--- thumb -----------------------------
 
         $stateThumb = self::J3X_IMG_NOT_FOUND;
@@ -1986,37 +1945,17 @@ EOT;
         $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
         $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
 
-        if (file_exists ($j3xTmbFile)) {
-
-            $stateThumb = J3X_IMG_FOUND_NOT_MOVED;
-
-            // !!! do Move !!!
-            $isMoved = rename($j3xTmbFile, $j4xTmbFile);
-
-            if($isMoved) {
-                $stateThumb = J3X_IMG_MOVED;
-            } else {
-                $stateThumb = J3X_IMG_MOVING_FAILED;
-            }
-        } else {
-            // destination exists
-            if (file_exists ($j4xTmbFile)) {
-                $stateThumb = J3X_IMG_ALREADY_MOVED;
-            }
-        }
-
-
+        $stateThumb = $this->RenameJ3xImageFile($j3xTmbFile, $j4xTmbFile);
+        
         //--- watermarked -----------------------------
 
+        // ToDo: move / copy watermarked
         $stateWatermarked = self::J3X_IMG_NOT_FOUND;
 
-//        $j3xTmbFile = $j3xImagePath->getThumbPath ($name);
-//        $j4xTmbFile = $j4xImagePath->getThumbPath ($name);
-//
-//        if (file_exists ($j3xTmbFile)) {
-//            rename($j3xTmbFile, $j4xTmbFile);
-//        }
-//
+//        $j3xWaterFile = $j3xImagePath->getThumbPath ($name);
+//        $j4xwaterFile = $j4xImagePath->getThumbPath ($name);
+//        
+//        $stateWatermarked = $this->RenameJ3xImageFile($j3xWaterFile, $j4xwaterFile);
 
         //--- Update image DB -----------------------------
 
@@ -2024,11 +1963,11 @@ EOT;
 
         // Is mved when all destionation images exist
         $isMoved = true;
-        $isMoved &= ($stateOriginal == J3X_IMG_MOVED || $stateOriginal == J3X_IMG_ALREADY_MOVED);
-        $isMoved &= ($stateDisplay == J3X_IMG_MOVED || $stateDisplay == J3X_IMG_ALREADY_MOVED);
-        $isMoved &= ($stateThumb == J3X_IMG_MOVED || $stateThumb == J3X_IMG_ALREADY_MOVED);
+        $isMoved &= ($stateOriginal == MaintenanceJ3xModel::J3X_IMG_MOVED || $stateOriginal == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
+        $isMoved &= ($stateDisplay == MaintenanceJ3xModel::J3X_IMG_MOVED || $stateDisplay == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
+        $isMoved &= ($stateThumb == MaintenanceJ3xModel::J3X_IMG_MOVED || $stateThumb == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
         // watermak exists and is copied ...
-        //$isMoved &= ($stateOriginal == J3X_IMG_MOVED || $stateOriginal == J3X_IMG_ALREADY_MOVED);
+        //$isMoved &= ($stateOriginal ==MaintenanceJ3xModel:: J3X_IMG_MOVED || $stateOriginal == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
 
         // ready for DB update ?
         if ($isMoved) {
@@ -2044,4 +1983,53 @@ EOT;
 
 
     /**/
+    /**
+     * @param string $j3xFile
+     * @param string $j4xFile
+     *
+     * @return array
+     *
+     * @since version
+     */
+    private function RenameJ3xImageFile(string $j3xFile, string $j4xFile)
+    {
+
+        $state = MaintenanceJ3xModel::J3X_IMG_NOT_FOUND;
+        
+        // source exist
+        if (file_exists($j3xFile)) {
+
+            // destination exists
+            if (file_exists($j4xFile)) {
+                $state = MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED;
+
+                // Delete original
+                unlink($j3xFile);
+            } else {
+
+                //---  do Move --------------------------------------------
+
+                $isMoved = rename($j3xFile, $j4xFile);
+
+                if ($isMoved) {
+                    $state = MaintenanceJ3xModel::J3X_IMG_MOVED;
+                } else {
+                    $state = MaintenanceJ3xModel::J3X_IMG_MOVING_FAILED;
+                }
+            }
+        } else {
+            // destination exists
+            if (file_exists($j4xFile)) {
+                $state = MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED;
+            } else {
+//                $state = J3X_IMG_NOT_FOUND;
+            }
+            
+        }
+        return $state;
+    }
+
+    privatze function .... is moved
+
+
 } // class

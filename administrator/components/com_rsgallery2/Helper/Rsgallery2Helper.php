@@ -53,17 +53,17 @@ class Rsgallery2Helper extends ContentHelper
 //		echo "\$vname: $vName <br>";
 
 
-        //--- toggle element ------------------------------------------------
-
-//        <span id="menu-collapse-icon" class="fas fa-fw fa-toggle-on" aria-hidden="true"></span>
-        \JHtmlSidebar::addEntry(
-            '<span Id="rsg2_toggle_sidebar" class="fas fa-fw fa-toggle-on" ></span>&nbsp;',
-            "#",
-            false);
-
-//        echo "<br>humpf<br>";
-
-        HTMLHelper::_('stylesheet', 'com_rsgallery2/sidebar.css', array('version' => 'auto', 'relative' => true));
+//        //--- toggle element ------------------------------------------------
+//
+////        <span id="menu-collapse-icon" class="fas fa-fw fa-toggle-on" aria-hidden="true"></span>
+//        \JHtmlSidebar::addEntry(
+//            '<span Id="rsg2_toggle_sidebar" class="fas fa-fw fa-toggle-on" ></span>&nbsp;',
+//            "#",
+//            false);
+//
+////        echo "<br>humpf<br>";
+//
+//        HTMLHelper::_('stylesheet', 'com_rsgallery2/sidebar.css', array('version' => 'auto', 'relative' => true));
 
 
         //--- standard form elements ----------------------------------------
@@ -111,7 +111,6 @@ class Rsgallery2Helper extends ContentHelper
             '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_MAINTENANCE') . '</span>',
             $link,
             $vName == 'maintenance');
-
 
 
         //--- Add develop view link ------------------------------------
