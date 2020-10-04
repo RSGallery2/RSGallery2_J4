@@ -20,8 +20,13 @@ interface Joomla {
     JText: {
         _(String)
     }
-    submitbutton: any;
-    submitform: any;
+
+    // submitbutton: any;
+    submitbutton (task: string, formSelector: string, validate: boolean|undefined|null) : void;
+    submitform (task, form: HTMLElement|undefined|null, validate: boolean|undefined|null) : void;
+
+    isChecked (isitchecked: boolean, form: string | undefined): boolean;
+    checkAll (elem: HTMLElement): void ;
 }
 
 /**/
@@ -126,7 +131,9 @@ class J3xImages2Move extends Queue<Ij3xFile> {
             this.push(next);
 
             // ToDo Remove
-            break;
+            if (this.length > 4) {
+                break;
+            }
         }
 
     }
@@ -185,7 +192,7 @@ function markImages_nGalleryTimes(maxGalleries: number) {
     let j3x_rows: HTMLElement [];
     let checkbox: HTMLInputElement;
     let galleryId: string;
-    let doCheck: boolean = true;
+    const doCheck: boolean = true;
 
     let galleries: string[] = [];
 
@@ -200,7 +207,7 @@ function markImages_nGalleryTimes(maxGalleries: number) {
         if (!isMerged) {
 
             galleryId = j3x_row.getAttribute("galleryId");
-            checkbox = <HTMLInputElement>j3x_row.querySelector('input[type="checkbox"]');
+            checkbox = <HTMLInputElement> j3x_row.querySelector('input[type="checkbox"]');
 
             // Assign if necessary
             if (checkbox.checked != doCheck) {
@@ -390,6 +397,35 @@ class GalleriesListTask {
 
         ev.preventDefault();
         ev.stopPropagation();
+
+        const checkGalleries = document.getElementsByName("cid[]");
+
+        let galleryIds: string [] = new Array ();
+
+        checkGalleries.forEach( checkGallery => {
+
+            const element = <HTMLInputElement> checkGallery;
+
+            // any check enables  button
+            if(element.checked) {
+                const Id = element.id;
+                const galleryId = Id.substring(2); // cb2
+                alert ("galleryId" +  galleryId)
+
+                galleryIds.push (galleryId);
+
+            }
+
+        })
+
+
+        galleryIds.forEach( galleryId => {
+
+            alert ("galleryIds: " + galleryIds);
+
+
+
+        })
 
         console.log(">onMoveByCheckedGalleries: ");
 
@@ -704,7 +740,7 @@ class RequestImageIdsTask {
             // badge gallery start
             const startBadge = createIconsBadge (
                 ["images"],
-                "info",
+                "primary",
                 j3xGallery.galleryId);
             j3xGallery.imgFlagArea.appendChild(startBadge);
 
@@ -934,6 +970,62 @@ function createIconsBadge (
     return imageBadge;
 }
 
+//---
+function badge4imageState (state:number, imageId:string, stateId:string, imgFlagArea: HTMLElement){
+// primary secondary success danger warning info light dark
+    let stateBadge: HTMLElement;
+    //const labelClass:string = "info";
+    const labelClass:string = "secondary";
+
+    // standard will not be shown
+    if (state != eImgMoveState.J3X_IMG_MOVED) {
+
+        switch (state)
+        {
+            case eImgMoveState.J3X_IMG_NOT_FOUND:
+
+                stateBadge = createIconsBadge(
+                    ["question-2"],
+                    labelClass,
+                    imageId + ':' + stateId);
+                break;
+
+            case eImgMoveState.J3X_IMG_ALREADY_MOVED:
+
+                stateBadge = createIconsBadge(
+                    ["move"],
+                    labelClass,
+                    imageId + ':' + stateId);
+                break;
+
+            case eImgMoveState.J3X_IMG_J3X_DELETED:
+
+                stateBadge = createIconsBadge(
+                    ["file-remove"],
+                    labelClass,
+                    imageId + ':' + stateId);
+                break;
+
+            case eImgMoveState.J3X_IMG_MOVING_FAILED:
+
+                stateBadge = createIconsBadge(
+                    ["warning-circle"],
+                    labelClass,
+                    imageId + ':' + stateId);
+
+                break;
+        }
+
+        imgFlagArea.appendChild(stateBadge);
+    }
+}
+
+
+
+
+
+
+
 
 
 /*----------------------------------------------------------------
@@ -1125,6 +1217,17 @@ function ajaxMessages2Html(AjaxResponse: IAjaxResponse, fileName: string): HTMLE
 /*----------------------------------------------------------------
      Ajax move files to server
 ----------------------------------------------------------------*/
+
+// state after move attempt
+enum eImgMoveState {
+    J3X_IMG_NOT_FOUND       = 0,
+    J3X_IMG_MOVED           = 1,
+    J3X_IMG_ALREADY_MOVED   = 2,
+    J3X_IMG_J3X_DELETED     = 3, //J4 exists and j3 is actively deleted
+    J3X_IMG_MOVING_FAILED   = 4,
+    J3X_IMG_MOVED_AND_DB    = 5
+}
+
 
 class MoveImagesTask {
 
@@ -1353,17 +1456,33 @@ class MoveImagesTask {
                         console.log("      response data.state_watermarked: " + moveData.state_watermarked);
                         console.log("      response data.state_image_db: " + moveData.state_image_db);
 
-                        // badge gallery success
-                        const successBadge = createIconsBadge (
-                            ["checkmark"],
-                            "success",
-                            j3xImage.id);
-                        j3xImage.imgFlagArea.appendChild(successBadge);
 
 
-                        // yyy reraction to states
+                        //--- reaction to states ------------------------------------------------
+
+                        badge4imageState (parseInt (moveData.state_original), j3xImage.id, 'O', j3xImage.imgFlagArea);
+                        badge4imageState (parseInt (moveData.state_display), j3xImage.id, 'D', j3xImage.imgFlagArea);
+                        badge4imageState (parseInt (moveData.state_thumb), j3xImage.id, 'T', j3xImage.imgFlagArea);
+                        // badge4imageState (parseInt (moveData.state_watermarked), j3xImage.id, 'W', j3xImage.imgFlagArea);
 
 
+                        //--- badge for all over state -----------------------------------
+
+                        // successful moved and DB
+                        if (parseInt(moveData.state_image_db) == eImgMoveState.J3X_IMG_MOVED_AND_DB) {
+
+                            // badge gallery success
+                            const successBadge = createImageFinishedBadge(j3xImage.id);
+                            j3xImage.imgFlagArea.appendChild(successBadge);
+
+                        } else {
+
+                            // badge4imageState (parseInt (moveData.state_thumb), j3xImage.id, 'A', j3xImage.imgFlagArea);
+
+                            // badge gallery failed
+                            const errorBadge = createImageErrorBadge(j3xImage.id);
+                            j3xImage.imgFlagArea.appendChild(errorBadge);
+                        }
 
 
                     } else {
@@ -1435,9 +1554,67 @@ class MoveImagesTask {
 
         console.log("    <this.j3xImages2Move.length: " + this.j3xImages2Move.length);
     }
+}
+
+function AssignCheckBoxEvents () {
+
+    //let checkAllToogle: HTMLInputElement;    // checkall-toggle
+    //let checkGalleries: HTMLInputElement []; // cid[]
+
+    let checkbox: HTMLInputElement;
+
+    const moveByCheckedGalleries = <HTMLInputElement> document.getElementById("moveByCheckedGalleries");
+
+    //--- handle "check all" on/off ----------------------------------------
+
+    const checkAllToogle = <HTMLInputElement>  (document.getElementsByName("checkall-toggle")[0]);
+
+    checkAllToogle.addEventListener("click", (event: Event) => {
+        let element = <HTMLInputElement> event.target;
+        moveByCheckedGalleries.disabled = ! element.checked;
+//        alert ('checked: ' + element.checked)
+//        alert("==> checkbox gallery");
+    });
+
+    //--- handle checked on/off (gallery line) ----------------------------
+
+    const checkGalleries = document.getElementsByName("cid[]");
+
+    checkGalleries.forEach( check => {
+
+        const checkbox = <HTMLInputElement> check;
+
+        checkbox.addEventListener("click", (event: Event) => {
+            const element = <HTMLInputElement> event.target;
+
+            // On checked enable button else ... others
+            moveByCheckedGalleries.disabled = ! element.checked;
+
+            // on uncheck find other checked item then enable
+            if(! element.checked) {
+
+                checkGalleries.forEach( checkGallery => {
+
+                    const other = <HTMLInputElement> checkGallery;
+
+                    // any check enables  button
+                    if(other.checked) {
+
+                        moveByCheckedGalleries.disabled = false;
+                        return;
+
+                    }
+
+                })
+            }
+        })
+    });
 
 
 }
+
+
+
 
 //======================================================================================
 // On start:  DOM is loaded and ready
@@ -1459,6 +1636,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     // assign click event for check boxes
 
+    AssignCheckBoxEvents ();
 
     // (3) ajax request: Move file to server
     const moveImagesTask = new MoveImagesTask(elements, j3xImages2Move);
@@ -1501,5 +1679,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 //    selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
 
+// media/system/js:
+// <input autocomplete="off" type="checkbox" name="checkall-toggle" value="" title="Check All Items" onclick="Joomla.checkAll(this)">
+// <input autocomplete="off" type="checkbox" id="cb2" name="cid[]" value="2" onclick="Joomla.isChecked(this.checked);">
 
+//
 });

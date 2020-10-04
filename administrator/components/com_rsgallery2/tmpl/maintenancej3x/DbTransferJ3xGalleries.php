@@ -523,7 +523,8 @@ EOT;
                 <!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-                <input type="hidden" name="task" value=""/>
+                <input type="hidden" name="boxchecked" value="0" />
+                <input type="hidden" name="task" value="" />
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>

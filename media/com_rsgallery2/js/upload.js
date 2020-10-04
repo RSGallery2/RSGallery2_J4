@@ -885,6 +885,7 @@ class TransferImagesTask {
                     console.log("      response data.fileUrl: " + transferData.fileUrl);
                     console.log("      response data.safeFileName: " + transferData.safeFileName);
                     console.log("      response data.thumbSize: " + transferData.thumbSize);
+
                     nextFile.statusBar.setOK(true);
                     this.showThumb(transferData);
                 }
@@ -1075,6 +1076,7 @@ class RequestZipUploadTask {
                             statusBar: null,
                             errorZone: null,
                         };
+
                         this.serverFiles.addFiles([serverFile]);
                     }
                     // ==> Start ajax transfer of files
@@ -1213,6 +1215,7 @@ class RequestFilesInFolderTask {
                         statusBar: null,
                         errorZone: null,
                     };
+
                     this.serverFiles.addFiles([serverFile]);
                 }
                 // ==> Start ajax transfer of files
@@ -1346,6 +1349,7 @@ class RequestTransferFolderFilesTask {
                     console.log("      response data.imageId: " + transferData.imageId);
                     console.log("      response data.fileUrl: " + transferData.fileUrl);
                     console.log("      response data.safeFileName: " + transferData.safeFileName);
+
                     nextFile.statusBar.setOK(true);
                     this.showThumb(transferData);
                 }

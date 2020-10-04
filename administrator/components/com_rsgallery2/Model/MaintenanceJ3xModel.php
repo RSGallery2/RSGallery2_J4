@@ -1957,17 +1957,18 @@ EOT;
 //        
 //        $stateWatermarked = $this->RenameJ3xImageFile($j3xWaterFile, $j4xwaterFile);
 
-        //--- Update image DB -----------------------------
+        //--- image states -----------------------------
 
         $stateImageDb = self::J3X_IMG_NOT_FOUND; // J3X_IMG_MOVED_AND_DB = 4;
 
         // Is mved when all destionation images exist
-        $isMoved = true;
-        $isMoved &= ($stateOriginal == MaintenanceJ3xModel::J3X_IMG_MOVED || $stateOriginal == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
-        $isMoved &= ($stateDisplay == MaintenanceJ3xModel::J3X_IMG_MOVED || $stateDisplay == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
-        $isMoved &= ($stateThumb == MaintenanceJ3xModel::J3X_IMG_MOVED || $stateThumb == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
+        $isMoved = $this->isMovedState ($stateOriginal)
+            & $this->isMovedState ($stateDisplay)
+            & $this->isMovedState ($stateThumb);
         // watermak exists and is copied ...
-        //$isMoved &= ($stateOriginal ==MaintenanceJ3xModel:: J3X_IMG_MOVED || $stateOriginal == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED);
+        //$isMoved &= $this->isMovedState ($stateWatermarked);
+
+        //--- Update image DB -----------------------------
 
         // ready for DB update ?
         if ($isMoved) {
@@ -2029,7 +2030,20 @@ EOT;
         return $state;
     }
 
-    privatze function .... is moved
+    private function isMovedState ($state)
+    {
+        $isMoved = false;
+
+        //
+        if(    $state == MaintenanceJ3xModel::J3X_IMG_MOVED
+            || $state == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED
+            || $state == MaintenanceJ3xModel::J3X_IMG_J3X_DELETED
+        ) {
+            $isMoved = true;
+        }
+
+        return $isMoved;
+    }
 
 
 } // class
