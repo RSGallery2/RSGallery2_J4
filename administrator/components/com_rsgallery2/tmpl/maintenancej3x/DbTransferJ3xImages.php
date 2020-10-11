@@ -281,15 +281,21 @@ EOT;
                         <th width="1%" class="text-center">
                             `name/alias/note`
                         </th>
-                        <th width="1%" class="text-center">
-                            `description`
-                        </th>
 
                         <th width="1%" class="text-center">
                             `gallery_id`
                         </th>
+
+                        <th width="1%" class="text-center">
+                            `use_j3x_location`
+                        </th>
+
                         <th width="1%" class="text-center">
                             `title`
+                        </th>
+
+                        <th width="1%" class="text-center">
+                            `description`
                         </th>
 
                         <th width="1%" class="text-center">
@@ -353,11 +359,6 @@ EOT;
                         <th width="1%" class="text-center">
                             `access`
                         </th>
-
-                        <th width="1%" class="text-center">
-                            `use_j3x_location`
-                        </th>
-
                     </tr>
                     </thead>
 
@@ -390,11 +391,11 @@ EOT;
                             </td>
 
                             <td class="text-center">
-                                <?php echo '"' . $item->description . '"'; ?>
+                                <?php echo $item->gallery_id; ?>
                             </td>
 
-                            <td class="text-center">
-                                <?php echo $item->gallery_id; ?>
+                            <td width="1%" class="text-center">
+                                <?php echo $item->use_j3x_location; ?>
                             </td>
 
                             <td class="text-center">
@@ -406,6 +407,10 @@ EOT;
                                     echo '???';
                                 }
                                 ?>
+                            </td>
+
+                            <td class="text-center">
+                                <?php echo '"' . $item->description . '"'; ?>
                             </td>
 
                             <td class="text-center">
@@ -540,11 +545,6 @@ EOT;
                             <td width="1%" class="text-center">
                                 <?php echo $item->access; ?>
                             </td>
-
-                            <td width="1%" class="text-center">
-                                <?php echo $item->use_j3x_location; ?>
-                            </td>
-
                         </tr>
                         <?php
                     }

@@ -23,6 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 /**
  * View class for a list of rsgallery2.
@@ -157,23 +158,27 @@ class HtmlView extends BaseHtmlView
             case 'MoveJ3xImages':
                 try
                 {
+                    // state ?
+                    $this->isMissingJ3xImages = ! $rsgConfig->get('j3x_images_copied');
 
-//                    $this->j3x_images = $j3xModel->j3x_imagesMergeList();
-//                    $this->j4x_images = $j3xModel->j4x_imagesMergeList();
-//
-//                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xImageIds ($this->j3x_images, $this->j4x_images);
-                    //[$this->j3x_imagesMerged, $this->j4x_imagesMerged] = $j3xModel->J3xJ4x_imagesMergedLists ();
+                    // J3x images exist
+                    if ($this->isMissingJ3xImages) {
+                        $this->j3x_galleries = $j3xModel->j3x_galleriesList();
+                        $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
-                    // ToDo: order by gallery id
-                    //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
-                    //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
+                        $this->galleryIdsJ3xAsJ4x = $j3xModel->j3x_transformGalleryIdsTo_j4x($this->j3x_galleries);
+                        $this->galleryIds4ImgsToBeMoved = $j3xModel->j3x_galleries4ImageMove($this->galleryIdsJ3xAsJ4x);
 
-                    //-----------------
-                    $this->j3x_galleries = $j3xModel->j3x_galleriesList();
-                    $this->j4x_galleries = $j3xModel->j4x_galleriesList();
+                        // finished by last call (move) ?  ToDo: call ajax check on empty list after move
+                        if(count($this->galleryIds4ImgsToBeMoved) == 0) {
 
-                    $this->galleryIds4ImgsToBeMoved = $j3xModel->j3x_galleries4ImageMove ($this->j3x_galleries);
+                            $this->isMissingJ3xImages = false;
+                            $rsgConfig->set('j3x_images_copied', true);
+                            ConfigRawModel::writeConfigParam ('j3x_images_copied', true);
+                        }
 
+                        $this->j3xGallerysData = $j3xModel->j3x_galleriesData($this->galleryIdsJ3xAsJ4x);
+                    }
 
                     //--- Form --------------------------------------------------------------------
 
@@ -190,12 +195,7 @@ class HtmlView extends BaseHtmlView
                         }
                     }
 
-
-
                     $this->form = $form;
-
-                    /**/
-
 
                 }
                 catch (\RuntimeException $e)
@@ -274,8 +274,6 @@ class HtmlView extends BaseHtmlView
 //     	    			. '* <br>'
 //				        . '* <br>'
 //     	    			. '* <br>'
-//				        . '* <br>'
-//     	    			. '* <br>'
 						. '</span><br>';
 				}
 
@@ -318,11 +316,7 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-                        . '* user should only see what is necessary: use debug / develop for others<br>'
-						. '* test partly moved images and <br>'
-	        			. '* a file already transferred should not result as false<br>'
-        				. '* User message when config is on j3x image path <br>'
-//		        		. '* <br>'
+		        		. '* <br>'
 //				        . '* <br>'
 //      				. '* <br>'
 //		        		. '* <br>'

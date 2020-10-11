@@ -251,10 +251,41 @@ class ConfigRawModel extends BaseModel
     }
 
 
+    /**
+     * Write single configuration parameter
+     * Use seldom and with care ! (+ separate set ;-) )
+     * @param string $param
+     * @param string $value
+     *
+     * @return bool
+     *
+     * @since version
+     */
+    public static function writeConfigParam ($param='', $value='')
+    {
 
+        // Load the current component params.
+        $params = ComponentHelper::getParams('com_rsgallery2');
+        // Set new value of param(s)
+        $params->set($param, $value);
 
+        // Save the parameters
+        $componentid = ComponentHelper::getComponent('com_rsgallery2')->id;
+        $table = Table::getInstance('extension');
+        $table->load($componentid);
+        $table->bind(array('params' => $params->toString()));
 
+        // check for error
+        if (!$table->check()) {
+            throw new \RuntimeException($table->getError());
+        }
+        // Save to database
+        if (!$table->store()) {
+            throw new \RuntimeException($table->getError());
+        }
 
+        return true;
+    }
 
 
 }

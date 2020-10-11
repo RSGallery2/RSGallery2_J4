@@ -67,10 +67,10 @@ class J3xImages2Move extends Queue {
                 imgFlagArea: gallery.imgFlagArea
             };
             this.push(next);
-            // ToDo Remove
-            if (this.length > 4) {
-                break;
-            }
+            // // Debug: restrict to 4 image per button click
+            // if (this.length > 4) {
+            //     break;
+            // }
         }
     }
 }
@@ -80,14 +80,17 @@ class J3xGalleries extends Queue {
             const gallery = galleries[idx];
             console.log('   +Gallery: ' + galleries[idx].name);
             //--- Add file with data ---------------------------------
-            const next = {
-                galleryId: gallery.galleryId,
-                name: gallery.name,
-                //statusBar: gallery.statusBar,
-                imgFlagArea: gallery.imgFlagArea,
-                errorZone: gallery.errorZone
-            };
-            this.push(next);
+            // const next: Ij3xGallery = {
+            //     galleryId: gallery.galleryId,
+            //     name: gallery.name,
+            //
+            //     //statusBar: gallery.statusBar,
+            //     imgFlagArea: gallery.imgFlagArea,
+            //     errorZone: gallery.errorZone
+            // };
+            //
+            // this.push(next);
+            this.push(gallery);
         }
     }
 }
@@ -240,62 +243,58 @@ class GalleriesListTask {
         //let element = <HTMLInputElement>ev.target;
         ev.preventDefault();
         ev.stopPropagation();
+        console.log(">onMoveByCheckedGalleries: ");
+        // all checked elements
         const checkGalleries = document.getElementsByName("cid[]");
-        let galleryIds = new Array();
         checkGalleries.forEach(checkGallery => {
             const element = checkGallery;
-            // any check enables  button
+            // use checked galleries
             if (element.checked) {
-                const Id = element.id;
-                const galleryId = Id.substring(2); // cb2
-                alert("galleryId" + galleryId);
-                galleryIds.push(galleryId);
+                const gallery_id = element.value; // cb2
+                // alert ("galleryId" +  gallery_id)
+                const galleryLink = document.getElementById('galleryId_' + gallery_id);
+                const gallery_name = galleryLink.innerText;
+                const imgFlagArea = document.getElementById('ImgFlagsArea_' + gallery_id);
+                const actGallery = {
+                    galleryId: gallery_id,
+                    name: gallery_name,
+                    // statusBar: null,
+                    imgFlagArea: imgFlagArea,
+                    errorZone: null
+                };
+                this.j3xGalleries.addGalleries([actGallery]);
             }
         });
-        galleryIds.forEach(galleryId => {
-            alert("galleryIds: " + galleryIds);
-        });
-        console.log(">onMoveByCheckedGalleries: ");
-        // // gallery id
-        // const selectionHTML = <HTMLInputElement>this.selectGallery;
-        // //const gallery_id =  parseInt (selectionHTML.value);
-        // const gallery_id = selectionHTML.value;
-        //
-        // // prevent empty gallery
-        // if (parseInt(gallery_id) < 1) {
-        //     alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
-        //     console.log(">onNewFile: Rejected");
-        // } else {
-        //
-        //     console.log(">onNewFile: " + files.length);
-        //     this.j3xGalleries.addFiles(files, gallery_id);
-        //
-        //     // Start ajax request of DB image reservation
-        //     this.requestImageIdsTask.ajaxRequest();
-        // }
+        // Start ajax request of DB image reservation
+        this.requestImageIdsTask.ajaxRequest();
     }
     onMoveAllGalleries(ev) {
         let element = ev.target;
         ev.preventDefault();
         ev.stopPropagation();
         console.log(">onMoveAllGalleries: ");
-        // // gallery id
-        // const selectionHTML = <HTMLInputElement>this.selectGallery;
-        // //const gallery_id =  parseInt (selectionHTML.value);
-        // const gallery_id = selectionHTML.value;
-        //
-        // // prevent empty gallery
-        // if (parseInt(gallery_id) < 1) {
-        //     alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
-        //     console.log(">onNewFile: Rejected");
-        // } else {
-        //
-        //     console.log(">onNewFile: " + files.length);
-        //     this.j3xGalleries.addFiles(files, gallery_id);
-        //
-        //     // Start ajax request of DB image reservation
-        //     this.requestImageIdsTask.ajaxRequest();
-        // }
+        // lazy programmers all galleries:
+        //     instead of ajax call use all galleries loaded
+        // all checked elements
+        const checkGalleries = document.getElementsByName("cid[]");
+        checkGalleries.forEach(checkGallery => {
+            const element = checkGallery;
+            const gallery_id = element.value; // cb2
+            //alert ("galleryId" +  gallery_id)
+            const galleryLink = document.getElementById('galleryId_' + gallery_id);
+            const gallery_name = galleryLink.innerText;
+            const imgFlagArea = document.getElementById('ImgFlagsArea_' + gallery_id);
+            const actGallery = {
+                galleryId: gallery_id,
+                name: gallery_name,
+                // statusBar: null,
+                imgFlagArea: imgFlagArea,
+                errorZone: null
+            };
+            this.j3xGalleries.addGalleries([actGallery]);
+        });
+        // Start ajax request of DB image reservation
+        this.requestImageIdsTask.ajaxRequest();
     }
 } // class GalleriesListTask
 /*----------------------------------------------------------------
@@ -456,9 +455,12 @@ class RequestImageIdsTask {
         while (this.j3xGalleries.length > 0) {
             let j3xGallery = this.j3xGalleries.shift();
             console.log("   @Request File: " + j3xGallery.name);
-            // badge gallery start
-            const startBadge = createIconsBadge(["images"], "primary", j3xGallery.galleryId);
-            j3xGallery.imgFlagArea.appendChild(startBadge);
+            // // badge gallery start
+            // const startBadge = createIconsBadge (
+            //     ["images"],
+            //     "primary",
+            //     j3xGallery.galleryId);
+            // j3xGallery.imgFlagArea.appendChild(startBadge);
             /* let request = */
             //await this.callAjaxRequest(j3xGallery)
             this.callAjaxRequest(j3xGallery)
@@ -499,7 +501,14 @@ class RequestImageIdsTask {
                     let image_ids = dbData.image_ids;
                     this.j3xImages2Move.addImages(image_ids, j3xGallery);
                     // badge gallery success
-                    const successBadge = createIconsBadge(["images"], "success", j3xGallery.galleryId + ': ' + image_ids.length);
+                    // const successBadge = createIconsBadge (
+                    //     ["images"],
+                    //     "success",
+                    //     j3xGallery.galleryId + ': ' + image_ids.length);
+                    // j3xGallery.imgFlagArea.appendChild(successBadge);
+                    const successBadge = createIconsBadge(["images", "move"], "success", 
+                    // j3xGallery.galleryId + ': ' + image_ids.length);
+                    image_ids.length.toString());
                     j3xGallery.imgFlagArea.appendChild(successBadge);
                     // ==> Start ajax move of files
                     this.moveImagesTask.ajaxMove();
@@ -1116,28 +1125,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const requestImageIdsTask = new RequestImageIdsTask(elements, j3xGalleries, j3xImages2Move, moveImagesTask);
     //                                                   j3xGalleries, j3xImages2Move, moveImagesTask);
     // (1) collect galleries, start request galleries from DB
-    const galleriesListTask = new GalleriesListTask(elements, j3xGalleries, requestImageIdsTask); //,
-    // zipFiles, requestZipUploadTask,
-    // serverFolder,
-    // serverFiles, requestFilesInFolderTask,
-    // requestMoveFolderFilesTask);
-    //    selectGallery : HTMLInputElement;
-    // buttonPresetNextGallery : HTMLAnchorElement;
-    // fileInput : HTMLButtonElement;
-    // let selectGallery = <HTMLSelectElement> document.getElementById('SelectGallery');
-    // selectGallery.onclick = (ev) => onSelectionChange (ev.target);
-    //
-    //    buttonSetNextGalleryFiles.onclick = (ev) => onSelectionChange (ev.target);
-    //let fileInput = <HTMLInputElement> document.querySelector('#config_file');
-    // buttonManualFiles.onclick = () => {
-    //     alert ("buttonManualFiles.onclick href:" + buttonManualFiles.getAttribute('href'));
-    //     //fileInput.click();
-    //     //joomla.submitbutton(buttonManualFiles.getAttribute('href'));
-    //
-    // }
-    //    selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
-    // media/system/js:
-    // <input autocomplete="off" type="checkbox" name="checkall-toggle" value="" title="Check All Items" onclick="Joomla.checkAll(this)">
-    // <input autocomplete="off" type="checkbox" id="cb2" name="cid[]" value="2" onclick="Joomla.isChecked(this.checked);">
-    //
+    const galleriesListTask = new GalleriesListTask(elements, j3xGalleries, requestImageIdsTask);
 });

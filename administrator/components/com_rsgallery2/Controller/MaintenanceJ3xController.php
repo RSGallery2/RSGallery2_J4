@@ -21,7 +21,8 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Table\Table;
+
+use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 
 /**
@@ -179,7 +180,7 @@ class MaintenanceJ3xController extends AdminController
 
                 if ($isOk) {
 
-                    $isOk = $this ->writeConfigParam ('j3x_db_galleries_copied',true);
+                    $isOk = ConfigRawModel::writeConfigParam ('j3x_db_galleries_copied', true);
 
                     $msg .= "Successful applied J3x gallery items";
                 } else {
@@ -281,7 +282,7 @@ class MaintenanceJ3xController extends AdminController
                 $isOk = $j3xModel->copyDbAllJ3xImages2J4x();
                 if ($isOk) {
                     // Tell
-                    $isOk = $this ->writeConfigParam ('j3x_db_images_copied',true);
+                    $isOk = ConfigRawModel::writeConfigParam ('j3x_db_images_copied', true);
 
                     $msg .= "Successful applied J3x image items";
                 } else {
@@ -338,7 +339,7 @@ class MaintenanceJ3xController extends AdminController
 //
 //                $isOk = $j3xModel->moveImagesJ3x2J4xById($j3x_imageIds);
 //                if ($isOk) {
-//                    $isOk = $this ->writeConfigParam ('j3x_images_copied',true);
+//                    $isOk = ConfigRawModel::writeConfigParam ('j3x_images_copied', true);
 //
 //                    $msg .= "Successful moved all J3x image files";
 //                    $msgType = 'success'; // ToDo: use in all controllers
@@ -585,33 +586,6 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-
-    protected function writeConfigParam ($param='', $value='')
-    {
-
-        // Load the current component params.
-        $params = ComponentHelper::getParams('com_rsgallery2');
-        // Set new value of param(s)
-        $params->set($param, $value);
-
-        // Save the parameters
-        $componentid = ComponentHelper::getComponent('com_rsgallery2')->id;
-        $table = Table::getInstance('extension');
-        $table->load($componentid);
-        $table->bind(array('params' => $params->toString()));
-
-        // check for error
-        if (!$table->check()) {
-            echo $table->getError();
-            return false;
-        }
-        // Save to database
-        if (!$table->store()) {
-            echo $table->getError();
-            return false;
-        }
-        return true;
-    }
 
     /**
      * From given gallery id all matching images are collected

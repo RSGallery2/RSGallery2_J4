@@ -11,5 +11,23 @@
 }
 
 
+.allJ3xMovedArea {
 
+  padding: 50px 0 0 0;
 
+//  border: 1px solid red;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.allJ3xMovedText {
+
+  padding: 50px 25px;
+  font-size: 1.5em;
+  border: 2px solid black;
+  border-radius: 0.4rem;
+
+  box-shadow: 4px 7px #888888;
+}

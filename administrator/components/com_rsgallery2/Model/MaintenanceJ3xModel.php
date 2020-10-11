@@ -1599,23 +1599,64 @@ EOT;
     J3x image physical move
     ===================================================================================================*/
 
-    public function j3x_galleries4ImageMove($j3x_galleries)
+    public function j3x_transformGalleryIdsTo_j4x ($j3x_galleries) {
+
+        $j4xGalleryIds = [];
+
+        foreach ($j3x_galleries as $j3x_gallery) {
+            $j4xGalleryIds[] = $j3x_gallery->id + 1;
+        }
+
+        return $j4xGalleryIds;
+    }
+
+    public function j3x_galleriesData ($j4x_galleryIds) {
+
+        $j3xGalleryData = [];
+
+        foreach ($j4x_galleryIds as $j4x_galleryId) {
+
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
+            // count gallery items
+            $query->select('COUNT(*)')
+                ->from('#__rsg2_images')
+                ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
+                ->where($db->quoteName('use_j3x_location') . ' = 1')
+            ;
+
+            $db->setQuery($query, 0, 1);
+            $imgToBeMoved = $db->loadResult();
+
+            $query = $db->getQuery(true);
+            // count gallery items
+            $query->select('COUNT(*)')
+                ->from('#__rsg2_images')
+                ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
+            ;
+
+            $db->setQuery($query, 0, 1);
+            $imgAvailable = $db->loadResult();
+
+            // $data = {}; // ...
+            $data ['toBeMoved'] = $imgToBeMoved;
+            $data ['count'] = $imgAvailable;
+            $j3xGalleryData [$j4x_galleryId] = $data;
+        }
+
+        return $j3xGalleryData;
+    }
+
+    public function j3x_galleries4ImageMove($j4xGalleryIds)
     {
         $galleryIds4ImgsToBeMoved = []; // ToDo: array() ==> []
 
         try {
-            $j4xGalleryIds = [];
-
-            foreach ($j3x_galleries as $j3x_gallery) {
-                $j4xGalleryIds[] = $j3x_gallery->id + 1;
-            }
 
             $db = Factory::getDbo();
             $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
             $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
 
-
-            $db = Factory::getDbo();
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('distinct `gallery_id`')
@@ -1635,7 +1676,6 @@ EOT;
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
-
 
         return $galleryIds4ImgsToBeMoved;
     }

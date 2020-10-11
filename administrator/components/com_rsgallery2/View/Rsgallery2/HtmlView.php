@@ -68,9 +68,9 @@ class HtmlView extends BaseHtmlView
 	protected $isConfigSavedOnce;
 
     protected $isJ3xDataExisting;
-    protected $isIsMissingJ3xDbGalleries;
-    protected $isIsMissingJ3xDbImages;
-    protected $isIsMissingJ3xImages;
+    protected $isMissingJ3xDbGalleries;
+    protected $isMissingJ3xDbImages;
+    protected $isMissingJ3xImages;
 
 	/**
 	 * Method to display the view.
@@ -120,6 +120,7 @@ class HtmlView extends BaseHtmlView
                 $isCopied = $j3xModel->collectAndCopyJ3xConfig2J4xOptions ();
                 if ($isCopied) {
                     $rsgConfig->set('j3x_db_config_copied', true);
+                    ConfigRawModel::writeConfigParam ('j3x_db_config_copied', true);
                 }
             }
 
@@ -190,8 +191,17 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '*  Install: documentation<br>'
-				. '*  Use _CFG_ in ?variable? names<br>'
+				. '* Install: documentation<br>'
+				. '* Use _CFG_ in ?variable? names<br>'
+				. '* General: ts: separate script (library) for "easy" ajax calls<br>'
+				. '* title in taskbar images  <br>'
+				. '* config as item in toolbar<br>'
+                . '* User message when config is on j3x image path <br>'
+                . '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 // May have to be checked again ?:	. '*  deprecated Factory::getApplication()->getIdentity() ==> $app->getIdentity()<br>'
 //        Factory::getApplication()->getIdentity()
 //	      $app  = Factory::getApplication();

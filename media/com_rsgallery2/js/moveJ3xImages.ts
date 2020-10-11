@@ -130,10 +130,10 @@ class J3xImages2Move extends Queue<Ij3xFile> {
 
             this.push(next);
 
-            // ToDo Remove
-            if (this.length > 4) {
-                break;
-            }
+            // // Debug: restrict to 4 image per button click
+            // if (this.length > 4) {
+            //     break;
+            // }
         }
 
     }
@@ -161,19 +161,20 @@ class J3xGalleries extends Queue<Ij3xGallery> {
 
             console.log('   +Gallery: ' + galleries[idx].name);
 
-
             //--- Add file with data ---------------------------------
 
-            const next: Ij3xGallery = {
-                galleryId: gallery.galleryId,
-                name: gallery.name,
+            // const next: Ij3xGallery = {
+            //     galleryId: gallery.galleryId,
+            //     name: gallery.name,
+            //
+            //     //statusBar: gallery.statusBar,
+            //     imgFlagArea: gallery.imgFlagArea,
+            //     errorZone: gallery.errorZone
+            // };
+            //
+            // this.push(next);
 
-                //statusBar: gallery.statusBar,
-                imgFlagArea: gallery.imgFlagArea,
-                errorZone: gallery.errorZone
-            };
-
-            this.push(next);
+            this.push(gallery);
         }
 
     }
@@ -200,7 +201,7 @@ function markImages_nGalleryTimes(maxGalleries: number) {
     j3x_rows = <HTMLElement []>Array.from(document.getElementsByName("j3x_img_row[]"));
 
     //j3x_images
-    j3x_rows.forEach((j3x_row) => {
+    j3x_rows.forEach ((j3x_row) => {
         let isMerged = j3x_row.getAttribute("isMerged");
 
         // count not merged galleries
@@ -398,56 +399,42 @@ class GalleriesListTask {
         ev.preventDefault();
         ev.stopPropagation();
 
+        console.log(">onMoveByCheckedGalleries: ");
+
+        // all checked elements
         const checkGalleries = document.getElementsByName("cid[]");
-
-        let galleryIds: string [] = new Array ();
-
-        checkGalleries.forEach( checkGallery => {
+        checkGalleries.forEach ( checkGallery => {
 
             const element = <HTMLInputElement> checkGallery;
 
-            // any check enables  button
-            if(element.checked) {
-                const Id = element.id;
-                const galleryId = Id.substring(2); // cb2
-                alert ("galleryId" +  galleryId)
+            // use checked galleries
+            if (element.checked) {
 
-                galleryIds.push (galleryId);
+                const gallery_id = element.value; // cb2
+                // alert ("galleryId" +  gallery_id)
 
+                const galleryLink = <HTMLElement>document.getElementById('galleryId_' + gallery_id);
+                const gallery_name = galleryLink.innerText;
+
+                const imgFlagArea = <HTMLElement>document.getElementById('ImgFlagsArea_' + gallery_id);
+
+                const actGallery: Ij3xGallery = {
+                    galleryId: gallery_id,
+                    name: gallery_name,
+
+                    // statusBar: null,
+                    imgFlagArea: imgFlagArea,
+                    errorZone: null
+                };
+
+                this.j3xGalleries.addGalleries([actGallery]);
             }
 
         })
 
-
-        galleryIds.forEach( galleryId => {
-
-            alert ("galleryIds: " + galleryIds);
-
-
-
-        })
-
-        console.log(">onMoveByCheckedGalleries: ");
-
-        // // gallery id
-        // const selectionHTML = <HTMLInputElement>this.selectGallery;
-        // //const gallery_id =  parseInt (selectionHTML.value);
-        // const gallery_id = selectionHTML.value;
-        //
-        // // prevent empty gallery
-        // if (parseInt(gallery_id) < 1) {
-        //     alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
-        //     console.log(">onNewFile: Rejected");
-        // } else {
-        //
-        //     console.log(">onNewFile: " + files.length);
-        //     this.j3xGalleries.addFiles(files, gallery_id);
-        //
-        //     // Start ajax request of DB image reservation
-        //     this.requestImageIdsTask.ajaxRequest();
-        // }
+        // Start ajax request of DB image reservation
+        this.requestImageIdsTask.ajaxRequest();
     }
-
 
     onMoveAllGalleries(ev: MouseEvent) {
         let element = <HTMLInputElement>ev.target;
@@ -456,24 +443,40 @@ class GalleriesListTask {
         ev.stopPropagation();
 
         console.log(">onMoveAllGalleries: ");
+        
+        // lazy programmers all galleries:
+        //     instead of ajax call use all galleries loaded
 
-        // // gallery id
-        // const selectionHTML = <HTMLInputElement>this.selectGallery;
-        // //const gallery_id =  parseInt (selectionHTML.value);
-        // const gallery_id = selectionHTML.value;
-        //
-        // // prevent empty gallery
-        // if (parseInt(gallery_id) < 1) {
-        //     alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
-        //     console.log(">onNewFile: Rejected");
-        // } else {
-        //
-        //     console.log(">onNewFile: " + files.length);
-        //     this.j3xGalleries.addFiles(files, gallery_id);
-        //
-        //     // Start ajax request of DB image reservation
-        //     this.requestImageIdsTask.ajaxRequest();
-        // }
+        // all checked elements
+        const checkGalleries = document.getElementsByName("cid[]");
+        checkGalleries.forEach ( checkGallery => {
+
+            const element = <HTMLInputElement> checkGallery;
+
+            const gallery_id = element.value; // cb2
+            //alert ("galleryId" +  gallery_id)
+
+            const galleryLink = <HTMLElement>document.getElementById('galleryId_' + gallery_id);
+            const gallery_name = galleryLink.innerText;
+
+            const imgFlagArea = <HTMLElement>document.getElementById('ImgFlagsArea_' + gallery_id);
+
+            const actGallery: Ij3xGallery = {
+                galleryId: gallery_id,
+                name: gallery_name,
+
+                // statusBar: null,
+                imgFlagArea: imgFlagArea,
+                errorZone: null
+            };
+
+            this.j3xGalleries.addGalleries([actGallery]);
+
+        })
+
+        // Start ajax request of DB image reservation
+        this.requestImageIdsTask.ajaxRequest();
+
     }
 
 
@@ -737,12 +740,12 @@ class RequestImageIdsTask {
             let j3xGallery = this.j3xGalleries.shift();
             console.log("   @Request File: " + j3xGallery.name);
 
-            // badge gallery start
-            const startBadge = createIconsBadge (
-                ["images"],
-                "primary",
-                j3xGallery.galleryId);
-            j3xGallery.imgFlagArea.appendChild(startBadge);
+            // // badge gallery start
+            // const startBadge = createIconsBadge (
+            //     ["images"],
+            //     "primary",
+            //     j3xGallery.galleryId);
+            // j3xGallery.imgFlagArea.appendChild(startBadge);
 
             /* let request = */
             //await this.callAjaxRequest(j3xGallery)
@@ -793,10 +796,16 @@ class RequestImageIdsTask {
                         this.j3xImages2Move.addImages(image_ids, j3xGallery);
 
                         // badge gallery success
+                        // const successBadge = createIconsBadge (
+                        //     ["images"],
+                        //     "success",
+                        //     j3xGallery.galleryId + ': ' + image_ids.length);
+                        // j3xGallery.imgFlagArea.appendChild(successBadge);
                         const successBadge = createIconsBadge (
-                            ["images"],
+                            ["images", "move"],
                             "success",
-                            j3xGallery.galleryId + ': ' + image_ids.length);
+                            // j3xGallery.galleryId + ': ' + image_ids.length);
+                            image_ids.length.toString());
                         j3xGallery.imgFlagArea.appendChild(successBadge);
 
                         // ==> Start ajax move of files
@@ -1580,7 +1589,7 @@ function AssignCheckBoxEvents () {
 
     const checkGalleries = document.getElementsByName("cid[]");
 
-    checkGalleries.forEach( check => {
+    checkGalleries.forEach ( check => {
 
         const checkbox = <HTMLInputElement> check;
 
@@ -1593,7 +1602,7 @@ function AssignCheckBoxEvents () {
             // on uncheck find other checked item then enable
             if(! element.checked) {
 
-                checkGalleries.forEach( checkGallery => {
+                checkGalleries.forEach ( checkGallery => {
 
                     const other = <HTMLInputElement> checkGallery;
 
@@ -1649,39 +1658,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     // (1) collect galleries, start request galleries from DB
     const galleriesListTask = new GalleriesListTask(elements,
-        j3xGalleries, requestImageIdsTask); //,
-    // zipFiles, requestZipUploadTask,
-    // serverFolder,
-    // serverFiles, requestFilesInFolderTask,
-    // requestMoveFolderFilesTask);
-
-
-//    selectGallery : HTMLInputElement;
-
-    // buttonPresetNextGallery : HTMLAnchorElement;
-    // fileInput : HTMLButtonElement;
-
-    // let selectGallery = <HTMLSelectElement> document.getElementById('SelectGallery');
-    // selectGallery.onclick = (ev) => onSelectionChange (ev.target);
-
-    //
-
-
-//    buttonSetNextGalleryFiles.onclick = (ev) => onSelectionChange (ev.target);
-    //let fileInput = <HTMLInputElement> document.querySelector('#config_file');
-
-    // buttonManualFiles.onclick = () => {
-    //     alert ("buttonManualFiles.onclick href:" + buttonManualFiles.getAttribute('href'));
-    //     //fileInput.click();
-    //     //joomla.submitbutton(buttonManualFiles.getAttribute('href'));
-    //
-    // }
-
-//    selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
-
-// media/system/js:
-// <input autocomplete="off" type="checkbox" name="checkall-toggle" value="" title="Check All Items" onclick="Joomla.checkAll(this)">
-// <input autocomplete="off" type="checkbox" id="cb2" name="cid[]" value="2" onclick="Joomla.isChecked(this.checked);">
-
-//
+        j3xGalleries, requestImageIdsTask); 
+    
 });
