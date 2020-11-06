@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\RSGallery2\Administrator\Model;
+namespace Joomla\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 

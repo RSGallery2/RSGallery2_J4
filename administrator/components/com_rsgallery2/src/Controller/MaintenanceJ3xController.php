@@ -8,7 +8,7 @@
  * RSGallery is Free Software
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Controller;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
 \defined('_JEXEC') or die;
 
