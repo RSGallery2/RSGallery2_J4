@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -118,7 +118,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' =
 /**
  * Just displays the logo as svg
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function DisplayRSG2Logo()
 {
@@ -137,7 +137,7 @@ function DisplayRSG2Logo()
 ///**
 // * Displays
 // *
-// * @since version
+// * @since __BUMP_VERSION__
 // */
 //function DisplayRequestSaveConfigOnce()
 //{
@@ -168,7 +168,7 @@ function DisplayRSG2Logo()
 /**
  * Displays info and links to needed j3x action
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function DisplayRequestJ3xActions($isMissingJ3xDbGalleries=false,
                                     $isMissingJ3xDbImages=false,
@@ -246,7 +246,7 @@ EOT;
  * @param $buttons
  *
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function DisplayRSG2ControlButtons($buttons)
 {
@@ -273,7 +273,7 @@ function DisplayRSG2ControlButtons($buttons)
  * @param $Rsg2Version
  *
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function DisplayAboutRsgallery2($Rsg2Version)
 {
@@ -517,7 +517,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
  * @param $changelogs
  *
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function DisplayChangeLog($changelogs)
 {
@@ -533,7 +533,7 @@ function DisplayChangeLog($changelogs)
  *
  * @return string
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function tableFromXml($changelogs)
 {
@@ -552,7 +552,7 @@ function tableFromXml($changelogs)
  * @param $credits
  *
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function DisplayCredits($credits)
 {
@@ -570,7 +570,7 @@ function DisplayCredits($credits)
  * @param $externalLicenses
  *
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function DisplayExternalLicenses($externalLicenses)
 {
@@ -589,7 +589,7 @@ function DisplayExternalLicenses($externalLicenses)
  * @param $id
  *
  *
- * @since version
+ * @since __BUMP_VERSION__
  */
 function collapseContent($title, $content, $id)
 {

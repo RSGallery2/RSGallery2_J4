@@ -8,7 +8,7 @@
  * @link       https://www.rsgallery2.org
  */
 // No direct access to this file
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -39,7 +39,7 @@ use Joomla\CMS\Log\Log;
 /**
  * Script file of Rsgallery2 Component
  *
- * @since  version
+ * @since __BUMP_VERSION__
  *
  */
 class Com_Rsgallery2InstallerScript
@@ -51,12 +51,12 @@ class Com_Rsgallery2InstallerScript
 
     /**
      * @var string
-     * @since version
+     * @since __BUMP_VERSION__
      */
     private $minimumJoomla;
     /**
      * @var string
-     * @since version
+     * @since __BUMP_VERSION__
      */
     private $minimumPhp;
 
@@ -67,7 +67,7 @@ class Com_Rsgallery2InstallerScript
     /**
      * Extension script constructor.
      *
-     * @since  version
+     * @since __BUMP_VERSION__
      *
      */
     public function __construct()
@@ -115,7 +115,7 @@ class Com_Rsgallery2InstallerScript
      * @return  boolean  True on success
      *
      * @throws Exception
-     * @since   3.7.0
+     * @since __BUMP_VERSION__
      */
     public function preflight($type, $installer)
     {
@@ -183,7 +183,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  version
+     * @since __BUMP_VERSION__
      *
      */
     public function install($parent)
@@ -210,7 +210,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  version
+     * @since __BUMP_VERSION__
      *
      */
     public function update($parent)
@@ -240,7 +240,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  version
+     * @since __BUMP_VERSION__
      *
      */
     public function postflight($type, $parent)
@@ -316,7 +316,7 @@ class Com_Rsgallery2InstallerScript
      *
      * @return  boolean  True on success
      *
-     * @since  version
+     * @since __BUMP_VERSION__
      *
      */
     public function uninstall($parent)
@@ -334,7 +334,7 @@ class Com_Rsgallery2InstallerScript
      * @return bool
      * @throws Exception
      *
-     * @since version
+     * @since __BUMP_VERSION__
      */
     protected  function initGalleryTree()
     {
@@ -382,7 +382,7 @@ class Com_Rsgallery2InstallerScript
      * @return bool
      * @throws Exception
      *
-     * @since version
+     * @since __BUMP_VERSION__
      */
     protected function installMessage($type)
     {
@@ -414,7 +414,7 @@ class Com_Rsgallery2InstallerScript
      * @return mixed|string
      *
      * @throws Exception
-     * @since version
+     * @since __BUMP_VERSION__
      */
     protected function getVersionFromManifestParam()
     {
@@ -439,7 +439,7 @@ class Com_Rsgallery2InstallerScript
      * @return array
      *
      * @throws Exception
-     * @since version
+     * @since __BUMP_VERSION__
      */
     protected function readRsg2ExtensionManifest()
     {
@@ -479,7 +479,7 @@ class Com_Rsgallery2InstallerScript
      * @return bool
      * @throws Exception
      *
-     * @since version
+     * @since __BUMP_VERSION__
      */
     protected function isJ3xRsg2DataExisting()
     {
@@ -509,7 +509,7 @@ class Com_Rsgallery2InstallerScript
      * @return bool
      * @throws Exception
      *
-     * @since version
+     * @since __BUMP_VERSION__
      */
     protected function copyJ3xDbTables()
     {

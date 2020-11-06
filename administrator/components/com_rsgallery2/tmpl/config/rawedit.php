@@ -6,7 +6,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die();
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -28,7 +28,7 @@ ksort($configVars);
  *
  * @param string $name  name of config variable
  * @param string $value of config variable
- * @since 4.3.0
+ * @since __BUMP_VERSION__
  */
 function configInputField($name = 'unknown', $value = '')
 {

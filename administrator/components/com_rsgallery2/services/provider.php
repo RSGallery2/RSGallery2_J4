@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
 use Joomla\CMS\Extension\ComponentInterface;
@@ -23,7 +23,7 @@ use Joomla\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
  * The rsgallery2 service provider.
  * https://github.com/joomla/joomla-cms/pull/20217
  *
- * @since  1.0.0
+ * @since __BUMP_VERSION__
  */
 return new class implements ServiceProviderInterface
 {
@@ -34,7 +34,7 @@ return new class implements ServiceProviderInterface
 	 *
 	 * @return  void
 	 *
-	 * @since   1.0.0
+	 * @since __BUMP_VERSION__
 	 */
 	public function register(Container $container)
 	{
