@@ -7,14 +7,14 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Association\AssociationExtensionHelper;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
-use Joomla\Component\Rsgallery2\Site\Helper\AssociationHelper;
+use Rsgallery2\Component\Rsgallery2\Site\Helper\AssociationHelper;
 
 /**
  * Content associations helper.
@@ -124,7 +124,7 @@ class AssociationsHelper extends AssociationExtensionHelper
 		switch ($typeName)
 		{
 			case 'rsgallery2':
-				$table = Table::getInstance('Rsgallery2Table', 'Joomla\\Component\\Rsgallery2\\Administrator\\Table\\');
+				$table = Table::getInstance('Rsgallery2Table', 'Rsgallery2\\Component\\Rsgallery2\\Administrator\\Table\\');
 				break;
 
 			case 'category':

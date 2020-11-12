@@ -10,7 +10,7 @@
  * RSGallery is Free Software
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 \defined('_JEXEC') or die;
 

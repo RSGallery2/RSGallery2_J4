@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Field\Modal;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Field\Modal;
 
 defined('JPATH_BASE') or die;
 

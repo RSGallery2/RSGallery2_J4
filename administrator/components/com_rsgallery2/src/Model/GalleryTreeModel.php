@@ -8,7 +8,7 @@
  * @link       https://www.rsgallery2.org
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Model;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 

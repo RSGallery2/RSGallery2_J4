@@ -21,7 +21,7 @@ use Joomla\CMS\Log\Log;
 //use Rsgallery2\Helper\Rsg2InstallTasks;
 
 
-////use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
+////use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 ////require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
 //$localDir = str_replace("\\","/",dirname(__FILE__));
 //$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
@@ -32,7 +32,7 @@ use Joomla\CMS\Log\Log;
 //\JLoader::register($rsg2ClassName, $rsg2FileName);
 //\JLoader::load($rsg2ClassName);
 //
-////use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
+////use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 // ToDo: More logs after action
 
@@ -251,17 +251,24 @@ class Com_Rsgallery2InstallerScript
 
             case 'install':
 
-                // Nested gallery table needs a root item
+                Log::add('post->install: init gallery tree', Log::INFO, 'rsg2');
+				
+				// Nested gallery table needs a root item
                 $isGalleryTreeCreated = $this->initGalleryTree();
 
-                $installMsg = $this->installMessage($type);
-                echo $installMsg;
+                Log::add('post->install: install message', Log::INFO, 'rsg2');
+				
+                //$installMsg = $this->installMessage($type);
+                //echo $installMsg;
 
-                echo $type . ' finished';
+                Log::add('post->install: finished', Log::INFO, 'rsg2');
+                // echo $type . ' finished';
 
                 break;
 
             case 'update':
+
+                Log::add('post->update: init gallery tree', Log::INFO, 'rsg2');
 
                 // Nested gallery table needs a root item
                 $isGalleryTreeCreated = $this->initGalleryTree();
@@ -269,23 +276,45 @@ class Com_Rsgallery2InstallerScript
                 // Old J3x config, galleries, images
 //                $this->checkAndHandleJ3xTables();
 
-                $installMsg = $this->installMessage($type);
-                echo $installMsg;
+                Log::add('post->update: install message', Log::INFO, 'rsg2');
+                //$installMsg = $this->installMessage($type);
+                //echo $installMsg;
 
-                echo $type . ' finished';
+                Log::add('post->update: finished', Log::INFO, 'rsg2');
+                //echo $type . ' finished';
 
                 break;
 
             case 'uninstall':
 
-                // ToDo: check existence of galleries/images table and then write
-                echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>'
+				$outText = 'Uninstall of RSG2 finished. <br>' 
+					. 'Configuration may be deleted. <br>'
                     . 'Galleries and images table may still exist';
-                // ToDo: uninstall Message
+                Log::add('post->uninstall: ' . $outText, Log::INFO, 'rsg2');
+					// ToDo: check existence of galleries/images table and then write
+					echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>'
+						. 'Galleries and images table may still exist';
+					// ToDo: uninstall Message
+
+				Factory::getApplication()->enqueueMessage($outText, 'info');
+
+                Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
 
                 break;
 
             case 'discover_install':
+
+                Log::add('post->discover_install: init gallery tree', Log::INFO, 'rsg2');
+				
+				// Nested gallery table needs a root item
+                $isGalleryTreeCreated = $this->initGalleryTree();
+
+                Log::add('post->discover_install: install message', Log::INFO, 'rsg2');
+				
+                // $installMsg = $this->installMessage($type);
+                //echo $installMsg;
+
+                Log::add('post->discover_install: finished', Log::INFO, 'rsg2');
 
                 break;
 
@@ -341,28 +370,33 @@ class Com_Rsgallery2InstallerScript
         $isGalleryTreeCreated = false;
 
         try {
-            $GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Model/GalleryTreeModel.php';
+			
+			Log::add('initGalleryTree: include TreeModel', Log::INFO, 'rsg2');
+
+            $GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/GalleryTreeModel.php';
             include ($GalleryTreeModelFileName);
-            $galleryTreeModel =  new Joomla\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
+            $galleryTreeModel =  new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
+
+			Log::add('initGalleryTree: check for root item', Log::INFO, 'rsg2');
 
             // check for root item
             $isRootItemExisting = $galleryTreeModel->isRootItemExisting();
 
             if ($isRootItemExisting) {   // assume tree structure already built
-                Log::add('Gallery table root record is already present', Log::INFO, 'rsg2');
+                Log::add('initGalleryTree: Gallery table root record is already present', Log::INFO, 'rsg2');
                 $isGalleryTreeCreated = true;
             } else {
 
-                Log::add('init nested gallery root item', Log::INFO, 'rsg2');
+                Log::add('initGalleryTree: init nested gallery root item', Log::INFO, 'rsg2');
 
                 $isGalleryTreeCreated = $galleryTreeModel->reinitNestedGalleryTable();
 
                 if ($isGalleryTreeCreated) {
                     $isGalleryTreeReset = true;
-                    Log::add('Success writing tree root item into gallery database', Log::INFO, 'rsg2');
+                    Log::add('initGalleryTree: Success writing tree root item into gallery database', Log::INFO, 'rsg2');
                 } else {
                     //Factory::getApplication()->enqueueMessage("Failed writing root into gallery database", 'error');
-                    Log::add('Failed writing tree root item into gallery database', Log::INFO, 'rsg2');
+                    Log::add('initGalleryTree: Failed writing tree root item into gallery database', Log::INFO, 'rsg2');
                 }
             }
 
@@ -390,10 +424,14 @@ class Com_Rsgallery2InstallerScript
 
         try {
 
-            $installMsgHelperFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Helper/InstallMessage.php';
+			Log::add('installMessage: include Helper/InstallMessage', Log::INFO, 'rsg2');
+
+            $installMsgHelperFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
             include ($installMsgHelperFileName);
-            $InstallMessageHelper =  new Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage
+            $InstallMessageHelper =  new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage
                 ($this->newRelease, $this->oldRelease);
+
+			Log::add('installMessage: create message', Log::INFO, 'rsg2');
 
             $installMsg = $InstallMessageHelper->installMessageText($type);
 
@@ -487,9 +525,9 @@ class Com_Rsgallery2InstallerScript
 
         try {
 
-            $J3xExistModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Model/J3xExistModel.php';
+            $J3xExistModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/J3xExistModel.php';
             include ($J3xExistModelFileName);
-            $j3xExistModel =  new Joomla\Component\Rsgallery2\Administrator\Model\J3xExistModel();
+            $j3xExistModel =  new Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel();
 
             $isJ3xTableExisting = $j3xExistModel->J3xConfigTableExist();
 
@@ -517,9 +555,9 @@ class Com_Rsgallery2InstallerScript
 
         try {
 
-            $j3xModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/Model/MaintenanceJ3xModel.php';
+            $j3xModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/MaintenanceJ3xModel.php';
             include ($j3xModelFileName);
-            $j3xModel =  new Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel();
+            $j3xModel =  new Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel();
 
             //--- DB configuration ---------------------------------------------
 

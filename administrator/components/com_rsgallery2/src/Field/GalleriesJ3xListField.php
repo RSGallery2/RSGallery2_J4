@@ -10,7 +10,7 @@
 
 // used in edit gallery
 
-namespace Joomla\Component\Rsgallery2\Administrator\Field;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
 \defined('_JEXEC') or die;
 

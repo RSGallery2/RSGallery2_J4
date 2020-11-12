@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\View\Develop;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Develop;
 
 \defined('_JEXEC') or die;
 
@@ -23,13 +23,13 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Filesystem\File;
 
-use Joomla\Component\Rsgallery2\Administrator\Helper\InstallMessage;
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 
-use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-use Joomla\Component\RSGallery2\Administrator\Model\Rsg2ExtensionModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
 
 /**
  * View class for a list of rsgallery2.
@@ -155,7 +155,7 @@ class HtmlView extends BaseHtmlView
                 $this->rsg2Configuration = $rsg2configuration;
 
                 $this->rsg2Configuration_j3x = [];
-                if (ConfigRawModel::J3xConfigTableExist ()) {
+                if (J3xExistModel::J3xConfigTableExist ()) {
 
                     $rsg2configuration_j3x = MaintenanceJ3xModel::j3xConfigItems ();
                     $this->rsg2Configuration_j3x = $rsg2configuration_j3x;

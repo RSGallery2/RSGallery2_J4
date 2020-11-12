@@ -17,7 +17,7 @@ use Joomla\CMS\Extension\Service\Provider\MVCFactory;
 use Joomla\CMS\HTML\Registry;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
-use Joomla\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
+use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
 
 /**
  * The rsgallery2 service provider.
@@ -38,9 +38,9 @@ return new class implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
-		$container->registerServiceProvider(new CategoryFactory('\\Joomla\\Component\\Rsgallery2'));
-		$container->registerServiceProvider(new MVCFactory('\\Joomla\\Component\\Rsgallery2'));
-		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Joomla\\Component\\Rsgallery2'));
+		$container->registerServiceProvider(new CategoryFactory('\\Rsgallery2\\Component\\Rsgallery2'));
+		$container->registerServiceProvider(new MVCFactory('\\Rsgallery2\\Component\\Rsgallery2'));
+		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Rsgallery2\\Component\\Rsgallery2'));
 
 		$container->set(
 			ComponentInterface::class,

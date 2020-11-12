@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\View\Images;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Images;
 
 \defined('_JEXEC') or die;
 
@@ -23,7 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\CMS\Uri\Uri;
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
  * View class for a list of rsgallery2.

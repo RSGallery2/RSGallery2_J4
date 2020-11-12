@@ -24,7 +24,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Response\JsonResponse;
 
-// use Joomla\Component\Rsgallery2\Administrator\Model\ImageModel;
+// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 
 /**
 global $Rsg2DebugActive;

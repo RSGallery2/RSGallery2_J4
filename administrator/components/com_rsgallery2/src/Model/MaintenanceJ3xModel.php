@@ -7,7 +7,7 @@
  * @license     A "Slug" license name e.g. GPL2
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Model;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
@@ -16,9 +16,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\BaseModel;
-use Joomla\Component\RSGallery2\Administrator\Model\ConfigRaw;
-use Joomla\Component\Rsgallery2\Administrator\Model\ImageJ3xPaths;
-use Joomla\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRaw;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageJ3xPaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 use Joomla\Utilities\ArrayHelper;
 
 /**

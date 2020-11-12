@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>30. Sep. 2020</creationDate>
+	<creationDate>09. Nov. 2020</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
@@ -9,7 +9,7 @@
 	<license>GNU General Public License version 2 or later;</license>
 	<version>5.0.0.4</version>
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
-	<namespace>Joomla\Component\Rsgallery2</namespace>
+	<namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
 
 	<!-- Script to run on installation -->
 	<scriptfile>install_rsg2.php</scriptfile>
@@ -43,22 +43,27 @@
 			<!-- menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu -->
 			<!-- Note that all & must be escaped to &amp; for the file to be valid XML and be parsed by the installer -->
 			<menu view="COM_RSGALLERY2_MENU_CONTROL_PANEL"
-			      img="class:config"
+			      img="class:home"
 			      link="option=com_rsgallery2">COM_RSGALLERY2_MENU_CONTROL_PANEL
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_GALLERIES"
+			      img="class:images"
 			      link="option=com_rsgallery2&amp;view=galleries">COM_RSGALLERY2_MENU_GALLERIES
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_UPLOAD"
+			      img="class:upload"
 			      link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_IMAGES"
+			      img="class:image"
 			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_CONFIG"
+			      img="class:config"
 			      link="option=com_config&amp;view=component&amp;component=com_rsgallery2">COM_RSGALLERY2_MENU_CONFIG
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_MAINTENANCE"
+			      img="class:equalizer"
 			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE
 			</menu>
 		</submenu>
@@ -66,36 +71,28 @@
 		<!-- Core files -->
 		<files folder="administrator/components/com_rsgallery2">
 			<filename>access.xml</filename>
-			<filename>config.xml</filename>
 			<filename>changelog.xml</filename>
-			<filename>LICENSE.txt</filename>
+			<filename>config.xml</filename>
+			<!--filename>LICENSE.txt</filename-->
 			<!--filename>rsgallery2.xml</filename-->
 			<!--filename>install_rsg2.php</filename-->
-			<folder>Controller</folder>
-			<folder>Extension</folder>
-			<folder>Field</folder>
 			<folder>forms</folder>
-			<folder>Helper</folder>
 			<folder>helpers</folder>
 			<folder>language</folder>
 			<folder>layouts</folder>
-			<folder>Model</folder>
-			<folder>Service</folder>
 			<folder>services</folder>
 			<folder>sql</folder>
-			<folder>Table</folder>
+			<folder>src</folder>
 			<folder>tmpl</folder>
-			<folder>View</folder>
 		</files>
 	</administration>
 
 	<!-- Front-end files -->
 	<files folder="components/com_rsgallery2">
-		<folder>Controller</folder>
+		<!--folder>forms</folder-->
 		<folder>language</folder>
-		<folder>Model</folder>
+		<folder>src</folder>
 		<folder>tmpl</folder>
-		<folder>View</folder>
 	</files>
 
 	<!-- css, js, images files, .... -->

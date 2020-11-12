@@ -9,7 +9,7 @@
  *                RSGallery is Free Software
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Factory;
 

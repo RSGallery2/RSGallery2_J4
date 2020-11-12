@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Extension;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Extension;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -17,7 +17,7 @@ use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
-use Joomla\Component\Rsgallery2\Administrator\Service\HTML\AdministratorService;
+use Rsgallery2\Component\Rsgallery2\Administrator\Service\HTML\AdministratorService;
 
 /**
  * Component class for com_rsgallery2

@@ -22,7 +22,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
-use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 
 /**

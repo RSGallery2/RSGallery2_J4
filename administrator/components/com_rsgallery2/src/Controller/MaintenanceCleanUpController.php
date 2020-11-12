@@ -18,7 +18,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 
-use Joomla\Component\RSGallery2\Administrator\Model\ConfigRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 /**
  * Clean up and prepare for uninstall of RSG2

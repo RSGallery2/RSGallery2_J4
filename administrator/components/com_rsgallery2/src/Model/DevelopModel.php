@@ -7,7 +7,7 @@
  * @license     A "Slug" license name e.g. GPL2
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Model;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
@@ -16,8 +16,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
-use Joomla\Component\Rsgallery2\Administrator\Model\Image;
-use Joomla\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
 class DevelopModel extends BaseDatabaseModel
@@ -89,7 +89,7 @@ class DevelopModel extends BaseDatabaseModel
 //                $modelDb = $this->getModel('Image');
 //
 //                $j4xImagePath = new ImagePaths ();
-//                //$modelDb = new Joomla\Component\Rsgallery2\Administrator\Model\Image();
+//                //$modelDb = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Image();
 //                //$modelDb = new Image();
 //                $modelDb = new image();
 //

@@ -7,9 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\View\Config;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Config;
 
-\\defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Access\Exception\NotAllowed;
@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\AbstractView;
 use Joomla\Component\Admin\Administrator\Model\SysinfoModel;
-use Joomla\Component\Rsgallery2\Administrator\Helper\rsgallery2Version;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsgallery2Version;
 
 /**
  * Sysinfo View class for the Admin component

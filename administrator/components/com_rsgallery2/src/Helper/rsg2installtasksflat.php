@@ -10,7 +10,7 @@
 
 
 
-namespace Joomla\Component\Rsgallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // No direct access to this file
 \defined('_JEXEC') or die;

@@ -18,7 +18,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use Joomla\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 /**
  * Rsgallery2 master display controller.
@@ -543,7 +543,7 @@ class DevelopController extends BaseController
                 $modelDb = $this->getModel('Gallery');
 
                 $j4xImagePath = new ImagePaths ();
-                //$modelDb = new Joomla\Component\Rsgallery2\Administrator\Model\eGallery();
+                //$modelDb = new Rsgallery2\Component\Rsgallery2\Administrator\Model\eGallery();
                 //$modelDb = new eGallery();
                 // $modelDb = new eGallery();
 
@@ -592,7 +592,7 @@ class DevelopController extends BaseController
                 $modelDb = $this->getModel('Image');
 
                 $j4xImagePath = new ImagePaths ();
-                //$modelDb = new Joomla\Component\Rsgallery2\Administrator\Model\Image();
+                //$modelDb = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Image();
                 //$modelDb = new Image();
                 // $modelDb = new image();
 

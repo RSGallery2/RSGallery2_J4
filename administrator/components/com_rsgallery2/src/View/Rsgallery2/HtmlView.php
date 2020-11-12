@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\View\Rsgallery2;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Rsgallery2;
 
 \defined('_JEXEC') or die;
 
@@ -23,17 +23,17 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Component\ComponentHelper;
 
-use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsEnumeration;
-use Joomla\Component\Rsgallery2\Administrator\Helper\CreditsExternal;
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\CreditsEnumeration;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\CreditsExternal;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 
-use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\GalleriesModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\ImagesModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\J3xExistModel;
-use Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleriesModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
 
 /**

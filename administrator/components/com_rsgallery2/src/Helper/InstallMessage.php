@@ -10,7 +10,7 @@
  * RSGallery is Free Software
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Exception;
 use Joomla\CMS\Factory;
@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 use JUri;
 use RuntimeException;
 
-use Joomla\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
 \defined('_JEXEC') or die;
 

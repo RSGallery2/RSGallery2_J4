@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\Model;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
@@ -31,7 +31,7 @@ use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
-use Joomla\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
 
 /**
  * Rsgallery2 Component Gallery Model

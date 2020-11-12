@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Component\Rsgallery2\Administrator\View\MaintenanceJ3x;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\View\MaintenanceJ3x;
 
 \defined('_JEXEC') or die;
 
@@ -22,8 +22,8 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
-use Joomla\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Joomla\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 /**
  * View class for a list of rsgallery2.
