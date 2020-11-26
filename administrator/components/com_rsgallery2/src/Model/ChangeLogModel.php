@@ -12,6 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 \defined('_JEXEC') or die;
 
 use Exception;
+use Juri;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
@@ -26,25 +27,79 @@ use Joomla\CMS\Language\Text;
 class ChangeLogModel
 {
     // no on install (com_installer) public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
-    public $changeLogFile = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/changelog.xml';
+    // will be taken from manifest file
+    public $changeLogUrl = ""; //JURI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
 
     /**
      * ChangeLogModel constructor.
-     * @param null $changeLogFile path to changelog file different from standard
+     * @param null $changeLogUrl path to changelog file different from standard
      *
      * @throws Exception
      * @since __BUMP_VERSION__
      */
-    public function __construct($changeLogFile = null)
+    public function __construct($changeLogUrl = null)
     {
-        if (!empty ($changeLogFile)) {
-            $this->changeLogFile = $changeLogFile;
+        // standard from manifest
+        if (empty ($changeLogUrl)) {
+            $this->changeLogUrl = $this->changeLogUrlFromExtension();
+        } else {
+            // user path
+            $this->changeLogUrl = $changeLogUrl;
         }
 
-        // standard joomla texts fopr title
+        // standard joomla texts for title
         $app = Factory::getApplication();
         $app->getLanguage()->load('com_installer');
     }
+
+
+    /**
+     * changeLogUrlFromExtension
+     *
+     * changelog Url given by RSGallery2.xml file is kept in table extension
+     *
+     * @return mixed|string
+     *
+     * @throws Exception
+     * @since version
+     */
+    public function changeLogUrlFromExtension()
+    {
+        $changeLogUrl = JURI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
+
+        try
+        {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select('changelogurl')
+                ->from($db->quoteName('#__extensions'))
+                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+            $db->setQuery($query);
+
+            $changeLogUrl = $db->loadResult();
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'ChangeLogModel: changeLogUrl_manifest: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $changeLogUrl;
+    }
+
+    static function readRsg2ExtensionManifest ()
+    {
+        $manifest = [];
+
+
+        return $manifest;
+    }
+
 
     /**
      * Selects array of changelog sections
@@ -60,16 +115,16 @@ class ChangeLogModel
     {
         $jsonChangeLogs = [];
 
-        if ( ! file_exists($this->changeLogFile))
-        {
-            $OutTxt = 'changeLogFile not found ' . $this->changeLogFile . '"';
-            Factory::getApplication()->enqueueMessage($OutTxt, 'error');
-        }
-        else {
+        // content of file
+        $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+        $xml = file_get_contents($this->changeLogUrl, false, $context);
 
+        // Data is valid
+        if ($xml)
+        {
             //--- read xml to json ---------------------------------------------------
 
-            $changelogs = simplexml_load_file($this->changeLogFile);
+            $changelogs = simplexml_load_string($xml);
 
             if (!empty ($changelogs)) {
                 //Encode the SimpleXMLElement object into a JSON string.
@@ -99,6 +154,10 @@ class ChangeLogModel
                     }
                 }
             }
+        } else {
+            // No valid xml file found
+            $OutTxt = 'changeLogFile: No valid xml file found ' . $this->changeLogUrl . '"';
+            Factory::getApplication()->enqueueMessage($OutTxt, 'error');
         }
 
         return $jsonChangeLogs;

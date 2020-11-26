@@ -16,7 +16,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use JUri;
-use RuntimeException;
+
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
@@ -158,7 +158,7 @@ EOT;
             }
 
             // Installed same a second time show all
-            // ToDo: fetch previous installeed version
+            // ToDo: fetch previous installed version
             if ($this->oldRelease == $this->newRelease) {
                 $this->oldRelease = '5.0.0.1';
             }

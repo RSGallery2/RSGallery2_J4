@@ -96,6 +96,36 @@ class Rsg2ExtensionModel extends BaseModel
         return $params;
     }
 
+    static function readRsg2ExtensionData ()
+    {
+        $extensionData = [];
+
+        try
+        {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select('*')
+                ->from($db->quoteName('#__extensions'))
+                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+            $db->setQuery($query);
+
+            $extensionData = $db->loadAssoc();
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'ConfigRawModel: readRsg2ExtensionData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $extensionData;
+    }
+
+
 //    static function getVersionFromManifestParam()
 //    {
 //        //$version = '1.0.0.999';

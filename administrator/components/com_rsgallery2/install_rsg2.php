@@ -259,10 +259,8 @@ class Com_Rsgallery2InstallerScript
                 Log::add('post->install: install message', Log::INFO, 'rsg2');
 				
                 //$installMsg = $this->installMessage($type);
-                //echo $installMsg;
 
                 Log::add('post->install: finished', Log::INFO, 'rsg2');
-                // echo $type . ' finished';
 
                 break;
 
@@ -278,10 +276,8 @@ class Com_Rsgallery2InstallerScript
 
                 Log::add('post->update: install message', Log::INFO, 'rsg2');
                 //$installMsg = $this->installMessage($type);
-                //echo $installMsg;
 
                 Log::add('post->update: finished', Log::INFO, 'rsg2');
-                //echo $type . ' finished';
 
                 break;
 
@@ -311,8 +307,7 @@ class Com_Rsgallery2InstallerScript
 
                 Log::add('post->discover_install: install message', Log::INFO, 'rsg2');
 				
-                // $installMsg = $this->installMessage($type);
-                //echo $installMsg;
+                $installMsg = $this->installMessage($type);
 
                 Log::add('post->discover_install: finished', Log::INFO, 'rsg2');
 

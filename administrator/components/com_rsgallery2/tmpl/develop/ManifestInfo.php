@@ -31,7 +31,15 @@ HTMLHelper::_('bootstrap.framework');
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ManifestInfoView', Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true)); ?>
 
-                <p></p>
+                <p>
+                    <?php
+                    //--- version ----------------------------------------------
+
+                    //echo '<p> RSG2 Version: ' . $this->rsg2Manifest->version . '</p>';
+                    echo '<p> RSG2 Version: <strong>' . $this->rsg2Manifest['version'] . '</strong></p>';
+
+                    ?>
+                </p>
                 <p><h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
 
                 <?php
@@ -80,11 +88,6 @@ HTMLHelper::_('bootstrap.framework');
                         echo '     </textarea>';
                         echo '</div>';
 
-                        //--- show json string formatted ----------------------------------------------
-
-                        //echo '<p> RSG2 Version: ' . $this->rsg2Manifest->version . '</p>';
-                        echo '<p> RSG2 Version: <strong>' . $this->rsg2Manifest['version'] . '</strong></p>';
-
                     }
 					catch (\RuntimeException $e)
 					{
@@ -92,6 +95,71 @@ HTMLHelper::_('bootstrap.framework');
 						$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 					
+						$app = Factory::getApplication();
+						$app->enqueueMessage($OutTxt, 'error');
+					}
+
+				?>
+
+				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExtensionInfoView', Text::_('COM_RSGALLERY2_EXTENSION_INFO_VIEW', true)); ?>
+
+                <p><h3><?php echo Text::_('COM_RSGALLERY2_EXTENSION_INFO_VIEW'); ?></h3></p>
+
+                <?php
+
+					try
+					{
+                        echo '<p><strong>DL DT DD definition</strong></p>';
+
+                        echo '<section class="manifest_definition">';
+
+//                        echo '<div class="container">';
+
+                        echo '<div class="card-body">';
+                        echo '<div class="card-text">';
+
+                        echo '<dl class="row">';
+                        foreach($this->readRsg2ExtensionData as $key => $value) {
+
+                            // Handle empty string
+                            if (strlen($value) == 0) {
+                                // $value = "''";
+                                $value = '""';
+                            }
+
+                            echo '    <dt class="col-sm-1">' . $key . '</dt>';
+                            echo '    <dd class="col-sm-11">' . $value . '</dd>';
+
+                        }
+                        echo '</dl>';
+
+                        echo '</div>';
+                        echo '</div>';
+
+                        echo '</section';
+
+                        //--- manifest data json string formatted ----------------------------------------------
+
+                        echo '<p><strong>As json</strong></p>';
+
+                        $json_string = json_encode($this->readRsg2ExtensionData, JSON_PRETTY_PRINT);
+
+                        echo '<div class="form-group  purple-border">';
+                        echo '    <label for="manifest_input">RSGallery2 manifest</label>';
+                        echo '    <textarea class="form-control manifest_input" id="manifest_input"  cols="40" rows="15" readonly >';
+                        echo             $json_string . '";';
+                        echo '     </textarea>';
+                        echo '</div>';
+
+                    }
+					catch (\RuntimeException $e)
+					{
+						$OutTxt = '';
+						$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
+						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}

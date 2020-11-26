@@ -51,6 +51,7 @@ class HtmlView extends BaseHtmlView
 	protected $isDevelop;
 
 	protected $rsg2Manifest = [];
+    protected $readRsg2ExtensionData = [];
 
 	/**
 	protected $isDangerActive;
@@ -124,6 +125,9 @@ class HtmlView extends BaseHtmlView
 
                 $rsg2Manifest = Rsg2ExtensionModel::readRsg2ExtensionManifest ();
                 $this->rsg2Manifest = $rsg2Manifest;
+
+                $readRsg2ExtensionData = Rsg2ExtensionModel::readRsg2ExtensionData();
+                $this->readRsg2ExtensionData = $readRsg2ExtensionData;
 
                 break;
 
