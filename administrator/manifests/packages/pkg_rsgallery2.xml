@@ -10,7 +10,7 @@
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
-	<version>5.0.0.0</version>
+	<version>5.0.0.3</version>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<description>PKG_RSGALLERY2_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
@@ -24,5 +24,4 @@
 	<updateservers>
 		<server type="extension" name="Foo Updates">https://raw.githubusercontent.com/astridx/boilerplate/tutorial/foo_update.xml</server>
 	</updateservers>
-	<dlid prefix="dlid=" suffix="" />
 </extension>

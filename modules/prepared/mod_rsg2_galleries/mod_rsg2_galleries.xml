@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module"
+           client="site"
+           method="upgrade">
+	<name>MOD_RSG2_GALLERIES</name>
+	<creationDate>[DATE]</creationDate>
+	<author>[AUTHOR]</author>
+	<authorEmail>[AUTHOR_EMAIL]</authorEmail>
+	<authorUrl>[AUTHOR_URL]</authorUrl>
+	<copyright>[COPYRIGHT]</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>__BUMP_VERSION__</version>
+	<description>MOD_RSG2_GALLERIES_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
+	<namespace>Rsg2_galleriesNamespace\Module\Rsg2_galleries</namespace>
+	<files>
+		<filename module="mod_rsg2_galleries">mod_rsg2_galleries.php</filename>
+		<folder>tmpl</folder>
+		<folder>Helper</folder>
+		<folder>language</folder>
+		<filename>mod_rsg2_galleries.xml</filename>
+	</files>
+
+	<!-- ToDo: Include outside lang file -->
+
+	<config>
+		<fields name="params">
+
+			<fieldset name="basic"
+				addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
+			>
+				<!-- Gallery selection -->
+				<field
+					id="SelectGallery"
+					name="SelectGallery"
+					type="GallerySelect"
+					label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+					description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+					required="true"
+				/>
+				<!-- URL to folder of galleries -->
+				<field
+					id="FolderUrl"
+					name="FolderUrl"
+					type="url"
+					label="MOD_RSG2_GALLERIES_FOLDER_URL_LABEL"
+					description="MOD_RSG2_GALLERIES_FOLDER_URL_LABEL_DESC"
+					filter="url"
+				/>
+				<!-- local folder of galleries -->
+				<field
+					id="LocalFolder"
+					name="LocalFolder"
+					type="url"
+					label="MOD_RSG2_GALLERIES_LOCAL_FOLDER_LABEL"
+					description="MOD_RSG2_GALLERIES_LOCAL_FOLDER_LABEL_DESC"
+					filter="url"
+				/>
+			</fieldset>
+			<fieldset name="advanced">
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" 
+				/>
+
+				<field
+					name="moduleclass_sfx"
+					type="textarea"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					rows="3"
+				/>
+
+				<field
+					name="cache"
+					type="list"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					default="1"
+					filter="integer"
+					validate="options"
+				>
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="number"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					default="900"
+					filter="integer"
+				/>
+
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static"
+				>
+					<option value="static"/>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
