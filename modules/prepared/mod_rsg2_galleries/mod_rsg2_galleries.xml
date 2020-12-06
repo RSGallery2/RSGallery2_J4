@@ -9,7 +9,7 @@
 	<authorUrl>[AUTHOR_URL]</authorUrl>
 	<copyright>[COPYRIGHT]</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>__BUMP_VERSION__</version>
+	<version>5.0.0.1</version>
 	<description>MOD_RSG2_GALLERIES_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<namespace>Rsg2_galleriesNamespace\Module\Rsg2_galleries</namespace>

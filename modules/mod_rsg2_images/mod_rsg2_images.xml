@@ -9,7 +9,7 @@
 	<authorUrl>[AUTHOR_URL]</authorUrl>
 	<copyright>[COPYRIGHT]</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>5.0.0.122</version>
+	<version>5.0.0.130</version>
 	<description>MOD_RSG2_IMAGES_XML_DESCRIPTION</description>
 	<scriptfile>install_mod.php</scriptfile>
 	<namespace>Rsg2_imagesNamespace\Module\Rsg2_images</namespace>

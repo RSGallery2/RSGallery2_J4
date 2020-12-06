@@ -2,7 +2,7 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>5.0.0.4</version>
+		<version>5.0.0.1</version>
 		<date>2018-01-28</date>
 		<fix>
 			<item>Drag and drop was limited to 20 images per drop. It is tested now with drop of 150 images at once</item>
