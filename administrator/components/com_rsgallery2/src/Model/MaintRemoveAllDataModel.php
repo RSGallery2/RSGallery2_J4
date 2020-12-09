@@ -17,7 +17,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 /**
  * Class MaintRemoveAllDataModel
- * @package Joomla\Component\Rsgallery2\Administrator\Model
+ * @package Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
  * used for removing image files and remove of all data
  *

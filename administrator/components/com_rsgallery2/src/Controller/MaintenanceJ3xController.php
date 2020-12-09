@@ -228,7 +228,7 @@ class MaintenanceJ3xController extends AdminController
 
             try {
                 // Get the model.
-                /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 // Remove the items.
@@ -670,7 +670,7 @@ class MaintenanceJ3xController extends AdminController
             //----------------------------------------------------
 
             // Get the model.
-            /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+            /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
             $j3xModel = $this->getModel('MaintenanceJ3x');
 
 
@@ -822,7 +822,7 @@ class MaintenanceJ3xController extends AdminController
             $isMovedDb = false;
 
             // Get the model.
-            /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+            /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
             $j3xModel = $this->getModel('MaintenanceJ3x');
 
             //  = self::J3X_IMG_NOT_FOUND;
@@ -834,7 +834,7 @@ class MaintenanceJ3xController extends AdminController
 
 
 //            // Get the model.
-//            /** @var \Joomla\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+//            /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
 //            $j3xModel = $this->getModel('MaintenanceJ3x');
 //
 //

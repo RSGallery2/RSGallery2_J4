@@ -47,7 +47,13 @@ HTMLHelper::_('bootstrap.framework');
 
                        // ?> <h1>---</h1> <?php
 
-					}
+
+                        // specify gallery
+                        // toDO: change name as used for all
+                        echo $this->form->renderFieldset('select_galleries');
+
+
+                    }
 					catch (\RuntimeException $e)
 					{
 						$OutTxt = '';

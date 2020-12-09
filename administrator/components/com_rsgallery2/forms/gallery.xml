@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field">
+<form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
 	<!-- general field set (pick your  choice -->
 	<fieldset>
 		<field

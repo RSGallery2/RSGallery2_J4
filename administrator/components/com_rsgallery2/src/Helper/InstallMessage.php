@@ -23,7 +23,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 \defined('_JEXEC') or die;
 
 /**
- * @package     Joomla\Component\Rsgallery2\Administrator\Helper
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
  * @since __BUMP_VERSION__
  */

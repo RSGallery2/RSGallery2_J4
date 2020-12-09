@@ -134,7 +134,7 @@ class ImageFileController extends BaseController
 	Session::checkToken();
 
 		// Set the model
-		/** @var \Joomla\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+		/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
 		$model = $this->getModel('Gallery');
 
 		// Preset the redirect

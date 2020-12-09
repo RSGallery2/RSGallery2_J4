@@ -14,6 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Develop;
 //use JModelLegacy;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
@@ -44,6 +45,7 @@ class HtmlView extends BaseHtmlView
 	 * @var  string
 	 */
 	protected $sidebar;
+    protected $form;
 
 	protected $buttons = [];
 
@@ -164,6 +166,42 @@ class HtmlView extends BaseHtmlView
                     $rsg2configuration_j3x = MaintenanceJ3xModel::j3xConfigItems ();
                     $this->rsg2Configuration_j3x = $rsg2configuration_j3x;
                 }
+
+                break;
+
+            case 'createImages':
+
+                //--- Form --------------------------------------------------------------------
+
+                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/createImages.xml';
+                $form = Form::getInstance('createImages', $xmlFile);
+
+                // Check for errors.
+                /* Must load form before */
+                if ($errors = $this->get('Errors'))
+                {
+                    if (count($errors))
+                    {
+                        throw new GenericDataException(implode("\n", $errors), 500);
+                    }
+                }
+                /**/
+
+                /**
+                // upload_zip, upload_folder
+                $formParam = array(
+                    'all_img_in_step1_01' => $isUseOneGalleryNameForAllImages,
+                    'all_img_in_step1_02' => $isUseOneGalleryNameForAllImages,
+                    'SelectGalleries01_01' => $IdGallerySelect,
+                    'SelectGalleries02_02' => $IdGallerySelect
+                );
+
+                $form->bind($formParam);
+                /**/
+
+                $this->form = $form;
+
+
 
                 break;
 		}

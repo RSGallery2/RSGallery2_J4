@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field">
+<form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
 	<fieldset
 			name="upload_gallery"
-			addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
+			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 	>
 		<!-- Gallery selection -->
 		<field
@@ -16,7 +16,7 @@
 	</fieldset>
 	<fieldset
 			name="upload_drag_and_drop"
-			addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
+			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 	>
 		<!-- Gallery selection -->
 		<field
@@ -30,7 +30,7 @@
 	</fieldset>
 	<fieldset
 			name="upload_zip"
-			addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
+			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 	>
 		<!--field
 				id="all_img_in_step1_01"
@@ -61,7 +61,7 @@
 	</fieldset>
 	<fieldset
 			name="upload_folder"
-			addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
+			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 	>
 		<!--field
 				id="all_img_in_step1_02"

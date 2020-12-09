@@ -23,7 +23,7 @@ use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class MaintenanceJ3xModel
- * @package Joomla\Component\Rsgallery2\Administrator\Model
+ * @package Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
  * Handles old J3x RSG23 data structures. Especially for transferring the config data
  *
