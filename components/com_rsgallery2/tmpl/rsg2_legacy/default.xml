@@ -11,7 +11,7 @@
 			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 		>
 			<field
-				name="id"
+				name="gid"
 				type="modal_rsgallery2"
 				label="COM_RSGALLERY2_SELECT_RSGALLERY2_LABEL"
 				required="true"

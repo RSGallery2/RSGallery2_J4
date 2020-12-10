@@ -11,19 +11,19 @@
 
 use Joomla\CMS\Language\Text;
 
-if ($this->item->params->get('show_name')) {
-
-	if ($this->Params->get('show_rsgallery2_name_label')) {
-		echo Text::_('COM_RSGALLERY2_RSG2_LEGACY_NAME') . $this->item->name;
-	} else {
-		echo $this->item->name;
-	}
-}
-
-echo $this->item->event->afterDisplayTitle; 
-echo $this->item->event->beforeDisplayContent;
-
-echo "<h1> RSG2 gallery image view </h1>";
-
-
-echo $this->item->event->afterDisplayContent;
+//if ($this->item->params->get('show_name')) {
+//
+//	if ($this->Params->get('show_rsgallery2_name_label')) {
+//		echo Text::_('COM_RSGALLERY2_RSG2_LEGACY_NAME') . $this->item->name;
+//	} else {
+//		echo $this->item->name;
+//	}
+//}
+//
+//echo $this->item->event->afterDisplayTitle;
+//echo $this->item->event->beforeDisplayContent;
+//
+echo "<h1> RSG2 gallery legacy view </h1>";
+//
+//
+//echo $this->item->event->afterDisplayContent;

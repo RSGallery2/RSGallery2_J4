@@ -11,14 +11,18 @@
 
 use Joomla\CMS\Language\Text;
 
-if ($this->item->params->get('show_name')) {
-	if ($this->Params->get('show_rsgallery2_name_label')) {
-		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-	} else {
-		echo $this->item->name;
-	}
-}
+//if ($this->item->params->get('show_name')) {
+//	if ($this->Params->get('show_rsgallery2_name_label')) {
+//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
+//	} else {
+//		echo $this->item->name;
+//	}
+//}
+//
+//echo $this->item->event->afterDisplayTitle;
+//echo $this->item->event->beforeDisplayContent;
+//echo $this->item->event->afterDisplayContent;
 
-echo $this->item->event->afterDisplayTitle; 
-echo $this->item->event->beforeDisplayContent;
-echo $this->item->event->afterDisplayContent;
+echo "<h1> RSG2 gallery default view </h1>";
+
+
