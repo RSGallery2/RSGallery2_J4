@@ -16,7 +16,7 @@ HTMLHelper::_('bootstrap.framework');
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=createGalleries'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>

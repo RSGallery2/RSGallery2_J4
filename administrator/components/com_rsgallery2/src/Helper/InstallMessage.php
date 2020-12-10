@@ -166,7 +166,7 @@ EOT;
             //--- fetch changelog and create html tables each -----------------------------
 
             $ChangeLogModel = new ChangeLogModel ();
-            $jsonChangelogs = $ChangeLogModel->changeLogElements($this->oldRelease);
+            $jsonChangelogs = $ChangeLogModel->changeLogElements($this->oldRelease, $this->newRelease);
             // Array: Html table each log item
             $changelogTables = $ChangeLogModel->changeLogsData2Html($jsonChangelogs);
 

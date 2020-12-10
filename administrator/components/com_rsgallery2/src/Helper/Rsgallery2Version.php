@@ -50,7 +50,7 @@ class rsgallery2Version
         $query = $db->getQuery(true)
 			->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))
-            ->where('element = "com_rsgallery2"');
+            ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
         $db->setQuery($query);
 
         // manifest Array (

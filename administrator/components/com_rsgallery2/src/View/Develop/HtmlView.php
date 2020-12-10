@@ -135,19 +135,33 @@ class HtmlView extends BaseHtmlView
 
             case 'InstallMessage':
 
+
+                //--- Form --------------------------------------------------------------------
+
+                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/InstallMessage.xml';
+                $this->form = Form::getInstance('upload', $xmlFile);
+
+                $input = Factory::getApplication()->input;
+                $lowerVersion = $input->get('lowerVersion', '', 'STRING');
+                if (empty ($lowerVersion)) {
+                    $lowerVersion = '5.0.0.3';
+                }
+
+                $this->lowerVersion = $lowerVersion;
+
                 // actual (new) version
                 $oRsg2Version = new rsgallery2Version();
                 $this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
                 $this->Rsg2Version = $oRsg2Version->getVersion(); // getLongVersion, getVersion
 
+                // ausschnitt
+                $installMessage = new InstallMessage ($this->Rsg2Version, $lowerVersion);
+                $this->installMessage2 = $installMessage->installMessageText('update');
+
                 // show all
-                $installMessage = new InstallMessage ($this->Rsg2Version);
+                $installMessage = new InstallMessage ('9999.9.9.9', '0.0.1.0');
                 //$this->installMessage = InstallMessage::installMessageText;
                 $this->installMessage = $installMessage->installMessageText('update');
-
-                // ausschnitt
-                $installMessage = new InstallMessage ($this->Rsg2Version, '5.0.0.3');
-                $this->installMessage2 = $installMessage->installMessageText('update');
 
                 break;
 
@@ -282,6 +296,9 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
 					. ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
+                // ToDo: write into manifest value; read first -> Rsg2ExtensionModel
+                // ToolBarHelper::custom ('develop.assignVersion','arrow-up-4','','Assign version to RSG2', false);
+                ToolBarHelper::custom ('develop.useOldVersion','pencil-2','','Use old version', false);
 				ToolBarHelper::cancel('config.cancel_rawView');
 				break;
 

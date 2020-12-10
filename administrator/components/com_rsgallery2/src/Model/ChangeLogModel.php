@@ -73,7 +73,7 @@ class ChangeLogModel
             $query = $db->getQuery(true)
                 ->select('changelogurl')
                 ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+                ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
 
             $changeLogUrl = $db->loadResult();
@@ -111,7 +111,7 @@ class ChangeLogModel
      *
      * @since __BUMP_VERSION__
      */
-    public function changeLogElements($previousVersion = '')
+    public function changeLogElements($previousVersion = '', $actualVersion = '')
     {
         $jsonChangeLogs = [];
 
@@ -145,10 +145,20 @@ class ChangeLogModel
                         if (empty ($previousVersion)) {
                             $jsonChangeLogs [] = $changeLog;
                         } else {
-                            // selected last versions
+
                             $logVersion = $changeLog ['version'];
+
+                            // above old version
                             if (version_compare($logVersion, $previousVersion, '>')) {
-                                $jsonChangeLogs [] = $changeLog;
+                                // all above lower are valid when actual is not given
+                                if (empty ($actualVersion)) {
+                                    $jsonChangeLogs [] = $changeLog;
+                                } else {
+                                    // below and including actual version
+                                    if (version_compare($logVersion, $actualVersion, '<=')) {
+                                        $jsonChangeLogs [] = $changeLog;
+                                    }
+                                }
                             }
                         }
                     }

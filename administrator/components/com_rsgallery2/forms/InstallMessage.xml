@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
+	<fieldset
+			name="install_message_var"
+			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+	>
+		<!-- Previous Version -->
+		<field
+				id="PreviousVersion"
+				name="PreviousVersion"
+				type="text"
+				label="COM_RSGALLERY2_PREVIOUS_VERSION"
+				description="COM_RSGALLERY2_PREVIOUS_VERSION_DESC"
+				required="true"
+				default="5.0.0.1"
+		/>
+	</fieldset>
+</form>

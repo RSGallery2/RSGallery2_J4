@@ -672,8 +672,6 @@ class DevelopController extends BaseController
         return $now;
     }
 
-
-
     /**
      * Standard cancel (may not be used)
      *
@@ -690,5 +688,119 @@ class DevelopController extends BaseController
 
         return true;
     }
+
+
+    /**
+     * On cevelop check install message the version number may be
+     * patched for the changelog display from / to version
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function useOldVersion()
+    {
+        $msg = "DevelopController.useOldVersion: ";
+        $msgType = 'notice';
+        echo "test";
+        $link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+            try {
+
+                $input = Factory::getApplication()->input;
+                $lowerVersion = $input->get('PreviousVersion', '', 'STRING');
+                if (empty ($lowerVersion)) {
+                    $lowerVersion = '5.0.0.1';
+                }
+
+                $msg .= ' Successful assigned RSG2 version: ' . $lowerVersion;
+
+                // toDO: secure by check for numbers and points
+                // split ('.')
+
+                //$link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage'
+                //    . '&lowerVersion=' . $lowerVersion;
+                 $link .= '&lowerVersion=' . $lowerVersion;
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing useOldVersion: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        $this->setRedirect($link,);
+    }
+    /**
+     * On install of RSG2 the message for the changelog display depends on the
+     * from / to version number. The RSG2 "extension" number in the db can be
+     * set here (from maintenace -> Test Install/Update message (form)
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function assignVersion()
+    {
+        // ??? maintenance / manifest ....
+        $msg = "DevelopController.assignVersion: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+            try {
+
+                $input = Factory::getApplication()->input;
+                $lowerVersion = $input->get('PreviousVersion', '', 'STRING');
+                if (empty ($lowerVersion)) {
+                    $lowerVersion = '5.0.0.1';
+                }
+
+                // secure by check for numbers and points
+                // split ('.')
+
+                $isOk = false;
+
+                if ($isOk) {
+                    $msg .= ' Successful assigned RSG2 version: ' . $lowerVersion;
+                } else {
+                    $msg .= 'Error at assignment of RSG2 version: ' . $lowerVersion;
+                    $msgType = 'error';
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing assignVersion: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage';
+        $link = Route::_('index.php?option=com_rsgallery2&view=develop&layout=InstallMessage');
+        $this->setRedirect($link);
+    }
+
 
 }

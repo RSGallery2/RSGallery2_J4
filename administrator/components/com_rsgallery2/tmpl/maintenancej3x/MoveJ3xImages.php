@@ -266,13 +266,13 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
                                 <td width="1%" class="center">
                                     <?php
-                                    $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
+                                    $link = Route::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
                                     echo '<a href="' . $link . '"">' . $item->id . '</a>';
                                     ?>
                                 </td>
                                 <td width="1%" class="center">
                                     <?php
-                                    $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
+                                    $link = Route::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
                                     echo '<a id="galleryId_' . $item->id . '" href="' . $link . '"">' . $item->name . '</a>';
                                     ?>
                                 </td>

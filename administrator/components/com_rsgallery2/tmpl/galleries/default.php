@@ -297,7 +297,7 @@ if ($saveOrder && !empty($this->items))
 
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">
                                         <?php
-                                        $link = JRoute::_("index.php?option=com_rsgallery2&view=gallery&task=gallery.edit&id=" . $item->id);
+                                        $link = Route::_("index.php?option=com_rsgallery2&view=gallery&task=gallery.edit&id=" . $item->id);
                                         //$count = random_int (0, 2) ;
                                         $imageCount = 0;
                                         if (!empty($item->image_count))

@@ -258,7 +258,7 @@ class Com_Rsgallery2InstallerScript
 
                 Log::add('post->install: install message', Log::INFO, 'rsg2');
 				
-                //$installMsg = $this->installMessage($type);
+                $installMsg = $this->installMessage($type);
 
                 Log::add('post->install: finished', Log::INFO, 'rsg2');
 
@@ -275,7 +275,7 @@ class Com_Rsgallery2InstallerScript
 //                $this->checkAndHandleJ3xTables();
 
                 Log::add('post->update: install message', Log::INFO, 'rsg2');
-                //$installMsg = $this->installMessage($type);
+                $installMsg = $this->installMessage($type);
 
                 Log::add('post->update: finished', Log::INFO, 'rsg2');
 
@@ -318,9 +318,11 @@ class Com_Rsgallery2InstallerScript
                 break;
         }
 
-
+		echo $installMsg;
+		
         // wonderworld 'good by' icons finnern
         echo '<br><h4>&oplus;&infin;&omega;</h4><br>';
+        Log::add('--- postflight finished', Log::INFO, 'rsg2');
 
         return true;
     }
@@ -397,7 +399,8 @@ class Com_Rsgallery2InstallerScript
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
+			Log::add('initGalleryTree: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+            throw new \RuntimeException($e->getMessage() . ' from initGalleryTree');
         }
 
         return $isGalleryTreeCreated;
@@ -405,7 +408,7 @@ class Com_Rsgallery2InstallerScript
 
 
     /**
-     * InitGalleryTree
+     * InstallMessage
      * Initializes the nested tree with a root element if not already exists
      *
      * @return bool
@@ -432,6 +435,7 @@ class Com_Rsgallery2InstallerScript
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
+			Log::add('installMessage: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
             throw new \RuntimeException($e->getMessage() . ' from installMessage');
         }
 
@@ -483,7 +487,7 @@ class Com_Rsgallery2InstallerScript
             $query = $db->getQuery(true)
                 ->select('manifest_cache')
                 ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+                ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
 
             $jsonStr = $db->loadResult();
@@ -528,6 +532,7 @@ class Com_Rsgallery2InstallerScript
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
+			Log::add('isJ3xRsg2DataExisting: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
             throw new \RuntimeException($e->getMessage() . ' from isJ3xRsg2DataExisting');
         }
 
@@ -605,6 +610,7 @@ class Com_Rsgallery2InstallerScript
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
+			Log::add('copyJ3xDbTables: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
             throw new \RuntimeException($e->getMessage() . ' from copyJ3xDbTables');
         }
 

@@ -38,7 +38,7 @@ class Rsg2ExtensionModel extends BaseModel
             $query = $db->getQuery(true)
                 ->select('manifest_cache')
                 ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+                ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
 
             $jsonStr = $db->loadResult();
@@ -73,7 +73,7 @@ class Rsg2ExtensionModel extends BaseModel
             $query = $db->getQuery(true)
                 ->select('params')
                 ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+                ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
 
             $jsonStr = $db->loadResult();
@@ -106,7 +106,7 @@ class Rsg2ExtensionModel extends BaseModel
             $query = $db->getQuery(true)
                 ->select('*')
                 ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('name') . ' = ' . $db->quote('COM_RSGALLERY2'));
+                ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
 
             $extensionData = $db->loadAssoc();

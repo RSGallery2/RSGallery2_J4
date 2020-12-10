@@ -258,11 +258,6 @@ HTMLHelper::_('bootstrap.framework');
 
 
 
-
-
-
-
-
     <input type="hidden" name="task" value="" />
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
