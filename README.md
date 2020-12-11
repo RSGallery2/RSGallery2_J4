@@ -79,3 +79,14 @@ Missing:
 - Site:Slideshow
 
 --------------------------------------------------------------------------------
+
+
+## Anyone wants to help ?
+
+Consider supporting the project
+* developing with the team
+* language
+
+Please mail to team2@tomfinnern.de
+
+
