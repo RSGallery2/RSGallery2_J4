@@ -14,6 +14,10 @@ RSGallery2 is released by the GPL license and will be **free to use** (as in fre
 
 This version is developed from scratch. The jump from J3.x to J4x needed to get rid of all the J1.5 code and template constructs still around in the version for J3x.
 
+Actual state:
+* J3 files will be used in backend
+* Backend structure ready (some features are missing)
+
 ## **Upgrade from J3x RSG2 version**
 
 Some steps may be necessary for the transfer of J3x configuration/galleries/images. In general if a J3x data is detected then in maintenance a separate section is prepared for the conversion
