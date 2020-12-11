@@ -18,6 +18,9 @@ Actual state:
 * J3 files will be used in backend
 * Backend structure ready (some features are missing)
 
+Next steps:
+* J3x Lagacy on site: gallery display (root gallery, Menu, latest ,  ..., ) like in  J3x Version
+
 ## **Upgrade from J3x RSG2 version**
 
 Some steps may be necessary for the transfer of J3x configuration/galleries/images. In general if a J3x data is detected then in maintenance a separate section is prepared for the conversion
