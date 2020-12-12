@@ -333,27 +333,33 @@
 		</field>
 
 	</fieldset>
-	<!-- ... Tab findings ................................. -->
+	
+	
+	<!-- ... Tab j3x legacy layout ................................. -->
 
 	<fieldset
-			name="findings"
-			label="findings"
-			description="findings description:  May be needed so i put it here"
+			name="j3x_legacy_layout"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_LAYOUT"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_LAYOUT_DESC"
 	>
-		<field
+		<!--field
 				type="spacer"
 				name="spacer_findings_01"
 				hr="true"
-		/>
+		/-->
 
 		<!-- ... block  ... -->
 
-		<field name="media_query_page_width" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," />
-
-		<!-- ... block  ... -->
-
-		<field name="media_query_" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" />
-
+		<field
+				name="image_width"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH_DESC"
+				class=""
+		>
+		</field>
+		
 	</fieldset>
 
 	<!-- ... Tab 01 ................................. -->
@@ -394,7 +400,35 @@
 		<field type="spacer" name="test_inner_02" hr="true" />
 		<!-- ... block  ... -->
 
-		<field name="note31" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="02_LOREMIPSUM_DESC" />
+		<field 
+				name="media_query_page_width" 
+				type="note" 
+				class="alert alert-primary" 
+				close="true" 
+				label="LOREMIPSUM" 
+				description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," 
+		/>
+
+		<!-- ... block  ... -->
+
+		<field 
+				name="media_query_" 
+				type="note" 
+				class="alert alert-dark" 
+				close="true" 
+				label="LOREMIPSUM" 
+				description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" 
+		/>
+
+		<field 
+				name="note31" 
+				type="note" 
+				class="alert alert-dark" 
+				close="true" 
+				label="LOREMIPSUM" 
+				description="02_LOREMIPSUM_DESC" 
+		/>
+		
 	</fieldset>
 
 	<!-- ... Tab Permissions ................................. -->

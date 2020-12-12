@@ -13,8 +13,8 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Registry\Registry;
 
 /**
@@ -22,7 +22,7 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_legacyModel extends ListModel
+class Rsgallery2Model extends BaseDatabaseModel
 {
 	/**
 	 * @var string item
@@ -87,7 +87,7 @@ class Rsg2_legacyModel extends ListModel
 	 * @return  void
 	 *
 	 * @since   __BUMP_VERSION__
-	 *
+	 */
 	protected function populateState()
 	{
 		$app = Factory::getApplication();
@@ -95,5 +95,4 @@ class Rsg2_legacyModel extends ListModel
 		$this->setState('rsgallery2.id', $app->input->getInt('id'));
 		$this->setState('params', $app->getParams());
 	}
-    /**/
 }

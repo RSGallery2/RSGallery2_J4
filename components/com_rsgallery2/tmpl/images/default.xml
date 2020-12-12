@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_RSGALLERY2_MENU_J3X_LEGACY_VIEW_TITLE">
+	<layout title="COM_RSGALLERY2_RSGALLERY2_VIEW_IMAGES_TITLE">
 		<message>
-			<![CDATA[COM_RSGALLERY2_MENU_J3X_LEGACY_VIEW_DESC]]>
+			<![CDATA[COM_RSGALLERY2_RSGALLERY2_VIEW_IMAGES_DESC]]>
 		</message>
 	</layout>
 	<!-- Add fields to the request variables for the layout. -->
@@ -11,10 +11,10 @@
 			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 		>
 			<field
-				name="gid"
-				type="RootGallerySelect"
-				label="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_LABEL"
-				description="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_LABEL_DESC"
+				name="id"
+				type="modal_rsgallery2"
+				label="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_LABEL"
+				description="COM_RSGALLERY2_MENU_SELECT_GALLERY_DESC"
 				required="true"
 				select="true"
 				new="true"

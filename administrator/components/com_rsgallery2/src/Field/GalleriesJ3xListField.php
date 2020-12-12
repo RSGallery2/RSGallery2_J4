@@ -22,9 +22,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 
 /**
- * Collects available gallery ids and names and creates
- * contents of a dropdown box for gallery selection
- * Includes "No parent" as first entry
+ * Collects available j3x gallery table ids and names 
+ * and creates contents of a dropdown box for gallery selection
  * Sorted by ordering (newest first)
  *
  * @since __BUMP_VERSION__
