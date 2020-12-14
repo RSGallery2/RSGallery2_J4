@@ -12,9 +12,8 @@
 use Joomla\CMS\Language\Text;
 
 //if ($this->item->params->get('show_name')) {
-//
 //	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_RSG2_LEGACY_NAME') . $this->item->name;
+//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
 //	} else {
 //		echo $this->item->name;
 //	}
@@ -22,8 +21,23 @@ use Joomla\CMS\Language\Text;
 //
 //echo $this->item->event->afterDisplayTitle;
 //echo $this->item->event->beforeDisplayContent;
-//
-echo '<h1> RSGallery2 "legacy" view </h1>';
+//echo $this->item->event->afterDisplayContent;
+
+echo '<h1> RSGallery2 "galleries latest" view </h1>';
+
+foreach ($this->items as $gallery) {
+
+    echo 'gallery: ' . $gallery->name . '<br>';
+
+}
+
 //
 //
 //echo $this->item->event->afterDisplayContent;
+
+?>
+
+
+
+
+

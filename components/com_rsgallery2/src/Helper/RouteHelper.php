@@ -27,15 +27,16 @@ abstract class RouteHelper
 	/**
 	 * Get the URL route for a rsgallery2 from a foo ID, rsgallery2 category ID and language
 	 *
-	 * @param   integer  $id        The id of the rsgallery2
-	 * @param   integer  $catid     The id of the rsgallery2's category
-	 * @param   mixed    $language  The id of the language being used.
+     * @param   integer  $id        The route of the content item.
+     * @param   integer  $catid     The category ID.
+     * @param   integer  $language  The language code.
+     * @param   string   $layout    The layout value.
 	 *
 	 * @return  string  The link to the rsgallery2
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	public static function getRsgallery2Route($id, $catid, $language = 0)
+	public static function getRsgallery2Route($id, $catid, $language = 0, $layout = null)
 	{
 		// Create the link
 		$link = 'index.php?option=com_rsgallery2&view=rsgallery2&id=' . $id;
@@ -50,7 +51,12 @@ abstract class RouteHelper
 			$link .= '&lang=' . $language;
 		}
 
-		return $link;
+        if ($layout)
+        {
+            $link .= '&layout=' . $layout;
+        }
+
+        return $link;
 	}
 
 	/**
@@ -59,13 +65,16 @@ abstract class RouteHelper
 	 * @param   integer  $id        The id of the rsgallery2
 	 * @param   integer  $catid     The id of the rsgallery2's category
 	 * @param   mixed    $language  The id of the language being used.
+     * @param   string   $layout    The layout value.
 	 *
 	 * @return  string  The link to the rsgallery2
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	public static function getFooRoute($id, $catid, $language = 0)
+	public static function getYYYYRoute($id, $catid, $language = 0, $layout = null)
 	{
+	    // for further routes (category ?) see com_content article routehelper
+
 		// Create the link
 		$link = 'index.php?option=com_rsgallery2&view=foo&id=' . $id;
 
@@ -78,6 +87,11 @@ abstract class RouteHelper
 		{
 			$link .= '&lang=' . $language;
 		}
+
+        if ($layout)
+        {
+            $link .= '&layout=' . $layout;
+        }
 
 		return $link;
 	}
@@ -92,6 +106,7 @@ abstract class RouteHelper
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
+    /**
 	public static function getCategoryRoute($catid, $language = 0)
 	{
 		if ($catid instanceof CategoryNode)
@@ -120,4 +135,24 @@ abstract class RouteHelper
 
 		return $link;
 	}
+    /**/
+
+
+    /**
+     * Get the form route.
+     *
+     * @param   integer  $id  The form ID.
+     *
+     * @return  string  The article route.
+     *
+     * @since   1.5
+     */
+    /**
+    public static function getFormRoute($id)
+    {
+        // toDo for edit ...
+        return 'index.php?option=com_content&task=article.edit&a_id=' . (int) $id;
+    }
+    /**/
+
 }

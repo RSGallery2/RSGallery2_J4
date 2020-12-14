@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsg2_legacy;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\ImagesRandom;
 
 \defined('_JEXEC') or die;
 

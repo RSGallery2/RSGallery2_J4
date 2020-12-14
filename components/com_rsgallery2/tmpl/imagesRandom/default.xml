@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_RSGALLERY2_RSGALLERY2_VIEW_DEFAULT_TITLE">
+	<layout title="COM_RSGALLERY2_MENU_VIEW_IMAGES_RANDOM_TITLE">
 		<message>
-			<![CDATA[COM_RSGALLERY2_RSGALLERY2_VIEW_DEFAULT_DESC]]>
+			<![CDATA[COM_RSGALLERY2_MENU_VIEW_IMAGES_DESC]]>
 		</message>
 	</layout>
 	<!-- Add fields to the request variables for the layout. -->
@@ -10,16 +10,31 @@
 		<fieldset name="request"
 			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 		>
-			<field
-				name="id"
-				type="modal_rsgallery2"
-				label="COM_RSGALLERY2_SELECT_RSGALLERY2_LABEL"
+		
+			<!--field
+				name="gid"
+				type="MenuGalleriesList"
+				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
+				description="COM_RSGALLERY2_MENU_SELECT_GALLERY_DESC"
 				required="true"
 				select="true"
 				new="true"
 				edit="true"
 				clear="true"
+			/-->
+			
+			<!-- ToDo: layout, number of displayed images, row/column, by time ....  -->
+
+			<field
+					name="gallery_layout"
+					type="componentlayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					view="images"
+					useglobal="true"
 			/>
+
 		</fieldset>
 	</fields>
 </metadata>

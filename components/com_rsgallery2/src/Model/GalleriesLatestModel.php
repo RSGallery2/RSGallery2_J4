@@ -25,7 +25,7 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class ImagesRandomModel extends ListModel
+class GalleriesLatestModel extends ListModel
 {
     /**
      * Model context string.
@@ -246,8 +246,8 @@ class ImagesRandomModel extends ListModel
 				$query = $db->getQuery(true);
 
 				$query->select('*')
-					//->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->from($db->quoteName('#__rsg2_images', 'a'))
+					//->from($db->quoteName('#__rsg2_images', 'a'))
+					->from($db->quoteName('#__rsg2_galleries', 'a'))
 					//->where('a.id = ' . (int) $gid);
 					->where('a.gallery_id = ' . (int) $gid)
                     ->order('rand()') 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_RSGALLERY2_MENU_VIEW_LATEST_GALLERIES_TITLE">
+		<message>
+			<![CDATA[COM_RSGALLERY2_MENU_VIEW_LATEST_GALLERIES_DESC]]>
+		</message>
+	</layout>
+	<!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request"
+			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+		>
+		
+<!--			<field-->
+<!--				name="gid"-->
+<!--				type="MenuGalleriesList"-->
+<!--				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"-->
+<!--				description="COM_RSGALLERY2_MENU_SELECT_GALLERY_DESC"-->
+<!--				required="true"-->
+<!--				select="true"-->
+<!--				new="true"-->
+<!--				edit="true"-->
+<!--				clear="true"-->
+<!--			/>-->
+			
+			<!-- ToDo: layout, number of displayed images, row/column, by time ....  -->
+
+		</fieldset>
+	</fields>
+</metadata>

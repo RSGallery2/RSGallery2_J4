@@ -23,6 +23,21 @@ use Joomla\CMS\Language\Text;
 //echo $this->item->event->beforeDisplayContent;
 //echo $this->item->event->afterDisplayContent;
 
-echo "<h1> RSG2 gallery default view </h1>";
+echo '<h1> RSGallery2 "galleries" view </h1>';
+
+foreach ($this->items as $gallery) {
+
+    echo 'gallery: ' . $gallery->name . '<br>';
+
+}
+
+//
+//
+//echo $this->item->event->afterDisplayContent;
+
+?>
+
+
+
 
 

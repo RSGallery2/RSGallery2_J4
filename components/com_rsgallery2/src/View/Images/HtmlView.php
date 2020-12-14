@@ -7,10 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsg2_legacy;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\Images;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
@@ -22,41 +23,85 @@ use Joomla\Registry\Registry;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The page parameters
-	 *
-	 * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $params = null;
+    /**
+     * The model state
+     *
+     * @var    \JObject
+     * @since  3.1
+     */
+    protected $state;
 
-	/**
-	 * The item model state
-	 *
-	 * @var    \Joomla\Registry\Registry
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $state;
+    /**
+     * The list of tags
+     *
+     * @var    array|false
+     * @since  3.1
+     */
+    protected $items;
 
-	/**
-	 * The item object details
-	 *
-	 * @var    \JObject
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $item;
+    /**
+     * The pagination object
+     *
+     * @var    \Joomla\CMS\Pagination\Pagination
+     * @since  3.1
+     */
+    protected $pagination;
 
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
+    /**
+     * The page parameters
+     *
+     * @var    \Joomla\Registry\Registry|null
+     * @since  3.1
+     */
+    protected $params = null;
+
+    /**
+     * The page class suffix
+     *
+     * @var    string
+     * @since  4.0.0
+     */
+    protected $pageclass_sfx = '';
+
+    /**
+     * The logged in user
+     *
+     * @var    \JUser|null
+     * @since  4.0.0
+     */
+    protected $user = null;
+
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed   A string if successful, otherwise an Error object.
+     */
 	public function display($tpl = null)
 	{
-		$item = $this->item = $this->get('Item');
-//		$state = $this->State = $this->get('State');
+//        $this->items = $this->get('Items');
+
+        $input  = Factory::getApplication()->input;
+        $this->galleryId = $input->get('gid', 0, 'INT');
+
+        // Get some data from the models
+        $this->state      = $this->get('State');
+        $this->items      = $this->get('Items');
+        $this->pagination = $this->get('Pagination');
+        $this->params     = $this->state->get('params');
+        $this->user       = Factory::getUser();
+
+
+//        if (count($errors = $this->get('Errors')))
+//        {
+//            throw new GenericDataException(implode("\n", $errors), 500);
+//        }
+
+        // Flag indicates to not add limitstart=0 to URL
+        $this->pagination->hideEmptyLimitstart = true;
+
+//   		$state = $this->State = $this->get('State');
 //		$params = $this->Params = $state->get('params');
 //		$itemparams = new Registry(json_decode($item->params));
 //

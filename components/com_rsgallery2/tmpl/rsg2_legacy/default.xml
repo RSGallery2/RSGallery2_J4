@@ -10,6 +10,7 @@
 		<fieldset name="request"
 			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 		>
+		
 			<field
 				name="gid"
 				type="RootGallerySelect"
@@ -21,6 +22,7 @@
 				edit="true"
 				clear="true"
 			/>
+			
 		</fieldset>
 	</fields>
 </metadata>
