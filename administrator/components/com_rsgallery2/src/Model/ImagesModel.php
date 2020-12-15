@@ -711,5 +711,4 @@ class ImagesModel extends ListModel
     }
 
 
-
 } // class

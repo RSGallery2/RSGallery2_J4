@@ -260,7 +260,7 @@ class ImagesModel extends ListModel
 				else
                 {
                     // may< be empty
-                    $this->_item[$gid] = false;
+                    $this->_item[$gid] = [];  // false;
                     // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
 				}
 			}

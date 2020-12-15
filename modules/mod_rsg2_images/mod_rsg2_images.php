@@ -1,7 +1,7 @@
 <?php
 /**
 /**
- * @package     Joomla.Administrator
+ * @package     RSGallery2
  * @subpackage  mod_rsg2_images
  *
  * @copyright   Copyright (C) 2005 - 2020 Open Source Matters, Inc. All rights reserved.
@@ -11,53 +11,61 @@
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
-use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
+use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
-// $app = JFactory::getApplication();
-
-//--- Retrieve params -----------------------
-
-$selectGallery = $params->get('SelectGallery');
-$localFolder = $params->get('LocalFolder');
-$folderUrl = $params->get('FolderUrl');
-
-
-$images = [];
-
-// Use gallery images (?org/display/thumb ?)
-if ($selectGallery > 0) {
-
-    // ToDo: retrieve path to thumbs ? ....
-
-} else {
-
-    // Use local folder images ?
-    if ( $localFolder) {
-
-        $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
-
-    } else {
-        // Use gallery is expected ?
-        if ($folderUrl) {
-
-            $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
-
-        } else {
-
-            // Nothing selected
-            $app->enqueueMessage('mod_rsg2_images: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
-        }
-    }
-}
-
-
-// Tests
-$localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
-$images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
-
-$folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
-$folderUrl = JURI::root() . '/images/rsgallery2/2/thumbs/';
-$images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
-
+echo "mod_rsg2_images.php";
 
 require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
+
+$list = Rsg2_imagesHelper::getList($params);
+
+require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
+//require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'horizontal'));
+
+
+//        // $app = JFactory::getApplication();
+//        
+//        //--- Retrieve params -----------------------
+//
+//        $selectGallery = $params->get('SelectGallery');
+//        $localFolder = $params->get('LocalFolder');
+//        $folderUrl = $params->get('FolderUrl');
+//
+//
+//        $images = [];
+//
+//        // Use gallery images (?org/display/thumb ?)
+//        if ($selectGallery > 0) {
+//
+//            // ToDo: retrieve path to thumbs ? ....
+//
+//        } else {
+//
+//            // Use local folder images ?
+//            if ( $localFolder) {
+//
+//                $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
+//
+//            } else {
+//                // Use gallery is expected ?
+//                if ($folderUrl) {
+//
+//                    $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
+//
+//                } else {
+//
+//                    // Nothing selected
+//                    $app->enqueueMessage('mod_rsg2_images: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
+//                }
+//            }
+//        }
+//
+//
+//        // Tests
+//        $localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
+//        $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
+//
+//        $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
+//        $folderUrl = JURI::root() . '/images/rsgallery2/2/thumbs/';
+//        $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
+//
