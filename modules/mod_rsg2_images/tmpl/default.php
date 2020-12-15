@@ -22,7 +22,12 @@ if (empty ($list))
 
 <div class="mod-articlesnews newsflash">
 	<?php foreach ($list as $item) : ?>
-		<?php require ModuleHelper::getLayoutPath('mod_articles_news', '_item'); ?>
+		<?php
+        // require ModuleHelper::getLayoutPath('mod_articles_news', '_item');
+
+        echo "Image: " . $item->title . '<br>';
+
+        ?>
 	<?php endforeach; ?>
 </div>
 

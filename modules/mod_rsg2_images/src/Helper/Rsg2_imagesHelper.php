@@ -130,10 +130,14 @@ class Rsg2_imagesHelper
 
 		// Check if we should trigger additional plugin events
 		$triggerEvents = $params->get('triggerevents', 1);
+		$SelectGallery = $params->get('SelectGallery', 1);
+
+
 
         //$input = Factory::getApplication()->input;
         $input = $app->input;
-        $input->set( 'gid' , '2' );
+        //$input->set( 'gid' , '2' );
+        $input->set( 'gid' , $SelectGallery );
 
 		// Retrieve Content
 		$items = $model->getItems();
