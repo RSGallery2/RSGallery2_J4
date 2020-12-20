@@ -247,6 +247,9 @@ class Com_Rsgallery2InstallerScript
     {
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
+		// fall back
+		$installMsg = '';
+
         switch ($type) {
 
             case 'install':
@@ -294,7 +297,7 @@ class Com_Rsgallery2InstallerScript
 
 				Factory::getApplication()->enqueueMessage($outText, 'info');
 
-                Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
+				Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
 
                 break;
 
