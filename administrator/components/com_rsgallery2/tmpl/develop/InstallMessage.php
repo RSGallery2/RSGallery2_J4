@@ -32,9 +32,9 @@ use Joomla\CMS\Router\Route;
         } ?>">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'InstallMessage')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'InstallMessage')); ?>
 
-                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'InstallMessage', Text::_('COM_RSGALLERY2_DEVELOP_INSTALL_MSG_TEST', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'InstallMessage', Text::_('COM_RSGALLERY2_DEVELOP_INSTALL_MSG_TEST', true)); ?>
 
                     <?php
 
@@ -70,13 +70,13 @@ use Joomla\CMS\Router\Route;
                     echo '====================================================================<br />';
                     ?>
 
-                <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-                <?php echo JHtml::_('bootstrap.endTabSet'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 
                 <input type="hidden" value="" name="task">
-                <?php echo JHtml::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>
     </div>

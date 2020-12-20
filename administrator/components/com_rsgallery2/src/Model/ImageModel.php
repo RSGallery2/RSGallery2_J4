@@ -783,7 +783,7 @@ class ImageModel extends AdminModel
 		//--- date -------------------------------------------
 
 		$date       = Factory::getDate();
-		$item->date = JHtml::_('date', $date, 'Y-m-d H:i:s');
+		$item->date = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- user id -------------------------------------------
 
@@ -878,8 +878,8 @@ class ImageModel extends AdminModel
         //--- date -------------------------------------------
 
 		$date       = Factory::getDate();
-		//$item->date = \JHtml::_('date', $date, 'Y-m-d H:i:s');
-		$table->created = \JHtml::_('date', $date, 'Y-m-d H:i:s');
+		//$item->date = \HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
+		$table->created = \HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- gallery -------------------------------------------
 

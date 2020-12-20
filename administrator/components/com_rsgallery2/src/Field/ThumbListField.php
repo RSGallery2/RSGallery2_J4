@@ -15,7 +15,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
 \defined('_JEXEC') or die;
 
-use JHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -69,7 +68,7 @@ class ThumbListField extends ListField
 	/**
 	 * Method to get a list of options for a list input.
 	 *
-	 * @return  string array  An array of JHtml options.
+	 * @return  string array  The field option objects.
      *
      * @since __BUMP_VERSION__
 	 */

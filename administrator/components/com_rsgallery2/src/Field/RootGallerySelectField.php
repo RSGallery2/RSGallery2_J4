@@ -15,7 +15,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
 \defined('_JEXEC') or die;
 
-use JHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -65,7 +64,7 @@ class RootGallerySelectField extends ListField
 	/**
 	 * Method to get a list of options for a list input.
 	 *
-	 * @return  string array  An array of JHtml options.
+     * @return  array  The field option objects.
      *
      * @since __BUMP_VERSION__
 	 */
@@ -102,7 +101,7 @@ class RootGallerySelectField extends ListField
         }
 
         // Put "Select an option" on the top of the list.
-		array_unshift($options, JHtml::_('select.option', '0', Text::_('COM_RSGALLERY2_J3X_MENU_GALLERIES_OVERVIEW')));
+		array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_J3X_MENU_GALLERIES_OVERVIEW')));
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
