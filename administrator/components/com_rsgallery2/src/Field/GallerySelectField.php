@@ -15,15 +15,11 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
 \defined('_JEXEC') or die;
 
-use JHtml;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-//use Joomla\CMS\HTML\HTMLHelper;
-//use Joomla\CMS\Language\Text;
-//use Joomla\Utilities\ArrayHelper;
 
 /**
  * Collects available gallery ids and names and creates
@@ -69,7 +65,7 @@ class GallerySelectField extends ListField
 	/**
 	 * Method to get a list of options for a list input.
 	 *
-	 * @return  string array  An array of JHtml options.
+	 * @return   array The field option objects.
      *
      * @since __BUMP_VERSION__
 	 */
@@ -106,7 +102,7 @@ class GallerySelectField extends ListField
         }
 
         // Put "Select an option" on the top of the list.
-		array_unshift($options, JHtml::_('select.option', '0', Text::_('COM_RSGALLERY2_SELECT_GALLERY')));
+		array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_SELECT_GALLERY')));
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
