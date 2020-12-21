@@ -298,21 +298,96 @@
 				label="COM_RSGALLERY2_FIELD_IMAGE_ALT_LABEL"
 				size="20"
 			/>
-			
-			<field 
-				name="gallery_sort_order" 
-				type="list" 
-				default="0" 
-				label="COM_RSGALLERY2_FIELD_SORT_ORDER_LABEL" 
-				description="COM_RSGALLERY2_FIELD_SORT_ORDER_DESC"
-				>
-				<option value="global">Use Global</option>
-				<option value="ordering">Order by ordering field</option>
-				<option value="desc">Date ascending</option>
-				<option value="asc">Date descending</option>
-			</field> 
+
 		</fieldset>
-		
+
+		<fieldset name="layout" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
+		<fieldset name="layout1" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
+			<field
+					name="images_column_arrangement"
+					type="list"
+					default="1"
+					label="*column of the gallery thumbs"
+					description="*Select column of the gallery thumbs"
+			>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">* auto</option>
+				<option value="1">* define column count</option>
+			</field>
+
+			<field
+					name="max_columns_in_images_view"
+					type="number"
+					default="4"
+					label="max_columns_in_images_LABEL"
+					description="max_columns_in_images_DESC"
+					showon="images_column_arrangement:1"
+			>
+			</field>
+
+			<field
+					name="images_row_arrangement"
+					type="list"
+					default="2"
+					label="*columns of image view"
+					description="*define columns input type of the image (thumbs)"
+			>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">* auto</option>
+				<option value="1">* define row count</option>
+				<option value="2">* define max images count</option>
+			</field>
+
+			<field
+					name="max_rows_in_images_view"
+					type="number"
+					default="20"
+					label="*Max Rows in images view _LABEL"
+					description="*Max Rows in images view _DESC"
+					showon="galleries_row_arrangement:1[AND]images_column_arrangement:1"
+			>
+			</field>
+
+			<field
+					name="max_images_in_images_view"
+					type="number"
+					default="0"
+					label="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_LABEL"
+					description="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_DESC"
+					showon="galleries_row_arrangement:2[AND]images_column_arrangement:1"
+			>
+			</field>
+
+		</fieldset>
+
+		<fieldset name="layout2" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
+			<field
+					name="Layout of images (thumbs)"
+					type="list"
+					default="layout02"
+					label="Thumbs layout"
+					description="Select layout of thumbs in this gallery"
+			>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
+				<option value="layout01">layout 1</option>
+				<option value="layout02">layout 2</option>
+			</field>
+
+			<field
+					name="gallery_sort_order"
+					type="list"
+					default="0"
+					label="COM_RSGALLERY2_FIELD_SORT_ORDER_LABEL"
+					description="COM_RSGALLERY2_FIELD_SORT_ORDER_DESC"
+			>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
+				<!--option value="ordering">*Order by ordering field</option-->
+				<option value="desc">JDATE_ASC</option>
+				<option value="asc">JDATE_DESC</option>
+			</field>
+
+		</fieldset>
+
 		<fieldset name="voting" label="COM_RSGALLERY2_FIELD_VOTING_LABEL">
 
 			<field 
@@ -327,6 +402,7 @@
 				<option value="registered">Registered</option>
 				<option value="off">Nobody</option>
 			</field>
+
 			<field 
 				name="voting_vote" 
 				type="list" 
@@ -339,6 +415,7 @@
 				<option value="registered">Registered Only</option>
 				<option value="off">No Voting</option>
 			</field>
+		</fieldset>
 
 		
 		</fieldset>

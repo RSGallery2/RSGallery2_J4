@@ -15,6 +15,23 @@
 				filter="JComponentHelper::filterText"
 				buttons="false"
 		/-->
+		
+		<field
+				name="ToDo_list_general"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - general"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">* add _NOTE_ part to lang of note elements</option>
+			<option value="1">* </option>
+			<option value="2">* </option>
+			<option value="3">* </option>
+			<option value="4">* </option>
+		</field>
+
 
 		<field
 				id="advancedSef"
@@ -34,7 +51,6 @@
 				hr="true"
 		/>
 
-
 	</fieldset>
 
 	<!-- ... Tab Upload ................................. -->
@@ -49,6 +65,23 @@
 				name="spacer_upload_01"
 				hr="true"
 		/-->
+
+		<field
+				name="ToDo_list_upload"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - upload"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">* </option>
+			<option value="1">* </option>
+			<option value="2">* </option>
+			<option value="3">* </option>
+			<option value="4">* </option>
+		</field>
+
 
 		<!-- ... block images upload ... -->
 
@@ -227,6 +260,111 @@
 			description="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_DESC"
 	>
 
+		<field
+				name="ToDo_list_galleries_view"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - galleries view"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">* Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... </option>
+			<option value="1">* Order of galleries: auto, time, name , ...</option>
+			<option value="2">* </option>
+			<option value="3">* </option>
+			<option value="4">* </option>
+		</field>
+
+		<!-- ... block  ... -->
+
+		<field name="note_galleries_view_layout"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_NOTE_GALLERIES_LAYOUT_LABEL"
+			   description="COM_RSGALLERY2_CFG_NOTE_GALLERIES_LAYOUT_DESC"
+		/>
+
+		<field
+				name="galleries_column_arrangement"
+				type="list"
+				default="1"
+				label="*column arrangement label"
+				description="*column arrangement  desc"
+		>
+			<option value="0">* auto</option>
+			<option value="1">* define column count</option>
+		</field>
+
+		<field
+				name="max_columns_in_galleries_view"
+				type="number"
+				default="4"
+				label="max_columns_in_galleries_LABEL"
+				description="max_columns_in_galleries_DESC"
+				showon="galleries_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="galleries_row_arrangement"
+				type="list"
+				default="1"
+				label="*columns of the gallery view"
+				description="*define columns input type of the gallery thumbs"
+		>
+			<option value="0">* auto</option>
+			<option value="1">* define row count</option>
+			<option value="2">* define max thumbs count</option>
+		</field>
+
+		<field
+				name="max_rows_in_galleries_view"
+				type="number"
+				default="20"
+				label="*Max Rows in galleries view label"
+				description="*Max Rows in galleries view DESC"
+				showon="galleries_row_arrangement:1[AND]galleries_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="max_thumbs_in_galleries_view"
+				type="number"
+				default="0"
+				label="COM_RSGALLERY2_LIMIT_GALLERIES_THUMBS_LABEL"
+				description="COM_RSGALLERY2_LIMIT_GALLERIES_THUMBS_DESC"
+				showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="Layout of galley thumbs"
+				type="list"
+				default="layout02"
+				label="Thumbs layout"
+				description="Select layout of thumbs in this gallery"
+		>
+			<option value="layout01">layout 1</option>
+			<option value="layout02">layout 2</option>
+		</field>
+
+
+
+
+		<!-- ... block  ... -->
+
+		<field name="note_galleries_view"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
+			   description="COM_RSGALLERY2_CFG_GALLERIES_VIEW_DESC"
+		/>
+
+		JYES
+
 		<field name="intro_text"
 			   type="editor"
 			   label="COM_RSGALLERY2_INTRODUCTION_TEXT"
@@ -249,15 +387,97 @@
 			hr="true"
 	/>
 
+		<field
+				name="ToDo_list_images_view"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - images view"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">* order of images: auto, time, name , ...</option>
+			<option value="1">* </option>
+			<option value="2">* </option>
+			<option value="3">* </option>
+			<option value="4">* </option>
+		</field>
+
 		<!-- ... block  ... -->
 
-		<field name="note_images_upload"
+		<field name="note_images_view_layout"
 		   type="note"
 		   class="alert alert-primary"
 		   close="true"
-		   label="COM_RSGALLERY2_CFG_IMAGE_UPLOAD"
-		   description="COM_RSGALLERY2_CFG_IMAGE_UPLOAD_DESC"
-	/>
+		   label="COM_RSGALLERY2_CFG_NOTE_IMAGES_LAYOUT_LABEL"
+		   description="COM_RSGALLERY2_CFG_NOTE_IMAGES_LAYOUT_DESC"
+		/>
+
+		<field
+				name="images_column_arrangement"
+				type="list"
+				default="1"
+				label="*column of the gallery thumbs"
+				description="*Select column of the gallery thumbs"
+		>
+			<option value="0">* auto</option>
+			<option value="1">* define column count</option>
+		</field>
+
+		<field
+				name="max_columns_in_images_view"
+				type="number"
+				default="4"
+				label="max_columns_in_images_LABEL"
+				description="max_columns_in_images_DESC"
+				showon="images_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="images_row_arrangement"
+				type="list"
+				default="2"
+				label="*columns of image view"
+				description="*define columns input type of the image (thumbs)"
+		>
+			<option value="0">* auto</option>
+			<option value="1">* define row count</option>
+			<option value="2">* define max images count</option>
+		</field>
+
+		<field
+				name="max_rows_in_images_view"
+				type="number"
+				default="20"
+				label="*Max Rows in images view _LABEL"
+				description="*Max Rows in images view _DESC"
+				showon="galleries_row_arrangement:1[AND]images_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="max_images_in_images_view"
+				type="number"
+				default="0"
+				label="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_LABEL"
+				description="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_DESC"
+				showon="galleries_row_arrangement:2[AND]images_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="Layout of images (thumbs)"
+				type="list"
+				default="layout02"
+				label="Thumbs layout"
+				description="Select layout of thumbs in this gallery"
+		>
+			<option value="layout01">layout 1</option>
+			<option value="layout02">layout 2</option>
+		</field>
+
+
 	</fieldset>
 
 	<!-- ... Tab Debug ................................. -->
@@ -455,6 +675,9 @@
 
 	</fieldset>
 
+	<!-- ... Temp  ................................. -->
 
+
+	<!-- ... End Temp .............................. -->
 
 </config>

@@ -102,6 +102,25 @@ class ImagesModel extends ListModel
     {
         $app = Factory::getApplication();
 
+
+        $gid = $app->input->get('gid', '', 'INT');
+        $this->setState('images.galleryId', $gid);
+
+        $gallery_param = $this->gallery_param ($gid);
+
+        // toDo: list limit see also further below
+        /**
+        $isGallerySingleImageView = $input->get('startShowSingleImage', 0, 'INT');
+        // thumbs per page
+        $limit = $params['display_thumbs_maxPerPage'];
+        // Limit is set to one for single image 'slider'
+        if ($isGallerySingleImageView > 0)
+        {
+            $limit = 1;
+        }
+        $this->setState('list.limit', $limit);
+        /**/
+
         // List state information
         $value = $app->input->get('limit', $app->get('list_limit', 0), 'uint');
         $this->setState('list.limit', $value);
@@ -291,5 +310,30 @@ class ImagesModel extends ListModel
         return $this->getState('list.start');
     }
 
+    private function gallery_param($gid=0)
+    {
+        $parameter = new \stdClass();
+
+        // Not root gallery
+        if( $gid != 0) {
+
+            // Create a new query object.
+            $db    = Factory::getDBO();
+            $query = $db->getQuery(true);
+
+            //$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
+            //	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
+
+            $query
+                ->select('*') // ToDo: select single items
+                ->from($db->quoteName('#__rsg2_galleries'))
+                ->where($db->quoteName('id') . '=' . $gid );
+
+            //$parameter = $db->loadObject();
+            $parameter = $db->loadRow();
+;        }
+
+        return $parameter;
+    }
 
 }
