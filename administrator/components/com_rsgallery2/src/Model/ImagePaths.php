@@ -42,10 +42,13 @@ class ImagePaths {
 
 	protected $rsgConfig;
 
-	//	ToDo: watermark ...
-
-	// root of images, image sizes from configuration build the paths
     // ToDo: watermarked path
+    // ToDo: original path of gallery  may be somewhere else (defined in gallery ... )
+    //
+    // ToDo: J3x and origpath from gallery itself
+    //
+    // toDo: image size to path when upload ...
+	// root of images, image sizes from configuration build the paths
 	public function __construct($galleryId = 0) {
 		global $rsgConfig;
 

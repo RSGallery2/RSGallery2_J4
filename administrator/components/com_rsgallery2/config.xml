@@ -313,6 +313,7 @@
 				default="1"
 				label="*columns of the gallery view"
 				description="*define columns input type of the gallery thumbs"
+				showon="galleries_column_arrangement:1"
 		>
 			<option value="0">* auto</option>
 			<option value="1">* define row count</option>
@@ -322,7 +323,7 @@
 		<field
 				name="max_rows_in_galleries_view"
 				type="number"
-				default="20"
+				default="5"
 				label="*Max Rows in galleries view label"
 				description="*Max Rows in galleries view DESC"
 				showon="galleries_row_arrangement:1[AND]galleries_column_arrangement:1"
@@ -332,10 +333,10 @@
 		<field
 				name="max_thumbs_in_galleries_view"
 				type="number"
-				default="0"
+				default="20"
 				label="COM_RSGALLERY2_LIMIT_GALLERIES_THUMBS_LABEL"
 				description="COM_RSGALLERY2_LIMIT_GALLERIES_THUMBS_DESC"
-				showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:1"
+				showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:2"
 		>
 		</field>
 
@@ -417,8 +418,8 @@
 				name="images_column_arrangement"
 				type="list"
 				default="1"
-				label="*column of the gallery thumbs"
-				description="*Select column of the gallery thumbs"
+				label="*column arrangement label"
+				description="*column arrangement  desc"
 		>
 			<option value="0">* auto</option>
 			<option value="1">* define column count</option>
@@ -440,6 +441,7 @@
 				default="2"
 				label="*columns of image view"
 				description="*define columns input type of the image (thumbs)"
+				showon="images_column_arrangement:1"
 		>
 			<option value="0">* auto</option>
 			<option value="1">* define row count</option>
@@ -449,20 +451,20 @@
 		<field
 				name="max_rows_in_images_view"
 				type="number"
-				default="20"
+				default="5"
 				label="*Max Rows in images view _LABEL"
 				description="*Max Rows in images view _DESC"
-				showon="galleries_row_arrangement:1[AND]images_column_arrangement:1"
+				showon="images_row_arrangement:1[AND]images_column_arrangement:1"
 		>
 		</field>
 
 		<field
 				name="max_images_in_images_view"
 				type="number"
-				default="0"
+				default="20"
 				label="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_LABEL"
 				description="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_DESC"
-				showon="galleries_row_arrangement:2[AND]images_column_arrangement:1"
+				showon="images_row_arrangement:2[AND]images_column_arrangement:1"
 		>
 		</field>
 

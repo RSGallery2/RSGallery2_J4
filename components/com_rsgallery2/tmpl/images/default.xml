@@ -35,6 +35,63 @@
 					useglobal="true"
 			/>
 
+			<field
+					name="images_column_arrangement"
+					type="list"
+					default="1"
+					label="*column arrangement label"
+					description="*column arrangement  desc"
+			>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">* auto</option>
+				<option value="1">* define column count</option>
+			</field>
+
+			<field
+					name="max_columns_in_images_view"
+					type="number"
+					default="4"
+					label="max_columns_in_images_LABEL"
+					description="max_columns_in_images_DESC"
+					showon="images_column_arrangement:1"
+			>
+			</field>
+
+			<field
+					name="images_row_arrangement"
+					type="list"
+					default="2"
+					label="*columns of image view"
+					description="*define columns input type of the image (thumbs)"
+					showon="images_column_arrangement:1"
+			>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">* auto</option>
+				<option value="1">* define row count</option>
+				<option value="2">* define max images count</option>
+			</field>
+
+			<field
+					name="max_rows_in_images_view"
+					type="number"
+					default="5"
+					label="*Max Rows in images view _LABEL"
+					description="*Max Rows in images view _DESC"
+					showon="images_row_arrangement:1[AND]images_column_arrangement:1"
+			>
+			</field>
+
+			<field
+					name="max_images_in_images_view"
+					type="number"
+					default="20"
+					label="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_LABEL"
+					description="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_DESC"
+					showon="images_row_arrangement:2[AND]images_column_arrangement:1"
+			>
+			</field>
+
+
 		</fieldset>
 	</fields>
 </metadata>
