@@ -15,7 +15,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
-//use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
@@ -878,8 +878,8 @@ class ImageModel extends AdminModel
         //--- date -------------------------------------------
 
 		$date       = Factory::getDate();
-		//$item->date = \HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
-		$table->created = \HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
+		//$item->date = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
+		$table->created = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
 
 		//--- gallery -------------------------------------------
 

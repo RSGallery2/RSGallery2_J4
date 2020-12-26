@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRaw;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageJ3xPaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 use Joomla\Utilities\ArrayHelper;
 
@@ -1567,7 +1567,7 @@ EOT;
 
         try {
 
-            $j3xImagePath = new ImageJ3xPaths ();
+            $j3xImagePath = new ImagePathsJ3x ();
             $isPathsExisting = $j3xImagePath->isPathsExisting();
 
         } catch (\RuntimeException $e) {
@@ -1584,7 +1584,7 @@ EOT;
 
         try {
 
-            $j3xImagePath = new ImageJ3xPaths ();
+            $j3xImagePath = new ImagePathsJ3x ();
             $isPathsRepaired = $j3xImagePath->createAllPaths();
 
         } catch (\RuntimeException $e) {
@@ -1765,7 +1765,7 @@ EOT;
 //            $bigImageWidth = $exploded[0];
 //
 //            $j4xImagePath = new ImagePaths ();
-//            $j3xImagePath = new ImageJ3xPaths ();
+//            $j3xImagePath = new ImagePathsJ3x ();
 //
 //
 //            // ToDo: Watermarked
@@ -1877,7 +1877,7 @@ EOT;
             $bigImageWidth = $exploded[0];
 
             $j4xImagePath = new ImagePaths ();
-            //$j3xImagePath = new ImageJ3xPaths ();
+            //$j3xImagePath = new ImagePathsJ3x ();
 
 
             // ToDo: Watermarked
@@ -1946,7 +1946,7 @@ EOT;
         //--- image paths ----------------------------------------
 
         $j4xImagePath = new ImagePaths ();
-        $j3xImagePath = new ImageJ3xPaths ();
+        $j3xImagePath = new ImagePathsJ3x ();
 
         $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
 

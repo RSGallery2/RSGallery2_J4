@@ -24,6 +24,8 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\MVC\Model\ListModel;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
+
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 
 // ToDo: own file ImageFilePaths for merge_paths and class imagePaths
@@ -573,7 +575,7 @@ class ImageFileModel extends BaseModel // AdminModel
 			{
 				if ($isUsePath_Original)
 				{
-					$originalFileName = path_join($imagePaths->originalBasePath, $targetFileName);
+					$originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
 					// Move of file on upload and not on ftp folder on server
 					if($uploadOrigin != 'server')
 					{

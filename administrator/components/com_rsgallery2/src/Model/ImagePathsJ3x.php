@@ -14,10 +14,12 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
+
 \defined('_JEXEC') or die;
 
 
-class ImageJ3xPaths {
+class ImagePathsJ3x {
 	// from config
 
 	// files gallery defined
@@ -59,17 +61,17 @@ class ImageJ3xPaths {
             File paths
             --------------------------------------------------------------------*/
 
-            $this->originalBasePath = path_join(JPATH_ROOT, $rsgConfig->get('imgPath_original'));
-            $this->displayBasePath = path_join(JPATH_ROOT, $rsgConfig->get('imgPath_display'));
-            $this->thumbBasePath = path_join(JPATH_ROOT, $rsgConfig->get('imgPath_thumb'));
+            $this->originalBasePath = PathHelper::join(JPATH_ROOT, $rsgConfig->get('imgPath_original'));
+            $this->displayBasePath = PathHelper::join(JPATH_ROOT, $rsgConfig->get('imgPath_display'));
+            $this->thumbBasePath = PathHelper::join(JPATH_ROOT, $rsgConfig->get('imgPath_thumb'));
 
             /*--------------------------------------------------------------------
             URIs
             --------------------------------------------------------------------*/
 
-            $this->originalUrl = path_join(Uri::root(), $this->originalBasePath);
-            $this->displayUrl = path_join(Uri::root(), $this->displayBasePath);
-            $this->thumbUrl = path_join(Uri::root(), $this->thumbBasePath);
+            $this->originalUrl = PathHelper::join(Uri::root(), $this->originalBasePath);
+            $this->displayUrl = PathHelper::join(Uri::root(), $this->displayBasePath);
+            $this->thumbUrl = PathHelper::join(Uri::root(), $this->thumbBasePath);
 
         }
 		catch (\RuntimeException $e)
@@ -88,13 +90,13 @@ class ImageJ3xPaths {
 	--------------------------------------------------------------------*/
 
 	public function getOriginalPath ($fileName=''){
-		return path_join ($this->originalBasePath, $fileName);
+		return PathHelper::join ($this->originalBasePath, $fileName);
 	}
 	public function getDisplayPath ($fileName=''){
-		return path_join ($this->displayBasePath, $fileName . '.jpg');
+		return PathHelper::join ($this->displayBasePath, $fileName . '.jpg');
 	}
 	public function getThumbPath ($fileName=''){
-		return path_join ($this->thumbBasePath, $fileName . '.jpg');
+		return PathHelper::join ($this->thumbBasePath, $fileName . '.jpg');
 	}
 
 	/*--------------------------------------------------------------------
@@ -186,35 +188,6 @@ class ImageJ3xPaths {
     }
 
 
-}
-
-/**
- * Merge several parts of URL or filesystem path in one path
- * Examples:
- *  echo merge_paths('stackoverflow.com', 'questions');           // 'stackoverflow.com/questions' (slash added between parts)
- *  echo merge_paths('usr/bin/', '/perl/');                       // 'usr/bin/perl/' (double slashes are removed)
- *  echo merge_paths('en.wikipedia.org/', '/wiki', ' Sega_32X');  // 'en.wikipedia.org/wiki/Sega_32X' (accidental space fixed)
- *  echo merge_paths('etc/apache/', '', '/php');                  // 'etc/apache/php' (empty path element is removed)
- *  echo merge_paths('/', '/webapp/api');                         // '/webapp/api' slash is preserved at the beginnnig
- *  echo merge_paths('http://google.com', '/', '/');              // 'http://google.com/' slash is preserved at the end
-/**/
-
-/**
- * Joins paths for files or url
- * Attention: may not be perfect so check once in a while
- * @return string|string[]|null
- *
- * @since __BUMP_VERSION__
- */
-function path_join() {
-
-	$paths = array();
-
-	foreach (func_get_args() as $arg) {
-		if ($arg !== '') { $paths[] = $arg; }
-	}
-
-	return preg_replace('#/+#','/',join('/', $paths));
 }
 
 

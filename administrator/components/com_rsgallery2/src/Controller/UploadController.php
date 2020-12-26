@@ -24,7 +24,7 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Response\JsonResponse;
 
-// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 
 /**
 global $Rsg2DebugActive;
@@ -786,7 +786,7 @@ out:
 			}
 
 			// path with joomla root
-			$ftpPathRoot = $this->path_join (JPATH_ROOT, $ftpPath);
+			$ftpPathRoot = PathHelper::join (JPATH_ROOT, $ftpPath);
 			$ftpPathServer = $ftpPath;
 
 			$ftpPath = is_dir($ftpPathRoot) ? $ftpPathRoot : $ftpPathServer;
@@ -1235,17 +1235,6 @@ interface IResponseTransfer {
 			$app->close();
 		}
 		/**/
-	}
-
-	function path_join () {
-
-		$paths = array();
-
-		foreach (func_get_args() as $arg) {
-			if ($arg !== '') { $paths[] = $arg; }
-		}
-
-		return preg_replace('#/+#','/',join('/', $paths));
 	}
 
 } // class
