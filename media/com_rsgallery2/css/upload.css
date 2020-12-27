@@ -271,5 +271,25 @@ ul#imagesAreaList {
 }
 
 /**/
+.caption.shorten-long-text {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 150px;
+  text-overflow: ellipsis;
+}
+.caption.shorten-long-text :hover {
+  overflow: visible;
+  width: 100%;
+}
+
+.filename.shorten-long-text {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 200px;
+  text-overflow: ellipsis;
+}
+.filename.shorten-long-text :hover {
+  overflow: visible;
+}
 
 /*# sourceMappingURL=upload.css.map */
