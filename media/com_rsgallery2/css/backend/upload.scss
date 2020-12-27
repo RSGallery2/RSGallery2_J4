@@ -1,0 +1,379 @@
+@import "Rsg2";
+
+#upload-icon {
+  font-size: 48px;
+  width: auto;
+  height: auto;
+  margin: 0;
+  line-height: 175%;
+  color: #999;
+  transition: all .2s;
+  display:block;
+}
+
+#dragarea {
+  background-color: #fafbfc;
+  /* border: 1px dashed #999; /**/
+  border: 5px dotted darkgreen; /**/
+  /* border: 5px dotted lightgreen; /**/
+  box-sizing: border-box;
+  padding: 10px 0 ;
+  transition: all 0.2s ease 0s;
+  width: 100%;
+
+  &:hover {
+    border-color: #666;
+//    background-color: #eee;
+    background-color: lightgrey;
+  }
+
+  &.dragareaDisabled {
+    border: 6px dotted red;
+//    background: linear-gradient(45deg, darkgrey, lightgrey);
+    /**/
+    background: repeating-linear-gradient(
+      45deg,
+      lightgrey,
+      lightgrey 20px,
+      white 20px,
+      white 40px);
+     /**/
+  }
+
+  &[data-state=pending] .upload-progress {
+    display: none;
+  }
+
+  &[data-state=pending] .install-progress {
+    display: none;
+  }
+
+  & #upload-icon,
+  & p.lead {
+    color: #999;
+    color: darkgrey;
+  }
+}
+
+/**
+#dragarea.hover #upload-icon,
+#dragarea p.lead {
+	color: #666;
+}
+/**/
+
+#dragandrophandler {
+  border: 2px dotted #0B85A1;
+  width: 400px;
+  color: #92AAB0;
+  text-align: left;
+  vertical-align: middle;
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 10px;
+  font-size: 200%;
+}
+
+.progressBar {
+  width: 200px;
+  height: 22px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  display: inline-block;
+  margin: 0px 10px 5px 5px;
+  vertical-align: top;
+
+  transition: all .2s ease-in-out;
+
+  div {
+    height: 100%;
+    color: #28a745; // #fff;
+    text-align: right;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    background-color: #0ba1b5;
+    border-radius: 3px;
+  }
+}
+
+.statusbar {
+  border-top: 1px solid #A9CCD1;
+  min-height: 25px;
+  width: 100%;
+  padding: 10px 10px 0px 10px;
+  vertical-align: top;
+
+//  :nth-child(odd) {
+//  }
+
+  &:nth-of-type(2n-1) {
+    background: #EBEFF0;
+  }
+
+}
+
+.filename {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+}
+
+.zip {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+  background-color: #1DC116;
+}
+
+
+.filesize {
+  display: inline-block;
+  vertical-align: top;
+  color: #30693D;
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.abort {
+  background-color: #A8352F;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  color: #fff;
+  font-family: arial;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 4px 15px;
+  cursor: pointer;
+  vertical-align: top
+}
+
+.OK {
+    background-color: #28a745;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 15px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.error {
+    background-color: #A8352F;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 15px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.upload {
+    background-color: #17a2b8;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 15px;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+
+.OK.label, .error.label {
+//  margin-left: 5px;
+}
+
+abort.label {
+//  background-color: map-get($rsg2-colors, red);
+}
+
+.upload.label {
+//  map-get($rsg2-colors, blue)
+}
+
+.OK.label {
+//  map-get($rsg2-colors, green)
+}
+
+.error.label {
+//  map-get($rsg2-colors, orange)
+}
+
+/**
+.tmp_order {
+    display:inline-block;
+    vertical-align:top;
+    color:#30693D;
+    margin-left:20px;
+    margin-right:20px;
+}
+/**/
+
+/**
+.thumbnails > li {
+  float: left;
+  margin-bottom: 18px;
+  margin-left: 20px;
+}
+/**/
+
+/**
+.thumbnails img {
+    float: left;
+    margin-right: 10px;
+//    display: block;
+    list-style: none;
+}
+/**/
+
+/**
+.thumbnails {
+  list-style: none;
+}
+/**/
+
+/**/
+.imagesArea {
+
+  display: block;
+
+  ul, ol {
+    padding: 0;
+    margin: 0 0 9px 25px;
+    list-style: none;
+  }
+
+  li {
+//    // display: block;
+    display: inline-block;
+//    display: list-item;
+//    list-style: none;
+
+    .rsg2_thumbnail {
+      //  display: block;
+      padding: 4px;
+      line-height: 18px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.055);
+      transition: all .2s ease-in-out;
+
+      img {
+        margin-top: 2.5%;
+        padding: 4px;
+
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+
+        // border-radius: 3px;
+        border-radius: 6px;
+
+        max-width: 100%;
+        // width: auto;
+        height: auto;
+        vertical-align: middle;
+        border: 0;
+
+        transition: all .2s ease-in-out;
+      }
+    }
+
+  }
+
+
+}
+
+/**
+.imgContainer {
+  display: block;
+}
+/**/
+
+
+/**/
+/**/
+
+/**/
+
+
+/**
+.caption {
+  display: block;
+}
+/**/
+
+/**/
+.btn-rsg2X {
+//  min-width: 220px;
+}
+/**/
+
+/**/
+.imagesArea {
+  display: block;
+  width: 100%;
+}
+/**/
+
+/**
+ul#imagesAreaList {
+  list-style: none;
+}
+/**/
+
+// Hack for removing empty header line
+/**/
+#subhead {
+  height: 0px;
+  min-height: 0px;
+  padding: 0 0;
+  visibility: hidden;
+  margin: 0 0 !important;
+}
+/**/
+
+.caption.shorten-long-text {
+  white-space: nowrap;
+  overflow: hidden;
+  //width: 100%;
+  //  width: 50%;
+  width: 150px;
+  text-overflow: ellipsis;
+
+  :hover {
+    overflow: visible;
+    width: 100%;
+  }
+
+}
+
+.filename.shorten-long-text{
+  white-space: nowrap;
+  overflow: hidden;
+  //width: 100%;
+  //  width: 50%;
+  width: 200px;
+  text-overflow: ellipsis;
+
+  :hover {
+    overflow: visible;
+  }
+
+}
+
