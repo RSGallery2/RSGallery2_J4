@@ -1,0 +1,250 @@
+@import "Rsg2";
+
+
+/**
+div.quickicon-icon {
+
+	font-size: xx-large;
+	text-align: center;
+	width: 5em;
+	width: auto;
+	border: 2px solid red;
+	border-color: red;
+	border-width: thick;
+	border-radius: 5px;
+	padding: 4px;
+	margin: 4px;
+
+}
+/**/
+
+div.rsg2logo
+{
+	padding-top: 0;
+	margin-top: 0;
+
+/*	border: 2px solid red; /**/
+
+}
+
+div.rsg2logo img {
+	vertical-align: top;
+	/** border: 4px solid blue; /**/
+}
+
+div.quickicon-icon {
+	position: relative;
+	left: -8px;
+}
+
+div.quickicon-icon div.fa-cog
+{
+	color: map-get($rsg2-colors, blue);
+}
+
+
+div.quickicon-icon div.fa-th
+{
+	color: map-get($rsg2-colors, green);
+}
+
+
+div.quickicon-icon div.fa-upload
+{
+	color: map-get($rsg2-colors, green);
+}
+
+
+div.quickicon-icon div.fa-image
+{
+	color: map-get($rsg2-colors, green);
+}
+
+
+div.quickicon-icon div.fa-cogs
+{
+	color: map-get($rsg2-colors, red);
+}
+
+/* border-radius: 25px; */
+li.quickicon-single
+{
+	display: block;
+	border: thick solid lightgray; /**/
+
+	/*	border-color: red;
+        border-width: thick;
+    /**/
+	border-radius: 2px;
+
+	background: white;
+	/**
+	padding-left: auto;
+	padding-right: auto;
+	/**/
+
+	// padding: 4px; /**/
+
+	// margin-left: auto;
+	// margin-right: auto;
+	// margin: 4px; /**/
+	margin: 0 8px 0 0; /**/
+}
+
+li.quickicon-single:hover {
+    /*	background: lightblue;  /**/
+	background: lightgray;  /**/
+	border: thick solid darkgray; /**/
+//	text-decoration: none;
+}
+
+li.quickicon-single a {
+	text-decoration: none;
+}
+
+li.quickicon-single:hover .quickicon-text {
+//	text-decoration: none;
+	color:black; /**/
+}
+
+li.quickicon-single:hover .quickicon-icon div.fa {
+//	text-decoration: none;
+//	border: 1px solid red;
+}
+
+li.quickicon-single:link {
+//	text-decoration: none;
+}
+
+
+/* border-radius: 25px; */
+div.quickicon-icon
+{
+	font-size: xx-large;
+
+	text-align: center;
+
+/*	width: 5em;  /**/
+	width: auto;  /**/
+
+/*	border: 2px solid red; /**/
+
+/*	border-color: red; /**/
+/*    border-width: thick; /**/
+
+/*	border-radius: 5px; /**/
+
+	padding: 4px; /**/
+	margin: 4px; /**/
+
+}
+
+//----------------------------------------------------------------------------------
+
+.table_morecondensed>thead>tr>th,
+.table_morecondensed>tbody>tr>th,
+.table_morecondensed>tfoot>tr>th,
+.table_morecondensed>thead>tr>td,
+.table_morecondensed>tbody>tr>td,
+.table_morecondensed>tfoot>tr>td
+{
+	padding: 4px;
+}
+
+/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+
+/* Large */
+.flex-buttons-table {
+	display: flex;
+	flex-flow: row wrap;
+	/* This aligns items to the end line on main-axis */
+	justify-content: flex-end;
+}
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+	.flex-buttons-table {
+		/* When on medium sized screens, we center it by evenly distributing empty space around items */
+		justify-content: space-around;
+	}
+}
+
+/* Small screens */
+@media all and (max-width: 500px) {
+	.flex-buttons-table {
+		/* On small screens, we are no longer using row direction but column */
+		flex-direction: column;
+	}
+}
+
+/* ToDo: More specific add dictionaries with class= gallery/images ... */
+.table caption {
+	caption-side: top;
+	white-space: nowrap;
+//	overflow: hidden;
+}
+
+
+
+
+//----------------------------------------------------------------------------------
+
+.changelog_area {
+	display: flex;
+	flex-direction: row;
+
+//	justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly | start | end | left | right ... + safe | unsafe;
+	justify-content: flex-start; // | flex-end | center | space-between | space-around | space-evenly | start | end | left | right ... + safe | unsafe;
+}
+
+.changelog_key {
+	min-width: 100px;
+	border-right: 2px solid red;
+}
+
+.changelog_value_area{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.change-log-caption {
+	color: black;
+}
+
+.change-log-table {
+	border-bottom: 2px solid black;
+}
+
+//----------------------------------------------------------------------------------
+
+.card-header .fa {
+	transition: .3s transform ease-in-out;
+}
+
+.card-header .collapsed .fa {
+	transform: rotate(-90deg);
+}
+
+//----------------------------------------------------------------------------------
+
+#GalImg_outer {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: stretch;
+
+	margin-bottom: 15px;
+}
+
+#galleriesCard {
+	margin-right: 10px;
+}
+
+row > .card {
+	margin-bottom: 15px;
+}
+
+//.card.forCollapse {
+//	padding: 10px;
+//}
