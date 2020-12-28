@@ -44,32 +44,32 @@ echo '<h3> parent gallery: ' .$this->galleryId .'</h3><br>';
 
     <button  type="button" class="btn btn-success">bootstrap </button>
 
-    <div class="row">
-
-        <?php
-        foreach ($this->items as $image) {
-
-
-        ?>
-        <div class="col-md-4">
-            <div class="thumbnail">
-                <a href="<?php echo $image->UrlOriginalFile ?>" target="_blank">
-                    <img src="<?php echo $image->UrlThumbFile ?>"
-                         alt="<?php echo $image->name ?>"
-                         style="width:100% height:100%"
-                         class="img-thumbnail"
-                    >
-                    <div class="caption">
-                        <p><?php echo $image->name; ?></p>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <?php
-        }
-        ?>
-    </div>
+<!--    <div class="row">-->
+<!---->
+<!--        --><?php
+//        foreach ($this->items as $image) {
+//
+//
+//        ?>
+<!--            <div class="col-md-4">-->
+<!--                <div class="thumbnail">-->
+<!--                    <a href="--><?php //echo $image->UrlOriginalFile ?><!--" target="_blank">-->
+<!--                        <img src="--><?php //echo $image->UrlThumbFile ?><!--"-->
+<!--                             alt="--><?php //echo $image->name ?><!--"-->
+<!--                             style="width:100% height:100%"-->
+<!--                             class="img-thumbnail"-->
+<!--                        >-->
+<!--                        <div class="caption">-->
+<!--                            <p>--><?php //echo $image->name; ?><!--</p>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!---->
+<!--        --><?php
+//        }
+//        ?>
+<!--    </div>-->
 
 
    <?php
@@ -130,7 +130,108 @@ echo '<h3> parent gallery: ' .$this->galleryId .'</h3><br>';
     <!--            </div>-->
     <!--        </div>-->
 
-    <?php
+    <div class="row"  id="gallery"  data-toggle="modal" data-target="#exampleModal">
+
+        <?php
+        foreach ($this->items as $idx => $image) {
+
+
+            ?>
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="thumbnail">
+                        <img src="<?php echo $image->UrlThumbFile ?>"
+                             alt="<?php echo $image->name ?>"
+                             style="width:100% height:100%"
+                             class="img-thumbnail"
+                             data-target="#carouselExample" data-slide-to="<?php echo $idx ?>"
+                        >
+                        <div class="caption">
+                            <p><?php echo $image->name; ?></p>
+                        </div>
+                </div>
+            </div>
+
+            <?php
+        }
+        ?>
+
+        <!-- Modal markup: https://getbootstrap.com/docs/4.4/components/modal/ -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Carousel markup goes here -->
+
+                        <div id="carouselExample" class="carousel slide" data-ride="carousel">
+
+<!--                            <ol class="carousel-indicators">-->
+<!--                                --><?php
+//                                $isActive="active";
+//                                foreach ($this->items as $image) {
+//                                ?>
+<!---->
+<!--                                    <li data-target="#carouselExample" data-slide-to="--><?php //echo $idx ?><!--" class="--><?php //echo $isActive ?><!--"></li>-->
+<!---->
+<!---->
+<!--                                --><?php
+//                                    $isActive="";
+//                                }
+//                                ?>
+<!--                            </ol>-->
+
+
+                            <div class="carousel-inner">
+
+                                <?php
+                                $isActive="active";
+                                foreach ($this->items as $image) {
+                                ?>
+
+                                    <div class="carousel-item <?php echo $isActive ?>">
+<!--                                        <img class="d-block " src="--><?php //echo $image->UrlDisplayFiles[400] ?><!--"-->
+<!--                                             alt="--><?php //echo $image->name ?><!--"-->
+<!--                                             style="width:100% height:100%"-->
+<!--                                             data-target="#carouselExample" data-slide-to="--><?php //echo $idx ?><!--"-->
+<!--                                        >-->
+                                        <img class="d-block " src="<?php echo $image->UrlDisplayFiles[400] ?>"
+                                             alt="<?php echo $image->name ?>"
+                                        >
+                                    </div>
+
+                                <?php
+                                    $isActive="";
+                                }
+                                ?>
+
+
+                                <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<?php
 
 /**
 

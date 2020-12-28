@@ -358,7 +358,7 @@
 				label="*Show gallery title"
 				description="*Show title of gallery near thumb"
 		>
-			<option value="0">*No</option>
+			<option value="0">JNO</option>
 			<option value="1">*Above thumb </option>
 			<option value="2">*Below thumb</option>
 			<option value="3">*Above description</option>
@@ -372,7 +372,7 @@
 				label="*Show gallery description"
 				description="*Select display location of gellery description"
 		>
-			<option value="0">*No</option>
+			<option value="0">JNO</option>
 			<option value="1">*Above thumb </option>
 			<option value="2">*Right beside thumb </option>
 			<option value="3">*Below thumb</option>
@@ -382,22 +382,12 @@
 
 		<!-- ... block  ... -->
 
-		<field name="note_galleries_view"
+		<field name="note_galleries_view_YYYY"
 			   type="note"
 			   class="alert alert-primary"
 			   close="true"
-			   label="COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
-			   description="COM_RSGALLERY2_CFG_GALLERIES_VIEW_DESC"
-		/>
-
-		JYES
-
-		<field name="intro_text"
-			   type="editor"
-			   label="COM_RSGALLERY2_INTRODUCTION_TEXT"
-			   description="COM_RSGALLERY2_INTRODUCTION_DESC"
-			   filter="JComponentHelper::filterText"
-			   buttons="false"
+			   label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
+			   description=""
 		/>
 	</fieldset>
 
@@ -512,7 +502,7 @@
 				label="*Show image title"
 				description="*Show title of image near thumb"
 		>
-			<option value="0">*No</option>
+			<option value="0">JNO</option>
 			<option value="1">*Above thumb </option>
 			<option value="2">*Below thumb</option>
 			<option value="3">*Above description</option>
@@ -526,7 +516,7 @@
 				label="*Show gallery description"
 				description="Select display location of gellery description"
 		>
-			<option value="0">*No</option>
+			<option value="0">JNO</option>
 			<option value="1">*Above thumb </option>
 			<option value="2">*Right beside thumb </option>
 			<option value="3">*Below thumb</option>

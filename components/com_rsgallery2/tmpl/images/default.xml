@@ -91,6 +91,20 @@
 			>
 			</field>
 
+		<field
+				name="images_show_gallery_description"
+				type="list"
+				default="0"
+				label="*Show description"
+				description="*Show gallery description near images"
+		>
+			<option value="0">JNO</option>
+			<option value="1">*Above images </option>
+			<option value="2">*Right beside images </option>
+			<option value="3">*Below galleries</option>
+			<option value="4">*Left beside galleries</option>
+		</field>
+
 
 		</fieldset>
 	</fields>

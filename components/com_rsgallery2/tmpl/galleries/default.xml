@@ -35,7 +35,44 @@
 					useglobal="true"
 			/>
 
-		</fieldset>
+		
+		<field name="galleries_intro_text"
+			   type="editor"
+			   label="COM_RSGALLERY2_GALLERIES_INTRODUCTION_TEXT"
+			   description="COM_RSGALLERY2_GALLERIES_INTRODUCTION_DESC"
+			   filter="JComponentHelper::filterText"
+			   buttons="false"
+		/>
+
+		<field
+				name="galleries_show_intro"
+				type="list"
+				default="0"
+				label="*Show galleries intro"
+				description="*Show title of gallery near thumb"
+		>
+			<option value="0">JNO</option>
+			<option value="1">*Above galleries </option>
+			<option value="2">*Right beside galleries </option>
+			<option value="3">*Below galleries</option>
+			<option value="4">*Left beside galleries</option>
+		</field>
+
+		</fieldset>		
+				<field
+				name="galleries_show_title"
+				type="list"
+				default="0"
+				label="*Show gallery title"
+				description="*Show title of gallery near thumb"
+		>
+			<option value="0">JNO</option>
+			<option value="1">*Above thumb </option>
+			<option value="2">*Below thumb</option>
+			<option value="3">*Above description</option>
+			<option value="4">*Below description</option>
+		</field>
+		
 	</fields>
 </metadata>
 
