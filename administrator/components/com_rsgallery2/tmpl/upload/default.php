@@ -17,9 +17,9 @@ use Joomla\CMS\Session\Session;
 
 //HTMLHelper::_('behavior.core');
 HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('behavior.keepalive'); // On long waiting ...  or ToDo: on post forms like edit otherwise ...
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/upload.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/upload.css', array('version' => 'auto', 'relative' => true));
 HTMLHelper::_('script', 'com_rsgallery2/upload.js', ['version' => 'auto', 'relative' => true]);
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);

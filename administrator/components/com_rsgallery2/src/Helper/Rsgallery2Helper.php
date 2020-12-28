@@ -63,7 +63,7 @@ class Rsgallery2Helper extends ContentHelper
 //
 ////        echo "<br>humpf<br>";
 //
-//        HTMLHelper::_('stylesheet', 'com_rsgallery2/sidebar.css', array('version' => 'auto', 'relative' => true));
+//        HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/sidebar.css', array('version' => 'auto', 'relative' => true));
 
 
         //--- standard form elements ----------------------------------------

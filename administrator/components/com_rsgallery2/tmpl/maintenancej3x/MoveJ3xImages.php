@@ -14,7 +14,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/moveJ3xImages.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/moveJ3xImages.css', array('version' => 'auto', 'relative' => true));
 
 // Items exist
 if ($this->isMissingJ3xImages) {

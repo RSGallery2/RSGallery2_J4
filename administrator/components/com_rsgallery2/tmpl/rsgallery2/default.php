@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('bootstrap.framework');
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/controlPanel.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/controlPanel.css', array('version' => 'auto', 'relative' => true));
 
 ?>
 

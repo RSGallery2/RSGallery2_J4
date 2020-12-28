@@ -282,27 +282,27 @@
 			   type="note"
 			   class="alert alert-primary"
 			   close="true"
-			   label="COM_RSGALLERY2_CFG_NOTE_GALLERIES_LAYOUT_LABEL"
-			   description="COM_RSGALLERY2_CFG_NOTE_GALLERIES_LAYOUT_DESC"
+			   label="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT"
+			   description="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT_DESC"
 		/>
 
 		<field
 				name="galleries_column_arrangement"
 				type="list"
 				default="1"
-				label="*column arrangement label"
-				description="*column arrangement  desc"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_DESC"
 		>
-			<option value="0">* auto</option>
-			<option value="1">* define column count</option>
+			<option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_COUNT</option>
 		</field>
 
 		<field
 				name="max_columns_in_galleries_view"
 				type="number"
 				default="4"
-				label="max_columns_in_galleries_LABEL"
-				description="max_columns_in_galleries_DESC"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS_DESC"
 				showon="galleries_column_arrangement:1"
 		>
 		</field>
@@ -311,21 +311,21 @@
 				name="galleries_row_arrangement"
 				type="list"
 				default="1"
-				label="*columns of the gallery view"
-				description="*define columns input type of the gallery thumbs"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_DESC"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO"
 				showon="galleries_column_arrangement:1"
 		>
-			<option value="0">* auto</option>
-			<option value="1">* define row count</option>
-			<option value="2">* define max thumbs count</option>
+			<option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_ROW_COUNT</option>
+			<option value="2">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_MAX_COUNT</option>
 		</field>
 
 		<field
 				name="max_rows_in_galleries_view"
 				type="number"
 				default="5"
-				label="*Max Rows in galleries view label"
-				description="*Max Rows in galleries view DESC"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS_DESC"
 				showon="galleries_row_arrangement:1[AND]galleries_column_arrangement:1"
 		>
 		</field>
@@ -334,24 +334,50 @@
 				name="max_thumbs_in_galleries_view"
 				type="number"
 				default="20"
-				label="COM_RSGALLERY2_LIMIT_GALLERIES_THUMBS_LABEL"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS"
 				description="COM_RSGALLERY2_LIMIT_GALLERIES_THUMBS_DESC"
 				showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:2"
 		>
 		</field>
 
 		<field
-				name="Layout of galley thumbs"
+				name="layout_galleries_thumbs"
 				type="list"
 				default="layout02"
-				label="Thumbs layout"
-				description="Select layout of thumbs in this gallery"
+				label="*Galleries thumbs layout"
+				description="*Select layout of thumbs in gallery overview"
 		>
-			<option value="layout01">layout 1</option>
-			<option value="layout02">layout 2</option>
+			<option value="layout01">*layout 1</option>
+			<option value="layout02">*layout 2</option>
 		</field>
 
+		<field
+				name="galleries_show_title"
+				type="list"
+				default="0"
+				label="*Show gallery title"
+				description="*Show title of gallery near thumb"
+		>
+			<option value="0">*No</option>
+			<option value="1">*Above thumb </option>
+			<option value="2">*Below thumb</option>
+			<option value="3">*Above description</option>
+			<option value="4">*Below description</option>
+		</field>
 
+		<field
+				name="galleries_show_description"
+				type="list"
+				default="layout01"
+				label="*Show gallery description"
+				description="*Select display location of gellery description"
+		>
+			<option value="0">*No</option>
+			<option value="1">*Above thumb </option>
+			<option value="2">*Right beside thumb </option>
+			<option value="3">*Below thumb</option>
+			<option value="4">*Left beside thumb</option>
+		</field>
 
 
 		<!-- ... block  ... -->
@@ -410,27 +436,27 @@
 		   type="note"
 		   class="alert alert-primary"
 		   close="true"
-		   label="COM_RSGALLERY2_CFG_NOTE_IMAGES_LAYOUT_LABEL"
-		   description="COM_RSGALLERY2_CFG_NOTE_IMAGES_LAYOUT_DESC"
+		   label="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT"
+		   description="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT_DESC"
 		/>
 
 		<field
 				name="images_column_arrangement"
 				type="list"
 				default="1"
-				label="*column arrangement label"
-				description="*column arrangement  desc"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
 		>
-			<option value="0">* auto</option>
-			<option value="1">* define column count</option>
+			<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
 		</field>
 
 		<field
 				name="max_columns_in_images_view"
 				type="number"
 				default="4"
-				label="max_columns_in_images_LABEL"
-				description="max_columns_in_images_DESC"
+				label="Images columns"
+				description="Number of columns for images thumb view"
 				showon="images_column_arrangement:1"
 		>
 		</field>
@@ -439,21 +465,21 @@
 				name="images_row_arrangement"
 				type="list"
 				default="2"
-				label="*columns of image view"
-				description="*define columns input type of the image (thumbs)"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
 				showon="images_column_arrangement:1"
 		>
-			<option value="0">* auto</option>
-			<option value="1">* define row count</option>
-			<option value="2">* define max images count</option>
+			<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
+			<option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
 		</field>
 
 		<field
 				name="max_rows_in_images_view"
 				type="number"
 				default="5"
-				label="*Max Rows in images view _LABEL"
-				description="*Max Rows in images view _DESC"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
 				showon="images_row_arrangement:1[AND]images_column_arrangement:1"
 		>
 		</field>
@@ -462,23 +488,50 @@
 				name="max_images_in_images_view"
 				type="number"
 				default="20"
-				label="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_LABEL"
-				description="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_DESC"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
 				showon="images_row_arrangement:2[AND]images_column_arrangement:1"
 		>
 		</field>
 
 		<field
-				name="Layout of images (thumbs)"
+				name="layout_images_thumbs"
 				type="list"
-				default="layout02"
-				label="Thumbs layout"
+				default="Layout of images thumbs"
+				label="*Thumbs layout"
 				description="Select layout of thumbs in this gallery"
 		>
-			<option value="layout01">layout 1</option>
-			<option value="layout02">layout 2</option>
+			<option value="layout01">*layout 1</option>
+			<option value="layout02">*layout 2</option>
 		</field>
 
+		<field
+				name="images_show_title"
+				type="list"
+				default="0"
+				label="*Show image title"
+				description="*Show title of image near thumb"
+		>
+			<option value="0">*No</option>
+			<option value="1">*Above thumb </option>
+			<option value="2">*Below thumb</option>
+			<option value="3">*Above description</option>
+			<option value="4">*Below description</option>
+		</field>
+
+		<field
+				name="images_show_description"
+				type="list"
+				default="layout01"
+				label="*Show gallery description"
+				description="Select display location of gellery description"
+		>
+			<option value="0">*No</option>
+			<option value="1">*Above thumb </option>
+			<option value="2">*Right beside thumb </option>
+			<option value="3">*Below thumb</option>
+			<option value="4">*Left beside thumb</option>
+		</field>
 
 	</fieldset>
 

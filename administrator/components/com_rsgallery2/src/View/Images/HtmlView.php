@@ -265,6 +265,7 @@ class HtmlView extends BaseHtmlView
                         . '* Delete function needs to delete watermarked too !<br>'
                         . '* Search controls ...<br>'
                         . '* Image not shown above title (data-original-title?)<br>'
+                        . '* Search tools -> filter by gallery <br>'
                         . '* Search tools -> group by ?<br>'
                         . '* Vote and others only when user enabled<br>'
                         . '* Put gallery name beside alias. Only when sorting by galleris is otherwise possible<br>'

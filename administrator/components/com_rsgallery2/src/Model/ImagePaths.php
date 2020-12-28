@@ -134,7 +134,7 @@ class ImagePaths
 
 		//---  URIs gallery based --------------------------------------------
 
-		$this->galleryRootUrl = Uri::root() . '/' . $this->rsgImagesBasePath . '/' . $galleryId;
+		$this->galleryRootUrl = Uri::root() . $this->rsgImagesBasePath . '/' . $galleryId;
 
 		$this->originalUrl = $this->galleryRootUrl . '/original';
 		$this->thumbUrl    = $this->galleryRootUrl . '/thumbs';
@@ -183,6 +183,18 @@ class ImagePaths
 	public function getSizeUrl($imageSize, $fileName = '')
 	{
 		return $this->sizeUrls [$imageSize] . '/' . $fileName;
+	}
+
+	public function getSizeUrls($fileName = '')
+	{
+	    $sizeUrls = [];
+
+        foreach ($this->imageSizes as $imageSize)
+        {
+            $sizeUrls[$imageSize] = $this->sizeUrls[$imageSize]  . '/' . $fileName;
+        }
+
+		return  $sizeUrls;
 	}
 
 	/**

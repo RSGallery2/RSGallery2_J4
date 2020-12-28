@@ -511,7 +511,8 @@ class ImagesModel extends ListModel
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
                 $image->UrlThumbFile = $ImagePaths->getThumbUrl ($image->name);
-                $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
+                // $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
+                $image->UrlDisplayFiles = $ImagePaths->getSizeUrls ($image->name);
                 $image->UrlOriginalFile = $ImagePaths->getOriginalUrl ($image->name);
 
                 // ToDo: watermarked file
