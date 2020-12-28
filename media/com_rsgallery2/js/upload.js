@@ -294,6 +294,7 @@ class createStatusBar {
         this.htmlFilename = document.createElement('div');
         if (origin == 'image') {
             this.htmlFilename.classList.add('filename');
+            this.htmlFilename.classList.add('shorten-long-text');
         }
         else {
             // ToDo: May be others too
@@ -885,7 +886,6 @@ class TransferImagesTask {
                     console.log("      response data.fileUrl: " + transferData.fileUrl);
                     console.log("      response data.safeFileName: " + transferData.safeFileName);
                     console.log("      response data.thumbSize: " + transferData.thumbSize);
-
                     nextFile.statusBar.setOK(true);
                     this.showThumb(transferData);
                 }
@@ -949,6 +949,7 @@ class TransferImagesTask {
         //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
         const caption = document.createElement('div');
         caption.classList.add('caption');
+        caption.classList.add('shorten-long-text');
         imageBox.appendChild(caption);
         //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
         const imageName = document.createElement('small');
@@ -1076,7 +1077,6 @@ class RequestZipUploadTask {
                             statusBar: null,
                             errorZone: null,
                         };
-
                         this.serverFiles.addFiles([serverFile]);
                     }
                     // ==> Start ajax transfer of files
@@ -1215,7 +1215,6 @@ class RequestFilesInFolderTask {
                         statusBar: null,
                         errorZone: null,
                     };
-
                     this.serverFiles.addFiles([serverFile]);
                 }
                 // ==> Start ajax transfer of files
@@ -1349,7 +1348,6 @@ class RequestTransferFolderFilesTask {
                     console.log("      response data.imageId: " + transferData.imageId);
                     console.log("      response data.fileUrl: " + transferData.fileUrl);
                     console.log("      response data.safeFileName: " + transferData.safeFileName);
-
                     nextFile.statusBar.setOK(true);
                     this.showThumb(transferData);
                 }

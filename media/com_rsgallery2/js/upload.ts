@@ -530,6 +530,7 @@ class createStatusBar {
         this.htmlFilename = document.createElement('div');
         if (origin == 'image') {
             this.htmlFilename.classList.add('filename');
+            this.htmlFilename.classList.add('shorten-long-text');
         }
         else
         {
@@ -1430,6 +1431,7 @@ class TransferImagesTask {
         //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
         const caption = document.createElement('div');
         caption.classList.add('caption');
+        caption.classList.add('shorten-long-text');
         imageBox.appendChild (caption);
 
         //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
