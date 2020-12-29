@@ -18,4 +18,20 @@
   border: 1px solid blue;
 }
 
+.modal {
+  padding: 0 !important;
+}
+
+.modal .modal-dialog {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+}
+
+.carousel-inner {
+  height: 90vh;
+  min-height: 400px;
+}
+
 /*# sourceMappingURL=images.css.map */

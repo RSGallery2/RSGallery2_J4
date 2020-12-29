@@ -11,6 +11,7 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Images;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
@@ -80,6 +81,12 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
+	    global $rsgConfig;
+
+        if (empty ($rsgConfig)) {
+            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+        }
+
 //        $this->items = $this->get('Items');
 
         $input  = Factory::getApplication()->input;
@@ -92,6 +99,7 @@ class HtmlView extends BaseHtmlView
         $this->params     = $this->state->get('params');
         $this->user       = Factory::getUser();
 
+        $this->isDevelopSite = $rsgConfig->get('isDevelop'); // = $rsgConfig->isDevelopSite;
 
 //        if (count($errors = $this->get('Errors')))
 //        {
