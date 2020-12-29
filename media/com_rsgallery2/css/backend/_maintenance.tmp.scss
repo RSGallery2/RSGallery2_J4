@@ -1,0 +1,293 @@
+
+//---------------------------
+
+@each $theme in $columnThemes {
+  .#{$theme}Zone {
+    background-color: #df3e3e; /**/
+    color: white; /**/
+    border-radius: $panel_border_radius $panel_border_radius 0 0;
+  }
+
+  .#{$theme} {
+    border: 1px solid;
+    border-color: #d00; /**/
+    border-radius: $panel_border_radius $panel_border_radius 0 0;
+  }
+
+}
+
+
+
+/*--- sections repair / danger ------*/
+
+.icons-panel {
+/*  clear: left; /**/
+  /* background-color: #df3e3e; /**/
+  border-radius: 3px;
+  /* padding: 10px; /**/
+  display: block; /**/
+
+  max-width: 15em; /**/
+
+  .dangerZone {
+    background-color: #df3e3e; /**/
+    color: white; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .repairZone {
+
+    background-color: DodgerBlue; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .developerZone {
+
+    background-color: #3056ff; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .upgradeZone {
+
+    background-color: purple; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .testZone {
+
+    background-color: #96a918; /**/
+    color: white; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .rawDbZone {
+
+    background-color: darkorange; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .rsg2Zone {
+
+    background-color: green; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+  .outdatedZone {
+
+    background-color: goldenrod; /**/
+    color: white; /**/
+    margin-left: 0px; /**/
+    border-radius: 3px 3px 0px 0px;
+  }
+
+}
+
+.repair {
+  border: 1px solid blue;
+  border-radius: 3px 3px 0px 0px;
+}
+
+/*--- sections repair / danger ------*/
+
+.danger {
+  border: 1px solid #d00;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.developer {
+  border: 1px solid #3056ff;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.upgrade {
+  border: 1px solid purple;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.test {
+  border: 1px solid #96a918;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.rawDb {
+  border: 1px solid darkorange;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.rsg2 {
+  border: 1px solid green;
+  border-radius: 3px 3px 0px 0px;
+}
+
+.outdated {
+  border: 1px solid goldenrod;
+  border-radius: 3px 3px 0px 0px;
+}
+
+
+.rsg2-icon-button-container {
+  margin: 5px; /**/
+  margin-top: 20px; /**/
+  margin-left: 10px; /**/
+  margin-right: 20px; /**/
+}
+
+
+.icons-panel-title header {
+  /* padding: 2em, 1em, 2em, 1em; /**/
+  /*	padding: 4em; /**/
+  padding-top: 1em; /**/
+  padding-bottom: 1em; /**/
+  margin-left : 10px; /**/
+  min-height: 2em;
+}
+
+.icons-panel-info {
+  margin      : 10px; /**/
+  /*	margin-left : 40px; /**/
+  max-width   :  20em; /**/
+}
+
+
+/*---  ------------------------------------------*/
+
+.rsg2-icon-bar a {
+
+  a {
+    float            : left; /**/
+
+    background-color : white; /**/
+    border-radius    : 8px; /**/
+    border           : 5px solid lightgrey; /**/
+
+    /*	margin: 10px 20px; /**/
+    /*	margin: 5px 10px; /**/
+    /* margin           : 5px 15px; /**/
+    /* margin           : 5px 5px 0 5px; /**/
+    /* padding          : 7px; /**/
+    padding           : 10px 5px 0 5px;
+    /* margin: 5px; /**/
+    /*	width: 80%; /**/
+
+    /*	display: block; /**/
+    display          : inline-block; /**/
+
+    /* width: 448px !important; /**/
+    /* width: 450px;  /**/
+
+    vertical-align   : middle;
+
+    box-shadow       : 2px 2px 1px #888888; /**/
+
+    width: 100%;
+
+    :link {
+      color : #808080;
+      color: blue;
+    }
+
+    :hover {
+      /*	color : #333;  /**/
+      /*    color: #08c; /**/
+      /*	background-color: #f1e8e6;  /**/
+      border-color : green; /**/
+      /*	border: 1px solid #c24733; /**/
+      /*	padding: 3px 4px 0px 6px; /**/
+      /*	position: relative; /**/
+      /*	left: -3px; /**/
+      /*	top: -3px; /**/
+    }
+
+    :active {
+      /*	color : darkred; /**/
+      background-color : sandybrown;
+    }
+
+  }
+
+  button {
+    float            : left; /**/
+
+    background-color : white; /**/
+    border-radius    : 8px; /**/
+    border           : 5px solid lightgrey; /**/
+
+    /*	margin: 10px 20px; /**/
+    /*	margin: 5px 10px; /**/
+    margin           : 5px 15px; /**/
+    /*	padding: 7px; /**/
+    /*	width: 80%; /**/
+
+    /*	display: block; /**/
+    display          : inline-block; /**/
+
+    /* width: 448px !important; /**/
+    /* width: 450px;  /**/
+
+    vertical-align   : middle;
+
+    box-shadow       : 2px 2px 1px #888888; /**/
+
+    :link {
+      color : #808080; /**/
+    }
+
+    :hover {
+      /*	color : #333;  /**/
+      /*    color: #08c; /**/
+      /*	background-color: #f1e8e6;  /**/
+      border-color : green; /**/
+      /*	border: 1px solid #c24733; /**/
+      /*	padding: 3px 4px 0px 6px; /**/
+      /*	position: relative; /**/
+      /*	left: -3px; /**/
+      /*	top: -3px; /**/
+    }
+
+    :active {
+      /*	color : darkred; /**/
+      background-color : sandybrown;
+    }
+
+  }
+}
+
+
+figure span {
+  /* float   : left; /**/
+  /*	border: 1px solid #003bb3; /**/
+  /*	border-radius: 4px; /**/
+  /*	display: table; /**/
+  /*	display: block; /**/
+  /*	margin: 5px 10px; /**/
+  padding: 7px 10px; /**/
+  /*	padding: 10px; /**/
+  /*	padding: 0px 10px 0px 10px; /**/
+  /*	padding: 0px 10px 0px 10px; /**/
+  display : inline-block; /**/
+}
+
+
+
+
+.maint-title {
+  color: blue;
+}
+
+.maint-text {
+  /* font-size: smaller; /**/
+  /* color: blue; /**/
+  color : black; /**/
+}
+
+

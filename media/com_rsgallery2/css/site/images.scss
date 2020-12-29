@@ -1,0 +1,150 @@
+
+
+// figure, figcaption { display: block; }
+
+
+//
+//.rsg2_gallery {
+//
+//  background: lightyellow;
+//
+//}
+//
+//
+//.rsg2_gallery__images {
+//
+//  display: flex;
+//
+//  border: 2px solid #00c4ff;
+//}
+
+.rsg2_gallery__images {
+
+  display: flex;
+
+  flex-flow: wrap;
+  align-items: center;
+//  justify-content: center; // space-around; // center; //
+  justify-content: space-around; // center; //
+
+  //flex-basis: 100%;
+  //flex: 1 1 0px;
+
+  border: 1px solid #00c4ff;
+}
+
+.rsg2_gallery__images_image {
+  //
+  //  flex-direction: row;
+  ////  flex-wrap: wrap;
+  //  flex-flow: column wrap;
+  ////  align-items: center;
+  //
+  flex-basis: 20vw;
+
+  background: lightgrey;
+  border: 2px solid #2A00FF;
+  //
+}
+
+.rsg2_gallery__images figure {
+
+  text-align:center;
+  flex-basis: 20vw;
+
+
+  border: 1px solid blue;
+
+}
+
+
+//
+//.rsg2_gallery__images_image img {
+//  text-align:center;
+//}
+//
+//
+//.rsg2_gallery__images_image {
+//
+////  flex-direction: row;
+////  flex-wrap: wrap;
+//  flex-flow: column wrap;
+//  justify-content: space-around; // center; //
+//  align-items: center;
+//
+////  text-align:center;
+//  background: lightgrey;
+//  border: 2px solid #2A00FF;
+//
+//}
+//
+//.rsg2_gallery__images_image img {
+//  text-align:center;
+//}
+
+///**
+//// Center images
+// */
+.thumbnail {
+//  text-align:center;
+}
+//
+//.thumbnail > li {
+//  display: inline-block;
+//  *display:inline; /* ie7 fix */
+//  float: none; /* this is the part that makes it work */
+//}
+///**/
+
+
+//
+//@mixin modal-fullscreen() {
+//  padding: 0 !important; // override inline padding-right added from js
+//
+//  .modal-dialog {
+//    width: 100%;
+//    max-width: none;
+//    height: 100%;
+//    margin: 0;
+//  }
+//
+//  .modal-content {
+//    height: 100%;
+//    border: 0;
+//    border-radius: 0;
+//  }
+//
+//  .modal-body {
+//    overflow-y: auto;
+//  }
+//
+//}
+//
+//@each $breakpoint in map-keys($grid-breakpoints) {
+//  @include media-breakpoint-down($breakpoint) {
+//    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+//
+//    .modal-fullscreen#{$infix} {
+//      @include modal-fullscreen();
+//    }
+//  }
+//}
+
+//.modal {
+//  padding: 0 !important; // override inline padding-right added from js
+//}
+//.modal .modal-dialog {
+//  width: 100%;
+//  max-width: none;
+//  height: 100%;
+//  margin: 0;
+//}
+//.modal .modal-content {
+//  height: 100%;
+//  border: 0;
+//  border-radius: 0;
+//}
+//.modal .modal-body {
+//  overflow-y: auto;
+//}
+

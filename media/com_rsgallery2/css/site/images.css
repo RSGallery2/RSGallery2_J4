@@ -1,0 +1,21 @@
+.rsg2_gallery__images {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #00c4ff;
+}
+
+.rsg2_gallery__images_image {
+  flex-basis: 20vw;
+  background: lightgrey;
+  border: 2px solid #2A00FF;
+}
+
+.rsg2_gallery__images figure {
+  text-align: center;
+  flex-basis: 20vw;
+  border: 1px solid blue;
+}
+
+/*# sourceMappingURL=images.css.map */

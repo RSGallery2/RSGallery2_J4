@@ -1,0 +1,256 @@
+
+/* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+
+/* Large */
+.flex-main-row {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	width: 100%;
+}
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+	.flex-main-row {
+		justify-content: space-around;
+	}
+}
+
+/* Small screens */
+@media all and (max-width: 500px) {
+	.flex-main-row {
+		flex-direction: column;
+	}
+}
+
+.rsg2-icon-bar {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+	flex: 1;
+/*	max-width: 10em; /**/
+ 	margin: 5px;
+	padding: 5px;
+}
+
+/*============================*/
+
+.icons-panel {
+	margin-top    : 20px; /**/
+	margin-left   : 10px; /**/
+	margin-right  : 20px; /**/
+	clear         : left;
+	/* background-color: #df3e3e; /**/
+	border-radius : 3px;
+	/* padding: 10px; /**/
+	display       : block;
+
+	max-width: 15em;
+}
+
+.icons-panel .rsg2Zone {	
+	background-color : green; 
+	color            : white;
+	margin-left      : 0px;
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .rawDbZone {
+	
+	background-color : darkorange;
+	color            : white; 
+	margin-left      : 0px; 
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .dangerZone {
+	background-color : #df3e3e; /**/
+	color            : white; /**/
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .repairZone {
+	
+	background-color : DodgerBlue; /**/
+	color            : white; /**/
+	margin-left      : 0px; /**/
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .developerZone {
+	
+	background-color : #3056ff; /**/
+	color            : white; /**/
+	margin-left      : 0px; /**/
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .upgradeZone {
+	
+	background-color : purple; /**/
+	color            : white; /**/
+	margin-left      : 0px; /**/
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .testZone {
+	
+	background-color : #96a918; /**/
+	color            : white; /**/
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel .outdatedZone {
+	
+	background-color : goldenrod; /**/
+	color            : white; /**/
+	margin-left      : 0px; /**/
+	border-radius    : 3px 3px 0px 0px;
+}
+
+.icons-panel-title header {
+/* padding: 2em, 1em, 2em, 1em; /**/
+/*	padding: 4em; /**/
+	padding-top: 1em; /**/
+	padding-bottom: 1em; /**/
+	margin-left : 10px; /**/
+	min-height: 2em;
+}
+
+.icons-panel-info {
+	margin      : 10px; /**/
+/*	margin-left : 40px; /**/
+	max-width   :  20em; /**/
+}
+
+  
+/*---------------------------------------------*/
+
+.rsg2-icon-bar a {
+	float            : left; /**/
+
+	background-color : white; /**/
+	border-radius    : 8px; /**/
+	border           : 5px solid lightgrey; /**/
+
+	/*	margin: 10px 20px; /**/
+	/*	margin: 5px 10px; /**/
+	/* margin           : 5px 15px; /**/
+	/* margin           : 5px 5px 0 5px; /**/
+	/* padding          : 7px; /**/
+	padding           : 10px 5px 0 5px;
+	/* margin: 5px; /**/
+	/*	width: 80%; /**/
+
+	/*	display: block; /**/
+	display          : inline-block; /**/
+
+	/* width: 448px !important; /**/
+	/* width: 450px;  /**/
+
+	vertical-align   : middle;
+
+	box-shadow       : 2px 2px 1px #888888; /**/
+
+	width: 100%;
+
+
+}
+
+.rsg2-icon-bar a:link {
+	color : #808080;
+	color: blue;
+}
+
+.rsg2-icon-bar a:hover {
+	/*	color : #333;  /**/
+	/*    color: #08c; /**/
+	/*	background-color: #f1e8e6;  /**/
+	border-color : green; /**/
+	/*	border: 1px solid #c24733; /**/
+	/*	padding: 3px 4px 0px 6px; /**/
+	/*	position: relative; /**/
+	/*	left: -3px; /**/
+	/*	top: -3px; /**/
+}
+
+/**/
+.rsg2-icon-bar a:active {
+	/*	color : darkred; /**/
+	background-color : sandybrown;
+}
+
+.rsg2-icon-bar button {
+	float            : left; /**/
+
+	background-color : white; /**/
+	border-radius    : 8px; /**/
+	border           : 5px solid lightgrey; /**/
+
+	/*	margin: 10px 20px; /**/
+	/*	margin: 5px 10px; /**/
+	margin           : 5px 15px; /**/
+	/*	padding: 7px; /**/
+	/*	width: 80%; /**/
+
+	/*	display: block; /**/
+	display          : inline-block; /**/
+
+	/* width: 448px !important; /**/
+	/* width: 450px;  /**/
+
+	vertical-align   : middle;
+
+	box-shadow       : 2px 2px 1px #888888; /**/
+}
+
+.rsg2-icon-bar button:link {
+	color : #808080; /**/
+}
+
+.rsg2-icon-bar button:hover {
+	/*	color : #333;  /**/
+	/*    color: #08c; /**/
+	/*	background-color: #f1e8e6;  /**/
+	border-color : green; /**/
+	/*	border: 1px solid #c24733; /**/
+	/*	padding: 3px 4px 0px 6px; /**/
+	/*	position: relative; /**/
+	/*	left: -3px; /**/
+	/*	top: -3px; /**/
+}
+
+/**/
+.rsg2-icon-bar button:active {
+	/*	color : darkred; /**/
+	background-color : sandybrown;
+}
+
+.maint-title {
+	color: blue;
+}
+
+.maint-text {
+	/* font-size: smaller; /**/
+	/* color: blue; /**/
+	color : black; /**/
+}
+
+figure span {
+	/* float   : left; /**/
+	/*	border: 1px solid #003bb3; /**/
+	/*	border-radius: 4px; /**/
+	/*	display: table; /**/
+	/*	display: block; /**/
+	/*	margin: 5px 10px; /**/
+		padding: 7px 10px; /**/
+	/*	padding: 10px; /**/
+	/*	padding: 0px 10px 0px 10px; /**/
+	/*	padding: 0px 10px 0px 10px; /**/
+	display : inline-block; /**/
+}
+
+
+
+
+
