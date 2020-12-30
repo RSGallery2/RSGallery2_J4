@@ -12,6 +12,7 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use \Joomla\CMS\Layout\FileLayout;
 
 // https://blog.kulturbanause.de/2014/09/responsive-images-srcset-sizes-adaptive/
 
@@ -37,7 +38,11 @@ if (!empty ($this->isDevelopSite))
         . '</span><br><br>';
 }
 
-
+//if ($this->config->displaySearch) {
+if (true) {
+    $layout = new FileLayout('Test.search');
+    echo $layout->render();
+}
 ?>
 <div class="rsg2__form rsg2_gallery-form">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php'); ?>" method="post" class="form-validate form-horizontal well">
