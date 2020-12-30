@@ -9,6 +9,9 @@
 
 \defined('_JEXEC') or die;
 
+namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper;
+
+
 /**
  * Galleries helper.
  *
