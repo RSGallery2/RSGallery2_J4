@@ -26,7 +26,7 @@
 				showon="isDevelop:1"
 		>
 			<option value="0">* add _NOTE_ part to lang of note elements</option>
-			<option value="1">* </option>
+			<option value="1">* use display instead of show for const and menu ...</option>
 			<option value="2">* </option>
 			<option value="3">* </option>
 			<option value="4">* </option>
@@ -387,7 +387,7 @@
 			   class="alert alert-primary"
 			   close="true"
 			   label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
-			   description=""
+			   description="Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... "
 		/>
 	</fieldset>
 
@@ -445,8 +445,8 @@
 				name="max_columns_in_images_view"
 				type="number"
 				default="4"
-				label="Images columns"
-				description="Number of columns for images thumb view"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS_DESC"
 				showon="images_column_arrangement:1"
 		>
 		</field>

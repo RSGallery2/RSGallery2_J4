@@ -43,9 +43,14 @@ if (true) {
     $layout = new FileLayout('Test.search');
     echo $layout->render();
 }
+
+
+
+
+
 ?>
 <div class="rsg2__form rsg2_gallery-form">
-    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php'); ?>" method="post" class="form-validate form-horizontal well">
+    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
         <h1> RSGallery2 "images" view </h1>
         <h2>Image Gallery</h2>
