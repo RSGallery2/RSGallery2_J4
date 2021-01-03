@@ -49,15 +49,9 @@ class Rsg2_imagesHelper
 	 *
 	 * @since 1.6
 	 */
-	public static function getList(&$params)
+//	public static function getList(Registry $params, BannersModel $model, CMSApplication $app)
+	public static function getList($params, $model, $app)
 	{
-		$app = Factory::getApplication();
-
-		/** @var \Joomla\Component\Content\Site\Model\ArticlesModel $model */
-		$model_comp = $app->bootComponent('com_rsgallery2');
-		$model_mvc = $model_comp->getMVCFactory();
-		$model_created = $model_mvc->createModel('Images', 'Site', ['ignore_request' => true]);
-		$model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Images', 'Site', ['ignore_request' => true]);
 
         // Set application parameters in model
 		$appParams = $app->getParams();
