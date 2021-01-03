@@ -10,6 +10,7 @@
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
 use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
@@ -18,8 +19,20 @@ echo "mod_rsg2_images.php";
 require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
 
 $list = Rsg2_imagesHelper::getList($params);
+$rsgConfig = JComponentHelper::getParams( 'com_content' );
+//$show_date = $rsgConfig->get( 'show_create_date' );
 
-require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
+// $lang = Factory::getLanguage();
+$lang =  $app->getLanguage();
+$lang->load('com_rsgallery2', JPATH_SITE, 'en-GB', true);
+$lang->load('com_rsgallery2', JPATH_SITE, $lang->getTag(), true);
+
+// require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
+$app  = JFactory::getApplication('site');
+$ctrl = JControllerLegacy::getInstance('MyCompModel');
+$view = $ctrl->getView('Myview', $vFormat, 'MyCompView');
+
+
 //require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'horizontal'));
 
 
