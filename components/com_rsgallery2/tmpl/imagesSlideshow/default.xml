@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_TITLE">
+		<message>
+			<![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_DESC]]>
+		</message>
+	</layout>
+	<!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request"
+			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+		>
+		
+			<field
+				name="gid"
+				type="GallerySelect"
+				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
+				description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_DESC"
+				required="true"
+				select="true"
+				new="true"
+				edit="true"
+				clear="true"
+			/>
+			
+			<field
+					name="slides_layout"
+					type="componentlayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					view="slideshow"
+					useglobal="true"
+			/>
+
+		</fieldset>
+	</fields>
+</metadata>

@@ -13,24 +13,9 @@ $images = $displayData['images'];
 ;
 ?>
 
-<h3>rsgallery 2 images area test</h3>
+<h3>rsgallery 2 images area layout</h3>
 
-
-<!--        <div class="col-md-4">-->
-<!--            <div class="thumbnail">-->
-<!--                <a href="--><?php //echo $image->UrlOriginalFile ?><!--" target="_blank">-->
-<!--                    <img src="--><?php //echo $smallestSizeUrl ?><!--"-->
-<!--                         alt="--><?php //echo $smallestSizeUrl ?><!--"-->
-<!--                         srcSet="--><?php //echo $srcSet; ?><!--"-->
-<!--                         style="width:100%">-->
-<!--                    <div class="caption">-->
-<!--                        <p>--><?php //echo $image->name ?><!--</p>-->
-<!--                    </div>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<div id="rsg2_gallery" class="rsg2_gallery" >
+<div id="rsg2_gallery" class="rsg2_gallery">
 
 	<div class="rsg2_gallery__images" id="gallery"  data-toggle="modal" data-target="#exampleModal">
 
@@ -41,7 +26,7 @@ $images = $displayData['images'];
 				<img src="<?php echo $image->UrlThumbFile ?>"
 				     alt="<?php echo $image->name ?>"
 				     class="img-thumbnail rsg2_gallery__images_image"
-				     data-target="#carouselExample"
+				     data-target="#rsg2_carousel"
 				     data-slide-to="<?php echo $idx ?>"
 				>
 				<figcaption><?php echo $image->name; ?></figcaption>
@@ -64,7 +49,7 @@ $images = $displayData['images'];
 
 					<!-- Carousel markup goes here -->
 
-					<div id="carouselExample" class="carousel slide" data-ride="carousel">
+					<div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
 
 						<div class="carousel-inner">
 
@@ -88,11 +73,11 @@ $images = $displayData['images'];
 							?>
 
 
-							<a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+							<a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
 								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								<span class="sr-only">Previous</span>
 							</a>
-							<a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+							<a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
 								<span class="carousel-control-next-icon" aria-hidden="true"></span>
 								<span class="sr-only">Next</span>
 							</a>

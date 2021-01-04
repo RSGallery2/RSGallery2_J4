@@ -28,7 +28,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
  *
  * @since  __BUMP_VERSION__
  */
-class ImagesModel extends ListModel
+class ImagesSlideshowModel extends ListModel
 {
     /**
      * Model context string.
@@ -36,7 +36,7 @@ class ImagesModel extends ListModel
      * @var    string
      * @since  3.1
      */
-    public $_context = 'com_rsgallery2.images';
+    public $_context = 'com_rsgallery2.slideshow';
 
     /**
      * The category context (allows other extensions to derived from this model).
@@ -45,16 +45,18 @@ class ImagesModel extends ListModel
      */
     protected $_extension = 'com_rsgallery2';
 
-    protected $layoutParams = null; // col/row count
+//    protected $layoutParams = null; // col/row count
 
-
-    public function getlayoutParams ()
-    {
-        if ($this->layoutParams == null) {
-            $this->layoutParams = $this->CascadedLayoutParameter ();
-        }
-        return $this->layoutParams;
-    }
+//
+//    public function getlayoutParams ()
+//    {
+//        if ($this->layoutParams == null) {
+//            $this->layoutParams = $this->CascadedLayoutParameter ();
+//        }
+//        return $this->layoutParams;
+//    }
+//
+//
 
     /**
      * Constructor.
@@ -123,19 +125,19 @@ class ImagesModel extends ListModel
         $gid = $app->input->get('gid', '', 'INT');
         $this->setState('images.galleryId', $gid);
 
-        $layoutParams = $this->getlayoutParams ();
+//        $layoutParams = $this->getlayoutParams ();
 
-        // List state information
-        // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
-        // $this->setState('list.limit', $value);
-        $this->setState('list.limit', $layoutParams->limit);
-
-        $value = $app->input->get('limitstart', 0, 'uint');
-        $this->setState('list.start', $value);
-
-        $value = $app->input->get('filter_tag', 0, 'uint');
-        $this->setState('filter.tag', $value);
-
+//        // List state information
+//        // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
+//        // $this->setState('list.limit', $value);
+//        $this->setState('list.limit', $layoutParams->limit);
+//
+//        $value = $app->input->get('limitstart', 0, 'uint');
+//        $this->setState('list.start', $value);
+//
+//        $value = $app->input->get('filter_tag', 0, 'uint');
+//        $this->setState('filter.tag', $value);
+//
         $orderCol = $app->input->get('filter_order', 'a.ordering');
 
         if (!in_array($orderCol, $this->filter_fields))
@@ -305,9 +307,6 @@ class ImagesModel extends ListModel
 		return $images;
 	}
 
-
-
-
     /**
      * Method to get the starting number of items for the data set.
      *
@@ -320,171 +319,6 @@ class ImagesModel extends ListModel
         return $this->getState('list.start');
     }
 
-
-    //-----------------------------------------------------------------
-
-
-    private function gallery_parameter($gid=0)
-    {
-        $parameter = new \stdClass();
-
-        // Not root gallery (tree root == 1)
-        if( $gid > 1) {
-
-            // Create a new query object.
-            $db    = Factory::getDBO();
-
-            $query = $db->getQuery(true)
-                ->select('params') // ToDo: select single items
-                ->from($db->quoteName('#__rsg2_galleries'))
-                ->where($db->quoteName('id') . '=' . $gid );
-
-            $parameterRow = $db->setQuery($query)
-                ->loadResult();
-            $parameter = new Registry($parameterRow);
-        }
-
-        return $parameter;
-    }
-
-    /**
-     * checks parameters from "top -> down" for user defined values
-     *  (1) General RSG2 configuration
-     *  (2) Gallery definition
-     *  // ??? (2) Menu definition ???
-     * @param $rsgConfig
-     * @param $galleryParameter
-     * @param null $imagesParameter
-     *
-     *
-     * @since version
-     */
-
-    private function CascadedLayoutParameter() // For gallery images view
-    {
-        $layoutParameter = new \stdClass();
-        $layoutParameter->images_column_arrangement  = 0; // 0: auto
-        $layoutParameter->max_columns_in_images_view = 0;
-        $layoutParameter->images_row_arrangement     = 0; // 0: auto
-        $layoutParameter->max_rows_in_images_view    = 0;
-        $layoutParameter->max_images_in_images_view  = 0;
-
-        try {
-
-
-            //--- RSG2 config  parameter -------------------------------------------------
-
-            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-
-            $images_column_arrangement = $rsgConfig->get('images_column_arrangement');
-            $max_columns_in_images_view = $rsgConfig->get('max_columns_in_images_view');
-            $images_row_arrangement = $rsgConfig->get('images_row_arrangement');
-            $max_rows_in_images_view = $rsgConfig->get('max_rows_in_images_view');
-            $max_images_in_images_view = $rsgConfig->get('max_images_in_images_view');
-
-            //--- menu parameter -------------------------------------------------
-
-            $app = Factory::getApplication();
-            $input = $app->input;
-
-            // overwrite config if chosen
-            $images_column_arrangement_menu = $input->get('images_column_arrangement', $images_column_arrangement, 'STRING');
-
-            if ($images_column_arrangement_menu != 'global') {
-                $images_column_arrangement = (int)$images_column_arrangement_menu;
-
-                // toDo: switch when more selections .. (0 auto)
-                if ($images_column_arrangement_menu == '1') {
-                    $max_columns_in_images_view = $input->get('max_columns_in_images_view', $max_columns_in_images_view, 'INT');
-
-                    $images_row_arrangement_menu = $input->get('images_row_arrangement', $images_row_arrangement, 'INT');
-                    if ($images_row_arrangement_menu != 'global') {
-                        $images_row_arrangement = (int)$images_row_arrangement_menu;
-
-                        // toDo: switch when more selections .. (0 auto)
-
-                        if ($images_row_arrangement_menu == '1') {
-                            $max_rows_in_images_view = $input->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
-                        } else {
-                            $max_images_in_images_view = $input->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
-                        }
-                    }
-                }
-            }
-
-            //--- gallery parameter -------------------------------------------------
-
-            // ToDo: gid: one get access function keep result ...
-            // gallery parameter
-            $gid = $input->get('gid', '', 'INT');
-            $gallery_param = $this->gallery_parameter($gid);
-
-            // overwrite config and new if chosen
-            $images_column_arrangement_gallery = $gallery_param->get('images_column_arrangement');
-
-            if ($images_column_arrangement_gallery != 'global') {
-                $images_column_arrangement = (int)$images_column_arrangement_gallery;
-
-                // toDo: switch when more selections .. (0 auto)
-                if ($images_column_arrangement_gallery == '1') {
-                    $max_columns_in_images_view = $gallery_param->get('max_columns_in_images_view');
-
-                    $images_row_arrangement_gallery = $gallery_param->get('images_row_arrangement', $images_row_arrangement, 'INT');
-                    if ($images_row_arrangement_gallery != 'global') {
-                        $images_row_arrangement = (int)$images_row_arrangement_gallery;
-
-                        // toDo: switch when more selections .. (0 auto)
-
-                        if ($images_row_arrangement_gallery == '1') {
-                            $max_rows_in_images_view = $gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
-                        } else {
-                            $max_images_in_images_view = $gallery_param->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
-                        }
-                    }
-                }
-            }
-
-            $layoutParameter->images_column_arrangement  = $images_column_arrangement;
-            $layoutParameter->max_columns_in_images_view = $max_columns_in_images_view;
-            $layoutParameter->images_row_arrangement     = $images_row_arrangement;
-            $layoutParameter->max_rows_in_images_view    = $max_rows_in_images_view;
-            $layoutParameter->max_images_in_images_view  = $max_images_in_images_view;
-
-
-            //--- determine limit --------------------------------------------------
-
-            $limit = 0;
-
-            // determine image limit of one page view
-            if ((int) $images_column_arrangement == 0) { // auto
-                $limit = 0;
-            }
-            else
-            {
-                if((int) $images_row_arrangement == 0) { // auto
-                    $limit = 0;
-                }
-                else
-                {
-                    if((int) $images_row_arrangement == 1) { // row count
-                        $limit = (int) $max_columns_in_images_view * (int) $max_rows_in_images_view;
-                    } else { // max images
-                        $limit = (int) $max_images_in_images_view;
-                    }
-
-                }
-
-            }
-
-            $layoutParameter->limit = $limit;
-
-        }
-        catch (\Exception $e) {
-            $this->setError($e);
-        }
-
-        return $layoutParameter;
-    }
 
     /**
      * @param $images
