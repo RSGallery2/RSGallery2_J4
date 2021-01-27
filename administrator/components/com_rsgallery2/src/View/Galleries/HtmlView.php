@@ -264,15 +264,21 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+                        	. '* <br>'
+                        	. '* <br>'
+                        	. '* <br>'
+                        	. '* <br>'
                         . '* Test: archived, trashed, (delete)<br>'
-                        . '* column width by css<br>'
+                        . '* column width by css instead in html<br>'
                         . '* Test Search controls ...<br>'
                         . '* Search tools -> group by parent/ parent child tree ? <br>'
 						. '* Can do ...<br>'
-		                . '* Add delete function: needs internal trash (published=-2) befor parent->delete()<br>'
+		                . '* Add delete function: needs internal trash (published=-2) before parent->delete()<br>'
 						. '* __associations <br>'
                     	. '* Badges array like in categories for images: Published, unpublished, trashed, archieved ... <br>'
                         . '* On develop show order left right level<br>'
+				    //	. '* <br>'
+				    //	. '* <br>'
 				    //	. '* <br>'
 				    //	. '* <br>'
 				    //	. '* <br>'
@@ -303,9 +309,9 @@ class HtmlView extends BaseHtmlView
 
 				$childBar->trash('galleries.trash')->listCheck(true);
 
-				$toolbar->standardButton('refresh')
-					->text('JTOOLBAR_REBUILD')
-					->task('gallery.rebuild');
+//				$toolbar->standardButton('refresh')
+//					->text('JTOOLBAR_REBUILD')
+//					->task('gallery.rebuild');
 
 
 
