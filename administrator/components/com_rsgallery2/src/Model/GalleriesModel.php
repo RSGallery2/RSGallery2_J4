@@ -43,19 +43,20 @@ class GalleriesModel extends ListModel
 				'id', 'a.id',
 				'name', 'a.name',
 
-				'published', 'a.published',
-
 				'created', 'a.created',
 				'created_by', 'a.created_by',
 
-				'modified', 'a.modified',
-				'modified_by', 'a.modified_by',
+                'published', 'a.published',
+
+//				'modified', 'a.modified',
+//				'modified_by', 'a.modified_by',
 
 				'parent_id', 'a.parent_id',
 				'lft', 'a.lft',
 
 				'hits', 'a.hits',
-				'tag',
+//				'tag',
+				'a.access,'
 			);
 		}
 
@@ -142,8 +143,8 @@ class GalleriesModel extends ListModel
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.access');
 //		$id .= ':' . $this->getState('filter.language');
-		$id .= ':' . $this->getState('filter.level');
-		$id .= ':' . $this->getState('filter.tag');
+//		$id .= ':' . $this->getState('filter.level');
+//		$id .= ':' . $this->getState('filter.tag');
 
 		return parent::getStoreId($id);
 	}
@@ -173,15 +174,15 @@ class GalleriesModel extends ListModel
 				. 'a.name, '
 				. 'a.alias, '
 				. 'a.description, '
-				. 'a.note, '
+                . 'a.thumb_id, '
 
-				. 'a.thumb_id, '
+                . 'a.note, '
 				. 'a.params, '
 				. 'a.published, '
-				. 'a.hits, '
-
                 . 'a.publish_up,'
                 . 'a.publish_down,'
+
+                . 'a.hits, '
 
 				. 'a.checked_out, '
 				. 'a.checked_out_time, '
@@ -197,11 +198,8 @@ class GalleriesModel extends ListModel
 				. 'a.lft, '
 				. 'a.rgt,'
 
-//				. 'a.checked_out, '
-//				. 'a.checked_out_time, '
-
+				. 'a.approved,'
                 . 'a.asset_id,'
-//				. 'a.access_level,'
 				. 'a.access'
 			)
 		);
@@ -330,14 +328,17 @@ class GalleriesModel extends ListModel
 			. 'a.name, '
 			. 'a.alias, '
 			. 'a.description, '
-			. 'a.note, '
+            . 'a.thumb_id, '
 
-			. 'a.thumb_id, '
-			. 'a.params, '
-			. 'a.published, '
-			. 'a.hits, '
+            . 'a.note, '
+            . 'a.params, '
+            . 'a.published, '
+            . 'a.publish_up,'
+            . 'a.publish_down,'
 
-			. 'a.checked_out, '
+            . 'a.hits, '
+
+            . 'a.checked_out, '
 			. 'a.checked_out_time, '
 			. 'a.created, '
 			. 'a.created_by, '
@@ -345,13 +346,16 @@ class GalleriesModel extends ListModel
 			. 'a.modified, '
 			. 'a.modified_by, '
 
-
 			. 'a.parent_id, '
 			. 'a.level, '
 			. 'a.path, '
 			. 'a.lft, '
 			. 'a.rgt, '
-				
+
+            . 'a.approved,'
+            . 'a.asset_id,'
+            . 'a.access, '
+
 			. 'uc.name, '
 		    . 'ua.name '
 

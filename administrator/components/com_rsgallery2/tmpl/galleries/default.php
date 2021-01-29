@@ -241,7 +241,7 @@ if ($saveOrder && !empty($this->items))
 											<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'galleries.', $canChange); ?>
 										</div>
 									</td>
-									<th scope="row">
+									<td scope="row">
 										<?php echo LayoutHelper::render('joomla.html.treeprefix', array('level' => $item->level)); ?>
 										<?php if ($item->checked_out) : ?>
 											<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'galleries.', $canCheckin); ?>
@@ -261,7 +261,7 @@ if ($saveOrder && !empty($this->items))
 												<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
 											<?php endif; ?>
 										</span>
-									</th>
+									</td>
                                     <?php
                                     /**
                                     Images published, unpublished, archived, trashed
@@ -297,7 +297,7 @@ if ($saveOrder && !empty($this->items))
 
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">
                                         <?php
-                                        $link = Route::_("index.php?option=com_rsgallery2&view=gallery&task=gallery.edit&id=" . $item->id);
+                                        $link = Route::_("index.php?option=com_rsgallery2&view=Images&filter[galler_id]=" . $item->id);
                                         //$count = random_int (0, 2) ;
                                         $imageCount = 0;
                                         if (!empty($item->image_count))
