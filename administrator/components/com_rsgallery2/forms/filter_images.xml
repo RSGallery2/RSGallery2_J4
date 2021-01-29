@@ -40,13 +40,15 @@
 		</field>
 
 		<field
-			name="language"
-			type="contentlanguage"
-			label="JOPTION_SELECT_LANGUAGE"
-			onchange="this.form.submit();"
-			>
-			<option value="">JOPTION_SELECT_LANGUAGE</option>
-			<option value="*">JALL</option>
+				name="created"
+				type="author"
+				label="JOPTION_SELECT_AUTHOR"
+				multiple="true"
+				layout="joomla.form.field.list-fancy-select"
+				description="COM_CONTENT_FILTER_AUTHOR_DESC"
+				hint="JOPTION_SELECT_AUTHOR"
+				onchange="this.form.submit();"
+		>
 		</field>
 
 		<field
