@@ -292,6 +292,10 @@ if ($saveOrder && !empty($this->items))
                                             <?php else : ?>
                                                 <?php echo $this->escape($item->gallery_name); ?>
                                             <?php endif; ?>
+                                            <span class="small" title="<?php echo $this->escape(""); ?>">
+                                                <?php echo '(' . $item->gallery_id . ')'; ?>
+    										</span>
+
                                         </div>
                                     </td>
 

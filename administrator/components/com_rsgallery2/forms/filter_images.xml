@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form>
+<form  addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
 
 	<fields name="filter">
 
@@ -18,7 +18,6 @@
 				description="COM_RSGALLERY2_FILTER_GALLERY_NAME_DESC"
 				onchange="this.form.submit();"
 		>
-			<option value="">COM_RSGALLERY2_FILTER_SELECT_GALLERY</option>
 		</field>
 		
 		<field
@@ -90,6 +89,9 @@
 
 			<option value="a.name ASC">COM_RSGALLERY2_NAME_ASC</option>
 			<option value="a.name DESC">COM_RSGALLERY2_NAME_DESC</option>
+
+			<option value="gallery_name ASC">COM_RSGALLERY2_GALLERY_NAME_ASC</option>
+			<option value="gallery_name DESC">COM_RSGALLERY2_GALLERY_NAME_ASC</option>
 
 			<option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
 			<option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
