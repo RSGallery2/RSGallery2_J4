@@ -7,7 +7,7 @@
 	<author>[AUTHOR]</author>
 	<authorEmail>[AUTHOR_EMAIL]</authorEmail>
 	<authorUrl>[AUTHOR_URL]</authorUrl>
-	<copyright>[COPYRIGHT]</copyright>
+	<copyright>(c) 2021-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>5.0.0.1</version>
 	<description>PLG_RSG2_GALLERIES_XML_DESCRIPTION</description>
