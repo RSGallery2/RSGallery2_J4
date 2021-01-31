@@ -4,13 +4,13 @@
            method="upgrade"
            version="4.0">
 	<name>MOD_RSG2_IMAGES</name>
-	<creationDate>15. Dec. 2020</creationDate>
+	<creationDate>31. Jan. 2021</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
-	<copyright>(c) 2020-2020 RSGallery2 Team</copyright>
+	<copyright>(c) 2020-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.0.13</version>
+	<version>5.0.0.19</version>
 	<description>MOD_RSG2_IMAGES_XML_DESCRIPTION</description>
 
 	<scriptfile>install_mod.php</scriptfile>

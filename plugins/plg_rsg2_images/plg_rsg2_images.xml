@@ -3,13 +3,13 @@
            group="content" 
            method="upgrade">
 	<name>PLG_RSG2_IMAGES</name>
-	<creationDate>[DATE]</creationDate>
+	<creationDate>31. Jan. 2021</creationDate>
 	<author>[AUTHOR]</author>
 	<authorEmail>[AUTHOR_EMAIL]</authorEmail>
 	<authorUrl>[AUTHOR_URL]</authorUrl>
-	<copyright>[COPYRIGHT]</copyright>
+	<copyright>(c) 2021-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>5.0.0.1</version>
+	<version>5.0.0.3</version>
 	<description>PLG_RSG2_IMAGES_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<namespace>Rsg2_imagesNamespace\Module\Rsg2_images</namespace>
