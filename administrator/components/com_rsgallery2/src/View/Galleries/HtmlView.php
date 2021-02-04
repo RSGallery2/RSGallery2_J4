@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
@@ -212,7 +213,10 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar($Layout = 'default')
 	{
-		// Get the toolbar object instance
+        $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
+        $user  = Factory::getUser();
+
+        // Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
 		switch ($Layout)
@@ -264,11 +268,11 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-                        . '* Add delete function: needs internal trash (published=-2) before parent->delete()<br>'
                         . '* Test: archived, trashed, (delete)<br>'
                         . '* sort by images ? wrong order <br>'
-                        . '* include workflow<br>'
+                        . '* ? Batch: move ...? <br>'
                         . '* <br>'
+                        . '* include workflow<br>'
                         . '* Add Modified (+ by) hide creation when small <br>'
                         . '* column width by css instead in html<br>'
 						. '* Can do ...<br>'
@@ -288,35 +292,57 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::addNew('gallery.add');
 
-				$dropdown = $toolbar->dropdownButton('status-group')
-					->text('JTOOLBAR_CHANGE_STATUS')
-					->toggleSplit(false)
-					->icon('fa fa-ellipsis-h')
-					->buttonClass('btn btn-action')
-					->listCheck(true);
+                if ($canDo->get('core.edit.state') || count($this->transitions))
+                {
+                    $dropdown = $toolbar->dropdownButton('status-group')
+                        ->text('JTOOLBAR_CHANGE_STATUS')
+                        ->toggleSplit(false)
+                        ->icon('fa fa-ellipsis-h')
+                        ->buttonClass('btn btn-action')
+                        ->listCheck(true);
 
-				$childBar = $dropdown->getChildToolbar();
+                    $childBar = $dropdown->getChildToolbar();
 
-				$childBar->publish('galleries.publish')->listCheck(true);
+                    if ($canDo->get('core.edit.state'))
+                    {
+                        $childBar->publish('galleries.publish')->listCheck(true);
 
-				$childBar->unpublish('galleries.unpublish')->listCheck(true);
+                        $childBar->unpublish('galleries.unpublish')->listCheck(true);
 
-				$childBar->archive('galleries.archive')->listCheck(true);
+                        $childBar->archive('galleries.archive')->listCheck(true);
 
-				$childBar->checkin('galleries.checkin')->listCheck(true);
+                        $childBar->checkin('galleries.checkin')->listCheck(true);
 
-				$childBar->trash('galleries.trash')->listCheck(true);
+                        $childBar->trash('galleries.trash')->listCheck(true);
 
-//				$toolbar->standardButton('refresh')
-//					->text('JTOOLBAR_REBUILD')
-//					->task('gallery.rebuild');
+                        //				$toolbar->standardButton('refresh')
+                        //					->text('JTOOLBAR_REBUILD')
+                        //					->task('gallery.rebuild');
 
+                    }
 
+                    // Add a batch button
+                    if ($user->authorise('core.create', 'com_content')
+                        && $user->authorise('core.edit', 'com_content')
+                        && $user->authorise('core.execute.transition', 'com_content'))
+                    {
+                        $childBar->popupButton('batch')
+                            ->text('JTOOLBAR_BATCH')
+                            ->selector('collapseModal')
+                            ->listCheck(true);
+                    }
 
-				ToolBarHelper::editList('gallery.edit');
-//				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'galleries.delete', 'JTOOLBAR_EMPTY_TRASH');
-				ToolBarHelper::deleteList('', 'galleries.delete', 'JTOOLBAR_DELETE');
+                    if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED
+                        && $canDo->get('core.delete'))
+                    {
+                        $toolbar->delete('galleries.delete')
+                            ->text('JTOOLBAR_EMPTY_TRASH')
+                            ->message('JGLOBAL_CONFIRM_DELETE')
+                            ->listCheck(true);
+                    }
 
+                    // ToolBarHelper::editList('gallery.edit');
+                }
 
 				break;
 			

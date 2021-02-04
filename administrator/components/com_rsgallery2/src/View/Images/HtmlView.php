@@ -23,6 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
@@ -219,7 +220,10 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar($Layout = 'default')
 	{
-		// Get the toolbar object instance
+        $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
+        $user  = Factory::getUser();
+
+        // Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
 		switch ($Layout)
@@ -253,20 +257,16 @@ class HtmlView extends BaseHtmlView
 				{
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
-                        . '* Search controls ...<br>'
-
-                        . '* Search tools -> filter by gallery <br>'
-                        . '* Search tools -> group by ?<br>'
-
                         . '* Test: archived, trashed, (delete)<br>'
-                        . '* Add delete function<br>'
+                        . '* Delete images for real <br>'
+                        . '* Batch : turn images, move .... <br>'
+                        . '* <br>'
                         . '* Can do ...<br>'
                         . '* __associations <br>'
                         . '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
                         . '* display thumb'
                         . '* column width by css<br>'
                         . '* Status (title and side text like article <br>'
-                        . '* Batch : turn images .... <br>'
                         . '* Delete function needs to delete watermarked too !<br>'
                         . '* Image not shown above title (data-original-title?)<br>'
                         . '* Vote and others only when user enabled<br>'
@@ -282,56 +282,57 @@ class HtmlView extends BaseHtmlView
 
 				//ToolBarHelper::addNew('image.add');
 
-				$dropdown = $toolbar->dropdownButton('status-group')
-					->text('JTOOLBAR_CHANGE_STATUS')
-					->toggleSplit(false)
-					->icon('fa fa-ellipsis-h')
-					->buttonClass('btn btn-action')
-					->listCheck(true);
+                if ($canDo->get('core.edit.state') || count($this->transitions))
+                {
+                    $dropdown = $toolbar->dropdownButton('status-group')
+                        ->text('JTOOLBAR_CHANGE_STATUS')
+                        ->toggleSplit(false)
+                        ->icon('fa fa-ellipsis-h')
+                        ->buttonClass('btn btn-action')
+                        ->listCheck(true);
 
-				$childBar = $dropdown->getChildToolbar();
+                    $childBar = $dropdown->getChildToolbar();
 
-				$childBar->publish('images.publish')->listCheck(true);
+                    if ($canDo->get('core.edit.state'))
+                    {
+                        $childBar->publish('images.publish')->listCheck(true);
 
-				$childBar->unpublish('images.unpublish')->listCheck(true);
+                        $childBar->unpublish('images.unpublish')->listCheck(true);
 
-				$childBar->archive('images.archive')->listCheck(true);
+                        $childBar->archive('images.archive')->listCheck(true);
 
-				$childBar->checkin('images.checkin')->listCheck(true);
+                        $childBar->checkin('images.checkin')->listCheck(true);
 
-				$childBar->trash('images.trash')->listCheck(true);
+                        $childBar->trash('images.trash')->listCheck(true);
 
-				// $toolbar->standardButton('refresh')
-				// 	->text('JTOOLBAR_REBUILD')
-				// 	->task('image.rebuild');
+                        // $toolbar->standardButton('refresh')
+                        // 	->text('JTOOLBAR_REBUILD')
+                        // 	->task('image.rebuild');
 
+                    }
 
-				ToolBarHelper::editList('image.edit');
-//				ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
-//				ToolBarHelper::deleteList('', 'image.delete', 'JTOOLBAR_DELETE');
+                    // Add a batch button
+                    if ($user->authorise('core.create', 'com_content')
+                        && $user->authorise('core.edit', 'com_content')
+                        && $user->authorise('core.execute.transition', 'com_content'))
+                    {
+                        $childBar->popupButton('batch')
+                            ->text('JTOOLBAR_BATCH')
+                            ->selector('collapseModal')
+                            ->listCheck(true);
+                    }
 
-				/**
-				 * // Add a batch button
-				 * $user = Factory::getApplication()->getIdentity();
-                 * $app  = Factory::getApplication();
-                 * $user = $app->getIdentity();
-				 * if ($user->authorise('core.create', 'com_rsgallery2')
-				 * && $user->authorise('core.edit', 'com_rsgallery2')
-				 * && $user->authorise('core.edit.state', 'com_rsgallery2')
-				 * )
-				 * {
-				 * // Get the toolbar object instance
-				 * $bar = Toolbar::getInstance('toolbar');
-				 *
-				 * $title = Text::_('JTOOLBAR_BATCH');
-				 *
-				 * // Instantiate a new JLayoutFile instance and render the batch button
-				 * $layout = new LayoutFile('joomla.toolbar.batch');
-				 *
-				 * $dhtml = $layout->render(array('title' => $title));
-				 * $bar->appendButton('Custom', $dhtml, 'batch');
-				 * }
-				 * /**/
+                    if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED
+                        && $canDo->get('core.delete'))
+                    {
+                        $toolbar->delete('images.delete')
+                            ->text('JTOOLBAR_EMPTY_TRASH')
+                            ->message('JGLOBAL_CONFIRM_DELETE')
+                            ->listCheck(true);
+                    }
+
+                    // ToolBarHelper::editList('image.edit');
+                }
 
 				break;
 		}
@@ -341,6 +342,8 @@ class HtmlView extends BaseHtmlView
 		{
 			$toolbar->preferences('com_rsgallery2');
 		}
+
+        // $toolbar->help('JHELP_CONTENT_ARTICLE_MANAGER');
 	}
 
 

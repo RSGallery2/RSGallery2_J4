@@ -262,7 +262,13 @@ class ImagesModel extends ListModel
 			$query->where('a.access = ' . (int) $access);
 		}
 
-		// Implement View Level Access
+        // Filter on the gallery Id.
+        if ($gallery_id = $this->getState('filter.gallery_id'))
+        {
+            $query->where('a.gallery_id = ' . $db->quote($gallery_id));
+        }
+
+        // Implement View Level Access
 		if (!$user->authorise('core.admin'))
 		{
 			$groups = implode(',', $user->getAuthorisedViewLevels());
