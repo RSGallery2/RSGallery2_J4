@@ -404,7 +404,7 @@ if ($saveOrder && !empty($this->items))
 							'bootstrap.renderModal',
 							'collapseModal',
 							array(
-								'title'  => Text::_('COM_RSGALLERY2_BATCH_OPTIONS'),
+								'title'  => Text::_('COM_RSGALLERY2_GALLERY_BATCH_OPTIONS'),
 								'footer' => $this->loadTemplate('batch_footer'),
 							),
 							$this->loadTemplate('batch_body')

@@ -16,6 +16,6 @@ use Joomla\CMS\Language\Text;
 <button type="button" class="btn btn-secondary" data-dismiss="modal">
 	<?php echo Text::_('JCANCEL'); ?>
 </button>
-<button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='gallery.batch'>
+<button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='image.batch'>
 	<?php echo Text::_('JGLOBAL_BATCH_PROCESS'); ?>
 </button>

@@ -406,7 +406,7 @@ if ($saveOrder && !empty($this->items))
 					<?php // load the pagination. ?>
 					<?php echo $this->pagination->getListFooter(); ?>
 
-					<?php /* // Load the batch processing form. ?>
+					<?php // Load the batch processing form. ?>
 					<?php if ($user->authorise('core.create', $extension)
 						&& $user->authorise('core.edit', $extension)
 						&& $user->authorise('core.edit.state', $extension)) : ?>
@@ -414,12 +414,12 @@ if ($saveOrder && !empty($this->items))
 							'bootstrap.renderModal',
 							'collapseModal',
 							array(
-								'title'  => Text::_('COM_RSGALLERY2_BATCH_OPTIONS'),
+								'title'  => Text::_('COM_RSGALLERY2_IMAGES_BATCH_OPTIONS'),
 								'footer' => $this->loadTemplate('batch_footer'),
 							),
 							$this->loadTemplate('batch_body')
 						); ?>
-					<?php endif; */?>
+					<?php endif; ?>
 				<?php endif; ?>
 
 				<input type="hidden" name="extension" value="<?php echo $extension; ?>">
