@@ -716,5 +716,35 @@ class ImagesModel extends ListModel
         return $isImagesReset;
     }
 
+    /**
+     * Delete #__content_frontpage items if the deleted articles was featured
+     *
+     * @param   object  $pks  The primary key related to the contents that was deleted.
+     *
+     * @return  boolean
+     *
+     * @since   3.7.0
+     */
+    public function delete(&$pks)
+    {
+        $return = parent::delete($pks);
+
+        if ($return)
+        {
+            yyyy;
+
+            // Now check to see if this articles was featured if so delete it from the #__content_frontpage table
+            $db = $this->getDbo();
+            $query = $db->getQuery(true)
+                ->delete($db->quoteName('#__content_frontpage'))
+                ->whereIn($db->quoteName('content_id'), $pks);
+            $db->setQuery($query);
+            $db->execute();
+
+            $this->workflow->deleteAssociation($pks);
+        }
+
+        return $return;
+    }
 
 } // class

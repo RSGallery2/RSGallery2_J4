@@ -408,6 +408,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
 		$IsImagesDeleted = false;
 
+// 					$originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
 		try
 		{
 			$IsImagesDeleted = true;

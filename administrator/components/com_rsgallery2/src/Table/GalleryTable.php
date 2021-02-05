@@ -222,6 +222,11 @@ class GalleryTable extends Nested
             if (empty($this->modified_by)) {
                 $this->modified_by = $this->created_by;
             }
+
+            // Text must be preset
+            if ($this->description == null) {
+                $this->description = '';
+            }
         }
 
         // Verify that the alias is unique

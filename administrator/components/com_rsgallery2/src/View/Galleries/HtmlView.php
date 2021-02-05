@@ -269,6 +269,7 @@ class HtmlView extends BaseHtmlView
 						. 'Tasks: <br>'
                         . '* sort by images ? wrong order ?<br>'
                         . '* ? Batch: move ...? <br>'
+                        . '* params test write, read back -> json_enmcode registry<br>'
                         . '* <br>'
                         . '* include workflow<br>'
                         . '* Add Modified (+ by) hide creation when small <br>'

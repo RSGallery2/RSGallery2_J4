@@ -79,7 +79,6 @@ class ImageTable extends Table
             $array['params'] = (string) $registry;
         }
 
-
         return parent::bind($array, $ignore);
     }
 
@@ -126,6 +125,8 @@ class ImageTable extends Table
         {
             throw new \UnexpectedValueException(sprintf('End publish date is before start publish date.'));
         }
+
+        // Clean up description -- eliminate quotes and <> brackets
 
         if (!empty($this->description))
         {
@@ -200,6 +201,11 @@ class ImageTable extends Table
             if (empty($this->modified_by)) {
                 $this->modified_by = $this->created_user_id;
             }
+
+            // Text must be preset
+            if ($this->description == null) {
+                $this->description = '';
+            }
         }
 
         // Verify that the alias is unique
@@ -213,23 +219,6 @@ class ImageTable extends Table
         }
 
         return parent::store($updateNulls);
-
-		// Transform the params field
-		if (is_array($this->params))
-		{
-			$registry = new Registry($this->params);
-			$this->params = (string) $registry;
-		}
-
-		// Text must be preset
-		if ($this->description == null) {
-			$this->description = '';
-		}
-		if ($this->params == null) {
-			$this->params = '';
-		}
-
-		return parent::store($updateNulls);
 	}
 
 	/**
@@ -241,22 +230,24 @@ class ImageTable extends Table
 	 * @return bool True if successful
 	 *
 	 * @since __BUMP_VERSION__
-	 *
+	 */
 	public function delete($pk=null)
 	{
 		$IsDeleted = false;
 
 		try
 		{
-			$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
+			//$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
+			$imgFileModel = $this->getModel ('imageFile');
 
 			$filename          = $this->name;
 			$IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
-			if ($IsFilesAreDeleted)
+			if (! $IsFilesAreDeleted)
 			{
 				// Remove from database
-				$IsDeleted = parent::delete($pk);
 			}
+
+            $IsDeleted = parent::delete($pk);
 		}
 		catch (\RuntimeException $e)
 		{
