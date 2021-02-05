@@ -152,7 +152,8 @@ class HtmlView extends BaseHtmlView
         switch ($Layout)
         {
             case 'galleries_raw':
-
+                $galleriesModel      = $this->getModel();
+                $this->items = $galleriesModel->allGalleries ();
 
                 break;
 
@@ -229,8 +230,6 @@ class HtmlView extends BaseHtmlView
 						. 'Tasks: <br>'
 						. '* Can do ...<br>'
 		                . '* Add pagination<br>'
-						. '* Test: archived, trashed, (delete)<br>'
-		                . '* Add delete function<br>'
 						. '* mark element width id 1 <br>'
 						//	. '* <br>'
 						//	. '* <br>'
@@ -268,8 +267,7 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-                        . '* Test: archived, trashed, (delete)<br>'
-                        . '* sort by images ? wrong order <br>'
+                        . '* sort by images ? wrong order ?<br>'
                         . '* ? Batch: move ...? <br>'
                         . '* <br>'
                         . '* include workflow<br>'

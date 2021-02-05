@@ -161,15 +161,10 @@ class HtmlView extends BaseHtmlView
         switch ($Layout)
         {
             case 'images_raw':
-
+                $imageModel = $this->getModel();
+                $dummyItems = $imageModel->allImages();
 
                 break;
-
-//            case '':
-//                $imageModel = $this->getModel();
-//                $dummyItems = $imageModel->allImages();
-//
-//                break;
 
             default:
 
@@ -257,8 +252,8 @@ class HtmlView extends BaseHtmlView
 				{
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
-                        . '* Test: archived, trashed, (delete)<br>'
                         . '* Delete images for real <br>'
+                        . '* Test: archived, trashed, (delete)<br>'
                         . '* Batch : turn images, move .... <br>'
                         . '* <br>'
                         . '* Can do ...<br>'
