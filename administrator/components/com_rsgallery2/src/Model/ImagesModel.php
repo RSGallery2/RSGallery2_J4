@@ -294,7 +294,8 @@ class ImagesModel extends ListModel
 			$search = $db->quote('%' . $db->escape($search, true) . '%');
 			$query->where(
 				'a.name LIKE ' . $search
-//				. ' OR a.title LIKE ' . $search
+				. ' OR a.title LIKE ' . $search
+				. ' OR a.alias LIKE ' . $search
 				. ' OR a.description LIKE ' . $search
 				. ' OR gal.name LIKE ' . $search
 				. ' OR a.note LIKE ' . $search

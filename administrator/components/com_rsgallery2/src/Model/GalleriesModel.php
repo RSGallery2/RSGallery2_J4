@@ -275,6 +275,7 @@ class GalleriesModel extends ListModel
 			$search = $db->quote('%' . $db->escape($search, true) . '%');
 			$query->where(
 				'a.name LIKE ' . $search
+				. ' OR a.alias LIKE ' . $search
 				. ' OR a.description LIKE ' . $search
 				. ' OR a.note LIKE ' . $search
 				. ' OR a.created LIKE ' . $search
