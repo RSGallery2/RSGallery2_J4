@@ -32,6 +32,10 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
  */
 class HtmlView extends BaseHtmlView
 {
+	// ToDo: Use other rights instead of core.admin -> IsRoot ?
+	// core.admin is the permission used to control access to
+	// the global config
+
 	/**
 	 * An array of items
 	 *
@@ -267,6 +271,7 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+						. '* Ordering: Mouse move not working<br>'
                         . '* ? Batch: move ...? <br>'
                         . '* params test write, read back -> json_encode registry<br>'
                         . '* <br>'
@@ -277,7 +282,6 @@ class HtmlView extends BaseHtmlView
 						. '* __associations <br>'
                     	. '* Badges array like in categories for images: Published, unpublished, trashed, archieved ... <br>'
                         . '* On develop show order left right level<br>'
-				    //	. '* <br>'
 				    //	. '* <br>'
 				    //	. '* <br>'
 				    //	. '* <br>'

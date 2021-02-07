@@ -252,6 +252,7 @@ class HtmlView extends BaseHtmlView
 				{
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
+	                    . '* Ordering: Mouse move not working<br>'
                         . '* Delete images for real <br>'
                         . '* Test: archived, trashed, (delete)<br>'
                         . '* Batch : turn images, move .... <br>'

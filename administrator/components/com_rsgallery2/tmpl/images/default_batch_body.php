@@ -24,7 +24,7 @@ $user = Factory::getUser();
 	<div class="row">
 		<div class="form-group col-md-6">
 			<div class="controls">
-				<?php echo LayoutHelper::render('joomla.html.batch.language', []); ?>
+				<?php echo LayoutHelper::render('Select4MoveCopy', []); ?>
 			</div>
 		</div>
 		<div class="form-group col-md-6">
