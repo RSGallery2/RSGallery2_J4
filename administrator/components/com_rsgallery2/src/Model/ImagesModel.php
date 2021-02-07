@@ -61,6 +61,7 @@ class ImagesModel extends ListModel
                 'votes', 'a.votes',
                 'comments', 'a.comments',
 				'tag',
+				'gallery_name'
 			);
 		}
 

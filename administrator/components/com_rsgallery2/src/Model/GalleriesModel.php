@@ -56,7 +56,8 @@ class GalleriesModel extends ListModel
 
 				'hits', 'a.hits',
 //				'tag',
-				'a.access,'
+				'a.access',
+				'image_count'
 			);
 		}
 
