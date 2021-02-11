@@ -24,7 +24,10 @@ $user = Factory::getUser();
 	<div class="row">
 		<div class="form-group col-md-6">
 			<div class="controls">
-				<?php echo LayoutHelper::render('Select4MoveCopy', []); ?>
+				<?php
+				// echo LayoutHelper::render('Select4MoveCopy', []);
+				echo LayoutHelper::render('field.GallerySelect', ['extension' => 'com_rsgallery2']);
+				?>
 			</div>
 		</div>
 		<div class="form-group col-md-6">
