@@ -166,7 +166,7 @@ class HtmlView extends BaseHtmlView
 				. '* start as published ? external parameter<br>'
 				. '* options: Values not defined and add params<br>'
                 . '* options: show user, layout ... see article<br>'
-                . '*  test published_up, published_down: on Web page <br>'
+                . '* test published_up, published_down: on Web page <br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'

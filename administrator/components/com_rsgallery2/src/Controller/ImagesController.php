@@ -108,7 +108,8 @@ class ImagesController extends AdminController
             $msg .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
-            str_replace('\n', '<br>', $msg);
+            // toDo: find " str_replace('\n', '<br>', $msg);" nad replace in complete project
+            $msg = nl2br ($msg);
         } else {
 
             try {
@@ -139,6 +140,118 @@ class ImagesController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
 
         return $isOk;
+    }
+
+    /**
+     * Moves one or more items (images) to another gallery, ordering each item as the last one.
+     *
+     * @throws Exception
+     * @since 4.3.0
+     */
+    public function moveImagesTo()
+    {
+        //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+        $msg     = "Control:moveTo: ";
+        $msgType = 'notice';
+
+        Session::checkToken();
+
+        // Access check
+        $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+        if (!$canAdmin)
+        {
+            $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            $msg = nl2br ($msg);
+        }
+        else
+        {
+            try
+            {
+                // Model tells if successful
+                $model = $this->getModel('image');
+
+                $IsMoved = $model->moveImagesTo();
+                if ($IsMoved)
+                {
+                    $msg .= 'Move of images ... successfull';
+                }
+                else
+                {
+                    $msg .= 'Move of images ... failed';
+                    $msgType = 'error';
+                }
+            }
+            catch (RuntimeException $e)
+            {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing moveTo: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = JFactory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=images';
+        $this->setRedirect($link, $msg, $msgType);
+
+    }
+
+    /**
+     * Saves changed manual ordering of galleries
+     *
+     * @throws Exception
+     * @since 4.3.0
+     */
+    public function copyImagesTo()
+    {
+        //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+        $msg     = "Control:copyTo: ";
+        $msgType = 'notice';
+
+        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+        // Access check
+        $canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+        if (!$canAdmin)
+        {
+            $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            $msg = nl2br ($msg);
+        }
+        else
+        {
+            try
+            {
+                // Model tells if successful
+                $model = $this->getModel('image');
+
+                $IsCopied = $model->copyImagesTo();
+                if ($IsCopied)
+                {
+                    $msg .= 'Copy of images ... sucessfull';
+                }
+                else
+                {
+                    $msg .= 'Copy of images ... failed';
+                    $msgType = 'error';
+                }
+            }
+            catch (RuntimeException $e)
+            {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing copyTo: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = JFactory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $this->setRedirect('index.php?option=com_rsgallery2&view=images', $msg, $msgType);
     }
 
 

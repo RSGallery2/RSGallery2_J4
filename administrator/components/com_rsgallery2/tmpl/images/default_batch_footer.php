@@ -13,15 +13,13 @@ use Joomla\CMS\Language\Text;
 // ?? wa script see article
 
 ?>
+
 <button type="button" class="btn btn-secondary" data-dismiss="modal">
 	<?php echo Text::_('JCANCEL'); ?>
 </button>
 <!--button type="submit" id='batch-submit-button-id' class="btn btn-success" data-submit-task='image.batch'>
 	<?php echo Text::_('JGLOBAL_BATCH_PROCESS'); ?>
 </button-->
-
-
-
 
 <button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('imagesProperties.PropertiesView');return false;">
 	<?php echo JText::_('COM_RSGALLERY2_ADD_IMAGE_PROPERTIES'); ?>

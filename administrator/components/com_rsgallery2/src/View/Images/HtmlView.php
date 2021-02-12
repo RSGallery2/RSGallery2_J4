@@ -13,6 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Images;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -125,7 +126,12 @@ class HtmlView extends BaseHtmlView
         $errors = $this->get('Errors');
 		$this->activeFilters = $this->get('ActiveFilters');
 
-		// Check for errors.
+        // for batch ToDo: remove
+
+        $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/images.xml';
+        $this->form = Form::getInstance('images', $xmlFile);
+
+        // Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
 			throw new GenericDataException(implode("\n", $errors), 500);
