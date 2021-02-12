@@ -16,9 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use Joomla\Utilities\ArrayHelper;
 
 /**
  * The Images List Controller
@@ -60,33 +58,6 @@ class ImagesController extends AdminController
 	{
 		return parent::getModel($name, $prefix, $config);
 	}
-
-
-
-	/**
-	 * Check in of one or more records.
-	 *
-	 * Overrides \JControllerAdmin::checkin to redirect to URL with extension.
-	 *
-	 * @return  boolean  True on success
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	/* ToDo try to remove */
-	public function checkin()
-	{
-		// Process parent checkin method.
-		$result = parent::checkin();
-
-		// Override the redirect Uri.
-//		$redirectUri = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&extension=' . $this->input->get('extension', '', 'CMD');
-//		$this->setRedirect(Route::_($redirectUri, false), $this->message, $this->messageType);
-		$this->setRedirect(Route::_('index.php?option=com_rsgallery2&view=Images'));
-
-		return $result;
-	}
-	/**/
-
 
     /**
      *
