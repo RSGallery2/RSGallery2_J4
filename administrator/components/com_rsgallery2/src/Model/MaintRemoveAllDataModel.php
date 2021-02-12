@@ -128,7 +128,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 				}
 			}
 
-			$msg .= ' successful';
+			$msg .= ' successfully';
 		}
 		catch (\Exception $e)
 		{

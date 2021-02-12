@@ -232,7 +232,7 @@ class ImagesController extends AdminController
                 $IsCopied = $model->copyImagesTo();
                 if ($IsCopied)
                 {
-                    $msg .= 'Copy of images ... sucessfull';
+                    $msg .= 'Copy of images ... successfully';
                 }
                 else
                 {
