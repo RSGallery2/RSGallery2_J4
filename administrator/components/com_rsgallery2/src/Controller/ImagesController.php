@@ -148,7 +148,7 @@ class ImagesController extends AdminController
      * @throws Exception
      * @since 4.3.0
      */
-    public function moveImagesTo()
+    public function moveImagesToGallery()
     {
         //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:moveTo: ";
@@ -172,10 +172,10 @@ class ImagesController extends AdminController
                 // Model tells if successful
                 $model = $this->getModel('image');
 
-                $IsMoved = $model->moveImagesTo();
+                $IsMoved = $model->moveImagesToGallery();
                 if ($IsMoved)
                 {
-                    $msg .= 'Move of images ... successfull';
+                    $msg .= 'Moved images successfully';
                 }
                 else
                 {
@@ -205,7 +205,7 @@ class ImagesController extends AdminController
      * @throws Exception
      * @since 4.3.0
      */
-    public function copyImagesTo()
+    public function copyImagesToGallery()
     {
         //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:copyTo: ";
@@ -229,10 +229,10 @@ class ImagesController extends AdminController
                 // Model tells if successful
                 $model = $this->getModel('image');
 
-                $IsCopied = $model->copyImagesTo();
+                $IsCopied = $model->copyImagesToGallery();
                 if ($IsCopied)
                 {
-                    $msg .= 'Copy of images ... successfully';
+                    $msg .= 'Copied mages successfully';
                 }
                 else
                 {

@@ -24,9 +24,9 @@ use Joomla\CMS\Language\Text;
 <button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('imagesProperties.PropertiesView');return false;">
 	<?php echo JText::_('COM_RSGALLERY2_ADD_IMAGE_PROPERTIES'); ?>
 </button>
-<button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('images.moveImagesTo');return false;">
-	<?php echo JText::_('COM_RSGALLERY2_MOVE_TO'); ?>
+<button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('images.moveImagesToGallery');return false;">
+	<?php echo JText::_('COM_RSGALLERY2_MOVE'); ?>
 </button>
-<button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('images.copyImagesTo');return false;">
+<button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('images.copyImagesToGallery');return false;">
 	<?php echo JText::_('COM_RSGALLERY2_COPY'); ?>
 </button>

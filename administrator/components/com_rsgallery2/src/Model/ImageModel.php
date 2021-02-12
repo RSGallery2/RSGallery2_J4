@@ -28,6 +28,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * RSGallery2 Component Image Model
@@ -948,8 +949,8 @@ class ImageModel extends AdminModel
      *
      * @since __BUMP_VERSION__
 	 */
-	/**
-	public function moveImagesTo() // ToDo: Rename moveImagesToGallery (imageIds, galleryId)
+	/**/
+	public function moveImagesToGallery() // ToDo: Rename moveImagesToGallery (imageIds, galleryId)
 	{
 		$IsMoved = false;
 
@@ -960,10 +961,10 @@ class ImageModel extends AdminModel
 			$cids  = $input->get('cid', array(), 'ARRAY');
 			ArrayHelper::toInteger($cids);
 
-			$NewGalleryId = $input->get('SelectGallery4MoveCopy', -1, 'INT');
+			$NewGalleryId = $input->get('gallery_id', -1, 'INT');
 
 			// Destination gallery selected ?
-			if ($NewGalleryId > 0)
+			if ($NewGalleryId > 1)
 			{
 				// Source images selected ?
 				if (count($cids) > 0)
@@ -988,7 +989,7 @@ class ImageModel extends AdminModel
 
 						if (!$item->store())
 						{
-							// ToDo: collect erorrs and display over enque .... with errr type
+							// ToDo: collect errors and display over enqueue .... with err type
 
 							$this->setError($this->_db->getErrorMsg());
 
@@ -999,16 +1000,16 @@ class ImageModel extends AdminModel
 					// Success
 					$IsMoved = true;
 
-					Factory::getApplication()->enqueueMessage(Text::_('Move is successful. Please check order of images in destination gallery'), 'notice');
+					Factory::getApplication()->enqueueMessage(Text::_('*Move is successful. Please check order of images in destination gallery'), 'notice');
 				}
 				else
 				{
-					Factory::getApplication()->enqueueMessage(Text::_('No valid image(s) selected'), 'warning');
+					Factory::getApplication()->enqueueMessage(Text::_('*No valid image(s) selected'), 'warning');
 				}
 			}
 			else
 			{
-				Factory::getApplication()->enqueueMessage(Text::_('No valid gallery selected'), 'warning');
+				Factory::getApplication()->enqueueMessage(Text::_('*No valid gallery selected'), 'warning');
 			}
 		}
 		catch (\RuntimeException $e)
@@ -1034,7 +1035,7 @@ class ImageModel extends AdminModel
      *
      * @since __BUMP_VERSION__
      */
-	/**
+	/**/
 	private function nextOrdering($GalleryId)
 	{
         $max = 0;
@@ -1044,7 +1045,7 @@ class ImageModel extends AdminModel
 			$db    = $this->getDbo();
 			$query = $db->getQuery(true)
 				->select('MAX(ordering)')
-				->from($db->quoteName('#__rsgallery2_files'))
+				->from($db->quoteName('#__rsg2_files'))
 				->where($db->quoteName('gallery_id') . ' = ' . $db->quote($GalleryId));
 			$db->setQuery($query);
             $max = $db->loadResult();
@@ -1073,7 +1074,7 @@ class ImageModel extends AdminModel
      *
      * @since __BUMP_VERSION__
 	 */
-	/**
+	/**/
 	public function copyImagesTo() // ToDo: Rename copyImagesToToGallery (imageIds, galleryId)
 	{
 		global $rsgConfig;
@@ -1112,7 +1113,7 @@ class ImageModel extends AdminModel
 
 							continue;
 						}
-						* /
+						*/
 
 						//----------------------------------------------------
 						// db: new image name
@@ -1131,66 +1132,66 @@ class ImageModel extends AdminModel
 						// Copy files
 						//----------------------------------------------------
 
-						// copy original
-						$fullPath_original = JPATH_ROOT . $rsgConfig->get('imgPath_original') . '/';
-						$srcFile           = $fullPath_original . $oldName;
-						$dstFile           = $fullPath_original . $item->name;
-						if (!copy($srcFile, $dstFile))
-						{
-							// ToDo: what ToDo if it fails ?
-							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							Factory::getApplication()->enqueueMessage(Text::_('Original image could not be copied') . $UsedNamesText, 'warning');
-						}
-						else
-						{
-							;
-						}
-
-						// copy display
-						// must function !!!
-						$fullPath_display = JPATH_ROOT . $rsgConfig->get('imgPath_display') . '/';
-						$srcFile          = $fullPath_display . $oldName . '.jpg';
-						$dstFile          = $fullPath_display . $item->name . '.jpg';
-						if (!copy($srcFile, $dstFile))
-						{
-							// ToDo: what ToDo if it fails ?
-							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							Factory::getApplication()->enqueueMessage(Text::_('Display image could not be copied') . $UsedNamesText, 'error');
-
-							$IsOneNotCopied = true;
-						}
-						else
-						{
-							$IsOneCopied = true;
-						}
-
-						// copy thumb
-						$fullPath_thumb = JPATH_ROOT . $rsgConfig->get('imgPath_thumb') . '/';
-						$srcFile        = $fullPath_thumb . $oldName . '.jpg';
-						$dstFile        = $fullPath_thumb . $item->name . '.jpg';
-						if (!copy($srcFile, $dstFile))
-						{
-							// ToDo: what ToDo if it fails ?
-							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
-							Factory::getApplication()->enqueueMessage(Text::_('Thumb image could not be copied') . $UsedNamesText, 'warning');
-						}
-
-						//----------------------------------------------------
-						// db: insert new item
-						//----------------------------------------------------
-
-						$item->gallery_id = $NewGalleryId;
-						$item->ordering   = $this->nextOrdering($NewGalleryId);
-						$item->id         = 0; // it is new item
-
-						if (!$item->store())
-						{
-							$UsedNamesText = '<br>SrcImage: ' . $oldName . '<br>DstImage: ' . $item->name;
-							Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inseted in database') . $UsedNamesText, 'error');
-
-							// return false;
-							$IsOneNotCopied = false;
-						}
+//						// copy original
+//						$fullPath_original = JPATH_ROOT . $rsgConfig->get('imgPath_original') . '/';
+//						$srcFile           = $fullPath_original . $oldName;
+//						$dstFile           = $fullPath_original . $item->name;
+//						if (!copy($srcFile, $dstFile))
+//						{
+//							// ToDo: what ToDo if it fails ?
+//							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
+//							Factory::getApplication()->enqueueMessage(Text::_('Original image could not be copied') . $UsedNamesText, 'warning');
+//						}
+//						else
+//						{
+//							;
+//						}
+//
+//						// copy display
+//						// must function !!!
+//						$fullPath_display = JPATH_ROOT . $rsgConfig->get('imgPath_display') . '/';
+//						$srcFile          = $fullPath_display . $oldName . '.jpg';
+//						$dstFile          = $fullPath_display . $item->name . '.jpg';
+//						if (!copy($srcFile, $dstFile))
+//						{
+//							// ToDo: what ToDo if it fails ?
+//							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
+//							Factory::getApplication()->enqueueMessage(Text::_('Display image could not be copied') . $UsedNamesText, 'error');
+//
+//							$IsOneNotCopied = true;
+//						}
+//						else
+//						{
+//							$IsOneCopied = true;
+//						}
+//
+//						// copy thumb
+//						$fullPath_thumb = JPATH_ROOT . $rsgConfig->get('imgPath_thumb') . '/';
+//						$srcFile        = $fullPath_thumb . $oldName . '.jpg';
+//						$dstFile        = $fullPath_thumb . $item->name . '.jpg';
+//						if (!copy($srcFile, $dstFile))
+//						{
+//							// ToDo: what ToDo if it fails ?
+//							$UsedNamesText = '<br>SrcPath: ' . $srcFile . '<br>DstPath: ' . $srcFile;
+//							Factory::getApplication()->enqueueMessage(Text::_('Thumb image could not be copied') . $UsedNamesText, 'warning');
+//						}
+//
+//						//----------------------------------------------------
+//						// db: insert new item
+//						//----------------------------------------------------
+//
+//						$item->gallery_id = $NewGalleryId;
+//						$item->ordering   = $this->nextOrdering($NewGalleryId);
+//						$item->id         = 0; // it is new item
+//
+//						if (!$item->store())
+//						{
+//							$UsedNamesText = '<br>SrcImage: ' . $oldName . '<br>DstImage: ' . $item->name;
+//							Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inseted in database') . $UsedNamesText, 'error');
+//
+//							// return false;
+//							$IsOneNotCopied = false;
+//						}
 					}
 
 					if (!$IsOneNotCopied)
