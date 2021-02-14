@@ -40,6 +40,9 @@ class ImageFileModel extends BaseModel // AdminModel
 {
 	protected $imagePaths = null;
 
+	const THUMB_PORTRAIT = 0;
+	const THUMB_SQUARE = 1;
+	
 	/**
 	 * Constructor.
 	 *
@@ -256,7 +259,8 @@ class ImageFileModel extends BaseModel // AdminModel
 			$width = $thumbSize;
 			$height = $thumbSize;
 
-			if ($thumbStyle != 1)
+			// ToDo: ? crop (above midle left right and two ...)
+			if ($thumbStyle == ImageFileModel::THUMB_PORTRAIT)
 			{
 				// ??? $thumbSize should be max ????
 				if ($imgWidth > $imgHeight)
