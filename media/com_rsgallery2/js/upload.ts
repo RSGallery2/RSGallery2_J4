@@ -1417,13 +1417,15 @@ class TransferImagesTask {
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
         const imgContainer = document.createElement('div');
         imgContainer.classList.add('imgContainer');
+        imgContainer.style.width = responseData.thumbSize + 'px';
+        imgContainer.style.height = responseData.thumbSize + 'px';
         thumbArea.appendChild (imgContainer);
 
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
         imageDisplay.classList.add('img-rounded');
-        imageDisplay.style.width = responseData.thumbSize + 'px';
-        imageDisplay.style.height = responseData.thumbSize + 'px';
+        // 2021.02.15 imageDisplay.style.width = responseData.thumbSize + 'px';
+        // 2021.02.15 imageDisplay.style.height = responseData.thumbSize + 'px';
         imageDisplay.src = responseData.fileUrl;
         imgContainer.appendChild (imageDisplay);
 
@@ -2050,13 +2052,15 @@ class RequestTransferFolderFilesTask {
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
         const imgContainer = document.createElement('div');
         imgContainer.classList.add('imgContainer');
+        imgContainer.style.width = responseData.thumbSize + 'px';
+        imgContainer.style.height = responseData.thumbSize + 'px';
         thumbArea.appendChild (imgContainer);
 
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
         imageDisplay.classList.add('img-rounded');
-        imageDisplay.style.width = responseData.thumbSize +'px';
-        imageDisplay.style.height = responseData.thumbSize + 'px';
+        // 2021.02.15 imageDisplay.style.width = responseData.thumbSize +'px';
+        // 2021.02.15 imageDisplay.style.height = responseData.thumbSize + 'px';
         imageDisplay.src = responseData.fileUrl;
         imgContainer.appendChild (imageDisplay);
 
