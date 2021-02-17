@@ -173,9 +173,9 @@ $maxSize = $this->UploadLimit;
                                 </div>
                             </div>
 
-                            <button id="AssignUploadedFiles" type="button"
+                            <button id="AssignImageProperties" type="button"
                                     class="btn btn-primary mx-auto mt-2"
-                                    onclick="Joomla.submitAssign2DroppedFiles()"
+                                    onclick="Joomla.submitbutton('imagesProperties.PropertiesView'));return false;"
                                     title="<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
                                     disabled
                                 >

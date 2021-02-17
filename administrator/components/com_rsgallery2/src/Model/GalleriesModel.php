@@ -1,10 +1,11 @@
 <?php
 /**
- * @package     Joomla.Administrator
+ * @package     RSGallery2
  * @subpackage  com_rsgallery2
- *
- * @copyright   (C) 2005 - 2021 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   (C) 2016-2021 RSGallery2 Team
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @author      finnern
+ * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
@@ -525,6 +526,7 @@ class GalleriesModel extends ListModel
 	 * @return array rows with image name, gallery name, date, and user name as rows
 	 *
 	 * @since __BUMP_VERSION__
+	 * @throws Exception
 	 */
 	static function latestGalleries($limit)
 	{
@@ -592,7 +594,7 @@ class GalleriesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getDBO();
+			$db    = Factory::getDbo();
 			$query = $db->getQuery(true);
 
 			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
