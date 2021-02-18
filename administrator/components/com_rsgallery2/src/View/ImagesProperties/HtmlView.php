@@ -42,7 +42,12 @@ class HtmlView extends BaseHtmlView
 	protected $form;
     protected $editor;
     protected $editorParams;
-	/**
+
+    protected $isDebugBackend;
+    protected $isDevelop;
+
+
+    /**
 	 * Method to display the view.
 	 *
 	 * @param   string  $tpl  A template file to load. [optional]
@@ -55,11 +60,17 @@ class HtmlView extends BaseHtmlView
 	{
 	    global $rsgConfig;
 
-	    if (empty ($rsgConfig)) {
-            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-        }
+        //--- config --------------------------------------------------------------------
 
-		$this->items = $this->get('Items');
+        if (empty ($rsgConfig)) {
+                $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        }
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+        $this->isDevelop = $rsgConfig->get('isDevelop');
+
+
+        $this->items = $this->get('Items');
 
 		// paths to image (galleryid
         $this->ImagePath = new ImagePaths ();
@@ -119,7 +130,7 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-						. '* <br>'
+						. '* modal on image click <br>'
 						. '* <br>'
 						. '* <br>'
 						//. '* <br>'
@@ -129,7 +140,41 @@ class HtmlView extends BaseHtmlView
 				}
 
 				ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
-				break;
+
+//                ToolbarHelper::divider();
+//                $toolbar->appendButton('Popup', 'bars', 'COM_FINDER_STATISTICS', 'index.php?option=com_finder&view=statistics&tmpl=component', 550, 350, '', '', '', Text::_('COM_FINDER_STATISTICS_TITLE'));
+//                ToolbarHelper::divider();
+
+//                $dropdown = $toolbar->dropdownButton('status-group')
+//                    ->text('JTOOLBAR_CHANGE_STATUS')
+//                    ->toggleSplit(false)
+//                    ->icon('fa fa-ellipsis-h')
+//                    ->buttonClass('btn btn-action')
+//                    ->listCheck(true);
+//
+//                $childBar = $dropdown->getChildToolbar();
+//                $childBar->popupButton('test')
+//                    ->text('JTOOLBAR_BATCH')
+//                    ->selector('collapseModal')
+//                    ->listCheck(true);
+//
+//                // $childBar->
+                $toolbar->popupButton()
+                ->url(Route::_('index.php?option=com_banners&view=download&tmpl=component'))
+                ->text('JTOOLBAR_EXPORT')
+                ->selector('downloadModal')
+                ->icon('icon-download')
+                ->footer('<button class="btn btn-secondary" data-bs-dismiss="modal" type="button"'
+                    . ' onclick="window.parent.Joomla.Modal.getCurrent().close();">'
+                    . Text::_('COM_BANNERS_CANCEL') . '</button>'
+                    . '<button class="btn btn-success" type="button"'
+                    . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#downloadModal\', buttonSelector: \'#exportBtn\'})">'
+                    . Text::_('COM_BANNERS_TRACKS_EXPORT') . '</button>'
+                );
+
+
+
+                break;
 		}
 
 		// Options button.

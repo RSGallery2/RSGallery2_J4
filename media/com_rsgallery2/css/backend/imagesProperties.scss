@@ -1,12 +1,29 @@
 @import "Rsg2";
 
+ul.thumbnails {
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+
 .thumbnails li {
   list-style-type: none;
 }
 
 .imageAreaItem {
-  border: 5px dotted darkgreen; /**/
+//  border: 5px dotted darkgreen; /**/
   max-width: 250px; /**/
+  background-color: white;
+
+//  width: 240px; /* center img https://stackoverflow.com/questions/7273338/how-to-vertically-align-an-image-inside-a-div*/
+//  height: 240px; /**/
+//  position: relative;
+
+  margin: 10px;
+
 }
 
 
@@ -14,15 +31,15 @@
   display: block;
   padding: 4px;
   line-height: 18px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
+//  border: 1px solid #ddd;
+//  border-radius: 3px;
   box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
   transition: all .2s ease-in-out;
 }
 
 
 .thumbnail img {
-//  margin-top: 2.5%; /**/
+  //  margin-top: 2.5%; /**/
   /*    max-width: 90%; /**/
   /*    border-radius: 5px; /**/
   /* object-fit: contain; /**/
@@ -33,16 +50,58 @@
   cursor: pointer;
 }
 
+.imgContainer {
+
+  // border: 5px dotted lightblue; /**/
+
+  position: relative;
+
+  min-height: 250px; /**/
+
+  margin: 10px 10px 10px 0;
+
+}
+
 .img-rounded {
+
+//  border: 5px dotted darkcyan; /**/
+
+  display: block;
+//
   border-radius: 6px;
   max-width: 100%;
-  width: auto \9;
-//  height: auto;
+
+//  width: auto \9;
+
+  //  height: auto;
   max-height: 250px; /**/
   margin: auto;
+
+//  margin-left: auto;
+//  margin-right: auto;
+
   vertical-align: middle;
-//  border: 0;
+  text-align:center;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+
+//  max-height: 100%;
+//  max-width: 100%;
+//  //width: auto;
+//  //height: auto;
+//  //position: absolute;
+//  //top: 0;
+//  //bottom: 0;
+//  //left: 0;
+//  //right: 0;
+//  margin: auto;
 }
+
+
 
 /*--------------------------------------------------------------------------------------
  modal image with back button
