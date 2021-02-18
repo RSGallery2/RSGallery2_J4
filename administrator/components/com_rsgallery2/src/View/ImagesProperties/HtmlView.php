@@ -12,6 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\ImagesProperties;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -22,6 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 /**
  * View class for a list of rsgallery2.
@@ -34,9 +36,12 @@ class HtmlView extends BaseHtmlView
 	protected $pagination;
 	protected $state;
 
+    protected $ImagePath;
+    protected $DisplayImgWidth;
+
 	protected $form;
-
-
+    protected $editor;
+    protected $editorParams;
 	/**
 	 * Method to display the view.
 	 *
@@ -48,10 +53,34 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+	    global $rsgConfig;
+
+	    if (empty ($rsgConfig)) {
+            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        }
 
 		$this->items = $this->get('Items');
 
-		$this->pagination = $this->get('Pagination');
+		// paths to image (galleryid
+        $this->ImagePath = new ImagePaths ();
+
+        // size of display image
+        $ImageWidths = $rsgConfig->get('image_width');
+        $exploded = explode(',', $ImageWidths);
+        $this->DisplayImgWidth = $exploded[0];
+
+
+        $editor = Factory::getApplication()->get('editor');
+        $this->editor = Editor::getInstance($editor);
+        // SET EDITOR PARAMS
+        $this->editorParams = array(
+            'smilies'=> '1' ,
+            'style'  => '1' ,
+            'layer'  => '0' ,
+            'table'  => '0' ,
+            'clear_entities'=>'0');
+
+        $this->pagination = $this->get('Pagination');
 		$this->state      = $this->get('State');
 
 		$Layout = $this->getLayout();

@@ -23,9 +23,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Session\Session;
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/maintenance.css', array('version' => 'auto', 'relative' => true));
-
-// HTMLHelper::_('script', 'mod_quickicon/quickicon.min.js', ['version' => 'auto', 'relative' => true]);
-HTMLHelper::_('script', 'com_rsgallery2/maintenance.js', ['version' => 'auto', 'relative' => true]);
+HTMLHelper::_('script', 'com_rsgallery2/backend/maintenance.js', ['version' => 'auto', 'relative' => true]);
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 

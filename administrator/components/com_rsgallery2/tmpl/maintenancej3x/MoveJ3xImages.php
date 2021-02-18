@@ -18,7 +18,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/moveJ3xImages.css', array('v
 
 // Items exist
 if ($this->isMissingJ3xImages) {
-    HTMLHelper::_('script', 'com_rsgallery2/moveJ3xImages.js', ['version' => 'auto', 'relative' => true]);
+    HTMLHelper::_('script', 'com_rsgallery2/backend/moveJ3xImages.js', ['version' => 'auto', 'relative' => true]);
 }
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);

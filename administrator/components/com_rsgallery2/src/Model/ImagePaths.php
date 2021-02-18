@@ -29,6 +29,7 @@ class ImagePaths
 
 	// files gallery defined
 	public $originalBasePath;
+	public $displayBasePath;
 	public $thumbBasePath;
 	public $sizeBasePaths; // 800x6000, ..., ? display:J3x
 	//	ToDo: watermark ...
@@ -40,6 +41,7 @@ class ImagePaths
 	// URIs gallery defined
 	protected $galleryRootUrl;
 	protected $originalUrl;
+    protected $displayUrl;
 	protected $thumbUrl;
 	protected $sizeUrls;
 
@@ -128,6 +130,9 @@ class ImagePaths
 			$this->sizeBasePaths[$imageSize] = PathHelper::join($this->galleryRoot, $imageSize);
 		}
 
+		// biggest is display
+        $this->displayBasePath = $this->sizeBasePaths [$this->imageSizes[0]];
+
 		/*--------------------------------------------------------------------
 		URIs
 		--------------------------------------------------------------------*/
@@ -145,6 +150,9 @@ class ImagePaths
 		{
 			$this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
 		}
+
+        // biggest is display
+        $this->displayUrl = $this->sizeUrls[$this->imageSizes[0]];
 	}
 
 	/*--------------------------------------------------------------------
@@ -154,6 +162,11 @@ class ImagePaths
 	public function getOriginalPath($fileName = '')
 	{
 		return PathHelper::join($this->originalBasePath, $fileName);
+	}
+
+	public function getDisplayPath($fileName = '')
+	{
+		return PathHelper::join($this->displayBasePath, $fileName);
 	}
 
 	public function getThumbPath($fileName = '')
@@ -173,6 +186,11 @@ class ImagePaths
 	public function getOriginalUrl($fileName = '')
 	{
 		return $this->originalUrl . '/' . $fileName;
+	}
+
+	public function getDisplayUrl($fileName = '')
+	{
+		return $this->displayUrl . '/' . $fileName;
 	}
 
 	public function getThumbUrl($fileName = '')

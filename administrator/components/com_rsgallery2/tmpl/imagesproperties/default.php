@@ -20,6 +20,15 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\String\Inflector;
 
+
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
+
+Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
+
+
+
+
 $extension = $this->escape($this->state->get('filter.extension'));
 
 ?>
@@ -44,15 +53,31 @@ $extension = $this->escape($this->state->get('filter.extension'));
 						</div>
 					<?php else : ?>
 
-						<ul class="thumbnails">
+                        <span class="">
+                            <?php
+                            echo  HTMLHelper::_('grid.checkall');
+                            echo  " ";
+                            echo  Text::_("COM_RSGALLERY2_SELECT_ALL");
+                            ?>
+                        </span>
+                        <br><br>
+
+                        <ul class="thumbnails">
 							<?php
 							$Idx = 0;
 
 							foreach ($this->items as $Idx => $item)
 							{
-								$src   = $this->HtmlPathDisplay . $this->escape($item->name) . '.pg';
+							    //-- path to display image ------------------------------------
+
+                                //$src   = $this->HtmlPathDisplay . $this->escape($item->name) . '.jpg';
+
+                                // galleryJ4x path is depending on gallery id
+                                $this->ImagePath->setPathsURIs_byGalleryId($item->gallery_id);
+                                $src = $this->ImagePath->getDisplayUrl ($item->name);
+
 								?>
-								<li class="imagesAreaList" >
+								<li class="imageAreaItem" >
 									<div class="thumbnail imgProperty">
 										<div class='imgContainer'>
 											<img src="<?php echo $src; ?>" class="img-rounded modalActive" alt="<?php echo $this->escape($item->name);?>">
@@ -85,11 +110,11 @@ $extension = $this->escape($this->state->get('filter.extension'));
 
                                     <div class="control-group">
 												<!-- label class="control-label" for="description2[]" ><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
-                                        <div class="controls">
-                                        <textarea cols="15" rows="" name="description[]"
+                                                <div class="controls">
+                                                <textarea cols="15" rows="" name="description[]"
                                                   placeholder="Text input"
                                                   style="width:95%;"><?php echo $this->escape($item->descr);?></textarea>
-                                        </div-->
+                                                </div-->
 
 												<label class="control-label" for="description[]" ><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
 												<div class="controls">
@@ -97,8 +122,13 @@ $extension = $this->escape($this->state->get('filter.extension'));
 													if ( ! empty($this->editor))
 													{
 														// ToDo: Leave out some editor buttons : use config ...
-														echo $this->editor->display('description[]', $this->escape($item->descr), '90%', '100', '20', '20',
-															false, 'description_' . $Idx, null, null, $this->editorParams);
+														echo $this->editor->display(
+														        'description[]',
+                                                                $this->escape($item->description), '
+                                                                90%', '100', '20', '20',
+                                                                false,
+                                                                'description_' . $Idx, null, null,
+                                                                $this->editorParams);
 													}
 													?>
 												</div>
