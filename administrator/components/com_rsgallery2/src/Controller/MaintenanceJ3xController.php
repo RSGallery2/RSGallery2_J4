@@ -69,7 +69,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "MaintenanceJ3xController.applyExistingJ3xData: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -116,7 +116,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "MaintenanceJ3xController.copyJ3xConfig2J4xOptions: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -163,7 +163,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "MaintenanceJ3xController.copyDbJ3xGalleries2J4x: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -216,7 +216,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "ImagesController.resetImagesTable: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -266,7 +266,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "MaintenanceJ3xController.copyDbJ3xImages2J4x: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -316,7 +316,7 @@ class MaintenanceJ3xController extends AdminController
 //        $msg = "MaintenanceJ3xController.moveAllJ3xImages2J4x: ";
 //        $msgType = 'notice';
 //
-//        Session::checkToken();
+//        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 //
 //        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 //        if (!$canAdmin) {
@@ -374,7 +374,7 @@ class MaintenanceJ3xController extends AdminController
 //        $msg = "MaintenanceJ3xController.moveSelectedJ3xImages2J4x: ";
 //        $msgType = 'notice';
 //
-//        Session::checkToken();
+//        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 //
 //        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 //        if (!$canAdmin) {
@@ -433,7 +433,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "MaintenanceJ3xController.updateMovedJ3xImages2J4x: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -493,7 +493,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "MaintenanceCleanUp.CheckImagePaths: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -547,7 +547,7 @@ class MaintenanceJ3xController extends AdminController
         $msg = "MaintenanceCleanUp.RepairImagePaths: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {

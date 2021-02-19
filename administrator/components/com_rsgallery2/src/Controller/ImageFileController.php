@@ -131,7 +131,7 @@ class ImageFileController extends BaseController
 	 *
 	public function batch($model = null)
 	{
-	Session::checkToken();
+	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		// Set the model
 		/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *

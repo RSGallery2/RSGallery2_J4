@@ -20,6 +20,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
+
+
 /**
  * RSGallery2 Component Images Model
  *
@@ -598,7 +601,7 @@ class ImagesModel extends ListModel
 	}
 
 	/**
-	 * This function will retrieve the data of the n last uploaded images
+	 * This function will retrieve the data of all uploaded images
 	 *
 	 * @param int $limit > 0 will limit the number of lines returned
 	 *
@@ -734,7 +737,6 @@ class ImagesModel extends ListModel
 
         if ($return)
         {
-            yyyy;
 
             // Now check to see if this articles was featured if so delete it from the #__content_frontpage table
             $db = $this->getDbo();
@@ -749,5 +751,90 @@ class ImagesModel extends ListModel
 
         return $return;
     }
+
+	/**
+	 * Fetches base file names identified by the list of given image ids
+	 *
+	 * @param $ImageIds array List of image ids from database
+	 *
+	 * @return string [] file names
+	 *
+	 * @since 4.3.2
+	 * @throws Exception
+	 */
+	public function fileNamesFromIds($ImageIds)
+	{
+		$fileNames = [];
+
+		try
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+
+			$query->select($db->quoteName('name'))
+				->from($db->quoteName('#__rsg2_images'))
+				->where($db->quoteName('id') . ' IN ' . ' (' . implode(',', $ImageIds) . ')');
+			$db->setQuery($query);
+
+			$fileNames = $db->loadColumn(); // wrong $db->loadObjectList();
+		}
+
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing query: "' . $query . '" in fileNamesFromIds $ImageIds count:' . count ($ImageIds) . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $fileNames;
+	}
+
+
+	/**
+	 * Fetches base file name identified by the given image id
+	 *
+	 * @param $ImageId
+	 *
+	 * @return string filename
+	 *
+	 * @since 4.3.2
+	 * @throws Exception
+	 */
+	public function galleryIdFromId($ImageId)
+	{
+		$galleryId = -1;
+
+		try
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true);
+
+			$query->select($db->quoteName('gallery_id'))
+				->from($db->quoteName('#__rsg2_images'))
+				->where(array($db->quoteName('id') . '=' . $ImageId));
+			$db->setQuery($query);
+			$db->execute();
+
+			$galleryId = $db->loadResult();
+		}
+
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing query: "' . $query . '" in galleryIdFromId $ImageId: "' . $ImageId .  '"<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $galleryId;
+	}
+
+
+
 
 } // class

@@ -19,6 +19,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Button\customButton;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
@@ -139,7 +140,96 @@ class HtmlView extends BaseHtmlView
 						. '</span><br><br>';
 				}
 
-				ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES', 'image'));
+
+				ToolbarHelper::back();
+
+				ToolBarHelper::apply('imagesProperties.apply_imagesProperties');
+
+//				ToolbarHelper::assign();
+
+				ToolBarHelper::save('imagesProperties.save_imagesProperties');
+//				ToolBarHelper::cancel('imagesProperties.cancel_imagesProperties');
+				ToolBarHelper::cancel('images.cancel', 'JTOOLBAR_CLOSE');
+
+				ToolbarHelper::archiveList('images.trash');
+				ToolbarHelper::trash('images.trash');
+//				ToolBarHelper::deleteList('', 'ImagesProperties.delete_imagesProperties', 'JTOOLBAR_DELETE');
+
+//				ToolbarHelper::saveGroup (
+//					[
+//						['apply', 'imagesProperties.apply_imagesProperties'],
+//						['save', 'imagesProperties.save_imagesProperties'],
+//						['cancel', 'images.cancel'],
+//						['archiveList', 'images.trash'],
+//					],
+//					'btn-success'
+//				);
+//
+
+				$toolbar = Toolbar::getInstance('toolbar');
+
+//				$formGroup = $bar->dropdownButton('form-group');
+//				$formGroup->getName();
+//				$formGroup->configure();
+//
+//				$bar->publish('contacts.publish')->listCheck(true);
+
+				$dropdownButton = $toolbar->dropdownButton('form-group')
+					->text('Group')
+//					->toggleSplit(true)
+					->icon('fa fa-globe')
+					->buttonClass('btn btn-success btn-sm');
+
+				$dropdownButton->configure(
+						function (Toolbar $childBar)
+						{
+							// $childBar->standardButton('remove', 'Button 3');
+//							$childBar->customButton('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
+//							$childBar->customButton('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
+//							$childBar->customButton('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
+//							$childBar->divider();
+//							$childBar->customButton('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
+//							$childBar->customButton('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
+//							$childBar->customButton('rotate_left_x', 'COM_RSGALLERY2_ROTATE_LEFT', 'imagesProperties.rotate_images_left');
+//							$childBar->customButton('rotate_right_x', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right');
+//							$childBar->customButton('rotate_180_x', 'COM_RSGALLERY2_ROTATE_180', 'imagesProperties.rotate_images_180');
+//							$childBar->divider();
+//							$childBar->customButton('flip_horizontal_x', 'COM_RSGALLERY2_FLIP_HORIZONTAL', 'imagesProperties.flip_images_horizontal');
+							//$childBar->customButton('flip_vertical_x', 'COM_RSGALLERY2_FLIP_VERTICAL', 'imagesProperties.flip_images_vertical');
+							$childBar->customButton('flip_vertical_x');
+
+
+							//$childBar->divider('HEADER');
+							//$childBar->divider();
+							$childBar->standardButton('remove', 'Button 3');
+							$childBar->standardButton('folder', 'Button 4');
+
+							$childBar->divider();
+							$childBar->standardButton('trash', 'Button 5');
+							$childBar->standardButton('question', 'Button 6');
+						}
+					);
+
+				ToolBarHelper::custom('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
+
+				//--- turn image -> flip / rotate -------------------------------
+
+				// ToolBarHelper;::spacer('50px');
+				ToolBarHelper::custom('', '', '', '   ', false);
+//				ToolbarHelper::divider();
+				ToolbarHelper::spacer(50);
+
+
+
+				ToolBarHelper::custom('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
+				ToolBarHelper::custom('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
+				ToolBarHelper::custom('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
+				ToolBarHelper::custom('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
+				ToolBarHelper::custom('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
+
+
+// ToDO: test drop down ...
 
 //                ToolbarHelper::divider();
 //                $toolbar->appendButton('Popup', 'bars', 'COM_FINDER_STATISTICS', 'index.php?option=com_finder&view=statistics&tmpl=component', 550, 350, '', '', '', Text::_('COM_FINDER_STATISTICS_TITLE'));
@@ -158,19 +248,20 @@ class HtmlView extends BaseHtmlView
 //                    ->selector('collapseModal')
 //                    ->listCheck(true);
 //
-//                // $childBar->
-                $toolbar->popupButton()
-                ->url(Route::_('index.php?option=com_banners&view=download&tmpl=component'))
-                ->text('JTOOLBAR_EXPORT')
-                ->selector('downloadModal')
-                ->icon('icon-download')
-                ->footer('<button class="btn btn-secondary" data-bs-dismiss="modal" type="button"'
-                    . ' onclick="window.parent.Joomla.Modal.getCurrent().close();">'
-                    . Text::_('COM_BANNERS_CANCEL') . '</button>'
-                    . '<button class="btn btn-success" type="button"'
-                    . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#downloadModal\', buttonSelector: \'#exportBtn\'})">'
-                    . Text::_('COM_BANNERS_TRACKS_EXPORT') . '</button>'
-                );
+
+////                // $childBar->
+//                $toolbar->popupButton()
+//                ->url(Route::_('index.php?option=com_banners&view=download&tmpl=component'))
+//                ->text('JTOOLBAR_EXPORT')
+//                ->selector('downloadModal')
+//                ->icon('icon-download')
+//                ->footer('<button class="btn btn-secondary" data-bs-dismiss="modal" type="button"'
+//                    . ' onclick="window.parent.Joomla.Modal.getCurrent().close();">'
+//                    . Text::_('COM_BANNERS_CANCEL') . '</button>'
+//                    . '<button class="btn btn-success" type="button"'
+//                    . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#downloadModal\', buttonSelector: \'#exportBtn\'})">'
+//                    . Text::_('COM_BANNERS_TRACKS_EXPORT') . '</button>'
+//                );
 
 
 

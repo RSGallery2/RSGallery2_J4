@@ -953,33 +953,6 @@ class ImageFileModel extends BaseModel // AdminModel
 		return array ($files, $ignored);
 	}
 
-	/**
-	 * rotate_images directs the master image and all dependent images to be turned by given degrees
-	 *
-	 * @param string [] $fileNames list of file names of images to be turned
-	 * @param int $galleryId May be used in destination path
-	 * @param double $angle Angle to turn the image
-	 *
-	 * @return int Number of successful turned images
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function rotate_images($fileNames, $galleryId, $angle)
-	{
-		$ImgCount = 0;
-
-		$msg = "model images: rotate_images: " . '<br>';
-
-		foreach ($fileNames as $fileName)
-		{
-			$IsSaved = $this->rotate_image($fileName, $galleryId, $angle);
-			if ($IsSaved){
-				$ImgCount++;
-			}
-		}
-
-		return $ImgCount;
-	}
 
 	/**
 	 * rotate_image rotates the master image by given degrees.
@@ -1004,18 +977,23 @@ class ImageFileModel extends BaseModel // AdminModel
 		{
 			//--- image source ------------------------------------------
 
-			$imgSrcPath = JPATH_ROOT . $rsgConfig->get('imgPath_original') . '/' . $fileName;
+			$imagePaths = new ImagePaths ($galleryId);
+
+			// $originalFileName
+			$imgSrcPath = PathHelper::join($imagePaths->originalBasePath, $fileName);
+
+			// fallback display file
+			if ( ! File::exists($imgSrcPath))
+			{
+				// displayBasePath
+				$imgSrcPath = PathHelper::join($imagePaths->displayBasePath, $fileName);
+			}
+
+			$memImage = null;
+
 			if (File::exists($imgSrcPath))
 			{
 				$memImage = new image ($imgSrcPath);
-			}
-			if (empty ($memImage))
-			{
-				$imgSrcPath = JPATH_ROOT . $rsgConfig->get('imgPath_display') . '/' . $fileName . '.jpg';
-				if (File::exists($imgSrcPath))
-				{
-					$memImage = new image ($imgSrcPath);
-				}
 			}
 
 			if ( ! empty ($memImage))
@@ -1028,7 +1006,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				$memImage->toFile($imgSrcPath, $type);
 				$memImage->destroy();
 
-				list($isRotated, $urlThumbFile, $msg) = $this->rotate_image($fileName, $galleryId);
+				$isRotated = $this->CreateRSG2Images($imagePaths, $imgSrcPath, $fileName);
 			}
 		}
 		catch (\RuntimeException $e)

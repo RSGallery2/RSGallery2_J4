@@ -60,7 +60,7 @@ class MaintenanceCleanUpController extends BaseController
         $msg = "MaintenanceCleanUp.purgeImagesAndData: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -126,7 +126,7 @@ class MaintenanceCleanUpController extends BaseController
         $msg = "MaintenanceCleanUp.prepareRemoveTables: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -173,7 +173,7 @@ class MaintenanceCleanUpController extends BaseController
         $msg = "MaintenanceCleanUp.undoPrepareRemoveTables: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -292,7 +292,7 @@ class MaintenanceCleanUpController extends BaseController
         $msg = "MaintenanceCleanUp.ResetConfigToDefault: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {

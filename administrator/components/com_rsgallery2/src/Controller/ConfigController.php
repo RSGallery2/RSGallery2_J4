@@ -105,7 +105,7 @@ class ConfigController extends AdminController // FormController
      */
 	public function cancel_rawView($key = null)
 	{
-		Session::checkToken();
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $link = 'index.php?option=com_rsgallery2&view=maintenance';
 		$this->setRedirect($link);
@@ -123,7 +123,7 @@ class ConfigController extends AdminController // FormController
 	 */
 	public function cancel_rawEdit($key = null)
 	{
-		Session::checkToken();
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		$link = 'index.php?option=com_rsgallery2&view=maintenance';
 		$this->setRedirect($link);
@@ -142,7 +142,7 @@ class ConfigController extends AdminController // FormController
 	 */
 	public function cancel($key = null)
 	{
-		Session::checkToken();
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		$link = 'index.php?option=com_rsgallery2';
 		$this->setRedirect($link);
@@ -160,7 +160,7 @@ class ConfigController extends AdminController // FormController
 	    $msg     = null;
 	    $msgType = 'notice';
 
-	    Session::checkToken();
+	    Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 	    $msg     = "apply_rawEdit: " . '<br>';
 
@@ -197,7 +197,7 @@ class ConfigController extends AdminController // FormController
      */
 	public function save_rawEdit()
 	{
-		Session::checkToken();
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 		$msg     = "save_rawEdit: " . '<br>';
 		$msgType = 'notice';
@@ -237,7 +237,7 @@ class ConfigController extends AdminController // FormController
         $msg = "Maintenance.importConfigFile: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -299,7 +299,7 @@ class ConfigController extends AdminController // FormController
 	/**
 	public function remove_OldConfigData()
 	{
-		Session::checkToken();
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
 
 	$msg     = "remove_OldConfigData: " . '<br>';

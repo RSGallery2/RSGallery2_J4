@@ -72,7 +72,7 @@ class ImagesController extends AdminController
         $msg = "ImagesController.reinitImagesTable: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -121,11 +121,11 @@ class ImagesController extends AdminController
      */
     public function moveImagesToGallery()
     {
-        //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+        //Factory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:moveTo: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         // Access check
         $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
@@ -160,7 +160,7 @@ class ImagesController extends AdminController
                 $OutTxt .= 'Error executing moveTo: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-                $app = JFactory::getApplication();
+                $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
         }
@@ -178,14 +178,14 @@ class ImagesController extends AdminController
      */
     public function copyImagesToGallery()
     {
-        //JFactory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+        //Factory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:copyTo: ";
         $msgType = 'notice';
 
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
         // Access check
-        $canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+        $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
         if (!$canAdmin)
         {
             $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
@@ -217,7 +217,7 @@ class ImagesController extends AdminController
                 $OutTxt .= 'Error executing copyTo: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-                $app = JFactory::getApplication();
+                $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
         }

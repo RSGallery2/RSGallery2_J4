@@ -1370,7 +1370,6 @@ class ImageModel extends AdminModel
      * @since __BUMP_VERSION__
      * @throws Exception
      */
-	/**
 	public function save_imageProperties ($imageProperties)
     {
         $IsSaved = false;
@@ -1390,7 +1389,7 @@ class ImageModel extends AdminModel
                 // Image found
                 if (!empty ($isImgFound)) {
                     $item->title = $title;
-                    $item->descr = $description;
+                    $item->description = $description;
 
                     //----------------------------------------------------
                     // save changed object
@@ -1422,6 +1421,6 @@ class ImageModel extends AdminModel
 
         return $IsSaved;
     }
-	/**/
+
 
 }

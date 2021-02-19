@@ -59,7 +59,7 @@ class MaintenanceController extends BaseController
         $msg = "MaintenanceCleanUp.CheckImagePaths: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -112,7 +112,7 @@ class MaintenanceController extends BaseController
         $msg = "MaintenanceCleanUp.RepairImagePaths: ";
         $msgType = 'notice';
 
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -210,7 +210,7 @@ class MaintenanceController extends BaseController
      */
     public function cancel()
     {
-        Session::checkToken();
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $link = 'index.php?option=com_rsgallery2&view=maintenance';
         $this->setRedirect($link);
