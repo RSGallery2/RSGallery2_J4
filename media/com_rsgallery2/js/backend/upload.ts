@@ -1352,6 +1352,10 @@ class TransferImagesTask {
 
                         this.showThumb(transferData)
 
+                        var buttonProperties : HTMLButtonElement; // button
+                        buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
+                        buttonProperties.disabled = false;
+
                     } else {
                         console.log("      failed data: " + AjaxResponse.data);
                         nextFile.statusBar.setError(true);
@@ -1995,6 +1999,10 @@ class RequestTransferFolderFilesTask {
                         nextFile.statusBar.setOK(true);
 
                         this.showThumb(transferData)
+
+                        var buttonProperties : HTMLButtonElement; // button
+                        buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
+                        buttonProperties.disabled = false;
 
                     } else {
                         console.log("      failed data: " + AjaxResponse.data);
