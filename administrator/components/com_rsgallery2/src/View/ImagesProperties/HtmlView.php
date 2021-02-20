@@ -175,10 +175,13 @@ class HtmlView extends BaseHtmlView
 //
 //				$bar->publish('contacts.publish')->listCheck(true);
 
-				$dropdownButton = $toolbar->dropdownButton('form-group')
-					->text('Group')
+				$dropdownButton = $toolbar->dropdownButton('rotate-group')
+					->text('*Rotate')
 //					->toggleSplit(true)
-					->icon('fa fa-globe')
+					->toggleSplit(false)
+//					->icon('fa fa-sync')
+					->icon('fas fa-image fa-spin')
+//					->icon('fas fa-sync fa-spin')
 					->buttonClass('btn btn-success btn-sm');
 
 				$dropdownButton->configure(
@@ -186,6 +189,7 @@ class HtmlView extends BaseHtmlView
 						{
 							// $childBar->standardButton('remove', 'Button 3');
 //							$childBar->customButton('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
+                            $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left');
 //							$childBar->customButton('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
 //							$childBar->customButton('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
 //							$childBar->divider();
@@ -196,22 +200,19 @@ class HtmlView extends BaseHtmlView
 //							$childBar->customButton('rotate_180_x', 'COM_RSGALLERY2_ROTATE_180', 'imagesProperties.rotate_images_180');
 //							$childBar->divider();
 //							$childBar->customButton('flip_horizontal_x', 'COM_RSGALLERY2_FLIP_HORIZONTAL', 'imagesProperties.flip_images_horizontal');
-							//$childBar->customButton('flip_vertical_x', 'COM_RSGALLERY2_FLIP_VERTICAL', 'imagesProperties.flip_images_vertical');
-							$childBar->customButton('flip_vertical_x');
+//							//$childBar->customButton('flip_vertical_x', 'COM_RSGALLERY2_FLIP_VERTICAL', 'imagesProperties.flip_images_vertical');
+//							$childBar->customButton('flip_vertical_x');
 
 
 							//$childBar->divider('HEADER');
 							//$childBar->divider();
-							$childBar->standardButton('remove', 'Button 3');
-							$childBar->standardButton('folder', 'Button 4');
+							$childBar->standardButton('folder', 'COM_RSGALLERY2_ROTATE_RIGHT');
 
 							$childBar->divider();
 							$childBar->standardButton('trash', 'Button 5');
 							$childBar->standardButton('question', 'Button 6');
 						}
 					);
-
-				ToolBarHelper::custom('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
 
 				//--- turn image -> flip / rotate -------------------------------
 
