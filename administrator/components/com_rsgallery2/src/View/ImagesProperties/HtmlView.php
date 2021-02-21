@@ -141,39 +141,47 @@ class HtmlView extends BaseHtmlView
 				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES', 'image'));
+                $toolbar = Toolbar::getInstance('toolbar');
 
-				ToolbarHelper::back();
+                //--- vack  -----------------------------------
 
-				ToolBarHelper::apply('imagesProperties.apply_imagesProperties');
+                ToolbarHelper::back();
 
-//				ToolbarHelper::assign();
+                // https://blog.astrid-guenther.de/joomla-aktionen-in-der-werkzeugleiste/
 
-				ToolBarHelper::save('imagesProperties.save_imagesProperties');
-//				ToolBarHelper::cancel('imagesProperties.cancel_imagesProperties');
-				ToolBarHelper::cancel('images.cancel', 'JTOOLBAR_CLOSE');
+				//--- apply, save and close ... -----------------------------------
 
-				ToolbarHelper::archiveList('images.trash');
-				ToolbarHelper::trash('images.trash');
-//				ToolBarHelper::deleteList('', 'ImagesProperties.delete_imagesProperties', 'JTOOLBAR_DELETE');
+                $user = "dummy: ToDo: remove later or real user ...";
+				$saveGroup = $toolbar->dropdownButton('save-group')
+                    ->text ('JTOOLBAR_CHANGE_STATUS')
+                    ->icon('fa fa-ellipsis-h')
+                    ->toggleSplit(false)
+                    ->buttonClass('btn btn-action')
+                    ->listCheck(true);
 
-//				ToolbarHelper::saveGroup (
-//					[
-//						['apply', 'imagesProperties.apply_imagesProperties'],
-//						['save', 'imagesProperties.save_imagesProperties'],
-//						['cancel', 'images.cancel'],
-//						['archiveList', 'images.trash'],
-//					],
-//					'btn-success'
-//				);
-//
+                $saveGroup->configure(
+                    function (Toolbar $childBar) use ($user) {
+                        $childBar->save('imagesProperties.save');
 
-				$toolbar = Toolbar::getInstance('toolbar');
+                        //if ($user->authorise('core.create', 'com_menus.menu'))
+                        // if ($user->authorise('core.admin'))
+                        {
 
-//				$formGroup = $bar->dropdownButton('form-group');
-//				$formGroup->getName();
-//				$formGroup->configure();
-//
-//				$bar->publish('contacts.publish')->listCheck(true);
+//                            $childBar->apply('imagesProperties.apply_imagesProperties');
+                            $childBar->apply('images.apply');
+//                            $childBar->save('imagesProperties.save_imagesProperties');
+                            $childBar->save('imagesProperties.save');
+//                            $childBar->archive('imagesProperties.archive_imagesProperties' );
+                            $childBar->archive('images.archive' );
+                            $childBar->trash('images.trash' );
+                            $childBar->delete('images.delete' )
+                                ->message('JGLOBAL_CONFIRM_DELETE');
+
+                        }
+                    }
+                );
+
+                //--- image rotate / flip -----------------------------------
 
 				$dropdownButton = $toolbar->dropdownButton('rotate-group')
 					->text('*Rotate')
@@ -181,58 +189,56 @@ class HtmlView extends BaseHtmlView
 					->toggleSplit(false)
 //					->icon('fa fa-sync')
 //					->icon('fas fa-image')
-					->icon('flip_images_vertical')
+					->icon('fa fa-sync')
 //					->icon('fas fa-sync fa-spin')
-					->buttonClass('btn btn-success btn-sm');
+                    ->listCheck(true)
+					->buttonClass('btn btn-action');
 
 				$dropdownButton->configure(
 						function (Toolbar $childBar)
 						{
 							// $childBar->standardButton('remove', 'Button 3');
-//							$childBar->customButton('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
-                            $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left');
+//							  $childBar->customButton('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
+//                            $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left');
+                            $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left')->icon('fa fa-undo');
 //							$childBar->customButton('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
-							$childBar->standardButton('redo', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right');
+//							$childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right');
+							$childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right')->icon('fa fa-redo');
 //							$childBar->customButton('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
-							$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180');
-							$childBar->divider();
+//							$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180');
+							$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180')->icon('fa fa-sync fa-rotate-180');
+							$childBar->divider('      ');
 //							$childBar->customButton('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
-							$childBar->standardButton('arrow-right-4', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal');
+//							$childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal');
+							$childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal')->icon('fa fa-arrows-alt-h');
 //							$childBar->customButton('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
-							$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical');
-//							$childBar->customButton('rotate_left_x', 'COM_RSGALLERY2_ROTATE_LEFT', 'imagesProperties.rotate_images_left');
-//							$childBar->customButton('rotate_right_x', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right');
-//							$childBar->customButton('rotate_180_x', 'COM_RSGALLERY2_ROTATE_180', 'imagesProperties.rotate_images_180');
-//							$childBar->divider();
-//							$childBar->customButton('flip_horizontal_x', 'COM_RSGALLERY2_FLIP_HORIZONTAL', 'imagesProperties.flip_images_horizontal');
-//							//$childBar->customButton('flip_vertical_x', 'COM_RSGALLERY2_FLIP_VERTICAL', 'imagesProperties.flip_images_vertical');
-//							$childBar->customButton('flip_vertical_x');
+//							$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical');
+							$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical')->icon('fa fa-arrows-alt-v');
 
 
-							//$childBar->divider('HEADER');
-							//$childBar->divider();
-							$childBar->standardButton('folder', 'COM_RSGALLERY2_ROTATE_RIGHT');
-
-							$childBar->divider();
-							$childBar->standardButton('trash', 'Button 5');
-							$childBar->standardButton('question', 'Button 6');
+                            $childBar->standardButton('anchor', 'text')->icon('fa fa-anchor');
+//                            $childBar->standardButton('anchor')->icon('anchor');
+//                            $childBar->standardButton('-empty fa-anchor');
+//                            $childBar->standardButton('anchor fa-anchor');
+//                            $childBar->standardButton('image fa fa-anchor');
+//                            $childBar->standardButton('image fa-rotate-90', 'test rotate');
 						}
 					);
 
 				//--- turn image -> flip / rotate -------------------------------
 
-				// ToolBarHelper;::spacer('50px');
-				ToolBarHelper::custom('', '', '', '   ', false);
+//				ToolBarHelper::spacer('50px');
+//				ToolBarHelper::custom('', '', '', '   ', false);
 //				ToolbarHelper::divider();
-				ToolbarHelper::spacer(50);
+//				ToolbarHelper::spacer('150px');
 
-
-
-				ToolBarHelper::custom('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
-				ToolBarHelper::custom('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
-				ToolBarHelper::custom('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
-				ToolBarHelper::custom('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
-				ToolBarHelper::custom('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
+//
+//
+//				ToolBarHelper::custom('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
+//				ToolBarHelper::custom('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
+//				ToolBarHelper::custom('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
+//				ToolBarHelper::custom('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
+//				ToolBarHelper::custom('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
 
 
 // ToDO: test drop down ...
@@ -269,7 +275,9 @@ class HtmlView extends BaseHtmlView
 //                    . Text::_('COM_BANNERS_TRACKS_EXPORT') . '</button>'
 //                );
 
+                //--- cancel  -----------------------------------
 
+                ToolBarHelper::cancel('images.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
 		}
