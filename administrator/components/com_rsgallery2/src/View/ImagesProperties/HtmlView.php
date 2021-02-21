@@ -180,7 +180,8 @@ class HtmlView extends BaseHtmlView
 //					->toggleSplit(true)
 					->toggleSplit(false)
 //					->icon('fa fa-sync')
-					->icon('fas fa-image fa-spin')
+//					->icon('fas fa-image')
+					->icon('flip_images_vertical')
 //					->icon('fas fa-sync fa-spin')
 					->buttonClass('btn btn-success btn-sm');
 
@@ -191,10 +192,14 @@ class HtmlView extends BaseHtmlView
 //							$childBar->customButton('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
                             $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left');
 //							$childBar->customButton('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
+							$childBar->standardButton('redo', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right');
 //							$childBar->customButton('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
-//							$childBar->divider();
+							$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180');
+							$childBar->divider();
 //							$childBar->customButton('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
+							$childBar->standardButton('arrow-right-4', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal');
 //							$childBar->customButton('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
+							$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical');
 //							$childBar->customButton('rotate_left_x', 'COM_RSGALLERY2_ROTATE_LEFT', 'imagesProperties.rotate_images_left');
 //							$childBar->customButton('rotate_right_x', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right');
 //							$childBar->customButton('rotate_180_x', 'COM_RSGALLERY2_ROTATE_180', 'imagesProperties.rotate_images_180');
