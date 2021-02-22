@@ -73,7 +73,8 @@ if ($saveOrder && !empty($this->items))
        method="post" name="adminForm" id="adminForm">
 	<div class="row">
 		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+			<!-- div id="j-sidebar-container" class="col-md-2" -->
+			<div id="sidebar-wrapper" class="">
 				<?php echo $this->sidebar; ?>
 			</div>
 		<?php endif; ?>

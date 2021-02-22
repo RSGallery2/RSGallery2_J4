@@ -334,7 +334,8 @@ class HtmlView extends BaseHtmlView
                             ->listCheck(true);
                     }
 
-                    // ToolBarHelper::editList('image.edit');
+	                ToolBarHelper::custom('imagesProperties.PropertiesView', 'next', 'next', 'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES', true);
+	                // ToolBarHelper::editList('image.edit');
                 }
 
 				break;

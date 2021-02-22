@@ -21,9 +21,9 @@ use Joomla\CMS\Language\Text;
 	<?php echo Text::_('JGLOBAL_BATCH_PROCESS'); ?>
 </button-->
 
-<button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('imagesProperties.PropertiesView');return false;">
+<!--button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('imagesProperties.PropertiesView');return false;">
 	<?php echo JText::_('COM_RSGALLERY2_ADD_IMAGE_PROPERTIES'); ?>
-</button>
+</button-->
 <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('images.moveImagesToGallery');return false;">
 	<?php echo JText::_('COM_RSGALLERY2_MOVE'); ?>
 </button>

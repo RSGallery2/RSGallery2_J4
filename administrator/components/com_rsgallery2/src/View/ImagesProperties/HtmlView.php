@@ -184,7 +184,7 @@ class HtmlView extends BaseHtmlView
                 //--- image rotate / flip -----------------------------------
 
 				$dropdownButton = $toolbar->dropdownButton('rotate-group')
-					->text('*Rotate')
+					->text('COM_RSGALLERY2_ROTATE')
 //					->toggleSplit(true)
 					->toggleSplit(false)
 //					->icon('fa fa-sync')

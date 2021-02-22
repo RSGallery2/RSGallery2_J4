@@ -72,22 +72,41 @@ class Rsgallery2Helper extends ContentHelper
 
         $link = 'index.php?option=com_rsgallery2&view=rsgallery2';
 		\JHtmlSidebar::addEntry(
-			'<span class="icon-home-2" ></span>&nbsp;' .
-            '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL') . '</span>',
+			'<span class="icon-home-2" ></span>&nbsp;'
+			. '<span class="sidebar-item-title">'
+//			. '<span class="">'
+			. Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL')
+			. '</span>',
 			$link,
 			$vName == 'control');
+//		\JHtmlSidebar::addEntry(
+////			'<span class="icon-home-2" ></span>&nbsp;'
+//			'<span class="icon-home-2" ></span>'
+////			. '<span class="sidebar-item-title">'
+////			. '<span class="">'
+//			. Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL')
+////			. '</span>',
+//		,
+//			$link,
+//			$vName == 'control');
 
 		$link = 'index.php?option=com_rsgallery2&view=galleries';
 		\JHtmlSidebar::addEntry(
-			'<span class="icon-images" ></span>&nbsp;' .
-            '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_GALLERIES') . '</span>',
+			'<span class="icon-images" ></span>&nbsp;'
+            . '<span class="sidebar-item-title">'
+//			. '<span class="">'
+			. Text::_('COM_RSGALLERY2_MENU_GALLERIES')
+			. '</span>',
 			$link,
 			$vName == 'galleries');
 
 		$link = 'index.php?option=com_rsgallery2&view=upload';
 		\JHtmlSidebar::addEntry(
-			'<span class="icon-upload" ></span>&nbsp;' .
-            '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_UPLOAD') . '</span>',
+			'<span class="icon-upload" ></span>&nbsp;'
+			. '<span class="sidebar-item-title">'
+//			. '<span class="">'
+			. Text::_('COM_RSGALLERY2_MENU_UPLOAD')
+			. '</span>',
 			$link,
 			$vName == 'upload');
 
@@ -95,8 +114,11 @@ class Rsgallery2Helper extends ContentHelper
 
 		$link = 'index.php?option=com_rsgallery2&view=images';
 		\JHtmlSidebar::addEntry(
-			'<span class="icon-image" ></span>&nbsp;' .
-            '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_IMAGES') . '</span>',
+			'<span class="icon-image" ></span>&nbsp;'
+			. '<span class="sidebar-item-title">'
+//			. '<span class="">'
+			. Text::_('COM_RSGALLERY2_MENU_IMAGES')
+			. '</span>',
 			// 'index.php?option=com_rsgallery2&rsgOption=images',
 			$link,
 			$vName == 'images' || $vName == 'images_raw');
@@ -107,8 +129,11 @@ class Rsgallery2Helper extends ContentHelper
         $link = 'index.php?option=com_rsgallery2&view=maintenance';
         // In config add maintenance
         \JHtmlSidebar::addEntry(
-            '<span class="icon-cogs" ></span>&nbsp;' .
-            '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_MAINTENANCE') . '</span>',
+            '<span class="icon-cogs" ></span>&nbsp;'
+            . '<span class="sidebar-item-title">'
+//	        . '<span class="">'
+            . Text::_('COM_RSGALLERY2_MENU_MAINTENANCE')
+            . '</span>',
             $link,
             $vName == 'maintenance');
 
@@ -123,8 +148,11 @@ class Rsgallery2Helper extends ContentHelper
             $link = 'index.php?option=com_rsgallery2&view=develop';
             // In config add maintenance
             \JHtmlSidebar::addEntry(
-                '<span class="icon-cube" ></span>&nbsp;' . // cube'
-                '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_DEVELOP') . '</span>',
+                '<span class="icon-cube" ></span>&nbsp;'
+                . '<span class="sidebar-item-title">'
+//	            . '<span class="">'
+	            . Text::_('COM_RSGALLERY2_MENU_DEVELOP')
+                . '</span>',
                 $link,
                 $vName == 'develop');
         }
@@ -134,8 +162,8 @@ class Rsgallery2Helper extends ContentHelper
 		$link = 'index.php?option=com_rsgallery2&view=config&task=config.edit';
 		// In maintenance add config
 		\JHtmlSidebar::addEntry(
-			'<span class="icon-equalizer" >  </span>' .
-			Text::_('COM_RSGALLERY2_MENU_CONFIG'),
+			'<span class="icon-equalizer" >  </span>'
+			. Text::_('COM_RSGALLERY2_MENU_CONFIG'),
 			$link,
 			false);
 		/**/
