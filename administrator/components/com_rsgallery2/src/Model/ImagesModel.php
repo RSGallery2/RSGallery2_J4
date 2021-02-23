@@ -762,21 +762,20 @@ class ImagesModel extends ListModel
 	 * @since 4.3.2
 	 * @throws Exception
 	 */
-	public function fileNamesFromIds($ImageIds)
+	public function ids2FileData($ImageIds)
 	{
 		$fileNames = [];
 
 		try
 		{
 			$db    = Factory::getDbo();
-			$query = $db->getQuery(true);
-
-			$query->select($db->quoteName('name'))
-				->from($db->quoteName('#__rsg2_images'))
+			$query = $db->getQuery(true)
+                ->select($db->quoteName(array('name', 'gallery_id')))
+                ->from($db->quoteName('#__rsg2_images'))
 				->where($db->quoteName('id') . ' IN ' . ' (' . implode(',', $ImageIds) . ')');
 			$db->setQuery($query);
 
-			$fileNames = $db->loadColumn(); // wrong $db->loadObjectList();
+			$fileNames = $db->loadObjectList(); // wrong $db->loadObjectList();
 		}
 
 		catch (RuntimeException $e)
@@ -792,6 +791,46 @@ class ImagesModel extends ListModel
 		return $fileNames;
 	}
 
+//	/**
+//	 * Fetches base file names identified by the list of given image ids
+//	 *
+//	 * @param $ImageIds array List of image ids from database
+//	 *
+//	 * @return string [] file names
+//	 *
+//	 * @since 4.3.2
+//	 * @throws Exception
+//	 */
+//	public function fileNamesFromIds($ImageIds)
+//	{
+//		$fileNames = [];
+//
+//		try
+//		{
+//			$db    = Factory::getDbo();
+//			$query = $db->getQuery(true);
+//
+//			$query->select($db->quoteName('name'))
+//				->from($db->quoteName('#__rsg2_images'))
+//				->where($db->quoteName('id') . ' IN ' . ' (' . implode(',', $ImageIds) . ')');
+//			$db->setQuery($query);
+//
+//			$fileNames = $db->loadColumn(); // wrong $db->loadObjectList();
+//		}
+//
+//		catch (RuntimeException $e)
+//		{
+//			$OutTxt = '';
+//			$OutTxt .= 'Error executing query: "' . $query . '" in fileNamesFromIds $ImageIds count:' . count ($ImageIds) . '<br>';
+//			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+//
+//			$app = Factory::getApplication();
+//			$app->enqueueMessage($OutTxt, 'error');
+//		}
+//
+//		return $fileNames;
+//	}
+//
 
 	/**
 	 * Fetches base file name identified by the given image id

@@ -1022,33 +1022,33 @@ class ImageFileModel extends BaseModel // AdminModel
 		return $isRotated;
 	}
 
-	/**
-	 * flip_images directs the master image and all dependent images to be flipped in given mode
-	 *
-	 * @param string [] $fileNames list of file names of images to be flipped
-	 * @param int $galleryId May be used in destination path
-	 * @param int $flipMode flip direction horiontal, vertical or both
-	 *
-	 * @return int Number of successful turned images
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function flip_images($fileNames, $galleryId, $flipMode)
-	{
-		$ImgCount = 0;
-
-		$msg = "model images: flip_images: " . '<br>';
-
-		foreach ($fileNames as $fileName)
-		{
-			$IsSaved = $this->flip_image($fileName, $galleryId, $flipMode);
-			if ($IsSaved){
-				$ImgCount++;
-			}
-		}
-
-		return $ImgCount;
-	}
+//	/**
+//	 * flip_images directs the master image and all dependent images to be flipped in given mode
+//	 *
+//	 * @param string [] $fileNames list of file names of images to be flipped
+//	 * @param int $galleryId May be used in destination path
+//	 * @param int $flipMode flip direction horiontal, vertical or both
+//	 *
+//	 * @return int Number of successful turned images
+//	 *
+//	 * @since __BUMP_VERSION__
+//	 */
+//	public function flip_images($fileNames, $galleryId, $flipMode)
+//	{
+//		$ImgCount = 0;
+//
+//		$msg = "model images: flip_images: " . '<br>';
+//
+//		foreach ($fileNames as $fileName)
+//		{
+//			$IsSaved = $this->flip_image($fileName, $galleryId, $flipMode);
+//			if ($IsSaved){
+//				$ImgCount++;
+//			}
+//		}
+//
+//		return $ImgCount;
+//	}
 
 	/**
 	 * flip_images directs the master image to be flipped in given mode
@@ -1067,27 +1067,32 @@ class ImageFileModel extends BaseModel // AdminModel
 		global $rsgConfig;
 		global $Rsg2DebugActive;
 
-		$isRotated = 0;
+		$isFlipped = 0;
 
 		try
 		{
 			//--- image source ------------------------------------------
 
-			$imgSrcPath = JPATH_ROOT . $rsgConfig->get('imgPath_original') . '/' . $fileName;
-			if (File::exists($imgSrcPath))
-			{
-				$memImage = new image ($imgSrcPath);
-			}
-			if (empty ($memImage))
-			{
-				$imgSrcPath = JPATH_ROOT . $rsgConfig->get('imgPath_display') . '/' . $fileName . '.jpg';
-				if (File::exists($imgSrcPath))
-				{
-					$memImage = new image ($imgSrcPath);
-				}
-			}
+            $imagePaths = new ImagePaths ($galleryId);
 
-			if ( ! empty ($memImage))
+            // $originalFileName
+            $imgSrcPath = PathHelper::join($imagePaths->originalBasePath, $fileName);
+
+            // fallback display file
+            if ( ! File::exists($imgSrcPath))
+            {
+                // displayBasePath
+                $imgSrcPath = PathHelper::join($imagePaths->displayBasePath, $fileName);
+            }
+
+            $memImage = null;
+
+            if (File::exists($imgSrcPath))
+            {
+                $memImage = new image ($imgSrcPath);
+            }
+
+            if ( ! empty ($memImage))
 			{
 				$type = IMAGETYPE_JPEG;
 
@@ -1097,7 +1102,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				$memImage->toFile($imgSrcPath, $type);
 				$memImage->destroy();
 
-				list($isRotated, $urlThumbFile, $msg) = $this->CreateRSG2Images($fileName, $galleryId);
+                $isFlipped = $this->CreateRSG2Images($imagePaths, $imgSrcPath, $fileName);
 			}
 		}
 		catch (\RuntimeException $e)
@@ -1110,7 +1115,7 @@ class ImageFileModel extends BaseModel // AdminModel
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
-		return $isRotated;
+		return $isFlipped;
 	}
 
 }

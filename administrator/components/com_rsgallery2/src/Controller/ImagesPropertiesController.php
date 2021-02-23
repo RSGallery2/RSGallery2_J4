@@ -332,7 +332,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function rotate_images_left()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$msg     = "rotate_left: " . '<br>';
 
@@ -348,7 +348,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function rotate_images_right()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$msg     = "rotate_right: " . '<br>';
 
@@ -364,7 +364,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function rotate_images_180()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		// Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$msg     = "rotate_180: " . '<br>';
 
@@ -410,15 +410,20 @@ class ImagesPropertiesController extends AdminController
 
 				// toDo: create imageDb model
 				$modelImages = $this->getModel('images');
-				$fileNames = $modelImages->fileNamesFromIds($sids);
 
-				$galleryId = $modelImages->galleryIdFromId($sids[0]);
+                // Needed filename and gallery id
+                //$fileNames = $modelImages->fileNamesFromIds($sids);
+				$imgFileDatas = $modelImages->ids2FileData($sids);
 
-				$modelFile = $this->getModel('imageFile');
-				// $ImgCount = $modelFile->rotate_images($fileNames, $galleryId, $direction);
+                $modelFile = $this->getModel('imageFile');
 
-				foreach ($fileNames as $fileName)
-				{
+                foreach ($imgFileDatas as $imgFileData)
+                {
+                    //$fileName = $imgFileData ['name'];
+                    //$galleryId =  $imgFileData ['gallery_id'];
+                    $fileName = $imgFileData->name;
+                    $galleryId =  $imgFileData->gallery_id;
+
 					$IsSaved = $modelFile->rotate_image($fileName, $galleryId, $direction);
 
 					if ($IsSaved){
@@ -441,7 +446,7 @@ class ImagesPropertiesController extends AdminController
 				}
 
 				// not all images were rotated
-				if ($ImgCount < count ($fileNames))
+				if ($ImgCount < count ($imgFileDatas))
 				{
 					$msgType = 'warning';
 				}
@@ -490,7 +495,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function flip_images_vertical()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$msg = "flip_images_vertical: " . '<br>';
 
@@ -506,7 +511,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function flip_images_both()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$msg = "flip_images_both: " . '<br>';
 
@@ -545,19 +550,45 @@ class ImagesPropertiesController extends AdminController
 
 				// toDo: create imageDb model
 				$modelImages = $this->getModel('images');
-				$fileNames = $modelImages->fileNamesFromIds($sids);
+                // Needed filename and gallery id
+                //$fileNames = $modelImages->fileNamesFromIds($sids);
+                $imgFileDatas = $modelImages->ids2FileData($sids);
 
-				$galleryId = $modelImages->galleryIdFromId($sids[0]);
+                $modelFile = $this->getModel('imageFile');
 
-				$modelFile = $this->getModel('imageFile');
-				$ImgCount = $modelFile->flip_images($fileNames, $galleryId, $flipMode);
+                foreach ($imgFileDatas as $imgFileData)
+                {
+                    //$fileName = $imgFileData ['name'];
+                    //$galleryId =  $imgFileData ['gallery_id'];
+                    $fileName = $imgFileData->name;
+                    $galleryId =  $imgFileData->gallery_id;
 
-				$msg = ' Successful flipped ' . $ImgCount . ' images';
-				// not all images were flipped
-				if ($ImgCount < count ($fileNames))
-				{
-					$msgType = 'warning';
-				}
+                    $IsSaved = $modelFile->flip_image($fileName, $galleryId, $flipMode);
+
+                    if ($IsSaved){
+                        $ImgCount++;
+                    } else {
+                        $ImgFailed++;
+                    }
+                }
+
+                // $msg '... successful assigned .... images ...
+                if ($ImgCount)
+                {
+                    $msg_ok = ' Successful flipped ' . $ImgCount . ' image properties';
+                    Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
+                }
+                if ($ImgFailed)
+                {
+                    $msg_bad = ' Failed on flipping of ' . $ImgFailed . ' image properties';
+                    Factory::getApplication()->enqueueMessage($msg_bad, 'error');
+                }
+
+                // not all images were rotated
+                if ($ImgCount < count ($imgFileDatas))
+                {
+                    $msgType = 'warning';
+                }
 			}
 		}
 		catch (RuntimeException $e)
