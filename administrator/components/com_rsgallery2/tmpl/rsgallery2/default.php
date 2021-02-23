@@ -22,7 +22,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/controlPanel.css', array('ve
 
     <form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
           method="post" name="adminForm" id="adminForm" class="form-validate">
-        <div class="row">
+        <div class="d-flex flex-row">
             <?php if (false) : // ToDo: Remove this quick hack. do not show sidebar
                 //if (!empty($this->sidebar)) :
                 ?>
@@ -30,13 +30,15 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/controlPanel.css', array('ve
                     <?php echo $this->sidebar; ?>
                 </div>
             <?php endif; ?>
-            <div class="<?php
-            // if (!empty($this->sidebar)) {
-            if (false) {
-                echo 'col-md-10';
-            } else {
-                echo 'col-md-12';
-            } ?>">
+<!--            <div class="--><?php
+//            // if (!empty($this->sidebar)) {
+//            if (false) {
+//                echo 'col-md-10';
+//            } else {
+//                echo 'col-md-12';
+//            } ?><!--">-->
+                <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+                <div class=" p2">
                 <div id="j-main-container" class="j-main-container">
 
                     <?php

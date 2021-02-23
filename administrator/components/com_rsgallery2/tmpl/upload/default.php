@@ -40,14 +40,15 @@ $maxSize = $this->UploadLimit;
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=upload'); ?>"
       method="post" name="adminForm" id="adminForm" enctype="multipart/form-data"
       class="form-validate form-horizontal">
-	<div class="row">
+	<div class="d-flex flex-row">
 		<?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
 				<?php echo $this->sidebar; ?>
 			</div>
 		<?php endif; ?>
 
-		<div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class=" p2">
 			<fieldset id="j-main-container" class="j-main-container">
                 <?php
                 echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_gallery_must_exist']);

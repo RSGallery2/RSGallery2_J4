@@ -661,13 +661,14 @@ function zoneInfo ($info='Unknown zone info')
     <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
           method="post" name="adminForm" id="adminForm" class="form-validate"
           enctype="multipart/form-data">
-        <div class="row">
+        <div class="d-flex flex-row">
             <?php if (!empty($this->sidebar)) : ?>
                 <div id="j-sidebar-container" class="">
                     <?php echo $this->sidebar; ?>
                 </div>
             <?php endif; ?>
-            <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
+            <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+            <div class=" p2">
                 <div id="j-main-container" class="j-main-container">
 
                     <div class="flex-main-row">

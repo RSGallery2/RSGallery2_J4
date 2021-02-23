@@ -17,65 +17,65 @@ HTMLHelper::_('bootstrap.framework');
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-    <div class="row">
+    <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
             <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
+            </div>
+            <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+            <div class=" p2">
+                <div id="j-sidebar-container" class="">
+                    <div id="j-toggle-sidebar-wrapper">
+                        <div id="sidebar" class="sidebar">
 
-                <div class="row">
-                    <div id="j-sidebar-container" class="">
-                        <div id="j-toggle-sidebar-wrapper">
-                            <div id="sidebar" class="sidebar">
+                            <button class="btn btn-sm btn-secondary my-2 options-menu" type="button"  data-toggle="collapse" data-target=".sub-sidebar-item"
+                                    aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle Menu">
+                                <span class="fas fa-toggle-on" aria-hidden="true"></span>
+                                <!--span class="sidebar-item-title">Toggle Menu</span-->
+                            </button>
 
-                                <button class="btn btn-sm btn-secondary my-2 options-menu" type="button"  data-toggle="collapse" data-target=".sub-sidebar-item"
-                                        aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle Menu">
-                                    <span class="fas fa-toggle-on" aria-hidden="true"></span>
-                                    <!--span class="sidebar-item-title">Toggle Menu</span-->
-                                </button>
+                            <nav class="main-nav-container sidebar-nav" aria-label="Main Menu" tabindex="-1" id="ui-skip-50">
+                                <ul id="sub-menu12" class="nav flex-column main-nav ">
+                                    <li class="item item-level-1">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=rsgallery2" aria-label="Home Dashboard">
+                                            <span class="icon-home-2" aria-hidden="true"/>
+                                            <span class="sidebar-item-title sub-sidebar-item">Control panel</span>
+                                        </a>
+                                    </li>
+                                    <li class="item item-level-1">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=galleries" aria-label="Help">
+                                            <span class="icon-images" aria-hidden="true"/>
+                                            <span class="sidebar-item-title sub-sidebar-item">Galleries</span>
+                                        </a>
+                                    </li>
+                                    <li class="item item-level-1">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=upload" aria-label="Help">
+                                            <span class="icon-upload" aria-hidden="true"/>
+                                            <span class="sidebar-item-title sub-sidebar-item">Upload</span>
+                                        </a>
+                                    </li>
+                                    <li class="item item-level-1">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=images" aria-label="Help">
+                                            <span class="icon-image" aria-hidden="true"/>
+                                            <span class="sidebar-item-title sub-sidebar-item">Images</span>
+                                        </a>
+                                    </li>
+                                    <li class="item item-level-1 active">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=maintenance" aria-label="Help">
+                                <span class="fas fa-wrench fa-fw" aria-hidden="true">
+                                    <span class="sidebar-item-title sub-sidebar-item">Maintenance</span>
+                                </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
 
-                                <nav class="main-nav-container sidebar-nav" aria-label="Main Menu" tabindex="-1" id="ui-skip-50">
-                                    <ul id="sub-menu12" class="nav flex-column main-nav ">
-                                        <li class="item item-level-1">
-                                            <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=rsgallery2" aria-label="Home Dashboard">
-                                                <span class="icon-home-2" aria-hidden="true"/>
-                                                <span class="sidebar-item-title sub-sidebar-item">Control panel</span>
-                                            </a>
-                                        </li>
-                                        <li class="item item-level-1">
-                                            <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=galleries" aria-label="Help">
-                                                <span class="icon-images" aria-hidden="true"/>
-                                                <span class="sidebar-item-title sub-sidebar-item">Galleries</span>
-                                            </a>
-                                        </li>
-                                        <li class="item item-level-1">
-                                            <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=upload" aria-label="Help">
-                                                <span class="icon-upload" aria-hidden="true"/>
-                                                <span class="sidebar-item-title sub-sidebar-item">Upload</span>
-                                            </a>
-                                        </li>
-                                        <li class="item item-level-1">
-                                            <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=images" aria-label="Help">
-                                                <span class="icon-image" aria-hidden="true"/>
-                                                <span class="sidebar-item-title sub-sidebar-item">Images</span>
-                                            </a>
-                                        </li>
-                                        <li class="item item-level-1 active">
-                                            <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=maintenance" aria-label="Help">
-                                    <span class="fas fa-wrench fa-fw" aria-hidden="true">
-                                        <span class="sidebar-item-title sub-sidebar-item">Maintenance</span>
-                                    </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-
-                            </div>
-                            <div id="j-toggle-sidebar"></div>
                         </div>
+                        <div id="j-toggle-sidebar"></div>
                     </div>
                 </div>
-
             </div>
+
         <?php endif; ?>
         <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
             <div id="j-main-container" class="j-main-container">
