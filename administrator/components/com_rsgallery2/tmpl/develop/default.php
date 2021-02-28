@@ -11,7 +11,10 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('bootstrap.framework');
+// HTMLHelper::_('bootstrap.framework');
+
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
 
 ?>
 
@@ -23,7 +26,7 @@ HTMLHelper::_('bootstrap.framework');
                 <?php echo $this->sidebar; ?>
             </div>
             <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-            <div class=" p2">
+            <div class="flex-fill">
                 <div id="j-sidebar-container" class="">
                     <div id="j-toggle-sidebar-wrapper">
                         <div id="sidebar" class="sidebar">

@@ -1,3 +1,23 @@
+.sidebar-nav {
+  overflow-y: hidden;
+}
+.sidebar-nav ul {
+  padding-left: 0rem;
+}
+.sidebar-nav li {
+  padding: 0;
+}
+.sidebar-nav li a {
+  padding: 0 0.12rem 0 0.12rem;
+}
+.sidebar-nav li a::before {
+  display: none;
+}
+
+#j-toggle-sidebar {
+  display: none;
+}
+
 /**/
 /**/
 [class^=icon-] {

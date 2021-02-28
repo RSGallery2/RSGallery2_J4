@@ -43,7 +43,7 @@ $extension = $this->escape($this->state->get('filter.extension'));
 				</div>
 			<?php endif; ?>
             <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-            <div class=" p2">
+            <div class="flex-fill">
 				<div id="j-main-container" class="j-main-container">
 
 					<legend><?php echo Text::_('COM_RSGALLERY2_PROPERTIES_UPLOADED_IMAGES'); ?></legend>

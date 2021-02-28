@@ -40,7 +40,7 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
             </div>
         <?php endif; ?>
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class=" p2">
+        <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'MoveJ3xImages')); ?>

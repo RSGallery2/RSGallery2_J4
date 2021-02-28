@@ -12,6 +12,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 
+
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
+
 // toDo: Checkout https://www.cssscript.com/clean-tree-diagram/
 
 HTMLHelper::_('bootstrap.framework');
@@ -130,7 +134,7 @@ EOT;
 			</div>
 		<?php endif; ?>
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class=" p2">
+        <div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferJ3xGalleries')); ?>

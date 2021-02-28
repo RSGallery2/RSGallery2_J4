@@ -12,7 +12,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('bootstrap.framework');
+// HTMLHelper::_('bootstrap.framework');
+
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('script', 'com_rsgallery2/backend/images.js', ['version' => 'auto', 'relative' => true]);
 
 ?>
 
@@ -26,7 +29,7 @@ HTMLHelper::_('bootstrap.framework');
 		<?php endif; ?>
 
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class=" p2">
+        <div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ConfigRawView')); ?>

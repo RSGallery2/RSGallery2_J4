@@ -48,7 +48,7 @@ $maxSize = $this->UploadLimit;
 		<?php endif; ?>
 
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="  p20 m20">
+        <div class="flex-fill">
 			<fieldset id="j-main-container" class="j-main-container">
                 <?php
                 echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_gallery_must_exist']);

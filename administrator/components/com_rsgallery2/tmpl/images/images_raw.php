@@ -14,6 +14,9 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.multiselect');
 
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
+
 $listOrder = '';
 $ListDirn  = '';
 
@@ -30,7 +33,7 @@ $ListDirn  = '';
     </div>
 
     <div class="d-flex flex-row">
-        <div class=" p2">
+        <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
                 <div>
                     <?php if (empty($this->items)) : ?>

@@ -24,7 +24,7 @@ HTMLHelper::_('bootstrap.framework');
 			</div>
 		<?php endif; ?>
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class=" p2">
+        <div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
 				<?php
