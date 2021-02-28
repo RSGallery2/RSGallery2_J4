@@ -68,19 +68,31 @@ if ($saveOrder && !empty($this->items))
 	$saveOrderingUrl = 'index.php?option=com_rsgallery2&task=images.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
 	HTMLHelper::_('draggablelist.draggable');
 }
+
+/**
+<div class="d-flex flex-row h-100">
+    <div class="d-flex justify-content-start">side menu</div>
+    <div class="d-flex flex-row w-100">
+        <div class="w-25">1 piece</div>
+        <div class="w-50">2 pieces piece</div>
+        <div class="w-25">1 piece</div>
+    </div>
+</div>
+/**/
 ?>
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
        method="post" name="adminForm" id="adminForm">
-	<div class="d-flex flex-row">
+	<div class="d-flex flex-row h-100">
 		<?php if (!empty($this->sidebar)) : ?>
             <!--div id="j-sidebar-container" class="col-md-2"-->
-            <div id="j-sidebar-container" class=" p-2">
+            <div id="j-sidebar-container" class="d-flex justify-content-start p-2">
 				<?php echo $this->sidebar; ?>
 			</div>
 		<?php endif; ?>
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class=" p2">
-			<div id="j-main-container" class="j-main-container">
+        <div class="d-flex flex-row w-100 p2">
+<!--			<div id="j-main-container" class="j-main-container">-->
+			<div >
 				<?php
 				// Search tools bar
 				echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
