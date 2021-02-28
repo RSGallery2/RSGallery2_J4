@@ -64,12 +64,11 @@ class HtmlView extends BaseHtmlView
         //--- config --------------------------------------------------------------------
 
         if (empty ($rsgConfig)) {
-                $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         }
         //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
         $this->isDevelop = $rsgConfig->get('isDevelop');
-
 
         $this->items = $this->get('Items');
 

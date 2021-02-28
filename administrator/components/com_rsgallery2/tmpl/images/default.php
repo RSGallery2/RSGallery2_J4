@@ -20,6 +20,11 @@ use Joomla\String\Inflector;
 
 HTMLHelper::_('behavior.multiselect');
 
+HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('script', 'com_rsgallery2/backend/images.js', ['version' => 'auto', 'relative' => true]);
+
+
+
 $user      = Factory::getApplication()->getIdentity();
 $userId    = $user->get('id');
 $extension = $this->escape($this->state->get('filter.extension'));
@@ -69,29 +74,16 @@ if ($saveOrder && !empty($this->items))
 	HTMLHelper::_('draggablelist.draggable');
 }
 
-/**
-<div class="d-flex flex-row h-100">
-    <div class="d-flex justify-content-start">side menu</div>
-    <div class="d-flex flex-row w-100">
-        <div class="w-25">1 piece</div>
-        <div class="w-50">2 pieces piece</div>
-        <div class="w-25">1 piece</div>
-    </div>
-</div>
-/**/
 ?>
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
        method="post" name="adminForm" id="adminForm">
-	<div class="d-flex flex-row h-100">
+	<div class="d-flex flex-row w-100">
 		<?php if (!empty($this->sidebar)) : ?>
-            <!--div id="j-sidebar-container" class="col-md-2"-->
-            <div id="j-sidebar-container" class="d-flex justify-content-start p-2">
+            <div id="j-sidebar-container" class=" p-2">
 				<?php echo $this->sidebar; ?>
 			</div>
 		<?php endif; ?>
-        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="d-flex flex-row w-100 p2">
-<!--			<div id="j-main-container" class="j-main-container">-->
+			<div class="flex-fill">
 			<div >
 				<?php
 				// Search tools bar
@@ -112,6 +104,7 @@ if ($saveOrder && !empty($this->items))
                                 <td style="width:1%" class="text-center">
 									<?php echo HTMLHelper::_('grid.checkall'); ?>
                                 </td>
+
 								<th scope="col" style="width:1%" class="text-center d-none d-md-table-cell">
 									<?php echo HTMLHelper::_('searchtools.sort', '', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2'); ?>
 								</th>
@@ -124,6 +117,10 @@ if ($saveOrder && !empty($this->items))
 
                                 <th scope="col" style="width:1%" class="text-center">
 									<?php echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
+                                </th>
+
+                                <th scope="thumb" style="min-width:100px">
+									<?php echo Text::_('COM_RSGALLERY2_IMAGE'); ?>
                                 </th>
 
                                 <th scope="col" style="min-width:100px">
@@ -248,6 +245,12 @@ if ($saveOrder && !empty($this->items))
                                 if (empty($modified_by->name)) {
                                     $modified_by = $created_by;
                                 }
+
+                                // toDo: Move to "htmlview-> create list in model
+                                // galleryJ4x path is depending on gallery id
+                                $this->ImagePath->setPathsURIs_byGalleryId($item->gallery_id);
+                                $src = $this->ImagePath->getDisplayUrl ($item->name);
+
                                 ?>
 
 								<tr class="row<?php echo $i % 2; ?>" >
@@ -281,7 +284,14 @@ if ($saveOrder && !empty($this->items))
 											<?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'images.', $canChange); ?>
 										</div>
 									</td>
-									<th scope="row">
+
+                                    <td class="thumb" style="min-width:100px">
+                                        <div class='imgContainer'>
+                                            <img src="<?php echo $src; ?>" class="img-rounded modalActive" alt="<?php echo $this->escape($item->name);?>">
+                                        </div>
+                                    </td>
+
+                                    <th scope="row">
 										<?php if ($item->checked_out) : ?>
 											<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'images.', $canCheckin); ?>
 										<?php endif; ?>

@@ -4,18 +4,14 @@ ul.imagesPropArea {
   flex-wrap: wrap;
 }
 
-.imagesPropArea li {
-  list-style-type: none;
-}
-
-.imagePropItem {
+.imagesPropArea {
   max-width: 250px;
   /**/
   background-color: white;
   margin: 10px;
 }
 
-.imagesPropArea li .imgProperty {
+.imagesPropArea li .thumbnail {
   display: block;
   padding: 4px;
   line-height: 18px;
@@ -23,7 +19,7 @@ ul.imagesPropArea {
   transition: all 0.2s ease-in-out;
 }
 
-.imgProperty img {
+.thumbnail img {
   /*    max-width: 90%; /**/
   /*    border-radius: 5px; /**/
   /* object-fit: contain; /**/
@@ -164,4 +160,4 @@ ul.imagesPropArea {
   }
 }
 
-/*# sourceMappingURL=imagesProperties.css.map */
+/*# sourceMappingURL=imagesProperties.bad.css.map */

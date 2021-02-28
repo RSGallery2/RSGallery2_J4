@@ -63,7 +63,7 @@ $extension = $this->escape($this->state->get('filter.extension'));
                         </span>
                         <br><br>
 
-                        <ul class="thumbnails">
+                        <ul class="imagesPropArea">
 							<?php
 							$Idx = 0;
 
@@ -71,15 +71,14 @@ $extension = $this->escape($this->state->get('filter.extension'));
 							{
 							    //-- path to display image ------------------------------------
 
-                                //$src   = $this->HtmlPathDisplay . $this->escape($item->name) . '.jpg';
-
+                                // toDo: Move to "htmlview-> create list in model
                                 // galleryJ4x path is depending on gallery id
                                 $this->ImagePath->setPathsURIs_byGalleryId($item->gallery_id);
                                 $src = $this->ImagePath->getDisplayUrl ($item->name);
 
 								?>
-								<li class="imageAreaItem" >
-									<div class="thumbnail imgProperty">
+								<li class="imagePropItem" >
+									<div class=" imgProperty">
 										<div class='imgContainer'>
 											<img src="<?php echo $src; ?>" class="img-rounded modalActive" alt="<?php echo $this->escape($item->name);?>">
 										</div>

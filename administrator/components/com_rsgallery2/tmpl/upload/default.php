@@ -42,13 +42,13 @@ $maxSize = $this->UploadLimit;
       class="form-validate form-horizontal">
 	<div class="d-flex flex-row">
 		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class=" p20 m20">
 				<?php echo $this->sidebar; ?>
 			</div>
 		<?php endif; ?>
 
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class=" p2">
+        <div class="  p20 m20">
 			<fieldset id="j-main-container" class="j-main-container">
                 <?php
                 echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_gallery_must_exist']);

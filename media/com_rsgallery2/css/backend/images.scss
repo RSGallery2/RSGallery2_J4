@@ -1,0 +1,54 @@
+// @import "Rsg2";
+
+// ToDo: import rg2_sidebar.scss
+// toDo: make general backen d scss for images middle
+
+
+@import "Rsg2_sidebar";
+
+
+$base-img-width: 200px;
+$img-width: $base-img-width;
+$img-height: $base-img-width;
+
+.imgContainer {
+
+  // border: 5px dotted lightblue; /**/
+
+  position: relative;
+
+//  min-height: 250px; /**/
+  height:$img-width;
+  width: $img-height;
+  margin: 10px 10px 10px 0;
+
+}
+
+.img-rounded {
+
+  //  border: 5px dotted darkcyan; /**/
+
+  display: block;
+  //
+  border-radius: 6px;
+
+  //  width: auto \9;
+
+  max-width: 100%;
+  //  height: auto;
+  max-height: $img-height; /**/
+  margin: auto;
+
+  //  margin-left: auto;
+  //  margin-right: auto;
+
+  vertical-align: middle;
+  text-align:center;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+}
+

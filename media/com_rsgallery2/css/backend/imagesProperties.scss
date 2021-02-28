@@ -1,6 +1,6 @@
-@import "Rsg2";
+// @import "Rsg2";
 
-ul.thumbnails {
+ul.imagesPropArea {
 
   display: flex;
   flex-direction: row;
@@ -9,11 +9,11 @@ ul.thumbnails {
 }
 
 
-.thumbnails li {
+.imagesPropArea li {
   list-style-type: none;
 }
 
-.imageAreaItem {
+.imagePropItem {
 //  border: 5px dotted darkgreen; /**/
   max-width: 250px; /**/
   background-color: white;
@@ -27,7 +27,7 @@ ul.thumbnails {
 }
 
 
-.thumbnails li .thumbnail {
+.imagesPropArea li .imgProperty {
   display: block;
   padding: 4px;
   line-height: 18px;
@@ -38,7 +38,7 @@ ul.thumbnails {
 }
 
 
-.thumbnail img {
+.imgProperty img {
   //  margin-top: 2.5%; /**/
   /*    max-width: 90%; /**/
   /*    border-radius: 5px; /**/

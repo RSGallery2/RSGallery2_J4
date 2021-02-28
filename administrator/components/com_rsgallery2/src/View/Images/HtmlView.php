@@ -26,6 +26,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 /**
  * View class for a list of rsgallery2.
@@ -150,14 +151,17 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		//--- thumb --------------------------------------------------------------------
+        // paths to image (galleryid
+        $this->ImagePath = new ImagePaths ();
 
-		// ToDo: HtmlPathThumb path must be taken from model (? file model ?)
-		$this->HtmlPathThumb = URI::base() . $rsgConfig->get('???imgPath_thumb') . '/';
-		////echo 'ThumbPath: ' . JPATH_THUMB . '<br>';
-		////echo 'ImagePathThumb: ' . $rsgConfig->imgPath_thumb . '<br>';
-		////echo 'ImagePathThumb: ' . JURI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
-		//echo $this->HtmlPathThumb . '<br>';
+//		//--- thumb --------------------------------------------------------------------
+//
+//		// ToDo: HtmlPathThumb path must be taken from model (? file model ?)
+//		$this->HtmlPathThumb = URI::base() . $rsgConfig->get('???imgPath_thumb') . '/';
+//		////echo 'ThumbPath: ' . JPATH_THUMB . '<br>';
+//		////echo 'ImagePathThumb: ' . $rsgConfig->imgPath_thumb . '<br>';
+//		////echo 'ImagePathThumb: ' . JURI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
+//		//echo $this->HtmlPathThumb . '<br>';
 
 		//--- sidebar --------------------------------------------------------------------
 

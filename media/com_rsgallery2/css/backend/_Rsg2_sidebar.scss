@@ -1,0 +1,46 @@
+// _Rsg2_sidebar.scss
+
+//.sidebar-nav li {
+//
+////  background: #00c4ff;
+//  list-style-type: none;
+//
+//}
+//
+//
+//.sidebar-nav ul {
+//
+////  background: #00c4ff;
+//  list-style-type: none;
+//
+//}
+
+
+.sidebar-nav li {
+
+  //padding: 0.35rem 0rem 0.35rem 0rem;
+
+  padding: 0;
+
+  a {
+
+    padding: 0;
+
+  }
+  a::before {
+
+    //  background: #00c4ff;
+    //  list-style-type: none;
+    display: none;
+
+  }
+
+}
+
+
+#j-toggle-sidebar {
+
+  display: none;
+
+
+}
