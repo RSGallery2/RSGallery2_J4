@@ -40,7 +40,7 @@
 				default="0"
 				label="COM_RSGALLERY2_ADVANCED_SEF"
 				description="COM_RSGALLERY2_ADVANCED_SEF_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -133,7 +133,7 @@
 				type="text"
 				default="jpg,jpeg,gif,png"
 				label="COM_RSGALLERY2_ALLOWED_FILETYPES"
-				description  = "COM_RSGALLERY2_ALLOWED_FILETYPES_DESC"
+				description="COM_RSGALLERY2_ALLOWED_FILETYPES_DESC"
 				readonly="true"
 				class="readonly"
 		>
@@ -144,7 +144,7 @@
 				default="1"
 				label="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE"
 				description=""
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -218,7 +218,7 @@
 				default="0"
 				label="COM_RSGALLERY2_USE_J3X_PATHS"
 				description="COM_RSGALLERY2_USE_J3X_PATHS_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -570,7 +570,7 @@
 				default="0"
 				label="COM_RSGALLERY2_DEBUG_BACKEND"
 				description="COM_RSGALLERY2_DEBUG_BACKEND_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -581,7 +581,7 @@
 				default="0"
 				label="COM_RSGALLERY2_DEBUG_SITE"
 				description="COM_RSGALLERY2_DEBUG_SITE_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -592,7 +592,9 @@
 				default="0"
 				label="COM_RSGALLERY2_DEVELOP"
 				description="COM_RSGALLERY2_DEVELOP_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
+				
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
