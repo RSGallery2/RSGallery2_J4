@@ -142,7 +142,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES', 'image'));
                 $toolbar = Toolbar::getInstance('toolbar');
 
-                //--- vack  -----------------------------------
+                //--- back  -----------------------------------
 
                 ToolbarHelper::back();
 
@@ -150,7 +150,7 @@ class HtmlView extends BaseHtmlView
 
 				//--- apply, save and close ... -----------------------------------
 
-                $user = "dummy: ToDo: remove later or real user ...";
+                $user = Factory::getApplication()->getIdentity();
 				$saveGroup = $toolbar->dropdownButton('save-group')
                     ->text ('JTOOLBAR_CHANGE_STATUS')
                     ->icon('fa fa-ellipsis-h')
@@ -215,7 +215,7 @@ class HtmlView extends BaseHtmlView
 							$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical')->icon('fa fa-arrows-alt-v');
 
 
-                            $childBar->standardButton('anchor', 'text')->icon('fa fa-anchor');
+//                            $childBar->standardButton('anchor', 'text')->icon('fa fa-anchor');
 //                            $childBar->standardButton('anchor')->icon('anchor');
 //                            $childBar->standardButton('-empty fa-anchor');
 //                            $childBar->standardButton('anchor fa-anchor');
