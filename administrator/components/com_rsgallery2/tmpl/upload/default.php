@@ -288,7 +288,7 @@ function LimitsAndMaxInfo ($UploadLimit, $PostMaxSize, $MemoryLimit)
         . Text::sprintf('COM_RSGALLERY2_POST_MEMORY_LIMIT_IS', $MemoryLimit)
         . Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI')
     ;
-	/**/
+	/**
 	echo '<div title="' . $uploadMaxsTitle . '" >ToDo: Make /Maximum/ Element with title in hover</div>';
 	/**/
 }

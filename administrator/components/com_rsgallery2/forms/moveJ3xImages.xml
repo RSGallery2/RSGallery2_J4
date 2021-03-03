@@ -39,9 +39,12 @@
 				default="0"
 				label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
 				description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
-				layout="joomla.form.field.radio.switcher">
-			<option value="1">JYES</option>
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field-->
 		<field 
 				id="all_img_in_step1_01"
@@ -70,9 +73,12 @@
 				default="0"
 				label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
 				description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
-				class="btn-group btn-group-yesno span5">
-			<option value="1">JYES</option>
+				class="btn-group btn-group-yesno span5"
+				filter="integer"
+				validate="options"
+		>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field-->
 		<field 
 				id="all_img_in_step1_02"

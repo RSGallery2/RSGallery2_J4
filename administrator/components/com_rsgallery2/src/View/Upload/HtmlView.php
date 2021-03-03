@@ -225,7 +225,7 @@ class HtmlView extends BaseHtmlView
 				. '* touch ?<br>'
 				. '* use makeSafeUrlNameRSG2 see b_Release_4_5_1\admin\models\image.php<br>'
 				. '* GallerySelectField: a) Trashed deleted ?  b) ? published  <br>'
-//				. '* <br>'
+				. '* Make /Maximum/ Element with title in hover<br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
