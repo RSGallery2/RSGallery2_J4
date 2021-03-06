@@ -630,7 +630,7 @@ class ImagesPropertiesController extends AdminController
 			$idx = 0;
 			foreach ($cids as $Idx => $cid)
 			{
-				$ImagesProperty = new stdClass();
+				$ImagesProperty = new \stdClass();
 
 				$ImagesProperty->cid = $cids [$Idx];
 				// ToDo: Check for not HTML input

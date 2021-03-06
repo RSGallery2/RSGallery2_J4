@@ -160,20 +160,22 @@ class HtmlView extends BaseHtmlView
 
                 $saveGroup->configure(
                     function (Toolbar $childBar) use ($user) {
-                        $childBar->save('imagesProperties.save');
 
                         //if ($user->authorise('core.create', 'com_menus.menu'))
                         // if ($user->authorise('core.admin'))
                         {
+                            $childBar->save('imagesProperties.save_imagesProperties');
+//                            $childBar->save('imagesProperties.save');
 
-//                            $childBar->apply('imagesProperties.apply_imagesProperties');
-                            $childBar->apply('images.apply');
-//                            $childBar->save('imagesProperties.save_imagesProperties');
-                            $childBar->save('imagesProperties.save');
-//                            $childBar->archive('imagesProperties.archive_imagesProperties' );
-                            $childBar->archive('images.archive' );
-                            $childBar->trash('images.trash' );
-                            $childBar->delete('images.delete' )
+                            $childBar->apply('imagesProperties.apply_imagesProperties');
+//                            $childBar->apply('images.apply');
+
+                            $childBar->archive('imagesProperties.archive_imagesProperties' );
+//                            $childBar->archive('images.archive' );
+
+                            $childBar->trash('images.trash_imagesProperties' );
+
+                            $childBar->delete('images.delete_imagesProperties' )
                                 ->message('JGLOBAL_CONFIRM_DELETE');
 
                         }

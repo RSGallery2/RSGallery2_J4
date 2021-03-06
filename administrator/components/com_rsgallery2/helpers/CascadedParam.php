@@ -41,7 +41,7 @@ class CascadedParam
 	 */
 	public static function lastSet (...$paramValues) {
 
-		$paramValue = new stdClass();
+		$paramValue = new \stdClass();
 
 		try
 		{

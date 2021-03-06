@@ -182,7 +182,9 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::apply('gallery.apply');
 				ToolBarHelper::save('gallery.save');
 				ToolBarHelper::save2new('gallery.save2new');
-				if (empty($this->item->id))
+                ToolBarHelper::save2copy('gallery.save2copy');
+
+                if (empty($this->item->id))
 				{
 					ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
 				}

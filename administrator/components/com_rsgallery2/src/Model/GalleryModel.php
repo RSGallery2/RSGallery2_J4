@@ -26,6 +26,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\UCM\UCMType;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
@@ -624,28 +625,59 @@ class GalleryModel extends AdminModel
 			$data['published'] = 0;
 		}
 
-		// Bind the data.
-		if (!$table->bind($data))
-		{
-			$this->setError($table->getError());
+        // Automatic handling of alias for empty fields
+        if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
+        {
+            if ($data['alias'] == null)
+            {
+                if (Factory::getApplication()->get('unicodeslugs') == 1)
+                {
+                    $data['alias'] = \JFilterOutput::stringURLUnicodeSlug($data['title']);
+                }
+                else
+                {
+                    $data['alias'] = \JFilterOutput::stringURLSafe($data['title']);
+                }
 
-			return false;
-		}
+                $table = Table::getInstance('Content', 'JTable');
 
-		// Bind the rules.
-		if (isset($data['rules']))
-		{
-			$rules = new Rules($data['rules']);
-			$table->setRules($rules);
-		}
+                if ($table->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
+                {
+                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
+                }
 
-		// Check the data.
-		if (!$table->check())
-		{
-			$this->setError($table->getError());
+                list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
+                $data['alias'] = $alias;
 
-			return false;
-		}
+                if (isset($msg))
+                {
+                    Factory::getApplication()->enqueueMessage($msg, 'warning');
+                }
+            }
+        }
+
+//        // Bind the data.
+//		if (!$table->bind($data))
+//		{
+//			$this->setError($table->getError());
+//
+//			return false;
+//		}
+//
+//		// Bind the rules.
+//		if (isset($data['rules']))
+//		{
+//			$rules = new Rules($data['rules']);
+//			$table->setRules($rules);
+//		}
+//
+//		// Check the data.
+//		if (!$table->check())
+//		{
+//			$this->setError($table->getError());
+//
+//			return false;
+//		}
 
 		// Trigger the before save event.
 //		$result = Factory::getApplication()->triggerEvent($this->event_before_save, array($context, &$table, $isNew, $data));
@@ -658,138 +690,143 @@ class GalleryModel extends AdminModel
 //		}
 
 		// Store the data.
-		if (!$table->store())
-		{
+//		if (!$table->store())
+//		{
+//
+//			$this->setError($table->getError());
+//
+//			return false;
+//		}
 
-			$this->setError($table->getError());
+        if (parent::save($data)) {
 
-			return false;
-		}
+            /**
+             * $assoc = $this->getAssoc();
+             *
+             * if ($assoc)
+             * {
+             * // Adding self to the association
+             * $associations = $data['associations'] ?? array();
+             *
+             * // Unset any invalid associations
+             * $associations = ArrayHelper::toInteger($associations);
+             *
+             * foreach ($associations as $tag => $id)
+             * {
+             * if (!$id)
+             * {
+             * unset($associations[$tag]);
+             * }
+             * }
+             *
+             * // Detecting all item menus
+             * $allLanguage = $table->language == '*';
+             *
+             * if ($allLanguage && !empty($associations))
+             * {
+             * Factory::getApplication()->enqueueMessage(Text::_('COM_RSGALLERY2_ERROR_ALL_LANGUAGE_ASSOCIATED'), 'notice');
+             * }
+             *
+             * // Get associationskey for edited item
+             * $db    = $this->getDbo();
+             * $query = $db->getQuery(true)
+             * ->select($db->quoteName('key'))
+             * ->from($db->quoteName('#__associations'))
+             * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
+             * ->where($db->quoteName('id') . ' = ' . (int) $table->id);
+             * $db->setQuery($query);
+             * $oldKey = $db->loadResult();
+             *
+             * // Deleting old associations for the associated items
+             * $query = $db->getQuery(true)
+             * ->delete($db->quoteName('#__associations'))
+             * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
+             *
+             * if ($associations)
+             * {
+             * $query->where('(' . $db->quoteName('id') . ' IN (' . implode(',', $associations) . ') OR '
+             * . $db->quoteName('key') . ' = ' . $db->quote($oldKey) . ')');
+             * }
+             * else
+             * {
+             * $query->where($db->quoteName('key') . ' = ' . $db->quote($oldKey));
+             * }
+             *
+             * $db->setQuery($query);
+             *
+             * try
+             * {
+             * $db->execute();
+             * }
+             * catch (\RuntimeException $e)
+             * {
+             * $this->setError($e->getMessage());
+             *
+             * return false;
+             * }
+             *
+             * // Adding self to the association
+             * if (!$allLanguage)
+             * {
+             * $associations[$table->language] = (int) $table->id;
+             * }
+             *
+             * if (count($associations) > 1)
+             * {
+             * // Adding new association for these items
+             * $key = md5(json_encode($associations));
+             * $query->clear()
+             * ->insert('#__associations');
+             *
+             * foreach ($associations as $id)
+             * {
+             * $query->values(((int) $id) . ',' . $db->quote($this->associationsContext) . ',' . $db->quote($key));
+             * }
+             *
+             * $db->setQuery($query);
+             *
+             * try
+             * {
+             * $db->execute();
+             * }
+             * catch (\RuntimeException $e)
+             * {
+             * $this->setError($e->getMessage());
+             *
+             * return false;
+             * }
+             * }
+             * }
+             * /**/
 
-		/**
-		$assoc = $this->getAssoc();
+//            // Trigger the after save event.
+//            Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
+//
+//            // Rebuild the path for the category:
+//            if (!$table->rebuildPath($table->id)) {
+//                $this->setError($table->getError());
+//
+//                return false;
+//            }
+//
+//            // Rebuild the paths of the category's children:
+//            if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path)) {
+//                $this->setError($table->getError());
+//
+//                return false;
+//            }
+//
+//            $this->setState($this->getName() . '.id', $table->id);
+//
+//            // Clear the cache
+//            $this->cleanCache();
 
-		if ($assoc)
-		{
-			// Adding self to the association
-			$associations = $data['associations'] ?? array();
+            return true;
+        }
+        else {
+            return false;
+        }
 
-			// Unset any invalid associations
-			$associations = ArrayHelper::toInteger($associations);
-
-			foreach ($associations as $tag => $id)
-			{
-				if (!$id)
-				{
-					unset($associations[$tag]);
-				}
-			}
-
-			// Detecting all item menus
-			$allLanguage = $table->language == '*';
-
-			if ($allLanguage && !empty($associations))
-			{
-				Factory::getApplication()->enqueueMessage(Text::_('COM_RSGALLERY2_ERROR_ALL_LANGUAGE_ASSOCIATED'), 'notice');
-			}
-
-			// Get associationskey for edited item
-			$db    = $this->getDbo();
-			$query = $db->getQuery(true)
-				->select($db->quoteName('key'))
-				->from($db->quoteName('#__associations'))
-				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
-				->where($db->quoteName('id') . ' = ' . (int) $table->id);
-			$db->setQuery($query);
-			$oldKey = $db->loadResult();
-
-			// Deleting old associations for the associated items
-			$query = $db->getQuery(true)
-				->delete($db->quoteName('#__associations'))
-				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
-
-			if ($associations)
-			{
-				$query->where('(' . $db->quoteName('id') . ' IN (' . implode(',', $associations) . ') OR '
-					. $db->quoteName('key') . ' = ' . $db->quote($oldKey) . ')');
-			}
-			else
-			{
-				$query->where($db->quoteName('key') . ' = ' . $db->quote($oldKey));
-			}
-
-			$db->setQuery($query);
-
-			try
-			{
-				$db->execute();
-			}
-			catch (\RuntimeException $e)
-			{
-				$this->setError($e->getMessage());
-
-				return false;
-			}
-
-			// Adding self to the association
-			if (!$allLanguage)
-			{
-				$associations[$table->language] = (int) $table->id;
-			}
-
-			if (count($associations) > 1)
-			{
-				// Adding new association for these items
-				$key = md5(json_encode($associations));
-				$query->clear()
-					->insert('#__associations');
-
-				foreach ($associations as $id)
-				{
-					$query->values(((int) $id) . ',' . $db->quote($this->associationsContext) . ',' . $db->quote($key));
-				}
-
-				$db->setQuery($query);
-
-				try
-				{
-					$db->execute();
-				}
-				catch (\RuntimeException $e)
-				{
-					$this->setError($e->getMessage());
-
-					return false;
-				}
-			}
-		}
-		/**/
-
-		// Trigger the after save event.
-		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
-
-		// Rebuild the path for the category:
-		if (!$table->rebuildPath($table->id))
-		{
-			$this->setError($table->getError());
-
-			return false;
-		}
-
-		// Rebuild the paths of the category's children:
-		if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path))
-		{
-			$this->setError($table->getError());
-
-			return false;
-		}
-
-		$this->setState($this->getName() . '.id', $table->id);
-
-		// Clear the cache
-		$this->cleanCache();
-
-		return true;
 	}
 
 	// expected name/alias  is unique
