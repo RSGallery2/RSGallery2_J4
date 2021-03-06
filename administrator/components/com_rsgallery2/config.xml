@@ -40,9 +40,12 @@
 				default="0"
 				label="COM_RSGALLERY2_ADVANCED_SEF"
 				description="COM_RSGALLERY2_ADVANCED_SEF_DESC"
-				layout="joomla.form.field.radio.switcher">
-			<option value="1">JYES</option>
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 
 		<field
@@ -144,9 +147,12 @@
 				default="1"
 				label="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE"
 				description=""
-				layout="joomla.form.field.radio.switcher">
-			<option value="1">JYES</option>
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 
 		<!-- ... block general section ... -->
@@ -218,9 +224,12 @@
 				default="0"
 				label="COM_RSGALLERY2_USE_J3X_PATHS"
 				description="COM_RSGALLERY2_USE_J3X_PATHS_DESC"
-				layout="joomla.form.field.radio.switcher">
-			<option value="1">JYES</option>
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 
 		<field
@@ -570,9 +579,12 @@
 				default="0"
 				label="COM_RSGALLERY2_DEBUG_BACKEND"
 				description="COM_RSGALLERY2_DEBUG_BACKEND_DESC"
-				layout="joomla.form.field.radio.switcher">
-			<option value="1">JYES</option>
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+			>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field
 				id="isDebugSite"
@@ -581,9 +593,12 @@
 				default="0"
 				label="COM_RSGALLERY2_DEBUG_SITE"
 				description="COM_RSGALLERY2_DEBUG_SITE_DESC"
-				layout="joomla.form.field.radio.switcher">
-			<option value="1">JYES</option>
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 		<field
 				id="isDevelop"
@@ -593,10 +608,11 @@
 				label="COM_RSGALLERY2_DEVELOP"
 				description="COM_RSGALLERY2_DEVELOP_DESC"
 				layout="joomla.form.field.radio.switcher"
-				>
-				
-			<option value="1">JYES</option>
+				filter="integer"
+				validate="options"
+		>
 			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
 
 	</fieldset>
