@@ -161,6 +161,7 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
+				. '* !!! Save return removed <> characters<br>'
                 . '* show image in edit<br>'
 				. '* published_up, published_down: preset on first save with published <br>'
 				. '* Cancel ?or save ? -> Close Image edit -> Fehlöer Null ...<br>'
@@ -170,6 +171,8 @@ class HtmlView extends BaseHtmlView
                 . '* options: show user, layout ... see article<br>'
 				. '* Save and goto prev/next<br>'
                 . '* test published_up, published_down: on Web page <br>'
+//				. '* <br>'
+//				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
 				. '</span><br><br>';
