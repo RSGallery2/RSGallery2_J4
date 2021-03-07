@@ -164,7 +164,6 @@ class HtmlView extends BaseHtmlView
 				. '* !!! Save return removed <> characters<br>'
                 . '* show image in edit<br>'
 				. '* published_up, published_down: preset on first save with published <br>'
-				. '* Cancel ?or save ? -> Close Image edit -> Fehlöer Null ...<br>'
 				. '* <br>'
 				. '* description to each input parameter "_DESC"<br>'
                 . '* options: Values not defined and add params<br>'

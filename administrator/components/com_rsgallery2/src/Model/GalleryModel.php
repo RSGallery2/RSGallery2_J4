@@ -28,6 +28,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\UCM\UCMType;
+use Joomla\CMS\Workflow\Workflow;
 use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
@@ -414,7 +415,8 @@ class GalleryModel extends AdminModel
 			}
 		}
 
-		$this->preprocessData('com_rsgallery2.category', $data);
+		// $this->preprocessData('com_rsgallery2.category', $data);
+		$this->preprocessData('com_rsgallery2.gallery', $data);
 
 		return $data;
 	}
@@ -546,7 +548,72 @@ class GalleryModel extends AdminModel
 	}
 	/**/
 
-	/**
+
+    /**
+     * Transform some data before it is displayed ? Saved ?
+     * extension development 129 bottom
+     *
+     * @param JTable $table
+     *
+     * @since __BUMP_VERSION__
+     */
+    /**/
+    protected function prepareTable($table)
+    {
+        $date = Factory::getDate()->toSql();
+        $table->name = htmlspecialchars_decode($table->name, ENT_QUOTES);
+
+        if (empty($table->id))
+        {
+            /**
+            // Set ordering to the last item if not set
+            if (empty($table->ordering))
+            {
+                $db = $this->getDbo();
+                $query = $db->getQuery(true)
+                    ->select('MAX(ordering)')
+                    ->from($db->quoteName('#__rsg2_images'));
+                $db->setQuery($query);
+                $max = $db->loadResult();
+
+                $table->ordering = $max + 1;
+
+                // Set the values
+                $table->date = $date;
+                $table->userid = Factory::getApplication()->getIdentity()->id;
+            }
+            /**/
+
+            //$table->ordering = $table->getNextOrder('gallery_id = ' . (int) $table->gallery_id); // . ' AND state >= 0');
+
+            // Set the values
+            $table->created = $date;
+            $table->created_by  = Factory::getApplication()->getIdentity()->id;
+        }
+        else
+        {
+            // Set the values
+            $table->modified   = $date;
+            $table->modified_by = Factory::getApplication()->getIdentity()->id;
+        }
+
+        // Set the publish date to now
+        if ($table->published == Workflow::CONDITION_PUBLISHED && (int) $table->publish_up == 0)
+        {
+            $table->publish_up = Factory::getDate()->toSql();
+        }
+
+        if ($table->published == Workflow::CONDITION_PUBLISHED && intval($table->publish_down) == 0)
+        {
+            $table->publish_down = null;
+        }
+
+        // Increment the content version number.
+        // $table->version++;
+    }
+
+
+    /**
 	 * Method to save the form data.
 	 *
 	 * @param   array  $data  The form data.
@@ -558,11 +625,8 @@ class GalleryModel extends AdminModel
 	public function save($data)
 	{
 		$table      = $this->getTable();
-		$test1= $data['name'];
-
-
 		$pk         = (!empty($data['id'])) ? $data['id'] : (int) $this->getState($this->getName() . '.id');
-		$isNew      = true;
+		//$isNew      = true;
 		$context    = $this->option . '.' . $this->name;
         $input      = Factory::getApplication()->input;
 

@@ -44,7 +44,7 @@ class ImageController extends FormController
 	 *
 	 * @since __BUMP_VERSION__
 	 * @see    \JControllerLegacy
-	 *
+	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config, $factory, $app, $input);
@@ -54,7 +54,6 @@ class ImageController extends FormController
 			$this->extension = $this->input->get('extension', 'com_rsgallery2');
 		}
 	}
-	/**/
 
 	/**
 	 * Method to check if you can add a new record.

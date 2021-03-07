@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `asset_id` int(11)  NOT NULL DEFAULT 0,
   `access` int(10) unsigned NOT NULL DEFAULT 0,
 
-
+  `version` int(10) unsigned NOT NULL DEFAULT 1,
 
 --  `metakey` text NOT NULL,
 --  `metadesc` text NOT NULL,
@@ -101,6 +101,8 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `access` int(10) NOT NULL DEFAULT 0,
 
   `use_j3x_location` tinyint(1) DEFAULT 0 NOT NULL,
+
+  `version` int(10) unsigned NOT NULL DEFAULT 1,
 
   PRIMARY KEY  (`id`),
 #  UNIQUE KEY `UK_name` (`name`),
@@ -170,14 +172,14 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_state` (
 #  `user_ip` varchar(50) NOT NULL DEFAULT '0.0.0.0',
 #  `parent_id` int(11) NOT NULL DEFAULT '0',
 #  `item_id` int(11) NOT NULL,
-#  `item_table` varchar(50) DEFAULT NULL,
+#  `item_table` varchar(50) DEFAULT 0,
 #  `datetime` datetime NOT NULL,
-#  `subject` varchar(100) DEFAULT NULL,
+#  `subject` varchar(100) DEFAULT 0,
 #  `comment` text NOT NULL,
 #  `published` tinyint(1) NOT NULL DEFAULT '1',
-#--- ToDo: `checked_out` int(11) DEFAULT NULL,
+#--- ToDo: `checked_out` int(11) DEFAULT 0,
 #  `checked_out` int(11) NOT NULL DEFAULT '0',
-#--- ToDo: `checked_out_time` datetime DEFAULT NULL,
+#--- ToDo: `checked_out_time` datetime DEFAULT 0,
 #  `checked_out_time` datetime,
 #  `ordering` int(11) NOT NULL,
 #  `params` text,

@@ -298,7 +298,8 @@ class ImageModel extends AdminModel
 			}
 		}
 
-		$this->preprocessData('com_rsgallery2.category', $data);
+		//$this->preprocessData('com_rsgallery2.category', $data);
+		$this->preprocessData('com_rsgallery2.image', $data);
 
 		return $data;
 	}
@@ -317,39 +318,39 @@ class ImageModel extends AdminModel
 		$date = Factory::getDate()->toSql();
 		$table->name = htmlspecialchars_decode($table->name, ENT_QUOTES);
 
-		if (empty($table->id))
-		{
-			/**/
-            // Set ordering to the last item if not set
-            if (empty($table->ordering))
-            {
-                $db = $this->getDbo();
-                $query = $db->getQuery(true)
-                    ->select('MAX(ordering)')
-                    ->from($db->quoteName('#__rsg2_images'));
-                $db->setQuery($query);
-                $max = $db->loadResult();
-
-                $table->ordering = $max + 1;
-
-                // Set the values
-                $table->date = $date;
-                $table->userid = Factory::getApplication()->getIdentity()->id;
-            }
-	        /**  */
-
-			//$table->ordering = $table->getNextOrder('gallery_id = ' . (int) $table->gallery_id); // . ' AND state >= 0');
-
-            // Set the values
-            $table->created = $date;
-            $table->created_by  = Factory::getApplication()->getIdentity()->id;
-		}
-		else
-		{
-			// Set the values
-			$table->modified   = $date;
-			$table->modified_by = Factory::getApplication()->getIdentity()->id;
-		}
+//		if (empty($table->id))
+//		{
+//			/**/
+//            // Set ordering to the last item if not set
+//            if (empty($table->ordering))
+//            {
+//                $db = $this->getDbo();
+//                $query = $db->getQuery(true)
+//                    ->select('MAX(ordering)')
+//                    ->from($db->quoteName('#__rsg2_images'));
+//                $db->setQuery($query);
+//                $max = $db->loadResult();
+//
+//                $table->ordering = $max + 1;
+//
+//                // Set the values
+//                $table->date = $date;
+//                $table->userid = Factory::getApplication()->getIdentity()->id;
+//            }
+//	        /**/
+//
+//			//$table->ordering = $table->getNextOrder('gallery_id = ' . (int) $table->gallery_id); // . ' AND state >= 0');
+//
+//            // Set the values
+//            $table->created = $date;
+//            $table->created_by  = Factory::getApplication()->getIdentity()->id;
+//		}
+//		else
+//		{
+//			// Set the values
+//			$table->modified   = $date;
+//			$table->modified_by = Factory::getApplication()->getIdentity()->id;
+//		}
 
         // Set the publish date to now
         if ($table->published == Workflow::CONDITION_PUBLISHED && (int) $table->publish_up == 0)
@@ -364,6 +365,12 @@ class ImageModel extends AdminModel
 
         // Increment the content version number.
 		// $table->version++;
+
+        // Reorder the articles within the category so the new article is first
+        if (empty($table->id))
+        {
+            $table->reorder('catid = ' . (int) $table->catid . ' AND state >= 0');
+        }
 	}
 	/**/
 
@@ -650,7 +657,12 @@ class ImageModel extends AdminModel
 		// Clear the cache
 		$this->cleanCache();
 
-		return true;
+        if (parent::save($data)) {
+
+            return true;
+        }
+
+		return false;
 	}
 
 	/**
