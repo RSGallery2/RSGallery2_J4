@@ -188,93 +188,21 @@ class HtmlView extends BaseHtmlView
 					->text('COM_RSGALLERY2_ROTATE')
 //					->toggleSplit(true)
 					->toggleSplit(false)
-//					->icon('fa fa-sync')
-//					->icon('fas fa-image')
 					->icon('fa fa-sync')
-//					->icon('fas fa-sync fa-spin')
                     ->listCheck(true)
 					->buttonClass('btn btn-action');
 
 				$dropdownButton->configure(
 						function (Toolbar $childBar)
 						{
-							// $childBar->standardButton('remove', 'Button 3');
-//							  $childBar->customButton('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
-//                            $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left');
                             $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left')->icon('fa fa-undo');
-//							$childBar->customButton('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
-//							$childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right');
 							$childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right')->icon('fa fa-redo');
-//							$childBar->customButton('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
-//							$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180');
 							$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180')->icon('fa fa-sync fa-rotate-180');
 							$childBar->divider('      ');
-//							$childBar->customButton('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
-//							$childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal');
 							$childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal')->icon('fa fa-arrows-alt-h');
-//							$childBar->customButton('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
-//							$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical');
 							$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical')->icon('fa fa-arrows-alt-v');
-
-
-//                            $childBar->standardButton('anchor', 'text')->icon('fa fa-anchor');
-//                            $childBar->standardButton('anchor')->icon('anchor');
-//                            $childBar->standardButton('-empty fa-anchor');
-//                            $childBar->standardButton('anchor fa-anchor');
-//                            $childBar->standardButton('image fa fa-anchor');
-//                            $childBar->standardButton('image fa-rotate-90', 'test rotate');
 						}
 					);
-
-				//--- turn image -> flip / rotate -------------------------------
-
-//				ToolBarHelper::spacer('50px');
-//				ToolBarHelper::custom('', '', '', '   ', false);
-//				ToolbarHelper::divider();
-//				ToolbarHelper::spacer('150px');
-
-//
-//
-//				ToolBarHelper::custom('imagesProperties.rotate_images_left', 'undo-2', '', 'COM_RSGALLERY2_ROTATE_LEFT', true);
-//				ToolBarHelper::custom('imagesProperties.rotate_images_right', 'redo-2', '', 'COM_RSGALLERY2_ROTATE_RIGHT', true);
-//				ToolBarHelper::custom('imagesProperties.rotate_images_180', 'backward-2', '', 'COM_RSGALLERY2_ROTATE_180', true);
-//				ToolBarHelper::custom('imagesProperties.flip_images_horizontal', 'arrow-right-4', '', 'COM_RSGALLERY2_FLIP_HORIZONTAL', true);
-//				ToolBarHelper::custom('imagesProperties.flip_images_vertical', 'arrow-down-4', '', 'COM_RSGALLERY2_FLIP_VERTICAL', true);
-
-
-// ToDO: test drop down ...
-
-//                ToolbarHelper::divider();
-//                $toolbar->appendButton('Popup', 'bars', 'COM_FINDER_STATISTICS', 'index.php?option=com_finder&view=statistics&tmpl=component', 550, 350, '', '', '', Text::_('COM_FINDER_STATISTICS_TITLE'));
-//                ToolbarHelper::divider();
-
-//                $dropdown = $toolbar->dropdownButton('status-group')
-//                    ->text('JTOOLBAR_CHANGE_STATUS')
-//                    ->toggleSplit(false)
-//                    ->icon('fa fa-ellipsis-h')
-//                    ->buttonClass('btn btn-action')
-//                    ->listCheck(true);
-//
-//                $childBar = $dropdown->getChildToolbar();
-//                $childBar->popupButton('test')
-//                    ->text('JTOOLBAR_BATCH')
-//                    ->selector('collapseModal')
-//                    ->listCheck(true);
-//
-
-////                // $childBar->
-//                $toolbar->popupButton()
-//                ->url(Route::_('index.php?option=com_banners&view=download&tmpl=component'))
-//                ->text('JTOOLBAR_EXPORT')
-//                ->selector('downloadModal')
-//                ->icon('icon-download')
-//                ->footer('<button class="btn btn-secondary" data-bs-dismiss="modal" type="button"'
-//                    . ' onclick="window.parent.Joomla.Modal.getCurrent().close();">'
-//                    . Text::_('COM_BANNERS_CANCEL') . '</button>'
-//                    . '<button class="btn btn-success" type="button"'
-//                    . ' onclick="Joomla.iframeButtonClick({iframeSelector: \'#downloadModal\', buttonSelector: \'#exportBtn\'})">'
-//                    . Text::_('COM_BANNERS_TRACKS_EXPORT') . '</button>'
-//                );
 
                 //--- cancel  -----------------------------------
 

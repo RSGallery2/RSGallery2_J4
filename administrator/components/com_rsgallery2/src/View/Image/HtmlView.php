@@ -169,35 +169,59 @@ class HtmlView extends BaseHtmlView
                 . '* options: show user, layout ... see article<br>'
 				. '* Save and goto prev/next<br>'
                 . '* test published_up, published_down: on Web page <br>'
-//				. '* <br>'
+				. '* Save and next, save and previous: move inside gallery<br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
 				. '</span><br><br>';
 		}
 
-		switch ($Layout)
-		{
-			case 'edit':
-			default:
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_IMAGE', 'image'));
+        switch ($Layout) {
+            case 'edit':
+            default:
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_IMAGE', 'image'));
 
-				ToolBarHelper::apply('image.apply');
-				ToolBarHelper::save('image.save');
-				//ToolBarHelper::save2new('image.save2new');
-				if (empty($this->item->id))
-				{
-					ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
-				}
-				else
-				{
-					ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
-				}
+                //--- apply, save and close ... -----------------------------------
+
+                ToolBarHelper::apply('image.apply');
+                ToolBarHelper::save('image.save');
+
+                $toolbar = Toolbar::getInstance('toolbar');
+
+                //--- image rotate / flip -----------------------------------
+
+                $dropdownButton = $toolbar->dropdownButton('rotate-group')
+                    ->text('COM_RSGALLERY2_ROTATE')
+//      		      ->toggleSplit(true)
+                    ->toggleSplit(false)
+                    ->icon('fa fa-sync')
+//                    ->listCheck(true)
+                    ->buttonClass('btn btn-action');
+
+                $dropdownButton->configure(
+                    function (Toolbar $childBar) {
+                        $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT', 'image.rotate_image_left')->icon('fa fa-undo');
+                        $childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT', 'images.rotate_image_right')->icon('fa fa-redo');
+                        $childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180', 'images.rotate_image_180')->icon('fa fa-sync fa-rotate-180');
+                        $childBar->divider('      ');
+                        $childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL', 'image.flip_image_horizontal')->icon('fa fa-arrows-alt-h');
+                        $childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL', 'image.flip_image_vertical')->icon('fa fa-arrows-alt-v');
+                    }
+                );
+
+                //--- cancel  -----------------------------------
+
+                //ToolBarHelper::save2new('image.save2new');
+                if (empty($this->item->id)) {
+                    ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
+                } else {
+                    ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
+                }
 
 //				ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
 
-				break;
-		}
+                break;
+        }
 
 		// Options button.
 		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))

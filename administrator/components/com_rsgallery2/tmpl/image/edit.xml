@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_RSGALLERY2_GALLERY_VIEW_EDIT_TITLE">
+	<layout title="COM_RSGALLERY2_IMAGE_VIEW_EDIT_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_GALLERY_VIEW_EDIT_DESC]]>
 		</message>
@@ -9,7 +9,7 @@
 		<fields name="request">
 			<field
 				name="extension"
-				type="componentsgallery"
+				type="componentsimage"
 				label="COM_RSGALLERY2_CHOOSE_COMPONENT_LABEL"
 				required="true"
 				>

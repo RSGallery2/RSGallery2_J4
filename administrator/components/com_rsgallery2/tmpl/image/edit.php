@@ -43,15 +43,21 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
 
 	<div>
 		<?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'general')); ?>
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('COM_RSGALLERY2_GENERAL')); ?>
+
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('COM_RSGALLERY2_GENERAL')); ?>
 		<div class="row">
             <div class="col-lg-9">
                 <div>
                     <div class="card-body">
                         <fieldset class="adminform">
                             <?php
+//                            echo'-------------- start: ><br>';
                             echo $this->form->renderField('name');
+//                            echo'-------------- start: ><br>';
+
                             echo $this->form->renderField('gallery_id');
+//                            echo'<br>-------------- end: ><br>';
+
                             //echo $this->form->renderField('description');
                             echo $this->form->getLabel('description');
                             echo $this->form->getInput('description');
