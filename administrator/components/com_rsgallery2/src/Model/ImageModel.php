@@ -482,11 +482,7 @@ class ImageModel extends AdminModel
                 }
             }
         }
-
         /**/
-
-
-
 
 
         // Bind the data.
@@ -629,9 +625,6 @@ class ImageModel extends AdminModel
 		}
 		/**/
 
-		// Trigger the after save event.
-		Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
-
 		/**
 		// Rebuild the path for the category:
 		if (!$table->rebuildPath($table->id))
@@ -658,6 +651,9 @@ class ImageModel extends AdminModel
 		$this->cleanCache();
 
         if (parent::save($data)) {
+
+            // Trigger the after save event.
+            Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
 
             return true;
         }

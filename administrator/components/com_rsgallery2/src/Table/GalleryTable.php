@@ -136,12 +136,16 @@ class GalleryTable extends Nested
 
         // Clean up description -- eliminate quotes and <> brackets
 
-        if (!empty($this->description))
+//        if (!empty($this->description))
+//        {
+//            // Only process if not empty
+//            $bad_characters = array("\"", '<', '>');
+//            $this->description = StringHelper::str_ireplace($bad_characters, '', $this->description);
+//        }        else         {
+//            $this->description = '';
+//        }
+        if (empty($this->description))
         {
-            // Only process if not empty
-            $bad_characters = array("\"", '<', '>');
-            $this->description = StringHelper::str_ireplace($bad_characters, '', $this->description);
-        }        else         {
             $this->description = '';
         }
 
