@@ -56,6 +56,275 @@ class ImageController extends FormController
 	}
 
 	/**
+	 * rotate_image_left directs the master image and all dependent images to be turned left against the clock
+	 *
+	 * @since version 4.3
+	 */
+	public function rotate_image_left()
+	{
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$msg     = "rotate_left: " . '<br>';
+
+		$direction = 90.000;
+		$this->rotate_image ($direction, $msg);
+	}
+
+	/**
+	 * rotate_image_right directs master image and all dependent images to be turned right with the clock
+	 *
+	 *
+	 * @since version 4.3
+	 */
+	public function rotate_image_right()
+	{
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$msg     = "rotate_right: " . '<br>';
+
+		$direction = -90.000;
+		$this->rotate_image ($direction, $msg);
+	}
+
+	/**
+	 * rotate_image_180 directs the master image and all dependent images to be turned 180 degrees (upside down)
+	 *
+	 * @since version 4.3
+	 */
+	public function rotate_image_180()
+	{
+		// Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$msg     = "rotate_180: " . '<br>';
+
+		$direction = 180.000;
+		$this->rotate_image ($direction, $msg);
+	}
+
+	/**
+	 * rotate_image directs the master image and all dependent images to be turned by given degrees
+	 *
+	 * @param double $direction angle to turn the image
+	 * @param string $msg       start of message to be given to the user on setRedirect
+	 *
+	 *
+	 * @since version 4.3
+	 * @throws Exception
+	 */
+	public function rotate_image($direction = -90.000, $msg = '')
+	{
+		Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		$msgType = 'notice';
+		$ImgCount = 0;
+		$ImgFailed = 0;
+
+		try
+		{
+			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+			// Access check
+			$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			if (!$canAdmin)
+			{
+				$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+				$msgType = 'warning';
+				// replace newlines with html line breaks.
+				$msg = nl2br ($msg);
+			}
+			else
+			{
+				// standard input
+				$id = $this->input->get('id', 0, 'int');
+
+				// toDo: create imageDb model
+				$modelImages = $this->getModel('images');
+
+                // Needed filename and gallery id
+				//$imgFileDatas = $modelImages->ids2FileData($sids);
+				//$formData = new JInput($this->input->get('jform', '', 'array'));
+
+				$modelFile = $this->getModel('imageFile');
+
+				$fileName = $this->input->get('name', '???', 'string');
+				$galleryId = $this->input->get('gallery_id', -1, 'int');
+
+				$IsSaved = $modelFile->rotate_image($fileName, $galleryId, $direction);
+
+				if ($IsSaved){
+					$ImgCount++;
+				} else {
+					$ImgFailed++;
+				}
+
+				// $msg '... successful assigned .... images ...
+				if ($ImgCount)
+				{
+					$msg_ok = ' Successful rotated ' . $ImgCount . ' image properties';
+					Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
+				}
+				if ($ImgFailed)
+				{
+					$msg_bad = ' Failed on rotation of ' . $ImgFailed . ' image properties';
+					Factory::getApplication()->enqueueMessage($msg_bad, 'error');
+				}
+
+				// not all images were rotated
+				if ($ImgCount < 1)
+				{
+					$msgType = 'warning';
+				}
+			}
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing rotate_image: ""' . $direction . '"<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=image&task=image.edit&id=' . $id;
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
+	 * flip_image_horizontal directs the master image and all dependent images to be flipped horizontal (left <-> right)
+	 *
+	 * @since version 4.3
+	 */
+	public function flip_image_horizontal()
+	{
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$msg = "flip_image_horizontal: " . '<br>';
+
+		$flipMode = IMG_FLIP_HORIZONTAL; //  IMG_FLIP_VERTICAL,  IMG_FLIP_BOTH
+		$this->flip_image($flipMode, $msg);
+	}
+
+	/**
+	 * flip_image_vertical directs the master image and all dependent images to be flipped horizontal (top <-> bottom)
+	 *
+	 * @since version 4.3
+	 */
+	public function flip_image_vertical()
+	{
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$msg = "flip_image_vertical: " . '<br>';
+
+		$flipMode = IMG_FLIP_VERTICAL;
+		$this->flip_image($flipMode, $msg);
+	}
+
+	/**
+	 * flip_image_both directs the master image and all dependent images to be flipped horizontal and vertical
+	 *
+	 *
+	 * @since version 4.3
+	 */
+	public function flip_image_both()
+	{
+        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+		$msg = "flip_image_both: " . '<br>';
+
+		$flipMode = IMG_FLIP_BOTH;
+		$this->flip_image($flipMode, $msg);
+	}
+
+	/**
+	 * flip_image directs the master image and all dependent images to be flipped
+	 * according to mode horizontal, vertical or both
+	 * @param int    $flipMode mode horizontal, vertical or both
+	 * @param string $msg       start of message to be given to the user on setRedirect
+	 *
+	 * @since version 4.3
+	 * @throws Exception
+	 */
+	public function flip_image($flipMode=0, $msg='')
+	{
+		Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		$msgType = 'notice';
+		$ImgCount = 0;
+		$ImgFailed = 0;
+
+		try
+		{
+			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+
+			// Access check
+			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			if (!$canAdmin)
+			{
+				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+				$msgType = 'warning';
+				// replace newlines with html line breaks.
+				$msg = nl2br ($msg);
+			}
+			else
+			{
+				// standard input
+				$id = $this->input->get('id', 0, 'int');
+
+				// toDo: create imageDb model
+				$modelImages = $this->getModel('images');
+
+                // Needed filename and gallery id
+                //$imgFileDatas = $modelImages->ids2FileData($sids);
+				// $formData = new JInput($this->input->get('jform', '', 'array'));
+
+				$modelFile = $this->getModel('imageFile');
+
+				$fileName = $this->input->get('name', '???', 'string');
+				$galleryId = $this->input->get('gallery_id', -1, 'int');
+
+				$IsSaved = $modelFile->flip_image($fileName, $galleryId, $flipMode);
+
+                if ($IsSaved){
+                    $ImgCount++;
+                } else {
+                    $ImgFailed++;
+                }
+
+                // $msg '... successful assigned .... images ...
+                if ($ImgCount)
+                {
+                    $msg_ok = ' Successful flipped ' . $ImgCount . ' image properties';
+                    Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
+                }
+                if ($ImgFailed)
+                {
+                    $msg_bad = ' Failed on flipping of ' . $ImgFailed . ' image properties';
+                    Factory::getApplication()->enqueueMessage($msg_bad, 'error');
+                }
+
+                // not all images were rotated
+                if ($ImgCount < 1)
+                {
+                    $msgType = 'warning';
+                }
+			}
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing flip_image: ""' . $flipMode . '"<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=image&task=image.edit&id=' . $id;
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
 	 * Method to check if you can add a new record.
 	 *
 	 * @param   array  $data  An array of input data.

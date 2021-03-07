@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 
 /**
- * The Galleries List Controller
+ * The image properties Controller
  *
  * @since __BUMP_VERSION__
  */
