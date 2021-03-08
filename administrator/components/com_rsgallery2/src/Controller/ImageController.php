@@ -121,10 +121,10 @@ class ImageController extends FormController
 
 		try
 		{
-			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+			Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 			// Access check
-			$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
@@ -135,19 +135,21 @@ class ImageController extends FormController
 			else
 			{
 				// standard input
-				$id = $this->input->get('id', 0, 'int');
+				$input = Factory::getApplication()->input;
+
+				$id = $input->get('id', 0, 'int');
 
 				// toDo: create imageDb model
 				$modelImages = $this->getModel('images');
 
                 // Needed filename and gallery id
 				//$imgFileDatas = $modelImages->ids2FileData($sids);
-				//$formData = new JInput($this->input->get('jform', '', 'array'));
+				//$formData = new Input($this->input->get('jform', '', 'array'));
 
 				$modelFile = $this->getModel('imageFile');
 
-				$fileName = $this->input->get('name', '???', 'string');
-				$galleryId = $this->input->get('gallery_id', -1, 'int');
+				$fileName = $input->get('name', '???', 'string');
+				$galleryId = $input->get('gallery_id', -1, 'int');
 
 				$IsSaved = $modelFile->rotate_image($fileName, $galleryId, $direction);
 
@@ -247,7 +249,7 @@ class ImageController extends FormController
 	 */
 	public function flip_image($flipMode=0, $msg='')
 	{
-		Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 		$msgType = 'notice';
 		$ImgCount = 0;
@@ -276,7 +278,7 @@ class ImageController extends FormController
 
                 // Needed filename and gallery id
                 //$imgFileDatas = $modelImages->ids2FileData($sids);
-				// $formData = new JInput($this->input->get('jform', '', 'array'));
+				// $formData = new Input($this->input->get('jform', '', 'array'));
 
 				$modelFile = $this->getModel('imageFile');
 

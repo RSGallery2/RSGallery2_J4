@@ -68,6 +68,7 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
             </div>
             <div class="col-lg-3">
                 <div class="bg-white px-3">
+	                <img src="<?php echo $this->imgUrl; ?>" class="img-fluid" alt="...">
                     <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
 				</div>
 			</div>

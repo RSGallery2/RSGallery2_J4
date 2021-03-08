@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
@@ -99,6 +100,11 @@ class HtmlView extends BaseHtmlView
 		$this->form = $this->get('Form');
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
+
+		$ImagePath = new ImagePaths ();
+		$ImagePath->setPathsURIs_byGalleryId($this->item->gallery_id);
+		$this->imgUrl = $ImagePath->getDisplayUrl ($this->item->name);
+
 		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
 		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
 		$this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);

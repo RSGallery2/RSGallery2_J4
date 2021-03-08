@@ -264,7 +264,6 @@ class HtmlView extends BaseHtmlView
                         . 'Tasks: <br>'
 	                    . '* Ordering: Mouse move not working<br>'
                         . '* Delete images for real <br>'
-                        . '* Test: archived, trashed, (delete)<br>'
                         . '* Batch : turn images, move .... <br>'
                         . '* params test write, read back -> json_enmcode registry<br>'
 	                    . '* <br>'
