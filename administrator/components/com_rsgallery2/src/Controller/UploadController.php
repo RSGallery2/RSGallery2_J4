@@ -249,7 +249,17 @@ class UploadController extends FormController
 		}
 		catch (\Exception $e)
 		{
-			echo new JsonResponse($e);
+            $errMsg   = $msg . $e->getMessage();
+            $hasError = 1;
+
+            if ($Rsg2DebugActive)
+            {
+                $errMsg   = $msg . $e;
+                Log::add('    Exception: ' . $errMsg);
+            }
+
+            echo new JsonResponse($msg, $errMsg, $hasError);
+			//echo new JsonResponse($e);
 		}
 
 		$app->close();
@@ -469,12 +479,16 @@ out:
 		}
 		catch (\Exception $e)
 		{
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $e->getMessage());
-			}
+            $errMsg   = $msg . $e; // $e->getMessage()
+            $hasError = 1;
 
-			echo new JsonResponse($e);
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
+
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 
 		}
 
@@ -672,13 +686,16 @@ out:
 		}
 		catch (\Exception $e)
 		{
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $e->getMessage());
-			}
+            $errMsg   = $msg . $e;
+            $hasError = 1;
 
-			echo new JsonResponse($e);
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
 
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 		}
 
 		$app->close();
@@ -940,13 +957,16 @@ out:
 		}
 		catch (\Exception $e)
 		{
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $e->getMessage());
-			}
+            $errMsg   = $msg . $e;
+            $hasError = 1;
 
-			echo new JsonResponse($e);
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
 
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 		}
 
 		$app->close();
@@ -1148,13 +1168,16 @@ interface IResponseTransfer {
 		}
 		catch (\Exception $e)
 		{
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $e->getMessage());
-			}
+            $errMsg   = $msg . $e;
+            $hasError = 1;
 
-			echo new JsonResponse($e);
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
 
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 		}
 
 		$app->close();

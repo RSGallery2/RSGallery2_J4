@@ -18,6 +18,7 @@ use Joomla\CMS\Session\Session;
 //HTMLHelper::_('behavior.core');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive'); // On long waiting ...  or ToDo: on post forms like edit otherwise ...
+HTMLHelper::_('behavior.core');
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/upload.css', array('version' => 'auto', 'relative' => true));
 HTMLHelper::_('script', 'com_rsgallery2/backend/upload.js', ['version' => 'auto', 'relative' => true]);
@@ -50,10 +51,8 @@ $maxSize = $this->UploadLimit;
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
 			<fieldset id="j-main-container" class="j-main-container">
-                <?php
-                echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_gallery_must_exist']);
-                ?>
                 <?php if (!$this->is1GalleryExisting) : ?>
+                    <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'upload_gallery_must_exist']); ?>
 	                <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'upload_gallery_must_exist', Text::_('COM_RSGALLERY2_DO_UPLOAD')); ?>
 
                     <div class="form-actions">
@@ -73,11 +72,14 @@ $maxSize = $this->UploadLimit;
                     </div>
 
 					<?php echo HTMLHelper::_('uitab.endTab'); ?>
-	                <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+                    <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 
 				<?php else : ?>
+                    <?php //echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'dragAndDrop']); ?>
+                    <?php //echo HTMLHelper::_('uitab.addTab', 'myTab', 'dragAndDrop', Text::_('COM_RSGALLERY2_DO_UPLOAD')); ?>
 
                     <!--legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?></legend-->
+                    <legend>  </legend>
                     <h2>
                         <span class="mb-2">
                             <?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?>
@@ -174,15 +176,28 @@ $maxSize = $this->UploadLimit;
                                 </div>
                             </div>
 
-                            <button id="AssignImageProperties" type="button"
+                            <button
+                                    id="AssignImageProperties"
+                                    type="button"
                                     class="btn btn-primary mx-auto mt-2"
-                                    onclick="Joomla.submitbutton('imagesProperties.PropertiesView'));return false;"
-                                    title="<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
-                                    disabled
+                                    onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
+                                    title="disabled <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
                                 >
                                 <span class="icon-copy" aria-hidden="true"></span>
 		                        <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>
                             </button>
+
+                            <p>
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
+                            >
+                                <span class="icon-undo" aria-hidden="true"></span>
+                                <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>
+                            </button>
+                            </p>
+
 
                             <p>
                                 <div id="uploadProgressArea"></div>
@@ -212,8 +227,10 @@ $maxSize = $this->UploadLimit;
                     <?php
                     LimitsAndMaxInfo ($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
                     ?>
+                    <?php echo HTMLHelper::_('uitab.endTab'); ?>
+                    <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
                 <?php endif; ?>
-            </div>
+        </div>
 		</div>
 	</div>
 
