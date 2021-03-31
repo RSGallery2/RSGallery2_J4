@@ -26,9 +26,6 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
-
-
-
 $extension = $this->escape($this->state->get('filter.extension'));
 
 ?>
@@ -46,7 +43,12 @@ $extension = $this->escape($this->state->get('filter.extension'));
             <div class="flex-fill">
 				<div id="j-main-container" class="j-main-container">
 
-					<legend><?php echo Text::_('COM_RSGALLERY2_PROPERTIES_UPLOADED_IMAGES'); ?></legend>
+					<legend></legend>
+					<h2>
+                        <span class="mb-2">
+					<?php echo Text::_('COM_RSGALLERY2_PROPERTIES_UPLOADED_IMAGES'); ?>
+                        </span>
+					</h2>
 
 					<?php if (empty($this->items)) : ?>
 						<div class="alert alert-no-items">

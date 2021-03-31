@@ -126,14 +126,14 @@ class HtmlView extends BaseHtmlView
 			$this->ActiveSelection = 'upload_drag_and_drop';
 		}
 
-		// 0: default, 1: enable, 2: disable
-		$isUseOneGalleryNameForAllImages = $rsgConfig->get('isUseOneGalleryNameForAllImages');
-		if (empty ($isUseOneGalleryNameForAllImages)) {
-			$isUseOneGalleryNameForAllImages = '1';
-		}
-		if ($isUseOneGalleryNameForAllImages == '2') {
-			$isUseOneGalleryNameForAllImages = '0';
-		}
+//		// 0: default, 1: enable, 2: disable
+//		$isUseOneGalleryNameForAllImages = $rsgConfig->get('isUseOneGalleryNameForAllImages');
+//		if (empty ($isUseOneGalleryNameForAllImages)) {
+//			$isUseOneGalleryNameForAllImages = '1';
+//		}
+//		if ($isUseOneGalleryNameForAllImages == '2') {
+//			$isUseOneGalleryNameForAllImages = '0';
+//		}
 
 		//--- Pre select latest gallery ?  ------------------------
 
@@ -147,22 +147,19 @@ class HtmlView extends BaseHtmlView
 			$IdGallerySelect = $Id;
 		}
 
-		$isPreSelectLatestGallery = $rsgConfig->get('IsPreSelectLatestGallery');
+		$isPreSelectLatestGallery = $rsgConfig->get('isPreSelectLatestGallery');
 		if ($isPreSelectLatestGallery) {
 			$IdGallerySelect = $this->getIdLatestGallery();
 		}
 
-		$this->is1GalleryExisting = $this->is1GalleryExisting();
-
 		// upload_zip, upload_folder
 		$formParam = array(
-			'all_img_in_step1_01' => $isUseOneGalleryNameForAllImages,
-			'all_img_in_step1_02' => $isUseOneGalleryNameForAllImages,
-			'SelectGalleries01_01' => $IdGallerySelect,
-			'SelectGalleries02_02' => $IdGallerySelect
+			'SelectGallery' => $IdGallerySelect,
 		);
 
 		$form->bind($formParam);
+
+		$this->is1GalleryExisting = $this->is1GalleryExisting();
 
 		$this->form = $form;
 
@@ -285,5 +282,35 @@ class HtmlView extends BaseHtmlView
 
 		return $is1GalleryExisting;
 	}
+
+	/**
+	 * Query for ID of latest gallery
+	 *
+	 * @return string ID of latest gallery
+	 *
+	 * @since 4.3.0
+	 */
+	public function getIdLatestGallery()
+	{
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+
+		$test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
+
+		$query->select($db->quoteName('id'))
+			->from('#__rsg2_galleries')
+			->where($db->quoteName('id') . ' != 1' )
+			->setLimit(1)
+//			->order($db->quoteName('created') . ' DESC');
+//			->order( $db->quoteName('id') . ' DESC')
+			->order($db->quoteName('created')  . ' DESC' . ', ' . $db->quoteName('id') . ' DESC')
+		;
+
+		$db->setQuery($query, 0, 1);
+		$IdLatestGallery = $db->loadResult();
+
+		return $IdLatestGallery;
+	}
+
 }
 

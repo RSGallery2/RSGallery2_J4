@@ -366,10 +366,11 @@ class ImageModel extends AdminModel
         // Increment the content version number.
 		// $table->version++;
 
-        // Reorder the articles within the category so the new article is first
+        // ToDo: Reorder the articles within the category so the new article is first
         if (empty($table->id))
         {
-            $table->reorder('gallery_id=' . (int) $table->gallery_id . ' AND state >= 0');
+            // state is wrong:
+	        // $table->reorder('gallery_id=' . (int) $table->gallery_id . ' AND state >= 0');
         }
 	}
 	/**/

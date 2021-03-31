@@ -18,7 +18,7 @@ use Joomla\CMS\Session\Session;
 //HTMLHelper::_('behavior.core');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive'); // On long waiting ...  or ToDo: on post forms like edit otherwise ...
-HTMLHelper::_('behavior.core');
+//HTMLHelper::_('behavior.core');
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/upload.css', array('version' => 'auto', 'relative' => true));
 HTMLHelper::_('script', 'com_rsgallery2/backend/upload.js', ['version' => 'auto', 'relative' => true]);
@@ -181,23 +181,12 @@ $maxSize = $this->UploadLimit;
                                     type="button"
                                     class="btn btn-primary mx-auto mt-2"
                                     onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
-                                    title="disabled <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
-                                >
+                                    title="disabled<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
+
+                            >
                                 <span class="icon-copy" aria-hidden="true"></span>
 		                        <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>
                             </button>
-
-                            <p>
-                            <button
-                                    type="button"
-                                    class="btn btn-secondary"
-                                    onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
-                            >
-                                <span class="icon-undo" aria-hidden="true"></span>
-                                <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>
-                            </button>
-                            </p>
-
 
                             <p>
                                 <div id="uploadProgressArea"></div>

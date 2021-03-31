@@ -261,6 +261,7 @@ class FormElements {
     buttonManualFiles : HTMLButtonElement;
     buttonZipFile : HTMLButtonElement;
     buttonFolderImport : HTMLButtonElement;
+    buttonProperties : HTMLButtonElement;
 
     inputFtpFolder : HTMLInputElement;
 
@@ -276,6 +277,7 @@ class FormElements {
         this.buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
         this.buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
         this.buttonFolderImport = <HTMLButtonElement> document.querySelector('#ftp-upload-folder-button-drop');
+        this.buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
 
         this.inputFtpFolder = <HTMLInputElement> document.querySelector('#ftp_upload_directory');
     }
@@ -293,12 +295,14 @@ class enableDragZone {
     buttonZipFile : HTMLButtonElement;
     buttonFolderImport : HTMLButtonElement;
     inputFtpFolder : HTMLInputElement;
+    buttonProperties : HTMLButtonElement;
 
     constructor(formElements:FormElements) {
         this.dragZone = formElements.dragZone;
         this.buttonManualFiles = formElements.buttonManualFiles;
         this.buttonZipFile = formElements.buttonZipFile;
         this.buttonFolderImport = formElements.buttonFolderImport;
+        this.buttonProperties = formElements.buttonProperties;
         this.inputFtpFolder = formElements.inputFtpFolder;
 
         formElements.selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
@@ -320,6 +324,7 @@ class enableDragZone {
             this.buttonZipFile.disabled = false;
             this.buttonFolderImport.disabled = false;
             this.inputFtpFolder.disabled = false;
+            this.buttonProperties.disabled = false;
         } else {
             // not selected (red)
             this.dragZone.classList.add('dragareaDisabled');
@@ -328,6 +333,7 @@ class enableDragZone {
             this.buttonZipFile.disabled = true;
             this.buttonFolderImport.disabled = true;
             this.inputFtpFolder.disabled = true;
+            this.buttonProperties.disabled = true;
         }
     }
 }
@@ -1459,7 +1465,8 @@ class TransferImagesTask {
         cid.classList.add('imageCid');
         cid.name = 'cid[]';
         cid.type = 'hidden';
-        cid.innerText = responseData.imageId;
+        //cid.innerText = responseData.imageId;
+        cid.value = responseData.imageId;
 
         imageBox.appendChild (cid);
     }
@@ -2095,7 +2102,8 @@ class RequestTransferFolderFilesTask {
         cid.classList.add('imageCid');
         cid.name = 'cid[]';
         cid.type = 'hidden';
-        cid.innerText = responseData.imageId;
+        //cid.innerText = responseData.imageId;
+        cid.value = responseData.imageId;
 
         imageBox.appendChild (cid);
     }
