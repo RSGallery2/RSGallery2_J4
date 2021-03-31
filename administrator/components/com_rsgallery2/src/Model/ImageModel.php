@@ -369,7 +369,7 @@ class ImageModel extends AdminModel
         // Reorder the articles within the category so the new article is first
         if (empty($table->id))
         {
-            $table->reorder('catid = ' . (int) $table->catid . ' AND state >= 0');
+            $table->reorder('gallery_id=' . (int) $table->gallery_id . ' AND state >= 0');
         }
 	}
 	/**/
@@ -882,7 +882,7 @@ class ImageModel extends AdminModel
 		$table->title = $title;
 		$table->alias = $alias;
 
-        $this-> prepareTable($table);
+        $this->prepareTable($table);
 
         //--- date -------------------------------------------
 
