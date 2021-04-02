@@ -41,7 +41,7 @@ if (!empty ($this->isDevelopSite))
 
 //if ($this->config->displaySearch) {
 if (true) {
-    $layout = new FileLayout('Test.search');
+    $layout = new FileLayout('Search.search');
     echo $layout->render();
 }
 
@@ -53,10 +53,14 @@ foreach ($this->items as $gallery) {
 
 }
 
+$layout = new FileLayout('ImagesArea.default');
+
+$displayData['images'] = $this->items;
+
 
 
 ?>
-<div class="rsg2__form rsg2_gallery-form">
+<div class="rsg2__form rsg2__galleries_thumbs">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
         <h1> RSGallery2 "images" view </h1>

@@ -71,22 +71,32 @@ class UploadModel extends BaseDatabaseModel
      */
     public static function IdLatestGallery()
     {
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
+        $IdLatestGallery = 0;
 
-        $test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
 
-        $query->select($db->quoteName('id'))
-            ->from('#__rsg2_galleries')
-            ->where($db->quoteName('id') . ' != 1' )
-            ->setLimit(1)
+            $test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
+
+            $query->select($db->quoteName('id'))
+                ->from('#__rsg2_galleries')
+                ->where($db->quoteName('id') . ' != 1')
+                ->setLimit(1)
 //			->order($db->quoteName('created') . ' DESC');
 //			->order( $db->quoteName('id') . ' DESC')
-            ->order($db->quoteName('created')  . ' DESC' . ', ' . $db->quoteName('id') . ' DESC')
-        ;
+                ->order($db->quoteName('created') . ' DESC' . ', ' . $db->quoteName('id') . ' DESC');
 
-        $db->setQuery($query, 0, 1);
-        $IdLatestGallery = $db->loadResult();
+            $db->setQuery($query, 0, 1);
+            $IdLatestGallery = $db->loadResult();
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'IdLatestGallery: Error executing query: "' . $query . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
         return $IdLatestGallery;
     }

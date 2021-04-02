@@ -4,7 +4,7 @@
  * @package     Joomla.Site
  * @subpackage  com_rsgallery2
  *
- * @copyright   (C) 2005 - 2021 RSGallery2 Team 
+ * @copyright   (C) 2005 - 2021 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -57,24 +57,23 @@ class GalleriesModel extends ListModel
         {
             $config['filter_fields'] = array(
                 'id', 'a.id',
-                'title', 'a.title',
-                'alias', 'a.alias',
-                'checked_out', 'a.checked_out',
-                'checked_out_time', 'a.checked_out_time',
-                'catid', 'a.catid', 'category_title',
-                'state', 'a.state',
-                'access', 'a.access', 'access_level',
+                'name', 'a.name',
+
                 'created', 'a.created',
                 'created_by', 'a.created_by',
-                'ordering', 'a.ordering',
-//                'featured', 'a.featured',
-//                'language', 'a.language',
+
+                'published', 'a.published',
+
+//				'modified', 'a.modified',
+//				'modified_by', 'a.modified_by',
+
+                'parent_id', 'a.parent_id',
+                'lft', 'a.lft',
+
                 'hits', 'a.hits',
-                'publish_up', 'a.publish_up',
-                'publish_down', 'a.publish_down',
-//                'images', 'a.images',
-//                'urls', 'a.urls',
-                'filter_tag',
+//				'tag',
+                'a.access',
+                'image_count'
             );
         }
 
@@ -98,67 +97,45 @@ class GalleriesModel extends ListModel
      *
      * @since   3.0.1
      */
-    protected function populateState($ordering = 'ordering', $direction = 'ASC')
+    protected function populateState($ordering = 'a.lft', $direction = 'ASC')
     {
         $app = Factory::getApplication();
 
-        // List state information
-        $value = $app->input->get('limit', $app->get('list_limit', 0), 'uint');
-        $this->setState('list.limit', $value);
-
-        $value = $app->input->get('limitstart', 0, 'uint');
-        $this->setState('list.start', $value);
-
-        $value = $app->input->get('filter_tag', 0, 'uint');
-        $this->setState('filter.tag', $value);
-
-        $orderCol = $app->input->get('filter_order', 'a.ordering');
-
-        if (!in_array($orderCol, $this->filter_fields))
+        // Adjust the context to support modal layouts.
+        if ($layout = $app->input->get('layout'))
         {
-            $orderCol = 'a.ordering';
+            $this->context .= '.' . $layout;
         }
 
-        $this->setState('list.ordering', $orderCol);
+        //$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
+        //// Adjust the context to support forced languages.
+        //if ($forcedLanguage)
+        //{
+        //	$this->context .= '.' . $forcedLanguage;
+        //}
 
-        $listOrder = $app->input->get('filter_order_Dir', 'ASC');
+        $extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
+        $this->setState('filter.extension', $extension);
+        $parts = explode('.', $extension);
 
-        if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', '')))
-        {
-            $listOrder = 'ASC';
-        }
+        // Extract the component name
+        $this->setState('filter.component', $parts[0]);
 
-        $this->setState('list.direction', $listOrder);
+        // Extract the optional section name
+        $this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
 
-        $params = $app->getParams();
-        $this->setState('params', $params);
-        $user = Factory::getUser();
+        $search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
+        $this->setState('filter.search', $search);
 
-        if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
-        {
-            // Filter on published for those who do not have edit or edit.state rights.
-            $this->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
-        }
+        // List state information.
+        parent::populateState($ordering, $direction);
 
-//        $this->setState('filter.language', Multilanguage::isEnabled());
-
-        // toDo: ??? when is it needed
-        // Process show_noauth parameter
-        if ((!$params->get('show_noauth')) || (!ComponentHelper::getParams('com_content')->get('show_noauth')))
-        {
-            $this->setState('filter.access', true);
-        }
-        else
-        {
-            $this->setState('filter.access', false);
-        }
-
-        $this->setState('layout', $app->input->getString('layout'));
-
-        //--- RSG2 ---------------------------------
-
-        $this->setState('rsgallery2.id', $app->input->getInt('id'));
-	}
+        //// Force a language.
+        //if (!empty($forcedLanguage))
+        //{
+        //	$this->setState('filter.language', $forcedLanguage);
+        //}
+    }
 
     /**
      * Method to get a store id based on model configuration state.
@@ -176,41 +153,253 @@ class GalleriesModel extends ListModel
     protected function getStoreId($id = '')
     {
         // Compile the store id.
-        $id .= ':' . serialize($this->getState('filter.condition'));
+//		$id .= ':' . $this->getState('filter.extension');
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.published');
         $id .= ':' . $this->getState('filter.access');
-//        $id .= ':' . $this->getState('filter.featured');
-        $id .= ':' . serialize($this->getState('filter.article_id'));
-        $id .= ':' . $this->getState('filter.article_id.include');
-        $id .= ':' . serialize($this->getState('filter.category_id'));
-        $id .= ':' . $this->getState('filter.category_id.include');
-        $id .= ':' . serialize($this->getState('filter.author_id'));
-        $id .= ':' . $this->getState('filter.author_id.include');
-        $id .= ':' . serialize($this->getState('filter.author_alias'));
-        $id .= ':' . $this->getState('filter.author_alias.include');
-        $id .= ':' . $this->getState('filter.date_filtering');
-        $id .= ':' . $this->getState('filter.date_field');
-        $id .= ':' . $this->getState('filter.start_date_range');
-        $id .= ':' . $this->getState('filter.end_date_range');
-        $id .= ':' . $this->getState('filter.relative_date');
-        $id .= ':' . serialize($this->getState('filter.tag'));
+//		$id .= ':' . $this->getState('filter.language');
+//		$id .= ':' . $this->getState('filter.level');
+//		$id .= ':' . $this->getState('filter.tag');
 
         return parent::getStoreId($id);
     }
 
 
     /**
-	 * @var string item
-	 */
+     * @var string item
+     */
     /**/
-	protected $_item = null;
+    protected $_item = null;
     /**/
 
     /**
-     * Method to get a list of images
+     * Method to get a database query to list galleries.
+     *
+     * @return  \DatabaseQuery object.
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getListQuery()
+    {
+        // Create a new query object.
+        $db = $this->getDbo();
+        $query = $db->getQuery(true);
+
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
+
+        // Select the required fields from the table.
+        $query->select(
+            $this->getState(
+            /**/
+                'list.select',
+                'a.id, '
+                . 'a.name, '
+                . 'a.alias, '
+                . 'a.description, '
+                . 'a.thumb_id, '
+
+                . 'a.note, '
+                . 'a.params, '
+                . 'a.published, '
+                . 'a.publish_up,'
+                . 'a.publish_down,'
+
+                . 'a.hits, '
+
+                . 'a.checked_out, '
+                . 'a.checked_out_time, '
+                . 'a.created, '
+                . 'a.created_by, '
+                . 'a.created_by_alias, '
+                . 'a.modified, '
+                . 'a.modified_by, '
+
+                . 'a.parent_id,'
+                . 'a.level, '
+                . 'a.path, '
+                . 'a.lft, '
+                . 'a.rgt,'
+
+                . 'a.approved,'
+                . 'a.asset_id,'
+                . 'a.access'
+            )
+        );
+        $query->from('#__rsg2_galleries AS a');
+
+        /* Count child images */
+        $query->select('COUNT(img.gallery_id) as image_count')
+            ->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id'
+            );
+
+        //// Join over the language
+        //$query->select('l.title AS language_title, l.image AS language_image')
+        //	->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+
+        // Join over the users for the checked out user.
+        $query->select('uc.name AS editor')
+            ->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+
+        // Join over the asset groups.
+        $query->select('ag.title AS access_level')
+            ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+
+        // Join over the users for the author.
+        $query->select('ua.name AS author_name')
+            ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
+
+//		// Join over the associations.
+//		$assoc = $this->getAssoc();
+//
+//		if ($assoc)
+//		{
+//			$query->select('COUNT(asso2.id)>1 as association')
+//				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
+//				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
+//				->group('a.id, l.title, uc.name, ag.title, ua.name');
+//		}
+
+        // Filter on the level.
+        if ($level = $this->getState('filter.level'))
+        {
+            $query->where('a.level <= ' . (int) $level);
+        }
+
+        // Filter by access level.
+        if ($access = $this->getState('filter.access'))
+        {
+            $query->where('a.access = ' . (int) $access);
+        }
+
+        // Implement View Level Access
+        if (!$user->authorise('core.admin'))
+        {
+            $groups = implode(',', $user->getAuthorisedViewLevels());
+            $query->where('a.access IN (' . $groups . ')');
+        }
+
+        // Filter by published state
+        $published = (string) $this->getState('filter.published');
+
+        if (is_numeric($published))
+        {
+            $query->where('a.published = ' . (int) $published);
+        }
+        elseif ($published === '')
+        {
+            $query->where('(a.published IN (0, 1))');
+        }
+
+        // Filter by search in name and others
+        $search = $this->getState('filter.search');
+        if (!empty($search))
+        {
+            $search = $db->quote('%' . $db->escape($search, true) . '%');
+            $query->where(
+                'a.name LIKE ' . $search
+                . ' OR a.alias LIKE ' . $search
+                . ' OR a.description LIKE ' . $search
+                . ' OR a.note LIKE ' . $search
+                . ' OR a.created LIKE ' . $search
+                . ' OR a.modified LIKE ' . $search
+            );
+        }
+
+        // exclude root gallery record
+//		$query->where('a.id > 1');
+
+        /**
+        // Filter on the language.
+        if ($language = $this->getState('filter.language'))
+        {
+        $query->where('a.language = ' . $db->quote($language));
+        }
+        /**/
+
+        // Filter by a single tag.
+        /**
+        $tagId = $this->getState('filter.tag');
+
+        if (is_numeric($tagId))
+        {
+        $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+        ->join(
+        'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
+        . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+        . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
+        );
+        }
+        /**/
+
+        // Add the list ordering clause
+        $listOrdering = $this->getState('list.ordering', 'a.lft');
+        $listDirn = $db->escape($this->getState('list.direction', 'ASC'));
+
+        if ($listOrdering == 'a.access')
+        {
+            $query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
+        }
+        else
+        {
+            $query->order($db->escape($listOrdering) . ' ' . $listDirn);
+        }
+
+        // Group by on Galleries for \JOIN with component tables to count items
+        $query->group(
+        /**/
+            'a.id, '
+            . 'a.name, '
+            . 'a.alias, '
+            . 'a.description, '
+            . 'a.thumb_id, '
+
+            . 'a.note, '
+            . 'a.params, '
+            . 'a.published, '
+            . 'a.publish_up,'
+            . 'a.publish_down,'
+
+            . 'a.hits, '
+
+            . 'a.checked_out, '
+            . 'a.checked_out_time, '
+            . 'a.created, '
+            . 'a.created_by, '
+            . 'a.created_by_alias, '
+            . 'a.modified, '
+            . 'a.modified_by, '
+
+            . 'a.parent_id, '
+            . 'a.level, '
+            . 'a.path, '
+            . 'a.lft, '
+            . 'a.rgt, '
+
+            . 'a.approved,'
+            . 'a.asset_id,'
+            . 'a.access, '
+
+            . 'uc.name, '
+            . 'ua.name '
+
+//				. 'a.language, '
+//			. 'ag.title, '
+//			. 'l.title, '
+//			. 'l.image, '
+//no good			. 'image_count '
+        /**/
+        );
+
+        return $query;
+    }
+
+    /**
+     * Method to get a list of galleries
      *
      * ??? Overridden to inject convert the attribs field into a Registry object.
      *
-     * @param   integer  $gid  Id for the gallery
+     * @param   integer  $gid  Id for the parent gallery
      *
      * @return  mixed  An array of objects on success, false on failure.
      *
@@ -219,62 +408,77 @@ class GalleriesModel extends ListModel
 
     // toDo: rights ...
 
-	public function getItems()
-	{
-        $items  = parent::getItems();
+    public function getItems()
+    {
         $user   = Factory::getUser();
         $userId = $user->get('id');
         $guest  = $user->get('guest');
         $groups = $user->getAuthorisedViewLevels();
-        $input  = Factory::getApplication()->input;
 
+        if ($this->_item === null)
+        {
+            $this->_item = array();
+        }
+
+        $galleries = new \stdClass(); // ToDo: all to (object)[];
+
+
+        $input  = Factory::getApplication()->input;
         $gid = $input->getInt ('gid', 0);
 
-		if ($this->_item === null)
-		{
-			$this->_item = array();
-		}
 
-        $images = new \stdClass(); // ToDo: all to (object)[];
 
-		// not fetched already
-		if ( ! isset($this->_item[$gid])) {
+        // not fetched already
+        if ( ! isset($this->_item[$gid])) {
 
-			try
-			{
-				$db    = $this->getDbo();
-				$query = $db->getQuery(true);
-
-				$query->select('*')
-					//->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->from($db->quoteName('#__rsg2_galleries', 'a'))
-					//->where('a.id = ' . (int) $gid);
-					->where('a.gallery_id = ' . (int) $gid);
-
-				$db->setQuery($query);
-				$data = $db->loadObjectList();
-
-				if ( ! empty($data)) {
+            try
+            {
+                // Root galleries, No parent is defined
+                if (!$gid) {
+                    $data  = parent::getItems();
                     $this->_item[$gid] = $data;
+                } else {
+                    // Select parent and child galleries
+                    $db    = $this->getDbo();
+                    $query = $db->getQuery(true);
+
+                    $query->select('*')
+                        //->from($db->quoteName('#__rsg2_galleries', 'a'))
+                        ->from($db->quoteName('#__rsg2_galleries', 'a'))
+                        //->where('a.id = ' . (int) $gid);
+                        ->where('a.id = ' . (int) $gid, 'OR')
+                        ->where('a.parent_id = ' . (int) $gid)
+                    ;
+
+                    $db->setQuery($query);
+                    $data = $db->loadObjectList();
+
+                    if ( ! empty($data)) {
+                        $this->_item[$gid] = $data;
+                    }
+                    else
+                    {
+                        // may< be empty
+                        $this->_item[$gid] = false;
+                        // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
+                    }
                 }
-				else
-                {
-                    // may< be empty
-                    $this->_item[$gid] = false;
-                    // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
-				}
-			}
-			catch (\Exception $e)
-			{
-				$this->setError($e);
-				$this->_item[$gid] = false;
-			}
-		}
+            }
+            catch (\RuntimeException $e)
+            {
+                $OutTxt = '';
+                $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-        $images = $this->_item[$gid];
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
 
-		return $images;
-	}
+        $galleries = $this->_item[$gid];
+
+        return $galleries;
+    }
 
 
 
