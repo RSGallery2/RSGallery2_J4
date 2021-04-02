@@ -86,13 +86,11 @@ class GalleriesModel extends ListModel
 	{
 		$app = Factory::getApplication();
 
-
 		// Adjust the context to support modal layouts.
 		if ($layout = $app->input->get('layout'))
 		{
 			$this->context .= '.' . $layout;
 		}
-
 
 		//$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
 		//// Adjust the context to support forced languages.

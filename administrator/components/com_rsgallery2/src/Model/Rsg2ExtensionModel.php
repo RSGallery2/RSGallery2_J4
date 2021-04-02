@@ -52,7 +52,7 @@ class Rsg2ExtensionModel extends BaseModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'ConfigRawModel: readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'ConfigRawModel: readRsg2ExtensionManifest: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -86,7 +86,7 @@ class Rsg2ExtensionModel extends BaseModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'ConfigRawModel: readConfigFromExtensionTable: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'ConfigRawModel: readConfigFromExtensionTable: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -115,7 +115,7 @@ class Rsg2ExtensionModel extends BaseModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'ConfigRawModel: readRsg2ExtensionData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'ConfigRawModel: readRsg2ExtensionData: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

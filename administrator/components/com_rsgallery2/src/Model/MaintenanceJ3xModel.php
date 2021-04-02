@@ -111,7 +111,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
             $oldItems = $db->loadAssocList('name', 'value');
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'OldConfigItems: Error executing query: "' . $query . '"' . '<br>';
+            $OutTxt .= 'j3xConfigItems: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

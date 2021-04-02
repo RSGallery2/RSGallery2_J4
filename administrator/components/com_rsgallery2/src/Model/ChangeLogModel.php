@@ -82,7 +82,7 @@ class ChangeLogModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'ChangeLogModel: changeLogUrl_manifest: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'ChangeLogModel: changeLogUrl_manifest: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
