@@ -34,6 +34,19 @@ class GalleryController extends FormController
 	 */
 	protected $extension;
 
+    /**
+     * Constructor.
+     *
+     * @param   array                $config   An optional associative array of configuration settings.
+     * @param   MVCFactoryInterface  $factory  The factory.
+     * @param   CMSApplication       $app      The JApplication for the dispatcher
+     * @param   \JInput              $input    Input
+     *
+     * @since __BUMP_VERSION__
+     * @see    \JControllerLegacy
+     *
+    /**/
+
     public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -44,20 +57,65 @@ class GalleryController extends FormController
         }
     }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
-	 *
-	 * @since __BUMP_VERSION__
-	 * @see    \JControllerLegacy
-	 *
-	/**/
+    /**
+     * Save edited gallery parameters and goto upload form
+     *
+     * @since version 4.3
+     */
+    public function save2upload()
+    {
+        // $msg     = '<strong>' . 'Save2Upload ' . ':</strong><br>';
+        $msg     = 'Save and goto upload: ';
+        // fall back link
+        $link = 'index.php?option=com_rsgallery2';
+        $IsSaved = false;
 
-	/**
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+
+            try {
+                //  tells if successful
+                $IsSaved  = $this->save();
+
+                if ($IsSaved)
+                {
+                    // ToDo: Prepare gallery ID and pre select it in upload form
+
+                    $id = $this->input->get('id', 0, 'int');
+                    $link = 'index.php?option=com_rsgallery2&view=upload' . '&id=' . $id;
+
+                    $msg .= ' successful';
+                    $msgType = 'notice';
+                    $this->setRedirect($link, $msg, $msgType);
+                }
+                else
+                {
+                    $msg .= ' failed';
+                    $msgType = 'error';
+                }
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing rebuild: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+        }
+
+        $this->setRedirect($link, $msg, $msgType);
+
+        return $IsSaved;
+    }
+
+    /**
 	 * Method to check if you can add a new record.
 	 *
 	 * @param   array  $data  An array of input data.

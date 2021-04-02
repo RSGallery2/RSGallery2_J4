@@ -193,7 +193,11 @@ class HtmlView extends BaseHtmlView
 					ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
 				}
 
-				ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
+				// Goto upload with selected gallery id
+                ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
+
+//                $link = 'index.php?option=com_rsgallery2&view=upload' . '&id=' . $this->item->id;
+//                $toolbar->appendButton( 'Link', 'upload', 'COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', $link);
 
 				break;
 		}

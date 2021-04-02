@@ -97,7 +97,6 @@ class UploadController extends FormController
 		$app = Factory::getApplication();
 
 		// do check token
-		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 		if (!Session::checkToken())
 		{
 			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
