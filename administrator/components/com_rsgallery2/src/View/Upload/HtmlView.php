@@ -25,6 +25,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\UploadModel;
 
 /**
  * View class for a list of rsgallery2.
@@ -149,7 +150,7 @@ class HtmlView extends BaseHtmlView
 
 		$isPreSelectLatestGallery = $rsgConfig->get('isPreSelectLatestGallery');
 		if ($isPreSelectLatestGallery) {
-			$IdGallerySelect = $this->getIdLatestGallery();
+			$IdGallerySelect = UploadModel::IdLatestGallery();
 		}
 
 		// upload_zip, upload_folder
@@ -159,7 +160,7 @@ class HtmlView extends BaseHtmlView
 
 		$form->bind($formParam);
 
-		$this->is1GalleryExisting = $this->is1GalleryExisting();
+		$this->is1GalleryExisting = UploadModel::is1GalleryExisting();
 
 		$this->form = $form;
 
@@ -240,76 +241,6 @@ class HtmlView extends BaseHtmlView
 //		{
 //	    	$toolbar->preferences('com_rsgallery2');
 //		}
-	}
-	/**
-	 * Check if at least one gallery exists
-	 * Regards the nested structure (ID=1 is only root of tree and no gallery)
-	 *
-	 * @return true on galleries found
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function is1GalleryExisting()
-	{
-		$is1GalleryExisting = false;
-
-		try
-		{
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true);
-
-			// count gallery items
-			$query->select('COUNT(*)')
-				// ignore root item  where id is "1"
-				->where($db->quoteName('id') . ' != 1')
-				->from('#__rsg2_galleries');
-
-			$db->setQuery($query, 0, 1);
-			$IdGallery          = $db->loadResult();
-
-			// > 0 galleries exist
-			$is1GalleryExisting = !empty ($IdGallery);
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-		return $is1GalleryExisting;
-	}
-
-	/**
-	 * Query for ID of latest gallery
-	 *
-	 * @return string ID of latest gallery
-	 *
-	 * @since 4.3.0
-	 */
-	public function getIdLatestGallery()
-	{
-		$db = Factory::getDbo();
-		$query = $db->getQuery(true);
-
-		$test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
-
-		$query->select($db->quoteName('id'))
-			->from('#__rsg2_galleries')
-			->where($db->quoteName('id') . ' != 1' )
-			->setLimit(1)
-//			->order($db->quoteName('created') . ' DESC');
-//			->order( $db->quoteName('id') . ' DESC')
-			->order($db->quoteName('created')  . ' DESC' . ', ' . $db->quoteName('id') . ' DESC')
-		;
-
-		$db->setQuery($query, 0, 1);
-		$IdLatestGallery = $db->loadResult();
-
-		return $IdLatestGallery;
 	}
 
 }

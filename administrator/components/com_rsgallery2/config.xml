@@ -156,6 +156,7 @@
 		</field>
 
 		<field
+				id="isPreSelectLatestGallery"
 				name="isPreSelectLatestGallery"
 				type="radio"
 				default="1"
