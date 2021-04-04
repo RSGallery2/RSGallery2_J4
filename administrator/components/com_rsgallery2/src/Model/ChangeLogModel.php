@@ -419,7 +419,7 @@ class ChangeLogModel
         <row>
             <div class="card forCollapse">
                 <h5 class="card-header">
-                    <button class="btn $collapsed" type="button" data-toggle="collapse" data-target="#collapse-collapsed-$id" 
+                    <button class="btn $collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-collapsed-$id" 
                         aria-expanded="$ariaExpanded" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">
                         <i class="fa fa-chevron-down pull-right"></i>
                         $title
