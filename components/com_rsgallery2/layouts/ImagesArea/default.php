@@ -7,10 +7,62 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Uri\Uri;
+
 defined('_JEXEC') or die;
 
+
+echo '<span style="color:red">'
+    . 'Image area Tasks: <br>'
+    . '* modal image (->slider)<br>'
+    . '* length of filenames<br>'
+    . '* what happens on empty galleries/ image lists<br>'
+	. '* Size of replace images (missing/no images) <br>'
+	. '* pagination<br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+. '</span><br><br>';
+
+
 $images = $displayData['images'];
-;
+
+
+//--- sanitice URLs -----------------------------------
+
+$noImageUrl = URI::root() . '/media/com_rsgallery2/images/NoImagesAssigned.png';
+$missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.png';
+
+foreach ($images as $idx => $image) {
+
+    // show dummy thumb on galleries with no images
+    if (! empty($image->isHasNoImages))
+    {
+        $image->UrlOriginalFile = $noImageUrl;
+        $image->UrlDisplayFiles = $noImageUrl;;
+        $image->UrlThumbFile = $noImageUrl;
+
+    }
+//    else {
+//
+//        if (!$image->isOriginalFileExist) {
+//            $image->UrlOriginalFile = $missingUrl;
+//            ;
+//        }
+//
+//        if (!$image->isDisplayFileExist) {
+//            $image->UrlDisplayFiles = $missingUrl;;
+//        }
+//
+//        if (!$image->isThumbFileExist) {
+//            $image->UrlThumbFile = $missingUrl;
+//        }
+//
+//    }
+}
+
 ?>
 
 <h3>rsgallery 2 images area layout</h3>

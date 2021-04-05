@@ -45,28 +45,28 @@ if (true) {
     echo $layout->render();
 }
 
-echo '<h1> RSGallery2 "galleries" view </h1>';
-
-foreach ($this->items as $gallery) {
-
-    echo 'gallery: ' . $gallery->name . '<br>';
-
-}
+//foreach ($this->items as $gallery) {
+//
+//    echo 'gallery: ' . $gallery->name . '<br>';
+//
+//}
 
 $layout = new FileLayout('ImagesArea.default');
 
 $displayData['images'] = $this->items;
 
-
-
 ?>
 <div class="rsg2__form rsg2__galleries_thumbs">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <h1> RSGallery2 "images" view </h1>
-        <h2>Image Gallery</h2>
+        <?php echo '<h1> RSGallery2 "galleries" view </h1>';?>
+        <h2>Thumbs of galleries</h2>
 
         <hr>
+
+        <?php
+        echo $layout->render($displayData);
+        ?>
 
 
 

@@ -245,7 +245,6 @@ class ImagesModel extends ListModel
 
 	public function getItems()
 	{
-        $items  = parent::getItems();
         $user   = Factory::getUser();
         $userId = $user->get('id');
         $guest  = $user->get('guest');
@@ -259,14 +258,17 @@ class ImagesModel extends ListModel
 			$this->_item = array();
 		}
 
-        $images = new \stdClass(); // ToDo: all to (object)[];
+        $images = []; // new \stdClass(); // ToDo: all to (object)[];
 
 		// not fetched already
 		if ( ! isset($this->_item[$gid])) {
 
 			try
 			{
-				$db    = $this->getDbo();
+                $images = parent::getItems(); // gid ...
+
+                //--- >>>>  toDo: use above instead of below ------------
+                $db    = $this->getDbo();
 				$query = $db->getQuery(true);
 
 				$query->select('*')
@@ -274,31 +276,35 @@ class ImagesModel extends ListModel
 					->from($db->quoteName('#__rsg2_images', 'a'))
 					//->where('a.id = ' . (int) $gid);
 					->where('a.gallery_id = ' . (int) $gid);
-// ToDo: limit ....
+                    // ToDo: limit ....
 
 				$db->setQuery($query);
-				$data = $db->loadObjectList();
+                $images = $db->loadObjectList();
+                //--- <<<  toDo: use above instead of below ------------
 
-				if ( ! empty($data)) {
-
-                    $this->_item[$gid] = $data;
+				if ( ! empty($images)) {
 
                     // Add image paths, image params ...
-                    $this->AssignImageUrls ($data);
-                    $this->AssignImageUrls ($data);
+                    $data = $this->AddLayoutData ($images);
+
                 }
 				else
                 {
-                    // may< be empty
-                    $this->_item[$gid] = [];  // false;
-                    // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
+                    // No images defined yet
+                    $data = false;
 				}
+
+                $this->_item[$gid] = $data;
 			}
-			catch (\Exception $e)
-			{
-				$this->setError($e);
-				$this->_item[$gid] = false;
-			}
+            catch (\RuntimeException $e)
+            {
+                $OutTxt = '';
+                $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
 		}
 
         $images = $this->_item[$gid];
@@ -480,8 +486,14 @@ class ImagesModel extends ListModel
             $layoutParameter->limit = $limit;
 
         }
-        catch (\Exception $e) {
-            $this->setError($e);
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: CascadedLayoutParameter: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
         }
 
         return $layoutParameter;
@@ -493,32 +505,58 @@ class ImagesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignImageUrls($images)
+    public function AddLayoutData($images)
     {
         try {
-
-            // ToDo: gid: one get access function keep result ...
-            // gallery parameter
-            $app = Factory::getApplication();
-            $input = $app->input;
-            $gid = $input->get('gid', '', 'INT');
-
-            $ImagePaths = new ImagePaths ($gid);
 
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                $image->UrlThumbFile = $ImagePaths->getThumbUrl ($image->name);
-                // $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
-                $image->UrlDisplayFiles = $ImagePaths->getSizeUrls ($image->name);
-                $image->UrlOriginalFile = $ImagePaths->getOriginalUrl ($image->name);
+                $this->AssignImageUrl($image);
 
-                // ToDo: watermarked file
             }
 
         }
-        catch (\Exception $e) {
-            $this->setError($e);
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $images;
+    }
+
+    /**
+     * @param $images
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public function AssignImageUrl($image)
+    {
+
+        try {
+
+            // ToDo: check for J3x style of gallery (? all in construct ?)
+
+            $ImagePaths = new ImagePathsData ($image->gallery_id);
+
+            $ImagePaths->assignPathData ($image);
+
+            // ToDo: watermarked file
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
         }
 
     }

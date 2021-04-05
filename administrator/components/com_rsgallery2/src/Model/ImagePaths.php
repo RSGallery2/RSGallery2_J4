@@ -179,9 +179,21 @@ class ImagePaths
 		return PathHelper::join($this->sizeBasePaths [$imageSize], $fileName);
 	}
 
-	/*--------------------------------------------------------------------
-	URIs
-	--------------------------------------------------------------------*/
+    public function getSizePaths($fileName = '')
+    {
+        $sizePaths = [];
+
+        foreach ($this->imageSizes as $imageSize)
+        {
+            $sizePaths[$imageSize] = $this->sizeUrls[$imageSize]  . '/' . $fileName;
+        }
+
+        return  $sizePaths;
+    }
+
+    /*--------------------------------------------------------------------
+    URIs
+    --------------------------------------------------------------------*/
 
 	public function getOriginalUrl($fileName = '')
 	{

@@ -70,7 +70,7 @@ class HtmlView extends BaseHtmlView
 
         $this->isDevelopSite = $rsgConfig->get('isDevelop'); // = $rsgConfig->isDevelopSite;
 
-/
+
 //		$temp = clone $params;
 //		$temp->merge($itemparams);
 //		$item->params = $temp;

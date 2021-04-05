@@ -15,11 +15,14 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\ListModel;
-use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
@@ -436,39 +439,24 @@ class GalleriesModel extends ListModel
             {
                 // Root galleries, No parent is defined
                 if (!$gid) {
-                    $data  = parent::getItems();
-                    $this->_item[$gid] = $data;
+                    $galleries  = parent::getItems();
                 } else {
-                    // Select parent and child galleries
-                    $db    = $this->getDbo();
-                    $query = $db->getQuery(true);
-
-                    $query->select('*')
-                        //->from($db->quoteName('#__rsg2_galleries', 'a'))
-                        ->from($db->quoteName('#__rsg2_galleries', 'a'))
-                        //->where('a.id = ' . (int) $gid);
-                        ->where('a.id = ' . (int) $gid, 'OR')
-                        ->where('a.parent_id = ' . (int) $gid)
-                    ;
-
-                    $db->setQuery($query);
-                    //$data = $db->loadObjectList();
-                    $galleries = $db->loadObjectList();
-
-                    if ( ! empty($galleries)) {
-
-	                    // Add image paths, image params ...
-	                    $data  = $this->CreateImageUrls ($galleries);
-
-                        $this->_item[$gid] = $data;
-                    }
-                    else
-                    {
-                        // may< be empty
-                        $this->_item[$gid] = false;
-                        // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
-                    }
+                    $galleries = $this->getGalleryAndChilds($gid);
                 }
+
+                if ( ! empty($galleries)) {
+
+                    // Add image paths, image params ...
+                    $data = $this->AddLayoutData ($galleries);
+
+                }
+                else
+                {
+                    // No galleries defined yet
+                    $data = false;
+                }
+
+                $this->_item[$gid] = $data;
             }
             catch (\RuntimeException $e)
             {
@@ -492,7 +480,7 @@ class GalleriesModel extends ListModel
 	 * @return mixed
 	 * @since 4.5.0.0
 	 */
-	public function CreateImageUrls($galleries)
+	public function AddLayoutData($galleries)
 	{
 		$images = [];
 
@@ -505,52 +493,85 @@ class GalleriesModel extends ListModel
 
 			foreach ($galleries as $gallery)
 			{
-				$ImagePaths = new ImagePaths ($gallery->id);
+				// $ImagePaths = new ImagePathsData ($gallery->id);
 
 				// Random image
 				if ($gallery->thumb_id == 0) {
-					$gallery->thumb_id = gatRandomImageId ($gallery->id);
+					$gallery->thumb_id = $this->RandomImageId ($gallery->id);
 				}
 
+				 // gallery has image
 				if ($gallery->thumb_id > 0)
 				{
 					//$image = new \stdClass();
-					$image = getImageById ($gallery->thumb_id);
+					$image = $this->ImageById ($gallery->thumb_id);
 
 					if ( ! empty ($image)) {
 
+                        $image->gallery_name = $gallery->name;
 						$images[] = $image;
+
+                        $image->isHasNoImages = false;
 					}
 
-				}
+                    $this->AssignImageUrl($image);
 
-//				foreach ($images as $image)
-//				{
-//					// ToDo: check for J3x style of gallery (? all in construct ?)
-//
-//					$image->UrlThumbFile = $ImagePaths->getThumbUrl($image->name);
-//					// $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
-//					$image->UrlDisplayFiles = $ImagePaths->getSizeUrls($image->name);
-//					$image->UrlOriginalFile = $ImagePaths->getOriginalUrl($image->name);
-//
-//					// ToDo: watermarked file
-//				}
-			}
+					// Replace image name with gallery name
+                    $image->name = $image->gallery_name;
+                }
+				else {
 
-			if (len($images))
-			{
+                    // gallery has NO image -> Create dummy data
+				    $dummyImage = new \stdClass();
+                    $dummyImage->name = $gallery->name;
 
-				AssignImageUrls($images);
+                    $dummyImage->isHasNoImages = true;
+
+                    $images[] = $dummyImage;
+                }
 			}
 
 		}
-		catch (\Exception $e)
-		{
-			$this->setError($e);
-		}
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		return images;
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+		return $images;
 	}
+
+//	/**
+//	 * @param $images
+//	 *
+//	 *
+//	 * @since 4.5.0.0
+//	 */
+//	public function AssignImageUrls($images)
+//	{
+//		try {
+//
+//			foreach ($images as $image) {
+//
+//                $this->AssignImageUrl($image);
+//			}
+//
+//		}
+//        catch (\RuntimeException $e)
+//        {
+//            $OutTxt = '';
+//            $OutTxt .= 'GalleriesModel: AssignImageUrls: Error executing query: "' . "" . '"' . '<br>';
+//            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+//
+//            $app = Factory::getApplication();
+//            $app->enqueueMessage($OutTxt, 'error');
+//        }
+//
+//	}
 
 	/**
 	 * @param $images
@@ -558,44 +579,39 @@ class GalleriesModel extends ListModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public function AssignImageUrls($images)
+	public function AssignImageUrl($image)
 	{
+
 		try {
 
-			// ToDo: gid: one get access function keep result ...
-			// gallery parameter
-			$app = Factory::getApplication();
-			$input = $app->input;
-			$gid = $input->get('gid', '', 'INT');
+            // ToDo: check for J3x style of gallery (? all in construct ?)
 
-			$ImagePaths = new ImagePaths ($gid);
+            $ImagePaths = new ImagePathsData ($image->gallery_id);
 
-			foreach ($images as $image) {
-				// ToDo: check for J3x style of gallery (? all in construct ?)
+            $ImagePaths->assignPathData ($image);
 
-				$image->UrlThumbFile = $ImagePaths->getThumbUrl ($image->name);
-				// $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
-				$image->UrlDisplayFiles = $ImagePaths->getSizeUrls ($image->name);
-				$image->UrlOriginalFile = $ImagePaths->getOriginalUrl ($image->name);
-
-				// ToDo: watermarked file
-			}
-
+            // ToDo: watermarked file
 		}
-		catch (\Exception $e) {
-			$this->setError($e);
-		}
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
 	}
 
 
 	/**
-	 * @param $galleries
+	 * @param $galleryId
 	 *
 	 * @return mixed
 	 * @since 4.5.0.0
 	 */
-	public function gatRandomImageId($galleryId)
+	public function RandomImageId($galleryId)
 	{
 		$imageId = -1;
 
@@ -614,7 +630,7 @@ class GalleriesModel extends ListModel
 
 			// Select required fields
 			$query->select('id')
-				->from($db->quoteName('#__rsgallery2_files'))
+				->from($db->quoteName('#__rsg2_images'))
 				->where($db->quoteName('gallery_id') . '=' . (int) $galleryId)
 				->setLimit((int) $limit)
 				->order('RAND()')
@@ -634,16 +650,58 @@ class GalleriesModel extends ListModel
 //
 
 		}
-		catch (\Exception $e)
-		{
-			$this->setError($e);
-		}
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: RandomImageId: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
 		return $imageId;
 	}
 
-	public function randomThumb ($galleryId)
+	/**
+	 * @param $imageId
+	 *
+	 * @return mixed
+	 * @since 4.5.0.0
+	 */
+	public function ImageById ($imageId)
 	{
+		$image = new \stdClass();
+
+		try
+		{
+
+			// Create a new query object.
+			$db = $this->getDbo();
+			$query = $db->getQuery(true);
+
+			// Select required fields
+			$query->select('*')
+				->from($db->quoteName('#__rsg2_images'))
+				->where($db->quoteName('id') . '=' . (int) $imageId)
+			;
+
+			$db->setQuery($query);
+
+            $image = $db->loadObject();
+            $testName = $image->name;
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: ImageById: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+		return $image;
 	}
 
 	/**
@@ -658,5 +716,47 @@ class GalleriesModel extends ListModel
         return $this->getState('list.start');
     }
 
+    /**
+     * @param int $gid
+     *
+     * @return mixed
+     *
+     * @since version
+     */
+    private function getGalleryAndChilds(int $gid)
+    {
+        $galleries = [];
 
+        try {
+            // Select parent and child galleries
+            $db = $this->getDbo();
+            $query = $db->getQuery(true);
+
+            $query->select('*')
+                //->from($db->quoteName('#__rsg2_galleries', 'a'))
+                ->from($db->quoteName('#__rsg2_galleries'))
+                //->where('a.id = ' . (int) $gid);
+                ->where('id = ' . (int)$gid, 'OR')
+                ->where('parent_id = ' . (int)$gid);
+
+            $db->setQuery($query);
+            //$data = $db->loadObjectList();
+            $galleries = $db->loadObjectList();
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $galleries;
+    }
 }
+
+
+
+

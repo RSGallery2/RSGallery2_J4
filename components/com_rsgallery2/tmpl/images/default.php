@@ -28,7 +28,7 @@ if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
         . 'Tasks: <br>'
-        . '* extract image and modal slider into layouts to be called<br>'
+        . '* <br>'
         . '* make rsgConfig global<br>'
         //	. '* <br>'
         //	. '* <br>'

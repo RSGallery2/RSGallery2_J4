@@ -23,12 +23,12 @@ echo '<span style="color:red">'
     . 'Search tasks: <br>'
     . '* link from extern ??<br>'
     . '* separate searches for gallery / images -> seperate answers<br>'
-    //	. '* <br>'
-    //	. '* <br>'
-    //	. '* <br>'
-    //	. '* <br>'
-    //	. '* <br>'
-    . '</span><br><br>';
+	. '* Height of button -> BS 5<br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+. '</span><br><br>';
 
 $link = Route::_('index.php?option=com_rsgallery2&view=searchresult'); // JRoute::_('index.php'); ? >search?Itemid=101
 $placeholder = Text::_('COM_RSGALLERY2_SEARCH_GALLERIES_IMAGES');
