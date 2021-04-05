@@ -19,6 +19,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
@@ -451,9 +452,14 @@ class GalleriesModel extends ListModel
                     ;
 
                     $db->setQuery($query);
-                    $data = $db->loadObjectList();
+                    //$data = $db->loadObjectList();
+                    $galleries = $db->loadObjectList();
 
-                    if ( ! empty($data)) {
+                    if ( ! empty($galleries)) {
+
+	                    // Add image paths, image params ...
+	                    $data  = $this->CreateImageUrls ($galleries);
+
                         $this->_item[$gid] = $data;
                     }
                     else
@@ -480,10 +486,167 @@ class GalleriesModel extends ListModel
         return $galleries;
     }
 
+	/**
+	 * @param $galleries
+	 *
+	 * @return mixed
+	 * @since 4.5.0.0
+	 */
+	public function CreateImageUrls($galleries)
+	{
+		$images = [];
+
+		try
+		{
+//			// gallery parameter
+//			$app = Factory::getApplication();
+//			$input = $app->input;
+//			$gid = $input->get('gid', '', 'INT');
+
+			foreach ($galleries as $gallery)
+			{
+				$ImagePaths = new ImagePaths ($gallery->id);
+
+				// Random image
+				if ($gallery->thumb_id == 0) {
+					$gallery->thumb_id = gatRandomImageId ($gallery->id);
+				}
+
+				if ($gallery->thumb_id > 0)
+				{
+					//$image = new \stdClass();
+					$image = getImageById ($gallery->thumb_id);
+
+					if ( ! empty ($image)) {
+
+						$images[] = $image;
+					}
+
+				}
+
+//				foreach ($images as $image)
+//				{
+//					// ToDo: check for J3x style of gallery (? all in construct ?)
+//
+//					$image->UrlThumbFile = $ImagePaths->getThumbUrl($image->name);
+//					// $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
+//					$image->UrlDisplayFiles = $ImagePaths->getSizeUrls($image->name);
+//					$image->UrlOriginalFile = $ImagePaths->getOriginalUrl($image->name);
+//
+//					// ToDo: watermarked file
+//				}
+			}
+
+			if (len($images))
+			{
+
+				AssignImageUrls($images);
+			}
+
+		}
+		catch (\Exception $e)
+		{
+			$this->setError($e);
+		}
+
+		return images;
+	}
+
+	/**
+	 * @param $images
+	 *
+	 *
+	 * @since 4.5.0.0
+	 */
+	public function AssignImageUrls($images)
+	{
+		try {
+
+			// ToDo: gid: one get access function keep result ...
+			// gallery parameter
+			$app = Factory::getApplication();
+			$input = $app->input;
+			$gid = $input->get('gid', '', 'INT');
+
+			$ImagePaths = new ImagePaths ($gid);
+
+			foreach ($images as $image) {
+				// ToDo: check for J3x style of gallery (? all in construct ?)
+
+				$image->UrlThumbFile = $ImagePaths->getThumbUrl ($image->name);
+				// $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
+				$image->UrlDisplayFiles = $ImagePaths->getSizeUrls ($image->name);
+				$image->UrlOriginalFile = $ImagePaths->getOriginalUrl ($image->name);
+
+				// ToDo: watermarked file
+			}
+
+		}
+		catch (\Exception $e) {
+			$this->setError($e);
+		}
+
+	}
 
 
+	/**
+	 * @param $galleries
+	 *
+	 * @return mixed
+	 * @since 4.5.0.0
+	 */
+	public function gatRandomImageId($galleryId)
+	{
+		$imageId = -1;
 
-    /**
+		try
+		{
+//			// gallery parameter
+//			$app = Factory::getApplication();
+//			$input = $app->input;
+//			$gid = $input->get('gid', '', 'INT');
+
+			// Create a new query object.
+			$db = $this->getDbo();
+			$query = $db->getQuery(true);
+
+			$limit = 1;
+
+			// Select required fields
+			$query->select('id')
+				->from($db->quoteName('#__rsgallery2_files'))
+				->where($db->quoteName('gallery_id') . '=' . (int) $galleryId)
+				->setLimit((int) $limit)
+				->order('RAND()')
+			;
+
+			$db->setQuery($query);
+
+			$imageId = $db->loadResult();
+
+//			if ($db->getErrorNum())
+//			{
+//				echo $db->stderr();
+//				return false;
+//			}
+//
+//			return $list;
+//
+
+		}
+		catch (\Exception $e)
+		{
+			$this->setError($e);
+		}
+
+		return $imageId;
+	}
+
+	public function randomThumb ($galleryId)
+	{
+	}
+
+	/**
      * Method to get the starting number of items for the data set.
      *
      * @return  integer  The starting number of items available in the data set.

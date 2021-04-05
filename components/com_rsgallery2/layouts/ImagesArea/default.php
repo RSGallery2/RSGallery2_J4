@@ -17,7 +17,7 @@ $images = $displayData['images'];
 
 <div id="rsg2_gallery" class="rsg2_gallery">
 
-	<div class="rsg2_gallery__images" id="gallery"  data-toggle="modal" data-target="#exampleModal">
+	<div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
 
 		<?php
 		foreach ($images as $idx => $image) {
@@ -27,7 +27,7 @@ $images = $displayData['images'];
 				     alt="<?php echo $image->name ?>"
 				     class="img-thumbnail rsg2_gallery__images_image"
 				     data-target="#rsg2_carousel"
-				     data-slide-to="<?php echo $idx ?>"
+				     data-slide-to="<?php echo $idx ?>"bs-
 				>
 				<figcaption><?php echo $image->name; ?></figcaption>
 			</figure>

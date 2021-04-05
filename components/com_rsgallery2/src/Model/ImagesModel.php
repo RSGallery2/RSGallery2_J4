@@ -285,6 +285,7 @@ class ImagesModel extends ListModel
 
                     // Add image paths, image params ...
                     $this->AssignImageUrls ($data);
+                    $this->AssignImageUrls ($data);
                 }
 				else
                 {
