@@ -16,7 +16,7 @@ use Joomla\CMS\Log\Log;
 /**
  * Script file of Rsg2_images module
  */
-class mod_rsg2_imagesInstallerScript
+class plg_rsg2_imagesInstallerScript
 {
 
 	/**
@@ -39,7 +39,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function install($parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_UNINSTALL');
+		echo Text::_('PLG_RSG2_IMAGES_INSTALLERSCRIPT_UNINSTALL');
 
 		return true;
 	}
@@ -53,7 +53,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function uninstall($parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_UNINSTALL');
+		echo Text::_('PLG_RSG2_IMAGES_INSTALLERSCRIPT_UNINSTALL');
 
 		return true;
 	}
@@ -67,7 +67,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function update($parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_UPDATE');
+		echo Text::_('PLG_RSG2_IMAGES_INSTALLERSCRIPT_UPDATE');
 
 		return true;
 	}
@@ -98,7 +98,7 @@ class mod_rsg2_imagesInstallerScript
 			return false;
 		}
 
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_PREFLIGHT');
+		echo Text::_('PLG_RSG2_IMAGES_INSTALLERSCRIPT_PREFLIGHT');
 
 		return true;
 	}
@@ -113,7 +113,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function postflight($type, $parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_POSTFLIGHT');
+		echo Text::_('PLG_RSG2_IMAGES_INSTALLERSCRIPT_POSTFLIGHT');
 
 		return true;
 	}
