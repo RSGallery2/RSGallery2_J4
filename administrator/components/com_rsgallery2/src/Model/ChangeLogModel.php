@@ -12,9 +12,10 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 \defined('_JEXEC') or die;
 
 use Exception;
-use Juri;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /**
  * Rsgallery2 Component changelog model
@@ -28,7 +29,7 @@ class ChangeLogModel
 {
     // no on install (com_installer) public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
     // will be taken from manifest file
-    public $changeLogUrl = ""; //JURI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
+    public $changeLogUrl = ""; //URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
 
     /**
      * ChangeLogModel constructor.
@@ -65,7 +66,7 @@ class ChangeLogModel
      */
     public function changeLogUrlFromExtension()
     {
-        $changeLogUrl = JURI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
+        $changeLogUrl = URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
 
         try
         {

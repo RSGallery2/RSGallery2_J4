@@ -160,7 +160,7 @@ class HtmlView extends BaseHtmlView
 //		$this->HtmlPathThumb = URI::base() . $rsgConfig->get('???imgPath_thumb') . '/';
 //		////echo 'ThumbPath: ' . JPATH_THUMB . '<br>';
 //		////echo 'ImagePathThumb: ' . $rsgConfig->imgPath_thumb . '<br>';
-//		////echo 'ImagePathThumb: ' . JURI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
+//		////echo 'ImagePathThumb: ' . URI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
 //		//echo $this->HtmlPathThumb . '<br>';
 
 		//--- sidebar --------------------------------------------------------------------

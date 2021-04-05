@@ -15,7 +15,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use JUri;
+use Joomla\CMS\Uri\Uri;
 
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
@@ -87,17 +87,17 @@ class InstallMessage
     {
         //--- prepare links and text in variables --------------------------------------------
 
-        $logoLink = JURI::root() . '/media/com_rsgallery2/images/RSG2_logoText.svg';
+        $logoLink = URI::root() . '/media/com_rsgallery2/images/RSG2_logoText.svg';
 
-        $rsg2ControlPanelLink = JURI::root() . '/administrator/index.php?option=com_rsgallery2';
+        $rsg2ControlPanelLink = URI::root() . '/administrator/index.php?option=com_rsgallery2';
         $controlPanelText = Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL');
         $controlPanelTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONTROL_PANEL_TITLE');
 
-        $rsg2ConfigurationLink = JURI::root() . '/administrator/index.php?option=com_config&view=component&component=com_rsgallery2';
+        $rsg2ConfigurationLink = URI::root() . '/administrator/index.php?option=com_config&view=component&component=com_rsgallery2';
         $configurationText = Text::_('COM_RSGALLERY2_MENU_CONFIG');
         $configurationTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONFIGURATION_TITLE');
 
-        $rsg2GalleriesLink = JURI::root() . '/administrator/index.php?option=com_rsgallery2&view=galleries';
+        $rsg2GalleriesLink = URI::root() . '/administrator/index.php?option=com_rsgallery2&view=galleries';
         $galleriesText = Text::_('COM_RSGALLERY2_MENU_GALLERIES');
         $galleriesTitle = Text::_('COM_RSGALLERY2_INSTALL_GOTO_GALLERIES_TITLE');
 
