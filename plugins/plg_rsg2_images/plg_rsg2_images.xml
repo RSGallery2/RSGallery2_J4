@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin"
            group="content" 
+		   version="4.0" 
            method="upgrade">
 	<name>PLG_RSG2_IMAGES</name>
 	<creationDate>05. Mar. 2021</creationDate>
