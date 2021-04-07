@@ -8,15 +8,24 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+// https://docs.joomla.org/J3.x:Creating_a_content_plugin/en
 // https://docs.joomla.org/JDOC:Joomla_4_Tutorials_Project/en
 // https://docs.joomla.org/J4.x:Creating_a_Plugin_for_Joomla/de
 // https://docs.joomla.org/J4_Plugin_example_-_Table_of_Contents
 
+// $this->params: die Parameter, die für dieses Plugin vom Administrator gesetzt werden
+// $this->_name: der Name des Plugins
+// $this->_type: die Gruppe (Art) des Plugins
+// $this->db: das Datenbankobjekt
+// $this->app: das Anwendungsobjekt
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Event\Event;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Plugin\CMSPlugin;
+//use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 
 use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
@@ -27,7 +36,8 @@ use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
      * @return  void
      *
      * @since   4.0
-     */class PlgContentRsg2Images extends CMSPlugin
+     */
+class PlgContentRsg2Images extends CMSPlugin
 {
 
     /** @var \Joomla\CMS\Application\CMSApplication */
