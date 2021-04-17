@@ -28,7 +28,7 @@ use Joomla\CMS\Plugin\CMSPlugin;
 //use Joomla\Event\SubscriberInterface;
 use Joomla\Utilities\ArrayHelper;
 
-// use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
+//use Rsg2imagesNamespace\Plugin\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
 /**
  * look for RSG ... to be replaced by gallery images
@@ -37,7 +37,7 @@ use Joomla\Utilities\ArrayHelper;
  *
  * @since   4.0
  */
-class PlgContentRsg2_images extends CMSPlugin
+class PlgContentRsg2Images extends CMSPlugin
 {
 
     /** @var \Joomla\CMS\Application\CMSApplication */

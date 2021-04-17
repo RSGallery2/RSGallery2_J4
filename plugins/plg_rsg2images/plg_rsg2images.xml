@@ -3,7 +3,7 @@
            group="content" 
 		   version="4.0" 
            method="upgrade">
-	<name>plg_content_rsg2_images</name>
+	<name>plg_content_rsg2images</name>
 	<creationDate>05. Mar. 2021</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
@@ -11,18 +11,13 @@
 	<copyright>(c) 2021-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>5.0.0.3</version>
-	<description>PLG_RSG2_IMAGES_XML_DESCRIPTION</description>
+	<description>PLG_RSG2IMAGES_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
-	<Xnamespace>Rsg2_imagesNamespace\Module\Rsg2_images</Xnamespace>
 	<files>
-		<filename plugin="plg_rsg2_images">plg_rsg2_images.php</filename>
+		<filename plugin="plg_rsg2images">plg_rsg2images.php</filename>
 		<folder>language</folder>
-		<filename>plg_rsg2_images.xml</filename>
+		<filename>plg_rsg2images.xml</filename>
 	</files>
-	<languages>
-		<language tag="en-GB">en-GB.plg_content_rsg2_images.ini</language>
-		<language tag="en-GB">en-GB.plg_content_rsg2_images.sys.ini</language>
-	</languages>
 	<config>
 		<fields name="params">
 			<fieldset 
@@ -32,9 +27,9 @@
 				<field
 						name="help"
 						type="text"
-						label="PLG_RSG2_IMAGES_XML_APPLIES_LABEL"
-						description="PLG_RSG2_IMAGES_XML_APPLIES_DESC"
-						default="PLG_RSG2_IMAGES_XML_APPLIES_DEFAULT"
+						label="PLG_RSG2IMAGES_XML__LABEL"
+						description="PLG_RSG2IMAGES_XML__DESC"
+						default="PLG_RSG2IMAGES_XML_DEFAULT"
 						readonly="readonly"
 				/>
 			</fieldset>
