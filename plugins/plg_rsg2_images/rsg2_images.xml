@@ -13,7 +13,7 @@
 	<version>5.0.0.3</version>
 	<description>PLG_CONTENT_RSG2_IMAGES_XML_DESCRIPTION</description>
 	<files>
-		<filename plugin="rsg2_images">plg_rsg2_images.php</filename>
+		<filename plugin="rsg2_images">rsg2_images.php</filename>
 		<folder>language</folder>
 	</files>
 	<languages>
