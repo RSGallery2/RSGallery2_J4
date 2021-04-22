@@ -304,7 +304,7 @@ out:
 		global $rsgConfig, $Rsg2DebugActive;
 
 		// $IsMoved = false;
-		$msg = 'uploadAjaxSingleFile';
+		$msg = 'uploadAjaxSingleFile::';
 		$app = Factory::getApplication();
 
 		// do check token
@@ -550,7 +550,6 @@ out:
 			}
 
 			$input = Factory::getApplication()->input;
-
 			$oFile = $input->files->get('upload_zip_name', array(), 'raw');
 
 			$srcTempPathFileName = $oFile['tmp_name'];
@@ -584,7 +583,7 @@ out:
 
 			// Clean up filename to get rid of strange characters like spaces etc
 			//$uploadZipName = JFile::makeSafe($zip_file['name']);
-//			$uploadZipName = File::makeSafe($zip_file['name']);
+			$uploadZipName = File::makeSafe($oFile['name']);
 //			$safeFileName   = File::makeSafe($oFile['name']);
 
 
@@ -613,6 +612,9 @@ out:
 			 * files: IResponseServerFile [];
 			 * }
 			 * /**/
+
+
+
 
 			$file1                 = [];
 			$file1 ['fileName']    = 'file1_name';

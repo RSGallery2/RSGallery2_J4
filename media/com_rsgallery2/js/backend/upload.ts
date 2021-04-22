@@ -102,7 +102,9 @@ class DroppedFiles extends Queue<IDroppedFile> {
                 errorZone: null,
             };
 
+            console.log('   +droppedFile: ' + next.file);
             this.push (next);
+
         }
 
     }
@@ -142,7 +144,10 @@ class ZipFiles extends Queue<IZipFile> {
                 errorZone: null,
             };
 
+            console.log('   +ZipFile: ' + next.file);
+
             this.push (next);
+
         }
 
     }
@@ -1189,7 +1194,7 @@ class TransferImagesTask {
     private async callAjaxTransfer(nextFile: ITransferFile): Promise<any>  {
 
         console.log("      in callAjaxTransfer: " + nextFile.file);
-        console.log("      > callAjaxTransfer: " + nextFile.file);
+        console.log("      > callAjaxTransfer: " + nextFile.file_name);
 
         return new Promise<any>(
             function (resolve, reject) {
@@ -1508,6 +1513,10 @@ class RequestZipUploadTask {
 
     /**/
     private async callAjaxRequest(nextFile: IDroppedFile): Promise<any> {
+
+        console.log("      in RequestZipUploadTask: " + nextFile.file);
+        console.log("      > RequestZipUploadTask: " + nextFile.file_name);
+
         return new Promise<any>(
             function (resolve, reject) {
 
@@ -1583,7 +1592,8 @@ class RequestZipUploadTask {
 
         while (this.zipFiles.length > 0) {
             let nextFile = this.zipFiles.shift();
-            console.log("   @Request zip File: " + nextFile.file.name);
+            // console.log("   @Request zip File: " + nextFile.file.name);
+            console.log("   @Request zip File: " + nextFile.file);
 
             nextFile.statusBar = new createStatusBar(this.progressArea, "*Zip: " + nextFile.file.name, nextFile.file.size, 'zip');
 
