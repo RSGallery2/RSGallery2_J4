@@ -68,6 +68,10 @@ class PlgContentRsg2_images extends CMSPlugin
             return false;
         }
 
+		https://twitter.com/bencodezen/status/1383907761876987910?s=19
+
+
+
         try {
             // Define the regular expression for the bot.
             //$regex = "#{rsg2_display\:*(.*?)}#s";
