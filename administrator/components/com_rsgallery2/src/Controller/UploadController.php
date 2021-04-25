@@ -562,6 +562,19 @@ out:
 			$fileSize            = $oFile['size'];
 
 
+			// add extension by type. Needed by extract below
+            // zip:    'application/x-zip-compressed' => 'zip',
+            // ToDo: ? tar, tgz, gz, gzip, tbz2, bz2, bzip2
+
+            if ($fileType ==  'application/x-zip-compressed') {
+                // Path to the archive
+                $archivename = $srcTempPathFileName . '.zip';
+                rename ($srcTempPathFileName, $archivename);
+            }
+
+			// ToDo: check for zip or other archive type or later ....
+
+
 			//--- upload_zip_name --------------------------------------------
 
 			$zipFileName = $input->get('upload_zip_name', 0, 'INT');
@@ -577,7 +590,7 @@ out:
 				// identify active file
 				Log::add('$srcTempPathFileName: "' . $srcTempPathFileName . '"');
 				Log::add('$safeFileName: "' . $safeFileName . '"');
-				// Log::add('$targetFileName: "' . $targetFileName . '"');
+				Log::add('$archivename: "' . $archivename . '"');
 				Log::add('$fileType: "' . $fileType . '"');
 				Log::add('$fileError: "' . $fileError . '"');
 				Log::add('$fileSize: "' . $fileSize . '"');
@@ -589,8 +602,8 @@ out:
 			$thumbSize = $rsgConfig->get('thumb_size');
 
 
-			// Path to the archive
-			$archivename = $srcTempPathFileName;
+//			// Path to the archive
+//			$archivename = $srcTempPathFileName;
 
 			// Temporary folder to extract the archive into
 			$tmpdir = uniqid('rsg2_zip_');
@@ -598,6 +611,8 @@ out:
 			// Clean the paths to use for archive extraction
 			$extractdir = Path::clean(\dirname($srcTempPathFileName) . '/' . $tmpdir);
 			$archivename = Path::clean($archivename);
+
+            $ajaxImgObject = [];
 
 			// Do the unpacking of the archive
 			try
@@ -618,13 +633,62 @@ out:
 			}
 			catch (\Exception $e)
 			{
+                $errMsg   = $msg . ' On extract file: ' . $archivename . '<br>' . $e;
+                $hasError = 1;
 
-//				ToDo: ...
-				return false;
+                if ($Rsg2DebugActive)
+                {
+                    Log::add('    Exception: ' . $errMsg);
+                }
+
+                echo new JsonResponse($msg, $errMsg, $hasError);
+
+				// return false;
 			}
 
 
-/**
+            // clean up artefacts (zip file and extract dir content)
+            if ($extract)
+            {
+                try {
+                    if (is_file($archivename)) {
+                        // Minimal check
+                        if (strlen($archivename) > 10) {
+                            // unlink($archivename);
+                            File::delete($archivename);
+                        }
+                    }
+                    if (is_dir($extractdir)) {
+                        // Minimal check
+                        if (strlen ($extractdir) > 10) {
+                            Folder::delete ($extractdir);
+                        }
+                    }
+
+                }
+                catch (\Exception $e)
+                {
+                    $errMsg   = $msg . ' On clean up: ' . $archivename . ' / ' . $extractdir . '<br>' . $e;
+                    $hasError = 1;
+
+                    if ($Rsg2DebugActive)
+                    {
+                        Log::add('    Exception: ' . $errMsg);
+                    }
+
+                    echo new JsonResponse($msg, $errMsg, $hasError);
+                }
+
+
+
+            }
+
+
+
+
+
+
+            /**
 			//--- gallery ID --------------------------------------------
 
 			$galleryId = $input->get('gallery_id', 0, 'INT');
@@ -647,67 +711,6 @@ out:
 
 
 			//--- Check zip file name -------------------
-
-			checkZipData
-
-
-			// Clean up filename to get rid of strange characters like spaces etc
-			//$uploadZipName = JFile::makeSafe($zip_file['name']);
-			$uploadZipName = File::makeSafe($oFile['name']);
-//			$safeFileName   = File::makeSafe($oFile['name']);
-
-			$zip = new ZipArchive;
-			$zip->open("FILE.ZIP", ZipArchive::RDONLY);
-			$entries = $zip->count();
-			for ($i=0; $i<$entries; $i++) { $stat = $zip->statIndex($i); }
-			$content = $zip->getFromName("FILE-IN-ZIP.TXT");
-			$zip->close();
-
-
-			$app          = Factory::getApplication();
-			$client       = ApplicationHelper::getClientInfo($template->client_id);
-			$relPath      = base64_decode($file);
-			$explodeArray = explode('/', $relPath);
-			$fileName     = end($explodeArray);
-			$folderPath   = stristr($relPath, $fileName, true);
-			$path         = Path::clean($client->path . '/templates/' . $template->element . '/' . $folderPath . '/');
-
-			if (file_exists(Path::clean($path . '/' . $fileName)))
-			{
-				$zip = new \ZipArchive;
-
-				if ($zip->open(Path::clean($path . '/' . $fileName)) === true)
-				{
-					for ($i = 0; $i < $zip->numFiles; $i++)
-					{
-						$entry = $zip->getNameIndex($i);
-
-						if (file_exists(Path::clean($path . '/' . $entry)))
-						{
-							$app->enqueueMessage(Text::_('COM_TEMPLATES_FILE_ARCHIVE_EXISTS'), 'error');
-
-							return false;
-						}
-					}
-
-					$zip->extractTo($path);
-
-					return true;
-				}
-				else
-				{
-					$app->enqueueMessage(Text::_('COM_TEMPLATES_FILE_ARCHIVE_OPEN_FAIL'), 'error');
-
-					return false;
-				}
-			}
-			else
-			{
-				$app->enqueueMessage(Text::_('COM_TEMPLATES_FILE_ARCHIVE_NOT_FOUND'), 'error');
-
-				return false;
-			}
-
 
 
 			// Database IDs of created images
@@ -795,7 +798,6 @@ out:
 			/* */
 
 
-			$ajaxImgObject = [];
 			$isCreated = false;
 
 
