@@ -12,8 +12,11 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
 \defined('_JEXEC') or die;
 
+use Joomla\Archive\Archive;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
@@ -350,6 +353,7 @@ out:
 
 			// Changed name of existing file name
 			$safeFileName   = File::makeSafe($oFile['name']);
+			// ToDo: check why is target name not used with makesafe ?
 			$targetFileName = $input->get('dstFileName', '', 'string');
 
 			if ($Rsg2DebugActive)
@@ -550,7 +554,7 @@ out:
 			}
 
 			$input = Factory::getApplication()->input;
-			$oFile = $input->files->get('upload_zip_name', array(), 'raw');
+			$oFile = $input->files->get('upload_zip_file', array(), 'raw');
 
 			$srcTempPathFileName = $oFile['tmp_name'];
 			$fileType            = $oFile['type'];
@@ -558,6 +562,69 @@ out:
 			$fileSize            = $oFile['size'];
 
 
+			//--- upload_zip_name --------------------------------------------
+
+			$zipFileName = $input->get('upload_zip_name', 0, 'INT');
+
+
+			// Changed name of existing file name
+			$safeFileName   = File::makeSafe($oFile['name']);
+			// ToDo: check why is target name not used with makesafe ?
+			$targetFileName = $input->get('dstFileName', '', 'string');
+
+			if ($Rsg2DebugActive)
+			{
+				// identify active file
+				Log::add('$srcTempPathFileName: "' . $srcTempPathFileName . '"');
+				Log::add('$safeFileName: "' . $safeFileName . '"');
+				// Log::add('$targetFileName: "' . $targetFileName . '"');
+				Log::add('$fileType: "' . $fileType . '"');
+				Log::add('$fileError: "' . $fileError . '"');
+				Log::add('$fileSize: "' . $fileSize . '"');
+			}
+
+			//--- preset return value --------------------------------------------
+
+			$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+			$thumbSize = $rsgConfig->get('thumb_size');
+
+
+			// Path to the archive
+			$archivename = $srcTempPathFileName;
+
+			// Temporary folder to extract the archive into
+			$tmpdir = uniqid('rsg2_zip_');
+
+			// Clean the paths to use for archive extraction
+			$extractdir = Path::clean(\dirname($srcTempPathFileName) . '/' . $tmpdir);
+			$archivename = Path::clean($archivename);
+
+			// Do the unpacking of the archive
+			try
+			{
+				$archive = new Archive(array('tmp_path' => Factory::getApplication()->get('tmp_path')));
+				$extract = $archive->extract($archivename, $extractdir);
+
+
+				// Successful extracted zip content
+				if ($extract)
+				{
+					;
+					;
+
+
+
+				}
+			}
+			catch (\Exception $e)
+			{
+
+//				ToDo: ...
+				return false;
+			}
+
+
+/**
 			//--- gallery ID --------------------------------------------
 
 			$galleryId = $input->get('gallery_id', 0, 'INT');
@@ -581,13 +648,65 @@ out:
 
 			//--- Check zip file name -------------------
 
+			checkZipData
+
+
 			// Clean up filename to get rid of strange characters like spaces etc
 			//$uploadZipName = JFile::makeSafe($zip_file['name']);
 			$uploadZipName = File::makeSafe($oFile['name']);
 //			$safeFileName   = File::makeSafe($oFile['name']);
 
+			$zip = new ZipArchive;
+			$zip->open("FILE.ZIP", ZipArchive::RDONLY);
+			$entries = $zip->count();
+			for ($i=0; $i<$entries; $i++) { $stat = $zip->statIndex($i); }
+			$content = $zip->getFromName("FILE-IN-ZIP.TXT");
+			$zip->close();
 
 
+			$app          = Factory::getApplication();
+			$client       = ApplicationHelper::getClientInfo($template->client_id);
+			$relPath      = base64_decode($file);
+			$explodeArray = explode('/', $relPath);
+			$fileName     = end($explodeArray);
+			$folderPath   = stristr($relPath, $fileName, true);
+			$path         = Path::clean($client->path . '/templates/' . $template->element . '/' . $folderPath . '/');
+
+			if (file_exists(Path::clean($path . '/' . $fileName)))
+			{
+				$zip = new \ZipArchive;
+
+				if ($zip->open(Path::clean($path . '/' . $fileName)) === true)
+				{
+					for ($i = 0; $i < $zip->numFiles; $i++)
+					{
+						$entry = $zip->getNameIndex($i);
+
+						if (file_exists(Path::clean($path . '/' . $entry)))
+						{
+							$app->enqueueMessage(Text::_('COM_TEMPLATES_FILE_ARCHIVE_EXISTS'), 'error');
+
+							return false;
+						}
+					}
+
+					$zip->extractTo($path);
+
+					return true;
+				}
+				else
+				{
+					$app->enqueueMessage(Text::_('COM_TEMPLATES_FILE_ARCHIVE_OPEN_FAIL'), 'error');
+
+					return false;
+				}
+			}
+			else
+			{
+				$app->enqueueMessage(Text::_('COM_TEMPLATES_FILE_ARCHIVE_NOT_FOUND'), 'error');
+
+				return false;
+			}
 
 
 
@@ -611,7 +730,7 @@ out:
 			 * // Path ?
 			 * files: IResponseServerFile [];
 			 * }
-			 * /**/
+			 * /**
 
 
 
@@ -665,7 +784,7 @@ out:
 			 * $ajaxImgObject['imageId']  = -1;
 			 * $ajaxImgObject['fileUrl']  = '';
 			 * $ajaxImgObject['safeFileName'] = $safeFileName;
-			 * /**/
+			 * /**
 
 
 
@@ -673,6 +792,11 @@ out:
 
 
 
+			/* */
+
+
+			$ajaxImgObject = [];
+			$isCreated = false;
 
 
 
@@ -832,7 +956,7 @@ out:
 			//--- select valid file names from ftp folder -------------------------------
 			if ($Rsg2DebugActive)
 			{
-				JLog::add('Valid folder:' . strval($ftpPath));
+				Log::add('Valid folder:' . strval($ftpPath));
 			}
 
 			$modelFile = $this->getModel('imageFile');
@@ -840,8 +964,8 @@ out:
 
 			if ($Rsg2DebugActive)
 			{
-				JLog::add('Select Images:' . count($filesFound));
-				JLog::add('Ignored Images:' . count($ignored));
+				Log::add('Select Images:' . count($filesFound));
+				Log::add('Ignored Images:' . count($ignored));
 			}
 
 			$modelDb = $this->getModel('image');

@@ -1515,7 +1515,7 @@ class RequestZipUploadTask {
     private async callAjaxRequest(nextFile: IDroppedFile): Promise<any> {
 
         console.log("      in RequestZipUploadTask: " + nextFile.file);
-        console.log("      > RequestZipUploadTask: " + nextFile.file_name);
+        console.log("      > RequestZipUploadTask: " + nextFile.file.name);
 
         return new Promise<any>(
             function (resolve, reject) {
@@ -1548,6 +1548,7 @@ class RequestZipUploadTask {
                 };
 
                 let data = new FormData();
+                data.append('upload_zip_file', nextFile.file);
                 data.append('upload_zip_name', nextFile.file.name);
                 data.append('upload_size', nextFile.file.size.toString());
                 data.append('upload_type', nextFile.file.type);
