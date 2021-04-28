@@ -659,6 +659,8 @@ out:
 
 
 //                            $origin = $input->get('origin', '', 'string'); // zip/server
+	                        $origin = 'zip';
+	                        $fileName = $file[;
 
                             check out MoveImageAndCreateRSG2Images 
                             /**/
