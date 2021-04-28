@@ -833,7 +833,7 @@ class ImageFileModel extends BaseModel // AdminModel
 		else
 		{
 			$OutTxt = ''; // ToDo: Raise (throw) errors instead
-			$OutTxt .= 'CreateRSG2Images Error. Could not find original file: "' . $srcFileName . '"';
+			$OutTxt .= 'CreateRSG2Images Error: Could not find original file: "' . $srcFileName . '"';
 
 			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');

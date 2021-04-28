@@ -48,12 +48,12 @@ class UploadController extends FormController
 	/**
 	 * Constructor.
 	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
-	 *                                         Recognized key values include 'name', 'default_task', 'model_path', and
-	 *                                         'view_path' (this list is not meant to be comprehensive).
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
+	 * @param array               $config  An optional associative array of configuration settings.
+	 *                                     Recognized key values include 'name', 'default_task', 'model_path', and
+	 *                                     'view_path' (this list is not meant to be comprehensive).
+	 * @param MVCFactoryInterface $factory The factory.
+	 * @param CMSApplication      $app     The JApplication for the dispatcher
+	 * @param \JInput             $input   Input
 	 *
 	 * @since __BUMP_VERSION__
 	 */
@@ -66,9 +66,9 @@ class UploadController extends FormController
 	/**
 	 * Proxy for getModel.
 	 *
-	 * @param   string  $name
-	 * @param   string  $prefix
-	 * @param   array   $config
+	 * @param string $name
+	 * @param string $prefix
+	 * @param array  $config
 	 *
 	 * @return mixed
 	 *
@@ -122,10 +122,7 @@ class UploadController extends FormController
 
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
-		if ($errorType)
-		{
-			issueError($errorType);
-		}
+		if ($errorType) { issueError  ($errorType);}
 
 		try
 		{
@@ -256,45 +253,45 @@ class UploadController extends FormController
 		}
 		catch (\Exception $e)
 		{
-			$errMsg   = $msg . $e->getMessage();
-			$hasError = 1;
+            $errMsg   = $msg . $e->getMessage();
+            $hasError = 1;
 
-			if ($Rsg2DebugActive)
-			{
-				$errMsg = $msg . $e;
-				Log::add('    Exception: ' . $errMsg);
-			}
+            if ($Rsg2DebugActive)
+            {
+                $errMsg   = $msg . $e;
+                Log::add('    Exception: ' . $errMsg);
+            }
 
-			echo new JsonResponse($msg, $errMsg, $hasError);
+            echo new JsonResponse($msg, $errMsg, $hasError);
 			//echo new JsonResponse($e);
 		}
 
 		$app->close();
 	}
 
-	/**
-	 * in:
-	 * interface IDroppedFile
-	 * {
-	 * file: File;
-	 * galleryId: string;
-	 * ...
-	 * }
-	 * interface ITransferFile extends IDroppedFile {
-	 * imageId: string;
-	 * fileName: string;
-	 * dstFileName: string;
-	 * }
-	 *
-	 * out:
-	 * interface IResponseTransfer {
-	 * fileName: string;
-	 * imageId: string; //number
-	 * fileUrl: string;
-	 * safeFileName: string;
-	 * }
-	 *
-	 * /**/
+/**
+in:
+interface IDroppedFile
+{
+	file: File;
+	galleryId: string;
+	...
+}
+interface ITransferFile extends IDroppedFile {
+	imageId: string;
+	fileName: string;
+	dstFileName: string;
+}
+
+out:
+	interface IResponseTransfer {
+	fileName: string;
+	imageId: string; //number
+	fileUrl: string;
+	safeFileName: string;
+}
+
+/**/
 
 	/**
 	 * The dropped file will be uploaded. The dependent files
@@ -338,10 +335,7 @@ class UploadController extends FormController
 
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
-		if ($errorType)
-		{
-			issueError($errorType);
-		}
+		if ($errorType) { issueError  ($errorType);}
 
 		try
 		{
@@ -360,7 +354,7 @@ class UploadController extends FormController
 			$fileSize            = $oFile['size'];
 
 			// Changed name of existing file name
-			$safeFileName = File::makeSafe($oFile['name']);
+			$safeFileName   = File::makeSafe($oFile['name']);
 			// ToDo: check why is target name not used with makesafe ?
 			$targetFileName = $input->get('dstFileName', '', 'string');
 
@@ -385,7 +379,7 @@ class UploadController extends FormController
 			$ajaxImgObject['imageId']      = -1;
 			$ajaxImgObject['fileUrl']      = '';
 			$ajaxImgObject['safeFileName'] = $safeFileName;
-			$ajaxImgObject['thumbSize']    = $thumbSize;
+			$ajaxImgObject['thumbSize']      = $thumbSize;
 
 			//--- gallery ID --------------------------------------------
 
@@ -491,16 +485,16 @@ class UploadController extends FormController
 		}
 		catch (\Exception $e)
 		{
-			$errMsg   = $msg . $e; // $e->getMessage()
-			$hasError = 1;
+            $errMsg   = $msg . $e; // $e->getMessage()
+            $hasError = 1;
 
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $errMsg);
-			}
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
 
-			echo new JsonResponse($msg, $errMsg, $hasError);
-			//echo new JsonResponse($e);
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 
 		}
 
@@ -550,10 +544,7 @@ class UploadController extends FormController
 
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
-		if ($errorType)
-		{
-			issueError($errorType);
-		}
+		if ($errorType) { issueError  ($errorType);}
 
 		try
 		{
@@ -572,15 +563,14 @@ class UploadController extends FormController
 			$fileSize            = $oFile['size'];
 
 			// add extension by type. Needed by extract below
-			// zip:    'application/x-zip-compressed' => 'zip',
-			// ToDo: ? tar, tgz, gz, gzip, tbz2, bz2, bzip2
+            // zip:    'application/x-zip-compressed' => 'zip',
+            // ToDo: ? tar, tgz, gz, gzip, tbz2, bz2, bzip2
 
-			if ($fileType == 'application/x-zip-compressed')
-			{
-				// Path to the archive
-				$archivename = $srcTempPathFileName . '.zip';
-				rename($srcTempPathFileName, $archivename);
-			}
+            if ($fileType ==  'application/x-zip-compressed') {
+                // Path to the archive
+                $archiveName = $srcTempPathFileName . '.zip';
+                rename ($srcTempPathFileName, $archiveName);
+            }
 
 			// ToDo: check for zip or other archive type or later ....
 
@@ -589,7 +579,7 @@ class UploadController extends FormController
 			$zipFileName = $input->get('upload_zip_name', 0, 'INT');
 
 			// Changed name of existing file name
-			$safeFileName = File::makeSafe($oFile['name']);
+			$safeFileName   = File::makeSafe($oFile['name']);
 			// ToDo: check why is target name not used with makesafe ?
 			$targetFileName = $input->get('dstFileName', '', 'string');
 
@@ -598,7 +588,7 @@ class UploadController extends FormController
 				// identify active file
 				Log::add('$srcTempPathFileName: "' . $srcTempPathFileName . '"');
 				Log::add('$safeFileName: "' . $safeFileName . '"');
-				Log::add('$archivename: "' . $archivename . '"');
+				Log::add('$archiveName: "' . $archiveName . '"');
 				Log::add('$fileType: "' . $fileType . '"');
 				Log::add('$fileError: "' . $fileError . '"');
 				Log::add('$fileSize: "' . $fileSize . '"');
@@ -610,161 +600,169 @@ class UploadController extends FormController
 			$thumbSize = $rsgConfig->get('thumb_size');
 
 //			// Path to the archive
-//			$archivename = $srcTempPathFileName;
+//			$archiveName = $srcTempPathFileName;
 
 			// Temporary folder to extract the archive into
 			$tmpdir = uniqid('rsg2_zip_');
 
 			// Clean the paths to use for archive extraction
-			$extractdir  = Path::clean(\dirname($srcTempPathFileName) . '/' . $tmpdir);
-			$archivename = Path::clean($archivename);
+			$extractDir = Path::clean(\dirname($srcTempPathFileName) . '/' . $tmpdir);
+			$archiveName = Path::clean($archiveName);
 
-			$ajaxImgObject = [];
+            //--- gallery ID --------------------------------------------
 
-			// Do the unpacking of the archive
+            $galleryId = $input->get('gallery_id', 0, 'INT');
+            // wrong id ?
+            if ($galleryId < 1)
+            {
+                $ajaxImgObject = [];
+                $msg .= ': Invalid gallery ID at drag and drop upload';
+
+                if ($Rsg2DebugActive)
+                {
+                    Log::add($msg);
+                }
+
+                echo new JsonResponse($ajaxImgObject, $msg, true);
+
+                $app->close();
+                return;
+            }
+
+            $ajaxImgObject = [];
+
+            $isCreated = false;
+            $extract = false;
+
+            // Do the unpacking of the archive
 			try
 			{
 				$archive = new Archive(array('tmp_path' => Factory::getApplication()->get('tmp_path')));
-				$extract = $archive->extract($archivename, $extractdir);
+				$extract = $archive->extract($archiveName, $extractDir);
 
 				// Successful extracted zip content
 				if ($extract)
 				{
-					;;
+                    $files = $this->ImportFilesInFolder  ($extractDir, $galleryId);
+                }
 
-				}
-			}
+                // Images exist
+                if ($files)
+                {
+                    //----------------------------------------------------
+                    // Move/copy file and create display, thumbs and watermarked images
+                    //----------------------------------------------------
+
+                    foreach ($files as $file)
+                    {
+                        try {
+
+
+//                            $origin = $input->get('origin', '', 'string'); // zip/server
+
+                            check out MoveImageAndCreateRSG2Images 
+                            /**/
+                            $modelFile = $this->getModel('imageFile');
+                            // toDo check origin and config for copy / or move file call below
+                            list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images(
+                                $fileName, $targetFileName, $galleryId, $origin);
+                            /**/
+                        } catch (\RuntimeException $e) {
+                            $OutTxt = '';
+                            $OutTxt .= 'moveFile2OrignalDir: "' . $fileName . '" -> "' . $targetFileName . '"<br>';
+                            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                            $app = Factory::getApplication();
+                            $app->enqueueMessage($OutTxt, 'error');
+
+                            if ($Rsg2DebugActive) {
+                                Log::add($OutTxt);
+                            }
+                        }
+
+                    }
+
+
+
+
+
+
+
+
+
+                    $ajaxImgObject ['files'] = $files;
+                    $isCreated = true;
+                }
+            }
 			catch (\Exception $e)
 			{
-				$errMsg   = $msg . ' On extract file: ' . $archivename . '<br>' . $e;
-				$hasError = 1;
+                $errMsg   = $msg . ' On extract file: ' . $archiveName . '<br>' . $e;
+                $hasError = 1;
 
-				if ($Rsg2DebugActive)
-				{
-					Log::add('    Exception: ' . $errMsg);
-				}
+                if ($Rsg2DebugActive)
+                {
+                    Log::add('    Exception: ' . $errMsg);
+                }
 
-				echo new JsonResponse($msg, $errMsg, $hasError);
+                echo new JsonResponse($msg, $errMsg, $hasError);
 
 				// return false;
 			}
 
-			// clean up artefacts (zip file and extract dir content)
-			if ($extract)
-			{
-				try
-				{
-					if (is_file($archivename))
-					{
-						// Minimal check
-						if (strlen($archivename) > 10)
-						{
-							// unlink($archivename);
-							File::delete($archivename);
-						}
-					}
-					if (is_dir($extractdir))
-					{
-						// Minimal check
-						if (strlen($extractdir) > 10)
-						{
-							Folder::delete($extractdir);
-						}
-					}
 
-				}
-				catch (\Exception $e)
-				{
-					$errMsg   = $msg . ' On clean up: ' . $archivename . ' / ' . $extractdir . '<br>' . $e;
-					$hasError = 1;
+            // clean up artefacts (zip file and extract dir content)
+            if ($extract)
+            {
+                try {
+                    if (is_file($archiveName)) {
+                        // Minimal check
+                        if (strlen($archiveName) > 10) {
+                            // unlink($archiveName);
+                            File::delete($archiveName);
+                        }
+                    }
+                    if (is_dir($extractDir)) {
+                        // Minimal check
+                        if (strlen ($extractDir) > 10) {
+                            Folder::delete ($extractDir);
+                        }
+                    }
 
-					if ($Rsg2DebugActive)
-					{
-						Log::add('    Exception: ' . $errMsg);
-					}
+                }
+                catch (\Exception $e)
+                {
+                    $errMsg   = $msg . ' On clean up: ' . $archiveName . ' / ' . $extractDir . '<br>' . $e;
+                    $hasError = 1;
 
-					echo new JsonResponse($msg, $errMsg, $hasError);
-				}
+                    if ($Rsg2DebugActive)
+                    {
+                        Log::add('    Exception: ' . $errMsg);
+                    }
 
-			}
+                    echo new JsonResponse($msg, $errMsg, $hasError);
+                }
 
-			/**
-			 * interface IResponseServerFile {
-			 * fileName: string;
-			 * imageId: string; //number
-			 * baseName: string;
-			 * dstFileName: string;
-			 * }
-			 *
-			 * interface IResponseServerFiles {
-			 * // Path ?
-			 * files: IResponseServerFile [];
-			 * }
-			 * /**
-			 *
-			 *
-			 *
-			 *
-			 * $file1                 = [];
-			 * $file1 ['fileName']    = 'file1_name';
-			 * $file1 ['imageId']     = '1001';
-			 * $file1 ['baseName']    = 'base1_name';
-			 * $file1 ['dstFileName'] = 'dest1_name';
-			 * $file1 ['galleryId'] = $galleryId;
-			 *
-			 *
-			 * $file2                 = [];
-			 * $file2 ['fileName']    = 'file2_name';
-			 * $file2 ['imageId']     = '1002';
-			 * $file2 ['baseName']    = 'base2_name';
-			 * $file2 ['dstFileName'] = 'dest2_name';
-			 * $file2 ['galleryId'] = $galleryId;
-			 *
-			 * $file3                 = [];
-			 * $file3 ['fileName']    = 'file3_name';
-			 * $file3 ['imageId']     = '1003';
-			 * $file3 ['baseName']    = 'base3_name';
-			 * $file3 ['dstFileName'] = 'dest3_name';
-			 * $file3 ['galleryId'] = $galleryId;
-			 *
-			 * $ajaxImgObject ['files'] = [$file1, $file2, $file2];
-			 *
-			 * $isCreated = true;
-			 *
-			 * /**
-			 * // for next upload tell where to start
-			 * //$rsgConfig->setLastUpdateType('upload_drag_and_drop');
-			 * // configDb::write2Config ('last_update_type', 'upload_drag_and_drop', $rsgConfig);
-			 *
-			 * if ($Rsg2DebugActive)
-			 * {
-			 * // identify active file
-			 * Log::add('$srcTempPathFileName: "' . $srcTempPathFileName . '"');
-			 * Log::add('$safeFileName: "' . $safeFileName . '"');
-			 * Log::add('$targetFileName: "' . $targetFileName . '"');
-			 * Log::add('$fileType: "' . $fileType . '"');
-			 * Log::add('$fileError: "' . $fileError . '"');
-			 * Log::add('$fileSize: "' . $fileSize . '"');
-			 * }
-			 *
-			 * //--- check user ID --------------------------------------------
-			 *
-			 * $ajaxImgObject['fileName'] = $targetFileName;
-			 * // some dummy data for error messages
-			 * $ajaxImgObject['imageId']  = -1;
-			 * $ajaxImgObject['fileUrl']  = '';
-			 * $ajaxImgObject['safeFileName'] = $safeFileName;
-			 * /**
-			 *
-			 *
-			 *
-			 *
-			 *
-			 *
-			 *
-			 * /* */
+            }
 
-			$isCreated = false;
+
+            // No Images exist
+            if (!$files) {
+                $ajaxImgObject = [];
+
+                $app->enqueueMessage(Text::_('COM_RSGALLERY2_ZIP_FILE_NO_IMAGE_EXIST') . '<br>'
+                    . 'Zip Name: ' . $oFile['name'] . '<br>'
+                    . 'Used Path: ' . $srcTempPathFileName // . '<br>'
+                );
+                if ($Rsg2DebugActive) {
+                    Log::add($msg);
+                }
+
+                echo new JsonResponse($ajaxImgObject, $msg, true);
+
+                $app->close();
+
+                return;
+            }
 
 			echo new JsonResponse($ajaxImgObject, "", !$isCreated, true);
 			//echo new JsonResponse("uploadAjaxSingleFile (1)", "uploadAjaxSingleFile (2)", true);
@@ -777,16 +775,16 @@ class UploadController extends FormController
 		}
 		catch (\Exception $e)
 		{
-			$errMsg   = $msg . $e;
-			$hasError = 1;
+            $errMsg   = $msg . $e;
+            $hasError = 1;
 
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $errMsg);
-			}
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
 
-			echo new JsonResponse($msg, $errMsg, $hasError);
-			//echo new JsonResponse($e);
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 		}
 
 		$app->close();
@@ -835,10 +833,7 @@ class UploadController extends FormController
 
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
-		if ($errorType)
-		{
-			issueError($errorType);
-		}
+		if ($errorType) { issueError  ($errorType);}
 
 		try
 		{
@@ -857,7 +852,7 @@ class UploadController extends FormController
 			if ($galleryId < 1)
 			{
 				$ajaxImgObject = [];
-				$msg           .= ': Invalid gallery ID at drag and drop upload';
+				$msg .= ': Invalid gallery ID at drag and drop upload';
 
 				if ($Rsg2DebugActive)
 				{
@@ -873,13 +868,13 @@ class UploadController extends FormController
 
 			//--- ftp path --------------------------------------------
 
-			$ftpPath = $ftp_upload_directory = $input->get('folderPath', null, 'RAW');
+			$ftpPath = $input->get('folderPath', null, 'RAW');
 
 			// toDo: last_used_ftp_path on success or when previous path is empty
 			// configDb::write2Config ('last_used_ftp_path', $ftpPath, $rsgConfig);
 
 			// folder name does not exist
-			if (!$ftpPath)
+			if(!$ftpPath)
 			{
 				$ajaxImgObject = [];
 				$app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_DIR_EMPTY'));
@@ -896,7 +891,7 @@ class UploadController extends FormController
 			}
 
 			// path with joomla root
-			$ftpPathRoot   = PathHelper::join(JPATH_ROOT, $ftpPath);
+			$ftpPathRoot = PathHelper::join (JPATH_ROOT, $ftpPath);
 			$ftpPathServer = $ftpPath;
 
 			$ftpPath = is_dir($ftpPathRoot) ? $ftpPathRoot : $ftpPathServer;
@@ -929,74 +924,7 @@ class UploadController extends FormController
 			}
 
 
-			/**
-
-			$modelFile = $this->getModel('imageFile');
-			list($filesFound, $ignored) = $modelFile->SelectImagesFromFolder($ftpPath);
-
-			if ($Rsg2DebugActive)
-			{
-				Log::add('Select Images:' . count($filesFound));
-				Log::add('Ignored Images:' . count($ignored));
-			}
-
-			$modelDb         = $this->getModel('image');
-			$files           = [];
-			$ajaxImgDbObject = [];
-
-			foreach ($filesFound as $filePathName)
-			{
-				//--- Create Destination file name -----------------------
-
-				$filePathName = realpath($filePathName);
-				$baseName     = basename($filePathName);
-
-				// ToDo: use sub folder for each gallery and check within gallery
-				// Each filename is only allowed once so create a new one if file already exist
-				$useFileName = $modelDb->generateNewImageName($baseName, $galleryId);
-
-				//----------------------------------------------------
-				// Create image data in db
-				//----------------------------------------------------
-
-				$title       = $baseName;
-				$description = '';
-
-				$imageId = $modelDb->createImageDbItem($useFileName, '', $galleryId, $description);
-				if (empty($imageId))
-				{
-					// actual give an error
-					//$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
-					$msg .= 'Create DB item for "' . $baseName . '"->"' . $useFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
-
-					if ($Rsg2DebugActive)
-					{
-						Log::add($msg);
-					}
-
-					/**
-					 * // replace newlines with html line breaks.
-					 * //str_replace('\n', '<br>', $msg);
-					 * echo new JsonResponse($ajaxImgDbObject, $msg, true);
-					 *
-					 * $app->close();
-					 *
-					 * return;
-					 * /**
-					continue;
-				}
-
-				$nextFile                 = [];
-				$nextFile ['fileName']    = $filePathName;
-				$nextFile ['imageId']     = $imageId;
-				$nextFile ['baseName']    = $baseName;
-				$nextFile ['dstFileName'] = $useFileName;
-				$nextFile ['size']        = 4500; // toDO: get size if necessary
-				$files []                 = $nextFile;
-			}
-			/**/
-
-			$files = ImportFilesInFolder  ($ftpPath, $galleryId);
+			$files = $this->ImportFilesInFolder  ($ftpPath, $galleryId);
 
 			// No Images exist
 			if (!$files)
@@ -1058,49 +986,49 @@ class UploadController extends FormController
 		}
 		catch (\Exception $e)
 		{
-			$errMsg   = $msg . $e;
-			$hasError = 1;
+            $errMsg   = $msg . $e;
+            $hasError = 1;
 
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $errMsg);
-			}
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
 
-			echo new JsonResponse($msg, $errMsg, $hasError);
-			//echo new JsonResponse($e);
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 		}
 
 		$app->close();
 	}
 
 
-	/**
-	 * in:
-	 * interface IRequestTransferFolderFile {
-	 * fileName: string;
-	 * imageId: string; //number
-	 * baseName: string;
-	 * dstFileName: string;
-	 * size: number;
-	 *
-	 * galleryId: string;
-	 * origin: string; // ftp/server
-	 *
-	 * statusBar: createStatusBar | null;
-	 * errorZone: HTMLElement | null;
-	 * }
-	 *
-	 * out:
-	 * interface IResponseTransfer {
-	 * fileName: string;
-	 * imageId: string; //number
-	 * fileUrl: string;
-	 * safeFileName: string;
-	 * }
-	 *
-	 * /**/
+/**
+in:
+interface IRequestTransferFolderFile {
+	fileName: string;
+	imageId: string; //number
+	baseName: string;
+	dstFileName: string;
+	size: number;
 
-	/**
+	galleryId: string;
+	origin: string; // ftp/server
+
+	statusBar: createStatusBar | null;
+	errorZone: HTMLElement | null;
+}
+
+out:
+interface IResponseTransfer {
+	fileName: string;
+	imageId: string; //number
+	fileUrl: string;
+	safeFileName: string;
+}
+
+/**/
+
+/**
 	 * The already uploaded file will be copied,
 	 * display and thumb files created
 	 *
@@ -1139,10 +1067,7 @@ class UploadController extends FormController
 
 		// for debug ajax response errors / notice
 		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
-		if ($errorType)
-		{
-			issueError($errorType);
-		}
+		if ($errorType) { issueError  ($errorType);}
 
 		try
 		{
@@ -1155,21 +1080,21 @@ class UploadController extends FormController
 			$input = Factory::getApplication()->input;
 
 			$fileName = $input->get('fileName', '', 'string');
-			$imageId  = $input->get('imageId', '', 'string');
+			$imageId = $input->get('imageId', '', 'string');
 			$baseName = $input->get('baseName', '', 'string');
-			$origin   = $input->get('origin', '', 'string'); //zip/server
+			$origin = $input->get('origin', '', 'string'); //zip/server
 			// toDo: rename dstFileName to safe file name ... so it matches function uploadAjaxSingleFile()
 			$targetFileName = $input->get('dstFileName', '', 'string');
-			/**
-			 * fileName: string;
-			 * imageId: string; //number
-			 * baseName: string;
-			 * dstFileName: string;
-			 * size: number;
-			 *
-			 * galleryId: string;
-			 * origin: string; // ftp/server
-			 * /**/
+/**
+			fileName: string;
+			imageId: string; //number
+			baseName: string;
+			dstFileName: string;
+			size: number;
+
+			galleryId: string;
+			origin: string; // ftp/server
+/**/
 
 			if ($Rsg2DebugActive)
 			{
@@ -1274,16 +1199,16 @@ class UploadController extends FormController
 		}
 		catch (\Exception $e)
 		{
-			$errMsg   = $msg . $e;
-			$hasError = 1;
+            $errMsg   = $msg . $e;
+            $hasError = 1;
 
-			if ($Rsg2DebugActive)
-			{
-				Log::add('    Exception: ' . $errMsg);
-			}
+            if ($Rsg2DebugActive)
+            {
+                Log::add('    Exception: ' . $errMsg);
+            }
 
-			echo new JsonResponse($msg, $errMsg, $hasError);
-			//echo new JsonResponse($e);
+            echo new JsonResponse($msg, $errMsg, $hasError);
+            //echo new JsonResponse($e);
 		}
 
 		$app->close();
@@ -1304,19 +1229,6 @@ class UploadController extends FormController
 
 		$modelDb         = $this->getModel('image');
 		$files           = [];
-
-		// ToDo: all folders ...
-		$this->folders = Folder::folders($ImagesFolder, '.', false)
-
-			foreach () {
-
-
-				array_merge ();
-
-
-			}
-
-
 
 		foreach ($filesFound as $filePathName)
 		{
@@ -1369,7 +1281,18 @@ class UploadController extends FormController
 			$files []                 = $nextFile;
 		}
 
-		return $files;
+        // ToDo: all folders ...
+        $subFolders = Folder::folders($ImagesFolder, '.', false);
+
+        foreach (subFolders as $subFolder) {
+
+            $subfiles = $this->ImportFilesInFolder  ($subFolder, $galleryId);
+            if (count ($subfiles)) {
+                array_merge($files, $subfiles);
+            }
+        }
+
+        return $files;
 	}
 
 	/**

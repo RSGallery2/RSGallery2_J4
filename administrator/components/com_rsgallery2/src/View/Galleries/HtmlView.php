@@ -282,7 +282,7 @@ class HtmlView extends BaseHtmlView
 						. '* __associations <br>'
                     	. '* Badges array like in categories for images: Published, unpublished, trashed, archieved ... <br>'
                         . '* On develop show order left right level<br>'
-				    //	. '* <br>'
+				    	. '* Link to images should restrict to gallery in link<br>'
 				    //	. '* <br>'
 				    //	. '* <br>'
 				    //	. '* <br>'
