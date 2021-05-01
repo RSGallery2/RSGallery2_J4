@@ -632,7 +632,7 @@ out:
             }
 
             //--------------------------------------------------------------------
-            //--- start the real work --------------------------------------------
+            // collect, import to db and create image files
             //--------------------------------------------------------------------
 
             $ajaxImgObject = [];
@@ -662,10 +662,13 @@ out:
                     // Move/copy file and create display, thumbs and watermarked images
                     //----------------------------------------------------
 
+                    $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+                    $thumbSize = $rsgConfig->get('thumb_size');
+
                     $modelFile = $this->getModel('imageFile');
 
                     // all images in all folders
-                    foreach ($files as $file)
+                    foreach ($files as $fileIdx => $file)
                     {
                         try {
 
@@ -684,7 +687,8 @@ out:
                                 $fileName, $targetFileName, $galleryId, $origin);
 
                             if($isCreated) {
-                                $file['fileUrl'] = $urlThumbFile; // $dstFileUrl ???
+                                $files [$fileIdx]['fileUrl'] = $urlThumbFile; // $dstFileUrl ???
+                                $files [$fileIdx]['thumbSize'] = $thumbSize;
                             }
                             else
                             {
@@ -1132,11 +1136,15 @@ interface IResponseTransfer {
 				Log::add('$baseName: "' . $baseName . '"');
 			}
 
-			$ajaxImgObject['fileName'] = $targetFileName;
+            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+            $thumbSize = $rsgConfig->get('thumb_size');
+
+            $ajaxImgObject['fileName'] = $targetFileName;
 			// some dummy data for error messages
 			$ajaxImgObject['imageId']      = $imageId;
 			$ajaxImgObject['fileUrl']      = '';
 			$ajaxImgObject['safeFileName'] = $fileName;
+            $ajaxImgObject['thumbSize']      = $thumbSize;
 
 			//--- gallery ID --------------------------------------------
 

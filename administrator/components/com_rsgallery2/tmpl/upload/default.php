@@ -182,7 +182,7 @@ $maxSize = $this->UploadLimit;
                                     class="btn btn-primary mx-auto mt-2"
                                     onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
                                     title="disabled<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
-
+                                    disabled
                             >
                                 <span class="icon-copy" aria-hidden="true"></span>
 		                        <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>

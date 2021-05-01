@@ -329,7 +329,7 @@ class enableDragZone {
             this.buttonZipFile.disabled = false;
             this.buttonFolderImport.disabled = false;
             this.inputFtpFolder.disabled = false;
-            this.buttonProperties.disabled = false;
+//            this.buttonProperties.disabled = false;
         } else {
             // not selected (red)
             this.dragZone.classList.add('dragareaDisabled');
@@ -519,6 +519,11 @@ class createStatusBar {
     private htmlBadgeOk: HTMLElement;
     private htmlBadgeError: HTMLElement;
 
+    private htmlBadgeZip: HTMLElement;
+    private htmlIconZip: HTMLElement;
+    private htmlBadgeServer: HTMLElement;
+    private htmlIconServer: HTMLElement;
+
     constructor(
         progressArea: HTMLElement,
         fileName: string,
@@ -536,17 +541,71 @@ class createStatusBar {
 
         this.htmlStatusbarInner = document.createElement('div');
         this.htmlStatusbar.appendChild (this.htmlStatusbarInner);
-        
+
+        if (origin == 'zip') {
+
+            this.htmlBadgeZip = document.createElement('i');
+            this.htmlBadgeZip = document.createElement('span');
+            this.htmlBadgeZip.classList.add('zip-upload');
+            this.htmlBadgeZip.classList.add('label');
+            this.htmlBadgeZip.classList.add('label-primary');
+
+//            this.htmlBadgeZip.style.display = "inline-block";
+
+            this.htmlIconZip = document.createElement('i');
+//            this.htmlIconZip.classList.add('icon-file-zip');
+//            this.htmlIconZip.classList.add('icon-expand-2');
+            this.htmlIconZip.classList.add('fa');
+            this.htmlIconZip.classList.add('fa-file-archive');
+            this.htmlBadgeZip.appendChild (this.htmlIconZip);
+            this.htmlBadgeZip.appendChild(document.createTextNode(' '));
+
+            this.htmlStatusbarInner.appendChild (this.htmlBadgeZip);
+        }
+
+        if (origin == 'server') {
+            this.htmlBadgeServer = document.createElement('i');
+            this.htmlBadgeServer = document.createElement('span');
+            this.htmlBadgeServer.classList.add('server-upload');
+            this.htmlBadgeServer.classList.add('label');
+            this.htmlBadgeServer.classList.add('label-primary');
+
+//            this.htmlBadgeServer.style.display = "inline-block";
+
+            this.htmlIconServer = document.createElement('i');
+            // this.htmlIconServer.classList.add('icon-folder');
+            this.htmlIconServer.classList.add('fa');
+            this.htmlIconServer.classList.add('fa-folder');
+            this.htmlBadgeServer.appendChild (this.htmlIconServer);
+            this.htmlBadgeServer.appendChild(document.createTextNode(' '));
+
+            this.htmlStatusbarInner.appendChild (this.htmlBadgeServer);
+        }
+
+
         //this.htmlFilename = $("<div class='filename'></div>").appendTo(this.statusbar);
         this.htmlFilename = document.createElement('div');
-        if (origin == 'image') {
-            this.htmlFilename.classList.add('filename');
-            this.htmlFilename.classList.add('shorten-long-text');
+        // if (origin == 'image') {
+        //     this.htmlFilename.classList.add('filename');
+        //     this.htmlFilename.classList.add('shorten-long-text');
+        // }
+        // else
+        // {
+        //     // ToDo: May be others too
+        //     this.htmlFilename.classList.add('zip');
+        //
+        // }
+        this.htmlFilename.classList.add('filename');
+        this.htmlFilename.classList.add('shorten-long-text');
+
+        if (origin == 'zip') {
+            this.htmlFilename.classList.add('zip-name');
         }
         else
         {
-            // ToDo: May be others too
-            this.htmlFilename.classList.add('zip');
+            if (origin == 'server') {
+                this.htmlFilename.classList.add('server-name');
+            }
         }
         this.htmlStatusbarInner.appendChild (this.htmlFilename);
 
@@ -826,12 +885,33 @@ interface IResponseServerFile {
     baseName: string;
     dstFileName: string;
     size: number;
+    thumbSize:string;
 }
 
 interface IResponseServerFiles {
     // Path ?
     files: IResponseServerFile [];
 }
+
+interface IResponseZipFile {
+    fileName: string;
+    imageId: string; //number
+    baseName: string;
+    dstFileName: string;
+    thumbSize:string;
+    size: number;
+    fileUrl: string;
+}
+
+interface IResponseZipFiles {
+    // Path ?
+    files: IResponseZipFile [];
+}
+
+
+
+
+
 
 class RequestDbImageIdTask {
 
@@ -1194,7 +1274,7 @@ class TransferImagesTask {
     private async callAjaxTransfer(nextFile: ITransferFile): Promise<any>  {
 
         console.log("      in callAjaxTransfer: " + nextFile.file);
-        console.log("      > callAjaxTransfer: " + nextFile.file_name);
+        console.log("      > callAjaxTransfer: " + nextFile.fileName);
 
         return new Promise<any>(
             function (resolve, reject) {
@@ -1363,6 +1443,7 @@ class TransferImagesTask {
 
                         this.showThumb(transferData)
 
+                        // ToDo: load aat start like others
                         var buttonProperties : HTMLButtonElement; // button
                         buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
                         buttonProperties.disabled = false;
@@ -1484,7 +1565,7 @@ class TransferImagesTask {
 
 class RequestZipUploadTask {
 
-    //    private dragZone: HTMLElement;
+    private imagesAreaList: HTMLElement;
     private progressArea: HTMLElement;
     private errorZone: HTMLElement;
 
@@ -1496,6 +1577,7 @@ class RequestZipUploadTask {
     private isBusy: boolean = false;
 
     constructor(
+        imagesAreaList: HTMLElement,
         progressArea: HTMLElement,
         errorZone: HTMLElement,
 
@@ -1503,6 +1585,7 @@ class RequestZipUploadTask {
         serverFiles: ServerFiles,
         RequestTransferFolderFilesTask: RequestTransferFolderFilesTask,
         ) {
+        this.imagesAreaList = imagesAreaList;
         this.progressArea = progressArea;
         this.errorZone = errorZone;
 
@@ -1596,7 +1679,7 @@ class RequestZipUploadTask {
             // console.log("   @Request zip File: " + nextFile.file.name);
             console.log("   @Request zip File: " + nextFile.file);
 
-            nextFile.statusBar = new createStatusBar(this.progressArea, "*Zip: " + nextFile.file.name, nextFile.file.size, 'zip');
+            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.file.name, nextFile.file.size, 'zip');
 
             /* let request = */
             //await this.callAjaxRequest(nextFile)
@@ -1617,31 +1700,67 @@ class RequestZipUploadTask {
                     if (AjaxResponse.success) {
                         console.log("      success data: " + AjaxResponse.data);
 
-                        let foundFiles = <IResponseServerFiles><unknown>AjaxResponse.data;
+                        let foundFiles = <IResponseZipFiles><unknown>AjaxResponse.data;
+
+                        if (foundFiles.files.length > 0) {
+                            nextFile.statusBar.removeAbort();
+                            nextFile.statusBar.setProgress(70);
+
+                            // toDo: flag in response data for all loaded
+                            nextFile.statusBar.setUpload(true);
+                        }
 
                         for (let idx = 0; idx < foundFiles.files.length; idx++) {
 
                             const foundFile = foundFiles.files[idx];
 
-                            const serverFile: IRequestTransferFolderFile = {
-                                fileName: foundFile.fileName,
-                                imageId: foundFile.imageId,
-                                baseName: foundFile.baseName,
-                                dstFileName: foundFile.dstFileName,
-                                size: foundFile.size,
-                                galleryId: nextFile.galleryId,
-                                origin: 'zip',
+                            console.log("      response data.file Temp:: " + foundFile.fileName);
+                            console.log("      response data.baseName: " + foundFile.baseName);
+                            console.log("      response data.safeFileName: " + foundFile.dstFileName);
+                            console.log("      response data.imageId: " + foundFile.imageId);
+                            console.log("      response data.fileUrl: " + foundFile.fileUrl);
+                            console.log("      response data.size: " + foundFile.size);
+                            console.log("      response data.thumbSize: " + foundFile.thumbSize);
 
-                                // ToDo create statusbar entry
-                                statusBar: null,
-                                errorZone: null,
+                            // Create new status bar for image
+                            let statusBar: createStatusBar = new createStatusBar(this.progressArea, foundFile.baseName, foundFile.size, 'image');
+
+                            //--- show image --------------------------------------
+
+                            //let transferData = <IResponseTransfer><unknown>AjaxResponse.data;
+                            const transferData: IResponseTransfer = {
+
+                                fileName: foundFile.baseName,
+                                imageId: foundFile.imageId,
+                                fileUrl: foundFile.fileUrl,
+                                safeFileName: foundFile.dstFileName,
+                                thumbSize: foundFile.thumbSize,
                             };
 
-                            this.serverFiles.addFiles([serverFile]);
+                            this.showThumb(transferData)
+
+                            //--- status bar --------------------------------------
+
+                            // toDo: on false flag -> IResponseTransfer prevent or ...
+                            statusBar.removeAbort();
+                            statusBar.setProgress(100);
+                            statusBar.setOK(true);
+                            // toDo: flag in response data for all loaded
+                            statusBar.setUpload(true);
+
+
+                            // ToDo: load at start like others
+                            var buttonProperties : HTMLButtonElement; // button
+                            buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
+                            buttonProperties.disabled = false;
+
                         }
 
-                        // ==> Start ajax transfer of files
-                        this.requestTransferFolderFilesTask.ajaxRequest ();
+                        if (foundFiles.files.length > 0) {
+                            nextFile.statusBar.setProgress(100);
+                            nextFile.statusBar.setOK(true);
+                        }
+
                     } else {
                         console.log("      failed data: " + AjaxResponse.data);
                     }
@@ -1679,6 +1798,67 @@ class RequestZipUploadTask {
         this.isBusy = false;
         console.log("    <zipFiles: " + this.zipFiles.length);
     }
+
+    // toDo: Html lib or similar
+    private showThumb (responseData: IResponseTransfer) {
+
+        // Add HTML to show thumb of uploaded image
+
+// ToDo: images area class:span12 && #imagesAreaList class:thumbnails around ...
+
+        //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
+        const imageBox = document.createElement('li');
+        this.imagesAreaList.appendChild (imageBox);
+
+        const thumbArea = document.createElement('div');
+        thumbArea.classList.add('rsg2_thumbnail');
+        imageBox.appendChild (thumbArea);
+
+        //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
+        const imgContainer = document.createElement('div');
+        imgContainer.classList.add('imgContainer');
+        imgContainer.style.width = responseData.thumbSize + 'px';
+        imgContainer.style.height = responseData.thumbSize + 'px';
+        thumbArea.appendChild (imgContainer);
+
+        //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
+        const imageDisplay = document.createElement('img');
+        imageDisplay.classList.add('img-rounded');
+        // 2021.02.15 imageDisplay.style.width = responseData.thumbSize +'px';
+        // 2021.02.15 imageDisplay.style.height = responseData.thumbSize + 'px';
+        imageDisplay.src = responseData.fileUrl;
+        imgContainer.appendChild (imageDisplay);
+
+        //
+        //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
+        const caption = document.createElement('div');
+        caption.classList.add('caption');
+        imageBox.appendChild (caption);
+
+        //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
+        const imageName = document.createElement('small');
+        imageName.innerText = responseData.fileName;
+        caption.appendChild (imageName);
+
+        // toDo: title ?
+        //this.imageId = $("<small> (" + jData.data.cid + ":" + jData.data.order + ")</small>").appendTo(this.imageDisplay);
+        const imageId = document.createElement('small');
+        imageId.innerText = ' (' + responseData.imageId + ')'; // order
+        //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
+        caption.appendChild (imageId);
+
+        //this.cid = $("<input name='cid[]' class='imageCid' type='hidden' value='" + jData.data.cid + "' />").appendTo(this.imageBox);
+        const cid = document.createElement('input');
+        cid.classList.add('imageCid');
+        cid.name = 'cid[]';
+        cid.type = 'hidden';
+        //cid.innerText = responseData.imageId;
+        cid.value = responseData.imageId;
+
+        imageBox.appendChild (cid);
+    }
+
+
 }
 
 //--------------------------------------------------------------------------------------
@@ -1791,7 +1971,7 @@ class RequestFilesInFolderTask {
         this.isBusy = true;
         /**/
 
-        this.serverFolder.statusBar = new createStatusBar(this.progressArea, '*Server: ' + this.serverFolder.path, 0, 'server');
+        this.serverFolder.statusBar = new createStatusBar(this.progressArea, this.serverFolder.path, 0, 'server');
 
         /* let request = */
         //await this.callAjaxRequest(nextFile)
@@ -1814,6 +1994,15 @@ class RequestFilesInFolderTask {
 
                     let foundFiles = <IResponseServerFiles><unknown>AjaxResponse.data;
 
+                    if (foundFiles.files.length > 0) {
+                        this.serverFolder.statusBar.setOK(true);
+                        this.serverFolder.statusBar.removeAbort();
+                        this.serverFolder.statusBar.setProgress(70);
+
+                        // toDo: flag in response data for all loaded
+                        // this.serverFolder.statusBar.setUpload(true);
+                    }
+
                     for (let idx = 0; idx < foundFiles.files.length; idx++) {
 
                         const foundFile = foundFiles.files[idx];
@@ -1834,6 +2023,16 @@ class RequestFilesInFolderTask {
 
                         this.serverFiles.addFiles([serverFile]);
                     }
+
+                    if (foundFiles.files.length > 0) {
+                        this.serverFolder.statusBar.setProgress(100);
+                        this.serverFolder.statusBar.setOK(true);
+
+                        // toDo: update to 100% when ???
+                        // nextFile.statusBar.setUpload(true);
+                    }
+
+
 
                     // ==> Start ajax transfer of files
                     this.requestTransferFolderFilesTask.ajaxRequest ();
@@ -1876,7 +2075,7 @@ class RequestFilesInFolderTask {
     }
 }
 //--------------------------------------------------------------------------------------
-// Files already on server by ftp or zip upload
+// Files already on server by ftp
 //--------------------------------------------------------------------------------------
 
 class RequestTransferFolderFilesTask {
@@ -2015,9 +2214,12 @@ class RequestTransferFolderFilesTask {
                         console.log("      response data.safeFileName: " + transferData.safeFileName);
 
                         nextFile.statusBar.setOK(true);
+                        nextFile.statusBar.removeAbort();
+                        nextFile.statusBar.setProgress(100);
 
                         this.showThumb(transferData)
 
+                        // ToDo: load aat start like others
                         var buttonProperties : HTMLButtonElement; // button
                         buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
                         buttonProperties.disabled = false;
@@ -2169,14 +2371,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         serverFolder, serverFiles, requestTransferFolderFilesTask);
 
     // Upload zip to a server folder, return list of files on server (and create image DB IDs)
-    const requestZipUploadTask = new RequestZipUploadTask(elements.progressArea, elements.errorZone,
+    const requestZipUploadTask = new RequestZipUploadTask(elements.imagesAreaList, elements.progressArea, elements.errorZone,
         zipFiles, serverFiles, requestTransferFolderFilesTask);
-
-
 
     // init red / green border of drag area
     const onGalleryChange = new enableDragZone (elements);
-
 
 
     // (3) ajax request: Transfer file to server
