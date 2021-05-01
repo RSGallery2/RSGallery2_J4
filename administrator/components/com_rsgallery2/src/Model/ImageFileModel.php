@@ -582,7 +582,7 @@ class ImageFileModel extends BaseModel // AdminModel
 				{
 					$originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
 					// Move of file on upload and not on ftp folder on server
-					if($uploadOrigin != 'server')
+					if($uploadOrigin != 'server' && $uploadOrigin != 'zip')
 					{
 						$isCreated = File::upload($srcTempPathFileName, $originalFileName);
 					}
@@ -613,6 +613,8 @@ class ImageFileModel extends BaseModel // AdminModel
 					// lead to upload at the end ....
 					$msg .= '<br>' . 'Create for file "' . $targetFileName . '"';
 					// 'failed: Other user may have tried to upload with same name at the same moment. Please try again or with different name.';
+
+                    // ToDo: follow up this message + debug message
 				}
 			}
 		}

@@ -424,11 +424,13 @@ out:
 
 			try
 			{
-				/**/
+                // $origin = $input->get('origin', '', 'string'); // zip/server
+                $origin = 'uploadFile';
+
 				$modelFile = $this->getModel('imageFile');
 				list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images(
-					$srcTempPathFileName, $targetFileName, $galleryId, 'uploadFile');
-				/**/
+					$srcTempPathFileName, $targetFileName, $galleryId, $origin);
+
 			}
 			catch (\RuntimeException $e)
 			{
@@ -629,6 +631,10 @@ out:
                 return;
             }
 
+            //--------------------------------------------------------------------
+            //--- start the real work --------------------------------------------
+            //--------------------------------------------------------------------
+
             $ajaxImgObject = [];
 
             $isCreated = false;
@@ -643,31 +649,50 @@ out:
 				// Successful extracted zip content
 				if ($extract)
 				{
-                    $files = $this->ImportFilesInFolder  ($extractDir, $galleryId);
+                    // Collect file info and Reserve Db ImageId
+                    $files = $this->Import2Db4FilesInFolder  ($extractDir, $galleryId);
                 }
 
                 // Images exist
                 if ($files)
                 {
+// see below                    $ajaxImgObject ['files'] = $files;
+
                     //----------------------------------------------------
                     // Move/copy file and create display, thumbs and watermarked images
                     //----------------------------------------------------
 
+                    $modelFile = $this->getModel('imageFile');
+
+                    // all images in all folders
                     foreach ($files as $file)
                     {
                         try {
 
+                            //----------------------------------------------------
+                            // Move/copy file and create display, thumbs and watermarked images
+                            //----------------------------------------------------
 
-//                            $origin = $input->get('origin', '', 'string'); // zip/server
+                            // $origin = $input->get('origin', '', 'string'); // zip/server
 	                        $origin = 'zip';
-	                        $fileName = $file[name];
+                            $fileName = $file['fileName'];
+                            $targetFileName= $file['dstFileName'];
+//                            check out MoveImageAndCreateRSG2Images
 
-                            check out MoveImageAndCreateRSG2Images 
-                            /**/
-                            $modelFile = $this->getModel('imageFile');
                             // toDo check origin and config for copy / or move file call below
                             list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images(
                                 $fileName, $targetFileName, $galleryId, $origin);
+
+                            if($isCreated) {
+                                $file['fileUrl'] = $urlThumbFile; // $dstFileUrl ???
+                            }
+                            else
+                            {
+                                // ToDo: ??? Keep for end result ???
+
+
+                            }
+
                             /**/
                         } catch (\RuntimeException $e) {
                             $OutTxt = '';
@@ -925,8 +950,8 @@ out:
 				Log::add('Valid folder:' . strval($ftpPath));
 			}
 
-
-			$files = $this->ImportFilesInFolder  ($ftpPath, $galleryId);
+            // Collect file info and Reserve Db ImageId
+			$files = $this->Import2Db4FilesInFolder  ($ftpPath, $galleryId);
 
 			// No Images exist
 			if (!$files)
@@ -1216,7 +1241,7 @@ interface IResponseTransfer {
 		$app->close();
 	}
 
-	private function ImportFilesInFolder  ($ImagesFolder, $galleryId)
+	private function Import2Db4FilesInFolder  ($ImagesFolder, $galleryId)
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
@@ -1283,12 +1308,14 @@ interface IResponseTransfer {
 			$files []                 = $nextFile;
 		}
 
-        // ToDo: all folders ...
+        //--- all sub folders  ----------------------------------------------------
+
         $subFolders = Folder::folders($ImagesFolder, '.', false);
 
         foreach (subFolders as $subFolder) {
 
-            $subfiles = $this->ImportFilesInFolder  ($subFolder, $galleryId);
+            // Collect file info and Reserve Db ImageId
+            $subfiles = $this->Import2Db4FilesInFolder  ($subFolder, $galleryId);
             if (count ($subfiles)) {
                 array_merge($files, $subfiles);
             }
