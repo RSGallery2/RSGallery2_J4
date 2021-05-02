@@ -229,14 +229,19 @@ class ImageTable extends Table
 	 */
 	public function delete($pk=null)
 	{
+        /**
 		$IsDeleted = false;
 
 		try
 		{
+
+		    // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
+
+            $filename          = $this->name;
+
 			//$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
 			$imgFileModel = $this->getModel ('imageFile');
 
-			$filename          = $this->name;
 			$IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
 			if (! $IsFilesAreDeleted)
 			{
@@ -255,7 +260,19 @@ class ImageTable extends Table
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
-		return $IsDeleted;
+        return $IsDeleted;
+        /**/
+
+        $return = parent::delete($pk);
+
+        if ($return)
+        {
+//            $helper = new TagsHelper;
+//            $helper->tagDeleteInstances($pk);
+        }
+
+        return $return;
 	}
+
 	/**/
 } // class

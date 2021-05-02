@@ -1431,5 +1431,54 @@ class ImageModel extends AdminModel
         return $IsSaved;
     }
 
+    /**
+     * Method to delete groups.
+     *
+     * @param   array  $itemIds  An array of item ids.
+     *
+     * @return  boolean  Returns true on success, false on failure.
+     *
+     * @since   1.6
+     */
+    public function delete(&$itemIds)
+    {
+        // Sanitize the ids.
+        $itemIds = ArrayHelper::toInteger((array) $itemIds);
+
+        // Get a group row instance.
+        $table = $this->getTable();
+
+//        // Include the plugins for the delete events.
+//        PluginHelper::importPlugin('content');
+
+        // Iterate the items to delete each one.
+        foreach ($itemIds as $itemId)
+        {
+            if ($table->load($itemId))
+            {
+//                // Trigger the before delete event.
+//                $result = Factory::getApplication()->triggerEvent('onContentBeforeDelete', array($this->_context, $table));
+
+                if (in_array(false, $result, true) || !$table->delete($itemId))
+                {
+                    $this->setError($table->getError());
+
+                    return false;
+                }
+
+                // Trigger the after delete event.
+                Factory::getApplication()->triggerEvent('onContentAfterDelete', array($this->_context, $table));
+
+                // TODO: Delete the menu associations - Menu items and Modules
+            }
+        }
+
+        // Clean the cache
+        $this->cleanCache();
+
+        return true;
+    }
+
+
 
 }

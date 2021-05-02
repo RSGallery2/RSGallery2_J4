@@ -18,6 +18,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * The Gallery Controller
@@ -55,7 +57,109 @@ class ImageController extends FormController
 		}
 	}
 
-	/**
+    /**
+     * Remove an item.
+     *
+     * @return  void
+     *
+     * @since   1.6
+     */
+    /**
+    public function delete()
+    {
+        // Check for request forgeries
+        $this->checkToken();
+
+        $user = $this->app->getIdentity();
+        $cids = (array) $this->input->get('cid', array(), 'array');
+
+        if (count($cids) < 1)
+        {
+            $this->setMessage(Text::_('COM_RSGALLERY2_NO_IMAGE_SELECTED'), 'warning');
+        }
+        else
+        {
+            // Access checks.
+            foreach ($cids as $i => $id)
+            {
+                if (!$user->authorise('core.delete', 'com_menus.menu.' . (int) $id))
+                {
+                    // Prune items that you can't change.
+                    unset($cids[$i]);
+                    $this->app->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'), 'error');
+                }
+            }
+
+            if (count($cids) > 0)
+            {
+                // Get the model.
+                /** @var \Joomla\Component\Menus\Administrator\Model\MenuModel $model *
+                $model = $this->getModel();
+
+                // Make sure the item ids are integers
+                $cids = ArrayHelper::toInteger($cids);
+
+                // Remove the items.
+                if (!$model->delete($cids))
+                {
+                    $this->setMessage($model->getError(), 'error');
+                }
+                else
+                {
+                    // Delete image files physically
+
+                    /** ToDo: folowing
+                    $IsDeleted = false;
+
+                    try
+                    {
+
+                        // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
+
+                        $filename          = $this->name;
+
+                        //$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
+                        $imgFileModel = $this->getModel ('imageFile');
+
+                        $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
+                        if (! $IsFilesAreDeleted)
+                        {
+                            // Remove from database
+                        }
+
+                        $IsDeleted = parent::delete($pk);
+                    }
+                    catch (\RuntimeException $e)
+                    {
+                        $OutTxt = '';
+                        $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
+                        $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                        $app = Factory::getApplication();
+                        $app->enqueueMessage($OutTxt, 'error');
+                    }
+
+                    return $IsDeleted;
+                    /**
+
+
+
+
+
+
+
+
+
+                    $this->setMessage(Text::plural('COM_RSGALLERY2_N_ITEMS_DELETED', count($cids)));
+                }
+            }
+        }
+
+        $this->setRedirect('index.php?option=com_menus&view=menus');
+    }
+    /**/
+
+    /**
 	 * rotate_image_left directs the master image and all dependent images to be turned left against the clock
 	 *
 	 * @since version 4.3
