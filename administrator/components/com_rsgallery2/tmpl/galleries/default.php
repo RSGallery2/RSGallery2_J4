@@ -301,7 +301,7 @@ if ($saveOrder && !empty($this->items))
 
                                     <td class="text-center btns d-none d-md-table-cell itemnumber">
                                         <?php
-                                        $link = Route::_("index.php?option=com_rsgallery2&view=Images&filter[galler_id]=" . $item->id);
+                                        $link = Route::_("index.php?option=com_rsgallery2&view=Images&filter_gallery_id=" . $item->id);
                                         //$count = random_int (0, 2) ;
                                         $imageCount = 0;
                                         if (!empty($item->image_count))
@@ -311,7 +311,7 @@ if ($saveOrder && !empty($this->items))
 
 
                                         ?>
-                                        <a class="btn <?php echo ($imageCount > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php echo Text::_('COM_CATEGORY_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo $link; ?>">
+                                        <a class="btn <?php echo ($imageCount > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_IMAGES_IN_GALLERY_COUNT_CLICK_TO_VIEW_THEM'); ?>" href="<?php echo $link; ?>">
 											<?php echo $imageCount; ?></a>
                                     </td>
 
