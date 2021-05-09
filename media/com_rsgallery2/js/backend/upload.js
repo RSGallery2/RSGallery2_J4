@@ -983,15 +983,19 @@ class TransferImagesTask {
         // ToDo: images area class:span12 && #imagesAreaList class:thumbnails around ...
         //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
         const imageBox = document.createElement('li');
+        //imageBox.classList.add('card_thumb');
+        imageBox.classList.add('card');
+        imageBox.classList.add('thumb_card');
         this.imagesAreaList.appendChild(imageBox);
         const thumbArea = document.createElement('div');
         thumbArea.classList.add('rsg2_thumbnail');
+        thumbArea.style.minWidth = '100px';
         imageBox.appendChild(thumbArea);
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
         const imgContainer = document.createElement('div');
         imgContainer.classList.add('imgContainer');
-        imgContainer.style.width = responseData.thumbSize + 'px';
-        imgContainer.style.height = responseData.thumbSize + 'px';
+        //imgContainer.style.width = responseData.thumbSize + 'px';
+        //imgContainer.style.height = responseData.thumbSize + 'px';
         thumbArea.appendChild(imgContainer);
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
@@ -1003,12 +1007,14 @@ class TransferImagesTask {
         //
         //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
         const caption = document.createElement('div');
-        caption.classList.add('caption');
-        caption.classList.add('shorten-long-text');
+        caption.classList.add('thumb_caption');
         imageBox.appendChild(caption);
         //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
+        //const imageName = document.createElement('small');
         const imageName = document.createElement('small');
         imageName.innerText = responseData.fileName;
+        imageName.classList.add('thumb_name');
+        imageName.classList.add('shorten-long-text');
         caption.appendChild(imageName);
         //        caption.appendChild(document.createTextNode(' '));
         // toDo: title ?

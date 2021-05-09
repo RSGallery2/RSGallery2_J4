@@ -235,6 +235,12 @@
   list-style: none;
 }
 /**/
+/**
+.thumbnails {
+  list-style: none;
+  border: 3px solid red;
+}
+/**/
 /**/
 .imagesArea {
   display: block;
@@ -248,30 +254,40 @@
   display: inline-block;
 }
 .imagesArea li .rsg2_thumbnail {
-  padding: 4px;
+  padding: 0px;
+  margin: 0px;
   line-height: 18px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
   transition: all 0.2s ease-in-out;
 }
-.imagesArea li .rsg2_thumbnail img {
-  margin-top: 2.5%;
-  padding: 4px;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+.imagesArea li .rsg2_thumbnail .imgContainer {
+  position: relative;
+  height: 130px;
+  width: 130px;
+}
+.imagesArea li .rsg2_thumbnail .imgContainer .img-rounded {
+  display: block;
   border-radius: 6px;
   max-width: 100%;
-  height: auto;
+  max-height: 130px;
+  /**/
+  margin: auto;
   vertical-align: middle;
-  border: 0;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.imagesArea li .rsg2_thumbnail .imgContainer img {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.23);
   transition: all 0.2s ease-in-out;
 }
 
-/**
-.imgContainer {
-  display: block;
+.thumb_card {
+  padding: 5px;
+  margin: 5px;
 }
-/**/
+
 /**/
 /**/
 /**/
@@ -291,7 +307,8 @@
 /**/
 /**
 ul#imagesAreaList {
-  list-style: none;
+  //list-style: none;
+  padding: 5px;
 }
 /**/
 /**/
@@ -304,13 +321,13 @@ ul#imagesAreaList {
 }
 
 /**/
-.caption.shorten-long-text {
+.thumb_caption.shorten-long-text {
   white-space: nowrap;
   overflow: hidden;
-  width: 150px;
+  width: 130px;
   text-overflow: ellipsis;
 }
-.caption.shorten-long-text :hover {
+.thumb_caption.shorten-long-text :hover {
   overflow: visible;
   width: 100%;
 }
