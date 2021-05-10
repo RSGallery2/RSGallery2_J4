@@ -206,10 +206,7 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
-                . '* ? auto  server path  from config <br>'
                 . '* upload big batch (50) last is uploaded first<br>'
-                . '* center portrait landscape thumb displayed<br>'
-                . '* Upload image portrait landscape -> size when creating thumb (images) See j3x<br>'
                 . '* Remove bar of uploaded image after 3s when OK<br>'
                 . '* Check b5 on card  on messages (error, ...)<br>'
                 . '* !!! ---- more --------------<br>'
