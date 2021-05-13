@@ -1457,8 +1457,8 @@ class ImageModel extends AdminModel
             if ($table->load($itemId))
             {
 //                // Trigger the before delete event.
-//                $result = Factory::getApplication()->triggerEvent('onContentBeforeDelete', array($this->_context, $table));
-
+                // $result = Factory::getApplication()->triggerEvent('onRsg2BeforeDeleteImage', array($this->_context, $table));
+				$result = array (false); // simulate event OK
                 if (in_array(false, $result, true) || !$table->delete($itemId))
                 {
                     $this->setError($table->getError());
@@ -1467,7 +1467,7 @@ class ImageModel extends AdminModel
                 }
 
                 // Trigger the after delete event.
-                Factory::getApplication()->triggerEvent('onContentAfterDelete', array($this->_context, $table));
+                Factory::getApplication()->triggerEvent('onRsg2AfterDeleteImage', array($this->_context, $table));
 
                 // TODO: Delete the menu associations - Menu items and Modules
             }
