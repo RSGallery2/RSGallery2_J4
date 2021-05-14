@@ -163,12 +163,14 @@ $repair_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_REPAIR_ZONE'), Text::_(
 
 $repair_ZoneButtons = [];
 
+//    '<del>' . Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES') . '<del>',
+//    '<del>' . Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES_TXT') . '<del>',
+
 /**/
 $repair_ZoneButtons[] =  new zoneButtons(
-	//Route::_('index.php?option=com_rsgallery2&view=maintConsolidateImages'),
-	Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared&intended=ConsolidateImages'),
-	'<del>' . Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES') . '<del>',
-    '<del>' . Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES_TXT') . '<del>',
+	Route::_('index.php?option=com_rsgallery2&view=maintConsolidateDb'),
+	Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES'),
+    Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGES_TXT'),
 	array('icon-database', 'icon-images', 'icon-checkbox-checked', 'icon-notification-2'),
 	'viewConsolidateDB'
 );

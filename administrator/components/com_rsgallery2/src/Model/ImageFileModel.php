@@ -472,7 +472,6 @@ class ImageFileModel extends BaseModel // AdminModel
                     $failedCount += 1;
                 }
             }
-
         }
 		catch (\RuntimeException $e)
 		{
