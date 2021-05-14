@@ -34,30 +34,66 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'MaintConsolidateDb')); ?>
 
 				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'MaintConsolidateDb', Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
-                <p></p>
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
-                <p><h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
 
-                <?php
+				<div style="max-width: 400px;">
+					<strong><?php echo JText::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'); ?></strong>
+				</div>
 
-					try
-					{
+				<?php
+                    // // if (empty($this->ImageReferences)) :
+                    if (true) :
+                    // $ImageReferenceList = $this->ImageReferences->getImageReferenceList();
+                    // if (count($ImageReferenceList) == 0) :
+                ?>
+					<div class="alert alert-no-items">
+						<?php
+                            // echo JText::_('COM_RSGALLERY2_MAINT_CONSOLDB_NO_MISSING_ITEMS_TXT');
+                            echo JText::_('COM_RSGALLERY2_NO_INCONSISTENCIES_IN_DATABASE');
+                        ?>
+					</div>
+				<?php else : ?>
+
+					<div class="pull-right">
+						<?php
+						// Specify parent gallery selection
+						echo $this->form->renderFieldset('maintConsolidateDB');
+						?>
+					</div>
+
+					<div class="span12">
+						<div class="row-fluid">
+							<!-- div class="span4 clsInfoAccordion" -->
+							<?php
+							// Info about last uploaded galleries
+							DisplayImageDataTable($this->ImageReferences, $this->form);
+							?>
+							<!-- /div -->
+						</div>
+					</div>
+
+				<?php endif; ?>
+
+				<div class="form-actions">
+					<br>
+				</div>
+
+				<fieldset class="refresh">
+					<!--legend><?php echo JText::_('COM_RSGALLERY2_REFRESH_TEXT'); ?>XXXXX</legend-->
+                    <div class="form-actions">
+                        <a class="btn btn-primary"
+                           title="<?php echo JText::_('COM_RSGALLERY2_REPEAT_CHECKING_INCONSITENCIES_DESC'); ?>"
+                           href="index.php?option=com_rsgallery2&amp;view=maintConsolidateDB">
+							<?php echo JText::_('COM_RSGALLERY2_REPEAT_CHECKING'); ?>
+                        </a>
+                        <a class="btn btn-primary"
+                           href="index.php?option=com_rsgallery2&amp;view=maintenance">
+		                    <?php echo JText::_('COM_RSGALLERY2_CANCEL'); ?>
+                        </a>
+                    </div>
+ 				</fieldset>
 
 
 
-
-					}
-					catch (\RuntimeException $e)
-					{
-						$OutTxt = '';
-						$OutTxt .= 'Error rawEdit view: "' . 'MaintConsolidateDb' . '"<br>';
-						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-					
-						$app = Factory::getApplication();
-						$app->enqueueMessage($OutTxt, 'error');
-					}
-
-				?>
 
 				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
@@ -67,6 +103,16 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 				<input type="hidden" name="rsgOption" value="maintenance" /-->
 
 				<input type="hidden" name="task" value="" />
+				<input type="hidden" name="boxchecked" value="0" />
+				<input type="hidden" name="ImageReferenceList" value="<?php
+                    // $ImageReferenceList = $this->ImageReferences->ImageReferenceList;
+                    // $JsonEncoded        = json_encode($ImageReferenceList);
+                    // //$JsonEncoded = json_encode($ImageReferenceList, JSON_HEX_QUOT);
+                    // //$HtmlOut = htmlentities($JsonEncoded, ENT_QUOTES, "UTF-8");
+                    // $HtmlOut = htmlentities($JsonEncoded, ENT_QUOTES, "UTF-8");
+                    // echo $HtmlOut;
+				?>" />
+
 				<?php echo HTMLHelper::_('form.token'); ?>
             </div>
 		</div>

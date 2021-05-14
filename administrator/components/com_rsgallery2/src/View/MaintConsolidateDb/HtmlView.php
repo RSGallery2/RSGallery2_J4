@@ -80,8 +80,8 @@ class HtmlView extends BaseHtmlView
 		//--- get needed data ------------------------------------------
 
 
-//		$ConsolidateModel      = $this->getModel(); // JModelLegacy::getInstance('MaintConsolidateDB', 'rsgallery2Model');
-//		$this->ImageReferences = $ConsolidateModel->GetImageReferences();
+		$ConsolidateModel      = $this->getModel(); // JModelLegacy::getInstance('MaintConsolidateDB', 'rsgallery2Model');
+		$this->ImageReferences = $ConsolidateModel->GetImageReferences();
 
 		// for prepared but not ready views
 		// $input = Factory::getApplication()->input;
@@ -97,8 +97,8 @@ class HtmlView extends BaseHtmlView
 
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
 
-//		$xmlFile    = JPATH_COMPONENT . '/models/forms/maintConsolidateDB.xml';
-//		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
+		$xmlFile    = JPATH_COMPONENT . '/models/forms/maintConsolidateDB.xml';
+		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
 
 
 
@@ -126,8 +126,6 @@ class HtmlView extends BaseHtmlView
 
 		$Layout = Factory::getApplication()->input->get('layout');
 
-
-
 		$this->addToolbar($Layout);
 
 		return parent::display($tpl);
@@ -150,7 +148,7 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. '* <br>'
-				. '* <br>'
+				. '* YYYYY<br>'
 				. '* <br>'
 				. '* <br>'
 //				. '* <br>'
@@ -160,11 +158,11 @@ class HtmlView extends BaseHtmlView
 				. '</span><br><br>';
 		}
 
-		switch ($Layout)
-		{
-			case 'MaintConsolidateDb':
+//		switch ($Layout)
+//		{
+//			case 'MaintConsolidateDb':
 
-				ToolBarHelper::title(JText::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGE_DATABASE'), 'icon-database icon-checkbox-checked');
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGE_DATABASE'), 'icon-database icon-checkbox-checked');
 
 				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
@@ -175,16 +173,16 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::custom('MaintConsolidateDb.deleteRowItems', 'delete', '', 'COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS', true);
                 ToolBarHelper::custom('MaintConsolidateDb.repairAllIssuesItems', 'refresh', '', 'COM_RSGALLERY2_REPAIR_ALL_ISSUES', true);
 
-				break;
-
-			default:
-				// Set the title
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
-				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
-				// ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
-				break;
-		}
-
+//				break;
+//
+//			default:
+//				// Set the title
+//				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
+//				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+//				// ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+//				break;
+//		}
+//
 
 		// Options button.
 		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
