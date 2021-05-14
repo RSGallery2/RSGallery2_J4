@@ -12,6 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
+use JModelLegacy;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
@@ -1432,7 +1433,7 @@ class ImageModel extends AdminModel
     }
 
     /**
-     * Method to delete groups.
+     * Method to delete groups. -> not needed for standard delete -> calling table
      *
      * @param   array  $itemIds  An array of item ids.
      *
@@ -1440,45 +1441,123 @@ class ImageModel extends AdminModel
      *
      * @since   1.6
      */
+    /**/
     public function delete(&$itemIds)
     {
+        $imgDeletedCount = 0;
+
         // Sanitize the ids.
-        $itemIds = ArrayHelper::toInteger((array) $itemIds);
+        $itemIds = ArrayHelper::toInteger((array)$itemIds);
 
         // Get a group row instance.
         $table = $this->getTable();
 
-//        // Include the plugins for the delete events.
-//        PluginHelper::importPlugin('content');
+        try {
 
-        // Iterate the items to delete each one.
-        foreach ($itemIds as $itemId)
-        {
-            if ($table->load($itemId))
-            {
-//                // Trigger the before delete event.
-                // $result = Factory::getApplication()->triggerEvent('onRsg2BeforeDeleteImage', array($this->_context, $table));
-				$result = array (false); // simulate event OK
-                if (in_array(false, $result, true) || !$table->delete($itemId))
-                {
-                    $this->setError($table->getError());
+            $imgFileModel = $this->getInstance('imageFile', 'RSGallery2Model');
+            //$imgFileModel = $this->getModel('imageFile');
 
-                    return false;
+
+            // Iterate the items to delete each one.
+            foreach ($itemIds as $itemId) {
+                if ($table->load($itemId)) {
+                    // Trigger the before delete event.
+                    // $result = Factory::getApplication()->triggerEvent('onRsg2BeforeDeleteImage', array($this->_context, $table));
+                    $eventResults = array(true); // simulate event OK
+
+                    $fileName = $table->name;
+                    $galleryId = $table->gallery_id;
+
+                    // ToDo: tell if any are left and then do not delete in table
+                    [$deletedCount, $failedCount] = $imgFileModel->deleteImgItemImages($fileName, $galleryId);
+                    if ($deletedCount > 0) {
+                    //if ($failedCount == 0) {
+
+                        // Remove from database
+                        $IsDeleted = $table->delete($itemId);
+                        $imgDeletedCount += 1;
+                    }
+                    else
+                    {
+                        $OutTxt = '';
+                        $OutTxt .= 'ImageModel: Error could not delete any files for: ' . $fileName . '<br>';
+//                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                        $app = Factory::getApplication();
+                        $app->enqueueMessage($OutTxt, 'error');
+                    }
+
+                    //
+                    if($failedCount > 0)
+                    {
+                        $OutTxt = '';
+                        $OutTxt .= 'ImageModel: Error could not delete all files for: ' . $fileName . '<br>';
+//                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                        $app = Factory::getApplication();
+                        $app->enqueueMessage($OutTxt, 'error');
+                    }
+
+//                    if (in_array(false, $eventResults, true) || !$IsDeleted) {
+//                        // ToDo: enqueue error
+//                        $this->setError($table->getError());
+//
+//                        return false;
+//                    }
+//
+//                    // Trigger the after delete event.
+//                    Factory::getApplication()->triggerEvent('onRsg2AfterDeleteImage', array($this->_context, $table));
+//
                 }
-
-                // Trigger the after delete event.
-                Factory::getApplication()->triggerEvent('onRsg2AfterDeleteImage', array($this->_context, $table));
-
-                // TODO: Delete the menu associations - Menu items and Modules
             }
+
+//            $app = Factory::getApplication();
+//            $app->enqueueMessage(Text::plural('COM_RSGALLERY2_N_ITEMS_DELETED', $imgDeletedCount), 'notice');
+
+            // Clean the cache
+            $this->cleanCache();
+
+        } catch (RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing image.table.delete: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
         }
 
-        // Clean the cache
-        $this->cleanCache();
-
-        return true;
+        return $imgDeletedCount > 0;
     }
+    /**/
 
+    /**
+    public function delete_single_in_table_copy($pk=null)
+    {
+        $IsDeleted = false;
 
+        try
+        {
+            $imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
 
+            $filename          = $this->name;
+            $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
+            if ($IsFilesAreDeleted)
+            {
+                // Remove from database
+                $IsDeleted = parent::delete($pk);
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $IsDeleted;
+    }
+    /**/
 }

@@ -392,79 +392,87 @@ class ImageFileModel extends BaseModel // AdminModel
 
 	    return $isCopied;
     }
-
+    /**/
     // create watermark -> watermark has separate class
 
+    // ToDo: The sizes may be defined (overwritten) in the gallery or image data (override) a) create gallery b) Upload image c) handling later  
+    
+    
+    public function allFilesOf($imageFileName, $galleryId)
+    {
+        $imagePathFileNames  = [];
+        
+        $this->imagePaths =
+        $imagePaths = new ImagePaths ($galleryId);
+
+        //--- expected images of gallery -------------------------------------------------
+
+        //$originalFileName
+        $imagePathFileNames [] = $imagePaths->getOriginalPath ($imageFileName);
+        // $thumbFileName
+        $imagePathFileNames [] =  $imagePaths->getThumbPath($imageFileName);
+        // $displayFileName  
+        $imagePathFileNames [] =  $imagePaths->getDisplayPath($imageFileName);
+        
+        // $sizeFileName 
+        foreach ($imagePaths->imageSizes as $imageSize) {
+
+            $imagePathFileNames [] =  $imagePaths->getSizePath($imageSize, $imageFileName);
+        }
+
+        return $imagePathFileNames;
+    }
 
 	/**
 	 * Deletes all children of given file name of RSGallery image item
 	 * (original, display, thumb and watermarked representation)
 	 *
-	 * @param string $imageName Base filename for images to be deleted
+	 * @param string $imageFileName Base filename for images to be deleted
 	 * @return bool True on success
 	 *
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 */
-	public function deleteImgItemImages($imageName)
+	
+	/**/
+	public function deleteImgItemImages($imageFileName, $galleryId)
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
-		$IsImagesDeleted = false;
+        $deletedCount = 0;
+        $failedCount = 0;
 
 // 					$originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
 		try
 		{
-			$IsImagesDeleted = true;
+			$IsImagesDeleted = false;
 
-			if ($Rsg2DebugActive)
-			{
-				Log::add('==> start deleteImgItemImages: "' . $imageName .'"');
-			}
-
-			// Delete existing images
-			$imgPath        = JPATH_ROOT . $rsgConfig->get('imgPath_original') . '/' . $imageName;
-			$IsImageDeleted = $this->DeleteImage($imgPath);
-			if (!$IsImageDeleted)
-			{
-				$IsImagesDeleted = false;
-			}
-
-			$imgPath        = JPATH_ROOT . $rsgConfig->get('imgPath_display') . '/' . $imageName . '.jpg';
-			$IsImageDeleted = $this->DeleteImage($imgPath);
-			if (!$IsImageDeleted)
-			{
-				$IsImagesDeleted = false;
-			}
-
-			$imgPath = JPATH_ROOT . $rsgConfig->get('imgPath_thumb') . '/' . $imageName . '.jpg';;
-			$IsImageDeleted = $this->DeleteImage($imgPath);
-			if (!$IsImageDeleted)
-			{
-				$IsImagesDeleted = false;
-			}
-
-
-			// destination  path file name
-			$watermarkFilename = ImgWatermarkNames::createWatermarkedPathFileName($imageName, 'original');
-			$IsWatermarkDeleted = $this->DeleteImage($watermarkFilename);
-			if (!$IsWatermarkDeleted)
-			{
-				$watermarkFilename = ImgWatermarkNames::createWatermarkedPathFileName($imageName, 'display');
-				$IsWatermarkDeleted = $this->DeleteImage($watermarkFilename);
-				if (!$IsWatermarkDeleted)
-				{
-
-				}
-			}
-
-            // Delete filename like original0817254a99efa36171c98a96a81c7214.jpg
-            $imgPath = JPATH_ROOT . $rsgConfig->get('imgPath_watermarked') . '/' . $imageName;
-            $IsImageDeleted = $this->DeleteImage($imgPath);
-            if (!$IsImageDeleted)
+            if ($Rsg2DebugActive)
             {
-                // $IsImagesDeleted = false;
+                Log::add('==>Start deleteImgItemImages: (' . $imageFileName . ' gid:' . $galleryId . ')');
             }
+
+            //--- destination image paths ---------------------------------------------------
+
+            $imagePathFileNames = $this->allFilesOf($imageFileName, $galleryId);
+
+            /**/
+
+            //--- Delete all images --------------------------------------------------
+
+            // try to delete each image, continue on fail
+            foreach ($imagePathFileNames as $imageFileName) {
+                // Make sure to not delete empty
+                //if (strlen($imageFileName) > strlen ($this->imagePaths->rsgImagesBasePath))
+                $isDeleted = File::delete($imageFileName);
+
+                if($isDeleted) {
+                    $deletedCount += 1;
+                } else {
+                    $failedCount += 1;
+                }
+            }
+
         }
 		catch (\RuntimeException $e)
 		{
@@ -478,12 +486,13 @@ class ImageFileModel extends BaseModel // AdminModel
 
 		if ($Rsg2DebugActive)
 		{
-			Log::add('<== Exit deleteImgItemImages: ' . (($IsImagesDeleted) ? 'true' : 'false'));
+			Log::add('<== Exit deleteImgItemImages: $deleted, $failed (' . $deletedCount . '/' .  $failedCount . ')');
 		}
 
-		return $IsImagesDeleted;
+		return  [$deletedCount, $failedCount];
 	}
-
+    /**/
+	
 	/**
 	 * Delete given file
 	 * @param string $filename

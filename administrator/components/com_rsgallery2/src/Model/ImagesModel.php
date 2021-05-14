@@ -723,7 +723,7 @@ class ImagesModel extends ListModel
     }
 
     /**
-     * Delete #__content_frontpage items if the deleted articles was featured
+     *
      *
      * @param   object  $pks  The primary key related to the contents that was deleted.
      *
@@ -731,6 +731,7 @@ class ImagesModel extends ListModel
      *
      * @since   3.7.0
      */
+    /** see below
     public function delete(&$pks)
     {
         $return = parent::delete($pks);
