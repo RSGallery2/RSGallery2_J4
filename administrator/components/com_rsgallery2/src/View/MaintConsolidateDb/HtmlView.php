@@ -32,6 +32,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
  */
 class HtmlView extends BaseHtmlView
 {
+	protected $form;
 	/**
 	 * The sidebar markup
 	 *
@@ -39,24 +40,22 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected $sidebar;
 
-	protected $buttons = [];
-
-	protected $isDebugBackend;
-	protected $isDevelop;
-
-	protected $isDangerActive;
-	protected $isRawDbActive;
-	protected $isUpgradeActive;
-	protected $isTestActive;
-	protected $isJ3xRsg2DataExisting;
-	protected $developActive;
-
-	protected $intended;
-
 	// ToDo: Use other rights instead of core.admin -> IsRoot ?
 	// core.admin is the permission used to control access to
 	// the global config
 	protected $UserIsRoot;
+
+	/**
+	 * @var ImageReferences
+	 */
+	protected $ImageReferences;
+
+
+	protected $IsAnyDbRefMissing; // header
+
+
+	protected $isDebugBackend;
+	protected $isDevelop;
 
 	/**
 	 * Method to display the view.
@@ -69,7 +68,6 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-
 		//--- config --------------------------------------------------------------------
 
 		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -77,30 +75,20 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
+
 		//--- get needed data ------------------------------------------
 
+		// Check rights of user
+		//$this->UserIsRoot = $this->CheckUserIsRoot();
 
 		$ConsolidateModel      = $this->getModel(); // JModelLegacy::getInstance('MaintConsolidateDB', 'rsgallery2Model');
 		$this->ImageReferences = $ConsolidateModel->GetImageReferences();
 
-		// for prepared but not ready views
-		// $input = Factory::getApplication()->input;
+//		$xmlFile    = JPATH_COMPONENT . '/models/forms/maintConsolidateDB.xml';
+//		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
 
-
-		// Check for errors.
-		/* Must load form before
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
-		/**/
 
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
-
-		$xmlFile    = JPATH_COMPONENT . '/models/forms/maintConsolidateDB.xml';
-		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
-
-
 
 
 

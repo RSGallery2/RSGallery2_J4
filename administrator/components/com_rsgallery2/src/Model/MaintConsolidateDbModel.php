@@ -20,41 +20,111 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 class MaintConsolidateDbModel extends BaseDatabaseModel
 {
 
-    public static function GetImageReferences()
-    {
-        $xxx = [];
+	/**
+     * Image artefacts as list
+     * Each entry contains existing image objects (? where at least one is missing ?)
+     *
+	 * @var ImageReferences
+     *
+     * @since 4.3.0
+     */
+	protected $ImageReferences;
 
-        try
-        {
-        	/**
-            $db    = Factory::getDbo();
-            $query = $db->getQuery(true);
+    /**
+     * Returns List of image "artefacts"
+     *
+     * @return ImageReferences
+     *
+     * @since 4.3.0
+     */
+	public function GetImageReferences()
+	{
+		if (empty($this->ImageReferences))
+		{
+			$this->CreateDisplayImageData();
+		}
 
-            // count gallery items
-            $query->select('COUNT(*)')
-                // ignore root item  where id is "1"
-                ->where($db->quoteName('id') . ' != 1')
-                ->from('#__rsg2_galleries');
+		return $this->ImageReferences;
+	}
 
-            $db->setQuery($query, 0, 1);
-            $IdGallery          = $db->loadResult();
+	/**
+	 * Collects image artefacts as list
+     * Each entry contains existing image objects where at least one is missing
+	 *
+	 * @return string operation messages
+     *
+     * @since 4.3.0
+     */
+	public function CreateDisplayImageData()
+	{
+		// ToDo: Instead of message return HasError;
+		$msg = ''; //  ": " . '<br>';
 
-            // > 0 galleries exist
-            $xxx = !empty ($IdGallery);
-	        /**/
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'Error in GetImageReferences' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+		// Include watermarked files to search and check for missing
+		//$ImageReferences->UseWatermarked = $this->IsWatermarkActive();
+		// $ImageReferences->UseWatermarked = true; // ToDO: remove
+		//$ImageReferences       = new ImageReferences ($this->IsWatermarkActive());
+		$ImageReferences       = new ImageReferences (1);
+		$this->ImageReferences = $ImageReferences;
 
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
+		try
+		{
+			$msg .= $ImageReferences->CollectImageReferences();
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing CollectImageReferences: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-        return $xxx;
-    }
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $msg;
+	}
+
+	/**
+	 * Tells if watermark is activated on user config
+	 *
+	 * @return bool true when set in config data
+     *
+     * @since 4.3.0
+     */
+	/** read config more direct global$rsgconfig ...
+	public function IsWatermarkActive()
+	{
+		if (empty($this->IsWatermarkActive))
+		{
+			$this->IsWatermarkActive = false;
+
+			try
+			{
+				$db    = JFactory::getDbo();
+				$query = $db->getQuery(true)
+					->select($db->quoteName('value'))
+					->from($db->quoteName('#__rsgallery2_config'))
+					->where($db->quoteName('name') . " = " . $db->quote('watermark'));
+				$db->setQuery($query);
+
+				$this->IsWatermarkActive = $db->loadResult();
+			}
+			catch (RuntimeException $e)
+			{
+				$OutTxt = '';
+				$OutTxt .= 'Error executing query: "' . $query . '"' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = JFactory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+
+			}
+		}
+
+		return $this->IsWatermarkActive;
+	}
+	/**/
+
 
 
 

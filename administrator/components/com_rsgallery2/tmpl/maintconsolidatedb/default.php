@@ -56,7 +56,7 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 					<div class="pull-right">
 						<?php
 						// Specify parent gallery selection
-						echo $this->form->renderFieldset('maintConsolidateDB');
+//						echo $this->form->renderFieldset('maintConsolidateDB');
 						?>
 					</div>
 
@@ -65,7 +65,16 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 							<!-- div class="span4 clsInfoAccordion" -->
 							<?php
 							// Info about last uploaded galleries
-							DisplayImageDataTable($this->ImageReferences, $this->form);
+//							DisplayImageDataTable($this->ImageReferences, $this->form);
+
+                            foreach ($this->ImageReferences as $reference) {
+
+                                ;
+
+
+
+                            }
+
 							?>
 							<!-- /div -->
 						</div>
