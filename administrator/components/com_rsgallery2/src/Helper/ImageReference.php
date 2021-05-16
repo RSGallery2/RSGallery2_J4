@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  *
  * @package       Rsgallery2
@@ -8,9 +8,13 @@
  * RSGallery2 is Free Software
  */
 
-namespace RSGallery2\Component\RSGallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 \defined('_JEXEC') or die;
+
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+
+
 
 // Include the JLog class.
 //jimport('joomla.log.log');
@@ -51,32 +55,24 @@ class ImageReference
 	/**
 	 * @var bool
 	 */
+	public $IsAllSizesImagesFound;
+	/**
+	 * @var bool
+	 */
 	public $IsWatermarkedImageFound;
 	/**
 	 * @var int
 	 */
-	public $ParentGalleryId;
+	public $parentGalleryId;
 	/**
 	 * @var bool
 	 */
-	public $UseWatermarked;
+	public $useWatermarked;
 
-    /**
-     * @var array
-     */
-	public $imageSizes_expected;
-
-    /**
-     * @var array
-     */
-    public $imageSizes_found;
-
-    /**
-     * @var array
-     */
-    public $imageSizes_lost;
-
-
+    public $originalBasePath;
+    public $displayBasePath;
+    public $thumbBasePath;
+    public $sizeBasePaths; // 800x6000, ..., ? display:J3x
 
     //--- constants -----------------------------------------
 
@@ -104,14 +100,15 @@ class ImageReference
 		$this->IsOriginalImageFound    = false;
 		$this->IsThumbImageFound       = false;
 		$this->IsWatermarkedImageFound = false;
+        $this->IsAllSizesImagesFound   = false;
 
         $this->imageSizes_expected = [];
         $this->imageSizes_found    = [];
         $this->imageSizes_lost     = [];
 
-        $this->ParentGalleryId = -1;
+        $this->parentGalleryId = -1;
 
-		$this->UseWatermarked = false;
+		$this->useWatermarked = false;
 	}
 
 	/**
@@ -128,6 +125,35 @@ class ImageReference
 		$this->UseWatermarked = $watermarked;
 	}
 
+	public function AssignDbItem ($Image) {
+
+	    // ToDo: path to original file
+        // ToDo: image sizes check local ones also
+
+        $this->IsImageInDatabase = false;
+        $this->imageName         = $Image ['name'];
+        $this->parentGalleryId   = $Image ['gallery_id'];
+
+        $imagePaths = new ImagePaths ($this->parentGalleryId);
+        $imagePaths->createAllPaths();
+
+        $originalBasePath = $imagePaths->originalBasePath;
+        $displayBasePath  = $imagePaths->displayBasePath ;
+        $thumbBasePath    = $imagePaths->thumbBasePath   ;
+        $sizeBasePaths    = $imagePaths->sizeBasePaths   ; // 800x6000, ..., ? display:J3x
+
+        $this->allImagePaths = [];
+
+        $this->allImagePaths [] = $originalBasePath;
+        $this->allImagePaths [] = $displayBasePath ;
+        $this->allImagePaths [] = $thumbBasePath   ;
+
+        foreach ($sizeBasePaths as $sizeBasePath) {
+            $this->allImagePaths [] = $sizeBasePaths;
+        }
+    }
+
+
 	/**
 	 * Tells from the data collected if any of the expected images exist
 	 * @param int $careForWatermarked
@@ -135,7 +161,7 @@ class ImageReference
 	 * @return bool
 	 *
 	 * @since version 4.3
-	 */
+	 *
 	public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
 	{
 	    // toDo:
@@ -167,7 +193,7 @@ class ImageReference
 	 * @return bool
 	 *
 	 * @since version 4.3
-	 */
+	 *
 	public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
 	{
 		$IsImageMissing =
@@ -187,6 +213,8 @@ class ImageReference
 
 		return $IsImageMissing;
 	}
+    /**/
+
 
 	// toDo: ? Any size image missing ? ....
 

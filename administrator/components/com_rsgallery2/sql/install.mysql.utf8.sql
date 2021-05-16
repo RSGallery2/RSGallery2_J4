@@ -8,8 +8,9 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `description` text NOT NULL,
+  `description` text NOT NULL DEFAULT '',
   `thumb_id` int unsigned NOT NULL DEFAULT '0',
+  `base_path` varchar(255) NOT NULL DEFAULT '',
 
   `note` varchar(255) NOT NULL,
   `params` text NOT NULL,
@@ -69,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `id` serial NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `alias` varchar(255) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
+  `description` text NOT NULL DEFAULT '',
+  `original_path` varchar(255) NOT NULL DEFAULT '',
 
   `gallery_id` int unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL DEFAULT '',

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * ImageReferences collect all information about image artefacts
  *
@@ -12,10 +12,13 @@
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // no direct access
-defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReference;
+
+\defined('_JEXEC') or die;
 
 // Include the JLog class.
-jimport('joomla.log.log');
+//jimport('joomla.log.log');
 
 // access to the content of the install.mysql.utf8.sql file
 //require_once(JPATH_COMPONENT_ADMINISTRATOR . '/classes/ImageReference.php');
@@ -89,11 +92,12 @@ class ImageReferences
 		$this->IsAnyImageMissingInWatermarked = false;
 		$this->IsAnyOneImageMissing           = false;
 
+		/**
 		if ($watermarked)
 		{
 			require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 		}
-
+        /**/
 		$this->UseWatermarked = $watermarked;
 	}
 
@@ -144,10 +148,20 @@ class ImageReferences
 
 		$msg = '';
 
-		//--- Collect data of all images --------------------------------------------------
+		//--- Collect data of all expected images --------------------------------------------------
 
-		$DbImageGalleryList = $this->getDbImageGalleryList();  // Is tunneled to create it only once
-		//$DbImageGalleryList = array_map('strtolower', $DbImageGalleryList);
+        $this->ImageReferenceList = [];
+
+        // Create references for items from database view. Contains path to all expected images (-> original, thumb, sizes ...)
+        $this->imageReferencesByDb ();
+        // flag not existing images
+        $this->checkList4NotExisting ();
+        // search for files not in list
+        $this->addFoundOrphans2List ();
+
+        /**
+
+        //$DbImageGalleryList = array_map('strtolower', $DbImageGalleryList);
 		//$DbImageGalleryList = array_change_key_case($DbImageGalleryList, CASE_LOWER);
 		$DbImageNames = $this->getDbImageNames();
 		$DbImageNames = array_map('strtolower', $DbImageNames);
@@ -175,7 +189,53 @@ class ImageReferences
 			$files_original, $files_thumb, $files_watermarked);
 
 		return $msg;
+        /**/
+
+        return;
 	}
+
+	private function imageReferencesByDb () {
+
+        try {
+
+            $this->ImageReferenceList = [];
+
+            $dbImagesList = $this->getDbImagesList();  // Is tunneled to create it only once
+
+            foreach ($dbImagesList as $dbImage) {
+
+                $ImageReference = new ImageReference ();
+                $ImageReference->AssignDbItem ($dbImage);
+
+                $this->ImageReferenceList [] = $ImageReference;
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+	    return ;
+    }
+
+
 
     /**
      * Collects existing image name list with gallery_id from database
@@ -184,7 +244,7 @@ class ImageReferences
      *
      * @since version 4.3
      */
-	private function getDbImageGalleryList()
+	private function getDbImagesList()
 	{
 		/*
 		$database = Factory::getDBO();
@@ -196,6 +256,8 @@ class ImageReferences
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 
+        // ToDo: add path to original file
+        // ToDo: add image sizes
 		$query->select($db->quoteName(array('name', 'gallery_id')))
 			->from($db->quoteName('#__rsg2_images'))
 			->order('name');
@@ -209,7 +271,10 @@ class ImageReferences
 
 		foreach ($rows as $row)
 		{
+		    // J3x: images has a gallery ID
 			$DbImageGalleryList [strtolower($row[0])] = $row[1];
+			// Test: Galleries have images
+			//$DbImageGalleryList [$row[1]][] = strtolower($row[0]);
 		}
 
 		return $DbImageGalleryList;
@@ -544,5 +609,5 @@ class ImageReferences
 
 		return $ParentGalleryName;
 	}
+} // class
 
-}
