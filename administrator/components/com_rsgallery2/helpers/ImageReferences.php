@@ -9,7 +9,7 @@
  *                RSGallery2 is Free Software
  */
 
-namespace RSGallery2\Component\RSGallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // no direct access
 defined('_JEXEC') or die;
