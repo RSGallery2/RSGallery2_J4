@@ -12,6 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Filesystem\File;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
@@ -69,12 +70,12 @@ class ImageReference
 	 */
 	public $useWatermarked;
 
-    public $originalBasePath;
-    public $displayBasePath;
-    public $thumbBasePath;
-    public $sizeBasePaths; // 800x6000, ..., ? display:J3x
+	public $originalBasePath;
+	public $displayBasePath;
+	public $thumbBasePath;
+	public $sizeBasePaths; // 800x6000, ..., ? display:J3x
 
-    //--- constants -----------------------------------------
+	//--- constants -----------------------------------------
 
 	/**
 	 * @var int
@@ -100,13 +101,13 @@ class ImageReference
 		$this->IsOriginalImageFound    = false;
 		$this->IsThumbImageFound       = false;
 		$this->IsWatermarkedImageFound = false;
-        $this->IsAllSizesImagesFound   = false;
+		$this->IsAllSizesImagesFound   = false;
 
-        $this->imageSizes_expected = [];
-        $this->imageSizes_found    = [];
-        $this->imageSizes_lost     = [];
+		$this->imageSizes_expected = [];
+		$this->imageSizes_found    = [];
+		$this->imageSizes_lost     = [];
 
-        $this->parentGalleryId = -1;
+		$this->parentGalleryId = -1;
 
 		$this->useWatermarked = false;
 	}
@@ -114,7 +115,7 @@ class ImageReference
 	/**
 	 * Second ImageReference constructor. Tells if watermarked images shall be checked too
 	 *
-	 * @param bool $watermarked
+	 * @param   bool  $watermarked
 	 *
 	 * @since version 4.3
 	 */
@@ -125,33 +126,108 @@ class ImageReference
 		$this->UseWatermarked = $watermarked;
 	}
 
-	public function AssignDbItem ($Image) {
+	public function AssignDbItem($Image)
+	{
 
-	    // ToDo: path to original file
-        // ToDo: image sizes check local ones also
+		// ToDo: path to original file
+		// ToDo: image sizes check local ones also
 
-        $this->IsImageInDatabase = false;
-        $this->imageName         = $Image ['name'];
-        $this->parentGalleryId   = $Image ['gallery_id'];
+		try
+		{
 
-        $imagePaths = new ImagePaths ($this->parentGalleryId);
-        $imagePaths->createAllPaths();
 
-        $originalBasePath = $imagePaths->originalBasePath;
-        $displayBasePath  = $imagePaths->displayBasePath ;
-        $thumbBasePath    = $imagePaths->thumbBasePath   ;
-        $sizeBasePaths    = $imagePaths->sizeBasePaths   ; // 800x6000, ..., ? display:J3x
+			$this->IsImageInDatabase = false;
+			$this->imageName         = $Image ['name'];
+			$this->parentGalleryId   = $Image ['gallery_id'];
 
-        $this->allImagePaths = [];
+			$imagePaths = new ImagePaths ($this->parentGalleryId);
+			$imagePaths->createAllPaths();
 
-        $this->allImagePaths [] = $originalBasePath;
-        $this->allImagePaths [] = $displayBasePath ;
-        $this->allImagePaths [] = $thumbBasePath   ;
+			$originalBasePath = $imagePaths->originalBasePath;
+			$displayBasePath  = $imagePaths->displayBasePath;
+			$thumbBasePath    = $imagePaths->thumbBasePath;
+			$sizeBasePaths    = $imagePaths->sizeBasePaths; // 800x6000, ..., ? display:J3x
 
-        foreach ($sizeBasePaths as $sizeBasePath) {
-            $this->allImagePaths [] = $sizeBasePaths;
-        }
-    }
+			$this->allImagePaths = [];
+
+			$this->allImagePaths [] = $originalBasePath . '/' . $this->imageName;
+			$this->allImagePaths [] = $displayBasePath . '/' . $this->imageName;
+			$this->allImagePaths [] = $thumbBasePath . '/' . $this->imageName;
+
+			foreach ($sizeBasePaths as $sizeBasePath)
+			{
+				$this->allImagePaths [] = $sizeBasePath . '/' . $this->imageName;
+			}
+
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return;
+	}
+
+
+	public function check4ImageIsNotExisting()
+	{
+
+		try
+		{
+
+			$IsDisplayImageFound    = true;
+			$IsOriginalImageFound   = true;
+			$IsThumbImageFound      = true;
+			$IsAllSizesImagesFound  = true;
+
+			$IsAllSizesImagesFound  = false;
+
+
+			if (!File::exist($this->originalBasePath))
+			{
+				$IsOriginalImageFound   = false;
+			}
+			if (!File::exist($this->displayBasePath))
+			{
+				$IsDisplayImageFound    = false;
+			}
+			if (!File::exist($this->thumbBasePath))
+			{
+				$IsThumbImageFound      = false;
+			}
+
+			/**
+			if (!File::exist($this->sizeBasePaths))
+			{
+				;
+			}
+			/**/
+
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return;
+	}
+
+
+
+
+
+
+
 
 
 	/**

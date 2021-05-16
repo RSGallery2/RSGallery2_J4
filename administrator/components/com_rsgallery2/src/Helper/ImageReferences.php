@@ -208,18 +208,7 @@ class ImageReferences
                 $ImageReference->AssignDbItem ($dbImage);
 
                 $this->ImageReferenceList [] = $ImageReference;
-
-
-
-
-
-
-
             }
-
-
-
-
 
         }
         catch (RuntimeException $e)
@@ -235,9 +224,62 @@ class ImageReferences
 	    return ;
     }
 
+	private function checkList4NotExisting ()
+	{
+
+		try
+		{
+//			$this->ImageReferenceList
+
+			foreach ($this->ImageReferenceList as $ImageReference) {
+
+				$ImageReference->check4ImageIsNotExisting();
+
+			}
 
 
-    /**
+
+
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return;
+	}
+
+	// search for files not in list
+	private function addFoundOrphans2List ()
+	{
+
+		try
+		{
+
+
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return;
+	}
+
+
+
+
+	/**
      * Collects existing image name list with gallery_id from database
      *
      * @return array of object (name and gallery_id)
@@ -263,9 +305,10 @@ class ImageReferences
 			->order('name');
 
 		$db->setQuery($query);
-		//$rows =  $db->loadAssocList();
-		$rows = $db->loadRowList();
+		$rows =  $db->loadAssocList();
+		//$rows = $db->loadRowList();
 
+		/**
 		//--- Create assoc List ------------------------------
 		$DbImageGalleryList = array();
 
@@ -278,6 +321,9 @@ class ImageReferences
 		}
 
 		return $DbImageGalleryList;
+		/**/
+
+		return $rows;
 	}
 
     /**
