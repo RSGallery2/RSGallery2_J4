@@ -13,6 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
@@ -57,10 +58,17 @@ class ImageReference
 	 * @var bool
 	 */
 	public $IsAllSizesImagesFound;
+
+    /**
+     * @var array
+     */
+	public $missingSizesImages;
+
 	/**
 	 * @var bool
 	 */
 	public $IsWatermarkedImageFound;
+
 	/**
 	 * @var int
 	 */
@@ -143,20 +151,25 @@ class ImageReference
 			$imagePaths = new ImagePaths ($this->parentGalleryId);
 			$imagePaths->createAllPaths();
 
-			$originalBasePath = $imagePaths->originalBasePath;
-			$displayBasePath  = $imagePaths->displayBasePath;
-			$thumbBasePath    = $imagePaths->thumbBasePath;
-			$sizeBasePaths    = $imagePaths->sizeBasePaths; // 800x6000, ..., ? display:J3x
+			$this->originalBasePath = $imagePaths->originalBasePath;
+			$this->displayBasePath  = $imagePaths->displayBasePath;
+			$this->thumbBasePath    = $imagePaths->thumbBasePath;
+
+            $this->sizeBasePaths = [];
+            foreach($imagePaths->sizeBasePaths as $size => $sizePath) {
+
+                $this->sizeBasePaths[$size] = $sizePath . '/' .  $this->imageName;;
+            }
 
 			$this->allImagePaths = [];
 
-			$this->allImagePaths [] = $originalBasePath . '/' . $this->imageName;
-			$this->allImagePaths [] = $displayBasePath . '/' . $this->imageName;
-			$this->allImagePaths [] = $thumbBasePath . '/' . $this->imageName;
+			$this->allImagePaths [] = $this->originalBasePath . '/' . $this->imageName;
+			$this->allImagePaths [] = $this->displayBasePath . '/' . $this->imageName;
+			$this->allImagePaths [] = $this->thumbBasePath . '/' . $this->imageName;
 
-			foreach ($sizeBasePaths as $sizeBasePath)
-			{
-				$this->allImagePaths [] = $sizeBasePath . '/' . $this->imageName;
+            foreach($this->sizeBasePaths as $sizePath) {
+
+				$this->allImagePaths [] = $sizePath;
 			}
 
 		}
@@ -180,13 +193,13 @@ class ImageReference
 		try
 		{
 
-			$IsDisplayImageFound    = true;
-			$IsOriginalImageFound   = true;
-			$IsThumbImageFound      = true;
-			$IsAllSizesImagesFound  = true;
+			$this->IsDisplayImageFound    = true;
+			$this->IsOriginalImageFound   = true;
+			$this->IsThumbImageFound      = true;
+			$this->IsAllSizesImagesFound  = true;
 
-			$IsAllSizesImagesFound  = false;
-
+			$this->IsAllSizesImagesFound  = true;
+            $this->missingSizesImages     = [];
 
 			if (!File::exist($this->originalBasePath))
 			{
@@ -201,12 +214,15 @@ class ImageReference
 				$IsThumbImageFound      = false;
 			}
 
-			/**
-			if (!File::exist($this->sizeBasePaths))
-			{
-				;
+            foreach($this->sizeBasePaths as $size => $sizePath) {
+
+                if (!File::exist($sizePath))
+                {
+                    $IsAllSizesImagesFound  = false;
+                    $this->missingSizesImages [$size] = $sizePath;
+                }
+
 			}
-			/**/
 
 		}
 		catch (RuntimeException $e)
@@ -221,11 +237,6 @@ class ImageReference
 
 		return;
 	}
-
-
-
-
-
 
 
 

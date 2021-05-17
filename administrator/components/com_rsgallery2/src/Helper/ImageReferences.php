@@ -14,14 +14,10 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 // no direct access
 use Joomla\CMS\Factory;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReference;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 \defined('_JEXEC') or die;
 
-// Include the JLog class.
-//jimport('joomla.log.log');
-
-// access to the content of the install.mysql.utf8.sql file
-//require_once(JPATH_COMPONENT_ADMINISTRATOR . '/classes/ImageReference.php');
 
 /**
  * ImageReferences collect all information about image artefacts
@@ -75,7 +71,7 @@ class ImageReferences
 	public $UseWatermarked;
 
 	/**
-	 * ImageReference constructor. init all variables
+	 * ImageReferences constructor. init all variables
 	 * @param bool $watermarked
 	 *
 	 * @since 4.3.0
@@ -260,6 +256,23 @@ class ImageReferences
 
 		try
 		{
+            // go through all
+
+
+		    // toDo: Outside originals ....
+
+            $imagePaths = new ImagePaths ($this->parentGalleryId);
+            $rsgImagesBasePath = $imagePaths->rsgImagesBasePath;
+
+
+            // all found gallery ids in folder
+            $galleryIdDirs = glob($rsgImagesBasePath . '/*' , GLOB_ONLYDIR);
+
+            foreach ($galleryIdDirs as $galleryIdDir) {
+
+                testImageDir4Orphans ($galleryIdDir);
+
+            }
 
 
 		}
@@ -277,6 +290,63 @@ class ImageReferences
 	}
 
 
+    // search for files not in list
+    private function testImageDir4Orphans ($galleryIdDir)
+    {
+
+        try
+        {
+            // gallery ID
+            $galleryId = dirname ($galleryIdDir);
+
+            if ( ! is_numeric($galleryId))
+            {
+                return;
+            }
+
+            // all found gallery ids in folder
+            $ImageFiles = array_filter(glob('/Path/To/*'), 'is_file');
+            foreach ($ImageFiles as $ImageFilePath)
+            {
+
+                // check if image, check if exist in list, check if other part of item exists (different size ...)
+                [$isInList, $partlyItem] = findInList ($galleryId, $ImageFilePath);
+
+                if ( ! $isInList) {
+
+                    // Find item with gallery and name ?
+                    //
+                    // No -> create new item
+                    //
+                    // Yes -> add flags for this
+
+                    $ImageReference = new ImageReference ();
+                    $ImageReference->AssignLostItem ($galleryId, $ImageFilePath);
+
+                    $this->ImageReferenceList [] = $ImageReference;
+
+
+
+
+                }
+
+
+            }
+
+
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return;
+    }
 
 
 	/**
