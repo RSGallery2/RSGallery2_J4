@@ -261,16 +261,17 @@ class ImageReferences
 
 		    // toDo: Outside originals ....
 
-            $imagePaths = new ImagePaths ($this->parentGalleryId);
-            $rsgImagesBasePath = $imagePaths->rsgImagesBasePath;
+			// only base path needed so galleryid == 0
+            $imagePaths = new ImagePaths (0);
+            $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
 
             // all found gallery ids in folder
-            $galleryIdDirs = glob($rsgImagesBasePath . '/*' , GLOB_ONLYDIR);
+            $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
 
             foreach ($galleryIdDirs as $galleryIdDir) {
 
-                testImageDir4Orphans ($galleryIdDir);
+                $this->testSizesDir4Orphans ($galleryIdDir);
 
             }
 
@@ -291,26 +292,61 @@ class ImageReferences
 
 
     // search for files not in list
-    private function testImageDir4Orphans ($galleryIdDir)
+    private function testSizesDir4Orphans ($galleryIdDir)
     {
 
         try
         {
             // gallery ID
-            $galleryId = dirname ($galleryIdDir);
+            $galleryId = basename ($galleryIdDir);
 
             if ( ! is_numeric($galleryId))
             {
                 return;
             }
 
+	        // all found gallery ids in folder
+	        $sizeDirs = glob($galleryIdDir . '/*', GLOB_ONLYDIR);
+
+	        foreach ($sizeDirs as $sizeDir) {
+
+		        $this->testImageDir4Orphans ($sizeDir, $galleryId);
+
+	        }
+
+
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return;
+    }
+
+
+    // search for files not in list
+    private function testImageDir4Orphans ($sizeDir, $galleryId)
+    {
+
+        try
+        {
+            // gallery ID
+            $sizeName = basename ($sizeDir);
+
             // all found gallery ids in folder
-            $ImageFiles = array_filter(glob('/Path/To/*'), 'is_file');
+            $ImageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
             foreach ($ImageFiles as $ImageFilePath)
             {
+	            $imageName = basename ($ImageFilePath);
 
                 // check if image, check if exist in list, check if other part of item exists (different size ...)
-                [$isInList, $partlyItem] = findInList ($galleryId, $ImageFilePath);
+                [$isInList, $partlyItem] = findImageInList ($galleryId, $imageName, $ImageFilePath);
 
                 if ( ! $isInList) {
 

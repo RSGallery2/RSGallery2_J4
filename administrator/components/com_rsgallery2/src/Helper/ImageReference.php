@@ -201,22 +201,22 @@ class ImageReference
 			$this->IsAllSizesImagesFound  = true;
             $this->missingSizesImages     = [];
 
-			if (!File::exist($this->originalBasePath))
+			if (!File::exists($this->originalBasePath))
 			{
 				$IsOriginalImageFound   = false;
 			}
-			if (!File::exist($this->displayBasePath))
+			if (!File::exists($this->displayBasePath))
 			{
 				$IsDisplayImageFound    = false;
 			}
-			if (!File::exist($this->thumbBasePath))
+			if (!File::exists($this->thumbBasePath))
 			{
 				$IsThumbImageFound      = false;
 			}
 
             foreach($this->sizeBasePaths as $size => $sizePath) {
 
-                if (!File::exist($sizePath))
+                if (!File::exists($sizePath))
                 {
                     $IsAllSizesImagesFound  = false;
                     $this->missingSizesImages [$size] = $sizePath;

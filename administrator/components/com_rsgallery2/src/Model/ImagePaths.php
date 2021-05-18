@@ -23,6 +23,7 @@ class ImagePaths
 {
 	// from config
 	public $rsgImagesBasePath;
+	public $rsgImagesGalleriesBasePath;
 
 	// includes galleryid
 	public $galleryRoot;
@@ -68,7 +69,8 @@ class ImagePaths
 
 			//--- config root path --------------------------------------------
 
-			$this->rsgImagesBasePath = $rsgConfig->get('imgPath_root');
+			$this->rsgImagesBasePath          = $rsgConfig->get('imgPath_root');
+			$this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
 
 			// Fall back
 			if (empty ($this->rsgImagesBasePath))
