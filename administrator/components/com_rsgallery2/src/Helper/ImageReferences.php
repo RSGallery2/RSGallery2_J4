@@ -231,9 +231,9 @@ class ImageReferences
 
 				$ImageReference->check4ImageIsNotExisting();
 
+
+
 			}
-
-
 
 
 		}
@@ -346,7 +346,8 @@ class ImageReferences
 	            $imageName = basename ($ImageFilePath);
 
                 // check if image, check if exist in list, check if other part of item exists (different size ...)
-                [$isInList, $partlyItem] = findImageInList ($galleryId, $imageName, $ImageFilePath);
+                // [$isInList, $partlyItem] = findImageInList ($galleryId, $sizeName, $imageName, $ImageFilePath);
+                $isInList = findImageInList ($galleryId, $sizeName, $imageName, $ImageFilePath);
 
                 if ( ! $isInList) {
 
@@ -361,15 +362,8 @@ class ImageReferences
 
                     $this->ImageReferenceList [] = $ImageReference;
 
-
-
-
                 }
-
-
             }
-
-
         }
         catch (RuntimeException $e)
         {
@@ -384,8 +378,47 @@ class ImageReferences
         return;
     }
 
+	// search for files not in list
+	private function findImageInList ($galleryId, $sizeName, $imageName, $ImageFilePath)
+	{
+		$isFound = false;
 
-	/**
+		try
+		{
+
+			foreach ($this->ImageReferenceList as $ImageReference) {
+
+				// gallery and image name must match
+				if ($ImageReference->parentGalleryId == $galleryId) {
+					if ($ImageReference->imageName == $imageName)
+					{
+						foreach ($ImageReference->allImagePaths as $TestImagePath) {
+
+							if ($ImageFilePath == $TestImagePath) {
+
+								$isFound = true;
+								break;
+							}
+						}
+
+					}
+				}
+			}
+		}
+		catch (RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = JFactory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $isFound;
+	}
+
+/**
      * Collects existing image name list with gallery_id from database
      *
      * @return array of object (name and gallery_id)
