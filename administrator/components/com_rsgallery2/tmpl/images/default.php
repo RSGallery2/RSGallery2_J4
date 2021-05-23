@@ -248,7 +248,7 @@ if ($saveOrder && !empty($this->items))
 
                                 // toDo: Move to "htmlview-> create list in model
                                 // galleryJ4x path is depending on gallery id
-                                $this->ImagePath->setPathsURIs_byGalleryId($item->gallery_id);
+                                $this->ImagePath->setPaths_URIs_byGalleryId($item->gallery_id);
                                 $src = $this->ImagePath->getDisplayUrl ($item->name);
 
                                 ?>

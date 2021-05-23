@@ -13,6 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // no direct access
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReference;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
@@ -36,6 +37,12 @@ class ImageReferences
 	 * @var ImageReference []
 	 */
 	protected $ImageReferenceList;
+
+    /**
+     * List of image references. Contains all items where a image is missing or surplus (additional in folder)
+     * @var LostAndFoundList []
+     */
+    protected $ImageLostAndFoundList;
 
 	/**
 	 * @var bool
@@ -153,41 +160,13 @@ class ImageReferences
         // flag not existing images
         $this->checkList4NotExisting ();
         // search for files not in list
-        $this->addFoundOrphans2List ();
+        $this->findOrphans_add2List ();
 
-        /**
+        // reduce list
+        $this->ImageLostAndFoundList = $this->reduceList4LostAndFounds ();
 
-        //$DbImageGalleryList = array_map('strtolower', $DbImageGalleryList);
-		//$DbImageGalleryList = array_change_key_case($DbImageGalleryList, CASE_LOWER);
-		$DbImageNames = $this->getDbImageNames();
-		$DbImageNames = array_map('strtolower', $DbImageNames);
 
-		$files_display  = $this->getFilenameArray($rsgConfig->get('imgPath_display'));
-		$files_original = $this->getFilenameArray($rsgConfig->get('imgPath_original'));
-		$files_thumb    = $this->getFilenameArray($rsgConfig->get('imgPath_thumb'));
-
-		// Watermarked: Start with empty array
-		$files_watermarked = array();
-		if ($this->UseWatermarked)
-		{
-			$files_watermarked = $this->getFilenameArray($rsgConfig->get('imgPath_watermarked'));
-		}
-
-		//$files_merged = array_unique(array_merge($DbImageNames, $files_display,
-		//	$files_original, $files_thumb, $files_watermarked));
-
-		$files_merged = array_unique(array_merge($DbImageNames, $files_display,
-			$files_original, $files_thumb));
-
-		//--- Check 4 missing data. Collect result in ImageReferenceList ---------------------
-
-		$msg .= $this->CreateImagesData($files_merged, $DbImageNames, $DbImageGalleryList, $files_display,
-			$files_original, $files_thumb, $files_watermarked);
-
-		return $msg;
-        /**/
-
-        return;
+        return; // $this->ImageReferenceList;
 	}
 
 	private function imageReferencesByDb () {
@@ -201,7 +180,7 @@ class ImageReferences
             foreach ($dbImagesList as $dbImage) {
 
                 $ImageReference = new ImageReference ();
-                $ImageReference->AssignDbItem ($dbImage);
+                $ImageReference->assignDbItem ($dbImage);
 
                 $this->ImageReferenceList [] = $ImageReference;
             }
@@ -213,7 +192,7 @@ class ImageReferences
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -225,17 +204,12 @@ class ImageReferences
 
 		try
 		{
-//			$this->ImageReferenceList
 
 			foreach ($this->ImageReferenceList as $ImageReference) {
 
 				$ImageReference->check4ImageIsNotExisting();
 
-
-
 			}
-
-
 		}
 		catch (RuntimeException $e)
 		{
@@ -243,7 +217,7 @@ class ImageReferences
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -251,7 +225,7 @@ class ImageReferences
 	}
 
 	// search for files not in list
-	private function addFoundOrphans2List ()
+	private function findOrphans_Add2List ()
 	{
 
 		try
@@ -283,7 +257,7 @@ class ImageReferences
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -322,7 +296,7 @@ class ImageReferences
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -334,34 +308,90 @@ class ImageReferences
     private function testImageDir4Orphans ($sizeDir, $galleryId)
     {
 
+
         try
         {
             // gallery ID
             $sizeName = basename ($sizeDir);
 
             // all found gallery ids in folder
-            $ImageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
-            foreach ($ImageFiles as $ImageFilePath)
+            $imageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
+            foreach ($imageFiles as $imageFilePath)
             {
-	            $imageName = basename ($ImageFilePath);
+                $imageFilePath = Path::clean ($imageFilePath);
+	            $imageName = basename ($imageFilePath);
 
-                // check if image, check if exist in list, check if other part of item exists (different size ...)
-                // [$isInList, $partlyItem] = findImageInList ($galleryId, $sizeName, $imageName, $ImageFilePath);
-                $isInList = findImageInList ($galleryId, $sizeName, $imageName, $ImageFilePath);
+//	            $testClean = Path::clean ($imageFilePath);
+//	            $testResolve = Path::resolve ($imageFilePath);
 
-                if ( ! $isInList) {
 
-                    // Find item with gallery and name ?
-                    //
-                    // No -> create new item
-                    //
-                    // Yes -> add flags for this
+                // toDo: check extension by config
+                // $ext =  File::getExt($filename);
 
-                    $ImageReference = new ImageReference ();
-                    $ImageReference->AssignLostItem ($galleryId, $ImageFilePath);
+                // toDo: check for valid image file
+                //---
+                // "Do not use getimagesize() to check that a given file is a valid image.Use a purpose-built solution such as the Fileinfo extension instead."
+                //
+                //Here is an example:
+                //
+                //$finfo = finfo_open(FILEINFO_MIME_TYPE);
+                //$type = finfo_file($finfo, "test.jpg");
+                //
+                //if (isset($type) && in_array($type, array("image/png", "image/jpeg", "image/gif"))) {
+                //    echo 'This is an image file';
+                //} else {
+                //    echo 'Not an image :(';
+                //}
+                //---
+                //    $a = getimagesize($path);
+                //    $image_type = $a[2];
+                //
+                //    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP)))
+                //    {
+                //        return true;
+                //    }
+                //    return false;
+                //---
+                // exif_imagetype is much faster than getimagesize and doesn't use gd-Lib (leaving a leaner mem footprint)
+                //
+                //function isImage($pathToFile)
+                //{
+                //  if( false === exif_imagetype($pathToFile) )
+                //   return FALSE;
+                //
+                //   return TRUE;
+                //}
 
-                    $this->ImageReferenceList [] = $ImageReference;
 
+                $isImage = true;
+
+                if ($isImage) {
+
+
+                    // check if image, check if exist in list, check if other part of item exists (different size ...)
+                    //$isInList = findImageInList ($galleryId, $sizeName, $imageName, $imageFilePath);
+                    [$isInList, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
+
+                    // Unknown item
+                    if (!$isInList) {
+
+
+                        // Find item with gallery and name ?
+                        // No -> create new item
+                        if (!$ImageReference) {
+
+                            $ImageReference = new ImageReference ();
+                            $ImageReference->initLostItems($galleryId, $imageName);
+                            $ImageReference->assignLostItem($sizeName, $imageFilePath);
+
+                            $this->ImageReferenceList [] = $ImageReference;
+                        } else {
+                            // Yes -> add flags for this
+
+                            $ImageReference->assignLostItem($sizeName, $imageFilePath);
+
+                        }
+                    }
                 }
             }
         }
@@ -371,7 +401,7 @@ class ImageReferences
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -379,9 +409,11 @@ class ImageReferences
     }
 
 	// search for files not in list
-	private function findImageInList ($galleryId, $sizeName, $imageName, $ImageFilePath)
+	private function findImageInList ($galleryId, $imageName, $ImageFilePath)
 	{
 		$isFound = false;
+
+        $partlyItem = false;
 
 		try
 		{
@@ -392,15 +424,25 @@ class ImageReferences
 				if ($ImageReference->parentGalleryId == $galleryId) {
 					if ($ImageReference->imageName == $imageName)
 					{
+
+                        $partlyItem = $ImageReference;
+
 						foreach ($ImageReference->allImagePaths as $TestImagePath) {
 
-							if ($ImageFilePath == $TestImagePath) {
+							if ($ImageFilePath === $TestImagePath) {
 
 								$isFound = true;
 								break;
 							}
 						}
 
+						if( ! $isFound) {
+                            break;
+                        }
+
+                        // matched galleryId ... no further search needed
+						// actual image name is checked
+						break;
 					}
 				}
 			}
@@ -411,11 +453,11 @@ class ImageReferences
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
-		return $isFound;
+		return [$isFound, $partlyItem];
 	}
 
 /**
@@ -427,13 +469,6 @@ class ImageReferences
      */
 	private function getDbImagesList()
 	{
-		/*
-		$database = Factory::getDBO();
-		//Load all image names from DB in array
-		$sql = "SELECT name FROM #__rsg2_images";
-		$database->setQuery($sql);
-		$names_db = rsg2_consolidate::arrayToLower($database->loadColumn());
-		*/
 		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 
@@ -445,354 +480,48 @@ class ImageReferences
 
 		$db->setQuery($query);
 		$rows =  $db->loadAssocList();
-		//$rows = $db->loadRowList();
-
-		/**
-		//--- Create assoc List ------------------------------
-		$DbImageGalleryList = array();
-
-		foreach ($rows as $row)
-		{
-		    // J3x: images has a gallery ID
-			$DbImageGalleryList [strtolower($row[0])] = $row[1];
-			// Test: Galleries have images
-			//$DbImageGalleryList [$row[1]][] = strtolower($row[0]);
-		}
-
-		return $DbImageGalleryList;
-		/**/
 
 		return $rows;
 	}
 
+
     /**
-     * Collects existing image name list from database
+     * collect all items in ImageReferenceList where a image is missing or surplus (additional in folder
+     * @return array
      *
-     * @return string [] image file names
-     *
-     * @since version 4.3
+     * @throws \Exception
+     * @since version
      */
-	private function getDbImageNames()
-	{
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
+    private function reduceList4LostAndFounds ()
+    {
+        $isFound = false;
 
-		$query->select($db->quoteName('name'))
-			->from($db->quoteName('#__rsg2_images'));
+        $List4LostAndFounds = [];
 
-		$db->setQuery($query);
-		$DbImageNames = $db->loadColumn();
+        try
+        {
+            foreach ($this->ImageReferenceList as $ImageReference) {
 
-		return $DbImageNames;
-	}
+                // Missing or additional image file in item
+                if ( ! $ImageReference->IsAllSizesImagesFound) {
 
-	/**
-	 * Fills an array with the file names, found in the specified directory
-	 *
-	 * @param string $dir Directory from Joomla root
-	 *
-	 * @return string [] file name array
-     *
-     * @since version 4.3
-     */
-	static function getFilenameArray($dir)
-	{
-		global $rsgConfig;
+                    $List4LostAndFounds [] = $ImageReference;
+                }
+            }
+        }
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing reduceList4LostAndFounds: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		//Load all image names from filesystem in array
-		$dh = opendir(JPATH_ROOT . $dir);
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
-		//Files to exclude from the check
-		$exclude  = array('.', '..', 'Thumbs.db', 'thumbs.db');
-		$allowed  = array('jpg', 'gif', 'png', 'jpeg');
-		$names_fs = array();
+        return $List4LostAndFounds;
+    }
 
-		while (false !== ($filename = readdir($dh)))
-		{
-			$ext = explode(".", $filename);
-			$ext = array_reverse($ext);
-			$ext = strtolower($ext[0]);
-			if (!is_dir(JPATH_ROOT . $dir . "/" . $filename) AND !in_array($filename, $exclude) AND in_array($ext, $allowed))
-			{
-				if ($dir == $rsgConfig->get('imgPath_display') OR $dir == $rsgConfig->get('imgPath_thumb'))
-				{
-					//Recreate normal filename, eliminating the extra ".jpg"
-					$names_fs[] = substr(strtolower($filename), 0, -4);
-				}
-				else
-				{
-					$names_fs[] = strtolower($filename);
-				}
-			}
-			else
-			{
-				//Do nothing
-				continue;
-			}
-		}
-		closedir($dh);
 
-		return $names_fs;
-
-	}
-
-	/**
-	 * Changes all values of an array to lowercase
-	 *
-	 * @param array $array mixed case mixed or upper case values
-	 *
-	 * @return array lower case values
-	 *
-	 * @since version 4.3
-	 */
-	static function arrayToLower($array)
-	{
-		$array = explode("|", strtolower(implode("|", $array)));
-
-		return $array;
-	}
-
-	/**
-     * Checks all occurrences of a image (information) and does collect uncomplete set as artifacts
-	 * An artifact occurs when an expected image or DB reference is missing
-	 *
-	 * @param string [] $AllFiles     file names
-	 * @param string [] $DbImageNames in lower case
-	 * @param           $DbImageGalleryList
-	 * @param           $files_display
-	 * @param           $files_original
-	 * @param           $files_thumb
-	 * @param $files_watermarked
-	 *
-	 * @return string Message
-	 *
-	 * @throws Exception
-	 *
-	 * @since version 4.3
-	 */
-	private function CreateImagesData($AllFiles, $DbImageNames, $DbImageGalleryList,
-		$files_display, $files_original, $files_thumb, $files_watermarked)
-	{
-		global $rsgConfig;
-
-		$this->ImageReferenceList = array();
-
-		$ValidWatermarkNames = array();
-
-		// Not watermarked
-		foreach ($AllFiles as $BaseFile)
-		{
-			//$MissingImage = false;
-
-			$ImagesData                 = new ImageReference($this->UseWatermarked);
-			$ImagesData->imageName      = $BaseFile;
-			// $ImagesData->UseWatermarked = $this->UseWatermarked;
-
-			$ImagesData->IsGalleryAssigned = false;
-			if (in_array($BaseFile, $DbImageNames))
-			{
-				$ImagesData->IsImageInDatabase = true;
-
-				// Check for missing gallery assignment. Use list read once -> ID-gallery id
-				$GalleryId = $DbImageGalleryList [$BaseFile];
-				if (!empty($GalleryId))
-				{
-					if ($GalleryId > 0)
-					{
-						$ImagesData->IsGalleryAssigned = true;
-						$ImagesData->ParentGalleryId   = $GalleryId;
-					}
-				}
-			}
-			if (in_array($BaseFile, $files_display))
-			{
-				$ImagesData->IsDisplayImageFound = true;
-			}
-
-			if (in_array($BaseFile, $files_original))
-			{
-				$ImagesData->IsOriginalImageFound = true;
-			}
-
-			if (in_array($BaseFile, $files_thumb))
-			{
-				$ImagesData->IsThumbImageFound = true;
-			}
-
-			if ($this->UseWatermarked)
-			{
-				// Needs creation of hidden filename -> either from original or display folder
-				$imageOrigin = 'original';
-				$BaseFileWatermarked = ImgWatermarkNames::createWatermarkedFileName($BaseFile, $imageOrigin);
-				if (in_array($BaseFileWatermarked, $files_watermarked))
-				{
-					$ImagesData->IsWatermarkedImageFound = true;
-					$ImagesData->WatermarkedFileName = $BaseFileWatermarked;
-					$ValidWatermarkNames [] = $BaseFileWatermarked;
-				}
-				else
-				{
-					$imageOrigin         = 'display';
-					$BaseFileWatermarked = ImgWatermarkNames::createWatermarkedFileName($BaseFile, $imageOrigin);
-					if (in_array($BaseFileWatermarked, $files_watermarked))
-					{
-						$ImagesData->IsWatermarkedImageFound = true;
-						$ImagesData->WatermarkedFileName = $BaseFileWatermarked;
-						$ValidWatermarkNames [] = $BaseFileWatermarked;
-					}
-				}
-			}
-
-			//-------------------------------------------------
-			// Does file need to be handled ?
-			//-------------------------------------------------
-			// "do not care" used as watermarked images are not missing as such.
-			// watermarked images will be created when displaying image
-			if ($ImagesData->IsMainImageMissing(ImageReference::dontCareForWatermarked)
-				|| !$ImagesData->IsImageInDatabase
-				|| !$ImagesData->IsGalleryAssigned
-			)
-			{
-				//--- parent gallery name ----------------------------------------------------
-
-				if ($ImagesData->IsGalleryAssigned == true)
-				{
-					$ImagesData->ParentGallery = $this->getParentGalleryName($ImagesData->ParentGalleryId);
-				}
-				else
-				{
-					// Not existing
-					// $ImagesData->ParentGalleryId = -1; // '0';
-				}
-
-				//--- ImagePath ----------------------------------------------------
-
-				// Assign most significant (matching destination) image
-				$ImagesData->imagePath = '';
-
-				if ($ImagesData->IsOriginalImageFound)
-				{
-					$ImagesData->imagePath = $rsgConfig->get('imgPath_original') . '/' . $ImagesData->imageName;
-				}
-
-				if ($ImagesData->IsDisplayImageFound)
-				{
-					$ImagesData->imagePath = $rsgConfig->get('imgPath_display') . '/' . $ImagesData->imageName . '.jpg';
-				}
-
-				if ($ImagesData->IsThumbImageFound)
-				{
-					$ImagesData->imagePath = $rsgConfig->get('imgPath_thumb') . '/' . $ImagesData->imageName . '.jpg';
-				}
-
-				if ($ImagesData->IsWatermarkedImageFound)
-				{
-					//$ImagesData->imagePath = $rsgConfig->get('imgPath_watermarked') . '/' . $ImagesData->imageName; // . '.jpg';
-					$ImagesData->imagePath = $rsgConfig->get('imgPath_watermarked') . '/' . $ImagesData->WatermarkedFileName; // . '.jpg';
-				}
-
-				$this->ImageReferenceList [] = $ImagesData;
-			}
-		}
-
-		// Check watermarked
-		foreach ($files_watermarked as $BaseFile)
-		{
-			$IsFileFound = false;
-
-			foreach ($ValidWatermarkNames as $WatermarkName)
-			{
-				if ($WatermarkName == $BaseFile)
-				{
-					$IsFileFound = true;
-					break;
-				}
-			}
-
-			if (! $IsFileFound)
-			{
-				$ImagesData                 = new ImageReference($this->UseWatermarked);
-				$ImagesData->imageName      = $BaseFile;
-				$ImagesData->IsWatermarkedImageFound = true;
-
-                $ImagesData->IsGalleryAssigned = false;
-
-				$this->ImageReferenceList [] = $ImagesData;
-			}
-		}
-
-		//--- Set column bits: Is one entry missing in column ? --------------------------------------
-
-		$this->IsAnyImageMissingInDB = false;
-		foreach ($this->ImageReferenceList as $ImageReference)
-		{
-			$this->IsAnyImageMissingInDB |= !$ImageReference->IsImageInDatabase;
-		}
-
-		$this->IsAnyImageMissingInDisplay = false;
-		foreach ($this->ImageReferenceList as $ImageReference)
-		{
-			$this->IsAnyImageMissingInDisplay |= !$ImageReference->IsDisplayImageFound;
-		}
-
-		$this->IsAnyImageMissingInOriginal = false;
-		foreach ($this->ImageReferenceList as $ImageReference)
-		{
-			$this->IsAnyImageMissingInOriginal |= !$ImageReference->IsOriginalImageFound;
-		}
-
-		$this->IsAnyImageMissingInThumb = false;
-		foreach ($this->ImageReferenceList as $ImageReference)
-		{
-			$this->IsAnyImageMissingInThumb |= !$ImageReference->IsThumbImageFound;
-		}
-
-		$this->IsAnyOneImageMissing = false;
-		foreach ($this->ImageReferenceList as $ImageReference)
-		{
-			// do not care as watermarked images are not missing as such. watermarked images will be created when displaying image
-			$this->IsAnyOneImageMissing |= $ImageReference->IsMainImageMissing(ImageReference::dontCareForWatermarked);
-		}
-
-		$this->IsAnyImageMissingInWatermarked = false;
-
-		if ($this->UseWatermarked)
-		{
-			foreach ($this->ImageReferenceList as $ImageReference)
-			{
-				$this->IsAnyImageMissingInWatermarked |= !$ImageReference->IsWatermarkedImageFound;
-			}
-		}
-
-		return '';
-	}
-
-	/**
-	 * @param int $ParentGalleryId
-	 *
-	 * @return string
-	 *
-	 * @since version 4.3
-	 */
-	private function getParentGalleryName($ParentGalleryId)
-	{
-		$ParentGalleryName = '???';
-
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-
-		$query->select($db->quoteName('name'))
-			->from($db->quoteName('#__rsg2_galleries'))
-			->where('id = ' . $db->quote($ParentGalleryId));
-		$db->setQuery($query);
-
-		$DbGalleryName = $db->loadResult();
-		if (!empty ($DbGalleryName))
-		{
-			$ParentGalleryName = $DbGalleryName;
-		}
-
-		return $ParentGalleryName;
-	}
 } // class
 

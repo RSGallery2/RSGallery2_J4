@@ -34,7 +34,7 @@ class MaintenanceModel extends BaseDatabaseModel
             foreach ($galleryIds as $galleryId) {
 
                 // galleryJ4x path is depending on gallery id
-                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+                $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
                 $isGalleryPathsExisting = $j4xImagePath->isPathsExisting ();
                 if ( ! $isGalleryPathsExisting) {
                     $notExisitnPaths [] = $j4xImagePath->galleryRoot . '/...';
@@ -68,7 +68,7 @@ class MaintenanceModel extends BaseDatabaseModel
             foreach ($galleryIds as $galleryId) {
 
                 // galleryJ4x path is depending on gallery id
-                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+                $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
                 $isPathsRepaired &= $j4xImagePath->createAllPaths ();
             }
 

@@ -48,7 +48,7 @@ class HtmlView extends BaseHtmlView
 	/**
 	 * @var ImageReferences
 	 */
-	protected $ImageReferences;
+	protected $oImgRefs;
 
 
 	protected $IsAnyDbRefMissing; // header
@@ -82,7 +82,9 @@ class HtmlView extends BaseHtmlView
 		//$this->UserIsRoot = $this->CheckUserIsRoot();
 
 		$ConsolidateModel      = $this->getModel(); // JModelLegacy::getInstance('MaintConsolidateDB', 'rsgallery2Model');
-		$this->ImageReferences = $ConsolidateModel->GetImageReferences();
+
+        // contains lost and found items
+        $this->oImgRefs = $ConsolidateModel->GetImageReferences();
 
 //		$xmlFile    = JPATH_COMPONENT . '/models/forms/maintConsolidateDB.xml';
 //		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);

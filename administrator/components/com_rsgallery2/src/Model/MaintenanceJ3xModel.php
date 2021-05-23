@@ -1775,7 +1775,7 @@ EOT;
 //                $galleryId = $imgObject['gallery_id'];
 //
 //                // galleryJ4x path is depending on gallery id
-//                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+//                $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
 //
 //                $isPathsExisting = $j4xImagePath->isPathsExisting ();
 //                if ( ! $isPathsExisting) {
@@ -1887,7 +1887,7 @@ EOT;
                 $galleryId = $imgObject['gallery_id'];
 
                 // galleryJ4x path is depending on gallery id
-                $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+                $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
 
                 $isPathsExisting = $j4xImagePath->isPathsExisting();
                 if (!$isPathsExisting) {
@@ -1948,7 +1948,7 @@ EOT;
         $j4xImagePath = new ImagePaths ();
         $j3xImagePath = new ImagePathsJ3x ();
 
-        $j4xImagePath->setPathsURIs_byGalleryId($galleryId);
+        $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
 
         $isPathsExisting = $j4xImagePath->isPathsExisting ();
         if ( ! $isPathsExisting) {

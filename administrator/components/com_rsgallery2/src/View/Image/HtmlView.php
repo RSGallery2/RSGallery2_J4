@@ -102,7 +102,7 @@ class HtmlView extends BaseHtmlView
 		$this->state = $this->get('State');
 
 		$ImagePath = new ImagePaths ();
-		$ImagePath->setPathsURIs_byGalleryId($this->item->gallery_id);
+		$ImagePath->setPaths_URIs_byGalleryId($this->item->gallery_id);
 		$this->imgUrl = $ImagePath->getDisplayUrl ($this->item->name);
 
 		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';

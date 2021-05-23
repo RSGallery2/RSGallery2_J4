@@ -12,9 +12,11 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Uri\Uri;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 
 \defined('_JEXEC') or die;
 
@@ -69,14 +71,15 @@ class ImagePaths
 
 			//--- config root path --------------------------------------------
 
-			$this->rsgImagesBasePath          = $rsgConfig->get('imgPath_root');
-			$this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
+            $this->rsgImagesBasePath = $rsgConfig->get('imgPath_root');
+            // Fall back
+            if (empty ($this->rsgImagesBasePath))
+            {
+                $this->rsgImagesBasePath = "images/rsgallery2";
+            }
+            $this->rsgImagesBasePath = Path::Clean($this->rsgImagesBasePath);
 
-			// Fall back
-			if (empty ($this->rsgImagesBasePath))
-			{
-				$this->rsgImagesBasePath = "images/rsgallery2";
-			}
+			$this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
 
 			//--- config image sizes --------------------------------------------
 
@@ -91,7 +94,7 @@ class ImagePaths
 			//--- prepare path / URI names ------------------------------------------
 
 			// file paths and URIs derived by gallery ID
-			$this->setPathsURIs_byGalleryId($galleryId);
+			$this->setPaths_URIs_byGalleryId($galleryId);
 
 		}
 		catch (\RuntimeException $e)
@@ -112,7 +115,7 @@ class ImagePaths
 	 *
 	 * @since __BUMP_VERSION__
 	 */
-	public function setPathsURIs_byGalleryId(int $galleryId): void
+	public function setPaths_URIs_byGalleryId(int $galleryId): void
 	{
 		/*--------------------------------------------------------------------
 		File paths
@@ -141,16 +144,16 @@ class ImagePaths
 
 		//---  URIs gallery based --------------------------------------------
 
-		$this->galleryRootUrl = Uri::root() . $this->rsgImagesBasePath . '/' . $galleryId;
+		$this->galleryRootUrl = UriHelper::join(Uri::root(),  $this->rsgImagesBasePath, $galleryId);
 
-		$this->originalUrl = $this->galleryRootUrl . '/original';
-		$this->thumbUrl    = $this->galleryRootUrl . '/thumbs';
+		$this->originalUrl = UriHelper::join($this->galleryRootUrl, 'original');
+		$this->thumbUrl    = UriHelper::join($this->galleryRootUrl, 'thumbs');
 
 		//--- URIs for image sizes locations ---------------------------------------
 
 		foreach ($this->imageSizes as $imageSize)
 		{
-			$this->sizeUrls[$imageSize] = $this->galleryRootUrl . '/' . $imageSize;
+			$this->sizeUrls[$imageSize] = UriHelper::join($this->galleryRootUrl, $imageSize);
 		}
 
         // biggest is display
@@ -187,7 +190,7 @@ class ImagePaths
 
         foreach ($this->imageSizes as $imageSize)
         {
-            $sizePaths[$imageSize] = $this->sizeUrls[$imageSize]  . '/' . $fileName;
+            $sizePaths[$imageSize] = PathHelper::join($this->sizeBasePaths[$imageSize], $fileName);
         }
 
         return  $sizePaths;
@@ -199,22 +202,22 @@ class ImagePaths
 
 	public function getOriginalUrl($fileName = '')
 	{
-		return $this->originalUrl . '/' . $fileName;
+		return UriHelper::join($this->originalUrl, $fileName);
 	}
 
 	public function getDisplayUrl($fileName = '')
 	{
-		return $this->displayUrl . '/' . $fileName;
+		return UriHelper::join($this->displayUrl, $fileName);
 	}
 
 	public function getThumbUrl($fileName = '')
 	{
-		return $this->thumbUrl . '/' . $fileName;
+		return UriHelper::join($this->thumbUrl, $fileName);
 	}
 
 	public function getSizeUrl($imageSize, $fileName = '')
 	{
-		return $this->sizeUrls [$imageSize] . '/' . $fileName;
+		return UriHelper::join($this->sizeUrls [$imageSize], $fileName);
 	}
 
 	public function getSizeUrls($fileName = '')
@@ -223,7 +226,7 @@ class ImagePaths
 
         foreach ($this->imageSizes as $imageSize)
         {
-            $sizeUrls[$imageSize] = $this->sizeUrls[$imageSize]  . '/' . $fileName;
+            $sizeUrls[$imageSize] = UriHelper::join($this->sizeUrls[$imageSize], $fileName);
         }
 
 		return  $sizeUrls;

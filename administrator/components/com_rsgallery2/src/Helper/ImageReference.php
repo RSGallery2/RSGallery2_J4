@@ -62,7 +62,7 @@ class ImageReference
     /**
      * @var array
      */
-	public $missingSizesImages;
+	public $IsSizes_ImageFound;
 
 	/**
 	 * @var bool
@@ -78,10 +78,10 @@ class ImageReference
 	 */
 	public $useWatermarked;
 
-	public $originalBasePath;
-	public $displayBasePath;
-	public $thumbBasePath;
-	public $sizeBasePaths; // 800x6000, ..., ? display:J3x
+	public $originalFilePath;
+	public $displayFilePath;
+	public $thumbFilePath;
+	public $sizeFilePaths; // 800x6000, ..., ? display:J3x
 
 	//--- constants -----------------------------------------
 
@@ -111,10 +111,6 @@ class ImageReference
 		$this->IsWatermarkedImageFound = false;
 		$this->IsAllSizesImagesFound   = false;
 
-		$this->imageSizes_expected = [];
-		$this->imageSizes_found    = [];
-		$this->imageSizes_lost     = [];
-
 		$this->parentGalleryId = -1;
 
 		$this->useWatermarked = false;
@@ -134,40 +130,36 @@ class ImageReference
 		$this->UseWatermarked = $watermarked;
 	}
 
-	public function AssignDbItem($Image)
+	public function assignDbItem($Image)
 	{
 
-		// ToDo: path to original file
+		// ToDo: path to original file on outside folder
 		// ToDo: image sizes check local ones also
+        // ToDo: watermarked files
 
 		try
 		{
-
-
-			$this->IsImageInDatabase = false;
+			$this->IsImageInDatabase = true;
 			$this->imageName         = $Image ['name'];
 			$this->parentGalleryId   = $Image ['gallery_id'];
 
 			$imagePaths = new ImagePaths ($this->parentGalleryId);
 			$imagePaths->createAllPaths();
 
-			$this->originalBasePath = $imagePaths->originalBasePath;
-			$this->displayBasePath  = $imagePaths->displayBasePath;
-			$this->thumbBasePath    = $imagePaths->thumbBasePath;
+			$this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);
+			$this->displayFilePath  = $imagePaths->getDisplayPath($this->imageName);
+			$this->thumbFilePath    = $imagePaths->getThumbPath($this->imageName);
 
-            $this->sizeBasePaths = [];
-            foreach($imagePaths->sizeBasePaths as $size => $sizePath) {
+            $this->sizeFilePaths = $imagePaths->getSizePaths($this->imageName);
 
-                $this->sizeBasePaths[$size] = $sizePath . '/' .  $this->imageName;;
-            }
-
+            // Helper list for faster detection of images lost and found
 			$this->allImagePaths = [];
 
-			$this->allImagePaths [] = $this->originalBasePath . '/' . $this->imageName;
-			$this->allImagePaths [] = $this->displayBasePath . '/' . $this->imageName;
-			$this->allImagePaths [] = $this->thumbBasePath . '/' . $this->imageName;
+			$this->allImagePaths [] = $this->originalFilePath;
+			$this->allImagePaths [] = $this->displayFilePath;
+			$this->allImagePaths [] = $this->thumbFilePath;
 
-            foreach($this->sizeBasePaths as $sizePath) {
+            foreach($this->sizeFilePaths as $sizePath) {
 
 				$this->allImagePaths [] = $sizePath;
 			}
@@ -179,7 +171,7 @@ class ImageReference
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
@@ -192,38 +184,41 @@ class ImageReference
 
 		try
 		{
-
 			$this->IsDisplayImageFound    = true;
 			$this->IsOriginalImageFound   = true;
 			$this->IsThumbImageFound      = true;
-			$this->IsAllSizesImagesFound  = true;
 
 			$this->IsAllSizesImagesFound  = true;
-            $this->missingSizesImages     = [];
 
-			if (!File::exists($this->originalBasePath))
+            $this->IsSizes_ImageFound     = [];
+
+			if (!File::exists($this->originalFilePath))
 			{
-				$IsOriginalImageFound   = false;
+				$this->IsOriginalImageFound   = false;
+                $this->IsAllSizesImagesFound  = false;
 			}
-			if (!File::exists($this->displayBasePath))
+			if (!File::exists($this->displayFilePath))
 			{
-				$IsDisplayImageFound    = false;
+				$this->IsDisplayImageFound    = false;
+                $this->IsAllSizesImagesFound  = false;
 			}
-			if (!File::exists($this->thumbBasePath))
+			if (!File::exists($this->thumbFilePath))
 			{
-				$IsThumbImageFound      = false;
+				$this->IsThumbImageFound      = false;
+                $this->IsAllSizesImagesFound  = false;
 			}
 
-            foreach($this->sizeBasePaths as $size => $sizePath) {
+            foreach($this->sizeFilePaths as $size => $sizePath) {
 
                 if (!File::exists($sizePath))
                 {
-                    $IsAllSizesImagesFound  = false;
-                    $this->missingSizesImages [$size] = $sizePath;
+                    $this->IsSizes_ImageFound [$size] = false;
+                    $this->IsAllSizesImagesFound  = false;
+                } else {
+                    $this->IsSizes_ImageFound [$size] = true;
                 }
 
 			}
-
 		}
 		catch (RuntimeException $e)
 		{
@@ -231,15 +226,125 @@ class ImageReference
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage($OutTxt, 'error');
 		}
 
 		return;
 	}
 
+    /**
+     * Set every expected image 'size' to not existing
+     *
+     * @param $galleryId
+     * @param $imageName
+     *
+     *
+     * @since version
+     */
+    public function initLostItems($galleryId, $imageName)
+    {
+        try {
+
+            //--- Prepare standard -----------------------------------
+
+            $this->IsImageInDatabase = false;
+            $this->imageName         = $imageName;
+            $this->parentGalleryId   = $galleryId;
+
+            $imagePaths = new ImagePaths ($this->parentGalleryId);
+            $imagePaths->createAllPaths();
+
+            $this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);
+            $this->displayFilePath  = $imagePaths->getDisplayPath($this->imageName);
+            $this->thumbFilePath    = $imagePaths->getThumbPath($this->imageName);
+
+            $this->sizeFilePaths = $imagePaths->getSizePaths($this->imageName);
+
+            //--- set images to not found  -----------------------------------
+
+            $this->IsDisplayImageFound    = false;
+            $this->IsOriginalImageFound   = false;
+            $this->IsThumbImageFound      = false;
+            $this->IsAllSizesImagesFound  = false;
+
+            foreach($this->sizeFilePaths as $size => $sizePath) {
+
+                $this->IsSizes_ImageFound [$size] = false; // $sizePath;
+            }
+
+            $this->allImagePaths = [];
+
+        } catch (RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing initLostItems: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+    }
+
+    /**
+     * add file not in db list, remove from missing list
+     * @param $sizeName
+     * @param $imageFilePath
+     *
+     *
+     * @since version
+     */
+    public function assignLostItem($sizeName, $imageFilePath)
+    {
+        $isImageAssigned = false;
+        
+        try {
 
 
+            if ($imageFilePath === $this->originalFilePath)
+            {
+                $this->IsOriginalImageFound   = true;
+                $isImageAssigned = true;
+            }
+            if ($imageFilePath === $this->displayFilePath)
+            {
+                $this->IsDisplayImageFound    = true;
+                $isImageAssigned = true;
+            }
+            if ($imageFilePath === $this->thumbFilePath)
+            {
+                $this->IsThumbImageFound      = true;
+                $isImageAssigned = true;
+            }
+
+            // size  assignment
+            if ( ! $isImageAssigned) {
+            
+                foreach($this->sizeFilePaths as $size => $sizePath) {
+                    if ($imageFilePath === $sizePath)
+                    {
+                        $this->IsSizes_ImageFound [$size] = true;
+                        $isImageAssigned = true;
+                    }
+                }    
+            }
+
+            // size  assignment ? -> may differ from expected  
+            if ( ! $isImageAssigned) {
+                $this->IsSizes_ImageFound [$sizeName] = true;
+                $isImageAssigned = true;
+            }
+
+        } catch (RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing AssignLostItem: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $isImageAssigned;
+    }
 
 	/**
 	 * Tells from the data collected if any of the expected images exist

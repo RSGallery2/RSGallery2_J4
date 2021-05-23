@@ -71,7 +71,9 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
 
 		try
 		{
-			$msg .= $ImageReferences->CollectImageReferences();
+		    // toDo:
+
+			$ImageReferences->CollectImageReferences();
 		}
 		catch (RuntimeException $e)
 		{

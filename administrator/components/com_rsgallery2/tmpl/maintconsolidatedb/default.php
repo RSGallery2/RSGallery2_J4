@@ -17,6 +17,9 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
 
+$ImageLostAndFoundList = $this->oImgRefs->ImageLostAndFoundList;
+
+
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
@@ -33,17 +36,15 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'MaintConsolidateDb')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'MaintConsolidateDb', Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'MaintConsolidateDb', Text::_('COM_RSGALLERY2_IMAGES_LOST_AND_FOUND_TITLE', true)); ?>
 
 				<div style="max-width: 400px;">
 					<strong><?php echo JText::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'); ?></strong>
 				</div>
 
 				<?php
-                    // // if (empty($this->ImageReferences)) :
-                    if (true) :
-                    // $ImageReferenceList = $this->ImageReferences->getImageReferenceList();
-                    // if (count($ImageReferenceList) == 0) :
+                // if (count($ImageLostAndFoundList) == 0) :
+                    if (empty($ImageLostAndFoundList)) :
                 ?>
 					<div class="alert alert-no-items">
 						<?php
@@ -67,11 +68,13 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 							// Info about last uploaded galleries
 //							DisplayImageDataTable($this->ImageReferences, $this->form);
 
-                            foreach ($this->ImageReferences as $reference) {
+                            foreach ($ImageLostAndFoundList as $ImageReference) {
 
-                                ;
+                                if ($this->IsImageInDatabase) {
 
+                                    ;
 
+                                }
 
                             }
 
