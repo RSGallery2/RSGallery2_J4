@@ -19,7 +19,40 @@ HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version'
 
 $ImageLostAndFoundList = $this->oImgRefs->ImageLostAndFoundList;
 
+/**
+ * @param ImageReferences $ImageReferences
+ * @param $form not used
+ *
+ * @since 4.3.0
+ */
+function DisplayImageDataTable($ImageReferences)
+{
+	$html = [];
 
+
+//-------------------------------------
+// Header
+//-------------------------------------
+	echo '<br>';
+
+	echo '<table class="table table-striped table-condensed">';
+	echo '    <caption><h3>' . JText::_('COM_RSGALLERY2_MISSING_IMAGE_REFERENCES_LIST') . '</h3></caption>';
+	echo '    <thead>';
+	echo '        <tr>';
+
+
+
+
+
+	return implode('\n',$html);
+
+}
+
+$LostAndFountHtml = '';
+if ( ! empty ($ImageLostAndFoundList))
+{
+	$LostAndFountHtml = DisplayImageDataTable ($ImageLostAndFoundList);
+}
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
@@ -63,23 +96,10 @@ $ImageLostAndFoundList = $this->oImgRefs->ImageLostAndFoundList;
 
 					<div class="span12">
 						<div class="row-fluid">
-							<!-- div class="span4 clsInfoAccordion" -->
 							<?php
-							// Info about last uploaded galleries
-//							DisplayImageDataTable($this->ImageReferences, $this->form);
-
-                            foreach ($ImageLostAndFoundList as $ImageReference) {
-
-                                if ($this->IsImageInDatabase) {
-
-                                    ;
-
-                                }
-
-                            }
-
+							// Info about lost and found images
+							DisplayImageDataTable($this->ImageReferences, $this->form);
 							?>
-							<!-- /div -->
 						</div>
 					</div>
 
