@@ -137,10 +137,10 @@ class HtmlView extends BaseHtmlView
 		if (!empty ($this->isDevelop))
 		{
 			echo '<span style="color:red">'
-				. '* <br>'
 				. '* YYYYY<br>'
-				. '* <br>'
-				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'

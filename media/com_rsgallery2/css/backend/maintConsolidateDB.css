@@ -1,0 +1,45 @@
+.img_border {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  margin: 10px;
+  position: relative;
+}
+
+.img_thumb {
+  position: absolute;
+  margin: auto;
+  min-height: 100%;
+  min-width: 100%;
+  /* For the following settings we set 100%, but it can be higher if needed
+  See the answer's update */
+  left: -100%;
+  right: -100%;
+  top: -100%;
+  bottom: -100%;
+}
+
+/*
+width="80" height="80"
+ */
+i.icon-ok {
+  color: green;
+  /**/
+}
+
+i.icon-cancel {
+  color: red;
+  /**/
+}
+
+a.db_missing {
+  color: white;
+  /**/
+}
+
+.inside_button {
+  padding: 1px 4px;
+  font-size: 10px;
+}
+
+/*# sourceMappingURL=maintConsolidateDB.css.map */
