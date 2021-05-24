@@ -22,7 +22,6 @@ $ImageLostAndFoundList = $this->oImgRefs->ImageLostAndFoundList;
 
 /**
  * @param $ImageLostAndFoundList $ImageReferences
- * @param $form not used
  *
  * @since 4.3.0
  */
@@ -108,7 +107,14 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 //        
 //    }
 
-     // action
+    // thumb
+    $html[] = '<th class="center sizes_column" >';
+    //$html[] = '7';
+    $html[] = Text::_('COM_RSGALLERY2_SIZES_BR_FOLDERS');
+    $html[] = '</th>';
+
+
+    // action
     $html[] = '<th class="center">';
     //$html[] =  '9';
     $html[] = Text::_('COM_RSGALLERY2_ACTION');
@@ -186,8 +192,8 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         {
             // Not found -> button
             $html[] = '<td class="center">';
-            $html[] = '    <a class="btn btn-danger btn-small jgrid hasTooltip db_missing inside_button" ';
-            $html[] = '         data-original-title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_CREATE_DATABASE_ENTRY') . '" ';
+            $html[] = '    <a class="btn btn-danger btn-small jgrid data-bs-toggle="tooltip" data-bs-placement="top" db_missing inside_button" ';
+            $html[] = '         title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_CREATE_DATABASE_ENTRY') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.createImageDbItems\')" ';
             $html[] = '         href="javascript:void(0);"';
             $html[] = '     >';
@@ -288,7 +294,46 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 //
 //        }
 
-         // action
+
+        // sizes
+        $html[] = '<td class="center">';
+
+        foreach ($ImageReference->sizeFilePaths as $size => $sizePath) {
+
+            $isSizeFound = $ImageReference->IsSizes_ImageFound [$size];
+
+            $html[] = '<div class="img_sizes">';
+            //$html[] = '<span>' . $size . ': </span>';
+            $html[] = $size . ': ';
+
+            if ($isSizeFound) {
+
+                $html[] = '    <i class="icon-ok hasTooltip" data-original-title="size image found" ';
+                $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_FOUND') . '" ';
+                $html[] = '    ></i>';
+
+            }
+            else {
+
+                $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="size image not found" ';
+                $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_NOT_FOUND') . '" ';
+                $html[] = '    ></i>';
+
+            }
+            $html[] = '</div>';
+
+        }
+
+
+
+
+        $html[] = '</td>';
+
+
+
+
+
+        // action
         $html[] = '<td class="center">';
         // if ($ImageReference->IsMainImageMissing(ImageReference::dontCareForWatermarked))
         {
@@ -313,7 +358,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         }
         //if($ImageReferences->)
         {
-            $html[] = '     <a class="btn btn-secondary btn-small jgrid hasTooltip inside_button" ';
+            $html[] = '     <a class="btn btn-success btn-small jgrid hasTooltip inside_button" ';
             $html[] = '         data-original-title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_REPAIR_ISSUES_IN_ROW') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.repairAllIssuesItems\')" ';
             $html[] = '         href="javascript:void(0);"';
@@ -323,7 +368,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         }
         //if($ImageReferences->)
         {
-            $html[] = '     <a class="btn btn-secondary btn-small jgrid hasTooltip inside_button" ';
+            $html[] = '     <a class="btn btn-danger btn-small jgrid hasTooltip inside_button" ';
             $html[] = '         data-original-title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS_IN_ROW') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.deleteRowItems\')" ';
             $html[] = '         href="javascript:void(0);"';
@@ -462,12 +507,12 @@ if ( ! empty ($ImageLostAndFoundList))
 				<fieldset class="refresh">
 					<!--legend><?php echo Text::_('COM_RSGALLERY2_REFRESH_TEXT'); ?>XXXXX</legend-->
                     <div class="form-actions">
-                        <a class="btn btn-secondary btn-small jgrid inside_button"
+                        <a class="btn btn-primary jgrid "
                            title="<?php echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING_INCONSITENCIES_DESC'); ?>"
                            href="index.php?option=com_rsgallery2&amp;view=maintConsolidateDB">
 							<?php echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING'); ?>
                         </a>
-                        <a class="btn btn-secondary btn-small jgrid inside_button"
+                        <a class="btn btn-primary jgrid"
                            href="index.php?option=com_rsgallery2&amp;view=maintenance">
 		                    <?php echo Text::_('COM_RSGALLERY2_CANCEL'); ?>
                         </a>
