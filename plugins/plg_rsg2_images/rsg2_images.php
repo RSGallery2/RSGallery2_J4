@@ -1,7 +1,7 @@
 <?php
 /**
  * /**
- * @package     Joomla.Administrator
+ * @package
  * @subpackage  plg_rsg2_images
  *
  * @copyright   (C) 2005 - 2021 RSGallery2 Team
@@ -24,6 +24,11 @@
 //use Joomla\CMS\Event\Event;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\Registry\Registry;
+
+use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
 //use Joomla\Event\SubscriberInterface;
 //use Joomla\Utilities\ArrayHelper;
@@ -41,7 +46,10 @@ class PlgContentRsg2_images extends CMSPlugin
 {
 
     /** @var \Joomla\CMS\Application\CMSApplication */
+    /**
     protected $app;
+    protected $db;
+    /**/
 
     protected $debugActive = 0;
     /**
@@ -50,7 +58,7 @@ class PlgContentRsg2_images extends CMSPlugin
      * @var    boolean
      * @since  3.1 Joomla
      */
-    protected $autoloadLanguage = true;
+//    protected $autoloadLanguage = true;  -> needs
 
     // onContentPrepare($context, &$article, &$articleParams, $page = 0)
     public function onContentPrepare($context, &$article, $articleParams, $page = 0)
@@ -63,24 +71,36 @@ class PlgContentRsg2_images extends CMSPlugin
         }
 
         // Simple high performance check to determine whether bot should process further.
-        if (stripos($article->text, 'rsg2_images') === false) {
-            // 150319 old: return true;
-            return false;
+        if (stripos($article->text, '{rsg2_images') === false) {
+            return;
         }
 
-		https://twitter.com/bencodezen/status/1383907761876987910?s=19
-
-
-
         try {
-            // Define the regular expression for the bot.
-            //$regex = "#{rsg2_display\:*(.*?)}#s";
-            $regex = "/\{rsg2_images:(.*?)\}/";
 
-            // Perform the replacement
+            // Load plugin language file only when needed
+            $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
+
+            HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+
+
+            //--- Perform the replacement ------------------------------
+
+            // Define the regular expression for the
+            //$regex = "#{rsg2_display\:*(.*?)}#s";
+            $regex = "|\{rsg2_images:(.*?)\}|";
+
             $article->text = preg_replace_callback($regex,
                 array(&$this, '_replacer'),
                 $article->text);
+
+            // toDO: J3x form
+            //$regex = "#{rsg2_display\:*(.*?)}#s";
+            $regex = "|\{rsg2_images:(.*?)\}|";
+
+            $article->text = preg_replace_callback($regex,
+                array(&$this, '_replacer'),
+                $article->text);
+
         } catch (Exception $e) {
             $msg = JText::_('PLG_CONTENT_RSG2_IMAGES') . ' Error (01): ' . $e->getMessage();
             $app = JFactory::getApplication();
@@ -120,7 +140,6 @@ class PlgContentRsg2_images extends CMSPlugin
 
             $rsgConfig = JComponentHelper::getParams( 'com_rsgallery2' );
 
-
             // toDo: debug site !!!
             $DebugActive = $rsgConfig->get('isDebugSite');
             /**
@@ -154,23 +173,58 @@ class PlgContentRsg2_images extends CMSPlugin
             //----------------------------------------------------------------
             // Get attributes from matches and create "clean" array from them
             //----------------------------------------------------------------
+
+
             $attribs = explode(',', $matches[1]);
-            if (is_array($attribs)) {
-                $clean_attribs = array();
-                foreach ($attribs as $attribute) {
-                    // Remove spaces (&nbsp;) from attributes and trim with space
-                    $clean_attrib = $this->plg_rsg2_clean_string($attribute);
-                    if (strlen($clean_attrib > 0)) {
-                        array_push($clean_attribs, $clean_attrib);
-                    }
-                }
-            } else {
+            if ( ! is_array($attribs)) {
+                $errText = '??? ' . $matches[1] . '->No attributes ???';
                 if ($DebugActive) {
-                    JLog::add('No attributes', JLog::DEBUG);
+                    JLog::add($errText, JLog::DEBUG);
                 }
-                return false;
+
+                return $errText;
             }
 
+            $usrParams = $this->extractParams ($attribs);
+
+            // ToDo: use gids in first place: change RSG2_imagesHelper -> modul ?mod_... ?? ....
+            $usrParams->set ('SelectGallery', $usrParams->get('gid'));
+
+
+            $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Images', 'Site', ['ignore_request' => true]);
+            $images = Rsg2_imagesHelper::getList($usrParams, $model, $app);
+
+
+// Test
+//$layout = new FileLayout('Test.search');
+            $layoutSearch    = new FileLayout('components.com_rsgallery2.layouts.Search.search', JPATH_SITE);
+            $layoutImages    = new FileLayout('components.com_rsgallery2.layouts.ImagesArea.default', JPATH_SITE);
+//echo $tabLayout->render(array('id' => $id, 'active' => $active, 'title' => $title));
+// echo $layout->render();
+
+            $displayData['images'] = $images;
+
+
+            $html[] = '<h1> Menu RSGallery2 "images" view </h1>';
+            $html[] = '<hr>';
+            $html[] =  $layoutSearch->render($displayData);;
+            $html[] = '<hr>';
+            $html[] = $layoutImages->render($displayData);
+            $html[] = '<hr>';
+            $html[] = '<br>';
+            $html[] = '';
+            $html[] = '';
+            $html[] = '';
+            $html[] = '';
+            $html[] = '';
+
+            // implode($html);
+            // implode(' ', $html);
+            // implode('< /br>', $html);
+
+            $content_output = implode($html);
+
+            /**
             // Go over attribs to get template, gid and possible parameters
             foreach ($clean_attribs as $key => $value) {//$key is 0, 1, etc. $value is semantic, etc.
                 switch ($key) {
@@ -201,9 +255,11 @@ class PlgContentRsg2_images extends CMSPlugin
                         }
                 }
             }
+            /**/
 
             //--- Start: Several checks on template and gallery id --------------------------------
 
+            /**
             // Check we have a template name
             if (!isset($template)) {
                 if ($DebugActive) {
@@ -290,6 +346,7 @@ class PlgContentRsg2_images extends CMSPlugin
             //JRequest::setVar('rsgTemplate', $template);
             $input->set('rsgTemplate', $template);
 
+
             //--- Get the RSGallery2 gallery template HTML! -----------------------
             ob_start();
             rsgInstance::instance(); // With option $showTemplate = true
@@ -302,11 +359,13 @@ class PlgContentRsg2_images extends CMSPlugin
              * }
              * /**/
 
+            /**
             // Reset the original request array when finished
             $_REQUEST = $original_request;
             $_GET = $original_get;
             $_POST = $original_post;
             $rsgConfig = clone $original_rsgConfig;
+            /**/
 
             return $content_output;
 
@@ -320,19 +379,98 @@ class PlgContentRsg2_images extends CMSPlugin
         return false;
     }
 
+
+    /**
+     * @param $attributes string [] 'name=value'
+     *
+     * @return array|string|string[]|null
+     *
+     * @since version
+     */
+    function extractParams($attributes)
+    {
+        $params = new Registry();
+
+        try
+        {
+            foreach ($attributes as $attribute) {
+
+                $items = explode('=', $attribute);
+
+                if (count ($items) > 0) {
+
+                    $name = $this->clean_string($items[0]);
+                    $value = '';
+
+                    if (count ($items) > 1) {
+                        $value = trim($items[1]);
+                    }
+
+                    // ToDo: ? multiple gids?
+
+                    // Handle plugin specific variables or J3x to j4x transformations
+                    $isHandled = $this->handleSpecificParams ($params, $name, $value);
+
+                    // standard assingment
+                    if (! $isHandled) {
+                        $params->set ($name, $value);
+                    }
+                }
+
+            }
+
+
+        }
+
+        catch (RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing PLG Rsg2_images::extractParams: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $params;
+    }
+
+
     /**
      * Remove spaces (&nbsp;) from attributes and trim white space
      *
      * @param string $attributeIn
      * @return  string
      */
-    function plg_rsg2_clean_string($attributeIn)
+    function clean_string($attributeIn)
     {
         $attribute = str_replace("&nbsp;", '', "$attributeIn");
         // $attribute = trim ($attribute); // surprisingly only one blank removed
         $attribute = preg_replace('/\s/u', '', $attribute); // '/u' -> unicode
 
         return $attribute;
+    }
+
+    /**
+     * Check for J3x parameter by index without value -> layout ..
+     * or handöle lists (multiple gids / iids)
+     * or ...
+     *
+     * @param $params  Registry Add new set
+     * @param $name
+     * @param $value
+     *
+     *
+     * @since version
+     */
+    function handleSpecificParams ($params, $name, $value)
+    {
+        // ToDo: prepare indexed values template/layout ...
+        $isHandled = false;
+
+
+
+        return $isHandled;
     }
 
 
