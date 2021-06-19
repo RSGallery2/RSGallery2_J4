@@ -141,7 +141,7 @@ class ConfigRawModel extends BaseModel
                     $secured = $filter->clean ($value, 'html');
                     break;
 
-                case 'image_width': // '800,600,400',
+                case 'image_size': // '800,600,400',
                     $secured = $filter->clean ($value, 'STRING');
                     break;
 

@@ -76,7 +76,7 @@ class HtmlView extends BaseHtmlView
         $this->ImagePath = new ImagePaths ();
 
         // size of display image
-        $ImageWidths = $rsgConfig->get('image_width');
+        $ImageWidths = $rsgConfig->get('image_size');
         $exploded = explode(',', $ImageWidths);
         $this->DisplayImgWidth = $exploded[0];
 

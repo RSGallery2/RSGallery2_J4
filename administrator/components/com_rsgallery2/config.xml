@@ -97,11 +97,11 @@
 		/>
 
 		<field
-				name="image_width"
+				name="image_size"
 				type="text"
 				default="800,600,400"
-				label="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH"
-				description="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH_DESC"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_DESC"
 				class="">
 		</field>
 		<field
@@ -649,11 +649,11 @@
 		<!-- ... block  ... -->
 
 		<field
-				name="image_width"
+				name="image_size"
 				type="text"
 				default="800,600,400"
-				label="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH"
-				description="COM_RSGALLERY2_DISPLAY_PICTURE_WIDTH_DESC"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
 				class=""
 		>
 		</field>

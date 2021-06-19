@@ -83,7 +83,7 @@ class ImagePaths
 
 			//--- config image sizes --------------------------------------------
 
-			$imageSizesText   = $rsgConfig->get('image_width');
+			$imageSizesText   = $rsgConfig->get('image_size');
 			$imageSizes       = explode(',', $imageSizesText);
 			$this->imageSizes = $imageSizes;
 

@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
   `access` int unsigned NOT NULL DEFAULT 0,
 
   `version` int unsigned NOT NULL DEFAULT 1,
+  `sizes` text NOT NULL DEFAULT '',
 
 --  `metakey` text NOT NULL,
 --  `metadesc` text NOT NULL,
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `params` text NOT NULL,
   `published` tinyint NOT NULL DEFAULT '1',
 
-  `hits` intunsigned NOT NULL DEFAULT '0',
+  `hits` int unsigned NOT NULL DEFAULT '0',
   `rating` int unsigned NOT NULL DEFAULT '0',
   `votes` int unsigned NOT NULL DEFAULT '0',
   `comments` int unsigned NOT NULL DEFAULT '0',
@@ -103,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   `access` int NOT NULL DEFAULT 0,
 
   `use_j3x_location` tinyint DEFAULT 0 NOT NULL,
+  `sizes` text NOT NULL DEFAULT '',
 
   `version` int unsigned NOT NULL DEFAULT 1,
 

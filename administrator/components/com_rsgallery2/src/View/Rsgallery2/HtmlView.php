@@ -97,7 +97,7 @@ class HtmlView extends BaseHtmlView
 		//--- auto save config after install ------------------------------
 
         // Is configuration not initialized ?
-		if (empty ($rsgConfig->get('image_width'))) {
+		if (empty ($rsgConfig->get('image_size'))) {
 
             // configuration must be saved once to be initialized
             $configRawModel = new ConfigRawModel ();

@@ -1760,7 +1760,7 @@ EOT;
 //
 //            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 //
-//            $ImageWidths = $rsgConfig->get('image_width');
+//            $ImageWidths = $rsgConfig->get('image_size');
 //            $exploded = explode(',', $ImageWidths);
 //            $bigImageWidth = $exploded[0];
 //
@@ -1872,7 +1872,7 @@ EOT;
 
             $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
-            $ImageWidths = $rsgConfig->get('image_width');
+            $ImageWidths = $rsgConfig->get('image_size');
             $exploded = explode(',', $ImageWidths);
             $bigImageWidth = $exploded[0];
 
@@ -1939,7 +1939,7 @@ EOT;
 
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
-        $ImageWidths = $rsgConfig->get('image_width');
+        $ImageWidths = $rsgConfig->get('image_size');
         $exploded = explode(',', $ImageWidths);
         $bigImageWidth = $exploded[0];
 

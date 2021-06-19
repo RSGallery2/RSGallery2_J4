@@ -77,7 +77,15 @@ class ChangeLogModel
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
 
-            $changeLogUrl = $db->loadResult();
+            $externUrl = $db->loadResult();
+
+			//Test oOpen file
+	        $handle = @fopen($externUrl, 'r');
+
+			// Use if file exists (reachable)
+	        if($handle){
+		        $changeLogUrl = $externUrl;
+	        }
 
         }
         catch (\RuntimeException $e)
