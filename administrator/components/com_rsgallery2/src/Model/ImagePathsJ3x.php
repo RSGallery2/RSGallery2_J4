@@ -15,6 +15,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 
 \defined('_JEXEC') or die;
 
@@ -69,9 +70,12 @@ class ImagePathsJ3x {
             URIs
             --------------------------------------------------------------------*/
 
-            $this->originalUrl = PathHelper::join(Uri::root(), $this->originalBasePath);
-            $this->displayUrl = PathHelper::join(Uri::root(), $this->displayBasePath);
-            $this->thumbUrl = PathHelper::join(Uri::root(), $this->thumbBasePath);
+//            $this->originalUrl = PathHelper::join(Uri::root(), $this->originalBasePath);
+//            $this->displayUrl = PathHelper::join(Uri::root(), $this->displayBasePath);
+//            $this->thumbUrl = PathHelper::join(Uri::root(), $this->thumbBasePath);
+            $this->originalUrl = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_original'));
+            $this->displayUrl = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_display'));
+            $this->thumbUrl = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_thumb'));
 
         }
 		catch (\RuntimeException $e)
@@ -104,12 +108,15 @@ class ImagePathsJ3x {
 	--------------------------------------------------------------------*/
 
 	public function getOriginalUrl ($fileName=''){
+		// return UriHelper::join($this->originalUrl, $fileName);
 		return $this->originalUrl . '/' . $fileName;
 	}
 	public function getDisplayUrl ($fileName=''){
+		// return UriHelper::join($this->displayUrl, $fileName);
 		return $this->displayUrl . '/' . $fileName;
 	}
 	public function getThumbUrl ($fileName=''){
+		// return UriHelper::join($this->thumbUrl, $fileName);
 		return $this->thumbUrl . '/' . $fileName;
 	}
 
