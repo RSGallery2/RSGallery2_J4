@@ -64,7 +64,6 @@ class ImageFileModel extends BaseModel // AdminModel
 		//
 		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 
-//		$this->imagePaths = new imagePaths ($rootPath, $galleryId, , 'false');
 
 	}
 
@@ -403,7 +402,7 @@ class ImageFileModel extends BaseModel // AdminModel
         $imagePathFileNames  = [];
         
         $this->imagePaths =
-        $imagePaths = new ImagePaths ($galleryId);
+        $imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
 
         //--- expected images of gallery -------------------------------------------------
 
@@ -574,7 +573,7 @@ class ImageFileModel extends BaseModel // AdminModel
 			// ToDo: ask gallery for old style and use it in imagePaths
 
 			$this->imagePaths =
-			$imagePaths = new ImagePaths ($galleryId);
+			$imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
 			$imagePaths->createAllPaths();
 
             $isUsePath_Original = $imagePaths->isUsePath_Original;
@@ -987,7 +986,7 @@ class ImageFileModel extends BaseModel // AdminModel
 		{
 			//--- image source ------------------------------------------
 
-			$imagePaths = new ImagePaths ($galleryId);
+			$imagePaths = new ImagePaths ($galleryId);   // ToDo: J3x
 
 			// $originalFileName
 			$imgSrcPath = PathHelper::join($imagePaths->originalBasePath, $fileName);
@@ -1083,7 +1082,7 @@ class ImageFileModel extends BaseModel // AdminModel
 		{
 			//--- image source ------------------------------------------
 
-            $imagePaths = new ImagePaths ($galleryId);
+            $imagePaths = new ImagePaths ($galleryId); // ToDo: J3x
 
             // $originalFileName
             $imgSrcPath = PathHelper::join($imagePaths->originalBasePath, $fileName);

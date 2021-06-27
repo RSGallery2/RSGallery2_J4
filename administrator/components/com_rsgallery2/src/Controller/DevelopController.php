@@ -542,7 +542,7 @@ class DevelopController extends BaseController
                 // gallery db handle
                 $modelDb = $this->getModel('Gallery');
 
-                $j4xImagePath = new ImagePaths ();
+                //$j4xImagePath = new ImagePaths (); ? J3x
                 //$modelDb = new Rsgallery2\Component\Rsgallery2\Administrator\Model\eGallery();
                 //$modelDb = new eGallery();
                 // $modelDb = new eGallery();
@@ -591,7 +591,7 @@ class DevelopController extends BaseController
                 // image db handle
                 $modelDb = $this->getModel('Image');
 
-                $j4xImagePath = new ImagePaths ();
+                // $j4xImagePath = new ImagePaths (); ? j3x
                 //$modelDb = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Image();
                 //$modelDb = new Image();
                 // $modelDb = new image();

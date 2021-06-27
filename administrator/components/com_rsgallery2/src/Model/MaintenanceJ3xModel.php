@@ -1764,7 +1764,7 @@ EOT;
 //            $exploded = explode(',', $ImageWidths);
 //            $bigImageWidth = $exploded[0];
 //
-//            $j4xImagePath = new ImagePaths ();
+//            $j4xImagePath = new ImagePaths (); ? J3x
 //            $j3xImagePath = new ImagePathsJ3x ();
 //
 //
@@ -1876,8 +1876,8 @@ EOT;
             $exploded = explode(',', $ImageWidths);
             $bigImageWidth = $exploded[0];
 
-            $j4xImagePath = new ImagePaths ();
-            //$j3xImagePath = new ImagePathsJ3x ();
+            $j4xImagePath = new ImagePaths (); // ToDo: J3x
+            //$j3xImagePath = new ImagePathsJ3x (); // ToDo: J3x
 
 
             // ToDo: Watermarked

@@ -25,6 +25,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
 
 /**
  * View class for a list of rsgallery2.
@@ -72,8 +73,9 @@ class HtmlView extends BaseHtmlView
 
         $this->items = $this->get('Items');
 
-		// paths to image (galleryid
+        // paths to image (over galleryid or j3x style)
         $this->ImagePath = new ImagePaths ();
+        $this->ImagePathJ3x = new ImagePathsJ3x ();
 
         // size of display image
         $ImageWidths = $rsgConfig->get('image_size');

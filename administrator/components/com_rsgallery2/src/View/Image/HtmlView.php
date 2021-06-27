@@ -23,6 +23,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
@@ -101,9 +102,16 @@ class HtmlView extends BaseHtmlView
 		$this->item = $this->get('Item');
 		$this->state = $this->get('State');
 
-		$ImagePath = new ImagePaths ();
-		$ImagePath->setPaths_URIs_byGalleryId($this->item->gallery_id);
-		$this->imgUrl = $ImagePath->getDisplayUrl ($this->item->name);
+        if( ! $this->item->use_j3x_location) {
+
+            $ImagePath = new ImagePaths ();
+            $ImagePath->setPaths_URIs_byGalleryId($this->item->gallery_id);
+            $this->imgUrl = $ImagePath->getDisplayUrl($this->item->name);
+        } else {
+
+            $ImagePathJ3x = new ImagePathsJ3x ();
+            $this->imgUrl = $ImagePathJ3x->getDisplayUrl($this->item->name);
+        }
 
 		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
 		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
@@ -198,11 +206,12 @@ class HtmlView extends BaseHtmlView
 
                 $dropdownButton = $toolbar->dropdownButton('rotate-group')
                     ->text('COM_RSGALLERY2_ROTATE')
-//      		      ->toggleSplit(true)
-                    ->toggleSplit(false)
+////                    ->toggleSplit(true)
+//                    ->toggleSplit(false)
                     ->icon('fa fa-sync')
-//                    ->listCheck(true)
-                    ->buttonClass('btn btn-action');
+//                    ->listCheck(false)
+                    ->buttonClass('btn btn-action')
+                ;
 
                 $dropdownButton->configure(
                     function (Toolbar $childBar) {

@@ -88,7 +88,7 @@ class DevelopModel extends BaseDatabaseModel
 //                // image db handle
 //                $modelDb = $this->getModel('Image');
 //
-//                $j4xImagePath = new ImagePaths ();
+//                $j4xImagePath = new ImagePaths (); ? J3x
 //                //$modelDb = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Image();
 //                //$modelDb = new Image();
 //                $modelDb = new image();

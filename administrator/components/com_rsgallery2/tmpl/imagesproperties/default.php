@@ -75,8 +75,15 @@ $extension = $this->escape($this->state->get('filter.extension'));
 
                                 // toDo: Move to "htmlview-> create list in model
                                 // galleryJ4x path is depending on gallery id
-                                $this->ImagePath->setPaths_URIs_byGalleryId($item->gallery_id);
-                                $src = $this->ImagePath->getDisplayUrl ($item->name);
+
+                                if( ! $item->use_j3x_location)
+                                {
+                                    $this->ImagePath->setPaths_URIs_byGalleryId($item->gallery_id);
+                                    $src = $this->ImagePath->getDisplayUrl($item->name);
+                                } else {
+
+                                    $src = $this->ImagePathJ3x->getDisplayUrl($item->name);
+                                }
 
 								?>
 								<li class="imagePropItem" >

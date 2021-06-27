@@ -43,7 +43,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 			}
 
 			// define path
-			$imagePaths = new ImagePaths (0);
+			$imagePaths = new ImagePaths (0);  // ToDo: J3x
 			$removePath = $imagePaths->rsgImagesBasePath;
 
 			$OutTxt = 'MaintRemoveAllDataModel: Executing removeAllImageFiles: <br> Remove Path: "' . $removePath . '"';

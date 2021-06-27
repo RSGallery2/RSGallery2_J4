@@ -26,7 +26,7 @@ class MaintenanceModel extends BaseDatabaseModel
 
         try {
 
-            $j4xImagePath = new ImagePaths ();
+            $j4xImagePath = new ImagePaths ();  // ToDo: J3x
             $galleryIds = $this->j4x_galleryIds();
 
             $isPathsExisting = true;
@@ -61,7 +61,7 @@ class MaintenanceModel extends BaseDatabaseModel
 
         try {
 
-            $j4xImagePath = new ImagePaths ();
+            $j4xImagePath = new ImagePaths ();  // ToDo: J3x
             $galleryIds = $this->j4x_galleryIds();
 
             $isPathsRepaired = true;

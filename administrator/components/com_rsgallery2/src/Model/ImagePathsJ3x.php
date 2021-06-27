@@ -108,16 +108,16 @@ class ImagePathsJ3x {
 	--------------------------------------------------------------------*/
 
 	public function getOriginalUrl ($fileName=''){
-		// return UriHelper::join($this->originalUrl, $fileName);
-		return $this->originalUrl . '/' . $fileName;
+		 return UriHelper::join($this->originalUrl, $fileName);
+//		return $this->originalUrl . '/' . $fileName;
 	}
 	public function getDisplayUrl ($fileName=''){
-		// return UriHelper::join($this->displayUrl, $fileName);
-		return $this->displayUrl . '/' . $fileName;
+		 return UriHelper::join($this->displayUrl, $fileName . '.jpg');
+//		return $this->displayUrl . '/' . $fileName . '.jpg';
 	}
 	public function getThumbUrl ($fileName=''){
-		// return UriHelper::join($this->thumbUrl, $fileName);
-		return $this->thumbUrl . '/' . $fileName;
+		 return UriHelper::join($this->thumbUrl, $fileName . '.jpg');
+//		return $this->thumbUrl . '/' . $fileName . '.jpg';
 	}
 
     /**

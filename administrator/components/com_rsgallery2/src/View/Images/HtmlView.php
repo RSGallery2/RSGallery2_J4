@@ -152,9 +152,8 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-        // paths to image (galleryid
+        // paths to image (over galleryid or j3x style)
         $this->ImagePath = new ImagePaths ();
-
         $this->ImagePathJ3x = new ImagePathsJ3x ();
 
 

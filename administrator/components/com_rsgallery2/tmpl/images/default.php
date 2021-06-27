@@ -253,8 +253,11 @@ if ($saveOrder && !empty($this->items))
                                 {
 	                                $this->ImagePath->setPaths_URIs_byGalleryId($item->gallery_id);
 	                                $src = $this->ImagePath->getDisplayUrl($item->name);
+//	                                $src = $this->ImagePath->getThumbUrl($item->name);
                                 } else {
+
 	                                $src = $this->ImagePathJ3x->getDisplayUrl($item->name);
+//	                                $src = $this->ImagePathJ3x->getThumbUrl($item->name);
                                 }
                                 ?>
 

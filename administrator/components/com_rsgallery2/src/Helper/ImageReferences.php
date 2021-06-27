@@ -236,7 +236,7 @@ class ImageReferences
 		    // toDo: Outside originals ....
 
 			// only base path needed so galleryid == 0
-            $imagePaths = new ImagePaths (0);
+            $imagePaths = new ImagePaths (0); // ToDo: J3x
             $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
 
