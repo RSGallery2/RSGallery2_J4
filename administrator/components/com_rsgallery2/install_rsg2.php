@@ -11,8 +11,10 @@
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+
 
 //JLoader::registerNamespace('Rsgallery2', __DIR__ .'/administrator/components/com_rsgallery2');
 //JLoader::registerNamespace('Rsgallery2',  JPATH_ADMINISTRATOR .'/components/com_rsgallery2');
@@ -191,6 +193,8 @@ class Com_Rsgallery2InstallerScript
 //		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_INSTALL'), Log::INFO, 'rsg2');
 
+		$this->addDashboardMenu('rsgallery2', 'rsgallery2');
+
         return true;
     }
 
@@ -218,6 +222,8 @@ class Com_Rsgallery2InstallerScript
         // echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UPDATE'), Log::INFO, 'rsg2');
         //Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
+
+		// ToDo: debug install $this->addDashboardMenu('rsgallery2', 'rsgallery2');
 
         return true;
     }
