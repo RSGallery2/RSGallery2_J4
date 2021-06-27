@@ -373,6 +373,7 @@ out:
 
 			$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 			$thumbSize = $rsgConfig->get('thumb_size');
+            $use_j3x_location = $rsgConfig->get('useJ3xOldPaths');
 
 			$ajaxImgObject['fileName'] = $targetFileName;
 			// some dummy data for error messages
@@ -427,9 +428,12 @@ out:
                 // $origin = $input->get('origin', '', 'string'); // zip/server
                 $origin = 'uploadFile';
 
-				$modelFile = $this->getModel('imageFile');
+
+
+
+                $modelFile = $this->getModel('imageFile');
 				list($isCreated, $urlThumbFile, $msg) = $modelFile->MoveImageAndCreateRSG2Images(
-					$srcTempPathFileName, $targetFileName, $galleryId, $origin);
+					$srcTempPathFileName, $targetFileName, $galleryId, $origin, $use_j3x_location);
 
 			}
 			catch (\RuntimeException $e)

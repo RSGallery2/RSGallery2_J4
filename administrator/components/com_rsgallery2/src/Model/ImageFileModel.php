@@ -397,26 +397,47 @@ class ImageFileModel extends BaseModel // AdminModel
     // ToDo: The sizes may be defined (overwritten) in the gallery or image data (override) a) create gallery b) Upload image c) handling later  
     
     
-    public function allFilesOf($imageFileName, $galleryId)
+    public function allFilesOf($imageFileName, $galleryId, $use_j3x_location)
     {
         $imagePathFileNames  = [];
-        
-        $this->imagePaths =
-        $imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
 
-        //--- expected images of gallery -------------------------------------------------
+        // J4x ?
+        if( ! $use_j3x_location) {
+            $this->imagePaths =  // ToDo: Needed on delete ....?
+            $imagePaths = new ImagePaths ($galleryId);
 
-        //$originalFileName
-        $imagePathFileNames [] = $imagePaths->getOriginalPath ($imageFileName);
-        // $thumbFileName
-        $imagePathFileNames [] =  $imagePaths->getThumbPath($imageFileName);
-        // $displayFileName  
-        $imagePathFileNames [] =  $imagePaths->getDisplayPath($imageFileName);
-        
-        // $sizeFileName 
-        foreach ($imagePaths->imageSizes as $imageSize) {
+            //--- expected images of gallery -------------------------------------------------
 
-            $imagePathFileNames [] =  $imagePaths->getSizePath($imageSize, $imageFileName);
+            //$originalFileName
+            $imagePathFileNames [] = $imagePaths->getOriginalPath ($imageFileName);
+            // $thumbFileName
+            $imagePathFileNames [] =  $imagePaths->getThumbPath($imageFileName);
+            // $displayFileName
+            $imagePathFileNames [] =  $imagePaths->getDisplayPath($imageFileName);
+
+            // $sizeFileName
+            foreach ($imagePaths->imageSizes as $imageSize) {
+
+                $imagePathFileNames [] =  $imagePaths->getSizePath($imageSize, $imageFileName);
+            }
+
+        } else {
+
+            // J3x
+
+            $this->imagePaths =
+            $ImagePathJ3x = new ImagePathsJ3x ();
+
+            //--- expected images of gallery -------------------------------------------------
+
+            //$originalFileName
+            $imagePathFileNames [] = $ImagePathJ3x->getOriginalPath ($imageFileName);
+            // $thumbFileName
+            $imagePathFileNames [] =  $ImagePathJ3x->getThumbPath($imageFileName);
+            // $displayFileName
+            $imagePathFileNames [] =  $ImagePathJ3x->getDisplayPath($imageFileName);
+
+            // $sizeFileName
         }
 
         return $imagePathFileNames;
@@ -434,7 +455,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 */
 	
 	/**/
-	public function deleteImgItemImages($imageFileName, $galleryId)
+	public function deleteImgItemImages($imageFileName, $galleryId, $use_j3x_location)
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
@@ -453,7 +474,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             //--- destination image paths ---------------------------------------------------
 
-            $imagePathFileNames = $this->allFilesOf($imageFileName, $galleryId);
+            $imagePathFileNames = $this->allFilesOf($imageFileName, $galleryId, $use_j3x_location);
 
             /**/
 
@@ -549,7 +570,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 *@since __BUMP_VERSION__
 	 */
 	public function MoveImageAndCreateRSG2Images($srcTempPathFileName, $targetFileName, $galleryId,
-	                                             $uploadOrigin): array
+	                                             $uploadOrigin, $use_j3x_location): array
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 

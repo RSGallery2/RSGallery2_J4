@@ -1467,9 +1467,10 @@ class ImageModel extends AdminModel
 
                     $fileName = $table->name;
                     $galleryId = $table->gallery_id;
+                    $use_j3x_location = $table->use_j3x_location;
 
                     // ToDo: tell if any are left and then do not delete in table
-                    [$deletedCount, $failedCount] = $imgFileModel->deleteImgItemImages($fileName, $galleryId);
+                    [$deletedCount, $failedCount] = $imgFileModel->deleteImgItemImages($fileName, $galleryId, $use_j3x_location);
                     if ($deletedCount > 0) {
                     //if ($failedCount == 0) {
 
