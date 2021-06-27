@@ -27,6 +27,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
 
 /**
  * View class for a list of rsgallery2.
@@ -153,6 +154,9 @@ class HtmlView extends BaseHtmlView
 
         // paths to image (galleryid
         $this->ImagePath = new ImagePaths ();
+
+        $this->ImagePathJ3x = new ImagePathsJ3x ();
+
 
 //		//--- thumb --------------------------------------------------------------------
 //
