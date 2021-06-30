@@ -38,7 +38,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
  */
 class ImageFileModel extends BaseModel // AdminModel
 {
-	protected $imagePaths = null;
 
 	const THUMB_PORTRAIT = 0;
 	const THUMB_SQUARE = 1;
@@ -403,7 +402,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
         // J4x ?
         if( ! $use_j3x_location) {
-            $this->imagePaths =  // ToDo: Needed on delete ....?
+
             $imagePaths = new ImagePaths ($galleryId);
 
             //--- expected images of gallery -------------------------------------------------
@@ -425,7 +424,6 @@ class ImageFileModel extends BaseModel // AdminModel
 
             // J3x
 
-            $this->imagePaths =
             $ImagePathJ3x = new ImagePathsJ3x ();
 
             //--- expected images of gallery -------------------------------------------------
@@ -483,7 +481,7 @@ class ImageFileModel extends BaseModel // AdminModel
             // try to delete each image, continue on fail
             foreach ($imagePathFileNames as $imageFileName) {
                 // Make sure to not delete empty
-                //if (strlen($imageFileName) > strlen ($this->imagePaths->rsgImagesBasePath))
+                //if (strlen($imageFileName) > strlen ($this->???imagePaths->rsgImagesBasePath))
                 $isDeleted = File::delete($imageFileName);
 
                 if($isDeleted) {
@@ -593,22 +591,43 @@ class ImageFileModel extends BaseModel // AdminModel
 			// ToDo: J3x style paths -> other class ? // , $isJ3xStylePaths = false or own path class similar
 			// ToDo: ask gallery for old style and use it in imagePaths
 
-			$this->imagePaths =
-			$imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
-			$imagePaths->createAllPaths();
 
-            $isUsePath_Original = $imagePaths->isUsePath_Original;
+            $isUsePath_Original = $rsgConfig->get('keepOriginalImage');
+
+            if ( ! $use_j3x_location) {
+
+                $imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
+                $imagePaths->createAllPaths();
+
+                $urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
+                $originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
+
+            } else {
+
+                $imagePaths = new ImagePathsJ3x ($galleryId);  // ToDo: J3x
+                $imagePaths->createAllPaths();
+
+                $urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
+                $originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
+
+            }
 
 			//--- create files ---------------------------------------------------
 
-			$isCreated = $this->CreateRSG2Images($imagePaths, $srcTempPathFileName, $targetFileName);
-			$urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
+            if ( ! $use_j3x_location) {
+
+                $isCreated = $this->CreateRSG2Images($imagePaths, $srcTempPathFileName, $targetFileName);
+
+            } else {
+
+                $isCreated = $this->CreateRSG2ImagesJ3x($imagePaths, $srcTempPathFileName, $targetFileName);
+
+            }
 
 			if ($isCreated)
 			{
 				if ($isUsePath_Original)
 				{
-					$originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
 					// Move of file on upload and not on ftp folder on server
 					if($uploadOrigin != 'server' && $uploadOrigin != 'zip')
 					{

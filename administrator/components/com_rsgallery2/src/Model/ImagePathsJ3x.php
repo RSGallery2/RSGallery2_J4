@@ -30,7 +30,7 @@ class ImagePathsJ3x {
 	//	ToDo: watermark ...
 
     // Original folder may not be needed (see config)
-    public $isUsePath_Original;
+    protected $isUsePath_Original;
 
     // URIs gallery defined
 	protected $originalUrl;
