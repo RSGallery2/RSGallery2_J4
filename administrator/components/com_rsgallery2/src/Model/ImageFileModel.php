@@ -588,21 +588,17 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			//--- destination image paths ---------------------------------------------------
 
-			// ToDo: J3x style paths -> other class ? // , $isJ3xStylePaths = false or own path class similar
-			// ToDo: ask gallery for old style and use it in imagePaths
-
-
             $isUsePath_Original = $rsgConfig->get('keepOriginalImage');
 
-            if ( ! $use_j3x_location) {
+			if (!$use_j3x_location) {
 
-                $imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
-                $imagePaths->createAllPaths();
+				$imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
+				$imagePaths->createAllPaths();
 
                 $urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
                 $originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
 
-            } else {
+			} else {
 
                 $imagePaths = new ImagePathsJ3x ($galleryId);  // ToDo: J3x
                 $imagePaths->createAllPaths();
@@ -610,13 +606,13 @@ class ImageFileModel extends BaseModel // AdminModel
                 $urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
                 $originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
 
-            }
+			}
 
 			//--- create files ---------------------------------------------------
 
             if ( ! $use_j3x_location) {
 
-                $isCreated = $this->CreateRSG2Images($imagePaths, $srcTempPathFileName, $targetFileName);
+				$isCreated = $this->CreateRSG2Images($imagePaths, $srcTempPathFileName, $targetFileName);
 
             } else {
 
@@ -732,7 +728,7 @@ class ImageFileModel extends BaseModel // AdminModel
 			if (true) {
 
 				if ($isCopied)
-				{
+				{ ? J3x
 					list($isCopied, $urlThumbFile, $msg) = $this->CreateRSG2Images($singleFileName, $galleryId);
 				}
 				else
@@ -780,7 +776,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 */
-	public function CreateRSG2Images(ImagePaths $imagePaths, $srcFileName='', $targetFileName='')//: array
+	public function X_CreateRSG2Images(ImagePaths $imagePaths, $srcFileName='', $targetFileName='')//: array
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
@@ -790,7 +786,6 @@ class ImageFileModel extends BaseModel // AdminModel
 		{
 			Log::add('==>Start CreateRSG2Images: ' . $targetFileName);
 		}
-
 
 		$isCreated = false; // successful images
 
@@ -828,17 +823,17 @@ class ImageFileModel extends BaseModel // AdminModel
 					$isCreated = false;
 					try
 					{
-					$isCreated = $this->createDisplayImageFile($imagePaths->getSizePath($imageSize, $targetFileName), $imageSize, $memImage);
+						$isCreated = $this->createDisplayImageFile($imagePaths->getSizePath($imageSize, $targetFileName), $imageSize, $memImage);
 
-					$afterWidth  = $memImage->getWidth();
-					$afterHeight = $memImage->getHeight();
-					/**
-					if ($srcWidth != $afterWidth || $srcHeight != $afterHeight) {
-						$memImage->destroy();
-					} else {
-						$memImage->destroy();
-					}
-					/**/
+						$afterWidth  = $memImage->getWidth();
+						$afterHeight = $memImage->getHeight();
+						/**
+						if ($srcWidth != $afterWidth || $srcHeight != $afterHeight) {
+							$memImage->destroy();
+						} else {
+							$memImage->destroy();
+						}
+						/**/
 					}
 					catch (\RuntimeException $e)
 					{
@@ -896,6 +891,133 @@ class ImageFileModel extends BaseModel // AdminModel
 		if ($Rsg2DebugActive)
 		{
 			Log::add('<== Exit CreateRSG2Images: '
+				. (($isCreated) ? 'true' : 'false'));
+		}
+
+		return $isCreated; // files are created
+	}
+
+	/**
+	 * Delegates the creation of display, thumb and watermark images
+	 *
+	 * @param string $uploadPathFileName Origin path file name
+	 * @param string $singleFileName  Destination base file name
+	 * @param int $galleryId May be used in destination path
+	 *
+	 * @return array ($isMoved, $msg) Tells about success, the URL to the thumb file and a message on error
+	 *
+	 * @since __BUMP_VERSION__
+	 * @throws Exception
+	 */
+	public function CreateRSG2ImagesJ3x(ImagePaths $imagePaths, $srcFileName='', $targetFileName='')//: array
+	{
+		global $rsgConfig, $Rsg2DebugActive;
+
+		$msg          = ''; // ToDo: Raise (throw) errors instead
+
+		if ($Rsg2DebugActive)
+		{
+			Log::add('==>Start CreateRSG2Images J3x: ' . $targetFileName);
+		}
+
+		$isCreated = false; // successful images
+
+		// ToDo: try ... catch
+
+		// source file exists
+		if (File::exists($srcFileName))
+		{
+			//--- Create thumb files ----------------------------------
+
+			// Create memory image
+			$memImage = new image ($srcFileName);
+
+			$srcWidth  = $memImage->getWidth();
+			$srcHeight = $memImage->getHeight();
+
+			$isCreated = $this->createThumbImageFile($imagePaths->getThumbPath($targetFileName), $memImage);
+
+			// ? changed toDo: check and remove
+			$afterWidth  = $memImage->getWidth();
+			$afterHeight = $memImage->getHeight();
+
+			$memImage->destroy ();
+
+			//--- Create display files ----------------------------------
+
+			if ($isCreated)
+			{
+				// toDo: ajax: update state thumb created
+
+				$memImage = new image ($srcFileName);
+
+				$isCreated = false;
+				try
+				{
+
+					$isCreated = $this->createDisplayImageFile($imagePaths->getDisplayPath($targetFileName), $memImage);
+
+					$afterWidth  = $memImage->getWidth();
+					$afterHeight = $memImage->getHeight();
+					/**
+					if ($srcWidth != $afterWidth || $srcHeight != $afterHeight) {
+						$memImage->destroy();
+					} else {
+						$memImage->destroy();
+					}
+					/**/
+				}
+				catch (\RuntimeException $e)
+				{
+					$memImage->destroy ();
+					throw $e;
+				}
+
+			}
+
+
+			/**  ToDo: watermark file $isWatermarkActive *
+			//--- Create watermark file ----------------------------------
+			if ( $isCreated) {
+
+				$isWatermarkActive = $rsgConfig->get('watermark');
+				if (!empty($isWatermarkActive))
+				{
+					//$modelWatermark = $this->getModel('ImgWaterMark');
+					$modelWatermark = $this->getInstance('imgwatermark', 'RSGallery2Model');
+
+					$isCreated = $modelWatermark->createMarkedFromBaseName(basename($srcFileName), 'original');
+					if (!$isCreated)
+					{
+						//
+						$msg .= '<br>' . 'Create Watermark File for "' . $singleFileName . '" failed. Use maintenance -> Consolidate image database to check it ';
+					}
+				}
+				else
+				{
+					// successful transfer
+					$isCreated = true;
+				}
+			}
+			/**/
+		}
+		else
+		{
+			$OutTxt = ''; // ToDo: Raise (throw) errors instead
+			$OutTxt .= 'CreateRSG2ImagesJ3x Error: Could not find original file: "' . $srcFileName . '"';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+
+			if ($Rsg2DebugActive)
+			{
+				Log::add($OutTxt);
+			}
+		}
+
+		if ($Rsg2DebugActive)
+		{
+			Log::add('<== Exit CreateRSG2ImagesJ3x: '
 				. (($isCreated) ? 'true' : 'false'));
 		}
 
