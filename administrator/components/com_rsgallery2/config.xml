@@ -274,15 +274,6 @@
 				class="input-large-text input-xxlarge"
 		>
 		</field>
-		<field
-				name="image_width"
-				type="text"
-				default="400"
-				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
-				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
-				class="">
-		>
-		</field>
 	</fieldset>
 
 	<!-- ... Tab Galleries view ................................. -->
@@ -657,15 +648,17 @@
 
 		<!-- ... block  ... -->
 
-		<field
-				name="image_size"
+
+			<field
+				name="image_width"
 				type="text"
-				default="800,600,400"
+				default="400"
 				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
 				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
-				class=""
-		>
-		</field>
+				class="">
+			>
+			</field>
+
 		
 	</fieldset>
 
