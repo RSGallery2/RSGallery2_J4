@@ -771,7 +771,7 @@ class ImagesModel extends ListModel
 		{
 			$db    = Factory::getDbo();
 			$query = $db->getQuery(true)
-                ->select($db->quoteName(array('name', 'gallery_id')))
+                ->select($db->quoteName(array('id', 'name', 'gallery_id')))
                 ->from($db->quoteName('#__rsg2_images'))
 				->where($db->quoteName('id') . ' IN ' . ' (' . implode(',', $ImageIds) . ')');
 			$db->setQuery($query);

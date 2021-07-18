@@ -255,7 +255,7 @@ class ImageController extends FormController
 				$fileName = $input->get('name', '???', 'string');
 				$galleryId = $input->get('gallery_id', -1, 'int');
 
-				$IsSaved = $modelFile->rotate_image($fileName, $galleryId, $direction);
+				$IsSaved = $modelFile->rotate_image($id, $fileName, $galleryId, $direction);
 
 				if ($IsSaved){
 					$ImgCount++;
@@ -389,7 +389,7 @@ class ImageController extends FormController
 				$fileName = $this->input->get('name', '???', 'string');
 				$galleryId = $this->input->get('gallery_id', -1, 'int');
 
-				$IsSaved = $modelFile->flip_image($fileName, $galleryId, $flipMode);
+				$IsSaved = $modelFile->flip_image($id, $fileName, $galleryId, $flipMode);
 
                 if ($IsSaved){
                     $ImgCount++;

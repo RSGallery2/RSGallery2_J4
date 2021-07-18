@@ -408,7 +408,7 @@ class ImageFileModel extends BaseModel // AdminModel
             //--- expected images of gallery -------------------------------------------------
 
             //$originalFileName
-            $imagePathFileNames [] = $imagePaths->getOriginalPath ($imageFileName);
+            $imagePathFileNames [] = $imagePaths->getOriginalPath($imageFileName);
             // $thumbFileName
             $imagePathFileNames [] =  $imagePaths->getThumbPath($imageFileName);
             // $displayFileName
@@ -600,11 +600,11 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			} else {
 
-                $imagePaths = new ImagePathsJ3x ($galleryId);  // ToDo: J3x
-                $imagePaths->createAllPaths();
+                $imagePathJ3x = new ImagePathsJ3x ($galleryId);  // ToDo: J3x
+                $imagePathJ3x->createAllPaths();
 
-                $urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
-                $originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
+                $urlThumbFile = $imagePathJ3x->getThumbUrl($targetFileName);
+                $originalFileName = PathHelper::join($imagePathJ3x->originalBasePath, $targetFileName);
 
 			}
 
@@ -616,7 +616,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             } else {
 
-                $isCreated = $this->CreateRSG2ImagesJ3x($imagePaths, $srcTempPathFileName, $targetFileName);
+                $isCreated = $this->CreateRSG2ImagesJ3x($imagePathJ3x, $srcTempPathFileName, $targetFileName);
 
             }
 
@@ -698,9 +698,14 @@ class ImageFileModel extends BaseModel // AdminModel
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 *
-	public function CopyImageAndCreateRSG2Images($uploadPathFileName, $singleFileName, $galleryId)//: array
+	public function CopyImageAndCreateRSG2Images( ??? $uploadPathFileName, $singleFileName, $galleryId)//: array
 	{
 		global $rsgConfig, $Rsg2DebugActive;
+
+        see rotate_image J3/j4 call of create images
+        May differ for in image and out image
+
+
 
 		if ($Rsg2DebugActive)
 		{
@@ -776,7 +781,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 */
-	public function X_CreateRSG2Images(ImagePaths $imagePaths, $srcFileName='', $targetFileName='')//: array
+	public function CreateRSG2Images(ImagePaths $imagePaths, $srcFileName='', $targetFileName='')//: array
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
@@ -823,7 +828,8 @@ class ImageFileModel extends BaseModel // AdminModel
 					$isCreated = false;
 					try
 					{
-						$isCreated = $this->createDisplayImageFile($imagePaths->getSizePath($imageSize, $targetFileName), $imageSize, $memImage);
+						$isCreated = $this->createDisplayImageFile($imagePaths->getSizePath($imageSize, $targetFileName),
+                            $imageSize, $memImage);
 
 						$afterWidth  = $memImage->getWidth();
 						$afterHeight = $memImage->getHeight();
@@ -909,7 +915,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 */
-	public function CreateRSG2ImagesJ3x(ImagePaths $imagePaths, $srcFileName='', $targetFileName='')//: array
+	public function CreateRSG2ImagesJ3x(ImagePathsJ3x $imagePaths, $srcFileName='', $targetFileName='')//: array
 	{
 		global $rsgConfig, $Rsg2DebugActive;
 
@@ -943,7 +949,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
 			$memImage->destroy ();
 
-			//--- Create display files ----------------------------------
+			//--- Create display file ----------------------------------
 
 			if ($isCreated)
 			{
@@ -954,8 +960,10 @@ class ImageFileModel extends BaseModel // AdminModel
 				$isCreated = false;
 				try
 				{
+                    $imageSize = $rsgConfig->get('image_size_j3x');
 
-					$isCreated = $this->createDisplayImageFile($imagePaths->getDisplayPath($targetFileName), $memImage);
+					$isCreated = $this->createDisplayImageFile($imagePaths->getDisplayPath($targetFileName),
+                        $imageSize, $memImage);
 
 					$afterWidth  = $memImage->getWidth();
 					$afterHeight = $memImage->getHeight();
@@ -1137,7 +1145,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 *
 	 * @since __BUMP_VERSION__
 	 */
-	public function rotate_image($fileName, $galleryId, $angle)
+	public function rotate_image($ImageId, $fileName, $galleryId, $angle)
 	{
 		global $rsgConfig;
 		global $Rsg2DebugActive;
@@ -1146,18 +1154,31 @@ class ImageFileModel extends BaseModel // AdminModel
 
 		try
 		{
+            $use_j3x_location = $this->use_j3x_location($ImageId);
+
 			//--- image source ------------------------------------------
 
-			$imagePaths = new ImagePaths ($galleryId);   // ToDo: J3x
+            // J4x ?
+            if( ! $use_j3x_location) {
 
-			// $originalFileName
-			$imgSrcPath = PathHelper::join($imagePaths->originalBasePath, $fileName);
+                $imagePaths = new ImagePaths($galleryId);
+                $originalPath = $imagePaths->getOriginalPath ($fileName);
+                $displayDPath =  $imagePaths->getDisplayPath($fileName);
+            } else {
+
+                // J3x
+                $imagePathJ3x = new ImagePathsJ3x ();
+                $originalPath = $imagePathJ3x->getOriginalPath ($fileName);
+                $displayDPath =  $imagePathJ3x->getDisplayPath($fileName);
+            }
+
+            $imgSrcPath = $originalPath;
 
 			// fallback display file
-			if ( ! File::exists($imgSrcPath))
+			if ( ! File::exists($originalPath))
 			{
 				// displayBasePath
-				$imgSrcPath = PathHelper::join($imagePaths->displayBasePath, $fileName);
+				$imgSrcPath = $displayDPath;
 			}
 
 			$memImage = null;
@@ -1177,7 +1198,12 @@ class ImageFileModel extends BaseModel // AdminModel
 				$memImage->toFile($imgSrcPath, $type);
 				$memImage->destroy();
 
-				$isRotated = $this->CreateRSG2Images($imagePaths, $imgSrcPath, $fileName);
+                // J4x ?
+                if( ! $use_j3x_location) {
+                    $isRotated = $this->CreateRSG2Images($imagePaths, $imgSrcPath, $fileName);
+                } else {
+                    $isRotated = $this->CreateRSG2ImagesJ3x($imagePathJ3x, $imgSrcPath, $fileName);
+                }
 			}
 		}
 		catch (\RuntimeException $e)
@@ -1193,34 +1219,6 @@ class ImageFileModel extends BaseModel // AdminModel
 		return $isRotated;
 	}
 
-//	/**
-//	 * flip_images directs the master image and all dependent images to be flipped in given mode
-//	 *
-//	 * @param string [] $fileNames list of file names of images to be flipped
-//	 * @param int $galleryId May be used in destination path
-//	 * @param int $flipMode flip direction horiontal, vertical or both
-//	 *
-//	 * @return int Number of successful turned images
-//	 *
-//	 * @since __BUMP_VERSION__
-//	 */
-//	public function flip_images($fileNames, $galleryId, $flipMode)
-//	{
-//		$ImgCount = 0;
-//
-//		$msg = "model images: flip_images: " . '<br>';
-//
-//		foreach ($fileNames as $fileName)
-//		{
-//			$IsSaved = $this->flip_image($fileName, $galleryId, $flipMode);
-//			if ($IsSaved){
-//				$ImgCount++;
-//			}
-//		}
-//
-//		return $ImgCount;
-//	}
-
 	/**
 	 * flip_images directs the master image to be flipped in given mode
 	 * All dependent images will be created anew from the flipped image
@@ -1233,7 +1231,7 @@ class ImageFileModel extends BaseModel // AdminModel
 	 *
 	 * @since __BUMP_VERSION__
 	 */
-	public function flip_image($fileName, $galleryId, $flipMode)
+	public function flip_image($ImageId, $fileName, $galleryId, $flipMode)
 	{
 		global $rsgConfig;
 		global $Rsg2DebugActive;
@@ -1242,18 +1240,31 @@ class ImageFileModel extends BaseModel // AdminModel
 
 		try
 		{
-			//--- image source ------------------------------------------
+            $use_j3x_location = $this->use_j3x_location($ImageId);
 
-            $imagePaths = new ImagePaths ($galleryId); // ToDo: J3x
+            //--- image source ------------------------------------------
 
-            // $originalFileName
-            $imgSrcPath = PathHelper::join($imagePaths->originalBasePath, $fileName);
+            // J4x ?
+            if( ! $use_j3x_location) {
+
+                $imagePaths = new ImagePaths($galleryId);
+                $originalPath = $imagePaths->getOriginalPath ($fileName);
+                $displayDPath =  $imagePaths->getDisplayPath($fileName);
+            } else {
+
+                // J3x
+                $imagePathJ3x = new ImagePathsJ3x ();
+                $originalPath = $imagePathJ3x->getOriginalPath ($fileName);
+                $displayDPath =  $imagePathJ3x->getDisplayPath($fileName);
+            }
+
+            $imgSrcPath = $originalPath;
 
             // fallback display file
-            if ( ! File::exists($imgSrcPath))
+            if ( ! File::exists($originalPath))
             {
                 // displayBasePath
-                $imgSrcPath = PathHelper::join($imagePaths->displayBasePath, $fileName);
+                $imgSrcPath = $displayDPath;
             }
 
             $memImage = null;
@@ -1267,13 +1278,18 @@ class ImageFileModel extends BaseModel // AdminModel
 			{
 				$type = IMAGETYPE_JPEG;
 
-				//--- rotate and save ------------------
+				//--- flip and save ------------------
 
 				$memImage->flip($flipMode, false);
 				$memImage->toFile($imgSrcPath, $type);
 				$memImage->destroy();
 
-                $isFlipped = $this->CreateRSG2Images($imagePaths, $imgSrcPath, $fileName);
+                // J4x ?
+                if( ! $use_j3x_location) {
+                    $isFlipped = $this->CreateRSG2Images($imagePaths, $imgSrcPath, $fileName);
+                } else {
+                    $isFlipped = $this->CreateRSG2ImagesJ3x($imagePathJ3x, $imgSrcPath, $fileName);
+                }
 			}
 		}
 		catch (\RuntimeException $e)
@@ -1288,6 +1304,47 @@ class ImageFileModel extends BaseModel // AdminModel
 
 		return $isFlipped;
 	}
+
+    /**
+     * ToDo: If needed on other sources move to ImageModel
+     * Tells about save of file by J3x or j4x style
+     *
+     * @param $ImageId
+     *
+     * @return bool
+     *
+     * @since __BUMP_VERSION__
+     */
+    /**/
+    private function use_j3x_location($ImageId)
+    {
+        $use_j3x = 0;
+
+        try
+        {
+            $db    =  Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('use_j3x_location'))
+                ->from($db->quoteName('#__rsg2_images'))
+                ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
+            $db->setQuery($query);
+            $use_j3x = $db->loadResult();
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing use_j3x_location for ImageId: "' . $ImageId . '"<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        // $next = $max +1;
+
+        return $use_j3x;
+    }
+    /**/
 
 }
 

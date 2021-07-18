@@ -7,7 +7,7 @@
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<copyright>(c) 2005-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.0.29</version>
+	<version>5.0.0.30</version>
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
 	<namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
 

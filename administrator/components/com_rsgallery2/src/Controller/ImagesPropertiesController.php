@@ -423,8 +423,9 @@ class ImagesPropertiesController extends AdminController
                     //$galleryId =  $imgFileData ['gallery_id'];
                     $fileName = $imgFileData->name;
                     $galleryId =  $imgFileData->gallery_id;
+                    $id = $imgFileData->id;
 
-					$IsSaved = $modelFile->rotate_image($fileName, $galleryId, $direction);
+					$IsSaved = $modelFile->rotate_image($id, $fileName, $galleryId, $direction);
 
 					if ($IsSaved){
 						$ImgCount++;
@@ -562,8 +563,9 @@ class ImagesPropertiesController extends AdminController
                     //$galleryId =  $imgFileData ['gallery_id'];
                     $fileName = $imgFileData->name;
                     $galleryId =  $imgFileData->gallery_id;
+                    $id = $imgFileData->id;
 
-                    $IsSaved = $modelFile->flip_image($fileName, $galleryId, $flipMode);
+                    $IsSaved = $modelFile->flip_image($id, $fileName, $galleryId, $flipMode);
 
                     if ($IsSaved){
                         $ImgCount++;
