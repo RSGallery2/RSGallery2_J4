@@ -26,7 +26,6 @@ div.rsg2logo img {
 }
 
 div.quickicon-icon {
-  position: relative;
   left: -8px;
 }
 
@@ -50,6 +49,10 @@ div.quickicon-icon div.fa-cogs {
   color: #e52626;
 }
 
+flex-buttons-table {
+  /*	flex-basis: 0; /**/
+}
+
 /* border-radius: 25px; */
 li.quickicon-single {
   display: block;
@@ -66,6 +69,8 @@ li.quickicon-single {
   /**/
   margin: 0 8px 0 0;
   /**/
+  /*	flex-basis: 0; /**/
+  flex: 1;
 }
 
 li.quickicon-single:hover {
@@ -78,6 +83,7 @@ li.quickicon-single:hover {
 
 li.quickicon-single a {
   text-decoration: none;
+  /*	flex-basis: 0; /**/
 }
 
 li.quickicon-single:hover .quickicon-text {
@@ -85,10 +91,14 @@ li.quickicon-single:hover .quickicon-text {
   /**/
 }
 
+li.quickicon-single:link {
+  /*	flex-basis: 0; /**/
+}
+
 /* border-radius: 25px; */
 div.quickicon-icon {
   font-size: xx-large;
-  text-align: center;
+  text-align: left;
   /*	width: 5em;  /**/
   width: auto;
   /**/
@@ -96,9 +106,17 @@ div.quickicon-icon {
   /*	border-color: red; /**/
   /*    border-width: thick; /**/
   /*	border-radius: 5px; /**/
-  padding: 4px;
+  padding: 0 4px;
   /**/
-  margin: 4px;
+  margin: 0 4px;
+  /**/
+  /*	flex-basis: 0; /**/
+}
+
+.quickicon .quickicon-name {
+  padding: 0 4px;
+  /**/
+  margin: 0 4px;
   /**/
 }
 
