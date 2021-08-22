@@ -960,9 +960,12 @@ class ImageFileModel extends BaseModel // AdminModel
 				$isCreated = false;
 				try
 				{
-                    $imageSize = $rsgConfig->get('image_size_j3x');
+                    $imageSize = $rsgConfig->get('image_width'); // j3x value
 
-					$isCreated = $this->createDisplayImageFile($imagePaths->getDisplayPath($targetFileName),
+                    // ToDo: Remove !!!
+                    $imageSize = 400;
+
+                    $isCreated = $this->createDisplayImageFile($imagePaths->getDisplayPath($targetFileName),
                         $imageSize, $memImage);
 
 					$afterWidth  = $memImage->getWidth();
