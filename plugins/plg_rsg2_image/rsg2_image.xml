@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin"
+           group="content" 
+		   version="3.0" 
+           method="upgrade">
+	<name>plg_content_rsg2_image</name>
+	<creationDate>05. Mar. 2021</creationDate>
+	<author>RSGallery2 Team</author>
+	<authorEmail>team2@rsgallery2.org</authorEmail>
+	<authorUrl>https://www.rsgallery2.org</authorUrl>
+	<copyright>(c) 2021-2021 RSGallery2 Team</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>5.0.0.3</version>
+	<description>PLG_CONTENT_RSG2_IMAGE_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="rsg2_image">rsg2_image.php</filename>
+		<folder>language</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.plg_content_rsg2_image.ini</language>
+		<language tag="en-GB">en-GB.plg_content_rsg2_image.sys.ini</language>
+	</languages>
+	<config>
+		<fields 
+			name="params">
+			<fieldset 
+				name="basic"
+			>
+				<field
+						name="help"
+						type="text"
+						label="PLG_CONTENT_RSG2_IMAGE_XML_APPLIES_LABEL"
+						description="PLG_CONTENT_RSG2_IMAGE_XML_APPLIES_DESC"
+						default="PLG_CONTENT_RSG2_IMAGE_XML_APPLIES_DEFAULT"
+						readonly="readonly"
+				/>
+				<field 
+					name="debug" 
+					type="radio" 
+					class="btn-group btn-group-yesno" 
+					default="0" 
+					label="PLG_CONTENT_RSG2_IMAGE_DEBUG_LABEL" 
+					description="PLG_CONTENT_RSG2_IMAGE_DEBUG_DESCRIPTION">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+	
+</extension>
