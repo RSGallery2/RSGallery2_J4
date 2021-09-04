@@ -17,11 +17,10 @@ use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
 //--- Retrieve params -----------------------
 
-$selectGallery = $params->get('SelectGallery');
-$localFolder = $params->get('LocalFolder');
-$folderUrl = $params->get('FolderUrl');
+/* ToDo: galleries list ....
+/**
 
-
+$selectGallery = 0;
 $images = [];
 
 // Use gallery images (?org/display/thumb ?)
@@ -61,3 +60,4 @@ $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
 
 
 require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
+/**/

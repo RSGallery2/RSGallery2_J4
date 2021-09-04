@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin"
            group="content" 
+		   version="4.0" 
            method="upgrade">
-	<name>PLG_RSG2_GALLERIES</name>
-	<creationDate>[DATE]</creationDate>
-	<author>[AUTHOR]</author>
-	<authorEmail>[AUTHOR_EMAIL]</authorEmail>
-	<authorUrl>[AUTHOR_URL]</authorUrl>
+	<name>plg_content_rsg2_galleries</name>
+	<creationDate>03. Sep. 2021</creationDate>
+	<author>RSGallery2 Team</author>
+	<authorEmail>team2@rsgallery2.org</authorEmail>
+	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<copyright>(c) 2021-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>5.0.0.1</version>
-	<description>PLG_RSG2_GALLERIES_XML_DESCRIPTION</description>
+	<description>PLG_CONTENT_RSG2_GALLERIES_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<namespace>Rsg2_galleriesNamespace\Module\Rsg2_galleries</namespace>
 	<files>
-		<filename plugin="plg_rsg2_galleries">plg_rsg2_galleries.php</filename>
+		<filename plugin="rsg2_galleries">rsg2_galleries.php</filename>
 		<folder>language</folder>
-		<filename>mod_rsg2_galleries.xml</filename>
 	</files>
-
-	<!-- ToDo: Include outside lang file -->
-
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_content_rsg2_galleries.ini</language>
+		<language tag="en-GB">language/en-GB/plg_content_rsg2_galleries.sys.ini</language>
+	</languages>
 	<config>
-		<fields name="params">
-
+		<fields 
+			name="params"
+		>
 			<fieldset 
 				name="basic"
 				addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
 			>
-				<!-- Gallery selection -->
+				<!-- Parent gallery selection -->
 				<field
 					id="SelectGallery"
 					name="SelectGallery"
@@ -42,8 +44,8 @@
 					id="FolderUrl"
 					name="FolderUrl"
 					type="url"
-					label="MOD_RSG2_GALLERIES_FOLDER_URL_LABEL"
-					description="MOD_RSG2_GALLERIES_FOLDER_URL_LABEL_DESC"
+					label="PLG_RSG2_GALLERIES_FOLDER_URL_LABEL"
+					description="PLG_RSG2_GALLERIES_FOLDER_URL_LABEL_DESC"
 					filter="url"
 				/>
 				<!-- local folder of galleries -->
@@ -51,10 +53,25 @@
 					id="LocalFolder"
 					name="LocalFolder"
 					type="url"
-					label="MOD_RSG2_GALLERIES_LOCAL_FOLDER_LABEL"
-					description="MOD_RSG2_GALLERIES_LOCAL_FOLDER_LABEL_DESC"
+					label="PLG_RSG2_GALLERIES_LOCAL_FOLDER_LABEL"
+					description="PLG_RSG2_GALLERIES_LOCAL_FOLDER_LABEL_DESC"
 					filter="url"
 				/>
+				<field
+						name="position_description_box"
+						type="list"
+						default="0"
+						label="COM_RSGALLERY2_POSITION_DESCRIPTION_BOX"
+						description="COM_RSGALLERY2_POSITION_DESCRIPTION_BOX_DESC"
+				>
+					<option value="0">COM_RSGALLERY2_POS_NONE</option>
+					<option value="1">COM_RSGALLERY2_POS_DEFAULT</option>
+					<option value="2">COM_RSGALLERY2_POS_ABOVE</option>
+					<option value="4">COM_RSGALLERY2_POS_RIGHT</option>
+					<option value="5">COM_RSGALLERY2_POS_BOTTOM</option>
+					<option value="6">COM_RSGALLERY2_POS_LEFT</option>
+				</field>
+
 			</fieldset>
 			<fieldset name="advanced">
 				<field
@@ -102,4 +119,5 @@
 			</fieldset>
 		</fields>
 	</config>
+	
 </extension>
