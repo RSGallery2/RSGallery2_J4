@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin"
            group="content" 
-		   version="3.0" 
+		   version="4.0" 
            method="upgrade">
 	<name>plg_content_rsg2_images</name>
 	<creationDate>05. Mar. 2021</creationDate>
@@ -17,8 +17,8 @@
 		<folder>language</folder>
 	</files>
 	<languages>
-		<language tag="en-GB">en-GB.plg_content_rsg2_images.ini</language>
-		<language tag="en-GB">en-GB.plg_content_rsg2_images.sys.ini</language>
+		<language tag="en-GB">language/en-GB/plg_content_rsg2_images.ini</language>
+		<language tag="en-GB">language/en-GB/plg_content_rsg2_images.sys.ini</language>
 	</languages>
 	<config>
 		<fields 
@@ -34,16 +34,21 @@
 						default="PLG_CONTENT_RSG2_IMAGES_XML_APPLIES_DEFAULT"
 						readonly="readonly"
 				/>
-				<field 
-					name="debug" 
-					type="radio" 
-					class="btn-group btn-group-yesno" 
-					default="0" 
-					label="PLG_CONTENT_RSG2_IMAGES_DEBUG_LABEL" 
-					description="PLG_CONTENT_RSG2_IMAGES_DEBUG_DESCRIPTION">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
+				<field
+						name="position_description_box"
+						type="list"
+						default="0"
+						label="COM_RSGALLERY2_POSITION_DESCRIPTION_BOX"
+						description="COM_RSGALLERY2_POSITION_DESCRIPTION_BOX_DESC"
+				>
+					<option value="0">COM_RSGALLERY2_POS_NONE</option>
+					<option value="1">COM_RSGALLERY2_POS_DEFAULT</option>
+					<option value="2">COM_RSGALLERY2_POS_ABOVE</option>
+					<option value="4">COM_RSGALLERY2_POS_RIGHT</option>
+					<option value="5">COM_RSGALLERY2_POS_BOTTOM</option>
+					<option value="6">COM_RSGALLERY2_POS_LEFT</option>
 				</field>
+
 			</fieldset>
 		</fields>
 	</config>
