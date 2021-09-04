@@ -28,12 +28,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Registry\Registry;
 
-use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
+use Rsgallery2\Module\Rsg2_gallery\Site\Helper\Rsg2_galleryHelper;
 
 //use Joomla\Event\SubscriberInterface;
 //use Joomla\Utilities\ArrayHelper;
 
-// use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
+// use Rsg2_galleryNamespace\Module\Rsg2_gallery\Site\Helper\Rsg2_galleryHelper;
 
 /**
  * look for RSG ... to be replaced by gallery images
@@ -42,7 +42,7 @@ use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
  *
  * @since   4.0
  */
-class PlgContentRsg2_images extends CMSPlugin
+class PlgContentRsg2_gallery extends CMSPlugin
 {
 
     /** @var \Joomla\CMS\Application\CMSApplication */
@@ -71,7 +71,7 @@ class PlgContentRsg2_images extends CMSPlugin
         }
 
         // Simple high performance check to determine whether bot should process further.
-        if (stripos($article->text, '{rsg2_images') === false) {
+        if (stripos($article->text, '{rsg2_gallery') === false) {
             return;
         }
 
@@ -80,14 +80,14 @@ class PlgContentRsg2_images extends CMSPlugin
             // Load plugin language file only when needed
             $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
 
-            HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+            HTMLHelper::_('stylesheet', 'com_rsgallery2/site/gallery.css', array('version' => 'auto', 'relative' => true));
 
 
             //--- Perform the replacement ------------------------------
 
             // Define the regular expression for the
             //$regex = "#{rsg2_display\:*(.*?)}#s";
-            $regex = "|\{rsg2_images:(.*?)\}|";
+            $regex = "|\{rsg2_gallery:(.*?)\}|";
 
             $article->text = preg_replace_callback($regex,
                 array(&$this, '_replacer'),
@@ -95,14 +95,14 @@ class PlgContentRsg2_images extends CMSPlugin
 
             // toDO: J3x form
             //$regex = "#{rsg2_display\:*(.*?)}#s";
-            $regex = "|\{rsg2_images:(.*?)\}|";
+            $regex = "|\{rsg2_gallery:(.*?)\}|";
 
             $article->text = preg_replace_callback($regex,
                 array(&$this, '_replacer'),
                 $article->text);
 
         } catch (Exception $e) {
-            $msg = JText::_('PLG_CONTENT_RSG2_IMAGES') . ' Error (01): ' . $e->getMessage();
+            $msg = JText::_('PLG_CONTENT_RSG2_GALLERY') . ' Error (01): ' . $e->getMessage();
             $app = JFactory::getApplication();
             $app->enqueueMessage($msg, 'error');
             return false;
@@ -187,12 +187,12 @@ class PlgContentRsg2_images extends CMSPlugin
 
             $usrParams = $this->extractParams ($attribs);
 
-            // ToDo: use gids in first place: change RSG2_imagesHelper -> modul ?mod_... ?? ....
+            // ToDo: use gids in first place: change RSG2_galleryHelper -> modul ?mod_... ?? ....
             $usrParams->set ('SelectGallery', $usrParams->get('gid'));
 
 
-            $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Images', 'Site', ['ignore_request' => true]);
-            $images = Rsg2_imagesHelper::getList($usrParams, $model, $app);
+            $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Gallery', 'Site', ['ignore_request' => true]);
+            $images = Rsg2_galleryHelper::getList($usrParams, $model, $app);
 
 
 // Test
