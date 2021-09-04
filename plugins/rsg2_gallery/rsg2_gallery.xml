@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin"
+           group="content" 
+		   version="4.0" 
+           method="upgrade">
+	<name>plg_content_rsg2_gallery</name>
+	<creationDate>05. Mar. 2021</creationDate>
+	<author>RSGallery2 Team</author>
+	<authorEmail>team2@rsgallery2.org</authorEmail>
+	<authorUrl>https://www.rsgallery2.org</authorUrl>
+	<copyright>(c) 2021-2021 RSGallery2 Team</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>5.0.0.3</version>
+	<description>PLG_CONTENT_RSG2_GALLERY_XML_DESCRIPTION</description>
+	<files>
+		<filename plugin="rsg2_gallery">rsg2_gallery.php</filename>
+		<folder>language</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_content_rsg2_gallery.ini</language>
+		<language tag="en-GB">language/en-GB/plg_content_rsg2_gallery.sys.ini</language>
+	</languages>
+	<config>
+		<fields 
+			name="params">
+			<fieldset 
+				name="basic"
+			>
+				<field
+						name="help"
+						type="text"
+						label="PLG_CONTENT_RSG2_GALLERY_XML_APPLIES_LABEL"
+						description="PLG_CONTENT_RSG2_GALLERY_XML_APPLIES_DESC"
+						default="PLG_CONTENT_RSG2_GALLERY_XML_APPLIES_DEFAULT"
+						readonly="readonly"
+				/>
+				<field
+						name="position_description_box"
+						type="list"
+						default="0"
+						label="COM_RSGALLERY2_POSITION_DESCRIPTION_BOX"
+						description="COM_RSGALLERY2_POSITION_DESCRIPTION_BOX_DESC"
+				>
+					<option value="0">COM_RSGALLERY2_POS_NONE</option>
+					<option value="1">COM_RSGALLERY2_POS_DEFAULT</option>
+					<option value="2">COM_RSGALLERY2_POS_ABOVE</option>
+					<option value="4">COM_RSGALLERY2_POS_RIGHT</option>
+					<option value="5">COM_RSGALLERY2_POS_BOTTOM</option>
+					<option value="6">COM_RSGALLERY2_POS_LEFT</option>
+				</field>
+
+			</fieldset>
+		</fields>
+	</config>
+	
+</extension>
