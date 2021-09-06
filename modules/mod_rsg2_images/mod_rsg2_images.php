@@ -26,6 +26,7 @@ $images = Rsg2_imagesHelper::getList($params, $model, $app);
 // require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
 
 // $lang = Factory::getLanguage();
+// toDO:
 $lang =  $app->getLanguage();
 //$lang->load('com_rsgallery2', JPATH_SITE, 'en-GB', true);
 //$lang->load('com_rsgallery2', JPATH_SITE, $lang->getTag(), true);

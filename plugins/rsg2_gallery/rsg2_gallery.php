@@ -28,12 +28,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Registry\Registry;
 
-use Rsgallery2\Module\Rsg2_gallery\Site\Helper\Rsg2_galleryHelper;
+use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
 //use Joomla\Event\SubscriberInterface;
 //use Joomla\Utilities\ArrayHelper;
 
-// use Rsg2_galleryNamespace\Module\Rsg2_gallery\Site\Helper\Rsg2_galleryHelper;
+// use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
 /**
  * look for RSG ... to be replaced by gallery images
@@ -177,6 +177,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             $attribs = explode(',', $matches[1]);
             if ( ! is_array($attribs)) {
+                // ToDo: add outer query so its clear where is came from ...
                 $errText = '??? ' . $matches[1] . '->No attributes ???';
                 if ($DebugActive) {
                     JLog::add($errText, JLog::DEBUG);
@@ -187,12 +188,12 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             $usrParams = $this->extractParams ($attribs);
 
-            // ToDo: use gids in first place: change RSG2_galleryHelper -> modul ?mod_... ?? ....
+            // ToDo: use gids in first place: change Rsg2_imagesHelper -> modul ?mod_... ?? ....
             $usrParams->set ('SelectGallery', $usrParams->get('gid'));
 
 
-            $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Gallery', 'Site', ['ignore_request' => true]);
-            $images = Rsg2_galleryHelper::getList($usrParams, $model, $app);
+            $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Images', 'Site', ['ignore_request' => true]);
+            $images = Rsg2_imagesHelper::getList($usrParams, $model, $app);
 
 
 // Test
@@ -205,7 +206,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             $displayData['images'] = $images;
 
 
-            $html[] = '<h1> Menu RSGallery2 "images" view </h1>';
+            $html[] = '<h1> Menu RSGallery2 PLG "gallery - images" view </h1>';
             $html[] = '<hr>';
             $html[] =  $layoutSearch->render($displayData);;
             $html[] = '<hr>';
