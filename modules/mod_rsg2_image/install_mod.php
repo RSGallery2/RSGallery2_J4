@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_rsg2_imagess
+ * @subpackage  com_rsg2_image
  *
  * @copyright   (C) 2005 - 2021 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -14,9 +14,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
 /**
- * Script file of Rsg2_images module
+ * Script file of Rsg2_image module
  */
-class mod_rsg2_imagesInstallerScript
+class mod_rsg2_imageInstallerScript
 {
 
 	/**
@@ -39,7 +39,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function install($parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_UNINSTALL');
+		echo Text::_('MOD_RSG2_IMAGE_INSTALLERSCRIPT_UNINSTALL');
 
 		return true;
 	}
@@ -53,7 +53,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function uninstall($parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_UNINSTALL');
+		echo Text::_('MOD_RSG2_IMAGE_INSTALLERSCRIPT_UNINSTALL');
 
 		return true;
 	}
@@ -67,7 +67,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function update($parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_UPDATE');
+		echo Text::_('MOD_RSG2_IMAGE_INSTALLERSCRIPT_UPDATE');
 
 		return true;
 	}
@@ -98,7 +98,7 @@ class mod_rsg2_imagesInstallerScript
 			return false;
 		}
 
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_PREFLIGHT');
+		echo Text::_('MOD_RSG2_IMAGE_INSTALLERSCRIPT_PREFLIGHT');
 
 		return true;
 	}
@@ -113,7 +113,7 @@ class mod_rsg2_imagesInstallerScript
 	 */
 	function postflight($type, $parent)
 	{
-		echo Text::_('MOD_RSG2_IMAGES_INSTALLERSCRIPT_POSTFLIGHT');
+		echo Text::_('MOD_RSG2_IMAGE_INSTALLERSCRIPT_POSTFLIGHT');
 
 		return true;
 	}

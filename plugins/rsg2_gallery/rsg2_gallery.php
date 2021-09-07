@@ -2,7 +2,7 @@
 /**
  * /**
  * @package
- * @subpackage  plg_rsg2_images
+ * @subpackage  plg_rsg2_gallery
  *
  * @copyright   (C) 2005 - 2021 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -206,7 +206,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             $displayData['images'] = $images;
 
 
-            $html[] = '<h1> Menu RSGallery2 PLG "gallery - images" view </h1>';
+            $html[] = '<h1> Plugin RSGallery2 PLG "gallery - images" view </h1>';
             $html[] = '<hr>';
             $html[] =  $layoutSearch->render($displayData);;
             $html[] = '<hr>';

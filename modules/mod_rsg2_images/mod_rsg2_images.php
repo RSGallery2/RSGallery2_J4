@@ -47,7 +47,7 @@ $displayData['images'] = $images;
 
 <div class="rsg2__mod rsg2__image_area">
 
-		<h1> Menu RSGallery2 "images" view </h1>
+		<h1> Modul RSGallery2 "images" view </h1>
 
 		<hr>
 

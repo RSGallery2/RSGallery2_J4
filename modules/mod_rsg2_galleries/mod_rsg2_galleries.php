@@ -13,6 +13,10 @@
 use Joomla\CMS\Helper\ModuleHelper;
 use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
+
+// ToDo: all see images module 
+
+
 // $app = JFactory::getApplication();
 
 //--- Retrieve params -----------------------
@@ -61,3 +65,20 @@ $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
 
 
 require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
+
+
+?>
+
+<div class="rsg2__mod rsg2__image_area">
+
+		<h1> Module RSGallery2 "galleries" view </h1>
+
+		<hr>
+
+	<?php
+//	echo $layoutImages->render($displayData);
+	?>
+
+</div>
+
+

@@ -205,7 +205,7 @@ class PlgContentRsg2_image extends CMSPlugin
             $displayData['H'] = $image;
 
 
-            $html[] = '<h1> Menu RSGallery2 "images" view </h1>';
+            $html[] = '<h1> Plugin RSGallery2 "images" view </h1>';
             $html[] = '<hr>';
             $html[] =  $layoutSearch->render($displayData);;
             $html[] = '<hr>';
