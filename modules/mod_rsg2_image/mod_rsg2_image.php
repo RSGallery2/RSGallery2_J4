@@ -22,7 +22,8 @@ echo "<h1>mod_rsg2_image.php</h1>";
 // $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Images', 'Site', ['ignore_request' => true]);
 // $images = Rsg2_imagesHelper::getList($params, $model, $app);
 $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Image', 'Site', ['ignore_request' => true]);
-$imgId = $params->get('layout', 'default')
+//$imgId = $params->get('layout', 'default');
+$imgId = $params->get('SelectImage', '0');
 $image = Rsg2_imageHelper::getItem($imgId);
 
 // standard display

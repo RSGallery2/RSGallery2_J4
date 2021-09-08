@@ -2,7 +2,7 @@
 /**
 /**
  * @package     Joomla.Administrator
- * @subpackage  mod_rsg2_images
+ * @subpackage  mod_rsg2_gallery
  *
  * @copyright   (C) 2005 - 2021 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -11,10 +11,10 @@
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
-use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_galleriesHelper;
+use Rsg2_galleryNamespace\Module\Rsg2_gallery\Site\Helper\Rsg2_galleryHelper;
 
 
-// ToDo: all see images module 
+// ToDo: all see gallery module 
 
 
 // $app = JFactory::getApplication();
@@ -28,7 +28,6 @@ $folderUrl = $params->get('FolderUrl');
 
 $images = [];
 
-/**
 // Use gallery images (?org/display/thumb ?)
 if ($selectGallery > 0) {
 
@@ -39,18 +38,18 @@ if ($selectGallery > 0) {
     // Use local folder images ?
     if ( $localFolder) {
 
-        $images = Rsg2_galleriesHelper::getImageNamesOfFolder($localFolder);
+        $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
 
     } else {
         // Use gallery is expected ?
         if ($folderUrl) {
 
-            $images = Rsg2_galleriesHelper::getImageNamesOfUrl($folderUrl);
+            $images = Rsg2_galleryHelper::getImageNamesOfUrl($folderUrl);
 
         } else {
 
             // Nothing selected
-            $app->enqueueMessage('mod_rsg2_images: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
+            $app->enqueueMessage('mod_rsg2_gallery: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
         }
     }
 }
@@ -58,21 +57,21 @@ if ($selectGallery > 0) {
 
 // Tests
 $localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
-$images = Rsg2_galleriesHelper::getImageNamesOfFolder($localFolder);
+$images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
 
 $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
 $folderUrl = JURI::root() . '/images/rsgallery2/2/thumbs/';
-$images = Rsg2_galleriesHelper::getImageNamesOfUrl($folderUrl);
+$images = Rsg2_galleryHelper::getImageNamesOfUrl($folderUrl);
 
 
-require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
-/**/
+require ModuleHelper::getLayoutPath('mod_rsg2_gallery', $params->get('layout', 'default'));
+
 
 ?>
 
 <div class="rsg2__mod rsg2__image_area">
 
-		<h1> Module RSGallery2 "galleries" view </h1>
+		<h1> Module RSGallery2 "gallery" view </h1>
 
 		<hr>
 

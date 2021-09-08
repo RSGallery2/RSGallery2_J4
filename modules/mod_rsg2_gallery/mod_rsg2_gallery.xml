@@ -3,7 +3,7 @@
            client="site"
            method="upgrade"
            version="4.0">
-	<name>MOD_RSG2_IMAGE</name>
+	<name>MOD_RSG2_GALLERY</name>
 	<creationDate>07. Sep. 2021</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
@@ -11,13 +11,13 @@
 	<copyright>(c) 2020-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
 	<version>5.0.0.1</version>
-	<description>MOD_RSG2_IMAGE_XML_DESCRIPTION</description>
+	<description>MOD_RSG2_GALLERY_XML_DESCRIPTION</description>
 	<scriptfile>install_mod.php</scriptfile>
 
-	<namespace path="src">Rsgallery2\Module\Rsg2_image</namespace>
+	<namespace>Rsg2_galleryNamespace\Module\Rsg2_gallery</namespace>
 	<files>
-		<filename module="mod_rsg2_image">mod_rsg2_image.php</filename>
-		<!--filename>mod_rsg2_image.xml</filename-->
+		<filename module="mod_rsg2_gallery">mod_rsg2_gallery.php</filename>
+		<!--filename>mod_rsg2_gallery.xml</filename-->
 		<folder>language</folder>
 		<folder>src</folder>
 		<folder>tmpl</folder>
@@ -28,7 +28,7 @@
 		<folder>js</folder>
 	</media-->
 
-	<help key="MOD_RSG2_IMAGE_HELP"/>
+	<help key="MOD_RSG2_GALLERY_HELP"/>
 
 	<config>
 		<fields name="params">
@@ -38,20 +38,11 @@
 			>
 				<!-- Gallery selection -->
 				<field
-						id="SelectGallery"
-						name="SelectGallery"
-						type="GallerySelect"
-						label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
-						description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
-						required="true"
-				/>
-				<!-- Image selection -->
-				<field
-					id="SelectImage"
-					name="SelectImage"
-					type="ImageSelect"
-					label="COM_RSGALLERY2_SPECIFY_IMAGE_LABEL"
-					description="COM_RSGALLERY2_SPECIFY_IMAGE_DESC"
+					id="SelectGallery"
+					name="SelectGallery"
+					type="GallerySelect"
+					label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+					description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
 					required="true"
 				/>
 			</fieldset>
