@@ -56,7 +56,7 @@ $displayData['image'] = $image;
 		<hr>
 
 	<?php
-	echo $layoutImages->render($displayData);
+	echo $layoutImage->render($displayData);
 	?>
 
 </div>
