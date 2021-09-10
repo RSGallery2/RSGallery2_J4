@@ -52,6 +52,7 @@ class PlgContentRsg2_image extends CMSPlugin
     /**/
 
     protected $debugActive = 0;
+	protected $isUseJ3x = false;
     /**
      * Load the language file on instantiation
      *
@@ -70,9 +71,18 @@ class PlgContentRsg2_image extends CMSPlugin
             return;
         }
 
-        // Simple high performance check to determine whether bot should process further.
+        // Simple high performance checks to determine whether bot should process further.
+        if (stripos($article->text, '{rsg2_') === false) {
+			return;
+		}
         if (stripos($article->text, '{rsg2_image') === false) {
-            return;
+			if (stripos($article->text, '{rsg2_singledisplay') === false) {
+				return;
+			}
+			else
+			{
+				$isUseJ3x = true;
+			}
         }
 
         try {
@@ -95,7 +105,7 @@ class PlgContentRsg2_image extends CMSPlugin
 
             // toDO: J3x form
             //$regex = "#{rsg2_display\:*(.*?)}#s";
-            $regex = "|\{rsg2_image:(.*?)\}|";
+            $regex = "|\{rsg2_singledisplay:(.*?)\}|";
 
             $article->text = preg_replace_callback($regex,
                 array(&$this, '_replacer'),
@@ -187,6 +197,9 @@ class PlgContentRsg2_image extends CMSPlugin
 
             $usrParams = $this->extractParams ($attribs);
 
+			// ToDo: rsg2_singledisplay ==> $isUseJ3x == true ...;
+
+
             // ToDo: use gids in first place: change RSG2_imageHelper -> modul ?mod_... ?? ....
             $usrParams->set ('SelectGallery', $usrParams->get('gid'));
 
@@ -198,16 +211,21 @@ class PlgContentRsg2_image extends CMSPlugin
 // Test
 //$layout = new FileLayout('Test.search');
             $layoutSearch    = new FileLayout('components.com_rsgallery2.layouts.Search.search', JPATH_SITE);
-            $layoutImages    = new FileLayout('components.com_rsgallery2.layouts.ImagesArea.default', JPATH_SITE);
-//echo $tabLayout->render(array('id' => $id, 'active' => $active, 'title' => $title));
+			if($isUseJ3x == false) {
+				$layoutImages    = new FileLayout('components.com_rsgallery2.layouts.ImagesArea.default', JPATH_SITE);
+			} else {
+				$layoutImages    = new FileLayout('components.com_rsgallery2.layouts.ImagesArea.j3x', JPATH_SITE);
+			}
+			
+// echo $tabLayout->render(array('id' => $id, 'active' => $active, 'title' => $title));
 // echo $layout->render();
 
             $displayData['H'] = $image;
 
 
             $html[] = '<h1> Plugin RSGallery2 "images" view </h1>';
-            $html[] = '<hr>';
-            $html[] =  $layoutSearch->render($displayData);;
+            // $html[] = '<hr>';
+            // $html[] = $layoutSearch->render($displayData);;
             $html[] = '<hr>';
             $html[] = $layoutImages->render($displayData);
             $html[] = '<hr>';
