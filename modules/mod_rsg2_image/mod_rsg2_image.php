@@ -1,6 +1,5 @@
 <?php
 /**
-/**
  * @package     RSGallery2
  * @subpackage  mod_rsg2_image
  *
@@ -25,6 +24,16 @@ $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Im
 //$imgId = $params->get('layout', 'default');
 $imgId = $params->get('SelectImage', '0');
 $image = Rsg2_imageHelper::getItem($imgId);
+
+// Return on no image found
+if (empty($image)) {
+    // toDo: enqueue message ...
+    echo '<strong>mod_rsg2_image: Image with id= ' . $imgId . ' not found<strong>';
+    return;
+}
+
+Rsg2_imageHelper::AssignImageUrl($image);
+
 
 // standard display
 // require ModuleHelper::getLayoutPath('mod_rsg2_image', $params->get('layout', 'default'));
@@ -51,12 +60,15 @@ $displayData['image'] = $image;
 
 <div class="rsg2__mod rsg2__image_area">
 
-		<h1> Module RSGallery2 "image" view </h1>
+    <h1> Module RSGallery2 "image" view </h1>
 
-		<hr>
+    <hr>
 
 	<?php
-	echo $layoutImage->render($displayData);
+    if (! empty($image)) {
+        echo $layoutImage->render($displayData);
+    }
+
 	?>
 
 </div>

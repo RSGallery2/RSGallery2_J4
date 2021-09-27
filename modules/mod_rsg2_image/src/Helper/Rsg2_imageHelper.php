@@ -14,9 +14,10 @@ namespace Rsgallery2\Module\Rsg2_image\Site\Helper;
 //use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Images;
-use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 
 /**
  * Helper for mod_rsg2_image
@@ -47,11 +48,13 @@ class Rsg2_imageHelper
         {
             $db    =  Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->quoteName('*'))
+                ->select('*')
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
             $db->setQuery($query);
-            $dbImage = $db->loadResult();
+            //$dbImage = $db->loadResult();
+            //$dbImage = $db->loadRow();
+            $dbImage = $db->loadObject();
         }
         catch (\RuntimeException $e)
         {
@@ -400,6 +403,40 @@ class Rsg2_imageHelper
 //		return $items;
 	}
 
+
+    /**
+     * @param $images
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public static function AssignImageUrl($image)
+    {
+
+        try {
+
+            // ToDo: check for J3x style of gallery (? all in construct ?)
+            $gallery_id = $image->gallery_id;
+
+            $ImagePaths = new ImagePathsData ($gallery_id);
+
+            $ImagePaths->assignPathData ($image);
+            $ImagePaths->urlReplaceMissing_BySign ($image);
+            // $ImagePaths->urlReplaceMissingImages_ByChild ($image);
+
+            // ToDo: watermarked file
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
 
 
 

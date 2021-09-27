@@ -9,11 +9,18 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
+use Joomla\CMS\Uri\Uri;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
 class ImagePathsData extends ImagePaths
 {
+    /**
+     * @param $image
+     *
+     *
+     * @since version
+     */
     public function assignPathData ($image) {
 
         $image->OriginalFile = $this->getOriginalPath ($image->name);
@@ -41,7 +48,59 @@ class ImagePathsData extends ImagePaths
 
     }
 
+    /**
+     * Handle URLs of missing image files
+     *
+     * Replace by image telling missing
+     *
+     * @param $image
+     *
+     * @since version
+     */
+    public function urlReplaceMissing_BySign ($image) {
 
+        // $noImageUrl = URI::root() . '/media/com_rsgallery2/images/NoImagesAssigned.png';
+        $missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.png';
+
+        if (!$image->isThumbFileExist) {
+            $image->UrlThumbFile = $missingUrl;
+        }
+
+        if (!$image->isDisplayFileExist) {
+            $image->UrlDisplayFile = $missingUrl;;
+        }
+
+        if (!$image->isOriginalFileExist) {
+            $image->UrlOriginalFile = $missingUrl;
+        }
+    }
+
+
+    /**
+     * Handle URLs of missing image files
+     * Missing display image may be replaced by thumb, missing original should be
+     * replaced by display (ToDo: watermarked ?)
+     *
+     * @param $image
+     *
+     * @since version
+     */
+    public function urlReplaceMissingImages_ByChild ($image) {
+
+
+        if (!$image->isThumbFileExist) {
+            $missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.png';
+            $image->UrlThumbFile = $missingUrl;
+        }
+
+        if (!$image->isDisplayFileExist) {
+            $image->UrlDisplayFile = $image->UrlThumbFile;
+        }
+
+        if (!$image->isOriginalFileExist) {
+            $image->UrlOriginalFile = $image->UrlDisplayFile;
+        }
+    }
 
 
 
