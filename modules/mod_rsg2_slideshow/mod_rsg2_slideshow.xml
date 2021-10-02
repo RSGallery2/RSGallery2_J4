@@ -4,17 +4,17 @@
            method="upgrade"
            version="4.0">
 	<name>MOD_RSG2_SLIDESHOW</name>
-	<creationDate>07. Sep. 2021</creationDate>
+	<creationDate>02. Oct. 2021</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<copyright>(c) 2020-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.0.7</version>
+	<version>5.0.0.8</version>
 	<description>MOD_RSG2_SLIDESHOW_XML_DESCRIPTION</description>
-
 	<scriptfile>install_mod.php</scriptfile>
-	<namespace path="src">Rsgallery2\Module\Rsg2_slideshow</namespace>
+	<namespace>Rsgallery2\Module\Rsg2_slideshow</namespace>
+	
 	<files>
 		<filename module="mod_rsg2_slideshow">mod_rsg2_slideshow.php</filename>
 		<!--filename>mod_rsg2_slideshow.xml</filename-->

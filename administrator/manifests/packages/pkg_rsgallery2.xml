@@ -2,7 +2,7 @@
 <extension type="package" version="1.0" method="upgrade">
 	<name>PKG_RSGALLERY2_</name>
 	<packagename>rsgallery2</packagename>
-	<creationDate>07. Sep. 2021</creationDate>
+	<creationDate>02. Oct. 2021</creationDate>
 	<packager>RSGallery2 Team</packager>
 	<copyright>(c) 2003-2021 RSGallery2 Team</copyright>
 	<packageremail>team2@rsgallery2.org</packageremail>
@@ -10,18 +10,14 @@
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
-	<version>5.0.0.4</version>
+	<version>5.0.0.5</version>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<description>PKG_RSGALLERY2_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<files>
 		<!-- The id for each extension is the element stored in the DB -->
-		<file type="component" id="com_rsgallery2">com_rsgallery2.zip</file>
-		<file type="module" id="mod_foo" client="site">mod_foo.zip</file>
-		<file type="plugin" id="plg_webservices_foos" group="webservices">plg_webservices_foos.zip</file>
-		<file type="template" id="tpl_facile" client="site">tpl_facile.zip</file>
 	</files>
 	<updateservers>
-		<server type="extension" name="Foo Updates">https://raw.githubusercontent.com/astridx/boilerplate/tutorial/foo_update.xml</server>
+		<server type="extension" name="Foo Updates">https://raw.githubusercontent.com/YYYastridx/boilerplate/tutorial/foo_update.xml</server>
 	</updateservers>
 </extension>

@@ -4,13 +4,13 @@
 		   version="4.0" 
            method="upgrade">
 	<name>plg_content_rsg2_images</name>
-	<creationDate>07. Sep. 2021</creationDate>
+	<creationDate>02. Oct. 2021</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<copyright>(c) 2021-2021 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>5.0.0.4</version>
+	<version>5.0.0.5</version>
 	<description>PLG_CONTENT_RSG2_IMAGES_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="rsg2_images">rsg2_images.php</filename>
