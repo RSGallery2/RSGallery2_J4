@@ -44,7 +44,7 @@ use Joomla\CMS\Log\Log;
  * @since __BUMP_VERSION__
  *
  */
-class Com_Rsgallery2InstallerScript
+class Com_Rsgallery2InstallerScript extends InstallerScript
 {
     protected $newRelease;
     protected $oldRelease;
@@ -55,12 +55,12 @@ class Com_Rsgallery2InstallerScript
      * @var string
      * @since __BUMP_VERSION__
      */
-    private $minimumJoomla;
+    protected $minimumJoomla;
     /**
      * @var string
      * @since __BUMP_VERSION__
      */
-    private $minimumPhp;
+    protected $minimumPhp;
 
 
     private $rsg2_basePath = '';
@@ -193,6 +193,7 @@ class Com_Rsgallery2InstallerScript
 //		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_INSTALL'), Log::INFO, 'rsg2');
 
+		// ToDo: debug install 
 		$this->addDashboardMenu('rsgallery2', 'rsgallery2');
 
         return true;
@@ -223,7 +224,8 @@ class Com_Rsgallery2InstallerScript
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UPDATE'), Log::INFO, 'rsg2');
         //Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
 
-		// ToDo: debug install $this->addDashboardMenu('rsgallery2', 'rsgallery2');
+		// ToDo: debug install 
+		$this->addDashboardMenu('rsgallery2', 'rsgallery2');
 
         return true;
     }
@@ -293,7 +295,7 @@ class Com_Rsgallery2InstallerScript
             case 'uninstall':
 
 				$outText = 'Uninstall of RSG2 finished. <br>' 
-					. 'Configuration may be deleted. <br>'
+					. 'Configuration was deleted. <br>'
                     . 'Galleries and images table may still exist';
                 Log::add('post->uninstall: ' . $outText, Log::INFO, 'rsg2');
 					// ToDo: check existence of galleries/images table and then write

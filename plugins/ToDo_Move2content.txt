@@ -1,0 +1,3 @@
+
+ToDo: Move plugins to content folder
+attention: Update phing build 
