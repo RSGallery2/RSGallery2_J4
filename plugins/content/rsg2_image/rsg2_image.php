@@ -524,7 +524,7 @@ function dummy()
      * $image = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
      *
      * $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
-     * $folderUrl = JURI::root() . '/images/rsgallery2/2/thumbs/';
+     * $folderUrl = JUri::root() . '/images/rsgallery2/2/thumbs/';
      * $image = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
      *
      *
