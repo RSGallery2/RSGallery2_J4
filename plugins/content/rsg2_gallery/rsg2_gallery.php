@@ -177,7 +177,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             $attribs = explode(',', $matches[1]);
             if ( ! is_array($attribs)) {
-                // ToDo: add outer query so its clear where is came from ...
+                // ToDo: add outer query so its clear where it came from ...
                 $errText = '??? ' . $matches[1] . '->No attributes ???';
                 if ($DebugActive) {
                     JLog::add($errText, JLog::DEBUG);

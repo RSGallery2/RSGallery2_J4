@@ -37,7 +37,7 @@ class Rsg2_imageHelper
 	 */
 	public static function getText()
 	{
-		return 'Rsg2_imageHelpertest';
+		return 'Rsg2_imageHelper Test';
 	}
 
     public static function getItem($ImageId)
