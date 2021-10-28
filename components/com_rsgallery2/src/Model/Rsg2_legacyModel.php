@@ -17,6 +17,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Registry\Registry;
 
+
+// ToDo:legacy single gallery or gallery overview
+
+
+
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *

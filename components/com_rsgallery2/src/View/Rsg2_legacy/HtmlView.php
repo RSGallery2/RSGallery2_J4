@@ -11,6 +11,7 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsg2_legacy;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
@@ -55,6 +56,22 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+
+        global $rsgConfig;
+
+        if (empty ($rsgConfig)) {
+            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+        }
+
+        $state = $this->State = $this->get('State');
+        $this->items = $this->get('Items');
+        $this->pagination = $this->get('Pagination');
+		$this->params = $this->Params = $state->get('params');
+        $this->user       = Factory::getUser();
+
+        $this->isDevelopSite = $rsgConfig->get('isDevelop'); // = $rsgConfig->isDevelopSite;
+
+/**
 		$item = $this->item = $this->get('Item');
 //		$state = $this->State = $this->get('State');
 //		$params = $this->Params = $state->get('params');
@@ -71,7 +88,7 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
-
+/**/
 
 
 
