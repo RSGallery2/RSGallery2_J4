@@ -62,6 +62,9 @@ class HtmlView extends BaseHtmlView
         if (empty ($rsgConfig)) {
             $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
         }
+		
+		// ToDo:legacy single gallery or gallery overview
+		
 
         $state = $this->State = $this->get('State');
         $this->items = $this->get('Items');
