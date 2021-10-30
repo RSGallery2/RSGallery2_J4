@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsg2_legacy;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallery;
 
 \defined('_JEXEC') or die;
 
@@ -24,7 +24,7 @@ use Joomla\Registry\Registry;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
+    /**
      * The model state
      *
      * @var    \JObject
@@ -49,14 +49,14 @@ class HtmlView extends BaseHtmlView
     protected $pagination;
 
     /**
-	 * The page parameters
-	 *
-	 * @var    \Joomla\Registry\Registry|null
+     * The page parameters
+     *
+     * @var    \Joomla\Registry\Registry|null
 	 * @since  __BUMP_VERSION__
-	 */
-	protected $params = null;
+     */
+    protected $params = null;
 
-	/**
+    /**
      * The page class suffix
      *
      * @var    string
@@ -73,23 +73,22 @@ class HtmlView extends BaseHtmlView
     protected $user = null;
 
     /**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed   A string if successful, otherwise an Error object.
+     */
 	public function display($tpl = null)
 	{
-        global $rsgConfig;
+	    global $rsgConfig;
 
         if (empty ($rsgConfig)) {
             $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
         }
-		
-        $state = $this->State = $this->get('State');
+
 //        $this->items = $this->get('Items');
-		
+
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
@@ -97,7 +96,7 @@ class HtmlView extends BaseHtmlView
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
-		$this->params = $this->Params = $state->get('params');
+        $this->params     = $this->state->get('params');
         $this->user       = Factory::getUser();
 
         $this->isDevelopSite = $rsgConfig->get('isDevelop'); // = $rsgConfig->isDevelopSite;
@@ -110,7 +109,7 @@ class HtmlView extends BaseHtmlView
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-//		$state = $this->State = $this->get('State');
+//   		$state = $this->State = $this->get('State');
 //		$params = $this->Params = $state->get('params');
 //		$itemparams = new Registry(json_decode($item->params));
 //

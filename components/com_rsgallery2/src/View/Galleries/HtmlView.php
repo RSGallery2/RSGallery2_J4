@@ -45,7 +45,7 @@ class HtmlView extends BaseHtmlView
 	 * @var    \JObject
 	 * @since  __BUMP_VERSION__
 	 */
-	protected $item;
+	protected $items;
 
 	/**
 	 * Execute and display a template script.

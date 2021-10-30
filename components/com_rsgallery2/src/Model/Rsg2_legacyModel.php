@@ -12,14 +12,15 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
-
-// ToDo:legacy single gallery or gallery overview
-
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
 /**
@@ -29,10 +30,31 @@ use Joomla\Registry\Registry;
  */
 class Rsg2_legacyModel extends ListModel
 {
-	/**
-	 * @var string item
-	 */
-	protected $_item = null;
+    /**
+     * Model context string.
+     *
+     * @var    string
+     * @since  3.1
+     */
+    public $_context = 'com_rsgallery2.gallery';
+
+    /**
+     * The category context (allows other extensions to derived from this model).
+     *
+     * @var		string
+     */
+    protected $_extension = 'com_rsgallery2';
+
+    protected $layoutParams = null; // col/row count
+
+
+    public function getlayoutParams ()
+    {
+        if ($this->layoutParams == null) {
+            $this->layoutParams = $this->CascadedLayoutParameter ();
+        }
+        return $this->layoutParams;
+    }
 
 	/**
 	 * Gets a rsgallery2
@@ -92,13 +114,75 @@ class Rsg2_legacyModel extends ListModel
 	 * @return  void
 	 *
 	 * @since   __BUMP_VERSION__
-	 *
-	protected function populateState()
+	 */
+	protected function populateState($ordering = 'ordering', $direction = 'ASC')
 	{
 		$app = Factory::getApplication();
 
 		$this->setState('rsgallery2.id', $app->input->getInt('id'));
 		$this->setState('params', $app->getParams());
 	}
-    /**/
+
+    /**
+     * @param $images
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public function AddLayoutData($images)
+    {
+        try {
+
+            foreach ($images as $image) {
+                // ToDo: check for J3x style of gallery (? all in construct ?)
+
+                $this->AssignImageUrl($image);
+
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $images;
+    }
+
+    /**
+     * @param $images
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public function AssignImageUrl($image)
+    {
+
+        try {
+
+            // ToDo: check for J3x style of gallery (? all in construct ?)
+
+            $ImagePaths = new ImagePathsData ($image->gallery_id);
+
+            $ImagePaths->assignPathData ($image);
+
+            // ToDo: watermarked file
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
+
 }
