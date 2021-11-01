@@ -56,19 +56,16 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-        global $rsgConfig;
 
-        if (empty ($rsgConfig)) {
-            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-        }
-
-        $state = $this->State = $this->get('State');
+        $state = $this->state = $this->get('State');
         $this->items = $this->get('Items');
+		$params = $this->params = $state->get('params');
+
         $this->pagination = $this->get('Pagination');
-		$this->params = $this->Params = $state->get('params');
         $this->user       = Factory::getUser();
 
-        $this->isDevelopSite = $rsgConfig->get('isDevelop'); // = $rsgConfig->isDevelopSite;
+        $this->isDebugSite = $params->get('isDebugSite'); 
+        $this->isDevelopSite = $params->get('isDevelop'); 
 
 
 //		$temp = clone $params;
@@ -82,10 +79,7 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
-
-
-
-
+        
 
 
 //		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));

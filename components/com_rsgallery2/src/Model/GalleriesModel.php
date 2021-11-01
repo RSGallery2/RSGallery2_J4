@@ -37,14 +37,17 @@ class GalleriesModel extends ListModel
      * @var    string
      * @since  3.1
      */
-    public $_context = 'com_rsgallery2.images';
+    public $_context = 'com_rsgallery2.galleries';
 
     /**
      * The category context (allows other extensions to derived from this model).
      *
-     * @var		string
+     * @var        string
      */
     protected $_extension = 'com_rsgallery2';
+
+
+    protected $galleryId = -1;
 
     /**
      * Constructor.
@@ -57,8 +60,7 @@ class GalleriesModel extends ListModel
      */
     public function __construct($config = array(), MVCFactoryInterface $factory = null)
     {
-        if (empty($config['filter_fields']))
-        {
+        if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'name', 'a.name',
@@ -94,8 +96,8 @@ class GalleriesModel extends ListModel
      *
      * Note. Calling getState in this method will result in recursion.
      *
-     * @param   string  $ordering   An optional ordering field.
-     * @param   string  $direction  An optional direction (asc|desc).
+     * @param string $ordering An optional ordering field.
+     * @param string $direction An optional direction (asc|desc).
      *
      * @return  void
      *
@@ -105,11 +107,7 @@ class GalleriesModel extends ListModel
     {
         $app = Factory::getApplication();
 
-        // Adjust the context to support modal layouts.
-        if ($layout = $app->input->get('layout'))
-        {
-            $this->context .= '.' . $layout;
-        }
+//        $layoutParams = $this->getlayoutParams ();
 
         //$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
         //// Adjust the context to support forced languages.
@@ -117,6 +115,14 @@ class GalleriesModel extends ListModel
         //{
         //	$this->context .= '.' . $forcedLanguage;
         //}
+
+        $this->setState('gallery.id', $app->input->getInt('gid'));
+        $this->setState('params', $app->getParams());
+
+        // Adjust the context to support modal layouts.
+        if ($layout = $app->input->get('layout')) {
+            $this->context .= '.' . $layout;
+        }
 
         $extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
         $this->setState('filter.extension', $extension);
@@ -128,7 +134,7 @@ class GalleriesModel extends ListModel
         // Extract the optional section name
         $this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
 
-        $search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
+        $search = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
         $this->setState('filter.search', $search);
 
         // List state information.
@@ -148,7 +154,7 @@ class GalleriesModel extends ListModel
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param   string  $id  A prefix for the store id.
+     * @param string $id A prefix for the store id.
      *
      * @return  string  A store id.
      *
@@ -189,7 +195,7 @@ class GalleriesModel extends ListModel
         $db = $this->getDbo();
         $query = $db->getQuery(true);
 
-        $app  = Factory::getApplication();
+        $app = Factory::getApplication();
         $user = $app->getIdentity();
 
         // Select the required fields from the table.
@@ -265,40 +271,33 @@ class GalleriesModel extends ListModel
 //		}
 
         // Filter on the level.
-        if ($level = $this->getState('filter.level'))
-        {
-            $query->where('a.level <= ' . (int) $level);
+        if ($level = $this->getState('filter.level')) {
+            $query->where('a.level <= ' . (int)$level);
         }
 
         // Filter by access level.
-        if ($access = $this->getState('filter.access'))
-        {
-            $query->where('a.access = ' . (int) $access);
+        if ($access = $this->getState('filter.access')) {
+            $query->where('a.access = ' . (int)$access);
         }
 
         // Implement View Level Access
-        if (!$user->authorise('core.admin'))
-        {
+        if (!$user->authorise('core.admin')) {
             $groups = implode(',', $user->getAuthorisedViewLevels());
             $query->where('a.access IN (' . $groups . ')');
         }
 
         // Filter by published state
-        $published = (string) $this->getState('filter.published');
+        $published = (string)$this->getState('filter.published');
 
-        if (is_numeric($published))
-        {
-            $query->where('a.published = ' . (int) $published);
-        }
-        elseif ($published === '')
-        {
+        if (is_numeric($published)) {
+            $query->where('a.published = ' . (int)$published);
+        } elseif ($published === '') {
             $query->where('(a.published IN (0, 1))');
         }
 
         // Filter by search in name and others
         $search = $this->getState('filter.search');
-        if (!empty($search))
-        {
+        if (!empty($search)) {
             $search = $db->quote('%' . $db->escape($search, true) . '%');
             $query->where(
                 'a.name LIKE ' . $search
@@ -314,38 +313,35 @@ class GalleriesModel extends ListModel
 //		$query->where('a.id > 1');
 
         /**
-        // Filter on the language.
-        if ($language = $this->getState('filter.language'))
-        {
-        $query->where('a.language = ' . $db->quote($language));
-        }
-        /**/
+         * // Filter on the language.
+         * if ($language = $this->getState('filter.language'))
+         * {
+         * $query->where('a.language = ' . $db->quote($language));
+         * }
+         * /**/
 
         // Filter by a single tag.
         /**
-        $tagId = $this->getState('filter.tag');
-
-        if (is_numeric($tagId))
-        {
-        $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
-        ->join(
-        'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
-        . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
-        . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
-        );
-        }
-        /**/
+         * $tagId = $this->getState('filter.tag');
+         *
+         * if (is_numeric($tagId))
+         * {
+         * $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+         * ->join(
+         * 'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
+         * . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+         * . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
+         * );
+         * }
+         * /**/
 
         // Add the list ordering clause
         $listOrdering = $this->getState('list.ordering', 'a.lft');
         $listDirn = $db->escape($this->getState('list.direction', 'ASC'));
 
-        if ($listOrdering == 'a.access')
-        {
+        if ($listOrdering == 'a.access') {
             $query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
-        }
-        else
-        {
+        } else {
             $query->order($db->escape($listOrdering) . ' ' . $listDirn);
         }
 
@@ -403,7 +399,7 @@ class GalleriesModel extends ListModel
      *
      * ??? Overridden to inject convert the attribs field into a Registry object.
      *
-     * @param   integer  $gid  Id for the parent gallery
+     * @param integer $gid Id for the parent gallery
      *
      * @return  mixed  An array of objects on success, false on failure.
      *
@@ -414,52 +410,41 @@ class GalleriesModel extends ListModel
 
     public function getItems()
     {
-        $user   = Factory::getUser();
+        $user = Factory::getUser();
         $userId = $user->get('id');
-        $guest  = $user->get('guest');
+        $guest = $user->get('guest');
         $groups = $user->getAuthorisedViewLevels();
 
-        if ($this->_item === null)
-        {
+        if ($this->_item === null) {
             $this->_item = array();
         }
 
         $galleries = new \stdClass(); // ToDo: all to (object)[];
-
-
-        $input  = Factory::getApplication()->input;
-        $gid = $input->getInt ('gid', 0);
-
-
+        $galleryId = $this->getGalleryId();
 
         // not fetched already
-        if ( ! isset($this->_item[$gid])) {
+        if (!isset($this->_item[$galleryId])) {
 
-            try
-            {
+            try {
                 // Root galleries, No parent is defined
-                if (!$gid) {
-                    $galleries  = parent::getItems();
+                if ($galleryId == 0) {
+                    $galleries = parent::getItems();
                 } else {
-                    $galleries = $this->getGalleryAndChilds($gid);
+                    $galleries = $this->getGalleryAndChilds($galleryId);
                 }
 
-                if ( ! empty($galleries)) {
+                if (!empty($galleries)) {
 
                     // Add image paths, image params ...
-                    $data = $this->AddLayoutData ($galleries);
+                    $data = $this->AddLayoutData($galleries);
 
-                }
-                else
-                {
+                } else {
                     // No galleries defined yet
                     $data = false;
                 }
 
-                $this->_item[$gid] = $data;
-            }
-            catch (\RuntimeException $e)
-            {
+                $this->_item[$galleryId] = $data;
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -469,9 +454,20 @@ class GalleriesModel extends ListModel
             }
         }
 
-        $galleries = $this->_item[$gid];
+        $galleries = $this->_item[$galleryId];
 
         return $galleries;
+    }
+
+    public function getGalleryId()
+    {
+        // Not defined
+        if ($this->galleryId < 0) {
+            $input = Factory::getApplication()->input;
+            $this->galleryId = $input->getInt('gid', 0);
+        }
+
+        return $this->galleryId;
     }
 
 	/**

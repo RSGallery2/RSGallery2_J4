@@ -124,6 +124,14 @@ class ImagesSlideshowModel extends ListModel
         // gallery id
         $gid = $app->input->get('gid', '', 'INT');
         $this->setState('images.galleryId', $gid);
+		// ??? See above
+        $this->setState('gallery.id', $app->input->getInt('gid'));
+        $this->setState('params', $app->getParams());
+
+        // Adjust the context to support modal layouts.
+        if ($layout = $app->input->get('layout')) {
+            $this->context .= '.' . $layout;
+        }
 
 //        $layoutParams = $this->getlayoutParams ();
 

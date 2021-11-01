@@ -102,6 +102,14 @@ class ImagesRandomModel extends ListModel
     {
         $app = Factory::getApplication();
 
+		//$this->setState('foo.id', $app->input->getInt('id'));
+        $this->setState('params', $app->getParams());
+		
+        // Adjust the context to support modal layouts.
+        if ($layout = $app->input->get('layout')) {
+            $this->context .= '.' . $layout;
+        }
+
         // List state information
         $value = $app->input->get('limit', $app->get('list_limit', 0), 'uint');
         $this->setState('list.limit', $value);

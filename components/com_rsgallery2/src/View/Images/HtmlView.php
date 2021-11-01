@@ -81,14 +81,7 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
-	    global $rsgConfig;
-
-        if (empty ($rsgConfig)) {
-            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-        }
-
-//        $this->items = $this->get('Items');
-
+		// toDo: use image list from user not from gallery
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
@@ -99,7 +92,9 @@ class HtmlView extends BaseHtmlView
         $this->params     = $this->state->get('params');
         $this->user       = Factory::getUser();
 
-        $this->isDevelopSite = $rsgConfig->get('isDevelop'); // = $rsgConfig->isDevelopSite;
+        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDevelopSite = $params->get('isDevelop');
+
 
 //        if (count($errors = $this->get('Errors')))
 //        {
@@ -109,7 +104,7 @@ class HtmlView extends BaseHtmlView
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-//   		$state = $this->State = $this->get('State');
+//   		$state = $this->state = $this->get('State');
 //		$params = $this->Params = $state->get('params');
 //		$itemparams = new Registry(json_decode($item->params));
 //

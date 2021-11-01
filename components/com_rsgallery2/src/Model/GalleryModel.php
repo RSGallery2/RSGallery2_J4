@@ -118,10 +118,18 @@ class GalleryModel extends ListModel
 
         $app = Factory::getApplication();
 
-        // ToDo: move to view html and model (plugion?)
+        // ToDo: move to view html and model (for plugin ?)
         // gallery id
         $gid = $app->input->get('gid', '', 'INT');
-        $this->setState('images.galleryId', $gid);
+        $this->setState('gallery.galleryId', $gid);
+
+        $this->setState('params', $app->getParams());
+		
+        // Adjust the context to support modal layouts.
+        // ToDo: what about more then one gallery displayed at one page ..
+        if ($layout = $app->input->get('layout')) {
+            $this->context .= '.' . $layout;
+        }
 
         $layoutParams = $this->getlayoutParams ();
 
@@ -378,6 +386,19 @@ class GalleryModel extends ListModel
 
         try {
 
+            /** @var merge registries *
+            $app = JFactory::getApplication();
+            $currentMenuId = JSite::getMenu()->getActive()->id;
+            $menuitem   = $app->getMenu()->getItem($currentMenuId);
+            $params = $menuitem->params;
+            echo $params['menu_image'];
+            /**/
+
+            $app = JFactory::getApplication();
+            $menuitem   = $app->getMenu()->getActive(); // get the active item
+            // $menuitem   = $app->getMenu()->getItem($theid); // or get item by ID
+            $params = $menuitem->params; // get the params
+            print_r($params); // print all params as overview
 
             //--- RSG2 config  parameter -------------------------------------------------
 

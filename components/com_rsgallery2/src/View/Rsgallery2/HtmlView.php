@@ -56,12 +56,16 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 		$item = $this->item = $this->get('Item');
-		$state = $this->State = $this->get('State');
-		$params = $this->Params = $state->get('params');
+		$state = $this->state = $this->get('State');
+		$params = $this->params = $state->get('params');
+
+        $this->isDebugSite = $params->get('isDebugSite'); 
+        $this->isDevelopSite = $params->get('isDevelop'); 
 
 		$test = json_decode($item->params);
 
 		$itemparams = new Registry(json_decode($item->params));
+        // ToDO: use registry merge $itemparams ??? on oter displays ...
 
 		// ToDo: remove
         $item = new \stdClass;

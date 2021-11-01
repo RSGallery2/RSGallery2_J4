@@ -35,7 +35,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' =>
 //echo $this->item->event->afterDisplayTitle;
 //echo $this->item->event->beforeDisplayContent;
 //
-echo '<h1> RSGallery2 "legacy" view </h1>';
+// echo '<h1> RSGallery2 "legacy" view </h1>';
 //
 //
 //echo $this->item->event->afterDisplayContent;
@@ -77,7 +77,7 @@ $displayData['images'] = $this->items;
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <h1> Menu RSGallery2 "images" view </h1>
+        <h1>RSGallery2 "j3x legacy" view </h1>
 
         <hr>
 

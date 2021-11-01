@@ -102,6 +102,9 @@ class GalleriesLatestModel extends ListModel
     {
         $app = Factory::getApplication();
 
+		//$this->setState('foo.id', $app->input->getInt('id'));
+        $this->setState('params', $app->getParams());
+		
         // List state information
         $value = $app->input->get('limit', $app->get('list_limit', 0), 'uint');
         $this->setState('list.limit', $value);

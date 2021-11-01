@@ -123,7 +123,12 @@ class ImagesModel extends ListModel
         $gid = $app->input->get('gid', '', 'INT');
         $this->setState('images.galleryId', $gid);
 
-        $layoutParams = $this->getlayoutParams ();
+        $this->setState('params', $app->getParams());
+		
+        // Adjust the context to support modal layouts.
+        if ($layout = $app->input->get('layout')) {
+            $this->context .= '.' . $layout;
+        }
 
         // List state information
         // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');

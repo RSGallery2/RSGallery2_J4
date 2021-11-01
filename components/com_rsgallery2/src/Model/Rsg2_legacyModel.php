@@ -20,6 +20,7 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
+use Rsgallery2\Component\Rsgallery2\Site\Model;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
@@ -28,23 +29,9 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_legacyModel extends ListModel
+class Rsg2_legacyModel extends GalleriesModel
 {
     /**
-     * Model context string.
-     *
-     * @var    string
-     * @since  3.1
-     */
-    public $_context = 'com_rsgallery2.gallery';
-
-    /**
-     * The category context (allows other extensions to derived from this model).
-     *
-     * @var		string
-     */
-    protected $_extension = 'com_rsgallery2';
-
     protected $layoutParams = null; // col/row count
 
 
@@ -56,133 +43,142 @@ class Rsg2_legacyModel extends ListModel
         return $this->layoutParams;
     }
 
-	/**
-	 * Gets a rsgallery2
-	 *
-	 * @param   integer  $pk  Id for the rsgallery2
-	 *
-	 * @return  mixed Object or null
-	 *
-	 * @since   __BUMP_VERSION__
-	 */
-	public function getItem($pk = null)
-	{
-		$app = Factory::getApplication();
-		$pk = $app->input->getInt('id');
-
-		if ($this->_item === null)
-		{
-			$this->_item = array();
-		}
-
-		if (!isset($this->_item[$pk]))
-		{
-			try
-			{
-				$db    = $this->getDbo();
-				$query = $db->getQuery(true);
-
-				$query->select('*')
-					->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->where('a.id = ' . (int) $pk);
-
-				$db->setQuery($query);
-				$data = $db->loadObject();
-
-				if (empty($data))
-				{
-					throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
-				}
-
-				$this->_item[$pk] = $data;
-			}
-			catch (\Exception $e)
-			{
-				$this->setError($e);
-				$this->_item[$pk] = false;
-			}
-		}
-
-		return $this->_item[$pk];
-	}
-
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @return  void
-	 *
-	 * @since   __BUMP_VERSION__
-	 */
-	protected function populateState($ordering = 'ordering', $direction = 'ASC')
-	{
-		$app = Factory::getApplication();
-
-		$this->setState('rsgallery2.id', $app->input->getInt('id'));
-		$this->setState('params', $app->getParams());
-	}
-
-    /**
-     * @param $images
-     *
-     *
-     * @since 4.5.0.0
-     */
-    public function AddLayoutData($images)
+    private function CascadedLayoutParameter() // For gallery images view
     {
+        $layoutParameter = new \stdClass();
+        $layoutParameter->images_column_arrangement  = 0; // 0: auto
+        $layoutParameter->max_columns_in_images_view = 0;
+        $layoutParameter->images_row_arrangement     = 0; // 0: auto
+        $layoutParameter->max_rows_in_images_view    = 0;
+        $layoutParameter->max_images_in_images_view  = 0;
+
         try {
 
-            foreach ($images as $image) {
-                // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                $this->AssignImageUrl($image);
+            $app = Factory::getApplication();
+            $menuitem   = $app->getMenu()->getActive(); // get the active item
+            // $menuitem   = $app->getMenu()->getItem($theid); // or get item by ID
+            $params = $menuitem->getParams(); // get the params
+            print_r($params); // print all params as overview
+
+            //--- RSG2 config  parameter -------------------------------------------------
+
+            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+
+            $images_column_arrangement = $rsgConfig->get('images_column_arrangement');
+            $max_columns_in_images_view = $rsgConfig->get('max_columns_in_images_view');
+            $images_row_arrangement = $rsgConfig->get('images_row_arrangement');
+            $max_rows_in_images_view = $rsgConfig->get('max_rows_in_images_view');
+            $max_images_in_images_view = $rsgConfig->get('max_images_in_images_view');
+
+            //--- menu parameter -------------------------------------------------
+
+            $app = Factory::getApplication();
+            $input = $app->input;
+
+            // overwrite config if chosen
+            $images_column_arrangement_menu = $input->get('images_column_arrangement', $images_column_arrangement, 'STRING');
+
+            if ($images_column_arrangement_menu != 'global') {
+                $images_column_arrangement = (int)$images_column_arrangement_menu;
+
+                // toDo: switch when more selections .. (0 auto)
+                if ($images_column_arrangement_menu == '1') {
+                    $max_columns_in_images_view = $input->get('max_columns_in_images_view', $max_columns_in_images_view, 'INT');
+
+                    $images_row_arrangement_menu = $input->get('images_row_arrangement', $images_row_arrangement, 'INT');
+                    if ($images_row_arrangement_menu != 'global') {
+                        $images_row_arrangement = (int)$images_row_arrangement_menu;
+
+                        // toDo: switch when more selections .. (0 auto)
+
+                        if ($images_row_arrangement_menu == '1') {
+                            $max_rows_in_images_view = $input->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
+                        } else {
+                            $max_images_in_images_view = $input->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
+                        }
+                    }
+                }
+            }
+
+            //--- gallery parameter -------------------------------------------------
+
+            // ToDo: gid: one get access function keep result ...
+            // gallery parameter
+            $gid = $input->get('gid', '', 'INT');
+            $gallery_param = $this->gallery_parameter($gid);
+
+            // overwrite config and new if chosen
+            $images_column_arrangement_gallery = $gallery_param->get('images_column_arrangement');
+
+            if ($images_column_arrangement_gallery != 'global') {
+                $images_column_arrangement = (int)$images_column_arrangement_gallery;
+
+                // toDo: switch when more selections .. (0 auto)
+                if ($images_column_arrangement_gallery == '1') {
+                    $max_columns_in_images_view = $gallery_param->get('max_columns_in_images_view');
+
+                    $images_row_arrangement_gallery = $gallery_param->get('images_row_arrangement', $images_row_arrangement, 'INT');
+                    if ($images_row_arrangement_gallery != 'global') {
+                        $images_row_arrangement = (int)$images_row_arrangement_gallery;
+
+                        // toDo: switch when more selections .. (0 auto)
+
+                        if ($images_row_arrangement_gallery == '1') {
+                            $max_rows_in_images_view = $gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
+                        } else {
+                            $max_images_in_images_view = $gallery_param->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
+                        }
+                    }
+                }
+            }
+
+            $layoutParameter->images_column_arrangement  = $images_column_arrangement;
+            $layoutParameter->max_columns_in_images_view = $max_columns_in_images_view;
+            $layoutParameter->images_row_arrangement     = $images_row_arrangement;
+            $layoutParameter->max_rows_in_images_view    = $max_rows_in_images_view;
+            $layoutParameter->max_images_in_images_view  = $max_images_in_images_view;
+
+
+            //--- determine limit --------------------------------------------------
+
+            $limit = 0;
+
+            // determine image limit of one page view
+            if ((int) $images_column_arrangement == 0) { // auto
+                $limit = 0;
+            }
+            else
+            {
+                if((int) $images_row_arrangement == 0) { // auto
+                    $limit = 0;
+                }
+                else
+                {
+                    if((int) $images_row_arrangement == 1) { // row count
+                        $limit = (int) $max_columns_in_images_view * (int) $max_rows_in_images_view;
+                    } else { // max images
+                        $limit = (int) $max_images_in_images_view;
+                    }
+
+                }
 
             }
 
+            $layoutParameter->limit = $limit;
+
         }
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: CascadedLayoutParameter: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return $images;
+        return $layoutParameter;
     }
-
-    /**
-     * @param $images
-     *
-     *
-     * @since 4.5.0.0
-     */
-    public function AssignImageUrl($image)
-    {
-
-        try {
-
-            // ToDo: check for J3x style of gallery (? all in construct ?)
-
-            $ImagePaths = new ImagePathsData ($image->gallery_id);
-
-            $ImagePaths->assignPathData ($image);
-
-            // ToDo: watermarked file
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-    }
-
+    /**/
 }

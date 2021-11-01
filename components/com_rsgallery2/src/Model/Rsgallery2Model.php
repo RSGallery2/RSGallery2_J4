@@ -92,7 +92,7 @@ class Rsgallery2Model extends BaseDatabaseModel
 	{
 		$app = Factory::getApplication();
 
-		$this->setState('rsgallery2.id', $app->input->getInt('id'));
+		//$this->setState('rsgallery2.id', $app->input->getInt('id'));
 		$this->setState('params', $app->getParams());
 	}
 }
