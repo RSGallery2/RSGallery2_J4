@@ -66,31 +66,20 @@ if (true) {
     echo $layout->render();
 }
 
-$layout = new FileLayout('ImagesArea_j3x.default');
+$layout = new FileLayout('ImagesArea.default');
 
 $displayData['images'] = $this->items;
 
-$displayData = [
-	'textPrefix' => 'COM_FOOS',
-	'formURL' => 'index.php?option=com_foos',
-	'helpURL' => 'https://github.com/astridx/boilerplate#readme',
-	'icon' => 'icon-copy',
-];
-
-
-
-
-
-
-
 // return;
+
+# ToDo: <h1> header on debug  ? develop ?
 
 ?>
 
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <h1>RSGallery2 "j3x legacy" view </h1>
+        <h1>RSGallery2 "galleries j3x legacy" view </h1>
 
         <hr>
 
