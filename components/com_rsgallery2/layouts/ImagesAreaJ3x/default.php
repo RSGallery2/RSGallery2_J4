@@ -69,11 +69,174 @@ foreach ($images as $idx => $image) {
 //    }
 }
 
+/**/
+?>
+<div class="rsg2">
+    <div class="j25search_box pull-right">
+        <form name="rsg2_search" class="form-search form-inline warning" method="post"
+              action="/joomla3x/index.php/j3x-galleries-overview">
+            <div class="input-prepend">
+                <button type="submit" class="btn">Search</button>
+                <input type="search" name="searchtextX" maxlength="200" class="inputbox search-query input-medium"
+                       placeholder="Keywords"></div>
+            <input type="hidden" name="option" value="com_rsgallery2"> <input type="hidden" name="rsgOption"
+                                                                              value="search"> <input type="hidden"
+                                                                                                     name="task"
+                                                                                                     value="showResults">
+        </form>
+    </div>
+    <div class="rsg2-clr"></div>
+
+    <table id="rsg2-thumbsList" border="0">
+        <tbody>
+        <tr>
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/158/asInline">
+                            <img src="http://127.0.0.1/joomla3x/images/rsgallery/thumb/DSC_5504.jpg.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5504				</span>
+                <br><i></i></td>
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/159/asInline">
+                            <img src="http://127.0.0.1/joomla3x/images/rsgallery/thumb/DSC_5505.jpg.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5505				</span>
+                <br><i></i></td>
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/160/asInline">
+                            <img src="http://127.0.0.1/joomla3x/images/rsgallery/thumb/DSC_5503-2.jpg.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5503-2				</span>
+                <br><i></i>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/161/asInline">
+                            <img src="http://127.0.0.1/joomla3x/images/rsgallery/thumb/DSC_5504-2.jpg.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5504-2				</span>
+                <br><i></i></td>
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/162/asInline">
+                            <img src="http://127.0.0.1/joomla3x/images/rsgallery/thumb/DSC_5505-2.jpg.jpg"
+                                 alt="<p>&nbsp;item description&nbsp;</p>
+<p>&nbsp;</p>
+<p>asdf</p>
+<p>asdf</p>
+<p>asdf</p>">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5505-2				</span>
+                <br><i></i></td>
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/163/asInline">
+                            <img src="http://127.0.0.1/joomla3x/images/rsgallery/thumb/DSC_5503-3.jpg.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5503-3				</span>
+                <br><i></i></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/157/asInline">
+                            <img src="http://127.0.0.1/joomla3x/images/rsgallery/thumb/DSC_5503.jpg.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5503				</span>
+                <br><i></i></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+    </div>
+</div>
+<?php
+/**/
+
+
 ?>
 
 <h3>rsgallery 2 j3x images area layout</h3>
 
-<div id="rsg2_gallery" class="rsg2_gallery">
+<div id="rsg2_gallery" class="rsg2">
+
+
+    <table id="rsg2-thumbsList" border="0">
+        <tbody>
+
+        <?php
+        foreach ($images as $idx => $image) {
+        ?>
+
+            <td>
+                <div class="shadow-box">
+                    <div class="img-shadow">
+                        <a href="/joomla3x/index.php/j3x-galleries-overview/item/158/asInline">
+                            <img src="<?php echo $image->UrlThumbFile ?>" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="rsg2-clr"></div>
+                <br>
+                <span class="rsg2_thumb_name">
+					DSC_5504				</span>
+                <br><i></i></td>
+
+        <?php
+        }
+        ?>
+
+
+
+
+
 
 	<div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
 
