@@ -101,6 +101,7 @@
 	<files folder="components/com_rsgallery2">
 		<!--folder>forms</folder-->
 		<folder>language</folder>
+		<folder>layouts</folder>
 		<folder>src</folder>
 		<folder>tmpl</folder>
 	</files>
