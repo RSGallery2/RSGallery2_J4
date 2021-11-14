@@ -81,11 +81,43 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+
+        /**
+         *
+         *      folders should be named galleries overview J3x
+         *         -> Rsg2_legacy is wrong
+         *
+        */
+
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
         $state = $this->state = $this->get('State');
         $params = $this->params = $state->get('params');
+
+        /**
+         *      Overview not started
+         *
+         *          ($this->galleryId == 0) ==> standard overview
+         *
+         *          ($this->galleryId != 0) ==> parent gallery overview
+         *
+         *
+         *          ??? ($this->galleryId != 0) ==> no childs gallery overview ???
+         *
+         *
+         */
+
+        // gallery overview with the latest galleries and latest images ...
+        if($this->galleryId == 0) {
+            // $this->setModel('GalleriesOverviewJ3x')
+        } else {
+            // parent gallery ?
+            // $this->setModel('GalleryParentJ3x')
+            // single gallery ?
+
+            // $this->setModel('GalleryJ3x')
+        }
 
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');

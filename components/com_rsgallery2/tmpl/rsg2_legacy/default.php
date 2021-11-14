@@ -90,11 +90,36 @@ $displayData = [
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <h1>RSGallery2 "j3x legacy" view </h1>
+        <h1>RSGallery2 "j3x legacy" gallery and latest overview </h1>
 
         <hr>
 
-	    <?php
+        <pre>
+        /**
+         *
+         *      folders should be named galleries overview J3x
+         *         -> Rsg2_legacy is wrong
+         *
+        */
+
+        </pre>
+
+        <pre>
+        /**
+         *      Overview not started
+         *
+         *          ($this->galleryId == 0) ==> standard overview
+         *
+         *          ($this->galleryId != 0) ==> parent gallery overview
+         *
+         *
+         *          ??? ($this->galleryId != 0) ==> no childs gallery overview ???
+         *
+         *
+         */
+        </pre>
+
+        <?php
 	    echo $layout->render($displayData);
 	    ?>
 
