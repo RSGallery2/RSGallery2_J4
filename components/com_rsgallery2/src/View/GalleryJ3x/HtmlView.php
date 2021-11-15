@@ -90,9 +90,6 @@ class HtmlView extends BaseHtmlView
         // $model = $this->getModel('Gallery');
         //$categoryModel = $app->bootComponent('com_contact')->getMVCFactory()
 
-        $this->c    ->createModel('Category', 'Site', ['ignore_request' => true]);
-        $this->setModel($model);
-
         // Get some data from the models
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');

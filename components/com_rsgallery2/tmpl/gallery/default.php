@@ -59,7 +59,7 @@ $displayData['images'] = $this->items;
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <h1> RSGallery2 "images list" view </h1>
+        <h1> RSGallery2 "gallery images" view </h1>
 
         <hr>
 

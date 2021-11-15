@@ -392,13 +392,16 @@ class GalleryModel extends ListModel
             $menuitem   = $app->getMenu()->getItem($currentMenuId);
             $params = $menuitem->params;
             echo $params['menu_image'];
-            /**/
+            /**
 
-            $app = JFactory::getApplication();
+    
+
+            $app = Factory::getApplication();
             $menuitem   = $app->getMenu()->getActive(); // get the active item
             // $menuitem   = $app->getMenu()->getItem($theid); // or get item by ID
             $params = $menuitem->params; // get the params
             print_r($params); // print all params as overview
+			/**/
 
             //--- RSG2 config  parameter -------------------------------------------------
 
@@ -445,6 +448,9 @@ class GalleryModel extends ListModel
             // ToDo: gid: one get access function keep result ...
             // gallery parameter
             $gid = $input->get('gid', '', 'INT');
+
+			// ToDo: check gid == 0 => error or selection control
+
             $gallery_param = $this->gallery_parameter($gid);
 
             // overwrite config and new if chosen
