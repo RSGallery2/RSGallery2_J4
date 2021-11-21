@@ -1,0 +1,290 @@
+#rsg2-galleryTitle {
+}
+
+/* Status icons */
+img.status {
+	text-decoration : none;
+	border          : none;
+}
+
+/* Thumbs shadow css */
+.img-shadow {
+	float      : left;
+	background : url(../../../images/j3x/shadowAlpha.png) no-repeat bottom right !important;
+	background : url(../../../images/j3x/shadow.gif) no-repeat bottom right;
+	margin     : 10px 0 0 10px !important;
+	margin     : 10px 0 0 5px;
+}
+
+.img-shadow img {
+	display          : block;
+	position         : relative;
+	background-color : #fff;
+	border           : 1px solid #a9a9a9;
+	margin           : -6px 6px 6px -6px;
+	padding          : 4px;
+}
+
+/* end Thumbs shadow */
+.rsg2_slideshow {
+	width      : 100%;
+	text-align : center;
+	padding    : 2px;
+}
+
+.rsg2-toolbar {
+	text-align     : center;
+	padding-bottom : 5px;
+	padding-left   : 5px;
+	padding-right  : 5px;
+	padding-top    : 5px;
+}
+
+.rsg2_display_name {
+	/*display:none;*/
+}
+
+.rsg2_thumb_name {
+	/*display:none;*/
+}
+
+.rsg2-galleryList-newImages {
+	color       : Red;
+	font-weight : bold;
+}
+
+.rsg2-galleryList-totalImages {
+	font-size : 8px;
+}
+
+#rsg2-navigation {
+	float      : right;
+	text-align : right;
+}
+
+#rsg2-navigation li {
+	list-style       : none;
+	background-image : none;
+}
+
+#rsg2-footer {
+	text-align : center;
+	font-size  : 10px;
+	color      : Silver;
+}
+
+/* gallery list */
+
+ul#rsg2-galleryList {
+	clear   : both;
+	padding : 0;
+}
+
+.rsg2-galleryList-status {
+	text-align : right;
+}
+
+.rsg2-galleryList-item {
+	clear            : both;
+
+	padding          : 5px;
+	margin           : 5px 0 5px 0;
+
+	list-style       : none;
+	background-image : none;
+
+	border           : 1px solid #ccc;
+}
+
+.rsg2-galleryList-thumb {
+	display : block;
+	float   : left;
+	/*margin: 0 5px 5px 0;*/
+}
+
+/* sub gallery list */
+
+.rsg2-subGalleryList-container {
+	margin-top : 1ex;
+}
+
+.rsg2-subGalleryList-title {
+	float : left;
+}
+
+.rsg2-subGalleryList-list {
+	float            : left;
+
+	margin           : 0 0 0 5px;
+	padding          : 0px;
+
+	list-style       : none;
+	background-image : none;
+}
+
+/* thumbnail list */
+
+ul#rsg2-thumbsList {
+	margin : auto;
+}
+
+ul#rsg2-thumbsList li {
+	display          : box;
+	float            : left;
+	overflow         : hidden;
+	padding          : 5px 5px;
+
+	text-align       : center;
+
+	/*     get rid of other possible list styles */
+	list-style       : none;
+	background-image : none;
+}
+
+table#rsg2-thumbsList {
+	width : 100%;
+}
+
+table#rsg2-thumbsList td {
+	overflow   : hidden;
+	padding    : 5px 5px;
+
+	text-align : center;
+}
+
+.rsg2-pageNav {
+	text-align : center;
+	font-size  : 12px;
+}
+
+.rsg2-pagenav-limitbox {
+	text-align : right;
+}
+
+/* utility selector, this is common in many templates, but we can't count on it being there */
+.rsg2-clr {
+	clear       : both;
+	line-height : 0px;
+}
+
+/****************** OLD CLASSES ********************/
+/* Classes for RSGallery:
+
+/* standard list style table */
+table.adminlist {
+	background-color : #FFFFFF;
+	margin           : 0px;
+	padding          : 0px;
+	border           : 1px solid #ddd;
+	border-spacing   : 0px;
+	width            : 100%;
+	border-collapse  : collapse;
+}
+
+table.adminlist th {
+	margin            : 0px;
+	padding           : 6px 4px 2px 4px;
+	height            : 25px;
+	background        : url(mediacom_rsgallery2/images/j3x/background.jpg);
+	background-repeat : repeat;
+	font-size         : 11px;
+	color             : #000;
+}
+
+table.adminlist th.title {
+	text-align : left;
+}
+
+table.adminlist th a:link, table.adminlist th a:visited {
+	color           : #c64934;
+	text-decoration : none;
+}
+
+table.adminlist th a:hover {
+	text-decoration : underline;
+}
+
+table.adminlist tr.row0 {
+	background-color : #F9F9F9;
+}
+
+table.adminlist tr.row1 {
+	background-color : #FFF;
+}
+
+table.adminlist td {
+	border-bottom : 1px solid #e5e5e5;
+	padding       : 4px;
+}
+
+table.adminlist tr.row0:hover {
+	background-color : #f1f1f1;
+}
+
+table.adminlist tr.row1:hover {
+	background-color : #f1f1f1;
+}
+
+table.adminlist td.options {
+	background-color : #ffffff;
+	font-size        : 8px;
+}
+
+select.options, input.options {
+	font-size   : 8px;
+	font-weight : normal;
+	border      : 1px solid #999999;
+}
+
+/* standard form style table */
+table.adminform, table.galleryblock {
+	background-color : #f9f9f9;
+	border           : 1px solid #d5d5d5;
+	padding          : 0px;
+	border-collapse  : collapse;
+	margin           : 0px;
+	border-spacing   : 0px;
+	width            : 100%;
+}
+
+table.adminform tr.row0 {
+	background-color : #f9f9f9;
+}
+
+table.adminform tr.row1 {
+	background-color : #eeeeee;
+}
+
+table.adminform th {
+	font-size         : 11px;
+	padding-top       : 6px;
+	padding-bottom    : 2px;
+	padding-left      : 4px;
+	padding-right     : 4px;
+	text-align        : left;
+	height            : 25px;
+	color             : #000;
+	background-repeat : repeat;
+	background        : url(mediacom_rsgallery2/images/j3x/background.jpg);
+}
+
+table.adminform td {
+	padding    : 3px;
+	text-align : left;
+}
+
+table.adminform td.editor {
+	font-size : 9px;
+}
+
+.tool-tip {
+	background-color : #fff;
+	padding          : 0.5em;
+	border           : 1px solid #aaa;
+}
+
+.tool-tip .tool-title {
+	border-bottom  : 1px solid #aaa;
+	padding-bottom : 0.5em;
+	margin-bottom  : 0.5em;
+}

@@ -45,7 +45,6 @@ class ImagePathsData extends ImagePaths
 
         //$image->isSizePaths = $this->getSizePaths ();
 
-
     }
 
     /**

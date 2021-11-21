@@ -124,6 +124,14 @@ class HtmlView extends BaseHtmlView
 //		$item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
+		// Check for layout override
+		$active = Factory::getApplication()->getMenu()->getActive();
+
+		if (isset($active->query['layout']))
+		{
+			$this->setLayout($active->query['layout']);
+		}
+
 
 
 

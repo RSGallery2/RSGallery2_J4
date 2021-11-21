@@ -25,7 +25,8 @@ class ImagePaths
 {
 	// from config
 	public $rsgImagesBasePath;
-	public $rsgImagesGalleriesBasePath;
+	public $rsgImagesBaseUrl;
+	public $rsgImagesGalleriesBasePath; // ToDo: Single gallery name ? used for search path ?
 
 	// includes galleryid
 	public $galleryRoot;
@@ -78,6 +79,13 @@ class ImagePaths
             $this->rsgImagesBasePath = Path::Clean($this->rsgImagesBasePath);
 
 			$this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
+
+			// remove starting slah or backslash for URL
+			if ($this->rsgImagesBasePath[0] == '\\' || $this->rsgImagesBasePath[0] == '/') {
+				$this->rsgImagesBaseUrl = substr($this->rsgImagesBasePath, 1);
+			} else {
+				$this->rsgImagesBaseUrl = $this->rsgImagesBasePath;
+			}
 
 			//--- config image sizes --------------------------------------------
 
@@ -142,7 +150,9 @@ class ImagePaths
 
 		//---  URIs gallery based --------------------------------------------
 
-		$this->galleryRootUrl = UriHelper::join(Uri::root(),  $this->rsgImagesBasePath, $galleryId);
+
+		//$this->galleryRootUrl = UriHelper::join(Uri::root(),  $this->rsgImagesBaseUrl, $galleryId);
+		$this->galleryRootUrl = UriHelper::join(Uri::root() .  $this->rsgImagesBaseUrl, $galleryId);
 
 		$this->originalUrl = UriHelper::join($this->galleryRootUrl, 'original');
 		$this->thumbUrl    = UriHelper::join($this->galleryRootUrl, 'thumbs');
