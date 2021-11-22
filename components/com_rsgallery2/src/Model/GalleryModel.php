@@ -14,10 +14,11 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
@@ -138,8 +139,10 @@ class GalleryModel extends ListModel
         // $this->setState('list.limit', $value);
         $this->setState('list.limit', $layoutParams->limit);
 
-        $value = $app->input->get('limitstart', 0, 'uint');
-        $this->setState('list.start', $value);
+        //$value = $app->input->get('limitstart', 0, 'uint');
+        //$this->setState('list.start', $value);
+	    $offset = $app->input->get('limitstart', 0, 'uint');
+	    $this->setState('list.offset', $offset);
 
         $value = $app->input->get('filter_tag', 0, 'uint');
         $this->setState('filter.tag', $value);
@@ -164,8 +167,8 @@ class GalleryModel extends ListModel
 
         $params = $app->getParams();
         $this->setState('params', $params);
-        $user = Factory::getUser();
 
+        $user = Factory::getUser();
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
             // Filter on published for those who do not have edit or edit.state rights.
@@ -251,76 +254,65 @@ class GalleryModel extends ListModel
 
     // toDo: rights ...
 
-	public function getItems()
+	/**
+	 * Method to build an SQL query to load the list data.
+	 *
+	 * @return  string  An SQL query
+	 *
+	 * @since   1.6
+	 */
+	public function getListQuery()
 	{
+		$app    = Factory::getApplication();
+		$input  = Factory::getApplication()->input;
         $user   = Factory::getUser();
+		$groups = $user->getAuthorisedViewLevels();
         $userId = $user->get('id');
         $guest  = $user->get('guest');
-        $groups = $user->getAuthorisedViewLevels();
-        $input  = Factory::getApplication()->input;
+		$orderby        = $this->state->params->get('all_tags_orderby', 'title');
+		$published      = (int) $this->state->params->get('published', 1);
+		$orderDirection = $this->state->params->get('all_tags_orderby_direction', 'ASC');
 
         $gid = $input->getInt ('gid', 0);
 
-		if ($this->_item === null)
+		// Create a new query object.
+		$db    = $this->getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('*')
+			//->from($db->quoteName('#__rsg2_galleries', 'a'))
+			->from($db->quoteName('#__rsg2_images', 'a'))
+			//->where('a.id = ' . (int) $gid);
+			->where('a.gallery_id = ' . (int) $gid);
+		// ToDo: limit ....
+
+
+		// limit
+
+
+		if ($this->state->params->get('show_pagination_limit'))
 		{
-			$this->_item = array();
+			$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'uint');
+		}
+		else
+		{
+			$limit = $this->state->params->get('maximum', 20);
 		}
 
-        $images = []; // new \stdClass(); // ToDo: all to (object)[];
+		$this->setState('list.limit', $limit);
 
-		// not fetched already
-		if ( ! isset($this->_item[$gid])) {
+		$offset = $app->input->get('limitstart', 0, 'uint');
+		$this->setState('list.start', $offset);
 
-			try
-			{
-                $images = parent::getItems(); // gid ...
 
-                //--- >>>>  toDo: use above instead of below ------------
-                $db    = $this->getDbo();
-				$query = $db->getQuery(true);
+		$query->where($db->quoteName('a.published') . ' = :published')
+			->bind(':published', $published, ParameterType::INTEGER);
 
-				$query->select('*')
-					//->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->from($db->quoteName('#__rsg2_images', 'a'))
-					//->where('a.id = ' . (int) $gid);
-					->where('a.gallery_id = ' . (int) $gid);
-                    // ToDo: limit ....
+		$query->order($db->quoteName($orderby) . ' ' . $orderDirection . ', a.title ASC');
 
-				$db->setQuery($query);
-                $images = $db->loadObjectList();
-                //--- <<<  toDo: use above instead of below ------------
+		return $query;
 
-				if ( ! empty($images)) {
-
-                    // Add image paths, image params ...
-                    $data = $this->AddLayoutData ($images);
-
-                }
-				else
-                {
-                    // No images defined yet
-                    $data = false;
-				}
-
-                $this->_item[$gid] = $data;
-			}
-            catch (\RuntimeException $e)
-            {
-                $OutTxt = '';
-                $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
-                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-                $app = Factory::getApplication();
-                $app->enqueueMessage($OutTxt, 'error');
-            }
-		}
-
-        $images = $this->_item[$gid];
-
-		return $images;
 	}
-
-
 
 
     /**
@@ -415,6 +407,7 @@ class GalleryModel extends ListModel
 
             //--- menu parameter -------------------------------------------------
 
+	        /*
             $app = Factory::getApplication();
             $input = $app->input;
 
@@ -477,6 +470,7 @@ class GalleryModel extends ListModel
                     }
                 }
             }
+			/**/
 
             $layoutParameter->images_column_arrangement  = $images_column_arrangement;
             $layoutParameter->max_columns_in_images_view = $max_columns_in_images_view;

@@ -95,10 +95,22 @@ class HtmlView extends BaseHtmlView
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
         $this->params     = $params = $this->state->get('params');
+        // ToDo: Why is this necessary ?
+//		$this->pagination->setTotal (count($this->items));
+
         $this->user       = Factory::getUser();
 
         $this->isDebugSite = $params->get('isDebugSite'); 
-        $this->isDevelopSite = $params->get('isDevelop'); 
+        $this->isDevelopSite = $params->get('isDevelop');
+
+
+		if ( ! empty($this->items)) {
+			$model = $this->getModel();
+			// Add image paths, image params ...
+			$data = $model->AddLayoutData ($this->items);
+
+		}
+
 
 //        if (count($errors = $this->get('Errors')))
 //        {

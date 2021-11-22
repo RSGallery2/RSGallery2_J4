@@ -69,7 +69,9 @@ foreach ($images as $idx => $image) {
 //    }
 }
 
-$cols = 4;
+
+// max_columns_in_images_view
+$cols = $params->get('max_columns_in_images_view',2);
 
 ?>
 
@@ -117,14 +119,14 @@ $cols = 4;
     </table>
 
 	<div class="pagination">
+		<?php echo $pagination->getListFooter (); ?>
+	</div>
+
+	<h3>rsgallery 2 j3x images area layout II</h3>
 
 
 
-		<h3>rsgallery 2 j3x images area layout II</h3>
-
-
-
-		<div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+	<div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
 
 		<?php
 		foreach ($images as $idx => $image) {
