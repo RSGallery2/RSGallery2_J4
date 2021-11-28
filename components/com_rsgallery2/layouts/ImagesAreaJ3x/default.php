@@ -102,7 +102,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 	                <div class="rsg2-clr"></div>
 	                <br>
 	                <span class="rsg2_thumb_name">
-						<?php echo $image->name ?>
+						<?php echo $image->title ?>
 	                </span>
 
 		        </td>
@@ -138,7 +138,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 				     data-target="#rsg2_carousel"
 				     data-slide-to="<?php echo $idx ?>"bs-
 				>
-				<figcaption><?php echo $image->name; ?></figcaption>
+				<figcaption><?php echo $image->titel; ?></figcaption>
 			</figure>
 			<?php
 		}

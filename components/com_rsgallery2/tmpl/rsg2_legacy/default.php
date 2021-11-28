@@ -20,6 +20,8 @@ use \Joomla\CMS\Layout\FileLayout;
 // ToDo:
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('version' => 'auto', 'relative' => true));
 
 
 
@@ -47,7 +49,7 @@ if (!empty ($this->isDevelopSite))
     echo '<span style="color:red">'
         . 'Tasks: <br>'
         . '* <br>'
-        . '* make rsgConfig global<br>'
+        . '* ??? global<br>'
         //	. '* <br>'
         //	. '* <br>'
         //	. '* <br>'
@@ -66,31 +68,31 @@ if (true) {
     echo $layout->render();
 }
 
-$layout = new FileLayout('ImagesArea_j3x.default');
+
+$layoutName = $this->getLayout();
+
+// default is 'ImagesAreaJ3x.default'
+if($layoutName == 'default') {
+
+	$layoutName = 'ImagesAreaJ3x.default';
+}
+
+$layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
-
-$displayData = [
-	'textPrefix' => 'COM_FOOS',
-	'formURL' => 'index.php?option=com_foos',
-	'helpURL' => 'https://github.com/astridx/boilerplate#readme',
-	'icon' => 'icon-copy',
-];
-
-
-
-
-
-
+$displayData['params'] = $this->params;
+$displayData['pagination'] = $this->pagination;
 
 // return;
+
+# ToDo: <h1> header on debug  ? develop ?
 
 ?>
 
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <h1>RSGallery2 "j3x legacy" gallery and latest overview </h1>
+        <h1>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h1>
 
         <hr>
 
@@ -119,8 +121,24 @@ $displayData = [
          */
         </pre>
 
+
         <?php
-	    echo $layout->render($displayData);
+//	    echo $layout->render($displayData);
+	    ?>
+
+        <?php
+		// RSGallery2_Project\Documentation\J!3x\ImagesUsedInDoc\site.start.rootgalleries.png
+	    echo '$layout_latest root ... galleries  ->render';
+	    ?>
+
+        <?php
+		// RSGallery2_Project\Documentation\J!3x\ImagesUsedInDoc\site.start.randomLatestImages.png
+	    echo '$layout_random images ->render';
+	    ?>
+
+        <?php
+		// RSGallery2_Project\Documentation\J!3x\ImagesUsedInDoc\site.start.randomLatestImages.png
+	    echo '$layout_latest images ->render';
 	    ?>
 
 

@@ -20,6 +20,8 @@ use \Joomla\CMS\Layout\FileLayout;
 // ToDo:
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('version' => 'auto', 'relative' => true));
 
 
 
@@ -66,9 +68,20 @@ if (true) {
     echo $layout->render();
 }
 
-$layout = new FileLayout('ImagesArea.default');
+
+$layoutName = $this->getLayout();
+
+// default is 'ImagesAreaJ3x.default'
+if($layoutName == 'default') {
+
+	$layoutName = 'ImagesAreaJ3x.default';
+}
+
+$layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
+$displayData['params'] = $this->params;
+$displayData['pagination'] = $this->pagination;
 
 // return;
 

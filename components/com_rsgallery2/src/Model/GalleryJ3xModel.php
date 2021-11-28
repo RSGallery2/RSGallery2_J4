@@ -83,19 +83,26 @@ class GalleryJ3xModel extends GalleryModel
 
 			//  Factory::getApplication()->getMenu()
 			$app = Factory::getApplication();
-			$urlMenu  = $app->getMenu()->getActive()->link;
+
+			$active       = $app->getMenu()->getActive();
+			$currentLink = $active->link;
+
+
+			//$urlMenu  = $app->getMenu()->getActive()->link;
+
 //
 //			echo Route::_($urlMenu);
 //			echo '<br>';
 
 			/**/
-			{
-				//$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
-				$image->UrlLayout_AsInline = Route::_($urlMenu
-					. '&gid=' . $image->gallery_id
-					. '&iid=' . $image->id
-					. '&layout=imagesJ3xAsInline',true,0,true);
-			}
+
+
+			//$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
+			$image->UrlLayout_AsInline = Route::_($currentLink
+				. '&gid=' . $image->gallery_id
+				. '&iid=' . $image->id
+				. '&layout=imagesJ3xAsInline',true,0,true);
+
 			/**/
 			// ToDo: watermarked file
 		}

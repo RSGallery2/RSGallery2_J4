@@ -436,7 +436,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			Log::add('installMessage: include Helper/InstallMessage', Log::INFO, 'rsg2');
 
             $installMsgHelperFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
-            include ($installMsgHelperFileName);
+			// include ($installMsgHelperFileName);
+			// include_once dirname(__DIR__) . '/vendor/autoload.php';
+			\JLoader::register('InstallMessage', $installMsgHelperFileName);
+			
             $InstallMessageHelper =  new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage
                 ($this->newRelease, $this->oldRelease);
 
@@ -630,7 +633,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
     protected function checkAndHandleJ3xTables(): void
     {
-// check and handle old J3x tables (Moving DB data ...)
+		// check and handle old J3x tables (Moving DB data ...)
         $isJ3xTableExisting = $this->isJ3xRsg2DataExisting();
 
         // Handle old RSG2 J3x DB data

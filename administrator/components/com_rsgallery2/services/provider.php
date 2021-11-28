@@ -19,6 +19,7 @@ use Joomla\CMS\HTML\Registry;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+
 use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
 
 /**

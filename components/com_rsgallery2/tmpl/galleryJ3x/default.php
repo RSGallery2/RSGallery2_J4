@@ -49,7 +49,7 @@ if (!empty ($this->isDevelopSite))
     echo '<span style="color:red">'
         . 'Tasks: <br>'
         . '* <br>'
-        . '* make rsgConfig global<br>'
+        . '* ??? global<br>'
         //	. '* <br>'
         //	. '* <br>'
         //	. '* <br>'
