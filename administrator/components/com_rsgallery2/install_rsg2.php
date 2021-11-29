@@ -86,7 +86,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::addLogger($logOptions, $logType, $logChannels);
 
             try {
-                Log::add(Text::_('Installer construct'), Log::INFO, 'rsg2');
+                Log::add(Text::_('\n>>Installer construct'), Log::INFO, 'rsg2');
             } catch (\RuntimeException $exception) {
                 // Informational log only
             }
@@ -436,9 +436,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			Log::add('installMessage: include Helper/InstallMessage', Log::INFO, 'rsg2');
 
             $installMsgHelperFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
+			$installMsgHelperClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage';
 			// include ($installMsgHelperFileName);
 			// include_once dirname(__DIR__) . '/vendor/autoload.php';
-			\JLoader::register('InstallMessage', $installMsgHelperFileName);
+			\JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
 			
             $InstallMessageHelper =  new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage
                 ($this->newRelease, $this->oldRelease);
