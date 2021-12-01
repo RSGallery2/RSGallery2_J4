@@ -190,11 +190,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
      */
     public function install($parent)
     {
-//		echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
+//      echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_INSTALL'), Log::INFO, 'rsg2');
 
-		// ToDo: debug install 
-		$this->addDashboardMenu('rsgallery2', 'rsgallery2');
+        // ToDo: debug install
+        $this->addDashboardMenu('rsgallery2', 'rsgallery2');
 
         return true;
     }
@@ -224,8 +224,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UPDATE'), Log::INFO, 'rsg2');
         //Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
 
-		// ToDo: debug install 
-		$this->addDashboardMenu('rsgallery2', 'rsgallery2');
+        // ToDo: debug install
+        $this->addDashboardMenu('rsgallery2', 'rsgallery2');
 
         return true;
     }
@@ -255,20 +255,20 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
     {
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_POSTFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
-		// fall back
-		$installMsg = '';
+        // fall back
+        $installMsg = '';
 
         switch ($type) {
 
             case 'install':
 
                 Log::add('post->install: init gallery tree', Log::INFO, 'rsg2');
-				
-				// Nested gallery table needs a root item
+
+                // Nested gallery table needs a root item
                 $isGalleryTreeCreated = $this->initGalleryTree();
 
                 Log::add('post->install: install message', Log::INFO, 'rsg2');
-				
+
                 $installMsg = $this->installMessage($type);
 
                 Log::add('post->install: finished', Log::INFO, 'rsg2');
@@ -294,30 +294,30 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             case 'uninstall':
 
-				$outText = 'Uninstall of RSG2 finished. <br>' 
-					. 'Configuration was deleted. <br>'
+                $outText = 'Uninstall of RSG2 finished. <br>'
+                    . 'Configuration was deleted. <br>'
                     . 'Galleries and images table may still exist';
                 Log::add('post->uninstall: ' . $outText, Log::INFO, 'rsg2');
-					// ToDo: check existence of galleries/images table and then write
-					echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>'
-						. 'Galleries and images table may still exist';
-					// ToDo: uninstall Message
+                    // ToDo: check existence of galleries/images table and then write
+                    echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>'
+                        . 'Galleries and images table may still exist';
+                    // ToDo: uninstall Message
 
-				Factory::getApplication()->enqueueMessage($outText, 'info');
+                Factory::getApplication()->enqueueMessage($outText, 'info');
 
-				Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
+                Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
 
                 break;
 
             case 'discover_install':
 
                 Log::add('post->discover_install: init gallery tree', Log::INFO, 'rsg2');
-				
-				// Nested gallery table needs a root item
+
+                // Nested gallery table needs a root item
                 $isGalleryTreeCreated = $this->initGalleryTree();
 
                 Log::add('post->discover_install: install message', Log::INFO, 'rsg2');
-				
+
                 $installMsg = $this->installMessage($type);
 
                 Log::add('post->discover_install: finished', Log::INFO, 'rsg2');
@@ -329,8 +329,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 break;
         }
 
-		echo $installMsg;
-		
+        echo $installMsg;
+
         // wonderworld 'good by' icons finnern
         echo '<br><h4>&oplus;&infin;&omega;</h4><br>';
         Log::add('--- postflight finished', Log::INFO, 'rsg2');
@@ -378,14 +378,14 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         $isGalleryTreeCreated = false;
 
         try {
-			
-			Log::add('initGalleryTree: include TreeModel', Log::INFO, 'rsg2');
+
+            Log::add('initGalleryTree: include TreeModel', Log::INFO, 'rsg2');
 
             $GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/GalleryTreeModel.php';
             include ($GalleryTreeModelFileName);
             $galleryTreeModel =  new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
 
-			Log::add('initGalleryTree: check for root item', Log::INFO, 'rsg2');
+            Log::add('initGalleryTree: check for root item', Log::INFO, 'rsg2');
 
             // check for root item
             $isRootItemExisting = $galleryTreeModel->isRootItemExisting();
@@ -410,7 +410,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
-			Log::add('initGalleryTree: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+            Log::add('initGalleryTree: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
             throw new \RuntimeException($e->getMessage() . ' from initGalleryTree');
         }
 
@@ -433,24 +433,26 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         try {
 
-			Log::add('installMessage: include Helper/InstallMessage', Log::INFO, 'rsg2');
+            Log::add('installMessage: include Helper/InstallMessage', Log::INFO, 'rsg2');
 
             $installMsgHelperFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
-			$installMsgHelperClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage';
-			// include ($installMsgHelperFileName);
-			// include_once dirname(__DIR__) . '/vendor/autoload.php';
-			\JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
-			
+            $installMsgHelperClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage';
+            \JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
+
+            $changeLogModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ChangeLogModel.php';
+            $changeLogModelClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel';
+            \JLoader::register($changeLogModelClassName, $changeLogModelFileName);
+
             $InstallMessageHelper =  new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage
                 ($this->newRelease, $this->oldRelease);
 
-			Log::add('installMessage: create message', Log::INFO, 'rsg2');
+            Log::add('installMessage: create message', Log::INFO, 'rsg2');
 
             $installMsg = $InstallMessageHelper->installMessageText($type);
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
-			Log::add('installMessage: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+            Log::add('installMessage: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
             throw new \RuntimeException($e->getMessage() . ' from installMessage');
         }
 
@@ -547,7 +549,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
-			Log::add('isJ3xRsg2DataExisting: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+            Log::add('isJ3xRsg2DataExisting: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
             throw new \RuntimeException($e->getMessage() . ' from isJ3xRsg2DataExisting');
         }
 
@@ -625,7 +627,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
-			Log::add('copyJ3xDbTables: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+            Log::add('copyJ3xDbTables: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
             throw new \RuntimeException($e->getMessage() . ' from copyJ3xDbTables');
         }
 
@@ -634,7 +636,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
     protected function checkAndHandleJ3xTables(): void
     {
-		// check and handle old J3x tables (Moving DB data ...)
+        // check and handle old J3x tables (Moving DB data ...)
         $isJ3xTableExisting = $this->isJ3xRsg2DataExisting();
 
         // Handle old RSG2 J3x DB data

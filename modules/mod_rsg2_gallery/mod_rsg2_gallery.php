@@ -11,7 +11,7 @@
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
-use Rsg2_galleryNamespace\Module\Rsg2_gallery\Site\Helper\Rsg2_galleryHelper;
+use Rsgallery2\Module\Rsgallery2\Site\Helper\Rsg2_galleryHelper;
 
 
 // ToDo: all see gallery module 

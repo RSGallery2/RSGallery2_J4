@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsg2_galleryNamespace\Module\Rsg2_gallery\Site\Helper;
+namespace Rsgallery2\Module\Rsgallery2\Site\Helper;
 
 \defined('_JEXEC') or die;
 
