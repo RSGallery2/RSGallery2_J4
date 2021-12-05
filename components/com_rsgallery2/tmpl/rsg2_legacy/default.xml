@@ -12,17 +12,75 @@
 		>
 		
 			<field
-				name="gid"
-				type="RootGallerySelect"
-				label="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_LABEL"
-				description="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_LABEL_DESC"
-				required="true"
-				select="true"
-				new="true"
-				edit="true"
-				clear="true"
+					name="gid" type="hidden" default="0"
 			/>
-			
+
+			<field
+					id="galCount"
+					name="galCount"
+					type="list"
+					default="5"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
+					class="">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
+			</field>
+
+			<field
+					id="dispLimitbox"
+					name="dispLimitbox"
+					type="list"
+					default="0"
+					label="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX"
+					description="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX_DESC"
+					class="">
+				<option value="2">COM_RSGALLERY2_ALWAYS</option>
+				<option value="1">COM_RSGALLERY2_IF_MORE_GALLERIES_THAN_LIMIT</option>
+				<option value="0">COM_RSGALLERY2_NEVER</option>
+			</field>
+
+			<field
+					id="displaySearch"
+					name="displaySearch"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH"
+					description="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="displayRandom"
+					name="displayRandom"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_DISPLAY_RANDOM"
+					description="COM_RSGALLERY2_DISPLAY_RANDOM_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="displayLatest"
+					name="displayLatest"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_DISPLAY_LATEST"
+					description="COM_RSGALLERY2_DISPLAY_LATEST_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
 			<field
 					name="images_layout"
 					type="componentlayout"
