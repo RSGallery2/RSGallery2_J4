@@ -9,7 +9,7 @@
 	<license>GNU General Public License version 2 or later;</license>
 	<version>5.0.0.34</version>
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
-	<namespace>Rsgallery2\Component\Rsgallery2</namespace>
+	<namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
 
 	<!-- Script to run on installation -->
 	<scriptfile>install_rsg2.php</scriptfile>
