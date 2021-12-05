@@ -20,6 +20,7 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
@@ -33,152 +34,118 @@ class Rsg2_legacyModel extends GalleriesModel
 {
     /**
     protected $layoutParams = null; // col/row count
+	/**/
+
+	/**
+	 * This function will retrieve the data of the n last uploaded images
+	 *
+	 * @param int $limit > 0 will limit the number of lines returned
+	 *
+	 * @return array rows with image name, images name, date, and user name as rows
+	 *
+	 * @since __BUMP_VERSION__
+	 * @throws Exception
+	 */
+	public static function latestImages($limit)
+	{
+		$latest = array();
+
+		try
+		{
+			// Create a new query object.
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
+
+			$query
+				->select('*')
+				->from($db->quoteName('#__rsg2_images'))
+				->order($db->quoteName('id') . ' DESC');
+
+			$db->setQuery($query, 0, $limit);
+			$rows = $db->loadObjectList();
+
+			foreach ($rows as $row)
+			{
+				$ImgInfo            = array();
+				$ImgInfo['name']    = $row->name;
+				$ImgInfo['images'] = ImagesModel::GalleryName($row->gallery_id);
+				$ImgInfo['date']    = $row->created;
+
+				//$ImgInfo['user'] = rsgallery2ModelImages::getUsernameFromId($row->userid);
+				$user            = Factory::getUser($row->created_by);
+				$ImgInfo['user'] = $user->get('username');
+
+				$latest[] = $ImgInfo;
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $latest;
+	}
 
 
-    public function getlayoutParams ()
-    {
-        if ($this->layoutParams == null) {
-            $this->layoutParams = $this->CascadedLayoutParameter ();
-        }
-        return $this->layoutParams;
-    }
+	/**
+	 * This function will retrieve the data of n random uploaded images
+	 *
+	 * @param int $limit > 0 will limit the number of lines returned
+	 *
+	 * @return array rows with image name, images name, date, and user name as rows
+	 *
+	 * @since __BUMP_VERSION__
+	 * @throws Exception
+	 */
+	public static function randomImages($limit)
+	{
+		$latest = array();
 
-    private function CascadedLayoutParameter() // For gallery images view
-    {
-        $layoutParameter = new \stdClass();
-        $layoutParameter->images_column_arrangement  = 0; // 0: auto
-        $layoutParameter->max_columns_in_images_view = 0;
-        $layoutParameter->images_row_arrangement     = 0; // 0: auto
-        $layoutParameter->max_rows_in_images_view    = 0;
-        $layoutParameter->max_images_in_images_view  = 0;
+		try
+		{
+			// Create a new query object.
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
 
-        try {
+			$query
+				->select('*')
+				->from($db->quoteName('#__rsg2_images'))
+				->order('RAND()');
 
+			$db->setQuery($query, 0, $limit);
+			$rows = $db->loadObjectList();
 
-            $app = Factory::getApplication();
-            $menuitem   = $app->getMenu()->getActive(); // get the active item
-            // $menuitem   = $app->getMenu()->getItem($theid); // or get item by ID
-            $params = $menuitem->getParams(); // get the params
-            print_r($params); // print all params as overview
+			foreach ($rows as $row)
+			{
+				$ImgInfo            = array();
+				$ImgInfo['name']    = $row->name;
+				$ImgInfo['images'] = ImagesModel::GalleryName($row->gallery_id);
+				$ImgInfo['date']    = $row->created;
 
-            //--- RSG2 config  parameter -------------------------------------------------
+				//$ImgInfo['user'] = rsgallery2ModelImages::getUsernameFromId($row->userid);
+				$user            = Factory::getUser($row->created_by);
+				$ImgInfo['user'] = $user->get('username');
 
-            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+				$latest[] = $ImgInfo;
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $images_column_arrangement = $rsgConfig->get('images_column_arrangement');
-            $max_columns_in_images_view = $rsgConfig->get('max_columns_in_images_view');
-            $images_row_arrangement = $rsgConfig->get('images_row_arrangement');
-            $max_rows_in_images_view = $rsgConfig->get('max_rows_in_images_view');
-            $max_images_in_images_view = $rsgConfig->get('max_images_in_images_view');
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
 
-            //--- menu parameter -------------------------------------------------
-
-            $app = Factory::getApplication();
-            $input = $app->input;
-
-            // overwrite config if chosen
-            $images_column_arrangement_menu = $input->get('images_column_arrangement', $images_column_arrangement, 'STRING');
-
-            if ($images_column_arrangement_menu != 'global') {
-                $images_column_arrangement = (int)$images_column_arrangement_menu;
-
-                // toDo: switch when more selections .. (0 auto)
-                if ($images_column_arrangement_menu == '1') {
-                    $max_columns_in_images_view = $input->get('max_columns_in_images_view', $max_columns_in_images_view, 'INT');
-
-                    $images_row_arrangement_menu = $input->get('images_row_arrangement', $images_row_arrangement, 'INT');
-                    if ($images_row_arrangement_menu != 'global') {
-                        $images_row_arrangement = (int)$images_row_arrangement_menu;
-
-                        // toDo: switch when more selections .. (0 auto)
-
-                        if ($images_row_arrangement_menu == '1') {
-                            $max_rows_in_images_view = $input->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
-                        } else {
-                            $max_images_in_images_view = $input->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
-                        }
-                    }
-                }
-            }
-
-            //--- gallery parameter -------------------------------------------------
-
-            // ToDo: gid: one get access function keep result ...
-            // gallery parameter
-            $gid = $input->get('gid', '', 'INT');
-            $gallery_param = $this->gallery_parameter($gid);
-
-            // overwrite config and new if chosen
-            $images_column_arrangement_gallery = $gallery_param->get('images_column_arrangement');
-
-            if ($images_column_arrangement_gallery != 'global') {
-                $images_column_arrangement = (int)$images_column_arrangement_gallery;
-
-                // toDo: switch when more selections .. (0 auto)
-                if ($images_column_arrangement_gallery == '1') {
-                    $max_columns_in_images_view = $gallery_param->get('max_columns_in_images_view');
-
-                    $images_row_arrangement_gallery = $gallery_param->get('images_row_arrangement', $images_row_arrangement, 'INT');
-                    if ($images_row_arrangement_gallery != 'global') {
-                        $images_row_arrangement = (int)$images_row_arrangement_gallery;
-
-                        // toDo: switch when more selections .. (0 auto)
-
-                        if ($images_row_arrangement_gallery == '1') {
-                            $max_rows_in_images_view = $gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
-                        } else {
-                            $max_images_in_images_view = $gallery_param->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
-                        }
-                    }
-                }
-            }
-
-            $layoutParameter->images_column_arrangement  = $images_column_arrangement;
-            $layoutParameter->max_columns_in_images_view = $max_columns_in_images_view;
-            $layoutParameter->images_row_arrangement     = $images_row_arrangement;
-            $layoutParameter->max_rows_in_images_view    = $max_rows_in_images_view;
-            $layoutParameter->max_images_in_images_view  = $max_images_in_images_view;
+		return $latest;
+	}
 
 
-            //--- determine limit --------------------------------------------------
-
-            $limit = 0;
-
-            // determine image limit of one page view
-            if ((int) $images_column_arrangement == 0) { // auto
-                $limit = 0;
-            }
-            else
-            {
-                if((int) $images_row_arrangement == 0) { // auto
-                    $limit = 0;
-                }
-                else
-                {
-                    if((int) $images_row_arrangement == 1) { // row count
-                        $limit = (int) $max_columns_in_images_view * (int) $max_rows_in_images_view;
-                    } else { // max images
-                        $limit = (int) $max_images_in_images_view;
-                    }
-
-                }
-
-            }
-
-            $layoutParameter->limit = $limit;
-
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: CascadedLayoutParameter: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-        return $layoutParameter;
-    }
-    /**/
 }

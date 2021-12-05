@@ -16,6 +16,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Site\Model\Rsg2_legacyModel;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -84,40 +85,18 @@ class HtmlView extends BaseHtmlView
 
         /**
          *
-         *      folders should be named galleries overview J3x
+         *      folders should be named galleries root J3x
          *         -> Rsg2_legacy is wrong
          *
         */
+
+        //--- root galleries --------------------------------------------------
 
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
         $state = $this->state = $this->get('State');
         $params = $this->params = $state->get('params');
-
-        /**
-         *      Overview not started
-         *
-         *          ($this->galleryId == 0) ==> standard overview
-         *
-         *          ($this->galleryId != 0) ==> parent gallery overview
-         *
-         *
-         *          ??? ($this->galleryId != 0) ==> no childs gallery overview ???
-         *
-         *
-         */
-
-        // gallery overview with the latest galleries and latest images ...
-        if($this->galleryId == 0) {
-            // $this->setModel('GalleriesOverviewJ3x')
-        } else {
-            // parent gallery ?
-            // $this->setModel('GalleryParentJ3x')
-            // single gallery ?
-
-            // $this->setModel('GalleryJ3x')
-        }
 
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
@@ -134,33 +113,27 @@ class HtmlView extends BaseHtmlView
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-//		$state = $this->state = $this->get('State');
-//		$params = $this->params = $state->get('params');
-//		$itemparams = new Registry(json_decode($item->params));
-//
-//		$temp = clone $params;
-//		$temp->merge($itemparams);
-//		$item->params = $temp;
-//
-//		Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
-//
-//		// Store the events for later
-//		$item->event = new \stdClass;
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayTitle = trim(implode("\n", $results));
-//
+		//--- random images --------------------------------------------------
+
+		// ToDo: seperate limits for ...
+		$limit = 4;
+
+
+		// $this->randomImages = $this->get('RandomImages', $limit);
+		$this->randomImages = Rsg2_legacyModel::RandomImages($limit);
+
+		//--- latest images --------------------------------------------------
+
+		// ToDo: seperate limits for ...
+		$limit = 4;
+
+		// $this->latestImages = $this->get('LatestImages', $limit);
+		$this->latestImages = Rsg2_legacyModel::latestImages($limit);
 
 
 
 
 
-
-//		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->beforeDisplayContent = trim(implode("\n", $results));
-//
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayContent = trim(implode("\n", $results));
-//
 		return parent::display($tpl);
 	}
 }

@@ -16,36 +16,6 @@
 			/>
 
 			<field
-					id="galCount"
-					name="galCount"
-					type="list"
-					default="5"
-					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
-					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
-					class="">
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="30">30</option>
-				<option value="50">50</option>
-			</field>
-
-			<field
-					id="dispLimitbox"
-					name="dispLimitbox"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX"
-					description="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX_DESC"
-					class="">
-				<option value="2">COM_RSGALLERY2_ALWAYS</option>
-				<option value="1">COM_RSGALLERY2_IF_MORE_GALLERIES_THAN_LIMIT</option>
-				<option value="0">COM_RSGALLERY2_NEVER</option>
-			</field>
-
-			<field
 					id="displaySearch"
 					name="displaySearch"
 					type="radio"
@@ -82,7 +52,7 @@
 			</field>
 
 			<field
-					name="images_layout"
+					name="gallery_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
@@ -91,104 +61,190 @@
 					useglobal="true"
 			/>
 
+		</fieldset>
+
+		<fieldset name="root_galleries" label="COM_RSGALLERY2_MENU_J3X_ROOT_GALLERIES_TAB">
 			<field
-					name="images_show_title"
+					id="galleries_count"
+					name="galleries_count"
 					type="list"
-					default="2"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
-			>
-				<option value="0">JNO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
-				<option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
-				<option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
+					default="5"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
+					class="">
+				<option value="5">0</option>
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
 			</field>
 
 			<field
-					name="images_show_description"
+					id="display_limitbox"
+					name="display_limitbox"
+					type="list"
+					default="1"
+					label="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX"
+					description="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX_DESC"
+					class="">
+				<option value="2">COM_RSGALLERY2_ALWAYS</option>
+				<option value="1">COM_RSGALLERY2_IF_MORE_GALLERIES_THAN_LIMIT</option>
+				<option value="0">COM_RSGALLERY2_NEVER</option>
+			</field>
+
+			<field
+					name="galleries_show_title"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE_DESC"
+					class="btn-group btn-group-yesno">
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="galleries_show_description"
+					name="galleries_show_description"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION_DESC"
+					class="btn-group btn-group-yesno">
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="galleries_show_owner"
+					name="galleries_show_owner"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="galleries_show_size"
+					name="galleries_show_size"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="galleries_show_date"
+					name="galleries_show_date"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="galleries_show_pre_label"
+					name="galleries_show_pre_label"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_PRE_LABEL"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_PRE_LABEL_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="galleries_display_slideshow"
+					name="displaySlideshow"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DISPLAY_SLIDESHOW"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_DISPLAY_SLIDESHOW_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					id="galleries_description_side"
+					name="galleries_description_side"
 					type="list"
 					default="0"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE_DESC"
 			>
-				<option value="0">JNO</option>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
 				<option value="1">COM_RSGALLERY2_CONFIG_DESC_POS_ABOVE_THUMB</option>
 				<option value="2">COM_RSGALLERY2_CONFIG_DESC_POS_RIGHT_BESIDE_THUMB</option>
 				<option value="3">COM_RSGALLERY2_CONFIG_DESC_POS_BELOW_THUMB</option>
 				<option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>
 			</field>
 
-			<field
-					name="images_show_search"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH_DESC"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
 
 		</fieldset>
 
-		<fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
+		<fieldset name="latest_images" label="COM_RSGALLERY2_MENU_J3X_LATEST_IMAGES_TAB">
 			<field
-					name="images_column_arrangement"
+					id="latest_count"
+					name="latest_count"
 					type="list"
-					default="1"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
-			>
-				<option value="global">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
-			</field>
-
-			<field
-					name="max_columns_in_images_view"
-					type="number"
-					default="4"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS_DESC"
-					showon="images_column_arrangement:1"
-			>
-			</field>
-
-			<field
-					name="images_row_arrangement"
-					type="list"
-					default="2"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
-					showon="images_column_arrangement:1"
-			>
-				<option value="global">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
-			</field>
-
-			<field
-					name="max_rows_in_images_view"
-					type="number"
 					default="5"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
-					showon="images_row_arrangement:1[AND]images_column_arrangement:1"
-			>
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
+					class="">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
 			</field>
 
-			<field
-					name="max_images_in_images_view"
-					type="number"
-					default="20"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
-					showon="images_row_arrangement:2[AND]images_column_arrangement:1"
-			>
-			</field>
+
 
 		</fieldset>
+
+		<fieldset name="random_images" label="COM_RSGALLERY2_MENU_J3X_RANDOM_IMAGES_TAB">
+			<field
+					id="random_images"
+					name="random_images"
+					type="list"
+					default="5"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
+					class="">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
+			</field>
+
+
+
+		</fieldset>
+
 	</fields>
 </metadata>

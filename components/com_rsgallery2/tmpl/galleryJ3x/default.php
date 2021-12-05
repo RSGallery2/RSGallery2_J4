@@ -63,11 +63,6 @@ if (!empty ($this->isDevelopSite))
 //echo $layout->render($displayData);
 
 //if ($this->config->displaySearch) {
-if (true) {
-    $layout = new FileLayout('Search.search');
-    echo $layout->render();
-}
-
 
 $layoutName = $this->getLayout();
 
@@ -88,20 +83,27 @@ $displayData['pagination'] = $this->pagination;
 # ToDo: <h1> header on debug  ? develop ?
 
 ?>
-
-<div class="rsg2__form rsg2__images_area">
-    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
+<!-- ToDo: is form here needed ? check core ...  -->
+<form id="rsg2_galleryJ3x__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
+      method="post" class="form-validate form-horizontal well">
+    <div class="rsg2__form rsg2__images_area">
 
 	    <h1>RSGallery2 "gallery j3x legacy" view </h1>
 
-        <hr>
+	    <hr>
+
+	    <?php // ToDo: insert variable(s) in menu ?>
+	    <?php //if ($this->config->displaySearch) ?>
+	    <?php if (true): ?>
+		    <?php      $searchLayout = new FileLayout('Search.search'); ?>
+		    <?php     echo $searchLayout->render(); ?>
+	    <?php endif; ?>
 
 	    <?php
 	    echo $layout->render($displayData);
 	    ?>
 
-
-    </form>
-</div>
+    </div>
+</form>
 
 

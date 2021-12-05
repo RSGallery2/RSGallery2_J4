@@ -74,12 +74,12 @@ $layoutName = $this->getLayout();
 // default is 'ImagesAreaJ3x.default'
 if($layoutName == 'default') {
 
-	$layoutName = 'ImagesAreaJ3x.default';
+	$layoutName = 'GalleriesAreaJ3x.default';
 }
 
 $layout = new FileLayout($layoutName);
 
-$displayData['images'] = $this->items;
+$displayData['galleries'] = $this->items;
 $displayData['params'] = $this->params;
 $displayData['pagination'] = $this->pagination;
 
@@ -89,8 +89,7 @@ $displayData['pagination'] = $this->pagination;
 
 ?>
 
-<div class="rsg2__form rsg2__images_area">
-    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
+<div class="rsg2__form rsg2__galleries_area">
 
         <h1>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h1>
 
@@ -121,11 +120,40 @@ $displayData['pagination'] = $this->pagination;
         </pre>
 
 
-        <?php
-//	    echo $layout->render($displayData);
-	    ?>
+	<?php
+	echo '--- galleries' . '-------------------------------' . '<br>';
+	foreach ($this->items as $idx => $gallery)
+	{
+		// $row = $idx % $cols;
+		echo 'images: ' . $gallery->name . '<br>';
+	}
+	?>
 
-        <?php
+	<?php
+	echo '--- randomImages' . '-------------------------------' . '<br>';
+	foreach ($this->randomImages as $idx => $image)
+	{
+		// $row = $idx % $cols;
+		echo 'images: ' . $image['name']. '<br>';
+	}
+	?>
+
+	<?php
+	echo '--- latesImages' . '-------------------------------' . '<br>';
+	foreach ($this->latestImages as $idx => $image)
+	{
+		// $row = $idx % $cols;
+		echo 'images: ' . $image['name']. '<br>';
+	}
+	?>
+
+
+
+
+	<hr>
+
+
+	<?php
 		// RSGallery2_Project\Documentation\J!3x\ImagesUsedInDoc\site.start.rootgalleries.png
 	    echo 'ToDo: $layout_ root ... galleries  ->render';
 	    ?>
@@ -268,7 +296,6 @@ $displayData['pagination'] = $this->pagination;
 		?>
 
 
-    </form>
 </div>
 
 
