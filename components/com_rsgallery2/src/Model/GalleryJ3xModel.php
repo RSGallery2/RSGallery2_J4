@@ -42,7 +42,7 @@ class GalleryJ3xModel extends GalleryModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public function AddLayoutData($images)
+	public static function AddLayoutData($images)
 	{
 		// ToDo: check for J3x style of gallery (? all in construct ?)
 		parent::AddLayoutData($images);
@@ -51,8 +51,8 @@ class GalleryJ3xModel extends GalleryModel
 		{
 			foreach ($images as $image)
 			{
-
-				$this->AssignUrl_AsInline($image);
+                // One image on the complete page with pagination
+				self::AssignUrl_AsInline($image);
 			}
 		}
 		catch (\RuntimeException $e)
@@ -74,7 +74,7 @@ class GalleryJ3xModel extends GalleryModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public function AssignUrl_AsInline($image)
+	public static function AssignUrl_AsInline($image)
 	{
 
 		try {
@@ -85,7 +85,8 @@ class GalleryJ3xModel extends GalleryModel
 			$app = Factory::getApplication();
 
 			$active       = $app->getMenu()->getActive();
-			$currentLink = $active->link;
+			// $currentLink = $active->link;
+            $currentLink = $active->route;
 
 
 			//$urlMenu  = $app->getMenu()->getActive()->link;
@@ -96,12 +97,14 @@ class GalleryJ3xModel extends GalleryModel
 
 			/**/
 
-
+            // /joomla3x/index.php/j3x-galleries-overview/item/105/asInline
 			//$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
 			$image->UrlLayout_AsInline = Route::_($currentLink
-				. '&gid=' . $image->gallery_id
-				. '&iid=' . $image->id
-				. '&layout=imagesJ3xAsInline',true,0,true);
+                . '/item/' . $image->id . '/asInline'
+//				. '&gid=' . $image->gallery_id
+//				. '&iid=' . $image->id
+				. '&layout=imagesJ3xAsInline'
+                ,true,0,true);
 
 			/**/
 			// ToDo: watermarked file

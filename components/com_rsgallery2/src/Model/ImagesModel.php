@@ -511,14 +511,14 @@ class ImagesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AddLayoutData($images)
+    public static function AddLayoutData($images)
     {
         try {
 
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                $this->AssignImageUrl($image);
+                self::AssignImageUrl($image);
 
             }
 
@@ -537,7 +537,7 @@ class ImagesModel extends ListModel
     }
 
     /**
-     * @param $images
+     * @param $image
      *
      *
      * @since 4.5.0.0

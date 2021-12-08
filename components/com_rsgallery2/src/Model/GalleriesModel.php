@@ -17,6 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
@@ -487,6 +488,7 @@ class GalleriesModel extends ListModel
 //			$input = $app->input;
 //			$gid = $input->get('gid', '', 'INT');
 
+
 			foreach ($galleries as $gallery)
 			{
 				// $ImagePaths = new ImagePathsData ($gallery->id);
@@ -509,7 +511,7 @@ class GalleriesModel extends ListModel
 
 						$this->AssignImageUrl($image);
 
-						$images[] = $image;
+                        $gallery->UrlThumbFile = $image->UrlThumbFile;
 					}
 
 					// Replace image name with gallery name
@@ -517,13 +519,14 @@ class GalleriesModel extends ListModel
 				else {
 
                     // gallery has NO image -> Create dummy data
-				    $dummyImage = new \stdClass();
-                    $dummyImage->name = $gallery->name;
+                    // toDo: there is an example for dummy link
+                    $gallery->isHasNoImages = true;
 
-                    $dummyImage->isHasNoImages = true;
-
-                    $images[] = $dummyImage;
+                    $gallery->UrlThumbFile = $image->UrlThumbFile;
                 }
+
+                // view single gallery on click
+                $this->AssignGalleryUrl($gallery);
 			}
 
 		}
@@ -581,7 +584,7 @@ class GalleriesModel extends ListModel
 
             // ToDo: check for J3x style of gallery (? all in construct ?)
 
-			// ToDo: keep assinged value for further use
+			// ToDo: keep assigned value for further use
             $ImagePaths = new ImagePathsData ($image->gallery_id);
 
             $ImagePaths->assignPathData ($image);
@@ -599,6 +602,56 @@ class GalleriesModel extends ListModel
         }
 
 	}
+
+
+	/**
+	 * @param $gallery
+	 *
+	 *
+	 * @since 4.5.0.0
+	 */
+	public static function AssignGalleryUrl($gallery)
+	{
+        try {
+
+            $gallery->UrlLayout_AsInline = ''; // fall back
+
+            //  Factory::getApplication()->getMenu()
+            $app = Factory::getApplication();
+
+            $active       = $app->getMenu()->getActive();
+            //$currentLink = $active->link;
+            $currentLink = $active->route;
+
+
+            //$urlMenu  = $app->getMenu()->getActive()->link;
+            /**/
+
+            // Link to single gallery in actual menu
+            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
+
+            //$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
+            $gallery->UrlLayout_AsInline = Route::_($currentLink
+                . '/gallery/' . $gallery->id . ''
+//                . '&gid=' . $image->gallery_id
+//                . '&iid=' . $gallery->id
+//                . '&layout=galleryJ3xAsInline'
+                ,true,0,true);
+
+            /**/
+            // ToDo: watermarked file
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
 
 
 	/**

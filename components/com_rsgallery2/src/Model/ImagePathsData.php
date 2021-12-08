@@ -31,7 +31,7 @@ class ImagePathsData extends ImagePaths
 
         $image->UrlThumbFile = $this->getThumbUrl ($image->name);
         // $image->UrlDisplayFile = $this->getSizeUrl ('400', $image->name); // toDo: image size to path
-        $image->UrlDisplayFiles = $this->getDisplayUrl ($image->name);
+        $image->UrlDisplayFile = $this->getDisplayUrl ($image->name);
         $image->UrlOriginalFile = $this->getOriginalUrl ($image->name);
 
         $image->SizeUrls = $this->getSizeUrls ($image->name);

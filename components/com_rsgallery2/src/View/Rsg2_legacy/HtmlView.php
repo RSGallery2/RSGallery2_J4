@@ -17,6 +17,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagesModel;
+use Rsgallery2\Component\Rsgallery2\Site\Model\GalleryJ3xModel;
 
 //use Rsgallery2\Component\Rsgallery2\Site\Model\Rsg2_legacyModel;
 
@@ -107,6 +108,11 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
+        $model = $this->getModel();
+        if ( ! empty($this->items)) {
+//            $model->AddLayoutData ($this->items);
+        }
+
 //        if (count($errors = $this->get('Errors')))
 //        {
 //            throw new GenericDataException(implode("\n", $errors), 500);
@@ -117,20 +123,26 @@ class HtmlView extends BaseHtmlView
 
 		//--- random images --------------------------------------------------
 
-		// ToDo: seperate limits for ...
+		// ToDo: separate limits for ...
 		$limit = 4;
 
-
-		// $this->randomImages = $this->get('RandomImages', $limit);
 		$this->randomImages = ImagesModel::randomImages($limit);
+        if ( ! empty($this->randomImages)) {
+            GalleryJ3xModel::AddLayoutData ($this->randomImages);
+        }
+        /**/
 
 		//--- latest images --------------------------------------------------
 
 		// ToDo: seperate limits for ...
 		$limit = 4;
 
-		// $this->latestImages = $this->get('LatestImages', $limit);
 		$this->latestImages = ImagesModel::latestImages($limit);
+        /**/
+        if ( ! empty($this->latestImages)) {
+            GalleryJ3xModel::AddLayoutData ($this->latestImages);
+        }
+        /**/
 
 
 		return parent::display($tpl);

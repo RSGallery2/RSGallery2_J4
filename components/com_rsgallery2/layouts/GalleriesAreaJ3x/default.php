@@ -83,33 +83,29 @@ $cols = $params->get('max_columns_in_images_view',2);
         <tbody>
 
         <?php
-        foreach ($galleries as $idx => $image) {
-	        $row = $idx % $cols;
+        foreach ($galleries as $idx => $gallery) {
+	        // $row = $idx % $cols;
 	    ?>
 
-	        <?php if ($row == 0 ): ?>
 			<tr>
-	        <?php endif ?>
 
 	            <td>
 	                <div class="shadow-box">
 	                    <div class="img-shadow">
-	                        <a href="<?php echo $image->UrlLayout_AsInline?>">
-	                            <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name ?>">
+	                        <a href="<?php echo $gallery->UrlLayout_AsInline?>">
+	                            <img src="<?php echo $gallery->UrlThumbFile ?>" alt="<?php echo $gallery->name ?>">
 	                        </a>
 	                    </div>
 	                </div>
 	                <div class="rsg2-clr"></div>
 	                <br>
 	                <span class="rsg2_thumb_name">
-						<?php echo $image->title ?>
+						<?php echo $gallery->name ?>
 	                </span>
 
 		        </td>
 
-	        <?php if ($row == $cols-1 ): ?>
-		        <tr>
-	        <?php endif ?>
+            <tr>
 
 	    <?php
         }
@@ -127,6 +123,9 @@ $cols = $params->get('max_columns_in_images_view',2);
 		?>
 	</div>
 
+    <?php
+    /**
+    ?>
 	<h3>rsgallery 2 j3x images area layout II</h3>
 
 
@@ -205,6 +204,8 @@ $cols = $params->get('max_columns_in_images_view',2);
 			</div>
 		</div>
 	</div>
+    /**/
+    ?>
 </div>
 
 
