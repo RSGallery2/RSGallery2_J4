@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 
 
 echo '<span style="color:red">'
-    . 'Image area Tasks: <br>'
-    . '* modal image (->slider)<br>'
+    . 'Galleries J3x area Tasks: <br>'
+    . '* call gallery view<br>'
     . '* length of filenames<br>'
     . '* what happens on empty galleries/ image lists<br>'
 	. '* Size of replace images (missing/no images) <br>'
@@ -83,7 +83,7 @@ $cols = $params->get('max_columns_in_images_view',2);
         <tbody>
 
         <?php
-        foreach ($images as $idx => $image) {
+        foreach ($galleries as $idx => $image) {
 	        $row = $idx % $cols;
 	    ?>
 
@@ -119,7 +119,12 @@ $cols = $params->get('max_columns_in_images_view',2);
     </table>
 
 	<div class="pagination">
-		<?php echo $pagination->getListFooter (); ?>
+		<?php
+		if(isset ($pagination))
+		{
+			echo $pagination->getListFooter();
+		}
+		?>
 	</div>
 
 	<h3>rsgallery 2 j3x images area layout II</h3>

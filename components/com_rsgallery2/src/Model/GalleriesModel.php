@@ -505,15 +505,14 @@ class GalleriesModel extends ListModel
 					if ( ! empty ($image)) {
 
                         $image->gallery_name = $gallery->name;
-						$images[] = $image;
+						$image->isHasNoImages = false;
 
-                        $image->isHasNoImages = false;
+						$this->AssignImageUrl($image);
+
+						$images[] = $image;
 					}
 
-                    $this->AssignImageUrl($image);
-
 					// Replace image name with gallery name
-                    $image->name = $image->gallery_name;
                 }
 				else {
 
@@ -575,13 +574,14 @@ class GalleriesModel extends ListModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public function AssignImageUrl($image)
+	public static function AssignImageUrl($image)
 	{
 
 		try {
 
             // ToDo: check for J3x style of gallery (? all in construct ?)
 
+			// ToDo: keep assinged value for further use
             $ImagePaths = new ImagePathsData ($image->gallery_id);
 
             $ImagePaths->assignPathData ($image);

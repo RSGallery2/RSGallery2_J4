@@ -10,13 +10,31 @@
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
+
+$layoutName = $this->getLayout();
+
+// default is 'ImagesAreaJ3x.default'
+if($layoutName == 'default') {
+
+	$layoutName = 'ImagesAreaJ3x.default';
+}
+
+$layout = new FileLayout($layoutName);
+
+$displayData['images'] = $this->randomImages;
+$displayData['params'] = $this->params;
+
+echo '--- randomImages (3)' . '-------------------------------' . '<br>';
+
+echo $layout->render($displayData);
 
 
-// RSGallery2_Project\Documentation\J!3x\ImagesUsedInDoc\site.start.randomLatestImages.png
-
-
-
+/**
 ?>
+
+
+
 
 <ul id="rsg2-galleryList">
 	<li class="rsg2-galleryList-item">
@@ -74,3 +92,4 @@ use Joomla\CMS\Language\Text;
 	</li>
 </ul>
 
+/**/

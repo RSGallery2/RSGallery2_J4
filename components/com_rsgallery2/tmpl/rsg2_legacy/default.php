@@ -97,30 +97,13 @@ $displayData['pagination'] = $this->pagination;
 
         <pre>
         /**
-         *
-         *      folders should be named galleries overview J3x
-         *         -> Rsg2_legacy is wrong
-         *
+         *      name should be rsg2RootJ3 -> model view ...
         */
-        </pre>
-
-        <pre>
-        /**
-         *      Overview not started
-         *
-         *          ($this->galleryId == 0) ==> standard overview
-         *
-         *          ($this->galleryId != 0) ==> parent gallery overview
-         *
-         *
-         *          ??? ($this->galleryId != 0) ==> no childs gallery overview ???
-         *
-         *
-         */
         </pre>
 
 
 	<?php
+	/**
 	echo '--- galleries' . '-------------------------------' . '<br>';
 	foreach ($this->items as $idx => $gallery)
 	{
@@ -145,15 +128,18 @@ $displayData['pagination'] = $this->pagination;
 		// $row = $idx % $cols;
 		echo 'images: ' . $image['name']. '<br>';
 	}
+	 * /**/
+
+	echo $layout->render($displayData);
+
+
 	?>
-
-
-
 
 	<hr>
 
 
 	<?php
+		/**
 		// RSGallery2_Project\Documentation\J!3x\ImagesUsedInDoc\site.start.rootgalleries.png
 	    echo 'ToDo: $layout_ root ... galleries  ->render';
 	    ?>
@@ -270,7 +256,9 @@ $displayData['pagination'] = $this->pagination;
 		<br>
 		Results 1 - 5 of 5	
 	</div>
-	
+	<?php
+	/**/
+	?>
 	<div class="rsg2-clr"></div>
 
 

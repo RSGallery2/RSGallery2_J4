@@ -20,7 +20,8 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 
 
 /**
@@ -541,7 +542,7 @@ class ImagesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignImageUrl($image)
+    public static function AssignImageUrl($image)
     {
 
         try {
@@ -565,5 +566,104 @@ class ImagesModel extends ListModel
         }
 
     }
+
+	/**
+	 * This function will retrieve the data of the n last uploaded images
+	 *
+	 * @param int $limit > 0 will limit the number of lines returned
+	 *
+	 * @return array rows with image name, images name, date, and user name as rows
+	 *
+	 * @since __BUMP_VERSION__
+	 * @throws Exception
+	 */
+	public static function latestImages($limit)
+	{
+		$images = array();
+
+		try
+		{
+			// Create a new query object.
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
+
+			$query
+				->select('*')
+				->from($db->quoteName('#__rsg2_images'))
+				->order($db->quoteName('id') . ' DESC');
+
+			$db->setQuery($query, 0, $limit);
+			$rows = $db->loadObjectList();
+
+			foreach ($rows as $image)
+			{
+				self::AssignImageUrl($image);
+
+				$images[] = $image;
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $images;
+	}
+
+	/**
+	 * This function will retrieve the data of n random uploaded images
+	 *
+	 * @param int $limit > 0 will limit the number of lines returned
+	 *
+	 * @return array rows with image name, images name, date, and user name as rows
+	 *
+	 * @since __BUMP_VERSION__
+	 * @throws Exception
+	 */
+	public static function randomImages($limit)
+	{
+		$images = array();
+
+		try
+		{
+			// Create a new query object.
+			$db    = Factory::getDBO();
+			$query = $db->getQuery(true);
+
+			$query
+				->select('*')
+				->from($db->quoteName('#__rsg2_images'))
+				->order('RAND()');
+
+			$db->setQuery($query, 0, $limit);
+			$rows = $db->loadObjectList();
+
+			foreach ($rows as $image)
+			{
+				self::AssignImageUrl($image);
+
+				$images[] = $image;
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $images;
+	}
+
+
+
 
 }

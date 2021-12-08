@@ -16,7 +16,9 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
-use Rsgallery2\Component\Rsgallery2\Site\Model\Rsg2_legacyModel;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagesModel;
+
+//use Rsgallery2\Component\Rsgallery2\Site\Model\Rsg2_legacyModel;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -120,7 +122,7 @@ class HtmlView extends BaseHtmlView
 
 
 		// $this->randomImages = $this->get('RandomImages', $limit);
-		$this->randomImages = Rsg2_legacyModel::RandomImages($limit);
+		$this->randomImages = ImagesModel::randomImages($limit);
 
 		//--- latest images --------------------------------------------------
 
@@ -128,10 +130,7 @@ class HtmlView extends BaseHtmlView
 		$limit = 4;
 
 		// $this->latestImages = $this->get('LatestImages', $limit);
-		$this->latestImages = Rsg2_legacyModel::latestImages($limit);
-
-
-
+		$this->latestImages = ImagesModel::latestImages($limit);
 
 
 		return parent::display($tpl);

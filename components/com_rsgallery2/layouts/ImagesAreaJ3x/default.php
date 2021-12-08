@@ -13,12 +13,12 @@ defined('_JEXEC') or die;
 
 
 echo '<span style="color:red">'
-    . 'Image area Tasks: <br>'
+    . 'Image J3x area Tasks: <br>'
     . '* modal image (->slider)<br>'
     . '* length of filenames<br>'
     . '* what happens on empty galleries/ image lists<br>'
 	. '* Size of replace images (missing/no images) <br>'
-	. '* pagination<br>'
+	. '* border and titel? for latest and random<br>'
 //	. '* <br>'
 //	. '* <br>'
 //	. '* <br>'
@@ -119,10 +119,16 @@ $cols = $params->get('max_columns_in_images_view',2);
     </table>
 
 	<div class="pagination">
-		<?php echo $pagination->getListFooter (); ?>
+		<?php
+		if(isset ($pagination))
+		{
+			echo $pagination->getListFooter();
+		}
+		?>
 	</div>
 
-	<h3>rsgallery 2 j3x images area layout II</h3>
+	<?php /**
+	<h3>rsgallery 2 j3x images area layout III</h3>
 
 
 
@@ -138,7 +144,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 				     data-target="#rsg2_carousel"
 				     data-slide-to="<?php echo $idx ?>"bs-
 				>
-				<figcaption><?php echo $image->titel; ?></figcaption>
+				<figcaption><?php echo $image->title; ?></figcaption>
 			</figure>
 			<?php
 		}
@@ -200,6 +206,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 			</div>
 		</div>
 	</div>
+    /**/ ?>
 </div>
 
 
