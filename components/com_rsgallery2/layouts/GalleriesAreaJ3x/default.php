@@ -79,6 +79,10 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 <div id="rsg2_gallery" class="rsg2">
 
+	<div class="intro_text">ToDo: intro_text </div>
+
+	<div class="rsg_galleryblock system-unpublished">
+
     <table id="rsg2-thumbsList">
         <tbody>
 
@@ -124,11 +128,37 @@ $cols = $params->get('max_columns_in_images_view',2);
 	</div>
 
     <?php
-    /**
+    /**/
     ?>
 	<h3>rsgallery 2 j3x images area layout II</h3>
 
 
+		<div class="rsg_galleryblock system-unpublished">
+			<div class="rsg2-galleryList-status"></div>
+			<div class="rsg2-galleryList-thumb">
+				<div class="img-shadow">
+					<a href="/Joomla3x/index.php/gallery-overview/3-gallery-03">
+						<img class="rsg2-galleryList-thumb" src="http://127.0.0.1/Joomla3x/images/rsgallery/thumb/DSC_5505-2.jpg.jpg" alt="">
+					</a>
+				</div>
+			</div>
+			<div class="rsg2-galleryList-text">Gallery 03	      <span class="rsg2-galleryList-newImages">		  </span>            <div class="rsg_gallery_details">
+					<div class="rsg2_details">
+						<a href="/Joomla3x/index.php/gallery-overview/3-gallery-03?page=slideshow">
+							Slideshow</a>
+						<br>
+						Owner: finnern                        <br>
+						Size: 4 images                        <br>
+						Created: 30 December 2020                        <br>
+					</div>
+				</div>
+				<div class="rsg2-galleryList-description">
+					
+				</div>
+			</div>
+			<div class="rsg_sub_url_single">
+			</div>
+		</div>
 
 	<div class="rsg_galleryblock" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
 
