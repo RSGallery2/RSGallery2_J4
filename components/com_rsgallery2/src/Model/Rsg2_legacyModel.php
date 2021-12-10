@@ -185,7 +185,7 @@ class Rsg2_legacyModel extends GalleriesModel
 
             // ToDo: check for J3x style of gallery (? all in construct ?)
 
-            $ImagePaths = new ImagePathsData ($image->id);
+            $ImagePaths = new ImagePathsData ($image->gallery_id);
 
             $ImagePaths->assignPathData ($image);
 

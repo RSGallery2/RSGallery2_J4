@@ -260,6 +260,8 @@ class GalleriesModel extends ListModel
         $query->select('ua.name AS author_name')
             ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
+	    $query->where('a.published = 1');
+
 //		// Join over the associations.
 //		$assoc = $this->getAssoc();
 //
@@ -307,7 +309,8 @@ class GalleriesModel extends ListModel
                 . ' OR a.note LIKE ' . $search
                 . ' OR a.created LIKE ' . $search
                 . ' OR a.modified LIKE ' . $search
-            );
+            )
+	        ->where('a.published = 1');
         }
 
         // exclude root gallery record
@@ -506,7 +509,7 @@ class GalleriesModel extends ListModel
 
 					if ( ! empty ($image)) {
 
-                        $image->gallery_name = $gallery->name;
+                        $image->gallery_id = $gallery->id;
 						$image->isHasNoImages = false;
 
 						$this->AssignImageUrl($image);

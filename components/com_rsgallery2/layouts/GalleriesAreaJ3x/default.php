@@ -28,10 +28,10 @@ echo '<span style="color:red">'
 
 
 
-//$images = $displayData['images'];
-extract($displayData); // $images
-if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
-    $images = [];
+//$galleries = $displayData['images'];
+extract($displayData); // $galleries
+if ( ! isset($galleries)) {   //         if (isset($to_user, $from_user, $amount))
+    $galleries = [];
 }
 
 //--- sanitize URLs -----------------------------------
@@ -40,30 +40,30 @@ $noImageUrl = URI::root() . '/media/com_rsgallery2/images/NoImagesAssigned.png';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.png';
 
 // assign dummy images if not found
-foreach ($images as $idx => $image) {
+foreach ($galleries as $idx => $gallery) {
 
     // show dummy thumb on galleries with no images
-    if (! empty($image->isHasNoImages))
+    if (! empty($gallery->isHasNoImages))
     {
-        $image->UrlOriginalFile = $noImageUrl;
-        $image->UrlDisplayFiles = $noImageUrl;;
-        $image->UrlThumbFile = $noImageUrl;
+        $gallery->UrlOriginalFile = $noImageUrl;
+        $gallery->UrlDisplayFiles = $noImageUrl;;
+        $gallery->UrlThumbFile = $noImageUrl;
 
     }
 
 //    else {
 //
-//        if (!$image->isOriginalFileExist) {
-//            $image->UrlOriginalFile = $missingUrl;
+//        if (!$gallery->isOriginalFileExist) {
+//            $gallery->UrlOriginalFile = $missingUrl;
 //            ;
 //        }
 //
-//        if (!$image->isDisplayFileExist) {
-//            $image->UrlDisplayFiles = $missingUrl;;
+//        if (!$gallery->isDisplayFileExist) {
+//            $gallery->UrlDisplayFiles = $missingUrl;;
 //        }
 //
-//        if (!$image->isThumbFileExist) {
-//            $image->UrlThumbFile = $missingUrl;
+//        if (!$gallery->isThumbFileExist) {
+//            $gallery->UrlThumbFile = $missingUrl;
 //        }
 //
 //    }
@@ -79,44 +79,41 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 <div id="rsg2_gallery" class="rsg2">
 
+		
+	<div class="intro_text">ToDo: search -> external </div>
+	<div class="intro_text">ToDo: limit selection box -> external </div>
+
 	<div class="intro_text">ToDo: intro_text </div>
 
-	<div class="rsg_galleryblock system-unpublished">
+	<?php
+	foreach ($galleries as $idx => $gallery) {
+		// $row = $idx % $cols;
+	?>
+		<div class="rsg_galleryblock system-unpublished">
+			<div class="rsg2-galleryList-status">ToDo: galleryList-status </div>
+			<div class="rsg2-galleryList-thumb">
+				<!---div class="shadow-box"-->
+				<div class="img-shadow">
+					<a href="<?php echo $gallery->UrlLayout_AsInline?>">
+						<img class="rsg2-galleryList-thumb" 
+							src="<?php echo $gallery->UrlThumbFile ?>" 
+							alt="<?php echo $gallery->name ?>">
+					</a>
+				</div>
+			</div>
 
-    <table id="rsg2-thumbsList">
-        <tbody>
+			<div class="rsg2-clr"></div>
+			<br>
+			<span class="rsg2_thumb_name">
+				<?php echo $gallery->name ?>
+			</span>
 
-        <?php
-        foreach ($galleries as $idx => $gallery) {
-	        // $row = $idx % $cols;
-	    ?>
+		</div>
+	<?php
+	}
+	?>
 
-			<tr>
 
-	            <td>
-	                <div class="shadow-box">
-	                    <div class="img-shadow">
-	                        <a href="<?php echo $gallery->UrlLayout_AsInline?>">
-	                            <img src="<?php echo $gallery->UrlThumbFile ?>" alt="<?php echo $gallery->name ?>">
-	                        </a>
-	                    </div>
-	                </div>
-	                <div class="rsg2-clr"></div>
-	                <br>
-	                <span class="rsg2_thumb_name">
-						<?php echo $gallery->name ?>
-	                </span>
-
-		        </td>
-
-            <tr>
-
-	    <?php
-        }
-        ?>
-
-        </tbody>
-    </table>
 
 	<div class="pagination">
 		<?php
@@ -126,11 +123,16 @@ $cols = $params->get('max_columns_in_images_view',2);
 		}
 		?>
 	</div>
+	
+</div class="rsg2">
+
+
+
 
     <?php
     /**/
     ?>
-	<h3>rsgallery 2 j3x images area layout II</h3>
+	<h3>rsgallery 2 j3x images area layout III demo</h3>
 
 
 		<div class="rsg_galleryblock system-unpublished">
@@ -138,11 +140,16 @@ $cols = $params->get('max_columns_in_images_view',2);
 			<div class="rsg2-galleryList-thumb">
 				<div class="img-shadow">
 					<a href="/Joomla3x/index.php/gallery-overview/3-gallery-03">
-						<img class="rsg2-galleryList-thumb" src="http://127.0.0.1/Joomla3x/images/rsgallery/thumb/DSC_5505-2.jpg.jpg" alt="">
+						<img class="rsg2-galleryList-thumb" 
+						src="http://127.0.0.1/Joomla3x/images/rsgallery/thumb/DSC_5505-2.jpg.jpg" 
+						alt="">
 					</a>
 				</div>
 			</div>
-			<div class="rsg2-galleryList-text">Gallery 03	      <span class="rsg2-galleryList-newImages">		  </span>            <div class="rsg_gallery_details">
+			<div class="rsg2-galleryList-text">Gallery 03
+					<span class="rsg2-galleryList-newImages">		  </span>
+					<div class="rsg_gallery_details">
+					
 					<div class="rsg2_details">
 						<a href="/Joomla3x/index.php/gallery-overview/3-gallery-03?page=slideshow">
 							Slideshow</a>
@@ -163,16 +170,16 @@ $cols = $params->get('max_columns_in_images_view',2);
 	<div class="rsg_galleryblock" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
 
 		<?php
-		foreach ($images as $idx => $image) {
+		foreach ($galleries as $idx => $gallery) {
 			?>
 			<figure>
-				<img src="<?php echo $image->UrlThumbFile ?>"
-				     alt="<?php echo $image->name ?>"
+				<img src="<?php echo $gallery->UrlThumbFile ?>"
+				     alt="<?php echo $gallery->name ?>"
 				     class="img-thumbnail rsg2_gallery__images_image"
 				     data-target="#rsg2_carousel"
 				     data-slide-to="<?php echo $idx ?>"bs-
 				>
-				<figcaption><?php echo $image->titel; ?></figcaption>
+				<figcaption><?php echo $gallery->title; ?></figcaption>
 			</figure>
 			<?php
 		}
@@ -198,14 +205,14 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 							<?php
 							$isActive="active";
-							foreach ($images as $image) {
+							foreach ($galleries as $gallery) {
 								?>
 
 								<div class="carousel-item <?php echo $isActive ?>" >
 									<div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">
-										<!--                                        <img class="d-block " src="--><?php //echo $image->UrlDisplayFiles[400] ?><!--"-->
-										<img class="d-block " src="<?php echo $image->UrlOriginalFile ?>"
-										     alt="<?php echo $image->name ?>"
+										<!--                                        <img class="d-block " src="--><?php //echo $gallery->UrlDisplayFiles[400] ?><!--"-->
+										<img class="d-block " src="<?php echo $gallery->UrlOriginalFile ?>"
+										     alt="<?php echo $gallery->name ?>"
 										>
 									</div>
 								</div>

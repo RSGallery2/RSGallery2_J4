@@ -281,6 +281,7 @@ class ImagesModel extends ListModel
 					//->from($db->quoteName('#__rsg2_galleries', 'a'))
 					->from($db->quoteName('#__rsg2_images', 'a'))
 					//->where('a.id = ' . (int) $gid);
+					->where('a.published = 1')
 					->where('a.gallery_id = ' . (int) $gid);
                     // ToDo: limit ....
 
@@ -590,6 +591,7 @@ class ImagesModel extends ListModel
 			$query
 				->select('*')
 				->from($db->quoteName('#__rsg2_images'))
+				->where('published = 1')
 				->order($db->quoteName('id') . ' DESC');
 
 			$db->setQuery($query, 0, $limit);
@@ -638,6 +640,7 @@ class ImagesModel extends ListModel
 			$query
 				->select('*')
 				->from($db->quoteName('#__rsg2_images'))
+				->where('published = 1')
 				->order('RAND()');
 
 			$db->setQuery($query, 0, $limit);

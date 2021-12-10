@@ -282,6 +282,7 @@ class GalleryModel extends ListModel
 		$query->select('*')
 			//->from($db->quoteName('#__rsg2_galleries', 'a'))
 			->from($db->quoteName('#__rsg2_images', 'a'))
+			->where('a.published = 1')
 			//->where('a.id = ' . (int) $gid);
 			->where('a.gallery_id = ' . (int) $gid);
 		// ToDo: limit ....
