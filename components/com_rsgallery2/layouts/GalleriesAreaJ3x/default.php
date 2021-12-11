@@ -106,7 +106,7 @@ $cols = $params->get('max_columns_in_images_view',2);
                 <div>
                 <?php if ($params->get('galleries_show_title') || True): ?>
                     <span><?php echo $gallery->name ?></span>
-                    <span class="rsg2-galleryList-newImages">ToDo: galleryList-newImages</span>
+                    <span class="rsg2-galleryList-newImages">ToDo: new images count</span>
                 <?php endif; ?>
                 </div>
                 <div class="rsg_gallery_details">
@@ -116,8 +116,8 @@ $cols = $params->get('max_columns_in_images_view',2);
                         <a href="<?php echo $gallery->UrlSlideshow?>">
                             Slideshow
                         </a>
-                        <?php if ($params->get('yyy') || True): ?>
-                            <div>Owner: <php echo $gallery->user ></div>
+                        <?php if (($params->get('yyy') || True) && !empty($gallery->author_name): ?>
+                            <div>Owner: <?php echo $gallery->author_name ?></div>
                         <?php endif; ?>
                         <div>Size: <php echo $gallery->size ></div>
                         <div>Created: <php echo $gallery->date ></div>
@@ -131,10 +131,6 @@ $cols = $params->get('max_columns_in_images_view',2);
     		</div>
 		</div>
         <div class="rsg2-clr"></div>
-        <hr>
-        <span class="rsg2_thumb_name">
-				<?php echo $gallery->name ?>
-			</span>
 	<?php
 	}
 	?>
