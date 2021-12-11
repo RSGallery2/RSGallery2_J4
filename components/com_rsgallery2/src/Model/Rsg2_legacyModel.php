@@ -49,6 +49,7 @@ class Rsg2_legacyModel extends GalleriesModel
         // ToDo: check for J3x style of gallery (? all in construct ?)
         parent::AddLayoutData($galleries);
 
+        /**
         try
         {
             foreach ($galleries as $gallery)
@@ -71,21 +72,16 @@ class Rsg2_legacyModel extends GalleriesModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
+        /**/
         return $galleries;
     }
 
-    /**
-     * @param $images
-     *
-     *
-     * @since 4.5.0.0
-     */
-    public function AssignUrl_AsInline($gallery)
+    public static function AssignSlideshowUrl($gallery)
     {
 
         try {
 
-            $gallery->UrlLayout_AsInline = ''; // fall back
+            $gallery->UrlGallery = ''; // fall back
 
             //  Factory::getApplication()->getMenu()
             $app = Factory::getApplication();
@@ -96,21 +92,17 @@ class Rsg2_legacyModel extends GalleriesModel
 
 
             //$urlMenu  = $app->getMenu()->getActive()->link;
-            /**/
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
-            //$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
-            $gallery->UrlLayout_AsInline = Route::_($currentLink
-                . '/gallery/' . $gallery->id . ''
+            $gallery->UrlSlideshow = Route::_($currentLink
+                . '/galleryJ3x/' . $gallery->id . '/slideshow'
 //                . '&gid=' . $image->gallery_id
 //                . '&iid=' . $gallery->id
 //                . '&layout=galleryJ3xAsInline'
                 ,true,0,true);
 
-            /**/
-            // ToDo: watermarked file
         }
         catch (\RuntimeException $e)
         {
@@ -124,6 +116,7 @@ class Rsg2_legacyModel extends GalleriesModel
 
     }
 
+
     /**
      * @param $gallery
      *
@@ -134,7 +127,7 @@ class Rsg2_legacyModel extends GalleriesModel
     {
         try {
 
-            $gallery->UrlLayout_AsInline = ''; // fall back
+            $gallery->UrlGallery = ''; // fall back
 
             //  Factory::getApplication()->getMenu()
             $app = Factory::getApplication();
@@ -150,8 +143,7 @@ class Rsg2_legacyModel extends GalleriesModel
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
-            //$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
-            $gallery->UrlLayout_AsInline = Route::_($currentLink
+            $gallery->UrlGallery = Route::_($currentLink
                 . '/galleryJ3x/' . $gallery->id . ''
 //                . '&gid=' . $image->gallery_id
 //                . '&iid=' . $gallery->id
@@ -172,38 +164,6 @@ class Rsg2_legacyModel extends GalleriesModel
         }
 
     }
-
-    /**
-     * @param $image
-     *
-     *
-     * @since 4.5.0.0
-     */
-    public static function AssignImageUrl($image)
-    {
-        try {
-
-            // ToDo: check for J3x style of gallery (? all in construct ?)
-
-            $ImagePaths = new ImagePathsData ($image->gallery_id);
-
-            $ImagePaths->assignPathData ($image);
-
-            // ToDo: watermarked file
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-    }
-
-
 
 
 }

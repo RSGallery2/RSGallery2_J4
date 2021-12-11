@@ -52,13 +52,14 @@ class GalleryJ3xModel extends GalleryModel
 			foreach ($images as $image)
 			{
                 // One image on the complete page with pagination
-				self::AssignUrl_AsInline($image);
+				self::AssignUrlImageAsInline($image);
+
 			}
 		}
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'GalleryJ3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -74,12 +75,12 @@ class GalleryJ3xModel extends GalleryModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public static function AssignUrl_AsInline($image)
+	public static function AssignUrlImageAsInline($image)
 	{
 
 		try {
 
-			$image->UrlLayout_AsInline = ''; // fall back
+			$image->UrlGallery_AsInline = ''; // fall back
 
 			//  Factory::getApplication()->getMenu()
 			$app = Factory::getApplication();
@@ -97,9 +98,13 @@ class GalleryJ3xModel extends GalleryModel
 
 			/**/
 
+            // ToDo:Is function needed ?
+
             // /joomla3x/index.php/j3x-galleries-overview/item/105/asInline
-			//$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
-			$image->UrlLayout_AsInline = Route::_($currentLink
+
+            // link to images view as image side to side per page
+
+			$image->UrlImageAsInline = Route::_($currentLink
                 . '/item/' . $image->id . '/asInline'
 //				. '&gid=' . $image->gallery_id
 //				. '&iid=' . $image->id
@@ -112,7 +117,7 @@ class GalleryJ3xModel extends GalleryModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'GalleriesModelJ3x: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'GalleryJ3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();

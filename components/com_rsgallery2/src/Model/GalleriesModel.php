@@ -512,7 +512,7 @@ class GalleriesModel extends ListModel
                         $image->gallery_id = $gallery->id;
 						$image->isHasNoImages = false;
 
-						$this->AssignImageUrl($image);
+						$this->AssignImagePaths($image);
 
                         $gallery->UrlThumbFile = $image->UrlThumbFile;
 					}
@@ -530,6 +530,9 @@ class GalleriesModel extends ListModel
 
                 // view single gallery on click
                 $this->AssignGalleryUrl($gallery);
+
+                // view single gallery on click
+                $this->AssignSlideshowUrl($gallery);
 			}
 
 		}
@@ -580,7 +583,7 @@ class GalleriesModel extends ListModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public static function AssignImageUrl($image)
+	public static function AssignImagePaths($image)
 	{
 
 		try {
@@ -617,7 +620,7 @@ class GalleriesModel extends ListModel
 	{
         try {
 
-            $gallery->UrlLayout_AsInline = ''; // fall back
+            $gallery->UrlGallery = ''; // fall back
 
             //  Factory::getApplication()->getMenu()
             $app = Factory::getApplication();
@@ -633,8 +636,7 @@ class GalleriesModel extends ListModel
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
-            //$image->UrlLayout_AsInline = Route::_(URI::root() . 'option=com_rsgallery2&view=galleryJ3x'
-            $gallery->UrlLayout_AsInline = Route::_($currentLink
+            $gallery->UrlGallery = Route::_($currentLink
                 . '/gallery/' . $gallery->id . ''
 //                . '&gid=' . $image->gallery_id
 //                . '&iid=' . $gallery->id
@@ -656,6 +658,45 @@ class GalleriesModel extends ListModel
 
     }
 
+    public static function AssignSlideshowUrl($gallery)
+    {
+
+        try {
+
+            $gallery->UrlGallery = ''; // fall back
+
+            //  Factory::getApplication()->getMenu()
+            $app = Factory::getApplication();
+
+            $active       = $app->getMenu()->getActive();
+            //$currentLink = $active->link;
+            $currentLink = $active->route;
+
+
+            //$urlMenu  = $app->getMenu()->getActive()->link;
+
+            // Link to single gallery in actual menu
+            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
+
+            $gallery->UrlSlideshow = Route::_($currentLink
+                . '/gallery/' . $gallery->id . '/slideshow'
+//                . '&gid=' . $image->gallery_id
+//                . '&iid=' . $gallery->id
+//                . '&layout=galleryJ3xAsInline'
+                ,true,0,true);
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModelJ3x: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
 
 	/**
 	 * @param $galleryId

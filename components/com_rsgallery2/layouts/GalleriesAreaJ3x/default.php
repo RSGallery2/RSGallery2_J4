@@ -90,11 +90,11 @@ $cols = $params->get('max_columns_in_images_view',2);
 		// $row = $idx % $cols;
 	?>
 		<div class="rsg_galleryblock system-unpublished">
-			<div class="rsg2-galleryList-status">ToDo: galleryList-status </div>
+			<div class="rsg2-galleryList-status">ToDo: galleryList-status</div>
 			<div class="rsg2-galleryList-thumb">
 				<!---div class="shadow-box"-->
 				<div class="img-shadow">
-					<a href="<?php echo $gallery->UrlLayout_AsInline?>">
+					<a href="<?php echo $gallery->UrlGallery?>">
 						<img class="rsg2-galleryList-thumb" 
 							src="<?php echo $gallery->UrlThumbFile ?>" 
 							alt="<?php echo $gallery->name ?>">
@@ -102,13 +102,39 @@ $cols = $params->get('max_columns_in_images_view',2);
 				</div>
 			</div>
 
-			<div class="rsg2-clr"></div>
-			<br>
-			<span class="rsg2_thumb_name">
+            <div class="rsg2-galleryList-text">
+                <div>
+                <?php if ($params->get('galleries_show_title') || True): ?>
+                    <span><?php echo $gallery->name ?></span>
+                    <span class="rsg2-galleryList-newImages">ToDo: galleryList-newImages</span>
+                <?php endif; ?>
+                </div>
+                <div class="rsg_gallery_details">
+
+                    <div class="rsg2_details">
+
+                        <a href="<?php echo $gallery->UrlSlideshow?>">
+                            Slideshow
+                        </a>
+                        <?php if ($params->get('yyy') || True): ?>
+                            <div>Owner: <php echo $gallery->user ></div>
+                        <?php endif; ?>
+                        <div>Size: <php echo $gallery->size ></div>
+                        <div>Created: <php echo $gallery->date ></div>
+
+                    </div>
+                    <div class="rsg2-galleryList-description">
+
+                    </div>
+                </div>
+
+    		</div>
+		</div>
+        <div class="rsg2-clr"></div>
+        <hr>
+        <span class="rsg2_thumb_name">
 				<?php echo $gallery->name ?>
 			</span>
-
-		</div>
 	<?php
 	}
 	?>
@@ -117,6 +143,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 	<div class="pagination">
 		<?php
+        // params_>get('');
 		if(isset ($pagination))
 		{
 			echo $pagination->getListFooter();
@@ -163,8 +190,14 @@ $cols = $params->get('max_columns_in_images_view',2);
 					
 				</div>
 			</div>
-			<div class="rsg_sub_url_single">
-			</div>
+            <div class="rsg_sub_url_single">Subgalleries:
+                <a href="/joomla3x/index.php/j3x-galleries-overview/gallery/5">
+                    Landschaft 22			(24 images)
+                </a>,
+                <a href="/joomla3x/index.php/j3x-galleries-overview/gallery/4">
+                    3.			(17 images)
+                </a>
+            </div>
 		</div>
 
 	<div class="rsg_galleryblock" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -241,8 +274,6 @@ $cols = $params->get('max_columns_in_images_view',2);
 			</div>
 		</div>
 	</div>
-    /**/
-    ?>
 </div>
 
 
