@@ -116,14 +116,15 @@ $cols = $params->get('max_columns_in_images_view',2);
                         <a href="<?php echo $gallery->UrlSlideshow?>">
                             Slideshow
                         </a>
-                        <?php if (($params->get('yyy') || True) && !empty($gallery->author_name): ?>
+                        <?php if (($params->get('yyy') || True) && !empty($gallery->author_name)): ?>
                             <div>Owner: <?php echo $gallery->author_name ?></div>
                         <?php endif; ?>
-                        <div>Size: <php echo $gallery->size ></div>
-                        <div>Created: <php echo $gallery->date ></div>
+                        <div>Size: <?php echo $gallery->image_count ?></div>
+                        <div>Created: <?php echo $gallery->created; ?></div>
 
                     </div>
                     <div class="rsg2-galleryList-description">
+	                    <div>Desc: <?php echo $gallery->description ?></div>
 
                     </div>
                 </div>
