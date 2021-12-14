@@ -7,7 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
 
 defined('_JEXEC') or die;
 
@@ -117,14 +120,16 @@ $cols = $params->get('max_columns_in_images_view',2);
                             Slideshow
                         </a>
                         <?php if (($params->get('yyy') || True) && !empty($gallery->author_name)): ?>
-                            <div>Owner: <?php echo $gallery->author_name ?></div>
+                            <div>xOwner: <?php echo $gallery->author_name ?></div>
                         <?php endif; ?>
-                        <div>Size: <?php echo $gallery->image_count ?></div>
-                        <div>Created: <?php echo $gallery->created; ?></div>
+                        <div>xSize: <?php echo $gallery->image_count ?></div>
+                        <div>xCreated: <?php echo Text::_('COM_RSGALLERY2_CREATED') . ' '
+		                      . HTMLHelper::_("date", $gallery->created, Text::_('COM_RSGALLERY2_DATE_FORMAT_LC3'))
+		                       . '#' . $gallery->created; ?></div>
 
                     </div>
                     <div class="rsg2-galleryList-description">
-	                    <div>Desc: <?php echo $gallery->description ?></div>
+	                    <div>xDesc: <?php echo $gallery->description ?></div>
 
                     </div>
                 </div>
