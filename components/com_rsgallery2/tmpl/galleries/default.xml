@@ -54,6 +54,8 @@
 				   label="COM_RSGALLERY2_GALLERIES_INTRODUCTION_TEXT"
 				   description="COM_RSGALLERY2_GALLERIES_INTRODUCTION_DESC"
 				   buttons="false"
+				   filter="JComponentHelper::filterText"
+				   asset_id="com_content"
 				   showon="galleries_show_intro!:0"
 			/>
 

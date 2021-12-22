@@ -51,6 +51,14 @@
 				<option value="0">JNO</option>
 			</field>
 
+			<field name="intro_text"
+				   type="editor"
+				   label="COM_RSGALLERY2_J3X_INTRODUCTION"
+				   description="COM_RSGALLERY2_J3X_INTRODUCTION_DESC"
+				   filter="JComponentHelper::filterText"
+				   buttons="false"
+			/>
+
 			<field
 					name="gallery_layout"
 					type="componentlayout"
@@ -226,8 +234,8 @@
 
 		<fieldset name="random_images" label="COM_RSGALLERY2_MENU_J3X_RANDOM_IMAGES_TAB">
 			<field
-					id="random_images"
-					name="random_images"
+					id="random_count"
+					name="random_count"
 					type="list"
 					default="5"
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"

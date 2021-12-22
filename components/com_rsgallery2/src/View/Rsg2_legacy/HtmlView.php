@@ -28,7 +28,7 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\GalleryJ3xModel;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
+    /**
      * The model state
      *
      * @var    \JObject
@@ -53,14 +53,14 @@ class HtmlView extends BaseHtmlView
     protected $pagination;
 
     /**
-	 * The page parameters
-	 *
-	 * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $params = null;
+     * The page parameters
+     *
+     * @var    \Joomla\Registry\Registry|null
+     * @since  __BUMP_VERSION__
+     */
+    protected $params = null;
 
-	/**
+    /**
      * The page class suffix
      *
      * @var    string
@@ -77,39 +77,40 @@ class HtmlView extends BaseHtmlView
     protected $user = null;
 
     /**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
-	public function display($tpl = null)
-	{
+     * Execute and display a template script.
+     *
+     * @param string $tpl The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
+     */
+    public function display($tpl = null)
+    {
 
         /**
          *
          *      folders should be named galleries root J3x
          *         -> Rsg2_legacy is wrong
          *
-        */
+         */
 
         //--- root galleries --------------------------------------------------
 
-        $input  = Factory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
         $state = $this->state = $this->get('State');
         $params = $this->params = $state->get('params');
+        $this->mergeMenuOptions();
 
-        $this->items      = $this->get('Items');
+        $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
-        $this->user       = Factory::getUser();
+        $this->user = Factory::getUser();
 
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
         $model = $this->getModel();
-        if ( ! empty($this->items)) {
+        if (!empty($this->items)) {
 //            $model->AddLayoutData ($this->items);
         }
 
@@ -121,30 +122,51 @@ class HtmlView extends BaseHtmlView
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-		//--- random images --------------------------------------------------
+        //--- random images --------------------------------------------------
 
-		// ToDo: separate limits for ...
-		$limit = 4;
+        // ToDo: separate limits for ...
+        $limit = $params->get('random_count', 4);
 
-		$this->randomImages = ImagesModel::randomImages($limit);
-        if ( ! empty($this->randomImages)) {
-            GalleryJ3xModel::AddLayoutData ($this->randomImages);
+        $this->randomImages = ImagesModel::randomImages($limit);
+        if (!empty($this->randomImages)) {
+            GalleryJ3xModel::AddLayoutData($this->randomImages);
         }
         /**/
 
-		//--- latest images --------------------------------------------------
+        //--- latest images --------------------------------------------------
 
-		// ToDo: seperate limits for ...
-		$limit = 4;
+        // ToDo: seperate limits for ...
+        $limit = $params->get('latest_count', 4);
 
-		$this->latestImages = ImagesModel::latestImages($limit);
+        $this->latestImages = ImagesModel::latestImages($limit);
         /**/
-        if ( ! empty($this->latestImages)) {
-            GalleryJ3xModel::AddLayoutData ($this->latestImages);
+        if (!empty($this->latestImages)) {
+            GalleryJ3xModel::AddLayoutData($this->latestImages);
         }
         /**/
 
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
+
+    public function mergeMenuOptions()
+    {
+        $app = Factory::getApplication();
+
+        if ($menu = $app->getMenu()->getActive())
+        {
+            $menuParams = $menu->getParams();
+        }
+        else
+        {
+            $menuParams = new Registry;
+        }
+
+        $mergedParams = clone $this->params;
+        $mergedParams->merge($menuParams);
+
+        $this->params = $mergedParams;
+    }
+
+
 }

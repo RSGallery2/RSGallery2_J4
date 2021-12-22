@@ -83,10 +83,10 @@ $cols = $params->get('max_columns_in_images_view',2);
 <div id="rsg2_gallery" class="rsg2">
 
 		
-	<div class="intro_text">ToDo: search -> external </div>
-	<div class="intro_text">ToDo: limit selection box -> external </div>
+	<div class="yyyy">$config->intro_text = $rsgConfig->get('intro_text');</div>
+	<div class="yyyy">ToDo: limit selection box -> external </div>
 
-	<div class="intro_text">ToDo: intro_text </div>
+	<div class="intro_text"><?php echo $params->get('intro_text'); ?></div>
 
 	<?php
 	foreach ($galleries as $idx => $gallery) {
@@ -107,7 +107,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 
             <div class="rsg2-galleryList-text">
                 <div>
-                <?php if ($params->get('galleries_show_title') || True): ?>
+                <?php if ($params->get('galleries_show_title')): ?>
                     <span><?php echo $gallery->name ?></span>
                     <span class="rsg2-galleryList-newImages">ToDo: new images count</span>
                 <?php endif; ?>
@@ -119,7 +119,7 @@ $cols = $params->get('max_columns_in_images_view',2);
                         <a href="<?php echo $gallery->UrlSlideshow?>">
                             Slideshow
                         </a>
-                        <?php if (($params->get('yyy') || True) && !empty($gallery->author_name)): ?>
+                        <?php if (($params->get('yyy')) && !empty($gallery->author_name)): ?>
                             <div>xOwner: <?php echo $gallery->author_name ?></div>
                         <?php endif; ?>
                         <div>xSize: <?php echo $gallery->image_count ?></div>
@@ -154,132 +154,5 @@ $cols = $params->get('max_columns_in_images_view',2);
 	</div>
 	
 </div class="rsg2">
-
-
-
-
-    <?php
-    /**/
-    ?>
-	<h3>rsgallery 2 j3x images area layout III demo</h3>
-
-
-		<div class="rsg_galleryblock system-unpublished">
-			<div class="rsg2-galleryList-status"></div>
-			<div class="rsg2-galleryList-thumb">
-				<div class="img-shadow">
-					<a href="/Joomla3x/index.php/gallery-overview/3-gallery-03">
-						<img class="rsg2-galleryList-thumb" 
-						src="http://127.0.0.1/Joomla3x/images/rsgallery/thumb/DSC_5505-2.jpg.jpg" 
-						alt="">
-					</a>
-				</div>
-			</div>
-			<div class="rsg2-galleryList-text">Gallery 03
-					<span class="rsg2-galleryList-newImages">		  </span>
-					<div class="rsg_gallery_details">
-					
-					<div class="rsg2_details">
-						<a href="/Joomla3x/index.php/gallery-overview/3-gallery-03?page=slideshow">
-							Slideshow</a>
-						<br>
-						Owner: finnern                        <br>
-						Size: 4 images                        <br>
-						Created: 30 December 2020                        <br>
-					</div>
-				</div>
-				<div class="rsg2-galleryList-description">
-					
-				</div>
-			</div>
-            <div class="rsg_sub_url_single">Subgalleries:
-                <a href="/joomla3x/index.php/j3x-galleries-overview/gallery/5">
-                    Landschaft 22			(24 images)
-                </a>,
-                <a href="/joomla3x/index.php/j3x-galleries-overview/gallery/4">
-                    3.			(17 images)
-                </a>
-            </div>
-		</div>
-
-	<div class="rsg_galleryblock" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-
-		<?php
-		foreach ($galleries as $idx => $gallery) {
-			?>
-			<figure>
-				<img src="<?php echo $gallery->UrlThumbFile ?>"
-				     alt="<?php echo $gallery->name ?>"
-				     class="img-thumbnail rsg2_gallery__images_image"
-				     data-target="#rsg2_carousel"
-				     data-slide-to="<?php echo $idx ?>"bs-
-				>
-				<figcaption><?php echo $gallery->title; ?></figcaption>
-			</figure>
-			<?php
-		}
-		?>
-	</div>
-
-	<!-- Modal markup: https://getbootstrap.com/docs/4.4/components/modal/ -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body">
-
-					<!-- Carousel markup goes here -->
-
-					<div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
-
-						<div class="carousel-inner">
-
-							<?php
-							$isActive="active";
-							foreach ($galleries as $gallery) {
-								?>
-
-								<div class="carousel-item <?php echo $isActive ?>" >
-									<div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">
-										<!--                                        <img class="d-block " src="--><?php //echo $gallery->UrlDisplayFiles[400] ?><!--"-->
-										<img class="d-block " src="<?php echo $gallery->UrlOriginalFile ?>"
-										     alt="<?php echo $gallery->name ?>"
-										>
-									</div>
-								</div>
-
-								<?php
-								$isActive="";
-							}
-							?>
-
-
-							<a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
-								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								<span class="sr-only">Previous</span>
-							</a>
-							<a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
-								<span class="carousel-control-next-icon" aria-hidden="true"></span>
-								<span class="sr-only">Next</span>
-							</a>
-						</div>
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-
 
 
