@@ -74,7 +74,11 @@ foreach ($galleries as $idx => $gallery) {
 
 
 // max_columns_in_images_view
-$cols = $params->get('max_columns_in_images_view',2);
+//$cols = $params->get('max_columns_in_images_view',2);
+
+// ToDo: format date is already in database ? May be as ...
+//  . HTMLHelper::_("date", $gallery->created, Text::_('COM_RSGALLERY2_DATE_FORMAT_LC3'))
+//   . '#' . $gallery->created; ?><!--</div>-->
 
 ?>
 
@@ -84,9 +88,9 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 		
 	<div class="yyyy">$config->intro_text = $rsgConfig->get('intro_text');</div>
-	<div class="yyyy">ToDo: limit selection box -> external </div>
+	<div class="yyyy">ToDo: limit selection box -> external </div><br>
 
-	<div class="intro_text"><?php echo $params->get('intro_text'); ?></div>
+	<div class="form-label intro_text"><?php echo $menuParams->intro_text; ?></div>
 
 	<?php
 	foreach ($galleries as $idx => $gallery) {
@@ -107,33 +111,36 @@ $cols = $params->get('max_columns_in_images_view',2);
 
             <div class="rsg2-galleryList-text">
                 <div>
-                <?php if ($params->get('galleries_show_title')): ?>
+                <?php if ($menuParams->galleries_show_title): ?>
                     <span><?php echo $gallery->name ?></span>
-                    <span class="rsg2-galleryList-newImages">ToDo: new images count</span>
+                    <span class="rsg2-galleryList-newImages">??? ToDo: new images count ??</span>
                 <?php endif; ?>
                 </div>
                 <div class="rsg_gallery_details">
 
                     <div class="rsg2_details">
 
-                        <a href="<?php echo $gallery->UrlSlideshow?>">
-                            Slideshow
-                        </a>
-                        <?php if (($params->get('yyy')) && !empty($gallery->author_name)): ?>
-                            <div>xOwner: <?php echo $gallery->author_name ?></div>
+                        <?php if ($menuParams->galleries_show_title): ?>
+                            <a href="<?php echo $gallery->UrlSlideshow?>">
+                                Slideshow
+                            </a>
                         <?php endif; ?>
-                        <div>xSize: <?php echo $gallery->image_count ?></div>
-                        <div>xCreated: <?php echo Text::_('COM_RSGALLERY2_CREATED') . ' '
-		                      . HTMLHelper::_("date", $gallery->created, Text::_('COM_RSGALLERY2_DATE_FORMAT_LC3'))
-		                       . '#' . $gallery->created; ?></div>
-
+                        <?php if ($menuParams->galleries_show_owner && !empty($gallery->author_name)): ?>
+                                <div><?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $gallery->author_name ?></div>
+                        <?php endif; ?>
+                        <?php if ($menuParams->galleries_show_size): ?>
+                            <div><?php echo Text::_('COM_RSGALLERY2_SIZE') . ': ' . $gallery->image_count ?></div>
+                        <?php endif; ?>
+                        <?php if ($menuParams->galleries_show_date): ?>
+                            <div><?php echo Text::_('COM_RSGALLERY2_CREATED') . ': ' . $gallery->created; ?></div>
+                        <?php endif; ?>
                     </div>
-                    <div class="rsg2-galleryList-description">
-	                    <div>xDesc: <?php echo $gallery->description ?></div>
-
-                    </div>
+                    <?php if ($menuParams->galleries_show_description): ?>
+                        <div class="rsg2-galleryList-description">
+                            <div><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION') . ': ' . $gallery->description ?></div>
+                        </div>
+                    <?php endif; ?>
                 </div>
-
     		</div>
 		</div>
         <div class="rsg2-clr"></div>

@@ -51,7 +51,9 @@
 				<option value="0">JNO</option>
 			</field>
 
-			<field name="intro_text"
+			<field
+				   id="intro_text"
+				   name="intro_text"
 				   type="editor"
 				   label="COM_RSGALLERY2_J3X_INTRODUCTION"
 				   description="COM_RSGALLERY2_J3X_INTRODUCTION_DESC"
@@ -104,6 +106,7 @@
 			</field>
 
 			<field
+					id="galleries_show_title"
 					name="galleries_show_title"
 					type="radio"
 					default="1"

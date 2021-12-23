@@ -58,9 +58,6 @@ if (!empty ($this->isDevelopSite))
         . '</span><br><br>';
 }
 
-//$displayData['images'] = $this->images;
-//$displayData['pagination'] = $this->pagination;
-//echo $layout->render($displayData);
 
 //if ($this->config->displaySearch) {
 if (true) {
@@ -81,6 +78,7 @@ $layout = new FileLayout($layoutName);
 
 $displayData['galleries'] = $this->items;
 $displayData['params'] = $this->params;
+$displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 // return;
