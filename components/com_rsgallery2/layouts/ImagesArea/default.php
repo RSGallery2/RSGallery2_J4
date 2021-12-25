@@ -11,24 +11,42 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
+if (!empty($isDevelopSite)) {
+    echo '<span style="color:red">'
+        . 'Image area Tasks: <br>'
+        . '* html aria-label ... <br>'
+        . '* HTML 5 layout, bootstrap * <br>'
+        . '* modal image (->slider)<br>'
+        . '* length of filenames<br>'
+        . '* what happens on empty galleries/ image lists<br>'
+        . '* Size of replace images (missing/no images) <br>'
+        . '* pagination<br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+        . '</span><br><br>';
+}
 
-echo '<span style="color:red">'
-    . 'Image area Tasks: <br>'
-    . '* modal image (->slider)<br>'
-    . '* length of filenames<br>'
-    . '* what happens on empty galleries/ image lists<br>'
-	. '* Size of replace images (missing/no images) <br>'
-	. '* pagination<br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-. '</span><br><br>';
+//$images = $displayData['images'];
+extract($displayData);
+if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
+    $images = [];
+}
 
-
-$images = $displayData['images'];
-
+if (!empty($isDevelopSite)) {
+    echo '<span style="color:red">'
+        . 'Images area layout Tasks: <br>'
+        . '* html aria-label ... <br>'
+        . '* HTML 5 layout, bootstrap * <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+        . '</span><br><br>';
+}
 
 //--- sanitice URLs -----------------------------------
 
@@ -65,7 +83,9 @@ foreach ($images as $idx => $image) {
 
 ?>
 
-<h3>rsgallery 2 images area layout</h3>
+<?php if (!empty($isDebugSite)): ?>
+    <h3>rsgallery 2 images area layout</h3>
+<?php endif; ?>
 
 <div id="rsg2_gallery" class="rsg2_gallery">
 

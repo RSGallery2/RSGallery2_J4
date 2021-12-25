@@ -9,17 +9,38 @@
 
 defined('_JEXEC') or die;
 
-$images = $displayData['images'];
-;
+//$images = $displayData['images'];
+extract($displayData);
+if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
+    $images = [];
+}
+
+if (!empty($isDevelopSite)) {
+    echo '<span style="color:red">'
+        . 'Slideshow layout Tasks: <br>'
+        . '* html aria-label ... <br>'
+        . '* HTML 5 layout, bootstrap * <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+//	. '* <br>'
+        . '</span><br><br>';
+}
+
 ?>
 
-<h3>rsgallery 2 images slideshow layout</h3>
+<?php if (!empty($isDebugSite)): ?>
+    <h3>rsgallery 2 images slideshow layout</h3>
+<?php endif; ?>
 
 <div class="rsg2_gallery">
 
     <div class="rsg2__slideshow" >
 
+        <?php if (!empty($isDebugSite)): ?>
         <hr>
+        <?php endif; ?>
 
         <!-- Carousel markup goes here -->
 
@@ -56,7 +77,9 @@ $images = $displayData['images'];
             </div>
         </div>
 
+    <?php if (!empty($isDebugSite)): ?>
         <hr>
+    <?php endif; ?>
         <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
 

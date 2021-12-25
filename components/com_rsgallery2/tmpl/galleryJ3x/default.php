@@ -62,6 +62,9 @@ if (!empty ($this->isDevelopSite))
 //$displayData['pagination'] = $this->pagination;
 //echo $layout->render($displayData);
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
 //if ($this->config->displaySearch) {
 
 $layoutName = $this->getLayout();
@@ -78,6 +81,9 @@ $displayData['images'] = $this->items;
 $displayData['params'] = $this->params;
 $displayData['pagination'] = $this->pagination;
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
 // return;
 
 # ToDo: <h1> header on debug  ? develop ?
@@ -88,9 +94,13 @@ $displayData['pagination'] = $this->pagination;
       method="post" class="form-validate form-horizontal well">
     <div class="rsg2__form rsg2__images_area">
 
-	    <h1>RSGallery2 "gallery j3x legacy" view </h1>
+        <?php if (!empty($this->isDebugSite)): ?>
+    	    <h1>RSGallery2 "gallery j3x legacy" view </h1>
+        <?php endif; ?>
 
+        <?php if (!empty($this->isDebugSite)): ?>
 	    <hr>
+        <?php endif; ?>
 
 	    <?php // ToDo: insert variable(s) in menu ?>
 	    <?php //if ($this->config->displaySearch) ?>

@@ -17,25 +17,26 @@ $layoutName = $this->getLayout();
 // default is 'ImagesAreaJ3x.default'
 if($layoutName == 'default') {
 
-	$layoutName = 'ImagesAreaJ3x.default';
+    $layoutName = 'ImagesFramedAreaJ3x.default';
 }
 
 $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->randomImages;
 $displayData['params'] = $this->params;
+$displayData['title'] = Text::_('COM_RSGALLERY2_RANDOM_IMAGES');
 
-echo '--- randomImages (3)' . '-------------------------------' . '<br>';
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
 
+if (!empty($this->isDebugSite)) {
+    echo '--- randomImages (3)' . '-------------------------------' . '<br>';
+}
 echo $layout->render($displayData);
 
 
 /**
 ?>
-
-
-
-
 <ul id="rsg2-galleryList">
 	<li class="rsg2-galleryList-item">
 		<table class="table_border" cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -91,5 +92,4 @@ echo $layout->render($displayData);
 		</table>
 	</li>
 </ul>
-
 /**/

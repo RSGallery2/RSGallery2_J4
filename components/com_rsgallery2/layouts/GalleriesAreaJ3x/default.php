@@ -14,28 +14,45 @@ use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
 
 defined('_JEXEC') or die;
 
-
-echo '<span style="color:red">'
-    . 'Galleries J3x area Tasks: <br>'
-    . '* call gallery view<br>'
-    . '* length of filenames<br>'
-    . '* what happens on empty galleries/ image lists<br>'
-	. '* Size of replace images (missing/no images) <br>'
-	. '* pagination<br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-. '</span><br><br>';
-
-
-
-//$galleries = $displayData['images'];
-extract($displayData); // $galleries
+extract($displayData);
 if ( ! isset($galleries)) {   //         if (isset($to_user, $from_user, $amount))
     $galleries = [];
 }
+
+if (!empty($isDevelopSite)) {
+    echo '<span style="color:red">'
+        . '* Use CSS flex: align right of thumb<br>'
+    	. '* html aria-label ... <br>'
+        . '* HTML 5 layout, bootstrap * <br>'
+        . '* Galleries J3x area Tasks: <br>'
+        . '* New images count ?? new images since last visit -> see class rsg2-galleryList-newImages<br>'
+        . '* Size of replace images (missing/no images) <br>'
+    	. '* HasNewImagesText ? text or icon ? -> see class rsg2-galleryList-status<br>'
+        . '* SubGalleryList array ( -> see class rsg_sub_url_single<br>'
+        . '* Display sub galleries with just thumb and small information <br>'
+        . '* Limit sub galleries print ... if count bigger <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+        . '</span><br><br>';
+}
+
+/**
+   -> see class rsg2-galleryList-status
+
+<div class="rsg_sub_url_single">
+    Subgalleries:
+    <a href="/joomla3x/index.php/j3x-galleries-overview/gallery/5">
+        Landschaft		(24 images)
+    </a>,
+    <a href="/joomla3x/index.php/j3x-galleries-overview/gallery/4">
+        Berge			(17 images)
+    </a>
+</div>
+/**/
 
 //--- sanitize URLs -----------------------------------
 
@@ -53,51 +70,22 @@ foreach ($galleries as $idx => $gallery) {
         $gallery->UrlThumbFile = $noImageUrl;
 
     }
-
-//    else {
-//
-//        if (!$gallery->isOriginalFileExist) {
-//            $gallery->UrlOriginalFile = $missingUrl;
-//            ;
-//        }
-//
-//        if (!$gallery->isDisplayFileExist) {
-//            $gallery->UrlDisplayFiles = $missingUrl;;
-//        }
-//
-//        if (!$gallery->isThumbFileExist) {
-//            $gallery->UrlThumbFile = $missingUrl;
-//        }
-//
-//    }
 }
-
-
-// max_columns_in_images_view
-//$cols = $params->get('max_columns_in_images_view',2);
-
-// ToDo: format date is already in database ? May be as ...
-//  . HTMLHelper::_("date", $gallery->created, Text::_('COM_RSGALLERY2_DATE_FORMAT_LC3'))
-//   . '#' . $gallery->created; ?><!--</div>-->
 
 ?>
 
-<h3>rsgallery 2 j3x galleries area layout II</h3>
+<?php if (!empty($isDebugSite)): ?>
+    <h3>rsgallery 2 j3x galleries area layout</h3>
+<?php endif; ?>
+
 
 <div id="rsg2_gallery" class="rsg2">
 
-		
-	<div class="yyyy">$config->intro_text = $rsgConfig->get('intro_text');</div>
-	<div class="yyyy">ToDo: limit selection box -> external </div><br>
-
 	<div class="form-label intro_text"><?php echo $menuParams->intro_text; ?></div>
 
-	<?php
-	foreach ($galleries as $idx => $gallery) {
-		// $row = $idx % $cols;
-	?>
+	<?php foreach ($galleries as $idx => $gallery) : ?>
 		<div class="rsg_galleryblock system-unpublished">
-			<div class="rsg2-galleryList-status">ToDo: galleryList-status</div>
+			<div class="rsg2-galleryList-status"></div>
 			<div class="rsg2-galleryList-thumb">
 				<!---div class="shadow-box"-->
 				<div class="img-shadow">
@@ -113,7 +101,7 @@ foreach ($galleries as $idx => $gallery) {
                 <div>
                 <?php if ($menuParams->galleries_show_title): ?>
                     <span><?php echo $gallery->name ?></span>
-                    <span class="rsg2-galleryList-newImages">??? ToDo: new images count ??</span>
+                    <span class="rsg2-galleryList-newImages"></span>
                 <?php endif; ?>
                 </div>
                 <div class="rsg_gallery_details">
@@ -136,19 +124,33 @@ foreach ($galleries as $idx => $gallery) {
                         <?php endif; ?>
                     </div>
                     <?php if ($menuParams->galleries_show_description): ?>
-                        <div class="rsg2-galleryList-description">
-                            <div><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION') . ': ' . $gallery->description ?></div>
-                        </div>
+                        <?php if (! empty ($gallery->description)): ?>
+                            <div class="rsg2-galleryList-description">
+                                <div><?php echo $gallery->description ?></div>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
     		</div>
+            <div class="rsg_sub_url_single">
+
+                <?php if (count($gallery->subGalleryList) > 0): ?>
+                    <?php echo Text::_('COM_RSGALLERY2_SUBGALLERIES') . ': ' ?>
+
+                    <?php foreach ($gallery->subGalleryList as $subIdx => $subGallery) : ?>
+
+                        <?php if ($subIdx > 0): ?>
+                            ,&nbsp;
+                        <?php endif; ?>
+                        <?php echo $subGallery->name . ' (' . $subGallery->imgCount .')'; ?>
+
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+            </div>
 		</div>
         <div class="rsg2-clr"></div>
-	<?php
-	}
-	?>
-
-
+	<?php endforeach; ?>
 
 	<div class="pagination">
 		<?php

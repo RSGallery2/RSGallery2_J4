@@ -83,6 +83,9 @@ $displayData['images'] = $this->items;
 $displayData['params'] = $this->params;
 $displayData['pagination'] = $this->pagination;
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
 // return;
 
 # ToDo: <h1> header on debug  ? develop ?
@@ -92,9 +95,13 @@ $displayData['pagination'] = $this->pagination;
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-	    <h1>RSGallery2 "galleries j3x legacy" view </h1>
+        <?php if (!empty($this->isDebugSite)): ?>
+    	    <h1>RSGallery2 "galleries j3x legacy" view </h1>
+        <?php endif; ?>
 
-        <hr>
+        <?php if (!empty($this->isDebugSite)): ?>
+            <hr>
+        <?php endif; ?>
 
 	    <?php
 	    echo $layout->render($displayData);

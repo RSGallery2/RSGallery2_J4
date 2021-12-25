@@ -98,30 +98,31 @@ class HtmlView extends BaseHtmlView
 
         //--- root galleries --------------------------------------------------
 
-        $this->mergeMenuOptions();
-//        $input = Factory::getApplication()->input;
+        $input = Factory::getApplication()->input;
 //        $this->galleryId = $input->get('gid', 0, 'INT');
 
         $state = $this->state = $this->get('State');
         $params = $this->params = $state->get('params');
+
+        $this->mergeMenuOptions();
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
         $this->user = Factory::getUser();
 
-        $this->isDebugSite = $params->get('isDebugSite');
-        $this->isDevelopSite = $params->get('isDevelop');
+        $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
+        $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
 
-        $model = $this->getModel();
-        if (!empty($this->items)) {
-//            $model->AddLayoutData ($this->items);
-        }
-
-//        if (count($errors = $this->get('Errors')))
-//        {
-//            throw new GenericDataException(implode("\n", $errors), 500);
+//        $model = $this->getModel();
+//        if (!empty($this->items)) {
+////            $model->AddLayoutData ($this->items);
 //        }
+
+        if (count($errors = $this->get('Errors')))
+        {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;

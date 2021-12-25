@@ -528,6 +528,9 @@ class GalleriesModel extends ListModel
                     $gallery->UrlThumbFile = $image->UrlThumbFile;
                 }
 
+                // Info about sub galleries
+                $this->AssignSubGalleryList($gallery);
+
                 // view single gallery on click
                 $this->AssignGalleryUrl($gallery);
 
@@ -548,34 +551,6 @@ class GalleriesModel extends ListModel
 
 		return $images;
 	}
-
-//	/**
-//	 * @param $images
-//	 *
-//	 *
-//	 * @since 4.5.0.0
-//	 */
-//	public function AssignImageUrls($images)
-//	{
-//		try {
-//
-//			foreach ($images as $image) {
-//
-//                $this->AssignImageUrl($image);
-//			}
-//
-//		}
-//        catch (\RuntimeException $e)
-//        {
-//            $OutTxt = '';
-//            $OutTxt .= 'GalleriesModel: AssignImageUrls: Error executing query: "' . "" . '"' . '<br>';
-//            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-//
-//            $app = Factory::getApplication();
-//            $app->enqueueMessage($OutTxt, 'error');
-//        }
-//
-//	}
 
 	/**
 	 * @param $images
@@ -609,8 +584,79 @@ class GalleriesModel extends ListModel
 
 	}
 
+    public function imageCount ($galleryId)
+    {
+        $imageCount = 0;
 
-	/**
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true);
+            // count gallery items
+            $query->select('COUNT(*)')
+                ->from('#__rsg2_images')
+                ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($galleryId))
+            ;
+            $db->setQuery($query);
+
+            $imageCount = $db->loadResult();
+        }
+        catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: imageCount: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $imageCount;
+    }
+
+    public function AssignSubGalleryList($gallery)
+    {
+
+        try {
+
+            $gallery->subGalleryList = []; // fall back
+
+            // Select parent and child galleries
+            $db = $this->getDbo();
+            $query = $db->getQuery(true);
+
+            $query->select('id, name')
+                ->from($db->quoteName('#__rsg2_galleries'))
+                ->where('parent_id = ' . (int)$gallery->id);
+
+            $db->setQuery($query);
+            $subGalleries = $db->loadObjectList();
+
+            foreach ($subGalleries as $subGallery) {
+
+                $subData = (object)[];
+
+                $subData->id = $subGallery->id;
+                $subData->name = $subGallery->name;
+
+                $subData->imgCount = $this->imageCount ($subGallery->id);
+
+                $gallery->subGalleryList[] = $subData;
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
+
+
+    /**
 	 * @param $gallery
 	 *
 	 *
@@ -689,7 +735,7 @@ class GalleriesModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModelJ3x: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

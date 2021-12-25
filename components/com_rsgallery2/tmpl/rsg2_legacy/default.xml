@@ -16,7 +16,6 @@
 			/>
 
 			<field
-					id="displaySearch"
 					name="displaySearch"
 					type="radio"
 					default="0"
@@ -28,7 +27,6 @@
 			</field>
 
 			<field
-					id="displayRandom"
 					name="displayRandom"
 					type="radio"
 					default="0"
@@ -40,7 +38,6 @@
 			</field>
 
 			<field
-					id="displayLatest"
 					name="displayLatest"
 					type="radio"
 					default="0"
@@ -52,7 +49,6 @@
 			</field>
 
 			<field
-				   id="intro_text"
 				   name="intro_text"
 				   type="editor"
 				   label="COM_RSGALLERY2_J3X_INTRODUCTION"
@@ -75,7 +71,6 @@
 
 		<fieldset name="root_galleries" label="COM_RSGALLERY2_MENU_J3X_ROOT_GALLERIES_TAB">
 			<field
-					id="galleries_count"
 					name="galleries_count"
 					type="list"
 					default="5"
@@ -93,7 +88,6 @@
 			</field>
 
 			<field
-					id="display_limitbox"
 					name="display_limitbox"
 					type="list"
 					default="1"
@@ -106,7 +100,6 @@
 			</field>
 
 			<field
-					id="galleries_show_title"
 					name="galleries_show_title"
 					type="radio"
 					default="1"
@@ -119,7 +112,6 @@
 			</field>
 
 			<field
-					id="galleries_show_description"
 					name="galleries_show_description"
 					type="radio"
 					default="0"
@@ -132,7 +124,6 @@
 			</field>
 
 			<field
-					id="galleries_show_owner"
 					name="galleries_show_owner"
 					type="radio"
 					default="0"
@@ -145,7 +136,6 @@
 			</field>
 
 			<field
-					id="galleries_show_size"
 					name="galleries_show_size"
 					type="radio"
 					default="0"
@@ -158,7 +148,6 @@
 			</field>
 
 			<field
-					id="galleries_show_date"
 					name="galleries_show_date"
 					type="radio"
 					default="0"
@@ -171,7 +160,6 @@
 			</field>
 
 			<field
-					id="galleries_show_pre_label"
 					name="galleries_show_pre_label"
 					type="radio"
 					default="0"
@@ -184,7 +172,6 @@
 			</field>
 
 			<field
-					id="galleries_display_slideshow"
 					name="displaySlideshow"
 					type="radio"
 					default="1"
@@ -196,7 +183,6 @@
 			</field>
 
 			<field
-					id="galleries_description_side"
 					name="galleries_description_side"
 					type="list"
 					default="0"
@@ -215,9 +201,8 @@
 
 		<fieldset name="latest_images" label="COM_RSGALLERY2_MENU_J3X_LATEST_IMAGES_TAB">
 			<field
-					id="latest_count"
 					name="latest_count"
-					type="list"
+					type="number"
 					default="5"
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
 					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
@@ -237,9 +222,8 @@
 
 		<fieldset name="random_images" label="COM_RSGALLERY2_MENU_J3X_RANDOM_IMAGES_TAB">
 			<field
-					id="random_count"
 					name="random_count"
-					type="list"
+					type="number"
 					default="5"
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
 					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"

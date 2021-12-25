@@ -19,7 +19,10 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/rsg2_search.css', array('versio
 ?>
 
 <?php
+if (!empty($isDevelopSite)) {
 echo '<span style="color:red">'
+    . '* html aria-label ... <br>'
+    . '* HTML 5 layout, bootstrap * <br>'
     . 'Search tasks: <br>'
     . '* link from extern ??<br>'
     . '* separate searches for gallery / images -> seperate answers<br>'
@@ -29,6 +32,7 @@ echo '<span style="color:red">'
 //	. '* <br>'
 //	. '* <br>'
 . '</span><br><br>';
+}
 
 $link = Route::_('index.php?option=com_rsgallery2&view=searchresult'); // JRoute::_('index.php'); ? >search?Itemid=101
 $placeholder = Text::_('COM_RSGALLERY2_SEARCH_GALLERIES_IMAGES');
@@ -65,5 +69,6 @@ $placeholder = Text::_('COM_RSGALLERY2_SEARCH_GALLERIES_IMAGES');
     </div>
 </form>
 
-
-<hr>
+<?php if (!empty($isDebugSite)): ?>
+    <hr>
+<?php endif; ?>

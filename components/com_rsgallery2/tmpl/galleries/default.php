@@ -23,7 +23,6 @@ use \Joomla\CMS\Layout\FileLayout;
 HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
 
 
-echo '';
 // on develop show open tasks if existing
 if (!empty ($this->isDevelopSite))
 {
@@ -55,22 +54,25 @@ $layout = new FileLayout('ImagesArea.default');
 
 $displayData['images'] = $this->items;
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
 ?>
 <div class="rsg2__form rsg2__galleries_thumbs">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <?php echo '<h1> RSGallery2 "galleries" view </h1>';?>
-        <h2>Thumbs of galleries</h2>
+        <?php if (!empty($this->isDebugSite)): ?>
+            <?php echo '<h1> RSGallery2 "galleries" view </h1>';?>
+            <h2>Thumbs of galleries</h2>
+        <?php endif; ?>
 
-        <hr>
+        <?php if (!empty($this->isDebugSite)): ?>
+            <hr>
+        <?php endif; ?>
 
         <?php
         echo $layout->render($displayData);
         ?>
-
-
-
-
 
     </form>
 </div>

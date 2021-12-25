@@ -42,16 +42,16 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('vers
 //
 //echo $this->item->event->afterDisplayContent;
 
-echo '';
+
 // on develop show open tasks if existing
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
         . 'Tasks: <br>'
-        . '* <br>'
-        . '* ??? global<br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        . '* User limit selection box -> layout ? Nbr of galleries  -> yes no ?  <br>'
+        . '* Format of date is already in database -> improve ... <br>'
+        . '* RSG2_legacy should be renamed to rsg2RootJ3x -> all: model view ...<br>'
+        . '* Events in general<br>'
         //	. '* <br>'
         //	. '* <br>'
         //	. '* <br>'
@@ -81,6 +81,11 @@ $displayData['params'] = $this->params;
 $displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
+
+
 // return;
 
 # ToDo: <h1> header on debug  ? develop ?
@@ -89,51 +94,16 @@ $displayData['pagination'] = $this->pagination;
 
 <div class="rsg2__form rsg2__galleries_area">
 
-        <h1>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h1>
+    <?php if (!empty($isDebugSite)): ?>
+        <h2>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h2>
+    <?php endif; ?>
 
-        <hr>
+	<?php // display root galleries ?>
+	<?php echo $layout->render($displayData); ?>
 
-        <pre>
-        /**
-         *      name should be rsg2RootJ3 -> model view ...
-        */
-        </pre>
-
-
-	<?php
-	/**
-	echo '--- galleries' . '-------------------------------' . '<br>';
-	foreach ($this->items as $idx => $gallery)
-	{
-		// $row = $idx % $cols;
-		echo 'images: ' . $gallery->name . '<br>';
-	}
-	?>
-
-	<?php
-	echo '--- randomImages' . '-------------------------------' . '<br>';
-	foreach ($this->randomImages as $idx => $image)
-	{
-		// $row = $idx % $cols;
-		echo 'images: ' . $image['name']. '<br>';
-	}
-	?>
-
-	<?php
-	echo '--- latesImages' . '-------------------------------' . '<br>';
-	foreach ($this->latestImages as $idx => $image)
-	{
-		// $row = $idx % $cols;
-		echo 'images: ' . $image['name']. '<br>';
-	}
-	 * /**/
-
-	echo $layout->render($displayData);
-
-
-	?>
-
-	<hr>
+    <?php if (!empty($this->isDebugSite)): ?>
+		<hr>
+    <?php endif; ?>
 
 
 	<?php
@@ -156,131 +126,13 @@ $displayData['pagination'] = $this->pagination;
 				<option value="0">All</option>
 			</select>
 		</form>
-	</div>
-
-
-	<div class="rsg_galleryblock">
-		<div class="rsg2-galleryList-status"></div>
-		<div class="rsg2-galleryList-thumb">
-			<div class="img-shadow">
-				<a href="/index.php/demo/demo-menu-root-galleries/gallery/7">
-					<img class="rsg2-galleryList-thumb" src="http://rsgallery2.org/images/rsgallery/original/img_9114.jpg" alt="">
-				</a>
-			</div>
-		</div>
-		<div class="rsg2-galleryList-text">
-			NextGallery <span class="rsg2-galleryList-newImages">
-				<sup></sup>
-			</span>
-			<div class="rsg_gallery_details">
-				<div class="rsg2_details">
-					<a href="/index.php/demo/demo-menu-root-galleries/gallery/7/asSlideshow">Slideshow</a><br>
-						Owner: adminfinnern<br>
-						Size: 7 images<br>
-						Created: 16 August 2020<br>
-				</div>
-			</div>
-			<div class="rsg2-galleryList-description">
-			</div>
-		</div>
-		<div class="rsg_sub_url_single">
-		</div>
-	</div>
-	
-	
-	<div class="rsg_galleryblock">
-		<div class="rsg2-galleryList-status"></div>
-		<div class="rsg2-galleryList-thumb">
-			<div class="img-shadow">
-				<a href="/index.php/demo/demo-menu-root-galleries/gallery/5">
-					<img class="rsg2-galleryList-thumb" src="http://rsgallery2.org/images/rsgallery/thumb/2015-10-11_00002.jpg.jpg" alt="">
-				</a>
-			</div>
-		</div>
-		<div class="rsg2-galleryList-text">
-			Love Locks			<span class="rsg2-galleryList-newImages">
-				<sup></sup>
-			</span>
-			<div class="rsg_gallery_details">
-				<div class="rsg2_details">
-					<a href="/index.php/demo/demo-menu-root-galleries/gallery/5/asSlideshow">
-						Slideshow</a>
-					<br>
-					Owner: adminfinnern	<br>
-					Size: 44 images<br>
-					Created: 16 August 2020<br>
-				</div>
-			</div>
-			<div class="rsg2-galleryList-description">
-			</div>
-		</div>
-		<div class="rsg_sub_url_single">
-		</div>
-	</div>
-
-	<div class="rsg_galleryblock">
-		<div class="rsg2-galleryList-status"></div>
-		<div class="rsg2-galleryList-thumb">
-			<div class="img-shadow">
-				<a href="/index.php/demo/demo-menu-root-galleries/gallery/4">
-					<img class="rsg2-galleryList-thumb" src="http://rsgallery2.org/images/rsgallery/thumb/test_600x600-1.jpg.jpg" alt="">
-				</a>
-			</div>
-		</div>
-		<div class="rsg2-galleryList-text">
-			Third gallery			<span class="rsg2-galleryList-newImages">
-				<sup></sup>
-			</span>
-			<div class="rsg_gallery_details">
-				<div class="rsg2_details">
-					<a href="/index.php/demo/demo-menu-root-galleries/gallery/4/asSlideshow">
-							Slideshow</a>
-					<br>
-					Owner: adminfinnern						<br>
-					Size: 10 images						<br>
-					Created: 16 August 2020						<br>
-				</div>
-			</div>
-			<div class="rsg2-galleryList-description">			
-			</div>
-		</div>
-		<div class="rsg_sub_url_single">
-		</div>
-	</div>
-
-...
-	
-	<div class="pagination">
-		<br>
-		Results 1 - 5 of 5	
-	</div>
-	<?php
-	/**/
+		/**/
 	?>
+
 	<div class="rsg2-clr"></div>
 
-
-
-	    <?php echo $this->loadTemplate('latest_images'); ?>
-	    <?php echo $this->loadTemplate('random_images'); ?>
-
-
-	    <?php
-		     /*
-	    ?>
-	        <?php if ((int) $params->get('displayLatest', 0) === 0) : ?>
-		    <?php echo $this->loadTemplate('latest_images'); ?>
-		    <?php endif; ?>
-
-		    <?php if ((int) $params->get('displayRandom', 0) === 0) : ?>
-		    <?php echo $this->loadTemplate('random_images'); ?>
-		    <?php endif; ?>
-
-
-	    <?php endif; ?>
-			/**/
-		?>
-
+	<?php echo $this->loadTemplate('latest_images'); ?>
+	<?php echo $this->loadTemplate('random_images'); ?>
 
 </div>
 

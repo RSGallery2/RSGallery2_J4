@@ -107,7 +107,7 @@ class Rsg2_legacyModel extends GalleriesModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModelJ3x: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModelJ3x: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

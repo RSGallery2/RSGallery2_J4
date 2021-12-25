@@ -42,6 +42,9 @@ if (!empty ($this->isDevelopSite))
 //$displayData['pagination'] = $this->pagination;
 //echo $layout->render($displayData);
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
 //if ($this->config->displaySearch) {
 if (true) {
     $layout = new FileLayout('Search.search');
@@ -52,6 +55,9 @@ $layout = new FileLayout('ImagesArea.default');
 
 $displayData['images'] = $this->items;
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
 // return;
 
 ?>
@@ -59,9 +65,13 @@ $displayData['images'] = $this->items;
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <h1> RSGallery2 "images list" view </h1>
+        <?php if (!empty($this->isDebugSite)): ?>
+            <h1> RSGallery2 "images list" view </h1>
+        <?php endif; ?>
 
-        <hr>
+        <?php if (!empty($this->isDebugSite)): ?>
+            <hr>
+        <?php endif; ?>
 
 	    <?php
 	    echo $layout->render($displayData);

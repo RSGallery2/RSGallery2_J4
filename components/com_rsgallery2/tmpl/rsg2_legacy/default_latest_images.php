@@ -12,23 +12,45 @@
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 
+// on develop show open tasks if existing
+if (!empty ($this->isDevelopSite))
+{
+    echo '<span style="color:red">'
+        . 'Task call latest images: <br>'
+        . '* Format needs frame and others <br>'
+        . '* <br>'
+        . '* <br>'
+        //	. '* <br>'
+        //	. '* <br>'
+        //	. '* <br>'
+        //	. '* <br>'
+        . '</span><br><br>';
+}
+
+
+
 $layoutName = $this->getLayout();
 
 // default is 'ImagesAreaJ3x.default'
 if($layoutName == 'default') {
 
-	$layoutName = 'ImagesAreaJ3x.default';
+	$layoutName = 'ImagesFramedAreaJ3x.default';
 }
 
 $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->latestImages;
 $displayData['params'] = $this->params;
+$displayData['title'] = Text::_('COM_RSGALLERY2_LATEST_IMAGES');
 
-echo '--- latestImages (3)' . '-------------------------------' . '<br>';
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
+if (!empty($this->isDebugSite)) {
+    echo '--- latestImages (3)' . '-------------------------------' . '<br>';
+}
 
 echo $layout->render($displayData);
-
 
 /**
 echo '--- latesImages (4)' . '-------------------------------' . '<br>';
