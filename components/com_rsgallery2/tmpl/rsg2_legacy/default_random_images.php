@@ -12,6 +12,21 @@
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 
+// on develop show open tasks if existing
+if (!empty ($this->isDevelopSite))
+{
+    echo '<span style="color:red">'
+        . 'Task default random images: <br>'
+        . '* Change date format<br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+        . '</span><br><br>';
+}
+
 $layoutName = $this->getLayout();
 
 // default is 'ImagesAreaJ3x.default'

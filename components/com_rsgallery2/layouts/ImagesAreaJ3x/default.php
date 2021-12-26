@@ -21,6 +21,7 @@ if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Image J3x area Tasks: <br>'
+        . '* Change date format<br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . '* modal image (->slider)<br>'

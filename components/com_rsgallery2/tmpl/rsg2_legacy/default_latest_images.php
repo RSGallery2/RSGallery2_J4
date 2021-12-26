@@ -16,14 +16,14 @@ use Joomla\CMS\Layout\FileLayout;
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Task call latest images: <br>'
-        . '* Format needs frame and others <br>'
-        . '* <br>'
-        . '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        . 'Task default latest images: <br>'
+        . '* Change date format<br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
         . '</span><br><br>';
 }
 

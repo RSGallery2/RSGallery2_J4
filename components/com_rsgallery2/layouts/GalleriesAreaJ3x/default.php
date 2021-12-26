@@ -21,6 +21,7 @@ if ( ! isset($galleries)) {   //         if (isset($to_user, $from_user, $amount
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
+        . '* Change date format<br>'
         . '* Use CSS flex: align right of thumb<br>'
     	. '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
