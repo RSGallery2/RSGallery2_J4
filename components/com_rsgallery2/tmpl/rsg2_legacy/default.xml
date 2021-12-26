@@ -72,19 +72,11 @@
 		<fieldset name="root_galleries" label="COM_RSGALLERY2_MENU_J3X_ROOT_GALLERIES_TAB">
 			<field
 					name="galleries_count"
-					type="list"
+					type="number"
 					default="5"
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
 					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
 					class="">
-				<option value="5">0</option>
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="30">30</option>
-				<option value="50">50</option>
 			</field>
 
 			<field
@@ -207,16 +199,7 @@
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
 					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
 					class="">
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="30">30</option>
-				<option value="50">50</option>
 			</field>
-
-
 
 		</fieldset>
 
@@ -228,16 +211,7 @@
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
 					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
 					class="">
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="30">30</option>
-				<option value="50">50</option>
 			</field>
-
-
 
 		</fieldset>
 

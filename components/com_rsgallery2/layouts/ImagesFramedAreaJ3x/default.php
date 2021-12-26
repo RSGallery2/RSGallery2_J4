@@ -7,6 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
@@ -98,11 +99,13 @@ $imgCount = count($images);
                             <div class="shadow-box">
                                 <div class="img-shadow">
                                     <a href="<?php echo $image->UrlImageAsInline?>">
-                                        <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name ?>"  width="80???">
+                                        <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name ?>"  width="80">
                                     </a>
                                 </div>
                                 <div class="rsg2-clr"></div>
-                                <div class="rsg2_details"><span style="color:red">Uploaded:&nbsp;Sunday, 09 May 2021</span></div>
+                                <div class="rsg2_details">
+	                                <?php echo Text::_('COM_RSGALLERY2_UPLOADED') . ': ' . $image->created; ?>
+                                </div>
                             </div>
                         </td>
 
