@@ -10,6 +10,7 @@
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
+use Joomla\CMS\Component\Router\RouterFactoryInterface;
 use Joomla\CMS\Extension\ComponentInterface;
 use Joomla\CMS\Extension\Service\Provider\CategoryFactory;
 use Joomla\CMS\Extension\Service\Provider\ComponentDispatcherFactory;
@@ -21,6 +22,7 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\AssociationsHelper;
 
 /**
  * The rsgallery2 service provider.
@@ -58,7 +60,7 @@ return new class implements ServiceProviderInterface
 				$component->setMVCFactory($container->get(MVCFactoryInterface::class));
 //				$component->setCategoryFactory($container->get(CategoryFactoryInterface::class));
 //				$component->setAssociationExtension($container->get(AssociationExtensionInterface::class));
-//				$component->setRouterFactory($container->get(RouterFactoryInterface::class));
+				$component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
 				return $component;
 			}

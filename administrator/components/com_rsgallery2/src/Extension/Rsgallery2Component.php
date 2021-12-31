@@ -13,6 +13,8 @@ defined('JPATH_PLATFORM') or die;
 
 use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceTrait;
+use Joomla\CMS\Component\Router\RouterServiceInterface;
+use Joomla\CMS\Component\Router\RouterServiceTrait;
 use Joomla\CMS\Extension\BootableExtensionInterface;
 use Joomla\CMS\Extension\MVCComponent;
 use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
@@ -24,11 +26,12 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Service\HTML\AdministratorServ
  *
  * @since __BUMP_VERSION__
  */
-class Rsgallery2Component extends MVCComponent implements BootableExtensionInterface, CategoryServiceInterface
+class Rsgallery2Component extends MVCComponent implements BootableExtensionInterface, CategoryServiceInterface, RouterServiceInterface
 {
 	use CategoryServiceTrait;
 	use HTMLRegistryAwareTrait;
-
+	use RouterServiceTrait;
+	
 	/**
 	 * Booting the extension. This is the function to set up the environment of the extension like
 	 * registering new class loaders, etc.
