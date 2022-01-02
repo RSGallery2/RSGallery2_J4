@@ -63,12 +63,10 @@ if (!empty ($this->isDevelopSite))
 }
 
 
-//if ($this->config->displaySearch) {
-if (true) {
-    $layout = new FileLayout('Search.search');
-    echo $layout->render();
+if ($this->menuParams->displaySearch) {
+    $searchLayout = new FileLayout('Search.search');
+    // $searchData['options'] = $searchOptions ...; // gallery
 }
-
 
 $layoutName = $this->getLayout();
 
@@ -88,12 +86,6 @@ $displayData['pagination'] = $this->pagination;
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
-
-
-// return;
-
-# ToDo: <h1> header on debug  ? develop ?
-
 ?>
 
 <div class="rsg2__form rsg2__galleries_area">
@@ -102,7 +94,15 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
         <h2>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h2>
     <?php endif; ?>
 
-	<?php // display root galleries ?>
+	<?php //--- display search ---------- ?>
+
+	<?php if ($this->menuParams->displaySearch): ?>
+		<?php echo $searchLayout->render(); ?>
+	<?php endif; ?>
+
+
+	<?php //--- display root galleries ---------- ?>
+
 	<?php echo $layout->render($displayData); ?>
 
     <?php if (!empty($this->isDebugSite)): ?>
@@ -110,34 +110,18 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
     <?php endif; ?>
 
 
-	<?php
-		/**
-		// RSGallery2_Project\Documentation\J!3x\ImagesUsedInDoc\site.start.rootgalleries.png
-	    echo 'ToDo: $layout_ root ... galleries  ->render';
-	    ?>
-
-        <div class="rsg2-pagenav-limitbox">
-		<form action="/index.php/demo/demo-menu-root-galleries" method="post">
-			<select id="limit" name="limit" class="inputbox input-mini" size="1" onchange="this.form.submit()">
-				<option value="5" selected="selected">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="30">30</option>
-				<option value="50">50</option>
-				<option value="100">100</option>
-				<option value="0">All</option>
-			</select>
-		</form>
-		/**/
-	?>
-
 	<div class="rsg2-clr"></div>
 
-	<?php echo $this->loadTemplate('latest_images'); ?>
-	<?php echo $this->loadTemplate('random_images'); ?>
+	<?php //--- display latest images ---------- ?>
+
+	<?php if ($this->menuParams->displayLatest): ?>
+		<?php echo $this->loadTemplate('latest_images'); ?>
+	<?php endif; ?>
+
+	<?php //--- display random images ---------- ?>
+
+	<?php if ($this->menuParams->displayRandom): ?>
+		<?php echo $this->loadTemplate('random_images'); ?>
+	<?php endif; ?>
 
 </div>
-
-

@@ -85,6 +85,11 @@ foreach ($galleries as $idx => $gallery) {
 	<div class="form-label intro_text"><?php echo $menuParams->intro_text; ?></div>
 
 	<?php foreach ($galleries as $idx => $gallery) : ?>
+
+		<?php /* if ($idx > $this->menuParams->Nr of items ): ?>
+			<?php break;?>
+		<?php endif; */ ?>
+
 		<div class="rsg_galleryblock system-unpublished">
 			<div class="rsg2-galleryList-status"></div>
 			<div class="rsg2-galleryList-thumb">

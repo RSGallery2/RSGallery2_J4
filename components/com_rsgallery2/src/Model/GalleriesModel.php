@@ -141,7 +141,30 @@ class GalleriesModel extends ListModel
         // List state information.
         parent::populateState($ordering, $direction);
 
-        //// Force a language.
+	    // List state information
+
+	    // J3x ToDo: use galcountNrs
+	    $configLimit = $app->input->get('galcountNrs', $app->get('list_limit'), 'uint');;
+
+	    // J4x: use cols * Rows
+	    // ToDo: needs a function as config allows several sources
+		// max_columns_in_galleries_view, max_rows_in_galleries_view
+
+	    $userLimit = $app->input->get('[galleries_count', $configLimit, 'uint');
+	    //$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'uint');
+	    $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $configLimit, 'uint');
+	    $this->setState('list.limit', $limit);
+
+	    $limitstart = $app->input->get('limitstart', 0, 'uint');
+	    $this->setState('list.start', $limitstart);
+
+
+
+
+
+
+
+	    //// Force a language.
         //if (!empty($forcedLanguage))
         //{
         //	$this->setState('filter.language', $forcedLanguage);

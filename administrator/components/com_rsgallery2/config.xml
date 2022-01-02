@@ -658,6 +658,15 @@
 		<!-- ... block  ... -->
 
 		<field
+				name="galcountNrs"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
+				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
+				class="">
+		</field>
+
+		<field
 				name="image_size"
 				type="text"
 				default="800,600,400"
