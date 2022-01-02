@@ -191,7 +191,7 @@ class HtmlView extends BaseHtmlView
         $this->menuParams->galleries_show_size = $input->getBool('galleries_show_size', true);
         $this->menuParams->galleries_show_date = $input->getBool('galleries_show_date', true);
         $this->menuParams->galleries_show_pre_label = $input->getBool('galleries_show_pre_label', true);
-        $this->menuParams->displaySlideshow = $input->getBool('displaySlideshow', true);
+        $this->menuParams->galleries_show_slideshow = $input->getBool('galleries_show_slideshow', true);
 
     }
 

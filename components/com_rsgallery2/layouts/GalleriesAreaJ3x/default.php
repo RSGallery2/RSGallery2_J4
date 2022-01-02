@@ -57,8 +57,8 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitize URLs -----------------------------------
 
-$noImageUrl = URI::root() . '/media/com_rsgallery2/images/NoImagesAssigned.png';
-$missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.png';
+$noImageUrl = URI::root() . '/media/com_rsgallery2/images/NoImagesAssigned.svg';
+$missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.svg';
 
 // assign dummy images if not found
 foreach ($galleries as $idx => $gallery) {
@@ -114,7 +114,7 @@ foreach ($galleries as $idx => $gallery) {
 
                     <div class="rsg2_details">
 
-                        <?php if ($menuParams->galleries_show_title): ?>
+                        <?php if ($menuParams->galleries_show_slideshow): ?>
                             <a href="<?php echo $gallery->UrlSlideshow?>">
                                 Slideshow
                             </a>

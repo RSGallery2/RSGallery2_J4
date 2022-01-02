@@ -164,7 +164,7 @@
 			</field>
 
 			<field
-					name="displaySlideshow"
+					name="galleries_show_slideshow"
 					type="radio"
 					default="1"
 					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DISPLAY_SLIDESHOW"
