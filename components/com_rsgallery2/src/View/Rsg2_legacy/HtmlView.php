@@ -107,9 +107,13 @@ class HtmlView extends BaseHtmlView
         $this->mergeMenuOptions();
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
+	    $this->state      = $this->get('State');
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
         $this->user = Factory::getUser();
+	    $this->params     = $params = $this->state->get('params');
+	    // ToDo: Why is this necessary ?
+//		$this->pagination->setTotal (count($this->items));
 
         $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
         $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));

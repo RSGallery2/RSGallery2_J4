@@ -87,41 +87,46 @@ $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 ?>
+<!-- ToDo: is form here needed ? check core ...  -->
+<!-- ToDo: form link ...  -->
+<form id="rsg2_root_galleryJ3x__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
+      method="post" class="form-validate form-horizontal well">
 
-<div class="rsg2__form rsg2__galleries_area">
+	<div class="rsg2__form rsg2__galleries_area">
 
-    <?php if (!empty($isDebugSite)): ?>
-        <h2>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h2>
-    <?php endif; ?>
+	    <?php if (!empty($isDebugSite)): ?>
+	        <h2>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h2>
+	    <?php endif; ?>
 
-	<?php //--- display search ---------- ?>
+		<?php //--- display search ---------- ?>
 
-	<?php if ($this->menuParams->displaySearch): ?>
-		<?php echo $searchLayout->render(); ?>
-	<?php endif; ?>
-
-
-	<?php //--- display root galleries ---------- ?>
-
-	<?php echo $layout->render($displayData); ?>
-
-    <?php if (!empty($this->isDebugSite)): ?>
-		<hr>
-    <?php endif; ?>
+		<?php if ($this->menuParams->displaySearch): ?>
+			<?php echo $searchLayout->render(); ?>
+		<?php endif; ?>
 
 
-	<div class="rsg2-clr"></div>
+		<?php //--- display root galleries ---------- ?>
 
-	<?php //--- display latest images ---------- ?>
+		<?php echo $layout->render($displayData); ?>
 
-	<?php if ($this->menuParams->displayLatest): ?>
-		<?php echo $this->loadTemplate('latest_images'); ?>
-	<?php endif; ?>
+	    <?php if (!empty($this->isDebugSite)): ?>
+			<hr>
+	    <?php endif; ?>
 
-	<?php //--- display random images ---------- ?>
 
-	<?php if ($this->menuParams->displayRandom): ?>
-		<?php echo $this->loadTemplate('random_images'); ?>
-	<?php endif; ?>
+		<div class="rsg2-clr"></div>
 
-</div>
+		<?php //--- display latest images ---------- ?>
+
+		<?php if ($this->menuParams->displayLatest): ?>
+			<?php echo $this->loadTemplate('latest_images'); ?>
+		<?php endif; ?>
+
+		<?php //--- display random images ---------- ?>
+
+		<?php if ($this->menuParams->displayRandom): ?>
+			<?php echo $this->loadTemplate('random_images'); ?>
+		<?php endif; ?>
+
+	</div>
+</form>

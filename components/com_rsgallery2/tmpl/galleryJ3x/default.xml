@@ -62,15 +62,16 @@
 			</field>
 
 			<field
-					name="images_show_search"
-					type="list"
+					name="displaySearch"
+					type="radio"
 					default="0"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH_DESC"
-			>
+					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
+					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
+					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+
 
 		</fieldset>
 
