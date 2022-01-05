@@ -78,6 +78,8 @@ $displayData['images'] = $this->items;
 $displayData['params'] = $this->params;
 $displayData['pagination'] = $this->pagination;
 
+$displayData['gallery'] = $this->gallery;
+
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 

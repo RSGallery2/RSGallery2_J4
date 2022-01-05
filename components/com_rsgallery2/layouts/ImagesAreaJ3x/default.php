@@ -88,6 +88,16 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 <div id="rsg2_gallery" class="rsg2">
 
+	<?php if ($menuParams->gallery_show_title): ?>
+		<h2>
+			<div class="rsg_gallery_title"><?php echo $gallery->title ?></div>
+		</h2>
+	<?php endif; ?>
+
+	<?php if ($menuParams->gallery_show_description): ?>
+		<div class="intro_text"><p><?php echo $gallery->description ?></p></div>
+	<?php endif; ?>
+
     <table id="rsg2-thumbsList">
         <tbody>
 

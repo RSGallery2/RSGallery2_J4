@@ -16,6 +16,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Site\Model\GalleryModel;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -101,6 +102,7 @@ class HtmlView extends BaseHtmlView
         // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
 
+		$this->gallery = GalleryModel::gallery_parameter();
         $this->isDebugSite = $params->get('isDebugSite'); 
         $this->isDevelopSite = $params->get('isDevelop');
 
@@ -109,7 +111,6 @@ class HtmlView extends BaseHtmlView
 			$model = $this->getModel();
 			// Add image paths, image params ...
 			$data = $model->AddLayoutData ($this->items);
-
 		}
 
         if (count($errors = $this->get('Errors')))
@@ -195,8 +196,8 @@ class HtmlView extends BaseHtmlView
 //		$this->menuParams->displayRandom = $input->getBool('displayRandom', true);
 //		$this->menuParams->displayLatest = $input->getBool('displayLatest', true);
 //		$this->menuParams->display_limitbox = $input->getBool('display_limitbox', true);
-//		$this->menuParams->galleries_show_title = $input->getBool('galleries_show_title', true);
-//		$this->menuParams->galleries_show_description = $input->getBool('galleries_show_description', true);
+		$this->menuParams->gallery_show_title = $input->getBool('gallery_show_title', true);
+		$this->menuParams->gallery_show_description = $input->getBool('galleries_show_description', true);
 //		$this->menuParams->galleries_show_owner = $input->getBool('galleries_show_owner', true);
 //		$this->menuParams->galleries_show_size = $input->getBool('galleries_show_size', true);
 //		$this->menuParams->galleries_show_date = $input->getBool('galleries_show_date', true);
