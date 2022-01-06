@@ -90,7 +90,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 	<?php if ($menuParams->gallery_show_title): ?>
 		<h2>
-			<div class="rsg_gallery_title"><?php echo $gallery->title ?></div>
+			<div class="rsg_gallery_title"><?php echo $gallery->name ?></div>
 		</h2>
 	<?php endif; ?>
 

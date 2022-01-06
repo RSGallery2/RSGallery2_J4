@@ -15,8 +15,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
-use Joomla\Registry\Registry;
-use Rsgallery2\Component\Rsgallery2\Site\Model\GalleryModel;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -102,13 +100,16 @@ class HtmlView extends BaseHtmlView
         // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
 
-		$this->gallery = GalleryModel::gallery_parameter();
-        $this->isDebugSite = $params->get('isDebugSite'); 
+		$model = $this->getModel();
+		$this->gallery = $model->galleryData($this->galleryId);
+        $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
+
+		// ToDo: Status of images
+
 
 
 		if ( ! empty($this->items)) {
-			$model = $this->getModel();
 			// Add image paths, image params ...
 			$data = $model->AddLayoutData ($this->items);
 		}
@@ -183,30 +184,22 @@ class HtmlView extends BaseHtmlView
 		$input = Factory::getApplication()->input;
 		//$this->galleryId = $input->get('gid', 0, 'INT');
 
-		$this->menuParams = new \stdClass();
+		// $this->menuParams = new \stdClass();
 		$this->menuParams = (object)[];
-		//$this->menuParams->intro_text = $input->getHTML('intro_text', '');
-//		$this->menuParams->intro_text = $input->get('intro_text', '', 'RAW'); //ToDo: there should be an other filter
-//		$this->menuParams->gallery_layout = $input->getString('gallery_layout', '');
-//		$this->menuParams->galleries_description_side = $input->getInt('galleries_description_side', 0, '');
-//		$this->menuParams->galleries_count = $input->getBool('galleries_count', 5, 'INT');
-//		$this->menuParams->latest_count = $input->getInt('latest_count', 5, 'INT');
-//		$this->menuParams->random_count = $input->getInt('random_count', 5, 'INT');
-		$this->menuParams->displaySearch = $input->getBool('displaySearch', true);
-//		$this->menuParams->displayRandom = $input->getBool('displayRandom', true);
-//		$this->menuParams->displayLatest = $input->getBool('displayLatest', true);
-//		$this->menuParams->display_limitbox = $input->getBool('display_limitbox', true);
 		$this->menuParams->gallery_show_title = $input->getBool('gallery_show_title', true);
-		$this->menuParams->gallery_show_description = $input->getBool('galleries_show_description', true);
-//		$this->menuParams->galleries_show_owner = $input->getBool('galleries_show_owner', true);
-//		$this->menuParams->galleries_show_size = $input->getBool('galleries_show_size', true);
-//		$this->menuParams->galleries_show_date = $input->getBool('galleries_show_date', true);
-//		$this->menuParams->galleries_show_pre_label = $input->getBool('galleries_show_pre_label', true);
-//		$this->menuParams->galleries_show_slideshow = $input->getBool('galleries_show_slideshow', true);
+		$this->menuParams->gallery_show_description = $input->getBool('gallery_show_description', true);
+		$this->menuParams->gallery_show_slideshow = $input->getBool('gallery_show_slideshow', true);
+		$this->menuParams->displaySearch = $input->getBool('displaySearch', true);
+
+		$this->menuParams->images_column_arrangement = $input->getInt('images_column_arrangement', '');
+		$this->menuParams->max_columns_in_images_view= $input->getInt('max_columns_in_images_view', '');
+		$this->menuParams->images_row_arrangement = $input->getInt('images_row_arrangement', '');
+		$this->menuParams->max_rows_in_images_view = $input->getInt('max_rows_in_images_view', '');
+		$this->menuParams->max_images_in_images_view = $input->getInt('max_images_in_images_view', '');
+
+		$this->menuParams->images_show_title = $input->getBool('images_show_title', true);
+		$this->menuParams->images_show_description = $input->getBool('images_show_description', true);
 
 	}
-
-
-
 
 }

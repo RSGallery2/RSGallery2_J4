@@ -91,7 +91,7 @@ foreach ($galleries as $idx => $gallery) {
 		<?php endif; */ ?>
 
 		<div class="rsg_galleryblock system-unpublished">
-			<div class="rsg2-galleryList-status"></div>
+			<div class="rsg2-galleryList-status">//Status//</div>
 			<div class="rsg2-galleryList-thumb">
 				<!---div class="shadow-box"-->
 				<div class="img-shadow">

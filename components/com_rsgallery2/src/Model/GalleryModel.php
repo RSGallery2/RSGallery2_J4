@@ -332,7 +332,7 @@ class GalleryModel extends ListModel
     //-----------------------------------------------------------------
 
 
-    private function gallery_parameter($gid=0)
+    public function gallery_parameter($gid=0)
     {
         $parameter = new \stdClass();
 
@@ -353,6 +353,28 @@ class GalleryModel extends ListModel
         }
 
         return $parameter;
+    }
+
+    public function galleryData($gid=0)
+    {
+        $gallery = new \stdClass();
+
+        // Not root gallery (tree root == 1)
+        if( $gid > 1) {
+
+            // Create a new query object.
+            $db    = Factory::getDBO();
+
+            $query = $db->getQuery(true)
+                ->select('*')
+                ->from($db->quoteName('#__rsg2_galleries'))
+                ->where($db->quoteName('id') . '=' . $gid );
+	        $db->setQuery($query);
+
+	        $gallery = $db->loadObject();
+        }
+
+        return $gallery;
     }
 
     /**

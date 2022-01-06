@@ -76,6 +76,7 @@ $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
 $displayData['params'] = $this->params;
+$displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 $displayData['gallery'] = $this->gallery;
@@ -105,9 +106,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 		    <?php echo $searchLayout->render(); ?>
 	    <?php endif; ?>
 
-	    <?php // ToDo: insert variable(s) in menu ?>
-
-	    <?php //--- display gallery image ---------- ?>
+	    <?php //--- display gallery images ---------- ?>
 
 	    <?php echo $layout->render($displayData); ?>
 
