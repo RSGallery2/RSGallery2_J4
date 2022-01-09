@@ -126,6 +126,28 @@ class GalleryJ3xModel extends GalleryModel
 
 	}
 
+    public static function AssignSlideshowUrl($gallery)
+    {
+
+        try {
+
+            // ToDo: check for J3x style of gallery (? all in construct ?)
+            parent::AssignSlideshowUrl($gallery);
+
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GallerysModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
+
 
 
 

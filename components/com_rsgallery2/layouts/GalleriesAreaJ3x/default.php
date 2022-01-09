@@ -115,12 +115,16 @@ foreach ($galleries as $idx => $gallery) {
                     <div class="rsg2_details">
 
                         <?php if ($menuParams->galleries_show_slideshow): ?>
-                            <a href="<?php echo $gallery->UrlSlideshow?>">
-                                Slideshow
-                            </a>
+                            <div class="rsg2_slideshow_link">
+                                <a href="<?php echo $gallery->UrlSlideshow?>">
+                                    Slideshow
+                                </a>
+                            </div>
                         <?php endif; ?>
                         <?php if ($menuParams->galleries_show_owner && !empty($gallery->author_name)): ?>
-                                <div><?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $gallery->author_name ?></div>
+                                <div>
+                                    <?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $gallery->author_name ?>
+                                </div>
                         <?php endif; ?>
                         <?php if ($menuParams->galleries_show_size): ?>
                             <div><?php echo Text::_('COM_RSGALLERY2_SIZE') . ': ' . $gallery->image_count ?></div>
