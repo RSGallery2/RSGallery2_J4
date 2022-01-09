@@ -50,8 +50,8 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitice URLs -----------------------------------
 
-$noImageUrl = URI::root() . '/media/com_rsgallery2/images/NoImagesAssigned.svg';
-$missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.svg';
+$noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
+$missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
 foreach ($images as $idx => $image) {
 

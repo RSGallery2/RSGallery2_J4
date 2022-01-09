@@ -58,8 +58,8 @@ class ImagePathsData extends ImagePaths
      */
     public function urlReplaceMissing_BySign ($image) {
 
-        // $noImageUrl = URI::root() . '/media/com_rsgallery2/images/NoImagesAssigned.png';
-        $missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.png';
+        // $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.png';
+        $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
 
         if (!$image->isThumbFileExist) {
             $image->UrlThumbFile = $missingUrl;
@@ -88,7 +88,7 @@ class ImagePathsData extends ImagePaths
 
 
         if (!$image->isThumbFileExist) {
-            $missingUrl = URI::root() . '/media/com_rsgallery2/images/MissingImage.png';
+            $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
             $image->UrlThumbFile = $missingUrl;
         }
 
