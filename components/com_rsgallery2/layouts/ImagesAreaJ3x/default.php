@@ -98,6 +98,16 @@ $cols = $params->get('max_columns_in_images_view',2);
 		<div class="intro_text"><p><?php echo $gallery->description ?></p></div>
 	<?php endif; ?>
 
+    <div class="rsg2-clr"></div>
+
+    <?php if ($menuParams->gallery_show_slideshow): ?>
+        <div class="rsg2_slideshow_link">
+            <a href="<?php echo $gallery->UrlSlideshow?>">
+                Slideshow
+            </a>
+        </div>
+    <?php endif; ?>
+
     <table id="rsg2-thumbsList">
         <tbody>
 

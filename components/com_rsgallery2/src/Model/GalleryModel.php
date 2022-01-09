@@ -16,6 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Database\ParameterType;
@@ -372,6 +373,12 @@ class GalleryModel extends ListModel
 	        $db->setQuery($query);
 
 	        $gallery = $db->loadObject();
+
+            // add slidshow url
+            if (! empty ($gallery)) {
+                self::AssignSlideshowUrl ($gallery);
+            }
+
         }
 
         return $gallery;
@@ -604,5 +611,49 @@ class GalleryModel extends ListModel
         }
 
     }
+
+    public static function AssignSlideshowUrl($gallery)
+    {
+
+        try {
+
+            $gallery->UrlGallery = ''; // fall back
+
+            //  Factory::getApplication()->getMenu()
+            $app = Factory::getApplication();
+
+            $active       = $app->getMenu()->getActive();
+            //$currentLink = $active->link;
+            $currentLink = $active->route;
+
+
+            //$urlMenu  = $app->getMenu()->getActive()->link;
+
+            // Link to single gallery in actual menu
+            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
+
+            $gallery->UrlSlideshow = Route::_($currentLink
+                . '/gallery/' . $gallery->id . '/slideshow'
+//                . '&gid=' . $image->gallery_id
+//                . '&iid=' . $gallery->id
+//                . '&layout=galleryJ3xAsInline'
+                ,true,0,true);
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GallerysModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
+
+
+
+
 
 }
