@@ -111,6 +111,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 	        <?php endif ?>
 
 	            <td>
+
 	                <div class="shadow-box">
 	                    <div class="img-shadow">
 	                        <a href="<?php echo $image->UrlImageAsInline?>">

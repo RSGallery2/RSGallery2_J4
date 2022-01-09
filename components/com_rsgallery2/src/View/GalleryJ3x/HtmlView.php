@@ -84,6 +84,12 @@ class HtmlView extends BaseHtmlView
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
+        /* wrong call but why ? */
+        if ($this->galleryId < 2)
+        {
+	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
+        }
+
         //$app = Factory::getApplication();
         // $model = $this->getModel('GalleryJ3x');
         // $model = $this->getModel('Gallery');
