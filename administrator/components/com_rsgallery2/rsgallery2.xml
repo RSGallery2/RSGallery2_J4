@@ -35,11 +35,7 @@
 	<administration>
 		<!-- Menu entries -->
 		<!--menu view="rsgallery2">COM_RSGALLERY2_MENU</menu-->
-		<menu view="rsgallery2">COM_RSGALLERY2_MENU
-			<params>
-				<dashboard>rsgallery2</dashboard>
-			</params>
-		</menu>
+		<menu view="rsgallery2">COM_RSGALLERY2_MENU</menu>
 		<submenu>
 			<!--
 				Note that all & must be escaped to &amp; for the file to be valid
@@ -55,8 +51,8 @@
 			      img="class:images"
 			      link="option=com_rsgallery2&amp;view=galleries">COM_RSGALLERY2_MENU_GALLERIES
 				<params>
-					<menu-quicktask-title>COM_RSGALLERY2_GALLERIES</menu-quicktask-title>
-					<menu-quicktask>index.php?option=com_rsgallery2&amp;view=galleries</menu-quicktask>
+					<menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title>
+					<menu-quicktask>index.php?option=com_rsgallery2&amp;amp;task=gallery.add</menu-quicktask>
 				</params>
 				  
 			</menu>
@@ -90,12 +86,17 @@
 			<folder>helpers</folder>
 			<folder>language</folder>
 			<folder>layouts</folder>
+			<folder>presets</folder>
 			<folder>services</folder>
 			<folder>sql</folder>
 			<folder>src</folder>
 			<folder>tmpl</folder>
 		</files>
 	</administration>
+
+	<dashboards>
+		<dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-imaages">users</dashboard>
+	</dashboards>
 
 	<!-- Front-end files -->
 	<files folder="components/com_rsgallery2">
@@ -119,4 +120,7 @@
 		<server type="extension" name="Foo Updates">http://example.com/.../foo_update.xml</server>
 	</updateservers>
 	-->
+	<dashboards>
+		<dashboard title="COM_MENUS_RSGALLERY2_TITLE" icon="icon-list">yyyy_menus</dashboard>
+	</dashboards>
 </extension>
