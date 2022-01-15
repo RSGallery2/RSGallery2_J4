@@ -9,9 +9,9 @@
 .test/RSG2_Backup/
 
 # moved files 
-rsgallery2.xml
-install_rsg2.php
-changelog.xml
+##rsgallery2.xml
+##install_rsg2.php
+##changelog.xml
 
 # python
 **/__pycache__
