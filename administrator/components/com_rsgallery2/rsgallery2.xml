@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>01. Dec. 2021</creationDate>
+	<creationDate>16. Jan. 2022</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
-	<copyright>(c) 2005-2021 RSGallery2 Team</copyright>
+	<copyright>(c) 2005-2022 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.0.34</version>
+	<version>5.0.0.36</version>
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
 	<namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
 
@@ -35,7 +35,12 @@
 	<administration>
 		<!-- Menu entries -->
 		<!--menu view="rsgallery2">COM_RSGALLERY2_MENU</menu-->
-		<menu view="rsgallery2">COM_RSGALLERY2_MENU</menu>
+		<menu view="rsgallery2">COM_RSGALLERY2_MENU
+			<params>
+				<dashboard>rsgallery2</dashboard>
+			</params>
+		</menu>
+		
 		<submenu>
 			<!--
 				Note that all & must be escaped to &amp; for the file to be valid
@@ -121,6 +126,6 @@
 	</updateservers>
 	-->
 	<dashboards>
-		<dashboard title="COM_MENUS_RSGALLERY2_TITLE" icon="icon-list">yyyy_menus</dashboard>
+		<dashboard title="COM_MENUS_RSGALLERY2_TITLE" icon="icon-list">rsgallery2</dashboard>
 	</dashboards>
 </extension>
