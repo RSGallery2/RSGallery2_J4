@@ -11,7 +11,6 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
-
 //$images = $displayData['images'];
 extract($displayData); // $images
 if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
@@ -20,7 +19,7 @@ if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
-        . 'Image J3x area Tasks: <br>'
+        . 'Image area J3x Tasks: <br>'
         . '* Change date format<br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
@@ -36,9 +35,6 @@ if (!empty($isDevelopSite)) {
 //	. '* <br>'
         . '</span><br><br>';
 }
-
-
-
 
 
 //--- sanitize URLs -----------------------------------
@@ -83,7 +79,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
-    <h3>rsgallery 2 j3x images area layout II</h3>
+    <h3>RSGallery2 j3x images area layout II</h3>
 <?php endif; ?>
 
 <div id="rsg2_gallery" class="rsg2">
@@ -159,7 +155,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 	<?php /**
     <?php if (!empty($isDebugSite)): ?>
-    	<h3>rsgallery 2 j3x images area layout III</h3>
+        <h3>RSGallery2 j3x images area layout III</h3>
     <?php endif; ?>
 
     <div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">

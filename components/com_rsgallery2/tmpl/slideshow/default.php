@@ -19,7 +19,7 @@ use \Joomla\CMS\Layout\FileLayout;
 // ToDo:
 // ToDo:
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/site/imagesSlideshow.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/slideshow.css', array('version' => 'auto', 'relative' => true));
 
 
 echo '';
@@ -38,34 +38,31 @@ if (!empty ($this->isDevelopSite))
         . '</span><br><br>';
 }
 
-//$displayData['images'] = $this->images;
-//$displayData['pagination'] = $this->pagination;
-//echo $layout->render($displayData);
+$layoutName = $this->getLayout();
 
-$displayData['isDebugSite'] = $this->isDebugSite;
-$displayData['isDevelopSite'] = $this->isDevelopSite;
+// default is 'ImagesAreax.default'
+if($layoutName == 'default') {
 
-//if ($this->config->displaySearch) {
-if (true) {
-    $layout = new FileLayout('Search.search');
-    echo $layout->render();
+    $layoutName = 'Slideshow.default';
 }
 
-$layout = new FileLayout('Slideshow.default');
+$layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
+$displayData['params'] = $this->params;
+$displayData['menuParams'] = $this->menuParams;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
-// return;
 
 ?>
 
-<div class="rsg2__form rsg2__form rsg2__image_area">
-    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
+<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=slideshow'); ?>" method="post" class="form-validate form-horizontal well">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+    <div class="rsg2__form rsg2__slide_area">
+
+    <?php if (!empty($this->isDebugSite)): ?>
             <h1> Menu RSGallery2 "slideshow" view </h1>
         <?php endif; ?>
 
@@ -77,12 +74,6 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 	    echo $layout->render($displayData);
 	    ?>
 
-
-    </form>
-</div>
-
-
-
-
-
+    </div>
+</form>
 

@@ -51,7 +51,7 @@ if (!empty($isDevelopSite)) {
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
-    <h3>rsgallery 2 image single layout</h3>
+    <h3>RSGallery2 image single layout</h3>
 <?php endif; ?>
 
 <div id="rsg2_image" class="rsg2_image__container">

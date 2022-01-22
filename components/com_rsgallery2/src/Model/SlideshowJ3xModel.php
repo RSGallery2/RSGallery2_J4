@@ -28,21 +28,28 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
  *
  * @since  __BUMP_VERSION__
  */
-class ImagesSlideshowModel extends ListModel
+class SlideshowJ3xModel extends GalleryJ3xModel
 {
+
+}
+
+    //
+    // we don't know which parts below may be needed
+    //
+
     /**
      * Model context string.
      *
      * @var    string
      * @since  3.1
-     */
-    public $_context = 'com_rsgallery2.slideshow';
+     *
+    public $_context = 'com_rsgallery2.slideshowJ3x';
 
     /**
      * The category context (allows other extensions to derived from this model).
      *
-     * @var		string
-     */
+     * @var        string
+     *
     protected $_extension = 'com_rsgallery2';
 
 //    protected $layoutParams = null; // col/row count
@@ -66,11 +73,10 @@ class ImagesSlideshowModel extends ListModel
      * @throws \Exception
      * @see     \JController
      * @since   1.6
-     */
+     *
     public function __construct($config = array(), MVCFactoryInterface $factory = null)
     {
-        if (empty($config['filter_fields']))
-        {
+        if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'title', 'a.title',
@@ -107,13 +113,13 @@ class ImagesSlideshowModel extends ListModel
      *
      * Note. Calling getState in this method will result in recursion.
      *
-     * @param   string  $ordering   An optional ordering field.
-     * @param   string  $direction  An optional direction (asc|desc).
+     * @param string $ordering An optional ordering field.
+     * @param string $direction An optional direction (asc|desc).
      *
      * @return  void
      *
      * @since   3.0.1
-     */
+     *
     protected function populateState($ordering = 'ordering', $direction = 'ASC')
     {
         global $rsgConfig;
@@ -124,7 +130,7 @@ class ImagesSlideshowModel extends ListModel
         // gallery id
         $gid = $app->input->get('gid', '', 'INT');
         $this->setState('images.galleryId', $gid);
-		// ??? See above
+        // ??? See above
         $this->setState('gallery.id', $app->input->getInt('gid'));
         $this->setState('params', $app->getParams());
 
@@ -148,8 +154,7 @@ class ImagesSlideshowModel extends ListModel
 //
         $orderCol = $app->input->get('filter_order', 'a.ordering');
 
-        if (!in_array($orderCol, $this->filter_fields))
-        {
+        if (!in_array($orderCol, $this->filter_fields)) {
             $orderCol = 'a.ordering';
         }
 
@@ -157,8 +162,7 @@ class ImagesSlideshowModel extends ListModel
 
         $listOrder = $app->input->get('filter_order_Dir', 'ASC');
 
-        if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', '')))
-        {
+        if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', ''))) {
             $listOrder = 'ASC';
         }
 
@@ -168,8 +172,7 @@ class ImagesSlideshowModel extends ListModel
         $this->setState('params', $params);
         $user = Factory::getUser();
 
-        if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
-        {
+        if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
             // Filter on published for those who do not have edit or edit.state rights.
             $this->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
         }
@@ -178,12 +181,9 @@ class ImagesSlideshowModel extends ListModel
 
         // toDo: ??? when is it needed
         // Process show_noauth parameter
-        if ((!$params->get('show_noauth')) || (!ComponentHelper::getParams('com_content')->get('show_noauth')))
-        {
+        if ((!$params->get('show_noauth')) || (!ComponentHelper::getParams('com_content')->get('show_noauth'))) {
             $this->setState('filter.access', true);
-        }
-        else
-        {
+        } else {
             $this->setState('filter.access', false);
         }
 
@@ -192,7 +192,7 @@ class ImagesSlideshowModel extends ListModel
         //--- RSG2 ---------------------------------
 
         $this->setState('rsgallery2.id', $app->input->getInt('id'));
-	}
+    }
 
     /**
      * Method to get a store id based on model configuration state.
@@ -201,12 +201,12 @@ class ImagesSlideshowModel extends ListModel
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param   string  $id  A prefix for the store id.
+     * @param string $id A prefix for the store id.
      *
      * @return  string  A store id.
      *
      * @since   1.6
-     */
+     *
     protected function getStoreId($id = '')
     {
         // Compile the store id.
@@ -233,10 +233,10 @@ class ImagesSlideshowModel extends ListModel
 
 
     /**
-	 * @var string item
-	 */
-    /**/
-	protected $_item = null;
+     * @var string item
+     */
+    /**
+    protected $_item = null;
     /**/
 
     /**
@@ -244,76 +244,70 @@ class ImagesSlideshowModel extends ListModel
      *
      * ??? Overridden to inject convert the attribs field into a Registry object.
      *
-     * @param   integer  $gid  Id for the gallery
+     * @param integer $gid Id for the gallery
      *
      * @return  mixed  An array of objects on success, false on failure.
      *
      * @since   1.6
-     */
+     *
 
     // toDo: rights ...
 
-	public function getItems()
-	{
-        $items  = parent::getItems();
-        $user   = Factory::getUser();
+    public function getItems()
+    {
+        $items = parent::getItems();
+        $user = Factory::getUser();
         $userId = $user->get('id');
-        $guest  = $user->get('guest');
+        $guest = $user->get('guest');
         $groups = $user->getAuthorisedViewLevels();
-        $input  = Factory::getApplication()->input;
+        $input = Factory::getApplication()->input;
 
-        $gid = $input->getInt ('gid', 0);
+        $gid = $input->getInt('gid', 0);
 
-		if ($this->_item === null)
-		{
-			$this->_item = array();
-		}
+        if ($this->_item === null) {
+            $this->_item = array();
+        }
 
         $images = new \stdClass(); // ToDo: all to (object)[];
 
-		// not fetched already
-		if ( ! isset($this->_item[$gid])) {
+        // not fetched already
+        if (!isset($this->_item[$gid])) {
 
-			try
-			{
-				$db    = $this->getDbo();
-				$query = $db->getQuery(true);
+            try {
+                $db = $this->getDbo();
+                $query = $db->getQuery(true);
 
-				$query->select('*')
-					//->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->from($db->quoteName('#__rsg2_images', 'a'))
-					//->where('a.id = ' . (int) $gid);
-					->where('a.gallery_id = ' . (int) $gid);
+                $query->select('*')
+                    //->from($db->quoteName('#__rsg2_galleries', 'a'))
+                    ->from($db->quoteName('#__rsg2_images', 'a'))
+                    //->where('a.id = ' . (int) $gid);
+                    ->where('a.gallery_id = ' . (int)$gid);
 // ToDo: limit ....
 
-				$db->setQuery($query);
-				$data = $db->loadObjectList();
+                $db->setQuery($query);
+                $data = $db->loadObjectList();
 
-				if ( ! empty($data)) {
+                if (!empty($data)) {
 
                     $this->_item[$gid] = $data;
 
                     // Add image paths, image params ...
-                    $this->AssignImageUrls ($data);
-                }
-				else
-                {
+                    $this->AssignImageUrls($data);
+                } else {
                     // may< be empty
                     $this->_item[$gid] = [];  // false;
                     // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
-				}
-			}
-			catch (\Exception $e)
-			{
-				$this->setError($e);
-				$this->_item[$gid] = false;
-			}
-		}
+                }
+            } catch (\Exception $e) {
+                $this->setError($e);
+                $this->_item[$gid] = false;
+            }
+        }
 
         $images = $this->_item[$gid];
 
-		return $images;
-	}
+        return $images;
+    }
 
     /**
      * Method to get the starting number of items for the data set.
@@ -321,7 +315,7 @@ class ImagesSlideshowModel extends ListModel
      * @return  integer  The starting number of items available in the data set.
      *
      * @since   3.0.1
-     */
+     *
     public function getStart()
     {
         return $this->getState('list.start');
@@ -333,7 +327,7 @@ class ImagesSlideshowModel extends ListModel
      *
      *
      * @since 4.5.0.0
-     */
+     *
     public function AssignImageUrls($images)
     {
         try {
@@ -349,19 +343,19 @@ class ImagesSlideshowModel extends ListModel
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                $image->UrlThumbFile = $ImagePaths->getThumbUrl ($image->name);
+                $image->UrlThumbFile = $ImagePaths->getThumbUrl($image->name);
                 // $image->UrlDisplayFile = $ImagePaths->getSizeUrl ('400', $image->name); // toDo: image size to path
-                $image->UrlDisplayFiles = $ImagePaths->getSizeUrls ($image->name);
-                $image->UrlOriginalFile = $ImagePaths->getOriginalUrl ($image->name);
+                $image->UrlDisplayFiles = $ImagePaths->getSizeUrls($image->name);
+                $image->UrlOriginalFile = $ImagePaths->getOriginalUrl($image->name);
 
                 // ToDo: watermarked file
             }
 
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->setError($e);
         }
 
     }
 
 }
+/**/

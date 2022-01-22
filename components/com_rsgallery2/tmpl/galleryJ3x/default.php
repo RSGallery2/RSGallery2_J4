@@ -48,8 +48,6 @@ if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
         . 'Tasks: <br>'
-        . '* <br>'
-        . '* ??? global<br>'
         //	. '* <br>'
         //	. '* <br>'
         //	. '* <br>'
@@ -84,10 +82,6 @@ $displayData['gallery'] = $this->gallery;
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
-// return;
-
-# ToDo: <h1> header on debug  ? develop ?
-
 ?>
 <!-- ToDo: is form here needed ? check core ...  -->
 <!-- ToDo: form link ...  -->
@@ -98,6 +92,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
         <?php if (!empty($this->isDebugSite)): ?>
     	    <h1>RSGallery2 "gallery j3x legacy" view </h1>
+            <hr>
         <?php endif; ?>
 
 	    <?php //--- display search ---------- ?>

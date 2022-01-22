@@ -77,7 +77,7 @@ $imgCount = count($images);
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
-    <h3>rsgallery 2 Images framed J3x area layout (<?php echo $title; ?>)I</h3>
+    <h3>RSGallery2 Images framed J3x area layout (<?php echo $title; ?>)I</h3>
 <?php endif; ?>
 
 

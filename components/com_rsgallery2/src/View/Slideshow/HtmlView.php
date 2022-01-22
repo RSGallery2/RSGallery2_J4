@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\ImagesSlideshow;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\Slideshow;
 
 \defined('_JEXEC') or die;
 
@@ -82,10 +82,17 @@ class HtmlView extends BaseHtmlView
 	public function display($tpl = null)
 	{
 
-//        $this->items = $this->get('Items');
-
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
+
+        /* wrong call but why ? */
+        if ($this->galleryId < 2)
+        {
+            Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
+        }
+
+
+        $this->mergeMenuOptions();
 
         // Get some data from the models
         $this->state      = $this->get('State');
@@ -93,14 +100,30 @@ class HtmlView extends BaseHtmlView
         $this->pagination = $this->get('Pagination');
         $this->params     = $this->state->get('params');
         $this->user       = Factory::getUser();
+        $this->params     = $params = $this->state->get('params');
 
-        $this->isDebugSite = $params->get('isDebugSite'); 
-        $this->isDevelopSite = $params->get('isDevelop'); 
+        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDevelopSite = $params->get('isDevelop');
 
-//        if (count($errors = $this->get('Errors')))
-//        {
-//            throw new GenericDataException(implode("\n", $errors), 500);
-//        }
+        $model = $this->getModel();
+        $this->gallery = $model->galleryData($this->galleryId);
+        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDevelopSite = $params->get('isDevelop');
+
+
+        // ToDo: Status of images
+
+
+
+        if ( ! empty($this->items)) {
+            // Add image paths, image params ...
+            $data = $model->AddLayoutData ($this->items);
+        }
+
+        if (count($errors = $this->get('Errors')))
+        {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
@@ -134,4 +157,48 @@ class HtmlView extends BaseHtmlView
 //
 		return parent::display($tpl);
 	}
+
+
+    public function mergeMenuOptions()
+    {
+        /**
+        $app = Factory::getApplication();
+
+        if ($menu = $app->getMenu()->getActive())
+        {
+        $menuParams = $menu->getParams();
+        }
+        else
+        {
+        $menuParams = new Registry;
+        }
+
+        $mergedParams = clone $this->params;
+        $mergedParams->merge($menuParams);
+
+        $this->params = $mergedParams;
+        /**/
+
+        // gid should be zero ToDo: is this really needed *?
+        $input = Factory::getApplication()->input;
+        //$this->galleryId = $input->get('gid', 0, 'INT');
+
+        // $this->menuParams = new \stdClass();
+        $this->menuParams = (object)[];
+//        $this->menuParams->gallery_show_title = $input->getBool('gallery_show_title', true);
+//        $this->menuParams->gallery_show_description = $input->getBool('gallery_show_description', true);
+//        $this->menuParams->gallery_show_slideshow = $input->getBool('gallery_show_slideshow', true);
+//        $this->menuParams->displaySearch = $input->getBool('displaySearch', true);
+
+//        $this->menuParams->images_column_arrangement = $input->getInt('images_column_arrangement', '');
+//        $this->menuParams->max_columns_in_images_view= $input->getInt('max_columns_in_images_view', '');
+//        $this->menuParams->images_row_arrangement = $input->getInt('images_row_arrangement', '');
+//        $this->menuParams->max_rows_in_images_view = $input->getInt('max_rows_in_images_view', '');
+//        $this->menuParams->max_images_in_images_view = $input->getInt('max_images_in_images_view', '');
+//
+//        $this->menuParams->images_show_title = $input->getBool('images_show_title', true);
+//        $this->menuParams->images_show_description = $input->getBool('images_show_description', true);
+
+    }
+
 }
