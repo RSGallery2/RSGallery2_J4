@@ -26,9 +26,13 @@ use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 
+/**
+ * Routing class of com_rsgallery2
+ *
+ * @since  3.3
+ */
 class Router extends RouterView
 {
-
 	/**
 	 * Flag to remove IDs
 	 *
