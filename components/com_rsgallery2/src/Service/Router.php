@@ -82,7 +82,28 @@ class Router extends RouterView
 		$this->attachRule(new StandardRules($this));
 		$this->attachRule(new NomenuRules($this));
         /**/
+
+        $params = ComponentHelper::getParams('com_rsgallery2');
+        $this->noIDs = (bool) $params->get('sef_ids');
+
+        $rsg2legacy = new RouterViewConfiguration('rsg2_legacy');
+        $rsg2legacy->setKey('gid');
+        $this->registerView($rsg2legacy);
+
+        parent::__construct($app, $menu);
+
+        $this->attachRule(new MenuRules($this));
+        $this->attachRule(new StandardRules($this));
+        $this->attachRule(new NomenuRules($this));
+
+
+        // rules for rsg2_legacy , galleriesJ3x, slideshowJ3x, galleries, images, slideshow
+
+
 	}
+
+
+
 
 
 }

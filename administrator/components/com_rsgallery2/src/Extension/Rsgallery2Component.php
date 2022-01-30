@@ -21,6 +21,7 @@ use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 use Psr\Container\ContainerInterface;
 use Rsgallery2\Component\Rsgallery2\Administrator\Service\HTML\AdministratorService;
 
+
 /**
  * Component class for com_rsgallery2
  *
