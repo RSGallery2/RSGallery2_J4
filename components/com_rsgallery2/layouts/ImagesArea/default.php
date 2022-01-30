@@ -21,11 +21,16 @@ if (!empty($isDevelopSite)) {
         . '* what happens on empty galleries/ image lists<br>'
         . '* Size of replace images (missing/no images) <br>'
         . '* pagination<br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
+        . '* <br>'
+        . '* checkout bootstrap CSS-Tricks: https://css-tricks.com/creating-a-modal-image-gallery-with-bootstrap-components/<br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
         . '</span><br><br>';
 }
 

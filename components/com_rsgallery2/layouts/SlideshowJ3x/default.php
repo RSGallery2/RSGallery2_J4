@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 
 
 HTMLHelper::_('bootstrap.carousel', '.selector');
+HTMLHelper::_('bootstrap.button', '.selector');
 
 
 //$images = $displayData['images'];

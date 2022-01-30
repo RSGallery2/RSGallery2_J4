@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 
 
 HTMLHelper::_('bootstrap.carousel', '.selector');
-
+HTMLHelper::_('bootstrap.button', '.selector');
 
 //$images = $displayData['images'];
 extract($displayData);
@@ -27,11 +27,16 @@ if (!empty($isDevelopSite)) {
         . 'Slideshow layout Tasks: <br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
+        . '* <br>'
+        . '* checkout Flexible CSS Carousel CSS-Tricks: https://css-tricks.com/a-super-flexible-css-carousel-enhanced-with-javascript-navigation/<br>'
+        . '* checkout Flexible CSS Carousel CSS-Tricks: https://css-tricks.com/css-only-carousel/<br>'
+        . '* checkout Flexible CSS Carousel CSS-Tricks: https://css-tricks.com/creating-responsive-touch-friendly-carousels-with-flickity/<br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
+//        . '* <br>'
         . '</span><br><br>';
 }
 
@@ -81,18 +86,24 @@ foreach ($images as $idx => $image) {
 
 <div class="rsg2_gallery">
 
-    <?php /** ?>
+    <?php /**/ ?>
     <h3>Test slideshow I</h3>
     <hr>
 
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-    </div>
-
     <!-- The slideshow/carousel -->
-    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+    <div id="demo1" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#demo1" data-bs-slide-to="0" class="active"
+                    style="color:black; background-color:red;"
+            ></button>
+            <button type="button" data-bs-target="#demo1" data-bs-slide-to="1"
+                    style="color:black; background-color:red;"
+            ></button>
+            <button type="button" data-bs-target="#demo1" data-bs-slide-to="2"
+                    style="color:black; background-color:red;"
+            ></button>
+        </div>
+
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img
@@ -111,10 +122,16 @@ foreach ($images as $idx => $image) {
             </div>
         </div>
         <!-- Left and right controls/icons -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <button class="carousel-control-prev"
+                style="color:black; background-color:red;"
+                type="button" data-bs-target="#demo1" data-bs-slide="prev"
+        >
             <span class="carousel-control-prev-icon"></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <button class="carousel-control-next"
+                style="color:black; background-color:red;"
+                type="button" data-bs-target="#demo1" data-bs-slide="next"
+        >
             <span class="carousel-control-next-icon"></span>
         </button>
     </div>
@@ -125,14 +142,20 @@ foreach ($images as $idx => $image) {
     <h3>Test slideshow II WWW3 + data </h3>
     <hr>
 
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-    </div>
-
     <!-- The slideshow/carousel -->
-    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+    <div id="demo2" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#demo2" data-bs-slide-to="0" class="active"
+                    style="color:black; background-color:red;"
+            ></button>
+            <button type="button" data-bs-target="#demo2" data-bs-slide-to="1"
+                    style="color:black; background-color:red;"
+            ></button>
+            <button type="button" data-bs-target="#demo2" data-bs-slide-to="2"
+                    style="color:black; background-color:red;"
+            ></button>
+        </div>
+
         <div class="carousel-inner">
             <?php
             $isActive="active";
@@ -156,10 +179,14 @@ foreach ($images as $idx => $image) {
 
         </div>
         <!-- Left and right controls/icons -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#demo2" data-bs-slide="prev"
+                style="color:black; background-color:red;"
+        >
             <span class="carousel-control-prev-icon"></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#demo2" data-bs-slide="next"
+                style="color:black; background-color:red;"
+        >
             <span class="carousel-control-next-icon"></span>
         </button>
     </div>
