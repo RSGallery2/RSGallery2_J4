@@ -86,9 +86,47 @@ class Router extends RouterView
         $params = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool) $params->get('sef_ids');
 
-        $rsg2legacy = new RouterViewConfiguration('rsg2_legacy');
-        $rsg2legacy->setKey('gid');
-        $this->registerView($rsg2legacy);
+		// rules for rsg2_legacy
+        $rsg2_legacy = new RouterViewConfiguration('rsg2_legacy');
+        $rsg2_legacy->setKey('gid');
+        $this->registerView($rsg2_legacy);
+
+		// rules for galleriesJ3x,
+        $galleriesJ3x = new RouterViewConfiguration('galleriesJ3x');
+        // $galleriesJ3x->setKey('gid');
+        $this->registerView($galleriesJ3x);
+
+		// rules for galleriesJ3x,
+        $galleryJ3x = new RouterViewConfiguration('galleryJ3x');
+		// $galleryJ3x->setKey('gid');
+        $this->registerView($galleryJ3x);
+
+		// rules for slideshowJ3x
+        $slideshowJ3x = new RouterViewConfiguration('slideshowJ3x');
+		// $slideshowJ3x->setKey('gid');
+        $this->registerView($slideshowJ3x);
+
+		// rules for galleries
+        $galleries = new RouterViewConfiguration('galleries');
+		// $galleries->setKey('gid');
+        $this->registerView($galleries);
+
+		// rules for galleries,
+		$gallery = new RouterViewConfiguration('gallery');
+		// $gallery->setKey('gid');
+		$this->registerView($gallery);
+
+		// rules for images
+        $images = new RouterViewConfiguration('images');
+		// $images->setKey('gid');
+        $this->registerView($images);
+
+		// rules for slideshow
+        $slideshow = new RouterViewConfiguration('slideshow');
+		// $slideshow->setKey('gid');
+        $this->registerView($slideshow);
+
+        //---  ---------------------------------------
 
         parent::__construct($app, $menu);
 
@@ -96,11 +134,50 @@ class Router extends RouterView
         $this->attachRule(new StandardRules($this));
         $this->attachRule(new NomenuRules($this));
 
-
-        // rules for rsg2_legacy , galleriesJ3x, slideshowJ3x, galleries, images, slideshow
-
-
 	}
+
+
+	// http://127.0.0.1/Joomla4x/index.php?option=com_content&view=article&id=9&Itemid=420
+	//
+	public function getArticleSegment($id, $query)
+	{
+
+
+		return array((int) $id => $id);
+	}
+
+	/**
+	 * Method to get the segment(s) for an article
+	 *
+	 * @param   string  $segment  Segment of the article to retrieve the ID for
+	 * @param   array   $query    The request that is parsed right now
+	 *
+	 * @return  mixed   The id of this item or false
+	 */
+	public function getArticleId($segment, $query)
+	{
+
+
+
+		return (int) $segment;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
