@@ -138,6 +138,16 @@ class Router extends RouterView
 
 
 	// http://127.0.0.1/Joomla4x/index.php?option=com_content&view=article&id=9&Itemid=420
+
+
+	/**
+	 * Method to get the segment(s) for an article
+	 *
+	 * @param   string  $id     ID of the article to retrieve the segments for
+	 * @param   array   $query  The request that is built right now
+	 *
+	 * @return  array|string  The segments of this item
+	 */
 	//
 	public function getArticleSegment($id, $query)
 	{
@@ -163,8 +173,143 @@ class Router extends RouterView
 	}
 
 
+// J3x - Root Gallery overview
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rsg2_legacy&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
+	public function getRsg2_legacySegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getRsg2_legacyId($segment, $query)
+	{
+		return (int) $segment;
+	}
 
 
+// J3x - Galleries by Parent
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesJ3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=20&Itemid=160
+	public function getGalleriesJ3xSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getGalleriesJ3xId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// J3x - Single Gallery
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryJ3x&gid=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
+	public function XgetGalleriesJ3xSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function XgetGalleriesJ3xId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// J3x - Slideshow
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshowJ3x&gid=2&Itemid=419
+	public function getSlideshowJ3xSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getSlideshowJ3xId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// J3x - Module Images
+// http://127.0.0.1/Joomla4x/index.php?option=com_content&view=category&layout=blog&id=12&Itemid=360
+	public function getYGalleriesJ3xSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getYGalleriesJ3xId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// J3x - Plugin Images
+// wrong: http://127.0.0.1/Joomla4x/index.php?option=com_content&view=category&layout=blog&id=13&Itemid=361
+	public function getAGalleriesJ3xSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getAGalleriesJ3xId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// RSG2 Root Galleries
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleries&gid=0&galleries_show_intro=0&galleries_show_title=2&galleries_show_description=0&galleries_show_search=0&galleries_column_arrangement=1&max_columns_in_galleries_view=4&galleries_row_arrangement=2&max_rows_in_galleries_view=5&max_galleries_in_galleries_view=20&Itemid=127
+	public function getGalleriesSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getGalleriesId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// RSG2 Galleries by Parent
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleries&gid=3&galleries_show_intro=0&galleries_show_title=2&galleries_show_description=0&galleries_show_search=0&galleries_column_arrangement=1&max_columns_in_galleries_view=4&galleries_row_arrangement=2&max_rows_in_galleries_view=5&max_galleries_in_galleries_view=20&Itemid=153
+	public function getZBGalleriesJ3xSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getZBGalleriesJ3xId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// RSG2 Gallery Images
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=gallery&gid=2&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=20&Itemid=154
+	public function getGallerySegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getGalleryId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// RSG2 Slideshow
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2&Itemid=155
+	public function getSlideshowSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getSlideshowId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// RSG2 gallery images
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=images&gid=2&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=16&images_show_title=2&images_show_description=0&images_show_search=0&Itemid=109
+	public function getImagesSegment($gid, $query)
+	{
+		return array((int) $id => $id);
+	}
+	public function getImagesId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+
+// RSG2 Module - image
+// .
+// .
+// .
+// .
 
 
 
