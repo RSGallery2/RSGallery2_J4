@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsg2_legacy;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\RootgalleriesJ3x;
 
 \defined('_JEXEC') or die;
 
@@ -19,7 +19,7 @@ use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagesModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\GalleryJ3xModel;
 
-//use Rsgallery2\Component\Rsgallery2\Site\Model\Rsg2_legacyModel;
+//use Rsgallery2\Component\Rsgallery2\Site\Model\RootgalleriesJ3xModel;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -88,13 +88,6 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-
-        /**
-         *
-         *      folders should be named galleries root J3x
-         *         -> Rsg2_legacy is wrong
-         *
-         */
 
         //--- root galleries --------------------------------------------------
 

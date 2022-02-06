@@ -86,10 +86,15 @@ class Router extends RouterView
         $params = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool) $params->get('sef_ids');
 
-		// rules for rsg2_legacy
-        $rsg2_legacy = new RouterViewConfiguration('rsg2_legacy');
-        $rsg2_legacy->setKey('gid');
-        $this->registerView($rsg2_legacy);
+
+
+
+		//--- rules for rsg2_legacy links ----------------------------------------
+
+        // rules for RootgalleriesJ3x
+        $rootgalleriesJ3x = new RouterViewConfiguration('RootgalleriesJ3xModel');
+        $rootgalleriesJ3x->setKey('gid');
+        $this->registerView($rootgalleriesJ3x);
 
 		// rules for galleriesJ3x,
         $galleriesJ3x = new RouterViewConfiguration('galleriesJ3x');
@@ -174,12 +179,12 @@ class Router extends RouterView
 
 
 // J3x - Root Gallery overview
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rsg2_legacy&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
-	public function getRsg2_legacySegment($gid, $query)
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rootgalleriesJ3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
+	public function getRootgalleriesJ3xSegment($gid, $query)
 	{
 		return array((int) $id => $id);
 	}
-	public function getRsg2_legacyId($segment, $query)
+	public function getRootgalleriesJ3xId($segment, $query)
 	{
 		return (int) $segment;
 	}

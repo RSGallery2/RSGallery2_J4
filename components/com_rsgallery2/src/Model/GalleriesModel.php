@@ -500,13 +500,11 @@ class GalleriesModel extends ListModel
 	/**
 	 * @param $galleries
 	 *
-	 * @return mixed
+	 * @return
 	 * @since 4.5.0.0
 	 */
 	public function AddLayoutData($galleries)
 	{
-		$images = [];
-
 		try
 		{
 //			// gallery parameter
@@ -572,7 +570,7 @@ class GalleriesModel extends ListModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-		return $images;
+		return;
 	}
 
 	/**

@@ -114,6 +114,26 @@ class HtmlView extends BaseHtmlView
         // ToDo: Status of images
 
 
+        // test routes
+        // use Joomla\CMS\Router\Route;
+
+        // ??? include actual meu item ???
+
+
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=2');
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=2&asSlideshow');
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=imageJ3x&item=83&asInline');
+
+        // J3x extract
+        // http://127.0.0.1/joomla3x/index.php/j3x-single-gallery/1-love-locks/158-dsc-5504
+        // http://127.0.0.1/joomla3x/index.php/j3x-galleries-overview/8-missing-thumb-imnage
+        //
+        // http://127.0.0.1/joomla3x//images/rsgallery/original/00071.jpg
+
+        // http://127.0.0.1/joomla3x/index.php/rsg2-slideshow?task=downloadfile&id=86
+
+
+
 
         if ( ! empty($this->items)) {
             // Add image paths, image params ...

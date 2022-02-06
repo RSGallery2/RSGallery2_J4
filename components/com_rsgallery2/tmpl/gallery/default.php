@@ -63,7 +63,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 ?>
 
 <div class="rsg2__form rsg2__images_area">
-    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
+    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=gallery'); ?>" method="post" class="form-validate form-horizontal well">
 
         <?php if (!empty($this->isDebugSite)): ?>
             <h1> RSGallery2 "gallery images" view </h1>

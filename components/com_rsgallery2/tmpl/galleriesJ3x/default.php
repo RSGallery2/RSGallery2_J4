@@ -28,7 +28,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('vers
 //if ($this->item->params->get('show_name')) {
 //
 //	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_RSG2_LEGACY_NAME') . $this->item->name;
+//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
 //	} else {
 //		echo $this->item->name;
 //	}
@@ -93,7 +93,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 ?>
 
 <div class="rsg2__form rsg2__images_area">
-    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>" method="post" class="form-validate form-horizontal well">
+    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=galleriesJ3x'); ?>" method="post" class="form-validate form-horizontal well">
 
         <?php if (!empty($this->isDebugSite)): ?>
     	    <h1>RSGallery2 "galleries j3x legacy" view </h1>

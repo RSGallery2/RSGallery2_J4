@@ -31,7 +31,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_legacyModel extends GalleriesModel
+class RootgalleriesJ3xModel extends GalleriesModel
 {
     /**
     protected $layoutParams = null; // col/row count
@@ -81,7 +81,7 @@ class Rsg2_legacyModel extends GalleriesModel
 
         try {
 
-            $gallery->UrlGallery = ''; // fall back
+            $gallery->UrlSlideshow = ''; // fall back
 
             //  Factory::getApplication()->getMenu()
             $app = Factory::getApplication();
@@ -95,13 +95,16 @@ class Rsg2_legacyModel extends GalleriesModel
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
-
+/**
             $gallery->UrlSlideshow = Route::_($currentLink
                 . '/galleryJ3x/' . $gallery->id . '/slideshow'
 //                . '&gid=' . $image->gallery_id
 //                . '&iid=' . $gallery->id
 //                . '&layout=galleryJ3xAsInline'
                 ,true,0,true);
+/**/
+
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2&view=slideshowJ3x&gid=' . $gallery->id);
 
         }
         catch (\RuntimeException $e)
@@ -138,7 +141,7 @@ class Rsg2_legacyModel extends GalleriesModel
 
 
             //$urlMenu  = $app->getMenu()->getActive()->link;
-            /**/
+            /**
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
@@ -151,6 +154,10 @@ class Rsg2_legacyModel extends GalleriesModel
                 ,true,0,true);
 
             /**/
+
+            $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=' . $gallery->id);
+
+
             // ToDo: watermarked file
         }
         catch (\RuntimeException $e)
