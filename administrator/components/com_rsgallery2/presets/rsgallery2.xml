@@ -15,7 +15,7 @@
 			type="component"
 			element="com_rsgallery2"
 			link="index.php?option=com_rsgallery2&amp;view=galleries"
-			quicktask="index.php?option=com_rsgallery2&amp;amp;task=gallery.add"
+			quicktask="index.php?option=com_rsgallery2&amp;task=gallery.add"
 			quicktask-title="COM_RSGALLERY2_DASHBOARD_ADD_GALLERY"
 		/>
 		<menuitem
@@ -51,7 +51,7 @@
 	</menuitem>
 
 
-	<menuitem
+	<!--menuitem
 			title="COM_RSGALLERY2_SQL"
 			type="heading"
 			icon="images"
@@ -68,16 +68,16 @@
 		>
 			<menuitem
 					title="{sql:title}"
-					quicktask-title="MOD_MENU_MENU_MANAGER_NEW_ADMIN_MENU_ITEM"
 					type="component"
 					element="com_menus"
 					link="index.php?option=com_menus&amp;view=items&amp;menutype={sql:menutype}"
 					icon="{sql:icon}"
 					class="class:menu"
+					quicktask-title="MOD_MENU_MENU_MANAGER_NEW_ADMIN_MENU_ITEM"
 					quicktask="index.php?option=com_menus&amp;task=item.add&amp;client_id=1&amp;menutype={sql:menutype}"
 			/>
 		</menuitem>
-	</menuitem>
+	</menuitem-->
 
 
 

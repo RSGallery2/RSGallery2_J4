@@ -57,9 +57,8 @@
 			      link="option=com_rsgallery2&amp;view=galleries">COM_RSGALLERY2_MENU_GALLERIES
 				<params>
 					<menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title>
-					<menu-quicktask>index.php?option=com_rsgallery2&amp;amp;task=gallery.add</menu-quicktask>
+					<menu-quicktask>index.php?option=com_rsgallery2&amp;task=gallery.add</menu-quicktask>
 				</params>
-				  
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_UPLOAD"
 			      img="class:upload"
