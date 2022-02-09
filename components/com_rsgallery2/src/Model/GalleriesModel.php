@@ -696,18 +696,24 @@ class GalleriesModel extends ListModel
             //$currentLink = $active->link;
             $currentLink = $active->route;
 
-
             //$urlMenu  = $app->getMenu()->getActive()->link;
             /**/
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
+//            $gallery->UrlGallery = Route::_($currentLink
+//                . '/gallery/' . $gallery->id . ''
+////                . '&gid=' . $image->gallery_id
+////                . '&iid=' . $gallery->id
+////                . '&layout=galleryJ3xAsInline'
+//                ,true,0,true);
+
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=galleries&gid=0
+
+
             $gallery->UrlGallery = Route::_($currentLink
-                . '/gallery/' . $gallery->id . ''
-//                . '&gid=' . $image->gallery_id
-//                . '&iid=' . $gallery->id
-//                . '&layout=galleryJ3xAsInline'
+                . '/gallery&gid=' . $gallery->id
                 ,true,0,true);
 
             /**/
@@ -745,11 +751,17 @@ class GalleriesModel extends ListModel
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
+//            $gallery->UrlSlideshow = Route::_($currentLink
+//                . '/gallery/' . $gallery->id . '/slideshow'
+////                . '&gid=' . $image->gallery_id
+////                . '&iid=' . $gallery->id
+////                . '&layout=galleryJ3xAsInline'
+//                ,true,0,true);
+
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2&slides_layout=_:default&Itemid=130
+
             $gallery->UrlSlideshow = Route::_($currentLink
-                . '/gallery/' . $gallery->id . '/slideshow'
-//                . '&gid=' . $image->gallery_id
-//                . '&iid=' . $gallery->id
-//                . '&layout=galleryJ3xAsInline'
+                . '/gallery&gid=' . $gallery->id . '/slideshow'
                 ,true,0,true);
 
         }

@@ -80,6 +80,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 <?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 j3x images area layout II</h3>
+    <hr>
 <?php endif; ?>
 
 <div id="rsg2_gallery" class="rsg2">
@@ -156,6 +157,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 	<?php /**
     <?php if (!empty($isDebugSite)): ?>
         <h3>RSGallery2 j3x images area layout III</h3>
+        <hr>
     <?php endif; ?>
 
     <div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">

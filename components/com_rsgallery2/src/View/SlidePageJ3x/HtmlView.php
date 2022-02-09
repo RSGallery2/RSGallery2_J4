@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\Slideshow;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\SlidePageJ3x;
 
 \defined('_JEXEC') or die;
 
@@ -15,7 +15,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
 
 /**
@@ -103,7 +102,7 @@ class HtmlView extends BaseHtmlView
         $this->user       = Factory::getUser();
         $this->params     = $params = $this->state->get('params');
 
-        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDebugSite = $params->get('isDebugSite'); 
         $this->isDevelopSite = $params->get('isDevelop');
 
         $model = $this->getModel();
@@ -113,26 +112,6 @@ class HtmlView extends BaseHtmlView
 
 
         // ToDo: Status of images
-
-
-        // test routes
-        // use Joomla\CMS\Router\Route;
-
-        // ??? include actual meu item ???
-
-
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=2');
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=2&asSlideshow');
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=imageJ3x&item=83&asInline');
-
-        // J3x extract
-        // http://127.0.0.1/joomla3x/index.php/j3x-single-gallery/1-love-locks/158-dsc-5504
-        // http://127.0.0.1/joomla3x/index.php/j3x-galleries-overview/8-missing-thumb-imnage
-        //
-        // http://127.0.0.1/joomla3x//images/rsgallery/original/00071.jpg
-
-        // http://127.0.0.1/joomla3x/index.php/rsg2-slideshow?task=downloadfile&id=86
-
 
 
 
@@ -178,6 +157,7 @@ class HtmlView extends BaseHtmlView
 //
 		return parent::display($tpl);
 	}
+
 
 
     public function mergeMenuOptions()

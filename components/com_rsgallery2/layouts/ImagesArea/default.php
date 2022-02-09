@@ -90,6 +90,7 @@ foreach ($images as $idx => $image) {
 
 <?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 images area layout</h3>
+    <hr>
 <?php endif; ?>
 
 <div id="rsg2_gallery" class="rsg2_gallery">

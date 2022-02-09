@@ -101,9 +101,11 @@ class GalleryJ3xModel extends GalleryModel
             // ToDo:Is function needed ?
 
             // /joomla3x/index.php/j3x-galleries-overview/item/105/asInline
+            // new: option=com_rsgallery2&view=galleryJ3x&gid=2
 
             // link to images view as image side to side per page
 
+            // ToDo: adjust URL see galleries model
 			$image->UrlImageAsInline = Route::_($currentLink
                 . '/item/' . $image->id . '/asInline'
 //				. '&gid=' . $image->gallery_id
@@ -131,8 +133,39 @@ class GalleryJ3xModel extends GalleryModel
 
         try {
 
-            // ToDo: check for J3x style of gallery (? all in construct ?)
-            parent::AssignSlideshowUrl($gallery);
+            $gallery->UrlGallery = ''; // fall back
+
+            //  Factory::getApplication()->getMenu()
+            $app = Factory::getApplication();
+
+            $active       = $app->getMenu()->getActive();
+            //$currentLink = $active->link;
+            $currentLink = $active->route;
+
+            $params = $active->params;
+
+
+            //$urlMenu  = $app->getMenu()->getActive()->link;
+
+            // Link to single gallery in actual menu
+            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
+
+//            $gallery->UrlSlideshow = Route::_($currentLink
+//                . '/gallery/' . $gallery->id . '/slideshow'
+////                . '&gid=' . $image->gallery_id
+////                . '&iid=' . $gallery->id
+////                . '&layout=galleryJ3xAsInline'
+//                ,true,0,true);
+
+
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshowJ3x&gid=2
+
+//            // ToDo: adjust URL see galleries model
+//            $gallery->UrlSlideshow = Route::_($currentLink
+//                . '/galleryJ3x&gid=' . $gallery->id . '/slideshow'
+//                ,true,0,true);
+
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2&view=slideshowJ3x&gid=' . $gallery->id);
 
 
         }

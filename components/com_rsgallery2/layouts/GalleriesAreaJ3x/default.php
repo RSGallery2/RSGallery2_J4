@@ -77,6 +77,7 @@ foreach ($galleries as $idx => $gallery) {
 
 <?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 j3x galleries area layout</h3>
+    <hr>
 <?php endif; ?>
 
 

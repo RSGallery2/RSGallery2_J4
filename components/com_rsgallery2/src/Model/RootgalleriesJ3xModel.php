@@ -90,6 +90,7 @@ class RootgalleriesJ3xModel extends GalleriesModel
             //$currentLink = $active->link;
             $currentLink = $active->route;
 
+            $params = $active->params;
 
             //$urlMenu  = $app->getMenu()->getActive()->link;
 
@@ -139,24 +140,12 @@ class RootgalleriesJ3xModel extends GalleriesModel
             //$currentLink = $active->link;
             $currentLink = $active->route;
 
-
-            //$urlMenu  = $app->getMenu()->getActive()->link;
-            /**
-
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
             $gallery->UrlGallery = Route::_($currentLink
-                . '/galleryJ3x/' . $gallery->id . ''
-//                . '&gid=' . $image->gallery_id
-//                . '&iid=' . $gallery->id
-//                . '&layout=galleryJ3xAsInline'
+                . '/galleryJ3x&gid=' . $gallery->id
                 ,true,0,true);
-
-            /**/
-
-            $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=' . $gallery->id);
-
 
             // ToDo: watermarked file
         }

@@ -33,7 +33,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/slideshow.css', array('vers
 //	}
 //}
 //
-//echo $this->item->event->afterDisplayTitle;
+//echo $this->item->event->afterDisplayTitle;R
 //echo $this->item->event->beforeDisplayContent;
 //
 // echo '<h1> RSGallery2 "legacy" view </h1>';
@@ -59,12 +59,13 @@ $layoutName = $this->getLayout();
 // default is 'ImagesAreaJ3x.default'
 if($layoutName == 'default') {
 
-    $layoutName = 'SlideshowJ3x.default';
+    $layoutName = 'SlidePageJ3x.default';
 }
 
 $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
+$displayData['gallery'] = $this->gallery;
 $displayData['params'] = $this->params;
 $displayData['menuParams'] = $this->menuParams;
 
@@ -74,12 +75,12 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 ?>
 
-<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=slideshowJ3x'); ?>" method="post" class="form-validate form-horizontal well">
+<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=SlidePageJ3x'); ?>" method="post" class="form-validate form-horizontal well">
 
-    <div class="rsg2__form rsg2__slide_area">
+    <div class="rsg2__form rsg2__slide_page">
 
         <?php if (!empty($this->isDebugSite)): ?>
-            <h1> Menu RSGallery2 "slideshow" J3x view </h1>
+            <h1> Menu RSGallery2 "slide page J3x" view </h1>
             <hr>
         <?php endif; ?>
 
