@@ -59,10 +59,12 @@ $layoutName = $this->getLayout();
 // default is 'ImagesAreaJ3x.default'
 if($layoutName == 'default') {
 
-    $layoutName = 'SlidePageJ3x.default';
+    $layoutImageName = 'SlidePageImageJ3x.default';
+    $layoutPropertiesName = 'SlidePagePropertiesJ3x.default';
 }
 
-$layout = new FileLayout($layoutName);
+$layoutImage = new FileLayout($layoutImageName);
+$layoutProperties = new FileLayout($layoutPropertiesName);
 
 $displayData['images'] = $this->items;
 $displayData['gallery'] = $this->gallery;
@@ -86,8 +88,12 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
         <?php //--- display images in J3x slideshow ---------- ?>
 
-        <?php echo $layout->render($displayData); ?>
+        <div class="rsg2">
 
+            <?php echo $layoutImage->render($displayData); ?>
+            <?php echo $layoutProperties->render($displayData); ?>
+
+        </div>
     </div>
 </form>
 

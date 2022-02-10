@@ -78,6 +78,13 @@ foreach ($images as $idx => $image) {
     <hr>
 <?php endif; ?>
 
+<?php if (true || $menuParams->galleries_show_slideshow): ?>
+    <div class="rsg2_slideshow_link">
+        <a href="<?php echo $gallery->UrlSlideshow?>">
+            Slideshow
+        </a>
+    </div>
+<?php endif; ?>
 
 <div class="rsg_sem_inl_dispImg">
     <table border="0"
