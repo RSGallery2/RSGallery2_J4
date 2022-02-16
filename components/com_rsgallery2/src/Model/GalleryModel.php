@@ -376,7 +376,7 @@ class GalleryModel extends ListModel
 
             // add slidshow url
             if (! empty ($gallery)) {
-                self::AssignSlideshowUrl ($gallery);
+                $this->AssignSlideshowUrl ($gallery);
             }
 
         }
@@ -556,14 +556,14 @@ class GalleryModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public static function AddLayoutData($images)
+    public function AddLayoutData($images)
     {
         try {
 
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                self::AssignImageUrl($image);
+                $this->AssignImageUrl($image);
 
             }
 
@@ -587,7 +587,7 @@ class GalleryModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public static function AssignImageUrl($image)
+    public function AssignImageUrl($image)
     {
 
         try {
@@ -612,24 +612,12 @@ class GalleryModel extends ListModel
 
     }
 
-    public static function AssignSlideshowUrl($gallery)
+    public function AssignSlideshowUrl($gallery)
     {
 
         try {
 
             $gallery->UrlGallery = ''; // fall back
-
-            //  Factory::getApplication()->getMenu()
-            $app = Factory::getApplication();
-
-            $active       = $app->getMenu()->getActive();
-            //$currentLink = $active->link;
-            $currentLink = $active->route;
-
-            $params = $active->getParams();
-
-
-            //$urlMenu  = $app->getMenu()->getActive()->link;
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8

@@ -122,7 +122,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 	                <div class="shadow-box">
 	                    <div class="img-shadow">
 	                        <a href="<?php echo $image->UrlImageAsInline?>">
-	                            <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name ?>">
+	                            <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
 	                        </a>
 	                    </div>
 	                </div>
@@ -167,7 +167,7 @@ $cols = $params->get('max_columns_in_images_view',2);
 			?>
 			<figure>
 				<img src="<?php echo $image->UrlThumbFile ?>"
-				     alt="<?php echo $image->name ?>"
+				     alt="<?php echo $image->name; ?>"
 				     class="img-thumbnail rsg2_gallery__images_image"
 				     data-target="#rsg2_carousel"
 				     data-slide-to="<?php echo $idx ?>"bs-
@@ -201,11 +201,11 @@ $cols = $params->get('max_columns_in_images_view',2);
 							foreach ($images as $image) {
 								?>
 
-								<div class="carousel-item <?php echo $isActive ?>" >
+								<div class="carousel-item <?php echo $isActive; ?>" >
 									<div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">
 										<!--                                        <img class="d-block " src="--><?php //echo $image->UrlDisplayFiles[400] ?><!--"-->
 										<img class="d-block " src="<?php echo $image->UrlOriginalFile ?>"
-										     alt="<?php echo $image->name ?>"
+										     alt="<?php echo $image->nam; ?>"
 										>
 									</div>
 								</div>

@@ -579,7 +579,7 @@ class GalleriesModel extends ListModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public static function AssignImagePaths($image)
+	public function AssignImagePaths($image)
 	{
 
 		try {
@@ -683,7 +683,7 @@ class GalleriesModel extends ListModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public static function AssignGalleryUrl($gallery)
+	public function AssignGalleryUrl($gallery)
 	{
         try {
 
@@ -731,7 +731,7 @@ class GalleriesModel extends ListModel
 
     }
 
-    public static function AssignSlideshowUrl($gallery)
+    public function AssignSlideshowUrl($gallery)
     {
 
         try {

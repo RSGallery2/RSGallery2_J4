@@ -100,7 +100,7 @@ $imgCount = count($images);
                             <div class="shadow-box">
                                 <div class="img-shadow">
                                     <a href="<?php echo $image->UrlImageAsInline?>">
-                                        <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name ?>"  width="80">
+                                        <img src="<?php echo $image->UrlThumbFile; ?>" alt="<?php echo $image->name; ?>"  width="80">
                                     </a>
                                 </div>
                                 <div class="rsg2-clr"></div>

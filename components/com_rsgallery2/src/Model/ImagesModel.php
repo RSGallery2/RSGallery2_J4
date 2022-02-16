@@ -512,14 +512,14 @@ class ImagesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public static function AddLayoutData($images)
+    public function AddLayoutData($images)
     {
         try {
 
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                self::AssignImageUrl($image);
+                $this->AssignImageUrl($image);
 
             }
 
@@ -543,7 +543,7 @@ class ImagesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public static function AssignImageUrl($image)
+    public function AssignImageUrl($image)
     {
 
         try {
@@ -578,7 +578,7 @@ class ImagesModel extends ListModel
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 */
-	public static function latestImages($limit)
+	public function latestImages($limit)
 	{
 		$images = array();
 
@@ -592,14 +592,15 @@ class ImagesModel extends ListModel
 				->select('*')
 				->from($db->quoteName('#__rsg2_images'))
 				->where('published = 1')
-				->order($db->quoteName('id') . ' DESC');
+				->order($db->quoteName('id') . ' DESC')
+                ->setLimit ($limit);
 
-			$db->setQuery($query, 0, $limit);
+			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 
 			foreach ($rows as $image)
 			{
-				self::AssignImageUrl($image);
+                $this->AssignImageUrl($image);
 
 				$images[] = $image;
 			}
@@ -627,7 +628,7 @@ class ImagesModel extends ListModel
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 */
-	public static function randomImages($limit)
+	public function randomImages($limit)
 	{
 		$images = array();
 
@@ -641,14 +642,15 @@ class ImagesModel extends ListModel
 				->select('*')
 				->from($db->quoteName('#__rsg2_images'))
 				->where('published = 1')
-				->order('RAND()');
+				->order('RAND()')
+                ->setLimit ($limit);
 
-			$db->setQuery($query, 0, $limit);
+			$db->setQuery($query);
 			$rows = $db->loadObjectList();
 
 			foreach ($rows as $image)
 			{
-				self::AssignImageUrl($image);
+                $this->AssignImageUrl($image);
 
 				$images[] = $image;
 			}

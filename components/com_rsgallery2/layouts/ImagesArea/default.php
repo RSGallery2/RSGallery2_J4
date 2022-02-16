@@ -102,7 +102,7 @@ foreach ($images as $idx => $image) {
 			?>
 			<figure>
 				<img src="<?php echo $image->UrlThumbFile ?>"
-				     alt="<?php echo $image->name ?>"
+				     alt="<?php echo $image->name; ?>"
 				     class="img-thumbnail rsg2_gallery__images_image"
 				     data-target="#rsg2_carousel"
 				     data-slide-to="<?php echo $idx ?>"bs-
@@ -136,11 +136,11 @@ foreach ($images as $idx => $image) {
 							foreach ($images as $image) {
 								?>
 
-								<div class="carousel-item <?php echo $isActive ?>" >
+								<div class="carousel-item <?php echo $isActiv; ?>" >
 									<div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">
 										<!--                                        <img class="d-block " src="--><?php //echo $image->UrlDisplayFiles[400] ?><!--"-->
 										<img class="d-block " src="<?php echo $image->UrlOriginalFile ?>"
-										     alt="<?php echo $image->name ?>"
+										     alt="<?php echo $image->name; ?>"
 										>
 									</div>
 								</div>

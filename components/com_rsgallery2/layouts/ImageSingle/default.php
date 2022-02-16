@@ -64,7 +64,7 @@ if (!empty($isDevelopSite)) {
 			?>
 			<figure>
 				<img src="<?php echo $image->UrlThumbFile ?>"
-				     alt="<?php echo $image->name ?>"
+				     alt="<?php echo $image->name; ?>"
 				     class="img-thumbnail rsg2_gallery__images_image"
 				>
 				<figcaption><?php echo $image->name; ?></figcaption>

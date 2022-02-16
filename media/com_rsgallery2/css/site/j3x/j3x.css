@@ -118,6 +118,7 @@ img.status {
 }
 
 /* Thumbs shadow css. If you don't want shadow, comment out the next 3 CSS-declarations */
+/* toDo: create shadow with CSS */
 .img-shadow {
 	float      : left;
 	background : url(../../../images/shadowAlpha.png) no-repeat bottom right !important;
@@ -176,10 +177,12 @@ img.status {
 
 .rsg2_display_name {
 	/*display:none;*/
+	text-align: center;
 }
 
 .rsg2_thumb_name {
 	/*display:none;*/
+	text-align: center;
 }
 
 .rsg2-galleryList-newImages {
@@ -312,13 +315,33 @@ table#rsg2-thumbsList tr {
 	border : none;
 }
 
+.rsg_sem_inl_dispImg table {
+	border-collapse: collapse;
+	width: 100%
+}
+
 .rsg_sem_inl_dispImg tr, .rsg_sem_inl_dispImg td {
 	border : none;
+	padding: 0;
 }
 
 .rsg_sem_inl_ImgDetails tr, .rsg_sem_inl_ImgDetails td {
 	border : none;
 }
+
+.rsg_sem_inl_dispImg  {
+	border-collapse: collapse;
+	width: 100%
+}
+
+.rsg_sem_inl_img_a_link {
+
+	text-align:center;
+
+}
+
+
+
 
 .rsg2-pageNav {
 	text-align : center;

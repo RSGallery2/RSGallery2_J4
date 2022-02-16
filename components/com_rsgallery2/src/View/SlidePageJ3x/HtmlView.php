@@ -113,8 +113,6 @@ class HtmlView extends BaseHtmlView
 
         // ToDo: Status of images
 
-
-
         if ( ! empty($this->items)) {
             // Add image paths, image params ...
             $data = $model->AddLayoutData ($this->items);

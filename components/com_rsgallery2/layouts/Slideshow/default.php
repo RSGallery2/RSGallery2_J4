@@ -163,11 +163,11 @@ foreach ($images as $idx => $image) {
             foreach ($images as $image) {
                 ?>
 
-                <div class="carousel-item <?php echo $isActive ?>" >
+                <div class="carousel-item <?php echo $isActive; ?>" >
                     <div class="d-block w-100">
                         <img class="d-block "
                              src="<?php echo $image->UrlDisplayFile ?>"
-                             alt="<?php echo $image->name ?>"
+                             alt="<?php echo $image->name; ?>"
                         >
                     </div>
                 </div>
@@ -212,11 +212,11 @@ foreach ($images as $idx => $image) {
                 foreach ($images as $image) {
                     ?>
 
-                    <div class="carousel-item <?php echo $isActive ?>" >
+                    <div class="carousel-item <?php echo $isActive; ?>" >
                         <div class="d-block w-100">
                             <img class="d-block "
                                  src="<?php echo $image->UrlOriginalFile ?>"
-                                 alt="<?php echo $image->name ?>"
+                                 alt="<?php echo $image->name; ?>"
                             >
                         </div>
                     </div>
@@ -254,10 +254,10 @@ foreach ($images as $idx => $image) {
                 foreach ($images as $image) {
                 ?>
 
-                <div class="carousel-item <?php echo $isActive ?>" >
+                <div class="carousel-item <?php echo $isActive; ?>" >
                         <img class="d-block w-100"
                              src="<?php echo $image->UrlOriginalFile ?>"
-                             alt="<?php echo $image->name ?>"
+                             alt="<?php echo $image->name; ?>"
                         >
                 </div>
 

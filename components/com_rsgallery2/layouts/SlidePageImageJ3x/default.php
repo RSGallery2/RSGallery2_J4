@@ -87,26 +87,23 @@ foreach ($images as $idx => $image) {
 <?php endif; ?>
 
 <div class="rsg_sem_inl_dispImg">
-    <table border="0"
-           cellspacing="0"
-           cellpadding="0"
-           width="100%">
+    <table>
         <tbody>
         <tr>
             <td>
-                <h2 class="rsg2_display_name"
-                    align="center">DSC_5503</h2>
+                <h2 class="rsg2_display_name"><?php echo $image->name; ?></h2>
             </td>
         </tr>
         <tr>
             <td>
-                <div align="center">
-                    <a href="http://127.0.0.1/joomla3x//images/rsgallery/original/DSC_5503.jpg"
+                <!--div align="center"-->
+                <div class="rsg_sem_inl_img_a_link">
+                    <a href="<?php echo $image->UrlOriginalFile; ?>"
                        target="_blank">
                         <img class="rsg2-displayImage"
-                             src="http://127.0.0.1/joomla3x/images/rsgallery/display/DSC_5503.jpg.jpg"
-                             alt="DSC_5503.jpg"
-                             title="DSC_5503.jpg">
+                             src="<?php echo $image->UrlDisplayFile; ?>"
+                             alt="<?php echo $image->name; ?>"
+                             title="<?php echo $image->title; ?>">
                     </a>
                 </div>
             </td>
@@ -114,10 +111,11 @@ foreach ($images as $idx => $image) {
         <tr>
             <td>
                 <div class="rsg2-toolbar">
-                    <a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114"
+                    <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
+                    <a href=<?php echo $image->UrlDownload; ?>
                        title="Download"
-                       class="btn btn-mini">
-                        <i class="icon-download icon-white"> </i>
+                       class="btn btn-light">
+                        <i class="fas fa-download"></i>
                     </a>
                 </div>
                 <div class="rsg2-clr">&nbsp;</div>

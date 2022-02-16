@@ -76,23 +76,12 @@ class RootgalleriesJ3xModel extends GalleriesModel
         return $galleries;
     }
 
-    public static function AssignSlideshowUrl($gallery)
+    public function AssignSlideshowUrl($gallery)
     {
 
         try {
 
             $gallery->UrlSlideshow = ''; // fall back
-
-            //  Factory::getApplication()->getMenu()
-            $app = Factory::getApplication();
-
-            $active       = $app->getMenu()->getActive();
-            //$currentLink = $active->link;
-            $currentLink = $active->route;
-
-            $params = $active->params;
-
-            //$urlMenu  = $app->getMenu()->getActive()->link;
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
@@ -127,7 +116,7 @@ class RootgalleriesJ3xModel extends GalleriesModel
      *
      * @since 4.5.0.0
      */
-    public static function AssignGalleryUrl($gallery)
+    public function AssignGalleryUrl($gallery)
     {
         try {
 
@@ -159,6 +148,37 @@ class RootgalleriesJ3xModel extends GalleriesModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
+    }
+
+    public function randomImages ($random_count)
+    {
+        $randomImages = [];
+
+        if ($random_count > 0) {
+
+            // toDo: create imagesJ3x model which does set the url to j3x
+            $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
+            $randomImages = $imagesModel->randomImages($random_count);
+
+            $galleryJ3xModel = $this->getInstance('GalleryJ3x', 'RSGallery2Model');
+            $galleryJ3xModel->AddLayoutData($randomImages);
+        }
+        return $randomImages;
+    }
+
+    public function latestImages ($latest_count) {
+        $latestImages = [];
+
+        if ($latest_count > 0) {
+            // toDo: create imagesJ3x model which does set the url to j3x
+            $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
+            $latestImages = $imagesModel->latestImages($latest_count);
+
+            $galleryJ3xModel = $this->getInstance('GalleryJ3x', 'RSGallery2Model');
+            $galleryJ3xModel->AddLayoutData($latestImages);
+        }
+
+        return $latestImages;
     }
 
 

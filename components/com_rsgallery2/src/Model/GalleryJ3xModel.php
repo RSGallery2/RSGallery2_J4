@@ -42,7 +42,7 @@ class GalleryJ3xModel extends GalleryModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public static function AddLayoutData($images)
+	public function AddLayoutData($images)
 	{
 		// ToDo: check for J3x style of gallery (? all in construct ?)
 		parent::AddLayoutData($images);
@@ -52,7 +52,9 @@ class GalleryJ3xModel extends GalleryModel
 			foreach ($images as $image)
 			{
                 // One image on the complete page with pagination
-				self::AssignUrlImageAsInline($image);
+                $this->AssignUrlImageAsInline($image);
+
+				$this->AssignUrlDownloadImage($image);
 
 			}
 		}
@@ -75,7 +77,7 @@ class GalleryJ3xModel extends GalleryModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public static function AssignUrlImageAsInline($image)
+	public function AssignUrlImageAsInline($image)
 	{
 
 		try {
@@ -128,24 +130,13 @@ class GalleryJ3xModel extends GalleryModel
 
 	}
 
-    public static function AssignSlideshowUrl($gallery)
+    public function AssignSlideshowUrl($gallery)
     {
 
         try {
 
             $gallery->UrlGallery = ''; // fall back
 
-            //  Factory::getApplication()->getMenu()
-            $app = Factory::getApplication();
-
-            $active       = $app->getMenu()->getActive();
-            //$currentLink = $active->link;
-            $currentLink = $active->route;
-
-            $params = $active->params;
-
-
-            //$urlMenu  = $app->getMenu()->getActive()->link;
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
@@ -167,6 +158,29 @@ class GalleryJ3xModel extends GalleryModel
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2&view=slideshowJ3x&gid=' . $gallery->id);
 
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GallerysModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
+
+    public function AssignUrlDownloadImage($image)
+    {
+
+        try {
+
+            $image->Urldownload = ''; // fall back
+
+
+            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2&&task=downloadfile&id=' . $image->id);
 
         }
         catch (\RuntimeException $e)

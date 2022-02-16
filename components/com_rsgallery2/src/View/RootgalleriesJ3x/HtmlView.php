@@ -111,7 +111,7 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
         $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
 
-//        $model = $this->getModel();
+        $model = $this->getModel();
 //        if (!empty($this->items)) {
 ////            $model->AddLayoutData ($this->items);
 //        }
@@ -126,20 +126,20 @@ class HtmlView extends BaseHtmlView
 
         //--- random images --------------------------------------------------
 
-        $this->randomImages = ImagesModel::randomImages($this->menuParams->random_count);
-        if (!empty($this->randomImages)) {
-            GalleryJ3xModel::AddLayoutData($this->randomImages);
-        }
-        /**/
+        $this->randomImages = $model->randomImages($this->menuParams->random_count);
+//        if (!empty($this->randomImages)) {
+//            GalleryJ3xModel::AddLayoutData($this->randomImages);
+//        }
+//        /**/
 
         //--- latest images --------------------------------------------------
 
-        $this->latestImages = ImagesModel::latestImages($this->menuParams->latest_count);
-        /**/
-        if (!empty($this->latestImages)) {
-            GalleryJ3xModel::AddLayoutData($this->latestImages);
-        }
-        /**/
+        $this->latestImages = $model->latestImages($this->menuParams->latest_count);
+//        /**/
+//        if (!empty($this->latestImages)) {
+//            GalleryJ3xModel::AddLayoutData($this->latestImages);
+//        }
+//        /**/
 
 
         return parent::display($tpl);
