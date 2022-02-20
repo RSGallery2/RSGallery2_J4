@@ -89,7 +89,7 @@ class Router extends RouterView
 
 
 
-		//--- rules for rsg2_legacy links ----------------------------------------
+		//--- rules for J3x rsg2_legacy links ----------------------------------------
 
         // rules for RootgalleriesJ3x
         $rootgalleriesJ3x = new RouterViewConfiguration('RootgalleriesJ3xModel');
