@@ -325,9 +325,44 @@ table#rsg2-thumbsList tr {
 	padding: 0;
 }
 
-.rsg_sem_inl_ImgDetails tr, .rsg_sem_inl_ImgDetails td {
-	border : none;
+
+.rsg_sem_inl_ImgDetails {
+	/* background-color : #f5f5f5; /**/
+	padding: 10px; /**/
+	/* border: solid 1px green;  /**/
 }
+
+.rsg_sem_inl_ImgDetails .nav-item {
+
+	font-weight: bold; /**/
+}
+
+/**/
+.page_inline_tabs_description {
+	/**
+	background-color : lightgrey;
+	padding: 10px;
+	/* margin: 10px; /**/
+	/* border: solid 1px green; /**/
+}
+/**/
+
+.page_inline_hits  {
+	/*
+	padding: 10px;
+	margin: 10px;
+	background-color : white;
+	/* border: solid 1px red; /**/
+	text-align: center;
+}
+
+.page_inline_description  {
+	margin: 10px;
+	background-color : white;
+	/* border: solid 1px blue; /**/
+}
+
+
 
 .rsg_sem_inl_dispImg  {
 	border-collapse: collapse;

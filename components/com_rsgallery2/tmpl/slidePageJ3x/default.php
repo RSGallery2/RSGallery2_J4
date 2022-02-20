@@ -45,12 +45,12 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' =
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Tasks: <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        . 'slide page J3x default Tasks: <br>'
+        . '* !!! Pagination !!!<br>'
+    //	. '* <br>'
+    //	. '* <br>'
+    //	. '* <br>'
+    //	. '* <br>'
         . '</span><br><br>';
 }
 
@@ -66,7 +66,7 @@ if($layoutName == 'default') {
 $layoutImage = new FileLayout($layoutImageName);
 $layoutProperties = new FileLayout($layoutPropertiesName);
 
-$displayData['images'] = $this->items;
+$displayData['image'] = $this->items[0];
 $displayData['gallery'] = $this->gallery;
 $displayData['params'] = $this->params;
 $displayData['menuParams'] = $this->menuParams;

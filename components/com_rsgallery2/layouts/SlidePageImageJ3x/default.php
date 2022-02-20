@@ -19,7 +19,7 @@ if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
-        . '* Slide image J3x Tasks: <br>'
+        . 'Slide page image J3x Tasks: <br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . '* modal image (->slider)<br>'
@@ -40,17 +40,15 @@ if (!empty($isDevelopSite)) {
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-// assign dummy images if not found
-foreach ($images as $idx => $image) {
 
-    // show dummy thumb on galleries with no images
-    if (! empty($image->isHasNoImages))
-    {
-        $image->UrlOriginalFile = $noImageUrl;
-        $image->UrlDisplayFiles = $noImageUrl;;
-        $image->UrlThumbFile = $noImageUrl;
 
-    }
+if (! empty($image->isHasNoImages))
+{
+    $image->UrlOriginalFile = $noImageUrl;
+    $image->UrlDisplayFiles = $noImageUrl;;
+    $image->UrlThumbFile = $noImageUrl;
+
+}
 
 //    else {
 //
@@ -68,7 +66,8 @@ foreach ($images as $idx => $image) {
 //        }
 //
 //    }
-}
+
+//}
 
 
 ?>

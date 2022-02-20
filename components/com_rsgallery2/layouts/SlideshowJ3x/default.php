@@ -7,8 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
