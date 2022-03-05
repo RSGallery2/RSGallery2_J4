@@ -3,7 +3,7 @@
  * @package    com_rsgallery2
  *
  * @author     RSGallery2 Team <team2@rsgallery2.org>
- * @copyright  (c) 2020-2021 RSGallery2 Team
+ * @copyright  (c) 2020-2022 RSGallery2 Team
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  * @link       https://www.rsgallery2.org
  */
