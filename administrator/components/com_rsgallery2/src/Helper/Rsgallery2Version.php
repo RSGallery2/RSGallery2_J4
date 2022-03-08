@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 
 /**
  * Version information class. Lives from the manifest file which it loads
- * (formely based on the Joomla version class)
+ * (formerly based on the Joomla version class)
  *
  * @package RSGallery2
  */
