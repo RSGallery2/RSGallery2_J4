@@ -84,8 +84,9 @@ class ThumbListField extends ListField
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
-//                ->select($db->quoteName('id') . ' As idx, name As text')
-                ->select($db->quoteName('id') . ' as value, name As text')
+	            ->select($db->quoteName('id', 'value'))
+	            ->select($db->quoteName('name', 'text'))
+
                 ->from('#__rsg2_images')
                 ->where($db->quoteName('gallery_id') . '=' . (int)$galleryId)
 //				->where($db->quoteName('published') . ' = 1')

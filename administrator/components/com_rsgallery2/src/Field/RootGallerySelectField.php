@@ -79,7 +79,11 @@ class RootGallerySelectField extends ListField
 
 			$query = $db->getQuery(true)
                 ->select('id AS value, name AS text, level')
-                ->from($db->quoteName('#__rsg2_galleries'))
+				->select($db->quoteName('id', 'value'))
+				->select($db->quoteName('title', 'text'))
+				->select($db->quoteName('level'))
+
+				->from($db->quoteName('#__rsg2_galleries'))
 				->where($db->quoteName('id') . ' != 1' )
 //				->where($db->quoteName('published') . ' = 1')
 				// ToDo: Use option in XML to select ASC/DESC
