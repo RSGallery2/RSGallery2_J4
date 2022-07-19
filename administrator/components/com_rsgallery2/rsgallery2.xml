@@ -99,7 +99,7 @@
 	</administration>
 
 	<dashboards>
-		<dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-imaages">users</dashboard>
+		<dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-images">users</dashboard>
 	</dashboards>
 
 	<!-- Front-end files -->
