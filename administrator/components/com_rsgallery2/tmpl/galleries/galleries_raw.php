@@ -246,7 +246,7 @@ $ListDirn  = '';
                     <?php
                         if (count ($this->items) == 1) {
                             $keyTranslation = Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_IS_EMPTY');
-                            echo '   <h2><span class="badge badge-pill badge-success">' . $keyTranslation . '</span></h2>';
+                            echo '   <h2><span class="badge badge-pill bg-success">' . $keyTranslation . '</span></h2>';
                         }
 
                         ?>

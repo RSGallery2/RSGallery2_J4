@@ -277,7 +277,7 @@ if ($saveOrder && !empty($this->items))
                                     Images published, unpublished, archived, trashed
 									<?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_published')) : ?>
 										<td class="text-center btns d-none d-md-table-cell">
-											<a class="badge <?php echo ($item->count_published > 0) ? 'badge-success' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=1' . '&filter[level]=1'); ?>">
+											<a class="badge <?php echo ($item->count_published > 0) ? 'bg-success' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=1' . '&filter[level]=1'); ?>">
 												<?php echo $item->count_published; ?></a>
 										</td>
 									<?php endif; ?>

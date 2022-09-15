@@ -1941,7 +1941,7 @@ EOT;
 		    Log::add('j3x_moveImage ==> ' . $name . ' galId: ' . $galleryId . ' imgId: ' .  $id);
 	    }
 
-        // [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb]
+	    // [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb]
 
         //--- display image width --------------------------------------
 
@@ -2033,7 +2033,7 @@ EOT;
 		    Log::add('j3x_moveImage <== state [Display: ' . $stateDisplay . ' thumb: ' . $stateThumb . ' water: ' .  $stateWatermarked . ' imgDb: ' .  $stateImageDb . ']');
 	    }
 
-        return [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb];
+	    return [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb];
     }
 
 

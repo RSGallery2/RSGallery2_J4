@@ -54,7 +54,7 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                 if ( ! $this->isMissingJ3xImages) { ?>
 
                     <div class="allJ3xMovedArea">
-                        <span class="badge badge-success allJ3xMovedText">
+                        <span class="badge bg-success allJ3xMovedText">
                             <?php echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
                         </span>
                     </div>
@@ -304,7 +304,7 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                     // all images are moved, no gallery displayed
                     if ($FoundNr == 0) { ?>
                         <div class="allJ3xMovedArea">
-                            <span class="badge badge-success allJ3xMovedText">
+                            <span class="badge bg-success allJ3xMovedText">
                                 <?php echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
                             </span>
                         </div>

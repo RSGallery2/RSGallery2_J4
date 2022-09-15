@@ -153,7 +153,7 @@ function DisplayRSG2Logo()
 ////    echo '        <button type="button" class="btn btn-primary"';
 //    echo '        <button type="button" class="btn btn-warning"';
 //    echo '               onclick="location.href=\'' . $rsg2ConfigurationLink . '\'">';
-////    echo '            <span class="badge badge-pill badge-info">' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</span>';
+////    echo '            <span class="badge badge-pill bg-info">' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</span>';
 //    echo '            <strong >' . Text::_('COM_RSGALLERY2_PLEASE_GOTO_CONFIGURATION') . '</strong>';
 //    echo '        </button>';
 //    echo '    </div>';
@@ -195,19 +195,19 @@ function DisplayRequestJ3xActions($isMissingJ3xDbGalleries=false,
     $link1 = '';
     if ($isMissingJ3xDbGalleries) {
         $link1 = <<<EOT
-                                <span class="badge badge-pill badge-success">1</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
+                                <span class="badge badge-pill bg-success">1</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
 EOT;
     }
     $link2 = '';
     if ($isMissingJ3xDbImages) {
         $link2 = <<<EOT
-                                <span class="badge badge-pill badge-success">2</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
+                                <span class="badge badge-pill bg-success">2</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
 EOT;
     }
     $link3 = '';
     if ($isMissingJ3xImages) {
         $link3 = <<<EOT
-                                <span class="badge badge-pill badge-success">3</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm" Title="$CopyImagesDesc" role="button">$CopyImages</a>
+                                <span class="badge badge-pill bg-success">3</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm" Title="$CopyImagesDesc" role="button">$CopyImages</a>
 EOT;
     }
 

@@ -237,7 +237,7 @@ class MaintenanceCleanUpController extends BaseController
 
                     $fp = fopen($sqlUninstallFile, 'w');
 
-                    // check all lines fro drop ....
+                    // check all lines for drop ....
                     foreach ($lines as $line) {
 
                         $changedLine = $line;

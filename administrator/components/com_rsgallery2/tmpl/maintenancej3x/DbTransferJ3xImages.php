@@ -558,7 +558,7 @@ EOT;
                 } // count (j4x_images) > 1
                 else {
                     $keyTranslation = 'J4x ' . Text::_('COM_RSGALLERY2_IMAGES_LIST_IS_EMPTY');
-                    echo '   <h2><span class="badge badge-pill badge-success">' . $keyTranslation . '</span></h2>';
+                    echo '   <h2><span class="badge badge-pill bg-success">' . $keyTranslation . '</span></h2>';
                 }
 
 

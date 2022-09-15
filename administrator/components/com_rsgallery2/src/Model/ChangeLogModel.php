@@ -299,36 +299,36 @@ class ChangeLogModel
         switch ($type) {
             case ("security"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_SECURITY');
-                $class = 'badge-danger';
+                $class = 'bg-danger';
                 break;
             case ("fix"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_FIX');
-                $class = 'badge-dark';
+                $class = 'bg-dark';
                 break;
             case ("language"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_LANGUAGE');
-                $class = 'badge-light';
+                $class = 'bg-light';
                 break;
             case ("addition"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_ADDITION');
-                $class = 'badge-success';
+                $class = 'bg-success';
                 break;
             case ("change"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_CHANGE');
-                $class = 'badge-danger';
+                $class = 'bg-danger';
                 break;
             case ("remove"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_REMOVE');
-                $class = 'badge-info';
+                $class = 'bg-info';
                 break;
             case ("note"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_NOTE');
-                $class = 'badge-info';
+                $class = 'bg-info';
                 break;
         }
         /**/
 
-        //	<span class="badge badge-pill badge-primary">Primary</span>
+        //	<span class="badge badge-pill bg-primary">Primary</span>
         if (!empty ($keyTranslation)) {
             $html .= '    <div class="badge badge-pill ' . $class . '">' . $keyTranslation . '</div>';
         }
