@@ -14,6 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
@@ -743,12 +744,26 @@ class MaintenanceJ3xController extends AdminController
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
 
-        global $rsgConfig, $Rsg2DebugActive;
+        global $rsgConfig, $isDebugBackend, $isDevelop;
 
         $msg = '::';
         $app = Factory::getApplication();
 
-        // do check token
+	    //--- config --------------------------------------------------------------------
+
+	    $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+	    //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+	    $isDebugBackend = $rsgConfig->get('isDebugBackend');
+	    $isDevelop = $rsgConfig->get('isDevelop');
+
+	    if ($isDebugBackend)
+	    {
+		    Log::add('ajaxMoveJ3xImage ==>');
+	    }
+
+	    //--- access check --------------------------------------------------------------------
+
+	    // do check token
         // Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         if (!Session::checkToken())
         {
@@ -776,12 +791,6 @@ class MaintenanceJ3xController extends AdminController
 
         try
         {
-            if ($Rsg2DebugActive)
-            {
-                // identify active file
-                Log::add('==> ');
-            }
-
             $input = Factory::getApplication()->input;
 
             //--- image data  --------------------------------------------
@@ -811,6 +820,7 @@ class MaintenanceJ3xController extends AdminController
 //                $app->close();
 //                return;
 //            }
+
             $ajaxImgDbObject['image_id']   = $imageId;
             $ajaxImgDbObject['image_name'] = $imageName;
             $ajaxImgDbObject['gallery_id'] = $galleryId;
@@ -848,7 +858,7 @@ class MaintenanceJ3xController extends AdminController
 ////            }
 //
 
-            if ($Rsg2DebugActive)
+            if ($isDebugBackend)
             {
 //                Log::add('<== uploadAjax: After : ' . count($j3x_images));
             }
@@ -861,13 +871,11 @@ class MaintenanceJ3xController extends AdminController
             $ajaxImgDbObject['state_watermarked'] = $stateWatermarked;
             $ajaxImgDbObject['state_image_db']    = $stateImageDb;
 
-
-
             //----------------------------------------------------
             // return result
             //----------------------------------------------------
 
-            if ($Rsg2DebugActive)
+            if ($isDebugBackend)
             {
 //                Log::add('    $ajaxImgDbObject: ' . json_encode($ajaxImgDbObject));
 //                Log::add('    $msg: "' . $msg . '"');
@@ -878,10 +886,10 @@ class MaintenanceJ3xController extends AdminController
             //echo new JsonResponse($ajaxImgDbObject, "", !$isMovedDb, false); // true);
             echo new JsonResponse($ajaxImgDbObject, "", $hasError, false); // true);
 
-            if ($Rsg2DebugActive)
-            {
-                Log::add('<== Exit ');
-            }
+	        if ($isDebugBackend)
+	        {
+		        Log::add('ajaxMoveJ3xImage <== ' . $hasError);
+	        }
 
         }
         catch (\Exception $e)

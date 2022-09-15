@@ -10,6 +10,8 @@
  * @since       5.0.0.4
  */
 
+// ToDo: check https://stackoverflow.com/questions/21247278/about-d-ts-in-typescript
+
 /*----------------------------------------------------------------
    Joomla interface created by ericfernance on 27/11/2015
    (with rsg2 additions found in internet)
@@ -31,11 +33,24 @@ interface Joomla {
 
 /**/
 
+// https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript
+
+
 //declare var joomla: Joomla;
 
 //const joomla = window.Joomla || {};
-const joomla: Joomla = window.Joomla || {};
+//const joomla: Joomla = window.Joomla || {};
 //const joomla: Joomla = ((Joomla) window.Joomla) || {};
+
+declare global {
+    interface Window { Joomla: any; }
+}
+
+window.Joomla = window.Joomla || {};
+
+
+
+
 
 // Joomla form token
 var Token: string;
@@ -956,7 +971,7 @@ function createIconsBadge (
     // badge
     imageBadge.classList.add('badge');
     imageBadge.classList.add('badge-pill');
-    imageBadge.classList.add('badge-' + labelClass);
+    imageBadge.classList.add('bg-' + labelClass);
 
     // info
     imageBadge.appendChild(document.createTextNode(info));

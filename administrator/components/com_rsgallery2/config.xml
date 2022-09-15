@@ -15,7 +15,7 @@
 				filter="JComponentHelper::filterText"
 				buttons="false"
 		/-->
-		
+
 		<field
 				name="ToDo_list_general"
 				type="list"
@@ -182,7 +182,7 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		
+
 		<!-- ... block general section ... -->
 
 		<field
@@ -598,13 +598,6 @@
 		<field
 				id="j3x_db_images_copied"
 				name="j3x_db_images_copied"
-				type="hidden"
-				default="0"
-		/>
-
-		<field
-				id="j3x_images_copied"
-				name="j3x_images_copied"
 				type="hidden"
 				default="0"
 		/>

@@ -1,10 +1,9 @@
 <?php
 /**
- * @package     ${NAMESPACE}
- * @subpackage
- *
- * @copyright   A copyright
- * @license     A "Slug" license name e.g. GPL2
+ * @package       RSGallery2
+ * @copyright (C) 2021-2022 RSGallery2 Team
+ * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
@@ -14,6 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRaw;
@@ -1933,11 +1933,19 @@ EOT;
 
     public function j3x_moveImage ($id, $name, $galleryId) {
 
+	    global $rsgConfig, $isDebugBackend, $isDevelop;
+
+	    if ($isDebugBackend)
+	    {
+		    // identify active file
+		    Log::add('j3x_moveImage ==> ' . $name . ' galId: ' . $galleryId . ' imgId: ' .  $id);
+	    }
+
         // [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb]
 
         //--- display image width --------------------------------------
 
-        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
         $ImageWidths = $rsgConfig->get('image_size');
         $exploded = explode(',', $ImageWidths);
@@ -2005,7 +2013,7 @@ EOT;
         $isMoved = $this->isMovedState ($stateOriginal)
             & $this->isMovedState ($stateDisplay)
             & $this->isMovedState ($stateThumb);
-        // watermak exists and is copied ...
+        // watermark exists and is copied ...
         //$isMoved &= $this->isMovedState ($stateWatermarked);
 
         //--- Update image DB -----------------------------
@@ -2018,6 +2026,12 @@ EOT;
                 $stateImageDb = self::J3X_IMG_MOVED_AND_DB;
             }
         }
+
+	    if ($isDebugBackend)
+	    {
+		    // identify active file
+		    Log::add('j3x_moveImage <== state [Display: ' . $stateDisplay . ' thumb: ' . $stateThumb . ' water: ' .  $stateWatermarked . ' imgDb: ' .  $stateImageDb . ']');
+	    }
 
         return [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb];
     }

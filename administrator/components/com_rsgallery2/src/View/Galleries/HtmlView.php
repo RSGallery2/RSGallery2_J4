@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_rsgallery2
  *
- * @copyright   (C) 2005 - 2021 RSGallery2 Team 
+ * @copyright   (C) 2005 - 2022 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -23,6 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
 /**
@@ -97,11 +98,13 @@ class HtmlView extends BaseHtmlView
 	protected $isDevelop;
 
 	/**
-	 * Display the view.
+	 * Method to display the view.
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 * @param   string  $tpl  A template file to load. [optional]
 	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
+	 * @return  mixed  A string if successful, otherwise an \Exception object.
+	 *
+	 * @since __BUMP_VERSION__
 	 */
 	public function display($tpl = null)
 	{

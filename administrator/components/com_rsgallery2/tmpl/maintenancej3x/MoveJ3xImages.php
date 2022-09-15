@@ -166,54 +166,6 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                             <th width="40%" class="center">
                                 `Info`
                             </th>
-                            <!--th width="1%" class="center">
-                                `alias`
-                            </th>
-                            <th width="1%" class="center">
-                                `descr`
-                            </th-->
-                            <!--th width="1%" class="center">
-                                `title`
-                            </th>
-                            <th width="1%" class="center">
-                                `hits`
-                            </th>
-                            <th width="1%" class="center">
-                                `date`
-                            </th>
-                            <th width="1%" class="center">
-                                `rating`
-                            </th>
-                            <th width="1%" class="center">
-                                `votes`
-                            </th>
-                            <th width="1%" class="center">
-                                `comments`
-                            </th>
-                            <th width="1%" class="center">
-                                `published`
-                            </th>
-                            <th width="1%" class="center">
-                                `checked_out`
-                            </th>
-                            <th width="1%" class="center">
-                                `checked_out_time`
-                            </th>
-                            <th width="1%" class="center">
-                                `ordering`
-                            </th>
-                            <th width="1%" class="center">
-                                `approved`
-                            </th>
-                            <th width="1%" class="center">
-                                `userid`
-                            </th>
-                            <th width="1%" class="center">
-                                `params`
-                            </th>
-                            <th width="1%" class="center">
-                                `asset_id`
-                            </th-->
                         </tr>
                         </thead>
 
@@ -252,14 +204,10 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                             }
 
                             ?>
-
+							<tr>
                                 <td class="text-center">
                                     <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                                 </td>
-
-                                <!--td class="text-center">
-                                    <?php echo $mergedStatusHtml; ?>
-                                </td-->
 
                                 <td width="1%" class="center">
                                     <?php
@@ -274,18 +222,22 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                                     ?>
                                 </td>
 
-                            <td width="1%" class="center">
-                                    <span class="badge badge-pill badge-primary">
+								<td width="1%" class="text-left">
+									<?php echo $mergedStatusHtml; ?>
+								<!--/td>
+
+								<td width="1%" class="center"-->
+                                    <span class="badge badge-pill bg-primary">
                                         <i class="icon-move"></i>
                                         <?php echo $imgToBeMoved; ?>
                                     </span>
-                                    <span class="badge badge-pill badge-secondary">
+                                    <span class="badge badge-pill bg-secondary">
                                         <i class="icon-images"></i>
                                         <?php //echo ' (' . $imgAvailable . ')'; ?>
                                         <?php echo $imgAvailable ; ?>
                                     </span>
                                 </td>
-                                <td width="1%" class="center">
+                                <td class="left">
                                     <?php echo createImgFlagsArea($item->id); ?>
                                 </td>
                                 <!--td width="1%" class="center">
