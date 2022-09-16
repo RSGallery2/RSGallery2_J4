@@ -80,7 +80,7 @@ class RootGallerySelectField extends ListField
 			$query = $db->getQuery(true)
                 ->select('id AS value, name AS text, level')
 				->select($db->quoteName('id', 'value'))
-				->select($db->quoteName('title', 'text'))
+				->select($db->quoteName('name', 'text'))
 				->select($db->quoteName('level'))
 
 				->from($db->quoteName('#__rsg2_galleries'))

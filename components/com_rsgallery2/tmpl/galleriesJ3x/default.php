@@ -81,6 +81,7 @@ $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
 $displayData['params'] = $this->params;
+$displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
