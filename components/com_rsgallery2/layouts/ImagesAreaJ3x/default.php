@@ -7,6 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
@@ -42,7 +43,8 @@ if (!empty($isDevelopSite)) {
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-// assign dummy images if not found
+//--- assign dummy images if not found -----------------------------------
+
 foreach ($images as $idx => $image) {
 
     // show dummy thumb on galleries with no images
@@ -85,26 +87,30 @@ $cols = $params->get('max_columns_in_images_view',2);
 
 <div id="rsg2_gallery" class="rsg2">
 
-	<?php if ($menuParams->gallery_show_title): ?>
-		<h2>
-			<div class="rsg_gallery_title"><?php echo $gallery->name ?></div>
-		</h2>
+	<?php if( ! empty($gallery)) : ?>
+		<?php if ($menuParams->gallery_show_title): ?>
+			<h2>
+				<div class="rsg_gallery_title"><?php echo $gallery->name ?></div>
+			</h2>
+		<?php endif; ?>
+
+		<?php if ($menuParams->gallery_show_description): ?>
+			<div class="intro_text"><p><?php echo $gallery->description ?></p></div>
+		<?php endif; ?>
+
+	    <div class="rsg2-clr"></div>
+
+	    <?php if ($menuParams->gallery_show_slideshow): ?>
+	        <div class="rsg2_slideshow_link">
+	            <a href="<?php echo $gallery->UrlSlideshow?>">
+	                Slideshow
+	            </a>
+	        </div>
+	    <?php endif; ?>
+
+	<?php else : ?>
+		<h2><?php echo Text::_('Gallery (ID ' . $galleryId . ') not defined'); ?> </h2>
 	<?php endif; ?>
-
-	<?php if ($menuParams->gallery_show_description): ?>
-		<div class="intro_text"><p><?php echo $gallery->description ?></p></div>
-	<?php endif; ?>
-
-    <div class="rsg2-clr"></div>
-
-    <?php if ($menuParams->gallery_show_slideshow): ?>
-        <div class="rsg2_slideshow_link">
-            <a href="<?php echo $gallery->UrlSlideshow?>">
-                Slideshow
-            </a>
-        </div>
-    <?php endif; ?>
-
     <table id="rsg2-thumbsList">
         <tbody>
 

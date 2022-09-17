@@ -78,6 +78,7 @@ $displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 $displayData['gallery'] = $this->gallery;
+$displayData['galleryId'] = $this->galleryId;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
