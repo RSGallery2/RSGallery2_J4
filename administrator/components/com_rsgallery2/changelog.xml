@@ -17,7 +17,7 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>5.0.0.3</version>
+		<version>5.0.0.36</version>
 		<date>2018-01-28</date>
 		<addition>
 			<item>Added "drag and drop" functionality (working uploads limited to 20 images at once and file size not too big)</item>
