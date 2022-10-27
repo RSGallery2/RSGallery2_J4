@@ -84,35 +84,12 @@ class GalleryJ3xModel extends GalleryModel
 
 			$image->UrlGallery_AsInline = ''; // fall back
 
-			//  Factory::getApplication()->getMenu()
-			$app = Factory::getApplication();
 
-			$active       = $app->getMenu()->getActive();
-			// $currentLink = $active->link;
-            $currentLink = $active->route;
-
-
-			//$urlMenu  = $app->getMenu()->getActive()->link;
-
-//
-//			echo Route::_($urlMenu);
-//			echo '<br>';
-
-			/**/
-
-            // ToDo:Is function needed ?
-
-            // /joomla3x/index.php/j3x-galleries-overview/item/105/asInline
-            // new: option=com_rsgallery2&view=galleryJ3x&gid=2
-
-            // link to images view as image side to side per page
-
-            // ToDo: adjust URL see galleries model
-			$image->UrlImageAsInline = Route::_($currentLink
-                . '/item/' . $image->id . '/asInline'
+            $image->UrlImageAsInline = Route::_('index.php?option=com_rsgallery2'
+                . '&view=imageJ3x&&item=' . $image->id // . '/asInline'
 //				. '&gid=' . $image->gallery_id
 //				. '&iid=' . $image->id
-				. '&layout=imagesJ3xAsInline'
+                . '&layout=imagesJ3xAsInline'
                 ,true,0,true);
 
 			/**/
@@ -137,27 +114,9 @@ class GalleryJ3xModel extends GalleryModel
 
             $gallery->UrlGallery = ''; // fall back
 
-
-            // Link to single gallery in actual menu
-            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
-
-//            $gallery->UrlSlideshow = Route::_($currentLink
-//                . '/gallery/' . $gallery->id . '/slideshow'
-////                . '&gid=' . $image->gallery_id
-////                . '&iid=' . $gallery->id
-////                . '&layout=galleryJ3xAsInline'
-//                ,true,0,true);
-
-
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshowJ3x&gid=2
-
-//            // ToDo: adjust URL see galleries model
-//            $gallery->UrlSlideshow = Route::_($currentLink
-//                . '/galleryJ3x&gid=' . $gallery->id . '/slideshow'
-//                ,true,0,true);
-
-            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2&view=slideshowJ3x&gid=' . $gallery->id);
-
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
+                . '&view=slideshowJ3x&gid=' . $gallery->id
+                ,true,0,true);
 
         }
         catch (\RuntimeException $e)
@@ -180,7 +139,8 @@ class GalleryJ3xModel extends GalleryModel
             $image->Urldownload = ''; // fall back
 
 
-            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2&&task=downloadfile&id=' . $image->id);
+            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2&&task=downloadfile&id=' . $image->id
+                ,true,0,true);
 
         }
         catch (\RuntimeException $e)

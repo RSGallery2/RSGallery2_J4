@@ -86,7 +86,7 @@ class RootgalleriesJ3xModel extends GalleriesModel
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 /**
-            $gallery->UrlSlideshow = Route::_($currentLink
+            $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
                 . '/galleryJ3x/' . $gallery->id . '/slideshow'
 //                . '&gid=' . $image->gallery_id
 //                . '&iid=' . $gallery->id
@@ -94,7 +94,8 @@ class RootgalleriesJ3xModel extends GalleriesModel
                 ,true,0,true);
 /**/
 
-            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2&view=slideshowJ3x&gid=' . $gallery->id);
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
+                . '&view=slideshowJ3x&gid=' . $gallery->id);
 
         }
         catch (\RuntimeException $e)
@@ -122,19 +123,21 @@ class RootgalleriesJ3xModel extends GalleriesModel
 
             $gallery->UrlGallery = ''; // fall back
 
-            //  Factory::getApplication()->getMenu()
-            $app = Factory::getApplication();
-
-            $active       = $app->getMenu()->getActive();
-            //$currentLink = $active->link;
-            $currentLink = $active->route;
-
-            // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
-            $gallery->UrlGallery = Route::_($currentLink
-                . '/galleryJ3x&gid=' . $gallery->id
-                ,true,0,true);
+//            $currentLink = $active->link;
+//            $currentLink = $active->route;
+//            $gallery->UrlGallery = Route::_(index.php?option=com_rsgallery2 ....
+//                . '/galleryJ3x&gid=' . $gallery->id
+//                ,true,0,true);
+
+            //--- Link to single gallery in actual menu ----------------------------
+
+            // ToDo: view parameter from menu / config / gallery ...
+
+            $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2'
+                . '&view=galleryJ3x&gid=' . $gallery->id,
+                true,0,true);
 
             // ToDo: watermarked file
         }

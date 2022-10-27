@@ -622,7 +622,7 @@ class GalleryModel extends ListModel
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
 
-//            $gallery->UrlSlideshow = Route::_($currentLink
+//            $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
 //                . '/gallery/' . $gallery->id . '/slideshow'
 ////                . '&gid=' . $image->gallery_id
 ////                . '&iid=' . $gallery->id
@@ -632,13 +632,9 @@ class GalleryModel extends ListModel
 
             // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2
 
-//            // ToDo: adjust URL see galleries model
-//            $gallery->UrlSlideshow = Route::_($currentLink
-//                . '/gallery/' . $gallery->id . '/slideshow'
-////                . '/gallery&gid=' . $gallery->id . '/slideshow'
-//                ,true,0,true);
-
-            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2&view=slideshow&gid=' . $gallery->id);
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
+                . '&view=slideshow&gid=' . $gallery->id
+                ,true,0,true);
         }
         catch (\RuntimeException $e)
         {
