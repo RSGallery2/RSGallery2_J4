@@ -463,11 +463,14 @@ class GalleriesModel extends ListModel
                 if (!empty($galleries)) {
 
                     // Add image paths, image params ...
-                    $data = $this->AddLayoutData($galleries);
+                    //$data = $this->AddLayoutData($galleries);
+                    $this->AddLayoutData($galleries);
+                    $data = $galleries;
 
                 } else {
                     // No galleries defined yet
-                    $data = false;
+                    //$data = false;
+                    $data = $galleries;
                 }
 
                 $this->_item[$galleryId] = $data;
@@ -555,7 +558,7 @@ class GalleriesModel extends ListModel
                 // view single gallery on click
                 $this->AssignGalleryUrl($gallery);
 
-                // view single gallery on click
+                // view single gallery as slideshow on click
                 $this->AssignSlideshowUrl($gallery);
 			}
 
