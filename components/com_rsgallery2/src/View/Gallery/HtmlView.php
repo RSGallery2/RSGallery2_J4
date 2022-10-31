@@ -89,10 +89,11 @@ class HtmlView extends BaseHtmlView
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
+        $params =
         $this->params     = $params = $this->state->get('params');
         $this->user       = Factory::getUser();
 
-        $this->isDebugSite = $params->get('isDebugSite'); 
+        $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop'); 
 
 //        if (count($errors = $this->get('Errors')))

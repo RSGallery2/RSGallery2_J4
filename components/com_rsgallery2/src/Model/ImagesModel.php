@@ -73,23 +73,25 @@ class ImagesModel extends ListModel
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'title', 'a.title',
-                'alias', 'a.alias',
-                'checked_out', 'a.checked_out',
-                'checked_out_time', 'a.checked_out_time',
-                'catid', 'a.catid', 'category_title',
-                'state', 'a.state',
-                'access', 'a.access', 'access_level',
+                'name', 'a.name',
+                'gallery_id', 'a.gallery_id',
+
+                'published', 'a.published',
+
                 'created', 'a.created',
                 'created_by', 'a.created_by',
+
+                'modified', 'a.modified',
+                'modified_by', 'a.modified_by',
+
                 'ordering', 'a.ordering',
-//                'featured', 'a.featured',
-//                'language', 'a.language',
+
                 'hits', 'a.hits',
-                'publish_up', 'a.publish_up',
-                'publish_down', 'a.publish_down',
-//                'images', 'a.images',
-//                'urls', 'a.urls',
-                'filter_tag',
+                'rating', 'a.rating',
+                'votes', 'a.votes',
+                'comments', 'a.comments',
+                'tag',
+                'gallery_name'
             );
         }
 
@@ -132,9 +134,9 @@ class ImagesModel extends ListModel
         }
 
         // List state information
-        // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
-        // $this->setState('list.limit', $value);
-        $this->setState('list.limit', $layoutParams->limit);
+        $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
+        $this->setState('list.limit', $value);
+        //$this->setState('list.limit', $layoutParams->limit);
 
         $value = $app->input->get('limitstart', 0, 'uint');
         $this->setState('list.start', $value);
@@ -234,6 +236,243 @@ class ImagesModel extends ListModel
     /**/
 	protected $_item = null;
     /**/
+
+    /**
+     * Method to get a database query to list images.
+     *
+     * @return  \DatabaseQuery object.
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getListQuery()
+    {
+        // Create a new query object.
+        $db = $this->getDbo();
+        $query = $db->getQuery(true);
+
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
+
+        // Select the required fields from the table.
+        $query->select(
+            $this->getState(
+            /**/
+                'list.select',
+                'a.id, '
+                . 'a.name, '
+                . 'a.alias, '
+                . 'a.description, '
+                . 'a.note, '
+                . 'a.gallery_id, '
+                . 'a.title, '
+
+                . 'a.params, '
+                . 'a.published, '
+
+                . 'a.hits, '
+                . 'a.rating, '
+                . 'a.votes, '
+                . 'a.comments, '
+
+                //               . 'a.publish_up,'
+                //               . 'a.publish_down,'
+
+                . 'a.checked_out, '
+                . 'a.checked_out_time, '
+                . 'a.created, '
+                . 'a.created_by, '
+                . 'a.created_by_alias, '
+                . 'a.modified, '
+                . 'a.modified_by, '
+
+                . 'a.ordering, '
+                . 'a.approved, '
+                . 'a.asset_id, '
+                . 'a.access, '
+                . 'a.use_j3x_location '
+            )
+        );
+        $query->from('#__rsg2_images as a');
+
+        /* parent gallery name */
+        $query->select('gal.name as gallery_name')
+            ->join('LEFT', '#__rsg2_galleries AS gal ON gal.id = a.gallery_id'
+            );
+
+        //// Join over the language
+        //$query->select('l.title AS language_title, l.image AS language_image')
+        //	->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+
+        // Join over the users for the checked out user.
+        $query->select('uc.name AS editor')
+            ->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+
+        // Join over the asset groups.
+        $query->select('ag.title AS access_level')
+            ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+
+        // Join over the users for the author.
+        $query->select('ua.name AS author_name')
+            ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
+
+        /**
+        // Join over the associations.
+        $assoc = $this->getAssoc();
+
+        if ($assoc)
+        {
+        $query->select('COUNT(asso2.id)>1 as association')
+        ->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
+        ->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
+        ->group('a.id, l.title, uc.name, ag.title, ua.name');
+        }
+        /**/
+
+        /**
+        // Filter on the level.
+        if ($level = $this->getState('filter.level'))
+        {
+        $query->where('a.level <= ' . (int) $level);
+        }
+        /**/
+
+        // Filter by access level.
+        if ($access = $this->getState('filter.access'))
+        {
+            $query->where('a.access = ' . (int) $access);
+        }
+
+        // Filter on the gallery Id.
+        if ($gallery_id = $this->getState('filter.gallery_id'))
+        {
+            $query->where('a.gallery_id = ' . $db->quote($gallery_id));
+        }
+
+        // Implement View Level Access
+        if (!$user->authorise('core.admin'))
+        {
+            $groups = implode(',', $user->getAuthorisedViewLevels());
+            $query->where('a.access IN (' . $groups . ')');
+        }
+
+        // Filter by published state
+        $published = (string) $this->getState('filter.published');
+
+        if (is_numeric($published))
+        {
+            $query->where('a.published = ' . (int) $published);
+        }
+        elseif ($published === '')
+        {
+            $query->where('(a.published IN (0, 1))');
+        }
+
+        // Filter by search in name and others
+        $search = $this->getState('filter.search');
+        if (!empty($search))
+        {
+            $search = $db->quote('%' . $db->escape($search, true) . '%');
+            $query->where(
+                'a.name LIKE ' . $search
+                . ' OR a.title LIKE ' . $search
+                . ' OR a.alias LIKE ' . $search
+                . ' OR a.description LIKE ' . $search
+                . ' OR gal.name LIKE ' . $search
+                . ' OR a.note LIKE ' . $search
+                . ' OR a.created LIKE ' . $search
+                . ' OR a.modified LIKE ' . $search
+            );
+        }
+
+        /**
+        // Filter on the language.
+        if ($language = $this->getState('filter.language'))
+        {
+        $query->where('a.language = ' . $db->quote($language));
+        }
+        /**/
+
+        // Filter by a single tag.
+        /**
+        $tagId = $this->getState('filter.tag');
+
+        if (is_numeric($tagId))
+        {
+        $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+        ->join(
+        'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
+        . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+        . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
+        );
+        }
+        /**/
+
+        // Add the list ordering clause
+
+        /**
+        // changes need changes above too -> populateState
+        $orderCol  = $this->state->get('list.ordering', 'a.id');
+        $orderDirn = $this->state->get('list.direction', 'desc');
+
+        if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
+        {
+        $orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
+        }
+
+        $query->order($db->escape($orderCol . ' ' . $orderDirn));
+        /**/
+
+        $listOrdering = $this->getState('list.ordering', 'a.ordering');
+        $listDirn = $db->escape($this->getState('list.direction', 'DESC'));
+
+        if ($listOrdering == 'a.access')
+        {
+            $query->order('a.access ' . $listDirn . ', a.id ' . $listDirn);
+        }
+        else
+        {
+            $query->order($db->escape($listOrdering) . ' ' . $listDirn);
+        }
+
+        // Group by on Images for \JOIN with component tables to count items
+        $query->group(
+        /**/
+            'a.id, '
+            . 'a.name, '
+            . 'a.alias, '
+            . 'a.description, '
+            . 'a.gallery_id, '
+            . 'a.title, '
+
+            . 'a.note, '
+            . 'a.params, '
+            . 'a.published, '
+//            . 'a.published_up, '
+//            . 'a.published_down, '
+
+            . 'a.hits, '
+            . 'a.rating, '
+            . 'a.votes, '
+            . 'a.comments, '
+
+            . 'a.checked_out, '
+            . 'a.checked_out_time, '
+            . 'a.created, '
+            . 'a.created_by, '
+            . 'a.created_by_alias, '
+            . 'a.modified, '
+            . 'a.modified_by, '
+
+            . 'a.ordering, '
+            . 'a.approved, '
+            . 'a.asset_id, '
+            . 'a.access, '
+            . 'a.use_j3x_location '
+        /**/
+        );
+
+        return $query;
+    }
 
     /**
      * Method to get a list of images

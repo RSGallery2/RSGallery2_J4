@@ -47,7 +47,7 @@ echo '';
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Tasks: <br>'
+        . 'Tasks: galleriesJ3x view<br>'
         . '* <br>'
         . '* ??? global<br>'
         //	. '* <br>'
@@ -107,7 +107,6 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 	    <?php
 	    echo $layout->render($displayData);
 	    ?>
-
 
     </form>
 </div>

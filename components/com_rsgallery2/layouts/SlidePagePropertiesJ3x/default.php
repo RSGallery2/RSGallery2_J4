@@ -26,7 +26,7 @@ if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
-        . 'Slide page properties J3x Tasks: <br>'
+        . 'Tasks:  layout slidePagePropertiesJ3x<br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . '* modal image (->slider)<br>'

@@ -27,7 +27,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' =>
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Tasks: <br>'
+        . 'Tasks: galleries view<br>'
         . '* extract image and modal slider into layouts to be called<br>'
         . '* make rsgConfig global<br>'
         //	. '* <br>'

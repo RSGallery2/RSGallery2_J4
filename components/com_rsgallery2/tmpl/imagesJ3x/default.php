@@ -20,6 +20,9 @@ use \Joomla\CMS\Layout\FileLayout;
 // ToDo:
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('version' => 'auto', 'relative' => true));
+
 
 
 echo '';
@@ -27,7 +30,7 @@ echo '';
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Tasks: images view<br>'
+        . 'Tasks: imagesJ3x view<br>'
         . '* <br>'
         . '* make rsgConfig global<br>'
         //	. '* <br>'

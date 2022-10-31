@@ -86,7 +86,7 @@ class GalleryJ3xModel extends GalleryModel
 
 
             $image->UrlImageAsInline = Route::_('index.php?option=com_rsgallery2'
-                . '&view=imageJ3x&&item=' . $image->id // . '/asInline'
+                . '&view=imagesJ3x&item=' . $image->id // . '/asInline'
 //				. '&gid=' . $image->gallery_id
 //				. '&iid=' . $image->id
                 . '&layout=imagesJ3xAsInline'
@@ -139,7 +139,8 @@ class GalleryJ3xModel extends GalleryModel
             $image->Urldownload = ''; // fall back
 
 
-            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2&&task=downloadfile&id=' . $image->id
+            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
+                . '&task=downloadfile&id=' . $image->id
                 ,true,0,true);
 
         }
@@ -154,10 +155,6 @@ class GalleryJ3xModel extends GalleryModel
         }
 
     }
-
-
-
-
 
 }
 

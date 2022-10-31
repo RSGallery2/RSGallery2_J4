@@ -703,7 +703,7 @@ class GalleriesJ3xModel extends ListModel
 
 
             $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2'
-                . '/gallery&gid=' . $gallery->id
+                . '/galleryJ3x&gid=' . $gallery->id
                 ,true,0,true);
 
             /**/

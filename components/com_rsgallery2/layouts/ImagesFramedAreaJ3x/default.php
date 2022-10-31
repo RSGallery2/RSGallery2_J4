@@ -21,6 +21,7 @@ if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
+        . 'Tasks: layout ImagesFramedAreaJ3x <br>'
         . 'Images framed J3x area Tasks: <br>'
         . '* Size of replace images (missing/no images)-> DRY move to one place <br>'
         . '--<br>'

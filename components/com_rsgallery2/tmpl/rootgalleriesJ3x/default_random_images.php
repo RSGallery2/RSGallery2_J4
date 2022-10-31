@@ -16,7 +16,7 @@ use Joomla\CMS\Layout\FileLayout;
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Task default random images: <br>'
+        . 'Tasks: default_random images view<br>'
         . '* Change date format<br>'
 //        . '* <br>'
 //        . '* <br>'

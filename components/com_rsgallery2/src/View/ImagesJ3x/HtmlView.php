@@ -7,14 +7,14 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\GalleryJ3x;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\ImagesJ3x;
 
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -51,7 +51,7 @@ class HtmlView extends BaseHtmlView
      * The page parameters
      *
      * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
+     * @since  3.1
      */
     protected $params = null;
 
@@ -80,53 +80,34 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
-		
+		// toDo: use image list by image parent not from gallery
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
-        /* wrong call but why ? */
-        if ($this->galleryId < 2)
-        {
-	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
-        }
 
-
-		$this->mergeMenuOptions();
-
-		// Get some data from the models
+        // Get some data from the models
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
-		$this->user       = Factory::getUser();
         $params =
-        $this->params     = $params = $this->state->get('params');
-        // ToDo: Why is this necessary ?
-//		$this->pagination->setTotal (count($this->items));
+        $this->params     = $this->state->get('params');
+        $this->user       = Factory::getUser();
 
-		$model = $this->getModel();
-		$this->gallery = $model->galleryData($this->galleryId);
+        $params = $this->params;
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
-		// ToDo: Status of images
 
-
-
-		if ( ! empty($this->items)) {
-			// Add image paths, image params ...
-			$data = $model->AddLayoutData ($this->items);
-		}
-
-        if (count($errors = $this->get('Errors')))
-        {
-            throw new GenericDataException(implode("\n", $errors), 500);
-        }
+//        if (count($errors = $this->get('Errors')))
+//        {
+//            throw new GenericDataException(implode("\n", $errors), 500);
+//        }
 
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-//   		$state = $this-sState = $this->get('State');
-//		$params = $this->params = $state->get('params');
+//   		$state = $this->state = $this->get('State');
+//		$params = $this->Params = $state->get('params');
 //		$itemparams = new Registry(json_decode($item->params));
 //
 //		$temp = clone $params;
@@ -141,13 +122,8 @@ class HtmlView extends BaseHtmlView
 //		$item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
-		// Check for layout override
-		$active = Factory::getApplication()->getMenu()->getActive();
 
-		if (isset($active->query['layout']))
-		{
-			$this->setLayout($active->query['layout']);
-		}
+
 
 
 
@@ -159,47 +135,4 @@ class HtmlView extends BaseHtmlView
 //
 		return parent::display($tpl);
 	}
-
-	public function mergeMenuOptions()
-	{
-		/**
-		$app = Factory::getApplication();
-
-		if ($menu = $app->getMenu()->getActive())
-		{
-		$menuParams = $menu->getParams();
-		}
-		else
-		{
-		$menuParams = new Registry;
-		}
-
-		$mergedParams = clone $this->params;
-		$mergedParams->merge($menuParams);
-
-		$this->params = $mergedParams;
-		/**/
-
-		// gid should be zero ToDo: is this really needed *?
-		$input = Factory::getApplication()->input;
-		//$this->galleryId = $input->get('gid', 0, 'INT');
-
-		// $this->menuParams = new \stdClass();
-		$this->menuParams = (object)[];
-		$this->menuParams->gallery_show_title = $input->getBool('gallery_show_title', true);
-		$this->menuParams->gallery_show_description = $input->getBool('gallery_show_description', true);
-		$this->menuParams->gallery_show_slideshow = $input->getBool('gallery_show_slideshow', true);
-		$this->menuParams->displaySearch = $input->getBool('displaySearch', true);
-
-		$this->menuParams->images_column_arrangement = $input->getInt('images_column_arrangement', '');
-		$this->menuParams->max_columns_in_images_view= $input->getInt('max_columns_in_images_view', '');
-		$this->menuParams->images_row_arrangement = $input->getInt('images_row_arrangement', '');
-		$this->menuParams->max_rows_in_images_view = $input->getInt('max_rows_in_images_view', '');
-		$this->menuParams->max_images_in_images_view = $input->getInt('max_images_in_images_view', '');
-
-		$this->menuParams->images_show_title = $input->getBool('images_show_title', true);
-		$this->menuParams->images_show_description = $input->getBool('images_show_description', true);
-
-	}
-
 }

@@ -20,7 +20,7 @@ if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
-        . 'Image area J3x Tasks: <br>'
+        . 'Tasks: layout Images area J3x<br>'
         . '* Change date format<br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
@@ -109,7 +109,10 @@ $cols = $params->get('max_columns_in_images_view',2);
 	    <?php endif; ?>
 
 	<?php else : ?>
-		<h2><?php echo Text::_('Gallery (ID ' . $galleryId . ') not defined'); ?> </h2>
+		<h2><?php
+			//echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
+			echo Text::_('Gallery (name) not defined in this situation');
+			?> </h2>
 	<?php endif; ?>
     <table id="rsg2-thumbsList">
         <tbody>

@@ -27,7 +27,7 @@ echo '';
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Tasks: <br>'
+        . 'Tasks: gallery view<br>'
         . '* <br>'
         . '* make rsgConfig global<br>'
         //	. '* <br>'

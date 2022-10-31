@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
+        . 'Tasks: layout Image Single<br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . 'Image single tasks: <br>'
@@ -37,6 +38,7 @@ if ( ! isset($image)) {   //         if (isset($to_user, $from_user, $amount))
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
+        . 'Tasks: layout ImageSingle<br>'
         . 'Image Single layout Tasks: <br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'

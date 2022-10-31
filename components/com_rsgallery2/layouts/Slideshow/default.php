@@ -24,6 +24,7 @@ if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
+        . 'Tasks: layout slideshow<br>'
         . 'Slideshow layout Tasks: <br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'

@@ -16,7 +16,7 @@ use Joomla\CMS\Layout\FileLayout;
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Task default latest images: <br>'
+        . 'Tasks: default latest images view <br>'
         . '* Change date format<br>'
 //        . '* <br>'
 //        . '* <br>'

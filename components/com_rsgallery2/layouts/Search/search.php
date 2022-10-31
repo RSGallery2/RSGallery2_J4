@@ -20,18 +20,19 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/rsg2_search.css', array('versio
 
 <?php
 if (!empty($isDevelopSite)) {
-echo '<span style="color:red">'
-    . '* html aria-label ... <br>'
-    . '* HTML 5 layout, bootstrap * <br>'
-    . 'Search tasks: <br>'
-    . '* link from extern ??<br>'
-    . '* separate searches for gallery / images -> seperate answers<br>'
-	. '* Height of button -> BS 5<br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-. '</span><br><br>';
+	echo '<span style="color:red">'
+	    . 'Tasks:  layout search<br>'
+	    . '* html aria-label ... <br>'
+	    . '* HTML 5 layout, bootstrap * <br>'
+	    . 'Search tasks: <br>'
+	    . '* link from extern ??<br>'
+	    . '* separate searches for gallery / images -> seperate answers<br>'
+		. '* Height of button -> BS 5<br>'
+	//	. '* <br>'
+	//	. '* <br>'
+	//	. '* <br>'
+	//	. '* <br>'
+	. '</span><br><br>';
 }
 
 $link = Route::_('index.php?option=com_rsgallery2&view=searchresult'); // JRoute::_('index.php'); ? >search?Itemid=101

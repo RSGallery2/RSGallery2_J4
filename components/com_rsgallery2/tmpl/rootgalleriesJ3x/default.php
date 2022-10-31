@@ -47,7 +47,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('vers
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Tasks: <br>'
+        . 'Tasks: rootgalleriesJ3x view<br>'
         . '* User limit selection box -> layout ? Nbr of galleries  -> yes no ?  <br>'
         . '* Format of date is already in database -> improve ... <br>'
         . '* Events in general<br>'

@@ -47,7 +47,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('vers
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'Tasks: <br>'
+        . 'Tasks: galleryJ3x view<br>'
         //	. '* <br>'
         //	. '* <br>'
         //	. '* <br>'

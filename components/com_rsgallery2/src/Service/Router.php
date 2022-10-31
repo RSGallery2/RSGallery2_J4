@@ -87,8 +87,6 @@ class Router extends RouterView
         $this->noIDs = (bool) $params->get('sef_ids');
 
 
-
-
 		//--- rules for J3x rsg2_legacy links ----------------------------------------
 
         // rules for RootgalleriesJ3x
@@ -116,7 +114,9 @@ class Router extends RouterView
 		// $slideshowJ3x->setKey('gid');
         $this->registerView($slideshowJ3x);
 
-		// rules for galleries
+        //--- rules for new J4x links ----------------------------------------
+
+        // rules for galleries
         $galleries = new RouterViewConfiguration('galleries');
 		// $galleries->setKey('gid');
         $this->registerView($galleries);
@@ -147,51 +147,61 @@ class Router extends RouterView
 	}
 
 
-	// http://127.0.0.1/Joomla4x/index.php?option=com_content&view=article&id=9&Itemid=420
-
-
-	/**
-	 * Method to get the segment(s) for an article
-	 *
-	 * @param   string  $id     ID of the article to retrieve the segments for
-	 * @param   array   $query  The request that is built right now
-	 *
-	 * @return  array|string  The segments of this item
-	 */
-	//
-	public function getArticleSegment($id, $query)
-	{
-
-
-		return array((int) $id => $id);
-	}
-
-	/**
-	 * Method to get the segment(s) for an article
-	 *
-	 * @param   string  $segment  Segment of the article to retrieve the ID for
-	 * @param   array   $query    The request that is parsed right now
-	 *
-	 * @return  mixed   The id of this item or false
-	 */
-	public function getArticleId($segment, $query)
-	{
-
-
-
-		return (int) $segment;
-	}
-
+// Doc: How to route ID -> https://www.techfry.com/joomla/how-to-create-router-for-joomla-component
 
 // J3x - Root Gallery overview
 // http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rootgalleriesJ3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
 	public function getRootgalleriesJ3xSegment($gid, $query)
 	{
-		return array((int) $gid => $gid);
-	}
+		//return array((int) $gid => $gid);
+
+        // root has no gallery ID
+        $void = '0';
+        $segment = '';
+
+        // parent gallery
+        if ($gid > 0) {
+            $db      = Factory::getDbo();
+            $dbquery = $db->getQuery(true);
+
+            $dbquery->select($dbquery->qn('alias'))
+                ->from($db->qn('__rsg2_galleries'))
+                ->where('id = ' . $db->q($gid));
+
+            $db->setQuery($dbquery);
+
+            $gid .= ':' . $db->loadResult();
+
+            list($void, $segment) = explode(':', $gid, 2);
+        }
+
+        return array($void => $segment);
+    }
 	public function getRootgalleriesJ3xId($segment, $query)
 	{
-		return (int) $segment;
+//		return (int) $segment;
+
+        $gid = 0; // root gallery
+
+        // parent gallery
+        if ( ! empty ($segment)) {
+            $db      = Factory::getDbo();
+            $dbquery = $db->getQuery(true);
+
+            $dbquery->select($dbquery->qn('id'))
+                ->from($dbquery->qn('#__rsg2_galleries'))
+                ->where('alias = ' . $dbquery->q($segment));
+
+            $db->setQuery($dbquery);
+
+            if (!(int)$db->loadResult()) {
+                $gid = false;
+            }
+
+            $gid = $db->loadResult();
+        }
+
+        return $gid;
 	}
 
 
@@ -199,22 +209,68 @@ class Router extends RouterView
 // http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesJ3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=20&Itemid=160
 	public function getGalleriesJ3xSegment($gid, $query)
 	{
-		return array((int) $gid => $gid);
+//		return array((int) $gid => $gid);
+
+        // fall back
+        $void = '0';
+        $segment = '';
+
+        // parent gallery
+        if ($gid > 0) {
+            $db      = Factory::getDbo();
+            $dbquery = $db->getQuery(true);
+
+            $dbquery->select($dbquery->qn('alias'))
+                ->from($db->qn('__rsg2_galleries'))
+                ->where('id = ' . $db->q($gid));
+
+            $db->setQuery($dbquery);
+
+            $gid .= ':' . $db->loadResult();
+
+            list($void, $segment) = explode(':', $gid, 2);
+        }
+
+        return array($void => $segment);
 	}
+
 	public function getGalleriesJ3xId($segment, $query)
 	{
-		return (int) $segment;
+//		return (int) $segment;
+        $gid = 0; // root gallery
+
+        // parent gallery
+        if ( ! empty ($segment)) {
+            $db      = Factory::getDbo();
+            $dbquery = $db->getQuery(true);
+
+            $dbquery->select($dbquery->qn('id'))
+                ->from($dbquery->qn('#__rsg2_galleries'))
+                ->where('alias = ' . $dbquery->q($segment));
+
+            $db->setQuery($dbquery);
+
+            if (!(int)$db->loadResult()) {
+                $gid = false;
+            }
+
+            $gid = $db->loadResult();
+        }
+
+        return $gid;
 	}
 
 
 // J3x - Single Gallery
 // http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryJ3x&gid=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_images_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
-	public function XgetGalleriesJ3xSegment($gid, $query)
+	public function getGalleryJ3xSegment($gid, $query)
 	{
+        // ToDo: parent ?
 		return array((int) $gid => $gid);
 	}
 	public function XgetGalleriesJ3xId($segment, $query)
 	{
+        // ToDo: parent ?
 		return (int) $segment;
 	}
 
@@ -322,8 +378,26 @@ class Router extends RouterView
 // .
 
 
-
-
+//
+//    public function preprocess(&$query)
+//    {
+//        $menu = CMSApplication::getInstance('site')->getMenu();
+//
+//        // Search for all menu items for your component
+//        $candidates = $menu->getItems('component', 'com_eventary');
+//
+//        if (!$candidates) return; // Nothing found
+//
+//        // Check each if it suits current $query
+//        foreach ($candidates as $candidate)
+//        {
+//            if ( /* .. $candidate is goood */)
+//            {
+//                $query['Itemid'] = $candidate->id;
+//                break;
+//            }
+//        }
+//    }
 
 
 

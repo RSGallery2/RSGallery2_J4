@@ -45,7 +45,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' =
 if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
-        . 'slide page J3x default Tasks: <br>'
+        . 'Tasks: slidePageJ3x view<br>'
         . '* !!! Pagination !!!<br>'
     //	. '* <br>'
     //	. '* <br>'
