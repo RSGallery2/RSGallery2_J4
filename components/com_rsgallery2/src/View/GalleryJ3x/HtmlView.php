@@ -103,10 +103,11 @@ class HtmlView extends BaseHtmlView
         // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
 
-		$model = $this->getModel();
-		$this->gallery = $model->galleryData($this->galleryId);
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
+
+		$model = $this->getModel();
+		$this->gallery = $model->galleryData($this->galleryId);
 
 		// ToDo: Status of images
 

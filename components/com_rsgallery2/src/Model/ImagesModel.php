@@ -16,6 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
@@ -121,10 +122,15 @@ class ImagesModel extends ListModel
 
         $app = Factory::getApplication();
 
-        // ToDo: move to view html and model (plugion?)
+        // ToDo: ? move to view html and model (plugin?)
+
         // gallery id
-        $gid = $app->input->get('gid', '', 'INT');
-        $this->setState('images.galleryId', $gid);
+        $galleryId = $app->input->get('gid', '', 'INT');
+        $this->setState('images.galleryId', $galleryId);
+
+        // image id
+        $imageId = $app->input->get('item', '', 'INT');
+        $this->setState('images.imageId', $imageId);
 
         $this->setState('params', $app->getParams());
 		
@@ -496,6 +502,7 @@ class ImagesModel extends ListModel
         $groups = $user->getAuthorisedViewLevels();
         $input  = Factory::getApplication()->input;
 
+        // ToDo: ? use state instead ?
         $gid = $input->getInt ('gid', 0);
 
 		if ($this->_item === null)
@@ -531,7 +538,8 @@ class ImagesModel extends ListModel
 				if ( ! empty($images)) {
 
                     // Add image paths, image params ...
-                    $data = $this->AddLayoutData ($images);
+                    $this->AddLayoutData($images);
+                    $data = $images;
 
                 }
 				else
@@ -760,6 +768,9 @@ class ImagesModel extends ListModel
 
                 $this->AssignImageUrl($image);
 
+                // ToDo: Are there situations where download should not be shown ? ==> watermark or not shown single => call in inherited instead
+                $this->AssignUrlDownloadImage($image);
+
             }
 
         }
@@ -807,7 +818,32 @@ class ImagesModel extends ListModel
 
     }
 
-	/**
+    public function AssignUrlDownloadImage($image)
+    {
+
+        try {
+
+            $image->Urldownload = ''; // fall back
+
+
+            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
+                . '&task=downloadfile&id=' . $image->id
+                ,true,0,true);
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'ImagessModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
+
+    /**
 	 * This function will retrieve the data of the n last uploaded images
 	 *
 	 * @param int $limit > 0 will limit the number of lines returned
@@ -906,6 +942,29 @@ class ImagesModel extends ListModel
 
 		return $images;
 	}
+
+    public function galleryData($gid=0)
+    {
+        $gallery = new \stdClass();
+
+        // Not root gallery (tree root == 1)
+        if( $gid > 1) {
+
+            // Create a new query object.
+            $db    = Factory::getDBO();
+
+            $query = $db->getQuery(true)
+                ->select('*')
+                ->from($db->quoteName('#__rsg2_galleries'))
+                ->where($db->quoteName('id') . '=' . $gid );
+            $db->setQuery($query);
+
+            $gallery = $db->loadObject();
+
+        }
+
+        return $gallery;
+    }
 
 
 

@@ -80,9 +80,9 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
-		// toDo: use image list by image parent not from gallery
-        $input  = Factory::getApplication()->input;
-        $this->galleryId = $input->get('gid', 0, 'INT');
+//		// toDo: use image list by image parent not from gallery
+//        $input  = Factory::getApplication()->input;
+//        $this->galleryId = $input->get('gid', 0, 'INT');
 
 
         // Get some data from the models
@@ -93,9 +93,11 @@ class HtmlView extends BaseHtmlView
         $this->params     = $this->state->get('params');
         $this->user       = Factory::getUser();
 
-        $params = $this->params;
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
+
+        $this->galleryId = $this->state->get('galleryId');
+        $this->imageId   = $this->state->get('imageId');
 
 
 //        if (count($errors = $this->get('Errors')))

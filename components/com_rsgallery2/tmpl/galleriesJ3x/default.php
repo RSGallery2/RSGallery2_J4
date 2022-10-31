@@ -74,12 +74,12 @@ $layoutName = $this->getLayout();
 // default is 'ImagesAreaJ3x.default'
 if($layoutName == 'default') {
 
-	$layoutName = 'ImagesAreaJ3x.default';
+	$layoutName = 'GalleriesAreaJ3x.default';
 }
 
 $layout = new FileLayout($layoutName);
 
-$displayData['images'] = $this->items;
+$displayData['galleries'] = $this->items;
 $displayData['params'] = $this->params;
 $displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;

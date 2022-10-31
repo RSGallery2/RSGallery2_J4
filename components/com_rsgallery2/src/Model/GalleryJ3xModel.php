@@ -84,13 +84,21 @@ class GalleryJ3xModel extends GalleryModel
 
 			$image->UrlGallery_AsInline = ''; // fall back
 
+            if ( ! empty ($image->gallery_id)) {
+                $route = 'index.php?option=com_rsgallery2'
+                    . '&view=slidePageJ3x'
+                    . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
+                    . '&item=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
+                ;
+            } else {
 
-            $image->UrlImageAsInline = Route::_('index.php?option=com_rsgallery2'
-                . '&view=imagesJ3x&item=' . $image->id // . '/asInline'
-//				. '&gid=' . $image->gallery_id
-//				. '&iid=' . $image->id
-                . '&layout=imagesJ3xAsInline'
-                ,true,0,true);
+                $route = 'index.php?option=com_rsgallery2'
+                    . '&view=slidePageJ3x'
+                    . '&item=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
+                ;
+            }
+
+            $image->UrlImageAsInline = Route::_($route,true,0,true);
 
 			/**/
 			// ToDo: watermarked file

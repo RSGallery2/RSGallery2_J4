@@ -106,10 +106,14 @@ class HtmlView extends BaseHtmlView
         $this->isDevelopSite = $params->get('isDevelop');
 
         $model = $this->getModel();
-        $this->gallery = $model->galleryData($this->galleryId);
-        $this->isDebugSite = $params->get('isDebugSite');
-        $this->isDevelopSite = $params->get('isDevelop');
 
+        $gallery =
+        $this->gallery = $model->galleryData($this->galleryId);
+
+        // add slidshow url
+        if (! empty ($gallery)) {
+            $model->AssignSlideshowUrl ($gallery);
+        }
 
         // ToDo: Status of images
 

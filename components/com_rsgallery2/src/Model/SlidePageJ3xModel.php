@@ -29,7 +29,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
  *
  * @since  __BUMP_VERSION__
  */
-class SlidePageJ3XModel extends GalleryJ3xModel
+class SlidePageJ3XModel extends ImagesJ3xModel
 {
 
 

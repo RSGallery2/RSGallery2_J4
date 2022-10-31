@@ -57,6 +57,8 @@ if (true) {
 $layout = new FileLayout('ImagesArea.default');
 
 $displayData['images'] = $this->items;
+$displayData['galleryId'] = $this->galleryId;
+$displayData['imageId'] = $this->imageId;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;

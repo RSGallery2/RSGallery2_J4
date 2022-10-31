@@ -108,9 +108,6 @@ class HtmlView extends BaseHtmlView
 
         $model = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
-        $this->isDebugSite = $params->get('isDebugSite');
-        $this->isDevelopSite = $params->get('isDevelop');
-
 
         // ToDo: Status of images
 

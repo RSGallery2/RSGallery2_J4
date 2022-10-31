@@ -463,7 +463,8 @@ class GalleriesJ3xModel extends ListModel
                 if (!empty($galleries)) {
 
                     // Add image paths, image params ...
-                    $data = $this->AddLayoutData($galleries);
+                    $this->AddLayoutData($galleries);
+                    $data = $galleries;
 
                 } else {
                     // No galleries defined yet
@@ -546,7 +547,7 @@ class GalleriesJ3xModel extends ListModel
                     // toDo: there is an example for dummy link
                     $gallery->isHasNoImages = true;
 
-                    $gallery->UrlThumbFile = $image->UrlThumbFile;
+                    $gallery->UrlThumbFile = ''; //not existent: $image->UrlThumbFile;
                 }
 
                 // Info about sub galleries
