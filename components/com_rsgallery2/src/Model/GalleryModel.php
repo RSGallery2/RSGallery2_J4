@@ -648,8 +648,16 @@ class GalleryModel extends ListModel
 
     }
 
+//    public function mergeParams ($paramRsg2Menu, $paramItem) {
+//
+//        // base with the lowest priority
+//        $mergedParams = clone $paramRsg2Menu;
+//
+//        // overwrite with param items
+//        $mergedParams->merge($paramItem);
+//
+//    }
 
 
 
-
-}
+} // class

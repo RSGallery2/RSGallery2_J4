@@ -14,17 +14,73 @@
 			<field
 				name="gid"
 				type="RootGallerySelect"
-				label="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_LABEL"
-				description="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_LABEL_DESC"
+				label="COM_RSGALLERY2_MENU_J3X_SELECT_PARENT_GALLERY_LABEL"
+				description="COM_RSGALLERY2_MENU_J3X_SELECT_PARENT_GALLERY_LABEL_DESC"
 				required="true"
 				select="true"
 				new="true"
 				edit="true"
 				clear="true"
 			/>
-			
+
 			<field
-					name="images_layout"
+					name="gallery_show_title"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="gallery_show_description"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="gallery_show_slideshow"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="intro_text"
+					type="editor"
+					label="COM_RSGALLERY2_J3X_INTRODUCTION"
+					description="COM_RSGALLERY2_J3X_INTRODUCTION_DESC"
+					filter="JComponentHelper::filterText"
+					buttons="false"
+			/>
+
+			<field
+					name="menu_show_intro_text"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="gallery_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
@@ -32,6 +88,13 @@
 					view="images"
 					useglobal="true"
 			/>
+
+		</fieldset>
+
+			<!-- parent gallery images -->
+			<fieldset name="parent_images"  label="COM_RSGALLERY2_MENU_PARENT_GALLERY_IMAGES"
+				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+			>
 
 			<field
 					name="images_show_title"
@@ -71,6 +134,17 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+
+
+			<field
+					name="images_layout"
+					type="componentlayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					view="images"
+					useglobal="true"
+			/>
 
 		</fieldset>
 

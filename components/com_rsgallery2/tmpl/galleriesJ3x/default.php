@@ -79,7 +79,11 @@ if($layoutName == 'default') {
 
 $layout = new FileLayout($layoutName);
 
+$displayData['parentGallery'] = $this->parentGallery;
+$displayData['parent_id'] = $this->state->get('gallery.id');
 $displayData['galleries'] = $this->items;
+
+
 $displayData['params'] = $this->params;
 $displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;

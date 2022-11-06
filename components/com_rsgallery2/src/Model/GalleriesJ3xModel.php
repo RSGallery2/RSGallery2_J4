@@ -453,12 +453,14 @@ class GalleriesJ3xModel extends ListModel
         if (!isset($this->_item[$galleryId])) {
 
             try {
-                // Root galleries, No parent is defined
+                // Root galleries, all galleries by date
                 if ($galleryId == 0) {
                     $galleries = parent::getItems();
                 } else {
-                    $galleries = $this->getGalleryAndChilds($galleryId);
+                    $galleries = $this->getchildGalleries($galleryId);
                 }
+
+                $galleries = parent::getItems();
 
                 if (!empty($galleries)) {
 
@@ -468,13 +470,14 @@ class GalleriesJ3xModel extends ListModel
 
                 } else {
                     // No galleries defined yet
-                    $data = false;
+                    //$data = false;
+                    $data = $galleries;
                 }
 
                 $this->_item[$galleryId] = $data;
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
+                $OutTxt .= 'GalleriesJ3xModel: getItems: Error executing query: "' . "" . '"' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -564,7 +567,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -597,7 +600,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -624,7 +627,7 @@ class GalleriesJ3xModel extends ListModel
         }
         catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: imageCount: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: imageCount: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -668,7 +671,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -713,7 +716,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -749,7 +752,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -806,7 +809,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: RandomImageId: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: RandomImageId: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -847,7 +850,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: ImageById: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: ImageById: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -875,7 +878,7 @@ class GalleriesJ3xModel extends ListModel
      * @return mixed
      *
      * @since version
-     */
+     *
     private function getGalleryAndChilds(int $gid)
     {
         $galleries = [];
@@ -899,7 +902,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -908,7 +911,98 @@ class GalleriesJ3xModel extends ListModel
 
         return $galleries;
     }
-}
+
+/    /**
+     * @param int $gid
+     *
+     * @return mixed
+     *
+     * @since version
+     */
+    public function getchildGalleries()
+    {
+        $parentGallery = null;
+
+        try {
+            $gid = $this->galleryId;
+
+            // Select parent and child galleries
+            $db = $this->getDbo();
+            $query = $db->getQuery(true);
+
+            $query->select('*')
+                ->from($db->quoteName('#__rsg2_galleries'))
+                ->where('id = ' . (int)$gid);
+
+            $db->setQuery($query);
+            //$data = $db->loadObjectList();
+            //$galleries = $db->loadObjectList();
+            $parentGallery = $db->loadObject();
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesJ3xModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $parentGallery;
+    }
+
+    public function getRsg2MenuParams () {
+
+        // see rootgalleriesJ3x\default.xml
+
+        /*
+        gid
+
+        images_show_title
+        images_show_description
+        images_show_search
+        intro_text
+        images_layout
+
+        images_column_arrangement
+        max_columns_in_images_view
+        images_row_arrangement
+        max_rows_in_images_view
+        max_images_in_images_view
+
+        displaySearch
+        displayRandom
+        displayLatest
+        intro_text
+        gallery_layout
+        ---
+        galleries_count
+        display_limitbox
+        galleries_show_title
+        galleries_show_description
+        galleries_show_owner
+        galleries_show_size
+        galleries_show_date
+        galleries_show_pre_label
+        galleries_show_slideshow
+        galleries_description_side
+
+        latest_count
+        random_count
+        /**/
+
+
+
+
+
+
+    }
+
+
+
+
+} // class
 
 
 

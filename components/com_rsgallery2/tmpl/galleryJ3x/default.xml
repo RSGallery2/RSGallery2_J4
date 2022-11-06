@@ -24,16 +24,6 @@
 			/>
 			
 			<field
-					name="images_layout"
-					type="componentlayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					extension="com_rsgallery2"
-					view="images"
-					useglobal="true"
-			/>
-
-			<field
 					name="gallery_show_title"
 					type="radio"
 					default="1"
@@ -78,6 +68,16 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+
+			<field
+					name="galleries_layout"
+					type="componentlayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					view="images"
+					useglobal="true"
+			/>
 
 		</fieldset>
 

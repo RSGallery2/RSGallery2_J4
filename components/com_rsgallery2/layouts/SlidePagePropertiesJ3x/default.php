@@ -48,7 +48,7 @@ $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' .
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
-    <h3>RSGallery2 slide properties J3x layout</h3>
+    <h3>RSGallery2 slide (?page) properties J3x layout</h3>
     <hr>
 <?php endif; ?>
 
@@ -128,13 +128,13 @@ $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' .
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 
-    <p><h3>This may be a comments </h3></p>
+    <p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
 
     <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 
-    <p><h3>This may be exif info  </h3></p>
+    <p><h3>ToDo: Display selected image exif info  </h3></p>
 
     <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 

@@ -18,6 +18,22 @@ extract($displayData);
 if ( ! isset($galleries)) {   //         if (isset($to_user, $from_user, $amount))
     $galleries = [];
 }
+echo '<br>--- $this->params ------------------------------------------<br>';
+//echo json_encode($params);
+//echo $params->toString();
+//echo json_encode($params->toArray());
+//foreach ($params->toArray() as $paramName => $paramValue) {
+//
+//	echo $paramName . ': '  . json_encode($paramValue) . '<br>';
+//
+//}
+//echo $params;
+
+//echo json_encode($params, JSON_PRETTY_PRINT);
+//echo json_encode(json_decode($params), JSON_PRETTY_PRINT);
+//echo json_encode(json_decode($params->toString()), JSON_PRETTY_PRINT);
+echo '<br>------------------------------------------------------------<br>';
+
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
@@ -56,6 +72,10 @@ if (!empty($isDevelopSite)) {
 </div>
 /**/
 
+
+
+
+
 //--- sanitize URLs -----------------------------------
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
@@ -74,6 +94,7 @@ foreach ($galleries as $idx => $gallery) {
     }
 }
 
+
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
@@ -84,7 +105,7 @@ foreach ($galleries as $idx => $gallery) {
 
 <div id="rsg2_gallery" class="rsg2">
 
-	<div class="form-label intro_text"><?php echo $menuParams->intro_text; ?></div>
+	<div class="form-label intro_text"><?php echo $params->intro_text; ?></div>
 
 	<?php foreach ($galleries as $idx => $gallery) : ?>
 
@@ -107,7 +128,7 @@ foreach ($galleries as $idx => $gallery) {
 
             <div class="rsg2-galleryList-text">
                 <div>
-                <?php if ($menuParams->galleries_show_title): ?>
+                <?php if ($params->galleries_show_title): ?>
                     <span><?php echo $gallery->name ?></span>
                     <span class="rsg2-galleryList-newImages"></span>
                 <?php endif; ?>
@@ -116,26 +137,26 @@ foreach ($galleries as $idx => $gallery) {
 
                     <div class="rsg2_details">
 
-                        <?php if ($menuParams->galleries_show_slideshow): ?>
+                        <?php if ($params->galleries_show_slideshow): ?>
                             <div class="rsg2_slideshow_link">
                                 <a href="<?php echo $gallery->UrlSlideshow?>">
                                     Slideshow
                                 </a>
                             </div>
                         <?php endif; ?>
-                        <?php if ($menuParams->galleries_show_owner && !empty($gallery->author_name)): ?>
+                        <?php if ($params->galleries_show_owner && !empty($gallery->author_name)): ?>
                                 <div>
                                     <?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $gallery->author_name ?>
                                 </div>
                         <?php endif; ?>
-                        <?php if ($menuParams->galleries_show_size): ?>
+                        <?php if ($params->galleries_show_size): ?>
                             <div><?php echo Text::_('COM_RSGALLERY2_SIZE') . ': ' . $gallery->image_count ?></div>
                         <?php endif; ?>
-                        <?php if ($menuParams->galleries_show_date): ?>
+                        <?php if ($params->galleries_show_date): ?>
                             <div><?php echo Text::_('COM_RSGALLERY2_CREATED') . ': ' . $gallery->created; ?></div>
                         <?php endif; ?>
                     </div>
-                    <?php if ($menuParams->galleries_show_description): ?>
+                    <?php if ($params->galleries_show_description): ?>
                         <?php if (! empty ($gallery->description)): ?>
                             <div class="rsg2-galleryList-description">
                                 <div><?php echo $gallery->description ?></div>

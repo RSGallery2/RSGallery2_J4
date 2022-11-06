@@ -62,7 +62,7 @@ if (!empty ($this->isDevelopSite))
 }
 
 
-if ($this->menuParams->displaySearch) {
+if ($this->menuParams->get('displaySearch')) {
     $searchLayout = new FileLayout('Search.search');
     // $searchData['options'] = $searchOptions ...; // gallery
 }
@@ -78,7 +78,8 @@ if($layoutName == 'default') {
 $layout = new FileLayout($layoutName);
 
 $displayData['galleries'] = $this->items;
-$displayData['params'] = $this->params;
+$test = $this->params->toObject();
+$displayData['params'] = $this->params->toObject();
 $displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
@@ -99,7 +100,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 		<?php //--- display search ---------- ?>
 
-		<?php if ($this->menuParams->displaySearch): ?>
+		<?php if ($this->menuParams->get('displaySearch')): ?>
 			<?php echo $searchLayout->render(); ?>
 		<?php endif; ?>
 

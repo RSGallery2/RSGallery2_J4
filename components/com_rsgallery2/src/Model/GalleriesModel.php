@@ -453,12 +453,16 @@ class GalleriesModel extends ListModel
         if (!isset($this->_item[$galleryId])) {
 
             try {
-                // Root galleries, No parent is defined
-                if ($galleryId == 0) {
-                    $galleries = parent::getItems();
-                } else {
-                    $galleries = $this->getGalleryAndChilds($galleryId);
-                }
+// Wrong parent gallery must be fetched seperately
+//                // Root galleries, No parent is defined
+//                if ($galleryId == 0) {
+//                    $galleries = parent::getItems();
+//                } else {
+//                    $galleries = $this->getGalleryAndChilds($galleryId);
+//                }
+
+// yyy ToDo:
+                $galleries = parent::getItems();
 
                 if (!empty($galleries)) {
 
@@ -904,7 +908,50 @@ class GalleriesModel extends ListModel
 
         return $galleries;
     }
-}
+    /**
+     * @param int $gid
+     *
+     * @return mixed
+     *
+     * @since version
+     */
+    public function getParentGallery()
+    {
+        $parentGallery = null;
+
+        try {
+            $gid = $this->galleryId;
+
+            // Select parent and child galleries
+            $db = $this->getDbo();
+            $query = $db->getQuery(true);
+
+            $query->select('*')
+                //->from($db->quoteName('#__rsg2_galleries', 'a'))
+                ->from($db->quoteName('#__rsg2_galleries'))
+                //->where('a.id = ' . (int) $gid);
+                ->where('id = ' . (int)$gid);
+
+            $db->setQuery($query);
+            //$data = $db->loadObjectList();
+            //$galleries = $db->loadObjectList();
+            $parentGallery = $db->loadObject();
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleriesModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $parentGallery;
+    }
+
+
+} // class
 
 
 

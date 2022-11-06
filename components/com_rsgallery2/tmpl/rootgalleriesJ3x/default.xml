@@ -58,6 +58,17 @@
 			/>
 
 			<field
+					name="menu_show_intro_text"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+			<field
 					name="gallery_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
@@ -191,7 +202,7 @@
 
 		</fieldset>
 
-		<fieldset name="latest_images" label="COM_RSGALLERY2_MENU_J3X_LATEST_IMAGES_TAB">
+		<fieldset name="latest_images_count" label="COM_RSGALLERY2_MENU_J3X_LATEST_IMAGES_TAB">
 			<field
 					name="latest_count"
 					type="number"
@@ -203,7 +214,7 @@
 
 		</fieldset>
 
-		<fieldset name="random_images" label="COM_RSGALLERY2_MENU_J3X_RANDOM_IMAGES_TAB">
+		<fieldset name="random_images_count" label="COM_RSGALLERY2_MENU_J3X_RANDOM_IMAGES_TAB">
 			<field
 					name="random_count"
 					type="number"

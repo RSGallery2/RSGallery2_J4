@@ -31,7 +31,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
  *
  * @since  __BUMP_VERSION__
  */
-class RootgalleriesJ3xModel extends GalleriesModel
+class RootgalleriesJ3xModel extends GalleriesJ3xModel
 {
     /**
     protected $layoutParams = null; // col/row count
@@ -101,7 +101,7 @@ class RootgalleriesJ3xModel extends GalleriesModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModelJ3x: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'RootgalleriesJ3xModel: AssignSlideshowUrl ()' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -116,35 +116,18 @@ class RootgalleriesJ3xModel extends GalleriesModel
      *
      *
      * @since 4.5.0.0
-     */
+     *
     public function AssignGalleryUrl($gallery)
     {
         try {
 
-            $gallery->UrlGallery = ''; // fall back
+            parent::AssignGalleryUrl($gallery);
 
-            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
-
-//            $currentLink = $active->link;
-//            $currentLink = $active->route;
-//            $gallery->UrlGallery = Route::_(index.php?option=com_rsgallery2 ....
-//                . '/galleryJ3x&gid=' . $gallery->id
-//                ,true,0,true);
-
-            //--- Link to single gallery in actual menu ----------------------------
-
-            // ToDo: view parameter from menu / config / gallery ...
-
-            $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2'
-                . '&view=galleryJ3x&gid=' . $gallery->id,
-                true,0,true);
-
-            // ToDo: watermarked file
         }
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModelJ3x: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'RootgalleriesJ3xModel: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -152,10 +135,13 @@ class RootgalleriesJ3xModel extends GalleriesModel
         }
 
     }
+    /**/
 
     public function randomImages ($random_count)
     {
         $randomImages = [];
+
+        // ToDo: try catch ...
 
         if ($random_count > 0) {
 
@@ -169,8 +155,11 @@ class RootgalleriesJ3xModel extends GalleriesModel
         return $randomImages;
     }
 
-    public function latestImages ($latest_count) {
+    public function latestImages ($latest_count)
+    {
         $latestImages = [];
+
+        // ToDo: try catch ...
 
         if ($latest_count > 0) {
             // toDo: create imagesJ3x model which does set the url to j3x
@@ -184,5 +173,84 @@ class RootgalleriesJ3xModel extends GalleriesModel
         return $latestImages;
     }
 
+    public function getRsg2MenuParams () {
 
-}
+        // see rootgalleriesJ3x\default.xml
+
+        /*
+        displaySearch
+        displayRandom
+        displayLatest
+        intro_text
+        menu_show_intro_text
+        gallery_layout
+        ---
+        galleries_count
+        display_limitbox
+        galleries_show_title
+        galleries_show_description
+        galleries_show_owner
+        galleries_show_size
+        galleries_show_date
+        galleries_show_pre_label
+        galleries_show_slideshow
+        galleries_description_side
+
+        latest_count
+        random_count
+        /**/
+
+
+        $menuParams = new Registry();
+
+        try {
+//            $activeMenu = Factory::getApplication()->getMenu()->getActive();
+//            if ($activeMenu) {
+//                $menuParams = $activeMenu->getParams();
+//            } else {
+//                $menuParams = new Registry();
+//            }
+
+            $input = Factory::getApplication()->input;
+
+            // $registry->foo = 'foo';
+
+            $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
+            $menuParams->set('displayRandom', $input->getBool('displayRandom', true));
+            $menuParams->set('displayLatest', $input->getBool('displayLatest', true));
+            $menuParams->set('intro_text', $input->get('intro_text', 'intro_text', 'HTML'));
+            $menuParams->set('intro_text', $input->get('intro_text', '', 'RAW'));
+            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
+            $menuParams->set('gallery_layout', $input->getString('gallery_layout', true));
+            //---
+            $menuParams->set('galleries_count', $input->getInt('galleries_count', 5));
+            $menuParams->set('display_limitbox', $input->getBool('display_limitbox', true));
+            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
+            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
+            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
+            $menuParams->set('galleries_show_size', $input->getInt('galleries_show_size', true));
+            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
+            $menuParams->set('galleries_show_pre_label', $input->getBool('galleries_show_pre_label', true));
+            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
+            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', 0));
+
+            $menuParams->set('latest_count', $input->getInt('latest_count', 5));
+            $menuParams->set('random_count', $input->getInt('random_count', 5));
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+
+
+        return $menuParams;
+    }
+
+} // class

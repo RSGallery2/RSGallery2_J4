@@ -92,41 +92,47 @@ class HtmlView extends BaseHtmlView
         //--- root galleries --------------------------------------------------
 
         $input = Factory::getApplication()->input;
-//        $this->galleryId = $input->get('gid', 0, 'INT');
-
-        $state = $this->state = $this->get('State');
-        $params = $this->params = $state->get('params');
-
-        $this->mergeMenuOptions();
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
-	    $this->state      = $this->get('State');
+        $state =
+        $this->state      = $this->get('State');
+        // Galleries with parend ID = 0
         $this->items = $this->get('Items');
+
+        $params =
+        $this->params = $this->state->get('params');
+
         $this->pagination = $this->get('Pagination');
-        $this->user = Factory::getUser();
-	    $this->params     = $params = $this->state->get('params');
+        // Flag indicates to not add limitstart=0 to URL
+        $this->pagination->hideEmptyLimitstart = true;
 	    // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
+        $this->user = Factory::getUser();
 
         $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
         $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
 
-        $model = $this->getModel();
-//        if (!empty($this->items)) {
-////            $model->AddLayoutData ($this->items);
-//        }
+        // Merge (overwrite) menu parameter with item/config parameter
+
+        $menuParams =
+        $this->menuParams = $this->get('Rsg2MenuParams');
+
+        // overwrite with param items
+        $menuParams->merge($this->params);
+        $this->params = $menuParams;
 
         if (count($errors = $this->get('Errors')))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
-        // Flag indicates to not add limitstart=0 to URL
-        $this->pagination->hideEmptyLimitstart = true;
+
+        $model = $this->getModel();
 
         //--- random images --------------------------------------------------
 
-        $this->randomImages = $model->randomImages($this->menuParams->random_count);
+        //$this->randomImages = $model->randomImages($this->menuParams->random_count);
+        $this->randomImages = $model->randomImages($menuParams->get('random_count'));
 //        if (!empty($this->randomImages)) {
 //            GalleryJ3xModel::AddLayoutData($this->randomImages);
 //        }
@@ -134,7 +140,7 @@ class HtmlView extends BaseHtmlView
 
         //--- latest images --------------------------------------------------
 
-        $this->latestImages = $model->latestImages($this->menuParams->latest_count);
+        $this->latestImages = $model->latestImages($menuParams->get('latest_count'));
 //        /**/
 //        if (!empty($this->latestImages)) {
 //            GalleryJ3xModel::AddLayoutData($this->latestImages);
@@ -144,54 +150,6 @@ class HtmlView extends BaseHtmlView
 
         return parent::display($tpl);
     }
-
-    public function mergeMenuOptions()
-    {
-        /**
-        $app = Factory::getApplication();
-
-        if ($menu = $app->getMenu()->getActive())
-        {
-            $menuParams = $menu->getParams();
-        }
-        else
-        {
-            $menuParams = new Registry;
-        }
-
-        $mergedParams = clone $this->params;
-        $mergedParams->merge($menuParams);
-
-        $this->params = $mergedParams;
-        /**/
-
-        // gid should be zero ToDo: is this really needed *?
-        $input = Factory::getApplication()->input;
-        //$this->galleryId = $input->get('gid', 0, 'INT');
-
-        $this->menuParams = new \stdClass();
-        $this->menuParams = (object)[];
-        //$this->menuParams->intro_text = $input->getHTML('intro_text', '');
-        $this->menuParams->intro_text = $input->get('intro_text', '', 'RAW'); //ToDo: there should be an other filter
-        $this->menuParams->gallery_layout = $input->getString('gallery_layout', '');
-        $this->menuParams->galleries_description_side = $input->getInt('galleries_description_side', 0, '');
-        $this->menuParams->galleries_count = $input->getBool('galleries_count', 5, 'INT');
-        $this->menuParams->latest_count = $input->getInt('latest_count', 5, 'INT');
-        $this->menuParams->random_count = $input->getInt('random_count', 5, 'INT');
-        $this->menuParams->displaySearch = $input->getBool('displaySearch', true);
-        $this->menuParams->displayRandom = $input->getBool('displayRandom', true);
-        $this->menuParams->displayLatest = $input->getBool('displayLatest', true);
-        $this->menuParams->display_limitbox = $input->getBool('display_limitbox', true);
-        $this->menuParams->galleries_show_title = $input->getBool('galleries_show_title', true);
-        $this->menuParams->galleries_show_description = $input->getBool('galleries_show_description', true);
-        $this->menuParams->galleries_show_owner = $input->getBool('galleries_show_owner', true);
-        $this->menuParams->galleries_show_size = $input->getBool('galleries_show_size', true);
-        $this->menuParams->galleries_show_date = $input->getBool('galleries_show_date', true);
-        $this->menuParams->galleries_show_pre_label = $input->getBool('galleries_show_pre_label', true);
-        $this->menuParams->galleries_show_slideshow = $input->getBool('galleries_show_slideshow', true);
-
-    }
-
 
 }
 
