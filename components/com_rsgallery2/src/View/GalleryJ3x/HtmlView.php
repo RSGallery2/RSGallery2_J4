@@ -110,9 +110,14 @@ class HtmlView extends BaseHtmlView
 
 		// ToDo: Status of images
 
+        $menuParams =
+        $this->menuParams = $this->get('Rsg2MenuParams');
 
+        // overwrite with param items
+        $menuParams->merge($this->params);
+        $this->params = $menuParams;
 
-		if ( ! empty($this->items)) {
+        if ( ! empty($this->items)) {
 			// Add image paths, image params ...
 			$data = $model->AddLayoutData ($this->items);
 		}
@@ -160,46 +165,5 @@ class HtmlView extends BaseHtmlView
 		return parent::display($tpl);
 	}
 
-	public function mergeMenuOptions()
-	{
-		/**
-		$app = Factory::getApplication();
-
-		if ($menu = $app->getMenu()->getActive())
-		{
-		$menuParams = $menu->getParams();
-		}
-		else
-		{
-		$menuParams = new Registry;
-		}
-
-		$mergedParams = clone $this->params;
-		$mergedParams->merge($menuParams);
-
-		$this->params = $mergedParams;
-		/**/
-
-		// gid should be zero ToDo: is this really needed *?
-		$input = Factory::getApplication()->input;
-		//$this->galleryId = $input->get('gid', 0, 'INT');
-
-		// $this->menuParams = new \stdClass();
-		$this->menuParams = (object)[];
-		$this->menuParams->gallery_show_title = $input->getBool('gallery_show_title', true);
-		$this->menuParams->gallery_show_description = $input->getBool('gallery_show_description', true);
-		$this->menuParams->gallery_show_slideshow = $input->getBool('gallery_show_slideshow', true);
-		$this->menuParams->displaySearch = $input->getBool('displaySearch', true);
-
-		$this->menuParams->images_column_arrangement = $input->getInt('images_column_arrangement', '');
-		$this->menuParams->max_columns_in_images_view= $input->getInt('max_columns_in_images_view', '');
-		$this->menuParams->images_row_arrangement = $input->getInt('images_row_arrangement', '');
-		$this->menuParams->max_rows_in_images_view = $input->getInt('max_rows_in_images_view', '');
-		$this->menuParams->max_images_in_images_view = $input->getInt('max_images_in_images_view', '');
-
-		$this->menuParams->images_show_title = $input->getBool('images_show_title', true);
-		$this->menuParams->images_show_description = $input->getBool('images_show_description', true);
-
-	}
 
 }

@@ -126,7 +126,6 @@ class HtmlView extends BaseHtmlView
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
-
         $model = $this->getModel();
 
         //--- random images --------------------------------------------------

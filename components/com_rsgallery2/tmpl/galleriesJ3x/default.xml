@@ -24,23 +24,24 @@
 			/>
 
 			<field
-					name="gallery_show_title"
+					name="galleries_show_title"
 					type="radio"
 					default="1"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE_DESC"
 					class="btn-group btn-group-yesno">
 				>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
 
+
 			<field
-					name="gallery_show_description"
+					name="galleries_show_description"
 					type="radio"
 					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION_DESC"
 					class="btn-group btn-group-yesno">
 				>
 				<option value="1">JYES</option>
@@ -57,6 +58,21 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
+
+			<field
+					name="galleries_description_side"
+					type="list"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE_DESC"
+			>
+				<option value="global">JGLOBAL_USE_GLOBAL</option>
+				<option value="1">COM_RSGALLERY2_CONFIG_DESC_POS_ABOVE_THUMB</option>
+				<option value="2">COM_RSGALLERY2_CONFIG_DESC_POS_RIGHT_BESIDE_THUMB</option>
+				<option value="3">COM_RSGALLERY2_CONFIG_DESC_POS_BELOW_THUMB</option>
+				<option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>
+			</field>
+
 
 			<field
 					name="intro_text"

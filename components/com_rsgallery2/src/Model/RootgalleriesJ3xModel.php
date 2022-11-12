@@ -173,7 +173,8 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
         return $latestImages;
     }
 
-    public function getRsg2MenuParams () {
+    public function getRsg2MenuParams ()
+    {
 
         // see rootgalleriesJ3x\default.xml
 
@@ -200,20 +201,11 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
         random_count
         /**/
 
-
         $menuParams = new Registry();
 
         try {
-//            $activeMenu = Factory::getApplication()->getMenu()->getActive();
-//            if ($activeMenu) {
-//                $menuParams = $activeMenu->getParams();
-//            } else {
-//                $menuParams = new Registry();
-//            }
 
             $input = Factory::getApplication()->input;
-
-            // $registry->foo = 'foo';
 
             $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
             $menuParams->set('displayRandom', $input->getBool('displayRandom', true));
@@ -247,8 +239,6 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
-
-
 
         return $menuParams;
     }
