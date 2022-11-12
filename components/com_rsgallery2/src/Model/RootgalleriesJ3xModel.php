@@ -218,7 +218,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
             $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
             $menuParams->set('displayRandom', $input->getBool('displayRandom', true));
             $menuParams->set('displayLatest', $input->getBool('displayLatest', true));
-            $menuParams->set('intro_text', $input->get('intro_text', 'intro_text', 'HTML'));
+            //$menuParams->set('intro_text', $input->get('intro_text', 'intro_text', 'HTML'));
             $menuParams->set('intro_text', $input->get('intro_text', '', 'RAW'));
             $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
             $menuParams->set('gallery_layout', $input->getString('gallery_layout', true));

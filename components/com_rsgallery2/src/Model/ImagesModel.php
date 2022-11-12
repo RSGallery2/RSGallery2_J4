@@ -118,7 +118,7 @@ class ImagesModel extends ListModel
      */
     protected function populateState($ordering = 'ordering', $direction = 'ASC')
     {
-        global $rsgConfig;
+        // global $rsgConfig;
 
         $app = Factory::getApplication();
 
@@ -519,7 +519,6 @@ class ImagesModel extends ListModel
 			{
                 $images = parent::getItems(); // gid ...
 
-                //--- >>>>  toDo: use above instead of below ------------
                 $db    = $this->getDbo();
 				$query = $db->getQuery(true);
 
@@ -533,7 +532,6 @@ class ImagesModel extends ListModel
 
 				$db->setQuery($query);
                 $images = $db->loadObjectList();
-                //--- <<<  toDo: use above instead of below ------------
 
 				if ( ! empty($images)) {
 

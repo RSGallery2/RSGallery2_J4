@@ -59,12 +59,14 @@ class HtmlView extends BaseHtmlView
 	{
         $input = Factory::getApplication()->input;
 
-        $state = $this->state = $this->get('State');
+        $state =
+        $this->state = $this->get('State');
         // Sub galleries
         $this->items = $this->get('Items');
 
         // parent gallery
         $this->parentGallery = $this->get('ParentGallery');
+
         //http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesJ3x
         //&gid=63
         //&images_show_title=2
@@ -77,6 +79,7 @@ class HtmlView extends BaseHtmlView
         //&max_images_in_images_view=20
         //&intro_text=%3Cp%3EIntroduction%20Text:%20J3x%20-%20Parent%20gallery%20with%20child%20galleries%3C/p%3E%20%20%3Cp%3E%20%3C/p%3E%20%20%3Cp%3E%20%3C/p%3E
         //&Itemid=160
+
         $params =
         $this->params = $state->get('params');
 

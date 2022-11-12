@@ -88,13 +88,13 @@ class GalleryJ3xModel extends GalleryModel
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidePageJ3x'
                     . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
-                    . '&item=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
+                    . '&img_id=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
                 ;
             } else {
 
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidePageJ3x'
-                    . '&item=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
+                    . '&img_id=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
                 ;
             }
 

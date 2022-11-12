@@ -32,6 +32,17 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 class SlidePageJ3XModel extends ImagesJ3xModel
 {
 
+//    // for pagination override
+//    protected function populateState($ordering = 'ordering', $direction = 'ASC')
+//    {
+//        parent::populateState($ordering, $direction);
+//
+//        // pagination over all images
+//        $this->setState('list.start', 0);
+//        $this->setState('list.limit', 99999); // all images
+//
+//    }
+//
 
 
 

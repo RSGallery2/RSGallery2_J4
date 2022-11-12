@@ -38,7 +38,7 @@ if($layoutName == 'default') {
 $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->randomImages;
-$displayData['params'] = $this->params;
+$displayData['params'] = $this->params->toObject();
 $displayData['title'] = Text::_('COM_RSGALLERY2_RANDOM_IMAGES');
 
 $displayData['isDebugSite'] = $this->isDebugSite;

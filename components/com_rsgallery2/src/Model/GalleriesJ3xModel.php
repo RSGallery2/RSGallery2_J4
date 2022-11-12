@@ -707,7 +707,7 @@ class GalleriesJ3xModel extends ListModel
 
 
             $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2'
-                . '/galleryJ3x&gid=' . $gallery->id
+                . '&view=galleryJ3x&gid=' . $gallery->id
                 ,true,0,true);
 
             /**/
@@ -957,46 +957,72 @@ class GalleriesJ3xModel extends ListModel
         // see rootgalleriesJ3x\default.xml
 
         /*
-        gid
+            gid
+            gallery_show_title
+            gallery_show_description
+            gallery_show_slideshow
+            intro_text
+            menu_show_intro_text
+            gallery_layout
 
-        images_show_title
-        images_show_description
-        images_show_search
-        intro_text
-        images_layout
+            images_show_title
+            images_show_description
+            images_show_search
+            images_layout
 
-        images_column_arrangement
-        max_columns_in_images_view
-        images_row_arrangement
-        max_rows_in_images_view
-        max_images_in_images_view
-
-        displaySearch
-        displayRandom
-        displayLatest
-        intro_text
-        gallery_layout
-        ---
-        galleries_count
-        display_limitbox
-        galleries_show_title
-        galleries_show_description
-        galleries_show_owner
-        galleries_show_size
-        galleries_show_date
-        galleries_show_pre_label
-        galleries_show_slideshow
-        galleries_description_side
-
-        latest_count
-        random_count
+            images_column_arrangement
+            max_columns_in_images_view
+            images_row_arrangement
+            max_rows_in_images_view
+            max_images_in_images_view
         /**/
 
 
+        $menuParams = new Registry();
+
+        try {
+//            $activeMenu = Factory::getApplication()->getMenu()->getActive();
+//            if ($activeMenu) {
+//                $menuParams = $activeMenu->getParams();
+//            } else {
+//                $menuParams = new Registry();
+//            }
+
+            $input = Factory::getApplication()->input;
+
+            $menuParams->set('gid', $input->getInt('gid', true));
+            $menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
+            $menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
+            $menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
+            $menuParams->set('intro_text', $input->get('intro_text','','RAW'));
+            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
+            $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+
+            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+            $menuParams->set('images_show_search', $input->getBool('images_show_search', true));
+            $menuParams->set('images_layout', $input->getBool('images_layout', true));
+
+            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', true));
+            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
+            $menuParams->set('images_row_arrangement', $input->getBool('images_row_arrangement', true));
+            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', true));
+            $menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', true));
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
 
 
-
+        return $menuParams;
     }
 
 

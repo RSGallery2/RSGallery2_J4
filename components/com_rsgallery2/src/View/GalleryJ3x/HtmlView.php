@@ -90,7 +90,6 @@ class HtmlView extends BaseHtmlView
 	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
 
-
 		$this->mergeMenuOptions();
 
 		// Get some data from the models

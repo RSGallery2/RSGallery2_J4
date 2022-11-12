@@ -33,12 +33,17 @@ class HtmlView extends BaseHtmlView
     protected $state;
 
     /**
-     * The list of tags
+     * The list of images
      *
      * @var    array|false
      * @since  3.1
      */
     protected $items;
+
+    /**
+     * index in image list matching the user selected image id
+     */
+    protected $imageIdx;
 
     /**
      * The pagination object
@@ -84,6 +89,7 @@ class HtmlView extends BaseHtmlView
 
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
+        $imageId = $input->get('img_id', 0, 'INT');
 
         /* wrong call but why ? */
         if ($this->galleryId < 2)
@@ -91,13 +97,10 @@ class HtmlView extends BaseHtmlView
             Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
 
-
         $this->mergeMenuOptions();
-
         // Get some data from the models
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
-        $this->pagination = $this->get('Pagination');
         $params =
         $this->params     = $this->state->get('params');
         $this->user       = Factory::getUser();
@@ -105,17 +108,29 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite = $params->get('isDebugSite'); 
         $this->isDevelopSite = $params->get('isDevelop');
 
+        //--- pagination use count of all images ------------------------------------
+
+        $this->state->set('list.start', 0);
+        $this->state->set('list.limit', count ($this->items)); // all images
+        $this->pagination = $this->get('Pagination');
+
+        // Flag indicates to not add limitstart=0 to URL
+        $this->pagination->hideEmptyLimitstart = true;
+
+        //---   --------------------------------------------------------------------
+
         $model = $this->getModel();
 
         $gallery =
         $this->gallery = $model->galleryData($this->galleryId);
 
-        // add slidshow url
+        // add slideshow url
         if (! empty ($gallery)) {
             $model->AssignSlideshowUrl ($gallery);
         }
 
-        // ToDo: Status of images
+        $this->imageIdx = $this->imageIdxInList ($imageId, $this->items);
+
 
         if ( ! empty($this->items)) {
             // Add image paths, image params ...
@@ -126,9 +141,6 @@ class HtmlView extends BaseHtmlView
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
-
-        // Flag indicates to not add limitstart=0 to URL
-        $this->pagination->hideEmptyLimitstart = true;
 
 //   		$state = $this->state = $this->get('State');
 //		$params = $this->params = $state->get('params');
@@ -162,6 +174,7 @@ class HtmlView extends BaseHtmlView
 
 
 
+//  ToDo: movoe to model
     public function mergeMenuOptions()
     {
         /**
@@ -203,5 +216,36 @@ class HtmlView extends BaseHtmlView
 //        $this->menuParams->images_show_description = $input->getBool('images_show_description', true);
 
     }
+
+    /**
+     * Detect matching image by ID in image list
+     * @param $imageId
+     * @param $images
+     *
+     * @return int
+     *
+     * @since version
+     *
+     *  ToDo: movoe to model
+     */
+    public function imageIdxInList ($imageId, $images)
+    {
+        /**/
+        $imageIdx = -1;
+
+        if (!empty ($images)) {
+
+            $count = count($images);
+            for ($idx = 0; $idx < $count ; $idx++) {
+                if ($images[$idx]->id == $imageId) {
+                    $imageIdx = $idx;
+                    break;
+                }
+            }
+        }
+
+        return $imageIdx;
+    }
+
 
 }

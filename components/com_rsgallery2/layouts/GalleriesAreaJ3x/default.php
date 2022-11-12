@@ -18,7 +18,7 @@ extract($displayData);
 if ( ! isset($galleries)) {   //         if (isset($to_user, $from_user, $amount))
     $galleries = [];
 }
-echo '<br>--- $this->params ------------------------------------------<br>';
+//echo '<br>--- $this->params ------------------------------------------<br>';
 //echo json_encode($params);
 //echo $params->toString();
 //echo json_encode($params->toArray());
@@ -32,7 +32,7 @@ echo '<br>--- $this->params ------------------------------------------<br>';
 //echo json_encode($params, JSON_PRETTY_PRINT);
 //echo json_encode(json_decode($params), JSON_PRETTY_PRINT);
 //echo json_encode(json_decode($params->toString()), JSON_PRETTY_PRINT);
-echo '<br>------------------------------------------------------------<br>';
+//echo '<br>------------------------------------------------------------<br>';
 
 
 if (!empty($isDevelopSite)) {
@@ -109,7 +109,7 @@ foreach ($galleries as $idx => $gallery) {
 
 	<?php foreach ($galleries as $idx => $gallery) : ?>
 
-		<?php /* if ($idx > $this->menuParams->Nr of items ): ?>
+		<?php /* if ($idx > $this->params->Nr of items ): ?>
 			<?php break;?>
 		<?php endif; */ ?>
 

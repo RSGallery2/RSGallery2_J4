@@ -84,8 +84,8 @@ $displayData['parent_id'] = $this->state->get('gallery.id');
 $displayData['galleries'] = $this->items;
 
 
-$displayData['params'] = $this->params;
-$displayData['menuParams'] = $this->menuParams;
+$displayData['params'] = $this->params->toObject();
+//$displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 $displayData['isDebugSite'] = $this->isDebugSite;

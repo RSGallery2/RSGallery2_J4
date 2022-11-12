@@ -40,7 +40,7 @@ if($layoutName == 'default') {
 $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->latestImages;
-$displayData['params'] = $this->params;
+$displayData['params'] = $this->params->toObject();
 $displayData['title'] = Text::_('COM_RSGALLERY2_LATEST_IMAGES');
 
 $displayData['isDebugSite'] = $this->isDebugSite;

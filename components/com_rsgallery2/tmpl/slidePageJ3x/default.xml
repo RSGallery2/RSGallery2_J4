@@ -22,7 +22,78 @@
 				edit="true"
 				clear="true"
 			/>
-			
+
+			<field
+					name="gallery_show_title"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="gallery_show_slideshow"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="displaySearch"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
+					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="images_show_title"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<!--field
+					name="images_show_description"
+					type="list"
+					default="2"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
+				<option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
+				<option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
+				<option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
+			</field-->
+
+			<field
+					name="images_show_description"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
 			<field
 					name="slides_layout"
 					type="componentlayout"

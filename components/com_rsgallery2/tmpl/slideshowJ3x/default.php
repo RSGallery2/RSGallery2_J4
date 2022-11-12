@@ -65,7 +65,7 @@ if($layoutName == 'default') {
 $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
-$displayData['params'] = $this->params;
+$displayData['params'] = $this->params->toObject();
 $displayData['menuParams'] = $this->menuParams;
 
 $displayData['isDebugSite'] = $this->isDebugSite;

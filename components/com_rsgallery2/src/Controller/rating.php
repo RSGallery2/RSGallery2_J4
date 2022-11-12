@@ -45,7 +45,7 @@ Or you can use a form where there is a hidden task field.
 
 		// http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=42&advancedSef=1&startShowSingleImage=1&Itemid=218
 		//$link = 'index.php?option=com_rsgallery2'; // &startShowSingleImage=1&Itemid=218
-		$link = 'index.php?option=com_rsgallery2&view=slidePageJ3x&gid=' . $galleryId . '&id=' . $imageId.'&tab=vote';
+		$link = 'index.php?option=com_rsgallery2&view=slidePageJ3x&gid=' . $galleryId . '&img_id=' . $imageId.'&tab=vote';
 
 		// Access check
 		$canVote = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
