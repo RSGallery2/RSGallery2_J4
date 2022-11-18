@@ -120,11 +120,7 @@ class GalleryModel extends ListModel
 
         $app = Factory::getApplication();
 
-        // ToDo: move to view html and model (for plugin ?)
-        // gallery id
-        $gid = $app->input->get('gid', '', 'INT');
-        $this->setState('gallery.galleryId', $gid);
-
+        $this->setState('gallery.id', $app->input->getInt('gid'));
         $this->setState('params', $app->getParams());
 		
         // Adjust the context to support modal layouts.
@@ -193,7 +189,8 @@ class GalleryModel extends ListModel
 
         //--- RSG2 ---------------------------------
 
-        $this->setState('rsgallery2.id', $app->input->getInt('id'));
+        //$this->setState('rsgallery2.id', $app->input->getInt('id'));
+        $this->setState('image.id', $app->input->getInt('id'));
 	}
 
     /**

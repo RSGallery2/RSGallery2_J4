@@ -90,17 +90,15 @@ class HtmlView extends BaseHtmlView
 	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
 
-		$this->mergeMenuOptions();
-
 		// Get some data from the models
+        $state =
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 		$this->user       = Factory::getUser();
+
         $params =
-        $this->params     = $params = $this->state->get('params');
-        // ToDo: Why is this necessary ?
-//		$this->pagination->setTotal (count($this->items));
+        $this->params = $state->get('params');
 
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
@@ -110,12 +108,10 @@ class HtmlView extends BaseHtmlView
 
 		// ToDo: Status of images
 
-        $menuParams =
-        $this->menuParams = $this->get('Rsg2MenuParams');
-
+        // Merge (overwrite) menu parameter with item/config parameter
+        $menuParams = $this->get('Rsg2MenuParams');
         // overwrite with param items
-        $menuParams->merge($this->params);
-        $this->params = $menuParams;
+        $this->params = $menuParams->merge($this->params);
 
         if ( ! empty($this->items)) {
 			// Add image paths, image params ...

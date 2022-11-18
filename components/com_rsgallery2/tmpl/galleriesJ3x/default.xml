@@ -49,6 +49,42 @@
 			</field>
 
 			<field
+					name="galleries_show_owner"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="galleries_show_size"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="galleries_show_date"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
 					name="galleries_show_slideshow"
 					type="radio"
 					default="1"
@@ -87,8 +123,8 @@
 					name="menu_show_intro_text"
 					type="radio"
 					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_INTRO_TEXT"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_INTRO_TEXT_DESC"
 					class="btn-group btn-group-yesno">
 				>
 				<option value="1">JYES</option>

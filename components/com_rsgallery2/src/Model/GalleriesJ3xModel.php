@@ -991,9 +991,15 @@ class GalleriesJ3xModel extends ListModel
             $input = Factory::getApplication()->input;
 
             $menuParams->set('gid', $input->getInt('gid', true));
-            $menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
-            $menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
-            $menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
+            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
+            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
+
+            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
+            $menuParams->set('galleries_show_size', $input->getBool('galleries_show_size', true));
+            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
+
+            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
+            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', true));
             $menuParams->set('intro_text', $input->get('intro_text','','RAW'));
             $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
             $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));

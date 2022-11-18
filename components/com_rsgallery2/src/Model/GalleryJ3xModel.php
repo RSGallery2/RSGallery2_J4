@@ -164,7 +164,7 @@ class GalleryJ3xModel extends GalleryModel
 
     }
 
-    public function mergeMenuOptions()
+    public function getRsg2MenuParams()
     {
 
         $menuParams = new Registry();
@@ -173,7 +173,8 @@ class GalleryJ3xModel extends GalleryModel
 
             $input = Factory::getApplication()->input;
 
-            $menuParams                             = (object)[];
+            $menuParams = new Registry();
+
             $menuParams->galleries_show_title       = $input->getBool('galleries_show_title', true);
             $menuParams->galleries_show_description = $input->getBool('galleries_show_description', true);
             $menuParams->galleries_show_slideshow   = $input->getBool('galleries_show_slideshow', true);

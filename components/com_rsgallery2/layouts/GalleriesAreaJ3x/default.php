@@ -105,13 +105,17 @@ foreach ($galleries as $idx => $gallery) {
 
 <div id="rsg2_gallery" class="rsg2">
 
+	XXXX
 	<div class="form-label intro_text"><?php echo $params->intro_text; ?></div>
+	XXXX<br>
 
 	<?php foreach ($galleries as $idx => $gallery) : ?>
 
-		<?php /* if ($idx > $this->params->Nr of items ): ?>
-			<?php break;?>
-		<?php endif; */ ?>
+		<?php
+//			if ($idx > $this->params->Nr of items ) {
+//			    break;
+//		    }
+		?>
 
 		<div class="rsg_galleryblock system-unpublished">
 			<div class="rsg2-galleryList-status">//Status//</div>
@@ -126,7 +130,7 @@ foreach ($galleries as $idx => $gallery) {
 				</div>
 			</div>
 
-            <div class="rsg2-galleryList-text">
+			<div class="rsg2-galleryList-text">
                 <div>
                 <?php if ($params->galleries_show_title): ?>
                     <span><?php echo $gallery->name ?></span>
