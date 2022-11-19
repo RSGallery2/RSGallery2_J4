@@ -175,19 +175,19 @@ class GalleryJ3xModel extends GalleryModel
 
             $menuParams = new Registry();
 
-            $menuParams->galleries_show_title       = $input->getBool('galleries_show_title', true);
-            $menuParams->galleries_show_description = $input->getBool('galleries_show_description', true);
-            $menuParams->galleries_show_slideshow   = $input->getBool('galleries_show_slideshow', true);
-            $menuParams->displaySearch              = $input->getBool('displaySearch', true);
+            $menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
+            $menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
+            $menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
+            $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
 
-            $menuParams->images_column_arrangement  = $input->getInt('images_column_arrangement', '');
-            $menuParams->max_columns_in_images_view = $input->getInt('max_columns_in_images_view', '');
-            $menuParams->images_row_arrangement     = $input->getInt('images_row_arrangement', '');
-            $menuParams->max_rows_in_images_view    = $input->getInt('max_rows_in_images_view', '');
-            $menuParams->max_images_in_images_view  = $input->getInt('max_images_in_images_view', '');
+            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ''));
+            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
+            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));
+            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
+            $menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', ''));
 
-            $menuParams->images_show_title       = $input->getBool('images_show_title', true);
-            $menuParams->images_show_description = $input->getBool('images_show_description', true);
+            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
 
         } catch (\RuntimeException $e) {
             $OutTxt = '';

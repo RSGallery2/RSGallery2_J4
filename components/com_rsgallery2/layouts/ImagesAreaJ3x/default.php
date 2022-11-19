@@ -76,7 +76,11 @@ foreach ($images as $idx => $image) {
 
 
 // max_columns_in_images_view
-$cols = $params->get('max_columns_in_images_view',2);
+$cols = $params->max_columns_in_images_view;
+if ($cols < 2) {
+
+    $cols = 2;
+}
 
 ?>
 
@@ -88,19 +92,19 @@ $cols = $params->get('max_columns_in_images_view',2);
 <div id="rsg2_gallery" class="rsg2">
 
 	<?php if( ! empty($gallery)) : ?>
-		<?php if ($menuParams->gallery_show_title): ?>
+		<?php if ($params->gallery_show_title): ?>
 			<h2>
 				<div class="rsg_gallery_title"><?php echo $gallery->name ?></div>
 			</h2>
 		<?php endif; ?>
 
-		<?php if ($menuParams->gallery_show_description): ?>
+		<?php if ($params->gallery_show_description): ?>
 			<div class="intro_text"><p><?php echo $gallery->description ?></p></div>
 		<?php endif; ?>
 
 	    <div class="rsg2-clr"></div>
 
-	    <?php if ($menuParams->gallery_show_slideshow): ?>
+	    <?php if ($params->gallery_show_slideshow): ?>
 	        <div class="rsg2_slideshow_link">
 	            <a href="<?php echo $gallery->UrlSlideshow?>">
 	                Slideshow

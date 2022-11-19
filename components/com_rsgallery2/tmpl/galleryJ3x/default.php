@@ -57,11 +57,6 @@ if (!empty ($this->isDevelopSite))
 }
 
 
-if ($this->menuParams->displaySearch) {
-	$searchLayout = new FileLayout('Search.search');
-	// $searchData['options'] = $searchOptions ...; // gallery
-}
-
 $layoutName = $this->getLayout();
 
 // default is 'ImagesAreaJ3x.default'
@@ -74,7 +69,7 @@ $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
 $displayData['params'] = $this->params->toObject();
-$displayData['menuParams'] = $this->menuParams;
+//$displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 $displayData['gallery'] = $this->gallery;
@@ -82,6 +77,12 @@ $displayData['galleryId'] = $this->galleryId;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
+
+$displaySearch = $this->params->get('displaySearch', false);
+if ($displaySearch) {
+    $searchLayout = new FileLayout('Search.search');
+    // $searchData['options'] = $searchOptions ...; // gallery
+}
 
 ?>
 <!-- ToDo: is form here needed ? check core ...  -->
@@ -98,7 +99,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 	    <?php //--- display search ---------- ?>
 
-	    <?php if ($this->menuParams->displaySearch): ?>
+	    <?php if ($displaySearch): ?>
 		    <?php echo $searchLayout->render(); ?>
 	    <?php endif; ?>
 
