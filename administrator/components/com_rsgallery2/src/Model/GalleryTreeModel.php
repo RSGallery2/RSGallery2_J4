@@ -129,9 +129,9 @@ class GalleryTreeModel extends BaseModel
             // insert root record
             // Missing
             $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id',
-                'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by',);
+                'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', 'sizes');
             $values = array(1, $name, $alias, 'root element of nested gallery list', '', '', 0,
-                0, $path, $lft, $rgt, $date, $user->id, $date, $user->id);
+                0, $path, $lft, $rgt, $date, $user->id, $date, $user->id, '');
 
             // Create root element
             $query = $db->getQuery(true)

@@ -1,5 +1,3 @@
-# noinspection SqlNoDataSourceInspectionForFile
-
 --
 -- galleries
 --

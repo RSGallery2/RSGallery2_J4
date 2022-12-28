@@ -195,7 +195,7 @@ class HtmlView extends BaseHtmlView
 				. '* Use _CFG_ in ?variable? names<br>'
 				. '* General: ts: separate script (library) for "easy" ajax calls<br>'
                 . '* include workflow<br>'
-                . '* <br>'
+                . '* Namespace Conventions "site/administrator" as last segment<br>'
 				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
