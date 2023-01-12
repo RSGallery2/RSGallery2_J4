@@ -678,5 +678,80 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         }
     }
 
+	/**
+	 * remove old language files as actual version stores the files within
+	 * component folders. On keeping the old files these would be loaded
+	 * instead of the new ones
+	 *
+	 * @since version
+	 */
+	protected function removeAllOldLangFiles (): void
+	{
+		//--- base \languages path ---------------------------------
+
+		$langPath = JPATH_ROOT . '/' . 'languages';
+
+		removeLangFilesInSubPaths ($langPath);
+
+
+		//--- administrator\languages path ---------------------------------
+
+		$langPath = JPATH_ADMINISTRATOR . '/' . 'languages';
+
+		removeLangFilesInSubPaths ($langPath);
+
+
+		//--- site\languages path ---------------------------------
+
+		$langPath = JPATH_SITE . '/' . 'languages';
+
+		removeLangFilesInSubPaths ($langPath);
+	}
+
+
+	protected function removeLangFilesInSubPaths ($langPath): void
+	{
+
+		$isManifestFileFound = false;
+
+		// All files ...
+		foreach (Folder::files($langPath) as $fileName)
+		{
+
+			// ... matching lang name ...
+			if (str_contains($fileName, 'com_rsgallery2'))
+			{
+				$langPathFileName = $langPath . '/' . $fileName;
+
+				// ... will be deleted
+				if(File::exist ($langPathFileName))
+				{
+					unlink($langPathFileName);
+				}
+
+			}
+		}
+
+		#--- Search in each sub folder -------------------------------------
+
+		// example project file already/still only in rootPath/administrator/component/ subfolder
+
+		if (!$isManifestFileFound)
+		{
+			foreach (Folder::folders($langPath) as $folderName)
+			{
+				$subFolder = $langPath . "/" . $folderName;
+
+				$isManifestFileFound = $this->removeLangFilesInSubPaths($subFolder);
+
+			}
+		}
+
+		// return $isManifestFileFound;
+		return;
+	}
+
+
+
 
 }
