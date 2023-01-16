@@ -137,5 +137,77 @@ class DevelopModel extends BaseDatabaseModel
 //        return $now;
 //    }
 
+
+	/**
+	 * Original: joomlatools / joomlatools-platform github 2023.01
+	 * Parses the config.xml for the given component and
+	 * returns the default values for each parameter.
+	 *
+	 * @param   string  Element name (com_xyz)
+	 *
+	 * @return  array   Array of parameters
+	 *
+	 *
+	 * @copyright   joomlatools: Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
+	 * @license     joomlatools: GNU General Public License version 2 or later; see LICENSE
+	 *
+	 */
+	protected function loadDefaultParams($element)
+	{
+		try
+		{
+			$params = array();
+			$file   = JPATH_ADMINISTRATOR . '/components/' . $element . '/config.xml';
+
+			if (!file_exists($file))
+			{
+				return $params;
+			}
+
+			$xml = simplexml_load_file($file);
+
+			if (!($xml instanceof SimpleXMLElement))
+			{
+				return $params;
+			}
+
+			$elements = $xml->xpath('/config');
+
+			if (empty($elements))
+			{
+				return $params;
+			}
+
+			foreach ($elements as $element)
+			{
+				$fields = $element->xpath('descendant-or-self::field');
+
+				foreach ($fields as $field)
+				{
+					if (!isset($field['default']))
+					{
+						continue;
+					}
+
+					$name    = (string) $field['name'];
+					$default = (string) $field['default'];
+
+					$params[$name] = $default;
+				}
+			}
+		}
+		catch (\RuntimeException $exception)
+		{
+			Log::add(Text::_('\n>> Exception: loadDefaultParams: '), Log::INFO, 'rsg2');
+		}
+
+		return $params;
+	}
+
+
+
+
+
+
 }
 

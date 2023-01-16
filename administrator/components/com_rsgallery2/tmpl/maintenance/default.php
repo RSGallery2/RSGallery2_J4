@@ -476,6 +476,16 @@ $developer_ZoneButtons[] =  new zoneButtons(
 );
 /**/
 
+/**/
+$developer_ZoneButtons[] =  new zoneButtons(
+	Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultParams'),
+	Text::_('COM_RSGALLERY2_DEVELOP_DEFAULT_PARAMS'),
+	Text::_('COM_RSGALLERY2_DEVELOP_DEFAULT_PARAMS_DESC'),
+	array('icon-copy', 'icon-image', 'icon-notification-2'),
+	'view___'
+);
+/**/
+
 
 
 //--- developer test zone -----------------------------

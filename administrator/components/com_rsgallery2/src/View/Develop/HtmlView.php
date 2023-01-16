@@ -215,9 +215,12 @@ class HtmlView extends BaseHtmlView
 
                 $this->form = $form;
 
+	            break;
+
+			case 'defaultParams':
 
 
-                break;
+			break;
 		}
 
 
