@@ -138,25 +138,12 @@ class DevelopModel extends BaseDatabaseModel
 //    }
 
 
-	/**
-	 * Original: joomlatools / joomlatools-platform github 2023.01
-	 * Parses the config.xml for the given component and
-	 * returns the default values for each parameter.
-	 *
-	 * @param   string  Element name (com_xyz)
-	 *
-	 * @return  array   Array of parameters
-	 *
-	 *
-	 * @copyright   joomlatools: Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
-	 * @license     joomlatools: GNU General Public License version 2 or later; see LICENSE
-	 *
-	 */
-	protected function loadDefaultParams($element)
+	protected static function loadDefaultParams($element)
 	{
+		$params = [];
+
 		try
 		{
-			$params = array();
 			$file   = JPATH_ADMINISTRATOR . '/components/' . $element . '/config.xml';
 
 			if (!file_exists($file))
@@ -205,6 +192,49 @@ class DevelopModel extends BaseDatabaseModel
 	}
 
 
+	protected static function loadActualParams($element)
+	{
+		$params = [];
+
+		try
+		{
+
+
+		}
+		catch (\RuntimeException $exception)
+		{
+			Log::add(Text::_('\n>> Exception: loadDefaultParams: '), Log::INFO, 'rsg2');
+		}
+
+		return $params;
+	}
+
+
+	protected static function mergeDefaultAndActualParams($element)
+	{
+		$merged = [];
+
+		try
+		{
+			$actual = self::loadActualParams($element);
+			$default = self::loadDefaultParams($element);
+
+			$merged = $actual;
+
+			foreach ($default as $name => $value) {
+
+				$merged [$name] = $value;
+
+			}
+
+		}
+		catch (\RuntimeException $exception)
+		{
+			Log::add(Text::_('\n>> Exception: loadDefaultParams: '), Log::INFO, 'rsg2');
+		}
+
+		return $merged;
+	}
 
 
 

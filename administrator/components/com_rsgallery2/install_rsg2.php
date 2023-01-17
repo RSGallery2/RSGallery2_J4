@@ -890,6 +890,18 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	{
 		try
 		{
+
+        $params = $this->parent->getParams();
+
+        if (empty($params) || $params == '{}')
+        {
+            $defaults = (object) $this->_loadDefaultParams($this->get('element'));
+            $params   = json_encode($defaults);
+        }
+
+        $row->set('params', $params);
+
+
 			$params = $this->loadDefaultParams('com_rsgallery2');
 
 			if (count ($params))
@@ -922,9 +934,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 */
 	protected function loadDefaultParams($element)
 	{
+        $params = [];
+
 		try
 		{
-			$params = array();
 			$file   = JPATH_ADMINISTRATOR . '/components/' . $element . '/config.xml';
 
 			if (!file_exists($file))
