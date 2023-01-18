@@ -48,14 +48,75 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version'
 
 					try
 					{
+                        ?>
 
-                       // ?> <h1>---</h1> <?php
+						<h2>RSG2 Parameter</h2>
+                        <p>Default: from XML, Actual: RSG2, Merged: Add default to actual</p>
 
+                        <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Parameter name</th>
+                            <th>Default</th>
+                            <th>Actual</th>
+                            <th>Merged</th>
+                          </tr>
+                        </thead>
 
-                        // specify gallery
-                        // toDO: change name as used for all
-                        echo $this->form->renderFieldset('select_galleries');
+                        <tbody>
 
+	                        <?php
+	                        foreach ($this->mergedParams as $mergeName => $mergedValue)
+                            {
+
+                                $defaultValue = "";
+	                            if ( ! empty ($this->defaultParams[$mergeName]) )
+	                            {
+		                            $defaultValue = $this->defaultParams[$mergeName];
+	                            }
+
+                                $actualValue = "";
+                                if ( ! empty ($this->actualParams[$mergeName]) )
+                                {
+	                                $actualValue = $this->actualParams[$mergeName];
+                                }
+
+	                        ?>
+
+                              <tr>
+                                <td>
+                                    <?php echo $mergeName ?>
+                                </td>
+                                <td>
+	                                <?php echo $defaultValue ?>
+                                </td>
+                                <td>
+	                                <?php echo $actualValue ?>
+                                </td>
+                                <td>
+	                                <?php echo $mergedValue ?>
+                                </td>
+                              </tr>
+
+                            <?php
+	                            ;
+                            }
+	                        ?>
+
+                            <tr>
+                            <td>Mary</td>
+                            <td>Moe</td>
+                            <td>mary@example.com</td>
+                          </tr>
+                          <tr>
+                            <td>July</td>
+                            <td>Dooley</td>
+                            <td>july@example.com</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                        <?php
 
                     }
 					catch (\RuntimeException $e)
