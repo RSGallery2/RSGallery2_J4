@@ -13,6 +13,8 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseModel;
 
 // required is used as classes may not be loaded on  fresh install
@@ -69,12 +71,22 @@ class Rsg2ExtensionModel extends BaseModel
 
         try
         {
+	        // read the existing component value(s)
             $db = Factory::getDbo();
             $query = $db->getQuery(true)
                 ->select('params')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
+
+			/* found in install but why reassing parameters ? regitry ?
+	        $param_array = json_decode($db->loadResult(), true);
+
+	        // add the new variable(s) to the existing one(s)
+	        foreach ($param_array as $name => $value) {
+		        $params[(string)$name] = (string)$value;
+	        }
+			/**/
 
             $jsonStr = $db->loadResult();
             if ( ! empty ($jsonStr))
@@ -86,11 +98,14 @@ class Rsg2ExtensionModel extends BaseModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'Rsg2ExtensionModel: readConfigFromExtensionTable: Error executing query: "' . $query . '"' . '<br>';
+            $OutTxt .= 'Rsg2ExtensionModel: readRsg2ExtensionConfiguration: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
+
+
+	        Log::add(Text::_('\n>> Exception: readRsg2ExtensionConfiguration: '), Log::INFO, 'rsg2');
         }
 
         return $params;
@@ -139,7 +154,7 @@ class Rsg2ExtensionModel extends BaseModel
 	 * @license     joomlatools: GNU General Public License version 2 or later; see LICENSE
 	 *
 	 */
-    static function readRsg2DefaultParams ($component='com_rsgallery2')
+    static function readRsg2ExtensionDefaultConfiguration ($component='com_rsgallery2')
     {
         $params = [];
 
@@ -154,13 +169,15 @@ class Rsg2ExtensionModel extends BaseModel
 
 			$xml = simplexml_load_file($file);
 
-			if (!($xml instanceof SimpleXMLElement))
+	        // wrong content ?
+	        if (empty($xml))
 			{
 				return $params;
 			}
 
 			$elements = $xml->xpath('/config');
 
+	        // wrong content ?
 			if (empty($elements))
 			{
 				return $params;
@@ -188,15 +205,119 @@ class Rsg2ExtensionModel extends BaseModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'Rsg2ExtensionModel: readRsg2DefaultParams: <br>';
+            $OutTxt .= 'Rsg2ExtensionModel: readRsg2ExtensionDefaultConfiguration: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
+
+	        Log::add(Text::_('\n>> Exception: readRsg2ExtensionDefaultConfiguration: '), Log::INFO, 'rsg2');
         }
 
         return $params;
     }
+
+
+	/**
+	 * mergeDefaultAndActualParams
+	 * reduces the parameter set to default vaues
+	 * overwrites default by existing actual values
+	 *
+	 * @param $actual
+	 * @param $default
+	 *
+	 * @return mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public static function mergeDefaultAndActualParams($default, $actual)
+	{
+		$merged = [];
+
+		try
+		{
+			$merged = $default;
+
+			foreach ($default as $name => $value) {
+
+				if ($name == 'isDebugBackend'){
+					$test = true;
+					if ( ! empty ($merged [$name]))
+					{
+						$test2 = $merged [$name];
+					}
+				}
+
+				// overwrite on existing parameter
+				if ( ! empty ($actual [$name]))
+				{
+					$merged [$name] = $actual [$name];
+				}
+			}
+
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Rsg2ExtensionModel: mergeDefaultAndActualParams: <br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+
+			Log::add(Text::_('\n>> Exception: mergeDefaultAndActualParams: '), Log::INFO, 'rsg2');
+		}
+
+		return $merged;
+	}
+
+
+	/**
+	 * write parameter set into the component's row of the extension table
+	 *
+	 * @param $params
+	 */
+	function replaceRsg2ExtensionConfiguration($params)
+	{
+		$isWritten = false;
+
+		try
+		{
+			// parameter exist
+			if (count($params) > 0)
+			{
+				// store the combined new and existing values back as a JSON string
+				$paramsString = json_encode($params);
+
+				$db = Factory::getDbo();
+				$query = $db->getQuery(true)
+					->update($db->quoteName('#__extensions'))
+					->set($db->quoteName('params') . ' = ' . $db->quote($paramsString))
+					->where($db->quoteName('name') . ' = ' . $db->quote('com_rsgallery2'));
+
+				if ($db->execute()) {
+					$successful = true;
+				}
+
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Rsg2ExtensionModel: replaceRsg2ExtensionConfiguration: <br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+
+			Log::add(Text::_('\n>> Exception: replaceRsg2ExtensionConfiguration: '), Log::INFO, 'rsg2');
+		}
+
+		return $isWritten;
+	}
+
+
 
 
 //    static function getVersionFromManifestParam()

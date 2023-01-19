@@ -895,7 +895,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         if (empty($params) || $params == '{}')
         {
-            $defaults = (object) $this->_loadDefaultParams($this->get('element'));
+            $defaults = (object) $this->loadDefaultParams($this->get('element'));
             $params   = json_encode($defaults);
         }
 

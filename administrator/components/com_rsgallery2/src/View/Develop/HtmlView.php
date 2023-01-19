@@ -55,6 +55,10 @@ class HtmlView extends BaseHtmlView
 	protected $rsg2Manifest = [];
     protected $readRsg2ExtensionData = [];
 
+	protected $actualParams = [];
+    protected $defaultParams = [];
+    protected $mergedParams = [];
+
 	/**
 	protected $isDangerActive;
 	protected $isRawDbActive;
@@ -220,6 +224,12 @@ class HtmlView extends BaseHtmlView
 			case 'defaultParams':
 
 
+	            $this->actualParams = Rsg2ExtensionModel::readRsg2ExtensionConfiguration ();
+                $this->defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
+                $this->mergedParams = Rsg2ExtensionModel::mergeDefaultAndActualParams ($this->defaultParams, $this->actualParams);
+
+				// ToDo: button with command on controller ;-)
+//				replaceRsg2ExtensionConfiguration($this->mergedParams);
 			break;
 		}
 

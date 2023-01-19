@@ -33,11 +33,11 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version'
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'PreparedButNotReady')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', Text::_('Create images', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', Text::_('RSG2 Parameter', true)); ?>
                 <p></p>
                 <legend><strong><?php
                         // echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC');
-                        echo 'Create images for testing purposes: Use button above, no further functionality';
+                        echo 'Check extension parameter: use before update ==> exchange config.xml and then check again';
 
                         ?></strong></legend>
                 <p><h3><?php
@@ -49,37 +49,49 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version'
 					try
 					{
                         ?>
-
 						<h2>RSG2 Parameter</h2>
+
                         <p>Default: from XML, Actual: RSG2, Merged: Add default to actual</p>
 
                         <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>Parameter name</th>
-                            <th>Default</th>
-                            <th>Actual</th>
-                            <th>Merged</th>
-                          </tr>
-                        </thead>
-
+                            <thead>
+                              <tr>
+                                  <th scope="col">Name</th>
+                                <th>Default</th>
+                                <th>&lt;=&gt;</th>
+                                <th>Actual</th>
+                                <th>Merged</th>
+                              </tr>
+                            </thead>
+        
                         <tbody>
 
 	                        <?php
 	                        foreach ($this->mergedParams as $mergeName => $mergedValue)
                             {
 
-                                $defaultValue = "";
+	                            $defaultValue = "%";
 	                            if ( ! empty ($this->defaultParams[$mergeName]) )
 	                            {
 		                            $defaultValue = $this->defaultParams[$mergeName];
 	                            }
 
-                                $actualValue = "";
+                                $actualValue = "%";
                                 if ( ! empty ($this->actualParams[$mergeName]) )
                                 {
 	                                $actualValue = $this->actualParams[$mergeName];
                                 }
+
+                                if (empty ($mergedValue)) {
+
+	                                $mergedValue = '%';
+                                }
+
+                                $delta = '';
+                                if ($defaultValue != $actualValue) {
+                                    $delta = '&lt;=&gt;';
+                                }
+
 
 	                        ?>
 
@@ -89,6 +101,9 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version'
                                 </td>
                                 <td>
 	                                <?php echo $defaultValue ?>
+                                </td>
+                                <td>
+	                                <?php echo $delta ?>
                                 </td>
                                 <td>
 	                                <?php echo $actualValue ?>
@@ -103,16 +118,6 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version'
                             }
 	                        ?>
 
-                            <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                          </tr>
-                          <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                          </tr>
                         </tbody>
                       </table>
 
@@ -131,7 +136,65 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version'
 
 				?>
 
-				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+				<?php
+
+				try
+				{
+					?>
+                    <h2>RSG2 surplus (old) parameter</h2>
+
+                    <p>Additinal parameter which will be removed</p>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th>Actual</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+						<?php
+						foreach ($this->actualParams as $oldName => $oldValue)
+						{
+                            if (empty ($this->defaultParams[$mergeName]))
+                            {
+                                ?>
+
+                                <tr>
+                                    <td>
+                                        <?php echo $oldName ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $oldValue ?>
+                                    </td>
+                                </tr>
+
+                                <?php
+                            }
+						}
+						?>
+
+                        </tbody>
+                    </table>
+
+					<?php
+
+				}
+				catch (\RuntimeException $e)
+				{
+					$OutTxt = '';
+					$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
+					$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+					$app = Factory::getApplication();
+					$app->enqueueMessage($OutTxt, 'error');
+				}
+
+				?>
+
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 				<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
