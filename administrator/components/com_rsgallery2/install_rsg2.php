@@ -891,23 +891,41 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		try
 		{
 
-        $params = $this->parent->getParams();
+            $actualParams = $this->parent->getParams();
 
-        if (empty($params) || $params == '{}')
-        {
-            $defaults = (object) $this->loadDefaultParams($this->get('element'));
-            $params   = json_encode($defaults);
-        }
+            if (empty($params) || $params == '{}') {
+                $params = [];
+            }
 
-        $row->set('params', $params);
+            //
+            $extensionModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel ();
+
+            $defaultParams = $extensionModel::readRsg2ExtensionDefaultConfiguration ();
+
+            $mergedParams = mergeDefaultAndActualParams($defaultParams, $actualParams);
+
+//            $extensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
+
+//
+//        $params = $this->parent->getParams();
+//
+//        if (empty($params) || $params == '{}')
+//        {
+//            $defaults = (object) $this->loadDefaultParams($this->get('element'));
+//            $params   = json_encode($defaults);
+//        }
+//
+//        $row->set('params', $params);
+//
+//
+//			$params = $this->loadDefaultParams('com_rsgallery2');
+//
+//			if (count ($params))
+//			{
+//				$this->setParams($params);
+//			}
 
 
-			$params = $this->loadDefaultParams('com_rsgallery2');
-
-			if (count ($params))
-			{
-				$this->setParams($params);
-			}
 		}
 		catch (\RuntimeException $exception)
 		{
@@ -931,7 +949,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @copyright   joomlatools: Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
 	 * @license     joomlatools: GNU General Public License version 2 or later; see LICENSE
 	 *
-	 */
+	 *
 	protected function loadDefaultParams($element)
 	{
         $params = [];
@@ -984,4 +1002,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		return $params;
 	}
+    /**/
+    
 } // class
