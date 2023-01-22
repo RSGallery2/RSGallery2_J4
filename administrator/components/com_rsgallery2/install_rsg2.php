@@ -290,7 +290,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 				Log::add('post->install: updateDefaultParams', Log::INFO, 'rsg2');
 
-				$this->updateDefaultParams();
+				$this->updateDefaultParams($parent);
 
 				Log::add('post->install: install message', Log::INFO, 'rsg2');
 
@@ -309,7 +309,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 				Log::add('post->install: updateDefaultParams', Log::INFO, 'rsg2');
 
-				$this->updateDefaultParams();
+				$this->updateDefaultParams($parent);
 
 				// Old J3x config, galleries, images
 //                $this->checkAndHandleJ3xTables();
@@ -846,63 +846,96 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		return $isOneFileDeleted;
 	}
 
-	/**
-	 * sets parameter values in the component's row of the extension table
-	 *
-	 * @param $param_array
-	 */
-	function setParams($param_array)
-	{
-		try
-		{
-//			{}
-			if (count($param_array) > 0)
-			{
-				// read the existing component value(s)
-				$db = JFactory::getDbo();
-				$db->setQuery('SELECT params FROM #__extensions WHERE name = "com_rsgallery2"');
-				$params = json_decode($db->loadResult(), true);
-
-				// add the new variable(s) to the existing one(s)
-				foreach ($param_array as $name => $value)
-				{
-					$params[(string) $name] = (string) $value;
-				}
-				// store the combined new and existing values back as a JSON string
-				$paramsString = json_encode($params);
-				$db->setQuery('UPDATE #__extensions SET params = ' .
-					$db->quote($paramsString) .
-					' WHERE name = "com_rsgallery2"');
-				$db->execute();
-			}
-		}
-		catch (\RuntimeException $exception)
-		{
-			Log::add(Text::_('\n>> Exception: setParams: '), Log::INFO, 'rsg2');
-		}
-
-		return;
-	}
 
 
 
-	protected function updateDefaultParams()
+    /**
+     * @param   InstallerAdapter  $parent  The class calling this method
+     *
+     *
+     * @since version
+     */
+	protected function updateDefaultParams($parent)
 	{
 		try
 		{
 
-            $actualParams = $this->parent->getParams();
+			Log::add(Text::_('upd (01) '), Log::INFO, 'rsg2');
+			
+			$parent = $parent->getParent();
 
-            if (empty($params) || $params == '{}') {
-                $params = [];
-            }
+			Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
+
+			$json_parent = json_encode($parent);
+
+			Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
+
+			Log::add($json_parent, Log::INFO, 'rsg2');
+
+			Log::add(Text::_('upd (04) '), Log::INFO, 'rsg2');
+
+			$params = $parent->getParams();
+
+			Log::add(Text::_('upd (05) '), Log::INFO, 'rsg2');
+
+			$json_params = json_encode($params);
+
+			Log::add(Text::_('upd (06) '), Log::INFO, 'rsg2');
+
+			Log::add($json_params, Log::INFO, 'rsg2');
+
+			Log::add(Text::_('upd (07) '), Log::INFO, 'rsg2');
+
+
+        // if (empty($params) || $params == '{}')
+        // {
+            // $defaults = (object) $this->_loadDefaultParams($this->get('element'));
+            // $params   = json_encode($defaults);
+        // }
+
+
+			// $json_parent= json_encode($parent);
+
+			// Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
+
+			// Log::add($json_parent, Log::INFO, 'rsg2');
+
+			// Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
+
+            // //$params = $this->parent->getParams();
+            // Log::add($json_params, Log::INFO, 'rsg2');
+
+			// Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
+			
+			// $json_params = json_encode($parent);
+			// $json_params = json_encode($params);
+			// Log::add($json_params, Log::INFO, 'rsg2');
+
+
+
+
+//            $this->getItemArray('params', $this->paramTable, 'id', $id);
+
+//			Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
+			// $galleryTreeModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
 
             //
-            $extensionModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel ();
+            // $extensionModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel ();
 
-            $defaultParams = $extensionModel::readRsg2ExtensionDefaultConfiguration ();
+//			Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
+            // // $actualParams = $this->parent->getParams();
+            // $actualParams = $extensionModel::readRsg2ExtensionConfiguration();
 
-            $mergedParams = mergeDefaultAndActualParams($defaultParams, $actualParams);
+			// Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
+            // if (empty($params) || $params == '{}') {
+                // $params = [];
+            // }
+
+			// Log::add(Text::_('upd (04) '), Log::INFO, 'rsg2');
+            // $defaultParams = $extensionModel::readRsg2ExtensionDefaultConfiguration ();
+
+			// Log::add(Text::_('upd (05) '), Log::INFO, 'rsg2');
+            // $mergedParams = mergeDefaultAndActualParams($defaultParams, $actualParams);
 
 //            $extensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
 
@@ -932,6 +965,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			Log::add(Text::_('\n>> Exception: updateDefaultParams: '), Log::INFO, 'rsg2');
 		}
 
+		Log::add(Text::_('Exit updateDefaultParams'), Log::INFO, 'rsg2');
+		
 		return;
 	}
 
