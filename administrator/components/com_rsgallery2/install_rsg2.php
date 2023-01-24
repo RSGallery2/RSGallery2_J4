@@ -482,7 +482,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			\JLoader::register($changeLogModelClassName, $changeLogModelFileName);
 
 			$InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage
-			($this->newRelease, $this->oldRelease);
+				($this->newRelease, $this->oldRelease);
 
 			Log::add('installMessage: create message', Log::INFO, 'rsg2');
 
@@ -887,11 +887,47 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			Log::add(Text::_('upd (07) '), Log::INFO, 'rsg2');
 
 
-        // if (empty($params) || $params == '{}')
-        // {
-            // $defaults = (object) $this->_loadDefaultParams($this->get('element'));
-            // $params   = json_encode($defaults);
-        // }
+			// if (empty($params) || $params == '{}')
+			// {
+				// $defaults = (object) $this->_loadDefaultParams($this->get('element'));
+				// $params   = json_encode($defaults);
+			// }
+
+
+			Log::add(Text::_('upd (20) Rsg2ExtensionModel -----------------------'), Log::INFO, 'rsg2');
+
+			Log::add(Text::_('upd (01) '), Log::INFO, 'rsg2');
+			
+			// $Rsg2ExtensionModelFileName = jpath_administrator . '/components/com_rsgallery2/src/model/Rsg2ExtensionModel.php';
+			// include($Rsg2ExtensionModelFileName);
+			// $Rsg2ExtensionModelModel = new rsgallery2\component\rsgallery2\administrator\model\rsg2extensionmodel ();
+
+			Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
+
+			$Rsg2ExtensionModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/model/Rsg2ExtensionModel.php';
+			$Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
+			\JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
+            $Rsg2ExtensionClass = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel();
+
+			Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
+
+			$this->actualParams = $Rsg2ExtensionClass->readRsg2ExtensionConfiguration ();
+
+			Log::add(Text::_('upd (04) '), Log::INFO, 'rsg2');
+
+			$this->defaultParams = $Rsg2ExtensionClass->readRsg2ExtensionDefaultConfiguration();
+
+			Log::add(Text::_('upd (05) '), Log::INFO, 'rsg2');
+
+			$this->mergedParams = $Rsg2ExtensionClass->mergeDefaultAndActualParams ($this->defaultParams, $this->actualParams);
+
+
+			Log::add(Text::_('upd (06) '), Log::INFO, 'rsg2');
+
+			$Rsg2ExtensionClass->replaceRsg2ExtensionConfiguration ($params);
+
+			Log::add(Text::_('upd (07) '), Log::INFO, 'rsg2');
+
 
 
 			// $json_parent= json_encode($parent);

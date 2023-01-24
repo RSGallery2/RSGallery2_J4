@@ -79,7 +79,7 @@ class Rsg2ExtensionModel extends BaseModel
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
             $db->setQuery($query);
 
-			/* found in install but why reassing parameters ? regitry ?
+			/* found in install but why reassign parameters ? registry ?
 	        $param_array = json_decode($db->loadResult(), true);
 
 	        // add the new variable(s) to the existing one(s)
