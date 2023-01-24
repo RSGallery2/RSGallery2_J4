@@ -285,7 +285,7 @@ class Rsg2ExtensionModel extends BaseModel
 		try
 		{
 			// parameter exist
-			if (count($params) > 0)
+			if ( (! empty ($params)) && count($params) > 0)
 			{
 				// store the combined new and existing values back as a JSON string
 				$paramsString = json_encode($params);
