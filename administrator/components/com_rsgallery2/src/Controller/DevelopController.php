@@ -18,7 +18,8 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
 
 /**
  * Rsgallery2 master display controller.
@@ -743,6 +744,7 @@ class DevelopController extends BaseController
 
         $this->setRedirect($link,);
     }
+
     /**
      * On install of RSG2 the message for the changelog display depends on the
      * from / to version number. The RSG2 "extension" number in the db can be
@@ -802,5 +804,14 @@ class DevelopController extends BaseController
         $this->setRedirect($link);
     }
 
+
+    public function mergeParams()
+    {
+
+        $actualParams = Rsg2ExtensionModel::readRsg2ExtensionConfiguration ();
+        $defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
+        $mergedParams = Rsg2ExtensionModel::mergeDefaultAndActualParams ($this->defaultParams, $this->actualParams);
+        Rsg2ExtensionModel::replaceRsg2ExtensionConfiguration ($mergedParams);
+    }
 
 }

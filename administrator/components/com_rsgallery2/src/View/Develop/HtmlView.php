@@ -228,7 +228,11 @@ class HtmlView extends BaseHtmlView
                 $this->defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
                 $this->mergedParams = Rsg2ExtensionModel::mergeDefaultAndActualParams ($this->defaultParams, $this->actualParams);
 
-				// ToDo: button with command on controller ;-)
+                ToolBarHelper::custom ('develop.mergeParams','copy','','Merge standard parameter ', false);
+
+
+
+                // ToDo: button with command on controller ;-)
 //				replaceRsg2ExtensionConfiguration($this->mergedParams);
 			break;
 		}

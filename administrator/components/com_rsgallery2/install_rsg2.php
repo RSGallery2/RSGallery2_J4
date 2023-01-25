@@ -847,8 +847,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	}
 
 
-
-
     /**
      * @param   InstallerAdapter  $parent  The class calling this method
      *
@@ -860,50 +858,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		try
 		{
 
-			Log::add(Text::_('upd (01) '), Log::INFO, 'rsg2');
-			
-			$parent = $parent->getParent();
-
-			Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
-
-			$json_parent = json_encode($parent);
-
-			Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
-
-			Log::add($json_parent, Log::INFO, 'rsg2');
-
-			Log::add(Text::_('upd (04) '), Log::INFO, 'rsg2');
-
-			$params = $parent->getParams();
-
-			Log::add(Text::_('upd (05) '), Log::INFO, 'rsg2');
-
-			$json_params = json_encode($params);
-
-			Log::add(Text::_('upd (06) '), Log::INFO, 'rsg2');
-
-			Log::add($json_params, Log::INFO, 'rsg2');
-
-			Log::add(Text::_('upd (07) '), Log::INFO, 'rsg2');
-
-
-			// if (empty($params) || $params == '{}')
-			// {
-				// $defaults = (object) $this->_loadDefaultParams($this->get('element'));
-				// $params   = json_encode($defaults);
-			// }
-
-
 			Log::add(Text::_('upd (20) Rsg2ExtensionModel -----------------------'), Log::INFO, 'rsg2');
 
 			Log::add(Text::_('upd (01) '), Log::INFO, 'rsg2');
 			
-			// $Rsg2ExtensionModelFileName = jpath_administrator . '/components/com_rsgallery2/src/model/Rsg2ExtensionModel.php';
-			// include($Rsg2ExtensionModelFileName);
-			// $Rsg2ExtensionModelModel = new rsgallery2\component\rsgallery2\administrator\model\rsg2extensionmodel ();
-
-			Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
-
 			$Rsg2ExtensionModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/model/Rsg2ExtensionModel.php';
 			$Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
 			\JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
@@ -921,79 +879,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 			$this->mergedParams = $Rsg2ExtensionClass->mergeDefaultAndActualParams ($this->defaultParams, $this->actualParams);
 
-
 			Log::add(Text::_('upd (06) '), Log::INFO, 'rsg2');
 
-			$Rsg2ExtensionClass->replaceRsg2ExtensionConfiguration ($params);
+			$Rsg2ExtensionClass->replaceRsg2ExtensionConfiguration ($this->mergedParams);
 
 			Log::add(Text::_('upd (07) '), Log::INFO, 'rsg2');
-
-
-
-			// $json_parent= json_encode($parent);
-
-			// Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
-
-			// Log::add($json_parent, Log::INFO, 'rsg2');
-
-			// Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
-
-            // //$params = $this->parent->getParams();
-            // Log::add($json_params, Log::INFO, 'rsg2');
-
-			// Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
-			
-			// $json_params = json_encode($parent);
-			// $json_params = json_encode($params);
-			// Log::add($json_params, Log::INFO, 'rsg2');
-
-
-
-
-//            $this->getItemArray('params', $this->paramTable, 'id', $id);
-
-//			Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
-			// $galleryTreeModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
-
-            //
-            // $extensionModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel ();
-
-//			Log::add(Text::_('upd (02) '), Log::INFO, 'rsg2');
-            // // $actualParams = $this->parent->getParams();
-            // $actualParams = $extensionModel::readRsg2ExtensionConfiguration();
-
-			// Log::add(Text::_('upd (03) '), Log::INFO, 'rsg2');
-            // if (empty($params) || $params == '{}') {
-                // $params = [];
-            // }
-
-			// Log::add(Text::_('upd (04) '), Log::INFO, 'rsg2');
-            // $defaultParams = $extensionModel::readRsg2ExtensionDefaultConfiguration ();
-
-			// Log::add(Text::_('upd (05) '), Log::INFO, 'rsg2');
-            // $mergedParams = mergeDefaultAndActualParams($defaultParams, $actualParams);
-
-//            $extensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
-
-//
-//        $params = $this->parent->getParams();
-//
-//        if (empty($params) || $params == '{}')
-//        {
-//            $defaults = (object) $this->loadDefaultParams($this->get('element'));
-//            $params   = json_encode($defaults);
-//        }
-//
-//        $row->set('params', $params);
-//
-//
-//			$params = $this->loadDefaultParams('com_rsgallery2');
-//
-//			if (count ($params))
-//			{
-//				$this->setParams($params);
-//			}
-
 
 		}
 		catch (\RuntimeException $exception)
@@ -1006,73 +896,4 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		return;
 	}
 
-
-	/**
-	 * Original: joomlatools / joomlatools-platform github 2023.01
-	 * Parses the config.xml for the given component and
-	 * returns the default values for each parameter.
-	 *
-	 * @param   string  Element name (com_xyz)
-	 *
-	 * @return  array   Array of parameters
-	 *
-	 *
-	 * @copyright   joomlatools: Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
-	 * @license     joomlatools: GNU General Public License version 2 or later; see LICENSE
-	 *
-	 *
-	protected function loadDefaultParams($element)
-	{
-        $params = [];
-
-		try
-		{
-			$file   = JPATH_ADMINISTRATOR . '/components/' . $element . '/config.xml';
-
-			if (!file_exists($file))
-			{
-				return $params;
-			}
-
-			$xml = simplexml_load_file($file);
-
-			if (!($xml instanceof SimpleXMLElement))
-			{
-				return $params;
-			}
-
-			$elements = $xml->xpath('/config');
-
-			if (empty($elements))
-			{
-				return $params;
-			}
-
-			foreach ($elements as $element)
-			{
-				$fields = $element->xpath('descendant-or-self::field');
-
-				foreach ($fields as $field)
-				{
-					if (!isset($field['default']))
-					{
-						continue;
-					}
-
-					$name    = (string) $field['name'];
-					$default = (string) $field['default'];
-
-					$params[$name] = $default;
-				}
-			}
-		}
-		catch (\RuntimeException $exception)
-		{
-			Log::add(Text::_('\n>> Exception: loadDefaultParams: '), Log::INFO, 'rsg2');
-		}
-
-		return $params;
-	}
-    /**/
-    
 } // class
