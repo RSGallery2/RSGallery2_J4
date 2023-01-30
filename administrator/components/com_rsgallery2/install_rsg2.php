@@ -12,9 +12,12 @@
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerScript;
+use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 
+use Joomla\CMS\File;
+use Joomla\CMS\Folder;
 
 //JLoader::registerNamespace('Rsgallery2', __DIR__ .'/administrator/components/com_rsgallery2');
 //JLoader::registerNamespace('Rsgallery2',  JPATH_ADMINISTRATOR .'/components/com_rsgallery2');
@@ -605,7 +608,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 *
 	 * Checks for RSG2 version j3x db tables existence
 	 *
-	 * @return bool
+	 * @return
 	 * @throws Exception
 	 *
 	 * @since __BUMP_VERSION__
@@ -758,19 +761,20 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	{
 		try
 		{
+			Log::add(Text::_('start: removeAllOldLangFiles: '), Log::INFO, 'rsg2');
 
-			//--- administrator\languages path ---------------------------------
+			//--- administrator\language path ---------------------------------
 
-			$langPath = JPATH_ADMINISTRATOR . '/' . 'languages';
+			$langPath = JPATH_ROOT . '/administrator/' . 'language';
 
-			$isOneFileDeleted = removeLangFilesInSubPaths($langPath);
+			$isOneFileDeleted = $this->removeLangFilesInSubPaths($langPath);
 
 
-			//--- site\languages path ---------------------------------
+			//--- site\language path ---------------------------------
 
-			$langPath = JPATH_ROOT . '/' . 'languages';
+			$langPath = JPATH_ROOT . '/' . 'language';
 
-			$isOneFileDeleted = removeLangFilesInSubPaths($langPath);
+			$isOneFileDeleted = $this->removeLangFilesInSubPaths($langPath);
 
 		}
 		catch (\RuntimeException $exception)
@@ -796,19 +800,22 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		try
 		{
+			Log::add(Text::_('start: removeLangFilesInSubPaths: ') . $langPath, Log::INFO, 'rsg2');
+
 			//--- All matching files in actual folder -------------------
-			//
-			foreach (Folder::files($langPath) as $fileName)
+
+			$files = array_diff(array_filter(glob($langPath . '/*'), 'is_file'), array('.', '..'));
+
+			foreach ($files as $fileName)
 			{
 				// A matching lang name ...
 				if (str_contains($fileName, 'com_rsgallery2'))
 				{
-					$langPathFileName = $langPath . '/' . $fileName;
 
-					// ... will be deleted
-					if (File::exist($langPathFileName))
+				// ... will be deleted
+				if (file_exists($fileName))
 					{
-						unlink($langPathFileName);
+						unlink($fileName);
 						$isOneFileDeleted = true;
 					}
 
@@ -829,11 +836,16 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			{
 				// base folder may contain lang ID folders en-GB, de-DE
 
-				foreach (Folder::folders($langPath) as $folderName)
-				{
-					$subFolder = $langPath . "/" . $folderName;
+				$folders = array_diff(array_filter(glob($langPath . '/*'), 'is_dir'), array('.', '..'));
 
-					$isOneFileDeleted = $this->removeLangFilesInSubPaths($subFolder);
+				foreach ($folders as $folderName)
+				{
+// 				echo ('folder name: ' . $folderName . '<br>');
+
+				// $subFolder = $langPath . "/" . $folderName;
+				//$isOneFileDeleted = removeLangFilesInSubPaths($subFolder);
+
+					$isOneFileDeleted = $this->removeLangFilesInSubPaths($folderName);
 
 				}
 			}
