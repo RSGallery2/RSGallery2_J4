@@ -812,9 +812,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				if (str_contains($fileName, 'com_rsgallery2'))
 				{
 
-				// ... will be deleted
-				if (file_exists($fileName))
+					// ... will be deleted
+					if (file_exists($fileName))
 					{
+						Log::add(Text::_('unlink: ') . $fileName, Log::INFO, 'rsg2');
+
 						unlink($fileName);
 						$isOneFileDeleted = true;
 					}

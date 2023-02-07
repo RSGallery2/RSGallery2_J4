@@ -133,7 +133,12 @@ class ImageTable extends Table
             $this->description = '';
         }
 
-        if (empty($this->params))
+	    if (empty($this->sizes))
+	    {
+		    $this->sizes = '';
+	    }
+
+	    if (empty($this->params))
         {
             $this->params = '{}';
         }
@@ -202,6 +207,12 @@ class ImageTable extends Table
             if ($this->description == null) {
                 $this->description = '';
             }
+
+	        if (empty($this->sizes))
+	        {
+		        $this->sizes = '';
+	        }
+
         }
 
         // Verify that the alias is unique

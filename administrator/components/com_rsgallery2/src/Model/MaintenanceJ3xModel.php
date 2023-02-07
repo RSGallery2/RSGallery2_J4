@@ -672,7 +672,9 @@ EOT;
         // `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
         $j4x_GalleryItem['asset_id'] = $j3x_gallery->asset_id;
         // `access` int(10) unsigned DEFAULT NULL,
-        $j4x_GalleryItem['access'] = $j3x_gallery->access;
+	    $j4x_GalleryItem['access'] = $j3x_gallery->access;
+
+	    $j4x_GalleryItem['sizes'] = '';
 
         return $j4x_GalleryItem;
     }
@@ -957,15 +959,17 @@ EOT;
 //            $columns[] = 'access';
 //            $values[] = $j4ImageItem['access'];
 
+	        $columns[] = 'sizes';
+	        $values[] = $j4x_GalleryItem['sizes'];
+
             // Prepare the insert query.
             $query
                 ->insert($db->quoteName('#__rsg2_galleries')) //make sure you keep #__
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $db->quote($values)));
             $db->setQuery($query);
-            $db->execute();
+	        $isOk = $db->execute();
 
-            $isOk = true;
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
@@ -1360,9 +1364,8 @@ EOT;
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $db->quote($values)));
             $db->setQuery($query);
-            $db->execute();
+	        $isOk = $db->execute();
 
-            $isOk = true;
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
@@ -1851,9 +1854,7 @@ EOT;
 
             $db->setQuery($query);
 
-            if ($db->execute()) {
-                $isIdsMarked = true;
-            }
+	        $isIdsMarked = $db->execute();
 
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');

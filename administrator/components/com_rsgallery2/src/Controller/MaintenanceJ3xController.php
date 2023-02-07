@@ -179,14 +179,24 @@ class MaintenanceJ3xController extends AdminController
 
                 $isOk = $j3xModel->copyDbAllJ3xGalleries2J4x();
 
+
                 if ($isOk) {
+
+	                $msg .= "Successful applied J3x gallery items ";
 
                     $isOk = ConfigRawModel::writeConfigParam ('j3x_db_galleries_copied', true);
 
-                    $msg .= "Successful applied J3x gallery items";
+	                if ($isOk) {
+		                $msg .= "and assigned configuration parameters";
+
+	                } else {
+		                $msg .= "!!! but error at writeConfigParam !!!";
+		                $msgType = 'error';
+	                }
+
                 } else {
-                    $msg .= "Error at copyDbJ3xGalleries2J4x items";
-                    $msgType = 'error';
+	                $msg .= "Error at copyDbJ3xGalleries2J4x items";
+	                $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {

@@ -160,13 +160,18 @@ class GalleryTable extends Nested
 //            $this->metadesc = '';
 //        }
 
-        if (empty($this->params))
-        {
-            $this->params = '{}';
-        }
+	    if (empty($this->params))
+	    {
+		    $this->params = '{}';
+	    }
+
+	    if (empty($this->sizes))
+	    {
+		    $this->sizes = '';
+	    }
 
 
-        if (!(int) $this->checked_out_time)
+	    if (!(int) $this->checked_out_time)
         {
             $this->checked_out_time = null;
         }
@@ -231,6 +236,11 @@ class GalleryTable extends Nested
             if ($this->description == null) {
                 $this->description = '';
             }
+
+	        if ($this->sizes == null) {
+		        $this->sizes = '';
+	        }
+
         }
 
         // Verify that the alias is unique

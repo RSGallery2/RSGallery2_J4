@@ -133,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 
 CREATE TABLE IF NOT EXISTS `#__rsg2_state` (
   `id` int unsigned NOT NULL auto_increment,
+--  `name` varchar(255) NOT NULL DEFAULT '',
   `name` text NOT NULL,
   `value` text NOT NULL,
  PRIMARY KEY `id` (`id`)
