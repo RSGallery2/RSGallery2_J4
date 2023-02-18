@@ -1358,7 +1358,10 @@ EOT;
             $columns[] = 'use_j3x_location';
             $values[] = $j4ImageItem['use_j3x_location'];
 
-            // Prepare the insert query.
+	        $columns[] = 'sizes';
+	        $values[] = $j4ImageItem['sizes'];
+
+	        // Prepare the insert query.
             $query
                 ->insert($db->quoteName('#__rsg2_images')) //make sure you keep #__
                 ->columns($db->quoteName($columns))
@@ -1444,12 +1447,13 @@ EOT;
         // Mark as to be found in old directory
         $j4_imageItem['use_j3x_location'] = 1;
 
+	    $j4_imageItem['sizes'] = '';
+
         return $j4_imageItem;
     }
 
     /**
-     * Reset image table to empty state
-     * Deletes all galleries and initialises the root of the nested tree
+     * Reset image table to empty state (No images in RSG J4x
      *
      * @return bool
      *

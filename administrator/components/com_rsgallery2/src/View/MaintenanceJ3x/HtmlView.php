@@ -291,10 +291,10 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+						. '* Add copy selected J3x Images <br>'
                         . '* user should only see what is necessary: use debug / develop for others<br>'
 						. '* Remove double code parts: See also images raw view -> import into views<br>'
         				. '* ? pagination <br>'
-		        		. '* <br>'
 //				        . '* <br>'
 //      				. '* <br>'
 //		        		. '* <br>'
@@ -306,8 +306,8 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_ALL_J3X_IMAGES', false);
-				//ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
+				// ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
 				break;
 
 			case 'MoveJ3xImages':

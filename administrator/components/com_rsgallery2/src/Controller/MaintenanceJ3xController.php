@@ -214,12 +214,13 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-    /**
-     *
-     * @return bool
-     *
-     * @since __BUMP_VERSION__
-     */
+	/**
+	 * Reset image table to empty state (No images in RSG J4x
+	 * ? used in mantenance ?
+	 * @return bool
+	 *
+	 * @since __BUMP_VERSION__
+	 */
     public function resetImagesTable()
     {
         $isOk = false;
