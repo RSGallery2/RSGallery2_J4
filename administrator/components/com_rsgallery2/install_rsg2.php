@@ -3,11 +3,10 @@
  * @package        com_rsgallery2
  *
  * @author         RSGallery2 Team <team2@rsgallery2.org>
- * @copyright  (c) 2003-2022 RSGallery2 Team
+ * @copyright  (c) 2003-2023 RSGallery2 Team
  * @license        GNU General Public License version 2 or later; see LICENSE.txt
  * @link           https://www.rsgallery2.org
  */
-// No direct access to this file
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
@@ -19,32 +18,10 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\File;
 use Joomla\CMS\Folder;
 
-//JLoader::registerNamespace('Rsgallery2', __DIR__ .'/administrator/components/com_rsgallery2');
-//JLoader::registerNamespace('Rsgallery2',  JPATH_ADMINISTRATOR .'/components/com_rsgallery2');
-
-// https://github.com/asikart/windwalker-template/blob/master/admin/flower.php
-//use Rsgallery2\Helper\Rsg2InstallTasks;
-
-
-////use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
-////require_once(dirname(__FILE__) . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php');
-//$localDir = str_replace("\\","/",dirname(__FILE__));
-//$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
-
-//$rsg2FileName = $localDir . '/administrator/components/com_rsgallery2/Helper/InstallMessage.php';
-//$rsg2ClassName = 'InstallMessage';
-//require_once($rsg2FileName);
-//\JLoader::register($rsg2ClassName, $rsg2FileName);
-//\JLoader::load($rsg2ClassName);
-//
-////use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
-
-// ToDo: More logs after action
-
 /**
- * Script file of Rsgallery2 Component
+ * Script (instfile of Rsgallery2 Component
  *
- * @since __BUMP_VERSION__
+ * @since 5.0.0
  *
  */
 class Com_Rsgallery2InstallerScript extends InstallerScript
@@ -56,12 +33,12 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 	/**
 	 * @var string
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected $minimumJoomla;
 	/**
 	 * @var string
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected $minimumPhp;
 
@@ -71,20 +48,23 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	/**
 	 * Extension script constructor.
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 *
 	 */
 	public function __construct()
 	{
 		$this->minimumJoomla = '4.0.0';
 		$this->minimumPhp    = JOOMLA_MINIMUM_PHP;   // (7.2.5)
-		//$this->minimumPhp    = '8.0.0';   // (8.0.0)
 
 		// Check if the default log directory can be written to, add a logger for errors to use it
 		if (is_writable(JPATH_ADMINISTRATOR . '/logs'))
 		{
+            // Get the date for log file name
+            $date = Factory::getDate()->format('Y-m-d');
+
+
 			$logOptions['format']    = '{DATE}\t{TIME}\t{LEVEL}\t{CODE}\t{MESSAGE}';
-			$logOptions['text_file'] = 'rsg2_install.php';
+			$logOptions['text_file'] = 'rsg2_install.' . $date . '.php';
 			$logType                 = Log::ALL;
 			$logChannels             = ['rsg2']; //jerror ...
 			Log::addLogger($logOptions, $logType, $logChannels);
@@ -124,7 +104,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @return  boolean  True on success
 	 *
 	 * @throws Exception
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	public function preflight($type, $installer)
 	{
@@ -161,6 +141,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		if ($type === 'update')
 		{
+			Log::add(Text::_('-> pre update'), Log::INFO, 'rsg2');
+
 			//--- Read manifest with old version ------------------------
 
 			// could also be done by $xml=simplexml_load_file of manfiest on
@@ -171,14 +153,26 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			// old release not found but rsgallery2 data still kept in database -> error message
 			if (empty ($this->oldRelease))
 			{
-				Factory::getApplication()->enqueueMessage('Can not install RSG2: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts', 'error');
+				$outTxt = 'Can not install RSG2: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts';
+				Factory::getApplication()->enqueueMessage($outTxt, 'error');
+				Log::add('oldRelease:' . outTxt, Log::WARNING, 'rsg2');
 
 				// May be error on install ?
 				// return false;
+
+				$this->oldRelease = '%';
 			}
 
 			Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');
+
+        } else { // $type == 'install'
+
+            JLog::add('-> pre freshInstall', JLog::DEBUG);
 		}
+
+		$this->oldRelease = '0.0';
+
+		Log::add(Text::_('newRelease:') . $this->newRelease, Log::INFO, 'rsg2');
 
 		if ($type === 'update')
 		{
@@ -188,6 +182,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				$this->removeAllOldLangFiles();
 			}
 		}
+
+		Log::add(Text::_('exit preflight') . $this->newRelease, Log::INFO, 'rsg2');
 
 		return true;
 	}
@@ -208,16 +204,16 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 *
 	 */
 	public function install($parent)
 	{
-//      echo Text::_('COM_RSGALLERY2_INSTALL_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_INSTALL'), Log::INFO, 'rsg2');
 
-		// ToDo: debug install
 		$this->addDashboardMenu('rsgallery2', 'rsgallery2');
+
+		Log::add(Text::_('exit install') , Log::INFO, 'rsg2');
 
 		return true;
 	}
@@ -238,17 +234,16 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 *
 	 */
 	public function update($parent)
 	{
-		// echo Text::_('COM_RSGALLERY2_UPDATE_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UPDATE'), Log::INFO, 'rsg2');
-		//Log::add(Text::_('COM_RSGALLERY2_UPDATE_TEXT'), Log::INFO, 'rsg2');
 
-		// ToDo: debug install
 		$this->addDashboardMenu('rsgallery2', 'rsgallery2');
+
+		Log::add(Text::_('exit update') , Log::INFO, 'rsg2');
 
 		return true;
 	}
@@ -271,7 +266,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 *
 	 */
 	public function postflight($type, $parent)
@@ -331,17 +326,24 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 					. 'Galleries and images table may still exist';
 				Log::add('post->uninstall: ' . $outText, Log::INFO, 'rsg2');
 				// ToDo: check existence of galleries/images table and then write
+                /**
 				echo 'Uninstall of RSG2 finished. <br>Configuration may be deleted. <br>'
 					. 'Galleries and images table may still exist';
 				// ToDo: uninstall Message
-
+				*/
 				Factory::getApplication()->enqueueMessage($outText, 'info');
+
+				// $installMsg = $this->uninstallMessage);
 
 				Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
 
 				break;
 
 			case 'discover_install':
+
+				Log::add('post->discover_install: updateDefaultParams', Log::INFO, 'rsg2');
+
+				$this->updateDefaultParams($parent);
 
 				Log::add('post->discover_install: init gallery tree', Log::INFO, 'rsg2');
 
@@ -365,7 +367,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		// wonderworld 'good by' icons finnern
 		echo '<br><h4>&oplus;&infin;&omega;</h4><br>';
-		Log::add('--- postflight finished', Log::INFO, 'rsg2');
+		Log::add(Text::_('--- exit postflight ------------'), Log::INFO, 'rsg2');
 
 		return true;
 	}
@@ -385,13 +387,17 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 *
 	 * @return  boolean  True on success
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 *
 	 */
 	public function uninstall($parent)
 	{
-		//echo Text::_('COM_RSGALLERY2_UNINSTALL_TEXT');
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL'), Log::INFO, 'rsg2');
+
+		// ToDo: enquire .. message to user
+		Factory::getApplication()->enqueueMessage(Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp), 'error');
+
+        Log::add(Text::_('exit uninstall'), Log::INFO, 'rsg2');
 
 		return true;
 	}
@@ -403,7 +409,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @return bool
 	 * @throws Exception
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected function initGalleryTree()
 	{
@@ -465,7 +471,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @return bool
 	 * @throws Exception
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected function installMessage($type)
 	{
@@ -509,7 +515,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @return mixed|string
 	 *
 	 * @throws Exception
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected function getOldVersionFromManifestParam()
 	{
@@ -534,7 +540,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @return array
 	 *
 	 * @throws Exception
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected function readRsg2ExtensionManifest()
 	{
@@ -578,7 +584,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @return bool
 	 * @throws Exception
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected function isJ3xRsg2DataExisting() : array
 	{
@@ -611,7 +617,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * @return
 	 * @throws Exception
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since 5.0.0
 	 */
 	protected function copyJ3xDbTables()
 	{
