@@ -260,7 +260,7 @@ class ImagesRandomModel extends ListModel
 					->where('a.gallery_id = ' . (int) $gid)
                     ->order('rand()') 
 //                    ->order('created DSC') 
-                    ->limit('5'); 
+                    ->setLimit('5');
 
 				$db->setQuery($query);
 				$data = $db->loadObjectList();
