@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  mod_rsg2_gallery
  *
- * @copyright   (C) 2005 - 2021 RSGallery2 Team 
+ * @copyright (c) 2005-2023 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 

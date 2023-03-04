@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  pkg_foos
  *
- * @copyright   Copyright (C) 2005 - 2019 Astrid Günther, Inc. All rights reserved.
+ * @copyright (c) 2005 - 2019 Astrid Günther, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later;
  * @link        astrid-guenther.de
  */

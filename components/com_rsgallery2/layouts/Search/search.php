@@ -3,7 +3,7 @@
  * @package     rsgallery2
  * @subpackage  Layout
  *
- * @copyright   Copyright (C) 2005 - 2020 
+ * @copyright (c) 2005-2023 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
