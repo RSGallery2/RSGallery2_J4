@@ -91,6 +91,7 @@ class HtmlView extends BaseHtmlView
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
         $imageId = $input->get('img_id', 0, 'INT');
+        $limitstart = $input->get('start', -1, 'INT');
 
         /* wrong call but not expected. Happens but why ? */
         if ($this->galleryId < 2)
@@ -109,28 +110,34 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite = $params->get('isDebugSite'); 
         $this->isDevelopSite = $params->get('isDevelop');
 
-        //--- pagination use count of all images ------------------------------------
+        //--- pagination ------------------------------------
 
-        // $imageId by user or from pagination
+        // Entry by click on gallery image ?
+        if ($limitstart <0) {
+            $this->imageIdx = $this->imageIdxInList ($imageId, $this->items);
+            //$this->state->set('list.limitstart', $this->imageIdx);
+            $this->state->set('list.start', $this->imageIdx);
+        }
 
-        // $this->state->set('list.start', 0);
+        // one image shown
         $this->state->set('list.limit', 1);
-        //$this->state->set('list.total', count ($this->items)); // all images
-        $this->state->set('list.total', count ($this->items)); // all images
+        // images of gallery
+        $this->state->set('list.total', count ($this->items));
+
         $this->pagination = $this->get('Pagination');
 
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-        //--- select image  --------------------------------------------------------------------
+        //--- select start image --------------------------------------------------------------------
 
+        // from pagination
         $this->imageIdx = $this->pagination->limitstart;
         $this->image = null;
         if (count ($this->items) >= $this->imageIdx) {
 
             $this->image = $this->items [$this->imageIdx];
         }
-
 
         //---   --------------------------------------------------------------------
 

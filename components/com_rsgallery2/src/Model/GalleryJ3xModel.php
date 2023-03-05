@@ -89,14 +89,14 @@ class GalleryJ3xModel extends GalleryModel
                     . '&view=slidePageJ3x'
                     . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
                     . '&img_id=' . $image->id
-                    . '&start=' . $idx
+// test bad ordering                    . '&start=' . $idx
                 ;
             } else {
 
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidePageJ3x'
                     . '&img_id=' . $image->id
-                    . '&start=' . $idx
+// test bad ordering                    . '&start=' . $idx
                 ;
             }
 
