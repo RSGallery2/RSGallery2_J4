@@ -87,18 +87,13 @@ if (!empty ($this->isDevelopSite))
 
 // 2022.11.12 moved code from php layout folder
 
-	$images = $this->items;
+//	$images = $this->items;
 	$image_idx = $this->imageIdx;
 	$gallery = $this->gallery;
 	$params = $this->params;
 	$menuParams = $this->menuParams;
 
-$image = null;
-if (count ($images)) {
-
-    $image = $images [$image_idx];
-
-}
+	$image = $this->image;
 
 ?>
 

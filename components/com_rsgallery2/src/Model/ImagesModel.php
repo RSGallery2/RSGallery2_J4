@@ -4,7 +4,7 @@
  * @package     Joomla.Site
  * @subpackage  com_rsgallery2
  *
- * @copyright (c) 2005-2023 RSGallery2 Team 
+ * @copyright(C) 2005-2023 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -963,8 +963,5 @@ class ImagesModel extends ListModel
 
         return $gallery;
     }
-
-
-
 
 }

@@ -49,10 +49,10 @@ class GalleryJ3xModel extends GalleryModel
 
 		try
 		{
-			foreach ($images as $image)
+			foreach ($images as $idx => $image)
 			{
                 // One image on the complete page with pagination
-                $this->AssignUrlImageAsInline($image);
+                $this->AssignUrlImageAsInline($image, $idx);
 
 				$this->AssignUrlDownloadImage($image);
 
@@ -77,7 +77,7 @@ class GalleryJ3xModel extends GalleryModel
 	 *
 	 * @since 4.5.0.0
 	 */
-	public function AssignUrlImageAsInline($image)
+	public function AssignUrlImageAsInline($image, $idx)
 	{
 
 		try {
@@ -88,13 +88,15 @@ class GalleryJ3xModel extends GalleryModel
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidePageJ3x'
                     . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
-                    . '&img_id=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
+                    . '&img_id=' . $image->id
+                    . '&start=' . $idx
                 ;
             } else {
 
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidePageJ3x'
-                    . '&img_id=' . $image->id // Todo: use instead: . '&img_id=' . $image->id
+                    . '&img_id=' . $image->id
+                    . '&start=' . $idx
                 ;
             }
 

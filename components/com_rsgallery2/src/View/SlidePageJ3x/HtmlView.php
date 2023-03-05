@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 
 /**
+ * Single image with pagination
  * HTML Rsgallery2 View class for the Rsgallery2 component
  *
  * @since  __BUMP_VERSION__
@@ -91,7 +92,7 @@ class HtmlView extends BaseHtmlView
         $this->galleryId = $input->get('gid', 0, 'INT');
         $imageId = $input->get('img_id', 0, 'INT');
 
-        /* wrong call but why ? */
+        /* wrong call but not expected. Happens but why ? */
         if ($this->galleryId < 2)
         {
             Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
@@ -110,12 +111,26 @@ class HtmlView extends BaseHtmlView
 
         //--- pagination use count of all images ------------------------------------
 
-        $this->state->set('list.start', 0);
-        $this->state->set('list.limit', count ($this->items)); // all images
+        // $imageId by user or from pagination
+
+        // $this->state->set('list.start', 0);
+        $this->state->set('list.limit', 1);
+        //$this->state->set('list.total', count ($this->items)); // all images
+        $this->state->set('list.total', count ($this->items)); // all images
         $this->pagination = $this->get('Pagination');
 
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
+
+        //--- select image  --------------------------------------------------------------------
+
+        $this->imageIdx = $this->pagination->limitstart;
+        $this->image = null;
+        if (count ($this->items) >= $this->imageIdx) {
+
+            $this->image = $this->items [$this->imageIdx];
+        }
+
 
         //---   --------------------------------------------------------------------
 
@@ -128,9 +143,6 @@ class HtmlView extends BaseHtmlView
         if (! empty ($gallery)) {
             $model->AssignSlideshowUrl ($gallery);
         }
-
-        $this->imageIdx = $this->imageIdxInList ($imageId, $this->items);
-
 
         if ( ! empty($this->items)) {
             // Add image paths, image params ...
@@ -226,7 +238,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since version
      *
-     *  ToDo: movoe to model
+     *  ToDo: move to model
      */
     public function imageIdxInList ($imageId, $images)
     {
@@ -234,6 +246,9 @@ class HtmlView extends BaseHtmlView
         $imageIdx = -1;
 
         if (!empty ($images)) {
+
+            // Not given use first
+            $imageIdx = 0;
 
             $count = count($images);
             for ($idx = 0; $idx < $count ; $idx++) {

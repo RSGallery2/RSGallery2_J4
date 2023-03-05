@@ -93,7 +93,7 @@ if ($displaySearch) {
     <div class="rsg2__form rsg2__images_area">
 
         <?php if (!empty($this->isDebugSite)): ?>
-    	    <h1>RSGallery2 "gallery j3x legacy" view </h1>
+    	    <h1><?php echo text::_('RSGallery2 "gallery j3x legacy"'); ?> view </h1>
             <hr>
         <?php endif; ?>
 

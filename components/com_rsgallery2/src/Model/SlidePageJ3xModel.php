@@ -32,21 +32,57 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 class SlidePageJ3XModel extends ImagesJ3xModel
 {
 
-//    // for pagination override
-//    protected function populateState($ordering = 'ordering', $direction = 'ASC')
-//    {
-//        parent::populateState($ordering, $direction);
+    // for pagination override
+    protected function populateState($ordering = 'ordering', $direction = 'ASC')
+    {
+//        $input   = Factory::getApplication()->input;
+//        $imageId = $input->get('img_id', 0, 'INT');
+
+        parent::populateState($ordering, $direction);
+
+//        if ($imageId > 0) {
+////            $imageIdx = $this->imageIdxInList ($imageId, $this->items);
+////            $this->state->set('list.limitstart', 9);
+//            $this->setState('id', $imageId);
 //
-//        // pagination over all images
-//        $this->setState('list.start', 0);
-//        $this->setState('list.limit', 99999); // all images
+//        }
+
+
+//        $input  = Factory::getApplication()->input;
+//        $galleryId = $input->get('gid', 0, 'INT');
 //
-//    }
-//
+//        // If gallery ID is given
+//        if ($galleryId) {
+//            // ToDo:         if ($gallery_id = ) instead of below
+//            // wrong: $this->setState('rsgallery2.id', $app->input->getInt('id'));
+//            $this->setState('filter.gallery_id', $galleryId);
+//            //filter.gallery_id
+//        }
+
+    }
 
 
+    /**
+     * Method to get a database query to list images.
+     *
+     * @return  \DatabaseQuery object.
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getListQuery()
+    {
 
+        $query = parent::getListQuery();
 
+        $input  = Factory::getApplication()->input;
+        $galleryId = $input->get('gid', 0, 'INT');
 
+        // If gallery ID is given
+        if ($galleryId) {
+            $query->where('a.gallery_id = ' . (int)$galleryId);
+        }
+
+        return $query;
+    }
 }
 

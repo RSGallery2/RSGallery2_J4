@@ -84,8 +84,5 @@ class DisplayController extends BaseController
 		parent::display($cachable);
 
 		return $this;
-
-
-
     }
 }
