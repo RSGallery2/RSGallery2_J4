@@ -171,19 +171,36 @@ if (!empty ($this->isDevelopSite))
 	    </div>
 
 
-	    <div class="mx-auto w-100">
-			<?php echo $this->pagination->getListFooter(); ?>
-	    </div>
 
-	    <div class=" w-100">
-            <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-			    <p class="com-contact-category__counter counter float-end pt-3 pe-2">
-                    <?php echo $this->pagination->getPagesCounter(); ?>
-			    </p>
-            <?php endif; ?>
 
-            <?php echo $this->pagination->getPagesLinks(); ?>
-	    </div>
+
+        <?php if ($this->params->get('show_pagination', 2)) : ?>
+        <p>
+		    <div class="padding-left=33% w-100">
+                <?php if ($this->params->def('show_pagination_results', 1)) : ?>
+<!--				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
+				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">
+<!--				    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
+                        <?php echo $this->pagination->getPagesCounter(); ?>
+				    </p>
+                <?php endif; ?>
+
+<!--			    <p class="mx-auto w-100 text-center float-none">-->
+<!--			    <div class="mx-auto float-end">-->
+			    <div class="">
+<!--	on left side-->
+	                <?php echo $this->pagination->getPagesLinks(); ?>
+<!--	on right side		-->
+<!--				    --><?php //echo $this->pagination->getListFooter(); ?>
+			    </div>
+<!--			    </p>-->
+		    </div>
+	    </p>
+        <?php endif; ?>
+
+
+
+	    
 
 
         <?php if (!empty($isDebugSite)): ?>
