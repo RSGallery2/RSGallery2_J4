@@ -44,7 +44,7 @@ class ImageFileController extends BaseController
 	 *
 	 * @since __BUMP_VERSION__
 	 * @see    \JControllerLegacy
-	 *
+	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config, $factory, $app, $input);
@@ -56,154 +56,81 @@ class ImageFileController extends BaseController
 	}
 	/**/
 
-	/**
-	 * Method to check if you can add a new record.
-	 *
-	 * @param   array  $data  An array of input data.
-	 *
-	 * @return  boolean
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	protected function allowAdd($data = array())
-	{
-        $app  = Factory::getApplication();
-        $user = $app->getIdentity();
+//	/**
+//	 * Download image file to user via Browser.
+//	 *
+//	 * @return  boolean
+//	 *
+//	 * @since __BUMP_VERSION__
+//	 */
+//	protected function downloadfile ()
+//	{
+//        $isDownloaded = false;
+//
+//        // $msg     = '<strong>' . 'Save2Upload ' . ':</strong><br>';
+//        $msg     = 'Download image file: ';
+//        $app     = Factory::getApplication();
+//
+//        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+//
+//        $input = Factory::getApplication()->input;
+//        $imageId = $input->get('$id', '', 'INT');
+//
+//        try {
+//            // query database for needed attributes
+//            [$fileName, $galleryId, $use_j3x_location] = $this->imageAttribById($imageId);
+//
+//            // not successful
+//            if (empty($fileName) || empty($galleryId)) {
+//
+//                $msg     .= ' failed. Filename or gallery could not be determnined. ID: ' . $imageId;
+//                $msgType = 'error';
+//                $app->enqueueMessage($msg, $msgType);
+//            } else {
+//
+//                [$OriginalFilePath, $OriginalFileUri] = $this->getOriginalPath($fileName, $galleryId, $use_j3x_location);
+//
+//                $isDownloaded = $this->downloadImageFile($OriginalFilePath, $OriginalFileUri);
+//
+//                if ($isDownloaded) {
+//                    // ToDo: Prepare gallery ID and pre select it in upload form
+//
+//                    $msg     .= ' successful';
+//                    $msgType = 'notice';
+//                    $app->enqueueMessage($msg, $msgType);
+//                } else {
+//                    $msg     .= ' failed. Download could not be completed for ID: ' . $imageId;
+//                    $msgType = 'error';
+//                    $app->enqueueMessage($msg, $msgType);
+//                }
+//            }
+//        } catch (\RuntimeException $e) {
+//            $OutTxt = '';
+//            $OutTxt .= 'Error executing rebuild: "' . '<br>';
+//            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+//
+//            $app = Factory::getApplication();
+//            $app->enqueueMessage($OutTxt, 'error');
+//        }
+//
+//        return $isDownloaded;
+//    }
 
-		return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
-	}
-	/**/
+//	/**
+//	 *
+//	 *
+//	 * @param   array  $data  An array of input data.
+//	 *
+//	 * @return  boolean
+//	 *
+//	 * @since __BUMP_VERSION__
+//	 */
+//	protected function yyyy($data = array())
+//	{
+//        $app  = Factory::getApplication();
+//        $user = $app->getIdentity();
+//
+//		return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
+//	}
 
-	/**
-	 * Method to check if you can edit a record.
-	 *
-	 * @param   array   $data  An array of input data.
-	 * @param   string  $key   The name of the key for the primary key.
-	 *
-	 * @return  boolean
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	protected function allowEdit($data = array(), $key = 'parent_id')
-	{
-		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
-        $app  = Factory::getApplication();
-        $user = $app->getIdentity();
-
-		// Check "edit" permission on record asset (explicit or inherited)
-		if ($user->authorise('core.edit', $this->extension . '.gallery.' . $recordId))
-		{
-			return true;
-		}
-
-		// Check "edit own" permission on record asset (explicit or inherited)
-		if ($user->authorise('core.edit.own', $this->extension . '.gallery.' . $recordId))
-		{
-			// Need to do a lookup from the model to get the owner
-			$record = $this->getModel()->getItem($recordId);
-
-			if (empty($record))
-			{
-				return false;
-			}
-
-			$ownerId = $record->created_user_id;
-
-			// If the owner matches 'me' then do the test.
-			if ($ownerId == $user->id)
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-	/**/
-
-	/**
-	 * Method to run batch operations.
-	 *
-	 * @param   object  $model  The model.
-	 *
-	 * @return  boolean  True if successful, false otherwise and internal error is set.
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	public function batch($model = null)
-	{
-	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
-
-		// Set the model
-		/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-		$model = $this->getModel('Gallery');
-
-		// Preset the redirect
-		$this->setRedirect('index.php?option=com_rsgallery2&view=galleries&extension=' . $this->extension);
-
-		return parent::batch($model);
-	}
-	/**/
-
-	/**
-	 * Gets the URL arguments to append to an item redirect.
-	 *
-	 * @param   integer  $recordId  The primary key id for the item.
-	 * @param   string   $urlVar    The name of the URL variable for the id.
-	 *
-	 * @return  string  The arguments to append to the redirect URL.
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
-	{
-		$append = parent::getRedirectToItemAppend($recordId);
-		$append .= '&extension=' . $this->extension;
-
-		return $append;
-	}
-	/**/
-
-	/**
-	 * Gets the URL arguments to append to a list redirect.
-	 *
-	 * @return  string  The arguments to append to the redirect URL.
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	protected function getRedirectToListAppend()
-	{
-		$append = parent::getRedirectToListAppend();
-		$append .= '&extension=' . $this->extension;
-
-		return $append;
-	}
-	/**/
-
-	/**
-	 * Function that allows child controller access to model data after the data has been saved.
-	 *
-	 * @param   \Joomla\CMS\MVC\Model\BaseDatabaseModel  $model      The data model object.
-	 * @param   array                                    $validData  The validated data.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = array())
-	{
-		$item = $model->getItem();
-
-		if (isset($item->params) && is_array($item->params))
-		{
-			$registry = new Registry($item->params);
-			$item->params = (string) $registry;
-		}
-
-		if (isset($item->metadata) && is_array($item->metadata))
-		{
-			$registry = new Registry($item->metadata);
-			$item->metadata = (string) $registry;
-		}
-	}
-	/**/
 }

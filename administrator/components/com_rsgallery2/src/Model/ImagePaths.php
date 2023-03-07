@@ -20,7 +20,15 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 
 \defined('_JEXEC') or die;
 
-
+/**
+ * Keeps the file location paths of an image for PHP use and URIs for HTML use
+ * The path is kept without filename . It is vaslid for all images in
+ * given gallery
+ *
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class ImagePaths
 {
 	// from config

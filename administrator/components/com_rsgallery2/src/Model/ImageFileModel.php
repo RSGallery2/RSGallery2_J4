@@ -63,6 +63,7 @@ class ImageFileModel extends BaseModel // AdminModel
 		//
 		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 
+        parent::__construct(array());
 
 	}
 
@@ -396,7 +397,7 @@ class ImageFileModel extends BaseModel // AdminModel
     // ToDo: The sizes may be defined (overwritten) in the gallery or image data (override) a) create gallery b) Upload image c) handling later  
     
     
-    public function allFilesOf($imageFileName, $galleryId, $use_j3x_location)
+    public function allFilePathsOf($imageFileName, $galleryId, $use_j3x_location)
     {
         $imagePathFileNames  = [];
 
@@ -472,7 +473,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             //--- destination image paths ---------------------------------------------------
 
-            $imagePathFileNames = $this->allFilesOf($imageFileName, $galleryId, $use_j3x_location);
+            $imagePathFileNames = $this->allFilePathsOf($imageFileName, $galleryId, $use_j3x_location);
 
             /**/
 
@@ -1252,13 +1253,13 @@ class ImageFileModel extends BaseModel // AdminModel
 
                 $imagePaths = new ImagePaths($galleryId);
                 $originalPath = $imagePaths->getOriginalPath ($fileName);
-                $displayDPath =  $imagePaths->getDisplayPath($fileName);
+                $displayPath =  $imagePaths->getDisplayPath($fileName);
             } else {
 
                 // J3x
                 $imagePathJ3x = new ImagePathsJ3x ();
                 $originalPath = $imagePathJ3x->getOriginalPath ($fileName);
-                $displayDPath =  $imagePathJ3x->getDisplayPath($fileName);
+                $displayPath =  $imagePathJ3x->getDisplayPath($fileName);
             }
 
             $imgSrcPath = $originalPath;
@@ -1267,7 +1268,7 @@ class ImageFileModel extends BaseModel // AdminModel
             if ( ! File::exists($originalPath))
             {
                 // displayBasePath
-                $imgSrcPath = $displayDPath;
+                $imgSrcPath = $displayPath;
             }
 
             $memImage = null;
@@ -1347,7 +1348,119 @@ class ImageFileModel extends BaseModel // AdminModel
 
         return $use_j3x;
     }
+
+    /**
+     * image file attributes to handle the file paths later
+     * @param $ImageId
+     *
+     * @return bool
+     *
+     * @since __BUMP_VERSION__
+     */
+    /**/
+    private function imageFileAttrib($ImageId)
+    {
+        $fileName = "";
+        $galleryId = "";
+        $use_j3x_location = "";
+
+        try
+        {
+            $db    =  Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select(
+                    $db->quoteName())
+                ->select($db->quoteName(array('name', 'gallery_id', 'use_j3x_location')))
+                ->from($db->quoteName('#__rsg2_images'))
+                ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
+            $db->setQuery($query);
+
+            $imageDb = $db->loadResult();
+
+            $fileName = $imageDb->name;
+            $galleryId = $imageDb->gallery_id;
+            $use_j3x_location = $imageDb->use_j3x_location;
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing use_j3x_location for ImageId: "' . $ImageId . '"<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        // $next = $max +1;
+
+        return [$fileName, $galleryId, $use_j3x_location];
+    }
     /**/
 
-}
 
+    public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location) {
+
+        $OriginalPathFileName = "";
+
+        // J4x ?
+        if( ! $use_j3x_location) {
+
+            $imagePaths = new ImagePaths ($galleryId);
+
+            //---  -------------------------------------------------
+
+            $OriginalPathFileName = $imagePaths->getOriginalPath($imageFileName);
+            $OriginalFileNameUri = $imagePaths->getOriginalUrl($imageFileName);
+
+        } else {
+
+            // J3x
+
+            $ImagePathJ3x = new ImagePathsJ3x ();
+
+            //---  -------------------------------------------------
+
+            $OriginalPathFileName = $ImagePathJ3x->getOriginalPath($imageFileName);
+            $OriginalFileNameUri = $ImagePathJ3x->getOriginalUrl($imageFileName);
+        }
+
+        return [$OriginalPathFileName, $OriginalFileNameUri];
+    }
+
+
+    public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
+        $IsDownloaded = false;
+
+        try {
+            //--- header ------------------------------------------------
+
+            header("Content-Disposition: attachment; filename=".basename($OriginalFilePath));
+            header("Content-type: " . mime_content_type($OriginalFilePath));
+
+            //--- read file to client ---------------------------------------------
+
+            ob_end_clean();
+
+            readfile($OriginalFileUri);
+
+            ob_flush();
+
+            //--- exit success ------------------------------------------------
+
+            //  tells if successful
+            $IsDownloaded  = true;
+
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing rebuild: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $IsDownloaded;
+    }
+
+}

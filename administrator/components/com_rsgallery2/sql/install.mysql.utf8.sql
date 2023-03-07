@@ -114,6 +114,8 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
   KEY `idx_access` (`access`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
+-- ToDo: __rsg2_images: name <==> filename ? add additional
+-- ToDo: __rsg2_images: original_path ? not needed ?
 
 --
 -- state of RSG data

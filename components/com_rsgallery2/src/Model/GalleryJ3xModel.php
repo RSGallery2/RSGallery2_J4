@@ -143,21 +143,20 @@ class GalleryJ3xModel extends GalleryModel
 
     public function AssignUrlDownloadImage($image)
     {
+        $image->Urldownload = ''; // fall back
 
+        // ToDo: use one function instead of two
         try {
 
-            $image->Urldownload = ''; // fall back
-
-
             $image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
-                . '&task=downloadfile&id=' . $image->id
+                . '&task=imagefile.downloadfile&id=' . $image->id
                 ,true,0,true);
 
         }
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleryJ3xModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleryJ3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

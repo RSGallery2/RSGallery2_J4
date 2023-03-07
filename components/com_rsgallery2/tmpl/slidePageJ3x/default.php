@@ -304,7 +304,7 @@ if (!empty ($this->isDevelopSite))
 
 		    <input type="hidden"
 		           name="task"
-		           value="rating.rateSingleImage">
+		           value="">
 		    <input type="hidden"
 		           name="rating"
 		           value="">
@@ -314,11 +314,7 @@ if (!empty ($this->isDevelopSite))
 		    <input type="hidden"
 		           name="id"
 		           value="157">
-		    <!--input id="token"
-           type="hidden"
-           name="<?php // Session::getFormToken() ?>"
-           value="1"-->
-
+            <?php echo HTMLHelper::_('form.token'); ?>
 
 	    </div>
     </div>
