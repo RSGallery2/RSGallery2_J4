@@ -20,7 +20,7 @@ use \Joomla\CMS\Layout\FileLayout;
 // ToDo:
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/slideshow.css', array('version' => 'auto', 'relative' => true));
-//HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('version' => 'auto', 'relative' => true));
 
 
@@ -76,7 +76,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=slideshowJ3x'); ?>" method="post" class="form-validate form-horizontal well">
 
-    <div class="rsg2__form rsg2__slide_area">
+    <div class="rsg2_x_form rsg2__slide_area">
 
         <?php if (!empty($this->isDebugSite)): ?>
             <h1> Menu RSGallery2 "slideshow" J3x view </h1>

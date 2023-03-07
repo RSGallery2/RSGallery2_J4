@@ -45,8 +45,6 @@ if (!empty($isDevelopSite)) {
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-
-
 if (! empty($image->isHasNoImages))
 {
     $image->UrlOriginalFile = $noImageUrl;
@@ -92,38 +90,40 @@ if (! empty($image->isHasNoImages))
 <div class="rsg_sem_inl_dispImg">
     <table>
         <tbody>
-        <tr>
-            <td>
-                <h2 class="rsg2_display_name"><?php echo $image->name; ?></h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <!--div align="center"-->
-                <div class="rsg_sem_inl_img_a_link">
-                    <a href="<?php echo $image->UrlOriginalFile; ?>"
-                       target="_blank">
-                        <img class="rsg2-displayImage"
-                             src="<?php echo $image->UrlDisplayFile; ?>"
-                             alt="<?php echo $image->name; ?>"
-                             title="<?php echo $image->title; ?>">
-                    </a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="rsg2-toolbar">
-                    <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
-                    <a href=<?php echo $image->UrlDownload; ?>
-                       title="Download"
-                       class="btn btn-light">
-                        <i class="fas fa-download"></i>
-                    </a>
-                </div>
-                <div class="rsg2-clr">&nbsp;</div>
-            </td>
-        </tr>
+	        <tr>
+	            <td>
+	                <h2 class="rsg2_display_name"><?php echo $image->name; ?></h2>
+	            </td>
+	        </tr>
+	        <tr>
+	            <td>
+	                <!--div align="center"-->
+	                <div class="rsg_sem_inl_img_a_link">
+	                    <a href="<?php echo $image->UrlOriginalFile; ?>"
+	                       target="_blank"
+	                    >
+	                        <img class="rsg2-displayImage"
+	                             src="<?php echo $image->UrlDisplayFile; ?>"
+	                             alt="<?php echo $image->name; ?>"
+	                             title="<?php echo $image->title; ?>">
+	                    </a>
+	                </div>
+	            </td>
+	        </tr>
+	        <tr>
+	            <td>
+	                <div class="rsg2-toolbar">
+	                    <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
+	                    <a href=<?php echo $image->UrlDownload; ?>
+	                       title="Download"
+	                       class="btn btn-light"
+	                    >
+	                        <i class="fas fa-download"></i>
+	                    </a>
+	                </div>
+	                <div class="rsg2-clr">&nbsp;</div>
+	            </td>
+	        </tr>
         </tbody>
     </table>
 </div>

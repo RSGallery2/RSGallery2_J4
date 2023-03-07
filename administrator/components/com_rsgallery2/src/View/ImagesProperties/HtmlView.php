@@ -133,7 +133,7 @@ class HtmlView extends BaseHtmlView
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
 						. '* modal on image click <br>'
-						. '* <br>'
+						. '* rotating does not rotate the original<br>'
 						. '* <br>'
 						//. '* <br>'
 						//. '* <br>'

@@ -74,7 +74,7 @@ foreach ($images as $idx => $image) {
 //    }
 }
 
-
+// allow:
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
@@ -82,30 +82,53 @@ foreach ($images as $idx => $image) {
     <hr>
 <?php endif; ?>
 
-<div class="rsg2_gallery">
+<div class="rsg2_x_gallery">
 
-    <div class="rsg2__slideshowJ3x" >
+    <div class="rsg2_x__slideshowJ3x" style="background-color: lightgrey">
 
         <?php if (!empty($isDebugSite)): ?>
+
         <?php endif; ?>
 
         <!-- Carousel markup goes here -->
+        <!-- rsg2_carousel_01 -->
 
-        <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
+        <div id="rsg2_carousel_01" class="carousel slide" data-bs-ride="carousel">
+
+	        <div class="carousel-indicators">
+                <?php
+                $isActive='aria-current="true" class="active"';
+                foreach ($images as $idx => $image) {
+	                ?>
+
+			        <button type="button" data-bs-target="#rsg2_carousel_01" data-bs-slide-to="<?php echo $idx; ?>" aria-label="Slide <?php echo $idx+1; ?>" <?php echo $isActive; ?>></button>
+
+	                <?php
+                    $isActive="";
+                }
+                ?>
+
+	        </div>
+
+
             <div class="carousel-inner">
 
                 <?php
                 $isActive="active";
+//                $isActive="";
                 foreach ($images as $idx => $image) {
                     ?>
 
                     <div class="carousel-item <?php echo $isActive; ?>" >
-                        <div class="d-block w-100">
                             <img class="d-block "
                                 src="<?php echo $image->UrlDisplayFile; ?>"
                                 alt="<?php echo $image->name; ?>"
+                                class="d-block w-100"
                             >
-                        </div>
+<!-- see w3schools	                    <div class="carousel-caption">-->
+<!--		                    <h3>Los Angeles</h3>-->
+<!--		                    <p>We had such a great time in LA!</p>-->
+<!--	                    </div>	                    -->
                     </div>
 
                     <?php
@@ -113,51 +136,28 @@ foreach ($images as $idx => $image) {
                 }
                 ?>
 
+	            <button class="carousel-control-prev" type="button" data-bs-target="#rsg2_carousel_01" data-bs-slide="prev">
+		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		            <span class="visually-hidden">Previous</span>
+	            </button>
+	            <button class="carousel-control-next" type="button" data-bs-target="#rsg2_carousel_01" data-bs-slide="next">
+		            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		            <span class="visually-hidden">Next</span>
+	            </button>
 
-                <a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+<!--                <button class="carousel-control-prev" href="#rsg2_carousel" type="button" data-slide="prev">-->
+<!--                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                    <span class="sr-only">Previous</span>-->
+<!--                </button>-->
+<!--                <a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">-->
+<!--                    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                    <span class="sr-only">Next</span>-->
+<!--                </a>-->
             </div>
         </div>
+	    <hr>
 
-    <?php if (!empty($isDebugSite)): ?>
-        <hr>
-    <?php endif; ?>
-        <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
 
-                <?php
-                $isActive="active";
-                foreach ($images as $image) {
-                ?>
-
-                <div class="carousel-item <?php echo $isActive; ?>" >
-                        <img class="d-block w-100"
-                             src="<?php echo $image->UrlDisplayFile; ?>"
-                             alt="<?php echo $image->name; ?>"
-                        >
-                </div>
-
-                <?php
-                $isActive="";
-                }
-                ?>
-
-            </div>
-            <a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
     </div>
 </div>
 

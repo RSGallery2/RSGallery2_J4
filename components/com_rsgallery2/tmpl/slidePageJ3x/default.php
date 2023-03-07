@@ -46,14 +46,16 @@ if (!empty ($this->isDevelopSite))
 {
     echo '<span style="color:red">'
         . 'Tasks: slidePageJ3x view<br>'
-        . 'Slide page image J3x Tasks: <br>'
-        . '* !!! Pagination !!!<br>'
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . '* modal image (->slider)<br>'
         . '* length of filenames<br>'
         . '* what happens on empty galleries/ image lists<br>'
         . '* Size of replace images (missing/no images) <br>'
+    	. '* handle -voting<br>'
+    	. '* handle comments<br>'
+    	. '* handle EXit<br>'
+    //	. '* <br>'
     //	. '* <br>'
     //	. '* <br>'
     //	. '* <br>'
@@ -200,7 +202,7 @@ if (!empty ($this->isDevelopSite))
 
 
 
-	    
+
 
 
         <?php if (!empty($isDebugSite)): ?>
@@ -318,6 +320,7 @@ if (!empty ($this->isDevelopSite))
            value="1"-->
 
 
+	    </div>
     </div>
 </form>
 

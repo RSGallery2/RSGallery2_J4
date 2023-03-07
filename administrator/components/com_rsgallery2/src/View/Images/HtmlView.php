@@ -175,7 +175,7 @@ class HtmlView extends BaseHtmlView
         {
             case 'images_raw':
                 $imageModel = $this->getModel();
-                $dummyItems = $imageModel->allImages();
+                $this->items = $imageModel->allImages();
 
                 break;
 
