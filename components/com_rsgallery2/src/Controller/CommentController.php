@@ -8,9 +8,17 @@
  * @link       [AUTHOR_URL]
  */
 
-use Joomla\CMS\MVC\Controller\BaseController;
+namespace Rsgallery2\Component\Rsgallery2\site\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Session\Session;
+use Joomla\Registry\Registry;
 
 /**
  * Foo controller.
@@ -18,8 +26,29 @@ defined('_JEXEC') or die;
  * @package  [PACKAGE_NAME]
  * @since    1.0
  */
-class RSGallery2ControllerComment extends BaseController
+class CommentController extends BaseController
 {
+
+	/**
+	 * Constructor.
+	 *
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @param   MVCFactoryInterface  $factory  The factory.
+	 * @param   CMSApplication       $app      The JApplication for the dispatcher
+	 * @param   \JInput              $input    Input
+	 *
+	 * @since __BUMP_VERSION__
+	 * @see    \JControllerLegacy
+	 */
+	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+	{
+		parent::__construct($config, $factory, $app, $input);
+
+		if (empty($this->extension))
+		{
+			$this->extension = $this->input->get('extension', 'com_rsgallery2');
+		}
+	}
 
 	// saveComment Below / ToDO: delete comment
 

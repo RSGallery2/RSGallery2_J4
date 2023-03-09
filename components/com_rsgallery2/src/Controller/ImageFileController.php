@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  com_rsgallery2
  *
- * @copyright (c) 2005-2023 RSGallery2 Team 
+ * @copyright (c) 2022-2023 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -54,9 +54,24 @@ class ImageFileController extends BaseController
 			$this->extension = $this->input->get('extension', 'com_rsgallery2');
 		}
 	}
-	/**/
 
-	/**
+    /**
+     * Proxy for getModel
+     *
+     * @param   string  $name    The model name. Optional.
+     * @param   string  $prefix  The class prefix. Optional.
+     * @param   array   $config  The array of possible config values. Optional.
+     *
+     * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel  The model.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function getModel($name = 'ImageFile', $prefix = 'Administrator', $config = array('ignore_request' => true))
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
+
+    /**
 	 * Download image file to user via Browser.
 	 *
 	 * @return  boolean
@@ -75,11 +90,15 @@ class ImageFileController extends BaseController
         //Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         $input = Factory::getApplication()->input;
-        $imageId = $input->get('$id', '', 'INT');
+        $imageId = $input->get('id', 0, 'INT');
 
         try {
+
+            /** @yyyvar \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageFileModel $model */
+            $model = $this->getModel();
+
             // query database for needed attributes
-            [$fileName, $galleryId, $use_j3x_location] = $this->imageAttribById($imageId);
+            [$fileName, $galleryId, $use_j3x_location] = $model->imageFileAttrib($imageId);
 
             // not successful
             if (empty($fileName) || empty($galleryId)) {
@@ -89,9 +108,9 @@ class ImageFileController extends BaseController
                 $app->enqueueMessage($msg, $msgType);
             } else {
 
-                [$OriginalFilePath, $OriginalFileUri] = $this->getOriginalPath($fileName, $galleryId, $use_j3x_location);
+                [$OriginalFilePath, $OriginalFileUri] = $model->getOriginalPaths($fileName, $galleryId, $use_j3x_location);
 
-                $isDownloaded = $this->downloadImageFile($OriginalFilePath, $OriginalFileUri);
+                $isDownloaded = $model->downloadImageFile($OriginalFilePath, $OriginalFileUri);
 
                 if ($isDownloaded) {
                     // ToDo: Prepare gallery ID and pre select it in upload form

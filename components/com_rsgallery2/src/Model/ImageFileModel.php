@@ -50,10 +50,10 @@ class ImageFileModel extends BaseModel // AdminModel
 
 //		parent::__construct($config = array());
 
-//		if ($Rsg2DebugActive)
-//		{
-//			Log::add('==>Start __construct ImageFile');
-//		}
+		if ($Rsg2DebugActive)
+		{
+			Log::add('==>Start __construct ImageFile');
+		}
 
 		// JComponentHelper::getParams();
 		// $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -74,7 +74,7 @@ class ImageFileModel extends BaseModel // AdminModel
      * @since __BUMP_VERSION__
      */
     /**/
-    public function imageFileAttrib($ImageId)
+    private function imageFileAttrib($ImageId)
     {
         $fileName = "";
         $galleryId = "";
@@ -84,14 +84,14 @@ class ImageFileModel extends BaseModel // AdminModel
         {
             $db    =  Factory::getDbo();
             $query = $db->getQuery(true)
+                ->select(
+                    $db->quoteName())
                 ->select($db->quoteName(array('name', 'gallery_id', 'use_j3x_location')))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
             $db->setQuery($query);
 
-            $imageDb = $db->loadObject();
-            // $imageDb = $db->loadRow();
-            // $imageDb = $db->loadAssoc();
+            $imageDb = $db->loadResult();
 
             $fileName = $imageDb->name;
             $galleryId = $imageDb->gallery_id;

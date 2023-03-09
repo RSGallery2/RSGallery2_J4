@@ -1,16 +1,21 @@
 <?php
 /**
- * @package    [PACKAGE_NAME]
+ * @package     Joomla.Administrator
+ * @subpackage  com_rsgallery2
  *
- * @author     [AUTHOR] <[AUTHOR_EMAIL]>
- * @copyright  [COPYRIGHT]
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       [AUTHOR_URL]
+ * @copyright (c) 2022-2023 RSGallery2 Team
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Joomla\CMS\MVC\Controller\BaseController;
+\defined('_JEXEC') or die;
 
-defined('_JEXEC') or die;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Session\Session;
+use Joomla\Registry\Registry;
 
 /**
  * Foo controller.
@@ -18,19 +23,37 @@ defined('_JEXEC') or die;
  * @package  [PACKAGE_NAME]
  * @since    1.0
  */
-class RSGallery2ControllerRating extends BaseController
+class RatingController extends BaseController
 {
-/**
-You do a task=controller.function
+	/**
+	 * The extension for which the galleries apply.
+	 *
+	 * @var    string
+	 * @since __BUMP_VERSION__
+	 */
+	protected $extension;
 
-As an example: You want to call the MycomponentControllerFoo in 
-/controllers/foo.php and execute the function bar(). 
-You use the following URL to call this:
-index.php?option=com_mycomponent&task=foo.bar
+	/**
+	 * Constructor.
+	 *
+	 * @param   array                $config   An optional associative array of configuration settings.
+	 * @param   MVCFactoryInterface  $factory  The factory.
+	 * @param   CMSApplication       $app      The JApplication for the dispatcher
+	 * @param   \JInput              $input    Input
+	 *
+	 * @since __BUMP_VERSION__
+	 * @see    \JControllerLegacy
+	 */
+	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+	{
+		parent::__construct($config, $factory, $app, $input);
 
+		if (empty($this->extension))
+		{
+			$this->extension = $this->input->get('extension', 'com_rsgallery2');
+		}
+	}
 
-Or you can use a form where there is a hidden task field.
-/**/
 
 	public function rateSingleImage()
 	{
