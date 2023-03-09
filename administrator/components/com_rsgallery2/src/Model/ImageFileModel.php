@@ -149,24 +149,32 @@ class ImageFileModel extends BaseModel // AdminModel
         $IsDownloaded = false;
 
         try {
+
+            $size = filesize($OriginalFilePath);
+            $mimeType =  mime_content_type($OriginalFilePath);
+            $fileName = basename($OriginalFilePath);
+
             //--- header ------------------------------------------------
 
-            header("Content-Disposition: attachment; filename=".basename($OriginalFilePath));
-            header("Content-type: " . mime_content_type($OriginalFilePath));
+            header('Content-Disposition: attachment; filename="' . $fileName . '"');
+            header("Content-type: " . $mimeType);
+            header("Pragma: no-cache");
+            header('Pragma: public');
+            header("Expires: 0");
+
+            header('Content-Length: ' . $size);
+
+//            ob_end_clean();
 
             //--- read file to client ---------------------------------------------
 
-            ob_end_clean();
-
             readfile($OriginalFileUri);
 
-            ob_flush();
+            // get my db data and echo it as csv data
 
-            //--- exit success ------------------------------------------------
-
-            //  tells if successful
-            $IsDownloaded  = true;
-
+            // Close the application gracefully.
+            Factory::getApplication()->close();            //--- exit success ------------------------------------------------
+            
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';
