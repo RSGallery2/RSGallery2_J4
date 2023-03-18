@@ -16,7 +16,9 @@ use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('bootstrap.framework');
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/controlPanel.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/controlPanel.css', array('version' => 'auto', 'relative' => true));
+// on more use preset ....
+$this->document->getWebAssetManager()->useStyle('com_rsallery2.backend.dbCopyJ3xConfig');
 
 ?>
 

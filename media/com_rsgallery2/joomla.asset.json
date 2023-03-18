@@ -1,0 +1,145 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_rsallery2",
+  "version": "0.1.0",
+  "description": "Assets used by com_rsallery2 copyright 2023-2023",
+  "license": "GNU General Public License version 2 or later",
+  "assets": [
+    {
+      "name": "com_rsallery2.backend.images",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/images.css"
+    },
+    {
+      "name": "com_rsallery2.backend.images",
+      "type": "preset",
+      "dependencies": [
+        "com_rsallery2.backend.images#style"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.galleries",
+      "type": "preset",
+      "dependencies": [
+        "com_rsallery2.backend.images#style"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.imagesProperties",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/imagesProperties.css"
+    },
+    {
+      "name": "com_rsallery2.backend.imagesProperties",
+      "description": "JavaScript for the backend Items page.",
+      "type": "script",
+      "uri": "backend/imagesProperties.js",
+      "attributes" : {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.imagesProperties",
+      "type": "preset",
+      "dependencies": [
+        "com_rsallery2.backend.imagesProperties#style",
+        "com_rsallery2.backend.imagesProperties#script"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.maintConsolidateDB",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/maintConsolidateDB.css"
+    },
+    {
+      "name": "com_rsallery2.backend.upload",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/upload.css"
+    },
+    {
+      "name": "com_rsallery2.backend.upload",
+      "description": "JavaScript for the backend Items page.",
+      "type": "script",
+      "uri": "backend/upload.js",
+      "attributes" : {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.upload",
+      "type": "preset",
+      "dependencies": [
+        "com_rsallery2.backend.upload#style",
+        "com_rsallery2.backend.upload#script"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.maintenance",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/maintenance.css"
+    },
+    {
+      "name": "com_rsallery2.backend.maintenance",
+      "description": "JavaScript for the backend Items page.",
+      "type": "script",
+      "uri": "backend/maintenance.js",
+      "attributes" : {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.maintenance",
+      "type": "preset",
+      "dependencies": [
+        "com_rsallery2.backend.maintenance#style",
+        "com_rsallery2.backend.maintenance#script"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.moveJ3xImages",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/moveJ3xImages.css"
+    },
+    {
+      "name": "com_rsallery2.backend.moveJ3xImages",
+      "description": "JavaScript for the backend Items page.",
+      "type": "script",
+      "uri": "backend/moveJ3xImages.js",
+      "attributes" : {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.moveJ3xImages",
+      "type": "preset",
+      "dependencies": [
+        "com_rsallery2.backend.moveJ3xImages#style",
+        "com_rsallery2.backend.moveJ3xImages#script"
+      ]
+    },
+    {
+      "name": "com_rsallery2.backend.dbCopyJ3xConfig",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/dbCopyJ3xConfig.css"
+    }
+  ]
+}

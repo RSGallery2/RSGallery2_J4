@@ -14,8 +14,9 @@ use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.multiselect');
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
-HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
+//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
+$this->document->getWebAssetManager()->usePreset('com_rsallery2.backend.imagesProperties');
 
 $listOrder = '';
 $ListDirn  = '';

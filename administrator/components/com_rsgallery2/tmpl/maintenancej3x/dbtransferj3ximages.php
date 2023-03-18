@@ -14,8 +14,9 @@ use Joomla\CMS\Language\Text;
 
 //HTMLHelper::_('bootstrap.framework');
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
-HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
+//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
+$this->document->getWebAssetManager()->usePreset('com_rsallery2.backend.imagesProperties');
 
 function isOKIconHtml ($title) {
 

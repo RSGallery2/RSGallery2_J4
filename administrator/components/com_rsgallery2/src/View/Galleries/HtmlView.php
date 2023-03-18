@@ -406,7 +406,8 @@ class HtmlView extends BaseHtmlView
 		}
 
 		// Load specific css component
-		HTMLHelper::_('stylesheet', $component . '/administrator/ ??? galleries.css', array('version' => 'auto', 'relative' => true));
+		// HTMLHelper::_('stylesheet', $component . '/administrator/ ??? galleries.css', array('version' => 'auto', 'relative' => true));
+        $this->document->getWebAssetManager()->usePreset('com_rsallery2.backend.images');
 
 		// Prepare the toolbar.
 		ToolbarHelper::title(

@@ -14,11 +14,17 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/moveJ3xImages.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/moveJ3xImages.css', array('version' => 'auto', 'relative' => true));
+// on more use preset ....
+$this->document->getWebAssetManager()->useStyle('com_rsallery2.backend.moveJ3xImages');
 
 // Items exist
+// ToDO: Script should not fail when no images ... ==> use web asset preset .. then for both
 if ($this->isMissingJ3xImages) {
-    HTMLHelper::_('script', 'com_rsgallery2/backend/moveJ3xImages.js', ['version' => 'auto', 'relative' => true]);
+    // HTMLHelper::_('script', 'com_rsgallery2/backend/moveJ3xImages.js', ['version' => 'auto', 'relative' => true]);
+    // on more use preset ....
+    $this->document->getWebAssetManager()->useScript('com_rsallery2.backend.moveJ3xImages');
+	// $this->document->getWebAssetManager()->usePreset('com_rsallery2.backend.moveJ3xImages');
 }
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);

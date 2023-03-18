@@ -132,42 +132,147 @@ if (!empty ($this->isDevelopSite))
 		    </div>
         <?php endif; ?>
 
-
 	    <div class="rsg_sem_inl_dispImg">
-		    <table>
+		    <table class="table table-borderless">
+				<thead >
+				    <tr>
+					    <td>
+						    <h2 class="rsg2_display_name">IIIIIII <?php echo $image->name; ?> IIIIIIIIII</h2>
+					    </td>
+				    </tr>
+			    </thead>
+
 			    <tbody>
-			    <tr>
-				    <td>
-					    <h2 class="rsg2_display_name"><?php echo $image->name; ?></h2>
-				    </td>
-			    </tr>
-			    <tr>
-				    <td>
-					    <!--div align="center"-->
-					    <div class="rsg_sem_inl_img_a_link">
-						    <a href="<?php echo $image->UrlOriginalFile; ?>"
-						       target="_blank">
-							    <img class="rsg2-displayImage"
-							         src="<?php echo $image->UrlDisplayFile; ?>"
-							         alt="<?php echo $image->name; ?>"
-							         title="<?php echo $image->title; ?>">
-						    </a>
+				    <tr>
+					    <td>
+						    <!--div align="center"-->
+						    <div class="rsg_sem_inl_img_a_link">
+							    <a href="<?php echo $image->UrlOriginalFile; ?>"
+							       target="_blank">
+								    <img class="rsg2-displayImage"
+								         src="<?php echo $image->UrlDisplayFile; ?>"
+								         alt="<?php echo $image->name; ?>"
+								         title="<?php echo $image->title; ?>">
+							    </a>
+						    </div>
+					    </td>
+				    </tr>
+				    <tr>
+					    <td>
+						    <div class="rsg2-toolbar">
+							    <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
+							    <a href=<?php echo $image->UrlDownload; ?>
+							       title="Download"
+							       class="btn btn-light">
+								    <i class="fas fa-download"></i>
+							    </a>
+						    </div>
+<!--						    <div class="rsg2-clr">&nbsp;</div>-->
+					    </td>
+				    </tr>
+
+				    <tr>
+					    <td>
+	                    <?php if ($this->params->get('show_pagination', 2)) : ?>
+<!--						    <p>-->
+						    <div class="padding-left=33% w-100">
+	                            <?php if ($this->params->def('show_pagination_results', 1)) : ?>
+								    <!--				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
+								    <p class="com-contact-category__counter counter float-end pt-3 pe-2">
+									    <!--				    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
+	                                    <?php echo $this->pagination->getPagesCounter(); ?>
+								    </p>
+	                            <?php endif; ?>
+
+							    <!--			    <p class="mx-auto w-100 text-center float-none">-->
+							    <!--			    <div class="mx-auto float-end">-->
+							    <div class="">
+								    <!--	on left side-->
+	                                <?php echo $this->pagination->getPagesLinks(); ?>
+								    <!--	on right side		-->
+								    <!--				    --><?php //echo $this->pagination->getListFooter(); ?>
+							    </div>
+							    <!--			    </p>-->
+						    </div>
+<!--						    </p>-->
+	                    <?php endif; ?>
+					    <td>
+				    </tr>
+
+				    <tr>
+					    <td>
+<!--					    <p><h3>Todo if or not if </h3></p>-->
+<!--					    <div class="page_inline_tabs_description">-->
+						    <div class="card bg-light ">
+							    <div class="card-body">
+								    <div class="container page_inline_hits">
+									    <i class="fas fa-flag"></i>
+									    <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
+								    </div>
+							    </div>
+						    </div>
+						    <div class="card bg-light ">
+							    <div class="card-body">
+	                                <?php echo $image->description; ?>
+							    </div>
+						    </div>
+						    <div class="page_inline_description">
+						    </div>
+<!--					    </div>-->
+					    </td>
+
+				    </tr>
+
+				    <tr>
+					    <td>
+<!--					    <p><h3>Todo script for voting</h3></p>-->
+
+					    <div class="rating-block row-fluid text-center">
+<!--						    <p><h3>Todo if or not if </h3></p>-->
+						    <h4>Average user rating</h4>
+						    <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
+						    </h2>
+						    <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
+						    <button id="star_1"
+						            type="button"
+						            class="btn btn-default btn-grey  btn-mini btn_star "
+						            aria-label="Left Align">
+							    <i class="fas fa-solid fa-star"></i>
+						    </button>
+						    <button id="star_2"
+						            type="button"
+						            class="btn btn-default btn-grey  btn-mini btn_star "
+						            aria-label="Left Align">
+							    <i class="fas fa-solid fa-star"></i>
+						    </button>
+						    <button id="star_3"
+						            type="button"
+						            class="btn btn-default btn-grey  btn-mini btn_star "
+						            aria-label="Left Align">
+							    <i class="fas fa-solid fa-star"></i>
+						    </button>
+						    <button id="star_4"
+						            type="button"
+						            class="btn btn-default btn-grey  btn-mini btn_star "
+						            aria-label="Left Align">
+							    <i class="fas fa-solid fa-star"></i>
+						    </button>
+						    <button id="star_5"
+						            type="button"
+						            class="btn btn-default btn-grey  btn-mini btn_star "
+						            aria-label="Left Align">
+							    <i class="fas fa-solid fa-star"></i>
+						    </button>
+						    <label id="DoVote"
+						           title="Rate image by click on star button">Rate image&nbsp;&nbsp;
+						    </label>
 					    </div>
-				    </td>
-			    </tr>
-			    <tr>
-				    <td>
-					    <div class="rsg2-toolbar">
-						    <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
-						    <a href=<?php echo $image->UrlDownload; ?>
-						       title="Download"
-						       class="btn btn-light">
-							    <i class="fas fa-download"></i>
-						    </a>
-					    </div>
-					    <div class="rsg2-clr">&nbsp;</div>
-				    </td>
-			    </tr>
+					    </td>
+				    </tr>
+
+				    <tr>
+
+				    </tr>
 			    </tbody>
 		    </table>
 	    </div>
@@ -175,30 +280,6 @@ if (!empty ($this->isDevelopSite))
 
 
 
-
-        <?php if ($this->params->get('show_pagination', 2)) : ?>
-        <p>
-		    <div class="padding-left=33% w-100">
-                <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-<!--				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
-				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">
-<!--				    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
-                        <?php echo $this->pagination->getPagesCounter(); ?>
-				    </p>
-                <?php endif; ?>
-
-<!--			    <p class="mx-auto w-100 text-center float-none">-->
-<!--			    <div class="mx-auto float-end">-->
-			    <div class="">
-<!--	on left side-->
-	                <?php echo $this->pagination->getPagesLinks(); ?>
-<!--	on right side		-->
-<!--				    --><?php //echo $this->pagination->getListFooter(); ?>
-			    </div>
-<!--			    </p>-->
-		    </div>
-	    </p>
-        <?php endif; ?>
 
 
 

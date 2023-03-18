@@ -56,8 +56,7 @@ flex-buttons-table {
 /* border-radius: 25px; */
 li.quickicon-single {
   display: block;
-  border: thick solid lightgray;
-  /**/
+  border: thick solid lightgray; /**/
   /*	border-color: red;
          border-width: thick;
      /**/
@@ -67,18 +66,15 @@ li.quickicon-single {
   padding-left: auto;
   padding-right: auto;
   /**/
-  margin: 0 8px 0 0;
-  /**/
+  margin: 0 8px 0 0; /**/
   /*	flex-basis: 0; /**/
   flex: 1;
 }
 
 li.quickicon-single:hover {
   /*	background: lightblue;  /**/
-  background: lightgray;
-  /**/
-  border: thick solid darkgray;
-  /**/
+  background: lightgray; /**/
+  border: thick solid darkgray; /**/
 }
 
 li.quickicon-single a {
@@ -87,8 +83,7 @@ li.quickicon-single a {
 }
 
 li.quickicon-single:hover .quickicon-text {
-  color: black;
-  /**/
+  color: black; /**/
 }
 
 li.quickicon-single:link {
@@ -100,24 +95,19 @@ div.quickicon-icon {
   font-size: xx-large;
   text-align: left;
   /*	width: 5em;  /**/
-  width: auto;
-  /**/
+  width: auto; /**/
   /*	border: 2px solid red; /**/
   /*	border-color: red; /**/
   /*    border-width: thick; /**/
   /*	border-radius: 5px; /**/
-  padding: 0 4px;
-  /**/
-  margin: 0 4px;
-  /**/
+  padding: 0 4px; /**/
+  margin: 0 4px; /**/
   /*	flex-basis: 0; /**/
 }
 
 .quickicon .quickicon-name {
-  padding: 0 4px;
-  /**/
-  margin: 0 4px;
-  /**/
+  padding: 0 4px; /**/
+  margin: 0 4px; /**/
 }
 
 .table_morecondensed > thead > tr > th,
@@ -136,11 +126,9 @@ div.quickicon-icon {
   flex-flow: row wrap;
   /* This aligns items to the end line on main-axis */
   /* justify-content: flex-end; /**/
-  justify-content: space-around;
-  /**/
+  justify-content: space-around; /**/
   /* justify-content: center; /**/
-  align-content: stretch;
-  /**/
+  align-content: stretch; /**/
 }
 
 /* Medium screens *

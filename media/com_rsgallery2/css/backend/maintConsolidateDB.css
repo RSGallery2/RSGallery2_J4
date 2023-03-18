@@ -23,18 +23,15 @@
 width="80" height="80"
  */
 i.icon-ok {
-  color: green;
-  /**/
+  color: green; /**/
 }
 
 i.icon-cancel {
-  color: red;
-  /**/
+  color: red; /**/
 }
 
 a.db_missing {
-  color: white;
-  /**/
+  color: white; /**/
 }
 
 .inside_button {
