@@ -18,7 +18,7 @@ HTMLHelper::_('bootstrap.framework');
 
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/controlPanel.css', array('version' => 'auto', 'relative' => true));
 // on more use preset ....
-$this->document->getWebAssetManager()->useStyle('com_rsallery2.backend.dbCopyJ3xConfig');
+$this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3xConfig');
 
 ?>
 

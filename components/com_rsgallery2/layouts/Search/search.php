@@ -13,8 +13,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/site/rsg2_search.css', array('version' => 'auto', 'relative' => true));
+// HTMLHelper::_('stylesheet', 'com_rsgallery2/site/rsg2_search.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/site/rsg2_search.js', ['version' => 'auto', 'relative' => true]);
+// on more use preset ....
+$this->document->getWebAssetManager()->useStyle('com_rsgallery2.site.rsg2_search');
 
 ?>
 

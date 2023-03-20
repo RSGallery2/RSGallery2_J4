@@ -18,7 +18,7 @@ use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/maintConsolidateDB.css', array('version' => 'auto', 'relative' => true));
 // HTMLHelper::_('script', 'com_rsgallery2/backend/maintConsolidateDB.js', ['version' => 'auto', 'relative' => true]);
 // on more use preset ....
-$this->document->getWebAssetManager()->useStyle('com_rsallery2.backend.maintConsolidateDB');
+$this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.maintConsolidateDB');
 
 $ImageLostAndFoundList = $this->oImgRefs->ImageLostAndFoundList;
 

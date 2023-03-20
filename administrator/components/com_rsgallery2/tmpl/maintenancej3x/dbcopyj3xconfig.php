@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/DbCopyJ3xConfig.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/upload.js', ['version' => 'auto', 'relative' => true]);
 // on more use preset ....
-$this->document->getWebAssetManager()->useStyle('com_rsallery2.backend.dbCopyJ3xConfig');
+$this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3xConfig');
 
 ?>
 

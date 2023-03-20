@@ -20,7 +20,8 @@ use \Joomla\CMS\Layout\FileLayout;
 // ToDo:
 // ToDo:
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+$this->document->getWebAssetManager()->useStyle('com_rsgallery2.site.images');
 
 
 // on develop show open tasks if existing
