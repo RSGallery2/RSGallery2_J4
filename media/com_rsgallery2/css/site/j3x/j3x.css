@@ -569,6 +569,7 @@ img.rsg2-displayImage {
 }
 
 /*** Pagination (based on http://joomla-css.nl/index.php/en/content-a-component-styles-en-16/pagination-general-en-16) ***/
+/*
 div.rsg_sem_inl_Nav div div.pagination {
 	border-top    : 1px solid #DDDDDD;
 	border-bottom : 1px solid #DDDDDD;
@@ -589,6 +590,20 @@ div.rsg_sem_inl_Nav div div.pagination ul {
 
 div.rsg_sem_inl_Nav div div.pagination ul li {
 	list-style : none;
-	display    : inline; /* Display Start Prev 123 Next End on one line */
-	padding    : 0 5px 0 5px; /* Spacing between numbers */
+	display    : inline; /* Display Start Prev 123 Next End on one line *
+	padding    : 0 5px 0 5px; /* Spacing between numbers *
+}
+/**/
+
+/* slidePage pagination */
+.rsg2-j3x-pagination .rsg2-j3x-pagination--buttons {
+/**
+	display: inline;
+	margin: 1px auto;
+/**/
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1ch;
 }

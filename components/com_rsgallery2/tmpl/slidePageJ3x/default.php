@@ -176,24 +176,27 @@ if (!empty ($this->isDevelopSite))
 					    <td>
 	                    <?php if ($this->params->get('show_pagination', 2)) : ?>
 <!--						    <p>-->
-						    <div class="padding-left=33% w-100">
-	                            <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-								    <!--				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
-								    <p class="com-contact-category__counter counter float-end pt-3 pe-2">
-									    <!--				    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
-	                                    <?php echo $this->pagination->getPagesCounter(); ?>
-								    </p>
-	                            <?php endif; ?>
+						    <div class="rsg2-j3x-pagination">
 
-							    <!--			    <p class="mx-auto w-100 text-center float-none">-->
-							    <!--			    <div class="mx-auto float-end">-->
-							    <div class="">
-								    <!--	on left side-->
+
+							    <div class="rsg2-j3x-pagination--buttons">
+
+								    <!-- must be before 			    </p>-->
+                                    <?php if ($this->params->def('show_pagination_results', 1)) : ?>
+									    <!--				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
+<!--									    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
+										    									    <div class="com-contact-category__counter counter float-end pt-3 pe-2">
+									    <div class="rsg2-j3x-pagination--counter">
+										    <!--				    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
+                                            <?php echo $this->pagination->getPagesCounter(); ?>
+									    </div>
+									    									    <div>
+<!--									    </p>-->
+                                    <?php endif; ?>
+
 	                                <?php echo $this->pagination->getPagesLinks(); ?>
-								    <!--	on right side		-->
-								    <!--				    --><?php //echo $this->pagination->getListFooter(); ?>
 							    </div>
-							    <!--			    </p>-->
+
 						    </div>
 <!--						    </p>-->
 	                    <?php endif; ?>

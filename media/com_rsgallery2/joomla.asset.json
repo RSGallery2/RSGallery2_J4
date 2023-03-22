@@ -6,6 +6,12 @@
   "license": "GNU General Public License version 2 or later",
   "assets": [
     {
+      "name": "com_rsgallery2.backend.controlPanel",
+      "description": "Backend styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/backend/controlPanel.css"
+    },
+    {
       "name": "com_rsgallery2.backend.images",
       "description": "Backend styling.",
       "type": "style",
@@ -35,7 +41,7 @@
       "name": "com_rsgallery2.backend.imagesProperties",
       "description": "JavaScript for the backend Items page.",
       "type": "script",
-      "uri": "backend/imagesProperties.js",
+      "uri": "com_rsgallery2/backend/imagesProperties.js",
       "attributes" : {
         "defer": true
       },
@@ -67,7 +73,7 @@
       "name": "com_rsgallery2.backend.upload",
       "description": "JavaScript for the backend Items page.",
       "type": "script",
-      "uri": "backend/upload.js",
+      "uri": "com_rsgallery2/backend/upload.js",
       "attributes" : {
         "defer": true
       },
@@ -93,7 +99,7 @@
       "name": "com_rsgallery2.backend.maintenance",
       "description": "JavaScript for the backend Items page.",
       "type": "script",
-      "uri": "backend/maintenance.js",
+      "uri": "com_rsgallery2/backend/maintenance.js",
       "attributes" : {
         "defer": true
       },
@@ -119,7 +125,7 @@
       "name": "com_rsgallery2.backend.moveJ3xImages",
       "description": "JavaScript for the backend Items page.",
       "type": "script",
-      "uri": "backend/moveJ3xImages.js",
+      "uri": "com_rsgallery2/backend/moveJ3xImages.js",
       "attributes" : {
         "defer": true
       },

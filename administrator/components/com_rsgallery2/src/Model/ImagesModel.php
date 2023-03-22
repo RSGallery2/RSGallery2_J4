@@ -89,7 +89,7 @@ class ImagesModel extends ListModel
 	 *
 	 * @since __BUMP_VERSION__
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'desc')
+	protected function populateState($ordering = 'a.ordering', $direction = 'desc')
 	{
 		$app = Factory::getApplication();
 
@@ -402,7 +402,7 @@ class ImagesModel extends ListModel
     /**
      * Prepare and sanitise the table prior to saving.
      *
-     * @param   Table  $table  A Table object.
+     * @param   \Table  $table  A Table object.
      *
      * @return  void
      *

@@ -22,7 +22,7 @@ HTMLHelper::_('behavior.multiselect');
 
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/images.js', ['version' => 'auto', 'relative' => true]);
-$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.images');
+$this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.images');
 
 
 $user      = Factory::getApplication()->getIdentity();
@@ -267,7 +267,7 @@ if ($saveOrder && !empty($this->items))
                                 }
                                 ?>
 
-								<tr class="row<?php echo $i % 2; ?>" >
+								<tr class="row<?php echo $i % 2; ?>"  data-dragable-group="<?php echo $item->parent_id; ?>" item-id="<?php echo $item->id ?>"  level="<?php echo $item->level ?>">
                                     <td class="text-center d-none d-md-table-cell">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                                     </td>
