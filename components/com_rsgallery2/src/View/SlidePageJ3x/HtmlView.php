@@ -16,6 +16,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 /**
  * Single image with pagination
@@ -100,6 +101,7 @@ class HtmlView extends BaseHtmlView
         }
 
         $this->mergeMenuOptions();
+
         // Get some data from the models
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
@@ -153,8 +155,26 @@ class HtmlView extends BaseHtmlView
 
         if ( ! empty($this->items)) {
             // Add image paths, image params ...
-            $data = $model->AddLayoutData ($this->items);
+            //$data = $model->AddLayoutData ($this->items);
         }
+
+        // exif ....
+        if ( ! empty ($this->image )) {
+
+            // exif ....
+            if(true){
+            //if ($this->params->get('isSlpShowExif', 0, 'INT')){
+
+
+                $selectedTags = [];
+                // $selectedTags = $this->params->get('isSlpExifTagSelection',  array(), 'array');
+                $ImageExif = new ImageExif($this->image->OriginalFile);
+
+                $ImageExifFeatures = $ImageExif->exifData_SelectedFeatures($selectedTags);
+
+            }
+        }
+
 
         if (count($errors = $this->get('Errors')))
         {

@@ -648,12 +648,48 @@
 	</fieldset>
 	
 	
-	<!-- ... Tab j3x legacy layout ................................. -->
+<!--	&lt;!&ndash; ... Tab j3x legacy layout ................................. &ndash;&gt;-->
+
+<!--	<fieldset-->
+<!--			name="j3x_legacy_layout"-->
+<!--			label=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"-->
+<!--			description=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"-->
+<!--	>-->
+<!--		&lt;!&ndash;field-->
+<!--				type="spacer"-->
+<!--				name="spacer_findings_01"-->
+<!--				hr="true"-->
+<!--		/&ndash;&gt;-->
+
+<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+
+<!--		<field-->
+<!--				name="galDisplayCountJ3x"-->
+<!--				type="number"-->
+<!--				default="5"-->
+<!--				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"-->
+<!--				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"-->
+<!--				class="">-->
+<!--		</field>-->
+
+<!--		&lt;!&ndash;field-->
+<!--				name="image_size"-->
+<!--				type="text"-->
+<!--				default="800,600,400"-->
+<!--				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"-->
+<!--				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"-->
+<!--				class=""-->
+<!--		>-->
+<!--		</field&ndash;&gt;-->
+<!--		-->
+<!--	</fieldset>-->
+
+	<!-- ... Tab j3x legacy galleries ................................. -->
 
 	<fieldset
-			name="j3x_legacy_layout"
-			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_LAYOUT"
-			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_LAYOUT_DESC"
+			name="j3x_legacy_galleries"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"
 	>
 		<!--field
 				type="spacer"
@@ -664,7 +700,7 @@
 		<!-- ... block  ... -->
 
 		<field
-				name="galcountNrs"
+				name="galDisplayCountJ3x"
 				type="number"
 				default="5"
 				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
@@ -672,7 +708,58 @@
 				class="">
 		</field>
 
+		<!--field
+				name="galThumbDisplaySizeJ3x"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<!-- ==== ToDo: rootThumbDisplaySizeJ3x ========= -->
+		<!-- ==== ToDo: isRootShowGallerySearchJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGallerySelectionJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGalNameJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGalDescriptionJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowSlideshowJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGalImageSearchJ3x yes/no ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+		<!-- ==== ToDo: isRootLatestImagesJ3x yes / no ========= -->
+		<!-- ==== ToDo: isRootRandomImagesJ3x yes no ========= -->
+
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+
+	</fieldset>
+
+	<!-- ... Tab j3x legacy gallery ................................. -->
+
+	<fieldset
+			name="j3x_legacy_gallery"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_GALLERY"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_GALLERY_DESC"
+	>
+		<!--field
+				type="spacer"
+				name="spacer_findings_01"
+				hr="true"
+		/-->
+
+		<!-- ... block  ... -->
+
 		<field
+				name="imgCountNrsJ3x"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
+				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+				class="">
+		</field>
+
+		<!--field
 				name="image_size"
 				type="text"
 				default="800,600,400"
@@ -680,8 +767,161 @@
 				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
 				class=""
 		>
+		</field-->
+
+		<!-- ==== ToDo: imgThumbDisplaySizeJ3x ========= -->
+		<!-- ==== ToDo: isImgDescriptionJ3x yes/no ========= -->
+		<!-- ==== ToDo: isImgShowSlideshowJ3x yes/no ========= -->
+		<!-- ==== ToDo: isImgImageSearchJ3x yes/no ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  idGalShowPartent (link/thumb) yes/no ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+
+	</fieldset>
+
+	<!-- ... Tab j3x legacy slide image ................................. -->
+
+	<fieldset
+			name="j3x_legacy_image_slide_page"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_IMAGE_SLIDE_PAGE"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_IMAGE_SLIDE_PAGE_DESC"
+	>
+		<!--field
+				type="spacer"
+				name="spacer_findings_01"
+				hr="true"
+		/-->
+
+		<!-- ... block  ... -->
+
+		<!--field
+				name="imgCountNrsJ3x"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
+				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+				class="">
+		</field-->
+
+		<!--field
+				name="image_size"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<!--field
+				name="image_size"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<!--field
+				name="image_size"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<!-- ==== ToDo: slpImageDisplaySizeJ3x ========= -->
+		<!-- ==== ToDo: isSlpShowSlideshowJ3x yes/no ========= -->
+		<!-- ==== ToDo: isSlpShowImageSearchJ3x yes/no ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo: isSlpShowImgDescriptionJ3x yes/no ========= -->
+		<field
+				name="isSlpShowImgDescriptionJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DESCRIPTION"
+				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DESCRIPTION_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
 		</field>
-		
+
+		<!-- ==== ToDo: isSlpShowDownloadJ3x yes/no ========= -->
+		<field
+				name="isSlpShowDownloadJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DOWNLOAD"
+				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DOWNLOAD_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpShowVotingJ3x yes/no ========= -->
+		<field
+				name="isSlpShowVotingJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_VOTING"
+				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_VOTING_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpShowCommentsJ3x yes/no ========= -->
+		<field
+				name="isSlpShowCommentsJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_COMMENTS"
+				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_COMMENTS_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpShowExif yes/no ========= -->
+		<field
+				name="isSlpShowExif"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_EXIF"
+				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_EXIF_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpExifTagSelection yes/no ========= -->
+
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+
 	</fieldset>
 
 	<!-- ... Tab 01 ................................. -->
