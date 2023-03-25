@@ -91,8 +91,11 @@ class MaintConsolidateDbController extends AdminController
 				}
 				/**/
 
-				$msg .= ' started';
-				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//				$msg .= ' started';
+//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+
+				$msg .= ' no code, not done';
+				Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
@@ -147,8 +150,11 @@ class MaintConsolidateDbController extends AdminController
 				}
 				/**/
 
-				$msg .= ' started';
-				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//				$msg .= ' started';
+//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+
+                $msg .= ' no code, not done';
+                Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
@@ -203,8 +209,11 @@ class MaintConsolidateDbController extends AdminController
 				}
 				/**/
 
-				$msg .= ' started';
-				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//				$msg .= ' started';
+//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+
+                $msg .= ' no code, not done';
+                Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
@@ -259,8 +268,11 @@ class MaintConsolidateDbController extends AdminController
 				}
 				/**/
 
-				$msg .= ' started';
-				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//				$msg .= ' started';
+//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+
+                $msg .= ' no code, not done';
+                Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
@@ -315,8 +327,11 @@ class MaintConsolidateDbController extends AdminController
 				}
 				/**/
 
-				$msg .= ' started';
-				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//				$msg .= ' started';
+//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+
+                $msg .= ' no code, not done';
+                Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
@@ -369,8 +384,11 @@ class MaintConsolidateDbController extends AdminController
 				}
 				/**/
 
-				$msg .= ' started';
-				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//				$msg .= ' started';
+//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+
+                $msg .= ' no code, not done';
+                Factory::getApplication()->enqueueMessage($msg, 'error');
 
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
@@ -387,8 +405,6 @@ class MaintConsolidateDbController extends AdminController
 
 		return $isOk;
 	}
-
-
 
 
 }

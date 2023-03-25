@@ -134,19 +134,21 @@ class HtmlView extends BaseHtmlView
 		$toolbar = Toolbar::getInstance('toolbar');
 
 		// on develop show open tasks if existing
-//		if (!empty ($this->isDevelop))
-//		{
-//			echo '<span style="color:red">'
-//				. '* YYYYY<br>'
-////				. '* <br>'
-////				. '* <br>'
-////				. '* <br>'
-////				. '* <br>'
-////				. '* <br>'
-////				. '* <br>'
-////				. '* <br>'
-//				. '</span><br><br>';
-//		}
+		if (!empty ($this->isDevelop))
+		{
+			echo '<span style="color:red">'
+                . 'Tasks: <br>'
+				. '* No Function for: createImageDbItems<br>'
+				. '* No Function for: createMissingImages<br>'
+				. '* No Function for: createWatermarkImages<br>'
+				. '* No Function for: assignParentGallery<br>'
+				. '* No Function for: deleteRowItems<br>'
+				. '* No Function for: repairAllIssuesItems<br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+				. '</span><br><br>';
+		}
 
 //		switch ($Layout)
 //		{
