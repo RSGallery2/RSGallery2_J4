@@ -667,8 +667,8 @@
 <!--				name="galDisplayCountJ3x"-->
 <!--				type="number"-->
 <!--				default="5"-->
-<!--				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"-->
-<!--				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"-->
+<!--				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"-->
+<!--				description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"-->
 <!--				class="">-->
 <!--		</field>-->
 
@@ -703,8 +703,8 @@
 				name="galDisplayCountJ3x"
 				type="number"
 				default="5"
-				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
-				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
+				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
+				description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
 				class="">
 		</field>
 
@@ -754,8 +754,8 @@
 				name="imgCountNrsJ3x"
 				type="number"
 				default="5"
-				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
-				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+				label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
+				description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
 				class="">
 		</field>
 
@@ -796,24 +796,15 @@
 
 		<!-- ... block  ... -->
 
-		<!--field
-				name="imgCountNrsJ3x"
-				type="number"
-				default="5"
-				label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
-				description="COM_RSGALLERY2_DEFAULT_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
-				class="">
-		</field-->
-
-		<!--field
-				name="image_size"
+		<field
+				name="imageSizeSlpJ3x"
 				type="text"
-				default="800,600,400"
-				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
-				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				default="800x600"
+				label="COM_RSGALLERY2_J3X_SLP_DISPLAY_IMAGE_SIZE"
+				description="COM_RSGALLERY2_J3X_SLP_DISPLAY_IMAGE_SIZE_DESC"
 				class=""
 		>
-		</field-->
+		</field>
 
 		<!--field
 				name="image_size"
@@ -844,9 +835,9 @@
 		<field
 				name="isSlpShowImgDescriptionJ3x"
 				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DESCRIPTION"
-				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DESCRIPTION_DESC"
+				default="1"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DESCRIPTION"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DESCRIPTION_DESC"
 				layout="joomla.form.field.radio.switcher"
 				filter="integer"
 				validate="options"
@@ -860,8 +851,8 @@
 				name="isSlpShowDownloadJ3x"
 				type="radio"
 				default="0"
-				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DOWNLOAD"
-				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_DOWNLOAD_DESC"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DOWNLOAD"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DOWNLOAD_DESC"
 				layout="joomla.form.field.radio.switcher"
 				filter="integer"
 				validate="options"
@@ -875,8 +866,8 @@
 				name="isSlpShowVotingJ3x"
 				type="radio"
 				default="0"
-				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_VOTING"
-				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_VOTING_DESC"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_VOTING"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_VOTING_DESC"
 				layout="joomla.form.field.radio.switcher"
 				filter="integer"
 				validate="options"
@@ -890,8 +881,8 @@
 				name="isSlpShowCommentsJ3x"
 				type="radio"
 				default="0"
-				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_COMMENTS"
-				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_COMMENTS_DESC"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_COMMENTS"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_COMMENTS_DESC"
 				layout="joomla.form.field.radio.switcher"
 				filter="integer"
 				validate="options"
@@ -905,8 +896,8 @@
 				name="isSlpShowExif"
 				type="radio"
 				default="0"
-				label="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_EXIF"
-				description="COM_RSGALLERY2_CFG_J3x_SLP_SHOW_EXIF_DESC"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_EXIF"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_EXIF_DESC"
 				layout="joomla.form.field.radio.switcher"
 				filter="integer"
 				validate="options"

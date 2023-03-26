@@ -38,9 +38,11 @@ class ImageExif
     }
 
     // ($this->original->filePath()
-    public function readExifData(string $imagPathFileName)
+    public function readExifData(string $imagPathFileName = '')
     {
-        $this->imagPathFileName = $imagPathFileName;
+        if ($imagPathFileName != '') {
+            $this->imagPathFileName = $imagPathFileName;
+        }
 
         if (!function_exists('exif_read_data'))
         {
