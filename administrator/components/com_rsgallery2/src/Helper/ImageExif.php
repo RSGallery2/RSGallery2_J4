@@ -33,12 +33,12 @@ class ImageExif
     {
         if ( ! empty ($imagPathFileName)) {
 
-            $this->readExifData ($imagPathFileName);
+//            $this->readExifData ($imagPathFileName);
         }
     }
 
     // ($this->original->filePath()
-    public function readExifData(string $imagPathFileName = '')
+    public function readExifDataAll(string $imagPathFileName = '')
     {
         if ($imagPathFileName != '') {
             $this->imagPathFileName = $imagPathFileName;
@@ -61,7 +61,9 @@ class ImageExif
 
         // required_sections: (second parameter) FILE, COMPUTED,	ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
 
+        // check if readable
         if (exif_read_data($imagPathFileName, 'IFD0')) {
+            // do read
             $exifData = exif_read_data($imagPathFileName, 0, true);
 
             // Debug todo: remove
@@ -89,6 +91,60 @@ class ImageExif
 
         }
 
+        // return ...;
+    }
+
+    // ($this->original->filePath()
+    public function readExifDataSelected(string $imagPathFileName = '')
+    {
+        $selected = [];
+
+        if ($imagPathFileName != '') {
+            $this->imagPathFileName = $imagPathFileName;
+        }
+
+        if (!function_exists('exif_read_data'))
+        {
+            return $selected;
+        }
+
+        // ToDo: use userExifTags
+        $supportedTags = $this->userExifTags();
+        $supportedTags = $this->supportedExifTags();
+
+        // required_sections: (second parameter) FILE, COMPUTED,	ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
+
+        // check if readable
+        if (exif_read_data($imagPathFileName, 'IFD0')) {
+            // do read
+            $exifData = exif_read_data($imagPathFileName, 0, true);
+
+            // Debug todo: remove
+            echo '<br>--- exif data ----------"' . $imagPathFileName . '" --------------------';
+            foreach ($exifData as $key => $section) {
+                foreach ($section as $name => $val) {
+                    echo "$key.$name: $val<br>\n";
+                }
+            }
+
+            // IPTC auslesen
+            // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
+
+            $size = getimagesize($imagPathFileName, $imgInfo);
+
+            if (isset($imgInfonfos["APP13"])) {
+
+                $iptc_orig = iptcparse($imgInfo["APP13"]);
+
+                var_dump($iptc_orig);
+
+            } else {
+                echo "Keine IPTC-Daten ";
+            }
+
+        }
+
+        return $selected;
     }
 
     public function exifDataSelected_Names(string $selectedNames)
@@ -256,20 +312,36 @@ class ImageExif
         return $supportedTags;
     }
 
-    public static function exifTranslationId ($ExifTags) {
+    public static function exifTranslationId ($ExifTag) {
 
-        $translationId = '';
+        // $translationId = '';
+        // fall back with added Name like 'EXIF'
+        $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifTag);
 
-        if ( ! empty($ExifTags)) {
+        if ( ! empty($ExifTag)) {
 
-            $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifTags);
+            // use second part of name as identifier
+            $parts = explode(".", $ExifTag) [1];
+
+            if (!empty ($parts[1])) {
+                $name = $parts[1];
+
+                $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($name);
+            }
 
         }
 
         return $translationId;
     }
 
+    private function userExifTags()
+    {
+        $userExifTags = [];
+
+        // ToDo: read config
 
 
+        return $userExifTags;
+    }
 
 }

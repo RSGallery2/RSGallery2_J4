@@ -170,7 +170,8 @@ class HtmlView extends BaseHtmlView
                 // $selectedTags = $this->params->get('isSlpExifTagSelection',  array(), 'array');
                 $ImageExif = new ImageExif($this->image->OriginalFile);
 
-                $ImageExifFeatures = $ImageExif->exifData_SelectedFeatures($selectedTags);
+                $ImageExifFeatures = $ImageExif->readExifDataAll($selectedTags);
+                // $ImageExifFeatures = $ImageExif->readExifDataSelected($selectedTags);
 
             }
         }
