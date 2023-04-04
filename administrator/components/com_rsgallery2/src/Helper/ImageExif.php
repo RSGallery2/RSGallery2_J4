@@ -12,7 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // Attention exif features may contain a array as subset
 // ToDo: should exif features be kept in DB as json ? instead of reading it when needed ?
-// ? then use selected and support recreate exif information as posibility in maintenance for changed selection with more or other elements
+// ? then use selected and support recreate exif information as possibility in maintenance for changed selection with more or other elements
 //
 class ImageExif
 {
@@ -33,13 +33,16 @@ class ImageExif
     {
         if ( ! empty ($imagPathFileName)) {
 
-//            $this->readExifData ($imagPathFileName);
+            // $this->readExifData ($imagPathFileName);
+            $this->imagPathFileName = $imagPathFileName;
         }
     }
 
     // ($this->original->filePath()
     public function readExifDataAll(string $imagPathFileName = '')
     {
+        $selected = [];
+
         if ($imagPathFileName != '') {
             $this->imagPathFileName = $imagPathFileName;
         }
@@ -67,31 +70,44 @@ class ImageExif
             $exifData = exif_read_data($imagPathFileName, 0, true);
 
             // Debug todo: remove
-            echo '<br>--- exif data ----------"' . $imagPathFileName . '" --------------------';
+            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
             foreach ($exifData as $key => $section) {
                 foreach ($section as $name => $val) {
                     echo "$key.$name: $val<br>\n";
                 }
             }
 
-            // IPTC auslesen
-            // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
+//             // IPTC auslesen
+//             // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
+//
+//             $size = getimagesize($imagPathFileName, $imgInfo);
+//
+//             if (isset($imgInfonfos["APP13"])) {
+//
+//                 $iptc_orig = iptcparse($imgInfo["APP13"]);
+//
+//                 var_dump($iptc_orig);
+//
+//             } else {
+//                 echo "Keine IPTC-Daten ";
+//             }
 
-            $size = getimagesize($imagPathFileName, $imgInfo);
 
-            if (isset($imgInfonfos["APP13"])) {
+            // Debug todo: remove
+            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
+            foreach ($exifData as $key => $section) {
+                foreach ($section as $name => $val) {
 
-                $iptc_orig = iptcparse($imgInfo["APP13"]);
+                   // Debug todo: remove
+                    echo $key . '.' . $name . ':' . $val . "<br>\n";
+                    $selected [$key . '.' . $name] = $val;
 
-                var_dump($iptc_orig);
-
-            } else {
-                echo "Keine IPTC-Daten ";
+                }
             }
 
         }
 
-        // return ...;
+        return $selected;
     }
 
     // ($this->original->filePath()
@@ -99,17 +115,20 @@ class ImageExif
     {
         $selected = [];
 
+        // align both file names
         if ($imagPathFileName != '') {
             $this->imagPathFileName = $imagPathFileName;
+        } else {
+            $imagPathFileName = $this->imagPathFileName;
         }
 
-        if (!function_exists('exif_read_data'))
-        {
+        if (!function_exists('exif_read_data')) {
             return $selected;
         }
 
         // ToDo: use userExifTags
         $supportedTags = $this->userExifTags();
+        // Debug: use all (J3x tags)
         $supportedTags = $this->supportedExifTags();
 
         // required_sections: (second parameter) FILE, COMPUTED,	ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
@@ -118,40 +137,44 @@ class ImageExif
         if (exif_read_data($imagPathFileName, 'IFD0')) {
             // do read
             $exifData = exif_read_data($imagPathFileName, 0, true);
+        }
 
-            // Debug todo: remove
-            echo '<br>--- exif data ----------"' . $imagPathFileName . '" --------------------';
-            foreach ($exifData as $key => $section) {
-                foreach ($section as $name => $val) {
-                    echo "$key.$name: $val<br>\n";
+        // IPTC auslesen
+//             // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
+//
+//             $size = getimagesize($imagPathFileName, $imgInfo);
+//
+//             if (isset($imgInfonfos["APP13"])) {
+//
+//                 $iptc_orig = iptcparse($imgInfo["APP13"]);
+//
+//                 var_dump($iptc_orig);
+//
+//             } else {
+//                 echo "Keine IPTC-Daten ";
+//             }
+
+        // Debug todo: remove
+        echo '<br>--- exif data selected ----------"' . $imagPathFileName . '" --------------------';
+
+        foreach ($exifData as $key => $section) {
+            foreach ($section as $name => $val) {
+                if (inarray($name, $supportedTags)) {
+                    // Debug todo: remove
+                    echo $key . '.' . $name . ':' . $val . "<br>\n";
+                    $selected [$name] = $val;
                 }
             }
-
-            // IPTC auslesen
-            // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
-
-            $size = getimagesize($imagPathFileName, $imgInfo);
-
-            if (isset($imgInfonfos["APP13"])) {
-
-                $iptc_orig = iptcparse($imgInfo["APP13"]);
-
-                var_dump($iptc_orig);
-
-            } else {
-                echo "Keine IPTC-Daten ";
-            }
-
         }
 
         return $selected;
     }
 
-    public function exifDataSelected_Names(string $selectedNames)
-    {
-
-
-    }
+//     public function exifDataSelected_Names(string $selectedNames)
+//     {
+//
+//
+//     }
 
     // do use for debug purposes only
     public function exifData_FeatureTags()
