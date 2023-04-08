@@ -31,7 +31,7 @@ $extension = $this->escape($this->state->get('filter.extension'));
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
        method="post" name="adminForm" id="adminForm">
 
 		<div class="d-flex flex-row">

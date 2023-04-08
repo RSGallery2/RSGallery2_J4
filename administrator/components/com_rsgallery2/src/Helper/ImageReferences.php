@@ -186,7 +186,7 @@ class ImageReferences
             }
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -211,7 +211,7 @@ class ImageReferences
 
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -251,7 +251,7 @@ class ImageReferences
 
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -290,7 +290,7 @@ class ImageReferences
 
 
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -395,7 +395,7 @@ class ImageReferences
                 }
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -447,7 +447,7 @@ class ImageReferences
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -509,7 +509,7 @@ class ImageReferences
                 }
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'Error executing reduceList4LostAndFounds: "' . '<br>';

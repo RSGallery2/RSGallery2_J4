@@ -240,7 +240,7 @@ class CommentController extends BaseController
 				$link = 'index.php?option=com_rsgallery2&view=gallery&gid=' . $galleryId . '&id=' . $imageId
 					. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing saveComment: "' . '<br>';

@@ -779,7 +779,7 @@ class ImagesModel extends ListModel
 			$fileNames = $db->loadObjectList(); // wrong $db->loadObjectList();
 		}
 
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing query: "' . $query . '" in fileNamesFromIds $ImageIds count:' . count ($ImageIds) . '<br>';
@@ -819,7 +819,7 @@ class ImagesModel extends ListModel
 //			$fileNames = $db->loadColumn(); // wrong $db->loadObjectList();
 //		}
 //
-//		catch (RuntimeException $e)
+//		catch (\RuntimeException $e)
 //		{
 //			$OutTxt = '';
 //			$OutTxt .= 'Error executing query: "' . $query . '" in fileNamesFromIds $ImageIds count:' . count ($ImageIds) . '<br>';
@@ -861,7 +861,7 @@ class ImagesModel extends ListModel
 			$galleryId = $db->loadResult();
 		}
 
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing query: "' . $query . '" in galleryIdFromId $ImageId: "' . $ImageId .  '"<br>';

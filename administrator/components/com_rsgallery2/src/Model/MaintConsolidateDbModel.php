@@ -75,7 +75,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
 
 			$ImageReferences->CollectImageReferences();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing CollectImageReferences: "' . '<br>';
@@ -113,7 +113,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
 
 				$this->IsWatermarkActive = $db->loadResult();
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing query: "' . $query . '"' . '<br>';

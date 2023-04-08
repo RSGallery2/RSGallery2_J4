@@ -25,6 +25,10 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
+
+
+
 /**
  * View class for a list of rsgallery2.
  *
@@ -99,7 +103,6 @@ class HtmlView extends BaseHtmlView
 		/**/
 
 
-
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
 
 
@@ -125,8 +128,68 @@ class HtmlView extends BaseHtmlView
 		$Layout = Factory::getApplication()->input->get('layout');
 
 
+        switch ($Layout)
+        {
+            case 'checkimageexif':
 
-		$this->addToolbar($Layout);
+                // ToDo: Save last used image in session
+                $input = $app->input;
+                $exifImageFile = $input->get('exifImageFile', '', 'STRING');
+                // $this->exifImageFile = $exifImageFile;
+
+                $exifDataJsonified = $input->get('exifData', '', 'STRING');
+
+                // toDo: remove
+                // gallery ID , image
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/fith04bar01.jpg');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/IMG_0018.JPG');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSCF0258.JPG');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_0240.JPG');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_0711.jpg');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/JED_LoveLocks.jpg');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_3871.jpg');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSCN1956.jpg');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/2019-09-21_00126.jpg');
+                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_0377.jpg');
+
+
+                // $this-> = ;
+                if (empty ($this->exifImageFiles)) {
+                    $this->exifDataOfFiles = [];
+                } else {
+                    $this->exifDataOfFiles = json_decode($exifDataJsonified);
+
+                    // toDo: retrieve files from answer
+                    // ... $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/fith04bar01.jpg');
+
+                }
+
+                $test = $this->exifDataOfFiles;
+                $test = $test;
+
+
+//                try
+//                {
+//
+//
+//
+//
+//                }
+//                catch (\RuntimeException $e)
+//                {
+//                    $OutTxt = '';
+//                    $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
+//                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+//
+//                    $app = Factory::getApplication();
+//                    $app->enqueueMessage($OutTxt, 'error');
+//                }
+
+                break;
+
+        }
+
+        $this->addToolbar($Layout);
 
 		return parent::display($tpl);
 	}
@@ -143,21 +206,6 @@ class HtmlView extends BaseHtmlView
 		// Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
 
-		// on develop show open tasks if existing
-		if (!empty ($this->isDevelop))
-		{
-			echo '<span style="color:red">'
-				. '*  Install: finish -> Move J3x images<br>'
-				. '*  Repair: Consolidade images<br>'
-				. '* !!! Purge / delete of database variables should be confirmed !!!<br>'
-				. '* Do shorten CSS by *.SCSS<br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-				. '</span><br><br>';
-		}
-
 		switch ($Layout)
 		{
 			case 'prepared':
@@ -169,8 +217,50 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 				break;
 
-			default:
-				// Set the title
+            case 'checkimageexif':
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . '*  Gallery number / image name <br>'
+                        . '*  collect only selected gallery id, and filenames<br>'
+                        . '*  <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+                        . '</span><br><br>';
+                }
+
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF'), 'camera-retro'); // 'maintenance');
+                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+
+                // https://jimpl.com/ Online EXIF data viewer
+                //ToolBarHelper::custom('maintenance.checkImageExifData', ' fas fa-camera-retro', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+                ToolBarHelper::custom('maintenance.checkImageExifData', 'none icon-image fas fa-camera-retro', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+//                ToolBarHelper::custom('maintenance.checkImageExifData', 'camera-retro', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+//                ToolBarHelper::custom('maintenance.checkImageExifData', 'info', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+
+                break;
+
+            default:
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop))
+                {
+                    echo '<span style="color:red">'
+                        . '*  Install: finish -> Move J3x images<br>'
+                        . '*  Repair: Consolidade images<br>'
+                        . '* !!! Purge / delete of database variables should be confirmed !!!<br>'
+                        . '* Do shorten CSS by *.SCSS<br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+//                        . '* <br>'
+                        . '</span><br><br>';
+                }
+
+                // Set the title
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
 				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 				// ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');

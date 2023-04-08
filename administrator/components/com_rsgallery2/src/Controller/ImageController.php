@@ -22,7 +22,7 @@ use Joomla\Utilities\ArrayHelper;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * The Gallery Controller
+ * The Image Controller
  *
  * @since __BUMP_VERSION__
  */
@@ -282,10 +282,10 @@ class ImageController extends FormController
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'Error executing rotate_image: ""' . $direction . '"<br>';
+			$OutTxt .= 'Error executing rotate_image: "' . $direction . '"<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -361,7 +361,6 @@ class ImageController extends FormController
 
 		try
 		{
-			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 			// Access check
 			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
@@ -416,10 +415,10 @@ class ImageController extends FormController
                 }
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'Error executing flip_image: ""' . $flipMode . '"<br>';
+			$OutTxt .= 'Error executing flip_image: "' . $flipMode . '"<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();

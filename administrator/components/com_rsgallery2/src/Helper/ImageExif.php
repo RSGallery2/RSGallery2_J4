@@ -45,6 +45,8 @@ class ImageExif
 
         if ($imagPathFileName != '') {
             $this->imagPathFileName = $imagPathFileName;
+        } else {
+            $imagPathFileName = $this->imagPathFileName;
         }
 
         if (!function_exists('exif_read_data'))
@@ -70,13 +72,34 @@ class ImageExif
             $exifData = exif_read_data($imagPathFileName, 0, true);
 
             // Debug todo: remove
-            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
+//            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
             foreach ($exifData as $key => $section) {
                 foreach ($section as $name => $val) {
-                    echo "$key.$name: $val<br>\n";
+                    $type = gettype ($val);
+//                    $strVal = strval($val);
+
+//                    if ( ! json_encode ($strVal)){
+                    $test = json_encode ($val);
+                    if (json_encode ($val) === false){
+                        $val = '%binary%';
+                    }
+
+//                    // Debug todo: remove
+//                    echo $key . '.' . $name . ':' . $val . "<br>\n";
+                    $item = $key . '.' . $name . ':' . $val;
+                    $selected [$key . '.' . $name] = $val;
+
                 }
             }
 
+//            // Debug todo: remove
+//            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
+//            foreach ($exifData as $key => $section) {
+//                foreach ($section as $name => $val) {
+//                    echo "$key.$name: $val<br>\n";
+//                }
+//            }
+//
 //             // IPTC auslesen
 //             // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
 //
@@ -92,18 +115,6 @@ class ImageExif
 //                 echo "Keine IPTC-Daten ";
 //             }
 
-
-            // Debug todo: remove
-            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
-            foreach ($exifData as $key => $section) {
-                foreach ($section as $name => $val) {
-
-                   // Debug todo: remove
-                    echo $key . '.' . $name . ':' . $val . "<br>\n";
-                    $selected [$key . '.' . $name] = $val;
-
-                }
-            }
 
         }
 

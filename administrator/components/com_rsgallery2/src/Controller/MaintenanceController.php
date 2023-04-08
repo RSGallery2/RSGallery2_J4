@@ -18,6 +18,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Rsgallery2 master display controller.
@@ -200,6 +201,90 @@ class MaintenanceController extends BaseController
 	/**/
 
 
+
+    /**
+     *
+     *
+     * @return bool
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function checkImageExifData()
+    {
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+        $msgType = 'notice';
+        $link = 'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif';
+
+        try {
+            // Access check
+            $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+            if (!$canAdmin) {
+
+                $msg     = Text::_('JERROR_ALERTNOAUTHOR');
+                $msgType = 'warning';
+                // replace newlines with html line breaks.
+                $msg = nl2br($msg);
+                $this->setRedirect($link, $msg, $msgType);
+
+            } else {
+                //--- input: collect selected gallery id, and file names -----------------------------------
+
+                // ToDo: collect selected gallery id, and filenames
+//                $id = $this->input->get('id', 0, 'int');
+                $inFileNames = $this->input->get('jform', array(), 'array');
+
+                $cids = $this->input->get('cid', array(), 'ARRAY');
+                ArrayHelper::toInteger($cids);
+
+                // ToDo: Determine filenames with real paths
+
+//                // simulate
+//                $filenames = [];
+//
+//                foreach ($data as $Idx => $fileName) {
+//
+//                    $filenames [] = $fileName;
+//                }
+
+                $fileNames = [];
+
+                foreach ($inFileNames as $idx => $fileName) {
+                    if (in_array($idx, $cids)) {
+                        $fileNames [] = $fileName;
+                    }
+                }
+
+                if (count($fileNames) > 0) {
+                    //--- collect EXIF data of files -----------------------------------
+
+                    // toDo: create imageDb model
+                    $modelImage      = $this->getModel('image');
+                    $exifDataOfFiles = $modelImage->exifDataOfFiles($fileNames);
+
+                    //--- prepare send to form ---------------------------------
+
+                    $exifDataJsonified = json_encode($exifDataOfFiles);
+
+//                $link = $link . '&amp;exifData=' . $exifDataJsonified;
+                    $link = $link
+                        . '&' . http_build_query(array('cid' => $cids))
+                        . '&exifData=' . $exifDataJsonified;
+                }
+            }
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing checkImageExifData: ' . '"<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        $this->setRedirect($link);
+
+        return true;
+    }
 
     /**
      * On cancel goto maintenance

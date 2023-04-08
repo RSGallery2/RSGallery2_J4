@@ -165,7 +165,7 @@ class ImageReference
 			}
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -220,7 +220,7 @@ class ImageReference
 
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -275,7 +275,7 @@ class ImageReference
 
             $this->allImagePaths = [];
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing initLostItems: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -334,7 +334,7 @@ class ImageReference
                 $isImageAssigned = true;
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing AssignLostItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

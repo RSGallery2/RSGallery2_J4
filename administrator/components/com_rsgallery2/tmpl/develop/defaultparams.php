@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=createImages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultparams'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
 		<?php if (!empty($this->sidebar)) : ?>

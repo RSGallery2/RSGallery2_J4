@@ -154,7 +154,7 @@ class ImagesPropertiesController extends AdminController
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing save_imagesProperties: "' . '<br>';
@@ -225,7 +225,7 @@ class ImagesPropertiesController extends AdminController
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing apply_imagesProperties: "' . '<br>';
@@ -308,7 +308,7 @@ class ImagesPropertiesController extends AdminController
 				$msg = 'Deleted ' . count ($sids) . ' images';
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing delete_imagesProperties: "' . '<br>';
@@ -453,7 +453,7 @@ class ImagesPropertiesController extends AdminController
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing rotate_images: ""' . $direction . '"<br>';
@@ -593,7 +593,7 @@ class ImagesPropertiesController extends AdminController
                 }
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing flip_images: ""' . $flipMode . '"<br>';
@@ -642,7 +642,7 @@ class ImagesPropertiesController extends AdminController
 				$ImagesProperties [] = $ImagesProperty;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
 			$OutTxt .= 'Error executing ImagesPropertiesFromInput: "' . '<br>';

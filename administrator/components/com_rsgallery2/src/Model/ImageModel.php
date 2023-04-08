@@ -30,6 +30,7 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 /**
  * RSGallery2 Component Image Model
@@ -1518,7 +1519,7 @@ class ImageModel extends AdminModel
             // Clean the cache
             $this->cleanCache();
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing image.table.delete: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1550,7 +1551,7 @@ class ImageModel extends AdminModel
                 $IsDeleted = parent::delete($pk);
             }
         }
-        catch (RuntimeException $e)
+        catch (\RuntimeException $e)
         {
             $OutTxt = '';
             $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
@@ -1561,6 +1562,67 @@ class ImageModel extends AdminModel
         }
 
         return $IsDeleted;
+    }
+    /**/
+
+
+    /**/
+    public function exifDataOfFiles ($filenames)
+    {
+        $exifDataOfFiles = [];
+
+        try
+        {
+
+            foreach ($filenames as $filename) {
+
+                $exifDataOfFiles [] = $this->exifDataOfFile ($filename);
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing exifDataOfFile: "' . count ($filenames) . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $exifDataOfFiles;
+    }
+    /**/
+
+    /**/
+    public function exifDataOfFile($filename)
+    {
+        $exifDataOfFile [$filename] = [];
+
+        try
+        {
+
+            $oImageExif = new ImageExif ($filename);
+
+            $exifData = $oImageExif->readExifDataAll();
+
+            if ( ! empty ($exifData))
+            {
+                $exifDataOfFile = [$filename, $exifData];
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing exifDataOfFile: "' . $filename . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $exifDataOfFile;
     }
     /**/
 }

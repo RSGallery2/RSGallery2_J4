@@ -154,7 +154,7 @@ class ImagesController extends AdminController
                     $msgType = 'error';
                 }
             }
-            catch (RuntimeException $e)
+            catch (\RuntimeException $e)
             {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing moveTo: "' . '<br>';
@@ -211,7 +211,7 @@ class ImagesController extends AdminController
                     $msgType = 'error';
                 }
             }
-            catch (RuntimeException $e)
+            catch (\RuntimeException $e)
             {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyTo: "' . '<br>';

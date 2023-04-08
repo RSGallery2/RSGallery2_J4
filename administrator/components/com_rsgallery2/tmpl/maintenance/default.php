@@ -155,6 +155,14 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
     'viewGalleriesRaw'
 );
 
+$rawDatabase_ZoneButtons[] = new zoneButtons(
+    Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif'),
+    Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF'),
+    Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF_DESC'),
+    // array('icon-images', 'icon-crop', 'fas fa-archive'),
+    array('icon-images', 'fas fa-camera-retro'),
+    'viewGalleriesRaw'
+);
 
 
 
