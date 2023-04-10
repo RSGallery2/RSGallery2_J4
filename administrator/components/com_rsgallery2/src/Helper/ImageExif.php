@@ -29,7 +29,7 @@ class ImageExif
      *
      * @since version 4.3
      */
-    public function __construct(string $imagPathFileName)
+    public function __construct(string $imagPathFileName='')
     {
         if ( ! empty ($imagPathFileName)) {
 
@@ -54,6 +54,12 @@ class ImageExif
             return false;
         }
 
+        // filename not defined
+        if (empty($imagPathFileName))
+        {
+            return false;
+        }
+
         // https://werner-zenk.de/php/exif-infos_eines_jpg-bildes_auslesen.php
 //        if (exif_read_data($bild, 'IFD0')) {
 //            $exif = exif_read_data($bild, 0, true);
@@ -64,64 +70,41 @@ class ImageExif
 //            }
 //        }
 
-        // required_sections: (second parameter) FILE, COMPUTED,	ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
+        // https://stackoverflow.com/questions/30177313/exif-or-other-meta-data-data-that-windows-displays-but-php-does-not
+
+        // required_sections: (second parameter) FILE, COMPUTED, ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
+
+
+        // ??? ini_set('exif.encode_unicode', 'UTF-8');
 
         // check if readable
         if (exif_read_data($imagPathFileName, 'IFD0')) {
             // do read
             $exifData = exif_read_data($imagPathFileName, 0, true);
 
-            // Debug todo: remove
-//            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
             foreach ($exifData as $key => $section) {
+
+// if (is_array($section)) {
                 foreach ($section as $name => $val) {
                     $type = gettype ($val);
-//                    $strVal = strval($val);
-
-//                    if ( ! json_encode ($strVal)){
-                    $test = json_encode ($val);
                     if (json_encode ($val) === false){
                         $val = '%binary%';
                     }
 
-//                    // Debug todo: remove
-//                    echo $key . '.' . $name . ':' . $val . "<br>\n";
-                    $item = $key . '.' . $name . ':' . $val;
-                    $selected [$key . '.' . $name] = $val;
+                    // comma separated string
+                    if (is_array($val)) {
+                        $val = implode(',', $val);
+                    }
 
+                    $selected [$key . '.' . $name] = $val;
                 }
             }
-
-//            // Debug todo: remove
-//            echo '<br>--- exif data all ----------"' . $imagPathFileName . '" --------------------';
-//            foreach ($exifData as $key => $section) {
-//                foreach ($section as $name => $val) {
-//                    echo "$key.$name: $val<br>\n";
-//                }
-//            }
-//
-//             // IPTC auslesen
-//             // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
-//
-//             $size = getimagesize($imagPathFileName, $imgInfo);
-//
-//             if (isset($imgInfonfos["APP13"])) {
-//
-//                 $iptc_orig = iptcparse($imgInfo["APP13"]);
-//
-//                 var_dump($iptc_orig);
-//
-//             } else {
-//                 echo "Keine IPTC-Daten ";
-//             }
-
 
         }
 
         return $selected;
     }
 
-    // ($this->original->filePath()
     public function readExifDataSelected(string $imagPathFileName = '')
     {
         $selected = [];
@@ -137,10 +120,9 @@ class ImageExif
             return $selected;
         }
 
-        // ToDo: use userExifTags
         $supportedTags = $this->userExifTags();
-        // Debug: use all (J3x tags)
-        $supportedTags = $this->supportedExifTags();
+//        // Debug: use all (J3x tags)
+//        $supportedTags = $this->supportedExifTags();
 
         // required_sections: (second parameter) FILE, COMPUTED,	ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
 
@@ -165,14 +147,9 @@ class ImageExif
 //                 echo "Keine IPTC-Daten ";
 //             }
 
-        // Debug todo: remove
-        echo '<br>--- exif data selected ----------"' . $imagPathFileName . '" --------------------';
-
         foreach ($exifData as $key => $section) {
             foreach ($section as $name => $val) {
-                if (inarray($name, $supportedTags)) {
-                    // Debug todo: remove
-                    echo $key . '.' . $name . ':' . $val . "<br>\n";
+                if (in_array($name, $supportedTags)) {
                     $selected [$name] = $val;
                 }
             }
@@ -180,12 +157,6 @@ class ImageExif
 
         return $selected;
     }
-
-//     public function exifDataSelected_Names(string $selectedNames)
-//     {
-//
-//
-//     }
 
     // do use for debug purposes only
     public function exifData_FeatureTags()
@@ -295,51 +266,51 @@ class ImageExif
 
         /**/
 
-        $supportedTags [] = 'resolutionUnit';
-        $supportedTags [] = 'FileName';
-        $supportedTags [] = 'FileSize';
-        $supportedTags [] = 'FileDateTime';
-        $supportedTags [] = 'FlashUsed';
-        $supportedTags [] = 'imageDesc';
-        $supportedTags [] = 'make';
-        $supportedTags [] = 'model';
-        $supportedTags [] = 'xResolution';
-        $supportedTags [] = 'yResolution';
-        $supportedTags [] = 'software';
-        $supportedTags [] = 'fileModifiedDate';
-        $supportedTags [] = 'YCbCrPositioning';
-        $supportedTags [] = 'exposureTime';
-        $supportedTags [] = 'fnumber';
-        $supportedTags [] = 'exposure';
-        $supportedTags [] = 'isoEquiv';
-        $supportedTags [] = 'exifVersion';
-        $supportedTags [] = 'DateTime';
-        $supportedTags [] = 'dateTimeDigitized';
-        $supportedTags [] = 'componentConfig';
-        $supportedTags [] = 'jpegQuality';
-        $supportedTags [] = 'exposureBias';
-        $supportedTags [] = 'aperture';
-        $supportedTags [] = 'meteringMode';
-        $supportedTags [] = 'whiteBalance';
-        $supportedTags [] = 'flashUsed';
-        $supportedTags [] = 'focalLength';
-        $supportedTags [] = 'makerNote';
-        $supportedTags [] = 'subSectionTime';
-        $supportedTags [] = 'flashpixVersion';
-        $supportedTags [] = 'colorSpace';
-        $supportedTags [] = 'Width';
-        $supportedTags [] = 'Height';
-        $supportedTags [] = 'GPSLatitudeRef';
-        $supportedTags [] = 'Thumbnail';
-        $supportedTags [] = 'ThumbnailSize';
-        $supportedTags [] = 'sourceType';
-        $supportedTags [] = 'sceneType';
-        $supportedTags [] = 'compressScheme';
-        $supportedTags [] = 'IsColor';
-        $supportedTags [] = 'Process';
-        $supportedTags [] = 'resolution';
-        $supportedTags [] = 'color';
-        $supportedTags [] = 'jpegProcess';
+        $supportedTags [] = 'EXIF.resolutionUnit';
+        $supportedTags [] = 'EXIF.FileName';
+        $supportedTags [] = 'EXIF.FileSize';
+        $supportedTags [] = 'EXIF.FileDateTime';
+        $supportedTags [] = 'EXIF.FlashUsed';
+        $supportedTags [] = 'EXIF.imageDesc';
+        $supportedTags [] = 'EXIF.make';
+        $supportedTags [] = 'EXIF.model';
+        $supportedTags [] = 'EXIF.xResolution';
+        $supportedTags [] = 'EXIF.yResolution';
+        $supportedTags [] = 'EXIF.software';
+        $supportedTags [] = 'EXIF.fileModifiedDate';
+        $supportedTags [] = 'EXIF.YCbCrPositioning';
+        $supportedTags [] = 'EXIF.exposureTime';
+        $supportedTags [] = 'EXIF.fnumber';
+        $supportedTags [] = 'EXIF.exposure';
+        $supportedTags [] = 'EXIF.isoEquiv';
+        $supportedTags [] = 'EXIF.exifVersion';
+        $supportedTags [] = 'EXIF.DateTime';
+        $supportedTags [] = 'EXIF.dateTimeDigitized';
+        $supportedTags [] = 'EXIF.componentConfig';
+        $supportedTags [] = 'EXIF.jpegQuality';
+        $supportedTags [] = 'EXIF.exposureBias';
+        $supportedTags [] = 'EXIF.aperture';
+        $supportedTags [] = 'EXIF.meteringMode';
+        $supportedTags [] = 'EXIF.whiteBalance';
+        $supportedTags [] = 'EXIF.flashUsed';
+        $supportedTags [] = 'EXIF.focalLength';
+        $supportedTags [] = 'EXIF.makerNote';
+        $supportedTags [] = 'EXIF.subSectionTime';
+        $supportedTags [] = 'EXIF.flashpixVersion';
+        $supportedTags [] = 'EXIF.colorSpace';
+        $supportedTags [] = 'EXIF.Width';
+        $supportedTags [] = 'EXIF.Height';
+        $supportedTags [] = 'EXIF.GPSLatitudeRef';
+        $supportedTags [] = 'EXIF.Thumbnail';
+        $supportedTags [] = 'EXIF.ThumbnailSize';
+        $supportedTags [] = 'EXIF.sourceType';
+        $supportedTags [] = 'EXIF.sceneType';
+        $supportedTags [] = 'EXIF.compressScheme';
+        $supportedTags [] = 'EXIF.IsColor';
+        $supportedTags [] = 'EXIF.Process';
+        $supportedTags [] = 'EXIF.resolution';
+        $supportedTags [] = 'EXIF.color';
+        $supportedTags [] = 'EXIF.jpegProcess';
 
         // On further additions reserve matching language names see below
 
@@ -348,27 +319,22 @@ class ImageExif
 
     public static function exifTranslationId ($ExifTag) {
 
-        // $translationId = '';
-        // fall back with added Name like 'EXIF'
-        $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifTag);
+         $translationId = '';
 
         if ( ! empty($ExifTag)) {
 
-            // use second part of name as identifier
-            $parts = explode(".", $ExifTag) [1];
-
-            if (!empty ($parts[1])) {
-                $name = $parts[1];
+            if (!empty ($ExifTag[1])) {
+                // use second part of name as identifier
+                $name = explode(".", $ExifTag) [1];
 
                 $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($name);
             }
-
         }
 
         return $translationId;
     }
 
-    private function userExifTags()
+    public static function userExifTags()
     {
         $userExifTags = [];
 
@@ -376,6 +342,48 @@ class ImageExif
 
 
         return $userExifTags;
+    }
+
+    public static function checkTagsNotSupported ($existingExifTags)    {
+
+        $notSupportedTags = [];
+
+        $supportedTags = self::supportedExifTags ();
+
+//        foreach ($existingExifTags as $existingExifTag) {
+        foreach ($existingExifTags as $existingExifTagSections) {
+
+            $existingExifTag = explode ('.', $existingExifTagSections);
+            if ( ! in_array($existingExifTag, $supportedTags)) {
+
+                // $supportedTags [] = $existingExifTag;
+                $notSupportedTags [] = $existingExifTagSections;
+
+            }
+        }
+
+        return $notSupportedTags;
+    }
+
+    public static function checkNotUserSelected($existingExifTags)
+    {
+        $notUserExifTags = [];
+
+        $userTags = self::userExifTags ();
+
+//        foreach ($existingExifTags as $existingExifTag) {
+        foreach ($existingExifTags as $existingExifTagSections) {
+
+            $existingExifTag = explode ('.', $existingExifTagSections);
+            if ( ! in_array($existingExifTag, $userTags)) {
+
+                // $userTags [] = $existingExifTag;
+                $notUserExifTags [] = $existingExifTagSections;
+
+            }
+        }
+
+        return $notUserExifTags;
     }
 
 }

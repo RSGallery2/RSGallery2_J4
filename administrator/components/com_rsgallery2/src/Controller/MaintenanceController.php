@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
@@ -42,6 +43,8 @@ class MaintenanceController extends BaseController
     public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
+
+
 
     }
 
@@ -97,6 +100,7 @@ class MaintenanceController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=Maintenance';
         $this->setRedirect($link, $msg, $msgType);
     }
+
 
 
     /**
@@ -228,49 +232,71 @@ class MaintenanceController extends BaseController
                 $this->setRedirect($link, $msg, $msgType);
 
             } else {
-                //--- input: collect selected gallery id, and file names -----------------------------------
-
-                // ToDo: collect selected gallery id, and filenames
-//                $id = $this->input->get('id', 0, 'int');
-                $inFileNames = $this->input->get('jform', array(), 'array');
-
-                $cids = $this->input->get('cid', array(), 'ARRAY');
-                ArrayHelper::toInteger($cids);
-
-                // ToDo: Determine filenames with real paths
-
-//                // simulate
-//                $filenames = [];
+//                //--- input: collect selected gallery id, and file names -----------------------------------
 //
-//                foreach ($data as $Idx => $fileName) {
+//                // ToDo: collect selected gallery id, and filenames
+////                $id = $this->input->get('id', 0, 'int');
+//                $imageNames = $this->input->get('jform', array(), 'array');
 //
-//                    $filenames [] = $fileName;
+//                $cids = $this->input->get('cid', array(), 'ARRAY');
+//                ArrayHelper::toInteger($cids);
+//
+//                // ToDo: Determine filenames with real paths
+//
+////                // simulate
+////                $filenames = [];
+////
+////                foreach ($data as $Idx => $fileName) {
+////
+////                    $filenames [] = $fileName;
+////                }
+//
+//                $fileNames = [];
+//
+//                foreach ($imageNames as $idx => $fileName) {
+//                    if (in_array($idx, $cids)) {
+//                        $fileNames [] = $fileName;
+//                    }
+//                }
+//
+//                if (count($fileNames) > 0) {
+//                    //--- collect EXIF data of files -----------------------------------
+//
+//                    $modelImage      = $this->getModel('image');
+//                    $exifDataOfFiles = $modelImage->exifDataOfFiles($fileNames);
+//
+//                    //--- prepare send to form ---------------------------------
+//
+//                    $exifDataJsonified = json_encode($exifDataOfFiles);
+//
+////                $link = $link . '&amp;exifData=' . $exifDataJsonified;
+//                    $link = $link
+//                        . '&' . http_build_query(array('cid' => $cids))
+//                        . '&exifData=' . $exifDataJsonified;
 //                }
 
-                $fileNames = [];
+                $input = $this->input;
 
-                foreach ($inFileNames as $idx => $fileName) {
-                    if (in_array($idx, $cids)) {
-                        $fileNames [] = $fileName;
-                    }
-                }
+                $data    = $input->post->get('jform', array(), 'array');
+                $test1 = json_encode($data);
 
-                if (count($fileNames) > 0) {
-                    //--- collect EXIF data of files -----------------------------------
+                $cids = $input->get('cid', array(), 'ARRAY');
+//                $galleryIds = $input->get('galIds', array(), 'array');
+//                $imageNames  = $input->get('imgNames', array(), 'array');
+                $galleryIds  = ArrayHelper::toInteger($data ['galIds']);
+//                $imageNames  = ArrayHelper::toString ($data ['imgNames']);
+                $imageNames  = $data ['imgNames'];
 
-                    // toDo: create imageDb model
-                    $modelImage      = $this->getModel('image');
-                    $exifDataOfFiles = $modelImage->exifDataOfFiles($fileNames);
-
-                    //--- prepare send to form ---------------------------------
-
-                    $exifDataJsonified = json_encode($exifDataOfFiles);
-
-//                $link = $link . '&amp;exifData=' . $exifDataJsonified;
-                    $link = $link
-                        . '&' . http_build_query(array('cid' => $cids))
-                        . '&exifData=' . $exifDataJsonified;
-                }
+//                $link .= ''
+//                    . '&' . http_build_query(array('cids' => $cids))
+//                    . '&' . http_build_query(array('galIds' => $galleryIds))
+//                    . '&' . http_build_query(array('imgNames' => $imageNames))
+//                    ;
+                $link .= ''
+                    . '&' . http_build_query(array('cids' => $cids))
+                    . '&' . http_build_query(array('galIds' => $galleryIds))
+                    . '&' . http_build_query(array('imgNames' => $imageNames))
+                    ;
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -303,9 +329,21 @@ class MaintenanceController extends BaseController
         return true;
     }
 
-
-
-
-
+//    /**
+//     * Proxy for getModel
+//     *
+//     * @param   string  $name    The model name. Optional.
+//     * @param   string  $prefix  The class prefix. Optional.
+//     * @param   array   $config  The array of possible config values. Optional.
+//     *
+//     * @return  BaseDatabaseModel  The model.
+//     *
+//     * @since __BUMP_VERSION__
+//     */
+//    public function getModel($name = 'maintenance', $prefix = 'Administrator', $config = array('ignore_request' => true))
+//    {
+//        return parent::getModel($name, $prefix, $config);
+//    }
+//
 
 }

@@ -12,20 +12,23 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Maintenance;
 \defined('_JEXEC') or die;
 
 //use JModelLegacy;
+use Finnern\Component\Lang4dev\Administrator\Helper\langFileNamesSet;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
+use Joomla\Utilities\ArrayHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-
-use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 
 
@@ -36,191 +39,247 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The sidebar markup
-	 *
-	 * @var  string
-	 */
-	protected $sidebar;
+    /**
+     * The sidebar markup
+     *
+     * @var  string
+     */
+    protected $sidebar;
 
-	protected $buttons = [];
+    protected $buttons = [];
 
-	protected $isDebugBackend;
-	protected $isDevelop;
+    protected $isDebugBackend;
+    protected $isDevelop;
 
-	protected $isDangerActive;
-	protected $isRawDbActive;
-	protected $isUpgradeActive;
-	protected $isTestActive;
-	protected $isJ3xRsg2DataExisting;
-	protected $developActive;
+    protected $isDangerActive;
+    protected $isRawDbActive;
+    protected $isUpgradeActive;
+    protected $isTestActive;
+    protected $isJ3xRsg2DataExisting;
+    protected $developActive;
 
-	protected $intended;
+    protected $intended;
 
-	// ToDo: Use other rights instead of core.admin -> IsRoot ?
-	// core.admin is the permission used to control access to
-	// the global config
-	protected $UserIsRoot;
+    // ToDo: Use other rights instead of core.admin -> IsRoot ?
+    // core.admin is the permission used to control access to
+    // the global config
+    protected $UserIsRoot;
 
-	/**
-	 * Method to display the view.
-	 *
-	 * @param   string  $tpl  A template file to load. [optional]
-	 *
-	 * @return  mixed  A string if successful, otherwise an \Exception object.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function display($tpl = null)
-	{
+    /**
+     * Method to display the view.
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
+     * @return  mixed  A string if successful, otherwise an \Exception object.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function display($tpl = null)
+    {
+        //--- config --------------------------------------------------------------------
 
-		//--- config --------------------------------------------------------------------
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+        $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
-		$this->isDevelop = $rsgConfig->get('isDevelop');
+        $this->isRawDbActive   = true; // false / true;
+        $this->isDangerActive  = true; // false / true;
+        $this->isUpgradeActive = true; // false / true;
+        if ($this->isDevelop) {
+            $this->isTestActive  = true; // false / true;
+            $this->developActive = true; // false / true;
+        }
 
-		$this->isRawDbActive   = true; // false / true;
-		$this->isDangerActive  = true; // false / true;
-		$this->isUpgradeActive = true; // false / true;
-		if ($this->isDevelop)
-		{
-			$this->isTestActive    = true; // false / true;
-			$this->developActive = true; // false / true;
-		}
+        // for prepared but not ready views
+        $input          = Factory::getApplication()->input;
+        $this->intended = $input->get('intended', 'not defined', 'STRING');
 
-		// for prepared but not ready views
-		$input = Factory::getApplication()->input;
-		$this->intended = $input->get('intended', 'not defined', 'STRING');
-
-		// Check for errors.
-		/* Must load form before
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
-		/**/
-
+        // Check for errors.
+        /* Must load form before
+        if (count($errors = $this->get('Errors')))
+        {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
+        /**/
 
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
 
-
         //--- Check user rights ---------------------------------------------
 
-		// toDo: More detailed for rsgallery admin
-		$app       = Factory::getApplication();
+        // toDo: More detailed for rsgallery admin
+        $app = Factory::getApplication();
 
-		$user = $app->getIdentity();
-		$canAdmin = $user->authorise('core.admin');
-		$this->UserIsRoot = $canAdmin;
+        $user             = $app->getIdentity();
+        $canAdmin         = $user->authorise('core.admin');
+        $this->UserIsRoot = $canAdmin;
 
-		//--- begin to display ----------------------------------------------
+        //--- begin to display ----------------------------------------------
 
 //		Factory::getApplication()->input->set('hidemainmenu', true);
 
-		//---  --------------------------------------------------------------
+        //---  --------------------------------------------------------------
 
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
-		Rsgallery2Helper::addSubmenu('maintenance');
-		$this->sidebar = \JHtmlSidebar::render();
+        HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
+        Rsgallery2Helper::addSubmenu('maintenance');
+        $this->sidebar = \JHtmlSidebar::render();
 
-		$Layout = Factory::getApplication()->input->get('layout');
+        $Layout = Factory::getApplication()->input->get('layout');
 
-
-        switch ($Layout)
-        {
+        switch ($Layout) {
             case 'checkimageexif':
 
                 // ToDo: Save last used image in session
                 $input = $app->input;
-                $exifImageFile = $input->get('exifImageFile', '', 'STRING');
-                // $this->exifImageFile = $exifImageFile;
 
-                $exifDataJsonified = $input->get('exifData', '', 'STRING');
+                // fall back
+                $this->exifDataOfFiles = [];
 
-                // toDo: remove
-                // gallery ID , image
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/fith04bar01.jpg');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/IMG_0018.JPG');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSCF0258.JPG');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_0240.JPG');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_0711.jpg');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/JED_LoveLocks.jpg');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_3871.jpg');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSCN1956.jpg');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/2019-09-21_00126.jpg');
-                $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/DSC_0377.jpg');
+                //--- files and ids from last call --------------------------------------
 
+                $cids         = ArrayHelper::toInteger($input->get('cids', array(), 'ARRAY'));
+                $inGalleryIds = ArrayHelper::toInteger($input->get('galIds', array(), 'array'));
+                //$inFileNames  = ArrayHelper::toString($input->get('imgNames', array(), 'array'));
+                $inFileNames  = $input->get('imgNames', array(), 'array');
 
-                // $this-> = ;
-                if (empty ($this->exifImageFiles)) {
-                    $this->exifDataOfFiles = [];
+                //--- self call by user -------------------------------------------------
+                // (self call with user input )
+
+                if ( ! empty ($inFileNames)) {
+
+                    $test1 = json_encode($inFileNames);
+
+                    //--- reuse files ---------------------------------------------------
+
+                    $this->exifImageFiles = [];
+                    foreach ($inFileNames as $idx => $fileName) {
+
+                        $GalleryId = '';
+                        if ($inGalleryIds[$idx] > 0) {
+                            $GalleryId = $inGalleryIds[$idx];
+                        }
+                        $this->exifImageFiles [] = array($GalleryId, $fileName);
+                    }
+
+                    //--- collect files exif data --------------------------------
+
+                    // selections
+                    if (!empty($cids)) {
+
+                        // create absolute paths (ToDo: improve for galleries ...
+                        $pathFileNames = $this->filenamesByGalIdAndImgName($inGalleryIds, $inFileNames);
+                        // select chosen files
+                        $exifFileNames = $this->selectedFileNames($cids, $pathFileNames);
+
+                        if (!empty ($exifFileNames)) {
+                            //--- extract exif data -----------------------------
+
+                            $imgModel              = new \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel (
+                            );
+                            $this->exifDataOfFiles = $imgModel->exifDataOfFiles($exifFileNames);
+
+                            //--- match exif names with enabled / supported --------------------------------
+
+                            // ToDo: rename name to tags
+                            $exifTags = [];
+                            foreach ($this->exifDataOfFiles as $exifDataOfFile) {
+
+                                if ( ! empty ($exifDataOfFile[1])) {
+
+                                    // $fileName = $exifDataOfFile[0];
+                                    $exifData = $exifDataOfFile[1];
+
+                                    foreach ($exifData as $exifTagFull => $exifItem) {
+                                        $exifTag = $exifTagFull;
+
+                                        if (!in_array($exifTag, $exifTags)) {
+                                            $exifTags [] = $exifTag;
+                                        }
+//                                    $exifDataFullName = $exifItem[0];
+
+//                                    // ToDo: ? use part/full name
+//                                    $exifName = explode('.', $exifDataFullName);
+//
+//                                    if (!in_array($exifTags, $exifName[1])) {
+//                                        $exifTags [] = $exifDataFullName;
+//                                    }
+
+                                    }
+                                }
+                            }
+
+                            $this->exifAllTagsCollected = $exifTags;
+
+                            $this->exifUserSelected      = imageExif::userExifTags();
+                            $this->exifIsNotSupported    = imageExif::checkTagsNotSupported($exifTags);
+                            $this->exifIsNotUserSelected = imageExif::checkNotUserSelected($exifTags);
+                            $this->exifTagsSupported     = imageExif::supportedExifTags();
+
+                            $this->exifTagsTranslationIds = [];
+                            if (!empty ($this->exifTagsSupported)) {
+                                foreach ($this->exifTagsSupported as $exifItem) {
+                                    $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($exifItem);
+                                }
+                            }
+                        }
+                    }
                 } else {
-                    $this->exifDataOfFiles = json_decode($exifDataJsonified);
+                    //--- first call -------------------------------------------------
 
-                    // toDo: retrieve files from answer
-                    // ... $this->exifImageFiles [] = array ('', JPATH_ROOT .   '/images/rsgallery2/ExifTest/fith04bar01.jpg');
+                    if ($this->isDevelop) {
+                        // preset file list
+                        $this->exifImageFiles = $this->presetExifFileList();
+                    } else {
 
+
+                    }
                 }
 
-                $test = $this->exifDataOfFiles;
-                $test = $test;
+                //--- prepare empty input for files -------------------------------------
 
-
-//                try
-//                {
-//
-//
-//
-//
-//                }
-//                catch (\RuntimeException $e)
-//                {
-//                    $OutTxt = '';
-//                    $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
-//                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-//
-//                    $app = Factory::getApplication();
-//                    $app->enqueueMessage($OutTxt, 'error');
-//                }
+                for ($idx = count($this->exifImageFiles); $idx < 10; $idx++) {
+                    $this->exifImageFiles [] = array('', '');
+                }
 
                 break;
 
-        }
+        } // switch
 
         $this->addToolbar($Layout);
 
-		return parent::display($tpl);
-	}
+        parent::display($tpl);
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function addToolbar($Layout)
-	{
-		// Get the toolbar object instance
-		$toolbar = Toolbar::getInstance('toolbar');
+        return ;
+    }
 
-		switch ($Layout)
-		{
-			case 'prepared':
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function addToolbar($Layout)
+    {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance('toolbar');
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . '<strong>' . $this->intended . '<strong>'
+        switch ($Layout) {
+            case 'prepared':
+
+                ToolBarHelper::title(
+                    Text::_('COM_RSGALLERY2_MAINTENANCE')
+                    . ': ' . '<strong>' . $this->intended . '<strong>'
 //					. ': ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY')
-					, 'screwdriver');
-				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
-				break;
+                    ,
+                    'screwdriver'
+                );
+                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                break;
 
             case 'checkimageexif':
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
+                if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '*  Gallery number / image name <br>'
                         . '*  collect only selected gallery id, and filenames<br>'
@@ -232,22 +291,25 @@ class HtmlView extends BaseHtmlView
                         . '</span><br><br>';
                 }
 
-
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF'), 'camera-retro'); // 'maintenance');
+                ToolBarHelper::title(
+                    Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF'),
+                    'fas fa-camera-retro'
+                ); // 'maintenance');
                 ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-                // https://jimpl.com/ Online EXIF data viewer
-                //ToolBarHelper::custom('maintenance.checkImageExifData', ' fas fa-camera-retro', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
-                ToolBarHelper::custom('maintenance.checkImageExifData', 'none icon-image fas fa-camera-retro', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
-//                ToolBarHelper::custom('maintenance.checkImageExifData', 'camera-retro', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
-//                ToolBarHelper::custom('maintenance.checkImageExifData', 'info', '', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+                ToolBarHelper::custom('maintenance.checkImageExifData', 'none fas fa-camera-retro',
+                    'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+                ToolBarHelper::link(
+                    'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif',
+                    'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',
+                    'none fas fa-camera-retro'
+                );
 
                 break;
 
             default:
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop))
-                {
+                if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '*  Install: finish -> Move J3x images<br>'
                         . '*  Repair: Consolidade images<br>'
@@ -261,26 +323,92 @@ class HtmlView extends BaseHtmlView
                 }
 
                 // Set the title
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
-				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
-				// ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
-				break;
-		}
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
+                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                // ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                break;
+        }
 
+        // Options button.
+        if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {
+            $toolbar->preferences('com_rsgallery2');
+        }
+    }
 
-		// Options button.
-		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
-		{
-			$toolbar->preferences('com_rsgallery2');
-		}
-	}
+    /** ToDo: put into model (?which ?)
+     * list of filenames from gallery ID and image name
+     * if no gallery ID is given then the filename is passed directly
+     *    path: root of J! installation or absolut (on server)
+     *
+     * @param   $galleryIds
+     * @param   $ImageNames
+     *
+     *
+     * @since version
+     */
+    public function filenamesByGalIdAndImgName($galleryIds = [], $ImageOrFileNames = [])
+    {
+        $fileNames = [];
 
-	/**
-	public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
-	/**/
+        foreach ($ImageOrFileNames as $idx => $imageOrFileName) {
+            // no gallery specified => filename given
+            if (empty ($galleryIds[$idx])) {
+                $fileNames [] = $imageOrFileName;
+            } else {
+                // ToDo:
+                $fileNames [] = "";
+            }
+        }
+
+        return $fileNames;
+    }
+
+    /** ToDo: put into model (image(s))
+     *
+     * @param   $cids
+     * @param   $fileNames
+     *
+     *
+     * @since version
+     */
+    public function selectedFileNames($cids = [], $inFileNames=[])
+    {
+        $fileNames = [];
+
+        foreach ($inFileNames as $idx => $fileName) {
+            if (in_array($idx, $cids)) {
+                if ($fileName != '') {
+                    $fileNames [] = $fileName;
+                }
+            }
+        }
+
+        return $fileNames;
+    }
+
+    public function presetExifFileList()
+    {
+        $exifImageFiles = [];
+
+        // gallery ID , image
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/2019-09-21_00126.jpg');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/8054.jpg');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0240.JPG');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0377.JPG');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0711.JPG');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_3871.JPG');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSCF0258.JPG');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSCN1956.JPG');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/fith04bar01.jpg');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_0018.JPG');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230114_094341.jpg');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230323_120558.jpg');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230401_115447.jpg');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG-20230106-WA0002.jpg');
+        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/Screenshot_20200613_150114_com.huawei.android.launcher.jpg');
+
+        return $exifImageFiles;
+    }
 
 }
 

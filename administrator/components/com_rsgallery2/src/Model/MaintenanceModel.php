@@ -44,7 +44,7 @@ class MaintenanceModel extends BaseDatabaseModel
             }
 
             if (count($notExisitnPaths)) {
-                $notPathList = implode ($notExisitnPaths, '<br>');
+                $notPathList = implode ('<br>', $notExisitnPaths);
                 Factory::getApplication()->enqueueMessage('No paths found for <br>' . $notPathList);
             }
 
@@ -109,7 +109,6 @@ class MaintenanceModel extends BaseDatabaseModel
 
         return $galleryIds;
     }
-
 
 
 }
