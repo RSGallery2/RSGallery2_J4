@@ -17,7 +17,6 @@
 
 	<files>
 		<filename module="mod_rsg2_galleries">mod_rsg2_galleries.php</filename>
-		<!--filename>mod_rsg2_galleries.xml</filename-->
 		<folder>language</folder>
 		<folder>src</folder>
 		<folder>tmpl</folder>

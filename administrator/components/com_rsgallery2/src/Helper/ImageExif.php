@@ -41,7 +41,7 @@ class ImageExif
     // ($this->original->filePath()
     public function readExifDataAll(string $imagPathFileName = '')
     {
-        $selected = [];
+        $items = [];
 
         if ($imagPathFileName != '') {
             $this->imagPathFileName = $imagPathFileName;
@@ -96,13 +96,13 @@ class ImageExif
                         $val = implode(',', $val);
                     }
 
-                    $selected [$key . '.' . $name] = $val;
+                    $items [$key . '.' . $name] = $val;
                 }
             }
 
         }
 
-        return $selected;
+        return $items;
     }
 
     public function readExifDataSelected(string $imagPathFileName = '')

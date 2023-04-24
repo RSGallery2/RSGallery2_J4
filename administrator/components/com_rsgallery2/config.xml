@@ -908,7 +908,19 @@
 
 		<!-- ==== ToDo: isSlpExifTagSelection yes/no ========= -->
 
-		<!-- ==== ToDo:  ========= -->
+		<!-- ==== Exif selection ========= -->
+
+		<field
+				id="exifTags"
+				name="exifTags"
+ 		        type="ExifList"
+		        label="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY"
+		        description=""
+		        class="inputbox"
+		        size="5"
+		        multiple="true">
+		</field>
+
 		<!-- ==== ToDo:  ========= -->
 		<!-- ==== ToDo:  yes/no ========= -->
 		<!-- ==== ToDo:  yes/no ========= -->
