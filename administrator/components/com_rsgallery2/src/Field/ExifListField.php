@@ -56,7 +56,7 @@ class ExifListField extends ListField
                 $text = ImageExif::exifTranslationId($enabledTag);
 
                 $option = new \stdClass();
-                $option->value = $enabledTags;
+                $option->value = $enabledTag;
                 $option->text  = $text;
                 $options[]     = $option;
 
