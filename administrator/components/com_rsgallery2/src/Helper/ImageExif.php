@@ -9,11 +9,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-
-// Attention exif features may contain a array as subset
-// ToDo: should exif features be kept in DB as json ? instead of reading it when needed ?
-// ? then use selected and support recreate exif information as possibility in maintenance for changed selection with more or other elements
-//
 class ImageExif
 {
     protected string $imagPathFileName = '';
@@ -323,9 +318,10 @@ class ImageExif
 
         if ( ! empty($ExifTag)) {
 
-            if (!empty ($ExifTag[1])) {
+            $exifParts = explode(".", $ExifTag);
+            if (!empty ($exifParts[1])) {
                 // use second part of name as identifier
-                $name = explode(".", $ExifTag) [1];
+                $name = $exifParts [1];
 
                 $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($name);
             }

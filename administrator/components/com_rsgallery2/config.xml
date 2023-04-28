@@ -915,10 +915,13 @@
 				name="exifTags"
  		        type="ExifList"
 		        label="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY"
-		        description=""
+		        description="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY_DESC"
 		        class="inputbox"
 		        size="5"
-		        multiple="true">
+		        multiple="true"
+				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+				showon="isSlpShowExif:1"
+		>
 		</field>
 
 		<!-- ==== ToDo:  ========= -->

@@ -8,21 +8,15 @@
  * RSGallery is Free Software
  */
 
-// used in upload
-
-
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 
-//use Joomla\CMS\HTML\HTMLHelper;
-//use Joomla\CMS\Language\Text;
-//use Joomla\Utilities\ArrayHelper;
+use Joomla\Filesystem\Path;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 /**
  * Collects available gallery ids and names and creates
@@ -34,14 +28,6 @@ use Joomla\CMS\Language\Text;
  */
 class ExifListField extends ListField
 {
-	/**
-	 * Cached array of the category items.
-	 *
-	 * @var    array
-	 * @since __BUMP_VERSION__
-	 */
-//	protected static $options = [];
-
     /**
      * The field type.
      *
@@ -52,20 +38,6 @@ class ExifListField extends ListField
 	protected $type = 'ExifList';
 
 	/**
-	 * Method to get the field input markup for a generic list.
-	 * Use the multiple attribute to enable multiselect.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	protected function getInput()
-	{
-		return $this->getOptions() ? parent::getInput() : '';
-	}
-	/**/
-
-	/**
 	 * Method to get a list of options for a list input.
 	 *
 	 * @return  string array  The field option objects.
@@ -74,49 +46,33 @@ class ExifListField extends ListField
 	 */
 	protected function getOptions()
 	{
-		$thumbs = [];
         $options = [];
 
 		try {
-//            $galleryId = $this->form->getValue('id');
-//            //$galleryName = $this->form->getValue('name');
-//
-//            // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
-//            $db = Factory::getDbo();
-//            $query = $db->getQuery(true)
-//	            ->select($db->quoteName('id', 'value'))
-//	            ->select($db->quoteName('name', 'text'))
-//
-//                ->from('#__rsg2_images')
-//                ->where($db->quoteName('gallery_id') . '=' . (int)$galleryId)
-////				->where($db->quoteName('published') . ' = 1')
-//                ->order('id');
-//
-//            // Get the options.
-//            $images = $db->setQuery($query)->loadObjectList();
-//
-////            // Create row number to Text = "Row number -> image name" assignment
-////            foreach ($images as $image) {
-////
-////                $option = new \stdClass;
-////                $option->value = $image->idx;
-////                $option->text = $image->text; // ToDo escape text see gallery list / image list names
-////
-////                $option->style="background-image:url(male.png);";
-////
-////                $options[] = $option;
-////            }
-//
-//
-//            $options = $images;
+            $enabledTags = ImageExif::supportedExifTags();
 
-            $id = 'EXIF.xResolution';
-            $options[$id]       = new \stdClass();
-            $options[$id]->text = 'Resoution-X';
+            foreach ($enabledTags as $enabledTag) {
 
-            $id = 'EXIF.yResolution';
-            $options[$id]       = new \stdClass();
-            $options[$id]->text = 'Resoution-Y';
+                $text = ImageExif::exifTranslationId($enabledTag);
+
+                $option = new \stdClass();
+                $option->value = $enabledTags;
+                $option->text  = $text;
+                $options[]     = $option;
+
+            }
+
+            //--- load additional language file --------------------------------------
+
+            //$lang = JFactory::getLanguage();
+            //$extension = 'com_helloworld';
+            //$base_dir = JPATH_SITE;
+            //$language_tag = 'en-GB';
+            //$reload = true;
+            //$lang->load($extension, $base_dir, $language_tag, $reload);
+
+            $lang = Factory::getLanguage();
+            $lang->load('com_rsg2_exif', Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 
         }
 		catch (\RuntimeException $e)
@@ -130,27 +86,5 @@ class ExifListField extends ListField
         return $options;
 	}
 
-//    /**
-//     * Method to get the field input markup for a generic list.
-//     * Use the multiple attribute to enable multiselect.
-//     *
-//     * @return  string  The field input markup.
-//     *
-//     * @since __BUMP_VERSION__
-//     */
-//    protected function getInput()
-//    {
-//        $data = $this->getLayoutData();
-//
-//        $data['options']     = $this->getOptions();
-//        $data['allowCustom'] = $this->allowAdd;
-//
-//        $renderer = $this->getRenderer($this->layout);
-//        $renderer->setComponent('com_rsgallery2');
-//        $renderer->setClient(1);
-//
-//        $test = $renderer->render($data);
-//        return $renderer->render($data);
-//    }
 }
 
