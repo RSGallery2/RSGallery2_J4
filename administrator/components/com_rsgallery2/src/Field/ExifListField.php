@@ -15,6 +15,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 
+use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
@@ -40,7 +41,7 @@ class ExifListField extends ListField
 	/**
 	 * Method to get a list of options for a list input.
 	 *
-	 * @return  string array  The field option objects.
+	 * @return  array  The field option objects.
      *
      * @since __BUMP_VERSION__
 	 */
@@ -49,20 +50,7 @@ class ExifListField extends ListField
         $options = [];
 
 		try {
-            $enabledTags = ImageExif::supportedExifTags();
-
-            foreach ($enabledTags as $enabledTag) {
-
-                $text = ImageExif::exifTranslationId($enabledTag);
-
-                $option = new \stdClass();
-                $option->value = $enabledTag;
-                $option->text  = $text;
-                $options[]     = $option;
-
-            }
-
-            //--- load additional language file --------------------------------------
+            //--- load additional language file --------------------------------
 
             //$lang = JFactory::getLanguage();
             //$extension = 'com_helloworld';
@@ -72,7 +60,23 @@ class ExifListField extends ListField
             //$lang->load($extension, $base_dir, $language_tag, $reload);
 
             $lang = Factory::getLanguage();
-            $lang->load('com_rsg2_exif', Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+            $lang->load('com_rsg2_exif',
+                Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+
+            //--- tags ---------------------------------------------------------
+            $enabledTags = ImageExif::supportedExifTags();
+
+            foreach ($enabledTags as $enabledTag) {
+
+                $translationId = ImageExif::exifTranslationId($enabledTag);
+                $translationText = Text::_($translationId);
+
+                $option = new \stdClass();
+                $option->value = $enabledTag;
+                $option->text  = $translationText;
+                $options[]     = $option;
+
+            }
 
         }
 		catch (\RuntimeException $e)
