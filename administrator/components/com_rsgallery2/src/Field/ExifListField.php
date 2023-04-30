@@ -52,32 +52,31 @@ class ExifListField extends ListField
 		try {
             //--- load additional language file --------------------------------
 
-            //$lang = JFactory::getLanguage();
-            //$extension = 'com_helloworld';
-            //$base_dir = JPATH_SITE;
-            //$language_tag = 'en-GB';
-            //$reload = true;
-            //$lang->load($extension, $base_dir, $language_tag, $reload);
-
             $lang = Factory::getLanguage();
             $lang->load('com_rsg2_exif',
                 Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 
-            //--- tags ---------------------------------------------------------
+            //--- exif tags ---------------------------------------------------------
+
             $enabledTags = ImageExif::supportedExifTags();
 
             foreach ($enabledTags as $enabledTag) {
 
-                $translationId = ImageExif::exifTranslationId($enabledTag);
+                //--- type, name and  translation text --------------------------------
+
+                [$type, $name] = ImageExif::tag2TypeAndName ($enabledTag);
+                $translationId = ImageExif::exifTranslationId($name);
                 $translationText = Text::_($translationId);
+
+                //--- create option element ----------------------------------------------
 
                 $option = new \stdClass();
                 $option->value = $enabledTag;
-                $option->text  = $translationText;
+                //$option->text  = $translationText;
+                $option->text  = $type . ':' . $translationText;
+
                 $options[]     = $option;
-
             }
-
         }
 		catch (\RuntimeException $e)
 		{

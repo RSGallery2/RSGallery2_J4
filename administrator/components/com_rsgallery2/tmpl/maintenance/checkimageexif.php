@@ -158,16 +158,8 @@ $exifDataOfFiles = $this->exifDataOfFiles;
 							if ( ! empty ($exifDataOfFile[0])) {
 								$fileName = $exifDataOfFile[0];
 							} else {
-								$test = json_encode($exifDataOfFile);
-								// should but does not work
-								$fileName = $exifDataOfFile[0];
+								$fileName = '%unknown error for filename%';
 							}
-
-//							if (is_array($exifDataOfFile)) {
-//								$a = $v;
-//							} else {
-//								$a[] = $v;
-//							}
 
 							echo '<hr>';
 							echo '$idx: ' . $idx . '  ';
@@ -175,10 +167,6 @@ $exifDataOfFiles = $this->exifDataOfFiles;
 
 							if ( ! empty ($exifDataOfFile[1])) {
 								$exifData = $exifDataOfFile[1];
-
-//							foreach ($exifDataOfFiles as $fileName => $exifData) {
-//								echo json_encode($exifData, JSON_PRETTY_PRINT) . '<br>';
-//							}
 
 								echo '<pre>' . json_encode($exifData, JSON_PRETTY_PRINT) . '</pre><br>';
 							}

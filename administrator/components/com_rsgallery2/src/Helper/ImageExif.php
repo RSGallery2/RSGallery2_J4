@@ -9,8 +9,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
+use Joomla\CMS\Component\ComponentHelper;
+
 class ImageExif
 {
+    // Tag names are not case senitive, so use it with lower cas as often it is possible
+
     protected string $imagPathFileName = '';
 
     protected $exifData = [];
@@ -201,66 +205,6 @@ class ImageExif
 
         $supportedTags = [];
 
-        /*
-        		<field
-				id="exifTags"
-				name="exifTags"
-				type="list"
-				label="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY"
-				description=""
-				class="inputbox"
-				size="5"
-				multiple="true"
-		>
-			<option value="resolutionUnit">Resolution unit</option>
-			<option value="FileName">Filename</option>
-			<option value="FileSize">Filesize</option>
-			<option value="FileDateTime">File Date</option>
-			<option value="FlashUsed">Flash used</option>
-			<option value="imageDesc">Image description</option>
-			<option value="make">Camera make</option>
-			<option value="model">Camera model</option>
-			<option value="xResolution">X Resolution</option>
-			<option value="yResolution">Y Resolution</option>
-			<option value="software">Software used</option>
-			<option value="fileModifiedDate">File modified date</option>
-			<option value="YCbCrPositioning">YCbCrPositioning</option>
-			<option value="exposureTime">Exposure time</option>
-			<option value="fnumber">f-Number</option>
-			<option value="exposure">Exposure</option>
-			<option value="isoEquiv">ISO equivalent</option>
-			<option value="exifVersion">EXIF version</option>
-			<option value="DateTime">Date &amp; time</option>
-			<option value="dateTimeDigitized">Original date</option>
-			<option value="componentConfig">Component config</option>
-			<option value="jpegQuality">Jpeg quality</option>
-			<option value="exposureBias">Exposure bias</option>
-			<option value="aperture">Aperture</option>
-			<option value="meteringMode">Metering Mode</option>
-			<option value="whiteBalance">White balance</option>
-			<option value="flashUsed">Flash used</option>
-			<option value="focalLength">Focal lenght</option>
-			<option value="makerNote">Maker note</option>
-			<option value="subSectionTime">Subsection time</option>
-			<option value="flashpixVersion">Flashpix version</option>
-			<option value="colorSpace">Color Space</option>
-			<option value="Width">Width</option>
-			<option value="Height">Height</option>
-			<option value="GPSLatitudeRef">GPS Latitude reference</option>
-			<option value="Thumbnail">Thumbnail</option>
-			<option value="ThumbnailSize">Thumbnail size</option>
-			<option value="sourceType">Source type</option>
-			<option value="sceneType">Scene type</option>
-			<option value="compressScheme">Compress scheme</option>
-			<option value="IsColor">Color or B&amp;W</option>
-			<option value="Process">Process</option>
-			<option value="resolution">Resolution</option>
-			<option value="color">Color</option>
-			<option value="jpegProcess">Jpeg process</option>
-		</field>
-
-        /**/
-
         $supportedTags [] = 'EXIF.resolutionUnit';
         $supportedTags [] = 'EXIF.FileName';
         $supportedTags [] = 'EXIF.FileSize';
@@ -307,26 +251,75 @@ class ImageExif
         $supportedTags [] = 'EXIF.color';
         $supportedTags [] = 'EXIF.jpegProcess';
 
-        // On further additions reserve matching language names see below
+        $supportedTags [] = 'FILE.FileName';
+        $supportedTags [] = 'FILE.FileDateTime';
+        $supportedTags [] = 'FILE.FileSize';
+        $supportedTags [] = 'FILE.FileType';
+        $supportedTags [] = 'FILE.MimeType';
+        $supportedTags [] = 'FILE.SectionsFound';
+
+        $supportedTags [] = 'COMPUTED.html';
+        $supportedTags [] = 'COMPUTED.Height';
+        $supportedTags [] = 'COMPUTED.Width';
+        $supportedTags [] = 'COMPUTED.IsColor';
+        $supportedTags [] = 'COMPUTED.ByteOrderMotorola';
+        $supportedTags [] = 'COMPUTED.ApertureFNumber';
+        $supportedTags [] = 'COMPUTED.Thumbnail.FileType';
+        $supportedTags [] = 'COMPUTED.Thumbnail.MimeType';
+
+        $supportedTags [] = 'IFD0.Make';
+        $supportedTags [] = 'IFD0.Model';
+        $supportedTags [] = 'IFD0.Orientation';
+        $supportedTags [] = 'IFD0.XResolution';
+        $supportedTags [] = 'IFD0.YResolution';
+        $supportedTags [] = 'IFD0.ResolutionUnit';
+        $supportedTags [] = 'IFD0.Software';
+        $supportedTags [] = 'IFD0.DateTime';
+        $supportedTags [] = 'IFD0.YCbCrPositioning';
+        $supportedTags [] = 'IFD0.Exif_IFD_Pointer';
+        $supportedTags [] = 'IFD0.GPS_IFD_Pointer';
+
+        $supportedTags [] = 'THUMBNAIL.Compression';
+        $supportedTags [] = 'THUMBNAIL.XResolution';
+        $supportedTags [] = 'THUMBNAIL.YResolution';
+        $supportedTags [] = 'THUMBNAIL.ResolutionUnit';
+        $supportedTags [] = 'THUMBNAIL.JPEGInterchangeFormat';
+        $supportedTags [] = 'THUMBNAIL.JPEGInterchangeFormatLength';
+        $supportedTags [] = 'THUMBNAIL.YCbCrPositioning';
+
+        natcasesort($supportedTags);
 
         return $supportedTags;
     }
 
-    public static function exifTranslationId ($ExifTag) {
+    public static function tag2TypeAndName ($ExifTag) {
 
-         $translationId = '';
+        $type = '';
+        $name = '';
 
         if ( ! empty($ExifTag)) {
 
             $exifParts = explode(".", $ExifTag);
-            if (!empty ($exifParts[1])) {
-                // use second part of name as identifier
-                $name = $exifParts [1];
 
-                $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($name);
+            if (!empty ($exifParts[0])) {
+                // use second part of name as identifier
+                $type = $exifParts [0];
+            }
+
+            // use second part as name
+            if (!empty ($exifParts[1])) {
+
+                // Tag names are not case senitive, so use it with lower cas as often it is possible
+                $name = strtolower ($exifParts [1]);
             }
         }
 
+        return [$type, $name];
+    }
+
+    public static function exifTranslationId ($ExifName) {
+
+        $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifName);
         return $translationId;
     }
 
@@ -336,6 +329,10 @@ class ImageExif
 
         // ToDo: read config
 
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $userExifTags = $rsgConfig->get('exifTags');
+
 
         return $userExifTags;
     }
@@ -344,17 +341,15 @@ class ImageExif
 
         $notSupportedTags = [];
 
-        $supportedTags = self::supportedExifTags ();
+        // lower case array
+        $supportedTags = array_map('strtolower', self::supportedExifTags ());
 
-//        foreach ($existingExifTags as $existingExifTag) {
-        foreach ($existingExifTags as $existingExifTagSections) {
 
-            $existingExifTag = explode ('.', $existingExifTagSections);
-            if ( ! in_array($existingExifTag, $supportedTags)) {
+        foreach ($existingExifTags as $existingExifTag) {
 
-                // $supportedTags [] = $existingExifTag;
-                $notSupportedTags [] = $existingExifTagSections;
+            if ( ! in_array(strtolower($existingExifTag), $supportedTags)) {
 
+                $notSupportedTags [] = $existingExifTag;
             }
         }
 

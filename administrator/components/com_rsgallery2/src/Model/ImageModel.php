@@ -1597,7 +1597,7 @@ class ImageModel extends AdminModel
     /**/
     public function exifDataOfFile($filename)
     {
-        $exifDataOfFile [$filename] = [];
+        $exifDataOfFile = [$filename];
 
         try
         {
