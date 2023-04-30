@@ -55,7 +55,7 @@ if (!empty ($this->isDevelopSite))
         . '* Size of replace images (missing/no images) <br>'
     	. '* handle -voting<br>'
     	. '* handle comments<br>'
-    	. '* handle EXit<br>'
+    	. '* handle EXIF<br>'
     //	. '* <br>'
     //	. '* <br>'
     //	. '* <br>'
@@ -89,6 +89,358 @@ if (!empty ($this->isDevelopSite))
 //
 
 // 2022.11.12 moved code from php layout folder
+
+//================================================================================================
+// display functions
+//================================================================================================
+
+/**
+ * Show description (from semantic /html/inline.php)
+ */
+function _showDescription()
+{
+	global $rsgConfig;
+	// $item = rsgInstance::getItem(); deprecated
+	$gallery = rsgGalleryManager::get();
+	$item    = $gallery->getItem();;
+
+	if ($rsgConfig->get('displayHits')):
+		?>
+		<p class="rsg2_hits"><?php echo JText::_('COM_RSGALLERY2_HITS'); ?> <span><?php echo $item->hits; ?></span>
+		</p>
+	<?php
+	endif;
+
+	if ($item->descr):
+		?>
+		<p class="rsg2_description"><?php echo stripslashes($item->descr); ?></p>
+	<?php
+	endif;
+}
+
+// voting
+function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
+{
+	global $rsgConfig;
+
+	$html = [];
+
+	$html[] = '<div class="container span12">';
+
+	$html[] =  '        <div class="rsg2_rating_container">';
+
+	//--- result of rating ------------------------------------
+
+	// ToDo: add limit here and remove from *js
+	//$html[] = '                <form name="rsgvoteform" method="post" action="' . JRoute::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
+	//                                                                                         index.php/single-gallery/item/1/asInline
+	//                                                                                         index.php?option=com_rsgallery2&page=inline&id=" . $item->id
+//		$html[] = '                <form name="rsgvoteform" method="post" action="' . JRoute::_('index.php?option=com_rsgallery2&&page=inline&id="&id=' . $imageId) .'" id="rsgVoteForm">';
+	$html[] = '                <form name="rsgvoteform" method="post" action="'
+		. JRoute::_('index.php?option=com_rsgallery2&page=inline&id=' . $imageId) .'" id="rsgVoteForm">';
+
+	$html[] = '                <div class="rating-block row-fluid text-center" >';
+
+	$html[] = '                    <h4>' . JText::_('COM_RSGALLERY2_AVERAGE_USER_RATING') . '</h4>';
+	$html[] = '                    <h2 class="bold padding-bottom-7">' . $ratingData->average . '&nbsp<small>/&nbsp' . $ratingData->count . '</small></h2>';
+
+	for ($idx = 0; $idx < 5; $idx++)
+	{
+		$html[] =  '                    ' . htmlStars ($idx, $ratingData->average, $ratingData->lastRating);
+	}
+
+	if ($isVotingEnabled)
+	{
+		$html[] = '                <label id="DoVote" title="' . JText::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE_DESC') . '">' . JText::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE') . '&nbsp;&nbsp;</label>';
+
+//		$templateName = $rsgConfig->get('template');
+//		$templateUri = JURI_SITE . "/components/com_rsgallery2/templates/" . $templateName;
+//
+//		$doc = JFactory::getDocument();
+//		$vote_js = $templateUri . "/js/OneImageVote.js";
+//		$doc->addScript($vote_js);
+	}
+
+	$html[] = '                </div>'; //
+
+	$html[] = '                <input type="hidden" name="task" value="rating.rateSingleImage" />';
+	$html[] = '                <input type="hidden" name="rating" value="" />';
+	$html[] = '                <input type="hidden" name="paginationImgIdx" value="" />';
+	$html[] = '                <input type="hidden" name="id" value="' . $imageId . '" />';
+	$html[] = '                <input id="token" type="hidden" name="' . JSession::getFormToken() . '" value="1" />';
+
+	$html[] = '                </form>';
+
+	$html[] =  '		</div>'; // rsg2_exif_container
+
+	$html[] = '</div>'; // class="container span12">';
+
+	return implode("\n", $html);
+}
+
+function htmlComments ($comments, $gid, $imageId)
+{
+//	// toDo improve ....
+//	// https://bootsnipp.com/snippets/Vp4P
+//	// https://bootsnipp.com/snippets/featured/comment-posts-layout
+//	// https://bootsnipp.com/snippets/featured/blog-post-footer
+//	// sophisticated
+//	// https://bootsnipp.com/snippets/featured/collapsible-tree-menu-with-accordion
+//	// https://bootsnipp.com/snippets/a35Pl
+//
+//	$formFields = $comments->formFields;
+//	$imgComments = $comments->comments;
+//
+//	$html = [];
+//
+//	$html[] = '<div class="container span12">';
+//
+//	$html[] =  '        <div class="rsg2_comments_container">';
+//
+//	if (empty($imgComments))
+//	{
+//		$html[] = '<div id="comment">';
+//		$html[] = '    <table width="100%" class="comment_table">';
+//		$html[] = '        <tr>';
+//		$html[] = '            <td class="title">';
+//		$html[] = '                <span class="posttitle">' . JText::_('COM_RSGALLERY2_NO_COMMENTS_YET') . ' <br></span>';
+//		$html[] = '                 ';
+//		$html[] = '                 <br>';
+//		$html[] = '            </td>';
+//		$html[] = '        </tr>';
+//		$html[] = '    </table>';
+//		$html[] = '</div>';
+//	}
+//	else
+//	{
+//		// Comments existing
+//
+//		//--- add comment link bar -------------------------------------------------
+//
+//		$html[] = '<div id="comment" class="title pull-right">';
+//
+//		$html[] = '    <button class="btn btn-success" type="button">';
+//		$html[] = '        <i class="icon-comment"></i>';
+//		$html[] = '	       <a class="special" href="#lblAddComment">' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//		//$html[] = '	       <a class="special" href="#bottom">' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//		//$html[] = '	       <a class="special" href="#commentUserName">' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//		$html[] = '    </button>';
+//		$html[] = '';
+//
+//		$html[] = '</div>';
+//
+//		// $html[] = '<div class="clearfix" />';
+//
+//		//--- existing comments -----------------------------------------------------
+//
+//		/**/
+//		// each comment
+//		foreach ($imgComments as $comment)
+//		{
+//
+//			// $html[] = '<div class="row">';
+//
+//			$html[] = '<div class="media">';
+//
+//			$html[] = '    <a class="pull-left span2" href="#">';
+//			//$html[] = '<div class="thumbnail">';
+//
+//			// $html[] = '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+//			$html[] = '        <div>';
+//			//$html[] = '            <i class="icon-user large-icon" style="font-size:24px;"></i>';
+//			$html[] = '            <i class="icon-user large-icon"></i>';
+//			$html[] = '            <strong>' . $comment->user_name . '</strong>';
+//			//$html[] = '            <br> <span class="text-muted">commented 5 days ago</span>';
+//			$html[] = '        </div>';
+//
+//			//$html[] = '</div>'; //<!-- /thumbnail -->
+//			$html[] = '    </a>';
+//
+//
+//			$html[] = '<div class="clearfix" >';
+//
+//
+//			$html[] = '    <div class="media-body  span10">';
+//			//$html[] = '        <i class="icon-comment large-icon" style="font-size:24px;"></i>';
+//			$html[] = '        <i class="icon-comment large-icon"></i>';
+//			$html[] = '        <strong class="media-heading title">' . $comment->subject . '</strong>';
+//			//$html[] = '        <strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>';
+//
+//			$html[] = '        <p><div>' . $comment->comment . '</div></p>';
+//
+//			$html[] = '    </div>';
+//			$html[] = '';
+//
+//			$html[] = '</div>';
+//
+//			$html[] = '</div>'; // class="media">';
+//
+//			$html[] = '<hr>';
+//		}
+//
+//		/**/
+//	}
+//
+//	//--- add comment -----------------------------------------------------
+//
+//
+//	// Manipulate form fieldset "name" depending on user
+//	$user = JFactory::getUser();
+//	// User is logged in
+//	if ( ! empty($user->id))
+//	{
+//		$user4Form ['commentUserName'] = $user->name;
+//		//$this->bind ($user4Form);
+//		//JForm::bind($user4Form);
+//		// $this->params_form = $params_form; see alsi where comments are collected
+//		/**
+//		$params = YireoHelper::toRegistry($this->item->params)->toArray();
+//		$params_form = JForm::getInstance('params', $file);
+//		$params_form->bind(array('params' => $params));
+//		$this->params_form = $params_form;
+//		/**/
+//	}
+//
+//	$html[] = '';
+//
+//	//$html[] = '<a name="lblAddComment"></a>';
+//	$html[] = '<a id="lblAddComment"></a>';
+//
+//	/**/
+//	//$html[] = '<hr>';
+//	$html[] = '';
+//	$html[] = '<div class="clearfix" >';
+//
+//	$html[] = '                <form name="rsgCommentForm" class="form-horizontal" method="post"';
+//	$html[] = '                    action="' . JRoute::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
+//
+//	$html[] = '                    <div class ="well">';
+//	$html[] = '                        <h4>'. JText::_('COM_RSGALLERY2_CREATE_COMMENT') . '</h4>';
+//
+//	// ToDo: text-align="center
+//	$html[] = '                        <button id="commitSend" class="btn btn-primary pull-right" ';
+//	$html[] = '                            type="submit" ';
+////    $html[] = '						       onclick="Joomla.submitbutton(\'comment.saveComment\')"';
+//	$html[] = '						       onclick="Joomla.submitbutton(this.form);return false" ';
+//	$html[] = '							   title="' . JText::_('COM_RSGALLERY2_SEND_COMMENT_DESC') . '">';
+//	$html[] = '						       <i class="icon-save"></i> ' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '';
+//	$html[] = '						   </button>';
+//
+//	$html[] = '                        ' . $formFields->renderFieldset ('comment');
+//
+//	$html[] = '                    	   <input type="hidden" name="task" value="comment.addComment" />';
+//	$html[] = '                    	   <input type="hidden" name="rating" value="" />';
+//	$html[] = '                    	   <input type="hidden" name="paginationImgIdx" value="" />';
+//	$html[] = '                    	   <input type="hidden" name="id" value="' . $imageId . '" />';
+//	$html[] = '                    	   <input id="token" type="hidden" name="' . JSession::getFormToken() . '" value="1" />';
+//
+//	$html[] = '                    </div>';
+//	$html[] = '                </form>';
+//	/**/
+//	$html[] = '</div>';
+//
+//	$html[] = '            </div>'; // container
+//
+//	$html[] = '</div>'; // class="container">';
+
+	$html[] = '';
+
+	return implode("\n", $html);
+}
+
+function htmlExifData ($exifTags)
+{
+//	$html = [];
+//
+//	$html[] = '<div class="container span12">';
+//
+//	$html[] =  '        <div class="rsg2_exif_container">';
+//	$html[] =  '            <dl class="dl-horizontal">';
+//
+//	// user requested EXIF tags
+//	foreach ($exifData as $exifKey => $exifValue)
+//	{
+//		$html[] =  '            <dt>' . Text::_($exifKey) . '</dt><dd>' . $exifValue . '</dd>';
+//	}
+//
+//	$html[] =  '            </dl>';
+//	$html[] =  '		</div>'; // rsg2_exif_container
+//
+//	$html[] = '</div>'; // class="container span12">';
+//
+//	return implode("\n", $html);
+
+	?>
+	<div class="container span12">
+
+        <div class="rsg2_exif_container">
+            <dl class="dl-horizontal">
+
+	            <?php // user requested EXIF tags ?>
+	            <?php foreach ($exifTags as $exifKey => $exifValue): ?>
+						<dt><?php Text::_($exifKey); ?></dt><dd><?php $exifValue?></dd>'
+	            <?php endforeach; ?>
+
+            </dl>
+		</div>
+
+	</div>
+<?php
+}
+
+
+function htmlStars ($idx, $average, $lastRating)
+{
+	$html = [];
+
+	$intAvg = (int) floor($average);
+	$avgRem = ((double) $average) - $intAvg; // reminder
+
+	$isSelected = "";
+	if ($lastRating > 0 && ($lastRating -1) == $idx)
+	{
+		$isSelected = "checked";
+	}
+
+	$isButtonActive = false;
+	$isHalfStar = false;
+	if ($idx < $intAvg)
+	{
+		$isButtonActive = true;
+	}
+
+	if ($idx == $intAvg)
+	{
+		if ($avgRem > 0.49)
+		{
+			$isHalfStar = true;
+			$isButtonActive = true;
+		}
+	}
+
+	if ($isHalfStar) {
+		$iconClass = "icon-star-2";
+	}
+	else
+	{
+		$iconClass = "icon-star";
+	}
+
+	$buttonClassAdd = 'btn-warning ';
+	if ( ! $isButtonActive)
+	{
+		$buttonClassAdd = 'btn-default btn-grey ';
+	}
+
+	$html[] = '<button id="star_' . ($idx+1) . '" type="button" class="btn ' .  $buttonClassAdd . ' btn-mini btn_star ' .  $isSelected . '" aria-label="Left Align">';
+	$html[] = '    <span class="' . $iconClass . '" aria-hidden="true"></span>';
+	$html[] = '</button>';
+
+	return implode("\n", $html);
+}
+
+
+
 
 //	$images = $this->items;
 	$image_idx = $this->imageIdx;
@@ -174,7 +526,7 @@ if (!empty ($this->isDevelopSite))
 
 				    <tr>
 					    <td>
-	                    <?php if ($this->params->get('show_pagination', 2)) : ?>
+	                    <?php if ($this->isShowPagination) : ?>
 <!--						    <p>-->
 						    <div class="rsg2-j3x-pagination">
 
@@ -205,77 +557,97 @@ if (!empty ($this->isDevelopSite))
 
 				    <tr>
 					    <td>
-<!--					    <p><h3>Todo if or not if </h3></p>-->
-<!--					    <div class="page_inline_tabs_description">-->
-						    <div class="card bg-light ">
-							    <div class="card-body">
-								    <div class="container page_inline_hits">
-									    <i class="fas fa-flag"></i>
-									    <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
+						    <?php if ($this->isShowDescription) : ?>
+
+	<!--					    <p><h3>Todo description if or not if </h3></p>-->
+	<!--					    <div class="page_inline_tabs_description">-->
+							    <div class="card bg-light ">
+								    <div class="card-body">
+									    <div class="container page_inline_hits">
+										    <i class="fas fa-flag"></i>
+										    <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
+									    </div>
 								    </div>
 							    </div>
-						    </div>
-						    <div class="card bg-light ">
-							    <div class="card-body">
-	                                <?php echo $image->description; ?>
+							    <div class="card bg-light ">
+								    <div class="card-body">
+		                                <?php echo $image->description; ?>
+								    </div>
 							    </div>
-						    </div>
-						    <div class="page_inline_description">
-						    </div>
-<!--					    </div>-->
+							    <div class="page_inline_description">
+							    </div>
+						    <?php endif; ?>
 					    </td>
 
 				    </tr>
 
 				    <tr>
 					    <td>
-<!--					    <p><h3>Todo script for voting</h3></p>-->
+						    <?php if ($this->isShowVoting) : ?>
 
-					    <div class="rating-block row-fluid text-center">
-<!--						    <p><h3>Todo if or not if </h3></p>-->
-						    <h4>Average user rating</h4>
-						    <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
-						    </h2>
-						    <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
-						    <button id="star_1"
-						            type="button"
-						            class="btn btn-default btn-grey  btn-mini btn_star "
-						            aria-label="Left Align">
-							    <i class="fas fa-solid fa-star"></i>
-						    </button>
-						    <button id="star_2"
-						            type="button"
-						            class="btn btn-default btn-grey  btn-mini btn_star "
-						            aria-label="Left Align">
-							    <i class="fas fa-solid fa-star"></i>
-						    </button>
-						    <button id="star_3"
-						            type="button"
-						            class="btn btn-default btn-grey  btn-mini btn_star "
-						            aria-label="Left Align">
-							    <i class="fas fa-solid fa-star"></i>
-						    </button>
-						    <button id="star_4"
-						            type="button"
-						            class="btn btn-default btn-grey  btn-mini btn_star "
-						            aria-label="Left Align">
-							    <i class="fas fa-solid fa-star"></i>
-						    </button>
-						    <button id="star_5"
-						            type="button"
-						            class="btn btn-default btn-grey  btn-mini btn_star "
-						            aria-label="Left Align">
-							    <i class="fas fa-solid fa-star"></i>
-						    </button>
-						    <label id="DoVote"
-						           title="Rate image by click on star button">Rate image&nbsp;&nbsp;
-						    </label>
-					    </div>
+							    <div class="rating-block row-fluid text-center">
+								    <h4>Average user rating</h4>
+								    <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
+								    </h2>
+								    <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
+								    <button id="star_1"
+								            type="button"
+								            class="btn btn-default btn-grey  btn-mini btn_star "
+								            aria-label="Left Align">
+									    <i class="fas fa-solid fa-star"></i>
+								    </button>
+								    <button id="star_2"
+								            type="button"
+								            class="btn btn-default btn-grey  btn-mini btn_star "
+								            aria-label="Left Align">
+									    <i class="fas fa-solid fa-star"></i>
+								    </button>
+								    <button id="star_3"
+								            type="button"
+								            class="btn btn-default btn-grey  btn-mini btn_star "
+								            aria-label="Left Align">
+									    <i class="fas fa-solid fa-star"></i>
+								    </button>
+								    <button id="star_4"
+								            type="button"
+								            class="btn btn-default btn-grey  btn-mini btn_star "
+								            aria-label="Left Align">
+									    <i class="fas fa-solid fa-star"></i>
+								    </button>
+								    <button id="star_5"
+								            type="button"
+								            class="btn btn-default btn-grey  btn-mini btn_star "
+								            aria-label="Left Align">
+									    <i class="fas fa-solid fa-star"></i>
+								    </button>
+								    <label id="DoVote"
+								           title="Rate image by click on star button">Rate image&nbsp;&nbsp;
+								    </label>
+							    </div>
+						    <?php endif; ?>
 					    </td>
 				    </tr>
 
 				    <tr>
+					    <td>
+						    <?php if ($this->isShowComments) : ?>
 
+							     <p><h3>Todo script for COMMENTS</h3></p>
+
+							    <?php echo htmlComments ($image->comments, $image->gallery_id, $image->id); ?>
+						    <?php endif; ?>
+					    </td>
+				    </tr>
+
+				    <tr>
+					    <td>
+						    <?php if ($this->isShowExif) : ?>
+
+							     <p><h3>Todo script for exif</h3></p>
+
+							    <?php echo htmlExifData ($image->exifTags); ?>
+						    <?php endif; ?>
+					    </td>
 				    </tr>
 			    </tbody>
 		    </table>

@@ -13,7 +13,7 @@ use Joomla\CMS\Component\ComponentHelper;
 
 class ImageExif
 {
-    // Tag names are not case senitive, so use it with lower cas as often it is possible
+    // Tag names are not case-sensitive, so use it with lower case as often it is possible
 
     protected string $imagPathFileName = '';
 
@@ -37,7 +37,6 @@ class ImageExif
         }
     }
 
-    // ($this->original->filePath()
     public function readExifDataAll(string $imagPathFileName = '')
     {
         $items = [];
@@ -74,7 +73,8 @@ class ImageExif
         // required_sections: (second parameter) FILE, COMPUTED, ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
 
 
-        // ??? ini_set('exif.encode_unicode', 'UTF-8');
+        ini_set('exif.encode_unicode', 'UTF-8');
+        // ini_set('exif.decode_unicode_motorola', 'UCS-2LE');
 
         // check if readable
         if (exif_read_data($imagPathFileName, 'IFD0')) {
@@ -83,7 +83,6 @@ class ImageExif
 
             foreach ($exifData as $key => $section) {
 
-// if (is_array($section)) {
                 foreach ($section as $name => $val) {
                     $type = gettype ($val);
                     if (json_encode ($val) === false){
@@ -101,55 +100,42 @@ class ImageExif
 
         }
 
+        // $test = natcasesort($items);
+        $test = ksort($items, \SORT_NATURAL | \SORT_FLAG_CASE);
+
         return $items;
     }
 
-    public function readExifDataSelected(string $imagPathFileName = '')
+    public function readExifDataUserSelected($supportedTags = [])
     {
         $selected = [];
 
-        // align both file names
-        if ($imagPathFileName != '') {
-            $this->imagPathFileName = $imagPathFileName;
-        } else {
-            $imagPathFileName = $this->imagPathFileName;
-        }
+        $exifItems = $this->readExifDataAll ($this->imagPathFileName);
 
-        if (!function_exists('exif_read_data')) {
-            return $selected;
-        }
+        // $supportedTags = $this->userExifTags();
 
-        $supportedTags = $this->userExifTags();
-//        // Debug: use all (J3x tags)
-//        $supportedTags = $this->supportedExifTags();
-
-        // required_sections: (second parameter) FILE, COMPUTED,	ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
-
-        // check if readable
-        if (exif_read_data($imagPathFileName, 'IFD0')) {
-            // do read
-            $exifData = exif_read_data($imagPathFileName, 0, true);
-        }
-
-        // IPTC auslesen
-//             // Beim Auslesen der IPTC-Daten wird es schon etwas trickreicher. Das funktioniert über die Funktion getimagesize, genauer gesagt über den Zusatzparameter $info.
+//        foreach ($exifItems as $key => $section) {
 //
-//             $size = getimagesize($imagPathFileName, $imgInfo);
-//
-//             if (isset($imgInfonfos["APP13"])) {
-//
-//                 $iptc_orig = iptcparse($imgInfo["APP13"]);
-//
-//                 var_dump($iptc_orig);
-//
-//             } else {
-//                 echo "Keine IPTC-Daten ";
-//             }
+//            foreach ($section as $name => $val) {
+//                if (in_array(strtolower ($name), $supportedTags)) {
+//                    $selected [$name] = $val;
+//                }
+//            }
+//        }
 
-        foreach ($exifData as $key => $section) {
-            foreach ($section as $name => $val) {
-                if (in_array($name, $supportedTags)) {
-                    $selected [$name] = $val;
+        // user has selected tags
+        if (! empty ($supportedTags)) {
+
+            foreach ($exifItems as $name => $value) {
+
+                if (str_contains($name, 'image')) {
+
+                    $test = 4;
+
+                }
+
+                if (in_array(strtolower($name), $supportedTags)) {
+                    $selected [$name] = $value;
                 }
             }
         }
@@ -157,135 +143,93 @@ class ImageExif
         return $selected;
     }
 
-    // do use for debug purposes only
-    public function exifData_FeatureTags()
-    {
-        if (empty($this->exifFeatureTags)) {
-            $exifFeatureTags = [];
-
-            foreach ($this->exifData as $key => $value) {
-
-                if ( ! is_array ($value)) {
-
-                    $this->exifFeatureTags [] = $key;
-
-                }
-                else
-                {
-                    // debug it ;-)
-                    $test_outer = json_encode ($value);
-                    foreach ($value as $item) {
-
-                        $test = json_encode ($item);
-
-                    }
-
-                }
-
-            }
-
-        }
-
-        return $this->exifFeatureTags;
-    }
-
-    // do use for debug purposes only
-    public function exifData_Features()
-    {
-
-    }
-
-    public function exifData_SelectedFeatures($selectedNames = [])
-    {
-
-
-    }
 
     public static function supportedExifTags () {
 
         $supportedTags = [];
 
-        $supportedTags [] = 'EXIF.resolutionUnit';
-        $supportedTags [] = 'EXIF.FileName';
-        $supportedTags [] = 'EXIF.FileSize';
-        $supportedTags [] = 'EXIF.FileDateTime';
-        $supportedTags [] = 'EXIF.FlashUsed';
-        $supportedTags [] = 'EXIF.imageDesc';
-        $supportedTags [] = 'EXIF.make';
-        $supportedTags [] = 'EXIF.model';
-        $supportedTags [] = 'EXIF.xResolution';
-        $supportedTags [] = 'EXIF.yResolution';
-        $supportedTags [] = 'EXIF.software';
-        $supportedTags [] = 'EXIF.fileModifiedDate';
-        $supportedTags [] = 'EXIF.YCbCrPositioning';
-        $supportedTags [] = 'EXIF.exposureTime';
-        $supportedTags [] = 'EXIF.fnumber';
-        $supportedTags [] = 'EXIF.exposure';
-        $supportedTags [] = 'EXIF.isoEquiv';
-        $supportedTags [] = 'EXIF.exifVersion';
+        $supportedTags [] = 'EXIF.aperture';
+        $supportedTags [] = 'EXIF.color';
+        $supportedTags [] = 'EXIF.colorSpace';
+        $supportedTags [] = 'EXIF.componentConfig';
+        $supportedTags [] = 'EXIF.compressScheme';
         $supportedTags [] = 'EXIF.DateTime';
         $supportedTags [] = 'EXIF.dateTimeDigitized';
-        $supportedTags [] = 'EXIF.componentConfig';
-        $supportedTags [] = 'EXIF.jpegQuality';
+        $supportedTags [] = 'EXIF.exifVersion';
+        $supportedTags [] = 'EXIF.exposure';
         $supportedTags [] = 'EXIF.exposureBias';
-        $supportedTags [] = 'EXIF.aperture';
-        $supportedTags [] = 'EXIF.meteringMode';
-        $supportedTags [] = 'EXIF.whiteBalance';
-        $supportedTags [] = 'EXIF.flashUsed';
-        $supportedTags [] = 'EXIF.focalLength';
-        $supportedTags [] = 'EXIF.makerNote';
-        $supportedTags [] = 'EXIF.subSectionTime';
+        $supportedTags [] = 'EXIF.exposureTime';
+        $supportedTags [] = 'EXIF.FileDateTime';
+        $supportedTags [] = 'EXIF.fileModifiedDate';
+        $supportedTags [] = 'EXIF.FileName';
+        $supportedTags [] = 'EXIF.FileSize';
         $supportedTags [] = 'EXIF.flashpixVersion';
-        $supportedTags [] = 'EXIF.colorSpace';
-        $supportedTags [] = 'EXIF.Width';
-        $supportedTags [] = 'EXIF.Height';
+        $supportedTags [] = 'EXIF.flashUsed';
+        $supportedTags [] = 'EXIF.FlashUsed';
+        $supportedTags [] = 'EXIF.Fnumber';
+        $supportedTags [] = 'EXIF.focalLength';
         $supportedTags [] = 'EXIF.GPSLatitudeRef';
-        $supportedTags [] = 'EXIF.Thumbnail';
-        $supportedTags [] = 'EXIF.ThumbnailSize';
-        $supportedTags [] = 'EXIF.sourceType';
-        $supportedTags [] = 'EXIF.sceneType';
-        $supportedTags [] = 'EXIF.compressScheme';
+        $supportedTags [] = 'EXIF.ImageDescription';
+        $supportedTags [] = 'EXIF.ImageLength';
+        $supportedTags [] = 'EXIF.ImageWidth';
         $supportedTags [] = 'EXIF.IsColor';
+        $supportedTags [] = 'EXIF.isoEquiv';
+        $supportedTags [] = 'EXIF.jpegProcess';
+        $supportedTags [] = 'EXIF.jpegQuality';
+        $supportedTags [] = 'EXIF.make';
+        $supportedTags [] = 'EXIF.makerNote';
+        $supportedTags [] = 'EXIF.meteringMode';
+        $supportedTags [] = 'EXIF.model';
         $supportedTags [] = 'EXIF.Process';
         $supportedTags [] = 'EXIF.resolution';
-        $supportedTags [] = 'EXIF.color';
-        $supportedTags [] = 'EXIF.jpegProcess';
+        $supportedTags [] = 'EXIF.resolutionUnit';
+        $supportedTags [] = 'EXIF.sceneType';
+        $supportedTags [] = 'EXIF.software';
+        $supportedTags [] = 'EXIF.sourceType';
+        $supportedTags [] = 'EXIF.subSectionTime';
+        $supportedTags [] = 'EXIF.Thumbnail';
+        $supportedTags [] = 'EXIF.ThumbnailSize';
+        $supportedTags [] = 'EXIF.version';
+        $supportedTags [] = 'EXIF.whiteBalance';
+        $supportedTags [] = 'EXIF.xResolution';
+        $supportedTags [] = 'EXIF.YCbCrPositioning';
+        $supportedTags [] = 'EXIF.yResolution';
 
-        $supportedTags [] = 'FILE.FileName';
         $supportedTags [] = 'FILE.FileDateTime';
+        $supportedTags [] = 'FILE.FileName';
         $supportedTags [] = 'FILE.FileSize';
         $supportedTags [] = 'FILE.FileType';
         $supportedTags [] = 'FILE.MimeType';
         $supportedTags [] = 'FILE.SectionsFound';
 
-        $supportedTags [] = 'COMPUTED.html';
-        $supportedTags [] = 'COMPUTED.Height';
-        $supportedTags [] = 'COMPUTED.Width';
-        $supportedTags [] = 'COMPUTED.IsColor';
-        $supportedTags [] = 'COMPUTED.ByteOrderMotorola';
         $supportedTags [] = 'COMPUTED.ApertureFNumber';
+        $supportedTags [] = 'COMPUTED.ByteOrderMotorola';
+        $supportedTags [] = 'COMPUTED.Height';
+        $supportedTags [] = 'COMPUTED.html';
+        $supportedTags [] = 'COMPUTED.IsColor';
         $supportedTags [] = 'COMPUTED.Thumbnail.FileType';
         $supportedTags [] = 'COMPUTED.Thumbnail.MimeType';
+        $supportedTags [] = 'COMPUTED.Width';
 
+        $supportedTags [] = 'IFD0.DateTime';
+        $supportedTags [] = 'IFD0.Exif_IFD_Pointer';
+        $supportedTags [] = 'IFD0.GPS_IFD_Pointer';
         $supportedTags [] = 'IFD0.Make';
         $supportedTags [] = 'IFD0.Model';
         $supportedTags [] = 'IFD0.Orientation';
-        $supportedTags [] = 'IFD0.XResolution';
-        $supportedTags [] = 'IFD0.YResolution';
         $supportedTags [] = 'IFD0.ResolutionUnit';
         $supportedTags [] = 'IFD0.Software';
-        $supportedTags [] = 'IFD0.DateTime';
+        $supportedTags [] = 'IFD0.XResolution';
         $supportedTags [] = 'IFD0.YCbCrPositioning';
-        $supportedTags [] = 'IFD0.Exif_IFD_Pointer';
-        $supportedTags [] = 'IFD0.GPS_IFD_Pointer';
+        $supportedTags [] = 'IFD0.YResolution';
 
         $supportedTags [] = 'THUMBNAIL.Compression';
-        $supportedTags [] = 'THUMBNAIL.XResolution';
-        $supportedTags [] = 'THUMBNAIL.YResolution';
-        $supportedTags [] = 'THUMBNAIL.ResolutionUnit';
         $supportedTags [] = 'THUMBNAIL.JPEGInterchangeFormat';
         $supportedTags [] = 'THUMBNAIL.JPEGInterchangeFormatLength';
+        $supportedTags [] = 'THUMBNAIL.ResolutionUnit';
+        $supportedTags [] = 'THUMBNAIL.XResolution';
         $supportedTags [] = 'THUMBNAIL.YCbCrPositioning';
+        $supportedTags [] = 'THUMBNAIL.YResolution';
 
         natcasesort($supportedTags);
 
@@ -323,16 +267,14 @@ class ImageExif
         return $translationId;
     }
 
-    public static function userExifTags()
+    public static function userExifTagsJ3x()
     {
         $userExifTags = [];
 
-        // ToDo: read config
-
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-        $userExifTags = $rsgConfig->get('exifTags');
 
+        // lower case array
+        $userExifTags = array_map('strtolower', $rsgConfig->get('exifTagsJ3x'));
 
         return $userExifTags;
     }
@@ -353,6 +295,8 @@ class ImageExif
             }
         }
 
+        natcasesort($notSupportedTags);
+
         return $notSupportedTags;
     }
 
@@ -360,7 +304,7 @@ class ImageExif
     {
         $notUserExifTags = [];
 
-        $userTags = self::userExifTags ();
+        $userTags = self::userExifTagsJ3x ();
 
 //        foreach ($existingExifTags as $existingExifTag) {
         foreach ($existingExifTags as $existingExifTagSections) {
@@ -374,7 +318,24 @@ class ImageExif
             }
         }
 
+        natcasesort($notUserExifTags);
+
         return $notUserExifTags;
+    }
+
+    public static function neededTranslationIds()
+    {
+        $neededIds = [];
+
+        $supportedExifTags = self::supportedExifTags ();
+
+        foreach ($supportedExifTags as $supportedExifTag) {
+
+            [$type, $name] = ImageExif::tag2TypeAndName ($supportedExifTag);
+            $neededIds [] = ImageExif::exifTranslationId($name);
+        }
+
+        return $neededIds;
     }
 
 }

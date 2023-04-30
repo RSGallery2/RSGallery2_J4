@@ -1567,7 +1567,7 @@ class ImageModel extends AdminModel
 
 
     /**/
-    public function exifDataOfFiles ($filenames)
+    public function exifDataAllOfFiles ($filenames)
     {
         $exifDataOfFiles = [];
 
@@ -1583,7 +1583,7 @@ class ImageModel extends AdminModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'Error executing exifDataOfFile: "' . count ($filenames) . '<br>';
+            $OutTxt .= 'Error executing exifDataAllOfFiles: "' . count ($filenames) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = JFactory::getApplication();
@@ -1616,6 +1616,93 @@ class ImageModel extends AdminModel
         {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataOfFile: "' . $filename . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $exifDataOfFile;
+    }
+    /**/
+
+    /**/
+    /**
+     *
+     * @param $filenames
+     *
+     * @return array Return exif item list of 'translation Id' => value for each file
+     *
+     * @since version
+     */
+    public function exifDataFilesUserSelected ($filenames)
+    {
+        $exifDataOfFiles = [];
+
+        try
+        {
+            $userExifTags = ImageExif::userExifTagsJ3x();
+
+            foreach ($filenames as $filename) {
+
+                $exifDataOfFiles [] = $this->exifDataUserSelected ($filename, $userExifTags);
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing exifDataFilesUserSelected: "' . count ($filenames) . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $exifDataOfFiles;
+    }
+
+    /**
+     * @param $filename
+     * @param $userExifTags
+     *
+     * @return arrayReturn exif item list of 'translation Id' => value
+
+     *
+     * @since version
+     */
+    public function exifDataUserSelected($filename, $userExifTags)
+    {
+        $exifDataOfFile = [$filename];
+
+        try
+        {
+            //--- collect by exif names --------------------------------------
+
+            $oImageExif = new ImageExif ($filename);
+
+            $exifItems = $oImageExif->readExifDataUserSelected($userExifTags);
+
+            //--- translate ID for names -------------------------------------
+
+            $exifTranslated = [];
+            foreach ($exifItems as $name => $value)
+            {
+                $transId = $oImageExif::exifTranslationId($name);
+                $exifTranslated[$transId] = $value;
+            }
+            //---  -----------------------------------------------------------
+
+            if ( ! empty ($exifTranslated))
+            {
+                $exifDataOfFile = [$filename, $exifTranslated];
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing exifDataUserSelected: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = JFactory::getApplication();

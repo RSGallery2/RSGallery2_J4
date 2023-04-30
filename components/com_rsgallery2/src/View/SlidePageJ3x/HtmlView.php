@@ -105,11 +105,19 @@ class HtmlView extends BaseHtmlView
         // Get some data from the models
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
+
         $params =
         $this->params     = $this->state->get('params');
         $this->user       = Factory::getUser();
 
-        $this->isDebugSite = $params->get('isDebugSite'); 
+        $this->isShowPagination = $params->get('show_pagination', 2);
+        $this->isShowDescription = $params->get('isSlpShowImgDescriptionJ3x', false);
+        $this->isShowDownload = $params->get('isSlpShowDownloadJ3x', false);
+        $this->isShowVoting = $params->get('isSlpShowVotingJ3x', false);
+        $this->isShowComments = $params->get('isSlpShowCommentsJ3x', false);
+        $this->isShowExif = $params->get('isSlpShowExifJ3x', false);
+
+        $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
         //--- pagination ------------------------------------
@@ -158,24 +166,28 @@ class HtmlView extends BaseHtmlView
             //$data = $model->AddLayoutData ($this->items);
         }
 
-        // exif ....
+        //--- exif data --------------------------------------------------------
+
         if ( ! empty ($this->image )) {
 
-            // exif ....
-            if(true){
-            //if ($this->params->get('isSlpShowExif', 0, 'INT')){
+            if($this->isShowExif){
 
+                // image to dislay exits
+                if ( ! empty ($this->image)) {
+                    // tags from config
+                    $userExifTags = ImageExif::userExifTagsJ3x();
 
-                $selectedTags = [];
-                // $selectedTags = $this->params->get('isSlpExifTagSelection',  array(), 'array');
-                $ImageExif = new ImageExif($this->image->OriginalFile);
+//                //
+//                $ImageExif = new ImageExif($this->image->OriginalFile);
+//
+//                // see image model
+//                $ImageExifTags = $ImageExif->readExifDataSelected($userExifTags);
 
-                $ImageExifFeatures = $ImageExif->readExifDataAll($selectedTags);
-                // $ImageExifFeatures = $ImageExif->readExifDataSelected($selectedTags);
-
+                    $ImageExifTags = $model->exifDataUserSelected($this->image->OriginalFile, $userExifTags);
+                    $this->image->exifTags = $ImageExifTags;
+                }
             }
         }
-
 
         if (count($errors = $this->get('Errors')))
         {

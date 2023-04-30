@@ -65,7 +65,7 @@ class HtmlView extends BaseHtmlView
     protected $pageclass_sfx = '';
 
     /**
-     * The logged in user
+     * The logged-in user
      *
      * @var    \JUser|null
      * @since  4.0.0

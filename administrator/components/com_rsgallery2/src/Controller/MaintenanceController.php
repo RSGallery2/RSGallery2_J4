@@ -263,7 +263,7 @@ class MaintenanceController extends BaseController
 //                    //--- collect EXIF data of files -----------------------------------
 //
 //                    $modelImage      = $this->getModel('image');
-//                    $exifDataOfFiles = $modelImage->exifDataOfFiles($fileNames);
+//                    $exifDataOfFiles = $modelImage->exifDataAllOfFiles($fileNames);
 //
 //                    //--- prepare send to form ---------------------------------
 //

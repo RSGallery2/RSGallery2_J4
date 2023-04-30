@@ -32,7 +32,7 @@ use Joomla\CMS\Router\Route;
 $name='path file name';
 $value='';
 
-$exifDataOfFiles = $this->exifDataOfFiles;
+$exifDataOfFiles = $this->exifDataRawOfFiles;
 
 
 ?>
@@ -47,16 +47,25 @@ $exifDataOfFiles = $this->exifDataOfFiles;
 		<?php endif; ?>
 
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
 
+
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
 				<div class="d-flex flex-row">
 					<div class="flex-fill">
 						<div id="j-main-container" class="j-main-container">
-							<div>
+							<?php if (empty($exifDataOfFiles)) : ?>
+							<div class="d-flex flex-row">
+								<h3>*<?php echo Text::_('No Exif data available: Select file(s) manually and use button above'); ?></h3>
 
-<!--								<table class="table table-striped w-auto" id="imageFileList">-->
+								<BR>
+								<div>
+									<?php endif; ?>
+
+									<div>
+
+										<!--								<table class="table table-striped w-auto" id="imageFileList">-->
 								<table class="table w-auto" id="imageFileList">
 
 									<caption id="captionTable" class="sr-only">
@@ -256,6 +265,19 @@ $exifDataOfFiles = $this->exifDataOfFiles;
 						}
 					}
 
+
+					//--- Missing translation tags ----------------------------------------------------------------------
+
+					echo '<hr>';
+					echo '<h2>' . '*Tags translation ID mmissing oin *.ini file ' .  '</h2>';
+
+					if ( ! empty ($this->exifMissingTranslations)) {
+
+						foreach ($this->exifMissingTranslations as $translationId) {
+
+							echo $translationId . '<br>';
+						}
+					}
 
 					?>
 

@@ -133,7 +133,7 @@ class HtmlView extends BaseHtmlView
                 $input = $app->input;
 
                 // fall back
-                $this->exifDataOfFiles = [];
+                $this->exifDataRawOfFiles = [];
 
                 //--- files and ids from last call --------------------------------------
 
@@ -174,15 +174,14 @@ class HtmlView extends BaseHtmlView
                         if (!empty ($exifFileNames)) {
                             //--- extract exif data -----------------------------
 
-                            $imgModel              = new \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel (
-                            );
-                            $this->exifDataOfFiles = $imgModel->exifDataOfFiles($exifFileNames);
+                            $imgModel                 = new \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel ();
+                            $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
 
                             //--- match exif names with enabled / supported --------------------------------
 
                             // ToDo: rename name to tags
                             $exifTags = [];
-                            foreach ($this->exifDataOfFiles as $exifDataOfFile) {
+                            foreach ($this->exifDataRawOfFiles as $exifDataOfFile) {
 
                                 if ( ! empty ($exifDataOfFile[1])) {
 
@@ -210,16 +209,24 @@ class HtmlView extends BaseHtmlView
 
                             $this->exifAllTagsCollected = $exifTags;
 
-                            $this->exifUserSelected      = imageExif::userExifTags();
+                            $this->exifUserSelected      = imageExif::userExifTagsJ3x();
                             $this->exifIsNotSupported    = imageExif::checkTagsNotSupported($exifTags);
                             $this->exifIsNotUserSelected = imageExif::checkNotUserSelected($exifTags);
                             $this->exifTagsSupported     = imageExif::supportedExifTags();
+
 
                             $this->exifTagsTranslationIds = [];
                             if (!empty ($this->exifTagsSupported)) {
                                 foreach ($this->exifTagsSupported as $exifItem) {
                                     $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($exifItem);
                                 }
+
+                                // ToDo: read ini file for not found translations
+
+                                $neededIds = imageExif::neededTranslationIds();
+
+                                $this->exifMissingTranslations = $this->CheckExifMissingTranslationIds ($neededIds);
+
                             }
                         }
                     }
@@ -408,6 +415,67 @@ class HtmlView extends BaseHtmlView
         $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/Screenshot_20200613_150114_com.huawei.android.launcher.jpg');
 
         return $exifImageFiles;
+    }
+
+    private function CheckExifMissingTranslationIds(array $neededIds)
+    {
+        $existingIds = [];
+        $missingIds = [];
+
+            //--- read ini file ---------------------------------------------
+
+        $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/language/en-GB/com_rsg2_exif.ini';
+
+        $handle = fopen($changeLogModelFileName, "r");
+        if ($handle) {
+            while (($line = fgets($handle)) !== false) {
+
+                $existingId = $this->lineExtractTransId ($line);
+
+                if ( ! empty ($existingId)) {
+
+                    $existingIds [] = $existingId;
+                }
+            }
+
+            fclose($handle);
+        }
+
+        if (count($existingIds) > 0) {
+            foreach ($neededIds as $neededId) {
+
+                if ( ! in_array ($neededId, $existingIds)){
+
+                    $missingIds [] = $neededId;
+                }
+
+            }
+
+        }
+
+
+
+        return $missingIds;
+    }
+
+    private function lineExtractTransId(bool|string $line)
+    {
+        $transId = '';
+
+        // COM_RSGALLERY2_EXIF_TAG_FILEMODIFIEDDATE="File modified date"
+
+        if (str_starts_with ($line, 'COM_RSGALLERY2_EXIF_TAG')) {
+
+            $parts = explode('=', $line);
+
+            if ( ! empty($parts[0])) {
+
+                $transId = $parts[0];
+            }
+
+        }
+
+        return $transId;
     }
 
 }

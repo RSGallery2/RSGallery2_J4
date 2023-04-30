@@ -21,6 +21,7 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
@@ -84,5 +85,57 @@ class SlidePageJ3XModel extends ImagesJ3xModel
 
         return $query;
     }
+
+
+    /**
+     * @param $filename
+     * @param $userExifTags
+     *
+     * @return arrayReturn exif item list of 'translation Id' => value
+
+     *
+     * @since version
+     */
+    public function exifDataUserSelected($filename, $userExifTags)
+    {
+        $exifDataOfFile = [$filename];
+
+        try
+        {
+            //--- collect by exif names --------------------------------------
+
+            $oImageExif = new ImageExif ($filename);
+
+            $exifItems = $oImageExif->readExifDataUserSelected($userExifTags);
+
+            //--- translate ID for names -------------------------------------
+
+            $exifTranslated = [];
+            foreach ($exifItems as $name => $value)
+            {
+                $transId = $oImageExif::exifTranslationId($name);
+                $exifTranslated[$transId] = $value;
+            }
+            //---  -----------------------------------------------------------
+
+            if ( ! empty ($exifTranslated))
+            {
+                $exifDataOfFile = [$filename, $exifTranslated];
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing exifDataUserSelected: "' . $filename . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = JFactory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $exifDataOfFile;
+    }
+
 }
 
