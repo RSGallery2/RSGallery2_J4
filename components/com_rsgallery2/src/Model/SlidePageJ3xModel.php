@@ -111,8 +111,9 @@ class SlidePageJ3XModel extends ImagesJ3xModel
             //--- translate ID for names -------------------------------------
 
             $exifTranslated = [];
-            foreach ($exifItems as $name => $value)
+            foreach ($exifItems as $exifTag => $value)
             {
+                [$type, $name] = ImageExif::tag2TypeAndName ($exifTag);
                 $transId = $oImageExif::exifTranslationId($name);
                 $exifTranslated[$transId] = $value;
             }

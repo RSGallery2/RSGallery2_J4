@@ -288,7 +288,7 @@ ul#rsg2-thumbsList {
 }
 
 ul#rsg2-thumbsList li {
-	display          : box;
+	display          : block;
 	float            : left;
 	overflow         : hidden;
 	padding          : 5px 5px;
@@ -606,4 +606,14 @@ div.rsg_sem_inl_Nav div div.pagination ul li {
 	align-items: center;
 	justify-content: center;
 	gap: 1ch;
+}
+
+/*.dl-horizontal dt{*/
+/*	text-align: center;*/
+/*}*/
+
+.rsg2_exif_container {
+
+	margin : 0px auto;
+
 }

@@ -128,12 +128,6 @@ class ImageExif
 
             foreach ($exifItems as $name => $value) {
 
-                if (str_contains($name, 'image')) {
-
-                    $test = 4;
-
-                }
-
                 if (in_array(strtolower($name), $supportedTags)) {
                     $selected [$name] = $value;
                 }
@@ -156,6 +150,8 @@ class ImageExif
         $supportedTags [] = 'EXIF.DateTime';
         $supportedTags [] = 'EXIF.dateTimeDigitized';
         $supportedTags [] = 'EXIF.exifVersion';
+        $supportedTags [] = 'EXIF.ExifImageLength';
+        $supportedTags [] = 'EXIF.ExifImageWidth';
         $supportedTags [] = 'EXIF.exposure';
         $supportedTags [] = 'EXIF.exposureBias';
         $supportedTags [] = 'EXIF.exposureTime';
@@ -170,8 +166,6 @@ class ImageExif
         $supportedTags [] = 'EXIF.focalLength';
         $supportedTags [] = 'EXIF.GPSLatitudeRef';
         $supportedTags [] = 'EXIF.ImageDescription';
-        $supportedTags [] = 'EXIF.ImageLength';
-        $supportedTags [] = 'EXIF.ImageWidth';
         $supportedTags [] = 'EXIF.IsColor';
         $supportedTags [] = 'EXIF.isoEquiv';
         $supportedTags [] = 'EXIF.jpegProcess';
@@ -329,9 +323,9 @@ class ImageExif
 
         $supportedExifTags = self::supportedExifTags ();
 
-        foreach ($supportedExifTags as $supportedExifTag) {
+        foreach ($supportedExifTags as $exifTag) {
 
-            [$type, $name] = ImageExif::tag2TypeAndName ($supportedExifTag);
+            [$type, $name] = ImageExif::tag2TypeAndName ($exifTag);
             $neededIds [] = ImageExif::exifTranslationId($name);
         }
 

@@ -15,6 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
@@ -172,18 +173,29 @@ class HtmlView extends BaseHtmlView
 
             if($this->isShowExif){
 
-                // image to dislay exits
+                // image to display exits
                 if ( ! empty ($this->image)) {
+
+                    //--- load additional language file --------------------------------
+
+                    $lang = Factory::getLanguage();
+                    $lang->load('com_rsg2_exif',
+                        Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+
+                    //--- selected tags from original file --------------------------------
+
                     // tags from config
                     $userExifTags = ImageExif::userExifTagsJ3x();
+                    // tags in file
+                    $ImageExifFileTags = $model->exifDataUserSelected($this->image->OriginalFile, $userExifTags);
 
-//                //
-//                $ImageExif = new ImageExif($this->image->OriginalFile);
-//
-//                // see image model
-//                $ImageExifTags = $ImageExif->readExifDataSelected($userExifTags);
+                    // tags in second item of array
+                    $ImageExifTags = [];
+                    if (! empty ($ImageExifFileTags[1])) {
 
-                    $ImageExifTags = $model->exifDataUserSelected($this->image->OriginalFile, $userExifTags);
+                        $ImageExifTags = $ImageExifFileTags[1];
+                    }
+
                     $this->image->exifTags = $ImageExifTags;
                 }
             }

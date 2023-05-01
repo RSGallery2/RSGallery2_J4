@@ -48,6 +48,16 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
 
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 
+		<?php if (empty($exifDataOfFiles)) : ?>
+		<div class="card-body">
+
+			<div class="card-text">
+
+				<h3>*<?php echo Text::_('No Exif data available: Select file(s) manually and use button above'); ?></h3>
+
+			<div>
+		<div>
+		<?php endif; ?>
 
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
@@ -55,13 +65,6 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
 				<div class="d-flex flex-row">
 					<div class="flex-fill">
 						<div id="j-main-container" class="j-main-container">
-							<?php if (empty($exifDataOfFiles)) : ?>
-							<div class="d-flex flex-row">
-								<h3>*<?php echo Text::_('No Exif data available: Select file(s) manually and use button above'); ?></h3>
-
-								<BR>
-								<div>
-									<?php endif; ?>
 
 									<div>
 
@@ -147,11 +150,7 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
 					</div>
 				</div>
 
-				<?php if (empty($exifDataOfFiles)) : ?>
-					* Exif data missing: do start with button above or
-
-				<?php else: ?>
-
+				<?php if ( ! empty($exifDataOfFiles)) : ?>
 
 					<?php
 
@@ -182,13 +181,6 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
 						}
 					}
 
-//					$json_beautified = str_replace(array("{", "}", '","'), array("{<br />&nbsp;&nbsp;&nbsp;&nbsp;", "<br />}", '",<br />&nbsp;&nbsp;&nbsp;&nbsp;"'), $exifDataOfFiles);
-//					echo $json_beautified;
-//					echo $exifDataOfFiles;
-//					echo json_encode($exifDataOfFiles [0][0], JSON_PRETTY_PRINT) . '<br>';
-//					echo '<hr>';
-//					echo json_encode($exifDataOfFiles[0][1], JSON_PRETTY_PRINT) . '<br>';
-//					echo '<hr>';
 
 					//--- $this->exifIsNotSupported --------------------------------------------------------------------------------
 
@@ -203,27 +195,6 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
 						}
 					}
 
-
-					//--- tags by user --------------------------------------------------------------------------------
-
-					echo '<hr>';
-					echo '<h2>' . '*Tags selected by user' .  '</h2>';
-
-					if ( ! empty ($this->exifUserSelected)) {
-
-						foreach ($this->exifUserSelected as $exifUserSelected) {
-
-							echo $exifUserSelected . '<br>';
-						}
-					}
-
-
-//					//--- this->exifIsNotUserSelected --------------------------------------------------------------------------------
-//
-//					echo '<hr>';
-//					echo '<h2>' . '*Tags not supported' .  '</h2>';
-
-
 					//--- collected tags --------------------------------------------------------------------------------
 
 					echo '<hr>';
@@ -237,103 +208,87 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
 						}
 					}
 
-
-					//--- supported tags --------------------------------------------------------------------------------
+					//--- this->exifIsNotUserSelected ------------------------------------------------------------------
 
 					echo '<hr>';
-					echo '<h2>' . '*Tags supported' .  '</h2>';
+					echo '<h2>' . '*Tags not selected by user' .  '</h2>';
 
-					if ( ! empty ($this->exifTagsSupported)) {
+					if ( ! empty ($this->exifIsNotUserSelected)) {
 
-						foreach ($this->exifTagsSupported as $exifItem) {
+						foreach ($this->exifIsNotUserSelected as $exifItem) {
 
 							echo $exifItem . '<br>';
 						}
 					}
 
-
-					//--- supported tags translation tags ----------------------------------------------------------------------
-
-					echo '<hr>';
-					echo '<h2>' . '*Tags translation ID of supported ' .  '</h2>';
-
-					if ( ! empty ($this->exifTagsTranslationIds)) {
-
-						foreach ($this->exifTagsTranslationIds as $exifItem) {
-
-							echo Text::_( $exifItem) . '<br>';
-						}
-					}
-
-
-					//--- Missing translation tags ----------------------------------------------------------------------
-
-					echo '<hr>';
-					echo '<h2>' . '*Tags translation ID mmissing oin *.ini file ' .  '</h2>';
-
-					if ( ! empty ($this->exifMissingTranslations)) {
-
-						foreach ($this->exifMissingTranslations as $translationId) {
-
-							echo $translationId . '<br>';
-						}
-					}
-
 					?>
-
 				<?php endif; ?>
 
+				<?php
+				//					$json_beautified = str_replace(array("{", "}", '","'), array("{<br />&nbsp;&nbsp;&nbsp;&nbsp;", "<br />}", '",<br />&nbsp;&nbsp;&nbsp;&nbsp;"'), $exifDataOfFiles);
+//					echo $json_beautified;
+//					echo $exifDataOfFiles;
+//					echo json_encode($exifDataOfFiles [0][0], JSON_PRETTY_PRINT) . '<br>';
+//					echo '<hr>';
+//					echo json_encode($exifDataOfFiles[0][1], JSON_PRETTY_PRINT) . '<br>';
+//					echo '<hr>';
 
-<!--				--><?php //echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'PreparedButNotReady')); ?>
-<!---->
-<!--				--><?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'PreparedButNotReady', Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true)); ?>
-<!--<!--                <p></p>-->-->
-<!--<!--                <legend><strong>-->--><?php ////echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?><!--<!--</strong></legend>-->-->
-<!--<!--                <p><h3>-->--><?php ////echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?><!--<!--</h3></p>-->-->
-<!---->
-<!---->
-<!--				<div class="control-group">-->
-<!--					<div class="control-label">-->
-<!--						<label id="jform_--><?php //echo $name ?><!---lbl" class="jform_control-label"-->
-<!--						       for="jform_--><?php //echo $name ?><!--">--><?php //echo $name ?><!--:</label>-->
-<!--					</div>-->
-<!--					<div class="controls">-->
-<!--						<input id="jform_--><?php //echo $name ?><!--" class="input-xxlarge input_box" type="text"-->
-<!--						       value="--><?php //echo $value ?><!--" size="70" name="jform[--><?php //echo $name ?><!--] aria-invalid=" false">-->
-<!--					</div>-->
-<!--				</div>-->
-<!---->
-<!---->
-<!---->
-<!---->
-<!---->
-<!--				--><?php
-//
-//					try
-//					{
-//
-//
-//
-//
-//					}
-//					catch (\RuntimeException $e)
-//					{
-//						$OutTxt = '';
-//						$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
-//						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-//
-//						$app = Factory::getApplication();
-//						$app->enqueueMessage($OutTxt, 'error');
-//					}
-//
-//				?>
-<!---->
-<!--				--><?php //echo HTMLHelper::_('bootstrap.endTab'); ?>
-<!---->
-<!--				--><?php //echo HTMLHelper::_('bootstrap.endTabSet'); ?>
-<!---->
-<!--				<!--input type="hidden" name="option" value="com_rsgallery2" />-->
-<!--				<input type="hidden" name="rsgOption" value="maintenance" /-->-->
+				//--- tags by user --------------------------------------------------------------------------------
+
+				echo '<hr>';
+				echo '<h2>' . '*Tags selected by user' .  '</h2>';
+
+				if ( ! empty ($this->exifUserSelected)) {
+
+					foreach ($this->exifUserSelected as $exifUserSelected) {
+
+						echo $exifUserSelected . '<br>';
+					}
+				}
+
+				//--- Missing translation tags ----------------------------------------------------------------------
+
+				if ( ! empty ($this->exifMissingTranslations)) {
+
+					echo '<hr>';
+					echo '<h2>' . '*Tags translation ID mmissing in *.ini file ' .  '</h2>';
+
+					foreach ($this->exifMissingTranslations as $translationId) {
+
+						echo $translationId . '<br>';
+					}
+				}
+
+
+				//--- supported tags --------------------------------------------------------------------------------
+
+				echo '<hr>';
+				echo '<h2>' . '*Tags supported' .  '</h2>';
+
+				if ( ! empty ($this->exifTagsSupported)) {
+
+					foreach ($this->exifTagsSupported as $exifItem) {
+
+						echo $exifItem . '<br>';
+					}
+				}
+
+
+				//--- supported tags translation tags ----------------------------------------------------------------------
+
+				echo '<hr>';
+				echo '<h2>' . '*Tags translation ID of supported ' .  '</h2>';
+
+				if ( ! empty ($this->exifTagsTranslationIds)) {
+
+					foreach ($this->exifTagsTranslationIds as $exifItem) {
+
+						echo Text::_( $exifItem) . '<br>';
+					}
+				}
+
+
+				?>
 
 				<input type="hidden" name="task" value="" />
 				<?php echo HTMLHelper::_('form.token'); ?>

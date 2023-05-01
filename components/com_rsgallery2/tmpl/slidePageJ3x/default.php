@@ -53,10 +53,10 @@ if (!empty ($this->isDevelopSite))
         . '* length of filenames<br>'
         . '* what happens on empty galleries/ image lists<br>'
         . '* Size of replace images (missing/no images) <br>'
-    	. '* handle -voting<br>'
+    	. '* handle voting, exif ... separate function calls<br>'
     	. '* handle comments<br>'
-    	. '* handle EXIF<br>'
-    //	. '* <br>'
+    	. '* center EXIF<br>'
+    	. '* j3x.css: clean up (shade by CSS (Scss ...) <br>'
     //	. '* <br>'
     //	. '* <br>'
     //	. '* <br>'
@@ -371,20 +371,30 @@ function htmlExifData ($exifTags)
 //	return implode("\n", $html);
 
 	?>
-	<div class="container span12">
 
-        <div class="rsg2_exif_container">
-            <dl class="dl-horizontal">
+<div class="exif-block row-fluid text-center">
 
-	            <?php // user requested EXIF tags ?>
-	            <?php foreach ($exifTags as $exifKey => $exifValue): ?>
-						<dt><?php Text::_($exifKey); ?></dt><dd><?php $exifValue?></dd>'
-	            <?php endforeach; ?>
+	<div class="rsg2_exif_container">
+        <div class="card-body">
 
-            </dl>
+	        <h4 class="card-title"><?php echo Text::_('COM_RSGALLERY2_EXIF_DATA'); ?></h4>
+
+	        <div class="card-text">
+
+	            <dl class="dl-horizontal text-center">
+
+		            <?php // user requested EXIF tags ?>
+		            <?php foreach ($exifTags as $exifKey => $exifValue): ?>
+						<dt class="text-end col-sm-x3"><?php echo Text::_($exifKey); ?></dt>
+			            <dd class="text-start col-sm-9"><?php echo $exifValue; ?></dd>
+		            <?php endforeach; ?>
+
+	            </dl>
+			</div>
 		</div>
-
 	</div>
+</div>
+
 <?php
 }
 
@@ -586,7 +596,7 @@ function htmlStars ($idx, $average, $lastRating)
 						    <?php if ($this->isShowVoting) : ?>
 
 							    <div class="rating-block row-fluid text-center">
-								    <h4>Average user rating</h4>
+								    <h4><?php echo Text::_('COM_RSGALLERY2_AVERAGE_USER_RATING'); ?></h4>
 								    <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
 								    </h2>
 								    <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
@@ -630,25 +640,25 @@ function htmlStars ($idx, $average, $lastRating)
 
 				    <tr>
 					    <td>
-						    <?php if ($this->isShowComments) : ?>
+						    <?php if ($this->isShowExif) : ?>
 
-							     <p><h3>Todo script for COMMENTS</h3></p>
+							    <?php htmlExifData ($image->exifTags); ?>
 
-							    <?php echo htmlComments ($image->comments, $image->gallery_id, $image->id); ?>
 						    <?php endif; ?>
 					    </td>
 				    </tr>
 
 				    <tr>
 					    <td>
-						    <?php if ($this->isShowExif) : ?>
+						    <?php if ($this->isShowComments) : ?>
 
-							     <p><h3>Todo script for exif</h3></p>
+							    <p><h3>Todo script for COMMENTS</h3></p>
 
-							    <?php echo htmlExifData ($image->exifTags); ?>
+							    <?php echo htmlComments ($image->comments, $image->gallery_id, $image->id); ?>
 						    <?php endif; ?>
 					    </td>
 				    </tr>
+
 			    </tbody>
 		    </table>
 	    </div>
@@ -759,18 +769,10 @@ function htmlStars ($idx, $average, $lastRating)
 
 
 
-		    <input type="hidden"
-		           name="task"
-		           value="">
-		    <input type="hidden"
-		           name="rating"
-		           value="">
-		    <input type="hidden"
-		           name="paginationImgIdx"
-		           value="">
-		    <input type="hidden"
-		           name="id"
-		           value="157">
+		    <input type="hidden" name="task" value="">
+		    <input type="hidden" name="rating" value="">
+		    <input type="hidden" name="paginationImgIdx" value="">
+		    <input type="hidden" name="id" value="157">
             <?php echo HTMLHelper::_('form.token'); ?>
 
 	    </div>

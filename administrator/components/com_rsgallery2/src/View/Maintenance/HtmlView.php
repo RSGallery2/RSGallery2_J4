@@ -208,28 +208,12 @@ class HtmlView extends BaseHtmlView
                             }
 
                             $this->exifAllTagsCollected = $exifTags;
-
-                            $this->exifUserSelected      = imageExif::userExifTagsJ3x();
                             $this->exifIsNotSupported    = imageExif::checkTagsNotSupported($exifTags);
                             $this->exifIsNotUserSelected = imageExif::checkNotUserSelected($exifTags);
-                            $this->exifTagsSupported     = imageExif::supportedExifTags();
 
-
-                            $this->exifTagsTranslationIds = [];
-                            if (!empty ($this->exifTagsSupported)) {
-                                foreach ($this->exifTagsSupported as $exifItem) {
-                                    $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($exifItem);
-                                }
-
-                                // ToDo: read ini file for not found translations
-
-                                $neededIds = imageExif::neededTranslationIds();
-
-                                $this->exifMissingTranslations = $this->CheckExifMissingTranslationIds ($neededIds);
-
-                            }
                         }
                     }
+
                 } else {
                     //--- first call -------------------------------------------------
 
@@ -240,6 +224,25 @@ class HtmlView extends BaseHtmlView
 
 
                     }
+                }
+
+
+                $this->exifUserSelected      = imageExif::userExifTagsJ3x();
+                $this->exifTagsSupported     = imageExif::supportedExifTags();
+
+                $this->exifTagsTranslationIds = [];
+                if (!empty ($this->exifTagsSupported)) {
+                    foreach ($this->exifTagsSupported as $exifTag) {
+                        [$type, $name] = ImageExif::tag2TypeAndName ($exifTag);
+                        $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($name);
+                    }
+
+                    // ToDo: read ini file for not found translations
+
+                    $neededIds = imageExif::neededTranslationIds();
+
+                    $this->exifMissingTranslations = $this->CheckExifMissingTranslationIds ($neededIds);
+
                 }
 
                 //--- prepare empty input for files -------------------------------------
