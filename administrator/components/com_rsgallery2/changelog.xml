@@ -2,21 +2,6 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>5.0.0.4</version>
-		<date>2018-01-28</date>
-		<fix>
-			<item>Drag and drop was limited to 20 images per drop. It is tested now with drop of 150 images at once</item>
-		</fix>
-		<change>
-			<item>Upload does use Joomla intern Jimage function</item>
-		</change>
-		<note>
-			<item>Zip upload may not run properly</item>
-		</note>
-	</changelog>
-	<changelog>
-		<element>com_rsgallery2</element>
-		<type>component</type>
 		<version>5.0.0.36</version>
 		<date>2018-01-28</date>
 		<addition>
@@ -38,5 +23,17 @@
 		<change>
 			<item>Separate include files for new view form and load it all from rsg2 in J1.5/2.5</item>
 		</change>
+	</changelog>
+	<changelog>
+		<element>com_rsgallery2</element>
+		<type>component</type>
+		<version>5.0.1.0</version>
+		<date>2023-05-11</date>
+		<change>
+			<item></item>
+		</change>
+		<note>
+			<item>First pre-release in preparation</item>
+		</note>
 	</changelog>
 </changelogs>
