@@ -96,6 +96,7 @@
 			<folder>src</folder>
 			<folder>tmpl</folder>
 		</files>
+		
 	</administration>
 
 	<dashboards>
@@ -113,6 +114,7 @@
 
 	<!-- css, js, images files, .... -->
 	<media folder="media/com_rsgallery2" destination="com_rsgallery2">
+		<filename>joomla.asset.json</filename>
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>
