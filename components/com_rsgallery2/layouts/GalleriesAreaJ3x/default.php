@@ -105,9 +105,9 @@ foreach ($galleries as $idx => $gallery) {
 
 <div id="rsg2_gallery" class="rsg2">
 
-	XXXX
+	INTRO_START
 	<div class="form-label intro_text"><?php echo $params->intro_text; ?></div>
-	XXXX<br>
+    INTRO_END<br>
 
 	<?php foreach ($galleries as $idx => $gallery) : ?>
 

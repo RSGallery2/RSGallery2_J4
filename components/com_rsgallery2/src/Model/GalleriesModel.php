@@ -730,7 +730,7 @@ class GalleriesModel extends ListModel
 
         try {
 
-            $gallery->UrlGallery = ''; // fall back
+            //$gallery->UrlSlideshow = ''; // fall back
 
 //            $gallery->UrlSlideshow = 'index.php?option=com_rsgallery2 ....
 //                . '/gallery/' . $gallery->id . '/slideshow'

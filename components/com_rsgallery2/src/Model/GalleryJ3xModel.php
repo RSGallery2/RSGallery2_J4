@@ -122,7 +122,7 @@ class GalleryJ3xModel extends GalleryModel
 
         try {
 
-            $gallery->UrlGallery = ''; // fall back
+            //$gallery->UrlSlideshow = ''; // fall back
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
                 . '&view=slideshowJ3x&gid=' . $gallery->id

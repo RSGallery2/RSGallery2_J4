@@ -81,7 +81,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
 
         try {
 
-            $gallery->UrlSlideshow = ''; // fall back
+            // $gallery->UrlSlideshow = ''; // fall back
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8

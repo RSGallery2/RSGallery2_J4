@@ -730,7 +730,7 @@ class GalleriesJ3xModel extends ListModel
 
         try {
 
-            $gallery->UrlGallery = ''; // fall back
+            //$gallery->UrlSlideshow = ''; // fall back
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8

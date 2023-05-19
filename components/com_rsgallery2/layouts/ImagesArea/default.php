@@ -60,16 +60,14 @@ if (!empty($isDevelopSite)) {
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-foreach ($images as $idx => $image) {
-
-    // show dummy thumb on galleries with no images
-    if (! empty($image->isHasNoImages))
-    {
-        $image->UrlOriginalFile = $noImageUrl;
-        $image->UrlDisplayFiles = $noImageUrl;;
-        $image->UrlThumbFile = $noImageUrl;
-
-    }
+if ( ! empty($images)) {
+	foreach ($images as $idx => $image) {
+		// show dummy thumb on galleries with no images
+		if (!empty($image->isHasNoImages)) {
+			$image->UrlOriginalFile = $noImageUrl;
+			$image->UrlDisplayFiles = $noImageUrl;;
+			$image->UrlThumbFile = $noImageUrl;
+		}
 //    else {
 //
 //        if (!$image->isOriginalFileExist) {
@@ -86,6 +84,7 @@ foreach ($images as $idx => $image) {
 //        }
 //
 //    }
+	}
 }
 
 ?>
@@ -100,18 +99,20 @@ foreach ($images as $idx => $image) {
 	<div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
 
 		<?php
-		foreach ($images as $idx => $image) {
-			?>
-			<figure>
-				<img src="<?php echo $image->UrlThumbFile ?>"
-				     alt="<?php echo $image->name; ?>"
-				     class="img-thumbnail rsg2_gallery__images_image"
-				     data-target="#rsg2_carousel"
-				     data-slide-to="<?php echo $idx ?>"bs-
-				>
-				<figcaption><?php echo $image->name; ?></figcaption>
-			</figure>
-			<?php
+		if ( ! empty($images)) {
+			foreach ($images as $idx => $image) {
+				?>
+				<figure>
+					<img src="<?php echo $image->UrlThumbFile ?>"
+					     alt="<?php echo $image->name; ?>"
+					     class="img-thumbnail rsg2_gallery__images_image"
+					     data-target="#rsg2_carousel"
+					     data-slide-to="<?php echo $idx ?>"bs-
+					>
+					<figcaption><?php echo $image->name; ?></figcaption>
+				</figure>
+				<?php
+			}
 		}
 		?>
 	</div>
