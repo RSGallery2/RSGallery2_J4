@@ -70,7 +70,7 @@ class InstallMessage
             $instMessage .= $this->changeLogHtml();
         } else {
             //
-            $instMessage .= "ToDo: Welcome to first use of RSGallery2 ....."; // ? state , possible functions
+            // $instMessage .= "ToDo: Welcome to first use of RSGallery2 ....."; // ? state , possible functions
         }
 
         return $instMessage;

@@ -178,8 +178,36 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 	return implode("\n", $html);
 }
 
-function htmlComments ($comments, $gid, $imageId)
+function htmlExifData ($exifTags)
 {
+	?>
+
+<div class="exif-block container d-flex align-items-center justify-content-center">
+
+	<div class="rsg2_exif_container">
+        <div class="card-body">
+
+	        <h4 class="card-title"><?php echo Text::_('COM_RSGALLERY2_EXIF_DATA'); ?></h4>
+
+	        <div class="card-text">
+
+	            <dl class="dl-horizontal text-center">
+
+		            <?php // user requested EXIF tags ?>
+		            <?php foreach ($exifTags as $exifKey => $exifValue): ?>
+						<dt class="text-end col-sm-x3"><?php echo Text::_($exifKey); ?></dt>
+			            <dd class="text-start col-sm-9"><?php echo $exifValue; ?></dd>
+		            <?php endforeach; ?>
+
+	            </dl>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php
+}
+
 //	// toDo improve ....
 //	// https://bootsnipp.com/snippets/Vp4P
 //	// https://bootsnipp.com/snippets/featured/comment-posts-layout
@@ -342,54 +370,25 @@ function htmlComments ($comments, $gid, $imageId)
 //	$html[] = '            </div>'; // container
 //
 //	$html[] = '</div>'; // class="container">';
-
-	$html[] = '';
-
-	return implode("\n", $html);
-}
-
-function htmlExifData ($exifTags)
+function htmlComments ($comments, $gallery_id, $image_id)
 {
-//	$html = [];
-//
-//	$html[] = '<div class="container span12">';
-//
-//	$html[] =  '        <div class="rsg2_exif_container">';
-//	$html[] =  '            <dl class="dl-horizontal">';
-//
-//	// user requested EXIF tags
-//	foreach ($exifData as $exifKey => $exifValue)
-//	{
-//		$html[] =  '            <dt>' . Text::_($exifKey) . '</dt><dd>' . $exifValue . '</dd>';
-//	}
-//
-//	$html[] =  '            </dl>';
-//	$html[] =  '		</div>'; // rsg2_exif_container
-//
-//	$html[] = '</div>'; // class="container span12">';
-//
-//	return implode("\n", $html);
-
 	?>
 
-<div class="exif-block row-fluid text-center">
+<div class="exif-block container d-flex align-items-center justify-content-center">
 
-	<div class="rsg2_exif_container">
+	<div class="rsg2_comments_container">
         <div class="card-body">
 
-	        <h4 class="card-title"><?php echo Text::_('COM_RSGALLERY2_EXIF_DATA'); ?></h4>
+	        <h4 class="card-title"><?php echo Text::_('COM_RSGALLERY2_COMMENTS'); ?></h4>
 
 	        <div class="card-text">
 
-	            <dl class="dl-horizontal text-center">
+		        <?php if ( ! empty ($comments)) : ?>
 
-		            <?php // user requested EXIF tags ?>
-		            <?php foreach ($exifTags as $exifKey => $exifValue): ?>
-						<dt class="text-end col-sm-x3"><?php echo Text::_($exifKey); ?></dt>
-			            <dd class="text-start col-sm-9"><?php echo $exifValue; ?></dd>
-		            <?php endforeach; ?>
+				<?php else : ?>
+			        <p><h5>Script for comments not activated</h5></p>
+		        <?php endif; ?>
 
-	            </dl>
 			</div>
 		</div>
 	</div>
@@ -652,9 +651,7 @@ function htmlStars ($idx, $average, $lastRating)
 					    <td>
 						    <?php if ($this->isShowComments) : ?>
 
-							    <p><h3>Todo script for COMMENTS</h3></p>
-
-							    <?php echo htmlComments ($image->comments, $image->gallery_id, $image->id); ?>
+							    <?php htmlComments ($image->comments, $image->gallery_id, $image->id); ?>
 						    <?php endif; ?>
 					    </td>
 				    </tr>

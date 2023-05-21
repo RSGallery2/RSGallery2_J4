@@ -106,8 +106,8 @@ if ($cols < 2) {
 
 	    <?php if ($params->gallery_show_slideshow): ?>
 	        <div class="rsg2_slideshow_link">
-	            <a href="<?php echo $gallery->UrlSlideshow?>">
-	                Slideshow
+	            <a href="<?php echo $gallery->UrlSlideshow; ?>">
+		            <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
 	            </a>
 	        </div>
 	    <?php endif; ?>
