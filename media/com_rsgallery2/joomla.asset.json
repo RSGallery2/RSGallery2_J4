@@ -166,6 +166,12 @@
       "uri": "com_rsgallery2/site/j3x/j3x.css"
     },
     {
+      "name": "com_rsgallery2.site.slideshowJ3x",
+      "description": "Site styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/site/j3x/slideshow.css"
+    },
+    {
       "name": "com_rsgallery2.site.rsgallery2J3x",
       "description": "Site styling.",
       "type": "style",
@@ -195,6 +201,13 @@
       "dependencies": [
         "com_rsgallery2.site.images#style",
         "com_rsgallery2.site.J3x#style"
+      ]
+    },
+    {
+      "name": "com_rsgallery2.site.slideshowJ3x",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.site.slideshowJ3x#style"
       ]
     }
 

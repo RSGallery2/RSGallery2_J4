@@ -8,7 +8,7 @@
  * RSGallery is Free Software
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
+namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 \defined('_JEXEC') or die;
 

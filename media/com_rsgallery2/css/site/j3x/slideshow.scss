@@ -1,81 +1,99 @@
-// images.slideshow.css
+// j3x images.slideshow.css
+
+//--- debug ---------------------------------------
+
+/**
+.rsg2_x__slideshowJ3x  {
+  border: 5px solid lightcyan;
+}
+.rsg2_carousel  {
+  border: 5px solid lightgreen;
+}
+.carousel-inner  {
+  border: 5px solid yellow;
+}
+.carousel-inner > .carousel-item  {
+  border: 5px solid lightblue;
+}
+.carousel-inner > .carousel-item > img {
+  border: 5px solid darkred;
+}
+/**/
 
 
+//--- style ----------------------------------------------------------
 
-//.carousel .carousel-item {
-//  height: 500px;
+.rsg2_carousel .carousel-item img {
+  object-fit: contain;
+  object-position: center;
+//  overflow: hidden;
+  height:100vh;
+}
+
+//--- controls left / right -----------------------------------
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+
+  //color: rgb(0, 255, 255);
+  //mix-blend-mode: difference;
+}
+
+.carousel-indicators {
+
+  //color: rgb(0, 255, 255);
+  //mix-blend-mode: difference;
+  //filter: invert(100%);
+  outline: black;
+  font-weight: bold;
+  font-size: xx-large;
+  color: red;
+
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  // offset: 50px 50px;
+  height: 150px;
+  width: 150px;
+  // outline: black;
+  background-size: 150%, 150% !important;
+  border-radius: 75%;
+  border: 4px solid white;
+
+//  filter: invert(100%);
+  font-weight: bold;
+  font-size: 48px;
+  color: blue;
+
+}
+
+//.carousel-control-prev-icon,
+//.carousel-control-next-icon {
+//  //height: 100px;
+//  //width: 100px;
+//  //outline: black;
+//  //background-size: 100%, 100%;
+//  //border-radius: 50%;
+////  border: 1px solid black;
+//  background-image: none !important;
+//}
+//.carousel-control-next-icon:after
+//{
+//  content: '>';
+//  font-size: 55px;
+//  font-weight: bold;
+////  color: red;
+//  filter: invert(100%);
 //}
 //
-//.carousel-item img {
-//    position: absolute;
-//    object-fit: cover;
-//    top: 0;
-//    left: 0;
-//    min-height: 500px;
+//.carousel-control-prev-icon:after {
+//  content: '<';
+//  font-size: 55px;
+//  font-weight: bold;
+//  //color: red;
+//  filter: invert(100%);
 //}
-
-.carousel .carousel-item {
-//  height: 200px;
-}
-
-.carousel-item {
-  margin: auto;
-}
-
-.carousel-item img {
-    // position: absolute;
-    //object-fit: cover;
-    //top: 0;
-    //left: 0;
-//    min-height: 500px;
-}
-
-.carousel-control-next-icon,.carousel-control-prev-icon {
-
-  mix-blend-mode: difference;
-}
-
-.carousel-indicators {
-
-  mix-blend-mode: difference;
-}
-
-
-  //.carousel .carousel-item {
-//  height: 500px;
-//}
-
-.carousel-inner {
-
-  border: 2px solid #0b5ed7;
-  //width: 100vw;
-  //height: 100vh;
-
-  margin: auto;
-
-//  height: 90vh;
-//  min-height: 400px;
-
-}
-
-//--- border debug tests -----------------------
-
-.carousel-inner {
-
-  border: 2px solid #0b5ed7;
-}
-
-.carousel-item img {
-
-  border: 4px solid green;
-}
-
-.carousel-indicators {
-
-  border: 2px solid #117700;
-}
-
-
-
+//
 
 
