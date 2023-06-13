@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     ${NAMESPACE}
+ * @package     ${YYY}
  * @subpackage
  *
  * @copyright   A copyright

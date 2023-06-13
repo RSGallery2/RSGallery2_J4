@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 
 
 /**
- * @package     ${NAMESPACE}
+ * @package     ${yyy}
  * @subpackage
  *
  * @copyright   A copyright

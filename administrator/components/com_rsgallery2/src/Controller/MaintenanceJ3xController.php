@@ -214,6 +214,66 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
+    /**
+     * Copies all old J3x gallery items to J4 galleries
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function copySelectedJ3xGalleries2J4x()
+    {
+        $msg = "MaintenanceJ3xController.copySelectedJ3xGalleries2J4x: ";
+        $msgType = 'notice';
+
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+        if (!$canAdmin) {
+            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        } else {
+            try {
+                $j3xModel = $this->getModel('MaintenanceJ3x');
+yyyy;
+                $isOk = $j3xModel->copySelectedJ3xGalleries2J4x(yyySelectedIds);
+
+
+                if ($isOk) {
+
+	                $msg .= "Successful applied J3x gallery items ";
+
+                    $isOk = ConfigRawModel::writeConfigParam ('j3x_db_galleries_copied', true);
+
+	                if ($isOk) {
+		                $msg .= "and assigned configuration parameters";
+
+	                } else {
+		                $msg .= "!!! but error at writeConfigParam !!!";
+		                $msgType = 'error';
+	                }
+
+                } else {
+	                $msg .= "Error at copyDbJ3xGalleries2J4x items";
+	                $msgType = 'error';
+                }
+
+            } catch (\RuntimeException $e) {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing copyDbJ3xGalleries2J4x: "' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+
+        }
+
+        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+
 	/**
 	 * Reset image table to empty state (No images in RSG J4x
 	 * ? used in mantenance ?
