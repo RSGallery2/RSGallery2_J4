@@ -174,7 +174,7 @@ class MaintenanceJ3xController extends AdminController
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-            try {
+            try {copySelectedJ3xGalleries2J4x
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->copyDbAllJ3xGalleries2J4x();
@@ -219,9 +219,9 @@ class MaintenanceJ3xController extends AdminController
      *
      * @since __BUMP_VERSION__
      */
-    public function copySelectedJ3xGalleries2J4x()
+    public function copyDbSelectedJ3xGalleries2J4x()
     {
-        $msg = "MaintenanceJ3xController.copySelectedJ3xGalleries2J4x: ";
+        $msg = "MaintenanceJ3xController.copyDbSelectedJ3xGalleries2J4x: ";
         $msgType = 'notice';
 
         Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
@@ -261,7 +261,7 @@ yyyy;
 
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'Error executing copyDbJ3xGalleries2J4x: "' . '<br>';
+                $OutTxt .= 'Error executing copyDbSelectedJ3xGalleries2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
