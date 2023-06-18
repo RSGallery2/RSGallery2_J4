@@ -20,7 +20,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 \defined('_JEXEC') or die;
 
 
-class ImagePathsJ3x {
+class ImagePathsJ3xModel {
 	// from config
 
 	// files gallery defined

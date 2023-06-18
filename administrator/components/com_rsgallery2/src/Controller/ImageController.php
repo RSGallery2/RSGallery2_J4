@@ -108,7 +108,7 @@ class ImageController extends FormController
                 {
                     // Delete image files physically
 
-                    /** ToDo: folowing
+                    /** ToDo: following
                     $IsDeleted = false;
 
                     try

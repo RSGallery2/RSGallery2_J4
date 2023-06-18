@@ -16,9 +16,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\BaseModel;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRaw;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -802,7 +802,7 @@ EOT;
         return $isOk;
     }
 
-    public function copySelectedJ3xGalleries2J4x($selectedIds)
+    public function copyDbSelectedJ3xGalleries2J4x($selectedIds)
     {
 
         $isOk = false;

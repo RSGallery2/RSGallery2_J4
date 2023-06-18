@@ -29,7 +29,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
  *
  * @since       version
  */
-class ImagePaths
+class ImagePathsModel
 {
 	// from config
 	public $rsgImagesBasePath;

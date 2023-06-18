@@ -22,8 +22,8 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 

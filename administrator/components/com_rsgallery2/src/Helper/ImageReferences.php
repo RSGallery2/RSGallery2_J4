@@ -15,7 +15,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReference;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 \defined('_JEXEC') or die;
 

@@ -17,7 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
 class DevelopModel extends BaseDatabaseModel

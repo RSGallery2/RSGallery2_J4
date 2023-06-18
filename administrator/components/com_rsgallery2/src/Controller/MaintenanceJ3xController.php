@@ -174,11 +174,10 @@ class MaintenanceJ3xController extends AdminController
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-            try {copySelectedJ3xGalleries2J4x
+            try {
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->copyDbAllJ3xGalleries2J4x();
-
 
                 if ($isOk) {
 
@@ -235,28 +234,44 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                $j3xModel = $this->getModel('MaintenanceJ3x');
-yyyy;
-                $isOk = $j3xModel->copySelectedJ3xGalleries2J4x(yyySelectedIds);
+                $cids = $this->input->get('cid', array(), 'array');
 
+                if (!is_array($cids) || count($cids) < 1) {
+                    //$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
+                    $msg .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
+                    $msgType = 'warning';
+                } else
+                {
 
-                if ($isOk) {
+	                $j3xModel = $this->getModel('MaintenanceJ3x');
 
-	                $msg .= "Successful applied J3x gallery items ";
+	                $isOk = $j3xModel->copyDbSelectedJ3xGalleries2J4x($cids);
 
-                    $isOk = ConfigRawModel::writeConfigParam ('j3x_db_galleries_copied', true);
+yyY; // are all galleries moved ?
+	                if ($isOk)
+	                {
 
-	                if ($isOk) {
-		                $msg .= "and assigned configuration parameters";
+		                $msg .= "Successful applied J3x gallery items ";
 
-	                } else {
-		                $msg .= "!!! but error at writeConfigParam !!!";
+		                $isOk = ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', true);
+
+		                if ($isOk)
+		                {
+			                $msg .= "and assigned configuration parameters";
+
+		                }
+		                else
+		                {
+			                $msg     .= "!!! but error at writeConfigParam !!!";
+			                $msgType = 'error';
+		                }
+
+	                }
+	                else
+	                {
+		                $msg     .= "Error at copyDbJ3xGalleries2J4x items";
 		                $msgType = 'error';
 	                }
-
-                } else {
-	                $msg .= "Error at copyDbJ3xGalleries2J4x items";
-	                $msgType = 'error';
                 }
 
             } catch (\RuntimeException $e) {
