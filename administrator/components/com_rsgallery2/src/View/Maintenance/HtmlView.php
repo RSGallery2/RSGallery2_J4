@@ -425,13 +425,16 @@ class HtmlView extends BaseHtmlView
         $existingIds = [];
         $missingIds = [];
 
-            //--- read ini file ---------------------------------------------
+        //--- read exif language file ---------------------------------------------
 
         $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/language/en-GB/com_rsg2_exif.ini';
 
         $handle = fopen($changeLogModelFileName, "r");
         if ($handle) {
-            while (($line = fgets($handle)) !== false) {
+
+	        //--- extract language items ---------------------------------------------
+
+	        while (($line = fgets($handle)) !== false) {
 
                 $existingId = $this->lineExtractTransId ($line);
 
@@ -445,18 +448,15 @@ class HtmlView extends BaseHtmlView
         }
 
         if (count($existingIds) > 0) {
+
             foreach ($neededIds as $neededId) {
 
                 if ( ! in_array ($neededId, $existingIds)){
 
                     $missingIds [] = $neededId;
                 }
-
             }
-
         }
-
-
 
         return $missingIds;
     }

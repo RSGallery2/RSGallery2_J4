@@ -83,197 +83,211 @@ EOT;
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xGalleries', Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'); ?></strong></legend>
+                <div class="card text-dark bg-light j3x-info-card" style="max-width: 36rem;">
+                    <!--div class="card-header">
+	                    <?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION'); ?>
+                    </div-->
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION'); ?> <?php echo Text::_('COM_RSGALLERY2_J3X_GALLERIES'); ?></h5>
+                        <?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION_DESC'); ?>
+                    </div>
+                </div>
+                <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'); ?></strong></legend-->
 
-                <h3><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h3>
+                <br>
+                <div class="card text-dark bg-light j3x-galleries-card">
+                    <h4><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h4>
 
-                <table class="table table-striped" id="galleryList">
+                    <div class="card-body">
+                        <table class="table table-striped" id="j3x_galleryList">
 
-                    <caption id="captionTable" class="sr-only">
-                        <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
-                        , <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
-                    </caption>
-                    <thead>
-                    <tr>
-                        <td style="width:1%" class="text-center">
-                            <?php echo HTMLHelper::_('grid.checkall'); ?>
-                        </td>
-
-                        <th width="1%" class="text-center">
-                            <?php echo Text::_('JSTATUS'); ?>
-                        </th>
-                        <th width="1%" class="text-center">
-                            `id`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `parent`
-                        </th>
-                        <th width="10%" class="text-center">
-                            `alias`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `description`
-                        </th>
-
-                        <th width="1%" class="text-center">
-                            `thumb_id`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `params`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `published`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `hits`
-                        </th>
-
-                        <th width="1%" class="text-center">
-                            `checked_out`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `checked_out_time`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `ordering`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `date`
-                        </th>
-                        <th width="1%" class="center">
-                            `user`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `uid`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `allowed`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `asset_id`
-                        </th>
-                        <th width="1%" class="text-center">
-                            `access`
-                        </th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    <?php
-                    foreach ($this->j3x_galleriesSorted as $i => $item) {
-                        $identHtml = str_repeat('⋮&nbsp;&nbsp;&nbsp;', $item->level);
-
-                        if (in_array ($item->id, $this->j3x_galleryIdsMerged)){
-                            $isMergedHtml =  isOKIconHtml ('Gallery is merged');
-                        } else {
-                            $isMergedHtml =  isNotOkIconHtml ('Gallery is not merged');
-                        }
-
-                        ?>
-                        <tr class="row<?php echo $i % 2; ?>">
-
-                            <td class="text-center">
-                                <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                        <caption id="j3x_captionTable" class="sr-only">
+                            <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
+                            , <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
+                        </caption>
+                        <thead>
+                        <tr>
+                            <td style="width:1%" class="text-center">
+                                <?php echo HTMLHelper::_('grid.checkall'); ?>
                             </td>
 
-                            <td class="text-center">
-                                <?php echo $isMergedHtml; ?>
-                            </td>
+                            <th width="1%" class="text-center">
+                                <?php echo Text::_('JSTATUS'); ?>
+                            </th>
+                            <th width="1%" class="text-center">
+                                `id`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `parent`
+                            </th>
+                            <th width="10%" class="text-center">
+                                `alias`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `description`
+                            </th>
 
-                            <td class="text-center">
-                                <?php echo $item->id; ?>
-                            </td>
+                            <th width="1%" class="text-center">
+                                `thumb_id`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `params`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `published`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `hits`
+                            </th>
 
-                            <td width="1%" class="text-center">
-                                <?php
-                                // ToDo: Name of parent gallery as title
-                                echo $item->parent; ?>
-                            </td>
-
-                            <td class="text-left">
-                                <!--
-                                <?php //echo $identHtml . $this->escape($item->name);
-                                ?>
-                                <span class="small">
-                                    (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>)
-    					        </span>
-    					        -->
-                                <?php echo $identHtml . $this->escape($item->alias); ?>
-
-                            </td>
-                            <td width="1%" class="center">
-                                <span class="small">
-                                    <?php echo $item->description; ?>
-    					        </span>
-                            </td>
-
-                            <td class="text-center">
-                                <?php echo $item->thumb_id; ?>
-                            </td>
-
-                            <td class="text-center">
-                                <span class="small">
-                                    "<?php echo $item->params; ?>"
-    					        </span>
-                            </td>
-
-                            <td width="1%" class="text-center">
-                                <?php echo $item->published; ?>
-                            </td>
-                            <td width="1%" class="text-center">
-                                <?php echo $item->hits; ?>
-                            </td>
-
-                            <td width="1%" class="text-center">
-                                <?php echo $item->checked_out; ?>
-                            </td>
-                            <td width="1%" class="text-center">
-                                <?php echo $item->checked_out_time; ?>
-                            </td>
-
-                            <td width="1%" class="text-center">
-                                <?php echo $item->ordering; ?>
-                            </td>
-                            <td width="1%" class="text-center">
-                                <?php echo $item->date; ?>
-                            </td>
-                            <td width="1%" class="text-center">
-                                "<?php echo $item->user; ?>"
-                            </td>
-                            <td width="1%" class="text-center">
-                                <?php echo $item->uid; ?>
-                            </td>
-                            <td width="1%" class="text-center">
-                                <?php echo $item->allowed; ?>
-                            </td>
-
-                            <td width="1%" class="text-center">
-                                <?php echo $item->asset_id; ?>
-                            </td>
-
-                            <td width="1%" class="text-center">
-                                <?php echo $item->access; ?>
-                            </td>
-
+                            <th width="1%" class="text-center">
+                                `checked_out`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `checked_out_time`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `ordering`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `date`
+                            </th>
+                            <th width="1%" class="center">
+                                `user`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `uid`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `allowed`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `asset_id`
+                            </th>
+                            <th width="1%" class="text-center">
+                                `access`
+                            </th>
                         </tr>
-                        <?php
-                    }
-                    ?>
-                    </tbody>
+                        </thead>
 
-                </table>
+                        <tbody>
+
+                        <?php
+                        foreach ($this->j3x_galleriesSorted as $i => $item) {
+                            $identHtml = str_repeat('⋮&nbsp;&nbsp;&nbsp;', $item->level);
+
+                            if (in_array ($item->id, $this->j3x_galleryIdsMerged)){
+                                $isMergedHtml =  isOKIconHtml ('Gallery is merged');
+                            } else {
+                                $isMergedHtml =  isNotOkIconHtml ('Gallery is not merged');
+                            }
+
+                            ?>
+                            <tr class="row<?php echo $i % 2; ?>">
+
+                                <td class="text-center">
+                                    <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                                </td>
+
+                                <td class="text-center">
+                                    <?php echo $isMergedHtml; ?>
+                                </td>
+
+                                <td class="text-center">
+                                    <?php echo $item->id; ?>
+                                </td>
+
+                                <td width="1%" class="text-center">
+                                    <?php
+                                    // ToDo: Name of parent gallery as title
+                                    echo $item->parent; ?>
+                                </td>
+
+                                <td class="text-left">
+                                    <!--
+                                    <?php //echo $identHtml . $this->escape($item->name);
+                                    ?>
+                                    <span class="small">
+                                        (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>)
+                                    </span>
+                                    -->
+                                    <?php echo $identHtml . $this->escape($item->alias); ?>
+
+                                </td>
+                                <td width="1%" class="center">
+                                    <span class="small">
+                                        <?php echo $item->description; ?>
+                                    </span>
+                                </td>
+
+                                <td class="text-center">
+                                    <?php echo $item->thumb_id; ?>
+                                </td>
+
+                                <td class="text-center">
+                                    <span class="small">
+                                        "<?php echo $item->params; ?>"
+                                    </span>
+                                </td>
+
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->published; ?>
+                                </td>
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->hits; ?>
+                                </td>
+
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->checked_out; ?>
+                                </td>
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->checked_out_time; ?>
+                                </td>
+
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->ordering; ?>
+                                </td>
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->date; ?>
+                                </td>
+                                <td width="1%" class="text-center">
+                                    "<?php echo $item->user; ?>"
+                                </td>
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->uid; ?>
+                                </td>
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->allowed; ?>
+                                </td>
+
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->asset_id; ?>
+                                </td>
+
+                                <td width="1%" class="text-center">
+                                    <?php echo $item->access; ?>
+                                </td>
+
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                        </tbody>
+
+                    </table>
+                    </div>
+                </div>
 
 
                 <?php
 
                 try {
                     echo '<hr>';
-                    echo '<h3>J3x ' . Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE') . '</h3>';
+                    echo '<h4>J3x ' . Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE') . '</h4>';
                     echo $this->j3x_galleriesHtml;
 
                     echo '<hr>';
-                    echo '<h3>J3x ' . Text::_('COM_RSGALLERY2_RAW_GALLERIES_TXT') . '</h3>';
+                    echo '<h4>J3x ' . Text::_('COM_RSGALLERY2_RAW_GALLERIES_TXT') . '</h4>';
                     echo jsonArray2Lines($this->j3x_galleriesSorted);
 
 //                        echo '<hr>';
@@ -288,7 +302,7 @@ EOT;
                     echo '<hr style="height:1px;border:none;color:#333;background-color:#333;" />';
                     echo '<hr style="height:1px;border:none;color:#333;background-color:#333;" />';
 
-                    echo '<h3>' . 'J4x ' . Text::_('COM_RSGALLERY2_GALLERIES_LIST') . '</h3>';
+                    echo '<h4>' . 'J4x ' . Text::_('COM_RSGALLERY2_GALLERIES_LIST') . '</h4>';
 
 //                    if (true) {
                     if (count ($this->j4x_galleries) > 1) {
@@ -527,11 +541,11 @@ EOT;
                 <input type="hidden" name="boxchecked" value="0" />
                 <input type="hidden" name="task" value="" />
                 <?php echo HTMLHelper::_('form.token'); ?>
+                </div>
             </div>
         </div>
     </div>
 
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
-
 

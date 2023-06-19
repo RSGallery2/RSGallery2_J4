@@ -811,7 +811,7 @@ EOT;
 
             $j3xGalleriesItems = $this->j3x_galleriesListOfIds($selectedIds);
 
-            $isOk = $this - copyDbJ3xGalleries2J4x($j3xGalleriesItems);
+            $isOk = $this->copyDbJ3xGalleries2J4x($j3xGalleriesItems);
 
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
@@ -836,7 +836,7 @@ EOT;
                 $j4xGalleryItemsSorted = $this->j4x_galleriesSortedByParent($j4xGalleriesItems, 0, 0);
 
                 // set nested tree ()
-                // last $lastNodeIdx needed for root ???
+	            // fills $sortedGalleries
                 $lastNodeIdx = $this->setNestingNodes2J4xGalleries($j4xGalleryItemsSorted, 0, 0, 1);
 
                 // re-init nested gallery table
@@ -1015,6 +1015,34 @@ EOT;
                 //->where($db->quoteName('status') . ' IN (' . implode(',', ArrayHelper::toInteger($array)) . ')')
                 ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($selectedIds)) . ')')
                 ->from('#__rsgallery2_files')
+                ->order('id ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $images = $db->loadObjectList();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+
+        return $images;
+    }
+
+    public function j3x_galleriesListOfIds($selectedIds)
+    {
+        $images = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+                ->select('*')
+                // https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
+                //->where($db->quoteName('status') . ' IN (' . implode(',', ArrayHelper::toInteger($array)) . ')')
+                ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($selectedIds)) . ')')
+                ->from('#__rsgallery2_galleries')
                 ->order('id ASC');
 
             // Get the options.

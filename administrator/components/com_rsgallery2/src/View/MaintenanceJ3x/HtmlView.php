@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 
+use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
@@ -63,7 +64,15 @@ class HtmlView extends BaseHtmlView
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
 		/**/
 
-        $j3xModel      = $this->getModel();
+		//--- load additional language file --------------------------------
+
+		$lang = Factory::getLanguage();
+		$lang->load('com_rsg2_j3x',
+			Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+
+		//---  --------------------------------------------------------------
+
+		$j3xModel      = $this->getModel();
 
 		$Layout = Factory::getApplication()->input->get('layout');
 		switch ($Layout)
@@ -265,9 +274,7 @@ class HtmlView extends BaseHtmlView
 						. 'Tasks: <br>'
                         . '* use "name/alias" in J3x galliers overview <br>'
                         . '* user should only see what is necessary: use debug / develop for others<br>'
-                        . '* Fix: Copy selected images / galleries -> greyed button, Ids in controller'
-						. '* Remove double code parts: See also galleries raw view -> import into views<br>'
-						. '* check table : if empty .. -> use isset ??? <br>'
+                        . '* Left out: Button for copy single galleries -> no functions for adding , actual table is cleared on start so ...'
 						. '* !!! asset id !!! <br>'
 						. '* db variable "access". how to use ???<br>'
 //				        . '* !!! Test resume of partly copied galleries !!! <br>'
@@ -281,7 +288,9 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_GALLERIES', false);
-				ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
+
+				// actual on copy the table is cleared first. So it is not possible to do it with single entries
+				// ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xGalleries2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
 
 				break;
 
