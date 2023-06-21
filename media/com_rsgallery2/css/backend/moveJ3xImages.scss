@@ -1,8 +1,9 @@
+// responsible for moveJ3xImages, dbtransferj3xgalleries, dbtransferj3ximages, dbcopyj3xconfig
+
 @import "Rsg2";
 
 // thin icons no padding
 @import "Rsg2_sidebar";
-
 
 /**/
 .btn-rsg2X {
@@ -14,6 +15,7 @@
   margin-right: 5px;
 }
 
+//--- moveJ3xImages --------------------------------------------------------
 
 .allJ3xMovedArea {
 
@@ -35,3 +37,10 @@
 
   box-shadow: 4px 7px #888888;
 }
+
+//--- dbtransferj3xgalleries --------------------------------------------------------
+
+//--- dbtransferj3ximages --------------------------------------------------------
+
+//--- dbcopyj3xconfig --------------------------------------------------------
+
