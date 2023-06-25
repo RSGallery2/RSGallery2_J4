@@ -9,10 +9,12 @@
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\HTML\HTMLHelper;
 
 use Joomla\CMS\Language\Text;
+use Joomla\Filesystem\Path;
 
 HTMLHelper::_('bootstrap.framework');
 
@@ -53,7 +55,13 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
 
                     if ($this->isJ3xDataExisting) {
 
-                        if ($this->isMissingJ3xDbGalleries
+	                    //--- load additional language file --------------------------------
+
+	                    $lang = Factory::getLanguage();
+	                    $lang->load('com_rsg2_j3x',
+		                    Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+
+	                    if ($this->isMissingJ3xDbGalleries
                             || $this->isMissingJ3xDbImages
                             || $this->isMissingJ3xImages) {
 

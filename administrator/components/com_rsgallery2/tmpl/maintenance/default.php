@@ -17,6 +17,7 @@ use Joomla\CMS\Response\JsonResponse;
 /**/
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -329,6 +330,12 @@ $danger_ZoneButtons[] = new zoneButtons(
 
 if ($this->isJ3xRsg2DataExisting)
 {
+	//--- load additional language file --------------------------------
+
+	$lang = Factory::getLanguage();
+	$lang->load('com_rsg2_j3x',
+		Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+
 	$upgrade_ZoneInfo = Text::_('COM_RSGALLERY2_UPGRADE_ZONE_DESCRIPTION');
 } else {
 	$upgrade_ZoneInfo = Text::_('COM_RSGALLERY2_J3X_RSG2_TABLES_NOT_EXISTING');

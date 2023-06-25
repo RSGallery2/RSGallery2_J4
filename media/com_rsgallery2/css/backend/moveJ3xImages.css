@@ -39,4 +39,30 @@
   box-shadow: 4px 7px #888888;
 }
 
+.j3x-info-card {
+  max-width: 36rem;
+  margin-bottom: 1rem;
+}
+
+.j3x-galleries-card {
+  margin-bottom: 1rem;
+}
+
+.j3x-galleries-as-tree-card {
+  margin-bottom: 1rem;
+}
+
+.j3x-galleries-as-raw-card {
+  margin-bottom: 1rem;
+}
+
+.j4x-info-card {
+  max-width: 36rem;
+  margin-bottom: 1rem;
+}
+
+.j4x-galleries-card {
+  margin-bottom: 1rem;
+}
+
 /*# sourceMappingURL=moveJ3xImages.css.map */

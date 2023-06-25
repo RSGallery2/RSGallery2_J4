@@ -35,7 +35,9 @@
 	<administration>
 		<!-- Menu entries -->
 		<!--menu view="rsgallery2">COM_RSGALLERY2_MENU</menu-->
-		<menu view="rsgallery2">COM_RSGALLERY2_MENU
+		<menu view="rsgallery2"
+			img="class:images"
+			>COM_RSGALLERY2_MENU
 			<params>
 				<dashboard>rsgallery2</dashboard>
 			</params>
@@ -62,20 +64,16 @@
 			</menu>
 			<menu view="COM_RSGALLERY2_MENU_UPLOAD"
 			      img="class:upload"
-			      link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD
-			</menu>
+			      link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD</menu>
 			<menu view="COM_RSGALLERY2_MENU_IMAGES"
-			      img="class:image"
-			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES
-			</menu>
+			      img="class:images"
+			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES</menu>
 			<menu view="COM_RSGALLERY2_MENU_CONFIG"
 			      img="class:config"
-			      link="option=com_config&amp;view=component&amp;component=com_rsgallery2">COM_RSGALLERY2_MENU_CONFIG
-			</menu>
+			      link="option=com_config&amp;view=component&amp;component=com_rsgallery2">COM_RSGALLERY2_MENU_CONFIG</menu>
 			<menu view="COM_RSGALLERY2_MENU_MAINTENANCE"
 			      img="class:equalizer"
-			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE
-			</menu>
+			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE</menu>
 		</submenu>
 
 		<!-- Core files -->
