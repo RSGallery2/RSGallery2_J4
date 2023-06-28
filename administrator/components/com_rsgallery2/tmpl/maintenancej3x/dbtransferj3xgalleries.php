@@ -13,7 +13,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 
 //HTMLHelper::_('bootstrap.framework');
-//HTMLHelper::_('behavior.multiselect');
 
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
@@ -247,10 +246,10 @@ function j3x_galleryListHtml ($dbtransferj3xgalleries) {
             }
             ?>
             </tbody>
-
         </table>
+
 	<?php else : ?>
-        <h2><span class="badge badge-pill bg-success"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
+        <h2><span class="badge badge-pill bg-error"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
 	<?php endif; ?>
 
 	<?php
@@ -506,7 +505,7 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
                 <div class="card text-dark bg-light j3x-info-card">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION'); ?> <?php echo Text::_('COM_RSGALLERY2_J3X_GALLERIES'); ?></h5>
-                        <?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION_DESC'); ?>
+                        <?php echo Text::_('COM_RSGALLERY2_J3X_DB_GALLERY_COPY_INSTRUCTION_DESC'); ?>
                     </div>
                 </div>
 
