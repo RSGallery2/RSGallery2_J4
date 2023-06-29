@@ -1218,16 +1218,16 @@ EOT;
         return $isOk;
     }
 
-    public function copySelectedJ3xImages2J4x($selectedIds)
-    {
 
+    public function copyDbSelectedJ3xImages2J4x($selectedIds)
+    {
         $isOk = false;
 
         try {
 
             $j3xImageItems = $this->j3x_imagesListOfIds($selectedIds);
 
-            $isOk = $this - copyDbJ3xImages2J4x($j3xImageItems);
+            $isOk = $this->copyDbJ3xImages2J4x($j3xImageItems);
 
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
@@ -1263,7 +1263,21 @@ EOT;
     }
 
 
-    public function convertDbJ3xImagesToJ4x($J3xImagesItems)
+	public function convertSelectedJ3xImages2J4x($selectedIds)
+	{
+		$isOk = false;
+
+		try {
+
+
+		} catch (\RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $isOk;
+	}
+
+	public function convertDbJ3xImagesToJ4x($J3xImagesItems)
     {
 
         $j4ImageItems = [];

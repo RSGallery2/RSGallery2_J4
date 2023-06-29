@@ -240,14 +240,11 @@ class MaintenanceJ3xController extends AdminController
                     //$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
                     $msg .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
                     $msgType = 'warning';
-                } else
-                {
+                } else {
 
 	                $j3xModel = $this->getModel('MaintenanceJ3x');
 
 	                $isOk = $j3xModel->copyDbSelectedJ3xGalleries2J4x($cids);
-
-yyY; // are all galleries moved ?
 	                if ($isOk)
 	                {
 
@@ -343,7 +340,61 @@ yyY; // are all galleries moved ?
         return $isOk;
     }
 
-    /**
+	public function copyDbSelectedJ3xImages2J4x()
+	{
+		$msg = "MaintenanceJ3xController.copyDbJ3xImages2J4x: ";
+		$msgType = 'notice';
+
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+			try {
+				$cids = $this->input->get('cid', array(), 'array');
+
+				if (!is_array($cids) || count($cids) < 1) {
+					//$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
+					$msg .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
+					$msgType = 'warning';
+				} else {
+
+					$j3xModel = $this->getModel('MaintenanceJ3x');
+
+					$isOk = $j3xModel->copyDbSelectedJ3xImages2J4x($cids);
+					if ($isOk)
+					{
+						$msg .= "Successful applied J3x image items";
+					}
+					else
+					{
+						$msg     .= "Error at copyDbJ3xImages2J4x items";
+						$msgType = 'error';
+					}
+				}
+			} catch (\RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing copyDbJ3xImages2J4x: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+
+		}
+
+		//$link = 'index.php?option=com_rsgallery2&view=galleries';
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+
+	/**
      * Copies all old J3x image items to J4 images
      *
      * @since __BUMP_VERSION__
@@ -385,7 +436,6 @@ yyY; // are all galleries moved ?
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         //$link = 'index.php?option=com_rsgallery2&view=galleries';
