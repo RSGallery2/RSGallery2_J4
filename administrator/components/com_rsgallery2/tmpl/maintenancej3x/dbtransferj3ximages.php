@@ -611,64 +611,6 @@ function j4x_imageListHtml ($dbtransferj3ximages) {
 
                 <hr>
 
-
-
-                        <legend><strong><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'); ?></strong></legend>
-
-                <h3><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h3>
-
-
-
-
-
-                <?php
-
-//                echo '<hr>';
-// ToDo:           sorted by gallery
-//                echo '<h3>J3x ' . Text::_('COM_RSGALLERY2_RAW_IMAGES_TXT') . '</h3>';
-
-
-                /*--------------------------------------------------------------------------------
-                    J4x images
-                --------------------------------------------------------------------------------*/
-
-
-                //
-                echo '<hr style="height:1px;border:none;color:#333;background-color:#333;" />';
-                echo '<hr style="height:1px;border:none;color:#333;background-color:#333;" />';
-
-                echo '<h3>' . 'J4x ' . Text::_('COM_RSGALLERY2_IMAGES_LIST') . '</h3>';
-
-                //if (true) {
-                //if (false) {
-                if (count ($this->j4x_images) > 0) {
-                ?>
-
-
-                <?php
-
-                } // count (j4x_images) > 1
-                else {
-                    $keyTranslation = 'J4x ' . Text::_('COM_RSGALLERY2_IMAGES_LIST_IS_EMPTY');
-                    echo '   <h2><span class="badge badge-pill bg-success">' . $keyTranslation . '</span></h2>';
-                }
-
-
-                try {
-
-
-                    echo '<hr>';
-                } catch (\RuntimeException $e) {
-                    $OutTxt = '';
-                    $OutTxt .= 'Error rawEdit view: "' . 'DbTransferJ3xImages' . '"<br>';
-                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-                    $app = Factory::getApplication();
-                    $app->enqueueMessage($OutTxt, 'error');
-                }
-
-                ?>
-
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
                 <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
