@@ -55,30 +55,38 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
                 <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'); ?></strong></legend-->
 
-                <?php
-                // all images are moved, no gallery displayed
-                if ( ! $this->isMissingJ3xImages) { ?>
+            	<?php if (! $this->isMissingJ3xImages): ?>
 
-                    <div class="allJ3xMovedArea">
-                        <span class="badge bg-success allJ3xMovedText">
-                            <?php echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
-                        </span>
+                    <div class="card text-dark bg-light j3x-info-card">
+                        <div class="card-body">
+                            <div class="allJ3xMovedArea">
+                                <span class="badge bg-success allJ3xMovedText">
+                                    <!-- ToDo: bade like in Dbcopxy ... -->
+                                    <?php echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
-                <?php } else { ?>
+            	<?php else : ?>
 
-                    <p style="max-width:400px">
-                        <?php
-                            echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE') . '.&nbsp'
-                               . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC') . '.&nbsp'
-                               . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC_B');
-                        ?>
-                    </p>
-                    <?php
-                    // specify gallery
-                    // toDO: change name as used for all
-                    echo $this->form->renderFieldset('j3x_gallery');
-                    ?>
+                    <div class="card text-dark bg-light j3x-info-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
+                            <?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC') . '.&nbsp'
+                               . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC_B');?>
+                            <?php
+                            // specify gallery
+                            // toDO: change name as used for all
+                            echo $this->form->renderFieldset('j3x_gallery');
+                            ?>
+
+                        </div>
+                    </div>
+
+            	<?php endif; ?>
+
+
 
                     <button id="moveByGallery" type="button" class="btn btn-success btn-rsg2"
                             title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY_DEC'); ?>"
@@ -315,8 +323,6 @@ Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
                             </span>
                         </div>
                     <?php } ?>
-
-                <?php } ?>
 
 
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
