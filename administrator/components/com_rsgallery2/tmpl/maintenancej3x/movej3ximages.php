@@ -111,9 +111,11 @@ function j3x_moveButtonsHtml ($movej3ximages) {
 	Not converted J4x galleries
 --------------------------------------------------------------------------------*/
 
-function j4x_galleryListHtml ($movej3ximages) {
+function j4x_galleryListHtml ($movej3ximages)
+{
+	$FoundNr = 0;
 
-?>
+	?>
 	<!-- more than root of tree exists -->
 	<?php if (count ($movej3ximages->j4x_galleries) >1): ?>
 
@@ -150,7 +152,6 @@ function j4x_galleryListHtml ($movej3ximages) {
             <tbody>
 
             <?php
-            $FoundNr = 0;
             foreach ($movej3ximages->j4x_galleries as $i => $item) {
 
                 $allMoved = false;
@@ -329,18 +330,22 @@ function j4x_galleryListHtml ($movej3ximages) {
                             <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
                             <?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC') . '.&nbsp'
                                . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC_B');?>
-                            <?php
-                            // specify gallery
-                            // toDO: change name as used for all
-                            echo $this->form->renderFieldset('j3x_gallery');
-                            ?>
-
                         </div>
                     </div>
 
             	<?php endif; ?>
 
-                <div class="card text-dark bg-light j3x-info-card">
+                <div class="card text-dark bg-light j3x-gallery-card">
+                    <div class="card-body">
+			            <?php
+			            // specify gallery
+			            // toDO: change name as used for all
+			            echo $this->form->renderFieldset('j3x_gallery');
+			            ?>
+                    </div>
+                </div>
+
+                <div class="card text-dark bg-light j3x--card">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
 
