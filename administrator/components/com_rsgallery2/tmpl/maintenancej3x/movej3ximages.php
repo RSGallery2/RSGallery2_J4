@@ -42,10 +42,8 @@ function j3x_moveButtonsHtml ($movej3ximages) {
 
 //	$html = <<<EOT
 
-// ToDo: why j4x galleries instead of j3x galleries ?
-
 ?>
-	<?php if (! empty ($j3x_moveButtonsHtml->j4x_galleries)): ?>
+	<?php if (! empty ($movej3ximages->j3x_galleries)): ?>
 
         <button id="moveByGallery" type="button" class="btn btn-success btn-rsg2"
                 title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY_DEC'); ?>"
@@ -164,8 +162,8 @@ function j4x_galleryListHtml ($movej3ximages)
 
                 $FoundNr += 1;
 
-                $imgToBeMoved = $movej3ximages->j3xGallerysData [$item->id]['toBeMoved'];
-                $imgAvailable = $movej3ximages->j3xGallerysData [$item->id]['count'];
+                $imgToBeMoved = $movej3ximages->h4j3xGalleriesData [$item->id]['toBeMoved'];
+                $imgAvailable = $movej3ximages->h4j3xGalleriesData [$item->id]['count'];
 
                 // a) Must be transferred b) check
 
@@ -281,7 +279,7 @@ function j4x_galleryListHtml ($movej3ximages)
 
 
 	<?php else : ?>
-        <h2><span class="badge badge-pill bg-success"><?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
+        <h2><span class="badge badge-pill bg-success"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
 	<?php endif; ?>
 
 	<?php
@@ -289,6 +287,19 @@ function j4x_galleryListHtml ($movej3ximages)
 	return $FoundNr;
  }
 
+ /*--- Available Data --------------------------------------------
+
+$this->isMissingJ3xImages
+ 
+$this->j3x_galleries = [];
+$this->j4x_galleries = [];
+
+$this->j3x_transformGalleryIdsTo_j4x = [];
+$this->j3x_galleries4ImageMove = [];
+$this->h4j3xGalleriesData = [];
+
+
+*/
 
 ?>
 

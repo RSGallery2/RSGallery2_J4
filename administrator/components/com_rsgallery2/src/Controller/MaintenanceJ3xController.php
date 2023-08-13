@@ -247,7 +247,6 @@ class MaintenanceJ3xController extends AdminController
 	                $isOk = $j3xModel->copyDbSelectedJ3xGalleries2J4x($cids);
 	                if ($isOk)
 	                {
-
 		                $msg .= "Successful applied J3x gallery items ";
 
 		                $isOk = ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', true);

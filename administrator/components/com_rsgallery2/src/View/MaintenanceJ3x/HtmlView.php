@@ -170,6 +170,13 @@ class HtmlView extends BaseHtmlView
                     // state ?
                     $this->isMissingJ3xImages = ! $rsgConfig->get('j3x_images_copied');
 
+	                $this->j3x_galleries = [];
+	                $this->j4x_galleries = [];
+
+	                $this->j3x_transformGalleryIdsTo_j4x = [];
+	                $this->j3x_galleries4ImageMove = [];
+	                $this->h4j3xGalleriesData = [];
+
                     // J3x images exist
                     if ($this->isMissingJ3xImages) {
                         $this->j3x_galleries = $j3xModel->j3x_galleriesList();
@@ -186,7 +193,7 @@ class HtmlView extends BaseHtmlView
                             ConfigRawModel::writeConfigParam ('j3x_images_copied', true);
                         }
 
-                        $this->j3xGallerysData = $j3xModel->j3x_galleriesData($this->galleryIdsJ3xAsJ4x);
+                        $this->h4j3xGalleriesData = $j3xModel->j3x_galleriesData($this->galleryIdsJ3xAsJ4x);
                     }
 
                     //--- Form --------------------------------------------------------------------
