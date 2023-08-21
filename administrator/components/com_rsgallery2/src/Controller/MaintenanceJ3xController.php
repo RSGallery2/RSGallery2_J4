@@ -341,7 +341,7 @@ class MaintenanceJ3xController extends AdminController
 
 	public function copyDbSelectedJ3xImages2J4x()
 	{
-		$msg = "MaintenanceJ3xController.copyDbJ3xImages2J4x: ";
+		$msg = "MaintenanceJ3xController.copyDbSelectedJ3xImages2J4x: ";
 		$msgType = 'notice';
 
 		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
@@ -372,13 +372,13 @@ class MaintenanceJ3xController extends AdminController
 					}
 					else
 					{
-						$msg     .= "Error at copyDbJ3xImages2J4x items";
+						$msg     .= "Error at copyDbSelectedJ3xImages2J4x items";
 						$msgType = 'error';
 					}
 				}
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
-				$OutTxt .= 'Error executing copyDbJ3xImages2J4x: "' . '<br>';
+				$OutTxt .= 'Error executing copyDbSelectedJ3xImages2J4x: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();

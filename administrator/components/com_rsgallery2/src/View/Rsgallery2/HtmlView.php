@@ -68,9 +68,9 @@ class HtmlView extends BaseHtmlView
 	protected $isConfigSavedOnce;
 
     protected $isJ3xDataExisting;
-    protected $isMissingJ3xDbGalleries;
-    protected $isMissingJ3xDbImages;
-    protected $isMissingJ3xImages;
+    protected $isDoCopyJ3xDbGalleries;
+    protected $isDoCopyJ3xDbImages;
+    protected $isDoCopyJ3xImages;
 
 	/**
 	 * Method to display the view.
@@ -124,9 +124,9 @@ class HtmlView extends BaseHtmlView
                 }
             }
 
-            $this->isMissingJ3xDbGalleries = ! $rsgConfig->get('j3x_db_galleries_copied');
-            $this->isMissingJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
-            $this->isMissingJ3xImages = ! $rsgConfig->get('j3x_images_copied');
+            $this->isDoCopyJ3xDbGalleries = ! $rsgConfig->get('j3x_db_galleries_copied');
+            $this->isDoCopyJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
+            $this->isDoCopyJ3xImages = ! $rsgConfig->get('j3x_images_copied');
 
         }
 

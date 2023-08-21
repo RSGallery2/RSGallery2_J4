@@ -20,7 +20,7 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.moveJ3xI
 
 // Items exist
 // ToDO: Script should not fail when no images ... ==> use web asset preset .. then for both
-if ($this->isMissingJ3xImages) {
+if ($this->isDoCopyJ3xImages) {
     // HTMLHelper::_('script', 'com_rsgallery2/backend/moveJ3xImages.js', ['version' => 'auto', 'relative' => true]);
     // on more use preset ....
     $this->document->getWebAssetManager()->useScript('com_rsgallery2.backend.moveJ3xImages');
@@ -111,7 +111,7 @@ function j3x_moveButtonsHtml ($movej3ximages) {
 
 function j4x_galleryListHtml ($movej3ximages)
 {
-	$FoundNr = 0;
+	$toBeMovedCount = 0;
 
 	?>
 	<!-- more than root of tree exists -->
@@ -156,11 +156,11 @@ function j4x_galleryListHtml ($movej3ximages)
                 if ( ! in_array ($item->id, $movej3ximages->galleryIds4ImgsToBeMoved)) {
                     $allMoved = true;
 
-                    // toDo: two views (a) only unassinged b) all
+                    // toDo: two views (a) only unassigned b) all
                     continue;
                 }
 
-                $FoundNr += 1;
+                $toBeMovedCount += 1;
 
                 $imgToBeMoved = $movej3ximages->h4j3xGalleriesData [$item->id]['toBeMoved'];
                 $imgAvailable = $movej3ximages->h4j3xGalleriesData [$item->id]['count'];
@@ -284,12 +284,12 @@ function j4x_galleryListHtml ($movej3ximages)
 
 	<?php
 
-	return $FoundNr;
+	return $toBeMovedCount;
  }
 
  /*--- Available Data --------------------------------------------
 
-$this->isMissingJ3xImages
+$this->isDoCopyJ3xImages
  
 $this->j3x_galleries = [];
 $this->j4x_galleries = [];
@@ -321,13 +321,13 @@ $this->h4j3xGalleriesData = [];
 
                 <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'); ?></strong></legend-->
 
-            	<?php if (! $this->isMissingJ3xImages): ?>
+            	<?php if (! $this->isDoCopyJ3xImages): ?>
 
                     <div class="card text-dark bg-light j3x-info-card">
                         <div class="card-body">
                             <div class="allJ3xMovedArea">
                                 <span class="badge bg-success allJ3xMovedText">
-                                    <!-- ToDo: bade like in Dbcopxy ... -->
+                    	            <?php //--- ToDo: badge like in Dbcopy ------------------------------------------ ?>
                                     <?php echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
                                 </span>
                             </div>
@@ -335,6 +335,8 @@ $this->h4j3xGalleriesData = [];
                     </div>
 
             	<?php else : ?>
+
+                    <?php //--- Move instruction -------------------------------------------------------------------- ?>
 
                     <div class="card text-dark bg-light j3x-info-card">
                         <div class="card-body">
@@ -344,44 +346,37 @@ $this->h4j3xGalleriesData = [];
                         </div>
                     </div>
 
-            	<?php endif; ?>
+		            <?php //--- Select gallery and buttons ---------------------------------------------------------- ?>
 
-                <div class="card text-dark bg-light j3x-gallery-card">
-                    <div class="card-body">
-			            <?php
-			            // specify gallery
-			            // toDO: change name as used for all
-			            echo $this->form->renderFieldset('j3x_gallery');
-			            ?>
+                    <div class="card text-dark bg-light j3x-gallery-card">
+                        <div class="card-body">
+                            <?php
+                            // specify gallery
+                            // toDO: change name as used for all
+                            echo $this->form->renderFieldset('j3x_gallery');
+                            ?>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card text-dark bg-light j3x--card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
+                    <div class="card text-dark bg-light j3x--card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
 
-                        <?php j3x_moveButtonsHtml ($this); ?>
+                            <?php j3xdTransferButtonsHtml ($this); ?>
+                        </div>
                     </div>
-                </div>
 
-                <hr>
+                    <hr>
 
-                    <!--div id="moveImageArea" >
-
-
-
-                        <hr>
-                    </div-->
-
+		            <?php //--- galleries info list ----------------------------------------------------------------- ?>
 
                     <h3><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_MOVE_IMAGES_LIST'); ?></h3>
-
 
                     <div class="card text-dark bg-light j3x-info-card">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
 
-			                <?php $FoundNr = j4x_galleryListHtml ($this); ?>
+			                <?php $toBeMovedCount = j4x_galleryListHtml ($this); ?>
                         </div>
                     </div>
 
@@ -389,13 +384,15 @@ $this->h4j3xGalleriesData = [];
 
 	                <?php
                     // all images are moved, no gallery displayed
-                    if ($FoundNr == 0) { ?>
+                    if ($toBeMovedCount == 0) { ?>
                         <div class="allJ3xMovedArea">
                             <span class="badge bg-success allJ3xMovedText">
                                 <?php echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
                             </span>
                         </div>
                     <?php } ?>
+
+	            <?php endif; ?>
 
 
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>

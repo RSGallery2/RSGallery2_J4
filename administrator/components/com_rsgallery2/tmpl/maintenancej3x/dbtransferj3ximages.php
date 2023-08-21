@@ -50,10 +50,10 @@ EOT;
 /*--------------------------------------------------------------------------------
 	J3x images
 --------------------------------------------------------------------------------*/
-function j3x_imageListHtml ($dbtransferj3ximages) {
+function j3x_imageInfoListHtml ($dbtransferj3ximages) {
+	$toBeMovedCount = 0;
 
-//	$html = <<<EOT
-?>
+	?>
 	<?php if (! empty ($dbtransferj3ximages->j3x_images)): ?>
 
         <table class="table table-striped" id="galleryList">
@@ -89,46 +89,6 @@ function j3x_imageListHtml ($dbtransferj3ximages) {
                 <th width="1%" class="center">
                     `title`
                 </th>
-                <th width="1%" class="center">
-                    `hits`
-                </th>
-                <th width="1%" class="center">
-                    `date`
-                </th>
-                <th width="1%" class="center">
-                    `rating`
-                </th>
-                <th width="1%" class="center">
-                    `votes`
-                </th>
-                <th width="1%" class="center">
-                    `comments`
-                </th>
-                <th width="1%" class="center">
-                    `published`
-                </th>
-                <th width="1%" class="center">
-                    `checked_out`
-                </th>
-                <th width="1%" class="center">
-                    `checked_out_time`
-                </th>
-                <th width="1%" class="center">
-                    `ordering`
-                </th>
-                <th width="1%" class="center">
-                    `approved`
-                </th>
-                <th width="1%" class="center">
-                    `userid`
-                </th>
-                <th width="1%" class="center">
-                    `params`
-                </th>
-                <th width="1%" class="center">
-                    `asset_id`
-                </th>
-
 
             </tr>
             </thead>
@@ -138,11 +98,13 @@ function j3x_imageListHtml ($dbtransferj3ximages) {
             <?php
             foreach ($dbtransferj3ximages->j3x_images as $i => $item) {
 
-                $isMerged =in_array ($item->id, $dbtransferj3ximages->j3x_imageIdsMerged);
+                $isMerged = in_array ($item->id, $dbtransferj3ximages->j3x_imageIdsMerged);
                 if ($isMerged){
                     $mergedStatusHtml =  isOKIconHtml ('Image is merged');
                 } else {
                     $mergedStatusHtml =  isNotOkIconHtml ('Image is not merged');
+
+	                $toBeMovedCount += 1;
                 }
 
                 ?>
@@ -172,52 +134,13 @@ function j3x_imageListHtml ($dbtransferj3ximages) {
                         <?php echo $item->alias; ?>
                     </td>
                     <td width="1%" class="center">
-                        <?php echo $item->descr; ?>
+                        <?php // echo $item->descr; ?>
                     </td>
                     <td width="1%" class="center">
                         <?php echo $item->gallery_id; ?>
                     </td>
                     <td width="1%" class="center">
                         <?php echo $item->title; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->hits; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->date; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->rating; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->votes; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->comments; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->published; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->checked_out; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->checked_out_time; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->ordering; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->approved; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->userid; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->params; ?>
-                    </td>
-                    <td width="1%" class="center">
-                        <?php echo $item->asset_id; ?>
                     </td>
                 </tr>
 
@@ -233,322 +156,79 @@ function j3x_imageListHtml ($dbtransferj3ximages) {
 
 	<?php
 
-//EOT;
-//
-//	return $html;
+	return $toBeMovedCount;
 }
 
 /*--------------------------------------------------------------------------------
-	J4x images
+	Move buttons
 --------------------------------------------------------------------------------*/
-
-function j4x_imageListHtml ($dbtransferj3ximages) {
+function j3xdTransferButtonsHtml ($movej3ximages) {
 
 //	$html = <<<EOT
-?>
-	<?php if (! empty ($dbtransferj3ximages->j4x_images)): ?>
 
-        <table class="table table-striped" id="imageList">
+	?>
+	<?php if (! empty ($movej3ximages->j3x_images)): ?>
 
-            <caption id="captionTable" class="sr-only">
-				<?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
-            </caption>
-            <thead>
-            <tr>
-                <td style="width:1%" class="text-center">
-					<?php echo HTMLHelper::_('grid.checkall'); ?>
-                </td>
+        <button id="transferByGallery" type="button" class="btn btn-success btn-rsg2"
+                title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY_DEC'); ?>"
 
-                <th width="1%" class="text-center">
-                    `id`
-                </th>
-                <th width="1%" class="text-center">
-                    `name/alias/note`
-                </th>
+        >
+            <span class="icon-checkbox" aria-hidden="false"></span>
+			<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY'); ?>
+        </button>
+        <!-- button id="transferByCheckedGalleries" type="button" class="btn btn-success btn-rsg2"
+                title="<?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_BY_GALLERIES_CHECK_DESC'); ?>"
+                disabled
+        >
+            <span class="icon-out-2" aria-hidden="false"></span>
+            <span class="icon-image" aria-hidden="false"></span>
+			<?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_BY_GALLERIES_CHECK'); ?>
+        </button -->
+        <!--button id="deSelectGallery" type="button" class="btn btn-success btn-rsg2"
+                title="<?php echo "???" . Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY_DEC'); ?>"
+        >
+            <span class="icon-checkbox-unchecked" aria-hidden="false"></span>
+            <?php echo "???" . Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY'); ?>
+        </button-->
 
-                <th width="1%" class="text-center">
-                    `gallery_id`
-                </th>
+        <button id="transferAllJ3xImjages" type="button" class="btn btn-success btn-rsg2"
+                title="<?php echo Text::_('COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES_DESC'); ?>"
+        >
+            <span class="icon-out-2" aria-hidden="false"></span>
+            <span class="icon-images" aria-hidden="false"></span>
+			<?php echo Text::_('COM_RSGALLERY2_MOVE_ALL_J3X_IMAGES'); ?>
+        </button>
 
-                <th width="1%" class="text-center">
-                    `use_j3x_location`
-                </th>
+        <hr>
 
-                <th width="1%" class="text-center">
-                    `title`
-                </th>
+        <button id="selectNextGallery" type="button" class="btn btn-info btn-rsg2"
+                title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY_DESC'); ?>"
 
-                <th width="1%" class="text-center">
-                    `description`
-                </th>
+        >
+            <span class="icon-checkbox" aria-hidden="false"></span>
+			<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY'); ?>
+        </button>
+        <button id="selectNextGalleries10" type="button" class="btn btn-info btn-rsg2"
+                title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
 
-                <th width="1%" class="text-center">
-                    `params`
-                </th>
-                <th width="1%" class="text-center">
-                    `published`
-                </th>
-                <th width="1%" class="text-center">
-                    `publish_up`
-                </th>
-                <th width="1%" class="text-center">
-                    `publish_down`
-                </th>
-
-                <th width="1%" class="text-center">
-                    `hits`
-                </th>
-                <th width="1%" class="text-center">
-                    `rating`
-                </th>
-                <th width="1%" class="text-center">
-                    `votes`
-                </th>
-                <th width="1%" class="text-center">
-                    `comments`
-                </th>
-
-                <th width="1%" class="text-center">
-                    `checked_out`
-                </th>
-                <th width="1%" class="text-center">
-                    `checked_out_time`
-                </th>
-                <th width="1%" class="text-center">
-                    `created`
-                </th>
-                <th width="1%" class="text-center">
-                    `created_by`
-                </th>
-                <th width="1%" class="text-center">
-                    `created_by_alias`
-                </th>
-                <th width="1%" class="text-center">
-                    `modified`
-                </th>
-                <th width="1%" class="text-center">
-                    `modified_by`
-                </th>
-
-                <th width="1%" class="text-center">
-                    `ordering`
-                </th>
-                <th width="1%" class="text-center">
-                    `approved`
-                </th>
-
-                <th width="1%" class="text-center">
-                    `asset_id`
-                </th>
-                <th width="1%" class="text-center">
-                    `access`
-                </th>
-            </tr>
-            </thead>
-
-            <tbody>
-			<?php
-
-			foreach ($dbtransferj3ximages->j4x_images as $i => $item)
-			{
-				?>
-                <tr class="row<?php echo $i % 2; ?>">
-
-                    <td class="text-center">
-						<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
-                    </td>
-
-                    <td class="text-center">
-						<?php echo $item->id; ?>
-                    </td>
-
-                    <td class="text-center">
-						<?php echo $dbtransferj3ximages->escape($item->name); ?>
-                        <span class="small" title="<?php // echo $this->escape($item->path);
-						?>">
-                                    <?php if ( ! isset($item->note)) : ?>
-                                        (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS',
-                                            $dbtransferj3ximages->escape($item->alias)); ?>)
-                                    <?php else : ?>
-                                        (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE',
-                                            $dbtransferj3ximages->escape($item->alias),
-                                            $dbtransferj3ximages->escape($item->note)); ?>)
-                                    <?php endif; ?>
-                                    </span>
-                    </td>
-
-                    <td class="text-center">
-						<?php echo $item->gallery_id; ?>
-                    </td>
-
-                    <td width="1%" class="text-center">
-						<?php echo $item->use_j3x_location; ?>
-                    </td>
-
-                    <td class="text-center">
-						<?php
-						if (! ! isset($item->title))
-						{
-							echo '"' . $item->title . '"';
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-
-                    <td class="text-center">
-						<?php echo '"' . $item->description . '"'; ?>
-                    </td>
-
-                    <td class="text-center">
-						<?php
-						if (! ! isset($item->params))
-						{
-							echo '"' . $item->params . '"';
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-
-                    <td width="1%" class="text-center">
-						<?php echo $item->published; ?>
-                    </td>
-                    <td width="1%" class="text-center">
-						<?php
-						if (! ! isset($item->publish_up))
-						{
-							echo '"' . $item->publish_up . '"';
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-                    <td width="1%" class="text-center">
-						<?php
-						if (! ! isset($item->publish_down))
-						{
-							echo '"' . $item->publish_down . '"';
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-
-                    <td width="1%" class="text-center">
-						<?php echo $item->hits; ?>
-                    </td>
-                    <td class="text-center">
-						<?php echo $item->rating; ?>
-                    </td>
-
-                    <td class="text-center">
-						<?php echo $item->votes; ?>
-                    </td>
-
-                    <td class="text-center">
-                        "<?php echo $item->comments; ?>"
-                    </td>
-
-
-                    <td width="1%" class="text-center">
-						<?php
-						if(! ! isset($item->checked_out))
-						{
-							echo $item->checked_out;
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-                    <td width="1%" class="text-center">
-						<?php
-						if(! ! isset($item->checked_out_time))
-						{
-							echo $item->checked_out_time;
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-
-                    <td width="1%" class="text-center">
-						<?php echo $item->created; ?>
-                    </td>
-                    <td width="1%" class="text-center">
-						<?php
-						if(! ! isset($item->created_by))
-						{
-							echo $item->created_by;
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-                    <td width="1%" class="text-center">
-                        "<?php
-						if(! ! isset($item->created_by_alias))
-						{
-							echo $item->created_by_alias;
-						} else {
-							echo '???';
-						}
-						?>"
-                    </td>
-                    <td width="1%" class="text-center">
-						<?php echo $item->modified; ?>
-                    </td>
-                    <td width="1%" class="text-center">
-						<?php echo $item->modified_by; ?>
-                    </td>
-
-
-                    <td width="1%" class="text-center">
-						<?php echo $item->ordering; ?>
-                    </td>
-
-                    <td width="1%" class="text-center">
-						<?php
-						if(! ! isset($item->approved))
-						{
-							echo $item->approved;
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-
-                    <td width="1%" class="text-center">
-						<?php
-						if(! ! isset($item->asset_id))
-						{
-							echo $item->asset_id;
-						} else {
-							echo '???';
-						}
-						?>
-                    </td>
-
-                    <td width="1%" class="text-center">
-						<?php echo $item->access; ?>
-                    </td>
-                </tr>
-				<?php
-			}
-			?>
-            </tbody>
-        </table>
+        >
+            <span class="icon-checkbox" aria-hidden="false"></span>
+			<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_10_GALLERIES'); ?>
+        </button>
+        <button id="selectNextGalleries100" type="button" class="btn btn-info btn-rsg2 "
+                title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
+        >
+            <span class="icon-checkbox" aria-hidden="false"></span>
+			<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERIES'); ?>
+        </button>
 
 	<?php else : ?>
-        <h2><span class="badge badge-pill bg-success"><?php echo Text::_('COM_RSGALLERY2_J4X_IMAGES_LIST_IS_EMPTY'); ?></span></h2>
+        <h2><span class="badge badge-pill bg-success"><?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
 	<?php endif; ?>
 
 	<?php
-
-//EOT;
-//
-//	return $html;
 }
+
 
 ?>
 
@@ -566,9 +246,10 @@ function j4x_imageListHtml ($dbtransferj3ximages) {
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbTransferJ3xImages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbTransferJ3xImages', Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbTransferJ3xImages',
+                    Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true)); ?>
 
-                <!-- J3x main .................................................................... -->
+                <?php //--- copy instruction ------------------------------------------------------------------------ ?>
 
                 <div class="card text-dark bg-light j3x-info-card">
                     <div class="card-body">
@@ -577,18 +258,41 @@ function j4x_imageListHtml ($dbtransferj3ximages) {
                     </div>
                 </div>
 
-                <div class="card text-dark bg-light j3x-galleries-card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h5>
+	            <?php //--- Select gallery and buttons ---------------------------------------------------------- ?>
 
-	                    <?php j3x_imageListHtml ($this); ?>
+                <div class="card text-dark bg-light j3x-gallery-card">
+                    <div class="card-body">
+			            <?php
+			            // specify gallery
+			            // toDO: change name as used for all
+			            echo $this->form->renderFieldset('j3x_gallery');
+			            ?>
+                    </div>
+                </div>
+
+                <div class="card text-dark bg-light j3x--card">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
+
+			            <?php j3xdTransferButtonsHtml ($this); ?>
                     </div>
                 </div>
 
                 <hr>
 
+                <?php //--- J3x image info list --------------------------------------------------------------------- ?>
 
-                <!-- J4x main .................................................................... -->
+                <div class="card text-dark bg-light j3x-galleries-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h5>
+
+	                    <?php j3x_imageInfoListHtml ($this); ?>
+                    </div>
+                </div>
+
+                <hr>
+
+	            <?php //--- J4x info about must have been transferred ----------------------------------------------- ?>
 
                 <div class="card text-dark bg-light j4x-info-card" style="max-width: 36rem;">
                     <div class="card-header">
@@ -596,20 +300,10 @@ function j4x_imageListHtml ($dbtransferj3ximages) {
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_INFO'); ?></h5>
-			            <?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_INFO_DESC'); ?>
+			            <?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_MUST_BE_TRANSFERRED'); ?>
                     </div>
                 </div>
 
-                <div class="card text-dark bg-light j4x-galleries-card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J4X_IMAGES_LIST'); ?></h5>
-
-	                    <?php j4x_imageListHtml($this); ?>
-
-                    </div>
-                </div>
-
-                <hr>
 
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 

@@ -142,14 +142,37 @@ class HtmlView extends BaseHtmlView
             case 'DbTransferJ3xImages':
                 try
                 {
-                    $this->j3x_images = $j3xModel->j3x_imagesList();
-                    $this->j4x_images = $j3xModel->j4x_imagesList();
 
-                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
+	                $this->j3x_images = [];
+	                $this->j4x_images = [];
+
+	                $this->j3x_imageIdsMerged = [];
+
+                    $this->j3x_images = $j3xModel->j3x_imagesInfoList();
+//                    $this->j4x_images = $j3xModel->j4x_imagesInfoList();
+//
+//                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
 
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
                     //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
+
+	                //--- Form --------------------------------------------------------------------
+
+	                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/moveJ3xImages.xml';
+	                $form = Form::getInstance('moveJ3xImages', $xmlFile);
+
+	                // Check for errors.
+	                /* Must load form before */
+	                if ($errors = $this->get('Errors'))
+	                {
+		                if (count($errors))
+		                {
+			                throw new GenericDataException(implode("\n", $errors), 500);
+		                }
+	                }
+
+	                $this->form = $form;
 
                 }
                 catch (\RuntimeException $e)
@@ -168,7 +191,7 @@ class HtmlView extends BaseHtmlView
                 try
                 {
                     // state ?
-                    $this->isMissingJ3xImages = ! $rsgConfig->get('j3x_images_copied');
+                    $this->isDoCopyJ3xImages = ! $rsgConfig->get('j3x_images_copied');
 
 	                $this->j3x_galleries = [];
 	                $this->j4x_galleries = [];
@@ -178,7 +201,7 @@ class HtmlView extends BaseHtmlView
 	                $this->h4j3xGalleriesData = [];
 
                     // J3x images exist
-                    if ($this->isMissingJ3xImages) {
+                    if ($this->isDoCopyJ3xImages) {
                         $this->j3x_galleries = $j3xModel->j3x_galleriesList();
                         $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
@@ -188,7 +211,7 @@ class HtmlView extends BaseHtmlView
                         // finished by last call (move) ?  ToDo: call ajax check on empty list after move
                         if(count($this->galleryIds4ImgsToBeMoved) == 0) {
 
-                            $this->isMissingJ3xImages = false;
+                            $this->isDoCopyJ3xImages = false;
                             $rsgConfig->set('j3x_images_copied', true);
                             ConfigRawModel::writeConfigParam ('j3x_images_copied', true);
                         }

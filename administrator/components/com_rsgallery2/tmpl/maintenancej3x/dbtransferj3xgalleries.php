@@ -500,7 +500,7 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xGalleries', Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES', true)); ?>
 
-                <!-- J3x main .................................................................... -->
+	            <?php //--- J3x main --------------------------------------------------------------- ?>
 
                 <div class="card text-dark bg-light j3x-info-card">
                     <div class="card-body">
@@ -519,8 +519,7 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
 
                 <hr>
 
-
-                <!-- J4x main .................................................................... -->
+	            <?php //--- J4x main --------------------------------------------------------------- ?>
 
                 <div class="card text-dark bg-light j4x-info-card" style="max-width: 36rem;">
                     <div class="card-header">
@@ -542,7 +541,7 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
 
                 <hr>
 
-                <!-- J3x tree .................................................................... -->
+	            <?php //--- J3x tree --------------------------------------------------------------- ?>
 
                 <div class="card text-dark bg-light j3x-galleries-as-tree-card">
                     <div class="card-body">
@@ -554,7 +553,7 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
 
                 <hr>
 
-                <!-- J3x raw .................................................................... -->
+	            <?php //--- J3x raw --------------------------------------------------------------- ?>
 
                 <div class="card text-dark bg-light j3x-galleries-as-raw-card">
                     <div class="card-body">

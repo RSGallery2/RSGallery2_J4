@@ -61,14 +61,14 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
 	                    $lang->load('com_rsg2_j3x',
 		                    Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 
-	                    if ($this->isMissingJ3xDbGalleries
-                            || $this->isMissingJ3xDbImages
-                            || $this->isMissingJ3xImages) {
+	                    if ($this->isDoCopyJ3xDbGalleries
+                            || $this->isDoCopyJ3xDbImages
+                            || $this->isDoCopyJ3xImages) {
 
                             echo DisplayRequestJ3xActions (
-                                    $this->isMissingJ3xDbGalleries,
-                                    $this->isMissingJ3xDbImages,
-                                    $this->isMissingJ3xImages
+                                    $this->isDoCopyJ3xDbGalleries,
+                                    $this->isDoCopyJ3xDbImages,
+                                    $this->isDoCopyJ3xImages
                             );
                         }
                     }
@@ -182,9 +182,9 @@ function DisplayRSG2Logo()
  *
  * @since __BUMP_VERSION__
  */
-function DisplayRequestJ3xActions($isMissingJ3xDbGalleries=false,
-                                    $isMissingJ3xDbImages=false,
-                                    $isMissingJ3xImages=false)
+function DisplayRequestJ3xActions($isDoCopyJ3xDbGalleries=false,
+                                    $isDoCopyJ3xDbImages=false,
+                                    $isDoCopyJ3xImages=false)
 {
     $html = '';
 
@@ -203,19 +203,19 @@ function DisplayRequestJ3xActions($isMissingJ3xDbGalleries=false,
     $headerDesc = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED_DESC');
 
     $link1 = '';
-    if ($isMissingJ3xDbGalleries) {
+    if ($isDoCopyJ3xDbGalleries) {
         $link1 = <<<EOT
                                 <span class="badge badge-pill bg-success">1</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
 EOT;
     }
     $link2 = '';
-    if ($isMissingJ3xDbImages) {
+    if ($isDoCopyJ3xDbImages) {
         $link2 = <<<EOT
                                 <span class="badge badge-pill bg-success">2</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
 EOT;
     }
     $link3 = '';
-    if ($isMissingJ3xImages) {
+    if ($isDoCopyJ3xImages) {
         $link3 = <<<EOT
                                 <span class="badge badge-pill bg-success">3</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm" Title="$CopyImagesDesc" role="button">$CopyImages</a>
 EOT;

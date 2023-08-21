@@ -998,6 +998,29 @@ EOT;
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
+        return $images;
+    }
+
+    public function j3x_imagesInfoList()
+    {
+        $images = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+                ->select($db->quoteName(array('id', 'name', 'alias', 'gallery_id', 'title')))
+                ->from('#__rsgallery2_files')
+                ->order('id ASC');
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $images = $db->loadObjectList();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
 
         return $images;
     }
