@@ -121,7 +121,7 @@ interface Ij3xFileDb {
     // isNotFound:boolean;
 }
 
-class dbTransferJ3xImages extends Queue<Ij3xFile> {
+class dbTransferJ3xGalleries extends Queue<Ij3xFile> {
 
     addImages(image_ids: IImageIds [], gallery: Ij3xGallery) {
 
@@ -645,7 +645,7 @@ class RequestImageIdsTask {
     private errorZone: HTMLElement;
 
     private j3xGalleries: J3xGalleries;
-    private dbTransferJ3xImages: dbTransferJ3xImages;
+    private dbTransferJ3xGalleries: dbTransferJ3xGalleries;
     private moveImagesTask: MoveImagesTask;
 
     private request: Promise<Ij3xGallery>;
@@ -657,14 +657,14 @@ class RequestImageIdsTask {
         // errorZone: HTMLElement,
 
         j3xGalleries: J3xGalleries,
-        dbTransferJ3xImages: dbTransferJ3xImages,
+        dbTransferJ3xGalleries: dbTransferJ3xGalleries,
         moveImagesTask: MoveImagesTask,
     ) {
         this.progressArea = formElements.moveImageArea; // progressArea;
         this.errorZone = formElements.moveImageArea; // errorZone;
 
         this.j3xGalleries = j3xGalleries;
-        this.dbTransferJ3xImages = dbTransferJ3xImages;
+        this.dbTransferJ3xGalleries = dbTransferJ3xGalleries;
         this.moveImagesTask = moveImagesTask;
     }
 
@@ -808,7 +808,7 @@ class RequestImageIdsTask {
                         // let gallery_name = dbData.gallery_name;
                         // let gallery_id = dbData.gallery_id;
                         let image_ids = dbData.image_ids;
-                        this.dbTransferJ3xImages.addImages(image_ids, j3xGallery);
+                        this.dbTransferJ3xGalleries.addImages(image_ids, j3xGallery);
 
                         // badge gallery success
                         // const successBadge = createIconsBadge (
@@ -1259,7 +1259,7 @@ class MoveImagesTask {
     // private progressArea: HTMLElement;
     private errorZone: HTMLElement;
 
-    private dbTransferJ3xImages: dbTransferJ3xImages;
+    private dbTransferJ3xGalleries: dbTransferJ3xGalleries;
 
     private request: Promise<Ij3xFile>;
     private isBusyCount: number = 0;
@@ -1270,13 +1270,13 @@ class MoveImagesTask {
         // imagesAreaList: HTMLElement,
         // progressArea: HTMLElement,
         // errorZone: HTMLElement,
-        dbTransferJ3xImages: dbTransferJ3xImages,
+        dbTransferJ3xGalleries: dbTransferJ3xGalleries,
     ) {
         // this.imagesAreaList = imagesAreaList;
         // this.progressArea = progressArea;
         this.errorZone = formElements.moveImageArea; // errorZone;
 
-        this.dbTransferJ3xImages = dbTransferJ3xImages;
+        this.dbTransferJ3xGalleries = dbTransferJ3xGalleries;
     }
 
     private async callAjaxMove(j3xImage2Move: Ij3xFile): Promise<any>  {
@@ -1409,15 +1409,15 @@ class MoveImagesTask {
     public async ajaxMove() {
         let AjaxResponse: IAjaxResponse;
 
-        console.log("    >this.dbTransferJ3xImages.length: " + this.dbTransferJ3xImages.length);
+        console.log("    >this.dbTransferJ3xGalleries.length: " + this.dbTransferJ3xGalleries.length);
 
         // check for busy
         while (this.isBusyCount < this.BusyCountLimit
-            && this.dbTransferJ3xImages.length > 0) {
+            && this.dbTransferJ3xGalleries.length > 0) {
 
             this.isBusyCount++;
 
-            let j3xImage = this.dbTransferJ3xImages.shift();
+            let j3xImage = this.dbTransferJ3xGalleries.shift();
             console.log("   @Move File: " + j3xImage.name);
 
             // badge image start
@@ -1576,7 +1576,7 @@ class MoveImagesTask {
             /**/
         }
 
-        console.log("    <this.dbTransferJ3xImages.length: " + this.dbTransferJ3xImages.length);
+        console.log("    <this.dbTransferJ3xGalleries.length: " + this.dbTransferJ3xGalleries.length);
     }
 }
 
@@ -1655,7 +1655,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     // Reserve list for galleries and images
-    const dbTransferJ3xImages = new dbTransferJ3xImages();
+    const dbTransferJ3xGalleries = new dbTransferJ3xGalleries();
     const j3xGalleries = new J3xGalleries();
 
     // assign click event for check boxes
@@ -1663,12 +1663,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     AssignCheckBoxEvents ();
 
     // (3) ajax request: Move file to server
-    const moveImagesTask = new MoveImagesTask(elements, dbTransferJ3xImages);
+    const moveImagesTask = new MoveImagesTask(elements, dbTransferJ3xGalleries);
 
 
     // (2) ajax request: database
-    const requestImageIdsTask = new RequestImageIdsTask(elements, j3xGalleries, dbTransferJ3xImages, moveImagesTask);
-    //                                                   j3xGalleries, dbTransferJ3xImages, moveImagesTask);
+    const requestImageIdsTask = new RequestImageIdsTask(elements, j3xGalleries, dbTransferJ3xGalleries, moveImagesTask);
+    //                                                   j3xGalleries, dbTransferJ3xGalleries, moveImagesTask);
 
 
     // (1) collect galleries, start request galleries from DB

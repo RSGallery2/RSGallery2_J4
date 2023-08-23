@@ -134,6 +134,21 @@
       ]
     },
     {
+      "name": "com_rsgallery2.backend.dbTransferJ3xGalleries",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.backend.moveJ3xImages#style",
+      ]
+    },
+    {
+      "name": "com_rsgallery2.backend.dbTransferJ3xImages",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.backend.moveJ3xImages#style",
+        "com_rsgallery2.backend.dbTransferJ3xImages#script"
+      ]
+    },
+    {
       "name": "com_rsgallery2.backend.moveJ3xImages",
       "type": "preset",
       "dependencies": [

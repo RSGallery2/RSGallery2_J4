@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
 // responsible for moveJ3xImages, dbtransferj3xgalleries, dbtransferj3ximages, dbcopyj3xconfig
-$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.moveJ3xImages');
+$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTransferJ3xGalleries');
 
 function jsonArray2Lines($lines)
 {
