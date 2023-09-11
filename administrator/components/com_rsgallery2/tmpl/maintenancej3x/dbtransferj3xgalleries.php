@@ -94,7 +94,7 @@ function j3x_galleryListHtml ($dbtransferj3xgalleries) {
                     `parent`
                 </th>
                 <th class="text-center">
-                    `alias`
+                    `name/alias/note`
                 </th>
                 <th class="text-center">
                     `description`
@@ -177,15 +177,13 @@ function j3x_galleryListHtml ($dbtransferj3xgalleries) {
                     </td>
 
                     <td class="text-left">
-                        <!--
-                        <?php //echo $identHtml . $this->escape($item->name);
-                        ?>
-                        <span class="small">
-                            (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3xgalleries->escape($item->alias)); ?>)
+                        <span class="small" title="<?php echo $dbtransferj3xgalleries->escape($item->path); ?>">
+                            <?php if (empty($item->note)) : ?>
+                                <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3xgalleries->escape($item->alias)); ?>
+                            <?php else : ?>
+                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3xgalleries->escape($item->alias), $dbtransferj3xgalleries->escape($item->note)); ?>)
+                            <?php endif; ?>
                         </span>
-                        -->
-                        <?php echo $identHtml . $dbtransferj3xgalleries->escape($item->alias); ?>
-
                     </td>
                     <td class="center">
                         <span class="small">
@@ -378,11 +376,11 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
                     <td class="text-center">
                         <?php echo $dbtransferj3xgalleries->escape($item->name); ?>
                         <span class="small" title="<?php echo $dbtransferj3xgalleries->escape($item->path); ?>">
-                        <?php if (empty($item->note)) : ?>
-                            (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3xgalleries->escape($item->alias)); ?>)
-                        <?php else : ?>
-                            (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3xgalleries->escape($item->alias), $dbtransferj3xgalleries->escape($item->note)); ?>)
-                        <?php endif; ?>
+                            <?php if (empty($item->note)) : ?>
+                                <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3xgalleries->escape($item->alias)); ?>
+                            <?php else : ?>
+                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3xgalleries->escape($item->alias), $dbtransferj3xgalleries->escape($item->note)); ?>)
+                            <?php endif; ?>
                         </span>
                     </td>
 
@@ -511,7 +509,7 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
 
                 <div class="card text-dark bg-light j3x-galleries-card">
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_GALLERIES_LIST'); ?></h5>
+                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h5>
 
                         <?php j3x_galleryListHtml ($this); ?>
                     </div>

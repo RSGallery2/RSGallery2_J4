@@ -109,23 +109,10 @@ class HtmlView extends BaseHtmlView
                 try
                 {
                     // gallery list
-                    $this->j3x_galleries = $j3xModel->j3x_galleriesList();
-                    $this->j4x_galleries = $j3xModel->j4x_galleriesList();
+	                $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesListSorted();
+	                $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
-                    $this->j3x_galleryIdsMerged = $j3xModel->MergedJ3xIdsDbGalleries ($this->j3x_galleries, $this->j4x_galleries);
-
-                        // html
-                    $this->j3x_galleriesHtml = $j3xModel->GalleriesListAsHTML($this->j3x_galleries);
-                    $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($this->j4x_galleries);
-                    $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
-
-                    // gallery list
-                    $this->j3x_galleries = $j3xModel->j3x_galleriesList();
-                    $this->j4x_galleries = $j3xModel->j4x_galleriesList();
-
-                    // gallery list
-                    $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesListSorted();
-
+	                $this->j3x_galleryIdsMerged = $j3xModel->MergedJ3xIdsDbGalleries ($this->j3x_galleries, $this->j4x_galleries);
                 }
                 catch (\RuntimeException $e)
                 {
@@ -148,11 +135,13 @@ class HtmlView extends BaseHtmlView
 
 	                $this->j3x_imageIdsMerged = [];
 
-                    $this->j3x_images = $j3xModel->j3x_imagesInfoList();
-//                    $this->j4x_images = $j3xModel->j4x_imagesInfoList();
-//
-//                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
+	                $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesList_transferred_YN();
 
+//                    $this->j3x_images = $j3xModel->j3x_imagesInfoList();
+////                    $this->j4x_images = $j3xModel->j4x_imagesInfoList();
+////
+////                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
+//
                     // ToDo: order by gallery id
                     //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
                     //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
@@ -345,9 +334,9 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				// ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', false);
 				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
-				ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
+				//ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
+				ToolBarHelper::custom ('MaintenanceJ3x.copyDbImagesOfSelectedGalleries','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
 
 				break;
 

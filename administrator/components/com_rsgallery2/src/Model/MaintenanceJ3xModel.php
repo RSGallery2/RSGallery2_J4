@@ -30,9 +30,10 @@ use Joomla\Utilities\ArrayHelper;
  *
  */
 
-class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseModel
+class MaintenanceJ3xModel extends BaseModel // removed for install: BaseDatabaseModel
 {
 
+	// ToDo: May not copy dbimages (too many ???)
     public function applyExistingJ3xData()
     {
         $isOk = true;
@@ -83,7 +84,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
         // ? ToDo: ACL, assets ...
 
 
-        // Left out: coipy of images as would be exceeding allkowed execution times
+        // Left out: copy of images as would be exceeding allkowed execution times
 
         return $isOk;
     }
@@ -235,14 +236,14 @@ class MaintenanceJ3xModel extends BaseModel // removed for install BaseDatabaseM
 
         try {
 
-            foreach ($j3xItems as $j3xitem) {
+            foreach ($j3xItems as $j3xItem) {
 
                 // fetch from db
                 foreach ($j4xItems as $j4xItem) {
 
-//                    if ($j3xitem->title == $j4xitem->title)
-                    if ($j3xitem->title == $j4xItem->title) {
-                        $mergedId [] = $j3xitem->id;
+//                    if ($j3xItem->title == $j4xitem->title)
+                    if ($j3xItem->title == $j4xItem->title) {
+                        $mergedId [] = $j3xItem->id;
                         break;
                     }
                 }
@@ -802,9 +803,92 @@ EOT;
         return $isOk;
     }
 
-    public function copyDbSelectedJ3xGalleries2J4x($selectedIds)
+    public function j3x_galleriesList_transferred_YN()
     {
+	    $j3xGalleriesItems = [];
 
+        try {
+
+            $j3xGalleriesItems = $this->j3x_galleriesListSorted();
+
+	        foreach ($j3xGalleriesItems as $j3xGalleriesItem)
+	        {
+		        $this->assignTransferFlag ($j3xGalleriesItem);
+			}
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $j3xGalleriesItems;
+    }
+
+	private function assignTransferFlag($j3xGalleriesItem)
+	{
+		$isOk = false;
+
+		try {
+			//--- J3x image count of gallery ---------------------
+
+			$db = Factory::getDbo();
+
+			$query = $db->getQuery(true)
+				// ->select($db->quoteName(array('id')))
+				->select('COUNT(*)')
+				->from('#__rsgallery2_files')
+				->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j3xGalleriesItem->id))
+			;
+
+			$db->setQuery($query, 0, 1);
+			$countJ3x = $db->loadResult();
+
+			//--- J4x gallery id ---------------------
+
+			$db = Factory::getDbo();
+
+			$query = $db->getQuery(true)
+				// ->select($db->quoteName(array('id')))
+				->select('id')
+				->from('#__rsg2_galleries')
+				->where($db->quoteName('name') . ' = ' . $db->quote($j3xGalleriesItem->name))
+			;
+
+			$db->setQuery($query, 0, 1);
+			$gallery_id_j4x = $db->loadResult();
+
+
+			//--- j4x image count of gallery ---------------------
+
+			$db = Factory::getDbo();
+
+			$query = $db->getQuery(true)
+				// ->select($db->quoteName(array('id')))
+				->select('COUNT(*)')
+				->from('#__rsg2_images')
+				->where($db->quoteName('gallery_id') . ' = ' . $db->quote($gallery_id_j4x))
+				->where($db->quoteName('use_j3x_location') . ' = 1')
+			;
+
+			$db->setQuery($query, 0, 1);
+			$countJ4x = $db->loadResult();
+
+
+			if ($countJ3x > 0 && $countJ3x == $countJ4x)
+			{
+				$j3xGalleriesItem->isTransferred = true;
+			} else {
+				$j3xGalleriesItem->isTransferred = false;
+			}
+
+		} catch (\RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $isOk;
+	}
+
+	public function copyDbSelectedJ3xGalleries2J4x($selectedIds)
+    {
         $isOk = false;
 
         try {
@@ -1241,6 +1325,39 @@ EOT;
         return $isOk;
     }
 
+// by galleries
+    public function copyDbImagesOfSelectedGalleries($selectedGalleryIds)
+    {
+        $isOk = false;
+
+        try {
+
+            $j3xGalleryItems = $this->j3x_galleriesListOfIds($selectedGalleryIds);
+
+	        $db = Factory::getDbo();
+	        $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+		        ->select('*')
+		        ->from('#__rsgallery2_files')
+		        ->where($db->quoteName('gallery_id') . ' IN (' . implode(',', ArrayHelper::toInteger($j3xGalleryItems)) . ')')
+		        ->order('id ASC');
+
+	        // Get the options.
+	        $db->setQuery($query);
+
+	        $imageIds = $db->loadObjectList();
+
+			if (isset($imageIds))
+			{
+				$isOk = $this->copyDbJ3xImages2J4x($imageIds);
+			}
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $isOk;
+    }
 
     public function copyDbSelectedJ3xImages2J4x($selectedIds)
     {

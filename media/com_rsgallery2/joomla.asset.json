@@ -137,7 +137,7 @@
       "name": "com_rsgallery2.backend.dbTransferJ3xGalleries",
       "type": "preset",
       "dependencies": [
-        "com_rsgallery2.backend.moveJ3xImages#style",
+        "com_rsgallery2.backend.moveJ3xImages#style"
       ]
     },
     {
