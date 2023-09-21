@@ -104,12 +104,12 @@ class HtmlView extends BaseHtmlView
 
         if( ! $this->item->use_j3x_location) {
 
-            $ImagePath = new ImagePaths ();
+            $ImagePath = new ImagePathsModel ();
             $ImagePath->setPaths_URIs_byGalleryId($this->item->gallery_id);
             $this->imgUrl = $ImagePath->getDisplayUrl($this->item->name);
         } else {
 
-            $ImagePathJ3x = new ImagePathsJ3x ();
+            $ImagePathJ3x = new ImagePathsJ3xModel ();
             $this->imgUrl = $ImagePathJ3x->getDisplayUrl($this->item->name);
         }
 
@@ -188,6 +188,15 @@ class HtmlView extends BaseHtmlView
 		}
 
         switch ($Layout) {
+            case 'raw_edit':
+	            ToolBarHelper::title(Text::_('COM_RSGALLERY2_RAW_EDIT_IMAGE', 'image'));
+
+	            //--- apply, save and close ... -----------------------------------
+
+				// ...
+
+	            break;
+
             case 'edit':
             default:
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_IMAGE', 'image'));

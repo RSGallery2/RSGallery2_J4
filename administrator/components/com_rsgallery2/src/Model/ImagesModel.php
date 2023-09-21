@@ -280,6 +280,7 @@ class ImagesModel extends ListModel
 			$query->where('a.access IN (' . $groups . ')');
 		}
 
+		/* 2023.09.19
 		// Filter by published state
 		$published = (string) $this->getState('filter.published');
 
@@ -292,6 +293,7 @@ class ImagesModel extends ListModel
 			$query->where('(a.published IN (0, 1))');
 		}
 
+		/* 2023.09.19
         // Filter by search in name and others
 		$search = $this->getState('filter.search');
 		if (!empty($search))

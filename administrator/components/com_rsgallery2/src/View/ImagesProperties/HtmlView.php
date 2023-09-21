@@ -74,8 +74,8 @@ class HtmlView extends BaseHtmlView
         $this->items = $this->get('Items');
 
         // paths to image (over galleryid or j3x style)
-        $this->ImagePath = new ImagePaths ();
-        $this->ImagePathJ3x = new ImagePathsJ3x ();
+        $this->ImagePath = new ImagePathsModel ();
+        $this->ImagePathJ3x = new ImagePathsJ3xModel ();
 
         // size of display image
         $ImageWidths = $rsgConfig->get('image_size');

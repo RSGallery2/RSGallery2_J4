@@ -404,7 +404,7 @@ class ImageFileModel extends BaseModel // AdminModel
         // J4x ?
         if( ! $use_j3x_location) {
 
-            $imagePaths = new ImagePaths ($galleryId);
+            $imagePaths = new ImagePathsModel ($galleryId);
 
             //--- expected images of gallery -------------------------------------------------
 
@@ -425,7 +425,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             // J3x
 
-            $ImagePathJ3x = new ImagePathsJ3x ();
+            $ImagePathJ3x = new ImagePathsJ3xModel ();
 
             //--- expected images of gallery -------------------------------------------------
 
@@ -593,7 +593,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             if (!$use_j3x_location) {
 
-                $imagePaths = new ImagePaths ($galleryId);  // ToDo: J3x
+                $imagePaths = new ImagePathsModel ($galleryId);  // ToDo: J3x
                 $imagePaths->createAllPaths();
 
                 $urlThumbFile = $imagePaths->getThumbUrl($targetFileName);
@@ -601,7 +601,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             } else {
 
-                $imagePathJ3x = new ImagePathsJ3x ($galleryId);  // ToDo: J3x
+                $imagePathJ3x = new ImagePathsJ3xModel ($galleryId);  // ToDo: J3x
                 $imagePathJ3x->createAllPaths();
 
                 $urlThumbFile = $imagePathJ3x->getThumbUrl($targetFileName);
@@ -1165,13 +1165,13 @@ class ImageFileModel extends BaseModel // AdminModel
             // J4x ?
             if( ! $use_j3x_location) {
 
-                $imagePaths = new ImagePaths($galleryId);
+                $imagePaths = new ImagePathsModel($galleryId);
                 $originalPath = $imagePaths->getOriginalPath ($fileName);
                 $displayDPath =  $imagePaths->getDisplayPath($fileName);
             } else {
 
                 // J3x
-                $imagePathJ3x = new ImagePathsJ3x ();
+                $imagePathJ3x = new ImagePathsJ3xModel ();
                 $originalPath = $imagePathJ3x->getOriginalPath ($fileName);
                 $displayDPath =  $imagePathJ3x->getDisplayPath($fileName);
             }
@@ -1251,13 +1251,13 @@ class ImageFileModel extends BaseModel // AdminModel
             // J4x ?
             if( ! $use_j3x_location) {
 
-                $imagePaths = new ImagePaths($galleryId);
+                $imagePaths = new ImagePathsModel ($galleryId);
                 $originalPath = $imagePaths->getOriginalPath ($fileName);
                 $displayPath =  $imagePaths->getDisplayPath($fileName);
             } else {
 
                 // J3x
-                $imagePathJ3x = new ImagePathsJ3x ();
+                $imagePathJ3x = new ImagePathsJ3xModel ();
                 $originalPath = $imagePathJ3x->getOriginalPath ($fileName);
                 $displayPath =  $imagePathJ3x->getDisplayPath($fileName);
             }
@@ -1406,7 +1406,7 @@ class ImageFileModel extends BaseModel // AdminModel
         // J4x ?
         if( ! $use_j3x_location) {
 
-            $imagePaths = new ImagePaths ($galleryId);
+            $imagePaths = new ImagePathsModel ($galleryId);
 
             //---  -------------------------------------------------
 
@@ -1417,7 +1417,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             // J3x
 
-            $ImagePathJ3x = new ImagePathsJ3x ();
+            $ImagePathJ3x = new ImagePathsJ3xModel ();
 
             //---  -------------------------------------------------
 

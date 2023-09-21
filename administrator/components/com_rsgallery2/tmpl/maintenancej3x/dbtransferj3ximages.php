@@ -74,7 +74,7 @@ function j3x_galleryListHtml ($dbtransferj3ximages) {
                 <th class="text-center">
                     `id`
                 </th>
-                <th class="text-center">
+                <th width="1%" class="text-center">
                     `name/alias/note`
                 </th>
                 <th class="text-center">
@@ -117,6 +117,7 @@ function j3x_galleryListHtml ($dbtransferj3ximages) {
                     </td>
 
                     <td class="text-left">
+	                    <?php echo $dbtransferj3ximages->escape($item->name); ?>
                         <span class="small" title="<?php echo $dbtransferj3ximages->escape($item->path); ?>">
                             <?php if (empty($item->note)) : ?>
 	                            <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3ximages->escape($item->alias)); ?>

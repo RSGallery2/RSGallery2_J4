@@ -235,9 +235,11 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+						. '* Raw edit form<br>'
 						. '* Can do ...<br>'
 		                . '* Add pagination<br>'
 						. '* mark element width id 1 <br>'
+						//	. '* <br>'
 						//	. '* <br>'
 						//	. '* <br>'
 						//	. '* <br>'
@@ -246,7 +248,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_VIEW_RAW_DATA'), 'images');
 
-				ToolBarHelper::editList('gallery.edit');
+				ToolBarHelper::editList('gallery.raw_edit');
 				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH'); 
 				break;
 

@@ -813,6 +813,11 @@ EOT;
 
 	        foreach ($j3xGalleriesItems as $j3xGalleriesItem)
 	        {
+		        if ($j3xGalleriesItem->id == 9){
+
+			        $test = $j3xGalleriesItem->id;
+		        }
+
 		        $this->assignTransferFlag ($j3xGalleriesItem);
 			}
 
@@ -828,6 +833,7 @@ EOT;
 		$isOk = false;
 
 		try {
+
 			//--- J3x image count of gallery ---------------------
 
 			$db = Factory::getDbo();
@@ -844,17 +850,38 @@ EOT;
 
 			//--- J4x gallery id ---------------------
 
+			$gallery_id_j4x = $this->convertDbJ3xGallery2J4xId($j3xGalleriesItem);
+
+			if (str_contains($j3xGalleriesItem->name, 'erste')){
+
+				$test = $j3xGalleriesItem->id;
+			}
+
+			if ($j3xGalleriesItem->id == 9){
+
+				$test = $gallery_id_j4x;
+				$test = $gallery_id_j4x;
+			}
+
+			//--- j4x image tests ---------------------
+
 			$db = Factory::getDbo();
 
 			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
-				->select('id')
-				->from('#__rsg2_galleries')
-				->where($db->quoteName('name') . ' = ' . $db->quote($j3xGalleriesItem->name))
-			;
+				->select('COUNT(*)')
+				->from('#__rsg2_images')
+				->where($db->quoteName('gallery_id') . ' = ' . $db->quote($gallery_id_j4x))
+				;
 
 			$db->setQuery($query, 0, 1);
-			$gallery_id_j4x = $db->loadResult();
+			$countJ4x = $db->loadResult();
+
+			if ($j3xGalleriesItem->id == 9){
+
+				$test = $countJ4x;
+				$test = $gallery_id_j4x;
+			}
 
 
 			//--- j4x image count of gallery ---------------------
@@ -1139,7 +1166,7 @@ EOT;
 
     public function j3x_galleriesListOfIds($selectedIds)
     {
-        $images = array();
+        $galleries = array();
 
         try {
             $db = Factory::getDbo();
@@ -1155,14 +1182,14 @@ EOT;
             // Get the options.
             $db->setQuery($query);
 
-            $images = $db->loadObjectList();
+            $galleries = $db->loadObjectList();
 
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
 
-        return $images;
+        return $galleries;
     }
 
     public function j4x_imagesList()
@@ -1326,20 +1353,20 @@ EOT;
     }
 
 // by galleries
-    public function copyDbImagesOfSelectedGalleries($selectedGalleryIds)
+    public function copyDbImagesOfSelectedGalleries($selectedJ3xGalleryIds)
     {
         $isOk = false;
 
         try {
 
-            $j3xGalleryItems = $this->j3x_galleriesListOfIds($selectedGalleryIds);
+//            $j3xGalleryItems = $this->j3x_galleriesListOfIds($selectedJ3xGalleryIds);
 
 	        $db = Factory::getDbo();
 	        $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 		        ->select('*')
 		        ->from('#__rsgallery2_files')
-		        ->where($db->quoteName('gallery_id') . ' IN (' . implode(',', ArrayHelper::toInteger($j3xGalleryItems)) . ')')
+		        ->where($db->quoteName('gallery_id') . ' IN (' . implode(',', ArrayHelper::toInteger($selectedJ3xGalleryIds)) . ')')
 		        ->order('id ASC');
 
 	        // Get the options.
@@ -1485,7 +1512,9 @@ EOT;
             $values[] = $j4ImageItem['description'];
 
             $columns[] = 'gallery_id';
-            $values[] = 1 + (int)$j4ImageItem['gallery_id'];
+            // $values[] = 1 + (int)$j4ImageItem['gallery_id'];
+	        // x_gallery_id = $this->convertDbJ3xGalleryId($j3x_image->gallery_id);
+	        $values[] = (int)$j4ImageItem['gallery_id'];
             $columns[] = 'title';
             $values[] = $j4ImageItem['title'];
 
@@ -1574,7 +1603,9 @@ EOT;
         $j4_imageItem['description'] = $j3x_image->desc == null ? '' : $j3x_image->desc;
 
         //`gallery_id` int(9) unsigned NOT NULL default '0',
-        $j4_imageItem['gallery_id'] = $j3x_image->gallery_id;
+//	    $j4x_gallery_id = $this->convertDbJ3xGalleryId2J4xId($j3x_image->gallery_id);
+	    $j4x_gallery_id = $this->convertDbJ3xGallery2J4xId($j3x_image);
+        $j4_imageItem['gallery_id'] = $j4x_gallery_id;
         //`title` varchar(255) NOT NULL default '',
         $j4_imageItem['title'] = $j3x_image->title;
 
@@ -1634,7 +1665,104 @@ EOT;
         return $j4_imageItem;
     }
 
-    /**
+
+//	/**
+//	 * j4x gallery id by same gallery names in J3 and J4
+//	 * retrieve gallery itme first
+//	 *
+//	 * @return bool
+//	 *
+//	 * @since __BUMP_VERSION__
+//	 */
+//	private function convertDbJ3xGalleryId2J4xId($j3xGalleriesItem) //$j3x_image->gallery_id
+//	{
+//		$gallery_id_j4x = -1;
+//
+//		try
+//		{
+////			//--- J3x gallery item ---------------------
+////
+////			$db = Factory::getDbo();
+////
+////			$query = $db->getQuery(true)
+////				// ->select($db->quoteName(array('id')))
+////                ->select($db->quoteName(array('id', 'name'))) // 'path'
+////				->from('#__rsgallery2_galleries')
+////				->where($db->quoteName('id') . ' = ' . $db->quote($j3xGalleriesItem->gallery_id));
+////
+////			$db->setQuery($query, 0, 1);
+////
+////			$j3xGalleriesItem = $db->loadAssoc(); // loadRow
+//
+//			if ( ! empty($j3xGalleriesItem))
+//			{
+//				//--- J4x gallery id ---------------------
+//
+//				$gallery_id_j4x = $this->convertDbJ3xGallery2J4xId($j3xGalleriesItem);
+//
+//				if (str_contains($j3xGalleriesItem->name, 'erste'))
+//				{
+//
+//					$test = $j3xGalleriesItem->id;
+//				}
+//
+//				if ($j3xGalleriesItem->id == 9)
+//				{
+//
+//					$test = $gallery_id_j4x;
+//					$test = $gallery_id_j4x;
+//				}
+//			}
+//
+//		} //catch (\RuntimeException $e)
+//		catch (\Exception $e) {
+//			throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
+//		}
+//
+//		return $gallery_id_j4x;
+//	}
+
+	/**
+	 * gallery id by same gallery names in J3 and J4
+	 *
+	 * @return bool
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	private function convertDbJ3xGallery2J4xId($j3xGalleriesItem) //$j3x_image->gallery_id
+	{
+		$gallery_id_j4x = -1;
+
+		try
+		{
+			//--- J4x gallery id ---------------------
+
+			$db = Factory::getDbo();
+
+			$query = $db->getQuery(true)
+				// ->select($db->quoteName(array('id')))
+				->select('id')
+				->from('#__rsg2_galleries')
+				->where($db->quoteName('name') . ' = ' . $db->quote($j3xGalleriesItem->name));
+
+			$db->setQuery($query, 0, 1);
+			$gallery_id_j4x = $db->loadResult();
+
+			if ($j3xGalleriesItem->id == 9)
+			{
+				$test = $gallery_id_j4x;
+				$test = $gallery_id_j4x;
+			}
+
+		} //catch (\RuntimeException $e)
+		catch (\Exception $e) {
+			throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
+		}
+
+		return $gallery_id_j4x;
+	}
+
+	/**
      * Reset image table to empty state (No images in RSG J4x
      *
      * @return bool
@@ -1756,7 +1884,7 @@ EOT;
 
         try {
 
-            $j3xImagePath = new ImagePathsJ3x ();
+            $j3xImagePath = new ImagePathsJ3xModel ();
             $isPathsExisting = $j3xImagePath->isPathsExisting();
 
         } catch (\RuntimeException $e) {
@@ -1773,7 +1901,7 @@ EOT;
 
         try {
 
-            $j3xImagePath = new ImagePathsJ3x ();
+            $j3xImagePath = new ImagePathsJ3xModel ();
             $isPathsRepaired = $j3xImagePath->createAllPaths();
 
         } catch (\RuntimeException $e) {
@@ -1792,6 +1920,7 @@ EOT;
 
         $j4xGalleryIds = [];
 
+		// otherwise convertDbJ3xGalleryId2J4xId
         foreach ($j3x_galleries as $j3x_gallery) {
             $j4xGalleryIds[] = $j3x_gallery->id + 1;
         }
@@ -1799,74 +1928,218 @@ EOT;
         return $j4xGalleryIds;
     }
 
-    public function j3x_galleriesData ($j4x_galleryIds) {
+	//
+    public function j3xNotMovedInfo ($galleryIdsJ3x_NotMoved) {
 
-        $j3xGalleryData = [];
+        $j3xNotMovedInfo = [];
 
-        foreach ($j4x_galleryIds as $j4x_galleryId) {
+	    try {
 
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true);
-            // count gallery items
-            $query->select('COUNT(*)')
-                ->from('#__rsg2_images')
-                ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
-                ->where($db->quoteName('use_j3x_location') . ' = 1')
-            ;
 
-            $db->setQuery($query, 0, 1);
-            $imgToBeMoved = $db->loadResult();
+//		    $db = Factory::getDbo();
+//		    //$db      = $this->getDatabase();
+//
+//		    $j3x_subquery = $db->getQuery(true)
+//			    ->select("count(*)")
+//			    ->from("#__rsgallery2_files")
+//			    ->where("gallery_id = j3x.id");
+//
+//		    $query = $db->getQuery(true);
+//		    $query->select($db->quoteName('j3x.gallery_id'), '(' . $j3x_subquery . ')  AS count'  )
+//			    ->from($db->quoteName('#__rsgallery2_files', 'j3x'))
+//			    ->where ('j3x.gallery_id in ' . $galleryIdsJ3x_NotMoved);
+//
 
-            $query = $db->getQuery(true);
-            // count gallery items
-            $query->select('COUNT(*)')
-                ->from('#__rsg2_images')
-                ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
-            ;
+//		    $db = Factory::getDbo();
+//		    //$db      = $this->getDatabase();
+//
+//		    $j3x_subquery = $db->getQuery(true)
+//			    ->select("count(*)")
+//			    ->from("#__rsgallery2_files")
+//			    ->where("gallery_id = j3x.gallery_id");
+//
+//		    $query = $db->getQuery(true);
+//
+//
+//		    $query->select('DISTINCT  ' . $db->quoteName('j3x.gallery_id') . ' AS gallery_id', ', count (' . $j3x_subquery . ')  AS count'  )
+//			    ->from($db->quoteName('#__rsgallery2_files', 'j3x'))
+//			    ;
 
-            $db->setQuery($query, 0, 1);
-            $imgAvailable = $db->loadResult();
+		    $db = Factory::getDbo();
+		    //$db      = $this->getDatabase();
 
-            // $data = {}; // ...
-            $data ['toBeMoved'] = $imgToBeMoved;
-            $data ['count'] = $imgAvailable;
-            $j3xGalleryData [$j4x_galleryId] = $data;
-        }
 
-        return $j3xGalleryData;
+		    /* Count child images */
+yyy		    $query->select('COUNT(img.gallery_id) as image_count')
+			    ->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id'
+			    );
+
+
+
+
+		    $query = $db->getQuery(true);
+
+
+
+
+		    $query->select('DISTINCT  ' . $db->quoteName('j3x.gallery_id') . ', count (id)  AS count'  )
+			    ->from($db->quoteName('#__rsgallery2_files', 'j3x'))
+			    ;
+
+		    $db->setQuery($query);
+
+		    $j3xNotMovedInfoList = $db->loadObjectList();
+
+			foreach ($j3xNotMovedInfoList as $j3xNotMovedInfoItem) {
+				$id = $j3xNotMovedInfoItem->gallery_id;
+				$count = $j3xNotMovedInfoItem->count;
+
+				$j3xNotMovedInfo[$id] =[];
+				$j3xNotMovedInfo[$id] ['count'] = $count;
+
+			}
+
+
+
+	    } catch (\RuntimeException $e) {
+		    Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+	    }
+
+	    return $j3xNotMovedInfo;
     }
 
-    public function j3x_galleries4ImageMove($j4xGalleryIds)
+
+
+
+
+//
+//	    .....
+//
+//
+//	    $query = $db->getQuery(true);
+//	    // count gallery items
+//	    $query->select('COUNT(*)')
+//		    ->from('#__rsg2_images')
+//		    ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
+//		    ->where($db->quoteName('use_j3x_location') . ' = 1')
+//	    ;
+//
+//	    $db->setQuery($query, 0, 1);
+//	    $imgToBeMoved = $db->loadResult();
+//
+//	    $query = $db->getQuery(true);
+//	    // count gallery items
+//	    $query->select('COUNT(*)')
+//		    ->from('#__rsg2_images')
+//		    ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
+//	    ;
+//
+//	    $db->setQuery($query, 0, 1);
+//	    $imgAvailable = $db->loadResult();
+//
+//
+//
+//
+//
+//
+//
+//
+//
+////	    foreach ($j3x_galleryIds as $j4x_galleryId) {
+////
+////            $db = Factory::getDbo();
+////            $query = $db->getQuery(true);
+////            // count gallery items
+////            $query->select('COUNT(*)')
+////                ->from('#__rsg2_images')
+////                ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
+////                ->where($db->quoteName('use_j3x_location') . ' = 1')
+////            ;
+////
+////            $db->setQuery($query, 0, 1);
+////            $imgToBeMoved = $db->loadResult();
+////
+////            $query = $db->getQuery(true);
+////            // count gallery items
+////            $query->select('COUNT(*)')
+////                ->from('#__rsg2_images')
+////                ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($j4x_galleryId))
+////            ;
+////
+////            $db->setQuery($query, 0, 1);
+////            $imgAvailable = $db->loadResult();
+////
+////            // $data = {}; // ...
+////            $data ['toBeMoved'] = $imgToBeMoved;
+////            $data ['count'] = $imgAvailable;
+////            $j3xGalleryData [$j4x_galleryId] = $data;
+////        }
+//
+//        return $j3xGalleryData;
+//    }
+
+	// J3x galleries ids where images are not moved
+    public function galleryIdsJ3x_dbImagesNotMoved($j4xGalleryIds)
     {
-        $galleryIds4ImgsToBeMoved = []; // ToDo: array() ==> []
+        $galleryIdsJ3x_NotMoved = []; // ToDo: array() ==> []
 
         try {
 
-            $db = Factory::getDbo();
-            $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
-            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
+	        // one query to rule them all :-(
 
-            $query = $db->getQuery(true)
-//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
-                ->select('distinct `gallery_id`')
-//                ->select('distinct ' . $db->qn(array('gallery_id')))
-//                  ->select($fieldlist)
-                ->from('#__rsg2_images')
-                ->where($db->quoteName('use_j3x_location') . ' = 1')
-                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")
-                ->order('id ASC');
+	        $db = Factory::getDbo();
+	        //$db      = $this->getDatabase();
 
-            // Get the options.
+	        $j3x_subquery = $db->getQuery(true)
+		        ->select("count(*)")
+		        ->from("#__rsgallery2_files")
+		        ->where("gallery_id = j3x.id");
+
+	        $j4x_subquery = $db->getQuery(true)
+		        ->select("count(*)")
+		        ->from("#__rsg2_images")
+		        ->where("gallery_id = j4x.id")
+		        ->where($db->quoteName('use_j3x_location') . ' = 1');
+
+
+	        $query = $db->getQuery(true);
+	        $query->select($db->quoteName('j3x.id'))
+		        ->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
+		        ->join('LEFT', '#__rsg2_galleries AS j4x ON j3x.id = (j4x.id-1)')
+		        //->where ('(' . $j3x_subquery . ') = (' . $j4x_subquery . ')');
+		        ->where ('(' . $j3x_subquery . ') != (' . $j4x_subquery . ')');
+
+            // J3x ds where images are not used
+
             $db->setQuery($query);
 
-            //$galleryIds4ImgsToBeMoved = $db->loadObjectList();
-            $galleryIds4ImgsToBeMoved = $db->loadColumn();
+	        $galleryIdsJ3x_NotMoved = $db->loadObjectList();
+
+//            $db = Factory::getDbo();
+//            $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
+//            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
+//
+//            $query = $db->getQuery(true)
+////                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+//                ->select('distinct `gallery_id`')
+////                ->select('distinct ' . $db->qn(array('gallery_id')))
+////                  ->select($fieldlist)
+//                ->from('#__rsg2_images')
+//                ->where($db->quoteName('use_j3x_location') . ' = 1')
+//                ->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")
+//                ->order('id ASC');
+//
+//            // Get the options.
+//            $db->setQuery($query);
+//
+//            //$galleryIdsJ3x_NotMoved = $db->loadObjectList();
+//            $galleryIdsJ3x_NotMoved = $db->loadColumn();
 
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
-        return $galleryIds4ImgsToBeMoved;
+        return $galleryIdsJ3x_NotMoved;
     }
 
 
@@ -1953,8 +2226,8 @@ EOT;
 //            $exploded = explode(',', $ImageWidths);
 //            $bigImageWidth = $exploded[0];
 //
-//            $j4xImagePath = new ImagePaths (); ? J3x
-//            $j3xImagePath = new ImagePathsJ3x ();
+//            $j4xImagePath = new ImagePathsModel (); ? J3x
+//            $j3xImagePath = new ImagePathsJ3xModel ();
 //
 //
 //            // ToDo: Watermarked
@@ -2063,8 +2336,8 @@ EOT;
             $exploded = explode(',', $ImageWidths);
             $bigImageWidth = $exploded[0];
 
-            $j4xImagePath = new ImagePaths (); // ToDo: J3x
-            //$j3xImagePath = new ImagePathsJ3x (); // ToDo: J3x
+            $j4xImagePath = new ImagePathsModel (); // ToDo: J3x
+            //$j3xImagePath = new ImagePathsJ3xModel (); // ToDo: J3x
 
 
             // ToDo: Watermarked
@@ -2140,8 +2413,8 @@ EOT;
 
         //--- image paths ----------------------------------------
 
-        $j4xImagePath = new ImagePaths ();
-        $j3xImagePath = new ImagePathsJ3x ();
+        $j4xImagePath = new ImagePathsModel ();
+        $j3xImagePath = new ImagePathsJ3xModel ();
 
         $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
 

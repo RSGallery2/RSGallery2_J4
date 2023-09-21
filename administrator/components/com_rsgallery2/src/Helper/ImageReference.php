@@ -143,7 +143,7 @@ class ImageReference
 			$this->imageName         = $Image ['name'];
 			$this->parentGalleryId   = $Image ['gallery_id'];
 
-			$imagePaths = new ImagePaths ($this->parentGalleryId);  // ToDo: J3x
+			$imagePaths = new ImagePathsModel ($this->parentGalleryId);  // ToDo: J3x
 			$imagePaths->createAllPaths();
 
 			$this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);
@@ -252,7 +252,7 @@ class ImageReference
             $this->imageName         = $imageName;
             $this->parentGalleryId   = $galleryId;
 
-            $imagePaths = new ImagePaths ($this->parentGalleryId); // ToDo: J3x
+            $imagePaths = new ImagePathsModel ($this->parentGalleryId); // ToDo: J3x
             $imagePaths->createAllPaths();
 
             $this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);

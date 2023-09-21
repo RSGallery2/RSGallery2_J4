@@ -177,6 +177,15 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
+			case 'raw_edit':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_RAW_EDIT_GALLERY', 'image'));
+
+				//--- apply, save and close ... -----------------------------------
+
+				// ...
+
+				break;
+
 			case 'edit':
 			default:
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_GALLERY', 'images'));

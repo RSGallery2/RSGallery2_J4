@@ -153,8 +153,8 @@ class HtmlView extends BaseHtmlView
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
         // paths to image (over galleryid or j3x style)
-        $this->ImagePath = new ImagePaths ();
-        $this->ImagePathJ3x = new ImagePathsJ3x ();
+        $this->ImagePath = new ImagePathsModel ();
+        $this->ImagePathJ3x = new ImagePathsJ3xModel ();
 
 
 //		//--- thumb --------------------------------------------------------------------
@@ -242,6 +242,7 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+						. '* Raw edit form<br>'
 						. '* Can do ...<br>'
 						. '* Add pagination<br>'
 						. '* Test: archived, trashed, (delete)<br>'
@@ -254,7 +255,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'image');
 
-				ToolBarHelper::editList('image.edit');
+				ToolBarHelper::editList('image.raw_edit');
 				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
 				break;
 

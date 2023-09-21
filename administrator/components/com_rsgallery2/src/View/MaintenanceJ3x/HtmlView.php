@@ -112,7 +112,7 @@ class HtmlView extends BaseHtmlView
 	                $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesListSorted();
 	                $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
-	                $this->j3x_galleryIdsMerged = $j3xModel->MergedJ3xIdsDbGalleries ($this->j3x_galleries, $this->j4x_galleries);
+	                $this->j3x_galleryIdsMerged = $j3xModel->MergedJ3xIdsDbGalleries ($this->j3x_galleriesSorted, $this->j4x_galleries);
                 }
                 catch (\RuntimeException $e)
                 {
@@ -124,11 +124,26 @@ class HtmlView extends BaseHtmlView
                     $app->enqueueMessage($OutTxt, 'error');
                 }
 
-                break;
+	            $this->isDoCopyJ3xDbGalleries = ! $rsgConfig->get('j3x_db_galleries_copied');
+
+				// ToDo: Check and update $this->isDoCopyJ3xDbGalleries
+
+	            if (! $this->isDoCopyJ3xDbGalleries)
+	            {
+		            // Tell
+		            $isOk = ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', true);
+
+		            $msg = "Successful moved J3x DB gallery items";
+		            $app = Factory::getApplication();
+		            $app->enqueueMessage($msg, 'notice');
+	            }
+
+	            break;
 
             case 'DbTransferJ3xImages':
                 try
                 {
+	                $this->isDoCopyJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
 
 	                $this->j3x_images = [];
 	                $this->j4x_images = [];
@@ -137,14 +152,23 @@ class HtmlView extends BaseHtmlView
 
 	                $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesList_transferred_YN();
 
-//                    $this->j3x_images = $j3xModel->j3x_imagesInfoList();
-////                    $this->j4x_images = $j3xModel->j4x_imagesInfoList();
-////
-////                    $this->j3x_imageIdsMerged = $j3xModel->MergedJ3xIdsDbImages ($this->j3x_images, $this->j4x_images);
-//
-                    // ToDo: order by gallery id
-                    //$this->j3x_images_parent = $j3xModel->j3x_imagesList_parent();
-                    //$this->j4x_images_parent = $j3xModel->j4x_imagesList_parent();
+	                $this->galleryIdsJ3x_NotMoved = $j3xModel->galleryIdsJ3x_dbImagesNotMoved($this->j3x_galleriesSorted);
+
+	                // yyy
+	                // $this->j3xNotMovedInfo = $j3xModel->j3xNotMovedInfo($this->galleryIdsJ3xAsJ4x);
+	                $this->j3xNotMovedInfo = $j3xModel->j3xNotMovedInfo($this->galleryIdsJ3x_NotMoved);
+
+					// ToDo: same for galleries
+	                if (! $this->isDoCopyJ3xDbImages)
+	                {
+		                // Tell
+		                $isOk = ConfigRawModel::writeConfigParam('j3x_db_images_copied', true);
+
+		                $msg = "Successful moved J3x DB image items";
+		                $app = Factory::getApplication();
+		                $app->enqueueMessage($msg, 'notice');
+	                }
+
 
 	                //--- Form --------------------------------------------------------------------
 
@@ -186,26 +210,39 @@ class HtmlView extends BaseHtmlView
 	                $this->j4x_galleries = [];
 
 	                $this->j3x_transformGalleryIdsTo_j4x = [];
-	                $this->j3x_galleries4ImageMove = [];
-	                $this->h4j3xGalleriesData = [];
+	                $this->galleryIdsJ3x_dbImagesNotMoved = [];
+	                $this->j3xNotMovedInfo = [];
 
                     // J3x images exist
-                    if ($this->isDoCopyJ3xImages) {
+//                    if ($this->isDoCopyJ3xImages) {
+                    if (true) {
                         $this->j3x_galleries = $j3xModel->j3x_galleriesList();
                         $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
-                        $this->galleryIdsJ3xAsJ4x = $j3xModel->j3x_transformGalleryIdsTo_j4x($this->j3x_galleries);
-                        $this->galleryIds4ImgsToBeMoved = $j3xModel->j3x_galleries4ImageMove($this->galleryIdsJ3xAsJ4x);
+                        //$this->galleryIdsJ3xAsJ4x = $j3xModel->j3x_transformGalleryIdsTo_j4x();
+                        $this->galleryIdsJ3x_NotMoved = $j3xModel->galleryIdsJ3x_ImagesNotMoved($this->j3x_galleries);
+	                    $this->galleryIdsJ3xAsJ4x = $j3xModel->j3x_transformGalleryIdsTo_j4x($this->j3x_galleries);
+	                    $this->galleryIds4ImgsToBeMoved = $j3xModel->j3x_galleries4ImageMove($this->galleryIdsJ3xAsJ4x);
 
-                        // finished by last call (move) ?  ToDo: call ajax check on empty list after move
+
+	                    // finished by last call (move) ?  ToDo: call ajax check on empty list after move
                         if(count($this->galleryIds4ImgsToBeMoved) == 0) {
 
                             $this->isDoCopyJ3xImages = false;
-                            $rsgConfig->set('j3x_images_copied', true);
-                            ConfigRawModel::writeConfigParam ('j3x_images_copied', true);
+                        } else
+                        {
+	                        $this->isDoCopyJ3xImages = true;
                         }
+                        $rsgConfig->set('j3x_images_copied', ! $this->isDoCopyJ3xImages);
+                        ConfigRawModel::writeConfigParam ('j3x_images_copied', ! $this->isDoCopyJ3xImages);
 
-                        $this->h4j3xGalleriesData = $j3xModel->j3x_galleriesData($this->galleryIdsJ3xAsJ4x);
+	                    if (! $this->isDoCopyJ3xDbGalleries)
+	                    {
+		                    $msg = "Successful moved J3x image items";
+		                    $app = Factory::getApplication();
+		                    $app->enqueueMessage($msg, 'notice');
+	                    }
+
                     }
 
                     //--- Form --------------------------------------------------------------------
@@ -336,7 +373,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
-				ToolBarHelper::custom ('MaintenanceJ3x.copyDbImagesOfSelectedGalleries','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
+				ToolBarHelper::custom ('MaintenanceJ3x.copyDbImagesOfSelectedGalleries','undo','','COM_RSGALLERY2_DB_COPY_IMAGES_BY_J3X_GALLERY', true);
 
 				break;
 

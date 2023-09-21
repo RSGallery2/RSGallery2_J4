@@ -153,7 +153,7 @@ function j4x_galleryListHtml ($movej3ximages)
             foreach ($movej3ximages->j4x_galleries as $i => $item) {
 
                 $allMoved = false;
-                if ( ! in_array ($item->id, $movej3ximages->galleryIds4ImgsToBeMoved)) {
+                if ( ! in_array ($item->id, $movej3ximages->galleryIdsJ3x_NotMoved)) {
                     $allMoved = true;
 
                     // toDo: two views (a) only unassigned b) all
@@ -162,8 +162,8 @@ function j4x_galleryListHtml ($movej3ximages)
 
                 $toBeMovedCount += 1;
 
-                $imgToBeMoved = $movej3ximages->h4j3xGalleriesData [$item->id]['toBeMoved'];
-                $imgAvailable = $movej3ximages->h4j3xGalleriesData [$item->id]['count'];
+                $imgToBeMoved = $movej3ximages->j3xNotMovedInfo [$item->id]['toBeMoved'];
+                $imgAvailable = $movej3ximages->j3xNotMovedInfo [$item->id]['count'];
 
                 // a) Must be transferred b) check
 
@@ -295,8 +295,8 @@ $this->j3x_galleries = [];
 $this->j4x_galleries = [];
 
 $this->j3x_transformGalleryIdsTo_j4x = [];
-$this->j3x_galleries4ImageMove = [];
-$this->h4j3xGalleriesData = [];
+$this->galleryIdsJ3x_dbImagesNotMoved = [];
+$this->j3xNotMovedInfo = [];
 
 
 */
