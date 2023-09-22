@@ -207,8 +207,7 @@ class GalleriesModel extends ListModel
 
 		/* Count child images */
 		$query->select('COUNT(img.gallery_id) as image_count')
-			->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id'
-			);
+			->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id');
 
 		//// Join over the language
 		//$query->select('l.title AS language_title, l.image AS language_image')

@@ -219,6 +219,51 @@ class MaintenanceJ3xModel extends BaseModel // removed for install: BaseDatabase
         return $galleries;
     }
 
+    public function j3x_galleries4DbImagesList()
+    {
+        $galleries = array();
+
+        try {
+            $db = Factory::getDbo();
+            $query = $db->getQuery(true)
+//                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+	            ->select($db->quoteName(array('j3x.id', 'j3x.alias', 'j3x.name', 'j3x.description')))
+	            ->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
+                ->order('id ASC')
+
+	            /* Count j3x child images */
+	            ->select('COUNT(img.gallery_id) as j3x_img_count')
+	            ->join('LEFT', $db->quoteName('#__rsgallery2_files', 'img')
+		            . ' ON ('
+		            . $db->quoteName('img.gallery_id') . ' = ' . $db->quoteName('j3x.id')
+		            . ')'
+	            )
+	            ->group('j3x.id')
+
+	            /* Count j4x child images */
+	            ->select('COUNT(j4x.gallery_id) as j4x_img_count')
+	            ->join('LEFT', $db->quoteName('#__rsg2_images', 'j4x')
+		            . ' ON ( '
+//		            . '(' . $db->quoteName('j3x.id') . '+1) = ' . $db->quoteName('j4x.gallery_id')
+		            . $db->quoteName('j4x.gallery_id') . ' = ( ' . $db->quoteName('j3x.id') .' +1 )'
+		            . ')'
+	            )
+//	             ->group('j4x.gallery_id')
+            ;
+
+            // Get the options.
+            $db->setQuery($query);
+
+            $galleries = $db->loadObjectList();
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+
+        return $galleries;
+    }
+
     private static function cmpJ4xGalleries($aGallery, $bGallery)
     {
         $a = $aGallery->ordering;
@@ -809,7 +854,8 @@ EOT;
 
         try {
 
-            $j3xGalleriesItems = $this->j3x_galleriesListSorted();
+            //$j3xGalleriesItems = $this->j3x_galleriesListSorted();
+            $j3xGalleriesItems = $this->j3x_galleries4DbImagesList();
 
 	        foreach ($j3xGalleriesItems as $j3xGalleriesItem)
 	        {
@@ -1604,7 +1650,8 @@ EOT;
 
         //`gallery_id` int(9) unsigned NOT NULL default '0',
 //	    $j4x_gallery_id = $this->convertDbJ3xGalleryId2J4xId($j3x_image->gallery_id);
-	    $j4x_gallery_id = $this->convertDbJ3xGallery2J4xId($j3x_image);
+//	    $j4x_gallery_id = $this->convertDbJ3xGallery2J4xId($j3x_image);
+	    $j4x_gallery_id = $j3x_image->gallery_id + 1; // definition on gallery J3x to J4x
         $j4_imageItem['gallery_id'] = $j4x_gallery_id;
         //`title` varchar(255) NOT NULL default '',
         $j4_imageItem['title'] = $j3x_image->title;
@@ -1929,9 +1976,9 @@ EOT;
     }
 
 	//
-    public function j3xNotMovedInfo ($galleryIdsJ3x_NotMoved) {
+    public function j3xGalleriesWithImgCount () {
 
-        $j3xNotMovedInfo = [];
+        $j3xGalleriesWithImgCount = [];
 
 	    try {
 
@@ -1968,35 +2015,31 @@ EOT;
 		    $db = Factory::getDbo();
 		    //$db      = $this->getDatabase();
 
+		    $query = $db->getQuery(true)
+			    ->select($db->quoteName('j3x.id', 'gallery_id'))
+			    ->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
 
-		    /* Count child images */
-yyy		    $query->select('COUNT(img.gallery_id) as image_count')
-			    ->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id'
-			    );
-
-
-
-
-		    $query = $db->getQuery(true);
-
-
-
-
-		    $query->select('DISTINCT  ' . $db->quoteName('j3x.gallery_id') . ', count (id)  AS count'  )
-			    ->from($db->quoteName('#__rsgallery2_files', 'j3x'))
+			    /* Count child images */
+			    ->select('COUNT(img.gallery_id) as img_count')
+			    ->join('LEFT', $db->quoteName('#__rsgallery2_files', 'img')
+				    . ' ON ('
+				        . $db->quoteName('img.gallery_id') . ' = ' . $db->quoteName('j3x.id')
+			        . ')'
+			    )
+			    ->group('j3x.id');
 			    ;
 
 		    $db->setQuery($query);
 
-		    $j3xNotMovedInfoList = $db->loadObjectList();
+			// ToDo: load assoc direct ?
+		    $j3xGalleries = $db->loadObjectList();
 
-			foreach ($j3xNotMovedInfoList as $j3xNotMovedInfoItem) {
-				$id = $j3xNotMovedInfoItem->gallery_id;
-				$count = $j3xNotMovedInfoItem->count;
+			foreach ($j3xGalleries as $j3xGallery) {
 
-				$j3xNotMovedInfo[$id] =[];
-				$j3xNotMovedInfo[$id] ['count'] = $count;
+				$gallery_id = $j3xGallery->gallery_id;
 
+				$j3xGalleriesWithImgCount[$gallery_id] =[];
+				$j3xGalleriesWithImgCount[$gallery_id] ['img_count'] = $j3xGallery->img_count;
 			}
 
 
@@ -2005,7 +2048,7 @@ yyy		    $query->select('COUNT(img.gallery_id) as image_count')
 		    Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 	    }
 
-	    return $j3xNotMovedInfo;
+	    return $j3xGalleriesWithImgCount;
     }
 
 
@@ -2102,8 +2145,8 @@ yyy		    $query->select('COUNT(img.gallery_id) as image_count')
 		        ->where($db->quoteName('use_j3x_location') . ' = 1');
 
 
-	        $query = $db->getQuery(true);
-	        $query->select($db->quoteName('j3x.id'))
+	        $query = $db->getQuery(true)
+	            ->select($db->quoteName('j3x.id'))
 		        ->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
 		        ->join('LEFT', '#__rsg2_galleries AS j4x ON j3x.id = (j4x.id-1)')
 		        //->where ('(' . $j3x_subquery . ') = (' . $j4x_subquery . ')');
@@ -2120,7 +2163,8 @@ yyy		    $query->select('COUNT(img.gallery_id) as image_count')
 //            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
 //
 //            $query = $db->getQuery(true)
-////                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
+////                ->select($db->quoteName(a
+/// rray('id', 'name', 'parent', 'ordering')))
 //                ->select('distinct `gallery_id`')
 ////                ->select('distinct ' . $db->qn(array('gallery_id')))
 ////                  ->select($fieldlist)

@@ -86,23 +86,35 @@ function j3x_galleryListHtml ($dbtransferj3ximages) {
             <tbody>
 
 			<?php
+			$isTransferred = false;
 			foreach ($dbtransferj3ximages->j3x_galleriesSorted as $i => $item) {
-				$identHtml = str_repeat('⋮&nbsp;&nbsp;&nbsp;', $item->level);
+				// $identHtml = str_repeat('⋮&nbsp;&nbsp;&nbsp;', $item->level);
 
-//				if (in_array ($item->id, $dbtransferj3xgalleries->j3x_galleryIdsMerged)){
-//					$isMergedHtml =  isOKIconHtml ('Gallery is merged');
+//				if ($item->isTransferred) {
+//					$isMergedHtml =  isOKIconHtml ('Images transferred');
 //				} else {
-//					$isMergedHtml =  isNotOkIconHtml ('Gallery is not merged');
+//					$isMergedHtml =  isNotOkIconHtml ('Images not transferred');
 //				}
 //
-				if ($item->isTransferred){
+				if ($item->j3x_img_count == $item->j4x_img_count) {
+                    $isTransferred = true;
 					$isMergedHtml =  isOKIconHtml ('Images transferred');
 				} else {
+					$isTransferred = false;
 					$isMergedHtml =  isNotOkIconHtml ('Images not transferred');
 				}
 
+				$attributeGalleryIdHtml = ' galleryId="' . $item->id . '"';
+
+				if ($isTransferred) {
+					$attributeIsMergedHtml = ' merged="true"';
+				} else {
+					$attributeIsMergedHtml = ' ';
+				}
+
+				$attributeIsMergedHtml = ' ';
 				?>
-                <tr class="row<?php echo $i % 2; ?>">
+                <tr class="row<?php echo $i % 2; ?>" name="j3x_gal_row" <?php echo $attributeGalleryIdHtml; ?> <?php echo $attributeIsMergedHtml; ?> >
 
                     <td class="text-center">
 						<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
@@ -119,19 +131,24 @@ function j3x_galleryListHtml ($dbtransferj3ximages) {
                     <td class="text-left">
 	                    <?php echo $dbtransferj3ximages->escape($item->name); ?>
                         <span class="small" title="<?php echo $dbtransferj3ximages->escape($item->path); ?>">
-                            <?php if (empty($item->note)) : ?>
+                            <?php if (empty($item->description)) : ?>
 	                            <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3ximages->escape($item->alias)); ?>
                             <?php else : ?>
-                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3ximages->escape($item->alias), $dbtransferj3ximages->escape($item->note)); ?>)
+                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3ximages->escape($item->alias),
+                                    $dbtransferj3ximages->escape($item->description)); ?>)
                             <?php endif; ?>
                         </span>
                     </td>
-                    <td class="center">
-                        <span class="small">
-                            <?php echo 'images: ' . '(nn/mm)'  ?>
-                        </span>
+                    <td class="text-center">
+                            <?php
+                            // ToDo: Fix SQL where 'Join LEFT' leads to multiplied image count
+                            if ($isTransferred) {
+                                echo  sqrt($item->j3x_img_count);
+                            } else {
+	                            echo $item->j3x_img_count;
+                            }
+                            ?>
                     </td>
-
 
                 </tr>
 				<?php
@@ -277,7 +294,7 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
 
 	?>
 	<?php if (! empty ($movej3ximages->j3x_galleriesSorted)): ?>
-
+<?php /*
         <button id="transferByGallery" type="button" class="btn btn-success btn-rsg2"
                 title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY_DEC'); ?>"
 
@@ -285,6 +302,7 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
             <span class="icon-checkbox" aria-hidden="false"></span>
 			<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY'); ?>
         </button>
+
         <!-- button id="transferByCheckedGalleries" type="button" class="btn btn-success btn-rsg2"
                 title="<?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_BY_GALLERIES_CHECK_DESC'); ?>"
                 disabled
@@ -309,7 +327,8 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
         </button>
 
         <hr>
-
+        /**/
+        ?>
         <button id="selectNextGallery" type="button" class="btn btn-info btn-rsg2"
                 title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY_DESC'); ?>"
 
@@ -369,7 +388,8 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
 
 	            <?php //--- Select gallery and buttons ---------------------------------------------------------- ?>
 
-                <div class="card text-dark bg-light j3x-gallery-card">
+                <?php /*
+                //                <div class="card text-dark bg-light j3x-gallery-card">
                     <div class="card-body">
 			            <?php
 			            // specify gallery
@@ -378,7 +398,8 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
 			            ?>
                     </div>
                 </div>
-
+                */
+                ?>
                 <div class="card text-dark bg-light j3x--card">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>

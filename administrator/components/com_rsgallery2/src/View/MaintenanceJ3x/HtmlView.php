@@ -150,13 +150,15 @@ class HtmlView extends BaseHtmlView
 
 	                $this->j3x_imageIdsMerged = [];
 
+	                //$this->j3x_galleriesSorted = $j3xModel->j3x_galleriesList_transferred_YN();
 	                $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesList_transferred_YN();
 
-	                $this->galleryIdsJ3x_NotMoved = $j3xModel->galleryIdsJ3x_dbImagesNotMoved($this->j3x_galleriesSorted);
+					// ToDo: merge with obove
+	                // $this->galleryIdsJ3x_NotMoved = $j3xModel->galleryIdsJ3x_dbImagesNotMoved($this->j3x_galleriesSorted);
 
-	                // yyy
-	                // $this->j3xNotMovedInfo = $j3xModel->j3xNotMovedInfo($this->galleryIdsJ3xAsJ4x);
-	                $this->j3xNotMovedInfo = $j3xModel->j3xNotMovedInfo($this->galleryIdsJ3x_NotMoved);
+	                // ToDo: merge with obove
+	                // $this->j3xGalleriesWithImgCount = $j3xModel->j3xNotMovedInfo($this->galleryIdsJ3xAsJ4x);
+	                // $this->j3xGalleriesWithImgCount = $j3xModel->j3xGalleriesWithImgCount();
 
 					// ToDo: same for galleries
 	                if (! $this->isDoCopyJ3xDbImages)
