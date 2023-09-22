@@ -167,7 +167,7 @@ class ImagesPropertiesModel extends ListModel
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db = $this->getDbo();
+		$db = $this->getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
         $app  = Factory::getApplication();

@@ -110,7 +110,7 @@ class GalleryField extends FormField
 
 		if ($value)
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
 				->select($db->quoteName('title'))
 				->from($db->quoteName('#__galleries'))

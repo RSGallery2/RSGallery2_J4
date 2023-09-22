@@ -46,7 +46,7 @@ class rsgallery2Version
     function __construct()
     {
         //--- collect data from manifest -----------------
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
 			->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))

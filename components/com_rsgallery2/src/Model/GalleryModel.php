@@ -274,7 +274,7 @@ class GalleryModel extends ListModel
         $gid = $input->getInt ('gid', 0);
 
 		// Create a new query object.
-		$db    = $this->getDbo();
+		$db    = $this->getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$query->select('*')
@@ -338,7 +338,7 @@ class GalleryModel extends ListModel
         if( $gid > 1) {
 
             // Create a new query object.
-            $db    = Factory::getDBO();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->getQuery(true)
                 ->select('params') // ToDo: select single items
@@ -361,7 +361,7 @@ class GalleryModel extends ListModel
         if( $gid > 1) {
 
             // Create a new query object.
-            $db    = Factory::getDBO();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->getQuery(true)
                 ->select('*')

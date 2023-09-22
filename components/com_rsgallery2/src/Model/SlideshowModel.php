@@ -274,7 +274,7 @@ $images = new \stdClass(); // ToDo: all to (object)[];
 if (!isset($this->_item[$gid])) {
 
 try {
-$db = $this->getDbo();
+$db = $this->getContainer()->get(DatabaseInterface::class);
 $query = $db->getQuery(true);
 
 $query->select('*')

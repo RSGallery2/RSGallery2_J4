@@ -274,7 +274,7 @@ class SlideshowJ3xModel extends GalleryJ3xModel
         if (!isset($this->_item[$gid])) {
 
             try {
-                $db = $this->getDbo();
+                $db = $this->getContainer()->get(DatabaseInterface::class);
                 $query = $db->getQuery(true);
 
                 $query->select('*')

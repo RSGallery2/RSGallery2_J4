@@ -34,7 +34,7 @@ class UploadModel extends BaseDatabaseModel
 
         try
         {
-            $db    = Factory::getDbo();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             // count gallery items
@@ -74,7 +74,7 @@ class UploadModel extends BaseDatabaseModel
         $IdLatestGallery = 0;
 
         try {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             $test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";

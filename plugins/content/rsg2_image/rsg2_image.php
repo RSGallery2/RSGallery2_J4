@@ -294,7 +294,7 @@ class PlgContentRsg2_image extends CMSPlugin
 
             // Check if a gallery with gallery id exists
             // Get gallery details first
-            $db = JFactory::getDbo();
+            $db = JFactory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
             $query->select('id, name, published'); // ToDo: Perhaps access could be checked as well
             $query->from('#__rsgallery2_galleries');

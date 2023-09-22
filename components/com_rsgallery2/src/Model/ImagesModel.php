@@ -253,7 +253,7 @@ class ImagesModel extends ListModel
     protected function getListQuery()
     {
         // Create a new query object.
-        $db = $this->getDbo();
+        $db = $this->getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $app  = Factory::getApplication();
@@ -519,7 +519,7 @@ class ImagesModel extends ListModel
 			{
                 $images = parent::getItems(); // gid ...
 
-                $db    = $this->getDbo();
+                $db    = $this->getContainer()->get(DatabaseInterface::class);
 				$query = $db->getQuery(true);
 
 				$query->select('*')
@@ -591,7 +591,7 @@ class ImagesModel extends ListModel
         if( $gid > 1) {
 
             // Create a new query object.
-            $db    = Factory::getDBO();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->getQuery(true)
                 ->select('params') // ToDo: select single items
@@ -856,7 +856,7 @@ class ImagesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			$query
@@ -906,7 +906,7 @@ class ImagesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			$query
@@ -947,7 +947,7 @@ class ImagesModel extends ListModel
         if( $gid > 1) {
 
             // Create a new query object.
-            $db    = Factory::getDBO();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->getQuery(true)
                 ->select('*')

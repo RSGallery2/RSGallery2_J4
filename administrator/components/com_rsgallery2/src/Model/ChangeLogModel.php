@@ -70,7 +70,7 @@ class ChangeLogModel
 
         try
         {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->select('changelogurl')
                 ->from($db->quoteName('#__extensions'))

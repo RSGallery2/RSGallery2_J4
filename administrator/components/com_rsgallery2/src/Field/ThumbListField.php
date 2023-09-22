@@ -82,7 +82,7 @@ class ThumbListField extends ListField
             //$galleryName = $this->form->getValue('name');
 
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
 	            ->select($db->quoteName('id', 'value'))
 	            ->select($db->quoteName('name', 'text'))

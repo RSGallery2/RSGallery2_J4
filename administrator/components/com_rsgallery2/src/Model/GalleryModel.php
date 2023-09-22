@@ -569,7 +569,7 @@ class GalleryModel extends AdminModel
             // Set ordering to the last item if not set
             if (empty($table->ordering))
             {
-                $db = $this->getDbo();
+                $db = $this->getContainer()->get(DatabaseInterface::class);
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from($db->quoteName('#__rsg2_images'));
@@ -792,7 +792,7 @@ class GalleryModel extends AdminModel
              * }
              *
              * // Get associationskey for edited item
-             * $db    = $this->getDbo();
+             * $db    = $this->getContainer()->get(DatabaseInterface::class);
              * $query = $db->getQuery(true)
              * ->select($db->quoteName('key'))
              * ->from($db->quoteName('#__associations'))
@@ -1035,7 +1035,7 @@ class GalleryModel extends AdminModel
 
         try {
 
-            $db = $this->getDbo();
+            $db = $this->getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             /**
@@ -1095,7 +1095,7 @@ class GalleryModel extends AdminModel
 		$parts = explode('.', $value);
 		$parentId = (int) ArrayHelper::getValue($parts, 0, 1);
 
-		$db = $this->getDbo();
+		$db = $this->getContainer()->get(DatabaseInterface::class);
 		$extension = Factory::getApplication()->input->get('extension', '', 'word');
 		$newIds = array();
 
@@ -1305,7 +1305,7 @@ class GalleryModel extends AdminModel
 		$type = new UCMType;
 		$this->type = $type->getTypeByAlias($this->typeAlias);
 
-		$db = $this->getDbo();
+		$db = $this->getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$extension = Factory::getApplication()->input->get('extension', '', 'word');
 

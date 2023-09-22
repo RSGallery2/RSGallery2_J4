@@ -166,7 +166,7 @@ class Router extends RouterView
 
         // parent gallery
         if ($gid > 0) {
-            $db      = Factory::getDbo();
+            $db      = Factory::getContainer()->get(DatabaseInterface::class);
             $dbquery = $db->getQuery(true);
 
             $dbquery->select($dbquery->qn('alias'))
@@ -190,7 +190,7 @@ class Router extends RouterView
 
         // parent gallery
         if ( ! empty ($segment)) {
-            $db      = Factory::getDbo();
+            $db      = Factory::getContainer()->get(DatabaseInterface::class);
             $dbquery = $db->getQuery(true);
 
             $dbquery->select($dbquery->qn('id'))
@@ -223,7 +223,7 @@ class Router extends RouterView
 
         // parent gallery
         if ($gid > 0) {
-            $db      = Factory::getDbo();
+            $db      = Factory::getContainer()->get(DatabaseInterface::class);
             $dbquery = $db->getQuery(true);
 
             $dbquery->select($dbquery->qn('alias'))
@@ -247,7 +247,7 @@ class Router extends RouterView
 
         // parent gallery
         if ( ! empty ($segment)) {
-            $db      = Factory::getDbo();
+            $db      = Factory::getContainer()->get(DatabaseInterface::class);
             $dbquery = $db->getQuery(true);
 
             $dbquery->select($dbquery->qn('id'))

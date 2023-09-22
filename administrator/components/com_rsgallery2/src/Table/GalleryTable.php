@@ -244,7 +244,7 @@ class GalleryTable extends Nested
         }
 
         // Verify that the alias is unique
-        $table = new static($this->getDbo());
+        $table = new static($this->getContainer()->get(DatabaseInterface::class));
 
         if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
         {

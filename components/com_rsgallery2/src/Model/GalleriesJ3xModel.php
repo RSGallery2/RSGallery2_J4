@@ -216,7 +216,7 @@ class GalleriesJ3xModel extends ListModel
     protected function getListQuery()
     {
         // Create a new query object.
-        $db = $this->getDbo();
+        $db = $this->getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $app = Factory::getApplication();
@@ -614,7 +614,7 @@ class GalleriesJ3xModel extends ListModel
         $imageCount = 0;
 
         try {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
             // count gallery items
             $query->select('COUNT(*)')
@@ -645,7 +645,7 @@ class GalleriesJ3xModel extends ListModel
             $gallery->subGalleryList = []; // fall back
 
             // Select parent and child galleries
-            $db = $this->getDbo();
+            $db = $this->getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             $query->select('id, name')
@@ -779,7 +779,7 @@ class GalleriesJ3xModel extends ListModel
 //			$gid = $input->get('gid', '', 'INT');
 
 			// Create a new query object.
-			$db = $this->getDbo();
+			$db = $this->getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			$limit = 1;
@@ -833,7 +833,7 @@ class GalleriesJ3xModel extends ListModel
 		{
 
 			// Create a new query object.
-			$db = $this->getDbo();
+			$db = $this->getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			// Select required fields
@@ -885,7 +885,7 @@ class GalleriesJ3xModel extends ListModel
 
         try {
             // Select parent and child galleries
-            $db = $this->getDbo();
+            $db = $this->getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             $query->select('*')
@@ -927,7 +927,7 @@ class GalleriesJ3xModel extends ListModel
             $gid = $this->galleryId;
 
             // Select parent and child galleries
-            $db = $this->getDbo();
+            $db = $this->getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             $query->select('*')

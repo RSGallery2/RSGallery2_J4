@@ -45,7 +45,7 @@ class J3xExistModel extends BaseModel
         $tableExist = false;
 
         try {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $db->setQuery('SHOW TABLES');
             $existingTables = $db->loadColumn();
 

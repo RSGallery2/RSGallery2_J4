@@ -469,7 +469,7 @@ class ImageReferences
      */
 	private function getDbImagesList()
 	{
-		$db    = Factory::getDbo();
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
         // ToDo: add path to original file

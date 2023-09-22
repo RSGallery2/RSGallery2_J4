@@ -326,7 +326,7 @@ class ImageModel extends AdminModel
             // Set ordering to the last item if not set
             if (empty($table->ordering))
             {
-                $db = $this->getDbo();
+                $db = $this->getContainer()->get(DatabaseInterface::class);
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from($db->quoteName('#__rsg2_images'));
@@ -557,7 +557,7 @@ class ImageModel extends AdminModel
 			}
 
 			// Get associationskey for edited item
-			$db    = $this->getDbo();
+			$db    = $this->getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
 				->select($db->quoteName('key'))
 				->from($db->quoteName('#__associations'))
@@ -1053,7 +1053,7 @@ class ImageModel extends AdminModel
 
 		try
 		{
-			$db    = $this->getDbo();
+			$db    = $this->getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
 				->select('MAX(ordering)')
 				->from($db->quoteName('#__rsg2_files'))
@@ -1308,7 +1308,7 @@ class ImageModel extends AdminModel
 
 		try
 		{
-			$db    = $this->getDbo();
+			$db    = $this->getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
 				->select('id')
 				->from($db->quoteName('#__rsgallery2_files'))
@@ -1348,7 +1348,7 @@ class ImageModel extends AdminModel
 
 		try
 		{
-			$db = $this->getDbo();
+			$db = $this->getContainer()->get(DatabaseInterface::class);
 
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__rsgallery2_files'))

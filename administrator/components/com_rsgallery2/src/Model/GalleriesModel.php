@@ -159,7 +159,7 @@ class GalleriesModel extends ListModel
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db = $this->getDbo();
+		$db = $this->getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
         $app  = Factory::getApplication();
@@ -393,7 +393,7 @@ class GalleriesModel extends ListModel
 //			// Set ordering to the last item if not set
 //			if (empty($table->ordering))
 //			{
-//				$db = $this->getDbo();
+//				$db = $this->getContainer()->get(DatabaseInterface::class);
 //				$query = $db->getQuery(true)
 //					->select('MAX(ordering)')
 //					->from('#__banners');
@@ -532,7 +532,7 @@ class GalleriesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
@@ -591,7 +591,7 @@ class GalleriesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)

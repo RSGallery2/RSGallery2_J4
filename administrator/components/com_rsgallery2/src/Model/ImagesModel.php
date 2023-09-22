@@ -172,7 +172,7 @@ class ImagesModel extends ListModel
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db = $this->getDbo();
+		$db = $this->getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
         $app  = Factory::getApplication();
@@ -425,7 +425,7 @@ class ImagesModel extends ListModel
             // Set ordering to the last item if not set
             if (empty($table->ordering))
             {
-                $db = $this->getDbo();
+                $db = $this->getContainer()->get(DatabaseInterface::class);
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from('#__rsg2_images');
@@ -564,7 +564,7 @@ class ImagesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getDBO();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			$query
@@ -618,7 +618,7 @@ class ImagesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
@@ -666,7 +666,7 @@ class ImagesModel extends ListModel
 	protected static function GalleryName($id)
 	{
 		// Create a new query object.
-		$db    = Factory::getDBO();
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		//$sql = 'SELECT `name` FROM `#__rsgallery2_galleries` WHERE `id` = '. (int) $id;
@@ -702,7 +702,7 @@ class ImagesModel extends ListModel
         $id_images = '#__rsg2_images';
 
         try {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             //--- delete old rows -----------------------------------------------
 
@@ -742,7 +742,7 @@ class ImagesModel extends ListModel
         {
 
             // Now check to see if this articles was featured if so delete it from the #__content_frontpage table
-            $db = $this->getDbo();
+            $db = $this->getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->delete($db->quoteName('#__content_frontpage'))
                 ->whereIn($db->quoteName('content_id'), $pks);
@@ -771,7 +771,7 @@ class ImagesModel extends ListModel
 
 		try
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
                 ->select($db->quoteName(array('id', 'name', 'gallery_id')))
                 ->from($db->quoteName('#__rsg2_images'))
@@ -810,7 +810,7 @@ class ImagesModel extends ListModel
 //
 //		try
 //		{
-//			$db    = Factory::getDbo();
+//			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 //			$query = $db->getQuery(true);
 //
 //			$query->select($db->quoteName('name'))
@@ -851,7 +851,7 @@ class ImagesModel extends ListModel
 
 		try
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			$query->select($db->quoteName('gallery_id'))

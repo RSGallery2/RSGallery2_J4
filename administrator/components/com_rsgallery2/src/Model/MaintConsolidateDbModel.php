@@ -104,7 +104,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
 
 			try
 			{
-				$db    = JFactory::getDbo();
+				$db    = JFactory::getContainer()->get(DatabaseInterface::class);
 				$query = $db->getQuery(true)
 					->select($db->quoteName('value'))
 					->from($db->quoteName('#__rsgallery2_config'))

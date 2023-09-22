@@ -97,7 +97,7 @@ class GalleriesHelper
 			// Include only published galleries with user access
 			$arrId    = explode(':', $langAssociation->id);
 			$assocId  = $arrId[0];
-			$db       = \Factory::getDbo();
+			$db       = \Factory::getContainer()->get(DatabaseInterface::class);
 
 			$query = $db->getQuery(true)
 				->select($db->quoteName('published'))

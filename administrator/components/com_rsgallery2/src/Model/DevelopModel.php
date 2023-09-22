@@ -43,7 +43,7 @@ class DevelopModel extends BaseDatabaseModel
 ////
 ////
 ////
-////            $db = Factory::getDbo();
+////            $db = Factory::getContainer()->get(DatabaseInterface::class);
 ////            $query = $db->getQuery(true)
 //////                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 ////                ->select('*')

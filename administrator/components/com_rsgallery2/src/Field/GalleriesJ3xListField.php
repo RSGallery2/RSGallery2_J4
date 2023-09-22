@@ -73,7 +73,7 @@ class GalleriesJ3xListField extends ListField
         {
             // $name = (string) $this->element['name'];
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
-		    $db   = Factory::getDbo();
+		    $db   = Factory::getContainer()->get(DatabaseInterface::class);
 
 		    $query = $db->getQuery(true)
 			    //->select('id AS value, name AS text, level, published, lft, language')

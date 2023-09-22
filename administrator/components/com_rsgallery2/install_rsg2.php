@@ -553,7 +553,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		try
 		{
-			$db    = Factory::getDbo();
+			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
 				->select('manifest_cache')
 				->from($db->quoteName('#__extensions'))

@@ -245,7 +245,7 @@ class GalleriesLatestModel extends ListModel
 
 			try
 			{
-				$db    = $this->getDbo();
+				$db    = $this->getContainer()->get(DatabaseInterface::class);
 				$query = $db->getQuery(true);
 
 				$query->select('*')

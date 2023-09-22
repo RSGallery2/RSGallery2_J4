@@ -113,7 +113,7 @@ class Rsg2_slideshowHelper
 
 		if (trim($ordering) === 'rand()')
 		{
-			$model->setState('list.ordering', Factory::getDbo()->getQuery(true)->rand());
+			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
 		}
 		else
 		{
@@ -278,7 +278,7 @@ class Rsg2_slideshowHelper
 //
 //		if (trim($ordering) === 'rand()')
 //		{
-//			$model->setState('list.ordering', Factory::getDbo()->getQuery(true)->rand());
+//			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
 //		}
 //		else
 //		{

@@ -36,7 +36,7 @@ class Rsg2ExtensionModel extends BaseModel
 
         try
         {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->select('manifest_cache')
                 ->from($db->quoteName('#__extensions'))
@@ -72,7 +72,7 @@ class Rsg2ExtensionModel extends BaseModel
         try
         {
 	        // read the existing component value(s)
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->select('params')
                 ->from($db->quoteName('#__extensions'))
@@ -117,7 +117,7 @@ class Rsg2ExtensionModel extends BaseModel
 
         try
         {
-            $db = Factory::getDbo();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->select('*')
                 ->from($db->quoteName('#__extensions'))
@@ -290,7 +290,7 @@ class Rsg2ExtensionModel extends BaseModel
 				// store the combined new and existing values back as a JSON string
 				$paramsString = json_encode($params);
 
-				$db = Factory::getDbo();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
 				$query = $db->getQuery(true)
 					->update($db->quoteName('#__extensions'))
 					->set($db->quoteName('params') . ' = ' . $db->quote($paramsString))
