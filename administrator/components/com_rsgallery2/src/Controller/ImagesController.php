@@ -128,7 +128,7 @@ class ImagesController extends AdminController
         Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
 
         // Access check
-        $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+        $canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
         if (!$canAdmin)
         {
             $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
@@ -185,7 +185,7 @@ class ImagesController extends AdminController
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
         // Access check
-        $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+        $canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
         if (!$canAdmin)
         {
             $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');

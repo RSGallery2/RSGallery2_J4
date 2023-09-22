@@ -170,7 +170,7 @@ class ImagesModel extends ListModel
 
         $params = $app->getParams();
         $this->setState('params', $params);
-        $user = Factory::getUser();
+        $user = Factory::getContainer()->get(UserFactoryInterface::class);
 
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
@@ -496,7 +496,7 @@ class ImagesModel extends ListModel
 
 	public function getItems()
 	{
-        $user   = Factory::getUser();
+        $user   = Factory::getContainer()->get(UserFactoryInterface::class);
         $userId = $user->get('id');
         $guest  = $user->get('guest');
         $groups = $user->getAuthorisedViewLevels();

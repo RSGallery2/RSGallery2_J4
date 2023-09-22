@@ -56,7 +56,7 @@ class GalleryField extends FormField
 		$allowSelect = ((string) $this->element['select'] != 'false');
 
 		// Load language.
-		Factory::getLanguage()->load('com_rsgallery2', JPATH_ADMINISTRATOR);
+		Factory::getApplication->getLanguage()->load('com_rsgallery2', JPATH_ADMINISTRATOR);
 
 		// The active gallery id field.
 		$value = (int) $this->value > 0 ? (int) $this->value : '';
@@ -80,7 +80,7 @@ class GalleryField extends FormField
 			if (!isset($scriptSelect[$this->id]))
 			{
 				//? title -> ? name
-				Factory::getDocument()->addScriptDeclaration("
+				Factory::getApplication->getDocument()->addScriptDeclaration("
 				function jSelectGallery_" . $this->id . "(id, title, object) {
 					window.processModalSelect('Gallery', '" . $this->id . "', id, title, '', object);
 				}

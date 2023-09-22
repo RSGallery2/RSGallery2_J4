@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 //$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
 //--- load additional language file --------------------------------------
-//$lang = JFactory::getLanguage();
+//$lang = JFactory::getApplication->getLanguage();
 //$extension = 'com_helloworld';
 //$base_dir = JPATH_SITE;
 //$language_tag = 'en-GB';

@@ -71,7 +71,7 @@ class RatingController extends BaseController
 		$link = 'index.php?option=com_rsgallery2&view=slidePageJ3x&gid=' . $galleryId . '&img_id=' . $imageId.'&tab=vote';
 
 		// Access check
-		$canVote = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		$canVote = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('core.admin', 'com_rsgallery2');
 		if ( ! $canVote)
 		{
 			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR') . " " . JText::_('COM_RSGALLERY2_VOTING_IS_DISABLED');

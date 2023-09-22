@@ -70,8 +70,8 @@ class CommentController extends BaseController
 
 		// Access check
 		$galleryId = $input->get('gid', 0, 'INT');
-		//$canComment = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
-		$canComment = JFactory::getUser()->authorise('rsgallery2.comment', 'com_rsgallery2.gallery.' . $galleryId);
+		//$canComment = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('core.admin', 'com_rsgallery2');
+		$canComment = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('rsgallery2.comment', 'com_rsgallery2.gallery.' . $galleryId);
 		// ToDO: remove
 		//$canComment = true;
 
@@ -86,7 +86,7 @@ class CommentController extends BaseController
 		{
 
 			// Check user ID
-			$user    = JFactory::getUser();
+			$user    = JFactory::getContainer()->get(UserFactoryInterface::class);
 			$user_id = (int) $user->id;
 
 //			??? if not / if needed ??
@@ -196,7 +196,7 @@ class CommentController extends BaseController
 		$userRating = $input->get('rating', 0, 'INT');
 
 		// Access check
-		$canComment = JFactory::getUser()->authorise('core.admin', 'com_rsgallery2');
+		$canComment = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('core.admin', 'com_rsgallery2');
 		//$canComment = true;
 
 		if ( ! $canComment)

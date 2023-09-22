@@ -88,7 +88,7 @@ class HtmlView extends BaseHtmlView
         $this->pagination->hideEmptyLimitstart = true;
         // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
-        $this->user       = Factory::getUser();
+        $this->user       = Factory::getContainer()->get(UserFactoryInterface::class);
 
         $this->isDebugSite = $params->get('isDebugSite'); 
         $this->isDevelopSite = $params->get('isDevelop');

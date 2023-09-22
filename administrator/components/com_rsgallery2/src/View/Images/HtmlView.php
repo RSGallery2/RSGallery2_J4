@@ -229,7 +229,7 @@ class HtmlView extends BaseHtmlView
 	protected function addToolbar($Layout = 'default')
 	{
         $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
-        $user  = Factory::getUser();
+        $user  = Factory::getContainer()->get(UserFactoryInterface::class);
 
         // Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');

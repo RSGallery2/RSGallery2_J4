@@ -17,7 +17,7 @@ $params = ComponentHelper::getParams('com_rsgallery2');
 
 $published = $this->state->get('filter.published');
 
-$user = Factory::getUser();
+$user = Factory::getContainer()->get(UserFactoryInterface::class);
 ?>
 
 <div class="container">

@@ -222,7 +222,7 @@ class MaintenanceController extends BaseController
 
         try {
             // Access check
-            $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+            $canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
             if (!$canAdmin) {
 
                 $msg     = Text::_('JERROR_ALERTNOAUTHOR');

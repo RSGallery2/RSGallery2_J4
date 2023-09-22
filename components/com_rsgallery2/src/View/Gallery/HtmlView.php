@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView
         $this->pagination = $this->get('Pagination');
         $params =
         $this->params     = $this->state->get('params');
-        $this->user       = Factory::getUser();
+        $this->user       = Factory::getContainer()->get(UserFactoryInterface::class);
 
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop'); 

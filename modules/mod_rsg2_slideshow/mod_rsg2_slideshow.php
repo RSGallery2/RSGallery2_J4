@@ -26,7 +26,7 @@ $images = Rsg2_slideshowHelper::getList($params, $model, $app);
 // standard display
 // require ModuleHelper::getLayoutPath('mod_rsg2_slideshow', $params->get('layout', 'default'));
 
-// $lang = Factory::getLanguage();
+// $lang = Factory::getApplication->getLanguage();
 $lang =  $app->getLanguage();
 //$lang->load('com_rsgallery2', JPATH_SITE, 'en-GB', true);
 //$lang->load('com_rsgallery2', JPATH_SITE, $lang->getTag(), true);

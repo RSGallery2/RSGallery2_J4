@@ -109,7 +109,7 @@ class HtmlView extends BaseHtmlView
 
         $params =
         $this->params     = $this->state->get('params');
-        $this->user       = Factory::getUser();
+        $this->user       = Factory::getContainer()->get(UserFactoryInterface::class);
 
         $this->isShowPagination = $params->get('show_pagination', 2);
         $this->isShowDescription = $params->get('isSlpShowImgDescriptionJ3x', false);
@@ -178,7 +178,7 @@ class HtmlView extends BaseHtmlView
 
                     //--- load additional language file --------------------------------
 
-                    $lang = Factory::getLanguage();
+                    $lang = Factory::getApplication->getLanguage();
                     $lang->load('com_rsg2_exif',
                         Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 

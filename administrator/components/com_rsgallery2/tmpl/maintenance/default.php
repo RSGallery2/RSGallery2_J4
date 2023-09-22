@@ -31,7 +31,7 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
 
 //$script = 'var Token = \'' . Session::getFormToken() . '\';';
-//Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
+//Factory::getApplication->getDocument()->addScriptDeclaration(implode("\n", $script));
 
 // ToDo: Use ROUTE for all and change com_rsgallery2&amp; -> com_rsgallery2&
 
@@ -332,7 +332,7 @@ if ($this->isJ3xRsg2DataExisting)
 {
 	//--- load additional language file --------------------------------
 
-	$lang = Factory::getLanguage();
+	$lang = Factory::getApplication->getLanguage();
 	$lang->load('com_rsg2_j3x',
 		Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 

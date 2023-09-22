@@ -38,7 +38,7 @@ Rsg2_imageHelper::AssignImageUrl($image);
 // standard display
 // require ModuleHelper::getLayoutPath('mod_rsg2_image', $params->get('layout', 'default'));
 
-// $lang = Factory::getLanguage();
+// $lang = Factory::getApplication->getLanguage();
 // toDO:
 $lang =  $app->getLanguage();
 //$lang->load('com_rsgallery2', JPATH_SITE, 'en-GB', true);

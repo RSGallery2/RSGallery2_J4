@@ -156,7 +156,7 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 //		$templateName = $rsgConfig->get('template');
 //		$templateUri = JURI_SITE . "/components/com_rsgallery2/templates/" . $templateName;
 //
-//		$doc = JFactory::getDocument();
+//		$doc = JFactory::getApplication->getDocument();
 //		$vote_js = $templateUri . "/js/OneImageVote.js";
 //		$doc->addScript($vote_js);
 	}
@@ -313,7 +313,7 @@ function htmlExifData ($exifTags)
 //
 //
 //	// Manipulate form fieldset "name" depending on user
-//	$user = JFactory::getUser();
+//	$user = JFactory::getContainer()->get(UserFactoryInterface::class);
 //	// User is logged in
 //	if ( ! empty($user->id))
 //	{

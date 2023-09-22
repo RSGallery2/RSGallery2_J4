@@ -69,7 +69,7 @@ class Rsg2_imagesHelper
 
 		// Access filter
 		$access     = !ComponentHelper::getParams('com_rsgallery2')->get('show_noauth');
-		//$authorised = Access::getAuthorisedViewLevels(Factory::getUser()->get('id'));
+		//$authorised = Access::getAuthorisedViewLevels(Factory::getContainer()->get(UserFactoryInterface::class)->get('id'));
 		//$model->setState('filter.access', $access);
 
 //		// Category filter
@@ -234,7 +234,7 @@ class Rsg2_imagesHelper
 //
 //		// Access filter
 //		$access     = !ComponentHelper::getParams('com_content')->get('show_noauth');
-//		$authorised = Access::getAuthorisedViewLevels(Factory::getUser()->get('id'));
+//		$authorised = Access::getAuthorisedViewLevels(Factory::getContainer()->get(UserFactoryInterface::class)->get('id'));
 //		$model->setState('filter.access', $access);
 //
 //		// Category filter

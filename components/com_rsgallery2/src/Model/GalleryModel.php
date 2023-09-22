@@ -165,7 +165,7 @@ class GalleryModel extends ListModel
         $params = $app->getParams();
         $this->setState('params', $params);
 
-        $user = Factory::getUser();
+        $user = Factory::getContainer()->get(UserFactoryInterface::class);
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
             // Filter on published for those who do not have edit or edit.state rights.
@@ -263,7 +263,7 @@ class GalleryModel extends ListModel
 	{
 		$app    = Factory::getApplication();
 		$input  = Factory::getApplication()->input;
-        $user   = Factory::getUser();
+        $user   = Factory::getContainer()->get(UserFactoryInterface::class);
 		$groups = $user->getAuthorisedViewLevels();
         $userId = $user->get('id');
         $guest  = $user->get('guest');

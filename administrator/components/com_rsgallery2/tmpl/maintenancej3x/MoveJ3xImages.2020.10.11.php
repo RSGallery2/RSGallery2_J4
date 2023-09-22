@@ -25,7 +25,7 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
 // Drag and Drop security id on ajax call.
 $script[] = 'var Token = \'' . Session::getFormToken() . '\';';
-Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
+Factory::getApplication->getDocument()->addScriptDeclaration(implode("\n", $script));
 
 // $app = Factory::getApplication();
 

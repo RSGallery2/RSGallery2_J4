@@ -116,7 +116,7 @@ class ImagesPropertiesController extends AdminController
 			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 			// Access check
-			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -187,7 +187,7 @@ class ImagesPropertiesController extends AdminController
 			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 			// Access check
-			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -279,7 +279,7 @@ class ImagesPropertiesController extends AdminController
 			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 			// Access check
-			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -395,7 +395,7 @@ class ImagesPropertiesController extends AdminController
 			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 			// Access check
-			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -536,7 +536,7 @@ class ImagesPropertiesController extends AdminController
 			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
 			// Access check
-			$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');

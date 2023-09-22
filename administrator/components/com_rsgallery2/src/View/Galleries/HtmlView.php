@@ -222,7 +222,7 @@ class HtmlView extends BaseHtmlView
 	protected function addToolbar($Layout = 'default')
 	{
         $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
-        $user  = Factory::getUser();
+        $user  = Factory::getContainer()->get(UserFactoryInterface::class);
 
         // Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');
@@ -382,7 +382,7 @@ class HtmlView extends BaseHtmlView
 		$componentParams = ComponentHelper::getParams($component);
 
 		// Need to load the menu language file as mod_menu hasn't been loaded yet.
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication->getLanguage();
 		$lang->load($component, JPATH_BASE, null, false, true)
 		|| $lang->load($component, JPATH_ADMINISTRATOR . '/components/' . $component, null, false, true);
 

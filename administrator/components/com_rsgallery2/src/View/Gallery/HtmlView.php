@@ -240,7 +240,7 @@ class HtmlView extends BaseHtmlView
 		$componentParams = ComponentHelper::getParams($component);
 
 		// Need to load the menu language file as mod_menu hasn't been loaded yet.
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication->getLanguage();
 		$lang->load($component, JPATH_BASE, null, false, true)
 		|| $lang->load($component, JPATH_ADMINISTRATOR . '/components/' . $component, null, false, true);
 
