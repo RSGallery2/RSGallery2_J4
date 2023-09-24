@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Database\DatabaseInterface;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 
@@ -172,7 +173,8 @@ class ImagesModel extends ListModel
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db = $this->getContainer()->get(DatabaseInterface::class);
+		$db = $this->getDatabase();
+
 		$query = $db->getQuery(true);
 
         $app  = Factory::getApplication();
@@ -425,7 +427,8 @@ class ImagesModel extends ListModel
             // Set ordering to the last item if not set
             if (empty($table->ordering))
             {
-                $db = $this->getContainer()->get(DatabaseInterface::class);
+	            $db = $this->getDatabase();
+
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from('#__rsg2_images');
@@ -742,7 +745,7 @@ class ImagesModel extends ListModel
         {
 
             // Now check to see if this articles was featured if so delete it from the #__content_frontpage table
-            $db = $this->getContainer()->get(DatabaseInterface::class);
+            $db = $this->>getDatabase();
             $query = $db->getQuery(true)
                 ->delete($db->quoteName('#__content_frontpage'))
                 ->whereIn($db->quoteName('content_id'), $pks);
@@ -771,7 +774,6 @@ class ImagesModel extends ListModel
 
 		try
 		{
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true)
                 ->select($db->quoteName(array('id', 'name', 'gallery_id')))
                 ->from($db->quoteName('#__rsg2_images'))
@@ -810,7 +812,7 @@ class ImagesModel extends ListModel
 //
 //		try
 //		{
-//			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+//			$db = $this->getDatabase();
 //			$query = $db->getQuery(true);
 //
 //			$query->select($db->quoteName('name'))
@@ -851,7 +853,7 @@ class ImagesModel extends ListModel
 
 		try
 		{
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
 			$query = $db->getQuery(true);
 
 			$query->select($db->quoteName('gallery_id'))

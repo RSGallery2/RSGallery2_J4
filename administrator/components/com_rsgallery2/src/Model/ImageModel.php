@@ -326,8 +326,8 @@ class ImageModel extends AdminModel
             // Set ordering to the last item if not set
             if (empty($table->ordering))
             {
-                $db = $this->getContainer()->get(DatabaseInterface::class);
-                $query = $db->getQuery(true)
+	            $db = $this->getDatabase();
+	            $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from($db->quoteName('#__rsg2_images'));
                 $db->setQuery($query);
@@ -1348,7 +1348,7 @@ class ImageModel extends AdminModel
 
 		try
 		{
-			$db = $this->getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
 				->delete($db->quoteName('#__rsgallery2_files'))

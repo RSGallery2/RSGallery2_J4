@@ -14,6 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\Database\DatabaseInterface;
 
 // required may be needed as classes may not be loaded on  fresh install
 // !!! needed by install
@@ -42,7 +43,7 @@ class GalleryTreeModel extends BaseModel
         $is1GalleryExisting = false;
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true);
 
             // count gallery items
@@ -85,7 +86,7 @@ class GalleryTreeModel extends BaseModel
         $id_galleries = '#__rsg2_galleries';
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
 
             //--- delete old rows -----------------------------------------------
 

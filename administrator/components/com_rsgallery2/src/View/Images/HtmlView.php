@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\User\UserFactoryInterface;
 
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 
@@ -229,7 +230,8 @@ class HtmlView extends BaseHtmlView
 	protected function addToolbar($Layout = 'default')
 	{
         $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
-        $user  = Factory::getContainer()->get(UserFactoryInterface::class);
+        //$user  = Factory::getContainer()->get(UserFactoryInterface::class);
+		$user  = $this->getCurrentUser();
 
         // Get the toolbar object instance
 		$toolbar = Toolbar::getInstance('toolbar');

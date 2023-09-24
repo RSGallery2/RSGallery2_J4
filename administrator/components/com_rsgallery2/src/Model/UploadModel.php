@@ -11,10 +11,12 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
-use JModelLegacy;
+//use JModelLegacy;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\Database\DatabaseInterface;
+
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 class UploadModel extends BaseDatabaseModel

@@ -52,7 +52,7 @@ class ExifListField extends ListField
 		try {
             //--- load additional language file --------------------------------
 
-            $lang = Factory::getApplication->getLanguage();
+            $lang = Factory::getApplication()->getLanguage();
             $lang->load('com_rsg2_exif',
                 Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 

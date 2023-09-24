@@ -10,12 +10,14 @@
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\User\UserFactoryInterface;
 
 $params = ComponentHelper::getParams('com_rsgallery2');
 
 $published = $this->state->get('filter.published');
 
-$user = Factory::getContainer()->get(UserFactoryInterface::class);
+//$user = Factory::getContainer()->get(UserFactoryInterface::class);
+$user      = Factory::getApplication()->getIdentity();
 ?>
 
 <div class="container">

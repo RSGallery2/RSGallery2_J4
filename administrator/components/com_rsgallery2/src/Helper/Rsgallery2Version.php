@@ -12,6 +12,7 @@
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 
 // no direct access
 \defined('_JEXEC') or die;
@@ -47,6 +48,7 @@ class rsgallery2Version
     {
         //--- collect data from manifest -----------------
         $db = Factory::getContainer()->get(DatabaseInterface::class);
+
         $query = $db->getQuery(true)
 			->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))

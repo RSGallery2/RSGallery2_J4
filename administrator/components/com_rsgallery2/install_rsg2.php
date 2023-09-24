@@ -159,7 +159,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				{
 					$outTxt = 'Can not install RSG2: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts';
 					Factory::getApplication()->enqueueMessage($outTxt, 'error');
-					Log::add('oldRelease:' . outTxt, Log::WARNING, 'rsg2');
+					Log::add('oldRelease:' . $outTxt, Log::WARNING, 'rsg2');
 
 					// May be error on install ?
 					// return false;
@@ -553,7 +553,9 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		try
 		{
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+			// $db    = Factory::getContainer()->get(DatabaseInterface::class);
+			// $db = $this->getDatabase();
+			$db = Factory::getDbo();
 			$query = $db->getQuery(true)
 				->select('manifest_cache')
 				->from($db->quoteName('#__extensions'))

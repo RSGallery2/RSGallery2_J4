@@ -436,7 +436,7 @@ class GalleryModel extends AdminModel
 	 *
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
-		$lang = Factory::getApplication->getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$component = $this->getState('category.component');
 		$section = $this->getState('category.section');
 		$extension = Factory::getApplication()->input->get('extension', null);
@@ -569,7 +569,7 @@ class GalleryModel extends AdminModel
             // Set ordering to the last item if not set
             if (empty($table->ordering))
             {
-                $db = $this->getContainer()->get(DatabaseInterface::class);
+                $db = $this->getDatabase();
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from($db->quoteName('#__rsg2_images'));
@@ -1035,7 +1035,7 @@ class GalleryModel extends AdminModel
 
         try {
 
-            $db = $this->getContainer()->get(DatabaseInterface::class);
+            $db = $this->getDatabase();
             $query = $db->getQuery(true);
 
             /**
@@ -1095,7 +1095,7 @@ class GalleryModel extends AdminModel
 		$parts = explode('.', $value);
 		$parentId = (int) ArrayHelper::getValue($parts, 0, 1);
 
-		$db = $this->getContainer()->get(DatabaseInterface::class);
+		$db = $this->getDatabase();
 		$extension = Factory::getApplication()->input->get('extension', '', 'word');
 		$newIds = array();
 
@@ -1305,7 +1305,7 @@ class GalleryModel extends AdminModel
 		$type = new UCMType;
 		$this->type = $type->getTypeByAlias($this->typeAlias);
 
-		$db = $this->getContainer()->get(DatabaseInterface::class);
+		$db = $this->getDatabase();
 		$query = $db->getQuery(true);
 		$extension = Factory::getApplication()->input->get('extension', '', 'word');
 

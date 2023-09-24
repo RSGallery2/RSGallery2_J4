@@ -212,7 +212,8 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 
 		try
 		{
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
+
 			$db->truncateTable($tableId);
 			$db->execute();
 

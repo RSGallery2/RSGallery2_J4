@@ -66,7 +66,7 @@ class HtmlView extends BaseHtmlView
 
 		//--- load additional language file --------------------------------
 
-		$lang = Factory::getApplication->getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$lang->load('com_rsg2_j3x',
 			Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 

@@ -16,10 +16,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Utilities\ArrayHelper;
+
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-use Joomla\Utilities\ArrayHelper;
 
 /**
  * Class MaintenanceJ3xModel
@@ -199,7 +201,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install: BaseDatabase
         $galleries = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('*')
@@ -224,7 +226,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install: BaseDatabase
         $galleries = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 	            ->select($db->quoteName(array('j3x.id', 'j3x.alias', 'j3x.name', 'j3x.description')))
@@ -509,7 +511,7 @@ class MaintenanceJ3xModel extends BaseModel // removed for install: BaseDatabase
         $galleries = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
                 ->select('*')
@@ -882,7 +884,7 @@ EOT;
 
 			//--- J3x image count of gallery ---------------------
 
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
@@ -911,7 +913,7 @@ EOT;
 
 			//--- j4x image tests ---------------------
 
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
@@ -932,7 +934,7 @@ EOT;
 
 			//--- j4x image count of gallery ---------------------
 
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
@@ -1049,7 +1051,7 @@ EOT;
             $columns = [];
             $values = [];
 
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true);
 
             $columns[] = 'id';
@@ -1139,7 +1141,8 @@ EOT;
         $images = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
+
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('*')
@@ -1163,7 +1166,8 @@ EOT;
         $images = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
+
             $query = $db->getQuery(true)
                 ->select($db->quoteName(array('id', 'name', 'alias', 'gallery_id', 'title')))
                 ->from('#__rsgallery2_files')
@@ -1187,7 +1191,8 @@ EOT;
         $images = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
+
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('*')
@@ -1215,7 +1220,7 @@ EOT;
         $galleries = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('*')
@@ -1243,7 +1248,7 @@ EOT;
         $images = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
                 ->select('*')
@@ -1291,7 +1296,7 @@ EOT;
         ];
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true)
                 ->select($db->quoteName($select))
                 ->from('#__rsgallery2_files')
@@ -1357,7 +1362,7 @@ EOT;
 //        ];
 //
 //        try {
-//            $db = Factory::getContainer()->get(DatabaseInterface::class);
+//            $db = $this->>getDatabase();
 //            $query = $db->getQuery(true)
 //                ->select($db->quoteName($select))
 //                ->from('#__rsg2_images')
@@ -1407,7 +1412,7 @@ EOT;
 
 //            $j3xGalleryItems = $this->j3x_galleriesListOfIds($selectedJ3xGalleryIds);
 
-	        $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
 	        $query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 		        ->select('*')
@@ -1545,7 +1550,7 @@ EOT;
             $columns = [];
             $values = [];
 
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
             $query = $db->getQuery(true);
 
             $columns[] = 'id';
@@ -1729,7 +1734,7 @@ EOT;
 //		{
 ////			//--- J3x gallery item ---------------------
 ////
-////			$db = Factory::getContainer()->get(DatabaseInterface::class);
+////			$db = $this->geDatabse());
 ////
 ////			$query = $db->getQuery(true)
 ////				// ->select($db->quoteName(array('id')))
@@ -1784,7 +1789,7 @@ EOT;
 		{
 			//--- J4x gallery id ---------------------
 
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
@@ -1852,7 +1857,8 @@ EOT;
         $dbImages = array();
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
+
             $query = $db->getQuery(true)
                 ->select($db->quoteName(array('name', 'id', 'gallery_id')))
                 ->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($cids)) . ')')
@@ -1983,7 +1989,7 @@ EOT;
 	    try {
 
 
-//		    $db = Factory::getContainer()->get(DatabaseInterface::class);
+//		    $db = $this->getDatabase();
 //		    //$db      = $this->getDatabase();
 //
 //		    $j3x_subquery = $db->getQuery(true)
@@ -1997,7 +2003,7 @@ EOT;
 //			    ->where ('j3x.gallery_id in ' . $galleryIdsJ3x_NotMoved);
 //
 
-//		    $db = Factory::getContainer()->get(DatabaseInterface::class);
+//		    $db = $this->>getDatabase();
 //		    //$db      = $this->getDatabase();
 //
 //		    $j3x_subquery = $db->getQuery(true)
@@ -2012,8 +2018,7 @@ EOT;
 //			    ->from($db->quoteName('#__rsgallery2_files', 'j3x'))
 //			    ;
 
-		    $db = Factory::getContainer()->get(DatabaseInterface::class);
-		    //$db      = $this->getDatabase();
+		    $db      = $this->getDatabase();
 
 		    $query = $db->getQuery(true)
 			    ->select($db->quoteName('j3x.id', 'gallery_id'))
@@ -2090,7 +2095,8 @@ EOT;
 //
 ////	    foreach ($j3x_galleryIds as $j4x_galleryId) {
 ////
-////            $db = Factory::getContainer()->get(DatabaseInterface::class);
+////            $db = $this->getDatabase();
+///
 ////            $query = $db->getQuery(true);
 ////            // count gallery items
 ////            $query->select('COUNT(*)')
@@ -2130,8 +2136,7 @@ EOT;
 
 	        // one query to rule them all :-(
 
-	        $db = Factory::getContainer()->get(DatabaseInterface::class);
-	        //$db      = $this->getDatabase();
+	        $db = $this->getDatabase();
 
 	        $j3x_subquery = $db->getQuery(true)
 		        ->select("count(*)")
@@ -2158,7 +2163,7 @@ EOT;
 
 	        $galleryIdsJ3x_NotMoved = $db->loadObjectList();
 
-//            $db = Factory::getContainer()->get(DatabaseInterface::class);
+//            $db = $this->getDatabase();
 //            $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
 //            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
 //
@@ -2199,9 +2204,8 @@ EOT;
 //                $j4xGalleryIds[] = $j3x_gallery->id + 1;
 //            }
 
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
 
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->select($db->qn(array('id', 'name')))
                 ->from('#__rsg2_images')
@@ -2343,7 +2347,8 @@ EOT;
 
         try {
 
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+	        $db = $this->getDatabase();
+
             $query = $db->getQuery(true);
 
             // $testImplode = implode(',', ArrayHelper::toInteger($movedIds));

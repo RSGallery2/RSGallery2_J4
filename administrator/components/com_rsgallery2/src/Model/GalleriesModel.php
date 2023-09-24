@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * RSGallery2 Component Galleries Model
@@ -159,7 +160,7 @@ class GalleriesModel extends ListModel
 	protected function getListQuery()
 	{
 		// Create a new query object.
-		$db = $this->getContainer()->get(DatabaseInterface::class);
+		$db = $this->getDatabase();
 		$query = $db->getQuery(true);
 
         $app  = Factory::getApplication();
@@ -393,7 +394,7 @@ class GalleriesModel extends ListModel
 //			// Set ordering to the last item if not set
 //			if (empty($table->ordering))
 //			{
-//				$db = $this->getContainer()->get(DatabaseInterface::class);
+//				$db = $this->getDatabase();
 //				$query = $db->getQuery(true)
 //					->select('MAX(ordering)')
 //					->from('#__banners');
@@ -525,14 +526,14 @@ class GalleriesModel extends ListModel
 	 * @since __BUMP_VERSION__
 	 * @throws Exception
 	 */
-	static function latestGalleries($limit)
+	public static function latestGalleries($limit)
 	{
 		$latest = array();
 
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
@@ -584,14 +585,14 @@ class GalleriesModel extends ListModel
 	 *
 	 * @since __BUMP_VERSION__
 	 */
-	static function allGalleries()
+	public static function allGalleries()
 	{
 		$latest = array();
 
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
 			$query = $db->getQuery(true);
 
 			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)

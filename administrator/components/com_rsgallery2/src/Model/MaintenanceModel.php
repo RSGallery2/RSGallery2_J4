@@ -83,24 +83,25 @@ class MaintenanceModel extends BaseDatabaseModel
     {
         $galleryIds = [];
 
-        try {
-        // $name = (string) $this->element['name'];
-        // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleryIds
-        $db   = Factory::getContainer()->get(DatabaseInterface::class);
+        try
+        {
+	        // $name = (string) $this->element['name'];
+	        // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleryIds
+	        $db = $this->getDatabase();
 
-        $query = $db->getQuery(true)
-            //->select('id AS value, name AS text, level, published, lft, language')
-            ->select('id')
-            ->from($db->quoteName('#__rsg2_galleries'))
-            ->where($db->quoteName('id') . ' != 1' )
-            // Filter on the published state
-            // ->where('published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
-            // ToDo: Use option in XML to select ASC/DESC
-            ->order('lft ASC');
+	        $query = $db->getQuery(true)
+		        //->select('id AS value, name AS text, level, published, lft, language')
+		        ->select('id')
+		        ->from($db->quoteName('#__rsg2_galleries'))
+		        ->where($db->quoteName('id') . ' != 1')
+		        // Filter on the published state
+		        // ->where('published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
+		        // ToDo: Use option in XML to select ASC/DESC
+		        ->order('lft ASC');
 
-            // Get the options.
-            //$galleryIds = $db->setQuery($query)->loadObjectList();
-            $galleryIds = $db->setQuery($query)->loadColumn();
+	        // Get the options.
+	        //$galleryIds = $db->setQuery($query)->loadObjectList();
+	        $galleryIds = $db->setQuery($query)->loadColumn();
 
         }
         catch (\RuntimeException $e) {

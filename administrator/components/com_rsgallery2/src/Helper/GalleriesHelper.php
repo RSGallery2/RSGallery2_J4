@@ -64,7 +64,7 @@ class GalleriesHelper
 			{
 				if (is_callable(array($cName, 'addSubmenu')))
 				{
-					$lang = Factory::getApplication->getLanguage();
+					$lang = Factory::getApplication()->getLanguage();
 
 					// Loading language file from the administrator/language directory then
 					// loading language file from the administrator/components/*extension*/language directory

@@ -20,6 +20,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\User\UserFactoryInterface;
 
 /**
  * Rsgallery2 master display controller.

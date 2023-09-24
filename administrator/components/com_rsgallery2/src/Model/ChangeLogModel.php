@@ -16,6 +16,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Rsgallery2 Component changelog model
@@ -70,8 +71,10 @@ class ChangeLogModel
 
         try
         {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
+	        // $db = $this->getDatabase();
+
+	        $query = $db->getQuery(true)
                 ->select('changelogurl')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));

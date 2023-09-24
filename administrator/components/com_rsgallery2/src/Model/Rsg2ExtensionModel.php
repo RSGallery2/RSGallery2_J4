@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\Database\DatabaseInterface;
 
 // required is used as classes may not be loaded on  fresh install
 // !!! needed by install
@@ -36,7 +37,7 @@ class Rsg2ExtensionModel extends BaseModel
 
         try
         {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true)
                 ->select('manifest_cache')
                 ->from($db->quoteName('#__extensions'))
@@ -72,8 +73,9 @@ class Rsg2ExtensionModel extends BaseModel
         try
         {
 	        // read the existing component value(s)
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
+
+			$query = $db->getQuery(true)
                 ->select('params')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -117,8 +119,8 @@ class Rsg2ExtensionModel extends BaseModel
 
         try
         {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
+			$query = $db->getQuery(true)
                 ->select('*')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -285,18 +287,20 @@ class Rsg2ExtensionModel extends BaseModel
 		try
 		{
 			// parameter exist
-			if ( (! empty ($params)) && count($params) > 0)
+			if ((!empty ($params)) && count($params) > 0)
 			{
 				// store the combined new and existing values back as a JSON string
 				$paramsString = json_encode($params);
 
-				$db = Factory::getContainer()->get(DatabaseInterface::class);
+				$db = $this->getDatabase();
+
 				$query = $db->getQuery(true)
 					->update($db->quoteName('#__extensions'))
 					->set($db->quoteName('params') . ' = ' . $db->quote($paramsString))
 					->where($db->quoteName('name') . ' = ' . $db->quote('com_rsgallery2'));
 
-				if ($db->execute()) {
+				if ($db->execute())
+				{
 					$successful = true;
 				}
 

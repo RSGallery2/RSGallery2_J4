@@ -19,6 +19,8 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\CMS\User\UserFactoryInterface;
+
 use Symfony\Component\Yaml\Yaml;
 
 /**

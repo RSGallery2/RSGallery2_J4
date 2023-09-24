@@ -13,7 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
-
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Item Model for a Configuration items (options).

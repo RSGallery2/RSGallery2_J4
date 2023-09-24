@@ -152,7 +152,8 @@ class HtmlView extends BaseHtmlView
 
 				//--- apply, save and close ... -----------------------------------
 
-                $user = Factory::getApplication()->getIdentity();
+                //$user = Factory::getApplication()->getIdentity();
+				$user  = $this->getCurrentUser();
 				$saveGroup = $toolbar->dropdownButton('save-group')
                     ->text ('JTOOLBAR_CHANGE_STATUS')
                     ->icon('fa fa-ellipsis-h')

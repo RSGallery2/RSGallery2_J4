@@ -100,7 +100,8 @@ class HtmlView extends BaseHtmlView
 		// toDo: More detailed for rsgallery admin
 		$app       = Factory::getApplication();
 
-		$user = $app->getIdentity();
+		//$user = $app->getIdentity();
+		$user  = $this->getCurrentUser();
 		$canAdmin = $user->authorise('core.admin');
 		$this->UserIsRoot = $canAdmin;
 
