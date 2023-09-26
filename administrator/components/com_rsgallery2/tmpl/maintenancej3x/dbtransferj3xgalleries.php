@@ -177,13 +177,22 @@ function j3x_galleryListHtml ($dbtransferj3xgalleries) {
                     </td>
 
                     <td class="text-left">
+	                    <?php echo $dbtransferj3xgalleries->escape($item->name); ?>
                         <span class="small" title="<?php echo $dbtransferj3xgalleries->escape($item->path); ?>">
+                            <?php if (empty($item->description)) : ?>
+	                            <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3xgalleries->escape($item->alias)); ?>
+                            <?php else : ?>
+                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3xgalleries->escape($item->alias),
+		                            $dbtransferj3xgalleries->escape($item->description)); ?>)
+                            <?php endif; ?>
+                        </span>
+                        <!--span class="small" title="<?php echo $dbtransferj3xgalleries->escape($item->path); ?>">
                             <?php if (empty($item->note)) : ?>
                                 <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3xgalleries->escape($item->alias)); ?>
                             <?php else : ?>
                                 (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3xgalleries->escape($item->alias), $dbtransferj3xgalleries->escape($item->note)); ?>)
                             <?php endif; ?>
-                        </span>
+                        </span-->
                     </td>
                     <td class="center">
                         <span class="small">

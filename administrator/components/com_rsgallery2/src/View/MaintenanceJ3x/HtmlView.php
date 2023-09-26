@@ -216,8 +216,7 @@ class HtmlView extends BaseHtmlView
 	                $this->j3xNotMovedInfo = [];
 
                     // J3x images exist
-//                    if ($this->isDoCopyJ3xImages) {
-                    if (true) {
+                    if ($this->isDoCopyJ3xImages) {
                         $this->j3x_galleries = $j3xModel->j3x_galleriesList();
                         $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
@@ -330,7 +329,6 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-                        . '* use "name/alias" in J3x galliers overview <br>'
                         . '* user should only see what is necessary: use debug / develop for others<br>'
                         . '* Left out: Button for copy single galleries -> no functions for adding , actual table is cleared on start so ...'
 						. '* !!! asset id !!! <br>'
@@ -358,11 +356,9 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-						. '* Add copy selected J3x Images <br>'
-                        . '* user should only see what is necessary: use debug / develop for others<br>'
 						. '* Remove double code parts: See also images raw view -> import into views<br>'
-        				. '* ? pagination <br>'
-//				        . '* <br>'
+				        . '* Remove J3x image list below<br>'
+				        . '* Remove J4x gallery list below<br>'
 //      				. '* <br>'
 //		        		. '* <br>'
 //				        . '* <br>'
