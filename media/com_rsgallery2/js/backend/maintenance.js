@@ -12,7 +12,7 @@
 /**/
 //declare var joomla: Joomla;
 //const joomla = window.Joomla || {};
-const joomla = window.Joomla || {};
+var joomla = window.Joomla || {};
 // Joomla form token
 var Token;
 //--------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ var Token;
 //--------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function (event) {
     joomla.submitbutton = function (buttonName) {
-        let confirmMessage = '';
+        var confirmMessage = '';
         // ToDo: switch for several pressbutton s -> change text, on not empty text let confirm
         switch (buttonName) {
             case '':

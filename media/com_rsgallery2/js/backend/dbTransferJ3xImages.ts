@@ -17,7 +17,7 @@
    (with rsg2 additions found in internet)
 ----------------------------------------------------------------*/
 
-/**/
+/**
 interface Joomla {
     JText: {
         _(String)
@@ -30,10 +30,16 @@ interface Joomla {
     isChecked (isitchecked: boolean, form: string | undefined): boolean;
     checkAll (elem: HTMLElement): void ;
 }
-
 /**/
 
+// import {Joomla} from "./dbTransferJ3xImages";
+
+
+// Only define the Joomla namespace if not defined.
+//window.Joomla = window.Joomla || {};
+//Window.Joomla = Window.Joomla || {};
 // https://stackoverflow.com/questions/12709074/how-do-you-explicitly-set-a-new-property-on-window-in-typescript
+(<any>Window).Joomla = (<any>Window).Joomla || {}
 
 
 //declare var joomla: Joomla;
@@ -47,8 +53,7 @@ interface Joomla {
 // }
 //
 
-Window.Joomla = Window.Joomla || {};
-//
+// Window.Joomla = Window.Joomla || {};
 
 /*----------------------------------------------------------------
 
@@ -61,42 +66,86 @@ function markImages_nGalleryTimes(maxGalleries: number) {
     // j3x_rows: HTMLTableRowElement []; // = [];
 
     let j3x_rows: HTMLElement [];
-    let checkbox: HTMLInputElement;
+    let j3x_form: HTMLFormElement;
+    let gallery_checkbox: HTMLInputElement;
+    let boxchecked: HTMLInputElement;
     let galleryId: string;
     const doCheck: boolean = true;
 
     let galleries: string[] = [];
 
     // let j3x_rows: HTMLElement [] = <HTMLElement []> Array.from(document.getElementsByName("j3x_img_row")));
-    j3x_rows = <HTMLElement []>Array.from(document.getElementsByName("j3x_gal_row[]"));
+    //j3x_rows = <HTMLElement []>Array.from(document.getElementsByName("j3x_gal_row[]"));
+    j3x_rows = <HTMLElement []>Array.from(document.getElementsByName("j3x_gal_row"));
 
-    //j3x_images
+    // all gallery rows
+
+    j3x_form = <HTMLFormElement> document.getElementById('adminForm');
+    // boxchecked = <HTMLInputElement>j3x_form.querySelector('input[name="boxchecked"]');
+    boxchecked = <HTMLInputElement> document.getElementsByName('boxchecked')[0];
+
     j3x_rows.forEach ((j3x_row) => {
-        let isMerged = j3x_row.getAttribute("isMerged");
 
-        // count not merged galleries
-        if (!isMerged) {
+        // within range ?
+        if (galleries.length < maxGalleries) {
 
-            galleryId = j3x_row.getAttribute("galleryId");
-            checkbox = <HTMLInputElement> j3x_row.querySelector('input[type="checkbox"]');
+            // enable not merged galleries
 
-            // Assign if necessary
-            if (checkbox.checked != doCheck) {
+            let isMerged = j3x_row.hasAttribute("is_merged");
+            if ( ! isMerged) {
 
-                // within range ? add to enabled list
-                if (galleries.length < maxGalleries) {
+                galleryId = j3x_row.getAttribute("gallery_id");
+                gallery_checkbox = <HTMLInputElement>j3x_row.querySelector('input[type="checkbox"]');
+
+                // Assign checked if not already done
+                if (gallery_checkbox.checked != doCheck) {
+
+//                    alert ("01");
+
                     if (!galleries.includes(galleryId)) {
+
+                        gallery_checkbox.checked = doCheck;
+
+                        boxchecked.value = doCheck ?
+                            (parseInt(boxchecked.value, 10) + 1).toString() :
+                            (parseInt(boxchecked.value, 10) - 1).toString();
+                        boxchecked.dispatchEvent(new CustomEvent('change', {
+                            bubbles: true,
+                            cancelable: true
+                        }));
+
+
+                        // if (typeof gallery_checkbox.onclick == "function") {
+                        //
+                        //     alert ("02");
+                        //
+                        //     // return $options.onClick && $options.onClick.apply($options, arguments);
+                        //     // Joomla.isChecked(isChecked, this.tableEl.id);
+                        //
+                        //     // gallery_checkbox.onclick.apply(gallery_checkbox);
+                        //     // gallery_checkbox.click ();
+                        //     var event: MouseEvent = new (<any>MouseEvent)('click',
+                        //         { 'view': window,
+                        //             'bubbles': true,
+                        //             'cancelable': true,
+                        //             'target': gallery_checkbox});
+                        //     gallery_checkbox.onclick (event);
+                        //
+                        //     // alert ("03");
+                        //     //
+                        //     // // onclick="Joomla.isChecked(this.checked);
+                        //     // Window.Joomla.isChecked(gallery_checkbox.checked);
+                        // }
+
+                        // add to enabled list
                         galleries.push(galleryId);
                     }
-                }
 
-                // Mark if gallery is in range
-                if (galleries.includes(galleryId)) {
-                    checkbox.checked = doCheck;
                 }
             }
         }
-    });
+
+    }); // foreach function
 
 }
 

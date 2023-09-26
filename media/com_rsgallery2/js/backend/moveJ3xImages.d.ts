@@ -13,6 +13,19 @@
 
 // ToDo: check https://stackoverflow.com/questions/21247278/about-d-ts-in-typescript
 
+/* eslint-disable no-var */
+
+// interface customWindow extends Window {
+//   customProperty?: any;
+// }
+//
+// declare const window: customWindow;
+//
+// /* ... */
+//
+// window.customProperty
+
+
 /*----------------------------------------------------------------
    Joomla interface created by ericfernance on 27/11/2015
    (with rsg2 additions found in internet)
@@ -34,18 +47,12 @@ interface Joomla {
 
 /**/
 
-//declare var joomla: Joomla;
+declare global {
+    interface Window {
+        Joomla: any;
+    }
+}
 
-//const joomla = window.Joomla || {};
-//const joomla: Joomla = window.Joomla || {};
-//const joomla: Joomla = ((Joomla) window.Joomla) || {};
-
-// declare global {
-//     interface Window { Joomla: any; }
-// }
-//
 // window.Joomla = window.Joomla || {};
-//
 
-
-// ToDo: fill out for joomla
+export {};

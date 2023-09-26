@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
 // responsible for moveJ3xImages, dbtransferj3xgalleries, dbtransferj3ximages, dbcopyj3xconfig
-$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTransferJ3xGalleries');
+$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTransferJ3xImages');
 
 function isOKIconHtml ($title) {
 
@@ -104,15 +104,14 @@ function j3x_galleryListHtml ($dbtransferj3ximages) {
 					$isMergedHtml =  isNotOkIconHtml ('Images not transferred');
 				}
 
-				$attributeGalleryIdHtml = ' galleryId="' . $item->id . '"';
+				$attributeGalleryIdHtml = ' gallery_id="' . $item->id . '"';
 
 				if ($isTransferred) {
-					$attributeIsMergedHtml = ' merged="true"';
+					$attributeIsMergedHtml = ' is_merged="true"';
 				} else {
 					$attributeIsMergedHtml = ' ';
 				}
 
-				$attributeIsMergedHtml = ' ';
 				?>
                 <tr class="row<?php echo $i % 2; ?>" name="j3x_gal_row" <?php echo $attributeGalleryIdHtml; ?> <?php echo $attributeIsMergedHtml; ?> >
 

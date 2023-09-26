@@ -1,14 +1,23 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Queue = void 0;
 /**/
-export class Queue {
-    constructor() {
+var Queue = /** @class */ (function () {
+    function Queue() {
         this._store = [];
     }
-    push(val) { this._store.push(val); }
-    shift() { return this._store.shift(); }
-    get length() { return this._store.length; }
-    isEmpty() { return this._store.length == 0; }
-    isPopulated() { return this._store.length > 0; }
-}
+    Queue.prototype.push = function (val) { this._store.push(val); };
+    Queue.prototype.shift = function () { return this._store.shift(); };
+    Object.defineProperty(Queue.prototype, "length", {
+        get: function () { return this._store.length; },
+        enumerable: false,
+        configurable: true
+    });
+    Queue.prototype.isEmpty = function () { return this._store.length == 0; };
+    Queue.prototype.isPopulated = function () { return this._store.length > 0; };
+    return Queue;
+}());
+exports.Queue = Queue;
 /**/
 /**
 export class Stack<T> {

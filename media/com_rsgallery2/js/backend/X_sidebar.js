@@ -21,16 +21,16 @@ var Token;
 document.addEventListener("DOMContentLoaded", function (event) {
     /**/
     function onToggleSidebar(ev) {
-        let element = ev.target;
+        var element = ev.target;
         // ToDo: In Rsgallery2Helper->addSubmenu exchange '<span class="sidebar-item-title">' with different class
         //       Find by class, change class to hide  or ...
-        let liElements = element.querySelector('li');
+        var liElements = element.querySelector('li');
         alert('liElements: ' + liElements.length);
-        for (let idx = 0; idx < liElements.length; idx++) {
+        for (var idx = 0; idx < liElements.length; idx++) {
             // ToDO: Change class to hide  or ... ==> sidebar.ts
         }
     }
     //--- sidebar toggle element -------------------------------------------
-    let toggle_sidebar = document.getElementById('rsg2_toggle_sidebar');
-    toggle_sidebar.onclick = (ev) => onToggleSidebar(ev);
+    var toggle_sidebar = document.getElementById('rsg2_toggle_sidebar');
+    toggle_sidebar.onclick = function (ev) { return onToggleSidebar(ev); };
 });

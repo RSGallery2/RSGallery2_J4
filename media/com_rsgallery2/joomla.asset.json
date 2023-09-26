@@ -123,7 +123,7 @@
     },
     {
       "name": "com_rsgallery2.backend.moveJ3xImages",
-      "description": "JavaScript for the backend Items page.",
+      "description": "JavaScript for the backend move images page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/moveJ3xImages.js",
       "attributes" : {
@@ -146,6 +146,18 @@
       "dependencies": [
         "com_rsgallery2.backend.moveJ3xImages#style",
         "com_rsgallery2.backend.dbTransferJ3xImages#script"
+      ]
+    },
+    {
+      "name": "com_rsgallery2.backend.dbTransferJ3xImages",
+      "description": "JavaScript for the backend db transfer images page.",
+      "type": "script",
+      "uri": "com_rsgallery2/backend/dbTransferJ3xImages.js",
+      "attributes" : {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
       ]
     },
     {

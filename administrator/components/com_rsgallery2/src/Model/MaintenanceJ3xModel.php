@@ -32,7 +32,9 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
  */
 
-class MaintenanceJ3xModel extends BaseModel // removed for install: BaseDatabaseModel
+// removed for install: BaseDatabaseModel
+//class MaintenanceJ3xModel extends BaseModel
+class MaintenanceJ3xModel extends BaseDatabaseModel
 {
 
 	// ToDo: May not copy dbimages (too many ???)
