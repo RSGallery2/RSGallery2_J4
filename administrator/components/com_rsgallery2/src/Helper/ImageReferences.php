@@ -14,6 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 // no direct access
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\Database\DatabaseInterface;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReference;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 

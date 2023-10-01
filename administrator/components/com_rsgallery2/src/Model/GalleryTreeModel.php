@@ -43,7 +43,7 @@ class GalleryTreeModel extends BaseModel
         $is1GalleryExisting = false;
 
         try {
-	        $db = $this->getDatabase();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             // count gallery items
@@ -86,7 +86,7 @@ class GalleryTreeModel extends BaseModel
         $id_galleries = '#__rsg2_galleries';
 
         try {
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             //--- delete old rows -----------------------------------------------
 
