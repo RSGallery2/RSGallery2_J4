@@ -38,6 +38,7 @@ class GalleryTreeModel extends BaseModel
      *
      * @since __BUMP_VERSION__
      */
+    // ToDo: change to static ?
     public function isRootItemExisting()
     {
         $is1GalleryExisting = false;
@@ -57,6 +58,7 @@ class GalleryTreeModel extends BaseModel
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
+
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleryTreeModel::is1GalleryRootItemExisting: Error count in "__rsg2_galleries" table' . '<br>';

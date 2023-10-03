@@ -91,6 +91,7 @@ class HtmlView extends BaseHtmlView
 
         //--- root galleries --------------------------------------------------
 
+        $app = Factory::getApplication();
         $input = Factory::getApplication()->input;
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
@@ -107,7 +108,8 @@ class HtmlView extends BaseHtmlView
         $this->pagination->hideEmptyLimitstart = true;
 	    // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
-        $this->user = Factory::getContainer()->get(UserFactoryInterface::class);
+        $this->user = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 
         $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
         $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));

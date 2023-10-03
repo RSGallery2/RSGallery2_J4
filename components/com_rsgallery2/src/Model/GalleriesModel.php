@@ -216,8 +216,9 @@ class GalleriesModel extends ListModel
     protected function getListQuery()
     {
         // Create a new query object.
-        $db = $this->getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
+	    $db = $this->getDatabase();
+
+	    $query = $db->getQuery(true);
 
         $app = Factory::getApplication();
         $user = $app->getIdentity();
@@ -437,7 +438,9 @@ class GalleriesModel extends ListModel
 
     public function getItems()
     {
-        $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
         $userId = $user->get('id');
         $guest = $user->get('guest');
         $groups = $user->getAuthorisedViewLevels();
@@ -617,8 +620,9 @@ class GalleriesModel extends ListModel
         $imageCount = 0;
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+	        $db = $this->getDatabase();
+
+	        $query = $db->getQuery(true);
             // count gallery items
             $query->select('COUNT(*)')
                 ->from('#__rsg2_images')
@@ -648,8 +652,9 @@ class GalleriesModel extends ListModel
             $gallery->subGalleryList = []; // fall back
 
             // Select parent and child galleries
-            $db = $this->getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+	        $db = $this->getDatabase();
+
+	        $query = $db->getQuery(true);
 
             $query->select('id, name')
                 ->from($db->quoteName('#__rsg2_galleries'))
@@ -776,7 +781,8 @@ class GalleriesModel extends ListModel
 //			$gid = $input->get('gid', '', 'INT');
 
 			// Create a new query object.
-			$db = $this->getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
+
 			$query = $db->getQuery(true);
 
 			$limit = 1;
@@ -830,7 +836,8 @@ class GalleriesModel extends ListModel
 		{
 
 			// Create a new query object.
-			$db = $this->getContainer()->get(DatabaseInterface::class);
+			$db = $this->getDatabase();
+
 			$query = $db->getQuery(true);
 
 			// Select required fields
@@ -882,8 +889,9 @@ class GalleriesModel extends ListModel
 
         try {
             // Select parent and child galleries
-            $db = $this->getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+	        $db = $this->getDatabase();
+
+	        $query = $db->getQuery(true);
 
             $query->select('*')
                 //->from($db->quoteName('#__rsg2_galleries', 'a'))
@@ -923,8 +931,9 @@ class GalleriesModel extends ListModel
             $gid = $this->galleryId;
 
             // Select parent and child galleries
-            $db = $this->getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+	        $db = $this->getDatabase();
+
+	        $query = $db->getQuery(true);
 
             $query->select('*')
                 //->from($db->quoteName('#__rsg2_galleries', 'a'))

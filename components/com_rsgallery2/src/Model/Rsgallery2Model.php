@@ -52,7 +52,7 @@ class Rsgallery2Model extends BaseDatabaseModel
 		{
 			try
 			{
-				$db    = $this->getContainer()->get(DatabaseInterface::class);
+				$db    = $this->getDatabase();
 				$query = $db->getQuery(true);
 
 				$query->select('*')

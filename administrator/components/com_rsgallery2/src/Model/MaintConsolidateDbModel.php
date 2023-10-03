@@ -104,7 +104,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
 
 			try
 			{
-				$db    = $this->>getDatabase();
+				$db    = $this->getDatabase();
 				$query = $db->getQuery(true)
 					->select($db->quoteName('value'))
 					->from($db->quoteName('#__rsgallery2_config'))

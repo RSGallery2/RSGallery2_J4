@@ -170,7 +170,8 @@ class ImagesModel extends ListModel
 
         $params = $app->getParams();
         $this->setState('params', $params);
-        $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
@@ -253,8 +254,9 @@ class ImagesModel extends ListModel
     protected function getListQuery()
     {
         // Create a new query object.
-        $db = $this->getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
+	    $db = $this->getDatabase();
+
+	    $query = $db->getQuery(true);
 
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
@@ -496,7 +498,9 @@ class ImagesModel extends ListModel
 
 	public function getItems()
 	{
-        $user   = Factory::getContainer()->get(UserFactoryInterface::class);
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
+        // $user   = Factory::getContainer()->get(UserFactoryInterface::class);
         $userId = $user->get('id');
         $guest  = $user->get('guest');
         $groups = $user->getAuthorisedViewLevels();
@@ -519,7 +523,7 @@ class ImagesModel extends ListModel
 			{
                 $images = parent::getItems(); // gid ...
 
-                $db    = $this->getContainer()->get(DatabaseInterface::class);
+                $db    = $this->getDatabase();
 				$query = $db->getQuery(true);
 
 				$query->select('*')
@@ -591,7 +595,8 @@ class ImagesModel extends ListModel
         if( $gid > 1) {
 
             // Create a new query object.
-            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            //$db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = $this->getDatabase();
 
             $query = $db->getQuery(true)
                 ->select('params') // ToDo: select single items
@@ -856,7 +861,8 @@ class ImagesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+			//$db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = $this->getDatabase();
 			$query = $db->getQuery(true);
 
 			$query
@@ -906,8 +912,9 @@ class ImagesModel extends ListModel
 		try
 		{
 			// Create a new query object.
-			$db    = Factory::getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true);
+			// $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = $this->getDatabase();
+            $query = $db->getQuery(true);
 
 			$query
 				->select('*')
@@ -947,7 +954,8 @@ class ImagesModel extends ListModel
         if( $gid > 1) {
 
             // Create a new query object.
-            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            //$db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = $this->getDatabase();
 
             $query = $db->getQuery(true)
                 ->select('*')

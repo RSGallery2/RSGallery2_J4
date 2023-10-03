@@ -170,7 +170,8 @@ $this->setState('list.direction', $listOrder);
 
 $params = $app->getParams();
 $this->setState('params', $params);
-$user = Factory::getContainer()->get(UserFactoryInterface::class);
+// $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 
 if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
 // Filter on published for those who do not have edit or edit.state rights.
@@ -256,7 +257,8 @@ protected $_item = null;
 public function getItems()
 {
 $items = parent::getItems();
-$user = Factory::getContainer()->get(UserFactoryInterface::class);
+// $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 $userId = $user->get('id');
 $guest = $user->get('guest');
 $groups = $user->getAuthorisedViewLevels();
@@ -274,7 +276,7 @@ $images = new \stdClass(); // ToDo: all to (object)[];
 if (!isset($this->_item[$gid])) {
 
 try {
-$db = $this->getContainer()->get(DatabaseInterface::class);
+$db = $this->getDatabase();
 $query = $db->getQuery(true);
 
 $query->select('*')

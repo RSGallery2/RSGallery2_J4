@@ -89,7 +89,7 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
-
+        $app = Factory::getApplication();
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
         $imageId = $input->get('img_id', 0, 'INT');
@@ -109,7 +109,8 @@ class HtmlView extends BaseHtmlView
 
         $params =
         $this->params     = $this->state->get('params');
-        $this->user       = Factory::getContainer()->get(UserFactoryInterface::class);
+        $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 
         $this->isShowPagination = $params->get('show_pagination', 2);
         $this->isShowDescription = $params->get('isSlpShowImgDescriptionJ3x', false);
@@ -178,7 +179,7 @@ class HtmlView extends BaseHtmlView
 
                     //--- load additional language file --------------------------------
 
-                    $lang = Factory::getApplication->getLanguage();
+                    $lang = Factory::getApplication()->getLanguage();
                     $lang->load('com_rsg2_exif',
                         Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 

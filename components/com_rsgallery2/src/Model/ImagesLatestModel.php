@@ -140,7 +140,8 @@ class ImagesLatestModel extends ListModel
 
         $params = $app->getParams();
         $this->setState('params', $params);
-        $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
@@ -230,7 +231,8 @@ class ImagesLatestModel extends ListModel
 	public function getItems()
 	{
         $items  = parent::getItems();
-        $user   = Factory::getContainer()->get(UserFactoryInterface::class);
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
         $userId = $user->get('id');
         $guest  = $user->get('guest');
         $groups = $user->getAuthorisedViewLevels();
@@ -250,7 +252,7 @@ class ImagesLatestModel extends ListModel
 
 			try
 			{
-				$db    = $this->getContainer()->get(DatabaseInterface::class);
+				$db    = $this->getDatabase();
 				$query = $db->getQuery(true);
 
 				$query->select('*')

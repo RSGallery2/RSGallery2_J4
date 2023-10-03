@@ -1053,7 +1053,9 @@ class ImageModel extends AdminModel
 
 		try
 		{
-			$db    = $this->getContainer()->get(DatabaseInterface::class);
+			//$db    = $this->getContainer()->get(DatabaseInterface::class);
+			$db    = $this->getDatabase();
+
 			$query = $db->getQuery(true)
 				->select('MAX(ordering)')
 				->from($db->quoteName('#__rsg2_files'))

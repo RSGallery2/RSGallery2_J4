@@ -216,7 +216,7 @@ class ImageTable extends Table
         }
 
         // Verify that the alias is unique
-        $table = new static($this->getContainer()->get(DatabaseInterface::class));
+        $table = new static($this->getDbo());
 
         if ($table->load(array('alias' => $this->alias)) && ($table->id != $this->id || $this->id == 0))
         {

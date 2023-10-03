@@ -57,6 +57,7 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+        $app = Factory::getApplication();
         $input = Factory::getApplication()->input;
 
         $state =
@@ -88,7 +89,8 @@ class HtmlView extends BaseHtmlView
         $this->pagination->hideEmptyLimitstart = true;
         // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
-        $this->user       = Factory::getContainer()->get(UserFactoryInterface::class);
+        $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 
         $this->isDebugSite = $params->get('isDebugSite'); 
         $this->isDevelopSite = $params->get('isDevelop');

@@ -56,14 +56,16 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
+        $app  = Factory::getApplication();
 
         $state = $this->state = $this->get('State');
         $this->items = $this->get('Items');
-        $this->params =
+        $params =
 		$this->params = $state->get('params');
 
         $this->pagination = $this->get('Pagination');
-        $this->user       = Factory::getContainer()->get(UserFactoryInterface::class);
+        $this->user =
+	    $user = $app->getIdentity();
 
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop'); 

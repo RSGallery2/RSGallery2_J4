@@ -165,7 +165,8 @@ class GalleryModel extends ListModel
         $params = $app->getParams();
         $this->setState('params', $params);
 
-        $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
             // Filter on published for those who do not have edit or edit.state rights.
@@ -263,7 +264,8 @@ class GalleryModel extends ListModel
 	{
 		$app    = Factory::getApplication();
 		$input  = Factory::getApplication()->input;
-        $user   = Factory::getContainer()->get(UserFactoryInterface::class);
+        // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 		$groups = $user->getAuthorisedViewLevels();
         $userId = $user->get('id');
         $guest  = $user->get('guest');
@@ -274,7 +276,7 @@ class GalleryModel extends ListModel
         $gid = $input->getInt ('gid', 0);
 
 		// Create a new query object.
-		$db    = $this->getContainer()->get(DatabaseInterface::class);
+		$db    = $this->getDatabase();
 		$query = $db->getQuery(true);
 
 		$query->select('*')
@@ -338,7 +340,8 @@ class GalleryModel extends ListModel
         if( $gid > 1) {
 
             // Create a new query object.
-            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            //$db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = $this->getDatabase();
 
             $query = $db->getQuery(true)
                 ->select('params') // ToDo: select single items
@@ -360,8 +363,8 @@ class GalleryModel extends ListModel
         // Not root gallery (tree root == 1)
         if( $gid > 1) {
 
-            // Create a new query object.
-            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            // Create a new query object
+            $db    = $this->getDatabase();
 
             $query = $db->getQuery(true)
                 ->select('*')
