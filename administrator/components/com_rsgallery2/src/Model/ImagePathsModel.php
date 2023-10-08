@@ -302,8 +302,8 @@ class ImagePathsModel
 
 		try
 		{
-
 			$isPathsExisting = is_dir($this->galleryRoot);
+
 			if ($isPathsExisting)
 			{
 				// Original images will be kept

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_RSGALLERY2_MENU_VIEW_GALLERY_TITLE">
+	<!-- J3x legacy view => slideshow  -->
+	<layout title="COM_RSGALLERY2_MENU_J3X_LEGACY_VIEW_TITLE">
 		<message>
-			<![CDATA[COM_RSGALLERY2_MENU_VIEW_GALLERY_DESC]]>
+			<![CDATA[COM_RSGALLERY2_MENU_J3X_LEGACY_VIEW_DESC]]>
 		</message>
 	</layout>
 	<!-- Add fields to the request variables for the layout. -->
@@ -14,8 +15,8 @@
 			<field
 				name="gid"
 				type="GallerySelect"
-				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
-				description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_DESC"
+				label="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_LABEL"
+				description="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_DESC"
 				required="true"
 				select="true"
 				new="true"

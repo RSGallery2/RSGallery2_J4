@@ -12,6 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Uri\Uri;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
@@ -20,7 +21,17 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 \defined('_JEXEC') or die;
 
 
-class ImagePathsJ3xModel {
+/**
+ * Keeps the file location paths of an image for PHP use and URIs for HTML use
+ * The path is kept without filename . It is vaslid for all images in
+ * given gallery
+ *
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
+class ImagePathsJ3xModel 
+{
 	// from config
 
 	// files gallery defined
@@ -39,11 +50,12 @@ class ImagePathsJ3xModel {
 
 	protected $rsgConfig;
 
-	//	ToDo: watermark ...
+	// ToDo: watermarked path
 
 	// root of images, image sizes from configuration build the paths
     // ToDo: watermarked path
-	public function __construct() {
+	public function __construct() 
+{
 		global $rsgConfig;
 
 		try
@@ -93,13 +105,16 @@ class ImagePathsJ3xModel {
 	File paths
 	--------------------------------------------------------------------*/
 
-	public function getOriginalPath ($fileName=''){
+	public function getOriginalPath ($fileName='')
+	{
 		return PathHelper::join ($this->originalBasePath, $fileName);
 	}
-	public function getDisplayPath ($fileName=''){
+	public function getDisplayPath ($fileName='')
+	{
 		return PathHelper::join ($this->displayBasePath, $fileName . '.jpg');
 	}
-	public function getThumbPath ($fileName=''){
+	public function getThumbPath ($fileName='')
+	{
 		return PathHelper::join ($this->thumbBasePath, $fileName . '.jpg');
 	}
 
@@ -107,15 +122,20 @@ class ImagePathsJ3xModel {
 	URIs
 	--------------------------------------------------------------------*/
 
-	public function getOriginalUrl ($fileName=''){
+	public function getOriginalUrl ($fileName='')
+	{
 		 return UriHelper::join($this->originalUrl, $fileName);
 //		return $this->originalUrl . '/' . $fileName;
 	}
-	public function getDisplayUrl ($fileName=''){
+
+	public function getDisplayUrl ($fileName='')
+	{
 		 return UriHelper::join($this->displayUrl, $fileName . '.jpg');
 //		return $this->displayUrl . '/' . $fileName . '.jpg';
 	}
-	public function getThumbUrl ($fileName=''){
+
+	public function getThumbUrl ($fileName='')
+	{
 		 return UriHelper::join($this->thumbUrl, $fileName . '.jpg');
 //		return $this->thumbUrl . '/' . $fileName . '.jpg';
 	}
@@ -126,7 +146,8 @@ class ImagePathsJ3xModel {
      *
      * @since __BUMP_VERSION__
      */
-    public function createAllPaths() {
+    public function createAllPaths() 
+	{
         $isCreated = false;
 
         try
@@ -163,14 +184,16 @@ class ImagePathsJ3xModel {
      *
      * @since __BUMP_VERSION__
      */
-    public function isPathsExisting() {
+    public function isPathsExisting() 
+	{
         $isPathsExisting = false;
 
         try
         {
-            {
-                $isPathsExisting = is_dir($this->displayBasePath);
+		    $isPathsExisting = is_dir($this->displayBasePath);
 
+			if ($isPathsExisting)
+            {
                 // Original images will be kept
                 if ($this->isUsePath_Original)
                 {
@@ -194,8 +217,4 @@ class ImagePathsJ3xModel {
         return $isPathsExisting;
     }
 
-
 }
-
-
-

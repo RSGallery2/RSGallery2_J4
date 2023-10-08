@@ -14,7 +14,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
 \defined('_JEXEC') or die;
 
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
