@@ -23,6 +23,7 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 
 /**
@@ -593,20 +594,26 @@ class GalleriesModel extends ListModel
 	{
 
 		try {
+			// ToDo: watermarked file
 
-            // ToDo: check for J3x style of gallery (? all in construct ?)
+			// J4x ?
+			if( ! $image->use_j3x_location) {
 
-			// ToDo: keep assigned value for further use
-            $ImagePaths = new ImagePathsData ($image->gallery_id);
+				$imagePaths = new ImagePaths ($image->gallery_id);
+				$imagePaths->assignPathData ($image);
 
-            $ImagePaths->assignPathData ($image);
+			} else {
 
-            // ToDo: watermarked file
+				// J3x
+				$imagePathJ3x = new ImagePathsJ3x ();
+				$imagePathJ3x->assignPathData ($image);
+			}
+
 		}
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

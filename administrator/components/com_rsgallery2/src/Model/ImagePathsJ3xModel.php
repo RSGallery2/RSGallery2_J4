@@ -30,8 +30,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
  *
  * @since       version
  */
-class ImagePathsJ3xModel 
-{
+class ImagePathsJ3xModel {
 	// from config
 
 	// files gallery defined
@@ -54,8 +53,7 @@ class ImagePathsJ3xModel
 
 	// root of images, image sizes from configuration build the paths
     // ToDo: watermarked path
-	public function __construct() 
-{
+	public function __construct() {
 		global $rsgConfig;
 
 		try
@@ -105,16 +103,13 @@ class ImagePathsJ3xModel
 	File paths
 	--------------------------------------------------------------------*/
 
-	public function getOriginalPath ($fileName='')
-	{
+	public function getOriginalPath ($fileName=''){
 		return PathHelper::join ($this->originalBasePath, $fileName);
 	}
-	public function getDisplayPath ($fileName='')
-	{
+	public function getDisplayPath ($fileName=''){
 		return PathHelper::join ($this->displayBasePath, $fileName . '.jpg');
 	}
-	public function getThumbPath ($fileName='')
-	{
+	public function getThumbPath ($fileName=''){
 		return PathHelper::join ($this->thumbBasePath, $fileName . '.jpg');
 	}
 
@@ -122,20 +117,15 @@ class ImagePathsJ3xModel
 	URIs
 	--------------------------------------------------------------------*/
 
-	public function getOriginalUrl ($fileName='')
-	{
+	public function getOriginalUrl ($fileName=''){
 		 return UriHelper::join($this->originalUrl, $fileName);
 //		return $this->originalUrl . '/' . $fileName;
 	}
-
-	public function getDisplayUrl ($fileName='')
-	{
+	public function getDisplayUrl ($fileName=''){
 		 return UriHelper::join($this->displayUrl, $fileName . '.jpg');
 //		return $this->displayUrl . '/' . $fileName . '.jpg';
 	}
-
-	public function getThumbUrl ($fileName='')
-	{
+	public function getThumbUrl ($fileName=''){
 		 return UriHelper::join($this->thumbUrl, $fileName . '.jpg');
 //		return $this->thumbUrl . '/' . $fileName . '.jpg';
 	}
@@ -146,8 +136,7 @@ class ImagePathsJ3xModel
      *
      * @since __BUMP_VERSION__
      */
-    public function createAllPaths() 
-	{
+    public function createAllPaths() {
         $isCreated = false;
 
         try
@@ -191,7 +180,6 @@ class ImagePathsJ3xModel
         try
         {
 		    $isPathsExisting = is_dir($this->displayBasePath);
-
 			if ($isPathsExisting)
             {
                 // Original images will be kept
@@ -218,3 +206,4 @@ class ImagePathsJ3xModel
     }
 
 }
+

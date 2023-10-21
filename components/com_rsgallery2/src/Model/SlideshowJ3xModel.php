@@ -294,7 +294,7 @@ class SlideshowJ3xModel extends GalleryJ3xModel
                     $this->_item[$gid] = $data;
 
                     // Add image paths, image params ...
-                    $this->AssignImageUrls($data);
+                    $this->assignImageUrls($data);
                 } else {
                     // may< be empty
                     $this->_item[$gid] = [];  // false;
@@ -330,7 +330,7 @@ class SlideshowJ3xModel extends GalleryJ3xModel
      *
      * @since 4.5.0.0
      *
-    public function AssignImageUrls($images)
+    public function assignImageUrls($images)
     {
         try {
 

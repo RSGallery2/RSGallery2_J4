@@ -22,7 +22,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 
 /**
  * Keeps the file location paths of an image for PHP use and URIs for HTML use
- * The path is kept without filename . It is vaslid for all images in
+ * The path is kept without filename . It is valid for all images in
  * given gallery
  *
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model

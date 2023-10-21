@@ -2,7 +2,8 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_rsgallery2
- * @copyright (c) 2005-2023 RSGallery2 Team 
+ * @copyright (c) 2005-2023 RSGallery2 Team
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @author      finnern
  * RSGallery is Free Software
  */
@@ -21,7 +22,10 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 
 
 /**
@@ -637,7 +641,7 @@ class GalleryModel extends ListModel
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                $this->AssignImageUrl($image);
+                $this->assignImageUrl($image);
 
             }
 
@@ -661,31 +665,30 @@ class GalleryModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignImageUrl($image)
+    public function assignImageUrl($image)
     {
 
         try {
             // ToDo: watermarked file
 			
 			// J4x ?
-			if( ! $use_j3x_location) {
+			if( ! $image->use_j3x_location) {
 
-				$imagePaths = new ImagePaths ($galleryId);
-				$ImagePaths->assignPathData ($image);
+				$imagePaths = new ImagePathsData ($image->gallery_id);
+				$imagePaths->assignPathData ($image);
 
 			} else {
 
 				// J3x
-
-				$ImagePathJ3x = new ImagePathsJ3x ();
-				$ImagePaths->assignPathData ($image);
+				$imagePathJ3x = new ImagePathsJ3xData ();
+				$imagePathJ3x->assignPathData ($image);
 			}
 				
         }
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

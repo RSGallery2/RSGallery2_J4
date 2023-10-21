@@ -153,7 +153,7 @@ class HtmlView extends BaseHtmlView
 		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		// ToDo: Use function AddLayoutData / AssignImageUrl
+		// ToDo: Use function AddLayoutData / assignImageUrl
         // paths to image (over galleryid or j3x style)
         $this->ImagePath = new ImagePathsModel ();
         $this->ImagePathJ3x = new ImagePathsJ3xModel ();

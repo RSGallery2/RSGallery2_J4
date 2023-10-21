@@ -8,7 +8,7 @@
  * RSGallery is Free Software
  */
 
-nnamespace Rsgallery2\Component\Rsgallery2\Site\Model;
+namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 \defined('_JEXEC') or die;
 
@@ -22,7 +22,9 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 
 
 /**
@@ -771,7 +773,7 @@ class ImagesModel extends ListModel
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
-                $this->AssignImageUrl($image);
+                $this->assignImageUrl($image);
 
                 // ToDo: Are there situations where download should not be shown ? 
 				// ==> watermark or not shown single => call in inherited instead
@@ -799,30 +801,30 @@ class ImagesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignImageUrl($image)
+    public function assignImageUrl($image)
     {
 
         try {
-			
-			// J4x ?
-			if( ! $use_j3x_location) {
+	        // ToDo: watermarked file
 
-				$imagePaths = new ImagePaths ($galleryId);
-				$ImagePaths->assignPathData ($image);
+	        // J4x ?
+	        if( ! $image->use_j3x_location) {
 
-			} else {
+		        $imagePaths = new ImagePathsData ($image->gallery_id);
+		        $imagePaths->assignPathData ($image);
 
-				// J3x
+	        } else {
 
-				$ImagePathJ3x = new ImagePathsJ3x ();
-				$ImagePaths->assignPathData ($image);
-			}
-				
+		        // J3x
+		        $imagePathJ3x = new ImagePathsJ3xData ();
+		        $imagePathJ3x->assignPathData ($image);
+	        }
+
         }
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -862,7 +864,7 @@ class ImagesModel extends ListModel
 	 * @return array rows with image name, images name, date, and user name as rows
 	 *
 	 * @since __BUMP_VERSION__
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function latestImages($limit)
 	{
@@ -887,7 +889,7 @@ class ImagesModel extends ListModel
 
 			foreach ($rows as $image)
 			{
-                $this->AssignImageUrl($image);
+                $this->assignImageUrl($image);
 
 				$images[] = $image;
 			}
@@ -938,7 +940,7 @@ class ImagesModel extends ListModel
 
 			foreach ($rows as $image)
 			{
-                $this->AssignImageUrl($image);
+                $this->assignImageUrl($image);
 
 				$images[] = $image;
 			}

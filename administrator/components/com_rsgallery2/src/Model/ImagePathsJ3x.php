@@ -12,6 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Uri\Uri;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
@@ -20,6 +21,15 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 \defined('_JEXEC') or die;
 
 
+/**
+ * Keeps the file location paths of an image for PHP use and URIs for HTML use
+ * The path is kept without filename . It is vaslid for all images in
+ * given gallery
+ *
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class ImagePathsJ3x {
 	// from config
 
@@ -39,7 +49,7 @@ class ImagePathsJ3x {
 
 	protected $rsgConfig;
 
-	//	ToDo: watermark ...
+	// ToDo: watermarked path
 
 	// root of images, image sizes from configuration build the paths
     // ToDo: watermarked path
@@ -163,14 +173,15 @@ class ImagePathsJ3x {
      *
      * @since __BUMP_VERSION__
      */
-    public function isPathsExisting() {
+    public function isPathsExisting()
+	{
         $isPathsExisting = false;
 
         try
         {
+			$isPathsExisting = is_dir($this->displayBasePath);
+			if ($isPathsExisting)
             {
-                $isPathsExisting = is_dir($this->displayBasePath);
-
                 // Original images will be kept
                 if ($this->isUsePath_Original)
                 {
@@ -194,8 +205,5 @@ class ImagePathsJ3x {
         return $isPathsExisting;
     }
 
-
 }
-
-
 
