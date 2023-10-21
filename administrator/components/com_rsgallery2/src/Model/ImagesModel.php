@@ -37,8 +37,10 @@ class ImagesModel extends ListModel
 	 * @param   array                $config   An optional associative array of configuration settings.
 	 * @param   MVCFactoryInterface  $factory  The factory.
 	 *
-	 * @see     \JControllerLegacy
-	 * @since __BUMP_VERSION__
+     * @param MVCFactoryInterface|null $factory
+     * @throws \Exception
+     * @see     \JController
+     * @since   5.0
 	 */
 	public function __construct($config = array(), MVCFactoryInterface $factory = null)
 	{
@@ -404,7 +406,7 @@ class ImagesModel extends ListModel
 	}
 
     /**
-     * Prepare and sanitise the table prior to saving.
+     * Prepare and sanitize the table prior to saving.
      *
      * @param   \Table  $table  A Table object.
      *

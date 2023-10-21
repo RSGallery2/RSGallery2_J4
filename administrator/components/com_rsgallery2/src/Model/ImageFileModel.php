@@ -1367,9 +1367,8 @@ class ImageFileModel extends BaseModel // AdminModel
         try
         {
 	        $db = $this->getDatabase();
+
             $query = $db->getQuery(true)
-                ->select(
-                    $db->quoteName())
                 ->select($db->quoteName(array('name', 'gallery_id', 'use_j3x_location')))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));

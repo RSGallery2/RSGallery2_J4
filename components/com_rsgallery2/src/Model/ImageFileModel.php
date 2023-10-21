@@ -39,6 +39,9 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 class ImageFileModel extends BaseModel // AdminModel
 {
 
+    const THUMB_PORTRAIT = 0;
+    const THUMB_SQUARE = 1;
+
 	/**
 	 * Constructor.
 	 *
@@ -82,7 +85,6 @@ class ImageFileModel extends BaseModel // AdminModel
 
         try
         {
-            // $db    =  Factory::getContainer()->get(DatabaseInterface::class);
             $db    = $this->getDatabase();
 
             $query = $db->getQuery(true)

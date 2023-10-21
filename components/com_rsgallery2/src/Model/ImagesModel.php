@@ -1,14 +1,14 @@
 <?php
-
 /**
- * @package     Joomla.Site
+ * @package     RSGallery2
  * @subpackage  com_rsgallery2
- *
- * @copyright(C) 2005-2023 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright (c) 2016-2023 RSGallery2 Team
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @author      finnern
+ * RSGallery is Free Software
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\Model;
+nnamespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 \defined('_JEXEC') or die;
 
@@ -26,7 +26,7 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 
 
 /**
- * Rsgallery2 model for the Joomla Rsgallery2 component.
+ * RSGallery2 Component Images Model
  *
  * @since  __BUMP_VERSION__
  */
@@ -65,10 +65,11 @@ class ImagesModel extends ListModel
      * @param MVCFactoryInterface|null $factory
      * @throws \Exception
      * @see     \JController
-     * @since   1.6
+     * @since   5.0
      */
     public function __construct($config = array(), MVCFactoryInterface $factory = null)
     {
+		//  which fields are needed for filter function
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = array(
@@ -98,7 +99,6 @@ class ImagesModel extends ListModel
 
         parent::__construct($config, $factory);
     }
-
 
     /**
      * Method to auto-populate the model state.
@@ -363,6 +363,7 @@ class ImagesModel extends ListModel
             $query->where('a.access IN (' . $groups . ')');
         }
 
+		/* 2023.09.19
         // Filter by published state
         $published = (string) $this->getState('filter.published');
 
@@ -375,6 +376,7 @@ class ImagesModel extends ListModel
             $query->where('(a.published IN (0, 1))');
         }
 
+		/* 2023.09.19
         // Filter by search in name and others
         $search = $this->getState('filter.search');
         if (!empty($search))
@@ -771,7 +773,8 @@ class ImagesModel extends ListModel
 
                 $this->AssignImageUrl($image);
 
-                // ToDo: Are there situations where download should not be shown ? ==> watermark or not shown single => call in inherited instead
+                // ToDo: Are there situations where download should not be shown ? 
+				// ==> watermark or not shown single => call in inherited instead
                 $this->AssignUrlDownloadImage($image);
 
             }
@@ -800,14 +803,21 @@ class ImagesModel extends ListModel
     {
 
         try {
+			
+			// J4x ?
+			if( ! $use_j3x_location) {
 
-            // ToDo: check for J3x style of gallery (? all in construct ?)
+				$imagePaths = new ImagePaths ($galleryId);
+				$ImagePaths->assignPathData ($image);
 
-            $ImagePaths = new ImagePathsData ($image->gallery_id);
+			} else {
 
-            $ImagePaths->assignPathData ($image);
+				// J3x
 
-            // ToDo: watermarked file
+				$ImagePathJ3x = new ImagePathsJ3x ();
+				$ImagePaths->assignPathData ($image);
+			}
+				
         }
         catch (\RuntimeException $e)
         {
@@ -823,7 +833,7 @@ class ImagesModel extends ListModel
 
     public function AssignUrlDownloadImage($image)
     {
-        $image->Urldownload = ''; // fall back
+        $image->UrlDownload = ''; // fall back
 
         // ToDo: use one function instead of two
         try {

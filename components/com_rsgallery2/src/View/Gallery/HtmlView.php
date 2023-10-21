@@ -83,8 +83,9 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
-		
-        $input  = Factory::getApplication()->input;
+        $app = Factory::getApplication();
+
+        $input  = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
         // Get some data from the models
@@ -93,10 +94,7 @@ class HtmlView extends BaseHtmlView
         $this->pagination = $this->get('Pagination');
         $params =
         $this->params     = $this->state->get('params');
-        //$this->user       = Factory::getContainer()->get(UserFactoryInterface::class);
-        //$user    = $this->app->getIdentity();
-        $user    = Factory::getApplication()->getIdentity();
-
+	    $user = $app->getIdentity();
 
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop'); 

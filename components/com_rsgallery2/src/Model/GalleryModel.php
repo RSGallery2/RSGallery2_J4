@@ -1,11 +1,10 @@
 <?php
-
 /**
  * @package     Joomla.Site
  * @subpackage  com_rsgallery2
- *
  * @copyright (c) 2005-2023 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @author      finnern
+ * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
@@ -26,7 +25,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 
 
 /**
- * Rsgallery2 model for the Joomla Rsgallery2 component.
+ * RSGallery2 Component gallery images Model
  *
  * @since  __BUMP_VERSION__
  */
@@ -97,7 +96,6 @@ class GalleryModel extends ListModel
         parent::__construct($config, $factory);
     }
 
-
     /**
      * Method to auto-populate the model state.
      *
@@ -167,6 +165,7 @@ class GalleryModel extends ListModel
 
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
+
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
             // Filter on published for those who do not have edit or edit.state rights.
@@ -240,27 +239,13 @@ class GalleryModel extends ListModel
     /**/
 
     /**
-     * Method to get a list of images
+     * Method to get a database query to list images.
      *
-     * ??? Overridden to inject convert the attribs field into a Registry object.
+     * @return  \DatabaseQuery object.
      *
-     * @param   integer  $gid  Id for the gallery
-     *
-     * @return  mixed  An array of objects on success, false on failure.
-     *
-     * @since   1.6
+     * @since __BUMP_VERSION__
      */
-
-    // toDo: rights ...
-
-	/**
-	 * Method to build an SQL query to load the list data.
-	 *
-	 * @return  string  An SQL query
-	 *
-	 * @since   1.6
-	 */
-	public function getListQuery()
+	protected function getListQuery()
 	{
 		$app    = Factory::getApplication();
 		$input  = Factory::getApplication()->input;
@@ -275,11 +260,13 @@ class GalleryModel extends ListModel
 
         $gid = $input->getInt ('gid', 0);
 
-		// Create a new query object.
-		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+        // Create a new query object.
+	    $db = $this->getDatabase();
 
-		$query->select('*')
+        // Select the required fields from the table.
+	    $query = $db->getQuery(true);
+
+        $query->select('*')
 			//->from($db->quoteName('#__rsg2_galleries', 'a'))
 			->from($db->quoteName('#__rsg2_images', 'a'))
 			->where('a.published = 1')
@@ -313,6 +300,93 @@ class GalleryModel extends ListModel
 
 		return $query;
 
+	}
+
+
+    /**
+     * Method to get a list of images
+     *
+     * ??? Overridden to inject convert the attribs field into a Registry object.
+     *
+     * @param   integer  $gid  Id for the gallery
+     *
+     * @return  mixed  An array of objects on success, false on failure.
+     *
+     * @since   1.6
+     */
+
+    // toDo: rights ...
+
+	public function getItems()
+	{
+        $app = Factory::getApplication();
+        $user = $app->getIdentity();
+        // $user   = Factory::getContainer()->get(UserFactoryInterface::class);
+        $userId = $user->get('id');
+        $guest  = $user->get('guest');
+        $groups = $user->getAuthorisedViewLevels();
+        $input  = Factory::getApplication()->input;
+
+        // ToDo: ? use state instead ?
+        $gid = $input->getInt ('gid', 0);
+
+		if ($this->_item === null)
+		{
+			$this->_item = array();
+		}
+
+        $images = []; // new \stdClass(); // ToDo: all to (object)[];
+
+		// not fetched already
+		if ( ! isset($this->_item[$gid])) {
+
+			try
+			{
+                $images = parent::getItems(); // gid ...
+
+                $db    = $this->getDatabase();
+				$query = $db->getQuery(true);
+
+				$query->select('*')
+					//->from($db->quoteName('#__rsg2_galleries', 'a'))
+					->from($db->quoteName('#__rsg2_images', 'a'))
+					//->where('a.id = ' . (int) $gid);
+					->where('a.published = 1')
+					->where('a.gallery_id = ' . (int) $gid);
+                    // ToDo: limit ....
+
+				$db->setQuery($query);
+                $images = $db->loadObjectList();
+
+				if ( ! empty($images)) {
+
+                    // Add image paths, image params ...
+                    $this->AddLayoutData($images);
+                    $data = $images;
+
+                }
+				else
+                {
+                    // No images defined yet
+                    $data = false;
+				}
+
+                $this->_item[$gid] = $data;
+			}
+            catch (\RuntimeException $e)
+            {
+                $OutTxt = '';
+                $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
+            }
+		}
+
+        $images = $this->_item[$gid];
+
+		return $images;
 	}
 
 
@@ -582,7 +656,7 @@ class GalleryModel extends ListModel
     }
 
     /**
-     * @param $images
+     * @param $image
      *
      *
      * @since 4.5.0.0
@@ -591,14 +665,22 @@ class GalleryModel extends ListModel
     {
 
         try {
-
-            // ToDo: check for J3x style of gallery (? all in construct ?)
-
-            $ImagePaths = new ImagePathsData ($image->gallery_id);
-
-            $ImagePaths->assignPathData ($image);
-
             // ToDo: watermarked file
+			
+			// J4x ?
+			if( ! $use_j3x_location) {
+
+				$imagePaths = new ImagePaths ($galleryId);
+				$ImagePaths->assignPathData ($image);
+
+			} else {
+
+				// J3x
+
+				$ImagePathJ3x = new ImagePathsJ3x ();
+				$ImagePaths->assignPathData ($image);
+			}
+				
         }
         catch (\RuntimeException $e)
         {

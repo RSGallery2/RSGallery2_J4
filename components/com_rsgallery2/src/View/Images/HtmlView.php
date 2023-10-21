@@ -84,7 +84,7 @@ class HtmlView extends BaseHtmlView
         $app = Factory::getApplication();
 
 		// toDo: use image list from user not from gallery
-        $input  = Factory::getApplication()->input;
+        $input  = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
         // Get some data from the models
@@ -98,7 +98,6 @@ class HtmlView extends BaseHtmlView
 
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
-
 
 //        if (count($errors = $this->get('Errors')))
 //        {
