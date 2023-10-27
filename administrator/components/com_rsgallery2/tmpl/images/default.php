@@ -267,7 +267,7 @@ if ($saveOrder && !empty($this->items))
                                 }
                                 ?>
 
-								<tr class="row<?php echo $i % 2; ?>"  data-dragable-group="<?php echo $item->gallery_id; ?>" item-id="<?php echo $item->id ?>"  level="<?php echo $item->level ?>">
+								<tr class="row<?php echo $i % 2; ?>"  data-dragable-group="<?php echo $item->gallery_id; ?>" item-id="<?php echo $item->id ?>" >
                                     <td class="text-center d-none d-md-table-cell">
 										<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                                     </td>

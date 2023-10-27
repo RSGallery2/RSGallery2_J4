@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x legacy view => slideshow  -->
-	<layout title="COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_TITLE">
+	<!-- J3x legacy view => slideshow default -->
+	<layout title="COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_J3X_DEFAULT_TITLE">
 		<message>
-			<![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_DESC]]>
+			<![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_J3X_DEFAULT_DESC]]>
 		</message>
 	</layout>
 	<!-- Add fields to the request variables for the layout. -->

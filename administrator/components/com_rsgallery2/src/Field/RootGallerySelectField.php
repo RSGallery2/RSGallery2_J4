@@ -10,7 +10,6 @@
 
 // used in upload
 
-
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
 \defined('_JEXEC') or die;
@@ -80,10 +79,6 @@ class RootGallerySelectField extends ListField
 
 			$query = $db->getQuery(true)
                 ->select('id AS value, name AS text, level')
-				->select($db->quoteName('id', 'value'))
-				->select($db->quoteName('name', 'text'))
-				->select($db->quoteName('level'))
-
 				->from($db->quoteName('#__rsg2_galleries'))
 				->where($db->quoteName('id') . ' != 1' )
 //				->where($db->quoteName('published') . ' = 1')
