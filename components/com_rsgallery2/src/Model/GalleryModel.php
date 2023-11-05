@@ -110,12 +110,19 @@ class GalleryModel extends ListModel
     {
         try {
 
-            foreach ($images as $image) {
+	        foreach ($images as $idx => $image)
+	        {
                 // ToDo: check for J3x style of gallery (? all in construct ?)
 
+		        // URL to image
                 $this->assignImageUrl($image);
 
-            }
+	            // URL to single image view (complete page with pagination)
+	            $this->AssignUrlImageAsInline($image, $idx);
+
+		        $this->AssignUrlDownloadImage($image);
+
+	        }
 
         }
         catch (\RuntimeException $e)
@@ -131,7 +138,53 @@ class GalleryModel extends ListModel
         return $images;
     }
 
-    /**
+	/**
+	 * @param $images
+	 *
+	 *
+	 * @since 4.5.0.0
+	 */
+	public function AssignUrlImageAsInline($image, $idx)
+	{
+
+		try {
+
+			$image->UrlGallery_AsInline = ''; // fall back
+
+			if ( ! empty ($image->gallery_id)) {
+				$route = 'index.php?option=com_rsgallery2'
+					. '&view=slidePageJ3x'
+					. '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
+					. '&img_id=' . $image->id
+// test bad ordering                    . '&start=' . $idx
+				;
+			} else {
+
+				$route = 'index.php?option=com_rsgallery2'
+					. '&view=slidePageJ3x'
+					. '&img_id=' . $image->id
+// test bad ordering                    . '&start=' . $idx
+				;
+			}
+
+			$image->UrlImageAsInline = Route::_($route,true,0,true);
+
+			/**/
+			// ToDo: watermarked file
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'GalleryJ3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+	}
+
+	/**
      * Method to auto-populate the model state.
      *
      * This method should only be called once per instantiation and is designed
@@ -485,7 +538,7 @@ class GalleryModel extends ListModel
 
             // add slidshow url
             if (! empty ($gallery)) {
-                $this->AssignSlideshowUrl ($gallery);
+                $this->assignSlideshowUrl ($gallery);
             }
 
         }
@@ -543,6 +596,7 @@ class GalleryModel extends ListModel
             $images_row_arrangement = $rsgConfig->get('images_row_arrangement');
             $max_rows_in_images_view = $rsgConfig->get('max_rows_in_images_view');
             $max_images_in_images_view = $rsgConfig->get('max_images_in_images_view');
+			$dummy = 0; // remove
 
             //--- menu parameter -------------------------------------------------
 
@@ -697,7 +751,7 @@ class GalleryModel extends ListModel
 
     }
 
-    public function AssignSlideshowUrl($gallery)
+    public function assignSlideshowUrl($gallery)
     {
 
         try {
@@ -722,42 +776,97 @@ class GalleryModel extends ListModel
                 ,true,0,true);
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'GallerysModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GallerysModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return $menuParams;
     }
 
-//    public function mergeParams ($paramRsg2Menu, $paramItem) {
-//
-//        // base with the lowest priority
-//        $mergedParams = clone $paramRsg2Menu;
-//
-//        // overwrite with param items
-//        $mergedParams->merge($paramItem);
-//
-//    }
+	public function AssignUrlDownloadImage($image)
+	{
+		$image->Urldownload = ''; // fall back
+
+		// ToDo: use one function instead of two
+		try {
+
+			$image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
+				. '&task=imagefile.downloadfile&id=' . $image->id
+				,true,0,true);
+
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'GalleryJ3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+	}
+
 
     public function getRsg2MenuParams()
     {
 
-        $menuParams = new Registry();
+	    // retrieved from default.xml ToDo Better way to merge ?
+
+	    /*
+		'gallery_show_title'
+		'gallery_show_description'
+		'gallery_show_slideshow'
+		'gallery_layout'
+		'images_show_title'
+		'images_show_title'
+		'images_show_description'
+		'images_show_description'
+		'images_show_search'
+		'images_column_arrangement'
+		'max_columns_in_images_view'
+		'images_row_arrangement'
+		'max_rows_in_images_view'
+		'max_images_in_images_view'
+		'displaySearch'
+		*/
+
+		/* ToDo: whats wrong with
+	    $app = Factory::getApplication();
+	    $menu = $app->getMenu()->getActive() ;
+	    $itemId = $menu->id;
+	    $menu_params = $menu->getParams($itemId);
+		/**/
+
+
+
+	    $menuParams = new Registry();
 
         try {
 
             $input = Factory::getApplication()->input;
 
-            $menuParams = new Registry();
+			$menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
+			$menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
+			$menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
+			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+			$menuParams->set('images_show_search', $input->getBool('images_show_search', true));
+			$menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', true));
+			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
+			$menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', true));
+	        $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
+			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
+			$menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', true));
+			$menuParams->set('displaySearch', $input->getBool('displaySearch', true));
 
-            $menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
-            $menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
-            $menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
-            $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
-/*
+
+			/*
             $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ''));
             $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
             $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));

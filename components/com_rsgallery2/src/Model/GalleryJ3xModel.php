@@ -118,7 +118,7 @@ class GalleryJ3xModel extends GalleryModel
 
 	}
 
-    public function AssignSlideshowUrl($gallery)
+    public function assignSlideshowUrl($gallery)
     {
 
         try {
@@ -133,31 +133,7 @@ class GalleryJ3xModel extends GalleryModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleryJ3xModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-    }
-
-    public function AssignUrlDownloadImage($image)
-    {
-        $image->Urldownload = ''; // fall back
-
-        // ToDo: use one function instead of two
-        try {
-
-            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
-                . '&task=imagefile.downloadfile&id=' . $image->id
-                ,true,0,true);
-
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'GalleryJ3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleryJ3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -190,6 +166,7 @@ class GalleryJ3xModel extends GalleryModel
 
             $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
             $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+	        $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
 
         } catch (\RuntimeException $e) {
             $OutTxt = '';

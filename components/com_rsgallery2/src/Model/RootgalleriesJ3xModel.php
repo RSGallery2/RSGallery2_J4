@@ -76,7 +76,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
         return $galleries;
     }
 
-    public function AssignSlideshowUrl($gallery)
+    public function assignSlideshowUrl($gallery)
     {
 
         try {
@@ -101,7 +101,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'RootgalleriesJ3xModel: AssignSlideshowUrl ()' . '<br>';
+            $OutTxt .= 'RootgalleriesJ3xModel: assignSlideshowUrl ()' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -201,7 +201,14 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
         random_count
         /**/
 
-        $menuParams = new Registry();
+	    /* ToDo: whats wrong with */
+		$app = Factory::getApplication();
+		$menu = $app->getMenu()->getActive() ;
+		$itemId = $menu->id;
+		$menu_params = $menu->getParams($itemId);
+		/**/
+
+	    $menuParams = new Registry();
 
         try {
 

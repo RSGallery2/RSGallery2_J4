@@ -160,7 +160,7 @@ class HtmlView extends BaseHtmlView
 
         // add slideshow url
         if (! empty ($gallery)) {
-            $model->AssignSlideshowUrl ($gallery);
+            $model->assignSlideshowUrl ($gallery);
         }
 
         if ( ! empty($this->items)) {

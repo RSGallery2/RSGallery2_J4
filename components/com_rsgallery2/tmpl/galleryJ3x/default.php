@@ -47,21 +47,6 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x
 //
 //echo $this->item->event->afterDisplayContent;
 
-
-// on develop show open tasks if existing
-if (!empty ($this->isDevelopSite))
-{
-    echo '<span style="color:red">'
-        . 'Tasks: galleryJ3x view<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        . '</span><br><br>';
-}
-
-
 $layoutName = $this->getLayout();
 
 // default is 'ImagesAreaJ3x.default'
@@ -72,6 +57,9 @@ if($layoutName == 'default') {
 
 $layout = new FileLayout($layoutName);
 
+$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDevelopSite'] = $this->isDevelopSite;
+
 $displayData['images'] = $this->items;
 $displayData['params'] = $this->params->toObject();
 //$displayData['menuParams'] = $this->menuParams;
@@ -79,9 +67,6 @@ $displayData['pagination'] = $this->pagination;
 
 $displayData['gallery'] = $this->gallery;
 $displayData['galleryId'] = $this->galleryId;
-
-$displayData['isDebugSite'] = $this->isDebugSite;
-$displayData['isDevelopSite'] = $this->isDevelopSite;
 
 $displaySearch = $this->params->get('displaySearch', false);
 if ($displaySearch) {

@@ -17,6 +17,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
+use Joomla\Registry\Registry;
+
 // use Joomla\Registry\Registry;
 
 /**
@@ -96,6 +98,7 @@ class HtmlView extends BaseHtmlView
 		$this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
 
+		// $test = $app->getParams();
         $params =
         $this->params = $state->get('params');
 
@@ -107,10 +110,41 @@ class HtmlView extends BaseHtmlView
 
 		// ToDo: Status of images
 
-        // Merge (overwrite) menu parameter with item/config parameter
+		$registry_1 = new Registry;
+		$registry_2 = new Registry;
+/**
+// Ein paar Testdaten in registry_1:
+		$registry_1->set('val1', 1);
+		$registry_1->set('val2', 2);
+		$registry_1->set('val3', 2456);
+
+// Ein paar Testdaten in registry_2:
+		$registry_2->set('val3', 3);
+		$registry_2->set('val4', 4);
+
+		// Jetzt die beiden zusammen-mergen, also registry_1 über registry_2 "bügeln":
+		$registry_2->merge($registry_1);
+
+//--------------------------------------------------
+// Ein paar Testdaten in registry_1:
+		/**
+		$registry_1->set('val1', 1);
+		$registry_1->set('val2', 2);
+		$registry_1->set('val3', 2456);
+
+		$registry_2 = new Registry;
+		$registry_2->set('val3', 3);
+		$registry_2->set('val4', 4);
+
+		// Jetzt die beiden zusammen-mergen, also registry_1 über registry_2 "bügeln":
+		$registry_1->merge($registry_2);
+		/**/
+
+
+		// Merge (overwrite) config parameter with menu parameter
         $menuParams = $this->get('Rsg2MenuParams');
-        // overwrite with param items
-        $this->params = $menuParams->merge($this->params);
+        // wrong: $this->params = $menuParams->merge($this->params);
+		$this->params->merge($menuParams);
 
         if ( ! empty($this->items)) {
 			// Add image paths, image params ...
@@ -157,6 +191,24 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
+
+		echo '';
+// on develop show open tasks if existing
+		if (!empty ($this->isDevelopSite))
+		{
+			echo '<span style="color:red">'
+				. 'Tasks: gallery view<br>'
+				. '* <br>'
+				. '* make rsgConfig global<br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				. '</span><br><br>';
+		}
+
+
 		return parent::display($tpl);
 	}
 

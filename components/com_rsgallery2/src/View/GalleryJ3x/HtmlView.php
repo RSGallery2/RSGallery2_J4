@@ -90,7 +90,7 @@ class HtmlView extends BaseHtmlView
         /* wrong call but why ? gallery should be a number > 0 */
         if ($this->galleryId < 2)
         {
-	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
+	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why does it happen ?", 'error');
         }
 
 		// Get some data from the models
@@ -112,10 +112,10 @@ class HtmlView extends BaseHtmlView
 
 		// ToDo: Status of images
 
-        // Merge (overwrite) menu parameter with item/config parameter
-        $menuParams = $this->get('Rsg2MenuParams');
-        // overwrite with param items
-        $this->params = $menuParams->merge($this->params);
+		// Merge (overwrite) config parameter with menu parameter
+		$menuParams = $this->get('Rsg2MenuParams');
+		// wrong: $this->params = $menuParams->merge($this->params);
+		$this->params->merge($menuParams);
 
         if ( ! empty($this->items)) {
 			// Add image paths, image params ...
@@ -162,6 +162,20 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
+
+		// on develop show open tasks if existing
+		if (!empty ($this->isDevelopSite))
+		{
+			echo '<span style="color:red">'
+				. 'Tasks: galleryJ3x view<br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				//	. '* <br>'
+				. '</span><br><br>';
+		}
+
 		return parent::display($tpl);
 	}
 

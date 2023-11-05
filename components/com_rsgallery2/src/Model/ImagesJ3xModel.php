@@ -33,7 +33,7 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 class ImagesJ3xModel extends ImagesModel
 {
 
-    public function AssignSlideshowUrl($gallery)
+    public function assignSlideshowUrl($gallery)
     {
 
         try {
@@ -48,7 +48,7 @@ class ImagesJ3xModel extends ImagesModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GallerysModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GallerysModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

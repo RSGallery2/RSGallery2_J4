@@ -96,10 +96,10 @@ class HtmlView extends BaseHtmlView
         $this->isDevelopSite = $params->get('isDevelop');
 
 
-        // Merge (overwrite) menu parameter with item/config parameter
-        $menuParams = $this->get('Rsg2MenuParams');
-        // overwrite with param items
-        $this->params = $menuParams->merge($this->params);
+		// Merge (overwrite) config parameter with menu parameter
+		$menuParams = $this->get('Rsg2MenuParams');
+		// wrong: $this->params = $menuParams->merge($this->params);
+		$this->params->merge($menuParams);
 
         if (count($errors = $this->get('Errors')))
         {
@@ -127,6 +127,7 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
+
 		return parent::display($tpl);
 	}
 }

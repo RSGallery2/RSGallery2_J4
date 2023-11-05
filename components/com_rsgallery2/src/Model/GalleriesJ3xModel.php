@@ -563,7 +563,7 @@ class GalleriesJ3xModel extends ListModel
                 $this->AssignGalleryUrl($gallery);
 
                 // view single gallery on click
-                $this->AssignSlideshowUrl($gallery);
+                $this->assignSlideshowUrl($gallery);
 			}
 
 		}
@@ -736,7 +736,7 @@ class GalleriesJ3xModel extends ListModel
 
     }
 
-    public function AssignSlideshowUrl($gallery)
+    public function assignSlideshowUrl($gallery)
     {
 
         try {
@@ -763,7 +763,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesJ3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
         //--- root galleries --------------------------------------------------
 
         $app = Factory::getApplication();
-        $input = Factory::getApplication()->input;
+	    $input  = $app->input;
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
         $state =
@@ -100,7 +100,8 @@ class HtmlView extends BaseHtmlView
         // Galleries with parend ID = 0
         $this->items = $this->get('Items');
 
-        $params =
+	    $test = $app->getParams();
+	    $params =
         $this->params = $this->state->get('params');
 
         $this->pagination = $this->get('Pagination');
@@ -119,9 +120,10 @@ class HtmlView extends BaseHtmlView
         $menuParams =
         $this->menuParams = $this->get('Rsg2MenuParams');
 
-        // overwrite with param items
-        $menuParams->merge($this->params);
-        $this->params = $menuParams;
+	    // Merge (overwrite) config parameter with menu parameter
+	    $menuParams = $this->get('Rsg2MenuParams');
+	    // wrong: $this->params = $menuParams->merge($this->params);
+	    $this->params->merge($menuParams);
 
         if (count($errors = $this->get('Errors')))
         {
@@ -148,8 +150,26 @@ class HtmlView extends BaseHtmlView
 //        }
 //        /**/
 
+// on develop show open tasks if existing
+	    if (!empty ($this->isDevelopSite))
+	    {
+		    echo '<span style="color:red">'
+			    . 'Tasks: rootgalleriesJ3x view<br>'
+			    . '* User limit selection box -> layout ? Nbr of galleries  -> yes no ?  <br>'
+			    . '* Format of date is already in database -> improve ... <br>'
+			    . '* Events in general<br>'
+			    . '* User count of galleries displayed not working: 0, 1,2,3<br>'
+			    //	. '* <br>'
+			    //	. '* <br>'
+			    //	. '* <br>'
+			    //	. '* <br>'
+			    //	. '* <br>'
+			    //	. '* <br>'
+			    . '</span><br><br>';
+	    }
 
-        return parent::display($tpl);
+
+	    return parent::display($tpl);
     }
 
 }

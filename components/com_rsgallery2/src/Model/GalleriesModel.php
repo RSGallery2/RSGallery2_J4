@@ -567,7 +567,7 @@ class GalleriesModel extends ListModel
                 $this->AssignGalleryUrl($gallery);
 
                 // view single gallery as slideshow on click
-                $this->AssignSlideshowUrl($gallery);
+                $this->assignSlideshowUrl($gallery);
 			}
 
 		}
@@ -737,7 +737,7 @@ class GalleriesModel extends ListModel
 
     }
 
-    public function AssignSlideshowUrl($gallery)
+    public function assignSlideshowUrl($gallery)
     {
 
         try {
@@ -761,7 +761,7 @@ class GalleriesModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

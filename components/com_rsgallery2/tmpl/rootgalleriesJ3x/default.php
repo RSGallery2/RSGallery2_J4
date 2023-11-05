@@ -44,24 +44,6 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x
 //echo $this->item->event->afterDisplayContent;
 
 
-// on develop show open tasks if existing
-if (!empty ($this->isDevelopSite))
-{
-    echo '<span style="color:red">'
-        . 'Tasks: rootgalleriesJ3x view<br>'
-        . '* User limit selection box -> layout ? Nbr of galleries  -> yes no ?  <br>'
-        . '* Format of date is already in database -> improve ... <br>'
-        . '* Events in general<br>'
-        . '* User count of galleries displayed not working: 0, 1,2,3<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        . '</span><br><br>';
-}
-
 
 if ($this->menuParams->get('displaySearch')) {
     $searchLayout = new FileLayout('Search.search');
@@ -86,6 +68,7 @@ $displayData['pagination'] = $this->pagination;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
+
 
 ?>
 <!-- ToDo: is form here needed ? check core ...  -->
@@ -119,13 +102,13 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 		<?php //--- display latest images ---------- ?>
 
-		<?php if ($this->menuParams->displayLatest): ?>
+		<?php if ($this->menuParams->get('displayLatest')): ?>
 			<?php echo $this->loadTemplate('latest_images'); ?>
 		<?php endif; ?>
 
 		<?php //--- display random images ---------- ?>
 
-		<?php if ($this->menuParams->displayRandom): ?>
+		<?php if ($this->menuParams->get('displayRandom')): ?>
 			<?php echo $this->loadTemplate('random_images'); ?>
 		<?php endif; ?>
 
