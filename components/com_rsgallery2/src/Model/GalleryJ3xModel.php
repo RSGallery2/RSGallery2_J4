@@ -1,11 +1,12 @@
 <?php
-
 /**
  * @package     Joomla.Site
  * @subpackage  com_rsgallery2
  *
  * @copyright (c) 2005-2023 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @author      finnern
+ * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
@@ -192,7 +193,7 @@ class GalleryJ3xModel extends GalleryModel
 
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
+            $OutTxt .= 'GallerysModel: getRsg2MenuParams()' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -201,5 +202,6 @@ class GalleryJ3xModel extends GalleryModel
 
         return $menuParams;
     }
+
 } // class
 

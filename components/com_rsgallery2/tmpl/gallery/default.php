@@ -8,7 +8,7 @@
  */
 
 
-//  J3x legacy view => gallery 
+//  J3x legacy view default => gallery images
 
 
 \defined('_JEXEC') or die;
@@ -50,20 +50,24 @@ if (!empty ($this->isDevelopSite))
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
-//if ($this->config->displaySearch) {
-if (true) {
-    $layout = new FileLayout('Search.search');
-    echo $layout->render();
-}
-
 $layout = new FileLayout('ImagesArea.default');
 
 $displayData['images'] = $this->items;
+$displayData['params'] = $this->params->toObject();
+//$displayData['menuParams'] = $this->menuParams;
+$displayData['pagination'] = $this->pagination;
+
+//$displayData['gallery'] = $this->gallery;
+//$displayData['galleryId'] = $this->galleryId;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
-// return;
+$displaySearch = $this->params->get('displaySearch', false);
+if ($displaySearch) {
+    $searchLayout = new FileLayout('Search.search');
+    // $searchData['options'] = $searchOptions ...; // gallery
+}
 
 ?>
 
@@ -75,13 +79,19 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
         <?php endif; ?>
 
         <?php if (!empty($this->isDebugSite)): ?>
+    	    <h1><?php echo text::_('RSGallery2 "gallery j3x legacy standard"'); ?> view </h1>
             <hr>
         <?php endif; ?>
 
-	    <?php
-	    echo $layout->render($displayData);
-	    ?>
+	    <?php //--- display search ---------- ?>
 
+	    <?php if ($displaySearch): ?>
+		    <?php echo $searchLayout->render(); ?>
+	    <?php endif; ?>
+
+	    <?php //--- display gallery images ---------- ?>
+
+	    <?php echo $layout->render($displayData); ?>
 
     </form>
 </div>

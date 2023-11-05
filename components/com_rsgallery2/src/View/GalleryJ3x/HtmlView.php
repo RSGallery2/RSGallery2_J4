@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+// J3x legacy view improved => gallery 
+
 namespace Rsgallery2\Component\Rsgallery2\Site\View\GalleryJ3x;
 
 \defined('_JEXEC') or die;
@@ -80,12 +82,12 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
-
         $app = Factory::getApplication();
-        $input  = Factory::getApplication()->input;
+
+        $input  = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
-        /* wrong call but why ? */
+        /* wrong call but why ? gallery should be a number > 0 */
         if ($this->galleryId < 2)
         {
 	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
@@ -162,6 +164,5 @@ class HtmlView extends BaseHtmlView
 //
 		return parent::display($tpl);
 	}
-
 
 }

@@ -60,18 +60,7 @@
 			</field>
 
 			<field
-					name="displaySearch"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
-					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<field
-					name="galleries_layout"
+					name="gallery_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
@@ -79,11 +68,82 @@
 					view="images"
 					useglobal="true"
 			/>
+		</fieldset>
+
+	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+
+		<fieldset name="images"
+		>
+		
+
+			<!--field
+					name="images_show_title"
+					type="list"
+					default="2"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
+				<option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
+				<option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
+				<option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
+			</field-->
+
+			<field
+					name="images_show_title"
+					type="radio"
+					default="1"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<!--field
+					name="images_show_description"
+					type="list"
+					default="0"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+			>
+				<option value="0">JNO</option>
+				<option value="1">COM_RSGALLERY2_CONFIG_DESC_POS_ABOVE_THUMB</option>
+				<option value="2">COM_RSGALLERY2_CONFIG_DESC_POS_RIGHT_BESIDE_THUMB</option>
+				<option value="3">COM_RSGALLERY2_CONFIG_DESC_POS_BELOW_THUMB</option>
+				<option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>
+			</field-->
+
+			<field
+					name="images_show_description"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+					class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="images_show_search"
+					type="list"
+					default="0"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH_DESC"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
 
 		</fieldset>
 
 		<fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
-
 			<field
 					name="images_column_arrangement"
 					type="list"
@@ -140,43 +200,22 @@
 			>
 			</field>
 
-			<!--field
-					name="images_show_title"
-					type="list"
-					default="2"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
-			>
-				<option value="0">JNO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
-				<option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
-				<option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
-			</field-->
+		</fieldset>
 
+		<fieldset name="form" label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH">
 			<field
-					name="images_show_title"
-					type="radio"
-					default="1"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<field
-					name="images_show_description"
+					name="displaySearch"
 					type="radio"
 					default="0"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
+					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
 					class="btn-group btn-group-yesno">
-				>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
-
 		</fieldset>
+
+
+
 	</fields>
 </metadata>

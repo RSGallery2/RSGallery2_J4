@@ -2,6 +2,7 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_rsgallery2
+ *
  * @copyright (c) 2005-2023 RSGallery2 Team
  * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @author      finnern
@@ -17,13 +18,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
 
-//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
-//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 
@@ -98,6 +98,37 @@ class GalleryModel extends ListModel
         }
 
         parent::__construct($config, $factory);
+    }
+
+    /**
+     * @param $images
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public function AddLayoutData($images)
+    {
+        try {
+
+            foreach ($images as $image) {
+                // ToDo: check for J3x style of gallery (? all in construct ?)
+
+                $this->assignImageUrl($image);
+
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'GalleryModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $images;
     }
 
     /**
@@ -629,37 +660,6 @@ class GalleryModel extends ListModel
     }
 
     /**
-     * @param $images
-     *
-     *
-     * @since 4.5.0.0
-     */
-    public function AddLayoutData($images)
-    {
-        try {
-
-            foreach ($images as $image) {
-                // ToDo: check for J3x style of gallery (? all in construct ?)
-
-                $this->assignImageUrl($image);
-
-            }
-
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-        return $images;
-    }
-
-    /**
      * @param $image
      *
      *
@@ -720,9 +720,7 @@ class GalleryModel extends ListModel
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
                 . '&view=slideshow&gid=' . $gallery->id
                 ,true,0,true);
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GallerysModel: AssignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -731,6 +729,7 @@ class GalleryModel extends ListModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
+        return $menuParams;
     }
 
 //    public function mergeParams ($paramRsg2Menu, $paramItem) {
@@ -743,6 +742,41 @@ class GalleryModel extends ListModel
 //
 //    }
 
+    public function getRsg2MenuParams()
+    {
 
+        $menuParams = new Registry();
+
+        try {
+
+            $input = Factory::getApplication()->input;
+
+            $menuParams = new Registry();
+
+            $menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
+            $menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
+            $menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
+            $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
+/*
+            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ''));
+            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
+            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));
+            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
+            $menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', ''));
+
+            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+/**/
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'GallerysModel: getRsg2MenuParams()' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $menuParams;
+    }
 
 } // class

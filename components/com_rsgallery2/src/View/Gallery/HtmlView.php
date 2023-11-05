@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// J3x legacy view => gallery 
+// J3x legacy view (default) => gallery 
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallery;
 
@@ -17,7 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
-use Joomla\Registry\Registry;
+// use Joomla\Registry\Registry;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -89,20 +89,38 @@ class HtmlView extends BaseHtmlView
         $this->galleryId = $input->get('gid', 0, 'INT');
 
         // Get some data from the models
+        $state =
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
-        $params =
-        $this->params     = $this->state->get('params');
+		$this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
+
+        $params =
+        $this->params = $state->get('params');
 
         $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop'); 
 
-//        if (count($errors = $this->get('Errors')))
-//        {
-//            throw new GenericDataException(implode("\n", $errors), 500);
-//        }
+		$model = $this->getModel();
+		$this->gallery = $model->galleryData($this->galleryId);
+
+		// ToDo: Status of images
+
+        // Merge (overwrite) menu parameter with item/config parameter
+        $menuParams = $this->get('Rsg2MenuParams');
+        // overwrite with param items
+        $this->params = $menuParams->merge($this->params);
+
+        if ( ! empty($this->items)) {
+			// Add image paths, image params ...
+			$data = $model->AddLayoutData ($this->items);
+		}
+
+        if (count($errors = $this->get('Errors')))
+        {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
@@ -123,8 +141,13 @@ class HtmlView extends BaseHtmlView
 //		$item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
+		// Check for layout override
+		$active = Factory::getApplication()->getMenu()->getActive();
 
-
+		if (isset($active->query['layout']))
+		{
+			$this->setLayout($active->query['layout']);
+		}
 
 
 
@@ -136,4 +159,5 @@ class HtmlView extends BaseHtmlView
 //
 		return parent::display($tpl);
 	}
+
 }
