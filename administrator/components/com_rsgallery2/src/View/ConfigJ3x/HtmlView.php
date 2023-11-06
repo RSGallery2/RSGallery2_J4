@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Config;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\View\ConfigJ3x;
 
 \defined('_JEXEC') or die;
 
@@ -54,10 +54,11 @@ class HtmlView extends BaseHtmlView
 		//---  --------------------------------------------------------------
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=config&layout=RawView');
-		/**/
+		/**
 		$Layout = Factory::getApplication()->input->get('layout');
 		Rsgallery2Helper::addSubmenu('config');
 		$this->sidebar = \JHtmlSidebar::render();
+		/**/
 
 		$this->addToolbar($Layout);
 		/**/
@@ -96,20 +97,20 @@ class HtmlView extends BaseHtmlView
 		{
 			case 'RawView':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_VIEW'), 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_J3X_RAW_VIEW'), 'screwdriver');
+				ToolBarHelper::cancel('configJ3x.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				break;
 
 			case 'RawEdit':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'), 'screwdriver');
-				ToolBarHelper::apply('config.apply_rawEdit');
-				ToolBarHelper::save('config.save_rawEdit');
-				ToolBarHelper::cancel('config.cancel_rawEdit', 'JTOOLBAR_CLOSE');
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_J3X_RAW_EDIT'), 'screwdriver');
+				ToolBarHelper::apply('configJ3x.apply_rawEdit');
+				ToolBarHelper::save('configJ3x.save_rawEdit');
+				ToolBarHelper::cancel('configJ3x.cancel_rawEdit', 'JTOOLBAR_CLOSE');
 				break;
 			default:
-				ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+				ToolBarHelper::cancel('configJ3x.cancel', 'JTOOLBAR_CLOSE');
 				break;
 		}
 

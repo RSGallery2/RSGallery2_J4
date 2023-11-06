@@ -417,6 +417,28 @@ if ($this->isJ3xRsg2DataExisting)
     );
     /**/
 
+    /**/
+	$upgrade_ZoneButtons[] = new zoneButtons(
+		Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'),
+		// Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=ConfigRawView'),
+		Text::_('COM_RSGALLERY2_CONFIGURATION_J3X_VARIABLES'),
+		Text::_('COM_RSGALLERY2_CONFIG_J3X_MINUS_VIEW_TXT') . '                        ',
+		array('icon-equalizer', 'icon-eye'),
+		'viewConfigRaw'
+	);
+    /**/
+
+    /**/
+	$upgrade_ZoneButtons[] =  new zoneButtons(
+		Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawEdit'),
+		// Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=ConfigRawEdit'),
+		Text::_('COM_RSGALLERY2_CONFIGURATION_J3X_RAW_EDIT'),
+		Text::_('COM_RSGALLERY2_CONFIG_J3X_MINUS_RAW_EDIT_TXT'),
+		array('icon-equalizer', 'icon-edit'),
+		'viewEditConfigRaw'
+	);
+    /**/
+
 }
 
 

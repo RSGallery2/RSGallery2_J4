@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_rsImage2
+ * @subpackage  com_rsgallery2
  *
  * @copyright (c) 2005-2023 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -27,14 +27,6 @@ use Joomla\String\StringHelper;
  */
 class ImageTable extends Table
 {
-	/**
-	 * An array of key names to be json encoded in the bind function
-	 *
-	 * @var    array
-	 * @since __BUMP_VERSION__
-	 */
-//	protected $_jsonEncode = ['params'];
-
 	/**
 	 * Constructor
 	 *
