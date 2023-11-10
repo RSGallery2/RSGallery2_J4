@@ -138,21 +138,42 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
     static function MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems)
     {
         // component parameters to array
-        $assistedJ3xItems = [];  // j3x tp j4x
-        $assistedJ4xItems = [];  // j4x to j3x
+        $assistedJ3xItems = [];  // j3x to j4x when names different
+        $assistedJ4xItems = [];  // j4x presetting on transfer j3x setup
         $mergedItems = [];
         $untouchedJ3xItems = [];
         $untouchedJ4xItems = [];
 
         try {
 
-            // Manual list of assisted merges (items which need special handling for merge j3x to j4x
+            //--- Manual list of assisted merges --------------------------------------------
+	        // items which need special handling for merge j3x to j4x
 
-            $assistedItems ['testJ3xNmae'] = array('testJ4xname', 'testJ3xValue'); // To Be defined when used
-            $assistedItems ['testJ4xName'] = array('testJ3xname', 'testJ34OldValue'); // ? new Value may be different ...To Be defined when used
+			//--- transform J3x to J4x (New names) ------------------------------------------
 
+	        // galcountNrs  <=> galDisplayCountJ3x
+	        $assistedJ3xItems ['galcountNrs'] = array('max_thumbs_in_galleries_view_j3x',
+		        $j3xConfigItems['galcountNrs']);
 
-            foreach ($j3xConfigItems as $name => $value) {
+	        //
+	        $assistedJ3xItems ['display_thumbs_maxPerPage'] = array('images_column_arrangement_j3x',
+		        $j3xConfigItems['display_thumbs_maxPerPage']);
+
+	        //
+	        $assistedJ3xItems ['display_thumbs_colsPerPage'] = array('max_columns_in_images_view_j3x',
+		        $j3xConfigItems['display_thumbs_colsPerPage']);
+
+	        //
+	        $assistedJ3xItems ['display_thumbs_maxPerPage'] = array('max_thumbs_in_images_view_j3x',
+		        $j3xConfigItems['display_thumbs_maxPerPage']);
+
+	        //--- transform J4x to match J3x setting (preset new variable) --------------------------
+
+	        // example $assistedJ4xItems ['images_column_arrangement'] = 1;
+
+	        //--- transform 1:1 J3x to J4x ---------------------------------------------------
+
+	        foreach ($j3xConfigItems as $name => $value) {
                 // Not handled manually
                 if (!array_key_exists($name, $assistedJ3xItems)) {
                     // 1:1 copy
@@ -164,7 +185,9 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
                 }
             }
 
-            // untouched J4x item ?
+	        //--- Not used J4x items ---------------------------------------------------
+
+	        // untouched J4x item ?
             foreach ($j4xConfigItems as $name => $value) {
                 // Not handled manually
                 if (!array_key_exists($name, $assistedJ4xItems)) {
@@ -770,7 +793,7 @@ EOT;
                 $isOk = $this->copyJ3xConfigItems2J4xOptions(
                     $j4xConfigItems,
                     $assistedJ3xItems,
-//                        $assistedJ4xItems,
+                    $assistedJ4xItems,
                     $mergedItems);
 
             } else {
@@ -799,7 +822,7 @@ EOT;
      */
     public function copyJ3xConfigItems2J4xOptions($j4xConfigItems,
                                                   $assistedJ3xItems,
-//                                                   $assistedJ4xItems,
+                                                  $assistedJ4xItems,
                                                   $mergedItems)
     {
         $isSaved = false;
@@ -811,10 +834,15 @@ EOT;
                 $j4xConfigItems [$name] = $value;
             }
 
-            // assisted copying
+            // assisted copying new names
             foreach ($assistedJ3xItems as $j3xName => $var) {
                 list($j4xName, $j4xNewValue) = $var;
                 $j4xConfigItems [$j4xName] = $j4xNewValue;
+            }
+
+            // assisted presetting on transfer j3x setup
+            foreach ($assistedJ4xItems as $j4xName => $value) {
+                $j4xConfigItems [$j4xName] = $value;
             }
 
             // Save parameter
@@ -829,7 +857,6 @@ EOT;
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
-
 
         return $isSaved;
     }
@@ -1032,7 +1059,6 @@ EOT;
             foreach ($j4xGalleriesItems as $j4xImageItem) {
 
                 $isOk &= $this->writeGalleryItem2Db($j4xImageItem);
-
             }
 
         } catch (\RuntimeException $e) {

@@ -97,8 +97,9 @@ if ($displaySearch) {
             // limit 20
             // total 19
             ?>
-        	    <?php
-                echo $this->pagination->getListFooter(); ?>
+
+            <?php
+                // echo $this->pagination->getListFooter(); ?>
     	    <?php
     	    // endif;
             ?>
