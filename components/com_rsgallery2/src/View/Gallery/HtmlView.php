@@ -90,10 +90,11 @@ class HtmlView extends BaseHtmlView
         $input  = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
+		$this->items      = $this->get('Items');
+
         // Get some data from the models
         $state =
         $this->state      = $this->get('State');
-        $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
 		$this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
@@ -110,9 +111,10 @@ class HtmlView extends BaseHtmlView
 
 		// ToDo: Status of images
 
+		/**
 		$registry_1 = new Registry;
 		$registry_2 = new Registry;
-/**
+
 // Ein paar Testdaten in registry_1:
 		$registry_1->set('val1', 1);
 		$registry_1->set('val2', 2);

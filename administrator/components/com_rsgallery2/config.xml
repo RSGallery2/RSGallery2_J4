@@ -357,8 +357,8 @@
 				name="galleries_row_arrangement"
 				type="list"
 				default="1"
-				label="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_DESC"
-				description="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_DESC"
 				showon="galleries_column_arrangement:1"
 		>
 			<option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO</option>
@@ -381,8 +381,8 @@
 				type="number"
 				default="20"
 				label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS"
-				description="COM_RSGALLERY2_LIMIT_GALLERIES_THUMBS_DESC"
-				showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:2"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS_DESC"
+				showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:2[OR]galleries_column_arrangement:0"
 		>
 		</field>
 
@@ -526,7 +526,7 @@
 				default="20"
 				label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
 				description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
-				showon="images_row_arrangement:2[AND]images_column_arrangement:1"
+				showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
 		>
 		</field>
 

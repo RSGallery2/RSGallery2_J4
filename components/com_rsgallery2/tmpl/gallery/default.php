@@ -91,6 +91,20 @@ if ($displaySearch) {
 
             <?php echo $layout->render($displayData); ?>
 
+
+	        <?php
+            // if ($displaySearch): show_pagination "2" / show_pagination_results "1"
+            // limit 20
+            // total 19
+            ?>
+        	    <?php
+                echo $this->pagination->getListFooter(); ?>
+    	    <?php
+    	    // endif;
+            ?>
+
+
+
     </div>
 </form>
 

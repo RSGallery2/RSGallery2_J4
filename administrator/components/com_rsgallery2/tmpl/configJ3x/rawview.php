@@ -36,71 +36,74 @@ use Joomla\CMS\Router\Route;
 
 				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW', true)); ?>
 
-                <p></p>
-                <p><h3><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_MINUS_RAW_VIEW'); ?></h3></p>
+                <div class="card">
+                    <div class="card-body">
+                        <legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_VARIABLES_DESC'); ?></legend>
 
-				<?php
-                /**
-				echo '<pre>';
-				// Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
-				echo json_encode($this->configVars, JSON_PRETTY_PRINT);
-				echo '</pre>';
-                echo '<HR>';
-                /**/
-				// echo '<pre>';
-				// Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
+                        <?php
+                        /**
+                        echo '<pre>';
+                        // Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
+                        echo json_encode($this->configVars, JSON_PRETTY_PRINT);
+                        echo '</pre>';
+                        echo '<HR>';
+                        /**/
+                        // echo '<pre>';
+                        // Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
 
-                echo '<section class="config_raw">';
+                        echo '<section class="config_raw">';
 
-                echo '<div class="card-body">';
-                echo '<div class="card-text">';
+                        echo '<div class="card-body">';
+                        echo '<div class="card-text">';
 
-                echo '<dl class="row">';
-                foreach ($this->configVars as  $key => $value)  {
+                        echo '<dl class="row">';
+                        foreach ($this->configVars as  $key => $value)  {
 
-                    // Handle empty string
-                    if (strlen($value) == 0) {
-                        // $value = "''";
-                        $value = '""';
-                    }
+                            // Handle empty string
+                            if (strlen($value) == 0) {
+                                // $value = "''";
+                                $value = '""';
+                            }
 
-                    echo '    <dt class="col-sm-3">' . $key . '</dt>';
-                    echo '    <dd class="col-sm-9">' . $value . '</dd>';
+                            echo '    <dt class="col-sm-3">' . $key . '</dt>';
+                            echo '    <dd class="col-sm-9">' . $value . '</dd>';
 
-                }
-                echo '</dl>';
+                        }
+                        echo '</dl>';
 
-                echo '</div>';
-                echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
 
-                echo '</section>';
+                        echo '</section>';
 
-                //--- show json string formatted ----------------------------------------------
+                        //--- show json string formatted ----------------------------------------------
 
-                $json_string = json_encode($this->configVars, JSON_PRETTY_PRINT);
+                        $json_string = json_encode($this->configVars, JSON_PRETTY_PRINT);
 
-                echo '<p><strong>As json</strong></p>';
+                        echo '<p><strong>As json</strong></p>';
 
-                echo '<div class="form-group  purple-border">';
-                echo '    <label for="usr">RSGallery2 Configuration J3x</label>';
-                echo '    <textarea class="form-control manifest_input" id="manifest_input"  cols="40" rows="40" readonly >';
-                echo             $json_string . '";';
-                echo '     </textarea>';
-                echo '</div>';
+                        echo '<div class="form-group  purple-border">';
+                        echo '    <label for="usr">RSGallery2 Configuration J3x</label>';
+                        echo '    <textarea class="form-control manifest_input" id="manifest_input"  cols="40" rows="40" readonly >';
+                        echo             $json_string . '";';
+                        echo '     </textarea>';
+                        echo '</div>';
 
-                ?>
+                        ?>
 
-				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+                    </div>
+                </div>
 
-				<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+
+                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 
                 <?php
-					// <!--input type="hidden" name="option" value="com_rsgallery2" />
-				    // <input type="hidden" name="rsgOption" value="maintenance" /-->
+                    // <!--input type="hidden" name="option" value="com_rsgallery2" />
+                    // <input type="hidden" name="rsgOption" value="maintenance" /-->
                     // <input type="hidden" name="task" value="" /> ?>
-				<?php echo HTMLHelper::_('form.token'); ?>
-
+                <?php echo HTMLHelper::_('form.token'); ?>
             </div>
 		</div>
 	</div>

@@ -204,6 +204,8 @@ class GalleryModel extends ListModel
     {
         global $rsgConfig;
 
+	    parent::populateState($ordering, $direction);
+
         $app = Factory::getApplication();
 
         $this->setState('gallery.id', $app->input->getInt('gid'));
@@ -220,7 +222,8 @@ class GalleryModel extends ListModel
         // List state information
         // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
         // $this->setState('list.limit', $value);
-        $this->setState('list.limit', $layoutParams->limit);
+        // ToDo: Use it again $this->setState('list.limit', $layoutParams->limit);
+        $this->setState('list.limit', 5);
 
         //$value = $app->input->get('limitstart', 0, 'uint');
         //$this->setState('list.start', $value);
@@ -365,7 +368,7 @@ class GalleryModel extends ListModel
 
 		// limit
 
-
+		/**
 		if ($this->state->params->get('show_pagination_limit'))
 		{
 			$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'uint');
@@ -376,6 +379,7 @@ class GalleryModel extends ListModel
 		}
 
 		$this->setState('list.limit', $limit);
+		/**/
 
 		$offset = $app->input->get('limitstart', 0, 'uint');
 		$this->setState('list.start', $offset);

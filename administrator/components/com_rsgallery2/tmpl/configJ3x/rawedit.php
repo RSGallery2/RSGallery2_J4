@@ -116,32 +116,36 @@ function configInputField($name = 'unknown', $value = '')
 
 				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ConfigRawView')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT', true)); ?>
 
-                <legend><strong><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'); ?></strong></legend>
+                <div class="card">
+                    <div class="card-body">
+                    <legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT_DESC'); ?></legend>
 
-                <p><h3>RAW Edit</h3></p>
-                <?php
+                    <?php
 
-					try
-					{
-						/**/
-						foreach ($configVars as $name => $value)
-						{
-							configInputField($name, $value);
-						}
-					}
-					catch (\RuntimeException $e)
-					{
-						$OutTxt = '';
-						$OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';
-						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-					
-						$app = Factory::getApplication();
-						$app->enqueueMessage($OutTxt, 'error');
-					}
+                        try
+                        {
+                            /**/
+                            foreach ($configVars as $name => $value)
+                            {
+                                configInputField($name, $value);
+                            }
+                        }
+                        catch (\RuntimeException $e)
+                        {
+                            $OutTxt = '';
+                            $OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';
+                            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				?>
+                            $app = Factory::getApplication();
+                            $app->enqueueMessage($OutTxt, 'error');
+                        }
+
+                    ?>
+
+                    </div>
+                </div>
 
 				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 

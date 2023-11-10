@@ -97,14 +97,14 @@ class HtmlView extends BaseHtmlView
 		{
 			case 'RawView':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_J3X_RAW_VIEW'), 'screwdriver');
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_VIEW'), 'screwdriver');
 				ToolBarHelper::cancel('configJ3x.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				break;
 
 			case 'RawEdit':
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_J3X_RAW_EDIT'), 'screwdriver');
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT'), 'screwdriver');
 				ToolBarHelper::apply('configJ3x.apply_rawEdit');
 				ToolBarHelper::save('configJ3x.save_rawEdit');
 				ToolBarHelper::cancel('configJ3x.cancel_rawEdit', 'JTOOLBAR_CLOSE');

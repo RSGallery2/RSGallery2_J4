@@ -36,8 +36,8 @@ use Joomla\CMS\Router\Route;
 
 				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW', true)); ?>
 
-                <p></p>
                 <p><h3><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW'); ?></h3></p>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'); ?></strong></legend>
 
 				<?php
                 /**
