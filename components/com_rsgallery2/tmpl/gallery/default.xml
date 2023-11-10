@@ -23,7 +23,27 @@
 				edit="true"
 				clear="true"
 			/>
-			
+
+			<field
+					id="max_thumbs_in_galleries_view_j3x"
+					name="max_thumbs_in_galleries_view_j3x"
+					type="list"
+					default="0"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
+					showon="gid:0"
+					class=""
+					useglobal="true"
+			>
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+				<option value="30">30</option>
+				<option value="50">50</option>
+			</field>
+
 			<field
 					name="images_layout"
 					type="componentlayout"
@@ -107,26 +127,6 @@
 			</field>
 
 			<field
-					id="galcountNrs"
-					name="galcountNrs"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_DEFAULT_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
-					description=""
-					showon="gid:0"
-					class=""
-					useglobal="true"
-			>
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="30">30</option>
-				<option value="50">50</option>
-			</field>
-
-			<field
 					id="displaySlideshow"
 					name="displaySlideshow"
 					type="radio"
@@ -197,6 +197,40 @@
 		<fieldset name="images_display"
 				  label="COM_RSGALLERY2_FIELDSET_IMAGES_DISPLAY"
 		>
+
+			<!-- ... thumb style float table ... -->
+			<field
+					name="images_column_arrangement_j3x"
+					type="list"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
+					useglobal="true"
+			>
+				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
+				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
+			</field>
+
+			<!-- ...   ... -->
+			<field
+					name="max_columns_in_images_view_j3x"
+					type="number"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC"
+					showon="images_column_arrangement_j3x:1"
+					useglobal="true"
+					class="">
+			</field>
+
+			<!-- ...   ... -->
+			<field
+					name="max_thumbs_in_images_view_j3x"
+					type="number"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+					showon="images_column_arrangement_j3x:1"
+					useglobal="true"
+					class="">
+			</field>
 
 			<field
 					id="displayGalleryName"
@@ -271,28 +305,6 @@
 				>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
-			</field>
-
-			<field
-					id="display_thumbs_colsPerPage"
-					name="display_thumbs_colsPerPage"
-					type="integer"
-					default="9"
-					label="COM_RSGALLERY2_NUMBER_OF_THUMBNAIL_COLUMNS_ONLY_FOR_TABLE"
-					description=""
-					class=""
-					first="1"
-					last="19"
-					step="1">
-			</field>
-			<field
-					id="display_thumbs_maxPerPage"
-					name="display_thumbs_maxPerPage"
-					type="text"
-					default="0"
-					label="COM_RSGALLERY2_THUMBNAILS_PER_PAGE"
-					description=""
-					class="">
 			</field>
 
 		</fieldset>

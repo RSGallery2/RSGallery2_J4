@@ -217,13 +217,14 @@ class GalleryModel extends ListModel
             $this->context .= '.' . $layout;
         }
 
+		// internal parameter
         $layoutParams = $this->getlayoutParams ();
 
         // List state information
         // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
         // $this->setState('list.limit', $value);
-        // ToDo: Use it again $this->setState('list.limit', $layoutParams->limit);
-        $this->setState('list.limit', 5);
+        $this->setState('list.limit', $layoutParams->limit);
+        // $this->setState('list.limit', 5);
 
         //$value = $app->input->get('limitstart', 0, 'uint');
         //$this->setState('list.start', $value);
@@ -340,11 +341,13 @@ class GalleryModel extends ListModel
 	{
 		$app    = Factory::getApplication();
 		$input  = Factory::getApplication()->input;
+
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
 		$groups = $user->getAuthorisedViewLevels();
         $userId = $user->get('id');
         $guest  = $user->get('guest');
+
 		$orderby        = $this->state->params->get('all_tags_orderby', 'title');
 		$published      = (int) $this->state->params->get('published', 1);
 		$orderDirection = $this->state->params->get('all_tags_orderby_direction', 'ASC');
@@ -394,92 +397,6 @@ class GalleryModel extends ListModel
 
 	}
 
-
-    /**
-     * Method to get a list of images
-     *
-     * ??? Overridden to inject convert the attribs field into a Registry object.
-     *
-     * @param   integer  $gid  Id for the gallery
-     *
-     * @return  mixed  An array of objects on success, false on failure.
-     *
-     * @since   1.6
-     */
-
-    // toDo: rights ...
-
-	public function getItems()
-	{
-        $app = Factory::getApplication();
-        $user = $app->getIdentity();
-        // $user   = Factory::getContainer()->get(UserFactoryInterface::class);
-        $userId = $user->get('id');
-        $guest  = $user->get('guest');
-        $groups = $user->getAuthorisedViewLevels();
-        $input  = Factory::getApplication()->input;
-
-        // ToDo: ? use state instead ?
-        $gid = $input->getInt ('gid', 0);
-
-		if ($this->_item === null)
-		{
-			$this->_item = array();
-		}
-
-        $images = []; // new \stdClass(); // ToDo: all to (object)[];
-
-		// not fetched already
-		if ( ! isset($this->_item[$gid])) {
-
-			try
-			{
-                $images = parent::getItems(); // gid ...
-
-                $db    = $this->getDatabase();
-				$query = $db->getQuery(true);
-
-				$query->select('*')
-					//->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->from($db->quoteName('#__rsg2_images', 'a'))
-					//->where('a.id = ' . (int) $gid);
-					->where('a.published = 1')
-					->where('a.gallery_id = ' . (int) $gid);
-                    // ToDo: limit ....
-
-				$db->setQuery($query);
-                $images = $db->loadObjectList();
-
-				if ( ! empty($images)) {
-
-                    // Add image paths, image params ...
-                    $this->AddLayoutData($images);
-                    $data = $images;
-
-                }
-				else
-                {
-                    // No images defined yet
-                    $data = false;
-				}
-
-                $this->_item[$gid] = $data;
-			}
-            catch (\RuntimeException $e)
-            {
-                $OutTxt = '';
-                $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
-                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-                $app = Factory::getApplication();
-                $app->enqueueMessage($OutTxt, 'error');
-            }
-		}
-
-        $images = $this->_item[$gid];
-
-		return $images;
-	}
 
 
     /**
@@ -700,6 +617,10 @@ class GalleryModel extends ListModel
                 }
 
             }
+
+			// ToDo: remove
+			$limit = 5;
+
 
             $layoutParameter->limit = $limit;
 

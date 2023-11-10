@@ -147,6 +147,7 @@ class ImagesModel extends ListModel
         //$this->setState('list.limit', $layoutParams->limit);
 
         $value = $app->input->get('limitstart', 0, 'uint');
+        // ToDo: check $this->setState('list.start', $value);
         $this->setState('list.start', $value);
 
         $value = $app->input->get('filter_tag', 0, 'uint');

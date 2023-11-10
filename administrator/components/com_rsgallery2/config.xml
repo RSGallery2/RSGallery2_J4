@@ -315,9 +315,9 @@
 				class="text text-danger"
 				showon="isDevelop:1"
 		>
-			<option value="0">* Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... </option>
-			<option value="1">* Order of galleries: auto, time, name , ...</option>
-			<option value="2">* </option>
+			<option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
+			<option value="1">* Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... </option>
+			<option value="2">* Order of galleries: auto, time, name , ...</option>
 			<option value="3">* </option>
 			<option value="4">* </option>
 		</field>
@@ -459,8 +459,8 @@
 				class="text text-danger"
 				showon="isDevelop:1"
 		>
-			<option value="0">* order of images: auto, time, name , ...</option>
-			<option value="1">* </option>
+			<option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
+			<option value="1">* order of images: auto, time, name , ...</option>
 			<option value="2">* </option>
 			<option value="3">* </option>
 			<option value="4">* </option>
@@ -700,7 +700,7 @@
 		<!-- ... block  ... -->
 
 		<field
-				name="galDisplayCountJ3x"
+				name="max_thumbs_in_galleries_view_j3x"
 				type="number"
 				default="5"
 				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
@@ -750,12 +750,38 @@
 
 		<!-- ... block  ... -->
 
+
+		<!-- ... thumb style float table ... -->
 		<field
-				name="imgCountNrsJ3x"
+				name="images_column_arrangement_j3x"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
+		>
+			<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
+		</field>
+
+		<!-- ...   ... -->
+		<field
+				name="max_columns_in_images_view_j3x"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS"
+				description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC"
+				showon="images_column_arrangement_j3x:1"
+				class="">
+		</field>
+
+		<!-- ...   ... -->
+		<field
+				name="max_thumbs_in_images_view_j3x"
 				type="number"
 				default="5"
 				label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
 				description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+				showon="images_column_arrangement_j3x:1"
 				class="">
 		</field>
 
