@@ -7,9 +7,16 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
+
+/*---------------------------------------------------
+? does what ?
+---------------------------------------------------*/
+
+extract($displayData);
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
@@ -30,24 +37,8 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
-//$image = $displayData['image'];
-extract($displayData);
-if ( ! isset($image)) {   //         if (isset($to_user, $from_user, $amount))
+if ( ! isset($image)) {
     $image = (object)[];
-}
-
-if (!empty($isDevelopSite)) {
-    echo '<span style="color:red">'
-        . 'Tasks: layout ImageSingle<br>'
-        . 'Image Single layout Tasks: <br>'
-        . '* html aria-label ... <br>'
-        . '* HTML 5 layout, bootstrap * <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-        . '</span><br><br>';
 }
 
 ?>

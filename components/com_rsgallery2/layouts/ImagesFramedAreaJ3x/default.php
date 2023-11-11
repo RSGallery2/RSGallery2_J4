@@ -12,19 +12,16 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
+/*---------------------------------------------------
+gallery thumbs display by rows like in J3x
+---------------------------------------------------*/
 
-//$images = $displayData['images'];
-extract($displayData); // $images
-if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
-    $images = [];
-}
+extract($displayData);
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: layout ImagesFramedAreaJ3x <br>'
-        . 'Images framed J3x area Tasks: <br>'
         . '* Size of replace images (missing/no images)-> DRY move to one place <br>'
-        . '--<br>'
         . '* length of filenames<br>'
         . '* what happens on empty image lists<br>'
         . '* Replace align="center by css from file<br>'
@@ -37,23 +34,29 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
-
 //--- sanitize URLs -----------------------------------
+
+if ( ! isset($images)) {
+	$images = [];
+}
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-// assign dummy images if not found
-foreach ($images as $idx => $image) {
+//--- assign dummy images if not found -----------------------------------
 
-    // show dummy thumb on galleries with no images
-    if (! empty($image->isHasNoImages))
-    {
-        $image->UrlOriginalFile = $noImageUrl;
-        $image->UrlDisplayFiles = $noImageUrl;;
-        $image->UrlThumbFile = $noImageUrl;
+if ( ! empty($images))
+{
+	foreach ($images as $idx => $image)
+	{
 
-    }
+		// show dummy thumb on galleries with no images
+		if (!empty($image->isHasNoImages))
+		{
+			$image->UrlOriginalFile = $noImageUrl;
+			$image->UrlDisplayFiles = $noImageUrl;;
+			$image->UrlThumbFile = $noImageUrl;
+		}
 
 //    else {
 //
@@ -71,6 +74,7 @@ foreach ($images as $idx => $image) {
 //        }
 //
 //    }
+	}
 }
 
 $imgCount = count($images);

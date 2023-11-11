@@ -196,7 +196,7 @@
 					default="20"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
 					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
-					showon="images_row_arrangement:2[AND]images_column_arrangement:1"
+					showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
 			>
 			</field>
 

@@ -79,7 +79,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 	<div class="rsg2__form rsg2__galleries_area">
 
 	    <?php if (!empty($isDebugSite)): ?>
-	        <h2>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h2>
+	        <h5>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h5>
 	    <?php endif; ?>
 
 		<?php //--- display search ---------- ?>

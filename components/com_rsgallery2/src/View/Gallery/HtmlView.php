@@ -90,8 +90,6 @@ class HtmlView extends BaseHtmlView
         $input  = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
-		$this->items      = $this->get('Items');
-
         // Get some data from the models
         $state =
         $this->state      = $this->get('State');
@@ -103,50 +101,20 @@ class HtmlView extends BaseHtmlView
         $params =
         $this->params = $state->get('params');
 
-        $this->isDebugSite = $params->get('isDebugSite');
+		// ToDo: may not be necessary
+		// Merge (overwrite) config parameter with menu parameter
+		$menuParams = $this->get('Rsg2MenuParams');
+		// wrong: $this->params = $menuParams->merge($this->params);
+		$this->params->merge($menuParams);
+
+		$this->items      = $this->get('Items');
+
+		$this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop'); 
 
 		$model = $this->getModel();
 		$this->gallery = $model->galleryData($this->galleryId);
 
-		// ToDo: Status of images
-
-		/**
-		$registry_1 = new Registry;
-		$registry_2 = new Registry;
-
-// Ein paar Testdaten in registry_1:
-		$registry_1->set('val1', 1);
-		$registry_1->set('val2', 2);
-		$registry_1->set('val3', 2456);
-
-// Ein paar Testdaten in registry_2:
-		$registry_2->set('val3', 3);
-		$registry_2->set('val4', 4);
-
-		// Jetzt die beiden zusammen-mergen, also registry_1 über registry_2 "bügeln":
-		$registry_2->merge($registry_1);
-
-//--------------------------------------------------
-// Ein paar Testdaten in registry_1:
-		/**
-		$registry_1->set('val1', 1);
-		$registry_1->set('val2', 2);
-		$registry_1->set('val3', 2456);
-
-		$registry_2 = new Registry;
-		$registry_2->set('val3', 3);
-		$registry_2->set('val4', 4);
-
-		// Jetzt die beiden zusammen-mergen, also registry_1 über registry_2 "bügeln":
-		$registry_1->merge($registry_2);
-		/**/
-
-
-		// Merge (overwrite) config parameter with menu parameter
-        $menuParams = $this->get('Rsg2MenuParams');
-        // wrong: $this->params = $menuParams->merge($this->params);
-		$this->params->merge($menuParams);
 
         if ( ! empty($this->items)) {
 			// Add image paths, image params ...

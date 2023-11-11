@@ -13,23 +13,15 @@ use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die;
 
 /*---------------------------------------------------
-image display by cols col like in J3x
+image display by flex arrangement
 ---------------------------------------------------*/
 
 extract($displayData);
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
-        . 'Tasks: layout Images area J3x<br>'
-        . '* Change date format<br>'
-        . '* html aria-label ... <br>'
-        . '* HTML 5 layout, bootstrap * <br>'
-        . '* modal image (->slider)<br>'
-        . '* length of filenames<br>'
-        . '* what happens on empty galleries/ image lists<br>'
-        . '* Size of replace images (missing/no images) <br>'
-        . '* border and title? for latest and random<br>'
-//	. '* <br>'
+        . 'Tasks: layout Images flex <br>'
+	    . '* <br>'
 //	. '* <br>'
 //	. '* <br>'
 //	. '* <br>'
@@ -123,45 +115,42 @@ if ($cols < 2) {
 			echo Text::_('Gallery (name) not defined in this situation');
 			?> </h2>
 	<?php endif; ?>
-    <table id="rsg2-thumbsList">
-        <tbody>
 
-        <?php
-        foreach ($images as $idx => $image) {
-	        $row = $idx % $cols;
-	    ?>
 
-	        <?php if ($row == 0 ): ?>
-			<tr>
-	        <?php endif ?>
+    <div class="rsg2-flex-thumbs">
 
-	            <td>
+        <?php // <div class="d-flex p-2 justify-content-center align-items-center ?  flex-flow"> ?>
+        <div class="d-flex p-2 justify-content-around align-items-center flex-wrap">
 
-	                <div class="shadow-box">
-	                    <div class="img-shadow">
-	                        <a href="<?php echo $image->UrlImageAsInline?>">
-	                            <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
-	                        </a>
-	                    </div>
-	                </div>
+            <?php
+            foreach ($images as $idx => $image) {
+            ?>
+                <div class="rsg2-flex-thumbs-row">
+                    <div class="rsg2-flex-thumb  pb-4 mx-auto">
 
-	                <div class="rsg2-clr"></div>
-	                <span class="rsg2_thumb_name">
-						<?php echo $image->title ?>
-	                </span>
+                        <div class="d-flex justify-content-center ">
+                            <div class="shadow-box">
+                                <div class="img-shadow">
+                                    <a href="<?php echo $image->UrlImageAsInline?>">
+                                        <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center ">
+                            <span class="rsg2_thumb_name">
+                                <?php echo $image->title ?>
+                            </span>
+                            </div>
+                    </div>
+                </div>
 
-		        </td>
+            <?php
+            }
+            ?>
 
-	        <?php if ($row == $cols-1 ): ?>
-		        <tr>
-	        <?php endif ?>
-
-	    <?php
-        }
-        ?>
-
-        </tbody>
-    </table>
+        </div>
+    </div>
 
 	<div class="pagination">
 		<?php

@@ -14,10 +14,12 @@ use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
 
 defined('_JEXEC') or die;
 
+/*---------------------------------------------------
+galleries area ? one per line with properties ?
+---------------------------------------------------*/
+
 extract($displayData);
-if ( ! isset($galleries)) {   //         if (isset($to_user, $from_user, $amount))
-    $galleries = [];
-}
+
 //echo '<br>--- $this->params ------------------------------------------<br>';
 //echo json_encode($params);
 //echo $params->toString();
@@ -58,6 +60,7 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
+
 /**
    -> see class rsg2-galleryList-status
 
@@ -74,26 +77,30 @@ if (!empty($isDevelopSite)) {
 
 
 
-
-
 //--- sanitize URLs -----------------------------------
+
+if ( ! isset($galleries)) {   
+	$galleries = [];
+}
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-// assign dummy images if not found
-foreach ($galleries as $idx => $gallery) {
-
-    // show dummy thumb on galleries with no images
-    if (! empty($gallery->isHasNoImages))
-    {
-        $gallery->UrlOriginalFile = $noImageUrl;
-        $gallery->UrlDisplayFiles = $noImageUrl;;
-        $gallery->UrlThumbFile = $noImageUrl;
-
+if ( ! empty($galleries))
+{
+    // assign dummy images if not found
+    foreach ($galleries as $idx => $gallery) {
+    
+        // show dummy thumb on galleries with no images
+        if (! empty($gallery->isHasNoImages))
+        {
+            $gallery->UrlOriginalFile = $noImageUrl;
+            $gallery->UrlDisplayFiles = $noImageUrl;;
+            $gallery->UrlThumbFile = $noImageUrl;
+        
+        }
     }
 }
-
 
 ?>
 

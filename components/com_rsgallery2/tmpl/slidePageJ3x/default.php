@@ -670,7 +670,7 @@ function htmlStars ($idx, $average, $lastRating)
 
 
         <?php if (!empty($isDebugSite)): ?>
-		    <h3>RSGallery2 slide (?page) properties J3x layout</h3>
+		    <h5>RSGallery2 slide (?page) properties J3x layout</h5>
 		    <hr>
         <?php endif; ?>
 

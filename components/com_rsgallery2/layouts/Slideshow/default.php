@@ -7,20 +7,20 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
+/*---------------------------------------------------
+? does what ? slideshow 
+---------------------------------------------------*/
 
 HTMLHelper::_('bootstrap.carousel', '.selector');
 HTMLHelper::_('bootstrap.button', '.selector');
 
 //$images = $displayData['images'];
 extract($displayData);
-if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
-    $images = [];
-}
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
@@ -43,39 +43,46 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitize URLs -----------------------------------
 
+if ( ! isset($images)) {
+	$images = [];
+}
+
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-// assign dummy images if not found
-foreach ($images as $idx => $image) {
+//--- assign dummy images if not found -----------------------------------
 
-    // show dummy thumb on galleries with no images
-    if (! empty($image->isHasNoImages))
-    {
-        $image->UrlOriginalFile = $noImageUrl;
-        $image->UrlDisplayFiles = $noImageUrl;;
-        $image->UrlThumbFile = $noImageUrl;
+if ( ! empty($images))
+{
+	foreach ($images as $idx => $image)
+	{
 
+        // show dummy thumb on galleries with no images
+        if (! empty($image->isHasNoImages))
+        {
+            $image->UrlOriginalFile = $noImageUrl;
+            $image->UrlDisplayFiles = $noImageUrl;;
+            $image->UrlThumbFile = $noImageUrl;
+        }
+    
+    //    else {
+    //
+    //        if (!$image->isOriginalFileExist) {
+    //            $image->UrlOriginalFile = $missingUrl;
+    //            ;
+    //        }
+    //
+    //        if (!$image->isDisplayFileExist) {
+    //            $image->UrlDisplayFiles = $missingUrl;;
+    //        }
+    //
+    //        if (!$image->isThumbFileExist) {
+    //            $image->UrlThumbFile = $missingUrl;
+    //        }
+    //
+    //    }
     }
-
-//    else {
-//
-//        if (!$image->isOriginalFileExist) {
-//            $image->UrlOriginalFile = $missingUrl;
-//            ;
-//        }
-//
-//        if (!$image->isDisplayFileExist) {
-//            $image->UrlDisplayFiles = $missingUrl;;
-//        }
-//
-//        if (!$image->isThumbFileExist) {
-//            $image->UrlThumbFile = $missingUrl;
-//        }
-//
-//    }
 }
-
 
 ?>
 
@@ -280,9 +287,6 @@ foreach ($images as $idx => $image) {
     </div>
     <?php /**/ ?>
 </div>
-
-
-
 
 
 

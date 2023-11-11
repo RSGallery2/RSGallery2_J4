@@ -10,23 +10,14 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
-//use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die;
 
-//$images = $displayData['images'];
-extract($displayData); // $images
-if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
-    $images = [];
-}
+/*---------------------------------------------------
+? does what ?
+---------------------------------------------------*/
 
-$image = null;
-if (count ($images)) {
-
-    $image = $images [$image_idx];
-
-}
-
+extract($displayData);
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
@@ -39,18 +30,27 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
-
 //--- sanitize URLs -----------------------------------
+
+if ( ! isset($images)) {   
+	$images = [];
+}
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
+
+$image = null;
+if (count ($images)) {
+
+	$image = $images [$image_idx];
+
+}
 
 if (! empty($image->isHasNoImages))
 {
     $image->UrlOriginalFile = $noImageUrl;
     $image->UrlDisplayFiles = $noImageUrl;;
     $image->UrlThumbFile = $noImageUrl;
-
 }
 
 //    else {

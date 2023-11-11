@@ -12,16 +12,15 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
+/*---------------------------------------------------
+? does what ?
+---------------------------------------------------*/
 
 HTMLHelper::_('bootstrap.carousel', '.selector');
 HTMLHelper::_('bootstrap.button', '.selector');
 
 
-//$images = $displayData['images'];
 extract($displayData);
-if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
-    $images = [];
-}
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
@@ -38,40 +37,47 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
-
 //--- sanitize URLs -----------------------------------
+
+if ( ! isset($images)) {
+	$images = [];
+}
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-// assign dummy images if not found
-foreach ($images as $idx => $image) {
+//--- assign dummy images if not found -----------------------------------
 
-    // show dummy thumb on galleries with no images
-    if (! empty($image->isHasNoImages))
-    {
-        $image->UrlOriginalFile = $noImageUrl;
-        $image->UrlDisplayFiles = $noImageUrl;;
-        $image->UrlThumbFile = $noImageUrl;
+if ( ! empty($images))
+{
+	foreach ($images as $idx => $image)
+	{
 
-    }
-
-//    else {
-//
-//        if (!$image->isOriginalFileExist) {
-//            $image->UrlDisplayFile; = $missingUrl;
-//            ;
-//        }
-//
-//        if (!$image->isDisplayFileExist) {
-//            $image->UrlDisplayFiles = $missingUrl;;
-//        }
-//
-//        if (!$image->isThumbFileExist) {
-//            $image->UrlThumbFile = $missingUrl;
-//        }
-//
-//    }
+        // show dummy thumb on galleries with no images
+        if (! empty($image->isHasNoImages))
+        {
+            $image->UrlOriginalFile = $noImageUrl;
+            $image->UrlDisplayFiles = $noImageUrl;;
+            $image->UrlThumbFile = $noImageUrl;    
+        }
+    
+    //    else {
+    //
+    //        if (!$image->isOriginalFileExist) {
+    //            $image->UrlDisplayFile; = $missingUrl;
+    //            ;
+    //        }
+    //
+    //        if (!$image->isDisplayFileExist) {
+    //            $image->UrlDisplayFiles = $missingUrl;;
+    //        }
+    //
+    //        if (!$image->isThumbFileExist) {
+    //            $image->UrlThumbFile = $missingUrl;
+    //        }
+    //
+    //    }
+}
 }
 
 // allow:

@@ -12,6 +12,13 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
+/*---------------------------------------------------
+? does what ?
+---------------------------------------------------*/
+
+//$images = $displayData['images'];
+extract($displayData);
+
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: layout imagesArea<br>'
@@ -36,25 +43,30 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
-//$images = $displayData['images'];
-extract($displayData);
-if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
+//--- sanitize URLs -----------------------------------
+
+if ( ! isset($images)) {
     $images = [];
 }
-
-//--- sanitize URLs -----------------------------------
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-if ( ! empty($images)) {
-	foreach ($images as $idx => $image) {
+//--- assign dummy images if not found -----------------------------------
+
+if ( ! empty($images)) 
+{
+	foreach ($images as $idx => $image) 
+	{
+
 		// show dummy thumb on galleries with no images
-		if (!empty($image->isHasNoImages)) {
+		if (!empty($image->isHasNoImages))
+		{
 			$image->UrlOriginalFile = $noImageUrl;
 			$image->UrlDisplayFiles = $noImageUrl;;
 			$image->UrlThumbFile = $noImageUrl;
 		}
+
 //    else {
 //
 //        if (!$image->isOriginalFileExist) {
@@ -75,12 +87,12 @@ if ( ! empty($images)) {
 }
 
 // max_columns_in_images_view
-$cols = $params->max_columns_in_images_view;
+// $cols = $params->max_columns_in_images_view;
+$cols = $params->max_columns_in_images_view_j3x;
 if ($cols < 2) {
 
 	$cols = 2;
 }
-
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
@@ -173,7 +185,7 @@ if ($cols < 2) {
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
-    <h3>RSGallery2 j3x images area layout II</h3>
+    <h5>RSGallery2 images area layout I</h5>
     <hr>
 <?php endif; ?>
 

@@ -227,7 +227,7 @@
 					type="number"
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
 					description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
-					showon="images_column_arrangement_j3x:1"
+					showon="images_column_arrangement_j3x:1[OR]images_column_arrangement_j3x:0"
 					useglobal="true"
 					class="">
 			</field>

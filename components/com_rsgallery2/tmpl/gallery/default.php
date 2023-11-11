@@ -18,7 +18,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use \Joomla\CMS\Layout\FileLayout;
 
-// https://blog.kulturbanause.de/2014/09/responsive-images-srcset-sizes-adaptive/
+// https://kulturbanause.de/blog/responsive-images-srcset-sizes-adaptive/
 
 // ToDo:
 // ToDo:
@@ -32,7 +32,20 @@ $layoutName = $this->getLayout();
 // default is 'ImagesAreaJ3x.default'
 if($layoutName == 'default') {
 
-	$layoutName = 'ImagesAreaJ3x.default';
+    // Auto layout => Flex
+    if ($this->params->get('images_column_arrangement_j3x') == 0)
+    {
+	    $layoutName = 'ImagesFlexJ3x.default';
+    }
+    else
+    {
+        // Standard j3x layout
+	    // $layoutName = 'ImagesArea.default';
+	    $layoutName = 'ImagesAreaJ3x.default';
+
+	    // test layout II
+	    // $layoutName = 'ImagesFramedAreaJ3x.default';
+    }
 }
 
 $layout = new FileLayout($layoutName);
@@ -44,8 +57,6 @@ $layout = new FileLayout($layoutName);
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
-
-$layout = new FileLayout('ImagesArea.default');
 
 $displayData['images'] = $this->items;
 $displayData['params'] = $this->params->toObject();
@@ -74,7 +85,7 @@ if ($displaySearch) {
     <div class="rsg2__form rsg2__images_area">
 
             <?php if (!empty($this->isDebugSite)): ?>
-                <h2><?php echo text::_('RSGallery2 "gallery j3x legacy standard"'); ?> view </h2>
+                <h3><?php echo text::_('RSGallery2 "gallery j3x legacy standard (default)"'); ?> view </h3>
                 <div><?php
                     echo ' GID: ' . $this->galleryId; ?>
                 </div>

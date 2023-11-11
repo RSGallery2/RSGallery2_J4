@@ -10,19 +10,17 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-//use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die;
 
-HTMLHelper::_('bootstrap.button', '.selector');
+/*---------------------------------------------------
+? does what ? one image ?
+---------------------------------------------------*/
 
+HTMLHelper::_('bootstrap.button', '.selector');
 HTMLHelper::_('script', 'com_rsgallery2/site/j3x/OneImageVote.js', ['version' => 'auto', 'relative' => true]);
 
-//$images = $displayData['images'];
-extract($displayData); // $images
-if ( ! isset($images)) {   //         if (isset($to_user, $from_user, $amount))
-    $images = [];
-}
+extract($displayData);
 
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
@@ -39,6 +37,16 @@ if (!empty($isDevelopSite)) {
 //	. '* <br>'
         . '</span><br><br>';
 }
+
+if ( ! isset($images)) {
+	$images = [];
+}
+
+if (!empty ($images))
+{
+	// ToDo: has one image ? see $image->id below
+}
+
 // "/joomla3x/index.php?option=com_rsgallery2&amp;page=inline&amp;id=157&amp;Itemid=114"
 $voteLink = Route::_('index.php?option=com_rsgallery2&page=inline&id=' . $image->id);
 $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' . $image->id);

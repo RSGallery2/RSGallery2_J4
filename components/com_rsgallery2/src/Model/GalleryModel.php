@@ -217,7 +217,7 @@ class GalleryModel extends ListModel
             $this->context .= '.' . $layout;
         }
 
-		// tests
+		// limit
 	    $params = $app->getParams();
 	    $max_thumbs_in_images_view_j3x  = $params->get('max_thumbs_in_images_view_j3x');
 
