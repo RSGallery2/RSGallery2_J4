@@ -15,34 +15,14 @@
 			<field
 				name="gid"
 				type="RootGallerySelect"
-				label="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_OVERVIEW_LABEL"
-				description="COM_RSGALLERY2_MENU_J3X_SELECT_GALLERY_OVERVIEW_DESC"
+				label="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_LABEL"
+				description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_OVERVIEW_DESC"
 				required="true"
 				select="true"
 				new="true"
 				edit="true"
 				clear="true"
 			/>
-
-			<field
-					id="max_thumbs_in_galleries_view_j3x"
-					name="max_thumbs_in_galleries_view_j3x"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
-					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
-					showon="gid:0"
-					class=""
-					useglobal="true"
-			>
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="30">30</option>
-				<option value="50">50</option>
-			</field>
 
 			<field
 					name="images_layout"
@@ -60,124 +40,6 @@
 					default="0"
 					label="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH"
 					description="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH_DESC"
-					class="btn-group btn-group-yesno"
-					useglobal="true"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<field
-					name="displayRandom"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_RANDOM"
-					description="COM_RSGALLERY2_DISPLAY_RANDOM_DESC"
-					class="btn-group btn-group-yesno"
-					showon="gid:0"
-					useglobal="true"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<field
-					name="displayLatest"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_LATEST"
-					description="COM_RSGALLERY2_DISPLAY_LATEST_DESC"
-					class="btn-group btn-group-yesno"
-					showon="gid:0"
-					useglobal="true"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<!-- field icons for status
-					id="displayStatus"
-					name="displayStatus"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_STATUS_ICONS"
-					description=""
-					showon="gid:0"
-					class="btn-group btn-group-yesno"
-					useglobal="true"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field-->
-
-			<field
-					id="dispLimitbox"
-					name="dispLimitbox"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_GALLERY_LIMITBOX"
-					description=""
-					showon="gid:0"
-					class=""
-					useglobal="true"
-			>
-				<option value="2">COM_RSGALLERY2_ALWAYS</option>
-				<option value="1">COM_RSGALLERY2_IF_MORE_GALLERIES_THAN_LIMIT</option>
-				<option value="0">COM_RSGALLERY2_NEVER</option>
-			</field>
-
-			<field
-					id="displaySlideshow"
-					name="displaySlideshow"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_SLIDESHOW_ON_ROOT"
-					description=""
-					showon="gid:0"
-					class="btn-group btn-group-yesno"
-					useglobal="true"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<field
-					id="showGalleryOwner"
-					name="showGalleryOwner"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_GALLERY_OWNER"
-					description=""
-					showon="gid:0"
-					useglobal="true"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<field
-					id="showGallerySize"
-					name="showGallerySize"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_GALLERY_ITEM_COUNT"
-					description=""
-					showon="gid:0"
-					class="btn-group btn-group-yesno"
-					useglobal="true"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
-			<field
-					id="showGalleryDate"
-					name="showGalleryDate"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_GALLERY_CREATION_DATE"
-					description=""
-					showon="gid:0"
 					class="btn-group btn-group-yesno"
 					useglobal="true"
 			>

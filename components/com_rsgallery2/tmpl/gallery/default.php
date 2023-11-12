@@ -13,43 +13,48 @@
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use \Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Layout\FileLayout;
 
 // https://kulturbanause.de/blog/responsive-images-srcset-sizes-adaptive/
-
-// ToDo:
-// ToDo:
 
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
 // ToDo: use but change $this->document->getWebAssetManager()->useStyle('com_rsgallery2.site.images');
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x');
 
+// Root galleries have their own menu type . Do not display anything
+$isDisplayRootGalleries = $this->galleryId === 0;
+if ($isDisplayRootGalleries)
+{
+	return;
+}
+
+//--- determine layout -------------------------------------------------
+
 $layoutName = $this->getLayout();
 
 // default is 'ImagesAreaJ3x.default'
-if($layoutName == 'default') {
-
-    // Auto layout => Flex
+if($layoutName == 'default')
+{
+    // image thumbs 'Auto' layout => Flex
     if ($this->params->get('images_column_arrangement_j3x') == 0)
     {
-	    $layoutName = 'ImagesFlexJ3x.default';
+        $layoutName = 'ImagesFlexJ3x.default';
     }
     else
     {
-        // Standard j3x layout
-	    // $layoutName = 'ImagesArea.default';
-	    $layoutName = 'ImagesAreaJ3x.default';
+        // image thumbs standard j3x layout
+        // $layoutName = 'ImagesArea.default';
+        $layoutName = 'ImagesAreaJ3x.default';
 
-	    // test layout II
-	    // $layoutName = 'ImagesFramedAreaJ3x.default';
+        // test layout II
+        // $layoutName = 'ImagesFramedAreaJ3x.default';
     }
 }
 
-$layout = new FileLayout($layoutName);
 
+$layout = new FileLayout($layoutName);
 
 //$displayData['images'] = $this->images;
 //$displayData['pagination'] = $this->pagination;
@@ -66,8 +71,6 @@ $displayData['pagination'] = $this->pagination;
 $displayData['gallery'] = $this->gallery;
 $displayData['galleryId'] = $this->galleryId;
 
-$displayData['isDebugSite'] = $this->isDebugSite;
-$displayData['isDevelopSite'] = $this->isDevelopSite;
 
 $displaySearch = $this->params->get('displaySearch', false);
 if ($displaySearch) {
@@ -102,26 +105,5 @@ if ($displaySearch) {
 
             <?php echo $layout->render($displayData); ?>
 
-
-	        <?php
-            // if ($displaySearch): show_pagination "2" / show_pagination_results "1"
-            // limit 20
-            // total 19
-            ?>
-
-            <?php
-                // echo $this->pagination->getListFooter(); ?>
-    	    <?php
-    	    // endif;
-            ?>
-
-
-
     </div>
 </form>
-
-
-
-
-
-

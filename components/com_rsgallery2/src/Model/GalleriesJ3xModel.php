@@ -24,7 +24,9 @@ use Joomla\Registry\Registry;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
@@ -210,7 +212,7 @@ class GalleriesJ3xModel extends ListModel
     /**
      * Method to get a database query to list galleries.
      *
-     * @return  \DatabaseQuery object.
+     * @return
      *
      * @since __BUMP_VERSION__
      */
@@ -595,14 +597,14 @@ class GalleriesJ3xModel extends ListModel
 			// J4x ?
 			if( ! $image->use_j3x_location) {
 
-				$imagePaths = new ImagePaths ($image->gallery_id);
-				$imagePaths->assignPathData ($image);
+				$imagePathsData = new ImagePathsData ($image->gallery_id);
+				$imagePathsData->assignPathData ($image);
 
 			} else {
 
 				// J3x
-				$imagePathJ3x = new ImagePathsJ3x ();
-				$imagePathJ3x->assignPathData ($image);
+				$imagePathsJ3xData = new ImagePathsJ3xData ();
+				$imagePathsJ3xData->assignPathData ($image);
 			}
 
 		}

@@ -14,12 +14,10 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallery;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
-use Joomla\Registry\Registry;
-
-// use Joomla\Registry\Registry;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -90,6 +88,19 @@ class HtmlView extends BaseHtmlView
         $input  = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
+		// gid = 0 ==> root view
+		$isDisplayRootGalleries = $this->galleryId === 0;
+		if ($isDisplayRootGalleries)
+		{
+			// Tell to use ... instead
+			$msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "' . Text::_('COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE') . '"';
+			$app->enqueueMessage($msg, 'Notice');
+
+			// ToDO: ? redirect ?
+
+
+		}
+
         // Get some data from the models
         $state =
         $this->state      = $this->get('State');
@@ -105,6 +116,7 @@ class HtmlView extends BaseHtmlView
 		// Merge (overwrite) config parameter with menu parameter
 		$menuParams = $this->get('Rsg2MenuParams');
 		// wrong: $this->params = $menuParams->merge($this->params);
+		$params =
 		$this->params->merge($menuParams);
 
 		$this->items      = $this->get('Items');
@@ -179,14 +191,8 @@ class HtmlView extends BaseHtmlView
 		}
 
 
-		return parent::display($tpl);
+		parent::display($tpl);
+
+		return;
 	}
-
-
-
-
-
-
-
-
 }
