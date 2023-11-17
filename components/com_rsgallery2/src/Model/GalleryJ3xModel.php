@@ -162,7 +162,7 @@ class GalleryJ3xModel extends GalleryModel
             $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
             $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));
             $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
-            $menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', ''));
+            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', ''));
 
             $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
             $menuParams->set('images_show_description', $input->getBool('images_show_description', true));

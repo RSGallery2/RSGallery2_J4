@@ -248,7 +248,7 @@
 			</field>
 
 			<field
-					name="max_images_in_images_view"
+					name="max_thumbs_in_images_view"
 					type="number"
 					default="20"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"

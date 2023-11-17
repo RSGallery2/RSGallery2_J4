@@ -83,6 +83,8 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
+		//--- gallery (j3x standard) --------------------------------------------------
+
         $app = Factory::getApplication();
 
         $input  = $app->input;
@@ -116,13 +118,12 @@ class HtmlView extends BaseHtmlView
 		// Merge (overwrite) config parameter with menu parameter
 		$menuParams = $this->get('Rsg2MenuParams');
 		// wrong: $this->params = $menuParams->merge($this->params);
-		$params =
-		$this->params->merge($menuParams);
-
-		$this->items      = $this->get('Items');
+		$params = $this->params->merge($menuParams);
 
 		$this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop'); 
+
+		$this->items      = $this->get('Items');
 
 		$model = $this->getModel();
 		$this->gallery = $model->galleryData($this->galleryId);

@@ -636,7 +636,7 @@ class ImagesModel extends ListModel
         $layoutParameter->max_columns_in_images_view = 0;
         $layoutParameter->images_row_arrangement     = 0; // 0: auto
         $layoutParameter->max_rows_in_images_view    = 0;
-        $layoutParameter->max_images_in_images_view  = 0;
+        $layoutParameter->max_thumbs_in_images_view  = 0;
 
         try {
 
@@ -649,7 +649,7 @@ class ImagesModel extends ListModel
             $max_columns_in_images_view = $rsgConfig->get('max_columns_in_images_view');
             $images_row_arrangement = $rsgConfig->get('images_row_arrangement');
             $max_rows_in_images_view = $rsgConfig->get('max_rows_in_images_view');
-            $max_images_in_images_view = $rsgConfig->get('max_images_in_images_view');
+            $max_thumbs_in_images_view = $rsgConfig->get('max_thumbs_in_images_view');
 
             //--- menu parameter -------------------------------------------------
 
@@ -675,7 +675,7 @@ class ImagesModel extends ListModel
                         if ($images_row_arrangement_menu == '1') {
                             $max_rows_in_images_view = $input->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
                         } else {
-                            $max_images_in_images_view = $input->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
+                            $max_thumbs_in_images_view = $input->get('max_thumbs_in_images_view', $max_thumbs_in_images_view, 'INT');
                         }
                     }
                 }
@@ -707,7 +707,7 @@ class ImagesModel extends ListModel
                         if ($images_row_arrangement_gallery == '1') {
                             $max_rows_in_images_view = $gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
                         } else {
-                            $max_images_in_images_view = $gallery_param->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
+                            $max_thumbs_in_images_view = $gallery_param->get('max_thumbs_in_images_view', $max_thumbs_in_images_view, 'INT');
                         }
                     }
                 }
@@ -717,7 +717,7 @@ class ImagesModel extends ListModel
             $layoutParameter->max_columns_in_images_view = $max_columns_in_images_view;
             $layoutParameter->images_row_arrangement     = $images_row_arrangement;
             $layoutParameter->max_rows_in_images_view    = $max_rows_in_images_view;
-            $layoutParameter->max_images_in_images_view  = $max_images_in_images_view;
+            $layoutParameter->max_thumbs_in_images_view  = $max_thumbs_in_images_view;
 
 
             //--- determine limit --------------------------------------------------
@@ -738,7 +738,7 @@ class ImagesModel extends ListModel
                     if((int) $images_row_arrangement == 1) { // row count
                         $limit = (int) $max_columns_in_images_view * (int) $max_rows_in_images_view;
                     } else { // max images
-                        $limit = (int) $max_images_in_images_view;
+                        $limit = (int) $max_thumbs_in_images_view;
                     }
 
                 }

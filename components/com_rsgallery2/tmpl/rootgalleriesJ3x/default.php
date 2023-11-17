@@ -24,31 +24,7 @@ use \Joomla\CMS\Layout\FileLayout;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('version' => 'auto', 'relative' => true));
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x');
 
-
-
-//if ($this->item->params->get('show_name')) {
-//
-//	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-//	} else {
-//		echo $this->item->name;
-//	}
-//}
-//
-//echo $this->item->event->afterDisplayTitle;
-//echo $this->item->event->beforeDisplayContent;
-//
-// echo '<h1> RSGallery2 "legacy" view </h1>';
-//
-//
-//echo $this->item->event->afterDisplayContent;
-
-
-
-if ($this->menuParams->get('displaySearch')) {
-    $searchLayout = new FileLayout('Search.search');
-    // $searchData['options'] = $searchOptions ...; // gallery
-}
+//--- determine layout -------------------------------------------------
 
 $layoutName = $this->getLayout();
 
@@ -69,6 +45,18 @@ $displayData['pagination'] = $this->pagination;
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
+// $displaySearch = $this->menuParams->get('displaySearch')
+$displaySearch = $this->menuParams->get('displaySearch');
+$displaySearch = $this->params->get('displaySearch', false);
+if ($displaySearch) {
+	$searchLayout = new FileLayout('Search.search');
+	// $searchData['options'] = $searchOptions ...; // gallery
+}
+
+$displayLatest = $this->menuParams->get('displayLatest');
+$displayLatest = $this->params->get('displayLatest');
+$displayRandom = $this->menuParams->get('displayRandom');
+$displayRandom = $this->params->get('displayRandom');
 
 ?>
 <!-- ToDo: is form here needed ? check core ...  -->
@@ -84,12 +72,12 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 		<?php //--- display search ---------- ?>
 
-		<?php if ($this->menuParams->get('displaySearch')): ?>
+		<?php if ($displaySearch): ?>
 			<?php echo $searchLayout->render(); ?>
 		<?php endif; ?>
 
 
-		<?php //--- display root galleries ---------- ?>
+        <?php //--- display root galleries ---------- ?>
 
 		<?php echo $layout->render($displayData); ?>
 
@@ -102,13 +90,13 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 		<?php //--- display latest images ---------- ?>
 
-		<?php if ($this->menuParams->get('displayLatest')): ?>
+		<?php if ($displayLatest): ?>
 			<?php echo $this->loadTemplate('latest_images'); ?>
 		<?php endif; ?>
 
 		<?php //--- display random images ---------- ?>
 
-		<?php if ($this->menuParams->get('displayRandom')): ?>
+		<?php if ($displayRandom): ?>
 			<?php echo $this->loadTemplate('random_images'); ?>
 		<?php endif; ?>
 

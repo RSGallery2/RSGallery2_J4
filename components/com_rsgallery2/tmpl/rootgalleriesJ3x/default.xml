@@ -16,6 +16,16 @@
 			/>
 
 			<field
+					name="max_thumbs_in_root_galleries_view_j3x"
+					type="number"
+					default="5"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
+					useglobal="true"
+					class="">
+			</field>
+
+			<field
 					name="displaySearch"
 					type="radio"
 					default="0"
@@ -81,15 +91,6 @@
 		</fieldset>
 
 		<fieldset name="root_galleries" label="COM_RSGALLERY2_MENU_J3X_ROOT_GALLERIES_TAB">
-			<field
-					name="galleries_count"
-					type="number"
-					default="5"
-					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
-					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
-					class="">
-			</field>
-
 			<field
 					name="display_limitbox"
 					type="list"

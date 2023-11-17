@@ -496,7 +496,7 @@ class GalleryModel extends ListModel
 //        $layoutParameter->max_columns_in_images_view = 0;
 //        $layoutParameter->images_row_arrangement     = 0; // 0: auto
 //        $layoutParameter->max_rows_in_images_view    = 0;
-//        $layoutParameter->max_images_in_images_view  = 0;
+//        $layoutParameter->max_thumbs_in_images_view  = 0;
 //
 //        try {
 //
@@ -525,7 +525,7 @@ class GalleryModel extends ListModel
 //            $max_columns_in_images_view = $rsgConfig->get('max_columns_in_images_view');
 //            $images_row_arrangement = $rsgConfig->get('images_row_arrangement');
 //            $max_rows_in_images_view = $rsgConfig->get('max_rows_in_images_view');
-//            $max_images_in_images_view = $rsgConfig->get('max_images_in_images_view');
+//            $max_thumbs_in_images_view = $rsgConfig->get('max_thumbs_in_images_view');
 //			$dummy = 0; // remove
 //
 //            //--- menu parameter -------------------------------------------------
@@ -553,7 +553,7 @@ class GalleryModel extends ListModel
 //                        if ($images_row_arrangement_menu == '1') {
 //                            $max_rows_in_images_view = $input->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
 //                        } else {
-//                            $max_images_in_images_view = $input->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
+//                            $max_thumbs_in_images_view = $input->get('max_thumbs_in_images_view', $max_thumbs_in_images_view, 'INT');
 //                        }
 //                    }
 //                }
@@ -588,7 +588,7 @@ class GalleryModel extends ListModel
 //                        if ($images_row_arrangement_gallery == '1') {
 //                            $max_rows_in_images_view = $gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
 //                        } else {
-//                            $max_images_in_images_view = $gallery_param->get('max_images_in_images_view', $max_images_in_images_view, 'INT');
+//                            $max_thumbs_in_images_view = $gallery_param->get('max_thumbs_in_images_view', $max_thumbs_in_images_view, 'INT');
 //                        }
 //                    }
 //                }
@@ -599,7 +599,7 @@ class GalleryModel extends ListModel
 //            $layoutParameter->max_columns_in_images_view = $max_columns_in_images_view;
 //            $layoutParameter->images_row_arrangement     = $images_row_arrangement;
 //            $layoutParameter->max_rows_in_images_view    = $max_rows_in_images_view;
-//            $layoutParameter->max_images_in_images_view  = $max_images_in_images_view;
+//            $layoutParameter->max_thumbs_in_images_view  = $max_thumbs_in_images_view;
 //
 //
 //            //--- determine limit --------------------------------------------------
@@ -620,7 +620,7 @@ class GalleryModel extends ListModel
 //                    if((int) $images_row_arrangement == 1) { // row count
 //                        $limit = (int) $max_columns_in_images_view * (int) $max_rows_in_images_view;
 //                    } else { // max images
-//                        $limit = (int) $max_images_in_images_view;
+//                        $limit = (int) $max_thumbs_in_images_view;
 //                    }
 //
 //                }
@@ -763,7 +763,7 @@ class GalleryModel extends ListModel
 		'max_columns_in_images_view'
 		'images_row_arrangement'
 		'max_rows_in_images_view'
-		'max_images_in_images_view'
+		'max_thumbs_in_images_view'
 		'displaySearch'
 		*/
 
@@ -796,7 +796,7 @@ class GalleryModel extends ListModel
 			$menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', true));
 	        $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
 			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
-			$menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', true));
+			$menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', true));
 			$menuParams->set('displaySearch', $input->getBool('displaySearch', true));
 
 
@@ -805,7 +805,7 @@ class GalleryModel extends ListModel
             $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
             $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));
             $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
-            $menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', ''));
+            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', ''));
 
             $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
             $menuParams->set('images_show_description', $input->getBool('images_show_description', true));

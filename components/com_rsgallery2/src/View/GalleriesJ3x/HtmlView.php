@@ -77,7 +77,7 @@ class HtmlView extends BaseHtmlView
         //&max_columns_in_images_view=4
         //&images_row_arrangement=2
         //&max_rows_in_images_view=5
-        //&max_images_in_images_view=20
+        //&max_thumbs_in_images_view=20
         //&intro_text=%3Cp%3EIntroduction%20Text:%20J3x%20-%20Parent%20gallery%20with%20child%20galleries%3C/p%3E%20%20%3Cp%3E%20%3C/p%3E%20%20%3Cp%3E%20%3C/p%3E
         //&Itemid=160
 

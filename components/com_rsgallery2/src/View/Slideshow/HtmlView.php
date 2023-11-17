@@ -216,7 +216,7 @@ class HtmlView extends BaseHtmlView
 //        $this->menuParams->max_columns_in_images_view= $input->getInt('max_columns_in_images_view', '');
 //        $this->menuParams->images_row_arrangement = $input->getInt('images_row_arrangement', '');
 //        $this->menuParams->max_rows_in_images_view = $input->getInt('max_rows_in_images_view', '');
-//        $this->menuParams->max_images_in_images_view = $input->getInt('max_images_in_images_view', '');
+//        $this->menuParams->max_thumbs_in_images_view = $input->getInt('max_thumbs_in_images_view', '');
 //
 //        $this->menuParams->images_show_title = $input->getBool('images_show_title', true);
 //        $this->menuParams->images_show_description = $input->getBool('images_show_description', true);

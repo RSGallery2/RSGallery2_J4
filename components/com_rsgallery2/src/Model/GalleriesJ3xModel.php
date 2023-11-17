@@ -109,16 +109,9 @@ class GalleriesJ3xModel extends ListModel
      */
     protected function populateState($ordering = 'a.lft', $direction = 'ASC')
     {
-        $app = Factory::getApplication();
+	    parent::populateState($ordering, $direction);
 
-//        $layoutParams = $this->getlayoutParams ();
-
-        //$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
-        //// Adjust the context to support forced languages.
-        //if ($forcedLanguage)
-        //{
-        //	$this->context .= '.' . $forcedLanguage;
-        //}
+	    $app = Factory::getApplication();
 
         $this->setState('gallery.id', $app->input->getInt('gid'));
         $this->setState('params', $app->getParams());
@@ -140,9 +133,6 @@ class GalleriesJ3xModel extends ListModel
 
         $search = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
         $this->setState('filter.search', $search);
-
-        // List state information.
-        parent::populateState($ordering, $direction);
 
 	    // List state information
 
@@ -305,6 +295,7 @@ class GalleriesJ3xModel extends ListModel
             $query->where('a.level <= ' . (int)$level);
         }
 
+		/**
         // Filter by access level.
         if ($access = $this->getState('filter.access')) {
             $query->where('a.access = ' . (int)$access);
@@ -315,6 +306,7 @@ class GalleriesJ3xModel extends ListModel
             $groups = implode(',', $user->getAuthorisedViewLevels());
             $query->where('a.access IN (' . $groups . ')');
         }
+		/**/
 
         // Filter by published state
         $published = (string)$this->getState('filter.published');
@@ -465,7 +457,7 @@ class GalleriesJ3xModel extends ListModel
                     $galleries = $this->getchildGalleries($galleryId);
                 }
 
-                $galleries = parent::getItems();
+                // see above $galleries = parent::getItems();
 
                 if (!empty($galleries)) {
 
@@ -990,7 +982,7 @@ class GalleriesJ3xModel extends ListModel
             max_columns_in_images_view
             images_row_arrangement
             max_rows_in_images_view
-            max_images_in_images_view
+            max_thumbs_in_images_view
         /**/
 
 
@@ -1029,7 +1021,7 @@ class GalleriesJ3xModel extends ListModel
             $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
             $menuParams->set('images_row_arrangement', $input->getBool('images_row_arrangement', true));
             $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', true));
-            $menuParams->set('max_images_in_images_view', $input->getInt('max_images_in_images_view', true));
+            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', true));
 
         }
         catch (\RuntimeException $e)

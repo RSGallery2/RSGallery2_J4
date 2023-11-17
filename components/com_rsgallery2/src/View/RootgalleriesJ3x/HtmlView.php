@@ -89,48 +89,53 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
 
-        //--- root galleries --------------------------------------------------
+        //--- root galleries (j3x standard --------------------------------------------------
 
         $app = Factory::getApplication();
+
 	    $input  = $app->input;
+
+	    $this->galleryId = $input->get('gid', 0, 'INT');
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
         $state =
         $this->state      = $this->get('State');
-        // Galleries with parend ID = 0
-        $this->items = $this->get('Items');
+	    $this->pagination = $this->get('Pagination');
+	    $this->user = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+	    $user = $app->getIdentity();
 
 	    $test = $app->getParams();
 	    $params =
-        $this->params = $this->state->get('params');
+	    $this->params = $this->state->get('params');
 
-        $this->pagination = $this->get('Pagination');
-        // Flag indicates to not add limitstart=0 to URL
-        $this->pagination->hideEmptyLimitstart = true;
-	    // ToDo: Why is this necessary ?
-//		$this->pagination->setTotal (count($this->items));
-        $this->user = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
-
-        $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
-        $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
-
-        // Merge (overwrite) menu parameter with item/config parameter
-
+	    // ToDo: may not be necessary but display
         $menuParams =
         $this->menuParams = $this->get('Rsg2MenuParams');
 
 	    // Merge (overwrite) config parameter with menu parameter
-	    $menuParams = $this->get('Rsg2MenuParams');
 	    // wrong: $this->params = $menuParams->merge($this->params);
-	    $this->params->merge($menuParams);
+	    $params = $this->params->merge($menuParams);
+
+        $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
+        $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
+
+		// J3x old parameter for limit
+	    $limit = $input->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
+	    $state->set('list.limit', $limit);
+
+	    // Galleries with parend ID = 0 / ? gallery id ?
+        $this->items = $this->get('Items');
 
         if (count($errors = $this->get('Errors')))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
-        $model = $this->getModel();
+	    // Flag indicates to not add limitstart=0 to URL
+	    $this->pagination->hideEmptyLimitstart = true;
+
+
+	    $model = $this->getModel();
 
         //--- random images --------------------------------------------------
 
@@ -155,6 +160,10 @@ class HtmlView extends BaseHtmlView
 	    {
 		    echo '<span style="color:red">'
 			    . 'Tasks: rootgalleriesJ3x view<br>'
+			    . '* !!! Menu intro text -> Save gets following lines double !!!<br>'
+			    . '* !!! Root gallery shows gallery list as text a) needed ? b) stop after 20 !!!<br>'
+			    . '* !!! latest images URLS wrong -> shows wrong image ? should show slide image of gallery ? !!!<br>'
+			    . '* !!! root images URLS wrong -> shows wrong image ? should show slide image of gallery ? !!!<br>'
 			    . '* User limit selection box -> layout ? Nbr of galleries  -> yes no ?  <br>'
 			    . '* Format of date is already in database -> improve ... <br>'
 			    . '* Events in general<br>'
@@ -164,10 +173,8 @@ class HtmlView extends BaseHtmlView
 			    //	. '* <br>'
 			    //	. '* <br>'
 			    //	. '* <br>'
-			    //	. '* <br>'
 			    . '</span><br><br>';
 	    }
-
 
 	    return parent::display($tpl);
     }
