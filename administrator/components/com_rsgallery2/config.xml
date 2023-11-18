@@ -521,7 +521,7 @@
 		</field>
 
 		<field
-				name="max_images_in_images_view"
+				name="max_thumbs_in_images_view"
 				type="number"
 				default="20"
 				label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
@@ -700,7 +700,7 @@
 		<!-- ... block  ... -->
 
 		<field
-				name="max_thumbs_in_galleries_view_j3x"
+				name="max_thumbs_in_root_galleries_view_j3x"
 				type="number"
 				default="5"
 				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"

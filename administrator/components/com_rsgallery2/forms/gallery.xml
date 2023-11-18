@@ -351,7 +351,7 @@
 				</field>
 
 				<field
-						name="max_images_in_images_view"
+						name="max_thumbs_in_images_view"
 						type="number"
 						default="20"
 						label="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_LABEL"

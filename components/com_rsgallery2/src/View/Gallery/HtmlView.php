@@ -85,7 +85,7 @@ class HtmlView extends BaseHtmlView
 	{
 		//--- gallery (j3x standard) --------------------------------------------------
 
-        $app = Factory::getApplication();
+		$app = Factory::getApplication();
 
         $input  = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
@@ -121,7 +121,7 @@ class HtmlView extends BaseHtmlView
 		$params = $this->params->merge($menuParams);
 
 		$this->isDebugSite = $params->get('isDebugSite');
-        $this->isDevelopSite = $params->get('isDevelop'); 
+		$this->isDevelopSite = $params->get('isDevelop');
 
 		$this->items      = $this->get('Items');
 

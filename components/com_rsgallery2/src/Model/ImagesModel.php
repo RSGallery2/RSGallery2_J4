@@ -120,8 +120,6 @@ class ImagesModel extends ListModel
      */
     protected function populateState($ordering = 'ordering', $direction = 'ASC')
     {
-        // global $rsgConfig;
-
         $app = Factory::getApplication();
 
         // ToDo: ? move to view html and model (plugin?)
@@ -131,6 +129,7 @@ class ImagesModel extends ListModel
         $this->setState('images.galleryId', $galleryId);
 
         // image id
+	    // why item ?
         $imageId = $app->input->get('item', '', 'INT');
         $this->setState('images.imageId', $imageId);
 

@@ -15,6 +15,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
@@ -92,8 +93,6 @@ class HtmlView extends BaseHtmlView
         $app = Factory::getApplication();
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
-        $imageId = $input->get('img_id', 0, 'INT');
-        $limitstart = $input->get('start', -1, 'INT');
 
         /* wrong call but not expected. Happens but why ? */
         if ($this->galleryId < 2)
@@ -103,11 +102,14 @@ class HtmlView extends BaseHtmlView
 
         $this->mergeMenuOptions();
 
-        // Get some data from the models
+        // State need items so it fetches them
         $this->state      = $this->get('State');
-        $this->items      = $this->get('Items');
 
-        $params =
+		// Need state defined here. Items will be fetched already there
+		$this->items      = $this->get('Items');
+
+
+		$params =
         $this->params     = $this->state->get('params');
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
@@ -122,29 +124,25 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
-        //--- pagination ------------------------------------
+		// In slide page view a single item is shown.
+		// Pagination parameters are changed to match it
+		$model = $this->getModel();
+		$model->setState2SingleItem ();
 
-        // Entry by click on gallery image ?
-        if ($limitstart <0) {
-            $this->imageIdx = $this->imageIdxInList ($imageId, $this->items);
-            //$this->state->set('list.limitstart', $this->imageIdx);
-            $this->state->set('list.start', $this->imageIdx);
-        }
+		//--- create pagination -------------------------------------------
 
-        // one image shown
-        $this->state->set('list.limit', 1);
-        // images of gallery
-        $this->state->set('list.total', count ($this->items));
+		$limitstart = $this->state->get('list.start');
+		$total =$this->state->get('list.total');
 
-        $this->pagination = $this->get('Pagination');
+		$this->pagination = new Pagination ($total, $limitstart, 1);
 
-        // Flag indicates to not add limitstart=0 to URL
-        $this->pagination->hideEmptyLimitstart = true;
+		// Flag indicates to not add limitstart=0 to URL
+		// commented to show also for IDX 0
+        // $this->pagination->hideEmptyLimitstart = true;
 
         //--- select start image --------------------------------------------------------------------
 
-        // from pagination
-        $this->imageIdx = $this->pagination->limitstart;
+        $this->imageIdx = $this->state->get('list.start');
         $this->image = null;
         if (count ($this->items) >= $this->imageIdx) {
 
@@ -280,39 +278,6 @@ class HtmlView extends BaseHtmlView
 //        $this->menuParams->images_show_title = $input->getBool('images_show_title', true);
 //        $this->menuParams->images_show_description = $input->getBool('images_show_description', true);
 
-    }
-
-    /**
-     * Detect matching image by ID in image list
-     * @param $imageId
-     * @param $images
-     *
-     * @return int
-     *
-     * @since version
-     *
-     *  ToDo: move to model
-     */
-    public function imageIdxInList ($imageId, $images)
-    {
-        /**/
-        $imageIdx = -1;
-
-        if (!empty ($images)) {
-
-            // Not given use first
-            $imageIdx = 0;
-
-            $count = count($images);
-            for ($idx = 0; $idx < $count ; $idx++) {
-                if ($images[$idx]->id == $imageId) {
-                    $imageIdx = $idx;
-                    break;
-                }
-            }
-        }
-
-        return $imageIdx;
     }
 
 

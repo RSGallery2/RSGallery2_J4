@@ -37,7 +37,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
     protected $layoutParams = null; // col/row count
 	/**/
 
-    /**
+	/**
      * Add "asInline" Url to each image
      * @param $galleries
      *

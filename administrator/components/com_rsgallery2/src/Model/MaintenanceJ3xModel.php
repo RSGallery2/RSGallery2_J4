@@ -152,7 +152,7 @@ class MaintenanceJ3xModel extends BaseDatabaseModel
 			//--- transform J3x to J4x (New names) ------------------------------------------
 
 	        // galcountNrs  <=> galDisplayCountJ3x
-	        $assistedJ3xItems ['galcountNrs'] = array('max_thumbs_in_galleries_view_j3x',
+	        $assistedJ3xItems ['galcountNrs'] = array('max_thumbs_in_root_galleries_view_j3x',
 		        $j3xConfigItems['galcountNrs']);
 
 	        //

@@ -33,34 +33,44 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
 class SlidePageJ3XModel extends ImagesJ3xModel
 {
 
-    // for pagination override
-    protected function populateState($ordering = 'ordering', $direction = 'ASC')
-    {
-//        $input   = Factory::getApplication()->input;
-//        $imageId = $input->get('img_id', 0, 'INT');
 
-        parent::populateState($ordering, $direction);
+	/**
+	 * In slide page view a single item is shown.
+	 * Pagination parameters are changed to match it
+	 * It can not be added to populatian as i t needs
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
 
-//        if ($imageId > 0) {
-////            $imageIdx = $this->imageIdxInList ($imageId, $this->items);
-////            $this->state->set('list.limitstart', 9);
-//            $this->setState('id', $imageId);
-//
-//        }
+	public function setState2SingleItem()
+	{
+		$app = Factory::getApplication();
 
+		$limitstart = $app->input->get('start', -1, 'INT');
 
-//        $input  = Factory::getApplication()->input;
-//        $galleryId = $input->get('gid', 0, 'INT');
-//
-//        // If gallery ID is given
-//        if ($galleryId) {
-//            // ToDo:         if ($gallery_id = ) instead of below
-//            // wrong: $this->setState('rsgallery2.id', $app->input->getInt('id'));
-//            $this->setState('filter.gallery_id', $galleryId);
-//            //filter.gallery_id
-//        }
+		//--- pagination ------------------------------------
 
-    }
+		// Entry by click on gallery image ?
+		if ($limitstart <0) {
+			$imageId = $app->input->get('img_id', 0, 'INT');
+
+			// May create list
+			$items = $this->getItems();
+			$imageIdx = $this->imageIdxInList ($imageId, $items);
+			//$this->state->set('list.limitstart', $this->imageIdx);
+			$this->state->set('list.start', $imageIdx);
+		}
+
+		// one image shown
+		$this->state->set('list.limit', 1);
+		// images of gallery
+		$total = count ($items);
+		$this->state->set('list.total', $total);
+
+		return;
+	}
+
 
 
     /**
@@ -137,6 +147,39 @@ class SlidePageJ3XModel extends ImagesJ3xModel
 
         return $exifDataOfFile;
     }
+
+	/**
+	 * Detect matching image by ID in image list
+	 * @param $imageId
+	 * @param $images
+	 *
+	 * @return int
+	 *
+	 * @since version
+	 *
+	 *  ToDo: move to model
+	 */
+	public function imageIdxInList ($imageId, $images)
+	{
+		/**/
+		$imageIdx = -1;
+
+		if (!empty ($images)) {
+
+			// Not given use first
+			$imageIdx = 0;
+
+			$count = count($images);
+			for ($idx = 0; $idx < $count ; $idx++) {
+				if ($images[$idx]->id == $imageId) {
+					$imageIdx = $idx;
+					break;
+				}
+			}
+		}
+
+		return $imageIdx;
+	}
 
 }
 
