@@ -75,9 +75,10 @@ class HtmlView extends BaseHtmlView
 		$j3xModel      = $this->getModel();
 
 		$Layout = Factory::getApplication()->input->get('layout');
+		// ? layout to lower ?
 		switch ($Layout)
 		{
-			case 'DbCopyJ3xConfig':
+			case 'dbcopyj3xconfig':
 
 				try
 				{
@@ -105,7 +106,7 @@ class HtmlView extends BaseHtmlView
 
 				break;
 
-            case 'DBTransferJ3xGalleries':
+            case 'dbtransferj3xgalleries':
                 try
                 {
                     // gallery list
@@ -140,7 +141,7 @@ class HtmlView extends BaseHtmlView
 
 	            break;
 
-            case 'DbTransferJ3xImages':
+            case 'dbtransferj3ximages':
                 try
                 {
 	                $this->isDoCopyJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
@@ -175,7 +176,7 @@ class HtmlView extends BaseHtmlView
 	                //--- Form --------------------------------------------------------------------
 
 	                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/moveJ3xImages.xml';
-	                $form = Form::getInstance('moveJ3xImages', $xmlFile);
+	                $form = Form::getInstance('movej3ximages', $xmlFile);
 
 	                // Check for errors.
 	                /* Must load form before */
@@ -202,7 +203,7 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
-            case 'MoveJ3xImages':
+            case 'movej3ximages':
                 try
                 {
                     // state ?
@@ -249,7 +250,7 @@ class HtmlView extends BaseHtmlView
                     //--- Form --------------------------------------------------------------------
 
                     $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/moveJ3xImages.xml';
-                    $form = Form::getInstance('moveJ3xImages', $xmlFile);
+                    $form = Form::getInstance('movej3ximages', $xmlFile);
 
                     // Check for errors.
                     /* Must load form before */
@@ -302,13 +303,13 @@ class HtmlView extends BaseHtmlView
 
 		switch ($Layout)
 		{
-			case 'DbCopyJ3xConfig':
+			case 'dbcopyj3xconfig':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
-//      				. '* <br>'
+      				    . '* Support single page for fisrt initialisation and return to ? config/rsgallery2 control panel ?<br>'
 //		        		. '* <br>'
 //				        . '* <br>'
 //      				. '* <br>'
@@ -323,7 +324,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 				break;
 
-			case 'DBTransferJ3xGalleries':
+			case 'dbtransferj3xgalleries':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
@@ -350,7 +351,7 @@ class HtmlView extends BaseHtmlView
 
 				break;
 
-			case 'DbTransferJ3xImages':
+			case 'dbtransferj3ximages':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
@@ -375,7 +376,7 @@ class HtmlView extends BaseHtmlView
 
 				break;
 
-			case 'MoveJ3xImages':
+			case 'movej3ximages':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{

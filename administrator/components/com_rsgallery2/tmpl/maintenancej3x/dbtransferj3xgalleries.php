@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
 // responsible for moveJ3xImages, dbtransferj3xgalleries, dbtransferj3ximages, dbcopyj3xconfig
-$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTransferJ3xGalleries');
+$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbtransferj3xgalleries');
 
 function jsonArray2Lines($lines)
 {
@@ -491,7 +491,7 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
 --------------------------------------------------------------------------------*/
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -503,9 +503,9 @@ function j4x_galleryListHtml ($dbtransferj3xgalleries) {
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferJ3xGalleries')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'dbtransferj3xgalleries')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xGalleries', Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'dbtransferj3xgalleries', Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES', true)); ?>
 
 	            <?php //--- J3x main --------------------------------------------------------------- ?>
 

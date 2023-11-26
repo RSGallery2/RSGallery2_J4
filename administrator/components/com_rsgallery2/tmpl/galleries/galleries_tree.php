@@ -126,7 +126,7 @@ EOT;
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
 		<?php if (!empty($this->sidebar)) : ?>
@@ -138,9 +138,9 @@ EOT;
         <div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DBTransferJ3xGalleries')); ?>
+				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'dbtransferj3xgalleries')); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DBTransferJ3xGalleries', Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE', true)); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'dbtransferj3xgalleries', Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE', true)); ?>
 
                 <legend><strong><?php echo Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'); ?></strong></legend>
 
@@ -163,7 +163,7 @@ EOT;
 
                         if (count ($this->items) == 1) {
                             $keyTranslation = Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_JUMP_TO_J3X_GALLERIES');
-                            $link = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries');
+                            $link = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries');
 //                            echo  '<br><h3></h3><a  class="badge badge-pill badge-notice" href="' . $link . '" target="_blank" '
 //                                . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >' . $keyTranslation . '</a></h3>';;
                             echo  '<br><h3></h3><a  class="badge badge-pill bg-notice" href="' . $link . '" " '
@@ -181,7 +181,7 @@ EOT;
 					catch (\RuntimeException $e)
 					{
 						$OutTxt = '';
-						$OutTxt .= 'Error rawEdit view: "' . 'DBTransferJ3xGalleries' . '"<br>';
+						$OutTxt .= 'Error rawEdit view: "' . 'dbtransferj3xgalleries' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 					
 						$app = Factory::getApplication();

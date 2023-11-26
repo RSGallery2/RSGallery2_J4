@@ -152,8 +152,6 @@ class ConfigJ3xRawModel extends BaseModel
 
                     $secured = $filter->clean ($value, 'STRING');
                 break;
-
-
             }
 
             $inType = gettype ($value);
@@ -202,8 +200,5 @@ class ConfigJ3xRawModel extends BaseModel
 
         return true;
     }
-
-
-
 
 }

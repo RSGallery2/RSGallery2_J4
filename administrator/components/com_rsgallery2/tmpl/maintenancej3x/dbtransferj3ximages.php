@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
 // responsible for moveJ3xImages, dbtransferj3xgalleries, dbtransferj3ximages, dbcopyj3xconfig
-$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTransferJ3xImages');
+$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbtransferj3ximages');
 
 function isOKIconHtml ($title) {
 
@@ -359,7 +359,7 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -371,9 +371,9 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DbTransferJ3xImages')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'dbtransferj3ximages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DbTransferJ3xImages',
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'dbtransferj3ximages',
                     Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true)); ?>
 
                 <?php //--- copy instruction ------------------------------------------------------------------------ ?>

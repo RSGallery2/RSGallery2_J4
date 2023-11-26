@@ -61,11 +61,13 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
 	                    $lang->load('com_rsg2_j3x',
 		                    Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 
-	                    if ($this->isDoCopyJ3xDbGalleries
+	                    if ($this->isDoCopyJ3xDbConfig
+                            || $this->isDoCopyJ3xDbGalleries
                             || $this->isDoCopyJ3xDbImages
                             || $this->isDoCopyJ3xImages) {
 
                             echo DisplayRequestJ3xActions (
+                                    $this->isDoCopyJ3xDbConfig,
                                     $this->isDoCopyJ3xDbGalleries,
                                     $this->isDoCopyJ3xDbImages,
                                     $this->isDoCopyJ3xImages
@@ -182,42 +184,53 @@ function DisplayRSG2Logo()
  *
  * @since __BUMP_VERSION__
  */
-function DisplayRequestJ3xActions($isDoCopyJ3xDbGalleries=false,
-                                    $isDoCopyJ3xDbImages=false,
-                                    $isDoCopyJ3xImages=false)
+function DisplayRequestJ3xActions($isDoCopyJ3xDbConfig=false,
+                                  $isDoCopyJ3xDbGalleries=false,
+                                  $isDoCopyJ3xDbImages=false,
+                                  $isDoCopyJ3xImages=false)
 {
     $html = '';
 
-    $rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries');
-    $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages');
-    $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages');
+    $rsg2J3xCopyDbConfigLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfig');
+    $rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries');
+    $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages');
+    $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximages');
 
-    $CopyDbGalleries = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES');
-    $CopyDbGalleriesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC');
+	$CopyDbConfig = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG');
+	$CopyDbConfigDesc = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC');
+
+	$CopyDbGalleries = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES');
+	$CopyDbGalleriesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC');
     $CopyDbImages = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES');
     $CopyDbImagesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC');
-    $CopyImages = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES');
+    $CopyImages = '<del>' . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES') .'</del>';
     $CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
 
     $header = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
     $headerDesc = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED_DESC');
 
+    $link0 = '';
+    if ($isDoCopyJ3xDbConfig) {
+        $link0 = <<<EOT
+                                <span class="badge badge-pill bg-success">1</span> <a href="$rsg2J3xCopyDbConfigLink" class="btn btn-success btn-sm" Title="$CopyDbConfigDesc" role="button">$CopyDbConfig</a>
+EOT;
+    }
     $link1 = '';
     if ($isDoCopyJ3xDbGalleries) {
         $link1 = <<<EOT
-                                <span class="badge badge-pill bg-success">1</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
+                                <span class="badge badge-pill bg-success">2</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
 EOT;
     }
     $link2 = '';
     if ($isDoCopyJ3xDbImages) {
         $link2 = <<<EOT
-                                <span class="badge badge-pill bg-success">2</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
+                                <span class="badge badge-pill bg-success">3</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
 EOT;
     }
     $link3 = '';
     if ($isDoCopyJ3xImages) {
         $link3 = <<<EOT
-                                <span class="badge badge-pill bg-success">3</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm" Title="$CopyImagesDesc" role="button">$CopyImages</a>
+                                <span class="badge badge-pill bg-success">4</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm" Title="$CopyImagesDesc" role="button">$CopyImages</a></del>
 EOT;
     }
 
@@ -229,6 +242,8 @@ EOT;
                     <div class="card-body">
                         <p class="card-text">$headerDesc</p>
                         <ul>
+                            <li style="list-style: none; margin-bottom: 10px">
+                            $link0
                             <li style="list-style: none; margin-bottom: 10px">
                             $link1
                             </li>

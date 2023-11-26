@@ -68,6 +68,8 @@ class HtmlView extends BaseHtmlView
 	protected $isConfigSavedOnce;
 
     protected $isJ3xDataExisting;
+
+	protected $isDoCopyJ3xDbConfig;
     protected $isDoCopyJ3xDbGalleries;
     protected $isDoCopyJ3xDbImages;
     protected $isDoCopyJ3xImages;
@@ -112,18 +114,20 @@ class HtmlView extends BaseHtmlView
         $this->isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
         if($this->isJ3xDataExisting) {
 
-            // j3x configuration will be copied immediately
-            $isj3xDbConfigCopied = $rsgConfig->get('j3x_db_config_copied');
-            if ( ! $isj3xDbConfigCopied) {
-                $j3xModel = new MaintenanceJ3xModel ();
+// j3x configuration not copied by installation actually
+//            // j3x configuration will be copied immediately
+//            $isj3xDbConfigCopied = $rsgConfig->get('j3x_db_config_copied');
+//            if ( ! $isj3xDbConfigCopied) {
+//                $j3xModel = new MaintenanceJ3xModel ();
+//
+//                $isCopied = $j3xModel->collectAndCopyJ3xConfig2J4xOptions ();
+//                if ($isCopied) {
+//                    $rsgConfig->set('j3x_db_config_copied', true);
+//                    ConfigRawModel::writeConfigParam ('j3x_db_config_copied', true);
+//                }
+//            }
 
-                $isCopied = $j3xModel->collectAndCopyJ3xConfig2J4xOptions ();
-                if ($isCopied) {
-                    $rsgConfig->set('j3x_db_config_copied', true);
-                    ConfigRawModel::writeConfigParam ('j3x_db_config_copied', true);
-                }
-            }
-
+            $this->isDoCopyJ3xDbConfig = ! $rsgConfig->get('j3x_db_config_copied');
             $this->isDoCopyJ3xDbGalleries = ! $rsgConfig->get('j3x_db_galleries_copied');
             $this->isDoCopyJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
             $this->isDoCopyJ3xImages = ! $rsgConfig->get('j3x_images_copied');

@@ -176,7 +176,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			}
 
 // !!! ToDo: remove !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			$this->oldRelease = '4.5.3.0';
+//			$this->oldRelease = '4.5.3.0';
 // !!! ToDo: remove !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			Log::add(Text::_('newRelease:') . $this->newRelease, Log::INFO, 'rsg2');
@@ -333,18 +333,18 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 				//--- Previous j3x version: ----------------------------------------------------
 
-				if (version_compare($this->oldRelease, '5.0.0', 'lt'))
-				{
-					//--- Old J3x config (not galleries, not images) -------------------------------
-
-					// Would like to update galleries and move images too, but it would be
-					// time-consuming. So left out
-
-					// copy J3xConfigParameter config (includes transfer to new names
-					$isCopiedConfig = $this->copyJ3xDbConfigParameter ();
-
-				}
-
+// Can't be used as boot rsg2 would be needed and is yet ? partly active ?
+//				if (version_compare($this->oldRelease, '5.0.0', 'lt'))
+//				{
+//					//--- Old J3x config (not galleries, not images) -------------------------------
+//
+//					// Would like to update galleries and move images too, but it would be
+//					// time-consuming. So left out
+//
+//					// copy J3xConfigParameter config (includes transfer to new names
+//					$isCopiedConfig = $this->copyJ3xDbConfigParameter ();
+//
+//				}
 
 				//--- install message  ----------------------------------------------------
 
@@ -455,13 +455,21 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		try
 		{
-
 			Log::add('initGalleryTree: include TreeModel', Log::INFO, 'rsg2');
 
 			$GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/GalleryTreeModel.php';
-			include($GalleryTreeModelFileName);
+			Log::add(Text::_('upd (10.2) '), Log::INFO, 'rsg2');
+			$GalleryTreeClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel';
+			Log::add(Text::_('upd (10.3) '), Log::INFO, 'rsg2');
+			\JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
+
+//			Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
+//			include($GalleryTreeModelFileName);
+
+			Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
 			$galleryTreeModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
 
+			Log::add(Text::_('upd (10.5) '), Log::INFO, 'rsg2');
 			Log::add('initGalleryTree: check for root item', Log::INFO, 'rsg2');
 
 			// check for root item
@@ -616,95 +624,130 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		return $manifest;
 	}
 
+// Not used ?
+//	/**
+//	 *
+//	 * Checks for RSG2 version j3x db tables existence
+//	 *
+//	 * @return bool
+//	 * @throws Exception
+//	 *
+//	 * @since 5.0.0
+//	 */
+//	protected function isJ3xRsg2DataExisting() : array
+//	{
+//		$isJ3xTableExisting = false;
+//
+//		try
+//		{
+//
+//			$J3xExistModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/J3xExistModel.php';
+//			include($J3xExistModelFileName);
+//			$j3xExistModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel();
+//
+//			$isJ3xTableExisting = $j3xExistModel->J3xConfigTableExist();
+//
+//		} //catch (\RuntimeException $e)
+//		catch (\Exception $e)
+//		{
+//			Log::add('isJ3xRsg2DataExisting: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+//			throw new \RuntimeException($e->getMessage() . ' from isJ3xRsg2DataExisting');
+//		}
+//
+//		return $isJ3xTableExisting;
+//	}
 
-	/**
-	 *
-	 * Checks for RSG2 version j3x db tables existence
-	 *
-	 * @return bool
-	 * @throws Exception
-	 *
-	 * @since 5.0.0
-	 */
-	protected function isJ3xRsg2DataExisting() : array
-	{
-		$isJ3xTableExisting = false;
-
-		try
-		{
-
-			$J3xExistModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/J3xExistModel.php';
-			include($J3xExistModelFileName);
-			$j3xExistModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel();
-
-			$isJ3xTableExisting = $j3xExistModel->J3xConfigTableExist();
-
-		} //catch (\RuntimeException $e)
-		catch (\Exception $e)
-		{
-			Log::add('isJ3xRsg2DataExisting: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
-			throw new \RuntimeException($e->getMessage() . ' from isJ3xRsg2DataExisting');
-		}
-
-		return $isJ3xTableExisting;
-	}
-
-	/**
-	 *
-	 * Checks for RSG2 version j3x db tables existence
-	 *
-	 * @return
-	 * @throws Exception
-	 *
-	 * @since 5.0.0
-	 */
-	protected function copyJ3xDbConfigParameter()
-	{
-		$isCopiedConfig = false;
-
-		try
-		{
-			Log::add(Text::_('upd (30) MaintenanceJ3xModel (copy J3x config) -----------------------'), Log::INFO, 'rsg2');
-
-			Log::add(Text::_('upd (30.1) '), Log::INFO, 'rsg2');
-
-			// load model -----------------------------------------------------
-
-			$j3xModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/MaintenanceJ3xModel.php';
-			Log::add(Text::_('upd (30.2) '), Log::INFO, 'rsg2');
-			include($j3xModelFileName);
-			Log::add(Text::_('upd (30.3) '), Log::INFO, 'rsg2');
-			$j3xModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel();
-
-			try
-			{
-				//--- copy j3x parameter ---------------------------------------------
-
-				Log::add(Text::_('upd (30.4) '), Log::INFO, 'rsg2');
-				$isCopiedConfig = $j3xModel->collectAndCopyJ3xConfig2J4xOptions();
-
-				Log::add(Text::_('upd (30.5) '), Log::INFO, 'rsg2');
-				if (!$isCopiedConfig)
-				{
-					Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
-				}
-			}
-			catch (\RuntimeException $e)
-			{
-				Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy j3x DB config', 'error');
-			}
-
-			Log::add(Text::_('upd (30.9) '), Log::INFO, 'rsg2');
-
-		} //catch (\RuntimeException $e)
-		catch (\Exception $e)
-		{
-			Log::add('copyJ3xDbTables: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
-			throw new \RuntimeException($e->getMessage() . ' from copyJ3xDbTables');
-		}
-
-		return $isCopiedConfig;
-	}
+// Can't be used as boot rsg2 would be needed and is yet ? partly active ?
+//	/**
+//	 *
+//	 * Copies J3x configuration parameter(options) to J4x version
+//	 *
+//	 * @return
+//	 * @throws Exception
+//	 *
+//	 * @since 5.0.0
+//	 */
+//	protected function copyJ3xDbConfigParameter()
+//	{
+//		// Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+//		// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+//		// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
+//		// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+//
+//		$isCopiedConfig = false;
+//
+//		try
+//		{
+//			Log::add(Text::_('upd (30) MaintenanceJ3xModel (copy J3x config) -----------------------'), Log::INFO, 'rsg2');
+//
+//			Log::add(Text::_('upd (30.1) '), Log::INFO, 'rsg2');
+//
+//			// prepare 'use' models -----------------------------------------------------
+//
+//			//--- load ConfigRawModel -----------------------------------------------------
+//
+//			$configRawModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ConfigRawModel.php';
+//			Log::add(Text::_('upd (30.2) '), Log::INFO, 'rsg2');
+//			$configRawClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel';
+//			Log::add(Text::_('upd (30.3) '), Log::INFO, 'rsg2');
+//			\JLoader::register($configRawClassName, $configRawModelFileName);
+//
+////			// Log::add(Text::_('upd (30.3) '), Log::INFO, 'rsg2');
+////			Log::add('ConfigRawModel: ', Log::INFO, 'rsg2');
+////			include($configRawModelFileName);
+//
+//			Log::add(Text::_('upd (30.4) '), Log::INFO, 'rsg2');
+//			$configRawModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel();
+//
+//			//--- load MaintenanceJ3xModel -----------------------------------------------------
+//
+//			Log::add(Text::_('upd (30.11) '), Log::INFO, 'rsg2');
+//			$copyConfigJ3xModelModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/CopyConfigJ3xModel.php';
+//			Log::add(Text::_('upd (30.12) '), Log::INFO, 'rsg2');
+//			$copyConfigJ3xClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\CopyConfigJ3xModel';
+//			Log::add(Text::_('upd (30.13) '), Log::INFO, 'rsg2');
+//			\JLoader::register($copyConfigJ3xClassName, $copyConfigJ3xModelModelFileName);
+//
+////			//Log::add(Text::_('upd (30.14) '), Log::INFO, 'rsg2');
+////			Log::add('ConfigJ3xRawModel: ', Log::INFO, 'rsg2');
+////			include($copyConfigJ3xModelModelFileName);
+//
+//			//--- use MaintenanceJ3xModel ----------------------------------------------------
+//
+//			Log::add(Text::_('upd (30.14) '), Log::INFO, 'rsg2');
+//			$j3xModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\CopyConfigJ3xModel();
+//
+//			try
+//			{
+//				//--- copy j3x parameter ---------------------------------------------
+//
+//				//Log::add(Text::_('upd (30.6) '), Log::INFO, 'rsg2');
+//				Log::add('collectAndCopyJ3xConfig2J4xOptions: ', Log::INFO, 'rsg2');
+//
+//				$isCopiedConfig = $j3xModel->collectAndCopyJ3xConfig2J4xOptions();
+//
+//				Log::add(Text::_('upd (30.7) '), Log::INFO, 'rsg2');
+//				if (!$isCopiedConfig)
+//				{
+//					Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
+//				}
+//			}
+//			catch (\RuntimeException $e)
+//			{
+//				Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy j3x DB config', 'error');
+//			}
+//
+//			Log::add(Text::_('upd (30.19) '), Log::INFO, 'rsg2');
+//
+//		} //catch (\RuntimeException $e)
+//		catch (\Exception $e)
+//		{
+//			Log::add('copyJ3xDbTables: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+//			throw new \RuntimeException($e->getMessage() . ' from copyJ3xDbTables');
+//		}
+//
+//		return $isCopiedConfig;
+//	}
 
 	/**
 	 * Remove old language files of RSG2 J3x stored within joomla
@@ -836,6 +879,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			if (is_dir($adminRSG2_Path)) {
 
 				Log::add(Text::_('upd (50.2) '), Log::INFO, 'rsg2');
+				Log::add(Text::_('del Folder: ') . $adminRSG2_Path, Log::INFO, 'rsg2');
 
 				$isOk = Folder::delete($adminRSG2_Path);
 
@@ -845,26 +889,31 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 					Log::add(Text::_('upd (50.3) RSG2 admin not deleted'), Log::INFO, 'rsg2');
 
 				}
+				
+				Log::add(Text::_('upd (50.4) '), Log::INFO, 'rsg2');
 			}
 
 			//--- site\language path ---------------------------------
 
 			$componentRSG2_Path = JPATH_ROOT . '/components/' . 'com_rsgallery2';
 
-			Log::add(Text::_('upd (50.10) '), Log::INFO, 'rsg2');
+			Log::add(Text::_('upd (50.11) '), Log::INFO, 'rsg2');
 
 			if (is_dir($componentRSG2_Path)) {
 
-				Log::add(Text::_('upd (50.11) '), Log::INFO, 'rsg2');
+				Log::add(Text::_('upd (50.12) '), Log::INFO, 'rsg2');
+				Log::add(Text::_('del Folder: ') . $componentRSG2_Path, Log::INFO, 'rsg2');
 
 				$isOk = Folder::delete($componentRSG2_Path);
 
 				if (!$isOk)
 				{
 
-					Log::add(Text::_('upd (50.3) RSG2 component not deleted'), Log::INFO, 'rsg2');
+					Log::add(Text::_('upd (50.12) RSG2 component not deleted'), Log::INFO, 'rsg2');
 
 				}
+				
+				Log::add(Text::_('upd (50.13) '), Log::INFO, 'rsg2');
 			}
 
 		}
@@ -887,8 +936,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	{
 		try
 		{
-
-			Log::add(Text::_('upd (20) Rsg2ExtensionModel (--default parameter) -----------------------'), Log::INFO, 'rsg2');
+			Log::add(Text::_('upd (20) Rsg2ExtensionModel (update default parameter) -----------------------'), Log::INFO, 'rsg2');
 
 			Log::add(Text::_('upd (20.1) '), Log::INFO, 'rsg2');
 
@@ -899,6 +947,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			$Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
 			Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');
 			\JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
+
 			Log::add(Text::_('upd (20.4) '), Log::INFO, 'rsg2');
             $Rsg2ExtensionClass = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel();
 

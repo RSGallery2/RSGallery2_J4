@@ -303,7 +303,7 @@ $this->j3xNotMovedInfo = [];
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximages'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -315,9 +315,9 @@ $this->j3xNotMovedInfo = [];
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'MoveJ3xImages')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'movej3ximages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'MoveJ3xImages', Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'movej3ximages', Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES', true)); ?>
 
                 <!--legend><strong><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'); ?></strong></legend-->
 

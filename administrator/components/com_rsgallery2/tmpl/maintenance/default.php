@@ -347,7 +347,7 @@ $upgrade_ZoneButtons = [];
 if ($this->isJ3xRsg2DataExisting)
 {
 
-	/**/
+	/**
 	$upgrade_ZoneButtons[] = new zoneButtons(
 		Route::_('index.php?option=com_rsgallery2&task=MaintenanceJ3x.applyExistingJ3xData'),
 		Text::_('COM_RSGALLERY2_APPLY_EXISTING_J3X_DATA'),
@@ -359,7 +359,7 @@ if ($this->isJ3xRsg2DataExisting)
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbCopyJ3xConfig'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfig'),
 		Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'),
 		Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC'),
 		array('icon-new-tab', 'icon-database', 'icon-equalizer'),
@@ -369,31 +369,31 @@ if ($this->isJ3xRsg2DataExisting)
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC'),
 		array('icon-new-tab', 'icon-images'),
-		'viewDBTransferJ3xGalleries'
+		'viewdbtransferj3xgalleries'
 	);
 	/**/
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'),
 		Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC'),
 		array('icon-new-tab', 'icon-database', 'icon-image'),
-		'viewDbTransferJ3xImages'
+		'viewdbtransferj3ximages'
 	);
 	/**/
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximages'),
         Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
         Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
 		array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
-		'viewDbTransferJ3xImages'
+		'viewdbtransferj3ximages'
 	);
 	/**/
 
@@ -551,41 +551,41 @@ $developer4Test_ZoneButtons = [];
 
 /**
 $developer4Test_ZoneButtons[] = new zoneButtons(
-	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DBTransferJ3xGalleries'),
+	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries'),
 	Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'),
 	Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC'),
 	array('icon-new-tab', 'icon-images'),
-	'viewDBTransferJ3xGalleries'
+	'viewdbtransferj3xgalleries'
 );
 /**/
 
 /**
 $developer4Test_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=DbTransferJ3xImages'),
+    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages'),
     Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'),
     Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC'),
     array('icon-new-tab', 'icon-database', 'icon-image'),
-    'viewDbTransferJ3xImages'
+    'viewdbtransferj3ximages'
 );
 /**/
 
 /**
 $developer4Test_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximages'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
     array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
-    'viewDbTransferJ3xImages'
+    'viewdbtransferj3ximages'
 );
 /**/
 
 /**/
 $developer4Test_ZoneButtons[] = new zoneButtons(
-    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=MoveJ3xImages'),
+    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximages'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'),
     Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC'),
     array('icon-new-tab', 'icon-copy', 'icon-image', 'icon-notification-2'),
-    'viewDbTransferJ3xImages'
+    'viewdbtransferj3ximages'
 );
 /**/
 
