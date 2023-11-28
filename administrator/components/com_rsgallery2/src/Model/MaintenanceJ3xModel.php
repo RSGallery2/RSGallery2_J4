@@ -2418,7 +2418,7 @@ EOT;
 					// valid link ?
 					if ( ! empty($newLink))
 					{
-						$successful &= $this->updataMenuLink($id, $newLink);
+						$successful &= $this->updateMenuLink($id, $newLink);
 					} // else successful = false ...
 				}
 			}
@@ -2463,7 +2463,7 @@ EOT;
 					// valid link ?
 					if ( ! empty($newLink))
 					{
-						$successful &= $this->updataMenuLink($id, $newLink);
+						$successful &= $this->updateMenuLink($id, $newLink);
 					}
 				}
 			}
@@ -2540,6 +2540,8 @@ EOT;
 	}
 
 	/**
+	 * Writes back menu link with increased / decreased gallery ID
+	 *
 	 * @param   int|string  $newLink
 	 * @param   int|string  $id
 	 * @param   bool        $successful
@@ -2548,7 +2550,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function updataMenuLink(string $id, string $newLink): bool
+	public function updateMenuLink(string $id, string $newLink): bool
 	{
 		$successful = false;
 
@@ -2557,8 +2559,9 @@ EOT;
 
 		$query->update($db->quoteName('#__menu'))
 			->set($db->quoteName('link') . ' = ' . $db->quote($newLink))
-			->where($db->quoteName('id') . ' = ' . $db->quote($id));
+			->where($db->quoteName('id') . ' = ' . $id);
 
+		$db->setQuery($query);
 		if ($db->execute())
 		{
 			$successful = true;
