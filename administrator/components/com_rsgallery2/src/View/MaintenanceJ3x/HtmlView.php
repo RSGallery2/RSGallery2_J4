@@ -307,20 +307,36 @@ class HtmlView extends BaseHtmlView
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
-					echo '<span style="color:red">'
-						. 'Tasks: <br>'
-      				    . '* Support single page for fisrt initialisation and return to ? config/rsgallery2 control panel ?<br>'
-//		        		. '* <br>'
-//				        . '* <br>'
-//      				. '* <br>'
-						. '</span><br>';
+//					echo '<span style="color:red">'
+//						. 'Tasks: <br>'
+////		        		. '* <br>'
+////				        . '* <br>'
+////      				. '* <br>'
+//						. '</span><br>';
 				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'), 'screwdriver');
-				ToolBarHelper::custom('MaintenanceJ3x.copyJ3xConfig2J4xOptions', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
-				//  ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xConfig2J4xOptions','copy','','COM_RSGALLERY2_COPY_SELECTED_J3X_CONFIGURATION', true);
-				//ToolBarHelper::custom ('copyoldconfig.recompare','upload','','COM_RSGALLERY2_OLD_CONFIGURATION_RECOMPARE', true);
 
+				ToolBarHelper::custom('MaintenanceJ3x.copyJ3xConfig2J4xOptions', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+				break;
+
+			case 'dbcopyj3xconfiguser':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+//					echo '<span style="color:red">'
+//						. 'Tasks: <br>'
+//					. '* activate / hide button<br>'
+////		        		. '* <br>'
+////				        . '* <br>'
+////      				. '* <br>'
+//						. '</span><br>';
+				}
+
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'), 'screwdriver');
+
+				ToolBarHelper::custom('MaintenanceJ3x.copyJ3xConfig2J4xOptionsUser', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 				break;
 
@@ -342,9 +358,31 @@ class HtmlView extends BaseHtmlView
 				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'), 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES', false);
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+
+				// actual on copy the table is cleared first. So it is not possible to do it with single entries
+				// ToolBarHelper::custom ('MaintenanceJ3x.COM_RSGALLERY2_DB_TRANSFER_SELECTED_J3X_GALLERIES','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
+
+				break;
+
+			case 'dbtransferj3xgalleriesuser':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+//					echo '<span style="color:red">'
+//						. 'Tasks: <br>'
+////     	    			. '* <br>'
+////				        . '* <br>'
+////     	    			. '* <br>'
+//						. '</span><br>';
+				}
+
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'), 'screwdriver');
+
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4xUser', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES', false);
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				// actual on copy the table is cleared first. So it is not possible to do it with single entries
 				// ToolBarHelper::custom ('MaintenanceJ3x.COM_RSGALLERY2_DB_TRANSFER_SELECTED_J3X_GALLERIES','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
@@ -368,15 +406,58 @@ class HtmlView extends BaseHtmlView
 				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
 				ToolBarHelper::custom ('MaintenanceJ3x.copyDbImagesOfSelectedGalleries','undo','','COM_RSGALLERY2_DB_COPY_IMAGES_BY_J3X_GALLERY', true);
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+
+				break;
+
+			case 'dbtransferj3ximagesuser':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+//					echo '<span style="color:red">'
+//						. 'Tasks: <br>'
+////      				. '* <br>'
+////		        		. '* <br>'
+////				        . '* <br>'
+////      				. '* <br>'
+//						. '</span><br>';
+				}
+
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
+
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+
+				break;
+
+			case 'increasemenugid':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+//					echo '<span style="color:red">'
+//						. 'Tasks: <br>'
+////      				. '* <br>'
+////		        		. '* <br>'
+////				        . '* <br>'
+////      				. '* <br>'
+//						. '</span><br>';
+				}
+
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_INCREASE_MENU_GID'), 'screwdriver');
+
+				ToolBarHelper::custom('MaintenanceJ3x.j3xIncreaseMenuGid', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
+				// ToDo: remove
+				ToolBarHelper::custom('MaintenanceJ3x.j3xIncreaseMenuGid', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				break;
 
 			case 'movej3ximages':
+			case 'movej3ximagesuser':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{

@@ -2378,4 +2378,218 @@ EOT;
     }
 
 
+	/**
+	 * Find in menus all GID references and increase them
+	 * On transfer of gallery ids to new balanced tree the
+	 * id is increased. Therefore, links in menu are now invalid
+	 * Applies to gallery and slideshow menu items
+	 * Can only be run once to match the changed gallery id
+	 * On double call use j3xDecreaseMenuGid
+	 *
+	 * index.php?option=com_rsgallery2&view=gallery&gid=0
+	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function j3xIncreaseMenuGid()
+	{
+		$successful = false;
+
+		try {
+
+			$menuLinks = $this->dbValidGidMenuLinks();
+
+			if ( ! empty ($menuLinks)) {
+
+				$successful = true;
+
+				foreach ($menuLinks as $id => $link) {
+
+					//--- change link for gid++ ----------------------------------------------
+
+					$newLink = $this->linkIncreaseGalleryId($link);
+
+					//--- update link --------------------------------------------
+
+					// valid link ?
+					if ( ! empty($newLink))
+					{
+						$successful &= $this->updataMenuLink($id, $newLink);
+					} // else successful = false ...
+				}
+			}
+		} catch (\RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
+	 * Opposite of j3xIncreaseMenuGid
+	 * Needed if above done too many times
+	 * Attention gid==0 special case with double meaning can't be solved
+	 * 0: root gallery 0-> 1: change to gallery if (1: forbidden as tree root)
+	 *
+	 * @return array
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function j3xDecreaseMenuGid()
+	{
+		$successful = false;
+
+		try {
+
+			$menuLinks = $this->dbValidGidMenuLinks();
+
+			if ( ! empty ($menuLinks)) {
+
+				$successful = true;
+
+				foreach ($menuLinks as $id => $link) {
+
+					//--- change link for gid++ ----------------------------------------------
+
+					$newLink = $this->linkDecreaseGalleryId($link);
+
+					//--- update link --------------------------------------------
+
+					// valid link ?
+					if ( ! empty($newLink))
+					{
+						$successful &= $this->updataMenuLink($id, $newLink);
+					}
+				}
+			}
+
+		} catch (\RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
+	 * @param $link
+	 *
+	 * @return int|string
+	 *
+	 * @since version
+	 */
+	public function linkAddToGalleryId(string $link, int $delta): string|bool
+	{
+		$newLink = false;
+
+		$gidIdx    = strpos($link, '&gid=') + 5;
+		$gidEndIdx = strpos($link, '&', $gidIdx);
+		// no further ...
+		if ($gidEndIdx == false) {
+
+			$gidEndIdx = strlen($link);
+		}
+
+		$galleryId = substr($link, $gidIdx, $gidEndIdx - $gidIdx);
+
+		if (intval($galleryId) == 0) {
+			// debug stop as should not happen
+			$test1 = intval($galleryId);
+		}
+
+		if (intval($galleryId) >= 0)
+		{
+			$newGalleryId = strval(intval($galleryId) + $delta);
+
+			$newLink = substr($link, 0, $gidIdx)
+				. $newGalleryId
+				. substr($link, $gidEndIdx);
+		}
+
+		return $newLink;
+	}
+
+	/**
+	 * @param $link
+	 *
+	 * @return int|string
+	 *
+	 * @since version
+	 */
+	public function linkIncreaseGalleryId($link): string|int
+	{
+
+		return $this->linkAddToGalleryId($link, +1);
+	}
+
+	/**
+	 * @param $link
+	 *
+	 * @return int|string
+	 *
+	 * @since version
+	 */
+	public function linkDecreaseGalleryId($link): string|int
+	{
+
+		return $this->linkAddToGalleryId($link, -1);
+	}
+
+	/**
+	 * @param   int|string  $newLink
+	 * @param   int|string  $id
+	 * @param   bool        $successful
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
+	public function updataMenuLink(string $id, string $newLink): bool
+	{
+		$successful = false;
+
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		$query->update($db->quoteName('#__menu'))
+			->set($db->quoteName('link') . ' = ' . $db->quote($newLink))
+			->where($db->quoteName('id') . ' = ' . $db->quote($id));
+
+		if ($db->execute())
+		{
+			$successful = true;
+		}
+
+		return $successful;
+	}
+
+	/**
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public function dbValidGidMenuLinks()
+	{
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		// $query->select([$db->quoteName('b.id', 'branch_id'), $db->quoteName('b.title', 'branch_title')])
+		$query->select(['id', 'link'])
+			->from('#__menu')
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
+			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
+
+		$db->setQuery($query);
+		$menuLinks = $db->loadAssocList('id', 'link');
+
+		return $menuLinks;
+	}
+
+
 } // class

@@ -109,6 +109,19 @@ class MaintenanceJ3xController extends AdminController
 
     /**
      * Copies all old configuration items to new configuration
+     * ...User: different return page
+     * @since __BUMP_VERSION__
+     */
+    public function copyJ3xConfig2J4xOptionsUser()
+    {
+		$this->copyJ3xConfig2J4xOptions ();
+
+	    $link = 'index.php?option=com_rsgallery2';
+	    $this->setRedirect($link);
+    }
+
+	/**
+     * Copies all old configuration items to new configuration
      *
      * @since __BUMP_VERSION__
      */
@@ -166,8 +179,22 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-    /**
-     * Copies all old J3x gallery items to J4 galleries
+
+	/**
+	 * Copies all old J3x gallery items to J4 galleries in database
+	 * ...User: different return page
+	 * @since __BUMP_VERSION__
+	 */
+	public function copyDbJ3xGalleries2J4xUser()
+	{
+		$this->copyDbJ3xGalleries2J4x ();
+
+		$link = 'index.php?option=com_rsgallery2';
+		$this->setRedirect($link);
+	}
+
+	/**
+     * Copies all old J3x gallery items to J4 galleries in database
      *
      * @since __BUMP_VERSION__
      */
@@ -225,7 +252,7 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-    /**
+	/**
      * Copies all old J3x gallery items to J4 galleries
      *
      * @since __BUMP_VERSION__
@@ -456,6 +483,19 @@ class MaintenanceJ3xController extends AdminController
 		//$link = 'index.php?option=com_rsgallery2&view=galleries';
 		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages';
 		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
+	 * Copies all old configuration items to new configuration
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function copyDbJ3xImages2J4xUser()
+	{
+		$this->copyDbJ3xImages2J4x ();
+
+		$link = 'index.php?option=com_rsgallery2';
+		$this->setRedirect($link);
 	}
 
 	/**
@@ -1107,7 +1147,137 @@ class MaintenanceJ3xController extends AdminController
         $app->close();
     }
 
+	/**
+	 *
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function j3xIncreaseMenuGidUser()
+	{
+		$this->j3xIncreaseMenuGid ();
 
+		$link = 'index.php?option=com_rsgallery2';
+		$this->setRedirect($link);
+	}
+
+	/**
+	 *
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function j3xIncreaseMenuGid()
+	{
+		$msg = "MaintenanceJ3xController.j3xIncreaseMenuGid: ";
+		$msgType = 'notice';
+
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
+
+				$isOk = $j3xModel->j3xIncreaseMenuGid();
+
+				if ($isOk) {
+
+					$msg .= "Successful increased menu J3x gallery gids ";
+
+					$isOk = ConfigRawModel::writeConfigParam ('j3x_menu_gid_increased', true);
+					if ($isOk) {
+						$msg .= " and assigned copied flag";
+
+					} else {
+						$msg .= "!!! but error at writeConfigParam !!!";
+						$msgType = 'error';
+					}
+
+				} else {
+					$msg .= "Error at j3xIncreaseMenuGid items";
+					$msgType = 'error';
+				}
+
+			} catch (\RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing j3xIncreaseMenuGid: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+
+		}
+
+		$link = 'index.php?option=com_rsgallery2';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+
+	/**
+	 *
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function j3xDecreaseMenuGid()
+	{
+		$msg = "MaintenanceJ3xController.j3xDecreaseMenuGid: ";
+		$msgType = 'notice';
+
+		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
+
+				$isOk = $j3xModel->j3xDecreaseMenuGid();
+
+				if ($isOk) {
+
+					$msg .= "Successful increased menu J3x gallery gids ";
+
+//					$isOk = ConfigRawModel::writeConfigParam ('j3x_menu_gid_increased', true);
+//					if ($isOk) {
+//						$msg .= " and assigned copied flag";
+//
+//					} else {
+//						$msg .= "!!! but error at writeConfigParam !!!";
+//						$msgType = 'error';
+//					}
+
+				} else {
+					$msg .= "Error at j3xDecreaseMenuGid items";
+					$msgType = 'error';
+				}
+
+			} catch (\RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing j3xDecreaseMenuGid: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x';
+		$this->setRedirect($link, $msg, $msgType);
+	}
 
 } // class
 
@@ -1187,3 +1357,4 @@ function issueError  ($errorType)
     /**/
 }
 
+// class is above
