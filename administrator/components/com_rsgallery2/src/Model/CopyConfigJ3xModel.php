@@ -85,25 +85,26 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 
 			//--- transform J3x to J4x (New names) ------------------------------------------
 
-			// galcountNrs  <=> galDisplayCountJ3x
+			// galcountNrs => max_thumbs_in_root_galleries_view_j3x
 			$assistedJ3xItems ['galcountNrs'] = array('max_thumbs_in_root_galleries_view_j3x',
 				$j3xConfigItems['galcountNrs']);
+
+			// display_thumbs_colsPerPage -> max_columns_in_images_view_j3x
+			$assistedJ3xItems ['display_thumbs_colsPerPage'] = array('max_columns_in_images_view_j3x',
+				$j3xConfigItems['display_thumbs_colsPerPage']);
+
+			// display_thumbs_maxPerPage -> max_thumbs_in_images_view_j3x
+			$assistedJ3xItems ['display_thumbs_maxPerPage'] = array('max_thumbs_in_images_view_j3x',
+				$j3xConfigItems['display_thumbs_maxPerPage']);
 
 			// ??? images_column_arrangement_j3x ???
 			//$assistedJ3xItems ['display_thumbs_maxPerPage'] = array('images_column_arrangement_j3x',
 			//	$j3xConfigItems['display_thumbs_maxPerPage']);
 
-			//
-			$assistedJ3xItems ['display_thumbs_colsPerPage'] = array('max_columns_in_images_view_j3x',
-				$j3xConfigItems['display_thumbs_colsPerPage']);
-
-			// yyy
-			$assistedJ3xItems ['display_thumbs_maxPerPage'] = array('max_thumbs_in_images_view_j3x',
-				$j3xConfigItems['display_thumbs_maxPerPage']);
-
 			//--- transform J4x to match J3x setting (preset new variable) --------------------------
 
-			// example $assistedJ4xItems ['images_column_arrangement'] = 1;
+			//
+			$assistedJ4xItems ['images_column_arrangement'] = 1;
 
 			//--- transform 1:1 J3x to J4x ---------------------------------------------------
 

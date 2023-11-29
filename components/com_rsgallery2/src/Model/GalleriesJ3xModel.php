@@ -998,30 +998,30 @@ class GalleriesJ3xModel extends ListModel
 
             $input = Factory::getApplication()->input;
 
-            $menuParams->set('gid', $input->getInt('gid', true));
-            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
-            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
-
-            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
-            $menuParams->set('galleries_show_size', $input->getBool('galleries_show_size', true));
-            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
-
-            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
-            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', true));
-            $menuParams->set('intro_text', $input->get('intro_text','','RAW'));
-            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
-            $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
-
-            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
-            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-            $menuParams->set('images_show_search', $input->getBool('images_show_search', true));
-            $menuParams->set('images_layout', $input->getBool('images_layout', true));
-
-            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', true));
-            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
-            $menuParams->set('images_row_arrangement', $input->getBool('images_row_arrangement', true));
-            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', true));
-            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', true));
+//            $menuParams->set('gid', $input->getInt('gid', true));
+//            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
+//            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
+//
+//            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
+//            $menuParams->set('galleries_show_size', $input->getBool('galleries_show_size', true));
+//            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
+//
+//            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
+//            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', true));
+//            $menuParams->set('intro_text', $input->get('intro_text','','RAW'));
+//            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
+//            $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+//
+//            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+//            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+//            $menuParams->set('images_show_search', $input->getBool('images_show_search', true));
+//            $menuParams->set('images_layout', $input->getBool('images_layout', true));
+//
+//            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ??? true));
+//            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ??? true));
+//            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ??? true));
+//            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ??? true));
+//            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', ??? true));
 
         }
         catch (\RuntimeException $e)
