@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=increasemenugid'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks'); ?>"
       method="post" name="adminForm" id="adminForm">
     <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -36,7 +36,7 @@ use Joomla\CMS\Language\Text;
 
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xIncreaseMenuGid');return false;">
+                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xChangeJ3xMenuLinks');return false;">
 				            <?php echo JText::_('COM_RSGALLERY2_INCREASE_MENU_GID'); ?>
                         </button>
 

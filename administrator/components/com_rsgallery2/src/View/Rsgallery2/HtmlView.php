@@ -130,7 +130,7 @@ class HtmlView extends BaseHtmlView
             $this->isDoCopyJ3xDbConfig    = ! $rsgConfig->get('j3x_db_config_copied');
             $this->isDoCopyJ3xDbGalleries = ! $rsgConfig->get('j3x_db_galleries_copied');
 	        $this->isDoCopyJ3xDbImages    = ! $rsgConfig->get('j3x_db_images_copied');
-	        $this->isDoIncreaseMenuGid    = ! $rsgConfig->get('j3x_menu_gid_increased');
+	        $this->isDoChangeJ3xMenuLinks = ! $rsgConfig->get('j3x_menu_gid_increased');
             $this->isDoCopyJ3xImages      = ! $rsgConfig->get('j3x_images_copied');
 
 			/**
@@ -138,7 +138,7 @@ class HtmlView extends BaseHtmlView
             $this->isDoCopyJ3xDbConfig = true;
             //$this->isDoCopyJ3xDbGalleries = true;
 	        //$this->isDoCopyJ3xDbImages = true;
-	        //$this->isDoIncreaseMenuGid = true;
+	        //$this->isDoChangeJ3xMenuLinks = true;
             //$this->isDoCopyJ3xImages = true;
 			/**/
         }

@@ -7,7 +7,7 @@
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<copyright>(c) 2005-2023 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.0.0</version>
+	<version>5.0.11.11</version>
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
 	<namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
 
@@ -88,7 +88,7 @@
 			<folder>helpers</folder>
 			<folder>language</folder>
 			<folder>layouts</folder>
-			<folder>presets</folder>s
+			<folder>presets</folder>
 			<folder>services</folder>
 			<folder>sql</folder>
 			<folder>src</folder>

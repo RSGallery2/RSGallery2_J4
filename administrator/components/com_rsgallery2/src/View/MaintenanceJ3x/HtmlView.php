@@ -434,7 +434,7 @@ class HtmlView extends BaseHtmlView
 
 				break;
 
-			case 'increasemenugid':
+			case 'changeJ3xMenuLinks':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
@@ -449,9 +449,9 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_INCREASE_MENU_GID'), 'screwdriver');
 
-				ToolBarHelper::custom('MaintenanceJ3x.j3xIncreaseMenuGid', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
+				ToolBarHelper::custom('MaintenanceJ3x.j3xChangeJ3xMenuLinks', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
 				// ToDo: remove
-				ToolBarHelper::custom('MaintenanceJ3x.j3xIncreaseMenuGid', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
+				ToolBarHelper::custom('MaintenanceJ3x.j3xChangeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				break;

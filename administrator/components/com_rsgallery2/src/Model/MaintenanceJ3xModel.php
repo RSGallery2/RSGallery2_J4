@@ -2379,6 +2379,13 @@ EOT;
 
 
 	/**
+	 * Use start templates matching a ..J3x folder. 
+	 * This enables to seperate J3x from new J4x 
+	 * folders with same name
+	 * Change j3x 'gallery' to root galleries, (?galleriies) or keep it
+	 *    On gid=0 = use root galleries J3x
+	 *    On gid!=0 still use gallery J3x
+	 *   * ToDo: Detect parent galleries 
 	 * Find in menus all GID references and increase them
 	 * On transfer of gallery ids to new balanced tree the
 	 * id is increased. Therefore, links in menu are now invalid
@@ -2395,7 +2402,7 @@ EOT;
 	 * @throws \Exception
 	 * @since version
 	 */
-	public function j3xIncreaseMenuGid()
+	public function j3xChangeJ3xMenuLinks()
 	{
 		$successful = false;
 
@@ -2412,6 +2419,11 @@ EOT;
 					//--- change link for gid++ ----------------------------------------------
 
 					$newLink = $this->linkIncreaseGalleryId($link);
+					
+					//--- change link for type: ----------------------------------------------
+
+					// root gallery, gallery , slideshow 
+					$newLink = $this->linkChangeByJ3xType($newLink);									
 
 					//--- update link --------------------------------------------
 
@@ -2430,7 +2442,7 @@ EOT;
 	}
 
 	/**
-	 * Opposite of j3xIncreaseMenuGid
+	 * Opposite of j3xChangeJ3xMenuLinks
 	 * Needed if above done too many times
 	 * Attention gid==0 special case with double meaning can't be solved
 	 * 0: root gallery 0-> 1: change to gallery if (1: forbidden as tree root)

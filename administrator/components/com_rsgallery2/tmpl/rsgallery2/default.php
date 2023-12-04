@@ -65,14 +65,14 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
 	                    if (   $this->isDoCopyJ3xDbConfig
                             || $this->isDoCopyJ3xDbGalleries
                             || $this->isDoCopyJ3xDbImages
-                            || $this->isDoIncreaseMenuGid
+                            || $this->isDoChangeJ3xMenuLinks
                             || $this->isDoCopyJ3xImages) {
 
                             echo DisplayRequestJ3xActions (
                                     $this->isDoCopyJ3xDbConfig,
                                     $this->isDoCopyJ3xDbGalleries,
                                     $this->isDoCopyJ3xDbImages,
-                                    $this->isDoIncreaseMenuGid,
+                                    $this->isDoChangeJ3xMenuLinks,
                                     $this->isDoCopyJ3xImages
                             );
                         }
@@ -190,7 +190,7 @@ function DisplayRSG2Logo()
 function DisplayRequestJ3xActions($isDoCopyJ3xDbConfig=false,
                                   $isDoCopyJ3xDbGalleries=false,
                                   $isDoCopyJ3xDbImages=false,
-                                  $isDoIncreaseMenuGid=false,
+                                  $isDoChangeJ3xMenuLinks=false,
                                   $isDoCopyJ3xImages=false)
 {
     $html = '';
@@ -198,7 +198,7 @@ function DisplayRequestJ3xActions($isDoCopyJ3xDbConfig=false,
     $rsg2J3xCopyDbConfigLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfiguser');
     $rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleriesuser');
     $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser');
-    $rsg2J3xIncreaseMenuGidLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=increasemenugid');
+    $rsg2j3xChangeJ3xMenuLinksLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks');
     $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser');
 
 	$CopyDbConfig = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG');
@@ -210,8 +210,8 @@ function DisplayRequestJ3xActions($isDoCopyJ3xDbConfig=false,
     $CopyDbImages = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES');
     $CopyDbImagesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC');
 
-    $IncreaseMenuGid = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID');
-    $IncreaseMenuGidDesc = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID_DESC');
+    $changeJ3xMenuLinks = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID');
+    $changeJ3xMenuLinksDesc = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID_DESC');
 
     $CopyImages = '<del>' . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES') .'</del>';
     $CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
@@ -245,10 +245,10 @@ EOT;
                                 <span class="badge badge-pill bg-success">3</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
 EOT;
     }
-    // isDoIncreaseMenuGid
-    if ($isDoIncreaseMenuGid) {
+    // isDoChangeJ3xMenuLinks
+    if ($isDoChangeJ3xMenuLinks) {
         $link4 = <<<EOT
-                                <span class="badge badge-pill bg-success">4</span> <a href="$rsg2J3xIncreaseMenuGidLink" class="btn btn-success btn-sm" Title="$IncreaseMenuGidDesc" role="button">$IncreaseMenuGid</a>
+                                <span class="badge badge-pill bg-success">4</span> <a href="$rsg2j3xChangeJ3xMenuLinksLink" class="btn btn-success btn-sm" Title="$changeJ3xMenuLinksDesc" role="button">$changeJ3xMenuLinks</a>
 EOT;
     }
 

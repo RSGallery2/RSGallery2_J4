@@ -42,7 +42,7 @@ class MaintenanceJ3xController extends AdminController
 {
 
     /**
-     * Constructor.
+     * Constructor
      *
      * @param array $config An optional associative array of configuration settings.
      * Recognized key values include 'name', 'default_task', 'model_path', and
@@ -1152,9 +1152,9 @@ class MaintenanceJ3xController extends AdminController
 	 *
 	 * @since __BUMP_VERSION__
 	 */
-	public function j3xIncreaseMenuGidUser()
+	public function j3xChangeJ3xMenuLinksUser()
 	{
-		$this->j3xIncreaseMenuGid ();
+		$this->j3xChangeJ3xMenuLinks ();
 
 		$link = 'index.php?option=com_rsgallery2';
 		$this->setRedirect($link);
@@ -1165,9 +1165,9 @@ class MaintenanceJ3xController extends AdminController
 	 *
 	 * @since __BUMP_VERSION__
 	 */
-	public function j3xIncreaseMenuGid()
+	public function j3xChangeJ3xMenuLinks()
 	{
-		$msg = "MaintenanceJ3xController.j3xIncreaseMenuGid: ";
+		$msg = "MaintenanceJ3xController.j3xChangeJ3xMenuLinks: ";
 		$msgType = 'notice';
 
 		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
@@ -1184,7 +1184,7 @@ class MaintenanceJ3xController extends AdminController
 			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
-				$isOk = $j3xModel->j3xIncreaseMenuGid();
+				$isOk = $j3xModel->j3xChangeJ3xMenuLinks();
 
 				if ($isOk) {
 
@@ -1200,13 +1200,13 @@ class MaintenanceJ3xController extends AdminController
 					}
 
 				} else {
-					$msg .= "Error at j3xIncreaseMenuGid items";
+					$msg .= "Error at j3xChangeJ3xMenuLinks items";
 					$msgType = 'error';
 				}
 
 			} catch (\RuntimeException $e) {
 				$OutTxt = '';
-				$OutTxt .= 'Error executing j3xIncreaseMenuGid: "' . '<br>';
+				$OutTxt .= 'Error executing j3xChangeJ3xMenuLinks: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 				$app = Factory::getApplication();
