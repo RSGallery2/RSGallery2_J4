@@ -48,6 +48,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 			$db->setQuery($query);
 
 			$oldItems = $db->loadAssocList('name', 'value');
+
 		} catch (\RuntimeException $e) {
 			$OutTxt = '';
 			$OutTxt .= 'j3xConfigItems: Error executing query: "' . $query . '"' . '<br>';

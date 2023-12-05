@@ -262,10 +262,10 @@ class ConfigController extends AdminController // FormController
                 $fContent = file_get_contents($srcTempPathFileName);
                 $configJson = json_decode($fContent, true);
 
-                $configData = $configJson [RSG2_configuration];
+                $configData = $configJson ['RSG2_configuration']; // ToDo: check use
 
                 $model   = $this->getModel('ConfigRaw');
-                $isSaved = $model->SaveItems($configData);
+                $isSaved = $model->saveItems($configData);
 
                 if ($isSaved) {
                     $msg .= "Successful uploaded and inserted configuration file data";

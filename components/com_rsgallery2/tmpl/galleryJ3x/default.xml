@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x legacy view => single gallery new -->
-	<layout title="COM_RSGALLERY2_MENU_J3X_LEGACY_SINGLE_GALLERY_VIEW_TITLE">
+	<!-- J3x legacy view => single gallery -->
+	<layout title="COM_RSGALLERY2_MENU_GALLERY_J3X_LEGACY_VIEW_TITLE">
 		<message>
-			<![CDATA[COM_RSGALLERY2_MENU_J3X_LEGACY_SINGLE_GALLERY_VIEW_DESC]]>
+			<![CDATA[COM_RSGALLERY2_MENU_GALLERY_J3X_LEGACY_VIEW_DESC]]>
 		</message>
 	</layout>
 	<!-- Add fields to the request variables for the layout. -->

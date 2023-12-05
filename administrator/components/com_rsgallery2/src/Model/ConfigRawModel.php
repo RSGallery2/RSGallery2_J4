@@ -54,7 +54,7 @@ class ConfigRawModel extends BaseModel
 	 * @throws \Exception
 	 * @since __BUMP_VERSION__
 	 */
-	public function SaveItems($configurationItems): bool
+	public function saveItems($configurationItems): bool
 	{
         $isSaved = false;
 

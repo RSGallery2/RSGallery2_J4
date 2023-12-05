@@ -17,6 +17,15 @@ use Joomla\CMS\Router\Route;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/images.js', ['version' => 'auto', 'relative' => true]);
 
+
+/* Sort config variables */
+$configVars = array();
+foreach ($this->configVars as $name => $value)
+{
+	$configVars [$name] = $value;
+}
+ksort($configVars);
+
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawView'); ?>"
@@ -42,13 +51,13 @@ use Joomla\CMS\Router\Route;
 				<?php
                 /**
 				echo '<pre>';
-				// Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
-				echo json_encode($this->configVars, JSON_PRETTY_PRINT);
+				// Old RSG2 config vars echo json_encode(get_object_vars($configVars), JSON_PRETTY_PRINT);
+				echo json_encode($configVars, JSON_PRETTY_PRINT);
 				echo '</pre>';
                 echo '<HR>';
                 /**/
 				// echo '<pre>';
-				// Old RSG2 config vars echo json_encode(get_object_vars($this->configVars), JSON_PRETTY_PRINT);
+				// Old RSG2 config vars echo json_encode(get_object_vars($configVars), JSON_PRETTY_PRINT);
 
                 echo '<section class="config_raw">';
 
@@ -56,7 +65,7 @@ use Joomla\CMS\Router\Route;
                 echo '<div class="card-text">';
 
                 echo '<dl class="row">';
-                foreach ($this->configVars as  $key => $value)  {
+                foreach ($configVars as  $key => $value)  {
 
                     // Handle empty string
                     if (strlen($value) == 0) {

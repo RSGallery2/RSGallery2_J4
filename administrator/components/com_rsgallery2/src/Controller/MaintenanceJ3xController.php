@@ -1188,7 +1188,7 @@ class MaintenanceJ3xController extends AdminController
 
 				if ($isOk) {
 
-					$msg .= "Successful increased menu J3x gallery gids ";
+					$msg .= "Successful changed j3x menu inks and increased menu J3x gallery gids ";
 
 					$isOk = ConfigRawModel::writeConfigParam ('j3x_menu_gid_increased', true);
 					if ($isOk) {
@@ -1248,7 +1248,7 @@ class MaintenanceJ3xController extends AdminController
 
 				if ($isOk) {
 
-					$msg .= "Successful increased menu J3x gallery gids ";
+					$msg .= "Successful decreased menu J3x gallery gids ";
 
 //					$isOk = ConfigRawModel::writeConfigParam ('j3x_menu_gid_increased', true);
 //					if ($isOk) {

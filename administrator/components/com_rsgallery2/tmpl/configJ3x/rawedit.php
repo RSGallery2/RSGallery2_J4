@@ -26,6 +26,7 @@ foreach ($this->configVars as $name => $value)
 }
 ksort($configVars);
 
+
 /**
  * Echos an input field for config variables
  *
@@ -46,11 +47,18 @@ function configInputField($name = 'unknown', $value = '')
 		{
 			if (gettype($value) == 'array')
 			{
-				$value = implode (',' , $value);
+				$value = implode(',', $value);
 			}
 			else
 			{
-				$value = 'Value type is ' . gettype($value) . ' and not a string';
+				if (gettype($value) == 'integer' || gettype($value) == 'boolean')
+				{
+					$value = (string) $value;
+				}
+				else
+				{
+					$value = 'Value type is ' . gettype($value) . ' and not a string';
+				}
 			}
 		}
 

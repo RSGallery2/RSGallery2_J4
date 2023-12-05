@@ -50,7 +50,14 @@ function configInputField($name = 'unknown', $value = '')
 			}
 			else
 			{
-				$value = 'Value type is ' . gettype($value) . ' and not a string';
+				if (gettype($value) == 'integer' || gettype($value) == 'boolean')
+				{
+					$value = (string) $value;
+				}
+				else
+				{
+					$value = 'Value type is ' . gettype($value) . ' and not a string';
+				}
 			}
 		}
 

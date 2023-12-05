@@ -1256,6 +1256,7 @@ EOT;
 
 		try {
 
+			// ...
 
 		} catch (\RuntimeException $e) {
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
@@ -2380,9 +2381,9 @@ EOT;
 
 	/**
 	 * Use start templates matching a ..J3x folder. 
-	 * This enables to seperate J3x from new J4x 
+	 * This enables to separate J3x from new J4x
 	 * folders with same name
-	 * Change j3x 'gallery' to root galleries, (?galleriies) or keep it
+	 * Change j3x 'gallery' to root galleries, (?galleries) or keep it
 	 *    On gid=0 = use root galleries J3x
 	 *    On gid!=0 still use gallery J3x
 	 *   * ToDo: Detect parent galleries 
@@ -2408,29 +2409,37 @@ EOT;
 
 		try {
 
-			$menuLinks = $this->dbValidGidMenuLinks();
+			$menuItemsDB = $this->dbValidGidMenuItems();
 
-			if ( ! empty ($menuLinks)) {
+			if ( ! empty ($menuItemsDB)) {
 
 				$successful = true;
 
-				foreach ($menuLinks as $id => $link) {
+				foreach ($menuItemsDB as $id => $menuItem) {
+
+					[$oldLink, $oldParams] = $menuItem;
 
 					//--- change link for gid++ ----------------------------------------------
 
-					$newLink = $this->linkIncreaseGalleryId($link);
+					// $newLink = $oldLink; // ToDo: remove
+					$newLink = $this->linkIncreaseGalleryId($oldLink);
 					
 					//--- change link for type: ----------------------------------------------
 
-					// root gallery, gallery , slideshow 
-					$newLink = $this->linkChangeByJ3xType($newLink);									
+					// root gallery, gallery , slideshow
+					$newLink = $this->linkChangeByJ3xType($newLink);
+
+					//--- change menu parameter for type: ----------------------------------------------
+
+					// root gallery, gallery , slideshow
+					$newParams = $this->changeMenuParamsByJ3xType($oldLink, $oldParams);
 
 					//--- update link --------------------------------------------
 
 					// valid link ?
 					if ( ! empty($newLink))
 					{
-						$successful &= $this->updateMenuLink($id, $newLink);
+//						$successful &= $this->updateMenuItem($id, $newLink, $newParams);
 					} // else successful = false ...
 				}
 			}
@@ -2458,24 +2467,26 @@ EOT;
 
 		try {
 
-			$menuLinks = $this->dbValidGidMenuLinks();
+			$menuItemsDB = $this->dbValidGidMenuItems();
 
-			if ( ! empty ($menuLinks)) {
+			if ( ! empty ($menuItemsDB)) {
 
 				$successful = true;
 
-				foreach ($menuLinks as $id => $link) {
+				foreach ($menuItemsDB as $id => $menuItem) {
+
+					[$oldLink, $oldParams] = $menuItem;
 
 					//--- change link for gid++ ----------------------------------------------
 
-					$newLink = $this->linkDecreaseGalleryId($link);
+					$newLink = $this->linkDecreaseGalleryId($oldLink);
 
 					//--- update link --------------------------------------------
 
 					// valid link ?
 					if ( ! empty($newLink))
 					{
-						$successful &= $this->updateMenuLink($id, $newLink);
+						$successful &= $this->updateMenuItem($id, $newLink, $oldParams);
 					}
 				}
 			}
@@ -2488,28 +2499,36 @@ EOT;
 	}
 
 	/**
-	 * @param $link
+	 * @param $oldLink
 	 *
 	 * @return int|string
 	 *
+	 * examples
+	 *    index.php?option=com_rsgallery2&view=gallery&gid=0
+	 *    index.php?option=com_rsgallery2&view=gallery&gid=2
+	 *    index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 *
 	 * @since version
 	 */
-	public function linkAddToGalleryId(string $link, int $delta): string|bool
+	public function linkAddToGalleryId(string $oldLink, int $delta): string|bool
 	{
 		$newLink = false;
 
-		$gidIdx    = strpos($link, '&gid=') + 5;
-		$gidEndIdx = strpos($link, '&', $gidIdx);
+		//--- extract gallery id --------------------------
+
+		$gidIdx    = strpos($oldLink, '&gid=') + 5;
+		$gidEndIdx = strpos($oldLink, '&', $gidIdx);
 		// no further ...
 		if ($gidEndIdx == false) {
 
-			$gidEndIdx = strlen($link);
+			$gidEndIdx = strlen($oldLink);
 		}
 
-		$galleryId = substr($link, $gidIdx, $gidEndIdx - $gidIdx);
+		$galleryId = substr($oldLink, $gidIdx, $gidEndIdx - $gidIdx);
 
 		if (intval($galleryId) == 0) {
 			// debug stop as should not happen
+			// debug stop for root gallery ?
 			$test1 = intval($galleryId);
 		}
 
@@ -2517,9 +2536,9 @@ EOT;
 		{
 			$newGalleryId = strval(intval($galleryId) + $delta);
 
-			$newLink = substr($link, 0, $gidIdx)
+			$newLink = substr($oldLink, 0, $gidIdx)
 				. $newGalleryId
-				. substr($link, $gidEndIdx);
+				. substr($oldLink, $gidEndIdx);
 		}
 
 		return $newLink;
@@ -2529,6 +2548,165 @@ EOT;
 	 * @param $link
 	 *
 	 * @return int|string
+	 *
+	 *
+	 * @since version
+	 */
+	public function changeMenuParamsByJ3xType($oldLink, $oldParams): string|bool
+	{
+		// fall back use given
+		$newParams = $oldParams;
+
+		try {
+			//--- extract gallery id --------------------------
+
+			$gidIdx    = strpos($oldLink, '&gid=') + 5;
+			$gidEndIdx = strpos($oldLink, '&', $gidIdx);
+			// no further characters
+			if ($gidEndIdx == false) {
+
+				$gidEndIdx = strlen($oldLink);
+			}
+
+			$galleryId = substr($oldLink, $gidIdx, $gidEndIdx - $gidIdx);
+
+			if (intval($galleryId) == 0) {
+				// debug stop for root gallery
+				$test1 = intval($galleryId);
+			}
+
+			//--- collect (j3x) config parameter----------------------------------
+
+			// collect parameter (by j4x config, J3x should be transferred)
+			$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+
+			// ToDo: use type as result of registry
+			$max_columns_in_images_view_j3x = $rsgConfig->get('max_columns_in_images_view_j3x');
+			$max_thumbs_in_images_view_j3x  = $rsgConfig->get('max_thumbs_in_images_view_j3x');
+			$displayGalleryName             = $rsgConfig->get('displayGalleryName');
+			$displayGalleryDescription      = $rsgConfig->get('displayGalleryDescription');
+
+			//--- actual parameter to array ----------------------------------
+
+			$params = json_decode ($oldParams, true);
+
+			//--- assign new parameter ----------------------------------
+
+			if (str_contains($oldLink, '&view=gallery&'))
+			{
+				// root gallery
+				if (intval($galleryId) == 0)
+				{
+					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
+					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
+					$params['displayGalleryName']             = $displayGalleryName;
+					$params['displayGalleryDescription']      = $displayGalleryDescription;
+				}
+				else
+				{
+					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
+					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
+					$params['displayGalleryName']             = $displayGalleryName;
+					$params['displayGalleryDescription']      = $displayGalleryDescription;
+				}
+			}
+			else
+			{
+				if (str_contains($oldLink, '&view=slideshow&'))
+				{
+					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
+					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
+					$params['displayGalleryName']             = $displayGalleryName;
+					$params['displayGalleryDescription']      = $displayGalleryDescription;
+				}
+			}
+
+			//--- to string ----------------------------------
+
+			$newParams = json_encode($params, true);
+
+
+		} catch (\RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $newParams;
+	}
+
+	/**
+	 * @param $newLink
+	 *
+	 * @return int|string
+	 *
+	 * examples
+	 *     index.php?option=com_rsgallery2&view=gallery&gid=0
+	 *     index.php?option=com_rsgallery2&view=gallery&gid=2
+	 *     index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
+	 *
+	 * @since version
+	 */
+	public function linkChangeByJ3xType(string $newLink): string|bool
+	{
+
+		try {
+			//--- extract gallery id --------------------------
+
+			$gidIdx    = strpos($newLink, '&gid=') + 5;
+			$gidEndIdx = strpos($newLink, '&', $gidIdx);
+			// no further characters
+			if ($gidEndIdx == false) {
+
+				$gidEndIdx = strlen($newLink);
+			}
+
+			$galleryId = substr($newLink, $gidIdx, $gidEndIdx - $gidIdx);
+
+			if (intval($galleryId) == 0) {
+				// debug stop for root gallery
+				$test1 = intval($galleryId);
+			}
+
+			//--- exchange gallery link type --------------------------
+
+			if (str_contains($newLink, '&view=gallery&'))
+			{
+				// root gallery
+				if (intval($galleryId) == 0)
+				{
+					$newLink = str_replace('&view=gallery&', '&view=rootgalleriesJ3x&', $newLink);
+				}
+				else
+				{
+					// ToDo: ? parent gallery ?
+					// gallery
+					$newLink = str_replace('&view=gallery&', '&view=galleryJ3x&', $newLink);
+				}
+			}
+			else
+			{
+				if (str_contains($newLink, '&view=slideshow&'))
+				{
+					// slideshow
+					$newLink = str_replace('&view=slideshow&', '&view=slideshowJ3x&', $newLink);
+				}
+			}
+
+		} catch (\RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $newLink;
+	}
+
+	/**
+	 * @param $link
+	 *
+	 * @return int|string
+	 *
+	 * examples
+	 *      index.php?option=com_rsgallery2&view=gallery&gid=0
+	 *      index.php?option=com_rsgallery2&view=gallery&gid=2
+	 *      index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
 	 *
 	 * @since version
 	 */
@@ -2545,10 +2723,10 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function linkDecreaseGalleryId($link): string|int
+	public function linkDecreaseGalleryId($oldLink): string|int
 	{
 
-		return $this->linkAddToGalleryId($link, -1);
+		return $this->linkAddToGalleryId($oldLink, -1);
 	}
 
 	/**
@@ -2562,7 +2740,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function updateMenuLink(string $id, string $newLink): bool
+	public function updateMenuItem(string $id, string $newLink, string $newParams): bool
 	{
 		$successful = false;
 
@@ -2571,6 +2749,7 @@ EOT;
 
 		$query->update($db->quoteName('#__menu'))
 			->set($db->quoteName('link') . ' = ' . $db->quote($newLink))
+			->set($db->quoteName('params') . ' = ' . $db->quote($newParams))
 			->where($db->quoteName('id') . ' = ' . $id);
 
 		$db->setQuery($query);
@@ -2588,20 +2767,49 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function dbValidGidMenuLinks()
+	public function dbValidGidMenuItems()
 	{
+		$menuLinks = [];
+
+		//--- list from #__menu table in DB  -------------------------------------------
+
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
-		// $query->select([$db->quoteName('b.id', 'branch_id'), $db->quoteName('b.title', 'branch_title')])
-		$query->select(['id', 'link'])
+		// select all menus with com_rsgallery2 and a gid
+
+		$query->select(['id', 'link', 'params'])
 			->from('#__menu')
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
 			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
 
 		$db->setQuery($query);
-		$menuLinks = $db->loadAssocList('id', 'link');
+
+		// $menuItemsDB = $db->loadAssocList('id', 'link');
+		$menuItemsDB = $db->loadAssocList('id');
+		// $menuItemsDB = $db->loadObjectList();
+
+		//--- restrict to 'legacy' j3x menu items -------------------------------------------
+
+		if ( ! empty ($menuItemsDB)) {
+
+			foreach ($menuItemsDB as $id => $menuItemDb) {
+
+				// [$idDummy, $link, $params] = $menuItemDb;
+				$link   = $menuItemDb ['link'];
+				$params = $menuItemDb ['params'];
+
+				// add matching link
+				if (   str_contains($link, '&view=gallery&')
+					|| str_contains($link, '&view=slideshow&'))
+				{
+
+					$menuLinks[$id] = [$link, $params];
+				}
+
+			}
+		}
 
 		return $menuLinks;
 	}

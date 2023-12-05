@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x legacy view => slideshow new -->
+	<!-- J3x legacy view => slideshow -->
 	<layout title="COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_J3X_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDESHOW_J3X_DESC]]>

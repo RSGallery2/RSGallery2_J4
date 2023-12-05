@@ -49,7 +49,13 @@ class HtmlView extends BaseHtmlView
 		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 		$this->isDevelop = $rsgConfig->get('isDevelop');
 
-		$this->configVars = $rsgConfig;
+		// "needs configj3x model using table ConfigJ3x ....";
+		// CopyConfigJ3xModel j3xConfigItems
+		// $this->items = $this->get('Items');
+
+		// $this->configVars = $this->items;
+
+		$this->configVars = [];
 
 		//---  --------------------------------------------------------------
 
@@ -83,11 +89,22 @@ class HtmlView extends BaseHtmlView
 		{
 			echo '<span style="color:red">'
 				. 'Tasks: <br>'
+				. '* !!! Read j3x config NOT ready !!! needs configj3x model using table ConfigJ3x .... !!!"<br>'
+				. '* !!! Save not ready !!!<br>'
 				. '* Secure user input <br>'
 				. '* copy to file <br>'
 				. '* copy to clipboard <br>'
 				. '* RawView: dt dl dd definition on small width will interleap <br>'
+				. '* <br>'
 //				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+//				. '* <br>'
+				. '</span><br><br>';
+		} else {
+
+			echo '<span style="color:red">'
+				. '* !!! NOT ready !!! needs configj3x model using table ConfigJ3x .... !!!"<br>'
 //				. '* <br>'
 //				. '* <br>'
 				. '</span><br><br>';
