@@ -25,6 +25,19 @@
 			/>
 			
 			<field
+					name="displaySearch"
+					type="radio"
+					default="0"
+					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
+					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
+					useglobal="true"
+					class="btn-group btn-group-yesno"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
 					name="gallery_show_title"
 					type="radio"
 					default="1"
@@ -34,6 +47,64 @@
 				>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
+			</field>
+
+			<!-- ... thumb style float table ... -->
+			<field
+					name="images_column_arrangement"
+					type="list"
+					default="1"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
+					useglobal="true"
+			>
+				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
+				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
+			</field>
+
+			<!-- ...   ... -->
+			<field
+					name="max_columns_in_images_view"
+					type="number"
+					default="4"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC"
+					showon="images_column_arrangement:1"
+			>
+			</field>
+
+			<field
+					name="images_row_arrangement"
+					type="list"
+					default="2"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
+					showon="images_column_arrangement:1"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
+				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
+				<option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
+			</field>
+
+			<field
+					name="max_rows_in_images_view"
+					type="number"
+					default="5"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
+					showon="images_row_arrangement:1[AND]images_column_arrangement:1"
+			>
+			</field>
+
+			<field
+					name="max_thumbs_in_images_view"
+					type="number"
+					default="20"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
+					showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
+			>
 			</field>
 
 			<field
@@ -99,6 +170,7 @@
 					default="1"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
 					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+					useglobal="true"
 					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
@@ -124,6 +196,7 @@
 					default="0"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
 					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+					useglobal="true"
 					class="btn-group btn-group-yesno">
 				>
 				<option value="1">JYES</option>
@@ -144,75 +217,9 @@
 		</fieldset>
 
 		<fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
-			<field
-					name="images_column_arrangement"
-					type="list"
-					default="1"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
-			</field>
-
-			<field
-					name="max_columns_in_images_view"
-					type="number"
-					default="4"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS_DESC"
-					showon="images_column_arrangement:1"
-			>
-			</field>
-
-			<field
-					name="images_row_arrangement"
-					type="list"
-					default="2"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
-					showon="images_column_arrangement:1"
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
-			</field>
-
-			<field
-					name="max_rows_in_images_view"
-					type="number"
-					default="5"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
-					showon="images_row_arrangement:1[AND]images_column_arrangement:1"
-			>
-			</field>
-
-			<field
-					name="max_thumbs_in_images_view"
-					type="number"
-					default="20"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
-					showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
-			>
-			</field>
-
 		</fieldset>
 
 		<fieldset name="form" label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH">
-			<field
-					name="displaySearch"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
-					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
 		</fieldset>
 
 

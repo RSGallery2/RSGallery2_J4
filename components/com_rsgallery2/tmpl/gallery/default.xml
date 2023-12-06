@@ -14,7 +14,7 @@
 		
 			<field
 				name="gid"
-				type="RootGallerySelect"
+				type="GallerySelect"
 				label="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_LABEL"
 				description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_OVERVIEW_DESC"
 				required="true"
@@ -38,10 +38,10 @@
 					name="displaySearch"
 					type="radio"
 					default="0"
-					label="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH"
-					description="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH_DESC"
-					class="btn-group btn-group-yesno"
+					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
+					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
 					useglobal="true"
+					class="btn-group btn-group-yesno"
 			>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
@@ -51,6 +51,7 @@
 			<field
 					name="images_column_arrangement_j3x"
 					type="list"
+					default="1"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
 					description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
 					useglobal="true"
@@ -81,24 +82,26 @@
 			</field>
 
 			<field
-					id="displayGalleryName"
-					name="displayGalleryName"
+					id="gallery_show_title"
+					name="gallery_show_title"
 					type="radio"
 					default="0"
 					label="COM_RSGALLERY2_DISPLAY_GALLERY_NAME"
 					description="COM_RSGALLERY2_DISPLAY_GALLERY_NAME_DESC"
+					useglobal="true"
 					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
 
 			<field
-					id="displayGalleryDescription"
+					id="gallery_show_description"
 					name="displayGalleryDescription"
 					type="radio"
 					default="0"
 					label="COM_RSGALLERY2_DISPLAY_GALLERY_DESCRIPTION"
 					description="COM_RSGALLERY2_DISPLAY_GALLERY_DESCRIPTION_DESC"
+					useglobal="true"
 					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
@@ -124,6 +127,7 @@
 					default="1"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
 					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+					useglobal="true"
 					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
@@ -149,6 +153,7 @@
 					default="0"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
 					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+					useglobal="true"
 					class="btn-group btn-group-yesno">
 				>
 				<option value="1">JYES</option>
