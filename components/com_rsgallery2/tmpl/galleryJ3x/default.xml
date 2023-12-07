@@ -23,8 +23,18 @@
 				edit="true"
 				clear="true"
 			/>
-			
+
 			<field
+					name="images_layout"
+					type="componentlayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					view="images"
+					useglobal="true"
+			/>
+
+			<!--field
 					name="displaySearch"
 					type="radio"
 					default="0"
@@ -35,23 +45,22 @@
 			>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
-			</field>
+			</field-->
 
 			<field
-					name="gallery_show_title"
-					type="radio"
-					default="1"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
-					class="btn-group btn-group-yesno">
-				>
+					name="images_show_search"
+					type="list"
+					default="0"
+					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH"
+					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH_DESC"
+			>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
 
 			<!-- ... thumb style float table ... -->
 			<field
-					name="images_column_arrangement"
+					name="images_column_arrangement_j3x"
 					type="list"
 					default="1"
 					label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
@@ -64,16 +73,16 @@
 
 			<!-- ...   ... -->
 			<field
-					name="max_columns_in_images_view"
+					name="max_columns_in_images_view_j3x"
 					type="number"
-					default="4"
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS"
 					description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC"
-					showon="images_column_arrangement:1"
-			>
+					showon="images_column_arrangement_j3x:[OR]images_column_arrangement_j3x:1"
+					useglobal="true"
+					class="">
 			</field>
 
-			<field
+			<!--field
 					name="images_row_arrangement"
 					type="list"
 					default="2"
@@ -85,9 +94,9 @@
 				<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
 				<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
 				<option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
-			</field>
+			</field-->
 
-			<field
+			<!--field
 					name="max_rows_in_images_view"
 					type="number"
 					default="5"
@@ -95,16 +104,27 @@
 					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
 					showon="images_row_arrangement:1[AND]images_column_arrangement:1"
 			>
+			</field-->
+
+			<field
+					name="max_thumbs_in_images_view_j3x"
+					type="number"
+					label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+					showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
+					useglobal="true"
+					class="">
 			</field>
 
 			<field
-					name="max_thumbs_in_images_view"
-					type="number"
-					default="20"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
-					showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
-			>
+					name="gallery_show_title"
+					type="radio"
+					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+					useglobal="true"
+					class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
 			</field>
 
 			<field
@@ -113,8 +133,8 @@
 					default="0"
 					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
 					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+					useglobal="true"
 					class="btn-group btn-group-yesno">
-				>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
@@ -130,15 +150,6 @@
 				<option value="0">JNO</option>
 			</field>
 
-			<field
-					name="gallery_layout"
-					type="componentlayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					extension="com_rsgallery2"
-					view="images"
-					useglobal="true"
-			/>
 		</fieldset>
 
 	</fields>
@@ -203,26 +214,29 @@
 				<option value="0">JNO</option>
 			</field>
 
-			<field
-					name="images_show_search"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH_DESC"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-
 		</fieldset>
 
-		<fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
+		<fieldset 
+            name="layout_thumbs" 
+            label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
 		</fieldset>
 
-		<fieldset name="form" label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH">
+		<fieldset 
+			name="form" 
+			label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH">
 		</fieldset>
-
-
 
 	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<!--fields name="params">
+
+		<fieldset name="images_display"
+				  label="COM_RSGALLERY2_FIELDSET_IMAGES_DISPLAY"
+		>
+
+		</fieldset>
+
+	</fields-->
+
 </metadata>
