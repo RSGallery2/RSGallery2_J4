@@ -2341,7 +2341,7 @@ EOT;
                 unlink($j3xFile);
             } else {
 
-                //---  do Move --------------------------------------------
+                //---  do move --------------------------------------------
 
                 $isMoved = rename($j3xFile, $j4xFile);
 
@@ -2432,14 +2432,12 @@ EOT;
 					//--- change menu parameter for type: ----------------------------------------------
 
 					// root gallery, gallery , slideshow
-					$newParams = $this->changeMenuParamsByJ3xType($oldLink, $oldParams);
-
-					//--- update link --------------------------------------------
+					$newParams = $this->menuParamsByJ3xType($oldLink, $oldParams);
 
 					// valid link ?
 					if ( ! empty($newLink))
 					{
-//						$successful &= $this->updateMenuItem($id, $newLink, $newParams);
+						$successful &= $this->updateMenuItem($id, $newLink, $newParams);
 					} // else successful = false ...
 				}
 			}
@@ -2552,7 +2550,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function changeMenuParamsByJ3xType($oldLink, $oldParams): string|bool
+	public function menuParamsByJ3xType($oldLink, $oldParams): string|bool
 	{
 		// fall back use given
 		$newParams = $oldParams;
@@ -2634,12 +2632,16 @@ EOT;
 	}
 
 	/**
+	 * Old j3x menu links interfere with same name j4 views
+	 * Exchange the view type (j3x use) in menu link for
+	 * j3x view type fallback calls
+	 *
 	 * @param $newLink
 	 *
 	 * @return int|string
 	 *
 	 * examples
-	 *     index.php?option=com_rsgallery2&view=gallery&gid=0
+	 *     index.php?option=com_rsgallery2&view=gallery&gid=0 => ...&view=rootgalleriesJ3x&...
 	 *     index.php?option=com_rsgallery2&view=gallery&gid=2
 	 *     index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
 	 *
@@ -2813,6 +2815,5 @@ EOT;
 
 		return $menuLinks;
 	}
-
 
 } // class
