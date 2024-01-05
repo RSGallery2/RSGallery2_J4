@@ -1,12 +1,5 @@
-//.build/
-.build/*.log
-.build/*.*.log
-.build/Translations/.idea/
-
-.packages/
-
-.test/BackupRestore/.idea/
-.test/RSG2_Backup/
+#phpstorm
+.idea/
 
 # moved files 
 ##rsgallery2.xml
