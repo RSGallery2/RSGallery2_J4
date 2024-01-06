@@ -198,7 +198,7 @@ function DisplayRequestJ3xActions($isDoCopyJ3xDbConfig=false,
     $rsg2J3xCopyDbConfigLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfiguser');
     $rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleriesuser');
     $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser');
-    $rsg2j3xChangeJ3xMenuLinksLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks');
+    $rsg2j3xUpgradeJ3xMenuLinksLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks');
     $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser');
 
 	$CopyDbConfig = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG');
@@ -248,7 +248,7 @@ EOT;
     // isDoChangeJ3xMenuLinks
     if ($isDoChangeJ3xMenuLinks) {
         $link4 = <<<EOT
-                                <span class="badge badge-pill bg-success">4</span> <a href="$rsg2j3xChangeJ3xMenuLinksLink" class="btn btn-success btn-sm" Title="$changeJ3xMenuLinksDesc" role="button">$changeJ3xMenuLinks</a>
+                                <span class="badge badge-pill bg-success">4</span> <a href="$rsg2j3xUpgradeJ3xMenuLinksLink" class="btn btn-success btn-sm" Title="$changeJ3xMenuLinksDesc" role="button">$changeJ3xMenuLinks</a>
 EOT;
     }
 

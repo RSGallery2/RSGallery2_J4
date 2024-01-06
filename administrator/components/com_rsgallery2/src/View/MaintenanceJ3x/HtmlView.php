@@ -201,6 +201,15 @@ class HtmlView extends BaseHtmlView
                     $app->enqueueMessage($OutTxt, 'error');
                 }
 
+	            break;
+
+			case 'changeJ3xMenuLinks':
+
+				// to be upgraded
+				$this->j3xRsg2MenuLinks = $j3xModel->dbValidJ3xGidMenuItems();
+				// to be degraded
+				$this->j4xRsg2MenuLinks = $j3xModel->dbValidJ4xGidMenuItems();
+
                 break;
 
             case 'movej3ximages':
@@ -449,9 +458,9 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_INCREASE_MENU_GID'), 'screwdriver');
 
-				ToolBarHelper::custom('MaintenanceJ3x.j3xChangeJ3xMenuLinks', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
+				ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
 				// ToDo: remove
-				ToolBarHelper::custom('MaintenanceJ3x.j3xChangeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
+				ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				break;

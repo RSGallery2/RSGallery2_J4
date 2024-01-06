@@ -12,8 +12,51 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 
+
+function displayRsgMenuLinks($Rsg2MenuLinks)
+{
+    if (empty ($Rsg2MenuLinks)) {
+        return;
+    }
+
+?>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Idx</th>
+            <th scope="col">Menu Id</th>
+            <th scope="col">Link</th>
+            <th scope="col">Params</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <?php
+        $row_id = 0;
+        foreach ($Rsg2MenuLinks as $idx => $Rsg2MenuLink )
+        {
+	        $row_id++;
+            [$link, $params] = $Rsg2MenuLink;
+
+        ?>
+
+        <tr>
+            <th scope="row"><?php echo $row_id; ?></th>
+            <td><?php echo $idx; ?></td>
+            <td><?php echo $link; ?></td>
+            <td><?php echo "%"; // $params; ?></td>
+        </tr>
+
+    <?php } ?>
+        </tbody>
+    </table>
+
+<?php
+}
+
 /*--------------------------------------------------------------------------------
-	db transfer j3x galleries
+	change menu links (example: j3x: '...&gallery&Gid...' => j4x: '...&galleryJ3x&Gid...'
 --------------------------------------------------------------------------------*/
 
 ?>
@@ -36,17 +79,41 @@ use Joomla\CMS\Language\Text;
 
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xChangeJ3xMenuLinks');return false;">
+                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks');return false;">
 				            <?php echo JText::_('COM_RSGALLERY2_INCREASE_MENU_GID'); ?>
                         </button>
 
                         <?php // 				// ToDo: remove  ?>
-                        <button class="btn btn-info" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xDecreaseMenuGid');return false;">
+                        <button class="btn btn-info" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xDegradeUpgradedJ3xMenuLinks');return false;">
 				            <?php echo JText::_('COM_RSGALLERY2_DECREASE_MENU_GID'); ?>
                         </button>
 
                     </div>
                 </div>
+
+                <div class="card text-center" >
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo Text::_('Links which will be upgraded', true);?></h3>
+
+                        <p class="card-text">
+                            <?php displayRsgMenuLinks($this->j3xRsg2MenuLinks); ?>
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="card text-center" >
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo Text::_('Links which have been upgraded', true);?></h3>
+
+                        <p class="card-text">
+                        <?php displayRsgMenuLinks($this->j4xRsg2MenuLinks); ?>
+                        </p>
+
+                    </div>
+                </div>
+
+
 
                 <input type="hidden" name="boxchecked" value="0" />
                 <input type="hidden" name="task" value=""/>
