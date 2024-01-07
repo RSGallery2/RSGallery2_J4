@@ -2652,27 +2652,46 @@ EOT;
 				}
 				else
 				{
-					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
-					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
-					$params['displayGalleryName']             = $displayGalleryName;
-					$params['displayGalleryDescription']      = $displayGalleryDescription;
-
-					/*
+					/* needed in galleryJ3x view
 					$paraPart = ""
-					    . "&displaySearch=0"
-						. "&displayGalleryName=0"
-						. "&displayGalleryDescription=0"
-						. "&images_show_title=1"
-						. "&images_show_description=0"
 						. "&images_show_search=1"
 						. "&images_column_arrangement_j3x=1"
 						. "&max_columns_in_images_view_j3x=4"
 						. "&max_thumbs_in_images_view_j3x=20"
+						. "&gallery_show_title=0"
 						. "&gallery_show_description=0"
 					    . "&gallery_show_slideshow=1"
+						. "&images_show_title=1"
+						. "&images_show_description=0"
+
+					// max_rows_in_images_view
 					;
 					$newLink .= $newLink = $paraPart;
 					/**/
+
+					$params['images_show_search']             = $rsgConfig->get('');
+					$params['images_column_arrangement_j3x']             = 1;
+					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
+					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
+
+					$params['gallery_show_title']             = $rsgConfig->get('');
+					$params['gallery_show_description']             = $rsgConfig->get('');
+					$params['images_show_title']             = $rsgConfig->get('');
+					$params['images_show_description']             = $rsgConfig->get('');
+
+
+
+finish
+
+					$params['displaySearch']             = $rsgConfig->get('');
+					$params['displayGalleryName']             = $displayGalleryName;
+					$params['displayGalleryDescription']      = $displayGalleryDescription;
+					$params['']             = $rsgConfig->get('');
+					$params['']             = $rsgConfig->get('');
+					$params['']             = $rsgConfig->get('');
+
+
+					// todo: (1) Assign values from parameter see max_columns_in_images_view_j3x here and above
 
 				}
 			}
@@ -2752,6 +2771,7 @@ EOT;
 					// gallery
 					$newLink = substr($newLink, 0, $gidEndIdx);
 					$newLink = str_replace('&view=gallery&', '&view=galleryJ3x&', $newLink);
+					// todo: (2) Assign values from parameter see max_columns_in_images_view_j3x here and above
 					$paraPart = ""
 						. "&displaySearch=0"
 						. "&displayGalleryName=0"
