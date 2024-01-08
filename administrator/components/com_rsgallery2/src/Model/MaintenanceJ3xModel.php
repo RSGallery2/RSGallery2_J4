@@ -894,6 +894,9 @@ EOT;
             $query
                 ->insert($db->quoteName('#__rsg2_galleries')) //make sure you keep #__
                 ->columns($db->quoteName($columns))
+	            // ToDo: ? explode ?
+                //->values(array(implode(',', $db->quote($values))));
+                //->values(array(implode(',', $db->quote($values))));
                 ->values(implode(',', $db->quote($values)));
             $db->setQuery($query);
 	        $isOk = $db->execute();
@@ -1397,6 +1400,9 @@ EOT;
             $query
                 ->insert($db->quoteName('#__rsg2_images')) //make sure you keep #__
                 ->columns($db->quoteName($columns))
+	            // ToDo: ? explode ?
+	            //->values(array(implode(',', $db->quote($values))));
+	            //->values(array(implode(',', $db->quote($values))));
                 ->values(implode(',', $db->quote($values)));
             $db->setQuery($query);
 	        $isOk = $db->execute();
@@ -2321,7 +2327,7 @@ EOT;
      * @param string $j3xFile
      * @param string $j4xFile
      *
-     * @return array
+     * @return int
      *
      * @since __BUMP_VERSION__
      */
@@ -2398,7 +2404,7 @@ EOT;
 	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
 	 * index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
 	 *
-	 * @return array
+	 * @return bool
 	 *
 	 * @throws \Exception
 	 * @since version
@@ -2420,6 +2426,11 @@ EOT;
 
 					[$oldLink, $oldParams] = $menuItem;
 
+					//--- add parameters from j3x config by link type -----------------------------
+
+					// root gallery, gallery , slideshow
+					$newParams = $this->menuParamsByJ3xType($oldLink, $oldParams);
+
 					//--- change link for gid++ ----------------------------------------------
 
 					$newLink = $this->linkIncreaseGalleryId($oldLink);
@@ -2427,12 +2438,9 @@ EOT;
 					//--- change link for type: ----------------------------------------------
 
 					// root gallery, gallery , slideshow
-					$newLink = $this->linkUpgradeByJ3xType($newLink);
+					$newLink = $this->linkUpgradeByJ3xType($newLink, $newParams);
 
 					//--- change menu parameter for type ----------------------------------------
-
-					// root gallery, gallery , slideshow
-					$newParams = $this->menuParamsByJ3xType($oldLink, $oldParams);
 
 					// valid link ?
 					if ( ! empty($newLink))
@@ -2454,7 +2462,7 @@ EOT;
 	 * Attention gid==0 special case with double meaning can't be solved
 	 * 0: root gallery 0-> 1: change to gallery if (1: forbidden as tree root)
 	 *
-	 * @return array
+	 * @return bool
 	 *
 	 * @throws \Exception
 	 * @since version
@@ -2505,7 +2513,7 @@ EOT;
 
 				//--- decrease on already downgraded links ---------------------------------
 
-				$menuItemsDB = $this->dbValidGidMenuItems();
+				$menuItemsDB = $this->dbValidJ3xGidMenuItems();
 
 				if ( ! empty ($menuItemsDB)) {
 
@@ -2625,14 +2633,17 @@ EOT;
 
 			//--- collect (j3x) config parameter----------------------------------
 
+			$rsgJ3xConfig = $this->j3xConfigItems();
 			// collect parameter (by j4x config, J3x should be transferred)
 			$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
+			/**
 			// ToDo: use type as result of registry
 			$max_columns_in_images_view_j3x = $rsgConfig->get('max_columns_in_images_view_j3x');
 			$max_thumbs_in_images_view_j3x  = $rsgConfig->get('max_thumbs_in_images_view_j3x');
 			$displayGalleryName             = $rsgConfig->get('displayGalleryName');
 			$displayGalleryDescription      = $rsgConfig->get('displayGalleryDescription');
+			/**/
 
 			//--- actual parameter to array ----------------------------------
 
@@ -2640,58 +2651,92 @@ EOT;
 
 			//--- assign new parameter ----------------------------------
 
+			/* ToDo: include left outs:
+				[image slide page parameters:]
+				* Displ. slideshow
+			    * Popup style
+			    * Display description
+			    * Display hits
+			    * Display voting
+			    * Display comments
+			    *
+			    *
+				[parent gallery]
+			    * ? how many galleries max ?
+			    *
+			 */
+
+
 			if (str_contains($oldLink, '&view=gallery&'))
 			{
-				// root gallery
-				if (intval($galleryId) == 0)
-				{
-					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
-					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
-					$params['displayGalleryName']             = $displayGalleryName;
-					$params['displayGalleryDescription']      = $displayGalleryDescription;
-				}
-				else
-				{
-					/* needed in galleryJ3x view
-					$paraPart = ""
-						. "&images_show_search=1"
-						. "&images_column_arrangement_j3x=1"
-						. "&max_columns_in_images_view_j3x=4"
-						. "&max_thumbs_in_images_view_j3x=20"
-						. "&gallery_show_title=0"
-						. "&gallery_show_description=0"
-					    . "&gallery_show_slideshow=1"
-						. "&images_show_title=1"
-						. "&images_show_description=0"
+			// root gallery
+			if (intval($galleryId) == 0)
+			{
+				/* ToDo: include left outs:
+					* Thumbnail Style
+					* direction left to right
+					* navigation bar top / bottom
+					*
+					*
+				/**/
 
-					// max_rows_in_images_view
-					;
-					$newLink .= $newLink = $paraPart;
+				/**
+				$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
+				$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
+				$params['displayGalleryName']             = $displayGalleryName;
+				$params['displayGalleryDescription']      = $displayGalleryDescription;
+				/**/
+				$params['images_column_arrangement_j3x']  = 1;
+				$params['max_columns_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_colsPerPage');;
+
+				$params['max_thumbs_in_images_view_j3x']  = $rsgJ3xConfig->get('display_thumbs_maxPerPage');;
+
+				$params['gallery_show_title']             = $rsgJ3xConfig->get('displayGalleryName');;
+				$params['gallery_show_description']       = $rsgJ3xConfig->get('displayGalleryDescription');
+
+			}
+			else
+			{
+				/* needed in galleryJ3x view
+				$paraPart = ""
+					. "&images_show_search=1"
+					. "&images_column_arrangement_j3x=1"
+					. "&max_columns_in_images_view_j3x=4"
+
+					. "&max_thumbs_in_images_view_j3x=20"
+					. "&gallery_show_title=0"
+					. "&gallery_show_description=0"
+
+					. "&gallery_show_slideshow=1"
+					. "&images_show_title=1"
+					. "&images_show_description=0"
+
+				// max_rows_in_images_view
+				;
+				$newLink .= $newLink = $paraPart;
+				/**/
+
+					$params['images_show_search']             = $rsgJ3xConfig->get('');
+					$params['images_column_arrangement_j3x']  = 1;
+					$params['max_columns_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_colsPerPage');;
+
+					$params['max_thumbs_in_images_view_j3x']  = $rsgJ3xConfig->get('display_thumbs_maxPerPage');;
+
+					$params['gallery_show_title']             = $rsgJ3xConfig->get('displayGalleryName');;
+					$params['gallery_show_description']       = $rsgJ3xConfig->get('displayGalleryDescription');
+
+					$params['gallery_show_slideshow']         = $rsgJ3xConfig->get('displaySlideshowGalleryView');
+					$params['images_show_title']              = $rsgJ3xConfig->get('display_thumbs_showImgName');
+					$params['images_show_description']        = $rsgConfig->get('');
+
+					/* ToDo: include left outs:
+						* Thumbnail Style
+						* direction left to right
+						* navigation bar top / bottom
+						*
+						*
 					/**/
 
-					$params['images_show_search']             = $rsgConfig->get('');
-					$params['images_column_arrangement_j3x']             = 1;
-					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
-					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
-
-					$params['gallery_show_title']             = $rsgConfig->get('');
-					$params['gallery_show_description']             = $rsgConfig->get('');
-					$params['images_show_title']             = $rsgConfig->get('');
-					$params['images_show_description']             = $rsgConfig->get('');
-
-
-
-finish
-
-					$params['displaySearch']             = $rsgConfig->get('');
-					$params['displayGalleryName']             = $displayGalleryName;
-					$params['displayGalleryDescription']      = $displayGalleryDescription;
-					$params['']             = $rsgConfig->get('');
-					$params['']             = $rsgConfig->get('');
-					$params['']             = $rsgConfig->get('');
-
-
-					// todo: (1) Assign values from parameter see max_columns_in_images_view_j3x here and above
 
 				}
 			}
@@ -2699,17 +2744,22 @@ finish
 			{
 				if (str_contains($oldLink, '&view=slideshow&'))
 				{
+					/* ToDo: include left outs:
+						* Thumbnail Style
+						* direction left to right
+						* navigation bar top / bottom
+						*
+						*
+					/**/
+
+					/**
 					$params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
 					$params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
 					$params['displayGalleryName']             = $displayGalleryName;
 					$params['displayGalleryDescription']      = $displayGalleryDescription;
+					/**/
 				}
 			}
-
-			//--- to string ----------------------------------
-
-			$newParams = json_encode($params, true);
-
 
 		} catch (\RuntimeException $e) {
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
@@ -2734,7 +2784,7 @@ finish
 	 *
 	 * @since version
 	 */
-	public function linkUpgradeByJ3xType(string $newLink): string|bool
+	public function linkUpgradeByJ3xType(string $newLink, $params): string|bool
 	{
 
 		try {
@@ -2773,17 +2823,15 @@ finish
 					$newLink = str_replace('&view=gallery&', '&view=galleryJ3x&', $newLink);
 					// todo: (2) Assign values from parameter see max_columns_in_images_view_j3x here and above
 					$paraPart = ""
-						. "&displaySearch=0"
-						. "&displayGalleryName=0"
-						. "&displayGalleryDescription=0"
-						. "&images_show_title=1"
-						. "&images_show_description=0"
-						. "&images_show_search=1"
-						. "&images_column_arrangement_j3x=1"
-						. "&max_columns_in_images_view_j3x=4"
-						. "&max_thumbs_in_images_view_j3x=20"
-						. "&gallery_show_description=0"
-						. "&gallery_show_slideshow=1"
+						. "&images_show_search']=" . $params['images_show_search'] . '"'
+						. "&images_column_arrangement_j3x=" . $params['images_column_arrangement_j3x'] . '"'
+						. "&max_columns_in_images_view_j3x=" . $params['max_columns_in_images_view_j3x'] . '"'
+						. "&max_thumbs_in_images_view_j3x=" . $params['max_thumbs_in_images_view_j3x'] . '"'
+						. "&gallery_show_title=" . $params['gallery_show_title'] . '"'
+						. "&gallery_show_description=" . $params['gallery_show_description'] . '"'
+						. "&gallery_show_slideshow=" . $params['gallery_show_slideshow'] . '"'
+						. "&images_show_title=" . $params['images_show_title'] . '"'
+						. "&images_show_description=" . $params['images_show_description'] . '"'
 					;
 					$newLink .= $paraPart;
 				}
@@ -2923,12 +2971,16 @@ finish
 	{
 		$successful = false;
 
+		//--- to string ----------------------------------
+
+		$jsonParameter = json_encode($newParams, true);
+
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$query->update($db->quoteName('#__menu'))
 			->set($db->quoteName('link') . ' = ' . $db->quote($newLink))
-			->set($db->quoteName('params') . ' = ' . $db->quote($newParams))
+			->set($db->quoteName('params') . ' = ' . $db->quote($jsonParameter))
 			->where($db->quoteName('id') . ' = ' . $id);
 
 		$db->setQuery($query);
