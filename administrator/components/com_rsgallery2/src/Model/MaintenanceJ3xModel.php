@@ -2772,16 +2772,36 @@ EOT;
 
                 }
             } else {
-                if (str_contains($oldLink, '&view=slideshow&')) {
-                    /* ToDo: include left outs:
-                        * Thumbnail Style
-                        * direction left to right
-                        * navigation bar top / bottom
-                        *
-                        *
-                    /**/
 
-                    /**
+				// slideshow
+                if (str_contains($oldLink, '&view=slideshow&')) {
+
+	                /* needed in galleryJ3x view
+					$paraPart = ""
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+						. "&displaySearch=" . $params['displaySearch'] . '"'
+
+					/**/
+
+	                /* ToDo: include left outs:
+						* Thumbnail Style
+						* direction left to right
+						* navigation bar top / bottom
+						*
+						*
+					/**/
+
+
+	                /**
                      * $params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
                      * $params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
                      * $params['displayGalleryName']             = $displayGalleryName;
