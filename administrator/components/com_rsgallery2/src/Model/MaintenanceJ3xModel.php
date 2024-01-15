@@ -895,9 +895,8 @@ EOT;
                 ->insert($db->quoteName('#__rsg2_galleries')) //make sure you keep #__
                 ->columns($db->quoteName($columns))
 	            // ToDo: ? explode ?
-                //->values(array(implode(',', $db->quote($values))));
-                //->values(array(implode(',', $db->quote($values))));
-                ->values(implode(',', $db->quote($values)));
+	            //->values(array(implode(',', $db->quote($values))));
+	            ->values(implode(',', $values));
             $db->setQuery($query);
 	        $isOk = $db->execute();
 
@@ -1402,8 +1401,8 @@ EOT;
                 ->columns($db->quoteName($columns))
 	            // ToDo: ? explode ?
 	            //->values(array(implode(',', $db->quote($values))));
-	            //->values(array(implode(',', $db->quote($values))));
-                ->values(implode(',', $db->quote($values)));
+	            ->values(implode(',', $values));
+
             $db->setQuery($query);
 	        $isOk = $db->execute();
 
@@ -2588,7 +2587,7 @@ EOT;
 			$test1 = intval($galleryId);
 		}
 
-		if (intval($galleryId) >= 0)
+		if (intval($galleryId) > 0)
 		{
 			$newGalleryId = strval(intval($galleryId) + $delta);
 
@@ -2608,7 +2607,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function menuParamsByJ3xType($oldLink, $oldParams): string|bool
+	public function menuParamsByJ3xType($oldLink, $oldParams)
 	{
 		// fall back use given
 		$newParams = $oldParams;
@@ -2643,11 +2642,11 @@ EOT;
              * $max_thumbs_in_images_view_j3x  = $rsgConfig->get('max_thumbs_in_images_view_j3x');
              * $displayGalleryName             = $rsgConfig->get('displayGalleryName');
              * $displayGalleryDescription      = $rsgConfig->get('displayGalleryDescription');
-             * /**/
+            /**/
 
             //--- actual parameter to array ----------------------------------
 
-            $params = json_decode($oldParams, true);
+            $params = $oldParams;
 
             //--- assign new parameter ----------------------------------
 
@@ -2664,7 +2663,7 @@ EOT;
                 [parent gallery]
                 * ? how many galleries max ?
                 *
-             */
+             /**/
 
 
             if (str_contains($oldLink, '&view=gallery&')) {
@@ -2696,40 +2695,55 @@ EOT;
                     /**/
 
                     /**
-                    $params['images_column_arrangement_j3x'] = 1;
-                    $params['max_columns_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_colsPerPage');;
-                    $params['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_maxPerPage');;
-                    $params['gallery_show_title'] = $rsgJ3xConfig->get('displayGalleryName');;
-                    $params['gallery_show_description'] = $rsgJ3xConfig->get('displayGalleryDescription');
+                    $newParams['images_column_arrangement_j3x'] = 1;
+                    $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_colsPerPage');;
+                    $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_maxPerPage');;
+                    $newParams['gallery_show_title'] = $rsgJ3xConfig->get('displayGalleryName');;
+                    $newParams['gallery_show_description'] = $rsgJ3xConfig->get('displayGalleryDescription');
                     /**/
 
                     // ToDo: assign j3x config vars :
-                    $params['images_show_search'] = $rsgJ3xConfig->get('d');
-                    $params['max_thumbs_in_root_galleries_view_j3x'] = $rsgJ3xConfig->get('d');
-                    $params['displaySearch'] = $rsgJ3xConfig->get('d');
-                    $params['displayRandom'] = $rsgJ3xConfig->get('d');
-                    $params['displayLatest'] = $rsgJ3xConfig->get('d');
-                    $params['intro_text'] = $rsgJ3xConfig->get('d');
-                    $params['menu_show_intro_text'] = $rsgJ3xConfig->get('d');
-                    $params['display_limitbox'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_show_title'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_show_description'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_show_owner'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_show_size'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_show_date'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_show_pre_label'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_show_slideshow'] = $rsgJ3xConfig->get('d');
-                    $params['galleries_description_side'] = $rsgJ3xConfig->get('d');
-                    $params['latest_images_count'] = $rsgJ3xConfig->get('d');
-                    $params['random_images_count'] = $rsgJ3xConfig->get('d');
+	                /**
+                    $newParams['images_show_search'] = $rsgJ3xConfig->get('d');
+                    $newParams['max_thumbs_in_root_galleries_view_j3x'] = $rsgJ3xConfig->get('d');
+                    $newParams['displaySearch'] = $rsgJ3xConfig->get('d');
+                    $newParams['displayRandom'] = $rsgJ3xConfig->get('d');
+                    $newParams['displayLatest'] = $rsgJ3xConfig->get('d');
+                    $newParams['intro_text'] = $rsgJ3xConfig->get('d');
+                    $newParams['menu_show_intro_text'] = $rsgJ3xConfig->get('d');
+                    $newParams['display_limitbox'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_show_title'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_show_description'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_show_owner'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_show_size'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_show_date'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_show_pre_label'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_show_slideshow'] = $rsgJ3xConfig->get('d');
+                    $newParams['galleries_description_side'] = $rsgJ3xConfig->get('d');
+                    $newParams['latest_images_count'] = $rsgJ3xConfig->get('d');
+                    $newParams['random_images_count'] = $rsgJ3xConfig->get('d');
+	                /**/
 
-                    /* ToDo: include left outs:
-                        * Thumbnail Style
-                        * direction left to right
-                        * navigation bar top / bottom
-                        *
-                        *
-                    /**/
+	                $newParams['images_show_search'] = '0'; // $rsgJ3xConfig->get('');
+	                $newParams['images_column_arrangement_j3x'] = '1';
+	                $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_colsPerPage'];
+
+	                $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_maxPerPage'];
+
+	                $newParams['gallery_show_title'] = $rsgJ3xConfig ['displayGalleryName'];
+	                $newParams['gallery_show_description'] = $rsgJ3xConfig ['displayGalleryDescription'];
+
+	                $newParams['gallery_show_slideshow'] = $rsgJ3xConfig ['displaySlideshowGalleryView'];
+	                $newParams['images_show_title'] = $rsgJ3xConfig ['display_thumbs_showImgName'];
+	                $newParams['images_show_description'] = '0'; //$rsgConfig [''];
+
+	                /* ToDo: include left outs:
+						* Thumbnail Style
+						* direction left to right
+						* navigation bar top / bottom
+						*
+						*
+					/**/
 
                 } else {
                     /* needed in galleryJ3x view
@@ -2745,21 +2759,20 @@ EOT;
                         . "&gallery_show_slideshow=1"
                         . "&images_show_title=1"
                         . "&images_show_description=0"
-
                     /**/
 
-                    $params['images_show_search'] = $rsgJ3xConfig->get('');
-                    $params['images_column_arrangement_j3x'] = 1;
-                    $params['max_columns_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_colsPerPage');;
+                    $newParams['images_show_search'] = '0'; // $rsgJ3xConfig->get('');
+                    $newParams['images_column_arrangement_j3x'] = '1';
+                    $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_colsPerPage'];
 
-                    $params['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig->get('display_thumbs_maxPerPage');;
+                    $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_maxPerPage'];
 
-                    $params['gallery_show_title'] = $rsgJ3xConfig->get('displayGalleryName');;
-                    $params['gallery_show_description'] = $rsgJ3xConfig->get('displayGalleryDescription');
+                    $newParams['gallery_show_title'] = $rsgJ3xConfig ['displayGalleryName'];
+                    $newParams['gallery_show_description'] = $rsgJ3xConfig ['displayGalleryDescription'];
 
-                    $params['gallery_show_slideshow'] = $rsgJ3xConfig->get('displaySlideshowGalleryView');
-                    $params['images_show_title'] = $rsgJ3xConfig->get('display_thumbs_showImgName');
-                    $params['images_show_description'] = $rsgConfig->get('');
+                    $newParams['gallery_show_slideshow'] = $rsgJ3xConfig ['displaySlideshowGalleryView'];
+                    $newParams['images_show_title'] = $rsgJ3xConfig ['display_thumbs_showImgName'];
+                    $newParams['images_show_description'] = '0'; //$rsgConfig [''];
 
                     /* ToDo: include left outs:
                         * Thumbnail Style
@@ -2802,10 +2815,10 @@ EOT;
 
 
 	                /**
-                     * $params['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
-                     * $params['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
-                     * $params['displayGalleryName']             = $displayGalleryName;
-                     * $params['displayGalleryDescription']      = $displayGalleryDescription;
+                     * $newParams['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
+                     * $newParams['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
+                     * $newParams['displayGalleryName']             = $displayGalleryName;
+                     * $newParams['displayGalleryDescription']      = $displayGalleryDescription;
                      * /**/
                 }
             }
@@ -2896,15 +2909,15 @@ EOT;
 					$newLink = str_replace('&view=gallery&', '&view=galleryJ3x&', $newLink);
 
 					$paraPart = ""
-						. "&images_show_search=" . $params['images_show_search'] . '"'
-						. "&images_column_arrangement_j3x=" . $params['images_column_arrangement_j3x'] . '"'
-						. "&max_columns_in_images_view_j3x=" . $params['max_columns_in_images_view_j3x'] . '"'
-						. "&max_thumbs_in_images_view_j3x=" . $params['max_thumbs_in_images_view_j3x'] . '"'
-						. "&gallery_show_title=" . $params['gallery_show_title'] . '"'
-						. "&gallery_show_description=" . $params['gallery_show_description'] . '"'
-						. "&gallery_show_slideshow=" . $params['gallery_show_slideshow'] . '"'
-						. "&images_show_title=" . $params['images_show_title'] . '"'
-						. "&images_show_description=" . $params['images_show_description'] . '"'
+						. "&images_show_search=" . $params['images_show_search']
+						. "&images_column_arrangement_j3x=" . $params['images_column_arrangement_j3x']
+						. "&max_columns_in_images_view_j3x=" . $params['max_columns_in_images_view_j3x']
+						. "&max_thumbs_in_images_view_j3x=" . $params['max_thumbs_in_images_view_j3x']
+						. "&gallery_show_title=" . $params['gallery_show_title']
+						. "&gallery_show_description=" . $params['gallery_show_description']
+						. "&gallery_show_slideshow=" . $params['gallery_show_slideshow']
+						. "&images_show_title=" . $params['images_show_title']
+						. "&images_show_description=" . $params['images_show_description']
 					;
 					$newLink .= $paraPart;
 				}
@@ -2967,30 +2980,32 @@ EOT;
 
 			if (str_contains($newLink, '&view=galleryJ3x&'))
 			{
-				// root gallery
-				if (intval($galleryId) == 0)
-				{
-					$newLink = substr($newLink, 0, $gidEndIdx);
-					$newLink = str_replace('&view=rootgalleriesJ3x&', '&view=gallery&', $newLink);
-				}
-				else
-				{
-					// ToDo: ? parent gallery ?
-					// gallery
-					$newLink = substr($newLink, 0, $gidEndIdx);
-					$newLink = str_replace('&view=galleryJ3x&', '&view=gallery&', $newLink);
-				}
+				// ToDo: ? parent gallery ?
+				// gallery
+				$newLink = substr($newLink, 0, $gidEndIdx);
+				$newLink = str_replace('&view=galleryJ3x&', '&view=gallery&', $newLink);
 			}
 			else
 			{
-				if (str_contains($newLink, '&view=slideshowJ3x&'))
+				if (str_contains($newLink, '&view=rootgalleriesJ3x&'))
 				{
-					// slideshow
-					$newLink = substr($newLink, 0, $gidEndIdx);
-					$newLink = str_replace('&view=slideshowJ3x&', '&view=slideshow&', $newLink);
+					// root gallery
+					if (intval($galleryId) == 0)
+					{
+						$newLink = substr($newLink, 0, $gidEndIdx);
+						$newLink = str_replace('&view=rootgalleriesJ3x&', '&view=gallery&', $newLink);
+					}
+				}
+				else
+				{
+					if (str_contains($newLink, '&view=slideshowJ3x&'))
+					{
+						// slideshow
+						$newLink = substr($newLink, 0, $gidEndIdx);
+						$newLink = str_replace('&view=slideshowJ3x&', '&view=slideshow&', $newLink);
+					}
 				}
 			}
-
 		} catch (\RuntimeException $e) {
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3040,7 +3055,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function updateMenuItem(string $id, string $newLink, string $newParams): bool
+	public function updateMenuItem(string $id, $newLink, $newParams): bool
 	{
 		$successful = false;
 
@@ -3087,7 +3102,7 @@ EOT;
 		$query->select(['id', 'link', 'params'])
 			->from('#__menu')
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
-			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
+//			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
 
 		$db->setQuery($query);
@@ -3104,13 +3119,12 @@ EOT;
 
 				// [$idDummy, $link, $params] = $menuItemDb;
 				$link   = $menuItemDb ['link'];
-				$params = $menuItemDb ['params'];
+				$params = json_decode ($menuItemDb ['params'], true);
 
 				// add matching link
 				if (   str_contains($link, '&view=gallery&')
 					|| str_contains($link, '&view=slideshow&'))
 				{
-
 					$menuLinks[$id] = [$link, $params];
 				}
 
@@ -3141,7 +3155,7 @@ EOT;
 		$query->select(['id', 'link', 'params'])
 			->from('#__menu')
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
-			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
+//			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
 
 		$db->setQuery($query);
@@ -3158,13 +3172,12 @@ EOT;
 
 				// [$idDummy, $link, $params] = $menuItemDb;
 				$link   = $menuItemDb ['link'];
-				$params = $menuItemDb ['params'];
+				$params = json_decode ($menuItemDb ['params'], true);
 
 				// add matching link
 				if (   str_contains($link, '&view=galleryJ3x&')
 					|| str_contains($link, '&view=slideshowJ3x&'))
 				{
-
 					$menuLinks[$id] = [$link, $params];
 				}
 

@@ -15,44 +15,49 @@ use Joomla\CMS\Language\Text;
 
 function displayRsgMenuLinks($Rsg2MenuLinks)
 {
-    if (empty ($Rsg2MenuLinks)) {
-        return;
-    }
+	if (empty ($Rsg2MenuLinks)) {
 
-?>
+		echo "<br> % No items found<br>";
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Idx</th>
-            <th scope="col">Menu Id</th>
-            <th scope="col">Link</th>
-            <th scope="col">Params</th>
-        </tr>
-        </thead>
-        <tbody>
+	} else {
 
-        <?php
-        $row_id = 0;
-        foreach ($Rsg2MenuLinks as $idx => $Rsg2MenuLink )
-        {
-	        $row_id++;
-            [$link, $params] = $Rsg2MenuLink;
+		?>
 
-        ?>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Idx</th>
+                <th scope="col">Menu Id</th>
+                <th scope="col">Link</th>
+                <!--th scope="col">Params</th-->
+            </tr>
+            </thead>
+            <tbody>
 
-        <tr>
-            <th scope="row"><?php echo $row_id; ?></th>
-            <td><?php echo $idx; ?></td>
-            <td><?php echo $link; ?></td>
-            <td><?php echo "%"; // $params; ?></td>
-        </tr>
+                <?php
+                $row_id = 0;
+                foreach ($Rsg2MenuLinks as $idx => $Rsg2MenuLink )
+                {
+                    $row_id++;
+                    [$link, $params] = $Rsg2MenuLink;
 
-    <?php } ?>
+                ?>
+
+                <tr>
+                    <th scope="row"><?php echo $row_id; ?></th>
+                    <td><?php echo $idx; ?></td>
+                    <td><?php echo $link; ?></td>
+                    <!--td><?php echo "%"; // $params; ?></td-->
+                </tr>
+
+            <?php
+            }
+            ?>
         </tbody>
     </table>
 
 <?php
+	}
 }
 
 /*--------------------------------------------------------------------------------
