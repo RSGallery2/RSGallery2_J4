@@ -2567,7 +2567,7 @@ EOT;
 	 */
 	public function linkAddToGalleryId(string $oldLink, int $delta): string|bool
 	{
-		$newLink = false;
+		$newLink = $oldLink;
 
 		//--- extract gallery id --------------------------
 
@@ -3176,6 +3176,7 @@ EOT;
 
 				// add matching link
 				if (   str_contains($link, '&view=galleryJ3x&')
+					|| str_contains($link, '&view=rootgalleriesJ3x&')
 					|| str_contains($link, '&view=slideshowJ3x&'))
 				{
 					$menuLinks[$id] = [$link, $params];
