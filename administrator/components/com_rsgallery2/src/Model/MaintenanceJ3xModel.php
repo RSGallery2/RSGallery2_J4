@@ -2674,19 +2674,19 @@ EOT;
                     /**
                      --- original J3x names root galleries front view -------------------------
                      * name="displaySearch"
-                     * name="displayRandom"
-                     * name="displayLatest"
-                     * name="displayBranding"
-                     * name="displayDownload"
-                     * name="displayStatus"
-                     * name="dispLimitbox"
+                     * x name="displayRandom"
+                     * x name="displayLatest"
+                     * x name="displayBranding"
+                     * x name="displayDownload"
+                     * x name="displayStatus"
+                     * x name="dispLimitbox"
                      * name="galcountNrs"
-                     * name="displaySlideshow"
-                     * name="current_slideshow"
-                     * name="showGalleryOwner"
-                     * name="showGallerySize"
-                     * name="includeKids"
-                     * name="showGalleryDate"
+                     * x name="displaySlideshow"
+                     * x name="current_slideshow"
+                     * x name="showGalleryOwner"
+                     * x name="showGallerySize"
+                     * x name="includeKids"
+                     * x name="showGalleryDate"
 	                 *
                     /**/
 
@@ -2710,47 +2710,27 @@ EOT;
 						name="menu_show_intro_text"
 						name="latest_count"
 						name="random_count"
-
-					$paraPart = ""
-						. "&images_show_search=1"
-						. "&max_thumbs_in_root_galleries_view_j3x=" . $params['max_thumbs_in_root_galleries_view_j3x'] . '"'
-						. "&displaySearch=" . $params['displaySearch'] . '"'
-						. "&displayRandom=" . $params['displayRandom'] . '"'
-						. "&displayLatest=" . $params['displayLatest'] . '"'
-						. "&intro_text=" . $params['intro_text'] . '"'
-						. "&menu_show_intro_text=" . $params['menu_show_intro_text'] . '"'
-						. "&display_limitbox=" . $params['display_limitbox'] . '"'
-						. "&galleries_show_title=" . $params['galleries_show_title'] . '"'
-						. "&galleries_show_description=" . $params['galleries_show_description'] . '"'
-						. "&galleries_show_owner=" . $params['galleries_show_owner'] . '"'
-						. "&galleries_show_size=" . $params['galleries_show_size'] . '"'
-						. "&galleries_show_date=" . $params['galleries_show_date'] . '"'
-						. "&galleries_show_pre_label=" . $params['galleries_show_pre_label'] . '"'
-						. "&galleries_show_slideshow=" . $params['galleries_show_slideshow'] . '"'
-						. "&galleries_description_side=" . $params['galleries_description_side'] . '"'
-						. "&latest_images_count=" . $params['latest_images_count'] . '"'
-						. "&random_images_count=" . $params['random_images_count'] . '"'
 					/**/
 
 
-	                $newParams['images_show_search'] = $rsgJ3xConfig ['displaySearch'];
+	                // ??? $newParams['images_show_search'] = $rsgJ3xConfig ['displaySearch'];
 	                $newParams['images_column_arrangement_j3x'] = '1';
-	                $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_colsPerPage'];
+	                // $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig ['']; // not used as root = vertical
 
-	    *           $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_maxPerPage'];
+	                $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig ['galcountNrs'];
 
-	                $newParams['gallery_show_title'] = $rsgJ3xConfig ['displayGalleryName'];
+	                // $newParams['gallery_show_title'] = $rsgJ3xConfig ['???displayGalleryName??'];
 	                $newParams['gallery_show_description'] = $rsgJ3xConfig ['displayGalleryDescription'];
-        *
-	                $newParams['gallery_show_slideshow'] = $rsgJ3xConfig ['displaySlideshowGalleryView'];
-	                $newParams['images_show_title'] = $rsgJ3xConfig ['display_thumbs_showImgName'];
+
+	                $newParams['gallery_show_slideshow'] = $rsgJ3xConfig [''];
+	                $newParams['images_show_title'] = $rsgJ3xConfig [''];
 	                $newParams['images_show_description'] = '0'; //$rsgConfig [''];
 
-        *           $newParams['displaySearch'] = $rsgJ3xConfig ['displaySearch'];
-        *           $newParams['displayRandom'] = $rsgJ3xConfig ['displayRandom'];
-        *           $newParams['displayLatest'] = $rsgJ3xConfig ['displayLatest'];
+                   $newParams['displaySearch'] = $rsgJ3xConfig ['displaySearch'];
+                   $newParams['displayRandom'] = $rsgJ3xConfig ['displayRandom'];
+                   $newParams['displayLatest'] = $rsgJ3xConfig ['displayLatest'];
 
-        *           $newParams['intro_text'] = $rsgJ3xConfig ['intro_text'];
+                   $newParams['intro_text'] = $rsgJ3xConfig ['intro_text'];
 
 		/**
         + display_limitbox
@@ -2807,7 +2787,6 @@ EOT;
                     $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_colsPerPage'];
 
                     $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_maxPerPage'];
-
                     $newParams['gallery_show_title'] = $rsgJ3xConfig ['displayGalleryName'];
                     $newParams['gallery_show_description'] = $rsgJ3xConfig ['displayGalleryDescription'];
 
