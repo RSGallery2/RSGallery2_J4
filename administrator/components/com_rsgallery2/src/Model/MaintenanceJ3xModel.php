@@ -2703,41 +2703,75 @@ EOT;
                     /**/
 
                     // ToDo: assign j3x config vars :
-	                /**
-                    $newParams['images_show_search'] = $rsgJ3xConfig->get('d');
-                    $newParams['max_thumbs_in_root_galleries_view_j3x'] = $rsgJ3xConfig->get('d');
-                    $newParams['displaySearch'] = $rsgJ3xConfig->get('d');
-                    $newParams['displayRandom'] = $rsgJ3xConfig->get('d');
-                    $newParams['displayLatest'] = $rsgJ3xConfig->get('d');
-                    $newParams['intro_text'] = $rsgJ3xConfig->get('d');
-                    $newParams['menu_show_intro_text'] = $rsgJ3xConfig->get('d');
-                    $newParams['display_limitbox'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_show_title'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_show_description'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_show_owner'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_show_size'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_show_date'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_show_pre_label'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_show_slideshow'] = $rsgJ3xConfig->get('d');
-                    $newParams['galleries_description_side'] = $rsgJ3xConfig->get('d');
-                    $newParams['latest_images_count'] = $rsgJ3xConfig->get('d');
-                    $newParams['random_images_count'] = $rsgJ3xConfig->get('d');
-	                /**/
+                    /**
+                     --- original J3x names root galleries front view -------------------------
+                     * name="displaySearch"
+                     * name="displayRandom"
+                     * name="displayLatest"
+                     * name="displayBranding"
+                     * name="displayDownload"
+                     * name="displayStatus"
+                     * name="dispLimitbox"
+                     * name="galcountNrs"
+                     * name="displaySlideshow"
+                     * name="current_slideshow"
+                     * name="showGalleryOwner"
+                     * name="showGallerySize"
+                     * name="includeKids"
+                     * name="showGalleryDate"
+                     *
+                     *
+                    * $newParams['images_show_search'] = $rsgJ3xConfig->get('d');
+                    * $newParams['max_thumbs_in_root_galleries_view_j3x'] = $rsgJ3xConfig->get('d');
+                    * $newParams['displaySearch'] = $rsgJ3xConfig->get('d');
+                    * $newParams['displayRandom'] = $rsgJ3xConfig->get('d');
+                    * $newParams['displayLatest'] = $rsgJ3xConfig->get('d');
+                    * $newParams['intro_text'] = $rsgJ3xConfig->get('d');
+                    * $newParams['menu_show_intro_text'] = $rsgJ3xConfig->get('d');
+                    * $newParams['display_limitbox'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_show_title'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_show_description'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_show_owner'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_show_size'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_show_date'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_show_pre_label'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_show_slideshow'] = $rsgJ3xConfig->get('d');
+                    * $newParams['galleries_description_side'] = $rsgJ3xConfig->get('d');
+                    * $newParams['latest_images_count'] = $rsgJ3xConfig->get('d');
+                    * $newParams['random_images_count'] = $rsgJ3xConfig->get('d');
+	                * /**/
 
 	                $newParams['images_show_search'] = '0'; // $rsgJ3xConfig->get('');
 	                $newParams['images_column_arrangement_j3x'] = '1';
 	                $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_colsPerPage'];
 
-	                $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_maxPerPage'];
+	     *           $newParams['max_thumbs_in_images_view_j3x'] = $rsgJ3xConfig ['display_thumbs_maxPerPage'];
 
 	                $newParams['gallery_show_title'] = $rsgJ3xConfig ['displayGalleryName'];
 	                $newParams['gallery_show_description'] = $rsgJ3xConfig ['displayGalleryDescription'];
-
+        *
 	                $newParams['gallery_show_slideshow'] = $rsgJ3xConfig ['displaySlideshowGalleryView'];
 	                $newParams['images_show_title'] = $rsgJ3xConfig ['display_thumbs_showImgName'];
 	                $newParams['images_show_description'] = '0'; //$rsgConfig [''];
 
-	                /* ToDo: include left outs:
+         *           $newParams['displaySearch'] = $rsgJ3xConfig ['displaySearch'];
+         *           $newParams['displayRandom'] = $rsgJ3xConfig ['displayRandom'];
+         *           $newParams['displayLatest'] = $rsgJ3xConfig ['displayLatest'];
+
+         *           $newParams['intro_text'] = $rsgJ3xConfig ['intro_text'];
+
+
+        + display_limitbox
+
+
+
+        - displayBranding
+        -
+
+
+
+
+                    /* ToDo: include left outs:
 						* Thumbnail Style
 						* direction left to right
 						* navigation bar top / bottom
