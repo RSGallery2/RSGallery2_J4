@@ -25,6 +25,20 @@ use Joomla\CMS\Filesystem\Folder;
  * @since 5.0.0
  *
  */
+
+protected $actualParams;
+protected $defaultParams;
+protected $mergedParams;
+
+protected minimumPhp;
+protected minimumJoomla;
+protected newRelease;
+protected oldRelease;
+
+protected oldManifestData;
+
+// protected $actualParams;
+
 class Com_Rsgallery2InstallerScript extends InstallerScript
 {
 	protected $newRelease;

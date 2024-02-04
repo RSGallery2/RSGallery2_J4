@@ -189,7 +189,7 @@ class ConfigRawModel extends BaseModel
                 $app->enqueueMessage($OutTxt, 'error');
             }
             else {
-                // attribArray if it is an config xml file
+                // attribArray if it is a config xml file
                 $xpath = "/config";
                 $xmlConfig = $xmlOuter->xpath($xpath);
 
