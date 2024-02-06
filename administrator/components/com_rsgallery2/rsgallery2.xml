@@ -120,9 +120,7 @@
 
 	<changelogurl>https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml</changelogurl>
 	<updateservers>
-		<server type="extension" name="RSG2 for J4 Update server">
-		https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml 
-		</server>
+		<server type="extension" name="RSG2 for J4 Update server">https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml</server>
 	</updateservers>
 	<dashboards>
 		<dashboard title="COM_MENUS_RSGALLERY2_TITLE" icon="icon-list">rsgallery2</dashboard>
