@@ -595,6 +595,7 @@ EOT;
         // `access` int(10) unsigned DEFAULT NULL,
 	    $j4x_GalleryItem['access'] = $j3x_gallery->access;
 
+	    // ToDo: sizes from j3x config
 	    $j4x_GalleryItem['sizes'] = '';
 
         return $j4x_GalleryItem;
@@ -890,6 +891,9 @@ EOT;
 	        $columns[] = 'sizes';
 	        $values[] = $j4x_GalleryItem['sizes'];
 
+//	        $testNames = implode(',', $columns);
+//	        $testValues = implode(',', $values);
+//
             // Prepare the insert query.
             $query
                 ->insert($db->quoteName('#__rsg2_galleries')) //make sure you keep #__
@@ -897,6 +901,10 @@ EOT;
 	            // ToDo: ? explode ?
 	            //->values(array(implode(',', $db->quote($values))));
 	            ->values(implode(',', $values));
+//
+//			$debug = $query->__toString();
+//	        Factory::getApplication()->enqueueMessage('Sql query: ' . $debug, 'notice');
+//
             $db->setQuery($query);
 	        $isOk = $db->execute();
 
@@ -1487,6 +1495,7 @@ EOT;
         // Mark as to be found in old directory
         $j4_imageItem['use_j3x_location'] = 1;
 
+		// ToDo: sizes from j3x config
 	    $j4_imageItem['sizes'] = '';
 
         return $j4_imageItem;
