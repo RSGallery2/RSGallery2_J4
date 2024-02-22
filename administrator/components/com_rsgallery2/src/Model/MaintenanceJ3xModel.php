@@ -825,75 +825,82 @@ EOT;
             $query = $db->getQuery(true);
 
             $columns[] = 'id';
-            $values[] = 1 + (int)$j4x_GalleryItem['id'];
+            $values[] = $db->quote(1 + (int)$j4x_GalleryItem['id']);
 
             $columns[] = 'name';
-            $values[] = $j4x_GalleryItem['name'];
+            $values[] = $db->quote($j4x_GalleryItem['name']);
             $columns[] = 'alias';
-            $values[] = $j4x_GalleryItem['alias'];
+            $values[] = $db->quote($j4x_GalleryItem['alias']);
             $columns[] = 'description';
-            $values[] = $j4x_GalleryItem['description'];
+            $values[] = $db->quote($j4x_GalleryItem['description']);
 
             $columns[] = 'note';
-//            $values[] = $j4ImageItem['note'];
-            $values[] = '';
+//            $values[] = $db->quote($j4ImageItem['note'];
+            $values[] = $db->quote('');
             $columns[] = 'params';
-            $values[] = $j4x_GalleryItem['params'];
+            $values[] = $db->quote($j4x_GalleryItem['params']);
             $columns[] = 'published';
-            $values[] = $j4x_GalleryItem['published'];
+            $values[] = $db->quote($j4x_GalleryItem['published']);
 
 //            $columns[] = 'publish_up';
-//            $values[] = $j4ImageItem['publish_up'];
+//            $values[] = $db->quote($j4ImageItem['publish_up']);
 //            $columns[] = 'publish_down';
-//            $values[] = $j4ImageItem['publish_down'];
+//            $values[] = $db->quote($j4ImageItem['publish_down']);
 
             $columns[] = 'hits';
-            $values[] = $j4x_GalleryItem['hits'];
+            $values[] = $db->quote($j4x_GalleryItem['hits']);
 
             $columns[] = 'checked_out';
-            $values[] = $j4x_GalleryItem['checked_out'];
+            $values[] = $db->quote($j4x_GalleryItem['checked_out']);
             $columns[] = 'checked_out_time';
-            $values[] = $j4x_GalleryItem['checked_out_time'];
+            $values[] = $db->quote($j4x_GalleryItem['checked_out_time']);
             $columns[] = 'created';
 //            $test01 = $j4ImageItem['created'];
 //            $test02 = $j4ImageItem['created']->toSql();
-//            $values[] = $j4ImageItem['created']->toSql();
-            $values[] = $j4x_GalleryItem['created'];
+//            $values[] = $db->quote($j4ImageItem['created']->toSql();
+            $values[] = $db->quote($j4x_GalleryItem['created']);
             $columns[] = 'created_by';
-            $values[] = $j4x_GalleryItem['created_by'];
+            $values[] = $db->quote($j4x_GalleryItem['created_by']);
             $columns[] = 'created_by_alias';
-            $values[] = $j4x_GalleryItem['created_by_alias'];
+            $values[] = $db->quote($j4x_GalleryItem['created_by_alias']);
             $columns[] = 'modified';
-            $values[] = $j4x_GalleryItem['created'];
+            $values[] = $db->quote($j4x_GalleryItem['created']);
 //            $columns[] = 'modified_by';
-//            $values[] = $j4x_GalleryItem['modified_by'];
+//            $values[] = $db->quote($j4x_GalleryItem['modified_by']);
 
             $columns[] = 'parent_id';
-            $values[] = 1 + (int)$j4x_GalleryItem['parent_id'];
+            $values[] = $db->quote(1 + (int)$j4x_GalleryItem['parent_id']);
 
             $columns[] = 'level';
-            $values[] = 1 + (int)$j4x_GalleryItem['level'];
+            $values[] = $db->quote(1 + (int)$j4x_GalleryItem['level']);
 //            $columns[] = 'path';
-//            $values[] = $j4x_GalleryItem['path'];
+//            $values[] = $db->quote($j4x_GalleryItem['path']);
             $columns[] = 'lft';
-            $values[] = $j4x_GalleryItem['lft'];
+            $values[] = $db->quote($j4x_GalleryItem['lft']);
             $columns[] = 'rgt';
-            $values[] = $j4x_GalleryItem['rgt'];
+            $values[] = $db->quote($j4x_GalleryItem['rgt']);
 
 //            $columns[] = 'approved';
-//            $values[] = $j4x_GalleryItem['approved'];
+//            $values[] = $db->quote($j4x_GalleryItem['approved']);
 
             $columns[] = 'asset_id';
-            $values[] = $j4x_GalleryItem['asset_id'];
+            $values[] = $db->quote($j4x_GalleryItem['asset_id']);
 //            $columns[] = 'access';
-//            $values[] = $j4ImageItem['access'];
+//            $values[] = $db->quote($j4ImageItem['access']);
 
 	        $columns[] = 'sizes';
-	        $values[] = $j4x_GalleryItem['sizes'];
+	        $values[] = $db->quote($j4x_GalleryItem['sizes']);
 
 //	        $testNames = implode(',', $columns);
 //	        $testValues = implode(',', $values);
 //
+
+	        // https://stackoverflow.com/questions/42385248/joomla-insert-multiple-rows-using-single-query
+			// $db->quote(
+
+
+
+
             // Prepare the insert query.
             $query
                 ->insert($db->quoteName('#__rsg2_galleries')) //make sure you keep #__
@@ -1334,74 +1341,74 @@ EOT;
             $query = $db->getQuery(true);
 
             $columns[] = 'id';
-            $values[] = $j4ImageItem['id'];
+            $values[] = $db->quote($j4ImageItem['id']);
             $columns[] = 'name';
-            $values[] = $j4ImageItem['name'];
+            $values[] = $db->quote($j4ImageItem['name']);
             $columns[] = 'alias';
-            $values[] = $j4ImageItem['alias'];
+            $values[] = $db->quote($j4ImageItem['alias']);
             $columns[] = 'description';
-            $values[] = $j4ImageItem['description'];
+            $values[] = $db->quote($j4ImageItem['description']);
 
             $columns[] = 'gallery_id';
-            // $values[] = 1 + (int)$j4ImageItem['gallery_id'];
-	        // x_gallery_id = $this->convertDbJ3xGalleryId($j3x_image->gallery_id);
-	        $values[] = (int)$j4ImageItem['gallery_id'];
+            // $values[] = $db->quote(1 + (int)$j4ImageItem['gallery_id']);
+	        // x_gallery_id = $this->convertDbJ3xGalleryId($j3x_image->gallery_id));
+	        $values[] = $db->quote($j4ImageItem['gallery_id']);
             $columns[] = 'title';
-            $values[] = $j4ImageItem['title'];
+            $values[] = $db->quote($j4ImageItem['title']);
 
 //            $columns[] = 'note';
-//            $values[] = $j4ImageItem['note'];
+//            $values[] = $db->quote($j4ImageItem['note']);
             $columns[] = 'params';
-            $values[] = $j4ImageItem['params'];
+            $values[] = $db->quote($j4ImageItem['params']);
             $columns[] = 'published';
-            $values[] = $j4ImageItem['published'];
+            $values[] = $db->quote($j4ImageItem['published']);
 
 //            $columns[] = 'publish_up';
-//            $values[] = $j4ImageItem['publish_up'];
+//            $values[] = $db->quote($j4ImageItem['publish_up']);
 //            $columns[] = 'publish_down';
-//            $values[] = $j4ImageItem['publish_down'];
+//            $values[] = $db->quote($j4ImageItem['publish_down']);
 
             $columns[] = 'hits';
-            $values[] = $j4ImageItem['hits'];
+            $values[] = $db->quote($j4ImageItem['hits']);
             $columns[] = 'rating';
-            $values[] = $j4ImageItem['rating'];
+            $values[] = $db->quote($j4ImageItem['rating']);
             $columns[] = 'votes';
-            $values[] = $j4ImageItem['votes'];
+            $values[] = $db->quote($j4ImageItem['votes']);
             $columns[] = 'comments';
-            $values[] = $j4ImageItem['comments'];
+            $values[] = $db->quote($j4ImageItem['comments']);
 
             $columns[] = 'checked_out';
-            $values[] = $j4ImageItem['checked_out'];
+            $values[] = $db->quote($j4ImageItem['checked_out']);
             $columns[] = 'checked_out_time';
-            $values[] = $j4ImageItem['checked_out_time'];
+            $values[] = $db->quote($j4ImageItem['checked_out_time']);
             $columns[] = 'created';
 //            $test01 = $j4ImageItem['created'];
 //            $test02 = $j4ImageItem['created']->toSql();
-//            $values[] = $j4ImageItem['created']->toSql();
-            $values[] = $j4ImageItem['created'];
+//            $values[] = $db->quote($j4ImageItem['created']->toSql();
+            $values[] = $db->quote($j4ImageItem['created']);
             $columns[] = 'created_by';
-            $values[] = $j4ImageItem['created_by'];
+            $values[] = $db->quote($j4ImageItem['created_by']);
             $columns[] = 'created_by_alias';
-            $values[] = $j4ImageItem['created_by_alias'];
+            $values[] = $db->quote($j4ImageItem['created_by_alias']);
             $columns[] = 'modified';
-            $values[] = $j4ImageItem['modified'];
+            $values[] = $db->quote($j4ImageItem['modified']);
             $columns[] = 'modified_by';
-            $values[] = $j4ImageItem['modified_by'];
+            $values[] = $db->quote($j4ImageItem['modified_by']);
 
             $columns[] = 'ordering';
-            $values[] = $j4ImageItem['ordering'];
+            $values[] = $db->quote($j4ImageItem['ordering']);
             $columns[] = 'approved';
-            $values[] = $j4ImageItem['approved'];
+            $values[] = $db->quote($j4ImageItem['approved']);
 
             $columns[] = 'asset_id';
-            $values[] = $j4ImageItem['asset_id'];
+            $values[] = $db->quote($j4ImageItem['asset_id']);
 //            $columns[] = 'access';
-//            $values[] = $j4ImageItem['access'];
+//            $values[] = $db->quote($j4ImageItem['access'];
             $columns[] = 'use_j3x_location';
-            $values[] = $j4ImageItem['use_j3x_location'];
+            $values[] = $db->quote($j4ImageItem['use_j3x_location']);
 
 	        $columns[] = 'sizes';
-	        $values[] = $j4ImageItem['sizes'];
+	        $values[] = $db->quote($j4ImageItem['sizes']);
 
 	        // Prepare the insert query.
             $query
@@ -2574,7 +2581,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function linkAddToGalleryId(string $oldLink, int $delta): string|bool
+	public function linkAddToGalleryId(string $oldLink, int $delta)
 	{
 		$newLink = $oldLink;
 
@@ -2875,7 +2882,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function linkUpgradeByJ3xType(string $newLink, $params): string|bool
+	public function linkUpgradeByJ3xType(string $newLink, $params)
 	{
 
 		try {
@@ -2984,7 +2991,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function linkDegradeByJ3xType(string $newLink): string|bool
+	public function linkDegradeByJ3xType(string $newLink)
 	{
 
 		try {
@@ -3054,7 +3061,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function linkIncreaseGalleryId($link): string|int
+	public function linkIncreaseGalleryId($link)
 	{
 
 		return $this->linkAddToGalleryId($link, +1);
@@ -3067,7 +3074,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function linkDecreaseGalleryId($oldLink): string|int
+	public function linkDecreaseGalleryId($oldLink)
 	{
 
 		return $this->linkAddToGalleryId($oldLink, -1);
@@ -3084,7 +3091,7 @@ EOT;
 	 *
 	 * @since version
 	 */
-	public function updateMenuItem(string $id, $newLink, $newParams): bool
+	public function updateMenuItem(string $id, $newLink, $newParams)
 	{
 		$successful = false;
 
