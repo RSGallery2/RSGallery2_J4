@@ -22,7 +22,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 
 /**
  * Keeps the file location paths of an image for PHP use and URIs for HTML use
- * The path is kept without filename . It is vaslid for all images in
+ * The path is kept without filename. It is valid for all images in
  * given gallery
  *
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
@@ -114,7 +114,7 @@ class ImagePathsModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'ImagePaths: Error executing __construct: <br>';
+			$OutTxt .= 'ImagePathsModel: Error executing __construct: <br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -280,7 +280,7 @@ class ImagePathsModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';
+			$OutTxt .= 'ImagePathsModel: Error executing createAllPaths: <br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -323,7 +323,7 @@ class ImagePathsModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'ImagePaths: Error executing isPathsExisting: <br>';
+			$OutTxt .= 'ImagePathsModel: Error executing isPathsExisting: <br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();

@@ -305,7 +305,7 @@ out:
 	{
 
 		// Todo: Check Authorisation, Jupload , check mime type ...
-
+        // ToDo: $rsgConfig is empty ...
 		global $rsgConfig, $Rsg2DebugActive;
 
 		// $IsMoved = false;
@@ -1324,7 +1324,7 @@ interface IResponseTransfer {
 
         $subFolders = Folder::folders($ImagesFolder, '.', false);
 
-        foreach (subFolders as $subFolder) {
+        foreach ($subFolders as $subFolder) {
 
             // Collect file info and Reserve Db ImageId
             $subfiles = $this->Import2Db4FilesInFolder  ($subFolder, $galleryId);

@@ -210,7 +210,9 @@ class ConfigRawModel extends BaseModel
                     foreach ($result as $item) {
 
                         // convert to array
-                        $fieldAttributes = current($item->attributes());
+	                    // $fieldAttributes = current($item->attributes());
+	                    $attributes = get_mangled_object_vars($item->attributes());
+	                    $fieldAttributes = current($attributes);
 
                         $type = $fieldAttributes ['type'];
 

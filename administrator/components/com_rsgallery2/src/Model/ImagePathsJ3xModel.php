@@ -91,7 +91,7 @@ class ImagePathsJ3xModel {
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'ImagePaths: Error executing __construct: <br>';
+			$OutTxt .= 'ImagePathsModel: Error executing __construct: <br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -157,7 +157,7 @@ class ImagePathsJ3xModel {
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'ImagePaths: Error executing createAllPaths: <br>';
+            $OutTxt .= 'ImagePathsModel: Error executing createAllPaths: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -195,7 +195,7 @@ class ImagePathsJ3xModel {
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'ImagePaths: Error executing isPathsExisting: <br>';
+            $OutTxt .= 'ImagePathsModel: Error executing isPathsExisting: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

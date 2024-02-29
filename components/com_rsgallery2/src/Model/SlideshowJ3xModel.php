@@ -20,7 +20,7 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
 /**
@@ -340,7 +340,7 @@ class SlideshowJ3xModel extends GalleryJ3xModel
             $input = $app->input;
             $gid = $input->get('gid', '', 'INT');
 
-            $ImagePaths = new ImagePaths ($gid);
+            $ImagePaths = new ImagePathsModel ($gid);
 
             foreach ($images as $image) {
                 // ToDo: check for J3x style of gallery (? all in construct ?)

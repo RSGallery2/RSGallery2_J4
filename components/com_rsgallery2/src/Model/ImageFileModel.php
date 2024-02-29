@@ -28,7 +28,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 
-// ToDo: own file ImageFilePaths for merge_paths and class imagePaths
+// ToDo: own file ImageFilePathsModel for merge_paths and class imagePathsModel
 
 /**
  * Handles files of images with actions like
@@ -126,7 +126,7 @@ class ImageFileModel extends BaseModel // AdminModel
         // J4x ?
         if( ! $use_j3x_location) {
 
-            $imagePaths = new ImagePaths ($galleryId);
+            $imagePaths = new ImagePathsModel ($galleryId);
 
             //---  -------------------------------------------------
 
@@ -137,7 +137,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             // J3x
 
-            $ImagePathJ3x = new ImagePathsJ3x ();
+            $ImagePathJ3x = new ImagePathsJ3xModel ();
 
             //---  -------------------------------------------------
 

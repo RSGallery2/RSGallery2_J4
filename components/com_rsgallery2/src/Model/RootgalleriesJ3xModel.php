@@ -23,7 +23,7 @@ use Joomla\Registry\Registry;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
 /**

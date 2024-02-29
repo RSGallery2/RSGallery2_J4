@@ -28,7 +28,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 
-// ToDo: own file ImageFilePaths for merge_paths and class imagePaths
+// ToDo: own file ImageFilePaths for merge_paths and class ImagePathsModel
 
 /**
  * Handles files of images with actions like
@@ -482,7 +482,7 @@ class ImageFileModel extends BaseModel // AdminModel
             // try to delete each image, continue on fail
             foreach ($imagePathFileNames as $imageFileName) {
                 // Make sure to not delete empty
-                //if (strlen($imageFileName) > strlen ($this->???imagePaths->rsgImagesBasePath))
+                //if (strlen($imageFileName) > strlen ($this->???ImagePathsModel->rsgImagesBasePath))
                 $isDeleted = File::delete($imageFileName);
 
                 if($isDeleted) {
@@ -782,7 +782,7 @@ class ImageFileModel extends BaseModel // AdminModel
      * @since __BUMP_VERSION__
      * @throws Exception
      */
-    public function CreateRSG2Images(ImagePaths $imagePaths, $srcFileName='', $targetFileName='')//: array
+    public function CreateRSG2Images(ImagePathsModel $imagePaths, $srcFileName='', $targetFileName='')//: array
     {
         global $rsgConfig, $Rsg2DebugActive;
 
@@ -916,7 +916,7 @@ class ImageFileModel extends BaseModel // AdminModel
      * @since __BUMP_VERSION__
      * @throws Exception
      */
-    public function CreateRSG2ImagesJ3x(ImagePathsJ3x $imagePaths, $srcFileName='', $targetFileName='')//: array
+    public function CreateRSG2ImagesJ3x(ImagePathsJ3xModel $imagePaths, $srcFileName='', $targetFileName='')//: array
     {
         global $rsgConfig, $Rsg2DebugActive;
 

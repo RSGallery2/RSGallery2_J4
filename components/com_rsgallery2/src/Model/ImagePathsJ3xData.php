@@ -10,10 +10,10 @@
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 use Joomla\CMS\Uri\Uri;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 
 
-class ImagePathsJ3xData extends ImagePathsJ3x
+class ImagePathsJ3xData extends ImagePathsJ3xModel
 {
     /**
      * @param $image

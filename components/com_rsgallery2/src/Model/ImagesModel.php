@@ -21,8 +21,8 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
-//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
-//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3x;
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 

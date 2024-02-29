@@ -22,8 +22,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
 
-//use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePaths;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 
 /**
@@ -599,13 +598,13 @@ class GalleriesModel extends ListModel
 			// J4x ?
 			if( ! $image->use_j3x_location) {
 
-				$imagePaths = new ImagePaths ($image->gallery_id);
+				$imagePaths = new ImagePathsModel ($image->gallery_id);
 				$imagePaths->assignPathData ($image);
 
 			} else {
 
 				// J3x
-				$imagePathJ3x = new ImagePathsJ3x ();
+				$imagePathJ3x = new ImagePathsJ3xModel ();
 				$imagePathJ3x->assignPathData ($image);
 			}
 
