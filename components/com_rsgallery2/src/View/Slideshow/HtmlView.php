@@ -89,6 +89,15 @@ class HtmlView extends BaseHtmlView
         $input  = Factory::getApplication()->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
+//        // Check for layout override
+//        $active = Factory::getApplication()->getMenu()->getActive();
+//
+//        if (isset($active->query['layout']))
+//        {
+//            $layout = $active->query['layout'];
+//            $this->setLayout($active->query['layout']);
+//        }
+
         /* wrong call but why ? */
         if ($this->galleryId < 2)
         {
