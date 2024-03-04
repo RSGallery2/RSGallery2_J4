@@ -24,7 +24,7 @@
 				clear="true"
 			/>
 			
-			<field
+			<!--field
 					name="slides_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
@@ -32,7 +32,20 @@
 					extension="com_rsgallery2"
 					view="slideshowJ3x"
 					useglobal="true"
+			/-->
+
+			<field
+					name="slides_layout"
+					type="SlideshowSelect"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					required="true"
 			/>
+
+
+
+
 
 		</fieldset>
 	</fields>
