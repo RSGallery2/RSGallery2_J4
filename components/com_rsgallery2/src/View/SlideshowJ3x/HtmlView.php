@@ -73,6 +73,14 @@ class HtmlView extends BaseHtmlView
     protected $user = null;
 
     /**
+     *
+     *
+     * @var    string
+     * @since  4.0.0
+     */
+    protected $slides_layout = '';
+
+    /**
      * Execute and display a template script.
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
@@ -109,8 +117,22 @@ class HtmlView extends BaseHtmlView
         $model = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
 
+
+
         // ToDo: Status of images
 
+
+        // ToDo: slides_layout from menu parameters
+        $this->slides_layout = "SlideshowJ3x";
+        // Fix wrong / others: 			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+        $this->slides_layout = ??? $input->getText('slides_layout', $this->slides_layout);
+
+        $layoutName = $this->getLayout();
+
+        $this->setLayout (); //     $layoutName = 'SlideshowJ3x.default';
+
+        $layout = $input::getWord('layout', '');
+        if (empty($layout)) $this->setLayout("lol");
 
 
         if ( ! empty($this->items)) {
