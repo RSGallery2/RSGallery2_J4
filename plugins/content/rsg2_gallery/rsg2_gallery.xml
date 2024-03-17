@@ -4,24 +4,25 @@
 		   version="4.0" 
            method="upgrade">
 	<name>plg_content_rsg2_gallery</name>
-	<creationDate>02. Oct. 2021</creationDate>
 	<author>RSGallery2 Team</author>
+	<creationDate>14. Mar. 2024</creationDate>
+	<copyright>(c) 2021-2024 RSGallery2 Team</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
-	<copyright>(c) 2021-2023 RSGallery2 Team</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>5.0.0.5</version>
 	<description>PLG_CONTENT_RSG2_GALLERY_XML_DESCRIPTION</description>
 	<namespace>Rsgallery2\Plugin\Rsg2_galleries</namespace>
-	
 	<files>
-		<filename plugin="rsg2_gallery">rsg2_gallery.php</filename>
 		<folder>language</folder>
+        <folder>services</folder>
+        <folder plugin="rsg2_gallery">src</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_gallery.ini</language>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_gallery.sys.ini</language>
 	</languages>
+
 	<config>
 		<fields 
 			name="params">

@@ -1,14 +1,12 @@
 <?php
 /**
- * /**
- * @package
+ * @package     com_rsgallery2
  * @subpackage  plg_rsg2_gallery
  *
- * @copyright (c) 2005-2023 RSGallery2 Team
+ * @copyright (c) 2005-2024 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-// https://docs.joomla.org/J3.x:Creating_a_content_plugin/en
 // https://docs.joomla.org/JDOC:Joomla_4_Tutorials_Project/en
 // https://docs.joomla.org/J4.x:Creating_a_Plugin_for_Joomla/de
 // https://docs.joomla.org/J4_Plugin_example_-_Table_of_Contents
@@ -22,13 +20,14 @@
 \defined('_JEXEC') or die;
 
 //use Joomla\CMS\Event\Event;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\Registry\Registry;
 
-use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
+// use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
 //use Joomla\Event\SubscriberInterface;
 //use Joomla\Utilities\ArrayHelper;
@@ -44,7 +43,6 @@ use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
  */
 class PlgContentRsg2_gallery extends CMSPlugin
 {
-
     /** @var \Joomla\CMS\Application\CMSApplication */
     /**
     protected $app;
@@ -52,61 +50,81 @@ class PlgContentRsg2_gallery extends CMSPlugin
     /**/
 
     protected $debugActive = 0;
-    /**
-     * Load the language file on instantiation
-     *
-     * @var    boolean
-     * @since  3.1 Joomla
-     */
-//    protected $autoloadLanguage = true;  -> needs
 
-    // onContentPrepare($context, &$article, &$articleParams, $page = 0)
-    public function onContentPrepare($context, &$article, $articleParams, $page = 0)
+
+    //              onContentPrepare($context, &$article, $articleParams, $page = 0)
+    public function onContentPrepare($context, &$article, &$articleParams, $page = 0)
     {
+        $canProceed = $context === 'com_content.article';
 
-        // the context could be something other than com_content
-        // such as a module - in which case do nothing and return
-        if ($context !== 'com_content.article') {
-            return;
+        if (!$canProceed) {
+            return null;
         }
+
+//        $view = Factory::getApplication()->input->get('view');
+//
+//        echo "<br>----------------------------------<br>";
+//        echo '<br/>the context is '.$context;
+//        echo '<br/>the params are '.json_encode($articleParams, true);
+//        echo '<br/>the page is '.$page;
+//        echo '<br/>the view is '.$view;
+//
 
         // Simple high performance check to determine whether bot should process further.
         if (stripos($article->text, '{rsg2_gallery') === false) {
-            return;
+            return null;
         }
 
         try {
 
-            // Load plugin language file only when needed
+            //--- collect all appearances ---------------------------------------
+
+            // ToDo: use pre fetch regex ...
+            // Expression to search for.
+            $regex = "/{rsg2_gallery:(.*?)}/i";
+
+            // Find all instances of plugin and put in $matches.
+            $matches = [];
+            \preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER);
+
+            // there should be matches as text is searched
+            if(empty ($matches)) {
+                echo "<br><br>!!! article has no text !!!<br>";
+                return null;
+            }
+
+
+            //--- load css/js -----------------------------------------------
+
+            //  keep to know what is available
+            // $pluginPath = 'plugins/content/' . $this->_name;
+
+            $doc = Factory::getApplication()->getDocument();
+            $wa  = $doc->getWebAssetManager();
+
+            //--- Load plugin language file -------------------------------
+
             $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
-
-            HTMLHelper::_('stylesheet', 'com_rsgallery2/site/gallery.css', array('version' => 'auto', 'relative' => true));
-
 
             //--- Perform the replacement ------------------------------
 
-            // Define the regular expression for the
-            //$regex = "#{rsg2_display\:*(.*?)}#s";
-            $regex = "|\{rsg2_gallery:(.*?)\}|";
-
             $article->text = preg_replace_callback($regex,
                 array(&$this, '_replacer'),
                 $article->text);
 
-            // toDO: J3x form
-            //$regex = "#{rsg2_display\:*(.*?)}#s";
-            $regex = "|\{rsg2_gallery:(.*?)\}|";
 
-            $article->text = preg_replace_callback($regex,
-                array(&$this, '_replacer'),
-                $article->text);
+//            echo "<br>----------------------------------<br>";
+
+
+
 
         } catch (Exception $e) {
-            $msg = JText::_('PLG_CONTENT_RSG2_GALLERY') . ' Error (01): ' . $e->getMessage();
-            $app = JFactory::getApplication();
+            $msg = Text::_('PLG_CONTENT_RSG2_GALLERY') . ' Error (01): ' . $e->getMessage();
+            $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
             return false;
         }
+
 
         return true;
     }
@@ -191,9 +209,11 @@ class PlgContentRsg2_gallery extends CMSPlugin
             // ToDo: use gids in first place: change Rsg2_imagesHelper -> modul ?mod_... ?? ....
             $usrParams->set ('SelectGallery', $usrParams->get('gid'));
 
+            $MVCFactory  = $app->bootComponent('com_rsgallery2')->getMVCFactory();
+            $model = $MVCFactory->createModel('Images', 'Site', ['ignore_request' => true]);
 
-            $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Images', 'Site', ['ignore_request' => true]);
-            $images = Rsg2_imagesHelper::getList($usrParams, $model, $app);
+            // $images = Rsg2_imagesHelper::getList($usrParams, $model, $app);
+            $images = [];
 
 
 // Test
@@ -371,13 +391,13 @@ class PlgContentRsg2_gallery extends CMSPlugin
             return $content_output;
 
         } catch (Exception $e) {
-            $msg = JText::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY') . ' Error (02): ' . $e->getMessage();
-            $app = JFactory::getApplication();
+            $msg = Text::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY') . ' Error (02): ' . $e->getMessage();
+            $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
             return false;
         }
 
-        return false;
+        // return false;
     }
 
 
@@ -412,17 +432,14 @@ class PlgContentRsg2_gallery extends CMSPlugin
                     // Handle plugin specific variables or J3x to j4x transformations
                     $isHandled = $this->handleSpecificParams ($params, $name, $value);
 
-                    // standard assingment
+                    // standard assignment
                     if (! $isHandled) {
                         $params->set ($name, $value);
                     }
                 }
 
             }
-
-
         }
-
         catch (RuntimeException $e)
         {
             $OutTxt = '';
@@ -451,6 +468,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
         return $attribute;
     }
+
 
     /**
      * Check for J3x parameter by index without value -> layout ..
