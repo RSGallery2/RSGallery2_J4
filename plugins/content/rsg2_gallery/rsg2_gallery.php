@@ -20,6 +20,7 @@
 \defined('_JEXEC') or die;
 
 //use Joomla\CMS\Event\Event;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -156,7 +157,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             // by reference).
             // $original_rsgConfig = clone $rsgConfig;
 
-            $rsgConfig = JComponentHelper::getParams( 'com_rsgallery2' );
+            $rsgConfig = ComponentHelper::getParams( 'com_rsgallery2' );
 
             // toDo: debug site !!!
             $DebugActive = $rsgConfig->get('isDebugSite');
@@ -191,7 +192,6 @@ class PlgContentRsg2_gallery extends CMSPlugin
             //----------------------------------------------------------------
             // Get attributes from matches and create "clean" array from them
             //----------------------------------------------------------------
-
 
             $attribs = explode(',', $matches[1]);
             if ( ! is_array($attribs)) {
