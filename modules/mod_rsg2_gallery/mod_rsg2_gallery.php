@@ -49,7 +49,7 @@ if ($selectGallery > 0) {
         } else {
 
             // Nothing selected
-            $app->enqueueMessage('mod_rsg2_gallery: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
+            Factory::getApplication()->enqueueMessage('mod_rsg2_gallery: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
         }
     }
 }
