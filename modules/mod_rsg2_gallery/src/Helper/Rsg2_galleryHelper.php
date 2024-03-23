@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Module\Rsg_gallery\Site\Helper;
+namespace Rsgallery2\Module\Rsg2_gallery\Site\Helper;
 
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Application\SiteApplication;
@@ -27,9 +27,11 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_galleryHelper implements DatabaseAwareInterface
+class Rsg2_galleryHelper //implements DatabaseAwareInterface
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
+//
+//
 
     /**
 	 * Get a list of the gallery images from the gallery model.     *
@@ -39,7 +41,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 	 *
 	 * @return  array
 	 */
-    public function getImageOfGallery(Registry $params, SiteApplication $app, int $gid)
+    public function getImagesOfGallery(Registry $params, SiteApplication $app, int $gid)
     {
         $images = [];
 
@@ -198,7 +200,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
     public function getText()
     {
-        return 'Rsg2_galleryHelpertest';
+        return 'Rsg2_gallery Helper test text';
     }
 
 

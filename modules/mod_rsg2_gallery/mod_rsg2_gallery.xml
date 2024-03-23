@@ -12,10 +12,11 @@
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<version>5.0.0.3</version>
 	<description>MOD_RSG2_GALLERY_XML_DESCRIPTION</description>
-	<namespace>Rsgallery2\Module\Rsg2_gallery</namespace>
+	<namespace path="src">Rsgallery2\Module\Rsg2_gallery</namespace>
 	<scriptfile>install_mod.php</scriptfile>
 	<files>
-		<filename module="mod_rsg2_gallery">mod_rsg2_gallery.php</filename>
+		<!--filename module="mod_rsg2_gallery">mod_rsg2_gallery.php</filename-->
+		<folder module="mod_rsg2_gallery">services</folder>
 		<!--filename>mod_rsg2_gallery.xml</filename-->
 		<folder>language</folder>
 		<folder>src</folder>

@@ -33,8 +33,8 @@ return new class () implements ServiceProviderInterface {
      */
     public function register(Container $container)
     {
-        $container->registerServiceProvider(new ModuleDispatcherFactory('\\Rsgallery2\\Module\\Rsg2_Galley'));
-        $container->registerServiceProvider(new HelperFactory('\\Rsgallery2\\Module\\Rsg2_Galley\\Site\\Helper'));
+        $container->registerServiceProvider(new ModuleDispatcherFactory('\\Rsgallery2\\Module\\Rsg2_gallery'));
+        $container->registerServiceProvider(new HelperFactory('\\Rsgallery2\\Module\\Rsg2_gallery\\Site\\Helper'));
 
         $container->registerServiceProvider(new Module());
     }

@@ -1,8 +1,12 @@
 <?php
 
+namespace Rsgallery2\Module\Rsg2_gallery\Site\Dispatcher;
+
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 use Joomla\CMS\Helper\HelperFactoryAwareInterface;
 use Joomla\CMS\Helper\HelperFactoryAwareTrait;
+
+\defined('_JEXEC') or die;
 
 class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
 {
@@ -17,13 +21,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 //            ->getData($data['params'], $this->getApplication());
 //
 
-        $helper      = $this->getHelperFactory()
-            ->getHelper('ExampleHelper');
-        $data['msg'] = $helper->getData($data['params'], $this->getApplication());
-
-        $helper      = $this->getHelperFactory()
-            ->getHelper('ExampleHelper');
-        $data['msg'] = $helper->getMsg($data['params'], $this->getApplication());
+        $data['msg'] = "    --- Rsg2_gallery module ----- ";
 
         return $data;
     }
