@@ -29,7 +29,7 @@
 	<help key="MOD_RSG2_GALLERY_HELP"/>
 	<config>
 		<fields name="params">
-			<fieldset name="request"
+			<fieldset name="basic"
 			          addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
 				<field id="gid"
 				       name="gid"
@@ -41,10 +41,17 @@
 				       new="true"
 				       edit="true"
 				       clear="true"/>
+				<field
+						name="images_layout"
+						type="componentlayout"
+						label="JFIELD_ALT_LAYOUT_LABEL"
+						class="custom-select"
+						extension="com_rsgallery2"
+						view="images"
+						useglobal="true"
+				/>
+
 			</fieldset>
-		</fields>
-		<!-- Add fields to the parameters object for the layout. -->
-		<fields name="params">
 			<fieldset name="request"
 			          addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
 				<field name="images_show_search"
@@ -190,10 +197,7 @@
 			</fieldset>
 			<fieldset name="layout_thumbs"
 			          label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
-		</fieldset>
-			<fieldset name="form"
-			          label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH">
-		</fieldset>
+			</fieldset>
 			<fieldset name="advanced">
 				<field name="layout"
 				       type="modulelayout"

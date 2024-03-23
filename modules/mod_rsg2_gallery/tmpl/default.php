@@ -9,6 +9,8 @@
 
 \defined('_JEXEC') or die;
 
+// global $msg;
+
 ////HTMLHelper::_('stylesheet', 'com_rsgallery2/maintenance.css', array('version' => 'auto', 'relative' => true));
 ///** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 //$wa = $app->getDocument()->getWebAssetManager();
@@ -27,7 +29,11 @@
 //             <div class="grid-element"><img src="<?php echo $image; ? >"> </div>
 
 echo '<br><br>--------------------------- mod_rsg2_gallery start ------------------------------<br>';
-echo $msg;
+
+if ( ! empty ($msg)) {
+    echo $msg;
+}
+
 echo '<br>--------------------------- mod_rsg2_gallery end   ------------------------------<br>';
 
 ?>
