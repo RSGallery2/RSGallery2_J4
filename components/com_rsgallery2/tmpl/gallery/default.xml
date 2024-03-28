@@ -47,6 +47,14 @@
 				<option value="0">JNO</option>
 			</field-->
 
+
+		</fieldset>
+	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="params">
+
 			<field
 					name="images_show_search"
 					type="list"
@@ -163,12 +171,6 @@
 			</field>
 
 		</fieldset>
-
-	</fields>
-
-	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params">
-
 		<fieldset name="images"
 		>
 		
@@ -226,6 +228,16 @@
 				<option value="0">JNO</option>
 			</field>
 
+		</fieldset>
+
+		<fieldset 
+            name="layout_thumbs" 
+            label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
+		</fieldset>
+
+		<fieldset 
+			name="form" 
+			label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH">
 		</fieldset>
 
 	</fields>

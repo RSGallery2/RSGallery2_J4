@@ -51,7 +51,7 @@ if (!empty($isDevelopSite)) {
         . '* SubGalleryList array ( -> see class rsg_sub_url_single<br>'
         . '* Display sub galleries with just thumb and small information <br>'
         . '* Limit sub galleries print ... if count bigger <br>'
-//        . '* <br>'
+        . '* test parent gallery overview in root gallery menu selection <br>'
 //        . '* <br>'
 //        . '* <br>'
 //        . '* <br>'
@@ -102,6 +102,14 @@ if ( ! empty($galleries))
     }
 }
 
+//--- sanitize params gallery intro text -----------------------------------
+
+if ( empty($params->intro_text)) {
+	$params->intro_text = '';
+}
+
+
+
 ?>
 
 <?php if (!empty($isDebugSite)): ?>
@@ -112,9 +120,17 @@ if ( ! empty($galleries))
 
 <div id="rsg2_gallery" class="rsg2">
 
-	INTRO_START
-	<div class="form-label intro_text"><?php echo $params->intro_text; ?></div>
-    INTRO_END<br>
+	<?php if (!empty($isDebugSite)): ?>
+        <h7>>>> menu intro start</h7>
+        <hr>
+	<?php endif; ?>
+
+	<div class="form-label rsg2_gallery_intro_text"><?php echo $params->intro_text; ?></div>
+
+	<?php if (!empty($isDebugSite)): ?>
+        <hr>
+        <h7><<< menu intro end</h7>
+	<?php endif; ?>
 
 	<?php foreach ($galleries as $idx => $gallery) : ?>
 

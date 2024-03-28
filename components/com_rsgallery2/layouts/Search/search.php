@@ -13,7 +13,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-// ToDo: Move to all display php files ore include in common *.scss file
+use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
+
+
+// ToDo: getWebAssetManager Move to all display php files or include in common *.scss file
 HTMLHelper::_('stylesheet', 'com_rsgallery2/site/rsg2_search.css', array('version' => 'auto', 'relative' => true));
 HTMLHelper::_('script', 'com_rsgallery2/site/rsg2_search.js', ['version' => 'auto', 'relative' => true]);
 // on more use preset ....
@@ -41,35 +44,99 @@ if (!empty($isDevelopSite)) {
 $link = Route::_('index.php?option=com_rsgallery2&view=searchresult'); // JRoute::_('index.php'); ? >search?Itemid=101
 $placeholder = Text::_('COM_RSGALLERY2_SEARCH_GALLERIES_IMAGES');
 
+$this->filterForm    = $this->get('FilterForm');
+$this->activeFilters = $this->get('ActiveFilters');
+
 ?>
 
-<form class="rsg2_search js-finder-searchform form-search"
+<!--<fields name="filter">-->
+<!--    <field-->
+<!--            name="search"-->
+<!--            type="text"-->
+<!--            inputmode="search"-->
+<!--            label=""-->
+<!--            hint="JSEARCH_FILTER"-->
+<!--            class="js-tools-search-string"-->
+<!--    />-->
+
+
+
+
+    <form class="rsg2_search"
       action="<?php echo $link; ?>"
       method="get"
       role="search">
-    <div class="row">
-        <div class="container">
-            <div class="col-md-4 float-right">
-                <div class="input-group ">
-                    <span class="input-group-prepend">
-                            <div class="input-group-text bg-transparent border-right-0">
-                                <i class="fa fa-search"></i>
+            <div class="container">
+
+<!--                <hr>-->
+<!--                <h4>(2) rectangles</h4>-->
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="col-md-5">
+                            <div class="input-group">
+                                <input class="form-control "
+                                       type="search"
+                                       value=""
+                                       placeholder="<?php echo $placeholder;?>"
+                                       id="rsg2_search_input"
+                                >
+                                <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary border  ms-n5" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
                             </div>
-                        </span>
-                    <input class="form-control py-2 border-left-0 border"
-                           type="search"
-                           value=""
-                           placeholder="<?php echo $placeholder;?>"
-                           id="example-search-input">
-                    <span class="input-group-append">
-                        <button class="btn btn-primary" type="submit">
-        <!--                    <span class="icon-search icon-white" aria-hidden="true"></span>-->
-                            <?php echo Text::_('JSEARCH_FILTER_SUBMIT');?>
-                        </button>
-                    </span>
+                    </div>
                 </div>
-            </div>
-            </div>
+
+<!--                <hr>-->
+<!--                <h4>(3) round</h4>-->
+<!---->
+<!--                <div class="input-group input-group-sm mb-3">-->
+<!--                    <div class="col-md-5">-->
+<!--                            <div class="input-group">-->
+<!--                                <input class="form-control rounded-pill"-->
+<!--                                       type="search"-->
+<!--                                       value=""-->
+<!--                                       placeholder="--><?php //echo $placeholder;?><!--"-->
+<!--                                       id="rsg2_search_input"-->
+<!--                                >-->
+<!--                                <span class="input-group-append">-->
+<!--                                    <button class="btn btn-primary border-bottom-0 border rounded-pill ms-n5" type="submit">-->
+<!--                                        <i class="fa fa-search"></i>-->
+<!--                                    </button>-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <hr>-->
+<!--                <h4>(X) old Version)</h4>-->
+
+<!--            <div class="col-md-5 float-right">-->
+<!--                <div class="input-group ">-->
+<!--                    <span class="input-group-prepend">-->
+<!--                            <div class="input-group-text bg-transparent border-right-0">-->
+<!--                                <i class="fa fa-search"></i>-->
+<!--                            </div>-->
+<!--                        </span>-->
+<!--                    <input class="form-control py-2 border-left-0 border"-->
+<!--                           type="search"-->
+<!--                           value=""-->
+<!--                           placeholder="--><?php //echo $placeholder;?><!--"-->
+<!--                           id="rsg2_search_input">-->
+<!--                    >-->
+<!--                    <span class="input-group-append">-->
+<!--                        <button class="btn btn-primary" type="submit">-->
+<!--                            --><?php //echo Text::_('JSEARCH_FILTER_SUBMIT');?>
+<!--                        </button>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            </div>-->
+
+<!--	            <hr>-->
+
     </div>
 </form>
 

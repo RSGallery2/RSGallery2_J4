@@ -332,7 +332,7 @@ class GalleriesJ3xModel extends ListModel
         }
 
         // exclude root gallery record
-//		$query->where('a.id > 1');
+		$query->where('a.id > 1');
 
         /**
          * // Filter on the language.

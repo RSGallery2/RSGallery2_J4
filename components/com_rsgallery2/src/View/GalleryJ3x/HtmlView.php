@@ -82,6 +82,8 @@ class HtmlView extends BaseHtmlView
      */
 	public function display($tpl = null)
 	{
+        //--- gallery (j4x++ try) --------------------------------------------------
+
         $app = Factory::getApplication();
 
         $input  = $app->input;

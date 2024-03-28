@@ -34,8 +34,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 class GalleryJ3xModel extends GalleryModel
 {
 
-
-
 	/**
 	 * Add "asInline" Url to each image
 	 * @param $images

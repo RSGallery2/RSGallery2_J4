@@ -98,7 +98,7 @@ class HtmlView extends BaseHtmlView
 			$msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "' . Text::_('COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE') . '"';
 			$app->enqueueMessage($msg, 'Notice');
 
-			// ToDO: ? redirect ?
+			// ToDo: ? redirect ?
 
 
 		}

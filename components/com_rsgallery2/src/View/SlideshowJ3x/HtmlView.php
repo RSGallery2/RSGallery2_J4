@@ -104,6 +104,8 @@ class HtmlView extends BaseHtmlView
 
         // Get some data from the models
         $this->state      = $this->get('State');
+		$this->state->set('list.limit', 999);
+
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
         $params =
@@ -125,15 +127,16 @@ class HtmlView extends BaseHtmlView
         // ToDo: slides_layout from menu parameters
         $this->slides_layout = "SlideshowJ3x";
         // Fix wrong / others: 			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
-        $this->slides_layout = ??? $input->getText('slides_layout', $this->slides_layout);
+        //$this->slides_layout = ??? $input->getText('slides_layout', $this->slides_layout);
 
         $layoutName = $this->getLayout();
 
-        $this->setLayout (); //     $layoutName = 'SlideshowJ3x.default';
-
-        $layout = $input::getWord('layout', '');
-        if (empty($layout)) $this->setLayout("lol");
-
+        $layout = $input->getWord('layout', '');
+        if (empty($layout)) {
+            $this->setLayout($this->slides_layout . ".default");
+        } else {
+            $this->setLayout ($layout); //     $layoutName = 'SlideshowJ3x.default';
+        }
 
         if ( ! empty($this->items)) {
             // Add image paths, image params ...

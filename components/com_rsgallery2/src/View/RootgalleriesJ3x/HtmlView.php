@@ -123,7 +123,7 @@ class HtmlView extends BaseHtmlView
 	    $limit = $input->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
 	    $state->set('list.limit', $limit);
 
-	    // Galleries with parend ID = 0 / ? gallery id ?
+	    // Galleries with parent ID = 0 / ? gallery id ?
         $this->items = $this->get('Items');
 
         if (count($errors = $this->get('Errors')))
