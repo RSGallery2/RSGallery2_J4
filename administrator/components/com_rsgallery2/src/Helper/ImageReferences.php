@@ -3,7 +3,7 @@
  * ImageReferences collect all information about image artefacts
  *
  * @package       Rsgallery2
- * @copyright (C) 2016-2023 RSGallery2 Team
+ * @copyright (C) 2016-2024 RSGallery2 Team
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @author        finnern
  *                RSGallery2 is Free Software

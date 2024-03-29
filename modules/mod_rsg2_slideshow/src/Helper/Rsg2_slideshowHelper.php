@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_rsg2_slideshow
  *
- * @copyright (c) 2005-2023 RSGallery2 Team 
+ * @copyright (c) 2005-2024 RSGallery2 Team 
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 

@@ -1,7 +1,7 @@
 <?php // no direct access
 /**
  * @package       RSGallery2
- * @copyright (C) 2003-2023 RSGallery2 Team
+ * @copyright (C) 2003-2024 RSGallery2 Team
  * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * RSGallery is Free Software
  */
