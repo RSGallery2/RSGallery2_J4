@@ -337,8 +337,13 @@ class HtmlView extends BaseHtmlView
 
                 // Set the title
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
-                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('maintenance.cancel_rsg2', 'JTOOLBAR_CLOSE');
                 // ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+
+	            ToolBarHelper::custom('MaintenanceCleanUp.undoPrepareRemoveTables', 'none fas fa-undo fa-delete',
+		            'icon-undo', 'Undo prepare remove of RSG2', false);
+
+
                 break;
         }
 

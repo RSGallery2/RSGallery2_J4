@@ -37,17 +37,18 @@ class SlidePageJ3XModel extends ImagesJ3xModel
 	/**
 	 * In slide page view a single item is shown.
 	 * Pagination parameters are changed to match it
-	 * It can not be added to populatian as i t needs
+	 * It can not be added to populatian as it needs ...
 	 *
 	 * @throws \Exception
 	 * @since version
 	 */
 
-	public function setState2SingleItem()
+	public function setState2SingleItem(array $items)
 	{
 		$app = Factory::getApplication();
 
-		$limitstart = $app->input->get('start', -1, 'INT');
+		//$limitstart = $app->input->get('start', -1, 'INT');
+		$limitstart = $app->input->get('limitstart', -1, 'INT');
 
 		//--- pagination ------------------------------------
 
@@ -56,7 +57,7 @@ class SlidePageJ3XModel extends ImagesJ3xModel
 			$imageId = $app->input->get('img_id', 0, 'INT');
 
 			// May create list
-			$items = $this->getItems();
+			//$items = $this->getItems();
 			$imageIdx = $this->imageIdxInList ($imageId, $items);
 			//$this->state->set('list.limitstart', $this->imageIdx);
 			$this->state->set('list.start', $imageIdx);

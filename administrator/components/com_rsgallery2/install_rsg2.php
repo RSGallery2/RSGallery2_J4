@@ -66,7 +66,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             // Get the date for log file name
             $date = Factory::getDate()->format('Y-m-d');
 
-
 			$logOptions['format']    = '{DATE}\t{TIME}\t{LEVEL}\t{CODE}\t{MESSAGE}';
 			$logOptions['text_file'] = 'rsg2_install.' . $date . '.php';
 			$logType                 = Log::ALL;
@@ -75,7 +74,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 			try
 			{
-				Log::add(Text::_('\n>>Installer construct'), Log::INFO, 'rsg2');
+				Log::add(Text::_('\n>>RSG2 Installer construct'), Log::INFO, 'rsg2');
 			}
 			catch (\RuntimeException $exception)
 			{
@@ -102,15 +101,15 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	/**
 	 * Function to act prior to installation process begins
 	 *
-	 * @param   string     $type       Which action is happening (install|uninstall|discover_install|update)
-	 * @param   Installer  $installer  The class calling this method
+	 * @param   string            $type    Which action is happening (install|uninstall|discover_install|update)
+	 * @param   InstallerAdapter  $parent  The class calling this method
 	 *
 	 * @return  boolean  True on success
 	 *
 	 * @throws Exception
 	 * @since 5.0.0
 	 */
-	public function preflight($type, $installer)
+	public function preflight($type, $parent)
 	{
 		Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_PREFLIGHT') . ' >' . $type, Log::INFO, 'rsg2');
 
@@ -138,7 +137,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 			//--- new release version --------------------------------------
 
-			$manifest         = $installer->getManifest();
+			$manifest         = $parent->getManifest();
 			$this->newRelease = (string) $manifest->version;
 
 			Log::add('newRelease:' . $this->newRelease, Log::INFO, 'rsg2');
@@ -327,7 +326,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				// Nested gallery table needs a root item
 				$isGalleryTreeCreated = $this->initGalleryTree();
 
-				Log::add('post->install: updateDefaultParams', Log::INFO, 'rsg2');
+				Log::add('post->update: updateDefaultParams', Log::INFO, 'rsg2');
 
 				//--- include new default Parameter ----------------------------------------------------
 
@@ -945,7 +944,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 			// load model -----------------------------------------------------
 
-			$Rsg2ExtensionModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/model/Rsg2ExtensionModel.php';
+			$Rsg2ExtensionModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/Rsg2ExtensionModel.php';
 			Log::add(Text::_('upd (20.2) '), Log::INFO, 'rsg2');
 			$Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
 			Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');

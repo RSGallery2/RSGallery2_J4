@@ -579,6 +579,19 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
+		<field
+				name="image_order_by"
+				type="list"
+				label="*Sort images by "
+				description="*"
+				default="0"
+				class="btn-group btn-group-yesno">
+			<option value="0">*Date/time ASC</option>
+			<option value="1">*Date/time ASC</option>
+			<option value="2">*Name Asc</option>
+			<option value="3">*Name Desc</option>
+			<option value="4">*Random</option>
+		</field>
 	</fieldset>
 
 	<!-- ... Tab Debug ................................. -->

@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
 
-// required may be needed as classes may not be loaded on  fresh install
+// required may be needed as classes may not be loaded on fresh install
 // !!! needed by install
 
 /**

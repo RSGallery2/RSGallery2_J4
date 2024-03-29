@@ -330,6 +330,23 @@ class MaintenanceController extends BaseController
         return true;
     }
 
+    /**
+     * On cancel goto com_rsgallery2
+     *
+     * @return bool
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function cancel_rsg2()
+    {
+        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+
+        $link = 'index.php?option=com_rsgallery2';
+        $this->setRedirect($link);
+
+        return true;
+    }
+
 //    /**
 //     * Proxy for getModel
 //     *

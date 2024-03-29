@@ -18,7 +18,7 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
 
-// required is used as classes may not be loaded on  fresh install
+// required is used as classes may not be loaded on fresh install
 // !!! needed by install
 
 /**
@@ -27,7 +27,7 @@ use Joomla\Database\DatabaseInterface;
  * @since __BUMP_VERSION__
  *
  */
-//class Rsg2ExtensionModel
+
 class Rsg2ExtensionModel extends BaseModel
 {
 
