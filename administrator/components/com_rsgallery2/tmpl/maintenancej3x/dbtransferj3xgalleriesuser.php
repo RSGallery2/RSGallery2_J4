@@ -45,7 +45,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTrans
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
                         <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xGalleries2J4xUser');return false;">
-		                    <?php echo JText::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'); ?>
+		                    <?php echo JText::_('COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES'); ?>
                         </button>
 
                     </div>

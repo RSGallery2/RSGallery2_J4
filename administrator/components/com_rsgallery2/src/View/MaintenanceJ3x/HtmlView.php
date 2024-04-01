@@ -125,16 +125,37 @@ class HtmlView extends BaseHtmlView
                     $app->enqueueMessage($OutTxt, 'error');
                 }
 
+				//--- reset transferred flag if necessary ------------------------------------------------------------
+
 	            $this->isDoCopyJ3xDbGalleries = ! $rsgConfig->get('j3x_db_galleries_copied');
 
-				// ToDo: Check and update $this->isDoCopyJ3xDbGalleries
+	            if ($this->isDoCopyJ3xDbGalleries)
+	            {
+		            // All J3x galleries transferred ?
+		            if (count($this->j3x_galleryIdsMerged) == count($this->j3x_galleriesSorted))
+		            {
+			            $this->isDoCopyJ3xDbGalleries = false;
 
+			            $isOk = ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', true);
+		            }
+	            } else {
+
+					// reset flag
+		            // All J3x galleries transferred ?
+		            if (count($this->j3x_galleryIdsMerged) != count($this->j3x_galleriesSorted))
+		            {
+			            $this->isDoCopyJ3xDbGalleries = true;
+
+			            $isOk = ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', false);
+		            }
+	            }
+
+				//--- message on is transferred ------------------------------------------------------
+
+				// All galleries transferred (not to be copied)
 	            if (! $this->isDoCopyJ3xDbGalleries)
 	            {
-		            // Tell
-		            $isOk = ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', true);
-
-		            $msg = "Successful moved J3x DB gallery items";
+		            $msg = "Successful moved <strong>all</strong> J3x DB gallery items";
 		            $app = Factory::getApplication();
 		            $app->enqueueMessage($msg, 'notice');
 	            }
@@ -144,42 +165,57 @@ class HtmlView extends BaseHtmlView
             case 'dbtransferj3ximages':
                 try
                 {
-	                $this->isDoCopyJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
-
-	                $this->j3x_images = [];
-	                $this->j4x_images = [];
-
-	                $this->j3x_imageIdsMerged = [];
+//	                $this->j3x_images = [];
+//	                $this->j4x_images = [];
+//
+//	                $this->j3x_imageIdsMerged = [];
 
 	                //$this->j3x_galleriesSorted = $j3xModel->j3x_galleriesList_transferred_YN();
-	                $this->j3x_galleriesSorted = $j3xModel->j3x_galleriesList_transferred_YN();
+	                $this->j3x_galleriesSorted = $j3xModel->j3x_DbGalleryList_imagesTransferred_YN();
 
-					// ToDo: merge with obove
-	                // $this->galleryIdsJ3x_NotMoved = $j3xModel->galleryIdsJ3x_dbImagesNotMoved($this->j3x_galleriesSorted);
+					// request from DB data
+	                $isDbImagesDoTransfer = $j3xModel->isImagesDoTransfer($this->j3x_galleriesSorted);
 
-	                // ToDo: merge with obove
-	                // $this->j3xGalleriesWithImgCount = $j3xModel->j3xNotMovedInfo($this->galleryIdsJ3xAsJ4x);
-	                // $this->j3xGalleriesWithImgCount = $j3xModel->j3xGalleriesWithImgCount();
+	                //--- reset transferred flag if necessary ------------------------------------------------------------
 
-					// ToDo: same for galleries
+	                $this->isDoCopyJ3xDbImages = ! $rsgConfig->get('j3x_db_images_copied');
+
+	                if ($this->isDoCopyJ3xDbImages)
+	                {
+		                // All J3x db images transferred ?
+		                if ( ! $isDbImagesDoTransfer)
+		                {
+			                $this->isDoCopyJ3xDbImages = false;
+
+			                $isOk = ConfigRawModel::writeConfigParam('j3x_db_images_copied', true);
+		                }
+	                } else {
+
+		                // reset flag
+		                // All J3x db images transferred ?
+		                if ($isDbImagesDoTransfer)
+		                {
+			                $this->isDoCopyJ3xDbImages = true;
+
+			                $isOk = ConfigRawModel::writeConfigParam('j3x_db_images_copied', false);
+		                }
+	                }
+
+	                //--- message on is transferred ------------------------------------------------------
+
 	                if (! $this->isDoCopyJ3xDbImages)
 	                {
-		                // Tell
-		                $isOk = ConfigRawModel::writeConfigParam('j3x_db_images_copied', true);
-
-		                $msg = "Successful moved J3x DB image items";
+		                $msg = "Successful moved <strong>all</strong> J3x DB image items";
 		                $app = Factory::getApplication();
 		                $app->enqueueMessage($msg, 'notice');
 	                }
-
 
 	                //--- Form --------------------------------------------------------------------
 
 	                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/moveJ3xImages.xml';
 	                $form = Form::getInstance('movej3ximages', $xmlFile);
 
-	                // Check for errors.
-	                /* Must load form before */
+	                // Check for errors. Form must beloaded before
 	                if ($errors = $this->get('Errors'))
 	                {
 		                if (count($errors))
@@ -215,10 +251,48 @@ class HtmlView extends BaseHtmlView
             case 'movej3ximages':
                 try
                 {
-                    // state ?
-                    $this->isDoCopyJ3xImages = ! $rsgConfig->get('j3x_images_copied');
 
-	                $this->j3x_galleries = [];
+	                $this->j3x_galleriesSorted = $j3xModel->j3x_GalleryList_imagesTransferred_YN();
+
+	                // request from DB data
+	                $isImagesDoTransfer = $j3xModel->isImagesDoTransfer($this->j3x_galleriesSorted);
+
+	                //--- reset transferred flag if necessary ------------------------------------------------------------
+
+	                $this->isDoCopyJ3xImages = ! $rsgConfig->get('j3x_images_copied');
+
+	                if ($this->isDoCopyJ3xImages)
+	                {
+		                // All J3x db images transferred ?
+		                if ( ! $isImagesDoTransfer)
+		                {
+			                $this->isDoCopyJ3xImages = false;
+
+			                $isOk = ConfigRawModel::writeConfigParam('j3x_images_copied', true);
+		                }
+	                } else {
+
+		                // reset flag
+		                // All J3x db images transferred ?
+		                if ($isImagesDoTransfer)
+		                {
+			                $this->isDoCopyJ3xImages = true;
+
+			                $isOk = ConfigRawModel::writeConfigParam('j3x_images_copied', false);
+		                }
+	                }
+
+	                //--- message on is transferred ------------------------------------------------------
+
+	                if (! $this->isDoCopyJ3xImages)
+	                {
+		                $msg = "Successful moved <strong>all</strong> J3x image files";
+		                $app = Factory::getApplication();
+		                $app->enqueueMessage($msg, 'notice');
+	                }
+
+
+	                $this->j3x_galleries = $this->j3x_galleriesSorted;
 	                $this->j4x_galleries = [];
 
 	                $this->j3x_transformGalleryIdsTo_j4x = [];
@@ -227,32 +301,27 @@ class HtmlView extends BaseHtmlView
 
                     // J3x images exist
                     if ($this->isDoCopyJ3xImages) {
-                        $this->j3x_galleries = $j3xModel->j3x_galleriesList();
+                        // $this->j3x_galleries = $j3xModel->j3x_galleriesList();
                         $this->j4x_galleries = $j3xModel->j4x_galleriesList();
 
-                        //$this->galleryIdsJ3xAsJ4x = $j3xModel->j3x_transformGalleryIdsTo_j4x();
+//                        //$this->galleryIdsJ3xAsJ4x = $j3xModel->j3x_transformGalleryIdsTo_j4x();
+//
                         $this->galleryIdsJ3x_NotMoved = $j3xModel->galleryIdsJ3x_ImagesNotMoved($this->j3x_galleries);
 	                    $this->galleryIdsJ3xAsJ4x = $j3xModel->j3x_transformGalleryIdsTo_j4x($this->j3x_galleries);
-	                    $this->galleryIds4ImgsToBeMoved = $j3xModel->j3x_galleries4ImageMove($this->galleryIdsJ3xAsJ4x);
-
-
-	                    // finished by last call (move) ?  ToDo: call ajax check on empty list after move
-                        if(count($this->galleryIds4ImgsToBeMoved) == 0) {
-
-                            $this->isDoCopyJ3xImages = false;
-                        } else
-                        {
-	                        $this->isDoCopyJ3xImages = true;
-                        }
-                        $rsgConfig->set('j3x_images_copied', ! $this->isDoCopyJ3xImages);
-                        ConfigRawModel::writeConfigParam ('j3x_images_copied', ! $this->isDoCopyJ3xImages);
-
-	                    if (! $this->isDoCopyJ3xDbGalleries)
-	                    {
-		                    $msg = "Successful moved J3x image items";
-		                    $app = Factory::getApplication();
-		                    $app->enqueueMessage($msg, 'notice');
-	                    }
+//	                    $this->galleryIds4ImgsToBeMoved = $j3xModel->j3x_galleries4ImageMove($this->galleryIdsJ3xAsJ4x);
+//
+//
+//	                    // finished by last call (move) ?  ToDo: call ajax check on empty list after move
+//                        if(count($this->galleryIds4ImgsToBeMoved) == 0) {
+//
+//                            $this->isDoCopyJ3xImages = false;
+//                        } else
+//                        {
+//	                        $this->isDoCopyJ3xImages = true;
+//                        }
+//                        $rsgConfig->set('j3x_images_copied', ! $this->isDoCopyJ3xImages);
+//                        ConfigRawModel::writeConfigParam ('j3x_images_copied', ! $this->isDoCopyJ3xImages);
+//
 
                     }
 
@@ -355,6 +424,7 @@ class HtmlView extends BaseHtmlView
 				{
 					echo '<span style="color:red">'
 						. 'Tasks: <br>'
+						. '* ! Db J3x gallery transfer: enable single transfers <br>'
                         . '* user should only see what is necessary: use debug / develop for others<br>'
                         . '* Left out: Button for copy single galleries -> no functions for adding , actual table is cleared on start so ...'
 						. '* !!! asset id !!! <br>'
@@ -391,6 +461,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 
 				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4xUser', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_SINGLE', false);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				// actual on copy the table is cleared first. So it is not possible to do it with single entries
@@ -416,7 +487,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 
-				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
 				ToolBarHelper::custom ('MaintenanceJ3x.copyDbImagesOfSelectedGalleries','undo','','COM_RSGALLERY2_DB_COPY_IMAGES_BY_J3X_GALLERY', true);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
@@ -439,6 +510,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 
 				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
+				ToolBarHelper::custom ('MaintenanceJ3x.dbtransferj3ximages','undo','','COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_SINGLE', false);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				break;
@@ -447,13 +519,13 @@ class HtmlView extends BaseHtmlView
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
-//					echo '<span style="color:red">'
-//						. 'Tasks: <br>'
-////      				. '* <br>'
-////		        		. '* <br>'
-////				        . '* <br>'
-////      				. '* <br>'
-//						. '</span><br>';
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+      				    . '* Seperate link and parameter (parameter as hidden option)<br>'
+//		        		. '* <br>'
+//				        . '* <br>'
+//      				. '* <br>'
+						. '</span><br>';
 				}
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_INCREASE_MENU_GID'), 'screwdriver');

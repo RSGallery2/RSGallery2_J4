@@ -48,7 +48,7 @@ function j3x_moveButtonsHtml ($movej3ximages) {
 	<?php if (! empty ($j3x_moveButtonsHtml->j4x_galleries)): ?>
 
         <button id="moveByGallery" type="button" class="btn btn-success btn-rsg2"
-                title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY_DEC'); ?>"
+                title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY_DESC'); ?>"
 
         >
             <span class="icon-checkbox" aria-hidden="false"></span>
@@ -63,7 +63,7 @@ function j3x_moveButtonsHtml ($movej3ximages) {
             <?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_BY_GALLERIES_CHECK'); ?>
         </button>
         <!--button id="deSelectGallery" type="button" class="btn btn-success btn-rsg2"
-                title="<?php echo "???" . Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY_DEC'); ?>"
+                title="<?php echo "???" . Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY_DESC'); ?>"
         >
             <span class="icon-checkbox-unchecked" aria-hidden="false"></span>
             <?php echo "???" . Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY'); ?>

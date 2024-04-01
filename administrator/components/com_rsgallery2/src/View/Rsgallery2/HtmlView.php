@@ -138,7 +138,7 @@ class HtmlView extends BaseHtmlView
             //$this->isDoCopyJ3xDbConfig = true;
             //$this->isDoCopyJ3xDbGalleries = true;
 	        //$this->isDoCopyJ3xDbImages = true;
-	        $this->isDoChangeJ3xMenuLinks = true;
+	        //$this->isDoChangeJ3xMenuLinks = true;
             //$this->isDoCopyJ3xImages = true;
 			/**/
         }

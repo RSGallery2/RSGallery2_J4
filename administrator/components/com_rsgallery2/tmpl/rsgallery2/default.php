@@ -254,7 +254,7 @@ EOT;
     // copy images seperately
     if ($isDoCopyJ3xImages) {
         $link5 = <<<EOT
-                                <span class="badge badge-pill bg-success">5</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm" Title="$CopyImagesDesc" role="button">$CopyImages</a></del>
+                                <span class="badge badge-pill bg-success">5</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm disabled" Title="$CopyImagesDesc" role="button" aria-disabled="true">$CopyImages</a></del>
 EOT;
     }
 

@@ -37,7 +37,7 @@ use Joomla\CMS\Language\Text;
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
                         <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
-				            <?php echo JText::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'); ?>
+				            <?php echo JText::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
                         </button>
 
                     </div>

@@ -322,14 +322,15 @@ class HtmlView extends BaseHtmlView
                 // on develop show open tasks if existing
                 if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
-                        . '*  Install: finish -> Move J3x images<br>'
-                        . '*  Repair: Consolidade images<br>'
+	                    . '* ! Db J3x gallery transfer: enable single transfers <br>'
+	                    . '* <br>'
+                        . '* Install: finish -> Move J3x images<br>'
+                        . '* Repair: Consolidade images<br>'
 	                    . '* Raw J3x galleries list<br>'
 	                    . '* Raw J3x images list<br>'
 	                    . '* Raw J3x .... list<br>'
                         . '* !!! Purge / delete of database variables should be confirmed !!!<br>'
                         . '* Do shorten CSS by *.SCSS<br>'
-//                        . '* <br>'
 //                        . '* <br>'
 //                        . '* <br>'
                         . '</span><br><br>';
