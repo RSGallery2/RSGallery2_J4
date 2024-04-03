@@ -46,6 +46,16 @@ if ( ! isset($images)) {
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
+echo json_encode($params);
+
+//$intervall = $params->get('interval', 6000);
+//$max_thumbs_in_root_galleries_view_j3x = $params['max_thumbs_in_root_galleries_view_j3x'];
+$max_thumbs_in_root_galleries_view_j3x = $params->max_thumbs_in_root_galleries_view_j3x;
+// $intervall = $params['interval'];
+
+
+
+
 //--- assign dummy images if not found -----------------------------------
 
 if ( ! empty($images))

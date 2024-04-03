@@ -43,8 +43,33 @@
 					required="true"
 			/>
 
+			<field
+					name="auto_start"
+					type="list"
+					default="1"
+					label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
+					description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
 
+			<field name="delay"
+				   type="number"
+				   default="2500"
+				   label="COM_RSGALLERY2_SLIDESHOW_INTERVALL"
+				   description="COM_RSGALLERY2_SLIDESHOW_INTERVALL_DESC"
+			>
+			</field>
 
+			<field name="showArrows"
+				   type="list"
+				   default="1"
+				   label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
+				   description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
 
 
 		</fieldset>
