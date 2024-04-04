@@ -25,6 +25,13 @@
 			
 			<!-- ToDo: layout, number of displayed images, row/column, by time ....  -->
 
+		</fieldset>
+	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="params">
+
 			
 		</fieldset>
 	</fields>

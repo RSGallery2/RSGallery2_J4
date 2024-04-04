@@ -24,6 +24,13 @@
 				clear="true"
 			/>
 
+		</fieldset>
+	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="params">
+
 			<field
 					name="galleries_show_title"
 					type="radio"

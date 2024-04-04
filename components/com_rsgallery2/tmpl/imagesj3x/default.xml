@@ -33,6 +33,13 @@
 					useglobal="true"
 			/>
 
+		</fieldset>
+	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="params">
+
 			<field
 					name="images_show_title"
 					type="list"

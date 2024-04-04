@@ -242,15 +242,4 @@
 
 	</fields>
 
-	<!-- Add fields to the parameters object for the layout. -->
-	<!--fields name="params">
-
-		<fieldset name="images_display"
-				  label="COM_RSGALLERY2_FIELDSET_IMAGES_DISPLAY"
-		>
-
-		</fieldset>
-
-	</fields-->
-
 </metadata>
