@@ -48,7 +48,7 @@
 
 	<!-- Add fields to the parameters object for the layout. -->
 	<fields name="params">
-		<fieldset name="params">
+		<fieldset name="basic">
 
 			<field
 					name="auto_start"
@@ -61,11 +61,11 @@
 				<option value="0">JNO</option>
 			</field>
 
-			<field name="delay"
+			<field name="interval"
 				   type="number"
 				   default="2500"
-				   label="COM_RSGALLERY2_SLIDESHOW_INTERVALL"
-				   description="COM_RSGALLERY2_SLIDESHOW_INTERVALL_DESC"
+				   label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
+				   description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
 			>
 			</field>
 
@@ -74,6 +74,17 @@
 				   default="1"
 				   label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
 				   description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="darkMode"
+					type="list"
+					default="1"
+					label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
+					description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
+			>
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>

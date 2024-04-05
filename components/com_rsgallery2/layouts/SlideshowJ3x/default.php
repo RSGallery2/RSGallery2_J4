@@ -25,12 +25,11 @@ extract($displayData);
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: layout slideshowJ3x<br>'
-        . 'Slideshow J3x layout Tasks: <br>'
         . '* html aria-label ... <br>'
-        . '* HTML 5 layout, bootstrap * <br>'
+        . '* View image name<br>'
         . '* what happens on empty galleries/ image lists<br>'
-        . '* click on image ? <br>'
-//        . '* <br>'
+        . '* click on image ?==> big screen no arrows modal <br>'
+        . '* center small images<br>'
 //        . '* <br>'
 //        . '* <br>'
 //        . '* <br>'
@@ -46,15 +45,16 @@ if ( ! isset($images)) {
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
-echo json_encode($params);
+// echo json_encode($params);
 
-//$intervall = $params->get('interval', 6000);
+//$interval = $params->get('interval', 6000);
 //$max_thumbs_in_root_galleries_view_j3x = $params['max_thumbs_in_root_galleries_view_j3x'];
-$max_thumbs_in_root_galleries_view_j3x = $params->max_thumbs_in_root_galleries_view_j3x;
-// $intervall = $params['interval'];
+// $interval = $params['interval'];
 
-
-
+$auto_start = $params->auto_start;
+$interval = $params->interval;
+$showArrows = $params->showArrows;
+$darkMode = $params->darkMode;
 
 //--- assign dummy images if not found -----------------------------------
 
@@ -71,26 +71,24 @@ if ( ! empty($images))
             $image->UrlThumbFile = $noImageUrl;    
         }
     
-    //    else {
-    //
-    //        if (!$image->isOriginalFileExist) {
-    //            $image->UrlDisplayFile; = $missingUrl;
-    //            ;
-    //        }
-    //
-    //        if (!$image->isDisplayFileExist) {
-    //            $image->UrlDisplayFiles = $missingUrl;;
-    //        }
-    //
-    //        if (!$image->isThumbFileExist) {
-    //            $image->UrlThumbFile = $missingUrl;
-    //        }
-    //
-    //    }
+        //    else {
+        //
+        //        if (!$image->isOriginalFileExist) {
+        //            $image->UrlDisplayFile; = $missingUrl;
+        //            ;
+        //        }
+        //
+        //        if (!$image->isDisplayFileExist) {
+        //            $image->UrlDisplayFiles = $missingUrl;;
+        //        }
+        //
+        //        if (!$image->isThumbFileExist) {
+        //            $image->UrlThumbFile = $missingUrl;
+        //        }
+        //
+        //    }
+    }
 }
-}
-
-$interval = 2000; // 1000=1sec
 
 // allow:
 ?>
@@ -180,7 +178,12 @@ $interval = 2000; // 1000=1sec
         $uniqueId = substr(md5(uniqid()), 0, 12);;
         ?>
 
-        <div id="rsg2_carousel_<?php echo $uniqueId; ?>" class="carousel slide" data-bs-ride="carousel">
+        <div id="rsg2_carousel_<?php echo $uniqueId; ?>"
+             class="carousel slide <?php if ($darkMode): ?>carousel-dark<?php endif; ?>"
+            <?php if ($auto_start): ?>
+                data-bs-ride="carousel"
+	        <?php endif; ?>
+        >
 
             <div class="carousel-indicators">
                 <?php
@@ -210,8 +213,13 @@ $interval = 2000; // 1000=1sec
                 foreach ($images as $idx => $image) {
                     ?>
 
-                    <div class="carousel-item <?php echo $isActive; ?>" data-bs-interval="<?php echo $interval; ?>">
-<!--                        <img class="d-block w-100"-->
+                    <div class="carousel-item <?php echo $isActive; ?>"
+    	                <?php if ($auto_start): ?>
+                             data-bs-interval="<?php echo $interval; ?>"
+	                    <?php else: ?>
+                            data-bs-interval="false"
+	                    <?php endif; ?>
+                    >
                             <img
                              src="<?php echo $image->UrlDisplayFile; ?>"
                              alt="<?php echo $image->name; ?>"
@@ -228,11 +236,19 @@ $interval = 2000; // 1000=1sec
                 ?>
 
                 <button class="carousel-control-prev" type="button" data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <?php if ($showArrows): ?>
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <?php else: ?>
+                        <span class="carousel-control-prev-icon" aria-hidden="true" hidden></span>
+                    <?php endif; ?>
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                <?php if ($showArrows): ?>
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	                <?php else: ?>
+                        <span class="carousel-control-next-icon" aria-hidden="true" hidden></span>
+                    <?php endif; ?>
                     <span class="visually-hidden">Next</span>
                 </button>
 
