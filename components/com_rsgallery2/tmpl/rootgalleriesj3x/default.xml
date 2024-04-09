@@ -20,7 +20,7 @@
 
 	<!-- Add fields to the parameters object for the layout. -->
 	<fields name="params">
-		<fieldset name="params">
+		<fieldset name="basic">
 
 			<field
 					name="max_thumbs_in_root_galleries_view_j3x"
