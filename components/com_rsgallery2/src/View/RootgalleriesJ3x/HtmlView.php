@@ -140,7 +140,7 @@ class HtmlView extends BaseHtmlView
         //--- random images --------------------------------------------------
 
         //$this->randomImages = $model->randomImages($this->menuParams->random_count);
-        $this->randomImages = $model->randomImages($menuParams->get('random_count'));
+        $this->randomImages = $model->randomImages($params->get('random_count'));
 //        if (!empty($this->randomImages)) {
 //            GalleryJ3xModel::AddLayoutData($this->randomImages);
 //        }
@@ -148,7 +148,7 @@ class HtmlView extends BaseHtmlView
 
         //--- latest images --------------------------------------------------
 
-        $this->latestImages = $model->latestImages($menuParams->get('latest_count'));
+        $this->latestImages = $model->latestImages($params->get('latest_count'));
 //        /**/
 //        if (!empty($this->latestImages)) {
 //            GalleryJ3xModel::AddLayoutData($this->latestImages);
