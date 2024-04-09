@@ -114,10 +114,10 @@ class HtmlView extends BaseHtmlView
 
 		// ToDo: Status of images
 
-		// Merge (overwrite) config parameter with menu parameter
-		$menuParams = $this->get('Rsg2MenuParams');
-		// wrong: $this->params = $menuParams->merge($this->params);
-		$this->params->merge($menuParams);
+//		// Merge (overwrite) config parameter with menu parameter
+//		$menuParams = $this->get('Rsg2MenuParams');
+//		// wrong: $this->params = $menuParams->merge($this->params);
+//		$this->params->merge($menuParams);
 
         if ( ! empty($this->items)) {
 			// Add image paths, image params ...

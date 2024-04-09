@@ -96,10 +96,10 @@ class HtmlView extends BaseHtmlView
         $this->isDevelopSite = $params->get('isDevelop');
 
 
-		// Merge (overwrite) config parameter with menu parameter
-		$menuParams = $this->get('Rsg2MenuParams');
-		// wrong: $this->params = $menuParams->merge($this->params);
-		$this->params->merge($menuParams);
+//		// Merge (overwrite) config parameter with menu parameter
+//		$menuParams = $this->get('Rsg2MenuParams');
+//		// wrong: $this->params = $menuParams->merge($this->params);
+//		$this->params->merge($menuParams);
 
         if (count($errors = $this->get('Errors')))
         {

@@ -744,83 +744,83 @@ class GalleryModel extends ListModel
 	}
 
 
-    public function getRsg2MenuParams()
-    {
-
-	    // retrieved from default.xml ToDo Better way to merge ?
-
-	    /*
-		'gallery_show_title'
-		'gallery_show_description'
-		'gallery_show_slideshow'
-		'gallery_layout'
-		'images_show_title'
-		'images_show_title'
-		'images_show_description'
-		'images_show_description'
-		'images_show_search'
-		'images_column_arrangement'
-		'max_columns_in_images_view'
-		'images_row_arrangement'
-		'max_rows_in_images_view'
-		'max_thumbs_in_images_view'
-		'displaySearch'
-		*/
-
-		/* ToDo: whats wrong with
-	    $app = Factory::getApplication();
-	    $menu = $app->getMenu()->getActive() ;
-	    $itemId = $menu->id;
-	    $menu_params = $menu->getParams($itemId);
-		/**/
-
-
-
-	    $menuParams = new Registry();
-
-        try {
-
-            $input = Factory::getApplication()->input;
-
-			$menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
-			$menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
-			$menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
-			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
-			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
-			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
-			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-			$menuParams->set('images_show_search', $input->getBool('images_show_search', true));
-			$menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', true));
-			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
-			$menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', true));
-	        $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
-			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
-			$menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', true));
-			$menuParams->set('displaySearch', $input->getBool('displaySearch', true));
-
-
-			/*
-            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ''));
-            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
-            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));
-            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
-            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', ''));
-
-            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
-            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-/**/
-        } catch (\RuntimeException $e) {
-            $OutTxt = '';
-            $OutTxt .= 'GallerysModel: getRsg2MenuParams()' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-        return $menuParams;
-    }
+//    public function getRsg2MenuParams()
+//    {
+//
+//	    // retrieved from default.xml ToDo Better way to merge ?
+//
+//	    /*
+//		'gallery_show_title'
+//		'gallery_show_description'
+//		'gallery_show_slideshow'
+//		'gallery_layout'
+//		'images_show_title'
+//		'images_show_title'
+//		'images_show_description'
+//		'images_show_description'
+//		'images_show_search'
+//		'images_column_arrangement'
+//		'max_columns_in_images_view'
+//		'images_row_arrangement'
+//		'max_rows_in_images_view'
+//		'max_thumbs_in_images_view'
+//		'displaySearch'
+//		*/
+//
+//		/* ToDo: whats wrong with
+//	    $app = Factory::getApplication();
+//	    $menu = $app->getMenu()->getActive() ;
+//	    $itemId = $menu->id;
+//	    $menu_params = $menu->getParams($itemId);
+//		/**/
+//
+//
+//
+//	    $menuParams = new Registry();
+//
+//        try {
+//
+//            $input = Factory::getApplication()->input;
+//
+//			$menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
+//			$menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
+//			$menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
+//			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+//			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+//			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+//			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+//			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+//			$menuParams->set('images_show_search', $input->getBool('images_show_search', true));
+//			$menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', true));
+//			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
+//			$menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', true));
+//	        $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
+//			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
+//			$menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', true));
+//			$menuParams->set('displaySearch', $input->getBool('displaySearch', true));
+//
+//
+//			/*
+//            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ''));
+//            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
+//            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));
+//            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
+//            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', ''));
+//
+//            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+//            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+///**/
+//        } catch (\RuntimeException $e) {
+//            $OutTxt = '';
+//            $OutTxt .= 'GallerysModel: getRsg2MenuParams()' . '<br>';
+//            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+//
+//            $app = Factory::getApplication();
+//            $app->enqueueMessage($OutTxt, 'error');
+//        }
+//
+//        return $menuParams;
+//    }
 
 //	public function max_thumbs_J3x ($params)
 //	{

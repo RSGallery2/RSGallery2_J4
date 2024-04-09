@@ -173,81 +173,81 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
         return $latestImages;
     }
 
-    public function getRsg2MenuParams ()
-    {
-
-        // see rootgalleriesJ3x\default.xml
-
-        /*
-        displaySearch
-        displayRandom
-        displayLatest
-        intro_text
-        menu_show_intro_text
-        gallery_layout
-        ---
-        galleries_count
-        display_limitbox
-        galleries_show_title
-        galleries_show_description
-        galleries_show_owner
-        galleries_show_size
-        galleries_show_date
-        galleries_show_pre_label
-        galleries_show_slideshow
-        galleries_description_side
-
-        latest_count
-        random_count
-        /**/
-
-	    /* ToDo: whats wrong with */
-		$app = Factory::getApplication();
-		$menu = $app->getMenu()->getActive() ;
-		$itemId = $menu->id;
-		$menu_params = $menu->getParams($itemId);
-		/**/
-
-	    $menuParams = new Registry();
-
-        try {
-
-            $input = Factory::getApplication()->input;
-
-            $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
-            $menuParams->set('displayRandom', $input->getBool('displayRandom', true));
-            $menuParams->set('displayLatest', $input->getBool('displayLatest', true));
-            //$menuParams->set('intro_text', $input->get('intro_text', 'intro_text', 'HTML'));
-            $menuParams->set('intro_text', $input->get('intro_text', '', 'RAW'));
-            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
-            $menuParams->set('gallery_layout', $input->getString('gallery_layout', true));
-            //---
-            $menuParams->set('galleries_count', $input->getInt('galleries_count', 5));
-            $menuParams->set('display_limitbox', $input->getBool('display_limitbox', true));
-            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
-            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
-            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
-            $menuParams->set('galleries_show_size', $input->getInt('galleries_show_size', true));
-            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
-            $menuParams->set('galleries_show_pre_label', $input->getBool('galleries_show_pre_label', true));
-            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
-            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', 0));
-
-            $menuParams->set('latest_count', $input->getInt('latest_count', 5));
-            $menuParams->set('random_count', $input->getInt('random_count', 5));
-
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-        return $menuParams;
-    }
+//    public function getRsg2MenuParams ()
+//    {
+//
+//        // see rootgalleriesJ3x\default.xml
+//
+//        /*
+//        displaySearch
+//        displayRandom
+//        displayLatest
+//        intro_text
+//        menu_show_intro_text
+//        gallery_layout
+//        ---
+//        galleries_count
+//        display_limitbox
+//        galleries_show_title
+//        galleries_show_description
+//        galleries_show_owner
+//        galleries_show_size
+//        galleries_show_date
+//        galleries_show_pre_label
+//        galleries_show_slideshow
+//        galleries_description_side
+//
+//        latest_count
+//        random_count
+//        /**/
+//
+//	    /* ToDo: whats wrong with */
+//		$app = Factory::getApplication();
+//		$menu = $app->getMenu()->getActive() ;
+//		$itemId = $menu->id;
+//		$menu_params = $menu->getParams($itemId);
+//		/**/
+//
+//	    $menuParams = new Registry();
+//
+//        try {
+//
+//            $input = Factory::getApplication()->input;
+//
+//            $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
+//            $menuParams->set('displayRandom', $input->getBool('displayRandom', true));
+//            $menuParams->set('displayLatest', $input->getBool('displayLatest', true));
+//            //$menuParams->set('intro_text', $input->get('intro_text', 'intro_text', 'HTML'));
+//            $menuParams->set('intro_text', $input->get('intro_text', '', 'RAW'));
+//            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
+//            $menuParams->set('gallery_layout', $input->getString('gallery_layout', true));
+//            //---
+//            $menuParams->set('galleries_count', $input->getInt('galleries_count', 5));
+//            $menuParams->set('display_limitbox', $input->getBool('display_limitbox', true));
+//            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
+//            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
+//            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
+//            $menuParams->set('galleries_show_size', $input->getInt('galleries_show_size', true));
+//            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
+//            $menuParams->set('galleries_show_pre_label', $input->getBool('galleries_show_pre_label', true));
+//            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
+//            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', 0));
+//
+//            $menuParams->set('latest_count', $input->getInt('latest_count', 5));
+//            $menuParams->set('random_count', $input->getInt('random_count', 5));
+//
+//        }
+//        catch (\RuntimeException $e)
+//        {
+//            $OutTxt = '';
+//            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
+//            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+//
+//            $app = Factory::getApplication();
+//            $app->enqueueMessage($OutTxt, 'error');
+//        }
+//
+//        return $menuParams;
+//    }
 
 } // class

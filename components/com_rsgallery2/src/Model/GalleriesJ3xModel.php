@@ -959,85 +959,85 @@ class GalleriesJ3xModel extends ListModel
         return $parentGallery;
     }
 
-    public function getRsg2MenuParams () {
-
-        // see rootgalleriesJ3x\default.xml
-
-        /*
-            gid
-            gallery_show_title
-            gallery_show_description
-            gallery_show_slideshow
-            intro_text
-            menu_show_intro_text
-            gallery_layout
-
-            images_show_title
-            images_show_description
-            images_show_search
-            images_layout
-
-            images_column_arrangement
-            max_columns_in_images_view
-            images_row_arrangement
-            max_rows_in_images_view
-            max_thumbs_in_images_view
-        /**/
-
-
-        $menuParams = new Registry();
-
-        try {
-//            $activeMenu = Factory::getApplication()->getMenu()->getActive();
-//            if ($activeMenu) {
-//                $menuParams = $activeMenu->getParams();
-//            } else {
-//                $menuParams = new Registry();
-//            }
-
-            $input = Factory::getApplication()->input;
-
-//            $menuParams->set('gid', $input->getInt('gid', true));
-//            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
-//            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
+//    public function getRsg2MenuParams () {
 //
-//            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
-//            $menuParams->set('galleries_show_size', $input->getBool('galleries_show_size', true));
-//            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
+//        // see rootgalleriesJ3x\default.xml
 //
-//            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
-//            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', true));
-//            $menuParams->set('intro_text', $input->get('intro_text','','RAW'));
-//            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
-//            $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+//        /*
+//            gid
+//            gallery_show_title
+//            gallery_show_description
+//            gallery_show_slideshow
+//            intro_text
+//            menu_show_intro_text
+//            gallery_layout
 //
-//            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
-//            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-//            $menuParams->set('images_show_search', $input->getBool('images_show_search', true));
-//            $menuParams->set('images_layout', $input->getBool('images_layout', true));
+//            images_show_title
+//            images_show_description
+//            images_show_search
+//            images_layout
 //
-//            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ??? true));
-//            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ??? true));
-//            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ??? true));
-//            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ??? true));
-//            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', ??? true));
-
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-
-
-        return $menuParams;
-    }
-
+//            images_column_arrangement
+//            max_columns_in_images_view
+//            images_row_arrangement
+//            max_rows_in_images_view
+//            max_thumbs_in_images_view
+//        /**/
+//
+//
+//        $menuParams = new Registry();
+//
+//        try {
+////            $activeMenu = Factory::getApplication()->getMenu()->getActive();
+////            if ($activeMenu) {
+////                $menuParams = $activeMenu->getParams();
+////            } else {
+////                $menuParams = new Registry();
+////            }
+//
+//            $input = Factory::getApplication()->input;
+//
+////            $menuParams->set('gid', $input->getInt('gid', true));
+////            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
+////            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
+////
+////            $menuParams->set('galleries_show_owner', $input->getBool('galleries_show_owner', true));
+////            $menuParams->set('galleries_show_size', $input->getBool('galleries_show_size', true));
+////            $menuParams->set('galleries_show_date', $input->getBool('galleries_show_date', true));
+////
+////            $menuParams->set('galleries_show_slideshow', $input->getBool('galleries_show_slideshow', true));
+////            $menuParams->set('galleries_description_side', $input->getInt('galleries_description_side', true));
+////            $menuParams->set('intro_text', $input->get('intro_text','','RAW'));
+////            $menuParams->set('menu_show_intro_text', $input->getBool('menu_show_intro_text', true));
+////            $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+////
+////            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+////            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+////            $menuParams->set('images_show_search', $input->getBool('images_show_search', true));
+////            $menuParams->set('images_layout', $input->getBool('images_layout', true));
+////
+////            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ??? true));
+////            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ??? true));
+////            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ??? true));
+////            $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ??? true));
+////            $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', ??? true));
+//
+//        }
+//        catch (\RuntimeException $e)
+//        {
+//            $OutTxt = '';
+//            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
+//            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+//
+//            $app = Factory::getApplication();
+//            $app->enqueueMessage($OutTxt, 'error');
+//        }
+//
+//
+//
+//        return $menuParams;
+//    }
+//
 
 
 

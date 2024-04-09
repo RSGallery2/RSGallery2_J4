@@ -108,13 +108,13 @@ class HtmlView extends BaseHtmlView
 	    $params =
 	    $this->params = $this->state->get('params');
 
-	    // ToDo: may not be necessary but display
-        $menuParams =
-        $this->menuParams = $this->get('Rsg2MenuParams');
-
-	    // Merge (overwrite) config parameter with menu parameter
-	    // wrong: $this->params = $menuParams->merge($this->params);
-	    $params = $this->params->merge($menuParams);
+//	    // ToDo: may not be necessary but display
+//        $menuParams =
+//        $this->menuParams = $this->get('Rsg2MenuParams');
+//
+//	    // Merge (overwrite) config parameter with menu parameter
+//	    // wrong: $this->params = $menuParams->merge($this->params);
+//	    $params = $this->params->merge($menuParams);
 
         $this->isDebugSite = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
         $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
