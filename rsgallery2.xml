@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>28. Mar. 2024</creationDate>
+	<creationDate>05. Apr. 2024</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<copyright>(c) 2005-2024 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.11.15</version>
+	<version>5.0.12.02</version>
 	<description>COM_RSGALLERY2_XML_DESCRIPTION</description>
 	<namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
 
@@ -120,7 +120,10 @@
 
 	<changelogurl>https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml</changelogurl>
 	<updateservers>
-		<server type="extension" name="RSG2 for J4 Update server">https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml</server>
+		<server type="extension" 
+		        name="RSG2 for J4 Update server"
+			>https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml
+		</server>
 	</updateservers>
 	<dashboards>
 		<dashboard title="COM_MENUS_RSGALLERY2_TITLE" icon="icon-list">rsgallery2</dashboard>
