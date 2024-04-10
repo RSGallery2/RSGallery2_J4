@@ -46,7 +46,8 @@ class Rsg2_galleryHelper //implements DatabaseAwareInterface
         // SiteApplication $app
         $this->galleryModel = $app->bootComponent('com_rsgallery2')
             ->getMVCFactory()
-            ->createModel('Gallery', 'Site', ['ignore_request' => true]);
+            // ->createModel('Gallery', 'Site', ['ignore_request' => true]);
+            ->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
 
         $appParams = $app->getParams();
         // $this->galleryModel->setState ('params') = $appParams;
