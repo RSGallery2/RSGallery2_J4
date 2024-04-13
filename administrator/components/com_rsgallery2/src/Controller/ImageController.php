@@ -168,7 +168,7 @@ class ImageController extends FormController
 	 */
 	public function rotate_image_left()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg     = "rotate_left: " . '<br>';
 
@@ -184,7 +184,7 @@ class ImageController extends FormController
 	 */
 	public function rotate_image_right()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg     = "rotate_right: " . '<br>';
 
@@ -199,7 +199,7 @@ class ImageController extends FormController
 	 */
 	public function rotate_image_180()
 	{
-		// Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		// Done later: $this->checkToken();
 
 		$msg     = "rotate_180: " . '<br>';
 
@@ -219,7 +219,7 @@ class ImageController extends FormController
 	 */
 	public function rotate_image($direction = -90.000, $msg = '')
 	{
-		Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$msgType = 'notice';
 		$ImgCount = 0;
@@ -227,10 +227,10 @@ class ImageController extends FormController
 
 		try
 		{
-			Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+			$this->checkToken();
 
 			// Access check
-			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
@@ -305,7 +305,7 @@ class ImageController extends FormController
 	 */
 	public function flip_image_horizontal()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$msg = "flip_image_horizontal: " . '<br>';
 
@@ -320,7 +320,7 @@ class ImageController extends FormController
 	 */
 	public function flip_image_vertical()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg = "flip_image_vertical: " . '<br>';
 
@@ -336,7 +336,7 @@ class ImageController extends FormController
 	 */
 	public function flip_image_both()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg = "flip_image_both: " . '<br>';
 
@@ -355,7 +355,7 @@ class ImageController extends FormController
 	 */
 	public function flip_image($flipMode=0, $msg='')
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$msgType = 'notice';
 		$ImgCount = 0;
@@ -365,7 +365,7 @@ class ImageController extends FormController
 		{
 
 			// Access check
-			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -506,7 +506,7 @@ class ImageController extends FormController
 	 *
 	public function batch($model = null)
 	{
-	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+	$this->checkToken();
 
 		// Set the model
 		/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *

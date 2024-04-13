@@ -60,9 +60,10 @@ class RatingController extends BaseController
 		$msgType = 'notice';
     	$msg     = 'Rate Single Image: ';
 
-//		Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		// Check for request forgeries.
+		$this->checkToken();
 
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->getInput();
 		$imageId = $input->get('iid', 0, 'INT');
 		$galleryId = $input->get('iid', 0, 'INT');
 
@@ -71,10 +72,10 @@ class RatingController extends BaseController
 		$link = 'index.php?option=com_rsgallery2&view=slidePageJ3x&gid=' . $galleryId . '&img_id=' . $imageId.'&tab=vote';
 
 		// Access check
-		$canVote = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('core.admin', 'com_rsgallery2');
+		$canVote = $this->app->getIdentity()->authorise('core.admin', 'com_rsgallery2');
 		if ( ! $canVote)
 		{
-			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR') . " " . JText::_('COM_RSGALLERY2_VOTING_IS_DISABLED');
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR') . " " . Text::_('COM_RSGALLERY2_VOTING_IS_DISABLED');
 			
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
@@ -121,7 +122,7 @@ class RatingController extends BaseController
 				$OutTxt .= 'Error executing rateSingleImage: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 		}

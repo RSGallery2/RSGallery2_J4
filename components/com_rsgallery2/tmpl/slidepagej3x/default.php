@@ -106,7 +106,7 @@ function _showDescription()
 
 	if ($rsgConfig->get('displayHits')):
 		?>
-		<p class="rsg2_hits"><?php echo JText::_('COM_RSGALLERY2_HITS'); ?> <span><?php echo $item->hits; ?></span>
+		<p class="rsg2_hits"><?php echo Text::_('COM_RSGALLERY2_HITS'); ?> <span><?php echo $item->hits; ?></span>
 		</p>
 	<?php
 	endif;
@@ -141,7 +141,7 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 
 	$html[] = '                <div class="rating-block row-fluid text-center" >';
 
-	$html[] = '                    <h4>' . JText::_('COM_RSGALLERY2_AVERAGE_USER_RATING') . '</h4>';
+	$html[] = '                    <h4>' . Text::_('COM_RSGALLERY2_AVERAGE_USER_RATING') . '</h4>';
 	$html[] = '                    <h2 class="bold padding-bottom-7">' . $ratingData->average . '&nbsp<small>/&nbsp' . $ratingData->count . '</small></h2>';
 
 	for ($idx = 0; $idx < 5; $idx++)
@@ -151,12 +151,12 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 
 	if ($isVotingEnabled)
 	{
-		$html[] = '                <label id="DoVote" title="' . JText::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE_DESC') . '">' . JText::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE') . '&nbsp;&nbsp;</label>';
+		$html[] = '                <label id="DoVote" title="' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE_DESC') . '">' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE') . '&nbsp;&nbsp;</label>';
 
 //		$templateName = $rsgConfig->get('template');
 //		$templateUri = JURI_SITE . "/components/com_rsgallery2/templates/" . $templateName;
 //
-//		$doc = JFactory::getApplication->getDocument();
+//		$doc = Factory::getApplication->getDocument();
 //		$vote_js = $templateUri . "/js/OneImageVote.js";
 //		$doc->addScript($vote_js);
 	}
@@ -231,7 +231,7 @@ function htmlExifData ($exifTags)
 //		$html[] = '    <table width="100%" class="comment_table">';
 //		$html[] = '        <tr>';
 //		$html[] = '            <td class="title">';
-//		$html[] = '                <span class="posttitle">' . JText::_('COM_RSGALLERY2_NO_COMMENTS_YET') . ' <br></span>';
+//		$html[] = '                <span class="posttitle">' . Text::_('COM_RSGALLERY2_NO_COMMENTS_YET') . ' <br></span>';
 //		$html[] = '                 ';
 //		$html[] = '                 <br>';
 //		$html[] = '            </td>';
@@ -249,9 +249,9 @@ function htmlExifData ($exifTags)
 //
 //		$html[] = '    <button class="btn btn-success" type="button">';
 //		$html[] = '        <i class="icon-comment"></i>';
-//		$html[] = '	       <a class="special" href="#lblAddComment">' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
-//		//$html[] = '	       <a class="special" href="#bottom">' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
-//		//$html[] = '	       <a class="special" href="#commentUserName">' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//		$html[] = '	       <a class="special" href="#lblAddComment">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//		//$html[] = '	       <a class="special" href="#bottom">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//		//$html[] = '	       <a class="special" href="#commentUserName">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
 //		$html[] = '    </button>';
 //		$html[] = '';
 //
@@ -343,15 +343,15 @@ function htmlExifData ($exifTags)
 //	$html[] = '                    action="' . JRoute::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
 //
 //	$html[] = '                    <div class ="well">';
-//	$html[] = '                        <h4>'. JText::_('COM_RSGALLERY2_CREATE_COMMENT') . '</h4>';
+//	$html[] = '                        <h4>'. Text::_('COM_RSGALLERY2_CREATE_COMMENT') . '</h4>';
 //
 //	// ToDo: text-align="center
 //	$html[] = '                        <button id="commitSend" class="btn btn-primary pull-right" ';
 //	$html[] = '                            type="submit" ';
 ////    $html[] = '						       onclick="Joomla.submitbutton(\'comment.saveComment\')"';
 //	$html[] = '						       onclick="Joomla.submitbutton(this.form);return false" ';
-//	$html[] = '							   title="' . JText::_('COM_RSGALLERY2_SEND_COMMENT_DESC') . '">';
-//	$html[] = '						       <i class="icon-save"></i> ' . JText::_('COM_RSGALLERY2_ADD_COMMENT') . '';
+//	$html[] = '							   title="' . Text::_('COM_RSGALLERY2_SEND_COMMENT_DESC') . '">';
+//	$html[] = '						       <i class="icon-save"></i> ' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '';
 //	$html[] = '						   </button>';
 //
 //	$html[] = '                        ' . $formFields->renderFieldset ('comment');

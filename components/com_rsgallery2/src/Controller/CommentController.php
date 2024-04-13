@@ -58,9 +58,10 @@ class CommentController extends BaseController
 		$msgType = 'notice';
     	$msg     = 'Add coment: ';
 
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		// Check for request forgeries.
+		$this->checkToken();
 
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->getInput();
 		$imageId = $input->get('id', 0, 'INT');
 
 		// http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=42&advancedSef=1&startShowSingleImage=1&Itemid=218
@@ -70,14 +71,14 @@ class CommentController extends BaseController
 
 		// Access check
 		$galleryId = $input->get('gid', 0, 'INT');
-		//$canComment = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('core.admin', 'com_rsgallery2');
-		$canComment = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('rsgallery2.comment', 'com_rsgallery2.gallery.' . $galleryId);
+		//$canComment = $this->app->getIdentity()->authorise('core.admin', 'com_rsgallery2');
+		$canComment = $this->app->getIdentity()->authorise('rsgallery2.comment', 'com_rsgallery2.gallery.' . $galleryId);
 		// ToDO: remove
 		//$canComment = true;
 
 		if ( ! $canComment)
 		{
-			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR') . " " . JText::_('COM_RSGALLERY2_COMMENTING_IS_DISABLED');
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR') . " " . Text::_('COM_RSGALLERY2_COMMENTING_IS_DISABLED');
 			$msgType = 'Warning: ';
 			// replace newlines with html line breaks.
 			$msg = nl2br ($msg);
@@ -86,14 +87,14 @@ class CommentController extends BaseController
 		{
 
 			// Check user ID
-			$user    = JFactory::getContainer()->get(UserFactoryInterface::class);
+			$user = $this->app->getIdentity();
 			$user_id = (int) $user->id;
 
 //			??? if not / if needed ??
 			if (empty($user_id))
 			{
 				// ToDo: Message Login to comment
-				$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR') . " " . JText::_('COM_RSGALLERY2_YOU_MUST_LOGIN_TO_COMMENT' . ' (B)');
+				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR') . " " . Text::_('COM_RSGALLERY2_YOU_MUST_LOGIN_TO_COMMENT' . ' (B)');
 				$msgType = 'Warning: ';
 				// replace newlines with html line breaks.
 				$msg = nl2br ($msg);
@@ -165,7 +166,7 @@ class CommentController extends BaseController
 					$OutTxt .= 'Error executing addComment: "' . '<br>';
 					$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-					$app = JFactory::getApplication();
+					$app = Factory::getApplication();
 					$app->enqueueMessage($OutTxt, 'error');
 				}
 			} // user ID
@@ -181,14 +182,15 @@ class CommentController extends BaseController
 		$msgType = 'notice';
 		$msg     = 'Save coment: ';
 
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		// Check for request forgeries.
+		$this->checkToken();
 
 		// Align like above
 
 		// http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=42&advancedSef=1&startShowSingleImage=1&Itemid=218
 		$link = 'index.php?option=com_rsgallery2'; // &startShowSingleImage=1&Itemid=218
 
-		$input = JFactory::getApplication()->input;
+		$input = Factory::getApplication()->getInput();
 
 		$galleryId = $input->get('gid', 0, 'INT');
 		// ToDo: check for appearance
@@ -196,12 +198,12 @@ class CommentController extends BaseController
 		$userRating = $input->get('rating', 0, 'INT');
 
 		// Access check
-		$canComment = JFactory::getContainer()->get(UserFactoryInterface::class)->authorise('core.admin', 'com_rsgallery2');
+		$canComment = $this->app->getIdentity()->authorise('core.admin', 'com_rsgallery2');
 		//$canComment = true;
 
 		if ( ! $canComment)
 		{
-			$msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			$msg = nl2br ($msg);
@@ -212,7 +214,7 @@ class CommentController extends BaseController
 			{
 				echo "<br><br><br>*CommentSingleImage<br><br><br>";
 
-				$input = JFactory::getApplication()->input;
+				$input = Factory::getApplication()->getInput();
 
 				$galleryId = $input->get('gid', 0, 'INT');
 				$imageId = $input->get('id', 0, 'INT');
@@ -246,7 +248,7 @@ class CommentController extends BaseController
 				$OutTxt .= 'Error executing saveComment: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				$app = JFactory::getApplication();
+				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
 		}

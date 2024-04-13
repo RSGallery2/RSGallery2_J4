@@ -68,7 +68,7 @@ class MaintConsolidateDbController extends AdminController
 		$msg = "MaintConsolidateDb.createImageDbItems: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin) {
@@ -127,7 +127,7 @@ class MaintConsolidateDbController extends AdminController
 		$msg = "MaintConsolidateDb.createMissingImages: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin) {
@@ -186,7 +186,7 @@ class MaintConsolidateDbController extends AdminController
 		$msg = "MaintConsolidateDb.createWatermarkImages: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin) {
@@ -245,7 +245,7 @@ class MaintConsolidateDbController extends AdminController
 		$msg = "MaintConsolidateDb.assignParentGallery: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin) {
@@ -304,7 +304,7 @@ class MaintConsolidateDbController extends AdminController
 		$msg = "MaintConsolidateDb.deleteRowItems: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin) {
@@ -361,7 +361,7 @@ class MaintConsolidateDbController extends AdminController
 		$msg = "MaintConsolidateDb.repairAllIssuesItems: ";
 		$msgType = 'notice';
 
-		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin) {

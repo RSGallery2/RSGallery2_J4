@@ -140,7 +140,6 @@ class ImagesRandomModel extends ListModel
 
         $params = $app->getParams();
         $this->setState('params', $params);
-        // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
 
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))

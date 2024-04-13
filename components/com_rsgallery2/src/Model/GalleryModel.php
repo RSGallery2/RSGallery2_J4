@@ -501,8 +501,8 @@ class GalleryModel extends ListModel
 //        try {
 //
 //            /** @var merge registries *
-//            $app = JFactory::getApplication();
-//            $currentMenuId = JSite::getMenu()->getActive()->id;
+//            $app = Factory::getApplication();
+//            $currentMenuId = ??? JSite::getMenu()->getActive()->id;
 //            $menuitem   = $app->getMenu()->getItem($currentMenuId);
 //            $params = $menuitem->params;
 //            echo $params['menu_image'];

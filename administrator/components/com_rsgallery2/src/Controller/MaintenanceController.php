@@ -64,7 +64,7 @@ class MaintenanceController extends BaseController
         $msg = "MaintenanceCleanUp.CheckImagePaths: ";
         $msgType = 'notice';
 
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -118,7 +118,7 @@ class MaintenanceController extends BaseController
         $msg = "MaintenanceCleanUp.RepairImagePaths: ";
         $msgType = 'notice';
 
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -216,14 +216,14 @@ class MaintenanceController extends BaseController
      */
     public function checkImageExifData()
     {
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         $msgType = 'notice';
         $link = 'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif';
 
         try {
             // Access check
-            $canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+            $canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
             if (!$canAdmin) {
 
                 $msg     = Text::_('JERROR_ALERTNOAUTHOR');
@@ -322,7 +322,7 @@ class MaintenanceController extends BaseController
      */
     public function cancel()
     {
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         $link = 'index.php?option=com_rsgallery2&view=maintenance';
         $this->setRedirect($link);
@@ -339,7 +339,7 @@ class MaintenanceController extends BaseController
      */
     public function cancel_rsg2()
     {
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         $link = 'index.php?option=com_rsgallery2';
         $this->setRedirect($link);

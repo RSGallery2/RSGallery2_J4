@@ -67,7 +67,7 @@ $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;
 $displayData['params'] = $this->params->toObject();
-$displayData['menuParams'] = $this->menuParams;
+//$displayData['menuParams'] = $this->menuParams;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;

@@ -68,7 +68,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function PropertiesView ()
 	{
-		Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
 		if (!$canAdmin)
@@ -103,7 +103,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function save_imagesProperties()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$ImgCount = 0;
 		$ImgFailed = 0;
@@ -114,10 +114,10 @@ class ImagesPropertiesController extends AdminController
 
 		try
 		{
-			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+			$this->checkToken();
 
 			// Access check
-			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -178,17 +178,17 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function apply_imagesProperties()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$msg     = "apply_imagesProperties: " . '<br>';
 		$msgType = 'notice';
 
 		try
 		{
-			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+			$this->checkToken();
 
 			// Access check
-			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -250,7 +250,7 @@ class ImagesPropertiesController extends AdminController
 //	 */
 //	public function cancel_imagesProperties()
 //	{
-//		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+//		$this->checkToken();
 //
 //		$link = 'index.php?option=com_rsgallery2&view=images';
 //		$this->setRedirect($link);
@@ -264,7 +264,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function delete_imagesProperties()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$msg     = "delete_imagesProperties: " . '<br>';
 		$msgType = 'notice';
@@ -277,10 +277,10 @@ class ImagesPropertiesController extends AdminController
 
 			// unset($ids[$i]);
 
-			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+			$this->checkToken();
 
 			// Access check
-			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -333,7 +333,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function rotate_images_left()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg     = "rotate_left: " . '<br>';
 
@@ -349,7 +349,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function rotate_images_right()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg     = "rotate_right: " . '<br>';
 
@@ -365,7 +365,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function rotate_images_180()
 	{
-		// Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		// Done later: $this->checkToken();
 
 		$msg     = "rotate_180: " . '<br>';
 
@@ -385,7 +385,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function rotate_images($direction = -90.000, $msg)
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$msgType = 'notice';
 		$ImgCount = 0;
@@ -393,10 +393,10 @@ class ImagesPropertiesController extends AdminController
 
 		try
 		{
-			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+			$this->checkToken();
 
 			// Access check
-			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
@@ -481,7 +481,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function flip_images_horizontal()
 	{
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		$this->checkToken();
 
 		$msg = "flip_images_horizontal: " . '<br>';
 
@@ -497,7 +497,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function flip_images_vertical()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg = "flip_images_vertical: " . '<br>';
 
@@ -513,7 +513,7 @@ class ImagesPropertiesController extends AdminController
 	 */
 	public function flip_images_both()
 	{
-        // Done later: Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        // Done later: $this->checkToken();
 
 		$msg = "flip_images_both: " . '<br>';
 
@@ -534,10 +534,10 @@ class ImagesPropertiesController extends AdminController
 
 		try
 		{
-			Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+			$this->checkToken();
 
 			// Access check
-			$canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+			$canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
 			if (!$canAdmin)
 			{
 				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');

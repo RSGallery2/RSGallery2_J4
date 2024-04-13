@@ -313,7 +313,7 @@ out:
 		$app = Factory::getApplication();
 
 		// do check token
-		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		// $this->checkToken();
 		if (!Session::checkToken())
 		{
 			$errMsg   = Text::_('JINVALID_TOKEN') . " (01)";
@@ -528,7 +528,7 @@ out:
 		$app = Factory::getApplication();
 
 		// do check token
-		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		// $this->checkToken();
 		if (!Session::checkToken())
 		{
 			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
@@ -846,7 +846,7 @@ out:
 		$app = Factory::getApplication();
 
 		// do check token
-		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		// $this->checkToken();
 		if (!Session::checkToken())
 		{
 			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";
@@ -1080,7 +1080,7 @@ interface IResponseTransfer {
 		$app = Factory::getApplication();
 
 		// do check token
-		// Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+		// $this->checkToken();
 		if (!Session::checkToken())
 		{
 			$errMsg   = Text::_('JINVALID_TOKEN') . " (02)";

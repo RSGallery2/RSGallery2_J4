@@ -72,7 +72,7 @@ class ImagesController extends AdminController
         $msg = "ImagesController.reinitImagesTable: ";
         $msgType = 'notice';
 
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -125,10 +125,10 @@ class ImagesController extends AdminController
         $msg     = "Control:moveTo: ";
         $msgType = 'notice';
 
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         // Access check
-        $canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+        $canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
         if (!$canAdmin)
         {
             $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
@@ -182,10 +182,10 @@ class ImagesController extends AdminController
         $msg     = "Control:copyTo: ";
         $msgType = 'notice';
 
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+	    $this->checkToken();
 
         // Access check
-        $canAdmin = Factory::getContainer()->get(UserFactoryInterface::class)->authorise('core.edit', 'com_rsgallery2');
+        $canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
         if (!$canAdmin)
         {
             $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');

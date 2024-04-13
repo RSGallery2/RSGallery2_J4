@@ -142,7 +142,7 @@ class SlidePageJ3XModel extends ImagesJ3xModel
             $OutTxt .= 'Error executing exifDataUserSelected: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 

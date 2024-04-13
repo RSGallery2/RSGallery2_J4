@@ -70,7 +70,7 @@ class GalleryController extends FormController
         $link = 'index.php?option=com_rsgallery2';
         $IsSaved = false;
 
-        Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
@@ -188,7 +188,7 @@ class GalleryController extends FormController
 //	 */
 //	public function batch($model = null)
 //	{
-//	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+//	$this->checkToken();
 //
 //		// Set the model
 //		/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model */

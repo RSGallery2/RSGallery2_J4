@@ -87,7 +87,8 @@ class ImageFileController extends BaseController
         $app     = Factory::getApplication();
 
         // Not needed : everyone may download the original image
-        //Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
+        //        // Check for request forgeries.
+		//        $this->checkToken();
 
         $input = Factory::getApplication()->input;
         $imageId = $input->get('id', 0, 'INT');
