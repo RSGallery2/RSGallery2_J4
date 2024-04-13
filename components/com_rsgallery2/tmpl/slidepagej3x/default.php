@@ -455,7 +455,7 @@ function htmlStars ($idx, $average, $lastRating)
 	$image_idx = $this->imageIdx;
 	$gallery = $this->gallery;
 	$params = $this->params;
-	$menuParams = $this->menuParams;
+//	$menuParams = $this->menuParams;
 
 	$image = $this->image;
 
@@ -486,7 +486,7 @@ function htmlStars ($idx, $average, $lastRating)
 <!---->
 <!--        </div>-->
 
-        <?php if (true || $menuParams->galleries_show_slideshow): ?>
+        <?php if (true || $params->galleries_show_slideshow): ?>
 		    <div class="rsg2_slideshow_link">
 			    <a href="<?php echo $gallery->UrlSlideshow?>">
 				    Slideshow

@@ -42,6 +42,7 @@ if (!empty($isDevelopSite)) {
         . 'Tasks: layout GalleriesAreaJ3x<br>'
         . '* Change date format<br>'
         . '* Use CSS flex: align right of thumb<br>'
+    	. '* add galery status <br>'
     	. '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . '* Galleries J3x area Tasks: <br>'
@@ -108,7 +109,8 @@ if ( empty($params->intro_text)) {
 	$params->intro_text = '';
 }
 
-
+// $galStatus =' //Status// ';
+$galStatus ='';
 
 ?>
 
@@ -141,7 +143,7 @@ if ( empty($params->intro_text)) {
 		?>
 
 		<div class="rsg_galleryblock system-unpublished">
-			<div class="rsg2-galleryList-status">//Status//</div>
+			<div class="rsg2-galleryList-status"><?php echo $galStatus?></div>
 			<div class="rsg2-galleryList-thumb">
 				<!---div class="shadow-box"-->
 				<div class="img-shadow">

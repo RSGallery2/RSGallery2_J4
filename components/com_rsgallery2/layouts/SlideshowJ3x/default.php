@@ -165,8 +165,6 @@ if ( ! empty($images))
 
 </style>
 
-<hr>
-<h5> (1) boostrap itself  </h5>
 <div class="rsg2_slideshow_box">
     <div class="rsg2_x__slideshowJ3x">
 
