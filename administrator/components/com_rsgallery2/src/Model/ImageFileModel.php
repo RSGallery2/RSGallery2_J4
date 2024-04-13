@@ -21,6 +21,7 @@ use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\MVC\Model\ListModel;
 
@@ -36,7 +37,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
  *
  * @since __BUMP_VERSION__
  */
-class ImageFileModel extends BaseModel // AdminModel
+class ImageFileModel extends BaseDatabaseModel // AdminModel
 {
 
     const THUMB_PORTRAIT = 0;

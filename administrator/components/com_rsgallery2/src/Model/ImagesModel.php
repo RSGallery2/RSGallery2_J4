@@ -570,8 +570,8 @@ class ImagesModel extends ListModel
 		{
 			// Create a new query object.
 			$db    = Factory::getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true);
 
+			$query = $db->getQuery(true);
 			$query
 				->select('*')
 				->from($db->quoteName('#__rsg2_images'))
@@ -624,6 +624,7 @@ class ImagesModel extends ListModel
 		{
 			// Create a new query object.
 			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+
 			$query = $db->getQuery(true);
 
 			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
@@ -776,6 +777,7 @@ class ImagesModel extends ListModel
 
 		try
 		{
+			$db    = $this->getDatabase();
 			$query = $db->getQuery(true)
                 ->select($db->quoteName(array('id', 'name', 'gallery_id')))
                 ->from($db->quoteName('#__rsg2_images'))

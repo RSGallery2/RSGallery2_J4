@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\ListModel;
 
 /**
@@ -25,7 +26,7 @@ use Joomla\CMS\MVC\Model\ListModel;
  *
  * @since __BUMP_VERSION__
  */
-class ImagesPropertiesModel extends ListModel
+class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseModel
 {
 	/**
 	 * Constructor.
