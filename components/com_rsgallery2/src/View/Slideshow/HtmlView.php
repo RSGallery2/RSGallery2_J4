@@ -214,8 +214,8 @@ class HtmlView extends BaseHtmlView
         $input = Factory::getApplication()->input;
         //$this->galleryId = $input->get('gid', 0, 'INT');
 
-        // $this->menuParams = new \stdClass();
-        $this->menuParams = (object)[];
+//        // $this->menuParams = new \stdClass();
+//        $this->menuParams = (object)[];
 //        $this->menuParams->gallery_show_title = $input->getBool('gallery_show_title', true);
 //        $this->menuParams->gallery_show_description = $input->getBool('gallery_show_description', true);
 //        $this->menuParams->gallery_show_slideshow = $input->getBool('gallery_show_slideshow', true);

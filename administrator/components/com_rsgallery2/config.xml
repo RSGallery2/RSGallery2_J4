@@ -973,14 +973,66 @@
 
 	</fieldset>
 
-	<!-- ... Tab 01 ................................. -->
+	<!-- ... Tab j3x legacy slide image ................................. -->
 
 	<fieldset
-			name="TestInner01"
-			label="TestInner01"
-			description="Testinner 01 description"
+			name="j3x_legacy_slideshow"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW_DESC"
 	>
-		<field type="spacer" name="test_inner_01" hr="true" />
+	<field type="spacer" name="test_inner_01" hr="true" />
+
+		<field
+				name="auto_start"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
+				description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="interval"
+			   type="number"
+			   default="2500"
+			   label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
+			   description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
+		>
+		</field>
+
+		<field name="showArrows"
+			   type="list"
+			   default="1"
+			   label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
+			   description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="darkMode"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
+				description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
+
+	</fieldset>
+
+	<!-- ... Tab 01 ................................. -->
+
+<!--	<fieldset-->
+<!--			name="TestInner01"-->
+<!--			label="TestInner01"-->
+<!--			description="Testinner01 description"-->
+<!--	>-->
+<!--		<field type="spacer" name="test_inner_01" hr="true" />-->
 <!--		<field name="jpegQuality_01" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
 <!--		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />-->
 <!--		<field name="jpegQuality_02" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
@@ -999,48 +1051,48 @@
 <!--		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />-->
 <!--		<field name="jpegQuality_09" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
 
-	</fieldset>
+<!--	</fieldset>-->
 
 	<!-- ... Tab 02 ................................. -->
 
-	<fieldset
-			name="TestInner02"
-			label="TestInner02"
-			description="TestInner01 description"
-	>
-		<field type="spacer" name="test_inner_02" hr="true" />
-		<!-- ... block  ... -->
+<!--	<fieldset-->
+<!--			name="TestInner02"-->
+<!--			label="TestInner02"-->
+<!--			description="TestInner02 description"-->
+<!--	>-->
+<!--		<field type="spacer" name="test_inner_02" hr="true" />-->
+<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
 
-		<field 
-				name="media_query_page_width" 
-				type="note" 
-				class="alert alert-primary" 
-				close="true" 
-				label="LOREMIPSUM" 
-				description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," 
-		/>
+<!--		<field -->
+<!--				name="media_query_page_width" -->
+<!--				type="note" -->
+<!--				class="alert alert-primary" -->
+<!--				close="true" -->
+<!--				label="LOREMIPSUM" -->
+<!--				description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," -->
+<!--		/>-->
 
-		<!-- ... block  ... -->
+<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
 
-		<field 
-				name="media_query_" 
-				type="note" 
-				class="alert alert-dark" 
-				close="true" 
-				label="LOREMIPSUM" 
-				description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" 
-		/>
+<!--		<field -->
+<!--				name="media_query_" -->
+<!--				type="note" -->
+<!--				class="alert alert-dark" -->
+<!--				close="true" -->
+<!--				label="LOREMIPSUM" -->
+<!--				description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" -->
+<!--		/>-->
 
-		<field 
-				name="note31" 
-				type="note" 
-				class="alert alert-dark" 
-				close="true" 
-				label="LOREMIPSUM" 
-				description="02_LOREMIPSUM_DESC" 
-		/>
-		
-	</fieldset>
+<!--		<field -->
+<!--				name="note31" -->
+<!--				type="note" -->
+<!--				class="alert alert-dark" -->
+<!--				close="true" -->
+<!--				label="LOREMIPSUM" -->
+<!--				description="02_LOREMIPSUM_DESC" -->
+<!--		/>-->
+<!--		-->
+<!--	</fieldset>-->
 
 	<!-- ... Tab Permissions ................................. -->
 

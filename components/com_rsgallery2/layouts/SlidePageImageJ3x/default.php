@@ -79,7 +79,7 @@ if (! empty($image->isHasNoImages))
     <hr>
 <?php endif; ?>
 
-<?php if (true || $menuParams->galleries_show_slideshow): ?>
+<?php if (true || $params->galleries_show_slideshow): ?>
     <div class="rsg2_slideshow_link">
         <a href="<?php echo $gallery->UrlSlideshow; ?>">
 	        <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
@@ -114,7 +114,7 @@ if (! empty($image->isHasNoImages))
 	            <td>
 	                <div class="rsg2-toolbar">
 	                    <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
-	                    <a href=<?php echo $image->UrlDownload; ?>
+	                    <a href="<?php echo $image->UrlDownload; ?>"
 	                       title="Download"
 	                       class="btn btn-light"
 	                    >

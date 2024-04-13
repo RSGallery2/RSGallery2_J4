@@ -76,7 +76,7 @@ class HtmlView extends BaseHtmlView
      */
     protected $user = null;
 
-    protected $menuParams; // (object)[];
+    //protected $menuParams; // (object)[];
     protected $galleryId; // (object)[];
 
     /**

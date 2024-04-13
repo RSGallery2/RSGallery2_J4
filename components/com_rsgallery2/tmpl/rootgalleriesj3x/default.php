@@ -39,23 +39,25 @@ $layout = new FileLayout($layoutName);
 $displayData['galleries'] = $this->items;
 $test = $this->params->toObject();
 $displayData['params'] = $this->params->toObject();
-$displayData['menuParams'] = $this->menuParams;
+//$displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 $displayData['isDebugSite'] = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
+$params = $this->params;
+
 // $displaySearch = $this->menuParams->get('displaySearch')
-$displaySearch = $this->menuParams->get('displaySearch');
+$displaySearch = $this->params->get('displaySearch');
 $displaySearch = $this->params->get('displaySearch', false);
 if ($displaySearch) {
 	$searchLayout = new FileLayout('Search.search');
 	// $searchData['options'] = $searchOptions ...; // gallery
 }
 
-$displayLatest = $this->menuParams->get('displayLatest');
 $displayLatest = $this->params->get('displayLatest');
-$displayRandom = $this->menuParams->get('displayRandom');
+$displayLatest = $this->params->get('displayLatest');
+$displayRandom = $this->params->get('displayRandom');
 $displayRandom = $this->params->get('displayRandom');
 
 ?>
