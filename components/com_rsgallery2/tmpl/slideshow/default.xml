@@ -10,20 +10,18 @@
 	<fields name="request">
 		<fieldset name="request"
 			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-		>
-		
-			<field
-				name="gid"
-				type="GallerySelect"
-				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
-				description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_DESC"
-				required="true"
-				select="true"
-				new="true"
-				edit="true"
-				clear="true"
-			/>
-			
+		>		
+			<field  id="gid"
+				    name="gid"
+				    type="GallerySelect"
+				    label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
+				    description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_DESC"
+				    required="true"
+				    select="true"
+				    new="true"
+				    edit="true"
+				    clear="true"
+			/>			
 			<field
 					name="slides_layout"
 					type="componentlayout"
@@ -32,6 +30,15 @@
 					extension="com_rsgallery2"
 					view="slideshow"
 					useglobal="true"
+			/-->
+
+			<field
+					name="slides_layout"
+					type="SlideshowSelect"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					required="true"
 			/>
 
 		</fieldset>
@@ -40,6 +47,46 @@
 	<!-- Add fields to the parameters object for the layout. -->
 	<fields name="params">
 		<fieldset name="basic">
+
+			<field
+					name="auto_start"
+					type="list"
+					default="1"
+					label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
+					description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field name="interval"
+				   type="number"
+				   default="2500"
+				   label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
+				   description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
+			>
+			</field>
+
+			<field name="showArrows"
+				   type="list"
+				   default="1"
+				   label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
+				   description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="darkMode"
+					type="list"
+					default="1"
+					label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
+					description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
 
 		</fieldset>
 	</fields>

@@ -29,7 +29,7 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_galleryHelper //implements DatabaseAwareInterface
+class Rsg2_galleryHelper implements DatabaseAwareInterface
 {
     use DatabaseAwareTrait;
 

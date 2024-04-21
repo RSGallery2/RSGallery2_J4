@@ -1,6 +1,6 @@
 <?php
 
-namespace Rsgallery2\Module\Rsg2_gallery\Site\Dispatcher;
+namespace Rsgallery2\Module\Rsg2_slideshow\Site\Dispatcher;
 
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
 use Joomla\CMS\Factory;
@@ -21,9 +21,9 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         $data = parent::getLayoutData();
 
         $helper = $this->getHelperFactory()
-            ->getHelper('Rsg2_galleryHelper', $data);
+            ->getHelper('Rsg2_slideshowHelper', $data);
 
-	    // ToDo flag that tells to indentify ...
+		// ToDo flag that tells to indentify ...
 //        $msg = $helper->getText();
 //        $data['msg'] = $msg;
 
@@ -53,8 +53,8 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         $data['gid'] = $gid;
 
         // gid = 0 ==> root view
-        $isDisplayRootGalleries = $gid === 0;
-        if ($isDisplayRootGalleries)
+        $isNoGallerySelected = $gid == 0;
+        if ($isNoGallerySelected)
         {
             // Tell to select a gallery in the module instead
             $msg = Text::_('COM_RSGALLERY2_GALLERY_NOT_SPECIFIED_MODULE');
@@ -82,6 +82,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 		    return $data;
 	    }
 
+	    $data['images'] = $images;
 
 //        $this->items      = $this->get('Items');
 //

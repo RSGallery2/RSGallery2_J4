@@ -4,19 +4,19 @@
            method="upgrade"
            version="4.0">
 	<name>MOD_RSG2_SLIDESHOW</name>
-	<creationDate>01. Dec. 2021</creationDate>
 	<author>RSGallery2 Team</author>
-	<authorEmail>team2@rsgallery2.org</authorEmail>
-	<authorUrl>https://www.rsgallery2.org</authorUrl>
+	<creationDate>01. Dec. 2021</creationDate>
 	<copyright>(c) 2020-2024 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later;</license>
-	<version>5.0.0.9</version>
+	<authorEmail>team2@rsgallery2.org</authorEmail>
+	<authorUrl>https://www.rsgallery2.org</authorUrl>
+	<version>5.0.0.3</version>
 	<description>MOD_RSG2_SLIDESHOW_XML_DESCRIPTION</description>
-	<scriptfile>install_mod.php</scriptfile>
-	<namespace>Rsgallery2\Module\Rsg2_slideshow</namespace>
-	
+	<namespace path="src">Rsgallery2\Module\Rsg2_slideshow</namespace>
+	<scriptfile>install_mod.php</scriptfile>	
 	<files>
-		<filename module="mod_rsg2_slideshow">mod_rsg2_slideshow.php</filename>
+		<!--filename module="mod_rsg2_slideshow">mod_rsg2_slideshow.php</filename-->
+		<folder module="mod_rsg2_slideshow">services</folder>
 		<!--filename>mod_rsg2_slideshow.xml</filename-->
 		<folder>language</folder>
 		<folder>src</folder>
@@ -32,63 +32,116 @@
 
 	<config>
 		<fields name="params">
-
 			<fieldset name="basic"
+  		              label="COM_RSGALLERY2_GALLERY"
 				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 			>
-				<!-- Gallery selection -->
-				<field
-					id="SelectGallery"
-					name="SelectGallery"
+				<field id="gid"
+					name="gid"
 					type="GallerySelect"
-					label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
-					description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+				       label="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_LABEL" 
+				       description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_OVERVIEW_DESC"
 					required="true"
+				select="true"
+				new="true"
+				edit="true"
+				clear="true"
+				/>
+				<field
+						name="slides_layout"
+						type="SlideshowSelect"
+						label="JFIELD_ALT_LAYOUT_LABEL"
+						class="custom-select"
+						extension="com_rsgallery2"
+						required="true"
+							useglobal="true"
 				/>
 			</fieldset>
-			<fieldset name="advanced">
-				<field
-					name="layout"
-					type="modulelayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					description="JFIELD_ALT_MODULE_LAYOUT_DESC" 
-				/>
 
-				<field
-					name="moduleclass_sfx"
-					type="textarea"
-					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-					rows="3"
-					validate="CssIdentifier"
-				/>
+			<fieldset name="options"
+					  label="COM_RSGALLERY2_SLIDESHOW_OPTIONS"
 
+			>
 				<field
-					name="cache"
-					type="list"
-					label="COM_MODULES_FIELD_CACHING_LABEL"
-					default="1"
-					filter="integer"
-					validate="options"
+						name="auto_start"
+						type="list"
+						default="1"
+						label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
+						description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
 				>
-					<option value="1">JGLOBAL_USE_GLOBAL</option>
-					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="interval"
+					   type="number"
+					   default="2500"
+					   label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
+					   description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
+				>
+				</field>
+
+				<field name="showArrows"
+					   type="list"
+					   default="1"
+					   label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
+					   description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
 				</field>
 
 				<field
-					name="cache_time"
-					type="number"
-					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
-					default="900"
-					filter="integer"
-				/>
-
-				<field
-					name="cachemode"
-					type="hidden"
-					default="itemid"
+						name="darkMode"
+						type="list"
+						default="1"
+						label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
+						description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
 				>
-					<option value="itemid"></option>
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="images_show_title"
+					   type="radio"
+					   default="1"
+					   label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+					   description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+					   useglobal="true"
+					   class="btn-group btn-group-yesno">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			</fieldset>
+
+			<fieldset name="advanced">
+				<field name="layout"
+					   type="modulelayout"
+					   label="JFIELD_ALT_LAYOUT_LABEL"
+					   class="custom-select"
+					   description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+				<field name="moduleclass_sfx"
+					   type="textarea"
+					   label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					   rows="3"
+					   validate="CssIdentifier"/>
+				<field name="cache"
+					   type="list"
+					   label="COM_MODULES_FIELD_CACHING_LABEL"
+					   default="1"
+					   filter="integer"
+					   validate="options">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time"
+					   type="number"
+					   label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					   default="900"
+					   filter="integer"/>
+				<field name="cachemode"
+					   type="hidden"
+					   default="itemid">
+					<option value="itemid"/>
 				</field>
 			</fieldset>
 		</fields>

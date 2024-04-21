@@ -11,8 +11,7 @@
 		<fieldset name="request"
 			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 		>
-		
-			<field
+			<field  id="gid"
 				name="gid"
 				type="GallerySelect"
 				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
@@ -23,8 +22,7 @@
 				edit="true"
 				clear="true"
 			/>
-			
-			<!--field
+			<field
 					name="slides_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"

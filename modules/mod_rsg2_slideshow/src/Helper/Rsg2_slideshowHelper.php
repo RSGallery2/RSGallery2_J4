@@ -9,35 +9,118 @@
 
 namespace Rsgallery2\Module\Rsg2_slideshow\Site\Helper;
 
-\defined('_JEXEC') or die;
-
-//use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+use Joomla\CMS\Access\Access;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\Slideshow;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Registry\Registry;
+
+\defined('_JEXEC') or die;
 
 /**
  * Helper for mod_rsg2_slideshow
  *
  * @since  __BUMP_VERSION__
  */
- // abstract ???
-class Rsg2_slideshowHelper
+class Rsg2_slideshowHelper implements DatabaseAwareInterface
 {
-	/**
-	 * Retrieve rsg2_?????? test
-	 *
+    use DatabaseAwareTrait;
+
+    protected $galleryModel; // ToDo: rename to slideshowModel
+
+    public function __construct(array $data ){
+
+        // boot component only once Model('Gallery', 'Site')
+
+        $app = $data['app'];
+
+        // ToDo: add params, app to local vars
+
+        // SiteApplication $app
+        $this->galleryModel = $app->bootComponent('com_rsgallery2')
+            ->getMVCFactory()
+            // ->createModel('Gallery', 'Site', ['ignore_request' => true]);
+            ->createModel('SlideshowJ3x', 'Site', ['ignore_request' => true]);
+
+        $appParams = $app->getParams();
+        // $this->galleryModel->setState ('params') = $appParams;
+
+    }
+
+    public function getGalleryData(int $gid)
+    {
+        return $this->galleryModel->galleryData($gid);
+    }
+
+    /**
+	 * Get a list of the gallery images from the slideshow model.     *
+     *
 	 * @param   Registry        $params  The module parameters
 	 * @param   CMSApplication  $app     The application
 	 *
 	 * @return  array
 	 */
-	public static function getText()
-	{
-		return 'Rsg2_slideshowHelpertest';
-	}
+    public function getImagesOfGallery(int $gid, Registry $params, SiteApplication $app)
+    {
+        $images = [];
+
+        try {
+            $model = $this->galleryModel;
+
+            //--- state -------------------------------------------------
+
+            $state = $model->getState();
+
+            // Set application parameters in model
+            $appParams = $app->getParams();
+
+            $model->setState('params', $params);
+
+            $model->setState('list.start', 0);
+            $model->setState('filter.published', 1);
+
+            // Set the filters based on the module params
+            $model->setState('list.limit', (int) $params->get('count', 5));
+
+            // This module does not use tags data
+            $model->setState('load_tags', false);
+
+	        $model->setState('gallery.id', $gid);
+	        $model->setState('gid', $gid);
+
+	        //--- images -----------------------------------------------------------------------
+
+//             $this->galleryModel->populateState();
+
+            // $images= $this->galleryModel->get('Items');
+            $images = $this->galleryModel->getItems();
+
+            if (!empty($images)) {
+                // Add image paths, image params ...
+                $data = $this->galleryModel->AddLayoutData($images);
+            }
+
+        } catch (\RuntimeException $e) {
+            // ToDo: Message more explicit
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $images;
+    }
+
+
+
+
+
+
+
 
 
 	/**
@@ -419,6 +502,14 @@ class Rsg2_slideshowHelper
 //        return $Images;
 //    }
 //
+
+
+    public function getText()
+    {
+        $msg = "    --- Rsg2_slideshow module ----- ";
+        return $msg;
+    }
+
 
 
 }

@@ -32,6 +32,7 @@ echo '<br><br>--------------------------- mod_rsg2_gallery start ---------------
 
 if ( ! empty ($msg)) {
     echo $msg;
+    return;
 }
 
 echo '<br>--------------------------- mod_rsg2_gallery end   ------------------------------<br>';
