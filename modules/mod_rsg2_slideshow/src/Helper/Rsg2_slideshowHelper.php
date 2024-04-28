@@ -87,7 +87,8 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
             $model->setState('filter.published', 1);
 
             // Set the filters based on the module params
-            $model->setState('list.limit', (int) $params->get('count', 5));
+            // $model->setState('list.limit', (int) $params->get('count', 5));
+            $model->setState('list.limit', 99);
 
             // This module does not use tags data
             $model->setState('load_tags', false);

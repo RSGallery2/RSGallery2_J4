@@ -22,15 +22,22 @@
 				    edit="true"
 				    clear="true"
 			/>			
-			<field
-					name="slides_layout"
-					type="componentlayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					extension="com_rsgallery2"
-					view="slideshow"
-					useglobal="true"
-			/-->
+<!--			<field-->
+<!--					name="layout"-->
+<!--					type="componentlayout"-->
+<!--					label="JFIELD_ALT_LAYOUT_LABEL"-->
+<!--					class="custom-select"-->
+<!--					extension="com_rsgallery2"-->
+<!--					view="slideshow"-->
+<!--					useglobal="true"-->
+<!--			/>-->
+
+		</fieldset>
+	</fields>
+
+	<!-- Add fields to the parameters object for the layout. -->
+	<fields name="params">
+		<fieldset name="basic">
 
 			<field
 					name="slides_layout"
@@ -39,14 +46,8 @@
 					class="custom-select"
 					extension="com_rsgallery2"
 					required="true"
+					useglobal="true"
 			/>
-
-		</fieldset>
-	</fields>
-
-	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params">
-		<fieldset name="basic">
 
 			<field
 					name="auto_start"

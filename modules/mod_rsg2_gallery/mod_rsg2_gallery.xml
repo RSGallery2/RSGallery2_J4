@@ -22,18 +22,23 @@
 		<folder>src</folder>
 		<folder>tmpl</folder>
 	</files>
+
 	<!--media destination="mod_rsg2_image" folder="media">
 		<folder>css</folder>
 		<folder>js</folder>
 	</media-->
-	<help key="MOD_RSG2_GALLERY_HELP"/>
+
+	<help key="MOD_RSG2_GALLERY_HELP" />
+
 	<config>
 		<fields name="params">
-			<fieldset name="basic"
+			<fieldset
+					name="basic"
 					  label="COM_RSGALLERY2_GALLERY"
 					  addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 			>
-				<field id="gid"
+				<field
+						id="gid"
 				       name="gid"
 				       type="GallerySelect"
 				       label="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_LABEL"
@@ -46,22 +51,34 @@
 				/>
 				<field
 						name="images_layout"
-						type="componentlayout"
+						type="LayoutGallery"
 						label="JFIELD_ALT_LAYOUT_LABEL"
 						class="custom-select"
 						extension="com_rsgallery2"
-						view="images"
 						required="true"
 						useglobal="true"
 				/>
+<!--				<field-->
+<!--						name="images_layout"-->
+<!--						type="componentlayout"-->
+<!--						label="JFIELD_ALT_LAYOUT_LABEL"-->
+<!--						class="custom-select"-->
+<!--						extension="com_rsgallery2"-->
+<!--						view="images"-->
+<!--						required="true"-->
+<!--						useglobal="true"-->
+<!--				/>-->
 			</fieldset>
 
-			<fieldset name="layout_thumbs"
+			<fieldset
+					name="layout_thumbs"
 					  label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS"
 					  addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 			>
+				<!-- ToDo:		grid, masonry smashingmagazine ...	 -->
 
-				<field name="images_show_search"
+				<field
+						name="images_show_search"
 					   type="list"
 					   default="0"
 					   label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH"
@@ -206,41 +223,42 @@
 				</field>
 			</fieldset>
 
-			<fieldset name="layout_thumbs"
-					  label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
-				<!--		grid, masonry smashingmagazine ...	 -->
-			</fieldset>
-
 			<fieldset name="advanced">
-				<field name="layout"
-					   type="modulelayout"
-					   label="JFIELD_ALT_LAYOUT_LABEL"
-					   class="custom-select"
-					   description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
-				<field name="moduleclass_sfx"
-					   type="textarea"
-					   label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-					   rows="3"
-					   validate="CssIdentifier"/>
-				<field name="cache"
-					   type="list"
-					   label="COM_MODULES_FIELD_CACHING_LABEL"
-					   default="1"
-					   filter="integer"
-					   validate="options">
+				<field
+						name="layout"
+						type="modulelayout"
+						label="JFIELD_ALT_LAYOUT_LABEL"
+						class="form-select"
+						validate="moduleLayout"
+				/>
+
+				<field
+						name="moduleclass_sfx"
+						type="textarea"
+						label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+						rows="3"
+						validate="CssIdentifier"
+				/>
+
+				<field
+						name="cache"
+						type="list"
+						label="COM_MODULES_FIELD_CACHING_LABEL"
+						default="1"
+						filter="integer"
+						validate="options"
+				>
 					<option value="1">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
 				</field>
-				<field name="cache_time"
-					   type="number"
-					   label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
-					   default="900"
-					   filter="integer"/>
-				<field name="cachemode"
-					   type="hidden"
-					   default="itemid">
-					<option value="itemid"/>
-				</field>
+
+				<field
+						name="cache_time"
+						type="number"
+						label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+						default="900"
+						filter="integer"
+				/>
 			</fieldset>
 		</fields>
 	</config>

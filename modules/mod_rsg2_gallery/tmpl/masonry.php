@@ -28,35 +28,14 @@
 
 //             <div class="grid-element"><img src="<?php echo $image; ? >"> </div>
 
-if (!empty($isDebugSite))
-{
-	echo '<br><br>--------------------------- mod_rsg2_gallery start ------------------------------<br>';
-}
+echo '<br><br>--------------------------- mod_rsg2_gallery masonry start ------------------------------<br>';
 
-// message on empty data or other
 if ( ! empty ($msg)) {
-
-	echo $msg;
-
-	if (!empty($isDebugSite))
-	{
-		echo $msg . '<br>';
-	}
-
-	return;
+    echo $msg;
+    // return;
 }
 
-$layoutName = $this->getLayout();
-$layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
-
-$layout = new FileLayout($layoutName, $layoutFolder);
-
-$displayData['images'] = $images;
-$displayData['params'] = $params->toObject();
-//$displayData['menuParams'] = $this->menuParams;
-
-$displayData['isDebugSite'] = $isDebugSite;
-$displayData['isDevelopSite'] = $isDevelopSite;
+echo '<br>--------------------------- mod_rsg2_gallery masonry end   ------------------------------<br>';
 
 ?>
 
@@ -70,25 +49,3 @@ $displayData['isDevelopSite'] = $isDevelopSite;
 <!--        --><?php //endforeach; ?>
 <!--    </div>-->
 <!--</div>-->
-
-<div class="rsg2_x_form rsg2__images_area">
-
-	<?php if (!empty($isDebugSite)): ?>
-        <h1> Module RSGallery2 "gallery images" J3x view </h1>
-        <hr>
-	<?php endif; ?>
-
-	<?php //--- display images in J3x slideshow ---------- ?>
-
-	<?php echo $layout->render($displayData); ?>
-
-</div>
-
-
-<?php
-
-if (!empty($isDebugSite))
-{
-	echo '<br>--------------------------- mod_rsg2_gallery end   ------------------------------<br>';
-}
-?>

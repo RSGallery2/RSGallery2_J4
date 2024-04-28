@@ -27,25 +27,39 @@ use Joomla\CMS\Layout\FileLayout;
 //		. '</span><br><br>';
 //}
 
-echo '<br><br>--------------------------- mod_rsg2_slideshow start ------------------------------<br>';
+if (!empty($isDebugSite))
+{
+	echo '<br><br>--------------------------- mod_rsg2_slideshow start ------------------------------<br>';
+}
 
+// message on empty data or other
 if ( ! empty ($msg)) {
+
 	echo $msg;
+
+	if (!empty($isDebugSite))
+	{
+		echo $msg . '<br>';
+	}
+
 	return;
 }
 
 
-
 // $layoutName = $this->getLayout();
 $layoutName = $params->get('slides_layout');
+$layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 
 // default is 'ImagesAreaJ3x.default'
-if($layoutName == 'default') {
+//if($layoutName == 'default') {
+//
+//	$layoutName = 'SlideshowJ3x.default';
+//} else {
+//
+//yyy	$layoutName = $layoutName;
+//}
 
-	$layoutName = 'SlideshowJ3x.default';
-}
-
-$layout = new FileLayout($layoutName);
+$layout = new FileLayout($layoutName, $layoutFolder);
 
 $displayData['images'] = $images;
 $displayData['params'] = $params->toObject();
@@ -54,14 +68,12 @@ $displayData['params'] = $params->toObject();
 $displayData['isDebugSite'] = $isDebugSite;
 $displayData['isDevelopSite'] = $isDevelopSite;
 
-// ToDo check that random number identifies the slideshow ...
-
 ?>
 
     <div class="rsg2_x_form rsg2__slide_area">
 
         <?php if (!empty($isDebugSite)): ?>
-            <h1> Menu RSGallery2 "slideshow" J3x view </h1>
+            <h1> Module RSGallery2 "slideshow" J3x view </h1>
             <hr>
         <?php endif; ?>
 
@@ -74,6 +86,9 @@ $displayData['isDevelopSite'] = $isDevelopSite;
 
 <?php
 
-echo '<br>--------------------------- mod_rsg2_slideshow end  ------------------------------<br>';
+if (!empty($isDebugSite)) {
+    echo '<br>--------------------------- mod_rsg2_slideshow end  ------------------------------<br>';
+}
+
 
 ?>

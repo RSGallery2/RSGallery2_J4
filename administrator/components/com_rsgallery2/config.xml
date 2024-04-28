@@ -333,6 +333,14 @@
 		/>
 
 		<field
+				name="images_layout"
+				type="LayoutGallery"
+				label="JFIELD_ALT_LAYOUT_LABEL"
+				class="custom-select"
+				extension="com_rsgallery2"
+		/>
+
+		<field
 				name="galleries_column_arrangement"
 				type="list"
 				default="1"
@@ -973,7 +981,7 @@
 
 	</fieldset>
 
-	<!-- ... Tab j3x legacy slide image ................................. -->
+	<!-- ... Tab j3x legacy slide show ................................. -->
 
 	<fieldset
 			name="j3x_legacy_slideshow"
@@ -981,6 +989,14 @@
 			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW_DESC"
 	>
 	<field type="spacer" name="test_inner_01" hr="true" />
+
+		<field
+				name="slides_layout"
+				type="SlideshowSelect"
+				label="JFIELD_ALT_LAYOUT_LABEL"
+				class="custom-select"
+				extension="com_rsgallery2"
+		/>
 
 		<field
 				name="auto_start"

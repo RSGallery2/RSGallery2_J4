@@ -25,7 +25,7 @@
 			/>
 
 			<field
-					name="images_layout"
+					name="layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
@@ -55,6 +55,16 @@
 		<fieldset name="basic"
 				  label="COM_RSGALLERY2_GALLERY"
 		>
+
+			<field
+					name="images_layout"
+					type="LayoutGallery"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					required="true"
+					useglobal="true"
+			/>
 
 			<field
 					name="images_show_search"

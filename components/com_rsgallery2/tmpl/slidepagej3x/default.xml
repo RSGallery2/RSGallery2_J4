@@ -24,12 +24,31 @@
 				clear="true"
 			/>
 
+			<field
+					name="layout"
+					type="componentlayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					class="custom-select"
+					extension="com_rsgallery2"
+					view="SlidePageJ3x"
+					useglobal="true"
+			/>
 		</fieldset>
 	</fields>
 
 	<!-- Add fields to the parameters object for the layout. -->
 	<fields name="params">
 		<fieldset name="basic">
+
+<!--			<field-->
+<!--					name="???_layout oder slidepage_layout .."-->
+<!--					type="SlideshowSelect"-->
+<!--					label="JFIELD_ALT_LAYOUT_LABEL"-->
+<!--					class="custom-select"-->
+<!--					extension="com_rsgallery2"-->
+<!--					required="true"-->
+<!--					useglobal="true"-->
+<!--			/>-->
 
 			<field
 					name="gallery_show_title"
@@ -101,16 +120,6 @@
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>
-
-			<field
-					name="slides_layout"
-					type="componentlayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					extension="com_rsgallery2"
-					view="SlidePageJ3x"
-					useglobal="true"
-			/>
 
 		</fieldset>
 	</fields>

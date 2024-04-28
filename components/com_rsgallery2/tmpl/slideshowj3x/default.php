@@ -57,12 +57,6 @@ if (!empty ($this->isDevelopSite))
 
 $layoutName = $this->getLayout();
 
-// default is 'ImagesAreaJ3x.default'
-if($layoutName == 'default') {
-
-    $layoutName = 'SlideshowJ3x.default';
-}
-
 $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->items;

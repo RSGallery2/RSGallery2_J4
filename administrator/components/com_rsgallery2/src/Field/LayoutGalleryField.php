@@ -30,7 +30,7 @@ use Joomla\Database\DatabaseInterface;
  *
  * @since __BUMP_VERSION__
  */
-class SlideshowSelectField extends ListField
+class LayoutGalleryField extends ListField
 {
 	/**
 	 * Cached array of the category items.
@@ -47,7 +47,7 @@ class SlideshowSelectField extends ListField
      *
      * @since __BUMP_VERSION__
      */
-	protected $type = 'SlideshowSelect';
+	protected $type = 'LayoutGallery';
 
 	/**
 	 * Method to get the field input markup for a generic list.
@@ -103,7 +103,7 @@ class SlideshowSelectField extends ListField
             $folders = Folder::folders($layoutFolder);
             foreach ($folders as $folder)
             {
-                if (str_starts_with(strtolower($folder), "slideshow"))
+                if (str_starts_with(strtolower($folder), "images"))
                 {
 					$subLayouts = $this->subLayouts ($layoutFolder . '/' . $folder);
 

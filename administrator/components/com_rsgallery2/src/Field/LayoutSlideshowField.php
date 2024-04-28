@@ -30,7 +30,7 @@ use Joomla\Database\DatabaseInterface;
  *
  * @since __BUMP_VERSION__
  */
-class SlideshowSelectField extends ListField
+class LayoutSlideshowField extends ListField
 {
 	/**
 	 * Cached array of the category items.
@@ -47,7 +47,8 @@ class SlideshowSelectField extends ListField
      *
      * @since __BUMP_VERSION__
      */
-	protected $type = 'SlideshowSelect';
+	//protected $type = 'LayoutGallerySelect';
+	protected $type = 'LayoutSlideshow';
 
 	/**
 	 * Method to get the field input markup for a generic list.

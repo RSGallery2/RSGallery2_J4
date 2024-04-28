@@ -746,7 +746,7 @@ class GalleriesJ3xModel extends ListModel
 ////                . '&layout=galleryJ3xAsInline'
 //                ,true,0,true);
 
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2&slides_layout=_:default&Itemid=130
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2&slides_layout=default&Itemid=130
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
                 . '/gallery&gid=' . $gallery->id . '/slideshow'
