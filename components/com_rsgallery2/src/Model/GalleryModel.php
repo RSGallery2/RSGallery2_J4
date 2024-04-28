@@ -361,7 +361,8 @@ class GalleryModel extends ListModel
 		$published      = (int) $this->state->params->get('published', 1);
 		$orderDirection = $this->state->params->get('all_tags_orderby_direction', 'ASC');
 
-        $gid = $input->getInt ('gid', 0);
+		// 2024.04.21: $gid = $input->getInt ('gid', 0);
+		$gid = (int) $this->getState ('gallery.id', 0);
 
         // Create a new query object.
 	    $db = $this->getDatabase();

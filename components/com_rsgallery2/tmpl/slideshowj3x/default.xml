@@ -11,7 +11,8 @@
 		<fieldset name="request"
 			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 		>
-			<field  id="gid"
+		
+			<field
 				name="gid"
 				type="GallerySelect"
 				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
@@ -22,7 +23,8 @@
 				edit="true"
 				clear="true"
 			/>
-			<field
+			
+			<!--field
 					name="slides_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
@@ -87,6 +89,16 @@
 				<option value="0">JNO</option>
 			</field>
 
+			<field name="images_show_title"
+				   type="radio"
+				   default="1"
+				   label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+				   description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+				   useglobal="true"
+				   class="btn-group btn-group-yesno">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
 
 		</fieldset>
 	</fields>
