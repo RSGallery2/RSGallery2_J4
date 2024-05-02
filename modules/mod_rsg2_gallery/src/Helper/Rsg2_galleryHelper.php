@@ -52,9 +52,6 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
             // ->createModel('Gallery', 'Site', ['ignore_request' => true]);
             ->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
 
-        $appParams = $app->getParams();
-        // $this->galleryModel->setState ('params') = $appParams;
-
     }
 
     public function getGalleryData(int $gid)

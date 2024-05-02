@@ -115,9 +115,7 @@ if ($displaySearch) {
 
 	<?php //--- display pagination ---------- ?>
 
-    <?php
-    $test = $pagination->getListFooter();
-    echo $pagination->getListFooter(); ?>
+    <?php echo $pagination->getListFooter(); ?>
 
 </div>
 
