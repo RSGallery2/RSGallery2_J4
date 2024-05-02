@@ -23,7 +23,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         $helper = $this->getHelperFactory()
             ->getHelper('Rsg2_slideshowHelper', $data);
 
-		// ToDo flag that tells to indentify ...
+		// ToDo flag that tells to identify ...
 //        $msg = $helper->getText();
 //        $data['msg'] = $msg;
 

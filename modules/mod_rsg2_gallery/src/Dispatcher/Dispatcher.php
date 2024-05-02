@@ -23,7 +23,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         $helper = $this->getHelperFactory()
             ->getHelper('Rsg2_galleryHelper', $data);
 
-	    // ToDo flag that tells to indentify ...
+	    // ToDo flag that tells to identify ...
 //        $msg = $helper->getText();
 //        $data['msg'] = $msg;
 
@@ -82,6 +82,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 		    return $data;
 	    }
 
+	    $data['images'] = $images;
 
 //        $this->items      = $this->get('Items');
 //

@@ -103,6 +103,7 @@
 					   description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC"
 					   showon="images_column_arrangement_j3x:[OR]images_column_arrangement_j3x:1"
 					   useglobal="true"
+					   default="5"
 					   class="">
 				</field>
 				<field name="images_row_arrangement"
@@ -110,7 +111,8 @@
 					   default="2"
 					   label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
 					   description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
-					   showon="images_column_arrangement:1">
+					   showon="images_column_arrangement:1"
+				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
 					<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
@@ -121,7 +123,8 @@
 					   default="5"
 					   label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
 					   description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
-					   showon="images_row_arrangement:1[AND]images_column_arrangement:1">
+					   showon="images_row_arrangement:1[AND]images_column_arrangement:1"
+				>
 				</field>
 				<field name="max_thumbs_in_images_view_j3x"
 					   type="number"
@@ -129,33 +132,40 @@
 					   description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
 					   showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
 					   useglobal="true"
-					   class="">
+					   default="5"
+					   class=""
+				>
 				</field>
 				<field name="gallery_show_title"
 					   type="radio"
 					   label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
 					   description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
 					   useglobal="true"
-					   class="btn-group btn-group-yesno">
+					   default="1"
+					   class="btn-group btn-group-yesno"
+				>
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
 				<field name="gallery_show_description"
 					   type="radio"
-					   default="0"
 					   label="COM_RSGALLERY2_DISPLAY_GALLERY_DESCRIPTION"
 					   description="COM_RSGALLERY2_DISPLAY_GALLERY_DESCRIPTION_DESC"
 					   useglobal="true"
-					   class="btn-group btn-group-yesno">
+					   default="0"
+					   class="btn-group btn-group-yesno"
+				>
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
 				<field name="gallery_show_slideshow"
 					   type="radio"
-					   default="1"
 					   label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
 					   description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
-					   class="btn-group btn-group-yesno">
+					   class="btn-group btn-group-yesno"
+						useglobal="true"
+						default="1"
+				>
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>

@@ -120,7 +120,7 @@ if ($cols < 2) {
 	<?php else : ?>
 		<h2><?php
 			//echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
-			echo Text::_('Gallery (name) not defined in this situation');
+			echo Text::_("Gallery name not defined in this situation");
 			?> </h2>
 	<?php endif; ?>
     <table id="rsg2-thumbsList">

@@ -129,7 +129,7 @@
 					name="max_thumbs_in_images_view_j3x"
 					type="number"
 					label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+					description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_DESC"
 					showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
 					useglobal="true"
 					class="">
@@ -139,8 +139,9 @@
 					name="gallery_show_title"
 					type="radio"
 					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
-					description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
 					useglobal="true"
+					default="1"
 					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
@@ -149,10 +150,9 @@
 			<field
 					name="gallery_show_description"
 					type="radio"
-					default="0"
 					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
 					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
-					useglobal="true"
+					default="0"
 					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
@@ -161,9 +161,9 @@
 			<field
 					name="gallery_show_slideshow"
 					type="radio"
-					default="1"
 					label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
 					description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
+					default="1"
 					class="btn-group btn-group-yesno">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>

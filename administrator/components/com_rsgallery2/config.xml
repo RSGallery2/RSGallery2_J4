@@ -106,7 +106,7 @@
 			   class="alert alert-primary"
 			   close="true"
 			   label="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
-			   description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
+			   description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION_DESC"
 		/>
 
 		<field
@@ -715,7 +715,7 @@
 <!--		-->
 <!--	</fieldset>-->
 
-	<!-- ... Tab j3x legacy galleries ................................. -->
+	<!-- ... Tab j3x legacy root galleries ................................. -->
 
 	<fieldset
 			name="j3x_legacy_galleries"
@@ -728,7 +728,62 @@
 				hr="true"
 		/-->
 
-		<!-- ... block  ... -->
+		<!-- ... block j3x gallery header ... -->
+
+		<field name="note_j3x_gallery_data"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA"
+			   description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA_DESC"
+		/>
+
+		<field
+				name="root_gallery_show_title"
+				type="radio"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="root_gallery_show_description"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+				useglobal="true"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="root_gallery_show_slideshow"
+				type="radio"
+				default="1"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
+		<!-- ... block images layout... -->
+
+		<field name="note_images_upload"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT"
+			   description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT_DESC"
+		/>
+
+
+
 
 		<field
 				name="max_thumbs_in_root_galleries_view_j3x"
@@ -779,7 +834,60 @@
 				hr="true"
 		/-->
 
-		<!-- ... block  ... -->
+		<!-- ... block gallery header ... -->
+
+		<field name="note_j3x_gallery_data"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES"
+			   description="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES_DESC"
+		/>
+
+		<field
+				name="gallery_show_title"
+				type="radio"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="gallery_show_description"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+				useglobal="true"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="gallery_show_slideshow"
+				type="radio"
+				default="1"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
+		<!-- ... block images layout... -->
+
+		<field name="note_images_upload"
+			   type="note"
+			   class="alert alert-primary"
+			   close="true"
+			   label="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT"
+			   description="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT_DESC"
+		/>
+
 
 
 		<!-- ... thumb style float table ... -->

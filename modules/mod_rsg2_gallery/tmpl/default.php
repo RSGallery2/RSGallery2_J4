@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Layout\FileLayout;
+
 \defined('_JEXEC') or die;
 
 // global $msg;
@@ -46,8 +48,22 @@ if ( ! empty ($msg)) {
 	return;
 }
 
-$layoutName = $this->getLayout();
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
+
+$wa->usePreset('com_rsgallery2.site.galleryJ3x');
+
+$layoutName = $params->get('images_layout');
 $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
+
+// default is 'ImagesAreaJ3x.default'
+//if($layoutName == 'default') {
+//
+//	$layoutName = 'ImagesAreaJ3x.default';
+//} else {
+//
+//yyy	$layoutName = $layoutName;
+//}
 
 $layout = new FileLayout($layoutName, $layoutFolder);
 
@@ -57,6 +73,15 @@ $displayData['params'] = $params->toObject();
 
 $displayData['isDebugSite'] = $isDebugSite;
 $displayData['isDevelopSite'] = $isDevelopSite;
+
+$displayData['gallery'] = $galleryData;
+$displayData['galleryId'] = $galleryData->id;
+
+$displaySearch = $params->get('displaySearch', false);
+if ($displaySearch) {
+	$searchLayout = new FileLayout('Search.search');
+	// $searchData['options'] = $searchOptions ...; // gallery
+}
 
 ?>
 
@@ -74,11 +99,17 @@ $displayData['isDevelopSite'] = $isDevelopSite;
 <div class="rsg2_x_form rsg2__images_area">
 
 	<?php if (!empty($isDebugSite)): ?>
-        <h1> Module RSGallery2 "gallery images" J3x view </h1>
+        <h1><?php echo text::_('Module RSGallery2 "gallery j3x legacy" J3x view'); ?> view </h1>
         <hr>
 	<?php endif; ?>
 
-	<?php //--- display images in J3x slideshow ---------- ?>
+	<?php //--- display search ---------- ?>
+
+	<?php if ($displaySearch): ?>
+		<?php echo $searchLayout->render(); ?>
+	<?php endif; ?>
+
+    <?php //--- display images in J3x slideshow ---------- ?>
 
 	<?php echo $layout->render($displayData); ?>
 
