@@ -84,21 +84,10 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 
 	    $data['images'] = $images;
 
-//        $this->items      = $this->get('Items');
-//
-//        $model = $this->getModel();
-//        $this->gallery = $model->galleryData($this->galleryId);
-//
-//
-//        if ( ! empty($this->items)) {
-//            // Add image paths, image params ...
-//            $data = $model->AddLayoutData ($this->items);
-//        }
-//
-//        // Flag indicates to not add limitstart=0 to URL
-//        $this->pagination->hideEmptyLimitstart = true;
-//
-//
+	    //--- pagination -----------------------------------------------------
+
+	    $data['pagination'] = $helper->pagination;
+
 
         return $data;
     }

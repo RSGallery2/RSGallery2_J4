@@ -15,6 +15,7 @@ use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
@@ -34,6 +35,8 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     use DatabaseAwareTrait;
 
     protected $galleryModel;
+
+	public $pagination;
 
     public function __construct(array $data ){
 
@@ -79,19 +82,20 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
             $state = $model->getState();
 
             // Set application parameters in model
-            $appParams = $app->getParams();
+            // $appParams = $app->getParams();
 
             $model->setState('params', $params);
 
             $model->setState('list.start', 0);
-            $model->setState('filter.published', 1);
+	        $model->setState('filter.published', 1);
 
-            // Set the filters based on the module params
-            //$model->setState('list.limit', (int) $params->get('count', 5));
-	        $model->setState('list.limit', 99);
+	        $limit  = $params->get('max_thumbs_in_images_view_j3x');
+	        $model->setState('list.limit', $limit);
 
             // This module does not use tags data
             $model->setState('load_tags', false);
+
+	        //--- state gid -------------------------------------------------
 
 	        $model->setState('gallery.id', $gid);
 	        $model->setState('gid', $gid);
@@ -107,6 +111,14 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
                 // Add image paths, image params ...
                 $data = $this->galleryModel->AddLayoutData($images);
             }
+
+	        //--- pagination -------------------------------------------------
+
+	        $this->pagination = $model->getPagination ();
+
+	        // Flag indicates to not add limitstart=0 to URL
+	        $this->pagination->hideEmptyLimitstart = true;
+
 
         } catch (\RuntimeException $e) {
             // ToDO: Message more explicit

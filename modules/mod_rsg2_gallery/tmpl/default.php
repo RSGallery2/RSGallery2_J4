@@ -113,6 +113,12 @@ if ($displaySearch) {
 
 	<?php echo $layout->render($displayData); ?>
 
+	<?php //--- display pagination ---------- ?>
+
+    <?php
+    $test = $pagination->getListFooter();
+    echo $pagination->getListFooter(); ?>
+
 </div>
 
 
