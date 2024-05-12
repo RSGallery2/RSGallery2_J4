@@ -72,6 +72,8 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         $images = [];
 
         try {
+
+
             $model = $this->galleryModel;
 
             //--- state -------------------------------------------------
@@ -292,9 +294,15 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 //    }
 //
 
+    public function HtmlImages() : string
+    {
+        $msg = "    --- HtmlImages from Rsg2_gallery plugin    ----- \nxxx\n";
+        return $msg;
+    }
+
     public function getText()
     {
-        $msg = "    --- Rsg2_gallery module ----- ";
+        $msg = "    --- Rsg2_gallery plugin ----- ";
         return $msg;
     }
 

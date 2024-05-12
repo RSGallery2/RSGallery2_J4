@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsg2_galleries\Module\Rsg2_galleries\Site\Helper;
+namespace Rsg2_galleries\Plugin\Content\Rsg_gallery\Helper;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Application\SiteApplication;
@@ -23,7 +23,7 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_galleriesHelper implements DatabaseAwareInterface
+class Rsg2_galleriesHelper //implements DatabaseAwareInterface
 {
 	use DatabaseAwareTrait;
 
