@@ -12,7 +12,7 @@
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<version>5.0.0.5</version>
 	<description>PLG_CONTENT_RSG2_GALLERY_XML_DESCRIPTION</description>
-	<namespace>Rsgallery2\Plugin\Content\Rsg2_gallery</namespace>
+	<namespace path="src">Rsgallery2\Plugin\Content\Rsg2_gallery</namespace>
 	<files>
         <folder plugin="rsg2_gallery">services</folder>
 		<folder>language</folder>

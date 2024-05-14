@@ -10,7 +10,7 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 
-use RSGallery2\Plugin\Content\Rsg2_Gallery\Extension\RSG2_Gallery;
+use RSGallery2\Plugin\Content\Rsg2_Gallery\Extension\Rsg2_Gallery;
 
 
 return new class () implements ServiceProviderInterface {

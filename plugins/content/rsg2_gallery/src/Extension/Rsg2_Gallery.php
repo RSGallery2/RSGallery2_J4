@@ -1,6 +1,6 @@
 <?php
 
-namespace Joomla\Plugin\Content\Contact\Extension;
+namespace RSGallery2\Plugin\Content\Rsg2_Gallery\Extension;
 
 /**
  * @package     Joomla.Plugin
@@ -17,7 +17,7 @@ use Joomla\Event\Event;
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 
-class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
+class Rsg2_Gallery extends CMSPlugin implements SubscriberInterface
 {
 	// only for lang strings shown on execution of plugin
 	protected $autoloadLanguage = true;
