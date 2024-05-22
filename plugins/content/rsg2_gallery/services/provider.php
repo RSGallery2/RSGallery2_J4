@@ -5,12 +5,11 @@ use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Database\DatabaseInterface;
-
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 
-use RSGallery2\Plugin\Content\Rsg2_Gallery\Extension\Rsg2_Gallery;
+use Rsgallery2\Plugin\Content\Rsg2_gallery\Extension\Rsg2_gallery;
 
 
 return new class () implements ServiceProviderInterface {
@@ -28,13 +27,13 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
+				$plgHelper =(array)PluginHelper::getPlugin('content', 'rsg2_gallery');
                 $dispatcher = $container->get(DispatcherInterface::class);
-                $plugin     = new Rsg2_Gallery(
-                    $dispatcher,
-                    (array) PluginHelper::getPlugin('content', 'rsg2_gallery')
-                );
+
+                $plugin     = new Rsg2_gallery($dispatcher, $plgHelper);
                 $plugin->setApplication(Factory::getApplication());
-                $plugin->setDatabase($container->get(DatabaseInterface::class));
+                //$plugin->setDatabase($container->get(DatabaseInterface::class));
+				//$plugin->setMyCustomService($container->get(MyCustomService::class));
 
                 return $plugin;
             }

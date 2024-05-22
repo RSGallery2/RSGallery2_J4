@@ -14,9 +14,9 @@
 	<description>PLG_CONTENT_RSG2_GALLERY_XML_DESCRIPTION</description>
 	<namespace path="src">Rsgallery2\Plugin\Content\Rsg2_gallery</namespace>
 	<files>
-        <folder plugin="rsg2_gallery">services</folder>
+        <folder>services</folder>
 		<folder>language</folder>
-        <folder>src</folder>
+        <folder plugin="rsg2_gallery">src</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_gallery.ini</language>
