@@ -55,7 +55,9 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 				$params = $event->getArgument('params'); // spelling ?
 			}
 
-			if (strpos ($context , 'com_content.article') === false) {
+			if (   (strpos ($context , 'com_content.article') === false)
+				&& (strpos ($context , 'com_content.category') === false)
+			) {
 				return false;
 			}
 
@@ -87,20 +89,24 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
 					foreach ($matches as $usrDefinition)
 					{
+						$insertHtml = '';
 
 						$replaceText = $usrDefinition[0]; // develop check
 						$replaceLen = strlen($usrDefinition[0]);
 						$replaceStart = strpos($article->text, $usrDefinition[0]);
 
+						//$test = $usrDefinition[1];
 						$usrParams = $this->extractUserParams($usrDefinition[1]);
 
-						// gid is missing
+						// ToDo: check if gid is missing
+						$gid = $usrParams->get('gid', -1);
+						if ($gid < 1) {
+							$insertHtml = 'Plg RSG2 gallery: Gid missing "gid:xx,.." ';
+						}
 
-
-						$insertHtml = '';
 						// $insertHtml = Rsg2_galleryHelper::galleryImagesHtml();
 						$insertHtml = '<h4>--- Rsg2_gallery replacement ---</h4>' . $insertHtml;
-						
+
 						// previous occurrences are replaced so the search will
 						// find the actual occurrence
 
@@ -143,21 +149,24 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 			foreach ($paramSets as $paramSet)
 			{
 
-				[$name, $value] = explode(':', $paramSet, 2);
-
-				$name  = trim($name);
-				$value = trim($value);
-
-				// ToDo: prepare indexed values template/layout ...
-				// Handle plugin specific variables or J3x to j4x transformations
-				// $isHandled = $this->handleSpecificParams ($params, $name, $value);
-
-				// ?? bool
-
-				// standard assignment
-				//if (! $isHandled)
+				if ( !empty ($paramSet))
 				{
-					$usrParams->set($name, $value);
+					[$name, $value] = explode(':', $paramSet, 2);
+
+					$name  = trim($name);
+					$value = trim($value);
+
+					// ToDo: prepare indexed values template/layout ...
+					// Handle plugin specific variables or J3x to j4x transformations
+					// $isHandled = $this->handleSpecificParams ($params, $name, $value);
+
+					// ?? bool
+
+					// standard assignment
+					//if (! $isHandled)
+					{
+						$usrParams->set($name, $value);
+					}
 				}
 
 			}

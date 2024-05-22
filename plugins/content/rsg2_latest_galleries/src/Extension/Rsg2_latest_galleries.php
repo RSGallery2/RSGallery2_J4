@@ -55,7 +55,9 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 				$params = $event->getArgument('params'); // spelling ?
 			}
 
-			if (strpos ($context , 'com_content.article') === false) {
+			if (   (strpos ($context , 'com_content.article') === false)
+				&& (strpos ($context , 'com_content.category') === false)
+			) {
 				return false;
 			}
 
