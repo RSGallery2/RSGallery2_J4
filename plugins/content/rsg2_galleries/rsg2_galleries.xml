@@ -4,43 +4,39 @@
 		   version="4.0" 
            method="upgrade">
 	<name>plg_content_rsg2_galleries</name>
-	<creationDate>02. Oct. 2021</creationDate>
 	<author>RSGallery2 Team</author>
-	<authorEmail>team2@rsgallery2.org</authorEmail>
-	<authorUrl>https://www.rsgallery2.org</authorUrl>
+	<creationDate>22. Mar. 2024</creationDate>
 	<copyright>(c) 2021-2024 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>team2@rsgallery2.org</authorEmail>
+	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<version>5.0.0.3</version>
 	<description>PLG_CONTENT_RSG2_GALLERIES_XML_DESCRIPTION</description>
-	<scriptfile>script.php</scriptfile>
-	<namespace>Rsgallery2\Plugin\Rsg2_galleries</namespace>
-
+	<namespace path="src">Rsgallery2\Plugin\Content\Rsg2_galleries</namespace>
 	<files>
-		<filename plugin="rsg2_galleries">rsg2_galleries.php</filename>
+		<folder>services</folder>
 		<folder>language</folder>
+		<folder plugin="rsg2_galleries">src</folder>
 	</files>
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_galleries.ini</language>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_galleries.sys.ini</language>
 	</languages>
+
 	<config>
 		<fields 
-			name="params"
-		>
+			name="params">
 			<fieldset 
 				name="basic"
-				addfieldprefix="Joomla\Component\Rsgallery2\Administrator\Field"
 			>
 				<!-- Parent gallery selection -->
 				<field
-					id="SelectGallery"
-					name="SelectGallery"
+					name="gid"
 					type="GallerySelect"
-					label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
-					description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+						label="COM_RSGALLERY2_MENU_J3X_SELECT_PARENT_GALLERY_LABEL"
+						description="COM_RSGALLERY2_MENU_J3X_SELECT_PARENT_GALLERY_LABEL_DESC"
 					required="true"
 				/>
-				<!-- URL to folder of galleries -->
 				<field
 					id="FolderUrl"
 					name="FolderUrl"
