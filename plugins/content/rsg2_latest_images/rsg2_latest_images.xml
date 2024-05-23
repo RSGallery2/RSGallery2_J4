@@ -13,11 +13,13 @@
 	<version>5.0.0.5</version>
 	<description>PLG_CONTENT_RSG2_LATEST_IMAGES_XML_DESCRIPTION</description>
 	<namespace path="src">Rsgallery2\Plugin\Content\Rsg2_latest_images</namespace>
+
 	<files>
         <folder>services</folder>
 		<folder>language</folder>
         <folder plugin="rsg2_latest_images">src</folder>
 	</files>
+
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_latest_images.ini</language>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_latest_images.sys.ini</language>

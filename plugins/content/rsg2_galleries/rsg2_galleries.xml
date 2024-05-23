@@ -13,11 +13,13 @@
 	<version>5.0.0.3</version>
 	<description>PLG_CONTENT_RSG2_GALLERIES_XML_DESCRIPTION</description>
 	<namespace path="src">Rsgallery2\Plugin\Content\Rsg2_galleries</namespace>
+
 	<files>
 		<folder>services</folder>
 		<folder>language</folder>
 		<folder plugin="rsg2_galleries">src</folder>
 	</files>
+
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_galleries.ini</language>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_galleries.sys.ini</language>

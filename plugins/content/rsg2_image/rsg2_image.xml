@@ -4,25 +4,27 @@
 		   version="4.0" 
            method="upgrade">
 	<name>plg_content_rsg2_image</name>
-	<creationDate>02. Oct. 2021</creationDate>
 	<author>RSGallery2 Team</author>
-	<authorEmail>team2@rsgallery2.org</authorEmail>
-	<authorUrl>https://www.rsgallery2.org</authorUrl>
+	<creationDate>23. Mai. 2024</creationDate>
 	<copyright>(c) 2021-2024 RSGallery2 Team</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>team2@rsgallery2.org</authorEmail>
+	<authorUrl>https://www.rsgallery2.org</authorUrl>
 	<version>5.0.0.5</version>
 	<description>PLG_CONTENT_RSG2_IMAGE_XML_DESCRIPTION</description>
-	<scriptfile>script.php</scriptfile>
-	<namespace>Rsgallery2\Plugin\Rsg2_image</namespace>
+	<namespace path="src">Rsgallery2\Plugin\Content\Rsg2_image</namespace>
 
 	<files>
-		<filename plugin="rsg2_image">rsg2_image.php</filename>
+        <folder>services</folder>
 		<folder>language</folder>
+		<filename plugin="rsg2_image">rsg2_image.php</filename>
 	</files>
+
 	<languages>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_image.ini</language>
 		<language tag="en-GB">language/en-GB/plg_content_rsg2_image.sys.ini</language>
 	</languages>
+
 	<config>
 		<fields 
 			name="params">
