@@ -9,7 +9,7 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 
-use Rsgallery2\Plugin\Content\Rsg2_random_images\Extension\Rsg2_random_images;
+use Rsgallery2\Plugin\Content\Rsg2_images\Extension\Rsg2_images;
 
 
 return new class () implements ServiceProviderInterface {
@@ -27,10 +27,10 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
-				$plgHelper =(array)PluginHelper::getPlugin('content', 'rsg2_random_images');
+				$plgHelper =(array)PluginHelper::getPlugin('content', 'rsg2_images');
                 $dispatcher = $container->get(DispatcherInterface::class);
 
-                $plugin     = new Rsg2_random_images($dispatcher, $plgHelper);
+                $plugin     = new Rsg2_images($dispatcher, $plgHelper);
                 $plugin->setApplication(Factory::getApplication());
                 //$plugin->setDatabase($container->get(DatabaseInterface::class));
 				//$plugin->setMyCustomService($container->get(MyCustomService::class));

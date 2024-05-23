@@ -1,6 +1,6 @@
 <?php
 
-namespace Rsgallery2\Plugin\Content\Rsg2_random_images\Extension;
+namespace Rsgallery2\Plugin\Content\Rsg2_images\Extension;
 
 /**
  * @package     Joomla.Plugin
@@ -19,7 +19,7 @@ use Joomla\Registry\Registry;
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 
-class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
+class Rsg2_images extends CMSPlugin implements SubscriberInterface
 {
 	// only for lang strings shown on execution of plugin
 	protected $autoloadLanguage = true;
@@ -34,11 +34,11 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 	public static function getSubscribedEvents () : array
 	{
 		return [
-			'onContentPrepare' => 'getRsg2_random_imagesDisplay'
+			'onContentPrepare' => 'getRsg2_imagesDisplay'
 		];
 	}
 
-	public function getRsg2_random_imagesDisplay (Event $event)
+	public function getRsg2_imagesDisplay (Event $event)
 	{
 		$context = '';
 		$article = '';
@@ -63,20 +63,20 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 
 			//--- replacement may exist --------------------------------------------------
 
-			if (str_contains($article->text, '{rsg2_random_images'))
+			if (str_contains($article->text, '{rsg2_images'))
 			{
 				$lastUserTestIdx = 0;
 
 				//--- collect all appearances ---------------------------------------
 
 				// Expression to search for.
-				$pattern = "/{rsg2_random_images:(.*?)}/i";
+				$pattern = "/{rsg2_images:(.*?)}/i";
 
 				preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
 
 //				// debug: there should be matches as text is searched
 //				if(empty ($matches)) {
-//					echo "<br><br>!!! article has no rsg2_random_images !!!<br>";
+//					echo "<br><br>!!! article has no rsg2_images !!!<br>";
 //					return null;
 //				}
 
@@ -89,20 +89,24 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 
 					foreach ($matches as $usrDefinition)
 					{
+						$insertHtml = '';
 
 						$replaceText = $usrDefinition[0]; // develop check
 						$replaceLen = strlen($usrDefinition[0]);
 						$replaceStart = strpos($article->text, $usrDefinition[0]);
 
+						//$test = $usrDefinition[1];
 						$usrParams = $this->extractUserParams($usrDefinition[1]);
 
-						// gid is missing
+						// ToDo: check if gid is missing
+						$gid = $usrParams->get('gid', -1);
+						if ($gid < 1) {
+							$insertHtml = 'Plg RSG2 gallery: Gid missing "gid:xx,.." ';
+						}
 
+						// $insertHtml = Rsg2_imagesHelper::galleryImagesHtml();
+						$insertHtml = '<h4>--- Rsg2_images replacement ---</h4>' . $insertHtml;
 
-						$insertHtml = '';
-						// $insertHtml = Rsg2_random_imagesHelper::galleryImagesHtml();
-						$insertHtml = '<h4>--- Rsg2_random_images replacement ---</h4>' . $insertHtml;
-						
 						// previous occurrences are replaced so the search will
 						// find the actual occurrence
 
@@ -122,7 +126,7 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 			// $event->stopPropagation();
 
 		} catch (Exception $e) {
-			$msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES') . ' getRsg2_random_imagesDisplay: '. ' Error (01): ' . $e->getMessage();
+			$msg = Text::_('PLG_CONTENT_RSG2_IMAGES') . ' getRsg2_imagesDisplay: '. ' Error (01): ' . $e->getMessage();
 			$app = Factory::getApplication();
 			$app->enqueueMessage($msg, 'error');
 			return false;
@@ -145,26 +149,29 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 			foreach ($paramSets as $paramSet)
 			{
 
-				[$name, $value] = explode(':', $paramSet, 2);
-
-				$name  = trim($name);
-				$value = trim($value);
-
-				// ToDo: prepare indexed values template/layout ...
-				// Handle plugin specific variables or J3x to j4x transformations
-				// $isHandled = $this->handleSpecificParams ($params, $name, $value);
-
-				// ?? bool
-
-				// standard assignment
-				//if (! $isHandled)
+				if ( !empty ($paramSet))
 				{
-					$usrParams->set($name, $value);
+					[$name, $value] = explode(':', $paramSet, 2);
+
+					$name  = trim($name);
+					$value = trim($value);
+
+					// ToDo: prepare indexed values template/layout ...
+					// Handle plugin specific variables or J3x to j4x transformations
+					// $isHandled = $this->handleSpecificParams ($params, $name, $value);
+
+					// ?? bool
+
+					// standard assignment
+					//if (! $isHandled)
+					{
+						$usrParams->set($name, $value);
+					}
 				}
 
 			}
 		} catch (Exception $e) {
-			$msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
+			$msg = Text::_('PLG_CONTENT_RSG2_IMAGES' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
 			$app = Factory::getApplication();
 			$app->enqueueMessage($msg, 'error');
 			return false;

@@ -9,7 +9,7 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
 
-use Rsgallery2\Plugin\Content\Rsg2_gallery\Extension\Rsg2_gallery;
+use Rsgallery2\Plugin\Content\Rsg2_latest_galleries\Extension\Rsg2_latest_galleries;
 
 
 return new class () implements ServiceProviderInterface {
@@ -27,10 +27,10 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
-				$plgHelper =(array)PluginHelper::getPlugin('content', 'rsg2_gallery');
+				$plgHelper =(array)PluginHelper::getPlugin('content', 'rsg2_latest_galleries');
                 $dispatcher = $container->get(DispatcherInterface::class);
 
-                $plugin     = new Rsg2_gallery($dispatcher, $plgHelper);
+                $plugin     = new Rsg2_latest_galleries($dispatcher, $plgHelper);
                 $plugin->setApplication(Factory::getApplication());
                 //$plugin->setDatabase($container->get(DatabaseInterface::class));
 				//$plugin->setMyCustomService($container->get(MyCustomService::class));

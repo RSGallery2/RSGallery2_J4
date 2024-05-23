@@ -33,7 +33,7 @@ use Rsgallery2\Module\Rsg2_image\Site\Helper\Rsg2_imageHelper;
 //use Joomla\Event\SubscriberInterface;
 //use Joomla\Utilities\ArrayHelper;
 
-// use Rsg2_imageNamespace\Module\Rsg2_image\Site\Helper\Rsg2_imagesHelper;
+// use Rsg2_imageNamespace\Module\Rsg2_image\Site\Helper\Rsg2_imageHelper;
 
 /**
  * look for RSG ... to be replaced by gallery image
@@ -166,7 +166,7 @@ class PlgContentRsg2_image extends CMSPlugin
                 );
 
                 // start logging...
-                JLog::add('Start plg_rsg2_gallerydisplay: debug active in RSGallery2', JLog::DEBUG);
+                JLog::add('Start plg_rsg2_imagedisplay: debug active in RSGallery2', JLog::DEBUG);
             }
             /**/
 
@@ -192,7 +192,7 @@ class PlgContentRsg2_image extends CMSPlugin
 
 
             $model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Image', 'Site', ['ignore_request' => true]);
-            $image = Rsg2_imagesHelper::getList($usrParams, $model, $app);
+            $image = Rsg2_imageHelper::getList($usrParams, $model, $app);
 
 
 // Test
@@ -425,7 +425,7 @@ class PlgContentRsg2_image extends CMSPlugin
         catch (RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'Error executing PLG Rsg2_images::extractParams: "' . '<br>';
+            $OutTxt .= 'Error executing PLG Rsg2_image::extractParams: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -502,18 +502,18 @@ function dummy()
      * // Use local folder images ?
      * if ( $localFolder) {
      *
-     * $image = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
+     * $image = Rsg2_imageHelper::getImageNamesOfFolder($localFolder);
      *
      * } else {
      * // Use gallery is expected ?
      * if ($folderUrl) {
      *
-     * $image = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
+     * $image = Rsg2_imageHelper::getImageNamesOfUrl($folderUrl);
      *
      * } else {
      *
      * // Nothing selected
-     * $app->enqueueMessage('plg_rsg2_images: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
+     * $app->enqueueMessage('plg_rsg2_image: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
      * }
      * }
      * }
@@ -521,14 +521,14 @@ function dummy()
      *
      * // Tests
      * $localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
-     * $image = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
+     * $image = Rsg2_imageHelper::getImageNamesOfFolder($localFolder);
      *
      * $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
      * $folderUrl = JUri::root() . '/images/rsgallery2/2/thumbs/';
-     * $image = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
+     * $image = Rsg2_imageHelper::getImageNamesOfUrl($folderUrl);
      *
      *
-     * require ModuleHelper::getLayoutPath('plg_rsg2_images', $params->get('layout', 'default'));
+     * require ModuleHelper::getLayoutPath('plg_rsg2_image', $params->get('layout', 'default'));
      *
 
 }

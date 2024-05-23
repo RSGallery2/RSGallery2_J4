@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Helper;
+namespace Rsgallery2\Plugin\Content\Rsg2_image\Helper;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Application\SiteApplication;
@@ -23,7 +23,7 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_galleryHelper //implements DatabaseAwareInterface
+class Rsg2_imageHelper //implements DatabaseAwareInterface
 {
 	use DatabaseAwareTrait;
 
@@ -152,7 +152,7 @@ class Rsg2_galleryHelper //implements DatabaseAwareInterface
 
 	public function getText()
 	{
-		$msg = "    --- Rsg2_gallery module ----- ";
+		$msg = "    --- Rsg2_image module ----- ";
 		return $msg;
 	}
 

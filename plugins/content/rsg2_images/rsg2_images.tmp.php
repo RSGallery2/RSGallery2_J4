@@ -166,7 +166,7 @@ class PlgContentRsg2_images extends CMSPlugin
                 );
 
                 // start logging...
-                JLog::add('Start plg_rsg2_gallerydisplay: debug active in RSGallery2', JLog::DEBUG);
+                JLog::add('Start plg_rsg2_imagesdisplay: debug active in RSGallery2', JLog::DEBUG);
             }
             /**/
 

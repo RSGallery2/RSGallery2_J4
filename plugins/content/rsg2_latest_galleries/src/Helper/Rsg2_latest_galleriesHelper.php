@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Plugin\Content\Rsg2_random_images\Helper;
+namespace Rsgallery2\Plugin\Content\Rsg2_latest_galleries\Helper;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Application\SiteApplication;
@@ -23,7 +23,7 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class Rsg2_random_imagesHelper //implements DatabaseAwareInterface
+class Rsg2_latest_galleriesHelper //implements DatabaseAwareInterface
 {
 	use DatabaseAwareTrait;
 
@@ -152,7 +152,7 @@ class Rsg2_random_imagesHelper //implements DatabaseAwareInterface
 
 	public function getText()
 	{
-		$msg = "    --- Rsg2_random_images module ----- ";
+		$msg = "    --- Rsg2_latest_galleries module ----- ";
 		return $msg;
 	}
 
