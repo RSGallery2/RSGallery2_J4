@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x legacy view => root gallery separate -->
+	<!-- J3x legacy view => root galleries (with random and latest) -->
 	<layout title="COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_DESC]]>
@@ -91,7 +91,7 @@
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
 					extension="com_rsgallery2"
-					view="images"
+					view="rootgalleryj3x"
 					useglobal="true"
 			/>
 

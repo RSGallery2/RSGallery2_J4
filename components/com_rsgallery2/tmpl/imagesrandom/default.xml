@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
+	<!-- J4x view -> imagesrandom -->
 	<layout title="COM_RSGALLERY2_MENU_VIEW_IMAGES_RANDOM_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_MENU_VIEW_IMAGES_DESC]]>
@@ -31,7 +32,7 @@
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
 					extension="com_rsgallery2"
-					view="images"
+					view="imagesrandom"
 					useglobal="true"
 			/>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J4x galleries (?root ?) -->
+	<!-- J4x galleries (pure root/parent) -->
 	<layout title="COM_RSGALLERY2_MENU_VIEW_GALLERIES_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_MENU_VIEW_GALLERIES_DESC]]>
@@ -31,7 +31,7 @@
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
 					extension="com_rsgallery2"
-					view="images"
+					view="galleries"
 					useglobal="true"
 			/>
 

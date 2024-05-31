@@ -209,7 +209,7 @@ class HtmlView extends BaseHtmlView
 
                 //--- cancel  -----------------------------------
 
-                ToolBarHelper::cancel('images.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('ImagesProperties.cancel_imagesProperties', 'JTOOLBAR_CLOSE');
 
                 break;
 		}

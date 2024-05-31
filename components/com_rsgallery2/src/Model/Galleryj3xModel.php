@@ -31,7 +31,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
  * @since  __BUMP_VERSION__
  */
-class GalleryJ3xModel extends GalleryModel
+class Galleryj3xModel extends GalleryModel
 {
 
 	/**
@@ -60,7 +60,7 @@ class GalleryJ3xModel extends GalleryModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'GalleryJ3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'Galleryj3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -85,7 +85,7 @@ class GalleryJ3xModel extends GalleryModel
 
             if ( ! empty ($image->gallery_id)) {
                 $route = 'index.php?option=com_rsgallery2'
-                    . '&view=slidePageJ3x'
+                    . '&view=slidepagej3x'
                     . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
                     . '&img_id=' . $image->id
 // test bad ordering                    . '&start=' . $idx
@@ -93,7 +93,7 @@ class GalleryJ3xModel extends GalleryModel
             } else {
 
                 $route = 'index.php?option=com_rsgallery2'
-                    . '&view=slidePageJ3x'
+                    . '&view=slidepagej3x'
                     . '&img_id=' . $image->id
 // test bad ordering                    . '&start=' . $idx
                 ;
@@ -107,7 +107,7 @@ class GalleryJ3xModel extends GalleryModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'GalleryJ3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'Galleryj3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -124,14 +124,14 @@ class GalleryJ3xModel extends GalleryModel
             //$gallery->UrlSlideshow = ''; // fall back
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '&view=slideshowJ3x&gid=' . $gallery->id
+                . '&view=slideshowj3x&gid=' . $gallery->id
                 ,true,0,true);
 
         }
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleryJ3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleryj3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

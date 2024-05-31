@@ -30,7 +30,7 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
  *
  * @since  __BUMP_VERSION__
  */
-class ImagesJ3xModel extends ImagesModel
+class imagesj3xModel extends ImagesModel
 {
 
     public function assignSlideshowUrl($gallery)
@@ -41,7 +41,7 @@ class ImagesJ3xModel extends ImagesModel
             // $gallery->UrlSlideshow = ''; // fall back
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '&view=slideshowJ3x&gid=' . $gallery->id
+                . '&view=slideshowj3x&gid=' . $gallery->id
                 ,true,0,true);
 
         }

@@ -32,7 +32,7 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
  *
  * @since  __BUMP_VERSION__
  */
-class GalleriesJ3xModel extends ListModel
+class Galleriesj3xModel extends ListModel
 {
     /**
      * Model context string.
@@ -473,7 +473,7 @@ class GalleriesJ3xModel extends ListModel
                 $this->_item[$galleryId] = $data;
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
-                $OutTxt .= 'GalleriesJ3xModel: getItems: Error executing query: "' . "" . '"' . '<br>';
+                $OutTxt .= 'Galleriesj3xModel: getItems: Error executing query: "' . "" . '"' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
                 $app = Factory::getApplication();
@@ -563,7 +563,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -602,7 +602,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -630,7 +630,7 @@ class GalleriesJ3xModel extends ListModel
         }
         catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: imageCount: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: imageCount: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -675,7 +675,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -711,7 +711,7 @@ class GalleriesJ3xModel extends ListModel
 
 
             $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2'
-                . '&view=galleryJ3x&gid=' . $gallery->id
+                . '&view=galleryj3x&gid=' . $gallery->id
                 ,true,0,true);
 
             /**/
@@ -720,7 +720,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -756,7 +756,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -814,7 +814,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: RandomImageId: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: RandomImageId: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -856,7 +856,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: ImageById: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: ImageById: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -908,7 +908,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -949,7 +949,7 @@ class GalleriesJ3xModel extends ListModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesJ3xModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -1026,7 +1026,7 @@ class GalleriesJ3xModel extends ListModel
 //        catch (\RuntimeException $e)
 //        {
 //            $OutTxt = '';
-//            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
+//            $OutTxt .= 'Galleriesj3xModel: getRsg2MenuParams()' . '<br>';
 //            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 //
 //            $app = Factory::getApplication();

@@ -77,7 +77,7 @@ if ($displaySearch) {
 ?>
 <!-- ToDo: is form here needed ? check core ...  -->
 <!-- ToDo: form link ...  -->
-<form id="rsg2_galleryJ3x__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
+<form id="rsg2_galleryJ3x__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=galleryj3x'); ?>"
       method="post" class="form-validate form-horizontal well">
 
     <div class="rsg2__form rsg2__images_area">

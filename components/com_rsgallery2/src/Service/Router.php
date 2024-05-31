@@ -90,8 +90,8 @@ class Router extends RouterView
 		//--- rules for J3x rsg2_legacy links ----------------------------------------
 
         /* use parent instead ??? */
-        // rules for RootgalleriesJ3x
-        $rootgalleriesJ3x = new RouterViewConfiguration('rootgalleriesJ3x');
+        // rules for rootgalleriesj3x
+        $rootgalleriesJ3x = new RouterViewConfiguration('rootgalleriesj3x');
         $rootgalleriesJ3x->setKey('gid');
         $this->registerView($rootgalleriesJ3x);
         /**/
@@ -99,22 +99,22 @@ class Router extends RouterView
         // 'toDo: use gal_id anf img_id instead
 
 		// rules for galleriesJ3x,
-        $galleriesJ3x = new RouterViewConfiguration('galleriesJ3x');
+        $galleriesJ3x = new RouterViewConfiguration('galleriesj3x');
         $galleriesJ3x->setKey('gid');
         $this->registerView($galleriesJ3x);
 
 		// rules for galleriesJ3x,
-        $galleryJ3x = new RouterViewConfiguration('galleryJ3x');
+        $galleryJ3x = new RouterViewConfiguration('galleryj3x');
 		$galleryJ3x->setKey('gid');
         $this->registerView($galleryJ3x);
 
 		// rules for slideshowJ3x
-        $slideshowJ3x = new RouterViewConfiguration('slideshowJ3x');
+        $slideshowJ3x = new RouterViewConfiguration('slideshowj3x');
 		$slideshowJ3x->setKey('gid');
         $this->registerView($slideshowJ3x);
 
 		// rules for slidePageJ3x
-        $slidePageJ3x = new RouterViewConfiguration('slidePageJ3x');
+        $slidePageJ3x = new RouterViewConfiguration('slidePagej3x');
 		// $slideshowJ3x->setKey('gid');
         $this->registerView($slidePageJ3x);
 
@@ -155,7 +155,7 @@ class Router extends RouterView
 
 /* use parent instead ??? */
 // J3x - Root Gallery overview
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rootgalleriesJ3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
 	public function getRootgalleriesJ3xSegment($gid, $query)
 	{
 		//return array((int) $gid => $gid);
@@ -212,7 +212,7 @@ class Router extends RouterView
 /* use parent instead */
 
 // J3x - Galleries by Parent
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesJ3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&Itemid=160
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&Itemid=160
 	public function getGalleriesJ3xSegment($gid, $query)
 	{
 //		return array((int) $gid => $gid);
@@ -268,7 +268,7 @@ class Router extends RouterView
 
 
 // J3x - Single Gallery
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryJ3x&gid=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryj3x&gid=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
 	public function getGalleryJ3xSegment($gid, $query)
 	{
         // ToDo: parent ?
@@ -282,7 +282,7 @@ class Router extends RouterView
 
 
 // J3x - Slideshow
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshowJ3x&gid=2&Itemid=419
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshowj3x&gid=2&Itemid=419
 	public function getSlideshowJ3xSegment($gid, $query)
 	{
 		return array((int) $gid => $gid);

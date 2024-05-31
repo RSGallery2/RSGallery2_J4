@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
+	<!-- J4x view -> imageslatest -->
 	<layout title="COM_RSGALLERY2_MENU_VIEW_IMAGES_LATEST_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_MENU_VIEW_IMAGES_LATEST_DESC]]>

@@ -9,7 +9,7 @@
 
 // J3x legacy view improved => gallery 
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\GalleryJ3x;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\Galleryj3x;
 
 \defined('_JEXEC') or die;
 

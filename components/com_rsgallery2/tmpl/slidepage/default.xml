@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x view => single image slidepage (new) -->
+	<!-- J4x view => single image slidepage (new) -->
 	<layout title="COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_DESC]]>
@@ -30,7 +30,7 @@
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
 					extension="com_rsgallery2"
-					view="slidepagej3x"
+					view="slidepage"
 					useglobal="true"
 			/>
 		</fieldset>

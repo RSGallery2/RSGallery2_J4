@@ -138,9 +138,9 @@ class HtmlView extends BaseHtmlView
         // ??? include actual meu item ???
 
 
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=2');
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryJ3x&gid=2&asSlideshow');
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=imageJ3x&item=83&asInline');
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryj3x&gid=2');
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryj3x&gid=2&asSlideshow');
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=imagej3x&item=83&asInline');
 
         // J3x extract
         // http://127.0.0.1/joomla3x/index.php/j3x-single-gallery/1-love-locks/158-dsc-5504

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\ImagesLatest;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\Imageslatest;
 
 \defined('_JEXEC') or die;
 

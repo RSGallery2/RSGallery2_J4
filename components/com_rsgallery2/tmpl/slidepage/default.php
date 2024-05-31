@@ -461,7 +461,7 @@ function htmlStars ($idx, $average, $lastRating)
 
 ?>
 
-<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="post" class="form-validate form-horizontal well">
+<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=slidePage'); ?>" method="post" class="form-validate form-horizontal well">
 
     <div class="rsg2__form rsg2__slide_page">
 

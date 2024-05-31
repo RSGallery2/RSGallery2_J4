@@ -25,7 +25,7 @@ use Joomla\Registry\Registry;
  *
  * @since  __BUMP_VERSION__
  */
-class ImagesRandomModel extends ListModel
+class gallerieslatestModel extends ListModel
 {
     /**
      * Model context string.
@@ -105,11 +105,6 @@ class ImagesRandomModel extends ListModel
 		//$this->setState('foo.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
 		
-        // Adjust the context to support modal layouts.
-        if ($layout = $app->input->get('layout')) {
-            $this->context .= '.' . $layout;
-        }
-
         // List state information
         $value = $app->input->get('limit', $app->get('list_limit', 0), 'uint');
         $this->setState('list.limit', $value);
@@ -140,7 +135,7 @@ class ImagesRandomModel extends ListModel
 
         $params = $app->getParams();
         $this->setState('params', $params);
-	    $user = $app->getIdentity();
+        $user = $app->getIdentity();
 
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
         {
@@ -255,8 +250,8 @@ class ImagesRandomModel extends ListModel
 				$query = $db->getQuery(true);
 
 				$query->select('*')
-					//->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->from($db->quoteName('#__rsg2_images', 'a'))
+					//->from($db->quoteName('#__rsg2_images', 'a'))
+					->from($db->quoteName('#__rsg2_galleries', 'a'))
 					//->where('a.id = ' . (int) $gid);
 					->where('a.gallery_id = ' . (int) $gid)
                     ->order('rand()') 

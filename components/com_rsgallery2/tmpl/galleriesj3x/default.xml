@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x legacy view => galleries overview -->
+	<!-- J3x legacy view => galleries (pure root/parent) -->
 	<layout title="COM_RSGALLERY2_MENU_GALLERIES_J3X_LEGACY_VIEW_TITLE">
 		<message>
 			<![CDATA[COM_RSGALLERY2_MENU_GALLERIES_J3X_LEGACY_VIEW_DESC]]>
@@ -139,13 +139,14 @@
 				<option value="0">JNO</option>
 			</field>
 
+			<!-- ToDo: double below -->
 			<field
 					name="gallery_layout"
 					type="componentlayout"
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
 					extension="com_rsgallery2"
-					view="images"
+					view="galleriesj3x"
 					useglobal="true"
 			/>
 
@@ -202,7 +203,7 @@
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
 					extension="com_rsgallery2"
-					view="images"
+					view="galleriesj3x"
 					useglobal="true"
 			/>
 

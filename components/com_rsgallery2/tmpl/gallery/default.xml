@@ -30,7 +30,7 @@
 					label="JFIELD_ALT_LAYOUT_LABEL"
 					class="custom-select"
 					extension="com_rsgallery2"
-					view="images"
+					view="gallery"
 					useglobal="true"
 			/>
 

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\RootgalleriesJ3x;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\Rootgalleriesj3x;
 
 \defined('_JEXEC') or die;
 
@@ -17,9 +17,9 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagesModel;
-use Rsgallery2\Component\Rsgallery2\Site\Model\GalleryJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel;
 
-//use Rsgallery2\Component\Rsgallery2\Site\Model\RootgalleriesJ3xModel;
+//use Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -142,7 +142,7 @@ class HtmlView extends BaseHtmlView
         //$this->randomImages = $model->randomImages($this->menuParams->random_count);
         $this->randomImages = $model->randomImages($params->get('random_count'));
 //        if (!empty($this->randomImages)) {
-//            GalleryJ3xModel::AddLayoutData($this->randomImages);
+//            Galleryj3xModel::AddLayoutData($this->randomImages);
 //        }
 //        /**/
 
@@ -151,7 +151,7 @@ class HtmlView extends BaseHtmlView
         $this->latestImages = $model->latestImages($params->get('latest_count'));
 //        /**/
 //        if (!empty($this->latestImages)) {
-//            GalleryJ3xModel::AddLayoutData($this->latestImages);
+//            Galleryj3xModel::AddLayoutData($this->latestImages);
 //        }
 //        /**/
 

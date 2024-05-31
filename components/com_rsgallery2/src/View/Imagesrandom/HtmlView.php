@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Site\View\GalleriesLatest;
+namespace Rsgallery2\Component\Rsgallery2\Site\View\Imagesrandom;
 
 \defined('_JEXEC') or die;
 
@@ -55,15 +55,17 @@ class HtmlView extends BaseHtmlView
 	 */
 	public function display($tpl = null)
 	{
-		$item = $this->item = $this->get('Item');
-        $state =
+		$item =
+        $this->item = $this->get('Item');
+		$state =
         $this->state = $this->get('State');
-        $params =
+		$params =
         $this->params = $state->get('params');
 //		$itemparams = new Registry(json_decode($item->params));
 
         $this->isDebugSite = $params->get('isDebugSite'); 
         $this->isDevelopSite = $params->get('isDevelop'); 
+
 
 //		$temp = clone $params;
 //		$temp->merge($itemparams);

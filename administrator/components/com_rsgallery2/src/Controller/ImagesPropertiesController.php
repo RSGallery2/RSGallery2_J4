@@ -243,18 +243,18 @@ class ImagesPropertiesController extends AdminController
 		$this->setRedirect($link, $msg, $msgType);
 	}
 
-//	/**
-//	 * Exit without saving
-//	 *
-//	 * @since version 4.3
-//	 */
-//	public function cancel_imagesProperties()
-//	{
-//		$this->checkToken();
-//
-//		$link = 'index.php?option=com_rsgallery2&view=images';
-//		$this->setRedirect($link);
-//	}
+	/**
+	 * Exit without saving
+	 *
+	 * @since version 4.3
+	 */
+	public function cancel_imagesProperties()
+	{
+		$this->checkToken();
+
+		$link = 'index.php?option=com_rsgallery2&view=images';
+		$this->setRedirect($link);
+	}
 
 
 	/**

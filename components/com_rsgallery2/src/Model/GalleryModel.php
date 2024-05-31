@@ -153,7 +153,7 @@ class GalleryModel extends ListModel
 
 			if ( ! empty ($image->gallery_id)) {
 				$route = 'index.php?option=com_rsgallery2'
-					. '&view=slidePageJ3x'
+					. '&view=slidepagej3x'
 					. '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
 					. '&img_id=' . $image->id
 // test bad ordering                    . '&start=' . $idx
@@ -161,7 +161,7 @@ class GalleryModel extends ListModel
 			} else {
 
 				$route = 'index.php?option=com_rsgallery2'
-					. '&view=slidePageJ3x'
+					. '&view=slidepagej3x'
 					. '&img_id=' . $image->id
 // test bad ordering                    . '&start=' . $idx
 				;
@@ -175,7 +175,7 @@ class GalleryModel extends ListModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'GalleryJ3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'Galleryj3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();
@@ -735,7 +735,7 @@ class GalleryModel extends ListModel
 		catch (\RuntimeException $e)
 		{
 			$OutTxt = '';
-			$OutTxt .= 'GalleryJ3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
+			$OutTxt .= 'Galleryj3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
 			$app = Factory::getApplication();

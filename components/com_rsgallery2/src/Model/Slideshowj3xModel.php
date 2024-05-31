@@ -28,7 +28,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
  * @since  __BUMP_VERSION__
  */
-class SlideshowJ3xModel extends GalleryJ3xModel
+class SlideshowJ3xModel extends Galleryj3xModel
 {
 
 }

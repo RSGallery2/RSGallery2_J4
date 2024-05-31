@@ -31,7 +31,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
  * @since  __BUMP_VERSION__
  */
-class RootgalleriesJ3xModel extends GalleriesJ3xModel
+class Rootgalleriesj3xModel extends Galleriesj3xModel
 {
     /**
     protected $layoutParams = null; // col/row count
@@ -95,13 +95,13 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
 /**/
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '&view=slideshowJ3x&gid=' . $gallery->id);
+                . '&view=slideshowj3x&gid=' . $gallery->id);
 
         }
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'RootgalleriesJ3xModel: assignSlideshowUrl ()' . '<br>';
+            $OutTxt .= 'Rootgalleriesj3xModel: assignSlideshowUrl ()' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -127,7 +127,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
         catch (\RuntimeException $e)
         {
             $OutTxt = '';
-            $OutTxt .= 'RootgalleriesJ3xModel: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Rootgalleriesj3xModel: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -149,7 +149,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
             $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
             $randomImages = $imagesModel->randomImages($random_count);
 
-            $galleryJ3xModel = $this->getInstance('GalleryJ3x', 'RSGallery2Model');
+            $galleryJ3xModel = $this->getInstance('Galleryj3x', 'RSGallery2Model');
             $galleryJ3xModel->AddLayoutData($randomImages);
         }
         return $randomImages;
@@ -166,7 +166,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
             $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
             $latestImages = $imagesModel->latestImages($latest_count);
 
-            $galleryJ3xModel = $this->getInstance('GalleryJ3x', 'RSGallery2Model');
+            $galleryJ3xModel = $this->getInstance('Galleryj3x', 'RSGallery2Model');
             $galleryJ3xModel->AddLayoutData($latestImages);
         }
 
@@ -240,7 +240,7 @@ class RootgalleriesJ3xModel extends GalleriesJ3xModel
 //        catch (\RuntimeException $e)
 //        {
 //            $OutTxt = '';
-//            $OutTxt .= 'RootgalleriesJ3xModel: getRsg2MenuParams()' . '<br>';
+//            $OutTxt .= 'Rootgalleriesj3xModel: getRsg2MenuParams()' . '<br>';
 //            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 //
 //            $app = Factory::getApplication();
