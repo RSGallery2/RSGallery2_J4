@@ -1,4 +1,4 @@
-![RSGallery logo with text](https://github.com/RSGallery2/RSGallery2_Project/blob/master/RSGallery2_Logo/RSG2_logoText.svg)
+![RSGallery logo with text](https://github.com/RSGallery2/RSGallery2_Project/blob/master/RSG2_icons/RSG2_Logo/RSG2_logoText.svg)
 
 # RSGallery2_Component
 
