@@ -2,38 +2,43 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>5.0.0.36</version>
-		<date>2018-01-28</date>
+		<version>5.0.14.0</version>
+		<date>2024-06-11</date>
+        <fix>
+            <item>Can not find view in menu path: Upper case in template and module files </item>
+            <item>Item b</item>
+        </fix>
+		<note>
+			<item></item>
+		</note>
+	</changelog>
+	<changelog>
+		<element>com_rsgallery2</element>
+		<type>component</type>
+		<version>5.0.12</version>
+		<date>2024-04-01</date>
 		<addition>
-			<item>Added "drag and drop" functionality (working uploads limited to 20 images at once and file size not too big)</item>
-			<item>Redesign of upload form</item>
+			<item>J3x Menu structur will be automatically adjusted (J3x Menues definitions shall work seamless)</item>
+			<item>Basic Slideshow works</item>
+			<item>Introduce  slide pages for single images view</item>
+			<item>Maintenance J3x column</item>
+			<item></item>
+			<item></item>
+			<item></item>
+			<item></item>
+			<note>
+				<item>Missing: commenting </item>
+				<item>Missing: voting </item>
+			</note>
 		</addition>
-		<change>
-			<item>old buttons still available as "... legacy". FTP and server upload will lead to the new page</item>
-		</change>
-		<change>
-			<item>Image properties like title and description got a new form with editor input</item>
-		</change>
-		<addition>
-			<item>Image properties form can be reached over images list batch</item>
-		</addition>
-		<change>
-			<item>Redesigned creating of images when uploading (display, thumbs and watermark creation)</item>
-		</change>
-		<change>
-			<item>Separate include files for new view form and load it all from rsg2 in J1.5/2.5</item>
-		</change>
 	</changelog>
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
 		<version>5.0.1.0</version>
 		<date>2023-05-11</date>
-		<change>
-			<item></item>
-		</change>
 		<note>
-			<item>First pre-release in preparation</item>
+			<item>First pre-release </item>
 		</note>
 	</changelog>
 </changelogs>
