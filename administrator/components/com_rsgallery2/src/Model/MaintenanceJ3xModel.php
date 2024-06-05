@@ -59,7 +59,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
 //            }
 //        } catch (\RuntimeException $e) {
-//            Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy j3x DB config', 'error');
+//            Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy J3x DB config', 'error');
 //        }
 //
 //        //--- DB galleries ---------------------------------------------
@@ -72,7 +72,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //                Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x galleries failed'), 'error');
 //            }
 //        } catch (\RuntimeException $e) {
-//            Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy j3x DB galleries', 'error');
+//            Factory::getApplication()->enqueueMessage($e->getMessage() . '  Copy J3x DB galleries', 'error');
 //        }
 //
 //        //--- DB images ---------------------------------------------
@@ -3176,11 +3176,11 @@ EOT;
 	 * id is increased. Therefore, links in menu are now invalid
 	 * Applies to gallery and slideshow menu items
 	 * Can only be run once to match the changed gallery id
-	 * On double call use j3xDegradeUpgradedJ3xMenuLinks
+	 * On double call use j3xDegradeUpgradedJ4xMenuLinks
 	 *
 	 * index.php?option=com_rsgallery2&view=gallery&gid=0
 	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
-	 * index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
+	 * index.php?option=com_rsgallery2&view=slideshow&gid=227
 	 *
 	 * @return bool
 	 *
@@ -3250,17 +3250,14 @@ EOT;
 	 * @throws \Exception
 	 * @since version
 	 */
-	public function j3xDegradeUpgradedJ3xMenuLinks()
+	public function j3xDegradeUpgradedJ4xMenuLinks()
 	{
 		$successful = false;
 
 		try
 		{
-
-
-			// ToDo: wrong values when "gallery" link is changed to "galleryJ3x"
 			// ToDO: ? create function to remove this change analog to j3xUpgradeJ3xMenuLinks
-			// '&view=galleryJ3x&' or '&view=slideshowJ3x&'
+			// '&view=galleryj3x&' or '&view=slideshowj3x&'
 			$menuItemsDB = $this->dbValidJ4xGidMenuItems();
 
 			// upgraded links found
@@ -3281,7 +3278,7 @@ EOT;
 					//--- change link for type: ----------------------------------------------
 
 					// root gallery, gallery , slideshow
-					$newLink = $this->linkDegradeByJ3xType($newLink);
+					$newLink = $this->linkDegradeByJ4xType($newLink);
 
 					//--- change menu parameter for type ----------------------------------------
 
@@ -3483,7 +3480,7 @@ EOT;
 					 *
 					 * /**/
 
-					/* needed in root galleryJ3x view xml
+					/* needed in root galleryj3x view xml
 						name="displaySearch"
 						name="max_thumbs_in_root_galleries_view_j3x"
 						name="displayRandom"
@@ -3561,7 +3558,7 @@ EOT;
 					 *
 					 * /**/
 
-					/* needed in galleryJ3x view
+					/* needed in galleryj3x view
 					$paraPart = ""
 						. "&images_show_search=1"
 						. "&images_column_arrangement_j3x=1"
@@ -3606,7 +3603,7 @@ EOT;
 				if (str_contains($oldLink, '&view=slideshow&'))
 				{
 
-					/* needed in galleryJ3x view
+					/* needed in galleryj3x view
 					$paraPart = ""
 						. "&displaySearch=" . $params['displaySearch'] . '"'
 						. "&displaySearch=" . $params['displaySearch'] . '"'
@@ -3659,9 +3656,9 @@ EOT;
 	 * @return int|string
 	 *
 	 * examples
-	 *     index.php?option=com_rsgallery2&view=gallery&gid=0 => ...&view=rootgalleriesJ3x&...
+	 *     index.php?option=com_rsgallery2&view=gallery&gid=0 => ...&view=rootgalleriesj3x&...
 	 *     index.php?option=com_rsgallery2&view=gallery&gid=2
-	 *     index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
+	 *     index.php?option=com_rsgallery2&view=slideshow&gid=227
 	 *
 	 * @since version
 	 */
@@ -3699,7 +3696,7 @@ EOT;
 					// todo: (2) Assign values from parameter see max_columns_in_images_view_j3x here and above
 
 					$newLink = substr($newLink, 0, $gidEndIdx);
-					$newLink = str_replace('&view=gallery&', '&view=rootgalleriesJ3x&', $newLink);
+					$newLink = str_replace('&view=gallery&', '&view=rootgalleriesj3x&', $newLink);
 
 					$paraPart = ""
 						. "&max_thumbs_in_root_galleries_view_j3x=" . $params['max_thumbs_in_root_galleries_view_j3x'] . '"'
@@ -3727,7 +3724,7 @@ EOT;
 					// ToDo: ? parent gallery ?
 					// gallery
 					$newLink = substr($newLink, 0, $gidEndIdx);
-					$newLink = str_replace('&view=gallery&', '&view=galleryJ3x&', $newLink);
+					$newLink = str_replace('&view=gallery&', '&view=galleryj3x&', $newLink);
 
 					$paraPart = ""
 						. "&images_show_search=" . $params['images_show_search']
@@ -3748,7 +3745,7 @@ EOT;
 				{
 					// slideshow
 					$newLink = substr($newLink, 0, $gidEndIdx);
-					$newLink = str_replace('&view=slideshow&', '&view=slideshowJ3x&', $newLink);
+					$newLink = str_replace('&view=slideshow&', '&view=slideshowj3x&', $newLink);
 				}
 			}
 
@@ -3771,13 +3768,13 @@ EOT;
 	 * @return int|string
 	 *
 	 * examples
-	 *     index.php?option=com_rsgallery2&view=gallery&gid=0 => ...&view=rootgalleriesJ3x&...
-	 *     index.php?option=com_rsgallery2&view=gallery&gid=2
-	 *     index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
+	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
+	 *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
+	 *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
 	 *
 	 * @since version
 	 */
-	public function linkDegradeByJ3xType(string $newLink)
+	public function linkDegradeByJ4xType(string $newLink)
 	{
 
 		try
@@ -3803,31 +3800,31 @@ EOT;
 
 			//--- exchange gallery link type --------------------------
 
-			if (str_contains($newLink, '&view=galleryJ3x&'))
+			if (str_contains($newLink, '&view=galleryj3x&'))
 			{
 				// ToDo: ? parent gallery ?
 				// gallery
 				$newLink = substr($newLink, 0, $gidEndIdx);
-				$newLink = str_replace('&view=galleryJ3x&', '&view=gallery&', $newLink);
+				$newLink = str_replace('&view=galleryj3x&', '&view=gallery&', $newLink);
 			}
 			else
 			{
-				if (str_contains($newLink, '&view=rootgalleriesJ3x&'))
+				if (str_contains($newLink, '&view=rootgalleriesj3x&'))
 				{
 					// root gallery
 					if (intval($galleryId) == 0)
 					{
 						$newLink = substr($newLink, 0, $gidEndIdx);
-						$newLink = str_replace('&view=rootgalleriesJ3x&', '&view=gallery&', $newLink);
+						$newLink = str_replace('&view=rootgalleriesj3x&', '&view=gallery&', $newLink);
 					}
 				}
 				else
 				{
-					if (str_contains($newLink, '&view=slideshowJ3x&'))
+					if (str_contains($newLink, '&view=slideshowj3x&'))
 					{
 						// slideshow
 						$newLink = substr($newLink, 0, $gidEndIdx);
-						$newLink = str_replace('&view=slideshowJ3x&', '&view=slideshow&', $newLink);
+						$newLink = str_replace('&view=slideshowj3x&', '&view=slideshow&', $newLink);
 					}
 				}
 			}
@@ -3848,7 +3845,7 @@ EOT;
 	 * examples
 	 *      index.php?option=com_rsgallery2&view=gallery&gid=0
 	 *      index.php?option=com_rsgallery2&view=gallery&gid=2
-	 *      index.php?option=com_rsgallery2&view=slideshowJ3x&gid=227
+	 *      index.php?option=com_rsgallery2&view=slideshow&gid=227
 	 *
 	 * @since version
 	 */
@@ -3965,7 +3962,7 @@ EOT;
 
 	/**
 	 * Select menu link item for rsg2 which have already been upgraded to J4x
-	 * link includes '&view=galleryJ3x&' or '&view=slideshowJ3x&'
+	 * link includes '&view=galleryj3x&' or '&view=slideshowj3x&'
 	 * @return mixed
 	 *
 	 * @since version
@@ -4006,9 +4003,9 @@ EOT;
 				$params = json_decode($menuItemDb ['params'], true);
 
 				// add matching link
-				if (str_contains($link, '&view=galleryJ3x&')
-					|| str_contains($link, '&view=rootgalleriesJ3x&')
-					|| str_contains($link, '&view=slideshowJ3x&'))
+				if (str_contains($link, '&view=galleryj3x&')
+					|| str_contains($link, '&view=rootgalleriesj3x&')
+					|| str_contains($link, '&view=slideshowj3x&'))
 				{
 					$menuLinks[$id] = [$link, $params];
 				}

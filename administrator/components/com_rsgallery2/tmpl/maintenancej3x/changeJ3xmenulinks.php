@@ -61,7 +61,7 @@ function displayRsgMenuLinks($Rsg2MenuLinks)
 }
 
 /*--------------------------------------------------------------------------------
-	change menu links (example: j3x: '...&gallery&Gid...' => j4x: '...&galleryJ3x&Gid...'
+	change menu links (example: j3x: '...&gallery&Gid...' => j4x: '...&galleryj3x&Gid...'
 --------------------------------------------------------------------------------*/
 
 ?>

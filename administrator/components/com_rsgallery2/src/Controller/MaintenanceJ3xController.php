@@ -1244,7 +1244,7 @@ class MaintenanceJ3xController extends AdminController
 			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
-				$isOk = $j3xModel->j3xDegradeUpgradedJ3xMenuLinks();
+				$isOk = $j3xModel->j3xDegradeUpgradedJ4xMenuLinks();
 
 				if ($isOk) {
 
