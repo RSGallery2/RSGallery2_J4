@@ -18,13 +18,10 @@
 		<version>5.0.12</version>
 		<date>2024-04-01</date>
 		<addition>
-			<item>J3x Menu structur will be automatically adjusted (J3x Menues definitions shall work seamless)</item>
+			<item>J3x Menu structure will be automatically adjusted (J3x Menues definitions shall work seamless)</item>
 			<item>Basic Slideshow works</item>
 			<item>Introduce  slide pages for single images view</item>
 			<item>Maintenance J3x column</item>
-			<item></item>
-			<item></item>
-			<item></item>
 			<item></item>
 			<note>
 				<item>Missing: commenting </item>

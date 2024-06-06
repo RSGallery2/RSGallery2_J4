@@ -248,6 +248,15 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
+			case 'lowerJ3xMenuLinks':
+
+				// to be upgraded
+				$this->j3xRsg2MenuLinks = $j3xModel->dbUpperCaseJ4xGidMenuItems();
+				// to be degraded
+				$this->j4xRsg2MenuLinks = $j3xModel->dbValidJ4xGidMenuItems();
+
+                break;
+
             case 'movej3ximages':
                 try
                 {
@@ -533,6 +542,28 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
 				// ToDo: remove
 				ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
+				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+
+				break;
+
+			case 'lowerJ3xMenuLinks':
+				// on develop show open tasks if existing
+				if (!empty ($this->isDevelop))
+				{
+					echo '<span style="color:red">'
+						. 'Tasks: <br>'
+      				    . '* ?<br>'
+//		        		. '* <br>'
+//				        . '* <br>'
+//      				. '* <br>'
+						. '</span><br>';
+				}
+
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_LOWER_MENU_LINKS'), 'screwdriver');
+
+				ToolBarHelper::custom('MaintenanceJ3x.j3xLowerJ3xMenuLinks', 'arrow-down-4', '', 'COM_RSGALLERY2_LOWER_MENU_LINKS', false);
+				// ToDo: remove
+				//ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 				break;

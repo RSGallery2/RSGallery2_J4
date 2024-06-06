@@ -4016,4 +4016,60 @@ EOT;
 		return $menuLinks;
 	}
 
+	/**
+	 * Select menu link item for rsg2 which have already been upgraded to J4x
+	 * link includes '&view=galleryj3x&' or '&view=slideshowj3x&'
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public function dbUpperCaseJ4xGidMenuItems()
+	{
+		$menuLinks = [];
+
+		//--- list from #__menu table in DB  -------------------------------------------
+
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		// select all menus with com_rsgallery2 and a gid
+
+		$query->select(['id', 'link', 'params'])
+			->from('#__menu')
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
+//			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
+
+		$db->setQuery($query);
+
+		// $menuItemsDB = $db->loadAssocList('id', 'link');
+		$menuItemsDB = $db->loadAssocList('id');
+		// $menuItemsDB = $db->loadObjectList();
+
+		//--- restrict to 'legacy' j3x menu items -------------------------------------------
+
+		if (!empty ($menuItemsDB))
+		{
+
+			foreach ($menuItemsDB as $id => $menuItemDb)
+			{
+
+				// [$idDummy, $link, $params] = $menuItemDb;
+				$link   = $menuItemDb ['link'];
+				$params = json_decode($menuItemDb ['params'], true);
+
+				// add matching link
+				if (str_contains($link, '&view=galleryJ3x&')
+					|| str_contains($link, '&view=rootgalleriesJ3x&')
+					|| str_contains($link, '&view=slideshowJ3x&'))
+				{
+					$menuLinks[$id] = [$link, $params];
+				}
+
+			}
+		}
+
+		return $menuLinks;
+	}
+
 } // class

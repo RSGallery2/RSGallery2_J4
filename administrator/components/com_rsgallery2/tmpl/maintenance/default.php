@@ -405,7 +405,18 @@ if ($this->isJ3xRsg2DataExisting)
 		Text::_('COM_RSGALLERY2_INCREASE_MENU_GID_DESC'),
 		// array('icon-new-tab', 'icon-tree-2', 'icon-folders', 'icon-code'),
 		array('icon-new-tab', 'icon-menu', 'icon-tree-2'),
-		'viewdbtransferj3ximages'
+		'viewchangej3xmenulinks'
+	);
+	/**/
+
+	/**/
+	$upgrade_ZoneButtons[] = new zoneButtons(
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=lowerJ3xMenuLinks'),
+		'(4b) ' . Text::_('COM_RSGALLERY2_LOWER_MENU_LINKS'),
+		Text::_('COM_RSGALLERY2_LOWER_MENU_LINKS_DESC'),
+		// array('icon-new-tab', 'icon-tree-2', 'icon-folders', 'icon-code'),
+		array('icon-new-tab', 'icon-menu', 'icon-link'),
+		'viewlowerj3xmenulinks'
 	);
 	/**/
 
