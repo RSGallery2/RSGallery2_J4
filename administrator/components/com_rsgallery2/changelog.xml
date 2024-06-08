@@ -1,4 +1,5 @@
 <changelogs>
+	<!-- security, fix, language, addition, change, remove, note -->
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
@@ -9,7 +10,7 @@
             <item>Item b</item>
         </fix>
 		<note>
-			<item></item>
+			<item>Item c</item>
 		</note>
 	</changelog>
 	<changelog>
@@ -23,11 +24,11 @@
 			<item>Introduce  slide pages for single images view</item>
 			<item>Maintenance J3x column</item>
 			<item></item>
-			<note>
-				<item>Missing: commenting </item>
-				<item>Missing: voting </item>
-			</note>
 		</addition>
+		<note>
+			<item>Missing: commenting </item>
+			<item>Missing: voting </item>
+		</note>
 	</changelog>
 	<changelog>
 		<element>com_rsgallery2</element>

@@ -236,8 +236,10 @@ class ChangeLogModel
             // valid item
             if (!empty ($sectionTitle)) {
 
+				$items = $value['item'];
+
                 // item texts
-                $sectionDtaList = self::changeLogSectionData2Html($value);
+                $sectionDtaList = self::changeLogSectionData2Html($items);
             }
 
             //--- create row ----------------------------------------------
@@ -349,33 +351,15 @@ class ChangeLogModel
      *
      * @since __BUMP_VERSION__
      */
-    public static function changeLogSectionData2Html($values)
+    public static function changeLogSectionData2Html($items)
     {
         $html = [];
-        $itemId = 'item';
 
-        //--- extract list of items --------------------
-
-        $items = [];
-
-        // item in first column of array
-        if (array_key_exists($itemId, $values)) {
-            $items [] = $values [$itemId];
-        } else {
-
-            // items in nested column
-            foreach ($values as $value) {
-                // still nested
-                $subItems = $value [$itemId];
-                if (!is_array($subItems)) {
-                    $subItems = array($subItems);
-                }
-
-                foreach ($subItems as $item) {
-                    $items [] = $item;
-                }
-            }
-        }
+		// single item ?
+		if (! \is_array($items))
+		{
+			$items = array($items);
+		}
 
         //--- collect item html --------------------
 
