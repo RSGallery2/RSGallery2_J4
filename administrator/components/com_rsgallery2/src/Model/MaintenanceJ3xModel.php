@@ -3193,7 +3193,6 @@ EOT;
 
 		try
 		{
-
 			// link includes '&view=gallery' or '&view=slideshow&'
 			$menuItemsDB = $this->dbValidJ3xGidMenuItems();
 
@@ -3327,6 +3326,112 @@ EOT;
 
 			}
 
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
+	 * Uppercase to lower case in 'J'
+	 * index.php?option=com_rsgallery2&view=gallery&gid=0
+	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function j3xLowerJ4xMenuLinks()
+	{
+		$successful = false;
+
+		try
+		{
+			// link includes '&view=gallery' or '&view=slideshow&'
+			$menuItemsDB = $this->dbUpperCaseJ4xGidMenuItems();
+
+			if (!empty ($menuItemsDB))
+			{
+
+				$successful = true;
+
+				foreach ($menuItemsDB as $id => $menuItem)
+				{
+
+					[$oldLink, $oldParams] = $menuItem;
+
+					//--- change link for type: ----------------------------------------------
+
+					// root gallery, gallery , slideshow
+					$newLink = $this->linkLowercaseJ4xType($oldLink);
+					
+					//--- change menu parameter for type ----------------------------------------
+
+					// valid link ?
+					if (!empty($newLink))
+					{
+						$successful = $this->updateMenuItem($id, $newLink, $oldParams);
+					} // else successful = false ...
+				}
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
+	 * Uppercase to lower case in 'J'
+	 * index.php?option=com_rsgallery2&view=gallery&gid=0
+	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function j3xUpperJ4xMenuLinks()
+	{
+		$successful = false;
+
+		try
+		{
+			// link includes '&view=gallery' or '&view=slideshow&'
+			$menuItemsDB = $this->dbValidJ4xGidMenuItems();
+
+			if (!empty ($menuItemsDB))
+			{
+
+				$successful = true;
+
+				foreach ($menuItemsDB as $id => $menuItem)
+				{
+
+					[$oldLink, $oldParams] = $menuItem;
+
+					//--- change link for type: ----------------------------------------------
+
+					// root gallery, gallery , slideshow
+					$newLink = $this->linkUppercaseJ4xType($oldLink);
+
+					//--- change menu parameter for type ----------------------------------------
+
+					// valid link ?
+					if (!empty($newLink))
+					{
+						$successful = $this->updateMenuItem($id, $newLink, $oldParams);
+					} // else successful = false ...
+				}
+			}
 		}
 		catch (\RuntimeException $e)
 		{
@@ -3866,6 +3971,159 @@ EOT;
 	{
 
 		return $this->linkAddToGalleryId($oldLink, -1);
+	}
+
+	/**
+	 *
+	 *
+	 * @param $newLink
+	 *
+	 * @return int|string
+	 *
+	 * examples
+	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
+	 *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
+	 *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+	 *
+	 * @since version
+	 */
+	public function linkLowercaseJ4xType(string $newLink)
+	{
+
+		try
+		{
+			//--- extract gallery id --------------------------
+
+			$gidIdx    = strpos($newLink, '&gid=') + 5;
+			$gidEndIdx = strpos($newLink, '&', $gidIdx);
+			// no further characters
+			if ($gidEndIdx == false)
+			{
+				$gidEndIdx = strlen($newLink);
+			}
+
+			$galleryId = substr($newLink, $gidIdx, $gidEndIdx - $gidIdx);
+
+			if (intval($galleryId) == 0)
+			{
+				// debug stop for root gallery
+				$test1 = intval($galleryId);
+			}
+
+			//--- exchange gallery link type --------------------------
+
+			if (str_contains($newLink, '&view=galleryJ3x&'))
+			{
+				// ToDo: ? parent gallery ?
+				// gallery
+				$newLink = substr($newLink, 0, $gidEndIdx);
+				$newLink = str_replace('&view=galleryJ3x&', '&view=galleryj3x&', $newLink);
+			}
+			else
+			{
+				if (str_contains($newLink, '&view=rootgalleriesJ3x&'))
+				{
+					// root gallery
+					if (intval($galleryId) == 0)
+					{
+						$newLink = substr($newLink, 0, $gidEndIdx);
+						$newLink = str_replace('&view=rootgalleriesJ3x&', '&view=rootgalleriesj3x&', $newLink);
+					}
+				}
+				else
+				{
+					if (str_contains($newLink, '&view=slideshowJ3x&'))
+					{
+						// slideshow
+						$newLink = substr($newLink, 0, $gidEndIdx);
+						$newLink = str_replace('&view=slideshowJ3x&', '&view=slideshowj3x&', $newLink);
+					}
+				}
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $newLink;
+	}
+
+	/**
+	 *
+	 *
+	 * @param $newLink
+	 *
+	 * @return int|string
+	 *
+	 * examples
+	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
+	 *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
+	 *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+	 *
+	 * @since version
+	 */
+	public function linkUppercaseJ4xType(string $newLink)
+	{
+
+		try
+		{
+			//--- extract gallery id --------------------------
+
+			$gidIdx    = strpos($newLink, '&gid=') + 5;
+			$gidEndIdx = strpos($newLink, '&', $gidIdx);
+			// no further characters
+			if ($gidEndIdx == false)
+			{
+
+				$gidEndIdx = strlen($newLink);
+			}
+
+			$galleryId = substr($newLink, $gidIdx, $gidEndIdx - $gidIdx);
+
+			if (intval($galleryId) == 0)
+			{
+				// debug stop for root gallery
+				$test1 = intval($galleryId);
+			}
+
+			//--- exchange gallery link type --------------------------
+
+			if (str_contains($newLink, '&view=galleryj3x&'))
+			{
+				// ToDo: ? parent gallery ?
+				// gallery
+				$newLink = substr($newLink, 0, $gidEndIdx);
+				$newLink = str_replace('&view=galleryj3x&', '&view=galleryJ3x&', $newLink);
+			}
+			else
+			{
+				if (str_contains($newLink, '&view=rootgalleriesj3x&'))
+				{
+					// root gallery
+					if (intval($galleryId) == 0)
+					{
+						$newLink = substr($newLink, 0, $gidEndIdx);
+						$newLink = str_replace('&view=rootgalleriesj3x&', '&view=rootgalleriesJ3x&', $newLink);
+					}
+				}
+				else
+				{
+					if (str_contains($newLink, '&view=slideshowj3x&'))
+					{
+						// slideshow
+						$newLink = substr($newLink, 0, $gidEndIdx);
+						$newLink = str_replace('&view=slideshowj3x&', '&view=slideshowJ3x&', $newLink);
+					}
+				}
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $newLink;
 	}
 
 	/**

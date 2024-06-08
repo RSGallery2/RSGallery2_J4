@@ -61,12 +61,12 @@ function displayRsgMenuLinks($Rsg2MenuLinks)
 }
 
 /*--------------------------------------------------------------------------------
-	change menu links (example: j3x: '...&gallery&Gid...' => j4x: '...&galleryj3x&Gid...'
+	change menu links (example: J3x: '...&gallery&Gid...' => j4x: '...&galleryj3x&Gid...'
 --------------------------------------------------------------------------------*/
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=lowerJ3xMenuLinks'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=lowerJ4xMenuLinks'); ?>"
       method="post" name="adminForm" id="adminForm">
     <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -84,12 +84,12 @@ function displayRsgMenuLinks($Rsg2MenuLinks)
 
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xLowerJ3xMenuLinks');return false;">
+                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xLowerJ4xMenuLinks');return false;">
 				            <?php echo JText::_('COM_RSGALLERY2_LOWER_MENU_LINKS'); ?>
                         </button>
 	                    <?php // 				// ToDo: remove  ?>
 
-                        <button class="btn btn-info" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xUpperJ3xMenuLinks');return false;">
+                        <button class="btn btn-info" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xUpperJ4xMenuLinks');return false;">
 		                    <?php echo JText::_('COM_RSGALLERY2_UPPER_MENU_LINKS'); ?>
                         </button>
 

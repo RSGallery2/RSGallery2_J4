@@ -411,12 +411,12 @@ if ($this->isJ3xRsg2DataExisting)
 
 	/**/
 	$upgrade_ZoneButtons[] = new zoneButtons(
-		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=lowerJ3xMenuLinks'),
+		Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=lowerJ4xMenuLinks'),
 		'(4b) ' . Text::_('COM_RSGALLERY2_LOWER_MENU_LINKS'),
 		Text::_('COM_RSGALLERY2_LOWER_MENU_LINKS_DESC'),
 		// array('icon-new-tab', 'icon-tree-2', 'icon-folders', 'icon-code'),
 		array('icon-new-tab', 'icon-menu', 'icon-link'),
-		'viewlowerj3xmenulinks'
+		'viewLowerJ4xMenuLinks'
 	);
 	/**/
 

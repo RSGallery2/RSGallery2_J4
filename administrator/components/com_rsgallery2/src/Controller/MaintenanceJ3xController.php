@@ -1219,6 +1219,106 @@ class MaintenanceJ3xController extends AdminController
 		$this->setRedirect($link, $msg, $msgType);
 	}
 
+	/**
+	 *
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function j3xLowerJ4xMenuLinks()
+	{
+		$msg = "MaintenanceJ3xController.j3xUpgradeJ3xMenuLinks: ";
+		$msgType = 'notice';
+
+		$this->checkToken();
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
+
+				$isOk = $j3xModel->j3xLowerJ4xMenuLinks();
+
+				if ($isOk) {
+
+					$msg .= "Successful lower j3x menu inks";
+
+				} else {
+					$msg .= "Error at j3xLowerJ4xMenuLinks items";
+					$msgType = 'error';
+				}
+
+			} catch (\RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing j3xLowerJ4xMenuLinks: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=Maintenance';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
+	 *
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function j3xUpperJ4xMenuLinks()
+	{
+		$msg = "MaintenanceJ3xController.j3xUpgradeJ3xMenuLinks: ";
+		$msgType = 'notice';
+
+		$this->checkToken();
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
+
+				$isOk = $j3xModel->j3xUpperJ4xMenuLinks();
+
+				if ($isOk) {
+
+					$msg .= "Successful lower j3x menu inks";
+
+				} else {
+					$msg .= "Error at j3xUpperJ4xMenuLinks items";
+					$msgType = 'error';
+				}
+
+			} catch (\RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing j3xUpperJ4xMenuLinks: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=lowerJ4xMenuLinks';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
 
 	/**
 	 *

@@ -248,7 +248,7 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
-			case 'lowerJ3xMenuLinks':
+			case 'lowerJ4xMenuLinks':
 
 				// to be upgraded
 				$this->j3xRsg2MenuLinks = $j3xModel->dbUpperCaseJ4xGidMenuItems();
@@ -546,7 +546,7 @@ class HtmlView extends BaseHtmlView
 
 				break;
 
-			case 'lowerJ3xMenuLinks':
+			case 'lowerJ4xMenuLinks':
 				// on develop show open tasks if existing
 				if (!empty ($this->isDevelop))
 				{
@@ -561,7 +561,7 @@ class HtmlView extends BaseHtmlView
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_LOWER_MENU_LINKS'), 'screwdriver');
 
-				ToolBarHelper::custom('MaintenanceJ3x.j3xLowerJ3xMenuLinks', 'arrow-down-4', '', 'COM_RSGALLERY2_LOWER_MENU_LINKS', false);
+				ToolBarHelper::custom('MaintenanceJ3x.j3xLowerJ4xMenuLinks', 'arrow-down-4', '', 'COM_RSGALLERY2_LOWER_MENU_LINKS', false);
 				// ToDo: remove
 				//ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
