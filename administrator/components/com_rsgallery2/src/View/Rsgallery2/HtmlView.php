@@ -133,12 +133,15 @@ class HtmlView extends BaseHtmlView
 	        $this->isDoChangeJ3xMenuLinks = ! $rsgConfig->get('j3x_menu_gid_increased');
             $this->isDoCopyJ3xImages      = ! $rsgConfig->get('j3x_images_copied');
 
+			/**
 			// debug flags
             $this->isDoCopyJ3xDbConfig = true;
             $this->isDoCopyJ3xDbGalleries = true;
 	        $this->isDoCopyJ3xDbImages = true;
 	        $this->isDoChangeJ3xMenuLinks = true;
             $this->isDoCopyJ3xImages = true;
+			/**/
+			
         }
 
         /*-------------------------------------------------------------------------------
