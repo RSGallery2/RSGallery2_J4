@@ -114,11 +114,16 @@ class Router extends RouterView
         $this->registerView($slideshowJ3x);
 
 		// rules for slidepagej3x
+		// http://127.0.0.1/JoomlaFinnern/index.php/kaffee?view=slidepagej3x&gid=2&img_id=23
         $slidepagej3x = new RouterViewConfiguration('slidepagej3x');
-		// $slidepagej3x->setKey('gid');
+		$slidepagej3x->setKey('gid');
         $this->registerView($slidepagej3x);
 
-        //--- rules for new J4x links ----------------------------------------
+		$img_id = new RouterViewConfiguration('img_id');
+		$img_id->setKey('img_id')->setParent($slidepagej3x);
+		$this->registerView($img_id);
+
+		//--- rules for new J4x links ----------------------------------------
 
         // rules for galleries
         $galleries = new RouterViewConfiguration('galleries');
@@ -293,12 +298,21 @@ class Router extends RouterView
 	}
 
 // J3x - Slidepagej3x
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slidepagej3x&gid=2&Itemid=419
+	// http://127.0.0.1/JoomlaFinnern/index.php/kaffee?view=slidepagej3x&gid=2&img_id=23
 	public function getSlidepagej3xSegment($gid, $query)
 	{
 		return array((int) $gid => $gid);
 	}
 	public function getSlidepagej3xId($segment, $query)
+	{
+		return (int) $segment;
+	}
+
+	public function getImg_idSegment($img_id, $query)
+	{
+		return array((int) $img_id => $img_id);
+	}
+	public function getImg_idId($segment, $query)
 	{
 		return (int) $segment;
 	}
