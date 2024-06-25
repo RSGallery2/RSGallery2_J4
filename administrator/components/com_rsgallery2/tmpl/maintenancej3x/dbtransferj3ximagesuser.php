@@ -26,6 +26,8 @@ use Joomla\CMS\Language\Text;
                 <?php echo $this->sidebar; ?>
             </div>
         <?php endif; ?>
+        dbtransfer <br>images <br>user<br>
+
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">

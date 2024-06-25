@@ -42,7 +42,7 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
 //            } ?><!--">-->
                 <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
                 <div class="flex-fill">
-                <div id="j-main-container" class="j-main-container">
+                    <div id="j-main-container" class="j-main-container">
 
                     <?php
 
@@ -196,7 +196,8 @@ function DisplayRequestJ3xActions($isDoCopyJ3xDbConfig=false,
 
     $rsg2J3xCopyDbConfigLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfiguser');
     $rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleriesuser');
-    $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser');
+    // $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser');
+    $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages');
     $rsg2j3xUpgradeJ3xMenuLinksLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks');
     $rsg2J3xCopyImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser');
 

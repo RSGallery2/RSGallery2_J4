@@ -367,6 +367,7 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
                 <?php echo $this->sidebar; ?>
             </div>
         <?php endif; ?>
+        dbtransfer <br>images <br>
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
@@ -375,6 +376,24 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'dbtransferj3ximages',
                     Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true)); ?>
+
+	            <?php //--- all at once ------------------------------------------------------------------------ ?>
+
+                <div class="card text-center" >
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL', true);?></h3>
+
+                        <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL_DESC'); ?></p>
+                        <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
+
+                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
+				            <?php echo JText::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
+                        </button>
+
+                    </div>
+                </div>
+
+                <br>
 
                 <?php //--- copy instruction ------------------------------------------------------------------------ ?>
 
