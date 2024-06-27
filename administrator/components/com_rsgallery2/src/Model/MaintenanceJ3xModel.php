@@ -1681,7 +1681,7 @@ EOT;
 		return $isOk;
 	}
 
-// by galleries
+	// by galleries
 
 	/**
 	 * @param $selectedJ3xGalleryIds
@@ -1717,6 +1717,40 @@ EOT;
 			{
 				$isOk = $this->copyDbJ3xImages2J4x($imageIds);
 			}
+
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $isOk;
+	}
+
+
+
+	/**
+	 * revertCopyDbJ3xImages2J4xUser (trunctate table)
+	 * @param $selectedIds
+	 *
+	 * @return bool|int
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function revertCopyDbJ3xImages2J4xUser()
+	{
+		$isOk = false;
+
+		try
+		{
+			$db    = $this->getDatabase();
+			$query = $db->getQuery(true);
+
+			$query->delete($db->quoteName('#__rsg2_images'));
+
+			$db->setQuery($query);
+			$isOk = $db->execute();
 
 		}
 		catch (\RuntimeException $e)

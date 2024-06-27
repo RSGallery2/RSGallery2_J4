@@ -486,73 +486,129 @@ class MaintenanceJ3xController extends AdminController
 	}
 
 	/**
-	 * Copies all old configuration items to new configuration
+	 * Copies all old Db image items to new configuration
 	 *
 	 * @since __BUMP_VERSION__
 	 */
 	public function copyDbJ3xImages2J4xUser()
 	{
-		$this->copyDbJ3xImages2J4x ();
+		$this->copyDbJ3xImages2J4x();
 
 		$link = 'index.php?option=com_rsgallery2';
 		$this->setRedirect($link);
 	}
 
 	/**
-     * Copies all old J3x image items to J4 images
-     *
-     * @since __BUMP_VERSION__
-     */
-    public function copyDbJ3xImages2J4x()
-    {
-        $msg = "MaintenanceJ3xController.copyDbJ3xImages2J4x: ";
-        $msgType = 'notice';
+	 * Copies all old J3x image items to J4 images
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function copyDbJ3xImages2J4x()
+	{
+		$msg = "MaintenanceJ3xController.copyDbJ3xImages2J4x: ";
+		$msgType = 'notice';
 
-        $this->checkToken();
+		$this->checkToken();
 
-        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-        if (!$canAdmin) {
-            //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
-            $msgType = 'warning';
-            // replace newlines with html line breaks.
-            str_replace('\n', '<br>', $msg);
-        } else {
-            try {
-                $j3xModel = $this->getModel('MaintenanceJ3x');
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
 
-                $isOk = $j3xModel->copyDbAllJ3xImages2J4x();
-                if ($isOk) {
-	                $msg .= "Successful applied J3x image items";
+				$isOk = $j3xModel->copyDbAllJ3xImages2J4x();
+				if ($isOk) {
+					$msg .= "Successful applied J3x image items";
 
-                    $isOk = ConfigRawModel::writeConfigParam ('j3x_db_images_copied', true);
-	                if ($isOk) {
-		                $msg .= " and assigned copied flag";
+					$isOk = ConfigRawModel::writeConfigParam ('j3x_db_images_copied', true);
+					if ($isOk) {
+						$msg .= " and assigned copied flag";
 
-	                } else {
-		                $msg .= "!!! but error at writeConfigParam !!!";
-		                $msgType = 'error';
-	                }
+					} else {
+						$msg .= "!!! but error at writeConfigParam !!!";
+						$msgType = 'error';
+					}
 
-                } else {
-                    $msg .= "Error at copyDbJ3xImages2J4x items";
-                    $msgType = 'error';
-                }
+				} else {
+					$msg .= "Error at copyDbJ3xImages2J4x items";
+					$msgType = 'error';
+				}
 
-            } catch (\RuntimeException $e) {
-                $OutTxt = '';
-                $OutTxt .= 'Error executing copyDbJ3xImages2J4x: "' . '<br>';
-                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+			} catch (\RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing copyDbJ3xImages2J4x: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-                $app = Factory::getApplication();
-                $app->enqueueMessage($OutTxt, 'error');
-            }
-        }
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+		}
 
-        //$link = 'index.php?option=com_rsgallery2&view=galleries';
-        $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages';
-        $this->setRedirect($link, $msg, $msgType);
-    }
+		//$link = 'index.php?option=com_rsgallery2&view=galleries';
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
+	 * Copies all old J3x image items to J4 images
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function revertCopyDbJ3xImages2J4xUser()
+	{
+		$msg = "MaintenanceJ3xController.revertCopyDbJ3xImages2J4xUser: ";
+		$msgType = 'notice';
+
+		$this->checkToken();
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
+
+				$isOk = $j3xModel->revertCopyDbJ3xImages2J4xUser();
+				if ($isOk) {
+					$msg .= "Successful reverted copy of J3x image items";
+
+					$isOk = ConfigRawModel::writeConfigParam ('j3x_db_images_copied', false);
+					if ($isOk) {
+						$msg .= " and assigned copied flag";
+
+					} else {
+						$msg .= "!!! but error at writeConfigParam !!!";
+						$msgType = 'error';
+					}
+
+				} else {
+					$msg .= "Error at revertCopyDbJ3xImages2J4xUser items";
+					$msgType = 'error';
+				}
+
+			} catch (\RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing revertCopyDbJ3xImages2J4xUser: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+		}
+
+		//$link = 'index.php?option=com_rsgallery2&view=galleries';
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages';
+		$this->setRedirect($link, $msg, $msgType);
+	}
 
 //    /**
 //     * Moves all old J3x image to J4 images path
