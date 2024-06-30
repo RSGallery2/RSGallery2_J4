@@ -497,6 +497,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 
 				ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
+				ToolBarHelper::custom('MaintenanceJ3x.revertCopyDbJ3xImages2J4xUser', 'delete', '', 'COM_RSGALLERY2_DB_REVERT_COPY_ALL_J3X_IMAGES', false);
 				//ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
 				ToolBarHelper::custom ('MaintenanceJ3x.copyDbImagesOfSelectedGalleries','undo','','COM_RSGALLERY2_DB_COPY_IMAGES_BY_J3X_GALLERY', true);
 				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');

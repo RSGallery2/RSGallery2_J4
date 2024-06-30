@@ -357,129 +357,130 @@ function j3xdTransferButtonsHtml ($movej3ximages) {
 }
 
 
+/*--------------------------------------------------------------------------------
+	db transfer j3x images (by galleries selected)
+--------------------------------------------------------------------------------*/
+
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages'); ?>"
-      method="post" name="adminForm" id="adminForm" class="form-validate">
+      method="post" name="adminForm" id="adminForm">
     <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
             <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
             </div>
         <?php endif; ?>
-        dbtransfer <br>images <br>
+
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'dbtransferj3ximages')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'tabDbtransferj3ximages')); ?>
 
-                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'dbtransferj3ximages',
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'tabDbtransferj3ximages',
                     Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true)); ?>
 
-	            <?php //--- all at once ------------------------------------------------------------------------ ?>
+                    <?php //--- all at once ------------------------------------------------------------------------ ?>
 
-                <div class="card text-center" >
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL', true);?></h3>
+                    <div class="card text-center" >
+                        <div class="card-body">
+                            <h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL', true);?></h3>
 
-                        <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL_DESC'); ?></p>
-                        <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
+                            <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL_DESC'); ?></p>
+                            <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
-		                    <?php echo JText::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
-                        </button>
+                            <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
+                                <?php echo JText::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
+                            </button>
 
-                        <button class="btn btn-warning" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.revertCopyDbJ3xImages2J4xUser');return false;">
-		                    <?php echo JText::_('COM_RSGALLERY2_DB_REVERT_COPY_ALL_J3X_IMAGES'); ?>
-                        </button>
+                            <button class="btn btn-warning" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.revertCopyDbJ3xImages2J4xUser');return false;">
+                                <?php echo JText::_('COM_RSGALLERY2_DB_REVERT_COPY_ALL_J3X_IMAGES'); ?>
+                            </button>
 
+                        </div>
                     </div>
-                </div>
 
-                <br>
+                    <br>
 
-                <?php //--- copy instruction ------------------------------------------------------------------------ ?>
+                    <?php //--- copy instruction ------------------------------------------------------------------------ ?>
 
-                <div class="card text-dark bg-light j3x-info-card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION'); ?> <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES'); ?></h5>
-			            <?php echo Text::_('COM_RSGALLERY2_J3X_DB_IMAGES_COPY_INSTRUCTION_DESC'); ?>
+                    <div class="card text-dark bg-light j3x-info-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION'); ?> <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES'); ?></h5>
+                            <?php echo Text::_('COM_RSGALLERY2_J3X_DB_IMAGES_COPY_INSTRUCTION_DESC'); ?>
+                        </div>
                     </div>
-                </div>
 
-	            <?php //--- Select gallery and buttons ---------------------------------------------------------- ?>
+                    <?php //--- Select gallery and buttons ---------------------------------------------------------- ?>
 
-                <?php /*
-                //                <div class="card text-dark bg-light j3x-gallery-card">
-                    <div class="card-body">
-			            <?php
-			            // specify gallery
-			            // toDO: change name as used for all
-			            echo $this->form->renderFieldset('j3x_gallery');
-			            ?>
+                    <?php /*
+                    //                <div class="card text-dark bg-light j3x-gallery-card">
+                        <div class="card-body">
+                            <?php
+                            // specify gallery
+                            // toDO: change name as used for all
+                            echo $this->form->renderFieldset('j3x_gallery');
+                            ?>
+                        </div>
                     </div>
-                </div>
-                */
-                ?>
-                <div class="card text-dark bg-light j3x--card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
+                    */
+                    ?>
+                    <div class="card text-dark bg-light j3x--card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
 
-			            <?php j3xdTransferButtonsHtml ($this); ?>
+                            <?php j3xdTransferButtonsHtml ($this); ?>
+                        </div>
                     </div>
-                </div>
 
-                <hr>
+                    <hr>
 
-                <?php //--- J3x gallery image status list --------------------------------------------------------------------- ?>
+                    <?php //--- J3x gallery image status list --------------------------------------------------------------------- ?>
 
-                <div class="card text-dark bg-light j3x-galleries-card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h5>
+                    <div class="card text-dark bg-light j3x-galleries-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h5>
 
-			            <?php j3x_galleryListHtml ($this); ?>
+                            <?php j3x_galleryListHtml ($this); ?>
+                        </div>
                     </div>
-                </div>
 
-                <hr>
+                    <hr>
 
 
-                <?php //--- J3x image info list --------------------------------------------------------------------- ?>
+                    <?php //--- J3x image info list --------------------------------------------------------------------- ?>
 
-                <div class="card text-dark bg-light j3x-galleries-card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h5>
+                    <div class="card text-dark bg-light j3x-galleries-card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h5>
 
-	                    <?php // j3x_imageInfoListHtml ($this); ?>
+                            <?php // j3x_imageInfoListHtml ($this); ?>
+                        </div>
                     </div>
-                </div>
 
-                <hr>
+                    <hr>
 
-	            <?php //--- J4x info about must have been transferred ----------------------------------------------- ?>
+                    <?php //--- J4x info about must have been transferred ----------------------------------------------- ?>
 
-                <div class="card text-dark bg-light j4x-info-card" style="max-width: 36rem;">
-                    <div class="card-header">
-			            <?php echo Text::_('COM_RSGALLERY2_J3X_J4_GALLERIES_AS_TREE'); ?>
+                    <div class="card text-dark bg-light j4x-info-card" style="max-width: 36rem;">
+                        <div class="card-header">
+                            <?php echo Text::_('COM_RSGALLERY2_J3X_J4_GALLERIES_AS_TREE'); ?>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_INFO'); ?></h5>
+                            <?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_MUST_BE_TRANSFERRED'); ?>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_INFO'); ?></h5>
-			            <?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_MUST_BE_TRANSFERRED'); ?>
-                    </div>
-                </div>
 
 
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
                 <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-                <!--input type="hidden" name="option" value="com_rsgallery2" />
-                <input type="hidden" name="rsgOption" value="maintenance" /-->
 
                 <input type="hidden" name="boxchecked" value="0" />
                 <input type="hidden" name="task" value=""/>
-                <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>
     </div>

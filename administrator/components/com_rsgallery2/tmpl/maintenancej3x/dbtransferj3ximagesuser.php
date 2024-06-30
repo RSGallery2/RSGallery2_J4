@@ -13,12 +13,12 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 
 /*--------------------------------------------------------------------------------
-	db transfer j3x galleries
+	db transfer j3x images (all)
 --------------------------------------------------------------------------------*/
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser'); ?>"
       method="post" name="adminForm" id="adminForm">
     <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
@@ -26,7 +26,6 @@ use Joomla\CMS\Language\Text;
                 <?php echo $this->sidebar; ?>
             </div>
         <?php endif; ?>
-        dbtransfer <br>images <br>user<br>
 
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
@@ -47,7 +46,6 @@ use Joomla\CMS\Language\Text;
 
                 <input type="hidden" name="boxchecked" value="0" />
                 <input type="hidden" name="task" value=""/>
-                <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>
     </div>

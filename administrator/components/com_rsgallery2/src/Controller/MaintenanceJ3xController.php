@@ -1504,7 +1504,7 @@ function issueError  ($errorType)
 
                 throw new \Exception('Attention: raised exception ');
 
-                echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+                // echo new JsonResponse($result, 'Response message with !!! no !!! error set');
                 break;
         }
 
