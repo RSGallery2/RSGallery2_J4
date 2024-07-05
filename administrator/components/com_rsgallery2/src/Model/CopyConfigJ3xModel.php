@@ -78,6 +78,13 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 		$mergedItems = [];
 		$untouchedJ3xItems = [];
 		$untouchedJ4xItems = [];
+		
+		/* J3x -> J4x 
+		displaySlideshow -> galleries_show_slideshow
+		showGalleryOwner -> galleries_show_owner
+		showGallerySize -> galleries_show_size
+		showGalleryDate -> galleries_show_date
+		/**/
 
 		try {
 
@@ -101,6 +108,25 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 			// ??? images_column_arrangement_j3x ???
 			//$assistedJ3xItems ['display_thumbs_maxPerPage'] = array('images_column_arrangement_j3x',
 			//	$j3xConfigItems['display_thumbs_maxPerPage']);
+
+
+
+			// displaySlideshow -> galleries_show_slideshow
+			$assistedJ3xItems ['displaySlideshow'] = array ('galleries_show_slideshow',
+				$j3xConfigItems['displaySlideshow'];
+			
+			// showGalleryOwner -> galleries_show_owner
+			$assistedJ3xItems ['showGalleryOwner'] = array ('galleries_show_owner',
+				$j3xConfigItems['showGalleryOwner'];
+
+			// showGallerySize -> galleries_show_size
+			$assistedJ3xItems ['showGallerySize'] = array ('galleries_show_size',
+				$j3xConfigItems['showGallerySize'];
+
+			// showGalleryDate -> galleries_show_date
+			$assistedJ3xItems ['showGalleryDate'] = array ('galleries_show_date',
+				$j3xConfigItems['showGalleryDate'];
+
 
 			//--- transform J4x to match J3x setting (preset new variable) --------------------------
 
