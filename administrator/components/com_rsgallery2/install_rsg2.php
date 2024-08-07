@@ -348,6 +348,13 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 //
 //				}
 
+				//--- upgradeSql ----------------------------------------------------
+
+				$this->upgradeSql ();
+
+				// Merge existing with default parameter
+				$this->updateDefaultParams($parent);
+
 				//--- install message  ----------------------------------------------------
 
 				Log::add('post->update: install message', Log::INFO, 'rsg2');
@@ -927,6 +934,51 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		return;
 	}
 
+
+	protected function upgradeSql ()
+	{
+		Log::add(Text::_('start: upgradeSql: '), Log::INFO, 'rsg2');
+
+		try
+		{
+			// Previous j3x version:
+			if (version_compare($this->oldRelease, '5.0.12.999', 'lt'))
+			{
+
+
+			}
+		}
+		catch (\RuntimeException $exception)
+		{
+			Log::add(Text::_('\n>> Exception: upgradeSql: '), Log::INFO, 'rsg2');
+		}
+
+		Log::add(Text::_('Exit upgradeSql'), Log::INFO, 'rsg2');
+
+		return;
+	}
+
+	protected function upgradeSql_j3x_tables ()
+	{
+		Log::add(Text::_('start: upgradeSql_j3x_tables: '), Log::INFO, 'rsg2');
+
+		try
+		{
+			$tables =
+				$db->getTableList();
+
+
+
+		}
+		catch (\RuntimeException $exception)
+		{
+			Log::add(Text::_('\n>> Exception: upgradeSql_j3x_tables: '), Log::INFO, 'rsg2');
+		}
+
+		Log::add(Text::_('Exit upgradeSql_j3x_tables'), Log::INFO, 'rsg2');
+
+		return;
+	}
 
 	/**
      * @param   InstallerAdapter  $parent  The class calling this method
