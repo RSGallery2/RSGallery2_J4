@@ -150,6 +150,9 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			{
 				Log::add(Text::_('-> pre update'), Log::INFO, 'rsg2');
 
+                // ToDo: use J4 $this->>oldManifestData->Version
+
+
 				//--- Read manifest with old version ------------------------
 
 				// could also be done by $xml=simplexml_load_file of manfiest on
@@ -603,6 +606,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		try
 		{
+            // ToDo: !!! $db = Factory::getContainer()->get('DatabaseDriver'); !!!
+
 			// $db    = Factory::getContainer()->get(DatabaseInterface::class);
 			// $db = $this->getDatabase();
 			$db = Factory::getDbo();
@@ -941,10 +946,13 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		try
 		{
+            // todo remove
+            $this->upgradeSql_j3x_tables ();
+
 			// Previous j3x version:
 			if (version_compare($this->oldRelease, '5.0.12.999', 'lt'))
 			{
-
+                $this->upgradeSql_j3x_tables ();
 
 			}
 		}
@@ -958,15 +966,103 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		return;
 	}
 
+	/**
+	 * Following could not be done in stanadrd SQL script
+	 * IF (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = `#__rsgallery2_galleries`))
+	 * so
+	 *
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
 	protected function upgradeSql_j3x_tables ()
 	{
 		Log::add(Text::_('start: upgradeSql_j3x_tables: '), Log::INFO, 'rsg2');
 
 		try
 		{
-			$tables =
-				$db->getTableList();
+            // ToDo: !!! // When used in the component's Model
+			//           $db = $this->getDatabase(); !!!
 
+            // $db = Factory::getDbo();
+            $db = Factory::getContainer()->get('DatabaseDriver');
+            $tables = $db->getTableList();
+            $prefix = $db->getPrefix();
+
+            if (in_array ($prefix . 'rsgallery2_galleries', $tables)) {
+
+				// ALTER TABLE IF EXISTS `#__rsgallery2_galleries` MODIFY `checked_out_time` datetime NOT NULL;
+
+
+
+	            // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
+	            $query = $db->getQuery(true)
+
+		            ->update($db->quoteName('#__rsgallery2_galleries'))
+		            ->set($db->quoteName('checked_out_time') . ' = 1980-01-01 00:00:00')
+		            ->where($db->quoteName('created_date') . ' = 0000-00-00 00:00:00')
+				;
+
+	            $db->setQuery($query);
+
+	            try {
+		            $db->execute();
+	            } catch (\RuntimeException $e) {
+		            $app     = Factory::getApplication();
+		            $app->enqueueMessage($e->getMessage(), 'error');
+
+		            return false;
+	            }
+
+            }
+
+            if (in_array ($prefix . 'rsgallery2_files', $tables)) {
+
+	            // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
+	            $query = $db->getQuery(true)
+
+		            ->update($db->quoteName('#__rsgallery2_files'))
+		            ->set($db->quoteName('checked_out_time') . ' = 1980-01-01 00:00:00')
+		            ->where($db->quoteName('created_date') . ' = 0000-00-00 00:00:00')
+	            ;
+
+	            $db->setQuery($query);
+
+	            try {
+		            $db->execute();
+	            } catch (\RuntimeException $e) {
+		            $app     = Factory::getApplication();
+		            $app->enqueueMessage($e->getMessage(), 'error');
+
+		            return false;
+	            }
+
+
+            }
+
+            if (in_array ($prefix . 'rsgallery2_comments', $tables)) {
+
+	            // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
+	            $query = $db->getQuery(true)
+
+		            ->update($db->quoteName('#__rsgallery2_comments'))
+		            ->set($db->quoteName('checked_out_time') . " = 1980-01-01 00:00:00")
+		            ->where($db->quoteName('created_date') . " = 0000-00-00 00:00:00")
+	            ;
+
+	            $db->setQuery($query);
+
+	            try {
+		            $db->execute();
+	            } catch (\RuntimeException $e) {
+		            $app     = Factory::getApplication();
+		            $app->enqueueMessage($e->getMessage(), 'error');
+
+		            return false;
+	            }
+
+
+            }
 
 
 		}
@@ -976,6 +1072,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		}
 
 		Log::add(Text::_('Exit upgradeSql_j3x_tables'), Log::INFO, 'rsg2');
+
+        throw new Exception('Exit by intention: upgradeSql_j3x_tables');
 
 		return;
 	}
