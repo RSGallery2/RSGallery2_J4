@@ -113,19 +113,19 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 
 			// displaySlideshow -> galleries_show_slideshow
 			$assistedJ3xItems ['displaySlideshow'] = array ('galleries_show_slideshow',
-				$j3xConfigItems['displaySlideshow'];
+				$j3xConfigItems['displaySlideshow']);
 			
 			// showGalleryOwner -> galleries_show_owner
 			$assistedJ3xItems ['showGalleryOwner'] = array ('galleries_show_owner',
-				$j3xConfigItems['showGalleryOwner'];
+				$j3xConfigItems['showGalleryOwner']);
 
 			// showGallerySize -> galleries_show_size
 			$assistedJ3xItems ['showGallerySize'] = array ('galleries_show_size',
-				$j3xConfigItems['showGallerySize'];
+				$j3xConfigItems['showGallerySize']);
 
 			// showGalleryDate -> galleries_show_date
 			$assistedJ3xItems ['showGalleryDate'] = array ('galleries_show_date',
-				$j3xConfigItems['showGalleryDate'];
+				$j3xConfigItems['showGalleryDate']);
 
 
 			//--- transform J4x to match J3x setting (preset new variable) --------------------------
