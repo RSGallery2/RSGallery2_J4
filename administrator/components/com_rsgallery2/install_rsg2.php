@@ -76,7 +76,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			{
 				Log::add(Text::_('\n>>RSG2 Installer construct'), Log::INFO, 'rsg2');
 			}
-			catch (\RuntimeException $exception)
+			catch (\RuntimeException $e)
 			{
 				// Informational log only
 			}
@@ -353,7 +353,14 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 				//--- upgradeSql ----------------------------------------------------
 
-				$this->upgradeSql ();
+				$hasError = $this->upgradeSql ();
+				if ($hasError) {
+
+					// The script failed, tell about it
+					throw new \RuntimeException(
+						Text::_('RSG2 upgrade sql fails on install_rsg2. More see log file')
+					);
+				}
 
 				// Merge existing with default parameter
 				$this->updateDefaultParams($parent);
@@ -511,10 +518,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				}
 			}
 
-		} //catch (\RuntimeException $e)
+		} 
 		catch (\Exception $e)
 		{
-			Log::add('initGalleryTree: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception in initGalleryTree: ' ) . $e->getMessage(),
+				Log::INFO, 'rsg2');
 			throw new \RuntimeException($e->getMessage() . ' from initGalleryTree');
 		}
 
@@ -555,10 +563,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 			$installMsg = $InstallMessageHelper->installMessageText($type);
 
-		} //catch (\RuntimeException $e)
+		} 
 		catch (\Exception $e)
 		{
-			Log::add('installMessage: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception in installMessage: ' ) . $e->getMessage(),
+				Log::INFO, 'rsg2');
 			throw new \RuntimeException($e->getMessage() . ' from installMessage');
 		}
 
@@ -627,6 +636,9 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		}
 		catch (\RuntimeException $e)
 		{
+			Log::add(Text::_('Exception in readRsg2ExtensionManifest: ' ) . $e->getMessage(),
+				Log::INFO, 'rsg2');
+
 			$OutTxt = '';
 			$OutTxt .= 'readRsg2ExtensionManifest: Error executing query: "' . "" . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -637,131 +649,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 		return $manifest;
 	}
-
-// Not used ?
-//	/**
-//	 *
-//	 * Checks for RSG2 version j3x db tables existence
-//	 *
-//	 * @return bool
-//	 * @throws Exception
-//	 *
-//	 * @since 5.0.0
-//	 */
-//	protected function isJ3xRsg2DataExisting() : array
-//	{
-//		$isJ3xTableExisting = false;
-//
-//		try
-//		{
-//
-//			$J3xExistModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/J3xExistModel.php';
-//			include($J3xExistModelFileName);
-//			$j3xExistModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel();
-//
-//			$isJ3xTableExisting = $j3xExistModel->J3xConfigTableExist();
-//
-//		} //catch (\RuntimeException $e)
-//		catch (\Exception $e)
-//		{
-//			Log::add('isJ3xRsg2DataExisting: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
-//			throw new \RuntimeException($e->getMessage() . ' from isJ3xRsg2DataExisting');
-//		}
-//
-//		return $isJ3xTableExisting;
-//	}
-
-// Can't be used as boot rsg2 would be needed and is yet ? partly active ?
-//	/**
-//	 *
-//	 * Copies J3x configuration parameter(options) to J4x version
-//	 *
-//	 * @return
-//	 * @throws Exception
-//	 *
-//	 * @since 5.0.0
-//	 */
-//	protected function copyJ3xDbConfigParameter()
-//	{
-//		// Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-//		// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
-//		// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
-//		// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-//
-//		$isCopiedConfig = false;
-//
-//		try
-//		{
-//			Log::add(Text::_('upd (30) MaintenanceJ3xModel (copy J3x config) -----------------------'), Log::INFO, 'rsg2');
-//
-//			Log::add(Text::_('upd (30.1) '), Log::INFO, 'rsg2');
-//
-//			// prepare 'use' models -----------------------------------------------------
-//
-//			//--- load ConfigRawModel -----------------------------------------------------
-//
-//			$configRawModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ConfigRawModel.php';
-//			Log::add(Text::_('upd (30.2) '), Log::INFO, 'rsg2');
-//			$configRawClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel';
-//			Log::add(Text::_('upd (30.3) '), Log::INFO, 'rsg2');
-//			\JLoader::register($configRawClassName, $configRawModelFileName);
-//
-////			// Log::add(Text::_('upd (30.3) '), Log::INFO, 'rsg2');
-////			Log::add('ConfigRawModel: ', Log::INFO, 'rsg2');
-////			include($configRawModelFileName);
-//
-//			Log::add(Text::_('upd (30.4) '), Log::INFO, 'rsg2');
-//			$configRawModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel();
-//
-//			//--- load MaintenanceJ3xModel -----------------------------------------------------
-//
-//			Log::add(Text::_('upd (30.11) '), Log::INFO, 'rsg2');
-//			$copyConfigJ3xModelModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/CopyConfigJ3xModel.php';
-//			Log::add(Text::_('upd (30.12) '), Log::INFO, 'rsg2');
-//			$copyConfigJ3xClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\CopyConfigJ3xModel';
-//			Log::add(Text::_('upd (30.13) '), Log::INFO, 'rsg2');
-//			\JLoader::register($copyConfigJ3xClassName, $copyConfigJ3xModelModelFileName);
-//
-////			//Log::add(Text::_('upd (30.14) '), Log::INFO, 'rsg2');
-////			Log::add('ConfigJ3xRawModel: ', Log::INFO, 'rsg2');
-////			include($copyConfigJ3xModelModelFileName);
-//
-//			//--- use MaintenanceJ3xModel ----------------------------------------------------
-//
-//			Log::add(Text::_('upd (30.14) '), Log::INFO, 'rsg2');
-//			$j3xModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\CopyConfigJ3xModel();
-//
-//			try
-//			{
-//				//--- copy j3x parameter ---------------------------------------------
-//
-//				//Log::add(Text::_('upd (30.6) '), Log::INFO, 'rsg2');
-//				Log::add('collectAndCopyJ3xConfig2J4xOptions: ', Log::INFO, 'rsg2');
-//
-//				$isCopiedConfig = $j3xModel->collectAndCopyJ3xConfig2J4xOptions();
-//
-//				Log::add(Text::_('upd (30.7) '), Log::INFO, 'rsg2');
-//				if (!$isCopiedConfig)
-//				{
-//					Factory::getApplication()->enqueueMessage(Text::_('Error: Transfer J3x configuration failed'), 'error');
-//				}
-//			}
-//			catch (\RuntimeException $e)
-//			{
-//				Factory::getApplication()->enqueueMessage($e->getMessage() . ' Copy j3x DB config', 'error');
-//			}
-//
-//			Log::add(Text::_('upd (30.19) '), Log::INFO, 'rsg2');
-//
-//		} //catch (\RuntimeException $e)
-//		catch (\Exception $e)
-//		{
-//			Log::add('copyJ3xDbTables: Exception: ' . $e->getMessage(), Log::INFO, 'rsg2');
-//			throw new \RuntimeException($e->getMessage() . ' from copyJ3xDbTables');
-//		}
-//
-//		return $isCopiedConfig;
-//	}
 
 	/**
 	 * Remove old language files of RSG2 J3x stored within joomla
@@ -790,9 +677,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			$isOneFileDeleted = $this->removeLangFilesInSubPaths($langPath);
 
 		}
-		catch (\RuntimeException $exception)
+		catch (\RuntimeException $e)
 		{
-			Log::add(Text::_('\n>> Exception: removeAllOldLangFiles: ') . $langPath, Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception in removeAllOldLangFiles: ') . $e->getMessage()
+				. ' \n' . $langPath,
+				Log::INFO, 'rsg2');
 		}
 
 		return;
@@ -837,9 +726,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				}
 			}
 		}
-		catch (\RuntimeException $exception)
+		catch (\RuntimeException $e)
 		{
-			Log::add(Text::_('\n>> Exception: removeLangFilesInSubPaths (1): ') . $langPath, Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception in removeLangFilesInSubPaths (1): ') . $e->getMessage()
+				. ' \n' . $langPath,
+				Log::INFO, 'rsg2');
 		}
 
 		try
@@ -865,9 +756,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				}
 			}
 		}
-		catch (\RuntimeException $exception)
+		catch (\RuntimeException $e)
 		{
-			Log::add(Text::_('\n>> Exception: removeLangFilesInSubPaths (2): ') . $langPath, Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception in removeLangFilesInSubPaths (2): '). $e->getMessage()
+				. ' \n' . $langPath,
+				Log::INFO, 'rsg2');
 		}
 
 		return $isOneFileDeleted;
@@ -931,9 +824,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			}
 
 		}
-		catch (\RuntimeException $exception)
+		catch (\RuntimeException $e)
 		{
-			Log::add(Text::_('\n>> Exception: removeJ3xComponentFiles: '), Log::INFO, 'rsg2');
+			Log::add(Text::_('\n>> Exception: removeJ3xComponentFiles: ') . $e->getMessage(),
+				Log::INFO, 'rsg2');
 		}
 
 		return;
@@ -944,26 +838,26 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	{
 		Log::add(Text::_('start: upgradeSql: '), Log::INFO, 'rsg2');
 
+		$hasError = false;
+
 		try
 		{
-            // todo remove
-            $this->upgradeSql_j3x_tables ();
-
 			// Previous j3x version:
 			if (version_compare($this->oldRelease, '5.0.12.999', 'lt'))
 			{
-                $this->upgradeSql_j3x_tables ();
+				$hasError = $this->upgradeSql_j3x_tables ();
 
 			}
 		}
-		catch (\RuntimeException $exception)
+		catch (\RuntimeException $e)
 		{
-			Log::add(Text::_('\n>> Exception: upgradeSql: '), Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception: upgradeSql: ') . $e->getMessage(),
+				Log::INFO, 'rsg2');
 		}
 
 		Log::add(Text::_('Exit upgradeSql'), Log::INFO, 'rsg2');
 
-		return;
+		return $hasError;
 	}
 
 	/**
@@ -972,12 +866,14 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 	 * so
 	 *
 	 *
-	 * @return void
+	 * @return bool
 	 * @throws Exception
 	 */
 	protected function upgradeSql_j3x_tables ()
 	{
 		Log::add(Text::_('start: upgradeSql_j3x_tables: '), Log::INFO, 'rsg2');
+
+		$hasError = false;
 
 		try
 		{
@@ -991,91 +887,79 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             if (in_array ($prefix . 'rsgallery2_galleries', $tables)) {
 
-				// ALTER TABLE IF EXISTS `#__rsgallery2_galleries` MODIFY `checked_out_time` datetime NOT NULL;
-
-
 
 	            // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
-	            $query = $db->getQuery(true)
+	            $hasError |= $this->j3x_tables_fix_datatime ('#__rsgallery2_galleries', 'checked_out_time', $db);
+	            $hasError |= $this->j3x_tables_fix_datatime ('#__rsgallery2_galleries', 'date', $db);
 
-		            ->update($db->quoteName('#__rsgallery2_galleries'))
-		            ->set($db->quoteName('checked_out_time') . ' = 1980-01-01 00:00:00')
-		            ->where($db->quoteName('created_date') . ' = 0000-00-00 00:00:00')
-				;
-
-	            $db->setQuery($query);
-
-	            try {
-		            $db->execute();
-	            } catch (\RuntimeException $e) {
-		            $app     = Factory::getApplication();
-		            $app->enqueueMessage($e->getMessage(), 'error');
-
-		            return false;
-	            }
+	            // ALTER TABLE IF EXISTS `#__rsgallery2_galleries` MODIFY `checked_out_time` datetime NOT NULL;
+				// Not needed ? ALTER TABLE `#__rsgallery2_galleries` MODIFY `created` datetime NOT NULL;
+	            // and below
 
             }
 
             if (in_array ($prefix . 'rsgallery2_files', $tables)) {
 
 	            // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
-	            $query = $db->getQuery(true)
-
-		            ->update($db->quoteName('#__rsgallery2_files'))
-		            ->set($db->quoteName('checked_out_time') . ' = 1980-01-01 00:00:00')
-		            ->where($db->quoteName('created_date') . ' = 0000-00-00 00:00:00')
-	            ;
-
-	            $db->setQuery($query);
-
-	            try {
-		            $db->execute();
-	            } catch (\RuntimeException $e) {
-		            $app     = Factory::getApplication();
-		            $app->enqueueMessage($e->getMessage(), 'error');
-
-		            return false;
-	            }
-
-
+	            $hasError |= $this->j3x_tables_fix_datatime ('#__rsgallery2_files', 'checked_out_time', $db);
+	            $hasError |= $this->j3x_tables_fix_datatime ('#__rsgallery2_files', 'date', $db);
             }
 
             if (in_array ($prefix . 'rsgallery2_comments', $tables)) {
 
 	            // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
-	            $query = $db->getQuery(true)
-
-		            ->update($db->quoteName('#__rsgallery2_comments'))
-		            ->set($db->quoteName('checked_out_time') . " = 1980-01-01 00:00:00")
-		            ->where($db->quoteName('created_date') . " = 0000-00-00 00:00:00")
-	            ;
-
-	            $db->setQuery($query);
-
-	            try {
-		            $db->execute();
-	            } catch (\RuntimeException $e) {
-		            $app     = Factory::getApplication();
-		            $app->enqueueMessage($e->getMessage(), 'error');
-
-		            return false;
-	            }
-
+	            $hasError |= $this->j3x_tables_fix_datatime ('#__rsgallery2_comments', 'checked_out_time', $db);
+	            $hasError |= $this->j3x_tables_fix_datatime ('#__rsgallery2_comments', 'datetime', $db);
 
             }
-
-
 		}
-		catch (\RuntimeException $exception)
+		catch (\RuntimeException $e)
 		{
-			Log::add(Text::_('\n>> Exception: upgradeSql_j3x_tables: '), Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception: upgradeSql_j3x_tables: ') . $e->getMessage(),
+				Log::INFO, 'rsg2');
+			return true;
 		}
 
 		Log::add(Text::_('Exit upgradeSql_j3x_tables'), Log::INFO, 'rsg2');
 
-        throw new Exception('Exit by intention: upgradeSql_j3x_tables');
+		return $hasError;
+	}
 
-		return;
+	/**
+	 * mysql fix for datetime NOT NULL default '0000-00-00 00:00:00' => '1980-01-01 00:00:00'
+	 *
+	 * @param string $tableName
+	 * @param string $
+	 *
+	 * @return bool
+	 */
+	protected function j3x_tables_fix_datatime (string $tableName, string $variableName, $db)
+	{
+		Log::add(Text::_('      * j3x_tables_fix_datatime: ' . $tableName . '.' . $variableName), Log::INFO, 'rsg2');
+
+		$query = $db->getQuery(true)
+			->update($db->quoteName($tableName))
+			->set($db->quoteName($variableName) . " = '1980-01-01 00:00:00'")
+			->where($db->quoteName($variableName) . " = '0000-00-00 00:00:00'");
+
+		$db->setQuery($query);
+
+		try
+		{
+			$db->execute();
+		}
+		catch (\RuntimeException $e)
+		{
+			Log::add(Text::_('Exception: j3x_tables_fix_datatime: ') . $e->getMessage(),
+				Log::INFO, 'rsg2');
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($e->getMessage(), 'error');
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -1126,9 +1010,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			Log::add(Text::_('upd (20.9) '), Log::INFO, 'rsg2');
 
 		}
-		catch (\RuntimeException $exception)
+		catch (\RuntimeException $e)
 		{
-			Log::add(Text::_('\n>> Exception: updateDefaultParams: '), Log::INFO, 'rsg2');
+			Log::add(Text::_('Exception: upgradeSql: ') . $e->getMessage(),
+				Log::INFO, 'rsg2');
 		}
 
 		Log::add(Text::_('Exit updateDefaultParams'), Log::INFO, 'rsg2');
