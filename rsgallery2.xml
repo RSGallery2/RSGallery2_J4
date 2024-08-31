@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
 	<name>COM_RSGALLERY2</name>
-	<creationDate>18. Aug. 2024</creationDate>
+	<creationDate>31.08.2024</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
@@ -50,30 +50,17 @@
 			-->
 			<!-- menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu -->
 			<!-- Note that all & must be escaped to &amp; for the file to be valid XML and be parsed by the installer -->
-			<menu view="COM_RSGALLERY2_MENU_CONTROL_PANEL"
-			      img="class:home"
-			      link="option=com_rsgallery2">COM_RSGALLERY2_MENU_CONTROL_PANEL
-			</menu>
-			<menu view="COM_RSGALLERY2_MENU_GALLERIES"
-			      img="class:images"
-			      link="option=com_rsgallery2&amp;view=galleries">COM_RSGALLERY2_MENU_GALLERIES
+			<menu view="COM_RSGALLERY2_MENU_CONTROL_PANEL" img="class:home" link="option=com_rsgallery2">COM_RSGALLERY2_MENU_CONTROL_PANEL</menu>
+			<menu view="COM_RSGALLERY2_MENU_GALLERIES" img="class:images" link="option=com_rsgallery2&amp;view=galleries">COM_RSGALLERY2_MENU_GALLERIES 
 				<params>
 					<menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title>
 					<menu-quicktask>index.php?option=com_rsgallery2&amp;task=gallery.add</menu-quicktask>
 				</params>
 			</menu>
-			<menu view="COM_RSGALLERY2_MENU_UPLOAD"
-			      img="class:upload"
-			      link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD</menu>
-			<menu view="COM_RSGALLERY2_MENU_IMAGES"
-			      img="class:images"
-			      link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES</menu>
-			<menu view="COM_RSGALLERY2_MENU_CONFIG"
-			      img="class:config"
-			      link="option=com_config&amp;view=component&amp;component=com_rsgallery2">COM_RSGALLERY2_MENU_CONFIG</menu>
-			<menu view="COM_RSGALLERY2_MENU_MAINTENANCE"
-			      img="class:equalizer"
-			      link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE</menu>
+			<menu view="COM_RSGALLERY2_MENU_UPLOAD" img="class:upload" link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD</menu>
+			<menu view="COM_RSGALLERY2_MENU_IMAGES" img="class:images" link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES</menu>
+			<menu view="COM_RSGALLERY2_MENU_CONFIG" img="class:config" link="option=com_config&amp;view=component&amp;component=com_rsgallery2">COM_RSGALLERY2_MENU_CONFIG</menu>
+			<menu view="COM_RSGALLERY2_MENU_MAINTENANCE" img="class:equalizer" link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE</menu>
 		</submenu>
 
 		<!-- Core files -->
@@ -125,7 +112,4 @@
 			>https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml
 		</server>
 	</updateservers>
-	<dashboards>
-		<dashboard title="COM_MENUS_RSGALLERY2_TITLE" icon="icon-list">rsgallery2</dashboard>
-	</dashboards>
 </extension>
