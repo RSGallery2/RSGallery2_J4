@@ -1,8 +1,9 @@
 <?php // no direct access
 /**
- * @package       RSGallery2
- * @copyright (C) 2003-2024 RSGallery2 Team
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (C) 2003-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -266,13 +267,13 @@ Factory::getApplication()->getDocument()->addScriptDeclaration(implode("\n", $sc
 
                                 <td width="1%" class="center">
                                     <?php
-                                    $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
+                                    $link = \Joomla\CMS\Router\Route::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
                                     echo '<a href="' . $link . '"">' . $item->id . '</a>';
                                     ?>
                                 </td>
                                 <td width="1%" class="center">
                                     <?php
-                                    $link = JRoute::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
+                                    $link = \Joomla\CMS\Router\Route::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $item->id);
                                     echo '<a id="galleryId_' . $item->id . '" href="' . $link . '"">' . $item->name . '</a>';
                                     ?>
                                 </td>

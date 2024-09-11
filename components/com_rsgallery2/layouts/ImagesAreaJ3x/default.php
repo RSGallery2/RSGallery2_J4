@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     rsgallery2
- * @subpackage  Layout
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2021-2024 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2021-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 use Joomla\CMS\Language\Text;

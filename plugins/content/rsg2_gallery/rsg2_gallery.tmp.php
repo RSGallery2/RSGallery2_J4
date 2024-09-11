@@ -145,7 +145,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             return false;
         }
 
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         try {
             //
@@ -167,7 +167,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
                 jimport('joomla.log.log');
 
                 // Get the date for log file name
-                $date = JFactory::getDate()->format('Y-m-d');
+                $date = Factory::getDate()->format('Y-m-d');
 
                 // Add the logger.
                 JLog::addLogger(
@@ -284,7 +284,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             // Check we have a template name
             if (!isset($template)) {
                 if ($DebugActive) {
-                    $msg = JText::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_TEMPLATE_NAME_GIVEN');
+                    $msg = Text::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_TEMPLATE_NAME_GIVEN');
                     $app->enqueueMessage($msg, 'message');
                     JLog::add('Template not found: "' . $template . '"', JLog::DEBUG);
                 }
@@ -296,7 +296,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             $templateLocation = JPATH_RSGALLERY2_SITE . '/templates/' . $template . '/index.php';
             if (!file_exists($templateLocation)) {
                 if ($DebugActive) {
-                    $msg = JText::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_TEMPLATE_DIRECTORY_NOT_FOUND', $template);
+                    $msg = Text::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_TEMPLATE_DIRECTORY_NOT_FOUND', $template);
                     $app->enqueueMessage($msg, 'message');
                     JLog::add('Template location not found: "' . $templateLocation . '"', JLog::DEBUG);
                 }
@@ -306,7 +306,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             // Check we have a gallery id
             if (!isset($gallery_id)) {
                 if ($DebugActive) {
-                    $msg = JText::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_GALLERY_ID_GIVEN');
+                    $msg = Text::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_GALLERY_ID_GIVEN');
                     $app->enqueueMessage($msg, 'message');
                     JLog::add('no gallery id found: "' . $gallery_id . '"', JLog::DEBUG);
                 }
@@ -315,7 +315,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             // Check if a gallery with gallery id exists
             // Get gallery details first
-            $db = JFactory::getContainer()->get(DatabaseInterface::class);
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
             $query->select('id, name, published'); // ToDo: Perhaps access could be checked as well
             $query->from('#__rsgallery2_galleries');
@@ -326,7 +326,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             // Does the gallery exist?
             if (!$galleryDetails) {
                 if ($DebugActive) {
-                    $msg = JText::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_SUCH_GALLERY_ID_EXISTS', $gallery_id);
+                    $msg = Text::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_SUCH_GALLERY_ID_EXISTS', $gallery_id);
                     $app->enqueueMessage($msg, 'message');
                     JLog::add('gallery id not found in DB: "' . $gallery_id . '"', JLog::DEBUG);
                 }
@@ -336,7 +336,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             // Is the gallery published?
             if (!$galleryDetails['published']) {
                 if ($DebugActive) {
-                    $msg = JText::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_GALLERY_UNPUBLISHED', $galleryDetails['name'], $gallery_id);
+                    $msg = Text::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_GALLERY_UNPUBLISHED', $galleryDetails['name'], $gallery_id);
                     $app->enqueueMessage($msg, 'message');
                     JLog::add('gallery not published: "' . $gallery_id . '"', JLog::DEBUG);
                 }
@@ -354,7 +354,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             //The article has lang, language, Itemid, option, view, catid and id
             //Get rid of catid and id, change option and view, set gallery_id (gid).
-            $input = JFactory::getApplication()->input;
+            $input = Factory::getApplication()->input;
             //JRequest::setVar('catid',Null);   //Is there a way to unset this?
 
             // Id may otherwise try to retrieve a image
@@ -500,7 +500,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
 public
 function dummy()
 {
-     * // $app = JFactory::getApplication();
+     * // $app = Factory::getApplication();
      *
      * //--- Retrieve params -----------------------
      *
@@ -543,7 +543,7 @@ function dummy()
      * $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
      *
      * $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
-     * $folderUrl = JUri::root() . '/images/rsgallery2/2/thumbs/';
+     * $folderUrl = \Joomla\CMS\Uri\Uri::root() . '/images/rsgallery2/2/thumbs/';
      * $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
      *
      *

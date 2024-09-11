@@ -1,11 +1,12 @@
 <?php
 /**
- * @package    [PACKAGE_NAME]
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
  * @author     [AUTHOR] <[AUTHOR_EMAIL]>
  * @copyright  [COPYRIGHT]
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- * @link       [AUTHOR_URL]
+ * @license    GNU General Public License version 2 or later
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\site\Controller;

@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 \defined('_JEXEC') or die;
 
@@ -22,11 +22,11 @@ use Joomla\CMS\Language\Text;
 </button-->
 
 <!--button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('imagesProperties.PropertiesView');return false;">
-	<?php echo JText::_('COM_RSGALLERY2_ADD_IMAGE_PROPERTIES'); ?>
+	<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGE_PROPERTIES'); ?>
 </button-->
 <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('images.moveImagesToGallery');return false;">
-	<?php echo JText::_('COM_RSGALLERY2_MOVE'); ?>
+	<?php echo Text::_('COM_RSGALLERY2_MOVE'); ?>
 </button>
 <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('images.copyImagesToGallery');return false;">
-	<?php echo JText::_('COM_RSGALLERY2_COPY'); ?>
+	<?php echo Text::_('COM_RSGALLERY2_COPY'); ?>
 </button>

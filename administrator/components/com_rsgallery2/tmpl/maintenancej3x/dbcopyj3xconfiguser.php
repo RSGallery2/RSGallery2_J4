@@ -1,8 +1,9 @@
 <?php // no direct access
 /**
- * @package       RSGallery2
- * @copyright (C) 2023-2024 RSGallery2 Team
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (C) 2023-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -43,7 +44,7 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
                         <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyJ3xConfig2J4xOptionsUser');return false;">
-		                    <?php echo JText::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'); ?>
+		                    <?php echo Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'); ?>
                         </button>
 
                     </div>

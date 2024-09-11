@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
  * @copyright
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
@@ -17,7 +17,7 @@ use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\LanguageHelper;
@@ -696,11 +696,11 @@ class GalleryModel extends AdminModel
             {
                 if (Factory::getApplication()->get('unicodeslugs') == 1)
                 {
-                    $data['alias'] = \JFilterOutput::stringURLUnicodeSlug($data['title']);
+                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['title']);
                 }
                 else
                 {
-                    $data['alias'] = \JFilterOutput::stringURLSafe($data['title']);
+                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
                 }
 
                 $table = Table::getInstance('Content', 'JTable');

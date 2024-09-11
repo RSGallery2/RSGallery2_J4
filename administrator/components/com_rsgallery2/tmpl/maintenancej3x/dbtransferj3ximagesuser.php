@@ -1,8 +1,9 @@
 <?php // no direct access
 /**
- * @package       RSGallery2
- * @copyright (C) 2003-2024 RSGallery2 Team
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (C) 2003-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -38,7 +39,7 @@ use Joomla\CMS\Language\Text;
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
                         <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
-				            <?php echo JText::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
+				            <?php echo Text::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
                         </button>
 
                     </div>

@@ -1,17 +1,17 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\MaintConsolidateDb;
 
 \defined('_JEXEC') or die;
 
-//use JModelLegacy;
+//use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -81,7 +81,7 @@ class HtmlView extends BaseHtmlView
 		// Check rights of user
 		//$this->UserIsRoot = $this->CheckUserIsRoot();
 
-		$ConsolidateModel      = $this->getModel(); // JModelLegacy::getInstance('MaintConsolidateDB', 'rsgallery2Model');
+		$ConsolidateModel      = $this->getModel(); // use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
 
         // contains lost and found items
         $this->oImgRefs = $ConsolidateModel->GetImageReferences();
@@ -113,7 +113,7 @@ class HtmlView extends BaseHtmlView
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
 		Rsgallery2Helper::addSubmenu('maintenance');
-		$this->sidebar = \JHtmlSidebar::render();
+		$this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
 
 		$Layout = Factory::getApplication()->input->get('layout');
 

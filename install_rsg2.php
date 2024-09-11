@@ -1,11 +1,12 @@
 <?php
 /**
- * @package        com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
  * @author         RSGallery2 Team <team2@rsgallery2.org>
- * @copyright (c)  2003-2023 RSGallery2 Team
- * @license        GNU General Public License version 2 or later; see LICENSE.txt
- * @link           https://www.rsgallery2.org
+ * @copyright  (c)  2003-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
+ * @license    GNU General Public License version 2 or later
  */
 \defined('_JEXEC') or die;
 
@@ -17,7 +18,7 @@ use Joomla\CMS\Log\Log;
 
 //use Joomla\CMS\File;
 //use Joomla\CMS\Folder;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder
 
 /**
  * Script (install file of Rsgallery2 Component)
@@ -177,7 +178,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 			} else { // $type == 'install'
 
-				JLog::add('-> pre freshInstall', JLog::DEBUG);
+				Log::add('-> pre freshInstall', Log::DEBUG);
 			}
 
 // !!! ToDo: remove !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

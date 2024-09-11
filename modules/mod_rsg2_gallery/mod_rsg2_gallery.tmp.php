@@ -17,7 +17,7 @@ use Rsgallery2\Module\Rsgallery2\Site\Helper\Rsg2_galleryHelper;
 // ToDo: all see gallery module 
 
 
-// $app = JFactory::getApplication();
+// $app = Factory::getApplication();
 
 //--- Retrieve params -----------------------
 
@@ -60,7 +60,7 @@ $localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
 $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
 
 $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
-$folderUrl = JUri::root() . '/images/rsgallery2/2/thumbs/';
+$folderUrl = \Joomla\CMS\Uri\Uri::root() . '/images/rsgallery2/2/thumbs/';
 $images = Rsg2_galleryHelper::getImageNamesOfUrl($folderUrl);
 
 

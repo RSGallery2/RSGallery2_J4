@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     RSGallery2
- * @subpackage  com_rsgallery2
- * @copyright (c) 2016-2024 RSGallery2 Team
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (c) 2016-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * @author      finnern
  * RSGallery is Free Software
  */
@@ -12,7 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
-use JModelLegacy;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
@@ -462,11 +462,11 @@ class ImageModel extends AdminModel
             {
                 if (Factory::getApplication()->get('unicodeslugs') == 1)
                 {
-                    $data['alias'] = \JFilterOutput::stringURLUnicodeSlug($data['title']);
+                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['title']);
                 }
                 else
                 {
-                    $data['alias'] = \JFilterOutput::stringURLSafe($data['title']);
+                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
                 }
 
                 $table = Table::getInstance('Content', 'JTable');
@@ -784,7 +784,7 @@ class ImageModel extends AdminModel
 
 		$item->title = $this->generateNewImageName($fileName, 0);
 		$item->alias = $item->title;
-		$this->alias = \JFilterOutput::stringURLSafe($this->alias);
+		$this->alias = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($this->alias);
 
 		// Create unique alias and title
 		list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
@@ -878,7 +878,7 @@ class ImageModel extends AdminModel
 			$table->title = $this->generateNewImageName($fileName);
 		}
 		$table->alias = $table->title;
-		$table->alias = \JFilterOutput::stringURLSafe($table->alias);
+		$table->alias = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($table->alias);
 
 		// Create unique alias and title
 		list($title, $alias) = $this->generateNewTitle(null, $table->alias, $table->title);
@@ -1526,7 +1526,7 @@ class ImageModel extends AdminModel
             $OutTxt .= 'Error executing image.table.delete: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -1543,7 +1543,7 @@ class ImageModel extends AdminModel
 
         try
         {
-            $imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
+            $imgFileModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('imageFile', 'RSGallery2Model');
 
             $filename          = $this->name;
             $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
@@ -1559,7 +1559,7 @@ class ImageModel extends AdminModel
             $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -1588,7 +1588,7 @@ class ImageModel extends AdminModel
             $OutTxt .= 'Error executing exifDataAllOfFiles: "' . count ($filenames) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -1620,7 +1620,7 @@ class ImageModel extends AdminModel
             $OutTxt .= 'Error executing exifDataOfFile: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -1657,7 +1657,7 @@ class ImageModel extends AdminModel
             $OutTxt .= 'Error executing exifDataFilesUserSelected: "' . count ($filenames) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
@@ -1709,7 +1709,7 @@ class ImageModel extends AdminModel
             $OutTxt .= 'Error executing exifDataUserSelected: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 

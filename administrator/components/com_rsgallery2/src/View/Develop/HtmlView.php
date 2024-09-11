@@ -1,17 +1,17 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Develop;
 
 \defined('_JEXEC') or die;
 
-//use JModelLegacy;
+//use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
@@ -22,7 +22,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Filesystem\File;
+use \Joomla\Filesystem\File
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
@@ -123,7 +123,7 @@ class HtmlView extends BaseHtmlView
 		    /**
 			case 'DebugGalleryOrder':
 
-				$this->GalleriesOrderModel = JModelLegacy::getInstance('GalleriesOrder', 'rsgallery2Model');
+				$this->GalleriesOrderModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('GalleriesOrder', 'rsgallery2Model');
 				$this->OrderedGalleries = $this->GalleriesOrderModel->OrderedGalleries();
 				$this->LeftJoinGalleries = $this->GalleriesOrderModel->LeftJoinGalleries();
 				break;
@@ -246,7 +246,7 @@ class HtmlView extends BaseHtmlView
 
 		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
 		Rsgallery2Helper::addSubmenu('develop');
-		$this->sidebar = \JHtmlSidebar::render();
+		$this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
 
 		$this->addToolbar($Layout);
 

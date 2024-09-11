@@ -1,17 +1,16 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Maintenance;
 
 \defined('_JEXEC') or die;
 
-//use JModelLegacy;
 use Finnern\Component\Lang4dev\Administrator\Helper\langFileNamesSet;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -123,7 +122,7 @@ class HtmlView extends BaseHtmlView
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
         Rsgallery2Helper::addSubmenu('maintenance');
-        $this->sidebar = \JHtmlSidebar::render();
+        $this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
 
         $Layout = Factory::getApplication()->input->get('layout');
 

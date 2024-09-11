@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
@@ -121,7 +121,7 @@ class ImagesController extends AdminController
      */
     public function moveImagesToGallery()
     {
-        //Factory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+        //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:moveTo: ";
         $msgType = 'notice';
 
@@ -131,7 +131,7 @@ class ImagesController extends AdminController
         $canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
         if (!$canAdmin)
         {
-            $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+            $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             $msg = nl2br ($msg);
@@ -178,7 +178,7 @@ class ImagesController extends AdminController
      */
     public function copyImagesToGallery()
     {
-        //Factory::getApplication()->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'warning');
+        //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:copyTo: ";
         $msgType = 'notice';
 
@@ -188,7 +188,7 @@ class ImagesController extends AdminController
         $canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
         if (!$canAdmin)
         {
-            $msg     = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+            $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             $msg = nl2br ($msg);

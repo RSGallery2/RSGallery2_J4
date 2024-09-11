@@ -1,11 +1,11 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  pkg_foos
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005 - 2019 Astrid Günther, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later;
- * @link        astrid-guenther.de
+ * @copyright  (c) 2005 - 2019 Astrid Günther, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later
+ * @license    GNU General Public License version 2 or later
  */
 
 \defined('_JEXEC') or die;

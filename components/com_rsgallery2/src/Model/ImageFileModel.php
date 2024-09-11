@@ -1,9 +1,9 @@
 <?php
 /**
- * @package         RSGallery2
- * @subpackage      com_rsgallery2
- * @copyright (c) 2016-2024 RSGallery2 Team
- * @license         http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (c) 2016-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * @author          finnern
  * RSGallery is Free Software
  */
@@ -14,10 +14,10 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use \Joomla\Filesystem\File
+use Joomla\Filesystem\Folder
 //use Joomla\CMS\Image;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\AdminModel;

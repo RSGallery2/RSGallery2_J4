@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 \defined('_JEXEC') or die;
@@ -132,12 +132,12 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 	//--- result of rating ------------------------------------
 
 	// ToDo: add limit here and remove from *js
-	//$html[] = '                <form name="rsgvoteform" method="post" action="' . JRoute::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
+	//$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
 	//                                                                                         index.php/single-gallery/item/1/asInline
 	//                                                                                         index.php?option=com_rsgallery2&page=inline&id=" . $item->id
-//		$html[] = '                <form name="rsgvoteform" method="post" action="' . JRoute::_('index.php?option=com_rsgallery2&&page=inline&id="&id=' . $imageId) .'" id="rsgVoteForm">';
+//		$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&&page=inline&id="&id=' . $imageId) .'" id="rsgVoteForm">';
 	$html[] = '                <form name="rsgvoteform" method="post" action="'
-		. JRoute::_('index.php?option=com_rsgallery2&page=inline&id=' . $imageId) .'" id="rsgVoteForm">';
+		. \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&page=inline&id=' . $imageId) .'" id="rsgVoteForm">';
 
 	$html[] = '                <div class="rating-block row-fluid text-center" >';
 
@@ -167,7 +167,7 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 	$html[] = '                <input type="hidden" name="rating" value="" />';
 	$html[] = '                <input type="hidden" name="paginationImgIdx" value="" />';
 	$html[] = '                <input type="hidden" name="id" value="' . $imageId . '" />';
-	$html[] = '                <input id="token" type="hidden" name="' . JSession::getFormToken() . '" value="1" />';
+	$html[] = '                <input id="token" type="hidden" name="' . \Joomla\CMS\Session\Session::getFormToken() . '" value="1" />';
 
 	$html[] = '                </form>';
 
@@ -313,7 +313,7 @@ function htmlExifData ($exifTags)
 //
 //
 //	// Manipulate form fieldset "name" depending on user
-//	$user = JFactory::getContainer()->get(UserFactoryInterface::class);
+//	$user = Factory::getContainer()->get(UserFactoryInterface::class);
 //	// User is logged in
 //	if ( ! empty($user->id))
 //	{
@@ -340,7 +340,7 @@ function htmlExifData ($exifTags)
 //	$html[] = '<div class="clearfix" >';
 //
 //	$html[] = '                <form name="rsgCommentForm" class="form-horizontal" method="post"';
-//	$html[] = '                    action="' . JRoute::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
+//	$html[] = '                    action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
 //
 //	$html[] = '                    <div class ="well">';
 //	$html[] = '                        <h4>'. Text::_('COM_RSGALLERY2_CREATE_COMMENT') . '</h4>';
@@ -360,7 +360,7 @@ function htmlExifData ($exifTags)
 //	$html[] = '                    	   <input type="hidden" name="rating" value="" />';
 //	$html[] = '                    	   <input type="hidden" name="paginationImgIdx" value="" />';
 //	$html[] = '                    	   <input type="hidden" name="id" value="' . $imageId . '" />';
-//	$html[] = '                    	   <input id="token" type="hidden" name="' . JSession::getFormToken() . '" value="1" />';
+//	$html[] = '                    	   <input id="token" type="hidden" name="' . \Joomla\CMS\Session\Session::getFormToken() . '" value="1" />';
 //
 //	$html[] = '                    </div>';
 //	$html[] = '                </form>';

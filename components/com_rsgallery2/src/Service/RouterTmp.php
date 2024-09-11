@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  com_foos
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright   (C) 2005 - 2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (C) 2005 - 2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace FooNamespace\Component\Foos\Site\Service;

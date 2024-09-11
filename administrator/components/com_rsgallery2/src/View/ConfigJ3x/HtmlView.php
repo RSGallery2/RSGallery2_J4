@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_rsgallery2
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\ConfigJ3x;
@@ -63,7 +63,7 @@ class HtmlView extends BaseHtmlView
 		/**
 		$Layout = Factory::getApplication()->input->get('layout');
 		Rsgallery2Helper::addSubmenu('config');
-		$this->sidebar = \JHtmlSidebar::render();
+		$this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
 		/**/
 
 		$this->addToolbar($Layout);

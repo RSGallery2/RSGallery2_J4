@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     rsgallery2
- * @subpackage  Layout
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c) 2005-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  */
 
 \defined('_JEXEC') or die;
@@ -41,7 +41,7 @@ if (!empty($isDevelopSite)) {
 	. '</span><br><br>';
 }
 
-$link = Route::_('index.php?option=com_rsgallery2&view=searchresult'); // JRoute::_('index.php'); ? >search?Itemid=101
+$link = Route::_('index.php?option=com_rsgallery2&view=searchresult'); // \Joomla\CMS\Router\Route::_('index.php'); ? >search?Itemid=101
 $placeholder = Text::_('COM_RSGALLERY2_SEARCH_GALLERIES_IMAGES');
 
 $this->filterForm    = $this->get('FilterForm');

@@ -2,9 +2,10 @@
 /**
  * ImageReferences collect all information about image artefacts
  *
- * @package       Rsgallery2
- * @copyright (C) 2016-2024 RSGallery2 Team
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (C) 2016-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * @author        finnern
  *                RSGallery2 is Free Software
  */
@@ -13,7 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // no direct access
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 use Joomla\Database\DatabaseInterface;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReference;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;

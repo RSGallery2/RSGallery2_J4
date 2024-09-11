@@ -1,8 +1,9 @@
 <?php // no direct access
 /**
- * @package       RSGallery2
- * @copyright (C) 2003-2024 RSGallery2 Team
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (C) 2003-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -85,12 +86,12 @@ function displayRsgMenuLinks($Rsg2MenuLinks)
                         <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
                         <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks');return false;">
-				            <?php echo JText::_('COM_RSGALLERY2_INCREASE_MENU_GID'); ?>
+				            <?php echo Text::_('COM_RSGALLERY2_INCREASE_MENU_GID'); ?>
                         </button>
 
                         <?php // 				// ToDo: remove  ?>
                         <button class="btn btn-info" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.j3xDegradeUpgradedJ3xMenuLinks');return false;">
-				            <?php echo JText::_('COM_RSGALLERY2_DECREASE_MENU_GID'); ?>
+				            <?php echo Text::_('COM_RSGALLERY2_DECREASE_MENU_GID'); ?>
                         </button>
 
                     </div>

@@ -4,9 +4,10 @@
  * Credits: Historical list of people participating in the project
  *
  * @version       $Id: CreditsExternal.php  2012-07-09 18:52:20Z mirjam $
- * @package       RSGallery2
- * @copyright (C) 2003-2024 RSGallery2 Team
- * @license       http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (C) 2003-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 

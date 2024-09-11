@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     RSGallery2
- * @subpackage  com_rsgallery2
- * @copyright (c) 2016-2024 RSGallery2 Team
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @package    RSGallery2
+ * @subpackage com_rsgallery2
+ * @copyright  (c) 2016-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * @author      finnern
  * RSGallery is Free Software
  */
@@ -240,9 +240,9 @@ class ConfigJ3xController extends AdminController // FormController
 	$this->checkToken();
 
 		// Access check
-		$canAdmin = JFactory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
 		if (!$canAdmin) {
-			$msg = $msg . JText::_('JERROR_ALERTNOAUTHOR');
+			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			$msg = nl2br ($msg);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
-	<name>COM_RSGALLERY2</name>
-	<creationDate>31.08.2024</creationDate>
+	<name>com_rsgallery2</name>
+	<creationDate>2024.09.11</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
@@ -33,14 +33,11 @@
 
 	<!-- Back-end files -->
 	<administration>
-		<!-- Menu entries -->
-		<!--menu view="rsgallery2">COM_RSGALLERY2_MENU</menu-->
-		<menu view="rsgallery2"
-			img="class:images"
-			>COM_RSGALLERY2_MENU
-			<params>
+		<menu img="class:images"
+			>com_rsgallery2
+			<!--params>
 				<dashboard>rsgallery2</dashboard>
-			</params>
+			</params-->
 		</menu>
 		
 		<submenu>
@@ -49,18 +46,52 @@
 				XML and be parsed by the installer
 			-->
 			<!-- menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu -->
-			<!-- Note that all & must be escaped to &amp; for the file to be valid XML and be parsed by the installer -->
-			<menu view="COM_RSGALLERY2_MENU_CONTROL_PANEL" img="class:home" link="option=com_rsgallery2">COM_RSGALLERY2_MENU_CONTROL_PANEL</menu>
-			<menu view="COM_RSGALLERY2_MENU_GALLERIES" img="class:images" link="option=com_rsgallery2&amp;view=galleries">COM_RSGALLERY2_MENU_GALLERIES 
+			<menu 
+				link="option=com_rsgallery2"
+				view="COM_RSGALLERY2_MENU_CONTROL_PANEL" 
+				img="class:home" 
+				>
+				COM_RSGALLERY2_MENU_CONTROL_PANEL
+			</menu>
+			<menu 
+				link="option=com_rsgallery2&amp;view=galleries"
+				view="COM_RSGALLERY2_MENU_GALLERIES" 
+				img="class:images" 
+				>
+				COM_RSGALLERY2_MENU_GALLERIES 
 				<params>
 					<menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title>
 					<menu-quicktask>index.php?option=com_rsgallery2&amp;task=gallery.add</menu-quicktask>
 				</params>
 			</menu>
-			<menu view="COM_RSGALLERY2_MENU_UPLOAD" img="class:upload" link="option=com_rsgallery2&amp;view=upload">COM_RSGALLERY2_MENU_UPLOAD</menu>
-			<menu view="COM_RSGALLERY2_MENU_IMAGES" img="class:images" link="option=com_rsgallery2&amp;view=images">COM_RSGALLERY2_MENU_IMAGES</menu>
-			<menu view="COM_RSGALLERY2_MENU_CONFIG" img="class:config" link="option=com_config&amp;view=component&amp;component=com_rsgallery2">COM_RSGALLERY2_MENU_CONFIG</menu>
-			<menu view="COM_RSGALLERY2_MENU_MAINTENANCE" img="class:equalizer" link="option=com_rsgallery2&amp;view=maintenance">COM_RSGALLERY2_MENU_MAINTENANCE</menu>
+			<menu 
+				link="option=com_rsgallery2&amp;view=upload"
+				view="COM_RSGALLERY2_MENU_UPLOAD" 
+				img="class:upload" 
+				>
+				COM_RSGALLERY2_MENU_UPLOAD
+			</menu>
+			<menu 
+				link="option=com_rsgallery2&amp;view=images"
+				view="COM_RSGALLERY2_MENU_IMAGES" 
+				img="class:images" 
+				>
+				COM_RSGALLERY2_MENU_IMAGES
+			</menu>
+			<menu 
+				link="option=com_config&amp;view=component&amp;component=com_rsgallery2"
+				view="COM_RSGALLERY2_MENU_CONFIG" 
+				img="class:config" 
+				>
+				COM_RSGALLERY2_MENU_CONFIG
+			</menu>
+			<menu 
+				link="option=com_rsgallery2&amp;view=maintenance"
+				view="COM_RSGALLERY2_MENU_MAINTENANCE" 
+				img="class:equalizer" 
+				>
+				COM_RSGALLERY2_MENU_MAINTENANCE
+			</menu>
 		</submenu>
 
 		<!-- Core files -->
