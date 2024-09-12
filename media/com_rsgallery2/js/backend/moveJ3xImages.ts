@@ -458,7 +458,7 @@ class GalleriesListTask {
         ev.stopPropagation();
 
         console.log(">onMoveAllGalleries: ");
-        
+
         // lazy programmers all galleries:
         //     instead of ajax call use all galleries loaded
 
@@ -1673,6 +1673,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     // (1) collect galleries, start request galleries from DB
     const galleriesListTask = new GalleriesListTask(elements,
-        j3xGalleries, requestImageIdsTask); 
-    
+        j3xGalleries, requestImageIdsTask);
+
 });

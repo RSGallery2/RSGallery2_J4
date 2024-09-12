@@ -7,7 +7,7 @@
  * @license    GNU General Public License version 2 or later
  */
 
-// J3x legacy view (default) => gallery 
+// J3x legacy view (default) => gallery
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallery;
 

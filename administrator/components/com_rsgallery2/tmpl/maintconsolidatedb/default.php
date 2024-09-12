@@ -48,56 +48,56 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     //$html[] = '';
     $html[] = Text::_('COM_RSGALLERY2_NUM');
     $html[] = '</th>';
-    
+
 
     /*
     $html = array (); // Check all empty
     $html[] = '<th class="center" width="1%">';
     //$html[] = '2'; // empty
     $html[] = '</th>';
-    
+
     /**/
      // Check all
     $html[] = '<th>';
     //$html[] = '';
     $html[] = HtmlHelper::_('grid.checkall');
     $html[] = '</th>';
-    
+
 
      // filename
     $html[] = '<th class="align-left" width="20%">';
     // $html[] =  '3';
     $html[] = Text::_('COM_RSGALLERY2_FILENAME');
     $html[] = '</th>';
-    
+
 
      // In Database
     $html[] = '<th class="center">';
     //$html[] = '4';
     $html[] = Text::_('COM_RSGALLERY2_IN_BR_DATABASE');
     $html[] = '</th>';
-    
+
 
      // display
     $html[] = '<th class="center">';
     //$html[] = '5';
     $html[] = Text::_('COM_RSGALLERY2_DISPLAY_BR_FOLDER');
     $html[] = '</th>';
-    
+
 
      // In original
     $html[] = '<th class="center">';
     //$html[] =  '6';
     $html[] = Text::_('COM_RSGALLERY2_ORIGINAL_BR_FOLDER');
     $html[] = '</th>';
-    
+
 
      // thumb
     $html[] = '<th class="center">';
     //$html[] = '7';
     $html[] = Text::_('COM_RSGALLERY2_THUMB_BR_FOLDER');
     $html[] = '</th>';
-    
+
 
 //    // watermarked
 //    if ($ImageReferences->UseWatermarked)
@@ -107,7 +107,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 //        //$html[] =  '8';
 //        $html[] = Text::_('COM_RSGALLERY2_WATERMARK_BR_FOLDER');
 //        $html[] = '</th>';
-//        
+//
 //    }
 
     // thumb
@@ -122,29 +122,29 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     //$html[] =  '9';
     $html[] = Text::_('COM_RSGALLERY2_ACTION');
     $html[] = '</th>';
-    
+
 
      // parent gallery
     $html[] = '<th class="center" width="20%">';
     //$html[] = '10';
     $html[] = Text::_('COM_RSGALLERY2_GALLERY'); // COM_RSGALLERY2_PARENT_BR_GALLERY
     $html[] = '</th>';
-    
+
 
      // image
     $html[] = '<th class="center" width="10%">';
     //$html[] = '11';
     $html[] = Text::_('COM_RSGALLERY2_IMAGE');
     $html[] = '</th>';
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
 
 
     $html[] = '        </tr>'; // end of row
@@ -228,14 +228,14 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         // original image found
         if ($ImageReference->IsOriginalImageFound)
         {
-            
+
             $html[] = '<td class="center">';
             //$html[] = '6';
             $html[] = '    <i class="icon-ok hasTooltip" data-original-title="original image found" ';
             $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_ORIGINAL_IMAGE_FOUND') . '" ';
             $html[] = '    />';
             $html[] = '</td>';
-            
+
         }
         else
         {
@@ -246,20 +246,20 @@ function DisplayImageDataTable($ImageLostAndFoundList)
             $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_ORIGINAL_IMAGE_NOT_FOUND') . '" ';
             $html[] = '    />';
             $html[] = '</td>';
-            
+
         }
 
         // thumb image found
         if ($ImageReference->IsThumbImageFound)
         {
-            
+
             $html[] = '<td class="center">';
             //$html[] = ' 7;';
             $html[] = '    <i class="icon-ok hasTooltip" data-original-title="thumb image found" ';
             $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_THUMB_IMAGE_FOUND') . '" ';
             $html[] = '    />';
             $html[] = '</td>';
-            
+
         }
         else
         {
@@ -270,7 +270,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
             $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_THUMB_IMAGE_NOT_FOUND') . '" ';
             $html[] = '    />';
             $html[] = '</td>';
-            
+
         }
 
 //        // Watermark
@@ -380,7 +380,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
             $html[] = '     </a>';
         }
         $html[] = '</td>';
-        
+
 
          //  parent gallery
         $html[] = '<td class="center">';
@@ -407,7 +407,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 //	    $html[] = $field->input;
 
         $html[] = '</td>';
-        
+
 
          // image
 

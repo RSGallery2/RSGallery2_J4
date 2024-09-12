@@ -54,7 +54,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-					
+
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}

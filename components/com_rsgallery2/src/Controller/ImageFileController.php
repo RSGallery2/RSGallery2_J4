@@ -24,7 +24,7 @@ use Joomla\Registry\Registry;
  *
  * @since __BUMP_VERSION__
  */
-class ImageFileController extends BaseController 
+class ImageFileController extends BaseController
 {
 	/**
 	 * The extension for which the galleries apply.

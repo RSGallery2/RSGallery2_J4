@@ -42,7 +42,7 @@ class rsgallery2Version
 //    var $URL = '<strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>';
 
 	/**
-	
+
 	 * @since __BUMP_VERSION__
     */
     function __construct()

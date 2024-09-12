@@ -80,7 +80,7 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitize URLs -----------------------------------
 
-if ( ! isset($galleries)) {   
+if ( ! isset($galleries)) {
 	$galleries = [];
 }
 
@@ -91,14 +91,14 @@ if ( ! empty($galleries))
 {
     // assign dummy images if not found
     foreach ($galleries as $idx => $gallery) {
-    
+
         // show dummy thumb on galleries with no images
         if (! empty($gallery->isHasNoImages))
         {
             $gallery->UrlOriginalFile = $noImageUrl;
             $gallery->UrlDisplayFiles = $noImageUrl;;
             $gallery->UrlThumbFile = $noImageUrl;
-        
+
         }
     }
 }
@@ -148,8 +148,8 @@ $galStatus ='';
 				<!---div class="shadow-box"-->
 				<div class="img-shadow">
 					<a href="<?php echo $gallery->UrlGallery?>">
-						<img class="rsg2-galleryList-thumb" 
-							src="<?php echo $gallery->UrlThumbFile ?>" 
+						<img class="rsg2-galleryList-thumb"
+							src="<?php echo $gallery->UrlThumbFile ?>"
 							alt="<?php echo $gallery->name ?>">
 					</a>
 				</div>
@@ -223,7 +223,7 @@ $galStatus ='';
 		}
 		?>
 	</div>
-	
+
 </div class="rsg2">
 
 

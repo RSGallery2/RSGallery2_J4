@@ -32,7 +32,7 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitize URLs -----------------------------------
 
-if ( ! isset($images)) {   
+if ( ! isset($images)) {
 	$images = [];
 }
 

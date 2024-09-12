@@ -13,7 +13,7 @@ use Joomla\CMS\Uri\Uri;
 defined('_JEXEC') or die;
 
 /*---------------------------------------------------
-? does what ? slideshow 
+? does what ? slideshow
 ---------------------------------------------------*/
 
 HTMLHelper::_('bootstrap.carousel', '.selector');
@@ -64,7 +64,7 @@ if ( ! empty($images))
             $image->UrlDisplayFiles = $noImageUrl;;
             $image->UrlThumbFile = $noImageUrl;
         }
-    
+
     //    else {
     //
     //        if (!$image->isOriginalFileExist) {

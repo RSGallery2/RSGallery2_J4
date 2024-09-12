@@ -68,9 +68,9 @@ if ( ! empty($images))
         {
             $image->UrlOriginalFile = $noImageUrl;
             $image->UrlDisplayFiles = $noImageUrl;;
-            $image->UrlThumbFile = $noImageUrl;    
+            $image->UrlThumbFile = $noImageUrl;
         }
-    
+
         //    else {
         //
         //        if (!$image->isOriginalFileExist) {

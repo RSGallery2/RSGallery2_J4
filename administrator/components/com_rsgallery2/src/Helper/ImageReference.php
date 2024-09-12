@@ -13,8 +13,8 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 \defined('_JEXEC') or die;
 
-use \Joomla\Filesystem\File
-use Joomla\Filesystem\Folder
+use \Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
@@ -297,7 +297,7 @@ class ImageReference
     public function assignLostItem($sizeName, $imageFilePath)
     {
         $isImageAssigned = false;
-        
+
         try {
 
 
@@ -319,17 +319,17 @@ class ImageReference
 
             // size  assignment
             if ( ! $isImageAssigned) {
-            
+
                 foreach($this->sizeFilePaths as $size => $sizePath) {
                     if ($imageFilePath === $sizePath)
                     {
                         $this->IsSizes_ImageFound [$size] = true;
                         $isImageAssigned = true;
                     }
-                }    
+                }
             }
 
-            // size  assignment ? -> may differ from expected  
+            // size  assignment ? -> may differ from expected
             if ( ! $isImageAssigned) {
                 $this->IsSizes_ImageFound [$sizeName] = true;
                 $isImageAssigned = true;

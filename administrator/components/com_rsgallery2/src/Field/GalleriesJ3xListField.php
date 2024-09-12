@@ -22,7 +22,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Utilities\ArrayHelper;
 
 /**
- * Collects available j3x gallery table ids and names 
+ * Collects available j3x gallery table ids and names
  * and creates contents of a dropdown box for gallery selection
  * Sorted by ordering (newest first)
  *

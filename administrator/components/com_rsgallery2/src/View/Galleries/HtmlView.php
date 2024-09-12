@@ -251,7 +251,7 @@ class HtmlView extends BaseHtmlView
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_VIEW_RAW_DATA'), 'images');
 
 				ToolBarHelper::editList('gallery.raw_edit');
-				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH'); 
+				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH');
 				break;
 
             case 'galleries_tree':
@@ -354,7 +354,7 @@ class HtmlView extends BaseHtmlView
                 }
 
 				break;
-			
+
 		}
 
 		// Options button.

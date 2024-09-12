@@ -145,7 +145,7 @@ function configInputField($name = 'unknown', $value = '')
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-					
+
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}

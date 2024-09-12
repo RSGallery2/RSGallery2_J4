@@ -99,7 +99,7 @@ use Joomla\CMS\Router\Route;
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-					
+
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}

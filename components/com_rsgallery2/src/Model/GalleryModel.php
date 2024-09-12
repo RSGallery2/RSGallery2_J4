@@ -210,7 +210,7 @@ class GalleryModel extends ListModel
 
         $this->setState('gallery.id', $app->input->getInt('gid'));
         $this->setState('params', $app->getParams());
-		
+
         // Adjust the context to support modal layouts.
         // ToDo: what about more then one gallery displayed at one page ..
         if ($layout = $app->input->get('layout')) {
@@ -659,7 +659,7 @@ class GalleryModel extends ListModel
 
         try {
             // ToDo: watermarked file
-			
+
 			// J4x ?
 			if( ! $image->use_j3x_location) {
 
@@ -672,7 +672,7 @@ class GalleryModel extends ListModel
 				$imagePathJ3x = new ImagePathsJ3xData ();
 				$imagePathJ3x->assignPathData ($image);
 			}
-				
+
         }
         catch (\RuntimeException $e)
         {

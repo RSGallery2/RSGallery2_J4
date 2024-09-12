@@ -115,7 +115,7 @@ class HtmlView extends BaseHtmlView
 
 		Factory::getApplication()->input->set('hidemainmenu', true);
 
-		
+
 		/**
 		// If we are forcing a language in modal (used for associations).
 		if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))

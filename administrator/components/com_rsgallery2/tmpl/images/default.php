@@ -234,7 +234,7 @@ if ($saveOrder && !empty($this->items))
 
 
 						<tbody <?php if ($saveOrder) :?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="<?php echo strtolower($listDirn); ?>" data-nested="false"<?php endif; ?>>
-							<?php 
+							<?php
 							foreach ($this->items as $i => $item) : ?>
 								<?php
 								// Get permissions
@@ -284,7 +284,7 @@ if ($saveOrder && !empty($this->items))
 										}
 										?>
 										<span class="sortable-handler<?php echo $iconClass ?>">
-											<span class="fa fa-ellipsis-v" aria-hidden="true"></span> 
+											<span class="fa fa-ellipsis-v" aria-hidden="true"></span>
 										</span>
 										<?php if ($canChange && $saveOrder) : ?>
 											<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order">

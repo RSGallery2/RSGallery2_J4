@@ -22,7 +22,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use \Joomla\Filesystem\File
+use \Joomla\Filesystem\File;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;

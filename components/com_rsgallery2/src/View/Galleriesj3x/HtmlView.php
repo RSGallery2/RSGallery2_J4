@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
 	    $user = $app->getIdentity();
 
-        $this->isDebugSite = $params->get('isDebugSite'); 
+        $this->isDebugSite = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
 

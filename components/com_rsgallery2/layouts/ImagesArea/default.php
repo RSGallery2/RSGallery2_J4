@@ -54,9 +54,9 @@ $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg'
 
 //--- assign dummy images if not found -----------------------------------
 
-if ( ! empty($images)) 
+if ( ! empty($images))
 {
-	foreach ($images as $idx => $image) 
+	foreach ($images as $idx => $image)
 	{
 
 		// show dummy thumb on galleries with no images

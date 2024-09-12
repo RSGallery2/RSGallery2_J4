@@ -104,7 +104,7 @@ class imagesrandomModel extends ListModel
 
 		//$this->setState('foo.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
-		
+
         // Adjust the context to support modal layouts.
         if ($layout = $app->input->get('layout')) {
             $this->context .= '.' . $layout;
@@ -259,8 +259,8 @@ class imagesrandomModel extends ListModel
 					->from($db->quoteName('#__rsg2_images', 'a'))
 					//->where('a.id = ' . (int) $gid);
 					->where('a.gallery_id = ' . (int) $gid)
-                    ->order('rand()') 
-//                    ->order('created DSC') 
+                    ->order('rand()')
+//                    ->order('created DSC')
                     ->setLimit('5');
 
 				$db->setQuery($query);

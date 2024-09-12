@@ -268,8 +268,8 @@ EOT;
 
 	$html = <<<EOT
             <div class="rsg2requestJ3xActions">
-            
-                <div class="card w-30" >                
+
+                <div class="card w-30" >
                     <h5 class="card-header">$header</h5>
                     <div class="card-body">
                         <p class="card-text">$headerDesc</p>
@@ -277,14 +277,14 @@ EOT;
                             <li style="list-style: none; margin-bottom: 10px">$link1</li>
                             <li style="list-style: none; margin-bottom: 10px">$link2</li>
                             <li style="list-style: none; margin-bottom: 10px">$link3</li>
-                            <li style="list-style: none; margin-bottom: 10px">$link4</li>                                                           
+                            <li style="list-style: none; margin-bottom: 10px">$link4</li>
                             <li style="list-style: none; margin-bottom:  0px">$link5</li>
                         </ul>
                     </div>
-            
+
                 </div>
             </div>
-            
+
             <br />
 EOT;
 
@@ -663,11 +663,11 @@ function collapseContent($title, $content, $id)
         <row>
             <div class="card forCollapse">
                 <h5 class="card-header">
-                    <button class="btn collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-collapsed-$id" 
+                    <button class="btn collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-collapsed-$id"
                         aria-expanded="false" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">
                         <i class="fa fa-chevron-down pull-right"></i>
                         $title
-                    </button>                    
+                    </button>
                 </h5>
                 <div id="collapse-collapsed-$id" class="collapse" aria-labelledby="heading-collapsed-$id">
                     <div class="card-body">

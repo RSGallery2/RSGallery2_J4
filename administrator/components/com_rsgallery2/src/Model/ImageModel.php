@@ -309,7 +309,7 @@ class ImageModel extends AdminModel
 	/**
      * Transform some data before it is displayed ? Saved ?
      * extension development 129 bottom
-     * 
+     *
      * @param JTable $table
      *
      * @since __BUMP_VERSION__

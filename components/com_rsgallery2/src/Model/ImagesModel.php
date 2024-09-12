@@ -134,7 +134,7 @@ class ImagesModel extends ListModel
         $this->setState('images.imageId', $imageId);
 
         $this->setState('params', $app->getParams());
-		
+
         // Adjust the context to support modal layouts.
         if ($layout = $app->input->get('layout')) {
             $this->context .= '.' . $layout;
@@ -775,7 +775,7 @@ class ImagesModel extends ListModel
 
                 $this->assignImageUrl($image);
 
-                // ToDo: Are there situations where download should not be shown ? 
+                // ToDo: Are there situations where download should not be shown ?
 				// ==> watermark or not shown single => call in inherited instead
                 $this->AssignUrlDownloadImage($image);
 

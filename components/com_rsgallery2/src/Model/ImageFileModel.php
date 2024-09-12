@@ -14,8 +14,8 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use \Joomla\Filesystem\File
-use Joomla\Filesystem\Folder
+use \Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 //use Joomla\CMS\Image;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Image\Image;
@@ -178,7 +178,7 @@ class ImageFileModel extends BaseModel // AdminModel
 
             // Close the application gracefully.
             Factory::getApplication()->close();            //--- exit success ------------------------------------------------
-            
+
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';

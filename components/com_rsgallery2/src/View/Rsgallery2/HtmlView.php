@@ -62,8 +62,8 @@ class HtmlView extends BaseHtmlView
 		$params =
         $this->params = $state->get('params');
 
-        $this->isDebugSite = $params->get('isDebugSite'); 
-        $this->isDevelopSite = $params->get('isDevelop'); 
+        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDevelopSite = $params->get('isDevelop');
 
 		$test = json_decode($item->params);
 

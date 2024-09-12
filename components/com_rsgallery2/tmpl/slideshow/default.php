@@ -8,7 +8,7 @@
  */
 
 
-//  J3x legacy view => slideshow 
+//  J3x legacy view => slideshow
 
 \defined('_JEXEC') or die;
 

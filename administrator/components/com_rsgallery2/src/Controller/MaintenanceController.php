@@ -178,12 +178,12 @@ class MaintenanceController extends BaseController
 	 *
 	public function display($cachable = false, $urlparams = array())
 	{
-		
+
 		// $model = $this->getModel('');
-		
-		
-		
-		
+
+
+
+
 		return parent::display();
 	}
     /**/
@@ -202,7 +202,7 @@ class MaintenanceController extends BaseController
     public function getModel($name = 'Maintenance', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
-    }  	
+    }
 	/**/
 
 

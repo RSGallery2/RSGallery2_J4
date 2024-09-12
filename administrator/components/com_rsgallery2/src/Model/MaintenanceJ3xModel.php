@@ -3084,7 +3084,7 @@ EOT;
 
 //        $j3xWaterFile = $j3xImagePath->getThumbPath ($name);
 //        $j4xwaterFile = $j4xImagePath->getThumbPath ($name);
-//        
+//
 //        $stateWatermarked = $this->RenameJ3xImageFile($j3xWaterFile, $j4xwaterFile);
 
 		//--- image states -----------------------------
@@ -3404,7 +3404,7 @@ EOT;
 
 					// root gallery, gallery , slideshow
 					$newLink = $this->linkLowercaseJ4xType($oldLink);
-					
+
 					//--- change menu parameter for type ----------------------------------------
 
 					// valid link ?

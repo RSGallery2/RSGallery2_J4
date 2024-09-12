@@ -189,7 +189,7 @@ class ConfigJ3xController extends AdminController // FormController
 	    $link = 'index.php?option=com_rsgallery2&view=configJ3x&layout=RawEdit';
         $this->setRedirect($link, $msg, $msgType);
     }
-    
+
     /**
      * Save changes in raw edit view value by value
      *

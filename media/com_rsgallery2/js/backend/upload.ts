@@ -733,7 +733,7 @@ class createStatusBar {
             htmlStatusbar.style.textDecoration = 'line-through';
         });
     };
-    
+
     public removeAbort () {
         this.htmlAbort.style.display = 'none';
     }
@@ -747,15 +747,15 @@ class createStatusBar {
         const display = state ? "inline-block" : "none"
         this.htmlBadgeOk.style.display = display;
     }
-    
+
     public setError (state:boolean) {
         const display = state ? "inline-block" : "none"
         this.htmlBadgeError.style.display = display;
     }
-    
-    
-    
-    
+
+
+
+
     //========================================
     // Remove item after successful file upload
     public remove () {
@@ -1486,7 +1486,7 @@ class TransferImagesTask {
 
                     this.isBusyCount--;
                     this.ajaxTransfer();
-                    
+
                 });
             /**/
         }

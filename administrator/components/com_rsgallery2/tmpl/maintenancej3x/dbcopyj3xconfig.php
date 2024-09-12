@@ -252,7 +252,7 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'DbCopyJ3xConfig' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-					
+
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}

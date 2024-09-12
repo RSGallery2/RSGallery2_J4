@@ -104,7 +104,7 @@ class gallerieslatestModel extends ListModel
 
 		//$this->setState('foo.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
-		
+
         // List state information
         $value = $app->input->get('limit', $app->get('list_limit', 0), 'uint');
         $this->setState('list.limit', $value);
@@ -254,8 +254,8 @@ class gallerieslatestModel extends ListModel
 					->from($db->quoteName('#__rsg2_galleries', 'a'))
 					//->where('a.id = ' . (int) $gid);
 					->where('a.gallery_id = ' . (int) $gid)
-                    ->order('rand()') 
-//                    ->order('created DSC') 
+                    ->order('rand()')
+//                    ->order('created DSC')
                     ->setLimit('5');
 
 				$db->setQuery($query);

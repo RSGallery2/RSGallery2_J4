@@ -49,8 +49,8 @@ class MaintConsolidateDbController extends AdminController
 	 *
      * @since 4.3.0
 	 */
-	public function getModel($name = 'maintConsolidateDB', 
-        $prefix = 'rsgallery2Model', 
+	public function getModel($name = 'maintConsolidateDB',
+        $prefix = 'rsgallery2Model',
         $config = array('ignore_request' => true))
 	{
 		return parent::getModel($name, $prefix, $config);

@@ -39,7 +39,7 @@ class Router extends RouterView
 	 * @var    boolean
 	 */
 	protected $noIDs = false;
-	
+
 	/**
 	 * The db
 	 *

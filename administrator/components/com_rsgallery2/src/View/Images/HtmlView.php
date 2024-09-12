@@ -38,7 +38,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 class HtmlView extends BaseHtmlView
 {
 	// ToDo: Use other rights instead of core.admin -> IsRoot ?
-	// core.admin is the permission used to control access to 
+	// core.admin is the permission used to control access to
 	// the global config
 
 	protected $UserIsRoot;

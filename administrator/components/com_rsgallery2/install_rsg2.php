@@ -18,7 +18,7 @@ use Joomla\CMS\Log\Log;
 
 //use Joomla\CMS\File;
 //use Joomla\CMS\Folder;
-use Joomla\Filesystem\Folder
+use Joomla\Filesystem\Folder;
 
 /**
  * Script (install file of Rsgallery2 Component)
@@ -121,7 +121,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 			if (version_compare(PHP_VERSION, $this->minimumPhp, '<'))
 			{
 				Log::add(Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp), Log::WARNING, 'jerror');
-				Factory::getApplication()->enqueueMessage(Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp) 
+				Factory::getApplication()->enqueueMessage(Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp)
 					. ' (' . PHP_VERSION . ')' , 'error');
 
 				return false;
@@ -205,7 +205,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				}
 			}
 		} // ! uninstall
-		
+
 		Log::add(Text::_('exit preflight') . $this->newRelease, Log::INFO, 'rsg2');
 
 		return true;
@@ -519,7 +519,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 				}
 			}
 
-		} 
+		}
 		catch (\Exception $e)
 		{
 			Log::add(Text::_('Exception in initGalleryTree: ' ) . $e->getMessage(),
@@ -564,7 +564,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
 			$installMsg = $InstallMessageHelper->installMessageText($type);
 
-		} 
+		}
 		catch (\Exception $e)
 		{
 			Log::add(Text::_('Exception in installMessage: ' ) . $e->getMessage(),
@@ -797,7 +797,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 					Log::add(Text::_('upd (50.3) RSG2 admin not deleted'), Log::INFO, 'rsg2');
 
 				}
-				
+
 				Log::add(Text::_('upd (50.4) '), Log::INFO, 'rsg2');
 			}
 
@@ -820,7 +820,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 					Log::add(Text::_('upd (50.12) RSG2 component not deleted'), Log::INFO, 'rsg2');
 
 				}
-				
+
 				Log::add(Text::_('upd (50.13) '), Log::INFO, 'rsg2');
 			}
 
@@ -1018,7 +1018,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 		}
 
 		Log::add(Text::_('Exit updateDefaultParams'), Log::INFO, 'rsg2');
-		
+
 		return;
 	}
 

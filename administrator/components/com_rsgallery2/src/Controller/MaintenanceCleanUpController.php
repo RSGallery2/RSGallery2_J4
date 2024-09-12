@@ -15,8 +15,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Session\Session;
-use \Joomla\Filesystem\File
-use Joomla\Filesystem\Folder
+use \Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 

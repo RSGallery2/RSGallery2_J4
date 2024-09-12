@@ -78,8 +78,8 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 		$mergedItems = [];
 		$untouchedJ3xItems = [];
 		$untouchedJ4xItems = [];
-		
-		/* J3x -> J4x 
+
+		/* J3x -> J4x
 		displaySlideshow -> galleries_show_slideshow
 		showGalleryOwner -> galleries_show_owner
 		showGallerySize -> galleries_show_size
@@ -114,7 +114,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 			// displaySlideshow -> galleries_show_slideshow
 			$assistedJ3xItems ['displaySlideshow'] = array ('galleries_show_slideshow',
 				$j3xConfigItems['displaySlideshow']);
-			
+
 			// showGalleryOwner -> galleries_show_owner
 			$assistedJ3xItems ['showGalleryOwner'] = array ('galleries_show_owner',
 				$j3xConfigItems['showGalleryOwner']);

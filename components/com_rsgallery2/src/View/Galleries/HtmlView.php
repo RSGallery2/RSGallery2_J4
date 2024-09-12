@@ -68,7 +68,7 @@ class HtmlView extends BaseHtmlView
 	    $user = $app->getIdentity();
 
         $this->isDebugSite = $params->get('isDebugSite');
-        $this->isDevelopSite = $params->get('isDevelop'); 
+        $this->isDevelopSite = $params->get('isDevelop');
 
 
 //		$temp = clone $params;

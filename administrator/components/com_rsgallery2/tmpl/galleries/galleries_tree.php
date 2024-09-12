@@ -184,7 +184,7 @@ EOT;
 						$OutTxt = '';
 						$OutTxt .= 'Error rawEdit view: "' . 'dbtransferj3xgalleries' . '"<br>';
 						$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-					
+
 						$app = Factory::getApplication();
 						$app->enqueueMessage($OutTxt, 'error');
 					}

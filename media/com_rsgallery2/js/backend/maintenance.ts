@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			// confirmation requested
             if (confirm(confirmMessage)) {
                 joomla.submitform(pressbutton);
-            } 
+            }
 		}
 
         return true;

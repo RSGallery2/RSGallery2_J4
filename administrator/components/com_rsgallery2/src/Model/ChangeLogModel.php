@@ -415,7 +415,7 @@ class ChangeLogModel
         <row>
             <div class="card forCollapse">
                 <h5 class="card-header">
-                    <button class="btn $collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-collapsed-$id" 
+                    <button class="btn $collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-collapsed-$id"
                         aria-expanded="$ariaExpanded" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">
                         <i class="fa fa-chevron-down pull-right"></i>
                         $title
@@ -451,36 +451,36 @@ EOT;
                     caption-side: top;
                   white-space: nowrap;
                 }
-                
+
                 .changelog_area {
                             display: flex;
                             flex-direction: row;
                   justify-content: flex-start;
                 }
-                
+
                 .changelog_key {
                             min-width: 100px;
                   border-right: 2px solid red;
                 }
-                
+
                 .changelog_value_area {
                             display: flex;
                             flex-direction: column;
                   flex-wrap: wrap;
                 }
-                
+
                 .change-log-caption {
                             color: black;
                         }
-                
+
                 .change-log-table {
                             border-bottom: 2px solid black;
                 }
-                
+
                 .card-header .fa {
                             transition: 0.3s transform ease-in-out;
                 }
-                
+
                 .card-header .collapsed .fa {
                             transform: rotate(-90deg);
                 }

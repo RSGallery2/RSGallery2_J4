@@ -21,8 +21,8 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use \Joomla\Filesystem\File
-use Joomla\Filesystem\Folder
+use \Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Response\JsonResponse;

@@ -76,7 +76,7 @@ class RatingController extends BaseController
 		if ( ! $canVote)
 		{
 			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR') . " " . Text::_('COM_RSGALLERY2_VOTING_IS_DISABLED');
-			
+
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			$msg = nl2br ($msg);

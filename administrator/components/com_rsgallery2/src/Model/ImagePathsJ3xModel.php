@@ -11,7 +11,7 @@
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\Filesystem\Folder
+use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Uri\Uri;
 
@@ -173,7 +173,7 @@ class ImagePathsJ3xModel {
      *
      * @since __BUMP_VERSION__
      */
-    public function isPathsExisting() 
+    public function isPathsExisting()
 	{
         $isPathsExisting = false;
 

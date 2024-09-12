@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @package    RSGallery2
  * @subpackage com_rsgallery2

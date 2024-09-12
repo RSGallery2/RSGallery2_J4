@@ -68,7 +68,7 @@ class CommentController extends BaseController
 		// http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=42&advancedSef=1&startShowSingleImage=1&Itemid=218
 		//$link = 'index.php?option=com_rsgallery2'; // &startShowSingleImage=1&Itemid=218
 		$link = 'index.php?option=com_rsgallery2&page=inline&id=' . $imageId.'&tab=comment';
-		
+
 
 		// Access check
 		$galleryId = $input->get('gid', 0, 'INT');

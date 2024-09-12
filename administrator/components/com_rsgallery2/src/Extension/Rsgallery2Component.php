@@ -32,7 +32,7 @@ class Rsgallery2Component extends MVCComponent implements BootableExtensionInter
 	use CategoryServiceTrait;
 	use HTMLRegistryAwareTrait;
 	use RouterServiceTrait;
-	
+
 	/**
 	 * Booting the extension. This is the function to set up the environment of the extension like
 	 * registering new class loaders, etc.
