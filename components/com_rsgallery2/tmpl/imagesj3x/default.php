@@ -1,18 +1,18 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use \Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Router\Route;
 
 // https://blog.kulturbanause.de/2014/09/responsive-images-srcset-sizes-adaptive/
 
@@ -25,11 +25,9 @@ use \Joomla\CMS\Layout\FileLayout;
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.imageJ3x');
 
 
-
 echo '';
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite))
-{
+if (!empty ($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: imagesJ3x view<br>'
         . '* <br>'
@@ -46,7 +44,7 @@ if (!empty ($this->isDevelopSite))
 //$displayData['pagination'] = $this->pagination;
 //echo $layout->render($displayData);
 
-$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDebugSite']   = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 //if ($this->config->displaySearch) {
@@ -57,11 +55,11 @@ if (true) {
 
 $layout = new FileLayout('ImagesArea.default');
 
-$displayData['images'] = $this->items;
+$displayData['images']    = $this->items;
 $displayData['galleryId'] = $this->galleryId;
-$displayData['imageId'] = $this->imageId;
+$displayData['imageId']   = $this->imageId;
 
-$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDebugSite']   = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 // return;
@@ -69,19 +67,25 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 ?>
 
 <div class="rsg2__form rsg2__images_area">
-    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=imagesj3x'); ?>" method="post" class="form-validate form-horizontal well">
+    <form id="rsg2_gallery__form" action="<?php
+    echo Route::_('index.php?option=com_rsgallery2&view=imagesj3x'); ?>" method="post"
+          class="form-validate form-horizontal well">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php
+        if (!empty($this->isDebugSite)): ?>
             <h1> RSGallery2 "images list" view </h1>
-        <?php endif; ?>
+        <?php
+        endif; ?>
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php
+        if (!empty($this->isDebugSite)): ?>
             <hr>
-        <?php endif; ?>
+        <?php
+        endif; ?>
 
-	    <?php
-	    echo $layout->render($displayData);
-	    ?>
+        <?php
+        echo $layout->render($displayData);
+        ?>
 
 
     </form>

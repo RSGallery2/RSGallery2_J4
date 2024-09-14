@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  mod_rsg2_galleries
+ * @package       Joomla.Site
+ * @subpackage    mod_rsg2_galleries
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright (c) 2005-2024 RSGallery2 Team
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Rsgallery2\Plugin\Content\Rsg2_images\Helper;
@@ -15,8 +15,11 @@ use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
+use RuntimeException;
 
-\defined('_JEXEC') or die;
+use function defined;
+
+defined('_JEXEC') or die;
 
 /**
  * Helper for mod_rsg2_galleries
@@ -25,89 +28,87 @@ use Joomla\Registry\Registry;
  */
 class Rsg2_imagesHelper //implements DatabaseAwareInterface
 {
-	use DatabaseAwareTrait;
+    use DatabaseAwareTrait;
 
-	protected $galleriesModel;
+    public $pagination;
+    protected $galleriesModel;
 
-	public $pagination;
+    public function __construct(array $data)
+    {
+        // boot component only once Model('Gallery', 'Site')
 
-	public function __construct(array $data ){
+        $app = $data['app'];
 
-		// boot component only once Model('Gallery', 'Site')
+        // ToDo: add params, app to local vars
 
-		$app = $data['app'];
+        // SiteApplication $app
+        $this->galleriesModel = $app
+            ->bootComponent('com_rsgallery2')
+            ->getMVCFactory()
+            // ->createModel('Gallery', 'Site', ['ignore_request' => true]);
+            ->createModel('Galleries', 'Site', ['ignore_request' => true]);
+    }
 
-		// ToDo: add params, app to local vars
+    public function getGalleryData(int $gid)
+    {
+        return $this->galleriesModel->getParentGallery($gid);
+    }
 
-		// SiteApplication $app
-		$this->galleriesModel = $app->bootComponent('com_rsgallery2')
-			->getMVCFactory()
-			// ->createModel('Gallery', 'Site', ['ignore_request' => true]);
-			->createModel('Galleries', 'Site', ['ignore_request' => true]);
+    /**
+     * Get a list of the gallery galleries from the slideshow model.     *
+     *
+     * @param   Registry        $params  The module parameters
+     * @param   CMSApplication  $app     The application
+     *
+     * @return  array
+     */
+    public function getGalleriesOfGallery(int $gid, Registry $params, SiteApplication $app)
+    {
+        $galleries = [];
 
-	}
+        try {
+            $model = $this->galleriesModel;
 
-	public function getGalleryData(int $gid)
-	{
-		return $this->galleriesModel->getParentGallery($gid);
-	}
+            //--- state -------------------------------------------------
 
-	/**
-	 * Get a list of the gallery galleries from the slideshow model.     *
-	 *
-	 * @param   Registry        $params  The module parameters
-	 * @param   CMSApplication  $app     The application
-	 *
-	 * @return  array
-	 */
-	public function getGalleriesOfGallery(int $gid, Registry $params, SiteApplication $app)
-	{
-		$galleries = [];
+            $state = $model->getState();
 
-		try {
-			$model = $this->galleriesModel;
+            // Set application parameters in model
+            $appParams = $app->getParams();
 
-			//--- state -------------------------------------------------
+            $model->setState('params', $params);
 
-			$state = $model->getState();
+            $model->setState('list.start', 0);
+            $model->setState('filter.published', 1);
 
-			// Set application parameters in model
-			$appParams = $app->getParams();
+            // Set the filters based on the module params
+            // $model->setState('list.limit', (int) $params->get('count', 5));
+            $model->setState('list.limit', 99);
 
-			$model->setState('params', $params);
+            // This module does not use tags data
+            $model->setState('load_tags', false);
 
-			$model->setState('list.start', 0);
-			$model->setState('filter.published', 1);
+            $model->setState('gallery.id', $gid);
+            $model->setState('gid', $gid);
 
-			// Set the filters based on the module params
-			// $model->setState('list.limit', (int) $params->get('count', 5));
-			$model->setState('list.limit', 99);
-
-			// This module does not use tags data
-			$model->setState('load_tags', false);
-
-			$model->setState('gallery.id', $gid);
-			$model->setState('gid', $gid);
-
-			//--- galleries -----------------------------------------------------------------------
+            //--- galleries -----------------------------------------------------------------------
 
 //             $this->galleriesModel->populateState();
 
-			// $galleries= $this->galleriesModel->get('Items');
-			$galleries = $this->galleriesModel->getItems();
+            // $galleries= $this->galleriesModel->get('Items');
+            $galleries = $this->galleriesModel->getItems();
 
-			if (!empty($galleries)) {
-				// Add image paths, image params ...
-				$data = $this->galleriesModel->AddLayoutData($galleries);
-			}
+            if (!empty($galleries)) {
+                // Add image paths, image params ...
+                $data = $this->galleriesModel->AddLayoutData($galleries);
+            }
+        } catch (RuntimeException $e) {
+            // ToDo: Message more explicit
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
 
-		} catch (\RuntimeException $e) {
-			// ToDo: Message more explicit
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-		}
-
-		return $galleries;
-	}
+        return $galleries;
+    }
 
 //	public static function getImageNamesOfUrl ($folderUrl)
 //    {
@@ -150,11 +151,12 @@ class Rsg2_imagesHelper //implements DatabaseAwareInterface
 //        return $galleries;
 //    }
 
-	public function getText()
-	{
-		$msg = "    --- Rsg2_images module ----- ";
-		return $msg;
-	}
+    public function getText()
+    {
+        $msg = "    --- Rsg2_images module ----- ";
+
+        return $msg;
+    }
 
 }
 

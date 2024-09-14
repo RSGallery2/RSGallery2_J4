@@ -1,9 +1,11 @@
-<?php // no direct access
+<?php
+// no direct access
+
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  * @copyright  (C) 2003-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -19,39 +21,49 @@ use Joomla\CMS\Language\Text;
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser'); ?>"
+<form action="<?php
+echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser'); ?>"
       method="post" name="adminForm" id="adminForm">
     <div class="d-flex flex-row">
-        <?php if (!empty($this->sidebar)) : ?>
+        <?php
+        if (!empty($this->sidebar)) : ?>
             <div id="j-sidebar-container" class="">
-                <?php echo $this->sidebar; ?>
+                <?php
+                echo $this->sidebar; ?>
             </div>
-        <?php endif; ?>
+        <?php
+        endif; ?>
 
-        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <!--div class="<?php
+        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
-                <div class="card text-center" >
+                <div class="card text-center">
                     <div class="card-body">
-                        <h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true);?></h3>
+                        <h3 class="card-title"><?php
+                            echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true); ?></h3>
 
-                        <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
+                        <p class="card-text"><?php
+                            echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
-				            <?php echo Text::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
+                        <button class="btn btn-success" type="submit"
+                                onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
+                            <?php
+                            echo Text::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
                         </button>
 
                     </div>
                 </div>
 
-                <input type="hidden" name="boxchecked" value="0" />
+                <input type="hidden" name="boxchecked" value="0"/>
                 <input type="hidden" name="task" value=""/>
             </div>
         </div>
     </div>
 
-    <?php echo HTMLHelper::_('form.token'); ?>
+    <?php
+    echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

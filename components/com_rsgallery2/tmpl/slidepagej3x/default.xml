@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x view => single image slidepage (new) -->
-	<layout title="COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_TITLE">
-		<message>
-			<![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_DESC]]>
-		</message>
-	</layout>
-	<!-- Add fields to the request variables for the layout. -->
-	<fields name="request">
-		<fieldset name="request"
-			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-		>
-		
-			<field
-				name="gid"
-				type="GallerySelect"
-				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
-				description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_DESC"
-				required="true"
-				select="true"
-				new="true"
-				edit="true"
-				clear="true"
-			/>
+    <!-- J3x view => single image slidepage (new) -->
+    <layout title="COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_TITLE">
+        <message>
+            <![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_DESC]]>
+        </message>
+    </layout>
+    <!-- Add fields to the request variables for the layout. -->
+    <fields name="request">
+        <fieldset name="request"
+                  addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+        >
 
-			<field
-					name="layout"
-					type="componentlayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					extension="com_rsgallery2"
-					view="slidepagej3x"
-					useglobal="true"
-			/>
-		</fieldset>
-	</fields>
+            <field
+                    name="gid"
+                    type="GallerySelect"
+                    label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
+                    description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_DESC"
+                    required="true"
+                    select="true"
+                    new="true"
+                    edit="true"
+                    clear="true"
+            />
 
-	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params">
-		<fieldset name="basic">
+            <field
+                    name="layout"
+                    type="componentlayout"
+                    label="JFIELD_ALT_LAYOUT_LABEL"
+                    class="custom-select"
+                    extension="com_rsgallery2"
+                    view="slidepagej3x"
+                    useglobal="true"
+            />
+        </fieldset>
+    </fields>
 
-<!--			<field-->
-<!--					name="???_layout oder slidepage_layout .."-->
-<!--					type="SlideshowSelect"-->
-<!--					label="JFIELD_ALT_LAYOUT_LABEL"-->
-<!--					class="custom-select"-->
-<!--					extension="com_rsgallery2"-->
-<!--					required="true"-->
-<!--					useglobal="true"-->
-<!--			/>-->
+    <!-- Add fields to the parameters object for the layout. -->
+    <fields name="params">
+        <fieldset name="basic">
 
-			<field
-					name="gallery_show_title"
-					type="radio"
-					default="1"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <!--			<field-->
+            <!--					name="???_layout oder slidepage_layout .."-->
+            <!--					type="SlideshowSelect"-->
+            <!--					label="JFIELD_ALT_LAYOUT_LABEL"-->
+            <!--					class="custom-select"-->
+            <!--					extension="com_rsgallery2"-->
+            <!--					required="true"-->
+            <!--					useglobal="true"-->
+            <!--			/>-->
 
-			<field
-					name="gallery_show_slideshow"
-					type="radio"
-					default="1"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="gallery_show_title"
+                    type="radio"
+                    default="1"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="displaySearch"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
-					description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="gallery_show_slideshow"
+                    type="radio"
+                    default="1"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
+                    class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="images_show_title"
-					type="radio"
-					default="1"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="displaySearch"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
+                    description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
+                    class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<!--field
-					name="images_show_description"
-					type="list"
-					default="2"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
-			>
-				<option value="0">JNO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
-				<option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
-				<option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
-			</field-->
+            <field
+                    name="images_show_title"
+                    type="radio"
+                    default="1"
+                    label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+                    description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+                    class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="images_show_description"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
-					description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <!--field
+                    name="images_show_description"
+                    type="list"
+                    default="2"
+                    label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+                    description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+            >
+                <option value="0">JNO</option>
+                <option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
+                <option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
+                <option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
+                <option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
+            </field-->
 
-		</fieldset>
-	</fields>
+            <field
+                    name="images_show_description"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC"
+                    description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+        </fieldset>
+    </fields>
 </metadata>

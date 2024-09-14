@@ -16,7 +16,7 @@ $img-height: $base-img-width;
   line-height: 175%;
   color: #999;
   transition: all .2s;
-  display:block;
+  display: block;
 }
 
 #dragarea {
@@ -25,27 +25,27 @@ $img-height: $base-img-width;
   border: 5px dotted darkgreen; /**/
   /* border: 5px dotted lightgreen; /**/
   box-sizing: border-box;
-  padding: 10px 0 ;
+  padding: 10px 0;
   transition: all 0.2s ease 0s;
   width: 100%;
 
   &:hover {
     border-color: #666;
-//    background-color: #eee;
+    //    background-color: #eee;
     background-color: lightgrey;
   }
 
   &.dragareaDisabled {
     border: 6px dotted red;
-//    background: linear-gradient(45deg, darkgrey, lightgrey);
+    //    background: linear-gradient(45deg, darkgrey, lightgrey);
     /**/
     background: repeating-linear-gradient(
-      45deg,
-      lightgrey,
-      lightgrey 20px,
-      white 20px,
-      white 40px);
-     /**/
+                    45deg,
+                    lightgrey,
+                    lightgrey 20px,
+                    white 20px,
+                    white 40px);
+    /**/
   }
 
   &[data-state=pending] .upload-progress {
@@ -111,8 +111,8 @@ $img-height: $base-img-width;
   padding: 10px 10px 0px 10px;
   vertical-align: top;
 
-//  :nth-child(odd) {
-//  }
+  //  :nth-child(odd) {
+  //  }
 
   &:nth-of-type(2n-1) {
     background: #EBEFF0;
@@ -152,7 +152,6 @@ $img-height: $base-img-width;
 }
 
 
-
 .filesize {
   display: inline-block;
   vertical-align: top;
@@ -178,69 +177,69 @@ $img-height: $base-img-width;
 }
 
 .OK {
-    background-color: #28a745;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    display: inline-block;
-    color: #fff;
-    font-family: arial;
-    font-size: 13px;
-    font-weight: normal;
-    padding: 4px 15px;
-    cursor: pointer;
-    vertical-align: top;
+  background-color: #28a745;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  color: #fff;
+  font-family: arial;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 4px 15px;
+  cursor: pointer;
+  vertical-align: top;
 }
 
 .error {
-    background-color: #A8352F;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    display: inline-block;
-    color: #fff;
-    font-family: arial;
-    font-size: 13px;
-    font-weight: normal;
-    padding: 4px 15px;
-    cursor: pointer;
-    vertical-align: top;
+  background-color: #A8352F;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  color: #fff;
+  font-family: arial;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 4px 15px;
+  cursor: pointer;
+  vertical-align: top;
 }
 
 .upload {
-    background-color: #17a2b8;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    display: inline-block;
-    color: #fff;
-    font-family: arial;
-    font-size: 13px;
-    font-weight: normal;
-    padding: 4px 15px;
-    cursor: pointer;
-    vertical-align: top;
+  background-color: #17a2b8;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  display: inline-block;
+  color: #fff;
+  font-family: arial;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 4px 15px;
+  cursor: pointer;
+  vertical-align: top;
 }
 
 
 .OK.label, .error.label {
-//  margin-left: 5px;
+  //  margin-left: 5px;
 }
 
 abort.label {
-//  background-color: map-get($rsg2-colors, red);
+  //  background-color: map-get($rsg2-colors, red);
 }
 
 .upload.label {
-//  map-get($rsg2-colors, blue)
+  //  map-get($rsg2-colors, blue)
 }
 
 .OK.label {
-//  map-get($rsg2-colors, green)
+  //  map-get($rsg2-colors, green)
 }
 
 .error.label {
-//  map-get($rsg2-colors, orange)
+  //  map-get($rsg2-colors, orange)
 }
 
 /**
@@ -295,7 +294,7 @@ abort.label {
   }
 
   li {
-     //display: block;
+    //display: block;
     display: inline-block;
     //display: list-item;
     //list-style: none;
@@ -322,7 +321,7 @@ abort.label {
         position: relative;
 
         //  min-height: 250px; /**/
-        height:$img-width;
+        height: $img-width;
         width: $img-height;
         //margin: 10px 10px 10px 10px;
 
@@ -346,7 +345,7 @@ abort.label {
           //  margin-right: auto;
 
           vertical-align: middle;
-          text-align:center;
+          text-align: center;
 
           position: absolute;
           left: 50%;
@@ -372,7 +371,6 @@ abort.label {
 
           transition: all .2s ease-in-out;
         }
-
 
 
       }
@@ -406,8 +404,9 @@ abort.label {
 
 /**/
 .btn-rsg2X {
-//  min-width: 220px;
+  //  min-width: 220px;
 }
+
 /**/
 
 /**/
@@ -415,6 +414,7 @@ abort.label {
   display: block;
   width: 100%;
 }
+
 /**/
 
 /**
@@ -433,6 +433,7 @@ ul#imagesAreaList {
   visibility: hidden;
   margin: 0 0 !important;
 }
+
 /**/
 
 .thumb_caption.shorten-long-text {
@@ -450,7 +451,7 @@ ul#imagesAreaList {
 
 }
 
-.filename.shorten-long-text{
+.filename.shorten-long-text {
   white-space: nowrap;
   overflow: hidden;
   //width: 100%;

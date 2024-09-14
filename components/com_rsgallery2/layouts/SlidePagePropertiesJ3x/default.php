@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2021-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -38,13 +38,12 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
-if ( ! isset($images)) {
-	$images = [];
+if (!isset($images)) {
+    $images = [];
 }
 
-if (!empty ($images))
-{
-	// ToDo: has one image ? see $image->id below
+if (!empty ($images)) {
+    // ToDo: has one image ? see $image->id below
 }
 
 // "/joomla3x/index.php?option=com_rsgallery2&amp;page=inline&amp;id=157&amp;Itemid=114"
@@ -52,32 +51,37 @@ $voteLink = Route::_('index.php?option=com_rsgallery2&page=inline&id=' . $image-
 $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' . $image->id);
 
 
-
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php
+if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 slide (?page) properties J3x layout</h3>
     <hr>
-<?php endif; ?>
+<?php
+endif; ?>
 
 <div class="rsg_sem_inl_ImgDetails">
 
-    <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'DescriptionTab')); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'DescriptionTab']); ?>
 
-    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DescriptionTab', Text::_('COM_RSGALLERY2_DESCRIPTION', true)); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DescriptionTab', Text::_('COM_RSGALLERY2_DESCRIPTION', true)); ?>
 
     <div class="page_inline_tabs_description">
         <div class="card bg-light ">
             <div class="card-body">
                 <div class="container page_inline_hits">
                     <i class="fas fa-flag"></i>
-                    <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
+                    <strong><?php
+                        echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
                 </div>
             </div>
         </div>
         <div class="card bg-light ">
             <div class="card-body">
-                <?php echo $image->description; ?>
+                <?php
+                echo $image->description; ?>
             </div>
         </div>
         <div class="page_inline_description">
@@ -85,18 +89,22 @@ $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' .
     </div>
 
 
-    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 
-    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
 
-    <p><h3>This may be a voting  </h3></p>
+    <p>
+    <h3>This may be a voting </h3></p>
 
     <div class="rating-block row-fluid text-center">
         <h4>Average user rating</h4>
         <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
         </h2>
-        <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
+        <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php
+        echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
         <button id="star_1"
                 type="button"
                 class="btn btn-default btn-grey  btn-mini btn_star "
@@ -132,23 +140,30 @@ $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' .
         </label>
     </div>
 
-    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 
-    <p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
+    <p>
+    <h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
 
-    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 
-    <p><h3>ToDo: Display selected image exif info  </h3></p>
+    <p>
+    <h3>ToDo: Display selected image exif info </h3></p>
 
-    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php
+    echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 
-    <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
-
+    <?php
+    echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 
     <input type="hidden"
@@ -165,7 +180,8 @@ $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' .
            value="157">
     <!--input id="token"
            type="hidden"
-           name="<?php // Session::getFormToken() ?>"
+           name="<?php
+    // Session::getFormToken() ?>"
            value="1"-->
 
 </div>

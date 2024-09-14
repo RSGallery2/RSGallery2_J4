@@ -1,14 +1,14 @@
 <?php
 /**
-/**
- * @package     Joomla.Administrator
- * @subpackage  mod_rsg2_images
+ * /**
+ * @package       Joomla.Administrator
+ * @subpackage    mod_rsg2_images
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright (c) 2005-2024 RSGallery2 Team
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
 use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;

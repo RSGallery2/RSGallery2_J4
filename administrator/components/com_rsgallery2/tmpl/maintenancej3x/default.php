@@ -1,9 +1,11 @@
-<?php // no direct access
+<?php
+// no direct access
+
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  * @copyright  (C) 2003-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -16,30 +18,36 @@ HTMLHelper::_('bootstrap.framework');
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x'); ?>"
+<form action="<?php
+echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
-		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
-				<?php echo $this->sidebar; ?>
-			</div>
-		<?php endif; ?>
-        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+    <div class="d-flex flex-row">
+        <?php
+        if (!empty($this->sidebar)) : ?>
+            <div id="j-sidebar-container" class="">
+                <?php
+                echo $this->sidebar; ?>
+            </div>
+        <?php
+        endif; ?>
+        <!--div class="<?php
+        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+            <div id="j-main-container" class="j-main-container">
 
-				<?php
-				echo '<h3> MaintenanceJ3x default</h3>' . '<br>';
-				echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
-			?>
+                <?php
+                echo '<h3> MaintenanceJ3x default</h3>' . '<br>';
+                echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+                ?>
 
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
-	<input type="hidden" name="task" value="" />
-	<?php echo HTMLHelper::_('form.token'); ?>
+    <input type="hidden" name="task" value=""/>
+    <?php
+    echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

@@ -12,9 +12,9 @@
  */
 
 /**
-// import { Queue } from './libQueueStack';
-/// <reference path="./libQueueStack.ts" /> #
-/**/
+ // import { Queue } from './libQueueStack';
+ /// <reference path="./libQueueStack.ts" /> #
+ /**/
 
 /**/
 interface Joomla {
@@ -24,15 +24,16 @@ interface Joomla {
     submitbutton: any;
     submitform: any;
 }
+
 /**/
 
 //declare var joomla: Joomla;
 
 //const joomla = window.Joomla || {};
-const joomla:Joomla = window.Joomla || {};
+const joomla: Joomla = window.Joomla || {};
 
 // Joomla form token
-var Token:string;
+var Token: string;
 
 /*----------------------------------------------------------------
    queue
@@ -40,13 +41,27 @@ var Token:string;
 
 class Queue<T> {
     private _store: T[] = [];
-    push(val: T) { this._store.push(val); }
-    shift(): T | undefined { return this._store.shift(); }
-    get length():number{ return this._store.length; }
-    isEmpty():boolean {return this._store.length == 0;}
-    isPopulated():boolean {return this._store.length > 0; }
-}
 
+    push(val: T) {
+        this._store.push(val);
+    }
+
+    shift(): T | undefined {
+        return this._store.shift();
+    }
+
+    get length(): number {
+        return this._store.length;
+    }
+
+    isEmpty(): boolean {
+        return this._store.length == 0;
+    }
+
+    isPopulated(): boolean {
+        return this._store.length > 0;
+    }
+}
 
 
 /*----------------------------------------------------------------
@@ -95,7 +110,7 @@ class DroppedFiles extends Queue<IDroppedFile> {
 
             //--- Add file with data ---------------------------------
 
-            const next : IDroppedFile = {
+            const next: IDroppedFile = {
                 file: file,
                 galleryId: galleryId,
                 statusBar: null,
@@ -103,7 +118,7 @@ class DroppedFiles extends Queue<IDroppedFile> {
             };
 
             console.log('   +droppedFile: ' + next.file);
-            this.push (next);
+            this.push(next);
 
         }
 
@@ -137,7 +152,7 @@ class ZipFiles extends Queue<IZipFile> {
 
             //--- Add file with data ---------------------------------
 
-            const next : IZipFile = {
+            const next: IZipFile = {
                 file: file,
                 galleryId: galleryId,
                 statusBar: null,
@@ -146,7 +161,7 @@ class ZipFiles extends Queue<IZipFile> {
 
             console.log('   +ZipFile: ' + next.file);
 
-            this.push (next);
+            this.push(next);
 
         }
 
@@ -185,24 +200,24 @@ interface IRequestTransferFolderFile {
 }
 
 /**
-interface IResponseServerFile {
-    fileName: string;
-    imageId: string; //number
-    baseName: string;
-    dstFileName: string;
-    size: number;
-}
-/**/
+ interface IResponseServerFile {
+ fileName: string;
+ imageId: string; //number
+ baseName: string;
+ dstFileName: string;
+ size: number;
+ }
+ /**/
 
 /**
-interface IServerFile {
-    serverFile: IResponseServerFile;
-    galleryId: string;
+ interface IServerFile {
+ serverFile: IResponseServerFile;
+ galleryId: string;
 
-    statusBar: createStatusBar | null;
-    errorZone: HTMLElement | null;
-}
-/**/
+ statusBar: createStatusBar | null;
+ errorZone: HTMLElement | null;
+ }
+ /**/
 
 class ServerFiles extends Queue<IRequestTransferFolderFile> {
 
@@ -215,7 +230,7 @@ class ServerFiles extends Queue<IRequestTransferFolderFile> {
 
             //--- Add file with data ---------------------------------
 
-            this.push (serverFile);
+            this.push(serverFile);
         }
 
     }
@@ -236,7 +251,7 @@ class TransferFiles extends Queue<ITransferFile> {
     add(nextFile: IDroppedFile, imageId: string, fileName: string, dstFileName: string) {
 
         console.log('    +TransferFile: ' + nextFile.file.name);
-        const next : ITransferFile = {
+        const next: ITransferFile = {
             file: nextFile.file,
             galleryId: nextFile.galleryId,
             imageId: imageId,
@@ -247,7 +262,7 @@ class TransferFiles extends Queue<ITransferFile> {
             errorZone: nextFile.errorZone,
         };
 
-        this.push (next);
+        this.push(next);
     }
 
 }
@@ -263,28 +278,28 @@ class FormElements {
     progressArea: HTMLElement;
     errorZone: HTMLElement;
 
-    buttonManualFiles : HTMLButtonElement;
-    buttonZipFile : HTMLButtonElement;
-    buttonFolderImport : HTMLButtonElement;
-    buttonProperties : HTMLButtonElement;
+    buttonManualFiles: HTMLButtonElement;
+    buttonZipFile: HTMLButtonElement;
+    buttonFolderImport: HTMLButtonElement;
+    buttonProperties: HTMLButtonElement;
 
-    inputFtpFolder : HTMLInputElement;
+    inputFtpFolder: HTMLInputElement;
 
     // : HTMLElement;
     // select eElements on form
     constructor() {
-        this.selectGallery = <HTMLInputElement> document.getElementById('SelectGallery');
-        this.dragZone = <HTMLElement> document.getElementById('dragarea');
-        this.imagesAreaList = <HTMLElement> document.getElementById('imagesAreaList');
-        this.progressArea = <HTMLElement> document.getElementById('uploadProgressArea');
-        this.errorZone = <HTMLElement> document.getElementById('uploadErrorArea');
+        this.selectGallery = <HTMLInputElement>document.getElementById('SelectGallery');
+        this.dragZone = <HTMLElement>document.getElementById('dragarea');
+        this.imagesAreaList = <HTMLElement>document.getElementById('imagesAreaList');
+        this.progressArea = <HTMLElement>document.getElementById('uploadProgressArea');
+        this.errorZone = <HTMLElement>document.getElementById('uploadErrorArea');
 
-        this.buttonManualFiles = <HTMLButtonElement> document.querySelector('#select-file-button-drop');
-        this.buttonZipFile = <HTMLButtonElement> document.querySelector('#select-zip-file-button-drop');
-        this.buttonFolderImport = <HTMLButtonElement> document.querySelector('#ftp-upload-folder-button-drop');
-        this.buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
+        this.buttonManualFiles = <HTMLButtonElement>document.querySelector('#select-file-button-drop');
+        this.buttonZipFile = <HTMLButtonElement>document.querySelector('#select-zip-file-button-drop');
+        this.buttonFolderImport = <HTMLButtonElement>document.querySelector('#ftp-upload-folder-button-drop');
+        this.buttonProperties = <HTMLButtonElement>document.getElementById('AssignImageProperties');
 
-        this.inputFtpFolder = <HTMLInputElement> document.querySelector('#ftp_upload_directory');
+        this.inputFtpFolder = <HTMLInputElement>document.querySelector('#ftp_upload_directory');
     }
 }
 
@@ -296,13 +311,13 @@ class enableDragZone {
 //    selectGallery: HTMLElement;
     dragZone: HTMLElement;
 
-    buttonManualFiles : HTMLButtonElement;
-    buttonZipFile : HTMLButtonElement;
-    buttonFolderImport : HTMLButtonElement;
-    inputFtpFolder : HTMLInputElement;
-    buttonProperties : HTMLButtonElement;
+    buttonManualFiles: HTMLButtonElement;
+    buttonZipFile: HTMLButtonElement;
+    buttonFolderImport: HTMLButtonElement;
+    inputFtpFolder: HTMLInputElement;
+    buttonProperties: HTMLButtonElement;
 
-    constructor(formElements:FormElements) {
+    constructor(formElements: FormElements) {
         this.dragZone = formElements.dragZone;
         this.buttonManualFiles = formElements.buttonManualFiles;
         this.buttonZipFile = formElements.buttonZipFile;
@@ -312,15 +327,15 @@ class enableDragZone {
 
         formElements.selectGallery.onchange = (ev) => this.onSelectionChange(ev.target);
 
-        this.checkSelection (formElements.selectGallery.value);
+        this.checkSelection(formElements.selectGallery.value);
     }
 
     onSelectionChange(target: EventTarget) {
         let selection = <HTMLInputElement>target;
-        this.checkSelection (selection.value);
+        this.checkSelection(selection.value);
     }
 
-    checkSelection (value: string) {
+    checkSelection(value: string) {
         // is selected (green)
         if (value != "0") {
             this.dragZone.classList.remove('dragareaDisabled');
@@ -353,28 +368,28 @@ class DroppedFilesTask {
     private droppedFiles: DroppedFiles;
     private requestDbImageIdTask: RequestDbImageIdTask;
     private zipFiles: ZipFiles;
-    private serverFolder:IRequestFolderImport;
+    private serverFolder: IRequestFolderImport;
     private serverFiles: ServerFiles;
     private requestZipUploadTask: RequestZipUploadTask;
     private requestFilesInFolderTask: RequestFilesInFolderTask;
     private requestTransferFolderFilesTask: RequestTransferFolderFilesTask;
 
-    private buttonManualFiles : HTMLButtonElement;
-    private buttonZipFile : HTMLButtonElement;
-    private buttonFolderImport : HTMLButtonElement;
-    private inputFtpFolder : HTMLInputElement;
+    private buttonManualFiles: HTMLButtonElement;
+    private buttonZipFile: HTMLButtonElement;
+    private buttonFolderImport: HTMLButtonElement;
+    private inputFtpFolder: HTMLInputElement;
 
     constructor(
 //*        selectGallery: HTMLInputElement,
-        formElements: FormElements,
-        droppedFiles: DroppedFiles,
-        requestDbImageIdTask: RequestDbImageIdTask,
-        zipFiles: ZipFiles,
-        requestZipUploadTask: RequestZipUploadTask,
-        serverFolder:IRequestFolderImport,
-        serverFiles: ServerFiles,
-        requestFilesInFolderTask: RequestFilesInFolderTask,
-        RequestTransferFolderFilesTask: RequestTransferFolderFilesTask,
+formElements: FormElements,
+droppedFiles: DroppedFiles,
+requestDbImageIdTask: RequestDbImageIdTask,
+zipFiles: ZipFiles,
+requestZipUploadTask: RequestZipUploadTask,
+serverFolder: IRequestFolderImport,
+serverFiles: ServerFiles,
+requestFilesInFolderTask: RequestFilesInFolderTask,
+RequestTransferFolderFilesTask: RequestTransferFolderFilesTask,
     ) {
         this.selectGallery = formElements.selectGallery;
         this.buttonManualFiles = formElements.buttonManualFiles;
@@ -391,18 +406,18 @@ class DroppedFilesTask {
         this.requestFilesInFolderTask = requestFilesInFolderTask;
         this.requestTransferFolderFilesTask = RequestTransferFolderFilesTask;
 
-        let fileInput = <HTMLInputElement> document.querySelector('#input_files');
-        let fileZip = <HTMLInputElement> document.querySelector('#input_zip');
+        let fileInput = <HTMLInputElement>document.querySelector('#input_files');
+        let fileZip = <HTMLInputElement>document.querySelector('#input_zip');
 
-        this.buttonManualFiles.onclick = () =>  fileInput.click();
-        this.buttonZipFile.onclick = () =>  fileZip.click();
+        this.buttonManualFiles.onclick = () => fileInput.click();
+        this.buttonZipFile.onclick = () => fileZip.click();
         this.buttonFolderImport.onclick = (ev: DragEvent) => this.onImportFolder(ev);
 
         fileInput.onchange = (ev: DragEvent) => this.onNewFile(ev);
         fileZip.onchange = (ev: DragEvent) => this.onZipFile(ev);
     }
 
-    onNewFile(ev: DragEvent ) {
+    onNewFile(ev: DragEvent) {
         let element = <HTMLInputElement>ev.target;
 
         ev.preventDefault();
@@ -411,14 +426,13 @@ class DroppedFilesTask {
         // gallery id
         const selectionHTML = <HTMLInputElement>this.selectGallery;
         //const gallery_id =  parseInt (selectionHTML.value);
-        const gallery_id =  selectionHTML.value;
+        const gallery_id = selectionHTML.value;
 
         // prevent empty gallery
-        if (parseInt (gallery_id) < 1) {
+        if (parseInt(gallery_id) < 1) {
             alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
             console.log(">onNewFile: Rejected");
-        }
-        else {
+        } else {
 
             const files: FileList = element.files || ev.dataTransfer.files;
             // files exist ?
@@ -427,14 +441,14 @@ class DroppedFilesTask {
             }
 
             console.log(">onNewFile: " + files.length);
-            this.droppedFiles.addFiles (files, gallery_id);
+            this.droppedFiles.addFiles(files, gallery_id);
 
             // Start ajax request of DB image reservation
-            this.requestDbImageIdTask.ajaxRequest ();
+            this.requestDbImageIdTask.ajaxRequest();
         }
     }
 
-    onZipFile(ev: DragEvent ) {
+    onZipFile(ev: DragEvent) {
         let element = <HTMLInputElement>ev.target;
 
         ev.preventDefault();
@@ -445,14 +459,13 @@ class DroppedFilesTask {
         // gallery id
         const selectionHTML = <HTMLInputElement>this.selectGallery;
         //const gallery_id =  parseInt (selectionHTML.value);
-        const gallery_id =  selectionHTML.value;
+        const gallery_id = selectionHTML.value;
 
         // prevent empty gallery
-        if (parseInt (gallery_id) < 1) {
+        if (parseInt(gallery_id) < 1) {
             alert(joomla.JText._('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST') + '(5)');
             console.log(">onZipFile: Rejected");
-        }
-        else {
+        } else {
             const files: FileList = element.files || ev.dataTransfer.files;
             // files exist ?
             if (!files.length) {
@@ -461,13 +474,13 @@ class DroppedFilesTask {
 
             console.log(">onZipFile: " + files.length);
 
-            this.zipFiles.addFiles (files, gallery_id);
+            this.zipFiles.addFiles(files, gallery_id);
 
-            this.requestZipUploadTask.ajaxRequest ();
+            this.requestZipUploadTask.ajaxRequest();
         }
     }
 
-    onImportFolder(ev: DragEvent ) {
+    onImportFolder(ev: DragEvent) {
         let element = <HTMLInputElement>ev.target;
 
         // tell folder files, ajax single files conversion
@@ -492,7 +505,7 @@ class DroppedFilesTask {
 
             console.log(">onImportFolder: " + this.serverFolder.path);
 
-            this.requestFilesInFolderTask.ajaxRequest (gallery_id);
+            this.requestFilesInFolderTask.ajaxRequest(gallery_id);
         }
     }
 }
@@ -503,7 +516,7 @@ class DroppedFilesTask {
 
 class createStatusBar {
 
-    private static imgCount:number = 0;
+    private static imgCount: number = 0;
 
     private htmlStatusbar: HTMLElement;
     private htmlStatusbarInner: HTMLElement;
@@ -529,7 +542,7 @@ class createStatusBar {
         fileName: string,
         fileSize: number,
         origin: string, // '
-    ){
+    ) {
         createStatusBar.imgCount++;
 //        let even_odd = (createStatusBar.imgCount % 2 == 0) ? "odd" : "even";
 
@@ -540,7 +553,7 @@ class createStatusBar {
 //        this.htmlStatusbar.classList.add(even_odd);
 
         this.htmlStatusbarInner = document.createElement('div');
-        this.htmlStatusbar.appendChild (this.htmlStatusbarInner);
+        this.htmlStatusbar.appendChild(this.htmlStatusbarInner);
 
         if (origin == 'zip') {
 
@@ -557,10 +570,10 @@ class createStatusBar {
 //            this.htmlIconZip.classList.add('icon-expand-2');
             this.htmlIconZip.classList.add('fa');
             this.htmlIconZip.classList.add('fa-file-archive');
-            this.htmlBadgeZip.appendChild (this.htmlIconZip);
+            this.htmlBadgeZip.appendChild(this.htmlIconZip);
             this.htmlBadgeZip.appendChild(document.createTextNode(' '));
 
-            this.htmlStatusbarInner.appendChild (this.htmlBadgeZip);
+            this.htmlStatusbarInner.appendChild(this.htmlBadgeZip);
         }
 
         if (origin == 'server') {
@@ -576,10 +589,10 @@ class createStatusBar {
             // this.htmlIconServer.classList.add('icon-folder');
             this.htmlIconServer.classList.add('fa');
             this.htmlIconServer.classList.add('fa-folder');
-            this.htmlBadgeServer.appendChild (this.htmlIconServer);
+            this.htmlBadgeServer.appendChild(this.htmlIconServer);
             this.htmlBadgeServer.appendChild(document.createTextNode(' '));
 
-            this.htmlStatusbarInner.appendChild (this.htmlBadgeServer);
+            this.htmlStatusbarInner.appendChild(this.htmlBadgeServer);
         }
 
 
@@ -600,19 +613,17 @@ class createStatusBar {
 
         if (origin == 'zip') {
             this.htmlFilename.classList.add('zip-name');
-        }
-        else
-        {
+        } else {
             if (origin == 'server') {
                 this.htmlFilename.classList.add('server-name');
             }
         }
-        this.htmlStatusbarInner.appendChild (this.htmlFilename);
+        this.htmlStatusbarInner.appendChild(this.htmlFilename);
 
         //this.htmlSize = $("<div class='filesize'></div>").appendTo(this.statusbar);
         this.htmlSize = document.createElement('div');
         this.htmlSize.classList.add('filesize');
-        this.htmlStatusbarInner.appendChild (this.htmlSize);
+        this.htmlStatusbarInner.appendChild(this.htmlSize);
 
         //this.htmlProgressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
         this.htmlProgressBarOuter = document.createElement('div');
@@ -620,15 +631,15 @@ class createStatusBar {
         this.htmlProgressBarInner = document.createElement('div');
         this.htmlProgressBarOuter.appendChild(this.htmlProgressBarInner);
 
-        this.htmlStatusbarInner.appendChild (this.htmlProgressBarOuter);
+        this.htmlStatusbarInner.appendChild(this.htmlProgressBarOuter);
 
         //this.htmlAbort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
         this.htmlAbort = document.createElement('span');
         this.htmlAbort.classList.add('abort');
         this.htmlAbort.classList.add('label');
         this.htmlAbort.innerHTML = 'Abort';
-        this.htmlStatusbarInner.appendChild (this.htmlAbort);
-/**/
+        this.htmlStatusbarInner.appendChild(this.htmlAbort);
+        /**/
 
         this.htmlIconUpload = document.createElement('i');
         this.htmlIconUpload.classList.add('icon-upload');
@@ -645,34 +656,34 @@ class createStatusBar {
         this.htmlBadgeUpload.classList.add('upload');
         this.htmlBadgeUpload.classList.add('label');
         this.htmlBadgeUpload.classList.add('label-primary');
-        this.htmlBadgeUpload.appendChild (this.htmlIconUpload);
+        this.htmlBadgeUpload.appendChild(this.htmlIconUpload);
         this.htmlBadgeUpload.appendChild(document.createTextNode('Uploaded'));
 //        this.htmlBadgeUpload.appendChild(document.createTextNode('Create images'));
         this.htmlBadgeUpload.style.display = "none";
-        this.htmlStatusbarInner.appendChild (this.htmlBadgeUpload);
+        this.htmlStatusbarInner.appendChild(this.htmlBadgeUpload);
 
         this.htmlBadgeOk = document.createElement('span');
         this.htmlBadgeOk.classList.add('OK');
         this.htmlBadgeOk.classList.add('label');
         this.htmlBadgeOk.classList.add('label-success');
         this.htmlBadgeOk.style.display = "none";
-        this.htmlBadgeOk.appendChild (this.htmlIconOk);
+        this.htmlBadgeOk.appendChild(this.htmlIconOk);
 //        this.htmlBadgeOk.appendChild(document.createTextNode('OK'));
         this.htmlBadgeOk.appendChild(document.createTextNode('finished OK'));
-        this.htmlStatusbarInner.appendChild (this.htmlBadgeOk);
+        this.htmlStatusbarInner.appendChild(this.htmlBadgeOk);
 
         this.htmlBadgeError = document.createElement('span');
         this.htmlBadgeError.classList.add('error');
         this.htmlBadgeError.classList.add('label');
         this.htmlBadgeError.classList.add('label-error');
         this.htmlBadgeError.style.display = "none";
-        this.htmlBadgeError.appendChild (this.htmlIconError);
+        this.htmlBadgeError.appendChild(this.htmlIconError);
 //        this.htmlBadgeError.appendChild(document.createTextNode('Error'));
         this.htmlBadgeError.appendChild(document.createTextNode('finished with ERROR'));
-        this.htmlStatusbarInner.appendChild (this.htmlBadgeError);
+        this.htmlStatusbarInner.appendChild(this.htmlBadgeError);
 
         this.htmlFilename.innerHTML = fileName;
-        if(fileSize > 0) {
+        if (fileSize > 0) {
             this.htmlSize.innerHTML = this.fileSizeText(fileSize);
         } else {
             this.htmlSize.innerHTML = '%'; // Not defined
@@ -685,20 +696,16 @@ class createStatusBar {
     }
 
 
-
-
-
     //--- file size in KB/MB .... -------------------
     // toDo: move to lib file
-    public fileSizeText (fileSize:number) {
+    public fileSizeText(fileSize: number) {
         let sizeStr = "";
         let sizeKB = fileSize / 1024;
 
         if (sizeKB > 1024) {
             let sizeMB = sizeKB / 1024;
             sizeStr = sizeMB.toFixed(2) + " MB";
-        }
-        else {
+        } else {
             sizeStr = sizeKB.toFixed(2) + " KB";
         }
 
@@ -707,13 +714,13 @@ class createStatusBar {
 
     //========================================
     // Change progress value
-    public setProgress (percentage: number) {
+    public setProgress(percentage: number) {
 
         this.htmlProgressBarInner.style.width = '' + percentage.toString() + '%';
         // remove abort button when nearly finished
         if (percentage >= 99.999) {
             //this.htmlAbort.style.display = 'none';
-            this.removeAbort ();
+            this.removeAbort();
         }
 //        console.log("      *** setProgress: " + percentage + '%');
     };
@@ -723,7 +730,7 @@ class createStatusBar {
     // ToDo: Test for second ajax still working ?
 
     // ToDo: !!!
-    public setAbort (jqxhr) {
+    public setAbort(jqxhr) {
         let htmlStatusbar = this.htmlStatusbar;
         this.htmlAbort.addEventListener('click', function () {
             jqxhr.abort();
@@ -734,31 +741,29 @@ class createStatusBar {
         });
     };
 
-    public removeAbort () {
+    public removeAbort() {
         this.htmlAbort.style.display = 'none';
     }
 
-    public setUpload (state:boolean) {
+    public setUpload(state: boolean) {
         const display = state ? "inline-block" : "none"
         this.htmlBadgeUpload.style.display = display;
     }
 
-    public setOK (state:boolean) {
+    public setOK(state: boolean) {
         const display = state ? "inline-block" : "none"
         this.htmlBadgeOk.style.display = display;
     }
 
-    public setError (state:boolean) {
+    public setError(state: boolean) {
         const display = state ? "inline-block" : "none"
         this.htmlBadgeError.style.display = display;
     }
 
 
-
-
     //========================================
     // Remove item after successful file upload
-    public remove () {
+    public remove() {
 
         this.htmlStatusbar.style.display = 'none';
     };
@@ -797,10 +802,10 @@ function separateDataAndNoise(response: string): [string, string] {
 ----------------------------------------------------------------*/
 
 // extract html part of error page
-function separateErrorAndAlerts(errMessage:string):[string,string] {
+function separateErrorAndAlerts(errMessage: string): [string, string] {
 
-    let errorHtml:string = errMessage; // Plan b: show all if nothing detected
-    let alertHtml:string = "";
+    let errorHtml: string = errMessage; // Plan b: show all if nothing detected
+    let alertHtml: string = "";
 
     const StartErrorIdx = errMessage.indexOf('<section id="content" class="content">');
     const EndErrorIdx = errMessage.indexOf('</section>');
@@ -828,7 +833,7 @@ function separateErrorAndAlerts(errMessage:string):[string,string] {
         }
     }
 
-    return [ errorHtml, alertHtml ];
+    return [errorHtml, alertHtml];
 }
 
 // jData = jQuery.parseJSON(jsonText);
@@ -850,7 +855,7 @@ enum JoomlaMessages {
 }
 
 type JoomlaMessage = {
-    msgType:JoomlaMessages,
+    msgType: JoomlaMessages,
     messages: string [],
 }
 
@@ -862,6 +867,7 @@ interface IAjaxResponse {
     messages: JoomlaMessage [] | null;
     data: string | null;
 }
+
 // {\"file\":\"dstFile_DSC_5501.JPG\",\"imageId\":2,\"dstFile\":\"http:\\/\\/127.0.0.1\\/Joomla4x\\/images\\/rsgallery2\\/dstFile_DSC_5501.JPG\",\"originalFileName\":\"DSC_5501.JPG\"}}"
 
 interface IResponseRequest {
@@ -876,7 +882,7 @@ interface IResponseTransfer {
     imageId: string; //number
     fileUrl: string;
     safeFileName: string;
-    thumbSize:string;
+    thumbSize: string;
 }
 
 interface IResponseServerFile {
@@ -885,7 +891,7 @@ interface IResponseServerFile {
     baseName: string;
     dstFileName: string;
     size: number;
-    thumbSize:string;
+    thumbSize: string;
 }
 
 interface IResponseServerFiles {
@@ -898,7 +904,7 @@ interface IResponseZipFile {
     imageId: string; //number
     baseName: string;
     dstFileName: string;
-    thumbSize:string;
+    thumbSize: string;
     size: number;
     fileUrl: string;
 }
@@ -907,10 +913,6 @@ interface IResponseZipFiles {
     // Path ?
     files: IResponseZipFile [];
 }
-
-
-
-
 
 
 class RequestDbImageIdTask {
@@ -929,11 +931,10 @@ class RequestDbImageIdTask {
     constructor(
         progressArea: HTMLElement,
         errorZone: HTMLElement,
-
         droppedFiles: DroppedFiles,
         transferFiles: TransferFiles,
         transferImagesTask: TransferImagesTask,
-        ) {
+    ) {
         this.progressArea = progressArea;
         this.errorZone = errorZone;
 
@@ -962,11 +963,11 @@ class RequestDbImageIdTask {
                         // attention joomla may send error data on this channel
                         resolve(this.response);
                     } else {
-                         let msg = 'Error \'on load\' for ' + nextFile.file.name + ' in DbRequest:\n*'
-                             + 'State: ' + this.status + ' ' + this.statusText + '\n';
-                             + 'responseType: ' + this.responseType + '\n';
-                         //alert (msg);
-                         console.log (msg);
+                        let msg = 'Error \'on load\' for ' + nextFile.file.name + ' in DbRequest:\n*'
+                            + 'State: ' + this.status + ' ' + this.statusText + '\n';
+                        +'responseType: ' + this.responseType + '\n';
+                        //alert (msg);
+                        console.log(msg);
 
                         // reject(new Error(this.response));
                         reject(new Error(this.responseText)); // ToDo: check if there is mor in this
@@ -977,7 +978,7 @@ class RequestDbImageIdTask {
                     msg += 'responseType: ' + this.responseType + '\n';
                     //msg += 'responseText: ' + this.responseText + '\n';
                     //alert (msg);
-                    console.log (msg);
+                    console.log(msg);
 
                     // reject(new Error(this.response));
                     reject(new Error(this.responseText));
@@ -1002,15 +1003,16 @@ class RequestDbImageIdTask {
 
                 request.send(data);
             }
-            );
+        );
 
         /**
          console.log("      > callAjaxRequest: " + nextFile.file.name);
          let result = await setTimeout(() => {
-            console.log("< callAjaxRequest: " + nextFile.file.name)
-        }, 333);
+         console.log("< callAjaxRequest: " + nextFile.file.name)
+         }, 333);
          /**/
     }
+
     /**/
 
     /**/
@@ -1029,7 +1031,7 @@ class RequestDbImageIdTask {
             let nextFile = this.droppedFiles.shift();
             console.log("   @Request File: " + nextFile.file.name);
 
-            nextFile.statusBar = new createStatusBar (this.progressArea, nextFile.file.name, nextFile.file.size, 'image');
+            nextFile.statusBar = new createStatusBar(this.progressArea, nextFile.file.name, nextFile.file.size, 'image');
 
             /* let request = */
             //await this.callAjaxRequest(nextFile)
@@ -1039,12 +1041,12 @@ class RequestDbImageIdTask {
                     console.log("   <Request OK: " + nextFile.file.name);
                     console.log("      response: " + JSON.stringify(response));
 
-                    const [data, noise] = separateDataAndNoise (response);
+                    const [data, noise] = separateDataAndNoise(response);
 
                     console.log("      response data: " + JSON.stringify(data));
                     console.log("      response error/noise: " + JSON.stringify(noise));
 
-                    let AjaxResponse:IAjaxResponse = JSON.parse(data);
+                    let AjaxResponse: IAjaxResponse = JSON.parse(data);
                     //console.log("      response data: " + JSON.stringify(data));
 
                     if (AjaxResponse.success) {
@@ -1102,9 +1104,9 @@ class RequestDbImageIdTask {
      ajax messages as html elements
 ----------------------------------------------------------------*/
 
-function ajaxCatchedMessages2Html (errText: Error, fileName: string):  HTMLElement | null {
+function ajaxCatchedMessages2Html(errText: Error, fileName: string): HTMLElement | null {
 
-    let errorHtml:HTMLElement = null;
+    let errorHtml: HTMLElement = null;
 
     // remove unnecessary HTML
     const [errorPart, alertPart] = separateErrorAndAlerts(errText.message);
@@ -1158,9 +1160,8 @@ function ajaxCatchedMessages2Html (errText: Error, fileName: string):  HTMLEleme
      ajax messages as html elements
 ----------------------------------------------------------------*/
 
-function ajaxMessages2Html (AjaxResponse: IAjaxResponse, fileName: string): HTMLElement | null
-{
-    let errorHtml:HTMLElement = null;
+function ajaxMessages2Html(AjaxResponse: IAjaxResponse, fileName: string): HTMLElement | null {
+    let errorHtml: HTMLElement = null;
 
     if (AjaxResponse.message || AjaxResponse.messages) {
 
@@ -1261,7 +1262,6 @@ class TransferImagesTask {
         imagesAreaList: HTMLElement,
         progressArea: HTMLElement,
         errorZone: HTMLElement,
-
         transferFiles: TransferFiles,
     ) {
         this.imagesAreaList = imagesAreaList;
@@ -1271,7 +1271,7 @@ class TransferImagesTask {
         this.transferFiles = transferFiles;
     }
 
-    private async callAjaxTransfer(nextFile: ITransferFile): Promise<any>  {
+    private async callAjaxTransfer(nextFile: ITransferFile): Promise<any> {
 
         console.log("      in callAjaxTransfer: " + nextFile.file);
         console.log("      > callAjaxTransfer: " + nextFile.fileName);
@@ -1289,7 +1289,7 @@ class TransferImagesTask {
                         let msg = 'Error over \'on load\' for ' + nextFile.file.name + ' in Transfer:\n*'
                             + 'State: ' + this.status + ' ' + this.statusText + '\n';
                         //alert (msg);
-                        console.log (msg);
+                        console.log(msg);
 
                         reject(new Error(this.responseText));  // ToDo: check if there is mor in this
                     }
@@ -1299,7 +1299,7 @@ class TransferImagesTask {
                     msg += 'responseType: ' + this.responseType + '\n';
                     msg += 'responseText: ' + this.responseText + '\n';
                     //alert (msg);
-                    console.log (msg);
+                    console.log(msg);
 
 //                    reject(new Error('XMLHttpRequest Error: ' + this.statusText));
                     reject(new Error(this.responseText));
@@ -1311,51 +1311,51 @@ class TransferImagesTask {
                 data.append('gallery_id', nextFile.galleryId);
                 data.append('imageId', nextFile.imageId);
                 data.append('fileName', nextFile.fileName);
-                console.log ('   >fileName: ' + nextFile.fileName);
+                console.log('   >fileName: ' + nextFile.fileName);
                 data.append('dstFileName', nextFile.dstFileName);
-                console.log ('   >dstFileName: ' + nextFile.dstFileName);
+                console.log('   >dstFileName: ' + nextFile.dstFileName);
 
 
                 /**
 
                  get:
                  request.onprogress = function (e) {
-                    if (e.lengthComputable) {
-                        console.log(e.loaded+  " / " + e.total)
-                    }
-                }
+                 if (e.lengthComputable) {
+                 console.log(e.loaded+  " / " + e.total)
+                 }
+                 }
 
                  post: upload
                  xhr.upload.addEventListener("progress", function(evt){
-                    if (evt.lengthComputable) {
-                        console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
-                    }
-                }, false);
+                 if (evt.lengthComputable) {
+                 console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
+                 }
+                 }, false);
 
                  xhr.upload.onprogress = function (event) {
-                    if (event.lengthComputable) {
-                        let complete = (event.loaded / event.total * 100 | 0);
-                        progress.value = progress.innerHTML = complete;
-                    }
-                };
+                 if (event.lengthComputable) {
+                 let complete = (event.loaded / event.total * 100 | 0);
+                 progress.value = progress.innerHTML = complete;
+                 }
+                 };
 
                  post: download
                  xhr.addEventListener("progress", function(evt){
-                    if (evt.lengthComputable) {
-                        let percentComplete = evt.loaded / evt.total;
-                        //Do something with download progress
-                        console.log(percentComplete);
-                    }
-                }, false);
+                 if (evt.lengthComputable) {
+                 let percentComplete = evt.loaded / evt.total;
+                 //Do something with download progress
+                 console.log(percentComplete);
+                 }
+                 }, false);
 
 
                  /**
                  xhr.onloadstart = function (e) {
-                    console.log("start")
-                }
+                 console.log("start")
+                 }
                  xhr.onloadend = function (e) {
-                    console.log("end")
-                }
+                 console.log("end")
+                 }
                  I would advise the use of a
                  HTML <progress> element to
                  display current progress.
@@ -1395,8 +1395,8 @@ class TransferImagesTask {
         /**
          console.log("      > callAjaxTransfer: " + nextFile.file.name);
          let result = await setTimeout(() => {
-            console.log("< callAjaxTransfer: " + nextFile.file.name)
-        }, 333);
+         console.log("< callAjaxTransfer: " + nextFile.file.name)
+         }, 333);
          /**/
     }
 
@@ -1406,8 +1406,7 @@ class TransferImagesTask {
         console.log("    >this.transferFiles.length: " + this.transferFiles.length);
         // check for busy
         while (this.isBusyCount < this.BusyCountLimit
-            && this.transferFiles.length > 0)
-        {
+        && this.transferFiles.length > 0) {
             this.isBusyCount++;
 
             let nextFile = this.transferFiles.shift();
@@ -1420,12 +1419,12 @@ class TransferImagesTask {
                     console.log("   <Transfer OK: " + nextFile.file);
                     console.log("       response: " + JSON.stringify(response));
 
-                    const [data, error]  = separateDataAndNoise (response);
+                    const [data, error] = separateDataAndNoise(response);
 
                     console.log("      response data: " + JSON.stringify(data));
                     console.log("      response error: " + JSON.stringify(error));
 
-                    let AjaxResponse:IAjaxResponse = JSON.parse(data);
+                    let AjaxResponse: IAjaxResponse = JSON.parse(data);
                     //console.log("      response data: " + JSON.stringify(data));
 
                     if (AjaxResponse.success) {
@@ -1444,8 +1443,8 @@ class TransferImagesTask {
                         this.showThumb(transferData)
 
                         // ToDo: load aat start like others
-                        var buttonProperties : HTMLButtonElement; // button
-                        buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
+                        var buttonProperties: HTMLButtonElement; // button
+                        buttonProperties = <HTMLButtonElement>document.getElementById('AssignImageProperties');
                         buttonProperties.disabled = false;
 
                     } else {
@@ -1462,7 +1461,7 @@ class TransferImagesTask {
 
                 })
 
-                .catch((errText:Error) => {
+                .catch((errText: Error) => {
                     console.log("    !!! Error transfer: " + nextFile.file);
                     //                  alert ('errText' + errText);
                     //console.log("        error: " + JSON.stringify(errText));
@@ -1496,7 +1495,7 @@ class TransferImagesTask {
 
     // toDo: Html lib or similar
     // ToDO: Extract function and use also otherwise
-    private showThumb (responseData: IResponseTransfer) {
+    private showThumb(responseData: IResponseTransfer) {
 
         // Add HTML to show thumb of uploaded image
 
@@ -1507,19 +1506,19 @@ class TransferImagesTask {
         //imageBox.classList.add('card_thumb');
         imageBox.classList.add('card');
         imageBox.classList.add('thumb_card');
-        this.imagesAreaList.appendChild (imageBox);
+        this.imagesAreaList.appendChild(imageBox);
 
         const thumbArea = document.createElement('div');
         thumbArea.classList.add('rsg2_thumbnail');
         thumbArea.style.minWidth = '100px';
-        imageBox.appendChild (thumbArea);
+        imageBox.appendChild(thumbArea);
 
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
         const imgContainer = document.createElement('div');
         imgContainer.classList.add('imgContainer');
         //imgContainer.style.width = responseData.thumbSize + 'px';
         //imgContainer.style.height = responseData.thumbSize + 'px';
-        thumbArea.appendChild (imgContainer);
+        thumbArea.appendChild(imgContainer);
 
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
@@ -1527,13 +1526,13 @@ class TransferImagesTask {
         // 2021.02.15 imageDisplay.style.width = responseData.thumbSize + 'px';
         // 2021.02.15 imageDisplay.style.height = responseData.thumbSize + 'px';
         imageDisplay.src = responseData.fileUrl;
-        imgContainer.appendChild (imageDisplay);
+        imgContainer.appendChild(imageDisplay);
 
         //
         //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
         const caption = document.createElement('div');
         caption.classList.add('thumb_caption');
-        imageBox.appendChild (caption);
+        imageBox.appendChild(caption);
 
         //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
         //const imageName = document.createElement('small');
@@ -1541,7 +1540,7 @@ class TransferImagesTask {
         imageName.innerText = responseData.fileName;
         imageName.classList.add('thumb_name');
         imageName.classList.add('shorten-long-text');
-        caption.appendChild (imageName);
+        caption.appendChild(imageName);
 
 //        caption.appendChild(document.createTextNode(' '));
 
@@ -1550,7 +1549,7 @@ class TransferImagesTask {
         const imageId = document.createElement('small');
         imageId.innerText = ' (' + responseData.imageId + ')'; // order
         //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
-        caption.appendChild (imageId);
+        caption.appendChild(imageId);
 
         //this.cid = $("<input name='cid[]' class='imageCid' type='hidden' value='" + jData.data.cid + "' />").appendTo(this.imageBox);
         const cid = document.createElement('input');
@@ -1560,7 +1559,7 @@ class TransferImagesTask {
         //cid.innerText = responseData.imageId;
         cid.value = responseData.imageId;
 
-        imageBox.appendChild (cid);
+        imageBox.appendChild(cid);
     }
 
 }
@@ -1586,11 +1585,10 @@ class RequestZipUploadTask {
         imagesAreaList: HTMLElement,
         progressArea: HTMLElement,
         errorZone: HTMLElement,
-
         zipFiles: ZipFiles,
         serverFiles: ServerFiles,
         RequestTransferFolderFilesTask: RequestTransferFolderFilesTask,
-        ) {
+    ) {
         this.imagesAreaList = imagesAreaList;
         this.progressArea = progressArea;
         this.errorZone = errorZone;
@@ -1617,9 +1615,9 @@ class RequestZipUploadTask {
                     } else {
                         let msg = 'Error \'on upload\' for ' + nextFile.file.name + ' in zip:\n*'
                             + 'State: ' + this.status + ' ' + this.statusText + '\n';
-                        + 'responseType: ' + this.responseType + '\n';
+                        +'responseType: ' + this.responseType + '\n';
                         //alert (msg);
-                        console.log (msg);
+                        console.log(msg);
 
                         // reject(new Error(this.response));
                         reject(new Error(this.responseText)); // ToDo: check if there is mor in this
@@ -1630,7 +1628,7 @@ class RequestZipUploadTask {
                     msg += 'responseType: ' + this.responseType + '\n';
                     //msg += 'responseText: ' + this.responseText + '\n';
                     //alert (msg);
-                    console.log (msg);
+                    console.log(msg);
 
                     // reject(new Error(this.response));
                     reject(new Error(this.responseText));
@@ -1661,12 +1659,12 @@ class RequestZipUploadTask {
         /**
          console.log("      > callAjaxRequest: " + nextFile.file.name);
          let result = await setTimeout(() => {
-            console.log("< callAjaxRequest: " + nextFile.file.name)
-        }, 333);
+         console.log("< callAjaxRequest: " + nextFile.file.name)
+         }, 333);
          /**/
     }
-    /**/
 
+    /**/
 
 
     public async ajaxRequest() {
@@ -1695,12 +1693,12 @@ class RequestZipUploadTask {
                     console.log("   <Request OK: " + nextFile.file.name);
                     console.log("      response: " + JSON.stringify(response));
 
-                    const [data, noise] = separateDataAndNoise (response);
+                    const [data, noise] = separateDataAndNoise(response);
 
                     console.log("      response data: " + JSON.stringify(data));
                     console.log("      response error/noise: " + JSON.stringify(noise));
 
-                    let AjaxResponse:IAjaxResponse = JSON.parse(data);
+                    let AjaxResponse: IAjaxResponse = JSON.parse(data);
                     //console.log("      response data: " + JSON.stringify(data));
 
                     if (AjaxResponse.success) {
@@ -1756,8 +1754,8 @@ class RequestZipUploadTask {
 
 
                             // ToDo: load at start like others
-                            var buttonProperties : HTMLButtonElement; // button
-                            buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
+                            var buttonProperties: HTMLButtonElement; // button
+                            buttonProperties = <HTMLButtonElement>document.getElementById('AssignImageProperties');
                             buttonProperties.disabled = false;
 
                         }
@@ -1806,7 +1804,7 @@ class RequestZipUploadTask {
     }
 
     // toDo: Html lib or similar
-    private showThumb (responseData: IResponseTransfer) {
+    private showThumb(responseData: IResponseTransfer) {
 
         // Add HTML to show thumb of uploaded image
 
@@ -1814,18 +1812,18 @@ class RequestZipUploadTask {
 
         //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
         const imageBox = document.createElement('li');
-        this.imagesAreaList.appendChild (imageBox);
+        this.imagesAreaList.appendChild(imageBox);
 
         const thumbArea = document.createElement('div');
         thumbArea.classList.add('rsg2_thumbnail');
-        imageBox.appendChild (thumbArea);
+        imageBox.appendChild(thumbArea);
 
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
         const imgContainer = document.createElement('div');
         imgContainer.classList.add('imgContainer');
         imgContainer.style.width = responseData.thumbSize + 'px';
         imgContainer.style.height = responseData.thumbSize + 'px';
-        thumbArea.appendChild (imgContainer);
+        thumbArea.appendChild(imgContainer);
 
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
@@ -1833,25 +1831,25 @@ class RequestZipUploadTask {
         // 2021.02.15 imageDisplay.style.width = responseData.thumbSize +'px';
         // 2021.02.15 imageDisplay.style.height = responseData.thumbSize + 'px';
         imageDisplay.src = responseData.fileUrl;
-        imgContainer.appendChild (imageDisplay);
+        imgContainer.appendChild(imageDisplay);
 
         //
         //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
         const caption = document.createElement('div');
         caption.classList.add('caption');
-        imageBox.appendChild (caption);
+        imageBox.appendChild(caption);
 
         //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
         const imageName = document.createElement('small');
         imageName.innerText = responseData.fileName;
-        caption.appendChild (imageName);
+        caption.appendChild(imageName);
 
         // toDo: title ?
         //this.imageId = $("<small> (" + jData.data.cid + ":" + jData.data.order + ")</small>").appendTo(this.imageDisplay);
         const imageId = document.createElement('small');
         imageId.innerText = ' (' + responseData.imageId + ')'; // order
         //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
-        caption.appendChild (imageId);
+        caption.appendChild(imageId);
 
         //this.cid = $("<input name='cid[]' class='imageCid' type='hidden' value='" + jData.data.cid + "' />").appendTo(this.imageBox);
         const cid = document.createElement('input');
@@ -1861,7 +1859,7 @@ class RequestZipUploadTask {
         //cid.innerText = responseData.imageId;
         cid.value = responseData.imageId;
 
-        imageBox.appendChild (cid);
+        imageBox.appendChild(cid);
     }
 
 
@@ -1877,7 +1875,7 @@ class RequestFilesInFolderTask {
     private progressArea: HTMLElement;
     private errorZone: HTMLElement;
 
-    private serverFolder:IRequestFolderImport;
+    private serverFolder: IRequestFolderImport;
     private serverFiles: ServerFiles;
     private requestTransferFolderFilesTask: RequestTransferFolderFilesTask;
 
@@ -1887,8 +1885,7 @@ class RequestFilesInFolderTask {
     constructor(
         progressArea: HTMLElement,
         errorZone: HTMLElement,
-
-        serverFolder:IRequestFolderImport,
+        serverFolder: IRequestFolderImport,
         serverFiles: ServerFiles,
         requestTransferFolderFilesTask: RequestTransferFolderFilesTask,
     ) {
@@ -1913,9 +1910,9 @@ class RequestFilesInFolderTask {
                     } else {
                         let msg = 'Error \'on load\' for ' + serverFolder.path + ' in DbRequest:\n*'
                             + 'State: ' + this.status + ' ' + this.statusText + '\n';
-                        + 'responseType: ' + this.responseType + '\n';
+                        +'responseType: ' + this.responseType + '\n';
                         //alert (msg);
-                        console.log (msg);
+                        console.log(msg);
 
                         // reject(new Error(this.response));
                         reject(new Error(this.responseText)); // ToDo: check if there is mor in this
@@ -1926,7 +1923,7 @@ class RequestFilesInFolderTask {
                     msg += 'responseType: ' + this.responseType + '\n';
                     //msg += 'responseText: ' + this.responseText + '\n';
                     //alert (msg);
-                    console.log (msg);
+                    console.log(msg);
 
                     // reject(new Error(this.response));
                     reject(new Error(this.responseText));
@@ -1956,13 +1953,12 @@ class RequestFilesInFolderTask {
         /**
          console.log("      > callAjaxRequest: " + nextFile.file.name);
          let result = await setTimeout(() => {
-            console.log("< callAjaxRequest: " + nextFile.file.name)
-        }, 333);
+         console.log("< callAjaxRequest: " + nextFile.file.name)
+         }, 333);
          /**/
     }
+
     /**/
-
-
 
 
     public async ajaxRequest(galleryId: string) {
@@ -1987,12 +1983,12 @@ class RequestFilesInFolderTask {
                 console.log("   <Request OK: " + this.serverFolder.path);
                 console.log("      response: " + JSON.stringify(response));
 
-                const [data, noise] = separateDataAndNoise (response);
+                const [data, noise] = separateDataAndNoise(response);
 
                 console.log("      response data: " + JSON.stringify(data));
                 console.log("      response error/noise: " + JSON.stringify(noise));
 
-                let AjaxResponse:IAjaxResponse = JSON.parse(data);
+                let AjaxResponse: IAjaxResponse = JSON.parse(data);
                 //console.log("      response data: " + JSON.stringify(data));
 
                 if (AjaxResponse.success) {
@@ -2039,9 +2035,8 @@ class RequestFilesInFolderTask {
                     }
 
 
-
                     // ==> Start ajax transfer of files
-                    this.requestTransferFolderFilesTask.ajaxRequest ();
+                    this.requestTransferFolderFilesTask.ajaxRequest();
                 } else {
                     console.log("      failed data: " + AjaxResponse.data);
                 }
@@ -2080,6 +2075,7 @@ class RequestFilesInFolderTask {
 
     }
 }
+
 //--------------------------------------------------------------------------------------
 // Files already on server by ftp
 //--------------------------------------------------------------------------------------
@@ -2099,7 +2095,6 @@ class RequestTransferFolderFilesTask {
         imagesAreaList: HTMLElement,
         progressArea: HTMLElement,
         errorZone: HTMLElement,
-
         //        zipFiles: ZipFiles,
         serverFiles: ServerFiles,
     ) {
@@ -2122,9 +2117,9 @@ class RequestTransferFolderFilesTask {
                     } else {
                         let msg = 'Error \'on load\' for ' + nextFile.fileName + ' in DbRequest:\n*'
                             + 'State: ' + this.status + ' ' + this.statusText + '\n';
-                            + 'responseType: ' + this.responseType + '\n';
+                        +'responseType: ' + this.responseType + '\n';
                         //alert (msg);
-                        console.log (msg);
+                        console.log(msg);
 
                         // reject(new Error(this.response));
                         reject(new Error(this.responseText)); // ToDo: check if there is mor in this
@@ -2135,7 +2130,7 @@ class RequestTransferFolderFilesTask {
                     msg += 'responseType: ' + this.responseType + '\n';
                     //msg += 'responseText: ' + this.responseText + '\n';
                     //alert (msg);
-                    console.log (msg);
+                    console.log(msg);
 
                     // reject(new Error(this.response));
                     reject(new Error(this.responseText));
@@ -2168,10 +2163,11 @@ class RequestTransferFolderFilesTask {
         /**
          console.log("      > callAjaxRequest: " + nextFile.file.name);
          let result = await setTimeout(() => {
-            console.log("< callAjaxRequest: " + nextFile.file.name)
-        }, 333);
+         console.log("< callAjaxRequest: " + nextFile.file.name)
+         }, 333);
          /**/
     }
+
     /**/
 
     /**/
@@ -2201,12 +2197,12 @@ class RequestTransferFolderFilesTask {
                     console.log("   <Request OK: " + nextFile.fileName);
                     console.log("      response: " + JSON.stringify(response));
 
-                    const [data, noise] = separateDataAndNoise (response);
+                    const [data, noise] = separateDataAndNoise(response);
 
                     console.log("      response data: " + JSON.stringify(data));
                     console.log("      response error/noise: " + JSON.stringify(noise));
 
-                    let AjaxResponse:IAjaxResponse = JSON.parse(data);
+                    let AjaxResponse: IAjaxResponse = JSON.parse(data);
                     //console.log("      response data: " + JSON.stringify(data));
 
                     if (AjaxResponse.success) {
@@ -2226,8 +2222,8 @@ class RequestTransferFolderFilesTask {
                         this.showThumb(transferData)
 
                         // ToDo: load aat start like others
-                        var buttonProperties : HTMLButtonElement; // button
-                        buttonProperties = <HTMLButtonElement> document.getElementById('AssignImageProperties');
+                        var buttonProperties: HTMLButtonElement; // button
+                        buttonProperties = <HTMLButtonElement>document.getElementById('AssignImageProperties');
                         buttonProperties.disabled = false;
 
                     } else {
@@ -2269,7 +2265,7 @@ class RequestTransferFolderFilesTask {
     }
 
     // toDo: Html lib or similar
-    private showThumb (responseData: IResponseTransfer) {
+    private showThumb(responseData: IResponseTransfer) {
 
         // Add HTML to show thumb of uploaded image
 
@@ -2277,18 +2273,18 @@ class RequestTransferFolderFilesTask {
 
         //this.imageBox = $("<li></li>").appendTo($('#imagesAreaList'));
         const imageBox = document.createElement('li');
-        this.imagesAreaList.appendChild (imageBox);
+        this.imagesAreaList.appendChild(imageBox);
 
         const thumbArea = document.createElement('div');
         thumbArea.classList.add('rsg2_thumbnail');
-        imageBox.appendChild (thumbArea);
+        imageBox.appendChild(thumbArea);
 
         //this.imgContainer = $("<div class='imgContainer' ></div>").appendTo(this.thumbArea);
         const imgContainer = document.createElement('div');
         imgContainer.classList.add('imgContainer');
         imgContainer.style.width = responseData.thumbSize + 'px';
         imgContainer.style.height = responseData.thumbSize + 'px';
-        thumbArea.appendChild (imgContainer);
+        thumbArea.appendChild(imgContainer);
 
         //this.imageDisplay = $("<img class='img-rounded' data-src='holder.js/600x400' src='" + jData.data.dstFile + "' alt='' />").appendTo(this.imgContainer);
         const imageDisplay = document.createElement('img');
@@ -2296,25 +2292,25 @@ class RequestTransferFolderFilesTask {
         // 2021.02.15 imageDisplay.style.width = responseData.thumbSize +'px';
         // 2021.02.15 imageDisplay.style.height = responseData.thumbSize + 'px';
         imageDisplay.src = responseData.fileUrl;
-        imgContainer.appendChild (imageDisplay);
+        imgContainer.appendChild(imageDisplay);
 
         //
         //this.caption = $("<div class='caption' ></div>").appendTo(this.imageBox);
         const caption = document.createElement('div');
         caption.classList.add('caption');
-        imageBox.appendChild (caption);
+        imageBox.appendChild(caption);
 
         //this.imageName = $("<small>" + jData.data.file + "</small>").appendTo(this.caption);
         const imageName = document.createElement('small');
         imageName.innerText = responseData.fileName;
-        caption.appendChild (imageName);
+        caption.appendChild(imageName);
 
         // toDo: title ?
         //this.imageId = $("<small> (" + jData.data.cid + ":" + jData.data.order + ")</small>").appendTo(this.imageDisplay);
         const imageId = document.createElement('small');
         imageId.innerText = ' (' + responseData.imageId + ')'; // order
         //imageId.innerText = '(' + responseData.imageId + ':' + responseData.safeFileName + ')'; // order
-        caption.appendChild (imageId);
+        caption.appendChild(imageId);
 
         //this.cid = $("<input name='cid[]' class='imageCid' type='hidden' value='" + jData.data.cid + "' />").appendTo(this.imageBox);
         const cid = document.createElement('input');
@@ -2324,7 +2320,7 @@ class RequestTransferFolderFilesTask {
         //cid.innerText = responseData.imageId;
         cid.value = responseData.imageId;
 
-        imageBox.appendChild (cid);
+        imageBox.appendChild(cid);
     }
 
 }
@@ -2333,15 +2329,15 @@ class RequestTransferFolderFilesTask {
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
 
     // collect html elements
     let elements = new FormElements();
 
     // on old browser just show file upload
     if (typeof FormData === 'undefined') {
-        let legacy_uploader = <HTMLInputElement> document.getElementById('legacy-uploader');
-        let uploader_wrapper = <HTMLElement> document.getElementById('uploader-wrapper');
+        let legacy_uploader = <HTMLInputElement>document.getElementById('legacy-uploader');
+        let uploader_wrapper = <HTMLElement>document.getElementById('uploader-wrapper');
         legacy_uploader.style.display = 'block';
         uploader_wrapper.style.display = 'none';
 
@@ -2349,18 +2345,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
 
     // Exit if no galleries are selectable
-    if ( ! elements.selectGallery)
-    {
+    if (!elements.selectGallery) {
         return;
     }
 
     // Reserve list for dropped files
     const droppedFiles = new DroppedFiles();
     const transferFiles = new TransferFiles();
-    const zipFiles = new ZipFiles ();
-    const serverFiles = new ServerFiles ();
+    const zipFiles = new ZipFiles();
+    const serverFiles = new ServerFiles();
 
-    const serverFolder:IRequestFolderImport = {
+    const serverFolder: IRequestFolderImport = {
         path: "",
         galleryId: '-1',
 
@@ -2373,7 +2368,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         elements.errorZone, serverFiles);
 
     // Get list of files on server (and create image DB IDs)
-    const requestFilesInFolderTask = new RequestFilesInFolderTask (elements.progressArea, elements.errorZone,
+    const requestFilesInFolderTask = new RequestFilesInFolderTask(elements.progressArea, elements.errorZone,
         serverFolder, serverFiles, requestTransferFolderFilesTask);
 
     // Upload zip to a server folder, return list of files on server (and create image DB IDs)
@@ -2381,21 +2376,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
         zipFiles, serverFiles, requestTransferFolderFilesTask);
 
     // init red / green border of drag area
-    const onGalleryChange = new enableDragZone (elements);
+    const onGalleryChange = new enableDragZone(elements);
 
 
     // (3) ajax request: Transfer file to server
-    const transferImagesTask = new TransferImagesTask (elements.imagesAreaList, elements.progressArea, elements.errorZone,
+    const transferImagesTask = new TransferImagesTask(elements.imagesAreaList, elements.progressArea, elements.errorZone,
         transferFiles);
 
     // (2) ajax request: database image item
     //const requestDbImageIdTask = new RequestDbImageIdTask (elements.dragZone, elements.progressArea, elements.errorZone,
     //    droppedFiles, transferFiles, transferImagesTask);
-    const requestDbImageIdTask = new RequestDbImageIdTask (elements.progressArea, elements.errorZone,
+    const requestDbImageIdTask = new RequestDbImageIdTask(elements.progressArea, elements.errorZone,
         droppedFiles, transferFiles, transferImagesTask);
 
     // (1) collect dropped files, start request DB image ID
-    const droppedFilesTask = new DroppedFilesTask (elements,
+    const droppedFilesTask = new DroppedFilesTask(elements,
         droppedFiles, requestDbImageIdTask,
         zipFiles, requestZipUploadTask,
         serverFolder,
@@ -2468,7 +2463,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         for (let i = 0; i < files.length; i++) {
             console.log("filename: " + files[i].name);
             // Zip ?
-            if (files[i].name.toLowerCase().endsWith ('.zip')) {
+            if (files[i].name.toLowerCase().endsWith('.zip')) {
                 isZip = true;
             } else {
                 isImage = true;
@@ -2476,9 +2471,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
         /**/
 
-        if (isImage && isZip)
-        {
-            alert ('Zip and image files selected. Please choose only one of both');
+        if (isImage && isZip) {
+            alert('Zip and image files selected. Please choose only one of both');
         }
         if (isImage) {
             droppedFilesTask.onNewFile(event);
@@ -2489,7 +2483,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 
 });
-
 
 
 /**/

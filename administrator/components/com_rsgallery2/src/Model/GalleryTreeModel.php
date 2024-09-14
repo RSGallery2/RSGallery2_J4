@@ -1,12 +1,12 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package         RSGallery2
+ * @subpackage      com_rsgallery2
  *
- * @author     RSGallery2 Team <team2@rsgallery2.org>
+ * @author          RSGallery2 Team <team2@rsgallery2.org>
  * @copyright  (c)  2020-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
- * @license    GNU General Public License version 2 or later
+ * @license         GNU General Public License version 2 or later
+ * @license         GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
@@ -27,7 +27,6 @@ use Joomla\Database\DatabaseInterface;
  * @since __BUMP_VERSION__
  *
  */
-
 class GalleryTreeModel extends BaseModel
 {
 
@@ -45,11 +44,12 @@ class GalleryTreeModel extends BaseModel
         $is1GalleryExisting = false;
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             // count gallery items
-            $query->select('COUNT(*)')
+            $query
+                ->select('COUNT(*)')
                 // ignore root item  where id is "1"
                 ->where($db->quoteName('id') . ' = 1')
                 ->from('#__rsg2_galleries');
@@ -59,7 +59,6 @@ class GalleryTreeModel extends BaseModel
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleryTreeModel::is1GalleryRootItemExisting: Error count in "__rsg2_galleries" table' . '<br>';
@@ -76,7 +75,7 @@ class GalleryTreeModel extends BaseModel
      * Reset gallery table to empty state
      * Deletes all galleries and initialises the root item of the nested tree
      *
-     * @param int $rgt
+     * @param   int  $rgt
      *
      * @return bool
      *
@@ -121,10 +120,10 @@ class GalleryTreeModel extends BaseModel
 //                ->set('access = 1')
 //                ->set('path = ' . $db->quote(''));
 
-            $lft = 0;
+            $lft  = 0;
             $path = '';
 
-            $name = 'galleries root';
+            $name  = 'galleries root';
             $alias = 'groot';
 
             $date = Factory::getDate();
@@ -132,13 +131,46 @@ class GalleryTreeModel extends BaseModel
 
             // insert root record
             // Missing
-            $columns = array('id', 'name', 'alias', 'description', 'note', 'params', 'parent_id',
-                'level', 'path', 'lft', 'rgt', 'created', 'created_by', 'modified', 'modified_by', 'sizes');
-            $values = array(1, $name, $alias, 'root element of nested gallery list', '', '', 0,
-                0, $path, $lft, $rgt, $date, $user->id, $date, $user->id, '');
+            $columns = [
+                'id',
+                'name',
+                'alias',
+                'description',
+                'note',
+                'params',
+                'parent_id',
+                'level',
+                'path',
+                'lft',
+                'rgt',
+                'created',
+                'created_by',
+                'modified',
+                'modified_by',
+                'sizes',
+            ];
+            $values  = [
+                1,
+                $name,
+                $alias,
+                'root element of nested gallery list',
+                '',
+                '',
+                0,
+                0,
+                $path,
+                $lft,
+                $rgt,
+                $date,
+                $user->id,
+                $date,
+                $user->id,
+                '',
+            ];
 
             // Create root element
-            $query = $db->getQuery(true)
+            $query = $db
+                ->getQuery(true)
                 ->insert('#__rsg2_galleries')
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $db->quote($values)));
@@ -148,9 +180,11 @@ class GalleryTreeModel extends BaseModel
             if ($result) {
                 $isGalleryTreeReset = true;
             } else {
-                Factory::getApplication()->enqueueMessage("Failed writing tree root item into gallery database", 'error');
+                Factory::getApplication()->enqueueMessage(
+                    "Failed writing tree root item into gallery database",
+                    'error',
+                );
             }
-
         } //catch (\RuntimeException $e)
         catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');

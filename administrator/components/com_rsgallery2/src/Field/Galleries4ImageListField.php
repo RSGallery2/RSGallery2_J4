@@ -32,56 +32,56 @@ use Joomla\Utilities\ArrayHelper;
  */
 class Galleries4ImageListField extends ListField
 {
-	/**
-	 * To allow creation of new galleries.
-	 *
-	 * @var    integer
-	 * @since __BUMP_VERSION__
-	 */
-	protected $allowAdd;
+    /**
+     * To allow creation of new galleries.
+     *
+     * @var    integer
+     * @since __BUMP_VERSION__
+     */
+    protected $allowAdd;
 
-	/**
-	 * A flexible gallery list that respects access controls
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
-	public $type = 'Galleries4ImageList';
+    /**
+     * A flexible gallery list that respects access controls
+     *
+     * @var    string
+     * @since __BUMP_VERSION__
+     */
+    public $type = 'Galleries4ImageList';
 
-	/**
-	 * Name of the layout being used to render the field
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
+    /**
+     * Name of the layout being used to render the field
+     *
+     * @var    string
+     * @since __BUMP_VERSION__
+     */
 //	protected $layout = 'joomla.form.field.ParentList';
 
 
-	/**
-	 * Method to get a list of galleries (?that respects access controls and can be used for
-	 * either gallery assignment or parent gallery assignment in edit screens?).
-	 *
-	 * @return  array  The field option objects.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function getOptions()
-	{
-        $galleries = array();
+    /**
+     * Method to get a list of galleries (?that respects access controls and can be used for
+     * either gallery assignment or parent gallery assignment in edit screens?).
+     *
+     * @return  array  The field option objects.
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getOptions()
+    {
+        $galleries = [];
 
-        $galleryId = (string) $this->form->getValue('id');
+        $galleryId = (string)$this->form->getValue('id');
 
-        try
-        {
+        try {
             // $name = (string) $this->element['name'];
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
-		    $db   = Factory::getContainer()->get(DatabaseInterface::class);
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		    $query = $db->getQuery(true)
-			    //->select('id AS value, name AS text, level, published, lft, language')
-			    ->select('id AS value, name AS text, level')
+            $query = $db
+                ->getQuery(true)
+                //->select('id AS value, name AS text, level, published, lft, language')
+                ->select('id AS value, name AS text, level')
                 ->from($db->quoteName('#__rsg2_galleries'))
-                ->where($db->quoteName('id') . ' != 1' )
+                ->where($db->quoteName('id') . ' != 1')
                 // Filter on the published state
                 // ->where('published IN (' . implode(',', ArrayHelper::toInteger($published)) . ')');
                 // ToDo: Use option in XML to select ASC/DESC
@@ -89,17 +89,14 @@ class Galleries4ImageListField extends ListField
 
             // Get the options.
             $galleries = $db->setQuery($query)->loadObjectList();
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
-		catch (\RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-		}
 
         $options = $galleries;
 
-		// Pad the option text with spaces using depth level as a multiplier.
-		for ($i = 0, $n = count($options); $i < $n; $i++)
-		{
+        // Pad the option text with spaces using depth level as a multiplier.
+        for ($i = 0, $n = count($options); $i < $n; $i++) {
 //			// Translate ROOT
 //			if ($this->element['parent'] == true)
 //			{
@@ -112,21 +109,23 @@ class Galleries4ImageListField extends ListField
 
 //			if ($options[$i]->published == 1)
 //			{
-				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . $options[$i]->text;
+            $options[$i]->text = str_repeat(
+                    '- ',
+                    !$options[$i]->level ? 0 : $options[$i]->level - 1,
+                ) . $options[$i]->text;
 //			}
 //			else
 //			{
 //				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
 //			}
-
-			/**
-			// Displays language code if not set to All
-			if ($options[$i]->language !== '*')
-			{
-				$options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
-			}
-			/**/
-		}
+            /**
+             * // Displays language code if not set to All
+             * if ($options[$i]->language !== '*')
+             * {
+             * $options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
+             * }
+             * /**/
+        }
 
 //		foreach ($options as $i => $option)
 //		{
@@ -145,6 +144,6 @@ class Galleries4ImageListField extends ListField
         $options = array_merge(parent::getOptions(), $options);
 
         return $options;
-	}
+    }
 
 }

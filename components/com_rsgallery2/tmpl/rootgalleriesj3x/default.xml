@@ -1,250 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J3x legacy view => root galleries (with random and latest) -->
-	<layout title="COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE">
-		<message>
-			<![CDATA[COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_DESC]]>
-		</message>
-	</layout>
-	<!-- Add fields to the request variables for the layout. -->
-	<fields name="request">
-		<fieldset name="request"
-			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-		>
-			<field
-					name="gid" type="hidden" default="0"
-			/>
+    <!-- J3x legacy view => root galleries (with random and latest) -->
+    <layout title="COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE">
+        <message>
+            <![CDATA[COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_DESC]]>
+        </message>
+    </layout>
+    <!-- Add fields to the request variables for the layout. -->
+    <fields name="request">
+        <fieldset name="request"
+                  addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+        >
+            <field
+                    name="gid" type="hidden" default="0"
+            />
 
-		</fieldset>
-	</fields>
+        </fieldset>
+    </fields>
 
-	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params">
-		<fieldset name="basic">
+    <!-- Add fields to the parameters object for the layout. -->
+    <fields name="params">
+        <fieldset name="basic">
 
-			<field
-					name="max_thumbs_in_root_galleries_view_j3x"
-					type="number"
-					default="5"
-					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
-					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
-					useglobal="true"
-					class="">
-			</field>
+            <field
+                    name="max_thumbs_in_root_galleries_view_j3x"
+                    type="number"
+                    default="5"
+                    label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
+                    description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
+                    useglobal="true"
+                    class="">
+            </field>
 
-			<field
-					name="displaySearch"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH"
-					description="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="displaySearch"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH"
+                    description="COM_RSGALLERY2_MENU_ROOT_GALLERIES_SHOW_SEARCH_DESC"
+                    class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="displayRandom"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_RANDOM"
-					description="COM_RSGALLERY2_DISPLAY_RANDOM_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="displayRandom"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_DISPLAY_RANDOM"
+                    description="COM_RSGALLERY2_DISPLAY_RANDOM_DESC"
+                    class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="displayLatest"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_DISPLAY_LATEST"
-					description="COM_RSGALLERY2_DISPLAY_LATEST_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="displayLatest"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_DISPLAY_LATEST"
+                    description="COM_RSGALLERY2_DISPLAY_LATEST_DESC"
+                    class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-				   name="intro_text"
-				   type="editor"
-				   label="COM_RSGALLERY2_J3X_INTRODUCTION"
-				   description="COM_RSGALLERY2_J3X_INTRODUCTION_DESC"
-				   filter="JComponentHelper::filterText"
-				   buttons="false"
-			/>
+            <field
+                    name="intro_text"
+                    type="editor"
+                    label="COM_RSGALLERY2_J3X_INTRODUCTION"
+                    description="COM_RSGALLERY2_J3X_INTRODUCTION_DESC"
+                    filter="JComponentHelper::filterText"
+                    buttons="false"
+            />
 
-			<field
-					name="menu_show_intro_text"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-			<field
-					name="gallery_layout"
-					type="componentlayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					extension="com_rsgallery2"
-					view="rootgalleryj3x"
-					useglobal="true"
-			/>
+            <field
+                    name="menu_show_intro_text"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field
+                    name="gallery_layout"
+                    type="componentlayout"
+                    label="JFIELD_ALT_LAYOUT_LABEL"
+                    class="custom-select"
+                    extension="com_rsgallery2"
+                    view="rootgalleryj3x"
+                    useglobal="true"
+            />
 
-		</fieldset>
+        </fieldset>
 
-		<fieldset name="root_galleries" label="COM_RSGALLERY2_MENU_J3X_ROOT_GALLERIES_TAB">
-			<field
-					name="display_limitbox"
-					type="list"
-					default="1"
-					label="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX"
-					description="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX_DESC"
-					class="">
-				<option value="2">COM_RSGALLERY2_ALWAYS</option>
-				<option value="1">COM_RSGALLERY2_IF_MORE_GALLERIES_THAN_LIMIT</option>
-				<option value="0">COM_RSGALLERY2_NEVER</option>
-			</field>
+        <fieldset name="root_galleries" label="COM_RSGALLERY2_MENU_J3X_ROOT_GALLERIES_TAB">
+            <field
+                    name="display_limitbox"
+                    type="list"
+                    default="1"
+                    label="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX"
+                    description="COM_RSGALLERY2_J3X_DISPLAY_GALLERY_LIMITBOX_DESC"
+                    class="">
+                <option value="2">COM_RSGALLERY2_ALWAYS</option>
+                <option value="1">COM_RSGALLERY2_IF_MORE_GALLERIES_THAN_LIMIT</option>
+                <option value="0">COM_RSGALLERY2_NEVER</option>
+            </field>
 
-			<field
-					name="galleries_show_title"
-					type="radio"
-					default="1"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE_DESC"
-					class="btn-group btn-group-yesno">
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_title"
+                    type="radio"
+                    default="1"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="galleries_show_description"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION_DESC"
-					class="btn-group btn-group-yesno">
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_description"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DESCRIPTION_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="galleries_show_owner"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_owner"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="galleries_show_size"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_size"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="galleries_show_date"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_date"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="galleries_show_pre_label"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_PRE_LABEL"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_PRE_LABEL_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_pre_label"
+                    type="radio"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_PRE_LABEL"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_PRE_LABEL_DESC"
+                    class="btn-group btn-group-yesno">
+                >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="galleries_show_slideshow"
-					type="radio"
-					default="1"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DISPLAY_SLIDESHOW"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_DISPLAY_SLIDESHOW_DESC"
-					class="btn-group btn-group-yesno">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_slideshow"
+                    type="radio"
+                    default="1"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DISPLAY_SLIDESHOW"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_DISPLAY_SLIDESHOW_DESC"
+                    class="btn-group btn-group-yesno">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="galleries_description_side"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE_DESC"
-			>
-				<option value="global">JGLOBAL_USE_GLOBAL</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_DESC_POS_ABOVE_THUMB</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_DESC_POS_RIGHT_BESIDE_THUMB</option>
-				<option value="3">COM_RSGALLERY2_CONFIG_DESC_POS_BELOW_THUMB</option>
-				<option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>
-			</field>
+            <field
+                    name="galleries_description_side"
+                    type="list"
+                    default="0"
+                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE"
+                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_DESCRIPTION_SIDE_DESC"
+            >
+                <option value="global">JGLOBAL_USE_GLOBAL</option>
+                <option value="1">COM_RSGALLERY2_CONFIG_DESC_POS_ABOVE_THUMB</option>
+                <option value="2">COM_RSGALLERY2_CONFIG_DESC_POS_RIGHT_BESIDE_THUMB</option>
+                <option value="3">COM_RSGALLERY2_CONFIG_DESC_POS_BELOW_THUMB</option>
+                <option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>
+            </field>
 
 
-		</fieldset>
+        </fieldset>
 
-		<field
-				name="menu_show_intro_text"
-				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
-				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
-				class="btn-group btn-group-yesno">
-			>
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
+        <field
+                name="menu_show_intro_text"
+                type="radio"
+                default="0"
+                label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+                description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+                class="btn-group btn-group-yesno">
+            >
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>
+        </field>
 
-		<fieldset name="latest_images_count" label="COM_RSGALLERY2_MENU_J3X_LATEST_IMAGES_TAB">
-			<field
-					name="latest_count"
-					type="number"
-					default="5"
-					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
-					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
-					class="">
-			</field>
+        <fieldset name="latest_images_count" label="COM_RSGALLERY2_MENU_J3X_LATEST_IMAGES_TAB">
+            <field
+                    name="latest_count"
+                    type="number"
+                    default="5"
+                    label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
+                    description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
+                    class="">
+            </field>
 
-		</fieldset>
+        </fieldset>
 
-		<fieldset name="random_images_count" label="COM_RSGALLERY2_MENU_J3X_RANDOM_IMAGES_TAB">
-			<field
-					name="random_count"
-					type="number"
-					default="5"
-					label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
-					description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
-					class="">
-			</field>
+        <fieldset name="random_images_count" label="COM_RSGALLERY2_MENU_J3X_RANDOM_IMAGES_TAB">
+            <field
+                    name="random_count"
+                    type="number"
+                    default="5"
+                    label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE"
+                    description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_FRONTPAGE_DESC"
+                    class="">
+            </field>
 
-		</fieldset>
+        </fieldset>
 
-	</fields>
+    </fields>
 </metadata>

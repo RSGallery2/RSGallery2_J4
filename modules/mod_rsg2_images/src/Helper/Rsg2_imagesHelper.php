@@ -1,76 +1,77 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  mod_rsg2_images
+ * @package       Joomla.Site
+ * @subpackage    mod_rsg2_images
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright (c) 2005-2024 RSGallery2 Team
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Rsgallery2\Module\Rsg2_images\Site\Helper;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 //use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\Images;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\Images;
+
+use function defined;
 
 /**
  * Helper for mod_rsg2_images
  *
  * @since  __BUMP_VERSION__
  */
- // abstract ???
+// abstract ???
 class Rsg2_imagesHelper
 {
-	/**
-	 * Retrieve rsg2_images test
-	 *
-	 * @param   Registry        $params  The module parameters
-	 * @param   CMSApplication  $app     The application
-	 *
-	 * @return  array
-	 */
-	public static function getText()
-	{
-		return 'Rsg2_imagesHelpertest';
-	}
+    /**
+     * Retrieve rsg2_images test
+     *
+     * @param   Registry        $params  The module parameters
+     * @param   CMSApplication  $app     The application
+     *
+     * @return  array
+     */
+    public static function getText()
+    {
+        return 'Rsg2_imagesHelpertest';
+    }
 
 
-	/**
-	 * Get a list of the latest articles from the article model
-	 *
-	 * @param   \Joomla\Registry\Registry  &$params  object holding the models parameters
-	 *
-	 * @return  mixed
-	 *
-	 * @since 1.6
-	 */
+    /**
+     * Get a list of the latest articles from the article model
+     *
+     * @param   Registry  &$params  object holding the models parameters
+     *
+     * @return  mixed
+     *
+     * @since 1.6
+     */
 //	public static function getList(Registry $params, BannersModel $model, CMSApplication $app)
-	public static function getList($params, $model, $app)
-	{
-
+    public static function getList($params, $model, $app)
+    {
         // Set application parameters in model
-		$appParams = $app->getParams();
-		$model->setState('params', $appParams);
+        $appParams = $app->getParams();
+        $model->setState('params', $appParams);
 
-		$model->setState('list.start', 0);
-		//$model->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
-		//$model->setState('filter.condition', Rsgallery2Component::CONDITION_PUBLISHED);
+        $model->setState('list.start', 0);
+        //$model->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
+        //$model->setState('filter.condition', Rsgallery2Component::CONDITION_PUBLISHED);
 
-		// Set the filters based on the module params
-		$model->setState('list.limit', (int) $params->get('count', 5));
+        // Set the filters based on the module params
+        $model->setState('list.limit', (int)$params->get('count', 5));
 
-		// This module does not use tags data
-		$model->setState('load_tags', false);
+        // This module does not use tags data
+        $model->setState('load_tags', false);
 
-		// Access filter
-		$access     = !ComponentHelper::getParams('com_rsgallery2')->get('show_noauth');
-		//$authorised = Access::getAuthorisedViewLevels(Factory::getContainer()->get(UserFactoryInterface::class)->get('id'));
-		//$model->setState('filter.access', $access);
+        // Access filter
+        $access = !ComponentHelper::getParams('com_rsgallery2')->get('show_noauth');
+        //$authorised = Access::getAuthorisedViewLevels(Factory::getContainer()->get(UserFactoryInterface::class)->get('id'));
+        //$model->setState('filter.access', $access);
 
 //		// Category filter
 //		$model->setState('filter.category_id', $params->get('catid', array()));
@@ -107,37 +108,35 @@ class Rsg2_imagesHelper
 //			$model->setState('filter.article_id.include', false);
 //		}
 
-		// Set ordering
-		$ordering = $params->get('ordering', 'a.publish_up');
-		$model->setState('list.ordering', $ordering);
+        // Set ordering
+        $ordering = $params->get('ordering', 'a.publish_up');
+        $model->setState('list.ordering', $ordering);
 
-		if (trim($ordering) === 'rand()')
-		{
-			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
-		}
-		else
-		{
-			$direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
-			$model->setState('list.direction', $direction);
-			$model->setState('list.ordering', $ordering);
-		}
+        if (trim($ordering) === 'rand()') {
+            $model->setState(
+                'list.ordering',
+                Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand(),
+            );
+        } else {
+            $direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
+            $model->setState('list.direction', $direction);
+            $model->setState('list.ordering', $ordering);
+        }
 
-		// Check if we should trigger additional plugin events
-		$triggerEvents = $params->get('triggerevents', 1);
-		$SelectGallery = $params->get('SelectGallery', 1);
-
+        // Check if we should trigger additional plugin events
+        $triggerEvents = $params->get('triggerevents', 1);
+        $SelectGallery = $params->get('SelectGallery', 1);
 
 
         //$input = Factory::getApplication()->input;
         $input = $app->input;
         //$input->set( 'gid' , '2' );
-        $input->set( 'gid' , $SelectGallery );
+        $input->set('gid', $SelectGallery);
 
-		// Retrieve Content
-		$items = $model->getItems();
+        // Retrieve Content
+        $items = $model->getItems();
 
-		foreach ($items as &$item)
-		{
+        foreach ($items as &$item) {
 //			$item->readmore = \strlen(trim($item->fulltext));
 //			$item->slug     = $item->id . ':' . $item->alias;
 //
@@ -212,9 +211,9 @@ class Rsg2_imagesHelper
 //				$item->beforeDisplayContent = '';
 //				$item->afterDisplayContent  = '';
 //			}
-		}
+        }
 
-		return $items;
+        return $items;
 //		/** @var \Joomla\Component\Content\Site\Model\ArticlesModel $model */
 //		$model = $app->bootComponent('com_content')
 //			->getMVCFactory()->createModel('Articles', 'Site', ['ignore_request' => true]);
@@ -372,7 +371,7 @@ class Rsg2_imagesHelper
 //		}
 //
 //		return $items;
-	}
+    }
 
 
 

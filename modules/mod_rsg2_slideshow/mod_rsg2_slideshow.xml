@@ -3,160 +3,160 @@
            client="site"
            method="upgrade"
            version="4.0">
-	<name>MOD_RSG2_SLIDESHOW</name>
-	<author>RSGallery2 Team</author>
-	<creationDate>01. Dec. 2021</creationDate>
-	<copyright>(c) 2020-2024 RSGallery2 Team</copyright>
-	<license>GNU General Public License version 2 or later;</license>
-	<authorEmail>team2@rsgallery2.org</authorEmail>
-	<authorUrl>https://www.rsgallery2.org</authorUrl>
-	<version>5.0.0.3</version>
-	<description>MOD_RSG2_SLIDESHOW_XML_DESCRIPTION</description>
-	<namespace path="src">Rsgallery2\Module\Rsg2_slideshow</namespace>
-	<scriptfile>install_mod.php</scriptfile>
+    <name>MOD_RSG2_SLIDESHOW</name>
+    <author>RSGallery2 Team</author>
+    <creationDate>01. Dec. 2021</creationDate>
+    <copyright>(c) 2020-2024 RSGallery2 Team</copyright>
+    <license>GNU General Public License version 2 or later;</license>
+    <authorEmail>team2@rsgallery2.org</authorEmail>
+    <authorUrl>https://www.rsgallery2.org</authorUrl>
+    <version>5.0.0.3</version>
+    <description>MOD_RSG2_SLIDESHOW_XML_DESCRIPTION</description>
+    <namespace path="src">Rsgallery2\Module\Rsg2_slideshow</namespace>
+    <scriptfile>install_mod.php</scriptfile>
 
-	<files>
-		<!--filename module="mod_rsg2_slideshow">mod_rsg2_slideshow.php</filename-->
-		<folder module="mod_rsg2_slideshow">services</folder>
-		<!--filename>mod_rsg2_slideshow.xml</filename-->
-		<folder>language</folder>
-		<folder>src</folder>
-		<folder>tmpl</folder>
-	</files>
+    <files>
+        <!--filename module="mod_rsg2_slideshow">mod_rsg2_slideshow.php</filename-->
+        <folder module="mod_rsg2_slideshow">services</folder>
+        <!--filename>mod_rsg2_slideshow.xml</filename-->
+        <folder>language</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
 
-	<!--media destination="mod_rsg2_slideshow" folder="media">
-		<folder>css</folder>
-		<folder>js</folder>
-	</media-->
+    <!--media destination="mod_rsg2_slideshow" folder="media">
+        <folder>css</folder>
+        <folder>js</folder>
+    </media-->
 
-	<help key="MOD_RSG2_SLIDESHOW_HELP"/>
+    <help key="MOD_RSG2_SLIDESHOW_HELP"/>
 
-	<config>
-		<fields name="params">
-			<fieldset
-					name="basic"
-  		            label="COM_RSGALLERY2_GALLERY"
-					addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-			>
+    <config>
+        <fields name="params">
+            <fieldset
+                    name="basic"
+                    label="COM_RSGALLERY2_GALLERY"
+                    addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+            >
 
-				<field
-						id="gid"
-						name="gid"
-						type="GallerySelect"
-				       	label="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_LABEL"
-				       	description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_OVERVIEW_DESC"
-						required="true"
-						select="true"
-						new="true"
-						edit="true"
-						clear="true"
-				/>
-				<field
-						name="slides_layout"
-						type="SlideshowSelect"
-						label="JFIELD_ALT_LAYOUT_LABEL"
-						class="custom-select"
-						extension="com_rsgallery2"
-						required="true"
-						useglobal="true"
-				/>
-			</fieldset>
+                <field
+                        id="gid"
+                        name="gid"
+                        type="GallerySelect"
+                        label="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_LABEL"
+                        description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_OVERVIEW_DESC"
+                        required="true"
+                        select="true"
+                        new="true"
+                        edit="true"
+                        clear="true"
+                />
+                <field
+                        name="slides_layout"
+                        type="SlideshowSelect"
+                        label="JFIELD_ALT_LAYOUT_LABEL"
+                        class="custom-select"
+                        extension="com_rsgallery2"
+                        required="true"
+                        useglobal="true"
+                />
+            </fieldset>
 
-			<fieldset
-					name="options"
-					label="COM_RSGALLERY2_SLIDESHOW_OPTIONS"
-			>
-				<field
-						name="auto_start"
-						type="list"
-						default="1"
-						label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
-						description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
-				>
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
+            <fieldset
+                    name="options"
+                    label="COM_RSGALLERY2_SLIDESHOW_OPTIONS"
+            >
+                <field
+                        name="auto_start"
+                        type="list"
+                        default="1"
+                        label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
+                        description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
 
-				<field 
-						name="interval"
-					   	type="number"
-					   	default="2500"
-					   	label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
-					   	description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
-				>
-				</field>
+                <field
+                        name="interval"
+                        type="number"
+                        default="2500"
+                        label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
+                        description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
+                >
+                </field>
 
-				<field
-						name="showArrows"
-					   	type="list"
-					   	default="1"
-					   	label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
-					   	description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
+                <field
+                        name="showArrows"
+                        type="list"
+                        default="1"
+                        label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
+                        description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
 
-				<field
-						name="darkMode"
-						type="list"
-						default="1"
-						label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
-						description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
-				>
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
+                <field
+                        name="darkMode"
+                        type="list"
+                        default="1"
+                        label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
+                        description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
 
-				<field
-						name="images_show_title"
-					   	type="radio"
-					   	default="1"
-					   	label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
-					   	description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
-					   	useglobal="true"
-					   	class="btn-group btn-group-yesno">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-			</fieldset>
+                <field
+                        name="images_show_title"
+                        type="radio"
+                        default="1"
+                        label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
+                        description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
+                        useglobal="true"
+                        class="btn-group btn-group-yesno">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+            </fieldset>
 
-			<fieldset name="advanced">
-				<field
-						name="layout"
-						type="modulelayout"
-						label="JFIELD_ALT_LAYOUT_LABEL"
-						class="form-select"
-						validate="moduleLayout"
-				/>
+            <fieldset name="advanced">
+                <field
+                        name="layout"
+                        type="modulelayout"
+                        label="JFIELD_ALT_LAYOUT_LABEL"
+                        class="form-select"
+                        validate="moduleLayout"
+                />
 
-				<field
-						name="moduleclass_sfx"
-						type="textarea"
-						label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-						rows="3"
-						validate="CssIdentifier"
-				/>
+                <field
+                        name="moduleclass_sfx"
+                        type="textarea"
+                        label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                        rows="3"
+                        validate="CssIdentifier"
+                />
 
-				<field
-						name="cache"
-						type="list"
-						label="COM_MODULES_FIELD_CACHING_LABEL"
-						default="1"
-						filter="integer"
-						validate="options"
-				>
-					<option value="1">JGLOBAL_USE_GLOBAL</option>
-					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
-				</field>
+                <field
+                        name="cache"
+                        type="list"
+                        label="COM_MODULES_FIELD_CACHING_LABEL"
+                        default="1"
+                        filter="integer"
+                        validate="options"
+                >
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
 
-				<field
-						name="cache_time"
-						type="number"
-						label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
-						default="900"
-						filter="integer"
-				/>
-			</fieldset>
-		</fields>
-	</config>
+                <field
+                        name="cache_time"
+                        type="number"
+                        label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+                        default="900"
+                        filter="integer"
+                />
+            </fieldset>
+        </fields>
+    </config>
 </extension>

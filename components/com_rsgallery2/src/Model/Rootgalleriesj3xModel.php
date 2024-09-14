@@ -1,29 +1,28 @@
 <?php
 
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
+use RuntimeException;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
-use Rsgallery2\Component\Rsgallery2\Site\Model;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use function defined;
 
 
 /**
@@ -34,11 +33,86 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 class Rootgalleriesj3xModel extends Galleriesj3xModel
 {
     /**
-    protected $layoutParams = null; // col/row count
-	/**/
+     * protected $layoutParams = null; // col/row count
+     * /**/
 
-	/**
+    public function assignSlideshowUrl($gallery)
+    {
+        try {
+            // $gallery->UrlSlideshow = ''; // fall back
+
+            // Link to single gallery in actual menu
+            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
+            /**
+             * $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
+             * . '/galleryJ3x/' . $gallery->id . '/slideshow'
+             * //                . '&gid=' . $image->gallery_id
+             * //                . '&iid=' . $gallery->id
+             * //                . '&layout=galleryJ3xAsInline'
+             * ,true,0,true);
+             * /**/
+
+            $gallery->UrlSlideshow = Route::_(
+                'index.php?option=com_rsgallery2'
+                . '&view=slideshowj3x&gid=' . $gallery->id,
+            );
+        } catch (RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Rootgalleriesj3xModel: assignSlideshowUrl ()' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+    }
+
+    /**
+     * @param $gallery
+     *
+     *
+     * @since 4.5.0.0
+     *
+     * public function AssignGalleryUrl($gallery)
+     * {
+     * try {
+     *
+     * parent::AssignGalleryUrl($gallery);
+     *
+     * }
+     * catch (\RuntimeException $e)
+     * {
+     * $OutTxt = '';
+     * $OutTxt .= 'Rootgalleriesj3xModel: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+     * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+     *
+     * $app = Factory::getApplication();
+     * $app->enqueueMessage($OutTxt, 'error');
+     * }
+     *
+     * }
+     * /**/
+
+    public function randomImages($random_count)
+    {
+        $randomImages = [];
+
+        // ToDo: try catch ...
+
+        if ($random_count > 0) {
+            // toDo: create imagesJ3x model which does set the url to j3x
+            $imagesModel  = $this->getInstance('Images', 'RSGallery2Model');
+            $randomImages = $imagesModel->randomImages($random_count);
+
+            $galleryJ3xModel = $this->getInstance('Galleryj3x', 'RSGallery2Model');
+            $galleryJ3xModel->AddLayoutData($randomImages);
+        }
+
+        return $randomImages;
+    }
+
+    /**
      * Add "asInline" Url to each image
+     *
      * @param $galleries
      *
      *
@@ -50,112 +124,33 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
         parent::AddLayoutData($galleries);
 
         /**
-        try
-        {
-            foreach ($galleries as $gallery)
-            {
-
-                $this->AssignGalleryUrl($gallery);
-// Maybe already done
-//                $this->AssignUrl_AsInline($gallery);
-
-
-            }
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-        /**/
+         * try
+         * {
+         * foreach ($galleries as $gallery)
+         * {
+         *
+         * $this->AssignGalleryUrl($gallery);
+         * // Maybe already done
+         * //                $this->AssignUrl_AsInline($gallery);
+         *
+         *
+         * }
+         * }
+         * catch (\RuntimeException $e)
+         * {
+         * $OutTxt = '';
+         * $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+         * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+         *
+         * $app = Factory::getApplication();
+         * $app->enqueueMessage($OutTxt, 'error');
+         * }
+         *
+         * /**/
         return $galleries;
     }
 
-    public function assignSlideshowUrl($gallery)
-    {
-
-        try {
-
-            // $gallery->UrlSlideshow = ''; // fall back
-
-            // Link to single gallery in actual menu
-            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
-/**
-            $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
-                . '/galleryJ3x/' . $gallery->id . '/slideshow'
-//                . '&gid=' . $image->gallery_id
-//                . '&iid=' . $gallery->id
-//                . '&layout=galleryJ3xAsInline'
-                ,true,0,true);
-/**/
-
-            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&gid=' . $gallery->id);
-
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'Rootgalleriesj3xModel: assignSlideshowUrl ()' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-    }
-
-
-    /**
-     * @param $gallery
-     *
-     *
-     * @since 4.5.0.0
-     *
-    public function AssignGalleryUrl($gallery)
-    {
-        try {
-
-            parent::AssignGalleryUrl($gallery);
-
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'Rootgalleriesj3xModel: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-    }
-    /**/
-
-    public function randomImages ($random_count)
-    {
-        $randomImages = [];
-
-        // ToDo: try catch ...
-
-        if ($random_count > 0) {
-
-            // toDo: create imagesJ3x model which does set the url to j3x
-            $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
-            $randomImages = $imagesModel->randomImages($random_count);
-
-            $galleryJ3xModel = $this->getInstance('Galleryj3x', 'RSGallery2Model');
-            $galleryJ3xModel->AddLayoutData($randomImages);
-        }
-        return $randomImages;
-    }
-
-    public function latestImages ($latest_count)
+    public function latestImages($latest_count)
     {
         $latestImages = [];
 
@@ -163,7 +158,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 
         if ($latest_count > 0) {
             // toDo: create imagesJ3x model which does set the url to j3x
-            $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
+            $imagesModel  = $this->getInstance('Images', 'RSGallery2Model');
             $latestImages = $imagesModel->latestImages($latest_count);
 
             $galleryJ3xModel = $this->getInstance('Galleryj3x', 'RSGallery2Model');

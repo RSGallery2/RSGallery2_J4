@@ -1,16 +1,17 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2022-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\site\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JInput;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -18,6 +19,9 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
+use RuntimeException;
+
+use function defined;
 
 /**
  * The Controller
@@ -26,75 +30,57 @@ use Joomla\Registry\Registry;
  */
 class ImageFileController extends BaseController
 {
-	/**
-	 * The extension for which the galleries apply.
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
-	protected $extension;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The JApplication for the dispatcher
-	 * @param   \JInput              $input    Input
-	 *
-	 * @since __BUMP_VERSION__
-	 * @see    \JControllerLegacy
-	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
-	{
-		parent::__construct($config, $factory, $app, $input);
-
-		if (empty($this->extension))
-		{
-			$this->extension = $this->input->get('extension', 'com_rsgallery2');
-		}
-	}
-
     /**
-     * Proxy for getModel
+     * The extension for which the galleries apply.
      *
-     * @param   string  $name    The model name. Optional.
-     * @param   string  $prefix  The class prefix. Optional.
-     * @param   array   $config  The array of possible config values. Optional.
-     *
-     * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel  The model.
-     *
+     * @var    string
      * @since __BUMP_VERSION__
      */
-    public function getModel($name = 'ImageFile', $prefix = 'Administrator', $config = array('ignore_request' => true))
+    protected $extension;
+
+    /**
+     * Constructor.
+     *
+     * @param   array                $config   An optional associative array of configuration settings.
+     * @param   MVCFactoryInterface  $factory  The factory.
+     * @param   CMSApplication       $app      The JApplication for the dispatcher
+     * @param   JInput              $input    Input
+     *
+     * @since  __BUMP_VERSION__
+     * @see    \JControllerLegacy
+     */
+    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
-        return parent::getModel($name, $prefix, $config);
+        parent::__construct($config, $factory, $app, $input);
+
+        if (empty($this->extension)) {
+            $this->extension = $this->input->get('extension', 'com_rsgallery2');
+        }
     }
 
     /**
-	 * Download image file to user via Browser.
-	 *
-	 * @return  boolean
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function downloadfile ()
-	{
+     * Download image file to user via Browser.
+     *
+     * @return  boolean
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function downloadfile()
+    {
         $isDownloaded = false;
 
         // $msg     = '<strong>' . 'Save2Upload ' . ':</strong><br>';
-        $msg     = 'Download image file: ';
-        $app     = Factory::getApplication();
+        $msg = 'Download image file: ';
+        $app = Factory::getApplication();
 
         // Not needed : everyone may download the original image
         //        // Check for request forgeries.
-		//        $this->checkToken();
+        //        $this->checkToken();
 
-        $input = Factory::getApplication()->input;
+        $input   = Factory::getApplication()->input;
         $imageId = $input->get('id', 0, 'INT');
 
         try {
-
             /** @yyyvar \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageFileModel $model */
             $model = $this->getModel();
 
@@ -103,13 +89,15 @@ class ImageFileController extends BaseController
 
             // not successful
             if (empty($fileName) || empty($galleryId)) {
-
                 $msg     .= ' failed. Filename or gallery could not be determnined. ID: ' . $imageId;
                 $msgType = 'error';
                 $app->enqueueMessage($msg, $msgType);
             } else {
-
-                [$OriginalFilePath, $OriginalFileUri] = $model->getOriginalPaths($fileName, $galleryId, $use_j3x_location);
+                [$OriginalFilePath, $OriginalFileUri] = $model->getOriginalPaths(
+                    $fileName,
+                    $galleryId,
+                    $use_j3x_location,
+                );
 
                 $isDownloaded = $model->downloadImageFile($OriginalFilePath, $OriginalFileUri);
 
@@ -125,7 +113,7 @@ class ImageFileController extends BaseController
                     $app->enqueueMessage($msg, $msgType);
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -136,7 +124,23 @@ class ImageFileController extends BaseController
 
         return $isDownloaded;
     }
-	/**/
+
+    /**
+     * Proxy for getModel
+     *
+     * @param   string  $name    The model name. Optional.
+     * @param   string  $prefix  The class prefix. Optional.
+     * @param   array   $config  The array of possible config values. Optional.
+     *
+     * @return  BaseDatabaseModel  The model.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function getModel($name = 'ImageFile', $prefix = 'Administrator', $config = ['ignore_request' => true])
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
+    /**/
 
 //	/**
 //	 *

@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 \defined('_JEXEC') or die;
@@ -23,109 +23,116 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
 
 ?>
 
-    <form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
+    <form action="<?php
+    echo Route::_('index.php?option=com_rsgallery2'); ?>"
           method="post" name="adminForm" id="adminForm" class="form-validate">
         <div class="d-flex flex-row">
-			<?php if (false) : // ToDo: Remove this quick hack. do not show sidebar
-				//if (!empty($this->sidebar)) :
-				?>
+            <?php
+            if (false) : // ToDo: Remove this quick hack. do not show sidebar
+                //if (!empty($this->sidebar)) :
+                ?>
                 <div id="j-sidebar-container" class="">
-					<?php echo $this->sidebar; ?>
+                    <?php
+                    echo $this->sidebar; ?>
                 </div>
-			<?php endif; ?>
+            <?php
+            endif; ?>
             <!--            <div class="--><?php
-			//            // if (!empty($this->sidebar)) {
-			//            if (false) {
-			//                echo 'col-md-10';
-			//            } else {
-			//                echo 'col-md-12';
-			//            } ?><!--">-->
-            <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+            //            // if (!empty($this->sidebar)) {
+            //            if (false) {
+            //                echo 'col-md-10';
+            //            } else {
+            //                echo 'col-md-12';
+            //            } ?><!--">-->
+            <!--div class="<?php
+            echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
             <div class="flex-fill">
                 <div id="j-main-container" class="j-main-container">
 
-					<?php
+                    <?php
 
-					//--- Logo -----------------------------
+                    //--- Logo -----------------------------
 
-					DisplayRSG2Logo();
+                    DisplayRSG2Logo();
 
-					//--- tell j3x galleries must be initialized ---------------------------
+                    //--- tell j3x galleries must be initialized ---------------------------
 
-					if ($this->isJ3xDataExisting)
-					{
+                    if ($this->isJ3xDataExisting) {
+                        // ToDO: move parts to function
+                        //--- load additional language file --------------------------------
 
-						// ToDO: move parts to function
-						//--- load additional language file --------------------------------
+                        $lang = Factory::getApplication()->getLanguage();
+                        $lang->load(
+                            'com_rsg2_j3x',
+                            Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
+                            null,
+                            false,
+                            true,
+                        );
 
-						$lang = Factory::getApplication()->getLanguage();
-						$lang->load('com_rsg2_j3x',
-							Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+                        if ($this->isDoCopyJ3xDbConfig
+                            || $this->isDoCopyJ3xDbGalleries
+                            || $this->isDoCopyJ3xDbImages
+                            || $this->isDoChangeJ3xMenuLinks
+                            || $this->isDoCopyJ3xImages) {
+                            echo DisplayRequestJ3xActions(
+                                $this->isDoCopyJ3xDbConfig,
+                                $this->isDoCopyJ3xDbGalleries,
+                                $this->isDoCopyJ3xDbImages,
+                                $this->isDoChangeJ3xMenuLinks,
+                                $this->isDoCopyJ3xImages,
+                            );
+                        }
+                    }
 
-						if ($this->isDoCopyJ3xDbConfig
-							|| $this->isDoCopyJ3xDbGalleries
-							|| $this->isDoCopyJ3xDbImages
-							|| $this->isDoChangeJ3xMenuLinks
-							|| $this->isDoCopyJ3xImages)
-						{
+                    //--- Control buttons ------------------
 
-							echo DisplayRequestJ3xActions(
-								$this->isDoCopyJ3xDbConfig,
-								$this->isDoCopyJ3xDbGalleries,
-								$this->isDoCopyJ3xDbImages,
-								$this->isDoChangeJ3xMenuLinks,
-								$this->isDoCopyJ3xImages
-							);
-						}
-					}
+                    DisplayRSG2ControlButtons($this->buttons);
 
-					//--- Control buttons ------------------
+                    echo '<hr>';
 
-					DisplayRSG2ControlButtons($this->buttons);
+                    //--- RSG2 informations -----------------------------
 
-					echo '<hr>';
+                    // About RSG2
+                    // ToDo: use real version
+                    DisplayAboutRsgallery2($this->Rsg2Version);
 
-					//--- RSG2 informations -----------------------------
+                    // echo '<hr>';
 
-					// About RSG2
-					// ToDo: use real version
-					DisplayAboutRsgallery2($this->Rsg2Version);
+                    //--- Last galleries and last uploaded images -----------------------------
 
-					// echo '<hr>';
+                    DisplayLastGalleriesAndImages($this->lastGalleries, $this->lastImages);
 
-					//--- Last galleries and last uploaded images -----------------------------
+                    //echo '<hr>';
 
-					DisplayLastGalleriesAndImages($this->lastGalleries, $this->lastImages);
+                    //--- Change log -----------------------------
 
-					//echo '<hr>';
+                    // Info about the change log of RSG3 sources
+                    DisplayChangeLog($this->changelogs);
 
-					//--- Change log -----------------------------
+                    //echo '<hr>';
 
-					// Info about the change log of RSG3 sources
-					DisplayChangeLog($this->changelogs);
+                    //--- Credits -----------------------------
 
-					//echo '<hr>';
+                    // Info about supporters of RSGallery 2
+                    DisplayCredits($this->credits);
 
-					//--- Credits -----------------------------
+                    //echo '<hr>';
 
-					// Info about supporters of RSGallery 2
-					DisplayCredits($this->credits);
+                    //--- External component licenses -----------------------------
 
-					//echo '<hr>';
+                    DisplayExternalLicenses($this->externalLicenses);
 
-					//--- External component licenses -----------------------------
+                    // echo '<hr>';
 
-					DisplayExternalLicenses($this->externalLicenses);
-
-					// echo '<hr>';
-
-					?>
+                    ?>
                 </div>
             </div>
         </div>
 
         <input type="hidden" name="task" value=""/>
-		<?php echo HTMLHelper::_('form.token'); ?>
+        <?php
+        echo HTMLHelper::_('form.token'); ?>
     </form>
 
 <?php
@@ -140,14 +147,20 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
  */
 function DisplayRSG2Logo()
 {
-	echo '    <div class="rsg2logo">';
+    echo '    <div class="rsg2logo">';
 //	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
-	echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
-	echo '     </div>';
+    echo HTMLHelper::_(
+        'image',
+        'com_rsgallery2/RSG2_logoText.svg',
+        Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'),
+        null,
+        true,
+    );
+    echo '     </div>';
 //	echo '<p class="test">';
 //	echo '</p>
 
-	echo '<div class="clearfix"></div>';
+    echo '<div class="clearfix"></div>';
 }
 
 ////--- Request to user: Save config -----------------------------
@@ -188,107 +201,113 @@ function DisplayRSG2Logo()
  *
  * @since __BUMP_VERSION__
  */
-function DisplayRequestJ3xActions($isDoCopyJ3xDbConfig = false,
-                                  $isDoCopyJ3xDbGalleries = false,
-                                  $isDoCopyJ3xDbImages = false,
-                                  $isDoChangeJ3xMenuLinks = false,
-                                  $isDoCopyJ3xImages = false)
-{
-	$html = '';
+function DisplayRequestJ3xActions(
+    $isDoCopyJ3xDbConfig = false,
+    $isDoCopyJ3xDbGalleries = false,
+    $isDoCopyJ3xDbImages = false,
+    $isDoChangeJ3xMenuLinks = false,
+    $isDoCopyJ3xImages = false,
+) {
+    $html = '';
 
-	$rsg2J3xCopyDbConfigLink    = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfiguser');
-	$rsg2J3xCopyDbGalleriesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleriesuser');
-	// $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser');
-	$rsg2J3xCopyDbImagesLink        = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages');
-	$rsg2j3xUpgradeJ3xMenuLinksLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks');
-	$rsg2J3xCopyImagesLink          = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser');
+    $rsg2J3xCopyDbConfigLink    = Route::_(
+        'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfiguser',
+    );
+    $rsg2J3xCopyDbGalleriesLink = Route::_(
+        'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleriesuser',
+    );
+    // $rsg2J3xCopyDbImagesLink = Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximagesuser');
+    $rsg2J3xCopyDbImagesLink        = Route::_(
+        'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages',
+    );
+    $rsg2j3xUpgradeJ3xMenuLinksLink = Route::_(
+        'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks',
+    );
+    $rsg2J3xCopyImagesLink          = Route::_(
+        'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser',
+    );
 
-	$CopyDbConfig     = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG');
-	$CopyDbConfigDesc = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC');
+    $CopyDbConfig     = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG');
+    $CopyDbConfigDesc = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC');
 
-	$CopyDbGalleries     = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES');
-	$CopyDbGalleriesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC');
+    $CopyDbGalleries     = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES');
+    $CopyDbGalleriesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_DESC');
 
-	$CopyDbImages     = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES');
-	$CopyDbImagesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC');
+    $CopyDbImages     = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES');
+    $CopyDbImagesDesc = Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_DESC');
 
-	$changeJ3xMenuLinks     = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID');
-	$changeJ3xMenuLinksDesc = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID_DESC');
+    $changeJ3xMenuLinks     = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID');
+    $changeJ3xMenuLinksDesc = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID_DESC');
 
-	$CopyImages     = '<del>' . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES') . '</del>';
-	$CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
+    $CopyImages     = '<del>' . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES') . '</del>';
+    $CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
 
-	$header     = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
-	$headerDesc = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED_DESC');
+    $header     = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
+    $headerDesc = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED_DESC');
 
-	$link1 = '';
-	$link2 = '';
-	$link3 = '';
-	$link4 = '';
-	$link5 = '';
+    $link1 = '';
+    $link2 = '';
+    $link3 = '';
+    $link4 = '';
+    $link5 = '';
 
-	// config
-	if ($isDoCopyJ3xDbConfig)
-	{
-		$link1 = <<<EOT
-                                <span class="badge badge-pill bg-success">1</span> <a href="$rsg2J3xCopyDbConfigLink" class="btn btn-success btn-sm" Title="$CopyDbConfigDesc" role="button">$CopyDbConfig</a>
-EOT;
-	}
+    // config
+    if ($isDoCopyJ3xDbConfig) {
+        $link1 = <<<EOT
+            <span class="badge badge-pill bg-success">1</span> <a href="$rsg2J3xCopyDbConfigLink" class="btn btn-success btn-sm" Title="$CopyDbConfigDesc" role="button">$CopyDbConfig</a>
+            EOT;
+    }
 
-	// db galleries
-	if ($isDoCopyJ3xDbGalleries)
-	{
-		$link2 = <<<EOT
-                                <span class="badge badge-pill bg-success">2</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
-EOT;
-	}
+    // db galleries
+    if ($isDoCopyJ3xDbGalleries) {
+        $link2 = <<<EOT
+            <span class="badge badge-pill bg-success">2</span> <a href="$rsg2J3xCopyDbGalleriesLink" class="btn btn-success btn-sm" Title="$CopyDbGalleriesDesc" role="button">$CopyDbGalleries</a>
+            EOT;
+    }
 
-	// db images
-	if ($isDoCopyJ3xDbImages)
-	{
-		$link3 = <<<EOT
-                                <span class="badge badge-pill bg-success">3</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
-EOT;
-	}
-	// isDoChangeJ3xMenuLinks
-	if ($isDoChangeJ3xMenuLinks)
-	{
-		$link4 = <<<EOT
-                                <span class="badge badge-pill bg-success">4</span> <a href="$rsg2j3xUpgradeJ3xMenuLinksLink" class="btn btn-success btn-sm" Title="$changeJ3xMenuLinksDesc" role="button">$changeJ3xMenuLinks</a>
-EOT;
-	}
+    // db images
+    if ($isDoCopyJ3xDbImages) {
+        $link3 = <<<EOT
+            <span class="badge badge-pill bg-success">3</span> <a href="$rsg2J3xCopyDbImagesLink" class="btn btn-success btn-sm" Title="$CopyDbImagesDesc" role="button">$CopyDbImages</a>
+            EOT;
+    }
+    // isDoChangeJ3xMenuLinks
+    if ($isDoChangeJ3xMenuLinks) {
+        $link4 = <<<EOT
+            <span class="badge badge-pill bg-success">4</span> <a href="$rsg2j3xUpgradeJ3xMenuLinksLink" class="btn btn-success btn-sm" Title="$changeJ3xMenuLinksDesc" role="button">$changeJ3xMenuLinks</a>
+            EOT;
+    }
 
-	// copy images seperately
-	if ($isDoCopyJ3xImages)
-	{
-		$link5 = <<<EOT
-                                <span class="badge badge-pill bg-success">5</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm disabled" Title="$CopyImagesDesc" role="button" aria-disabled="true">$CopyImages</a></del>
-EOT;
-	}
+    // copy images seperately
+    if ($isDoCopyJ3xImages) {
+        $link5 = <<<EOT
+            <span class="badge badge-pill bg-success">5</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm disabled" Title="$CopyImagesDesc" role="button" aria-disabled="true">$CopyImages</a></del>
+            EOT;
+    }
 
-	$html = <<<EOT
-            <div class="rsg2requestJ3xActions">
-
-                <div class="card w-30" >
-                    <h5 class="card-header">$header</h5>
-                    <div class="card-body">
-                        <p class="card-text">$headerDesc</p>
-                        <ul>
-                            <li style="list-style: none; margin-bottom: 10px">$link1</li>
-                            <li style="list-style: none; margin-bottom: 10px">$link2</li>
-                            <li style="list-style: none; margin-bottom: 10px">$link3</li>
-                            <li style="list-style: none; margin-bottom: 10px">$link4</li>
-                            <li style="list-style: none; margin-bottom:  0px">$link5</li>
-                        </ul>
-                    </div>
-
+    $html = <<<EOT
+        <div class="rsg2requestJ3xActions">
+        
+            <div class="card w-30" >
+                <h5 class="card-header">$header</h5>
+                <div class="card-body">
+                    <p class="card-text">$headerDesc</p>
+                    <ul>
+                        <li style="list-style: none; margin-bottom: 10px">$link1</li>
+                        <li style="list-style: none; margin-bottom: 10px">$link2</li>
+                        <li style="list-style: none; margin-bottom: 10px">$link3</li>
+                        <li style="list-style: none; margin-bottom: 10px">$link4</li>
+                        <li style="list-style: none; margin-bottom:  0px">$link5</li>
+                    </ul>
                 </div>
+        
             </div>
+        </div>
+        
+        <br />
+        EOT;
 
-            <br />
-EOT;
-
-	return $html;
+    return $html;
 }
 
 
@@ -302,21 +321,20 @@ EOT;
  */
 function DisplayRSG2ControlButtons($buttons)
 {
+    $htmlButtons = HTMLHelper::_('icons.buttons', $buttons);
 
-	$htmlButtons = HTMLHelper::_('icons.buttons', $buttons);
 
+    $html[] = '<div class="flex-buttons-table" >';
+    $html[] = '';
+    $html[] = '';
+    $html[] = $htmlButtons;
+    $html[] = '';
+    $html[] = '';
+    $html[] = '</div>';
 
-	$html[] = '<div class="flex-buttons-table" >';
-	$html[] = '';
-	$html[] = '';
-	$html[] = $htmlButtons;
-	$html[] = '';
-	$html[] = '';
-	$html[] = '</div>';
+    echo implode($html);
 
-	echo implode($html);
-
-	echo '<div class="clearfix"></div>';
+    echo '<div class="clearfix"></div>';
 }
 
 //--- About RSG2 ------------------
@@ -329,71 +347,70 @@ function DisplayRSG2ControlButtons($buttons)
  */
 function DisplayAboutRsgallery2($Rsg2Version)
 {
-	//$title = Text::_('COM_RSGALLERY2_ABOUT') . ' <strong>' . $Rsg2Version . ' </strong>';
-	$title   = Text::_('COM_RSGALLERY2_ABOUT') . ' ' . $Rsg2Version;
-	$content = rsg2InfoHtml($Rsg2Version);
-	$id      = 'rsg2_info';
+    //$title = Text::_('COM_RSGALLERY2_ABOUT') . ' <strong>' . $Rsg2Version . ' </strong>';
+    $title   = Text::_('COM_RSGALLERY2_ABOUT') . ' ' . $Rsg2Version;
+    $content = rsg2InfoHtml($Rsg2Version);
+    $id      = 'rsg2_info';
 
-	collapseContent($title, $content, $id);
+    collapseContent($title, $content, $id);
 }
 
 function rsg2InfoHtml($Rsg2Version)
 {
+    $html[] = '';
 
-	$html[] = '';
-
-	$html[] = '<table class="table table-light w-auto table_morecondensed">';
-	$html[] = '    <tbody>';
-
-
-	$html[] = '        <tr>';
-	$html[] = '            <td>' . Text::_('COM_RSGALLERY2_INSTALLED_VERSION') . ': ' . '</td>';
-	$html[] = '            <td>';
-	$html[] = '                   <strong>' . $Rsg2Version . '</strong>';
-	$html[] = '            </td>';
-	$html[] = '        </tr>';
-
-	// License
-	$html[] = '        <tr>';
-	$html[] = '            <td>' . Text::_('COM_RSGALLERY2_LICENSE') . ': ' . '</td>';
-	$html[] = '            <td>';
-	$html[] = '               <a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"'
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
-	$html[] = '            </td>';
-	$html[] = '        </tr>';
-
-	// Home page
-	$html[] = '        <tr>';
-	$html[] = '            <td>' . Text::_('COM_RSGALLERY2_HOME_PAGE') . '</td>';
-	$html[] = '            <td>';
-	$html[] = '                <a href="http://www.rsgallery2.org/" target="_blank" '
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
-	$html[] = '            </td>';
-	$html[] = '        </tr>';
-
-	// Forum
-	$html[] = '        <tr>';
-	$html[] = '            <td>' . Text::_('COM_RSGALLERY2_FORUM') . '</td>';
-	$html[] = '            <td>';
-	$html[] = '                <a href="http://www.forum.rsgallery2.org/" target="_blank" '
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
-	$html[] = '            </td>';
-	$html[] = '        </tr>';
-
-	// Documentation
-	$html[] = '        <tr>';
-	$html[] = '            <td>' . Text::_('COM_RSGALLERY2_DOCUMENTATION') . '</td>';
-	$html[] = '            <td>';
-	$html[] = '                <a href="http://www.rsgallery2.org/index.php/documentation" target="_blank"'
-		. ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
-	$html[] = '            </td>';
-	$html[] = '        </tr>';
+    $html[] = '<table class="table table-light w-auto table_morecondensed">';
+    $html[] = '    <tbody>';
 
 
-	$html[] = '    </tbody>';
-	$html[] = '</table>';
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_INSTALLED_VERSION') . ': ' . '</td>';
+    $html[] = '            <td>';
+    $html[] = '                   <strong>' . $Rsg2Version . '</strong>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
 
-	return implode($html);
+    // License
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_LICENSE') . ': ' . '</td>';
+    $html[] = '            <td>';
+    $html[] = '               <a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"'
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_GNU_ORG') . '" >GNU GPL</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+    // Home page
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_HOME_PAGE') . '</td>';
+    $html[] = '            <td>';
+    $html[] = '                <a href="http://www.rsgallery2.org/" target="_blank" '
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.rsgallery2.org</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+    // Forum
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_FORUM') . '</td>';
+    $html[] = '            <td>';
+    $html[] = '                <a href="http://www.forum.rsgallery2.org/" target="_blank" '
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >www.forum.rsgallery2.org</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+    // Documentation
+    $html[] = '        <tr>';
+    $html[] = '            <td>' . Text::_('COM_RSGALLERY2_DOCUMENTATION') . '</td>';
+    $html[] = '            <td>';
+    $html[] = '                <a href="http://www.rsgallery2.org/index.php/documentation" target="_blank"'
+        . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_DOCUMENTATION') . '" >www.rsg.../documentation</a>';
+    $html[] = '            </td>';
+    $html[] = '        </tr>';
+
+
+    $html[] = '    </tbody>';
+    $html[] = '</table>';
+
+    return implode($html);
 }
 
 
@@ -401,174 +418,160 @@ function rsg2InfoHtml($Rsg2Version)
 
 function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
 {
+    //--- galleries -----------------------------------------------------
 
-	//--- galleries -----------------------------------------------------
+    echo '<row>';
 
-	echo '<row>';
+    echo '    <div id="GalImg_outer">';
 
-	echo '    <div id="GalImg_outer">';
+    echo '    <div>';
+    echo '        <div class="custom-column">';
+    echo '            <div class="custom-column-content">';
+    echo '                <div class="card bg-light" id="galleriesCard" >';
+    echo '                    <div class="card-header">';
+    echo '                        ' . Text::_('COM_RSGALLERY2_GALLERIES');
+    echo '                    </div>';
 
-	echo '    <div>';
-	echo '        <div class="custom-column">';
-	echo '            <div class="custom-column-content">';
-	echo '                <div class="card bg-light" id="galleriesCard" >';
-	echo '                    <div class="card-header">';
-	echo '                        ' . Text::_('COM_RSGALLERY2_GALLERIES');
-	echo '                    </div>';
+    echo '                    <div id="credit-card-body" class="card-body">';
+    echo '                        <div class="rsg2-gallery-info-table">';
 
-	echo '                    <div id="credit-card-body" class="card-body">';
-	echo '                        <div class="rsg2-gallery-info-table">';
+    // only root gallery item existing
+    if (count($lastGalleries) < 2) {
+        echo '<table class="table table-striped table-sm table_morecondensed" id="galleriesTable" >';
+        echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
 
-	// only root gallery item existing
-	if (count($lastGalleries) < 2)
-	{
-		echo '<table class="table table-striped table-sm table_morecondensed" id="galleriesTable" >';
-		echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
+        echo '    <tbody>';
 
-		echo '    <tbody>';
+        echo '        <tr>';
+        echo '        %';
+        // echo Text::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
+        echo '        </tr>';
+        echo '    </tbody>';
 
-		echo '        <tr>';
-		echo '        %';
-		// echo Text::_('COM_RSGALLERY2_NO_NEW_GALLERIES');
-		echo '        </tr>';
-		echo '    </tbody>';
-
-		//--- footer ----------------------------------
-		echo '</table>';
-	}
-	else
-	{
-
-		// Header ----------------------------------
+        //--- footer ----------------------------------
+        echo '</table>';
+    } else {
+        // Header ----------------------------------
 
 //        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="galleriesTable" >';
-		echo '<table class="table table-striped table-sm table_morecondensed" id="galleriesTable" >';
-		echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
-		echo '    <thead>';
-		echo '        <tr>';
-		echo '            <th>' . Text::_('COM_RSGALLERY2_GALLERY') . '</th>';
-		echo '            <th>' . Text::_('COM_RSGALLERY2_USER') . '</th>';
-		echo '            <th>' . Text::_('COM_RSGALLERY2_ID') . '</th>';
-		echo '        </tr>';
-		echo '    </thead>';
+        echo '<table class="table table-striped table-sm table_morecondensed" id="galleriesTable" >';
+        echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_GALLERIES') . '</caption>';
+        echo '    <thead>';
+        echo '        <tr>';
+        echo '            <th>' . Text::_('COM_RSGALLERY2_GALLERY') . '</th>';
+        echo '            <th>' . Text::_('COM_RSGALLERY2_USER') . '</th>';
+        echo '            <th>' . Text::_('COM_RSGALLERY2_ID') . '</th>';
+        echo '        </tr>';
+        echo '    </thead>';
 
-		//--- data ----------------------------------
+        //--- data ----------------------------------
 
-		echo '    <tbody>';
+        echo '    <tbody>';
 
-		foreach ($lastGalleries as $GalleryInfo)
-		{
-			if ($GalleryInfo['id'] != '1')
-			{
-				echo '        <tr>';
-				echo '            <td>' . $GalleryInfo['name'] . '</td>';
-				echo '            <td>' . $GalleryInfo['user'] . '</td>';
-				echo '            <td>' . $GalleryInfo['id'] . '</td>';
-				echo '        </tr>';
-			}
-		}
+        foreach ($lastGalleries as $GalleryInfo) {
+            if ($GalleryInfo['id'] != '1') {
+                echo '        <tr>';
+                echo '            <td>' . $GalleryInfo['name'] . '</td>';
+                echo '            <td>' . $GalleryInfo['user'] . '</td>';
+                echo '            <td>' . $GalleryInfo['id'] . '</td>';
+                echo '        </tr>';
+            }
+        }
 
-		echo '    </tbody>';
+        echo '    </tbody>';
 
-		//--- footer ----------------------------------
-		echo '</table>';
-	}
+        //--- footer ----------------------------------
+        echo '</table>';
+    }
 
-	echo '                        </div>';
-	echo '                    </div>';
-	echo '                </div>';
+    echo '                        </div>';
+    echo '                    </div>';
+    echo '                </div>';
 
-	echo '            </div>';
-	echo '        </div>';
-	echo '    </div>';
+    echo '            </div>';
+    echo '        </div>';
+    echo '    </div>';
 
-	// echo '</row>';
+    // echo '</row>';
 
-	//--- images -----------------------------------------------------
+    //--- images -----------------------------------------------------
 
 //    echo "<hr>";
 
 //    echo '<row>';
 
-	echo '    <div>';
-	echo '        <div class="custom-column">';
-	echo '            <div class="custom-column-content">';
-	echo '                <div class="card bg-light" id="imagesCard" >';
-	echo '                    <div class="card-header">';
-	echo '                        ' . Text::_('COM_RSGALLERY2_IMAGES');
-	echo '                    </div>';
+    echo '    <div>';
+    echo '        <div class="custom-column">';
+    echo '            <div class="custom-column-content">';
+    echo '                <div class="card bg-light" id="imagesCard" >';
+    echo '                    <div class="card-header">';
+    echo '                        ' . Text::_('COM_RSGALLERY2_IMAGES');
+    echo '                    </div>';
 
-	echo '                    <div id="credit-card-body" class="card-body">';
-	echo '                        <div class="rsg2-images-info-table">';
-
-
-	// no image existing
-	if (count($lastImages) == 0)
-	{
-		echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
-		echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
-		echo '    <tbody>';
-
-		echo '        <tr>';
-		echo '        %';
-		// echo Text::_('COM_RSGALLERY2_NO_NEW_IMAGES');
-		echo '        </tr>';
-		echo '    </tbody>';
-
-		//--- footer ----------------------------------
-		echo '</table>';
-	}
-	else
-	{
-
-		// Header ----------------------------------
-
-		echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
-		echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
-		echo '    <thead>';
-		echo '        <tr>';
-		echo '            <th>' . Text::_('COM_RSGALLERY2_FILENAME') . '</th>';
-		echo '            <th>' . Text::_('COM_RSGALLERY2_GALLERY') . '</th>';
-		echo '            <th>' . Text::_('COM_RSGALLERY2_DATE') . '</th>';
-		echo '            <th>' . Text::_('COM_RSGALLERY2_USER') . '</th>';
-		echo '        </tr>';
-		echo '    </thead>';
-
-		//--- data ----------------------------------
-
-		echo '    <tbody>';
-
-		foreach ($lastImages as $ImgInfo)
-		{
-
-			echo '        <tr>';
-			echo '            <td>' . $ImgInfo['name'] . '</td>';
-			echo '            <td>' . $ImgInfo['gallery'] . '</td>';
-			echo '            <td>' . $ImgInfo['date'] . '</td>';
-			echo '            <td>' . $ImgInfo['user'] . '</td>';
-			echo '        </tr>';
-		}
-		echo '    </tbody>';
-
-		//--- footer ----------------------------------
-		echo '</table>';
-	}
-
-	echo '                        </div>';
-	echo '                    </div>';
-	echo '                </div>';
-
-	echo '            </div>';
-	echo '        </div>';
-	echo '    </div>';
-
-	echo '    </div>'; // id="GalImg_outer"
+    echo '                    <div id="credit-card-body" class="card-body">';
+    echo '                        <div class="rsg2-images-info-table">';
 
 
-	echo '</row>';
+    // no image existing
+    if (count($lastImages) == 0) {
+        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
+        echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
+        echo '    <tbody>';
 
-	echo '<div class="clearfix"></div>';
+        echo '        <tr>';
+        echo '        %';
+        // echo Text::_('COM_RSGALLERY2_NO_NEW_IMAGES');
+        echo '        </tr>';
+        echo '    </tbody>';
 
+        //--- footer ----------------------------------
+        echo '</table>';
+    } else {
+        // Header ----------------------------------
+
+        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
+        echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
+        echo '    <thead>';
+        echo '        <tr>';
+        echo '            <th>' . Text::_('COM_RSGALLERY2_FILENAME') . '</th>';
+        echo '            <th>' . Text::_('COM_RSGALLERY2_GALLERY') . '</th>';
+        echo '            <th>' . Text::_('COM_RSGALLERY2_DATE') . '</th>';
+        echo '            <th>' . Text::_('COM_RSGALLERY2_USER') . '</th>';
+        echo '        </tr>';
+        echo '    </thead>';
+
+        //--- data ----------------------------------
+
+        echo '    <tbody>';
+
+        foreach ($lastImages as $ImgInfo) {
+            echo '        <tr>';
+            echo '            <td>' . $ImgInfo['name'] . '</td>';
+            echo '            <td>' . $ImgInfo['gallery'] . '</td>';
+            echo '            <td>' . $ImgInfo['date'] . '</td>';
+            echo '            <td>' . $ImgInfo['user'] . '</td>';
+            echo '        </tr>';
+        }
+        echo '    </tbody>';
+
+        //--- footer ----------------------------------
+        echo '</table>';
+    }
+
+    echo '                        </div>';
+    echo '                    </div>';
+    echo '                </div>';
+
+    echo '            </div>';
+    echo '        </div>';
+    echo '    </div>';
+
+    echo '    </div>'; // id="GalImg_outer"
+
+
+    echo '</row>';
+
+    echo '<div class="clearfix"></div>';
 }
 
 //--- display change log ------------------
@@ -583,11 +586,11 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
  */
 function DisplayChangeLog($changelogs)
 {
-	$title   = Text::_('COM_RSGALLERY2_CHANGELOG');
-	$content = tableFromXml($changelogs);
-	$id      = 'rsg2_changelog';
+    $title   = Text::_('COM_RSGALLERY2_CHANGELOG');
+    $content = tableFromXml($changelogs);
+    $id      = 'rsg2_changelog';
 
-	collapseContent($title, $content, $id);
+    collapseContent($title, $content, $id);
 }
 
 /**
@@ -599,13 +602,12 @@ function DisplayChangeLog($changelogs)
  */
 function tableFromXml($changelogs)
 {
-	foreach ($changelogs as $htmlElements)
-	{
-		$html[] = '            ' . $htmlElements;
-	}
+    foreach ($changelogs as $htmlElements) {
+        $html[] = '            ' . $htmlElements;
+    }
 
-	// return implode($html);
-	return implode('</br>', $html);
+    // return implode($html);
+    return implode('</br>', $html);
 }
 
 //--- Credits ------------------
@@ -620,11 +622,11 @@ function tableFromXml($changelogs)
  */
 function DisplayCredits($credits)
 {
-	$title = Text::_('COM_RSGALLERY2_CREDITS');
+    $title = Text::_('COM_RSGALLERY2_CREDITS');
 //    $content = CreditsHtml ($credits);
-	$id = 'rsg2_credits';
+    $id = 'rsg2_credits';
 
-	collapseContent($title, $credits, $id);
+    collapseContent($title, $credits, $id);
 }
 
 //--- display external licenses ------------------
@@ -639,11 +641,11 @@ function DisplayCredits($credits)
  */
 function DisplayExternalLicenses($externalLicenses)
 {
-	$title   = Text::_('COM_RSGALLERY2_EXTERNAL_LICENSES');
-	$content = $externalLicenses;
-	$id      = 'rsg2_externalLicenses';
+    $title   = Text::_('COM_RSGALLERY2_EXTERNAL_LICENSES');
+    $content = $externalLicenses;
+    $id      = 'rsg2_externalLicenses';
 
-	collapseContent($title, $content, $id);
+    collapseContent($title, $content, $id);
 }
 
 //--- general collapse function ------------------------
@@ -658,8 +660,7 @@ function DisplayExternalLicenses($externalLicenses)
  */
 function collapseContent($title, $content, $id)
 {
-
-	$collapsed = <<<EOT
+    $collapsed = <<<EOT
         <row>
             <div class="card forCollapse">
                 <h5 class="card-header">
@@ -676,9 +677,9 @@ function collapseContent($title, $content, $id)
                 </div>
             </div>
         </row>
-EOT;
+        EOT;
 
-	echo $collapsed;
+    echo $collapsed;
 
-	return;
+    return;
 }

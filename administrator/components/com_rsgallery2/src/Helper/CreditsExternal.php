@@ -3,11 +3,11 @@
  * Hall of Fame in the RSGallery2 project
  * Credits: Historical list of people participating in the project
  *
- * @version       $Id: CreditsExternal.php  2012-07-09 18:52:20Z mirjam $
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @version        $Id: CreditsExternal.php  2012-07-09 18:52:20Z mirjam $
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  * @copyright  (C) 2003-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -17,23 +17,22 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 class CreditsExternal
 {
-	/** use for external libraries
-	<h4>extension name </h4>
-	<dl>
-		<dt>Name</dt>
-		<dd>link, copyright and License</dd>
-	</dl>
-	/**/
+    /** use for external libraries
+     * <h4>extension name </h4>
+     * <dl>
+     * <dt>Name</dt>
+     * <dd>link, copyright and License</dd>
+     * </dl>
+     * /**/
 
-	const CreditsExternalText = <<<EOT
-
-	<h3>Used external components</h3>
-	<p>Actually for RSG2 (J!4x 2019/2020) there is no external component used besides libraries provided by joomla! itself. It is expected that with the implementation of slide shows and similar functions libraries will appear here </p>
-
-	<h3>Honorable mentions go to jetbrains phpstorm</h3>
-	<dl>
-		<dt>phpstorm</dt>
-		<dd>RSGallery2 is developed with <a href="https://www.jetbrains.com/phpstorm/">phpstorm</a> since 2015  </dd>
-	</dl>
-EOT;
+    const CreditsExternalText = <<<EOT
+              <h3>Used external components</h3>
+              <p>Actually for RSG2 (J!4x 2019/2020) there is no external component used besides libraries provided by joomla! itself. It is expected that with the implementation of slide shows and similar functions libraries will appear here </p>
+              
+              <h3>Honorable mentions go to jetbrains phpstorm</h3>
+              <dl>
+              	<dt>phpstorm</dt>
+              	<dd>RSGallery2 is developed with <a href="https://www.jetbrains.com/phpstorm/">phpstorm</a> since 2015  </dd>
+              </dl>
+              EOT;
 }

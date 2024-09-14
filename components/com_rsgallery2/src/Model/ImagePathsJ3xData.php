@@ -1,18 +1,20 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  * @copyright  (C) 2014-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Uri\Uri;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
+
+use function defined;
 
 
 class ImagePathsJ3xData extends ImagePathsJ3xModel
@@ -23,18 +25,18 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      *
      * @since version
      */
-    public function assignPathData ($image) {
-
-        $image->OriginalFile = $this->getOriginalPath ($image->name);
-        $image->DisplayFile = $this->getDisplayPath ($image->name);
-        $image->ThumbFile = $this->getThumbPath ($image->name);
+    public function assignPathData($image)
+    {
+        $image->OriginalFile = $this->getOriginalPath($image->name);
+        $image->DisplayFile  = $this->getDisplayPath($image->name);
+        $image->ThumbFile    = $this->getThumbPath($image->name);
 
         // $image->SizePaths = $this->getSizePaths ();
 
-        $image->UrlThumbFile = $this->getThumbUrl ($image->name);
+        $image->UrlThumbFile = $this->getThumbUrl($image->name);
         // $image->UrlDisplayFile = $this->getSizeUrl ('400', $image->name); // toDo: image size to path
-        $image->UrlDisplayFile = $this->getDisplayUrl ($image->name);
-        $image->UrlOriginalFile = $this->getOriginalUrl ($image->name);
+        $image->UrlDisplayFile  = $this->getDisplayUrl($image->name);
+        $image->UrlOriginalFile = $this->getOriginalUrl($image->name);
 
         //$image->SizeUrls = $this->getSizeUrls ($image->name);
 
@@ -42,9 +44,8 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
 
 
         $image->isOriginalFileExist = file_exists($image->OriginalFile);
-        $image->isDisplayFileExist = file_exists($image->DisplayFile);
-        $image->isThumbFileExist = file_exists($image->DisplayFile);
-
+        $image->isDisplayFileExist  = file_exists($image->DisplayFile);
+        $image->isThumbFileExist    = file_exists($image->DisplayFile);
         //$image->isSizePaths = $this->getSizePaths ();
 
     }
@@ -58,8 +59,8 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      *
      * @since version
      */
-    public function urlReplaceMissing_BySign ($image) {
-
+    public function urlReplaceMissing_BySign($image)
+    {
         // $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.png';
         $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
 
@@ -68,7 +69,7 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
         }
 
         if (!$image->isDisplayFileExist) {
-            $image->UrlDisplayFile = $missingUrl;;
+            $image->UrlDisplayFile = $missingUrl;
         }
 
         if (!$image->isOriginalFileExist) {
@@ -86,11 +87,10 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      *
      * @since version
      */
-    public function urlReplaceMissingImages_ByChild ($image) {
-
-
+    public function urlReplaceMissingImages_ByChild($image)
+    {
         if (!$image->isThumbFileExist) {
-            $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
+            $missingUrl          = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
             $image->UrlThumbFile = $missingUrl;
         }
 
@@ -102,7 +102,6 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
             $image->UrlOriginalFile = $image->UrlDisplayFile;
         }
     }
-
 
 
 }

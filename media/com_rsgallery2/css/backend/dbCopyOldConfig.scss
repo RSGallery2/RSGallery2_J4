@@ -6,31 +6,31 @@
 
 .configMatching {
 
-//  color: #58a323;
+  //  color: #58a323;
   color: map-get($rsg2-colors, green);
-  font-weight:bold;
+  font-weight: bold;
 
 }
 
 .configNotMatching {
 
-//  color:#e52626;
+  //  color:#e52626;
   color: map-get($rsg2-colors, red);
-  font-weight:bold;
+  font-weight: bold;
   background-color: lightyellow;
 }
 
 .configOnlyNew {
 
   color: map-get($rsg2-colors, blue);
-  font-weight:bold;
+  font-weight: bold;
 
 }
 
 .configTransfer {
 
   color: map-get($rsg2-colors, orange);
-  font-weight:bold;
+  font-weight: bold;
 
 }
 
@@ -38,13 +38,13 @@
   word-wrap: break-word;
   max-width: 20%;
 
-//  background-color: lightcoral;
+  //  background-color: lightcoral;
 }
 
 .configValueOld {
   word-wrap: break-word;
   max-width: 20%;
 
-//  background-color: lightblue;
+  //  background-color: lightblue;
 }
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  * @copyright  (C) 2014-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -136,9 +136,6 @@ class DevelopModel extends BaseDatabaseModel
 //
 //        return $now;
 //    }
-
-
-
 
 
 }

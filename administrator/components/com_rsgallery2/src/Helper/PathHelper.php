@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (c) 2016-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package         RSGallery2
+ * @subpackage      com_rsgallery2
+ * @copyright  (c)  2016-2024 RSGallery2 Team
+ * @license         GNU General Public License version 2 or later
  * @author          finnern
  * RSGallery is Free Software
  */
@@ -20,12 +20,12 @@ class PathHelper
      *
      * @since version
      */
-	public static function join(): string
-	{
-		$paths = implode(DIRECTORY_SEPARATOR, func_get_args());
+    public static function join(): string
+    {
+        $paths = implode(DIRECTORY_SEPARATOR, func_get_args());
 
-		return Path::clean($paths);
-	}
+        return Path::clean($paths);
+    }
 
 
 //	public static function join(): string

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Extension\PluginInterface;
@@ -8,7 +9,6 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-
 use Rsgallery2\Plugin\Content\Rsg2_latest_images\Extension\Rsg2_latest_images;
 
 
@@ -27,16 +27,16 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
-				$plgHelper =(array)PluginHelper::getPlugin('content', 'rsg2_latest_images');
+                $plgHelper  = (array)PluginHelper::getPlugin('content', 'rsg2_latest_images');
                 $dispatcher = $container->get(DispatcherInterface::class);
 
-                $plugin     = new Rsg2_latest_images($dispatcher, $plgHelper);
+                $plugin = new Rsg2_latest_images($dispatcher, $plgHelper);
                 $plugin->setApplication(Factory::getApplication());
                 //$plugin->setDatabase($container->get(DatabaseInterface::class));
-				//$plugin->setMyCustomService($container->get(MyCustomService::class));
+                //$plugin->setMyCustomService($container->get(MyCustomService::class));
 
                 return $plugin;
-            }
+            },
         );
     }
 };

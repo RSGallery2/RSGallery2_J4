@@ -2,11 +2,11 @@
 /**
  * ImageReferences collect all information about image artefacts
  *
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  * @copyright  (C) 2016-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
- * @author        finnern
+ * @license        GNU General Public License version 2 or later
+ * @author         finnern
  *                RSGallery2 is Free Software
  */
 
@@ -34,11 +34,11 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  */
 class ImageReferences
 {
-	/**
+    /**
      * List of image references
-	 * @var ImageReference []
-	 */
-	protected $ImageReferenceList;
+     * @var ImageReference []
+     */
+    protected $ImageReferenceList;
 
     /**
      * List of image references. Contains all items where a image is missing or surplus (additional in folder)
@@ -46,65 +46,66 @@ class ImageReferences
      */
     protected $ImageLostAndFoundList;
 
-	/**
-	 * @var bool
-	 */
-	protected $IsAnyImageMissingInDB;
     /**
      * @var bool
      */
-	protected $IsAnyImageMissingInDisplay;
+    protected $IsAnyImageMissingInDB;
     /**
      * @var bool
      */
-	protected $IsAnyImageMissingInOriginal;
+    protected $IsAnyImageMissingInDisplay;
     /**
      * @var bool
      */
-	protected $IsAnyImageMissingInThumb;
+    protected $IsAnyImageMissingInOriginal;
     /**
      * @var bool
      */
-	protected $IsAnyImageMissingInSizes;
+    protected $IsAnyImageMissingInThumb;
     /**
      * @var bool
      */
-	protected $IsAnyImageMissingInWatermarked;
+    protected $IsAnyImageMissingInSizes;
     /**
      * @var bool
      */
-	protected $IsAnyOneImageMissing;
-	/**
-	 * @var bool
-	 */
-	public $UseWatermarked;
+    protected $IsAnyImageMissingInWatermarked;
+    /**
+     * @var bool
+     */
+    protected $IsAnyOneImageMissing;
+    /**
+     * @var bool
+     */
+    public $UseWatermarked;
 
-	/**
-	 * ImageReferences constructor. init all variables
-	 * @param bool $watermarked
-	 *
-	 * @since 4.3.0
-	 */
-	public function __construct($watermarked = false)
-	{
-		$this->ImageReferences = array();
+    /**
+     * ImageReferences constructor. init all variables
+     *
+     * @param   bool  $watermarked
+     *
+     * @since 4.3.0
+     */
+    public function __construct($watermarked = false)
+    {
+        $this->ImageReferences = [];
 
-		$this->IsAnyImageMissingInDB          = false;
-		$this->IsAnyImageMissingInDisplay     = false;
-		$this->IsAnyImageMissingInOriginal    = false;
-		$this->IsAnyImageMissingInThumb       = false;
-		$this->IsAnyImageMissingInSizes       = false;
-		$this->IsAnyImageMissingInWatermarked = false;
-		$this->IsAnyOneImageMissing           = false;
+        $this->IsAnyImageMissingInDB          = false;
+        $this->IsAnyImageMissingInDisplay     = false;
+        $this->IsAnyImageMissingInOriginal    = false;
+        $this->IsAnyImageMissingInThumb       = false;
+        $this->IsAnyImageMissingInSizes       = false;
+        $this->IsAnyImageMissingInWatermarked = false;
+        $this->IsAnyOneImageMissing           = false;
 
-		/**
-		if ($watermarked)
-		{
-			require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
-		}
-        /**/
-		$this->UseWatermarked = $watermarked;
-	}
+        /**
+         * if ($watermarked)
+         * {
+         * require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
+         * }
+         * /**/
+        $this->UseWatermarked = $watermarked;
+    }
 
     /**
      *
@@ -112,32 +113,31 @@ class ImageReferences
      *
      * @since version 4.3
      */
-	public function getImageReferenceList()
-	{
+    public function getImageReferenceList()
+    {
+        // ??? if empty -> CollectImageReferences ...
 
-		// ??? if empty -> CollectImageReferences ...
+        return $this->ImageReferenceList;
+    }
 
-		return $this->ImageReferenceList;
-	}
+    // ToDO: Do i need this function ?
 
-	// ToDO: Do i need this function ?
     /**
      * property accessor
      * shall only be used for IsAny...
      *
-     * @param string $property
+     * @param   string  $property
      *
      * @return mixed (mostly bool)
      *
      * @since version 4.3
      */
-	public function __get($property)
-	{
-		if (property_exists($this, $property))
-		{
-			return $this->$property;
-		}
-	}
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
+    }
 
     /**
      * Collects all data of all images and then creates the list
@@ -147,49 +147,44 @@ class ImageReferences
      *
      * @since version 4.3
      */
-	public function CollectImageReferences()
-	{
-		global $rsgConfig;
+    public function CollectImageReferences()
+    {
+        global $rsgConfig;
 
-		$msg = '';
+        $msg = '';
 
-		//--- Collect data of all expected images --------------------------------------------------
+        //--- Collect data of all expected images --------------------------------------------------
 
         $this->ImageReferenceList = [];
 
         // Create references for items from database view. Contains path to all expected images (-> original, thumb, sizes ...)
-        $this->imageReferencesByDb ();
+        $this->imageReferencesByDb();
         // flag not existing images
-        $this->checkList4NotExisting ();
+        $this->checkList4NotExisting();
         // search for files not in list
-        $this->findOrphans_add2List ();
+        $this->findOrphans_add2List();
 
         // reduce list
-        $this->ImageLostAndFoundList = $this->reduceList4LostAndFounds ();
+        $this->ImageLostAndFoundList = $this->reduceList4LostAndFounds();
 
 
         return; // $this->ImageReferenceList;
-	}
+    }
 
-	private function imageReferencesByDb () {
-
+    private function imageReferencesByDb()
+    {
         try {
-
             $this->ImageReferenceList = [];
 
             $dbImagesList = $this->getDbImagesList();  // Is tunneled to create it only once
 
             foreach ($dbImagesList as $dbImage) {
-
                 $ImageReference = new ImageReference ();
-                $ImageReference->assignDbItem ($dbImage);
+                $ImageReference->assignDbItem($dbImage);
 
                 $this->ImageReferenceList [] = $ImageReference;
             }
-
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -198,47 +193,38 @@ class ImageReferences
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-	    return ;
+        return;
     }
 
-	private function checkList4NotExisting ()
-	{
+    private function checkList4NotExisting()
+    {
+        try {
+            foreach ($this->ImageReferenceList as $ImageReference) {
+                $ImageReference->check4ImageIsNotExisting();
+            }
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-		try
-		{
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
-			foreach ($this->ImageReferenceList as $ImageReference) {
+        return;
+    }
 
-				$ImageReference->check4ImageIsNotExisting();
-
-			}
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-		return;
-	}
-
-	// search for files not in list
-	private function findOrphans_Add2List ()
-	{
-
-		try
-		{
+    // search for files not in list
+    private function findOrphans_Add2List()
+    {
+        try {
             // go through all
 
 
-		    // toDo: Outside originals ....
+            // toDo: Outside originals ....
 
-			// only base path needed so galleryid == 0
-            $imagePaths = new ImagePathsModel (0); // ToDo: J3x
+            // only base path needed so galleryid == 0
+            $imagePaths             = new ImagePathsModel (0); // ToDo: J3x
             $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
 
@@ -246,54 +232,9 @@ class ImageReferences
             $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
 
             foreach ($galleryIdDirs as $galleryIdDir) {
-
-                $this->testSizesDir4Orphans ($galleryIdDir);
-
+                $this->testSizesDir4Orphans($galleryIdDir);
             }
-
-
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-		return;
-	}
-
-
-    // search for files not in list
-    private function testSizesDir4Orphans ($galleryIdDir)
-    {
-
-        try
-        {
-            // gallery ID
-            $galleryId = basename ($galleryIdDir);
-
-            if ( ! is_numeric($galleryId))
-            {
-                return;
-            }
-
-	        // all found gallery ids in folder
-	        $sizeDirs = glob($galleryIdDir . '/*', GLOB_ONLYDIR);
-
-	        foreach ($sizeDirs as $sizeDir) {
-
-		        $this->testImageDir4Orphans ($sizeDir, $galleryId);
-
-	        }
-
-
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -307,21 +248,47 @@ class ImageReferences
 
 
     // search for files not in list
-    private function testImageDir4Orphans ($sizeDir, $galleryId)
+    private function testSizesDir4Orphans($galleryIdDir)
     {
-
-
-        try
-        {
+        try {
             // gallery ID
-            $sizeName = basename ($sizeDir);
+            $galleryId = basename($galleryIdDir);
+
+            if (!is_numeric($galleryId)) {
+                return;
+            }
+
+            // all found gallery ids in folder
+            $sizeDirs = glob($galleryIdDir . '/*', GLOB_ONLYDIR);
+
+            foreach ($sizeDirs as $sizeDir) {
+                $this->testImageDir4Orphans($sizeDir, $galleryId);
+            }
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return;
+    }
+
+
+    // search for files not in list
+    private function testImageDir4Orphans($sizeDir, $galleryId)
+    {
+        try {
+            // gallery ID
+            $sizeName = basename($sizeDir);
 
             // all found gallery ids in folder
             $imageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
-            foreach ($imageFiles as $imageFilePath)
-            {
-                $imageFilePath = Path::clean ($imageFilePath);
-	            $imageName = basename ($imageFilePath);
+            foreach ($imageFiles as $imageFilePath) {
+                $imageFilePath = Path::clean($imageFilePath);
+                $imageName     = basename($imageFilePath);
 
 //	            $testClean = Path::clean ($imageFilePath);
 //	            $testResolve = Path::resolve ($imageFilePath);
@@ -368,20 +335,15 @@ class ImageReferences
                 $isImage = true;
 
                 if ($isImage) {
-
-
                     // check if image, check if exist in list, check if other part of item exists (different size ...)
                     //$isInList = findImageInList ($galleryId, $sizeName, $imageName, $imageFilePath);
                     [$isInList, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
 
                     // Unknown item
                     if (!$isInList) {
-
-
                         // Find item with gallery and name ?
                         // No -> create new item
                         if (!$ImageReference) {
-
                             $ImageReference = new ImageReference ();
                             $ImageReference->initLostItems($galleryId, $imageName);
                             $ImageReference->assignLostItem($sizeName, $imageFilePath);
@@ -391,14 +353,11 @@ class ImageReferences
                             // Yes -> add flags for this
 
                             $ImageReference->assignLostItem($sizeName, $imageFilePath);
-
                         }
                     }
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -410,81 +369,73 @@ class ImageReferences
         return;
     }
 
-	// search for files not in list
-	private function findImageInList ($galleryId, $imageName, $ImageFilePath)
-	{
-		$isFound = false;
+    // search for files not in list
+    private function findImageInList($galleryId, $imageName, $ImageFilePath)
+    {
+        $isFound = false;
 
         $partlyItem = false;
 
-		try
-		{
-
-			foreach ($this->ImageReferenceList as $ImageReference) {
-
-				// gallery and image name must match
-				if ($ImageReference->parentGalleryId == $galleryId) {
-					if ($ImageReference->imageName == $imageName)
-					{
-
+        try {
+            foreach ($this->ImageReferenceList as $ImageReference) {
+                // gallery and image name must match
+                if ($ImageReference->parentGalleryId == $galleryId) {
+                    if ($ImageReference->imageName == $imageName) {
                         $partlyItem = $ImageReference;
 
-						foreach ($ImageReference->allImagePaths as $TestImagePath) {
+                        foreach ($ImageReference->allImagePaths as $TestImagePath) {
+                            if ($ImageFilePath === $TestImagePath) {
+                                $isFound = true;
+                                break;
+                            }
+                        }
 
-							if ($ImageFilePath === $TestImagePath) {
-
-								$isFound = true;
-								break;
-							}
-						}
-
-						if( ! $isFound) {
+                        if (!$isFound) {
                             break;
                         }
 
                         // matched galleryId ... no further search needed
-						// actual image name is checked
-						break;
-					}
-				}
-			}
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+                        // actual image name is checked
+                        break;
+                    }
+                }
+            }
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
-		return [$isFound, $partlyItem];
-	}
+        return [$isFound, $partlyItem];
+    }
 
-/**
+    /**
      * Collects existing image name list with gallery_id from database
      *
      * @return array of object (name and gallery_id)
      *
      * @since version 4.3
      */
-	private function getDbImagesList()
-	{
-		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+    private function getDbImagesList()
+    {
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
 
         // ToDo: add path to original file
         // ToDo: add image sizes
-		$query->select($db->quoteName(array('name', 'gallery_id')))
-			->from($db->quoteName('#__rsg2_images'))
-			->order('name');
+        $query
+            ->select($db->quoteName(['name', 'gallery_id']))
+            ->from($db->quoteName('#__rsg2_images'))
+            ->order('name');
 
-		$db->setQuery($query);
-		$rows =  $db->loadAssocList();
+        $db->setQuery($query);
+        $rows = $db->loadAssocList();
 
-		return $rows;
-	}
+        return $rows;
+    }
 
 
     /**
@@ -494,25 +445,20 @@ class ImageReferences
      * @throws \Exception
      * @since version
      */
-    private function reduceList4LostAndFounds ()
+    private function reduceList4LostAndFounds()
     {
         $isFound = false;
 
         $List4LostAndFounds = [];
 
-        try
-        {
+        try {
             foreach ($this->ImageReferenceList as $ImageReference) {
-
                 // Missing or additional image file in item
-                if ( ! $ImageReference->IsAllSizesImagesFound) {
-
+                if (!$ImageReference->IsAllSizesImagesFound) {
                     $List4LostAndFounds [] = $ImageReference;
                 }
             }
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing reduceList4LostAndFounds: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

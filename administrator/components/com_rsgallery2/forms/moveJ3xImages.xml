@@ -1,100 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
-	<fieldset
-			name="j3x_gallery"
-			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-	>
-		<!-- Gallery selection -->
-		<field
-				id="SelectGallery"
-				name="SelectGallery"
-				type="GalleriesJ3xList"
-				label="Specify J3x gallery"
-				description="Select gallery for images to be transferred"
-				required="true"
-		/>
-	</fieldset>
-	<fieldset
-			name="upload_drag_and_drop"
-			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-	>
-		<!-- Gallery selection -->
-		<field
-				id="SelectGalleries_03"
-				name="SelectGalleries03"
-				type="GallerySelect"
-				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
-				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
-				required="true"
-		/>
-	</fieldset>
-	<fieldset
-			name="upload_zip"
-			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-	>
-		<!--field
-				id="all_img_in_step1_01"
-				name="all_img_in_step1_01"
-				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
-				description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
-				layout="joomla.form.field.radio.switcher"
-				filter="integer"
-				validate="options"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field-->
-		<field 
-				id="all_img_in_step1_01"
-				name="all_img_in_step1_01" 
-				type="hidden" 
-				default="1" 
-		/>
-		<!-- Gallery selection -->
-		<field
-				id="SelectGalleries_01"
-				name="SelectGalleries01"
-				type="GallerySelect"
-				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
-				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
-				required="true"
-		/>
-	</fieldset>
-	<fieldset
-			name="upload_folder"
-			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-	>
-		<!--field
-				id="all_img_in_step1_02"
-				name="all_img_in_step1_02"
-				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
-				description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
-				class="btn-group btn-group-yesno span5"
-				filter="integer"
-				validate="options"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field-->
-		<field 
-				id="all_img_in_step1_02"
-				name="all_img_in_step1_02" 
-				type="hidden" 
-				default="1" 
-		/>
+    <fieldset
+            name="j3x_gallery"
+            addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+    >
+        <!-- Gallery selection -->
+        <field
+                id="SelectGallery"
+                name="SelectGallery"
+                type="GalleriesJ3xList"
+                label="Specify J3x gallery"
+                description="Select gallery for images to be transferred"
+                required="true"
+        />
+    </fieldset>
+    <fieldset
+            name="upload_drag_and_drop"
+            addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+    >
+        <!-- Gallery selection -->
+        <field
+                id="SelectGalleries_03"
+                name="SelectGalleries03"
+                type="GallerySelect"
+                label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+                description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+                required="true"
+        />
+    </fieldset>
+    <fieldset
+            name="upload_zip"
+            addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+    >
+        <!--field
+                id="all_img_in_step1_01"
+                name="all_img_in_step1_01"
+                type="radio"
+                default="0"
+                label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
+                description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
+                layout="joomla.form.field.radio.switcher"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field-->
+        <field
+                id="all_img_in_step1_01"
+                name="all_img_in_step1_01"
+                type="hidden"
+                default="1"
+        />
+        <!-- Gallery selection -->
+        <field
+                id="SelectGalleries_01"
+                name="SelectGalleries01"
+                type="GallerySelect"
+                label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+                description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+                required="true"
+        />
+    </fieldset>
+    <fieldset
+            name="upload_folder"
+            addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+    >
+        <!--field
+                id="all_img_in_step1_02"
+                name="all_img_in_step1_02"
+                type="radio"
+                default="0"
+                label="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_LABEL"
+                description="COM_RSGALLERY2_ONE_GALLERY_FOR_ALL_IMAGES_DESC"
+                class="btn-group btn-group-yesno span5"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field-->
+        <field
+                id="all_img_in_step1_02"
+                name="all_img_in_step1_02"
+                type="hidden"
+                default="1"
+        />
 
-		<!-- Gallery selection -->
-		<field
-				id="SelectGalleries_02"
-				name="SelectGalleries02"
-				type="GallerySelect"
-				label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
-				description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
-				required="true"
-		/>
-	</fieldset>
+        <!-- Gallery selection -->
+        <field
+                id="SelectGalleries_02"
+                name="SelectGalleries02"
+                type="GallerySelect"
+                label="COM_RSGALLERY2_SPECIFY_GALLERY_LABEL"
+                description="COM_RSGALLERY2_SPECIFY_GALLERY_DESC"
+                required="true"
+        />
+    </fieldset>
 </form>

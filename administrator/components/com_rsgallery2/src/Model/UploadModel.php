@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  * @copyright  (C) 2014-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -34,25 +34,23 @@ class UploadModel extends BaseDatabaseModel
     {
         $is1GalleryExisting = false;
 
-        try
-        {
+        try {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             // count gallery items
-            $query->select('COUNT(*)')
+            $query
+                ->select('COUNT(*)')
                 // ignore root item  where id is "1"
                 ->where($db->quoteName('id') . ' != 1')
                 ->from('#__rsg2_galleries');
 
             $db->setQuery($query, 0, 1);
-            $IdGallery          = $db->loadResult();
+            $IdGallery = $db->loadResult();
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -76,12 +74,13 @@ class UploadModel extends BaseDatabaseModel
         $IdLatestGallery = 0;
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             $test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
 
-            $query->select($db->quoteName('id'))
+            $query
+                ->select($db->quoteName('id'))
                 ->from('#__rsg2_galleries')
                 ->where($db->quoteName('id') . ' != 1')
                 ->setLimit(1)
@@ -102,8 +101,6 @@ class UploadModel extends BaseDatabaseModel
 
         return $IdLatestGallery;
     }
-
-
 
 
 }

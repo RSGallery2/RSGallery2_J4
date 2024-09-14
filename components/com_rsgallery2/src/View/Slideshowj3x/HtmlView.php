@@ -1,21 +1,26 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Slideshowj3x;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JObject;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Factory;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
+use JUser;
+
+use function defined;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -24,137 +29,131 @@ use Joomla\Registry\Registry;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The model state
-	 *
-	 * @var    \JObject
-	 * @since  3.1
-	 */
-	protected $state;
+    /**
+     * The model state
+     *
+     * @var    JObject
+     * @since  3.1
+     */
+    protected $state;
 
-	/**
-	 * The list of tags
-	 *
-	 * @var    array|false
-	 * @since  3.1
-	 */
-	protected $items;
+    /**
+     * The list of tags
+     *
+     * @var    array|false
+     * @since  3.1
+     */
+    protected $items;
 
-	/**
-	 * The pagination object
-	 *
-	 * @var    \Joomla\CMS\Pagination\Pagination
-	 * @since  3.1
-	 */
-	protected $pagination;
+    /**
+     * The pagination object
+     *
+     * @var    Pagination
+     * @since  3.1
+     */
+    protected $pagination;
 
-	/**
-	 * The page parameters
-	 *
-	 * @var    \Joomla\Registry\Registry|null
-	 * @since  3.1
-	 */
-	protected $params = null;
+    /**
+     * The page parameters
+     *
+     * @var    Registry|null
+     * @since  3.1
+     */
+    protected $params = null;
 
-	/**
-	 * The page class suffix
-	 *
-	 * @var    string
-	 * @since  4.0.0
-	 */
-	protected $pageclass_sfx = '';
+    /**
+     * The page class suffix
+     *
+     * @var    string
+     * @since  4.0.0
+     */
+    protected $pageclass_sfx = '';
 
-	/**
-	 * The logged in user
-	 *
-	 * @var    \JUser|null
-	 * @since  4.0.0
-	 */
-	protected $user = null;
+    /**
+     * The logged in user
+     *
+     * @var    JUser|null
+     * @since  4.0.0
+     */
+    protected $user = null;
 
-	/**
-	 *
-	 *
-	 * @var    string
-	 * @since  4.0.0
-	 */
-	protected $slides_layout = '';
+    /**
+     *
+     *
+     * @var    string
+     * @since  4.0.0
+     */
+    protected $slides_layout = '';
 
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed   A string if successful, otherwise an Error object.
-	 */
-	public function display($tpl = null)
-	{
-		$app             = Factory::getApplication();
-		$input           = Factory::getApplication()->input;
-		$this->galleryId = $input->get('gid', 0, 'INT');
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed   A string if successful, otherwise an Error object.
+     */
+    public function display($tpl = null)
+    {
+        $app             = Factory::getApplication();
+        $input           = Factory::getApplication()->input;
+        $this->galleryId = $input->get('gid', 0, 'INT');
 
-		/* wrong call but why ? */
-		if ($this->galleryId < 2)
-		{
-			Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
-		}
-
-
-		// Get some data from the models
-		$this->state = $this->get('State');
-		$this->state->set('list.limit', 999);
-
-		$this->items      = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
-		$params           =
-		$this->params = $this->state->get('params');
-		$this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-		$user = $app->getIdentity();
-
-		$this->isDebugSite   = $params->get('isDebugSite');
-		$this->isDevelopSite = $params->get('isDevelop');
-
-		$model         = $this->getModel();
-		$this->gallery = $model->galleryData($this->galleryId);
+        /* wrong call but why ? */
+        if ($this->galleryId < 2) {
+            Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
+        }
 
 
-		// ToDo: Status of images
+        // Get some data from the models
+        $this->state = $this->get('State');
+        $this->state->set('list.limit', 999);
+
+        $this->items      = $this->get('Items');
+        $this->pagination = $this->get('Pagination');
+        $params           =
+        $this->params = $this->state->get('params');
+        $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        $user = $app->getIdentity();
+
+        $this->isDebugSite   = $params->get('isDebugSite');
+        $this->isDevelopSite = $params->get('isDevelop');
+
+        $model         = $this->getModel();
+        $this->gallery = $model->galleryData($this->galleryId);
 
 
-		$this->slides_layout = $params->get('slides_layout');
-		//$this->slides_layout = "SlideshowJ3x";
-		// Fix wrong / others: 			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
-		//$this->slides_layout = ??? $input->getText('slides_layout', $this->slides_layout);
-
-		// Standard Joomla behaviour : Layout use file parallel to default.php layout
-		$layoutName = $this->getLayout();
-
-		// Standard Joomla behaviour : Layout use file parallel to default.php layout
-		$layout = $input->getWord('layout', 'default');
-		if ($layout == 'default')
-		{
-			$this->setLayout($this->slides_layout);
-		}
-		else
-		{
-			$this->setLayout($layout); //     $layoutName = 'SlideshowJ3x.default';
-		}
+        // ToDo: Status of images
 
 
-		// pad the images with more information
-		if (!empty($this->items))
-		{
-			// Add image paths, image params ...
-			$data = $model->AddLayoutData($this->items);
-		}
+        $this->slides_layout = $params->get('slides_layout');
+        //$this->slides_layout = "SlideshowJ3x";
+        // Fix wrong / others: 			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+        //$this->slides_layout = ??? $input->getText('slides_layout', $this->slides_layout);
 
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
+        // Standard Joomla behaviour : Layout use file parallel to default.php layout
+        $layoutName = $this->getLayout();
 
-		// Flag indicates to not add limitstart=0 to URL
-		$this->pagination->hideEmptyLimitstart = true;
+        // Standard Joomla behaviour : Layout use file parallel to default.php layout
+        $layout = $input->getWord('layout', 'default');
+        if ($layout == 'default') {
+            $this->setLayout($this->slides_layout);
+        } else {
+            $this->setLayout($layout); //     $layoutName = 'SlideshowJ3x.default';
+        }
+
+
+        // pad the images with more information
+        if (!empty($this->items)) {
+            // Add image paths, image params ...
+            $data = $model->AddLayoutData($this->items);
+        }
+
+        if (count($errors = $this->get('Errors'))) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
+
+        // Flag indicates to not add limitstart=0 to URL
+        $this->pagination->hideEmptyLimitstart = true;
 
 
 // ToDo: more trigger
@@ -174,8 +173,8 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 
 }
 

@@ -1,23 +1,29 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 // J3x legacy view (default) => gallery
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallery;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JObject;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Factory;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\Registry\Registry;
+use JUser;
+
+use function defined;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -29,7 +35,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var    \JObject
+     * @var    JObject
      * @since  3.1
      */
     protected $state;
@@ -45,7 +51,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var    \Joomla\CMS\Pagination\Pagination
+     * @var    Pagination
      * @since  3.1
      */
     protected $pagination;
@@ -53,8 +59,8 @@ class HtmlView extends BaseHtmlView
     /**
      * The page parameters
      *
-     * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
+     * @var    Registry|null
+     * @since  __BUMP_VERSION__
      */
     protected $params = null;
 
@@ -69,7 +75,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The logged in user
      *
-     * @var    \JUser|null
+     * @var    JUser|null
      * @since  4.0.0
      */
     protected $user = null;
@@ -81,36 +87,36 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-	public function display($tpl = null)
-	{
-		//--- gallery (j3x standard) --------------------------------------------------
+    public function display($tpl = null)
+    {
+        //--- gallery (j3x standard) --------------------------------------------------
 
-		$app = Factory::getApplication();
+        $app = Factory::getApplication();
 
-        $input  = $app->input;
+        $input           = $app->input;
         $this->galleryId = $input->get('gid', 0, 'INT');
 
-		// gid = 0 ==> root view
-		$isDisplayRootGalleries = $this->galleryId === 0;
-		if ($isDisplayRootGalleries)
-		{
-			// Tell to use ... instead
-			$msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "' . Text::_('COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE') . '"';
-			$app->enqueueMessage($msg, 'Notice');
+        // gid = 0 ==> root view
+        $isDisplayRootGalleries = $this->galleryId === 0;
+        if ($isDisplayRootGalleries) {
+            // Tell to use ... instead
+            $msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "' . Text::_(
+                    'COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE',
+                ) . '"';
+            $app->enqueueMessage($msg, 'Notice');
+            // ToDo: ? redirect ?
 
-			// ToDo: ? redirect ?
 
-
-		}
+        }
 
         // Get some data from the models
-        $state =
-        $this->state      = $this->get('State');
+        $state            =
+        $this->state = $this->get('State');
         $this->pagination = $this->get('Pagination');
-		$this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
+        $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        $user = $app->getIdentity();
 
-		// $test = $app->getParams();
+        // $test = $app->getParams();
         $params =
         $this->params = $state->get('params');
 
@@ -120,22 +126,21 @@ class HtmlView extends BaseHtmlView
 //		// wrong: $this->params = $menuParams->merge($this->params);
 //		$params = $this->params->merge($menuParams);
 
-		$this->isDebugSite = $params->get('isDebugSite');
-		$this->isDevelopSite = $params->get('isDevelop');
+        $this->isDebugSite   = $params->get('isDebugSite');
+        $this->isDevelopSite = $params->get('isDevelop');
 
-		$this->items      = $this->get('Items');
+        $this->items = $this->get('Items');
 
-		$model = $this->getModel();
-		$this->gallery = $model->galleryData($this->galleryId);
+        $model         = $this->getModel();
+        $this->gallery = $model->galleryData($this->galleryId);
 
 
-        if ( ! empty($this->items)) {
-			// Add image paths, image params ...
-			$data = $model->AddLayoutData ($this->items);
-		}
+        if (!empty($this->items)) {
+            // Add image paths, image params ...
+            $data = $model->AddLayoutData($this->items);
+        }
 
-        if (count($errors = $this->get('Errors')))
-        {
+        if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -158,14 +163,12 @@ class HtmlView extends BaseHtmlView
 //		$item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
-		// Check for layout override
-		$active = Factory::getApplication()->getMenu()->getActive();
+        // Check for layout override
+        $active = Factory::getApplication()->getMenu()->getActive();
 
-		if (isset($active->query['layout']))
-		{
-			$this->setLayout($active->query['layout']);
-		}
-
+        if (isset($active->query['layout'])) {
+            $this->setLayout($active->query['layout']);
+        }
 
 
 //		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
@@ -175,25 +178,24 @@ class HtmlView extends BaseHtmlView
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
 
-		echo '';
+        echo '';
 // on develop show open tasks if existing
-		if (!empty ($this->isDevelopSite))
-		{
-			echo '<span style="color:red">'
-				. 'Tasks: gallery view<br>'
-				. '* <br>'
-				. '* make rsgConfig global<br>'
-				//	. '* <br>'
-				//	. '* <br>'
-				//	. '* <br>'
-				//	. '* <br>'
-				//	. '* <br>'
-				. '</span><br><br>';
-		}
+        if (!empty ($this->isDevelopSite)) {
+            echo '<span style="color:red">'
+                . 'Tasks: gallery view<br>'
+                . '* <br>'
+                . '* make rsgConfig global<br>'
+                //	. '* <br>'
+                //	. '* <br>'
+                //	. '* <br>'
+                //	. '* <br>'
+                //	. '* <br>'
+                . '</span><br><br>';
+        }
 
 
-		parent::display($tpl);
+        parent::display($tpl);
 
-		return;
-	}
+        return;
+    }
 }

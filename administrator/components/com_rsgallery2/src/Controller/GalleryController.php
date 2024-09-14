@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
@@ -26,13 +26,13 @@ use Joomla\Registry\Registry;
  */
 class GalleryController extends FormController
 {
-	/**
-	 * The extension for which the galleries apply.
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
-	protected $extension;
+    /**
+     * The extension for which the galleries apply.
+     *
+     * @var    string
+     * @since __BUMP_VERSION__
+     */
+    protected $extension;
 
     /**
      * Constructor.
@@ -42,17 +42,16 @@ class GalleryController extends FormController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   \JInput              $input    Input
      *
-     * @since __BUMP_VERSION__
+     * @since  __BUMP_VERSION__
      * @see    \JControllerLegacy
      *
-    /**/
+     * /**/
 
-    public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
 
-        if (empty($this->extension))
-        {
+        if (empty($this->extension)) {
             $this->extension = $this->input->get('extension', 'com_rsgallery2');
         }
     }
@@ -65,39 +64,35 @@ class GalleryController extends FormController
     public function save2upload()
     {
         // $msg     = '<strong>' . 'Save2Upload ' . ':</strong><br>';
-        $msg     = 'Save and goto upload: ';
+        $msg = 'Save and goto upload: ';
         // fall back link
-        $link = 'index.php?option=com_rsgallery2';
+        $link    = 'index.php?option=com_rsgallery2';
         $IsSaved = false;
 
         $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-
             try {
                 //  tells if successful
-                $IsSaved  = $this->save();
+                $IsSaved = $this->save();
 
-                if ($IsSaved)
-                {
+                if ($IsSaved) {
                     // ToDo: Prepare gallery ID and pre select it in upload form
 
-                    $id = $this->input->get('id', 0, 'int');
+                    $id   = $this->input->get('id', 0, 'int');
                     $link = 'index.php?option=com_rsgallery2&view=upload' . '&id=' . $id;
 
-                    $msg .= ' successful';
+                    $msg     .= ' successful';
                     $msgType = 'notice';
                     $this->setRedirect($link, $msg, $msgType);
-                }
-                else
-                {
-                    $msg .= ' failed';
+                } else {
+                    $msg     .= ' failed';
                     $msgType = 'error';
                 }
             } catch (\RuntimeException $e) {

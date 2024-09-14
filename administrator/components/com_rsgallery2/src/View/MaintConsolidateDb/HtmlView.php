@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\MaintConsolidateDb;
@@ -32,56 +32,57 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
  */
 class HtmlView extends BaseHtmlView
 {
-	protected $form;
-	/**
-	 * The sidebar markup
-	 *
-	 * @var  string
-	 */
-	protected $sidebar;
+    protected $form;
+    /**
+     * The sidebar markup
+     *
+     * @var  string
+     */
+    protected $sidebar;
 
-	// ToDo: Use other rights instead of core.admin -> IsRoot ?
-	// core.admin is the permission used to control access to
-	// the global config
-	protected $UserIsRoot;
+    // ToDo: Use other rights instead of core.admin -> IsRoot ?
+    // core.admin is the permission used to control access to
+    // the global config
+    protected $UserIsRoot;
 
-	/**
-	 * @var ImageReferences
-	 */
-	protected $oImgRefs;
-
-
-	protected $IsAnyDbRefMissing; // header
+    /**
+     * @var ImageReferences
+     */
+    protected $oImgRefs;
 
 
-	protected $isDebugBackend;
-	protected $isDevelop;
-
-	/**
-	 * Method to display the view.
-	 *
-	 * @param   string  $tpl  A template file to load. [optional]
-	 *
-	 * @return  mixed  A string if successful, otherwise an \Exception object.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function display($tpl = null)
-	{
-		//--- config --------------------------------------------------------------------
-
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
-		$this->isDevelop = $rsgConfig->get('isDevelop');
+    protected $IsAnyDbRefMissing; // header
 
 
-		//--- get needed data ------------------------------------------
+    protected $isDebugBackend;
+    protected $isDevelop;
 
-		// Check rights of user
-		//$this->UserIsRoot = $this->CheckUserIsRoot();
+    /**
+     * Method to display the view.
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
+     * @return  mixed  A string if successful, otherwise an \Exception object.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function display($tpl = null)
+    {
+        //--- config --------------------------------------------------------------------
 
-		$ConsolidateModel      = $this->getModel(); // use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+        $this->isDevelop      = $rsgConfig->get('isDevelop');
+
+
+        //--- get needed data ------------------------------------------
+
+        // Check rights of user
+        //$this->UserIsRoot = $this->CheckUserIsRoot();
+
+        $ConsolidateModel = $this->getModel(
+        ); // use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
 
         // contains lost and found items
         $this->oImgRefs = $ConsolidateModel->GetImageReferences();
@@ -93,78 +94,114 @@ class HtmlView extends BaseHtmlView
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
 
 
-
-
         //--- Check user rights ---------------------------------------------
 
-		// toDo: More detailed for rsgallery admin
-		$app       = Factory::getApplication();
+        // toDo: More detailed for rsgallery admin
+        $app = Factory::getApplication();
 
-		//$user = $app->getIdentity();
-		$user  = $this->getCurrentUser();
-		$canAdmin = $user->authorise('core.admin');
-		$this->UserIsRoot = $canAdmin;
+        //$user = $app->getIdentity();
+        $user             = $this->getCurrentUser();
+        $canAdmin         = $user->authorise('core.admin');
+        $this->UserIsRoot = $canAdmin;
 
-		//--- begin to display ----------------------------------------------
+        //--- begin to display ----------------------------------------------
 
 //		Factory::getApplication()->input->set('hidemainmenu', true);
 
-		//---  --------------------------------------------------------------
+        //---  --------------------------------------------------------------
 
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
-		Rsgallery2Helper::addSubmenu('maintenance');
-		$this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
+        Rsgallery2Helper::addSubmenu('maintenance');
+        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
 
-		$Layout = Factory::getApplication()->input->get('layout');
+        $Layout = Factory::getApplication()->input->get('layout');
 
-		$this->addToolbar($Layout);
+        $this->addToolbar($Layout);
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function addToolbar($Layout)
-	{
-		// Get the toolbar object instance
-		$toolbar = Toolbar::getInstance('toolbar');
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function addToolbar($Layout)
+    {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance('toolbar');
 
-		// on develop show open tasks if existing
-		if (!empty ($this->isDevelop))
-		{
-			echo '<span style="color:red">'
+        // on develop show open tasks if existing
+        if (!empty ($this->isDevelop)) {
+            echo '<span style="color:red">'
                 . 'Tasks: <br>'
-				. '* No Function for: createImageDbItems<br>'
-				. '* No Function for: createMissingImages<br>'
-				. '* No Function for: createWatermarkImages<br>'
-				. '* No Function for: assignParentGallery<br>'
-				. '* No Function for: deleteRowItems<br>'
-				. '* No Function for: repairAllIssuesItems<br>'
+                . '* No Function for: createImageDbItems<br>'
+                . '* No Function for: createMissingImages<br>'
+                . '* No Function for: createWatermarkImages<br>'
+                . '* No Function for: assignParentGallery<br>'
+                . '* No Function for: deleteRowItems<br>'
+                . '* No Function for: repairAllIssuesItems<br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
-				. '</span><br><br>';
-		}
+                . '</span><br><br>';
+        }
 
 //		switch ($Layout)
 //		{
 //			case 'MaintConsolidateDb':
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGE_DATABASE'), 'icon-database icon-checkbox-checked');
+        ToolBarHelper::title(
+            Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGE_DATABASE'),
+            'icon-database icon-checkbox-checked',
+        );
 
-				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+        ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-                ToolBarHelper::custom('MaintConsolidateDb.createImageDbItems', 'database', '', 'COM_RSGALLERY2_CREATE_DATABASE_ENTRIES', true);
-        		ToolBarHelper::custom('MaintConsolidateDb.createMissingImages', 'image', '', 'COM_RSGALLERY2_CREATE_MISSING_IMAGES', true);
-        		ToolBarHelper::custom('MaintConsolidateDb.createWatermarkImages', 'scissors', '', 'COM_RSGALLERY2_CREATE_MISSING_WATERMARKS', true);
-                ToolBarHelper::custom('MaintConsolidateDb.assignParentGallery', 'images', '', 'COM_RSGALLERY2_ASSIGN_SELECTED_GALLERY', true);
-                ToolBarHelper::custom('MaintConsolidateDb.deleteRowItems', 'delete', '', 'COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS', true);
-                ToolBarHelper::custom('MaintConsolidateDb.repairAllIssuesItems', 'refresh', '', 'COM_RSGALLERY2_REPAIR_ALL_ISSUES', true);
+        ToolBarHelper::custom(
+            'MaintConsolidateDb.createImageDbItems',
+            'database',
+            '',
+            'COM_RSGALLERY2_CREATE_DATABASE_ENTRIES',
+            true,
+        );
+        ToolBarHelper::custom(
+            'MaintConsolidateDb.createMissingImages',
+            'image',
+            '',
+            'COM_RSGALLERY2_CREATE_MISSING_IMAGES',
+            true,
+        );
+        ToolBarHelper::custom(
+            'MaintConsolidateDb.createWatermarkImages',
+            'scissors',
+            '',
+            'COM_RSGALLERY2_CREATE_MISSING_WATERMARKS',
+            true,
+        );
+        ToolBarHelper::custom(
+            'MaintConsolidateDb.assignParentGallery',
+            'images',
+            '',
+            'COM_RSGALLERY2_ASSIGN_SELECTED_GALLERY',
+            true,
+        );
+        ToolBarHelper::custom(
+            'MaintConsolidateDb.deleteRowItems',
+            'delete',
+            '',
+            'COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS',
+            true,
+        );
+        ToolBarHelper::custom(
+            'MaintConsolidateDb.repairAllIssuesItems',
+            'refresh',
+            '',
+            'COM_RSGALLERY2_REPAIR_ALL_ISSUES',
+            true,
+        );
 
 //				break;
 //
@@ -177,19 +214,18 @@ class HtmlView extends BaseHtmlView
 //		}
 //
 
-		// Options button.
-		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
-		{
-			$toolbar->preferences('com_rsgallery2');
-		}
-	}
+        // Options button.
+        if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {
+            $toolbar->preferences('com_rsgallery2');
+        }
+    }
 
-	/**
-	public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
-	/**/
+    /**
+     * public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
+     * {
+     * return parent::getModel($name, $prefix, $config);
+     * }
+     * /**/
 
 }
 

@@ -30,54 +30,54 @@ use Joomla\Utilities\ArrayHelper;
  */
 class GalleriesJ3xListField extends ListField
 {
-	/**
-	 * To allow creation of new galleries.
-	 *
-	 * @var    integer
-	 * @since __BUMP_VERSION__
-	 */
-	protected $allowAdd;
+    /**
+     * To allow creation of new galleries.
+     *
+     * @var    integer
+     * @since __BUMP_VERSION__
+     */
+    protected $allowAdd;
 
-	/**
-	 * A flexible gallery list that respects access controls
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
-	public $type = 'GalleriesJ3xList';
+    /**
+     * A flexible gallery list that respects access controls
+     *
+     * @var    string
+     * @since __BUMP_VERSION__
+     */
+    public $type = 'GalleriesJ3xList';
 
-	/**
-	 * Name of the layout being used to render the field
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
+    /**
+     * Name of the layout being used to render the field
+     *
+     * @var    string
+     * @since __BUMP_VERSION__
+     */
 //	protected $layout = 'joomla.form.field.ParentList';
 
 
-	/**
-	 * Method to get a list of galleries (?that respects access controls and can be used for
-	 * either gallery assignment or parent gallery assignment in edit screens?).
-	 *
-	 * @return  array  The field option objects.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function getOptions()
-	{
-        $galleries = array();
+    /**
+     * Method to get a list of galleries (?that respects access controls and can be used for
+     * either gallery assignment or parent gallery assignment in edit screens?).
+     *
+     * @return  array  The field option objects.
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getOptions()
+    {
+        $galleries = [];
 
-        $galleryId = (string) $this->form->getValue('id');
+        $galleryId = (string)$this->form->getValue('id');
 
-        try
-        {
+        try {
             // $name = (string) $this->element['name'];
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
-		    $db   = Factory::getContainer()->get(DatabaseInterface::class);
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		    $query = $db->getQuery(true)
-			    //->select('id AS value, name AS text, level, published, lft, language')
-			    ->select('id AS value, name AS text')
+            $query = $db
+                ->getQuery(true)
+                //->select('id AS value, name AS text, level, published, lft, language')
+                ->select('id AS value, name AS text')
                 ->from($db->quoteName('#__rsgallery2_galleries'))
                 //->where($db->quoteName('id') . ' != 1' )
                 // Filter on the published state
@@ -87,11 +87,9 @@ class GalleriesJ3xListField extends ListField
 
             // Get the options.
             $galleries = $db->setQuery($query)->loadObjectList();
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
-		catch (\RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-		}
 
         $options = $galleries;
 
@@ -128,7 +126,6 @@ class GalleriesJ3xListField extends ListField
 //
 
 
-
 //		foreach ($options as $i => $option)
 //		{
 //			/*
@@ -146,6 +143,6 @@ class GalleriesJ3xListField extends ListField
         $options = array_merge(parent::getOptions(), $options);
 
         return $options;
-	}
+    }
 
 }

@@ -42,7 +42,7 @@
       "description": "JavaScript for the backend Items page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/imagesProperties.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -74,7 +74,7 @@
       "description": "JavaScript for the backend Items page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/upload.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -100,7 +100,7 @@
       "description": "JavaScript for the backend Items page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/maintenance.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -126,7 +126,7 @@
       "description": "JavaScript for the backend move images page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/moveJ3xImages.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -153,7 +153,7 @@
       "description": "JavaScript for the backend db transfer images page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/dbTransferJ3xImages.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -237,6 +237,5 @@
         "com_rsgallery2.site.slideshowJ3x#style"
       ]
     }
-
   ]
 }

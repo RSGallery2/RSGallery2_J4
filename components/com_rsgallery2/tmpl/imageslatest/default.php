@@ -1,13 +1,13 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
@@ -25,12 +25,10 @@ use Joomla\CMS\Language\Text;
 
 echo '<h1> RSGallery2 "images latest" view </h1>';
 
-echo 'parent gallery: ' .$this->galleryId .'<br>';
+echo 'parent gallery: ' . $this->galleryId . '<br>';
 
 foreach ($this->items as $image) {
-
     echo 'image: ' . $image->name . '<br>';
-
 }
 
 //

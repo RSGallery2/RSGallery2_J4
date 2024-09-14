@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Config;
@@ -27,45 +27,44 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsgallery2Version;
  */
 class JsonView extends AbstractView
 {
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	 * @throws  Exception
-	 */
-	public function display($tpl = null): void
-	{
-		// Access check.
-		if (!Factory::getApplication()->getIdentity()->authorise('core.admin'))
-		{
-			throw new NotAllowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
-		}
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  void
+     *
+     * @throws  Exception
+     * @since __BUMP_VERSION__
+     *
+     */
+    public function display($tpl = null): void
+    {
+        // Access check.
+        if (!Factory::getApplication()->getIdentity()->authorise('core.admin')) {
+            throw new NotAllowed(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+        }
 
-		header('MIME-Version: 1.0');
-		header('Content-Disposition: attachment; filename="RSG2.config.' . date('c') . '.json"');
-		header('Content-Transfer-Encoding: binary');
+        header('MIME-Version: 1.0');
+        header('Content-Disposition: attachment; filename="RSG2.config.' . date('c') . '.json"');
+        header('Content-Transfer-Encoding: binary');
 
-		$data = $this->getLayoutData();
+        $data = $this->getLayoutData();
 
-		echo json_encode($data, JSON_PRETTY_PRINT);
+        echo json_encode($data, JSON_PRETTY_PRINT);
 
-		Factory::getApplication()->close();
-	}
+        Factory::getApplication()->close();
+    }
 
-	/**
-	 * Get the data for the view
-	 *
-	 * @return  array
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function getLayoutData()//:  array
-	{
+    /**
+     * Get the data for the view
+     *
+     * @return  array
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getLayoutData()//:  array
+    {
 //		/** @var SysinfoModel $model */
 //		$model = $this->getModel();
 //
@@ -80,15 +79,15 @@ class JsonView extends AbstractView
 
         // ToDO: RSG2 version !!!
         $oRsg2Version = new rsgallery2Version();
-        $Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
+        $Rsg2Version  = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 
 
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-        $withInfo = [
+        $withInfo  = [
             'RSG2_configuration' => $rsgConfig,
-            'RSG2_version' => $Rsg2Version,
-            'time_created' => date('c')
-            ];
+            'RSG2_version'       => $Rsg2Version,
+            'time_created'       => date('c'),
+        ];
 
         return $withInfo;
     }

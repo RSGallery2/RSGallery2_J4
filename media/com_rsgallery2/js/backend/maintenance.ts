@@ -23,47 +23,48 @@ interface Joomla {
     submitbutton: any;
     submitform: any;
 }
+
 /**/
 
 //declare var joomla: Joomla;
 
 //const joomla = window.Joomla || {};
-const joomla:Joomla = window.Joomla || {};
+const joomla: Joomla = window.Joomla || {};
 
 // Joomla form token
-var Token:string;
+var Token: string;
 
 //--------------------------------------------------------------------------------------
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
 
 
     joomla.submitbutton = function (buttonName) {
 
-        let confirmMessage:string = '';
+        let confirmMessage: string = '';
         // ToDo: switch for several pressbutton s -> change text, on not empty text let confirm
 
         switch (buttonName) {
-			case '':
+            case '':
                 // eslint-disable-next-line no-restricted-globals
                 confirmMessage = joomla.JText._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
-			    break;
+                break;
 
-			default:
-    			break;
+            default:
+                break;
         }
 
-		// Task possible without further attention (confirmation)
-		if (empty (confirmMessage)) {
+        // Task possible without further attention (confirmation)
+        if (empty(confirmMessage)) {
             joomla.submitform(pressbutton);
-		} else {
-			// confirmation requested
+        } else {
+            // confirmation requested
             if (confirm(confirmMessage)) {
                 joomla.submitform(pressbutton);
             }
-		}
+        }
 
         return true;
     };

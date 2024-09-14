@@ -32,12 +32,12 @@ use Joomla\Database\DatabaseInterface;
  */
 class ThumbListField extends ListField
 {
-	/**
-	 * Cached array of the category items.
-	 *
-	 * @var    array
-	 * @since __BUMP_VERSION__
-	 */
+    /**
+     * Cached array of the category items.
+     *
+     * @var    array
+     * @since __BUMP_VERSION__
+     */
 //	protected static $options = [];
 
     /**
@@ -47,44 +47,44 @@ class ThumbListField extends ListField
      *
      * @since __BUMP_VERSION__
      */
-	protected $type = 'ThumbList';
+    protected $type = 'ThumbList';
 
-	/**
-	 * Method to get the field input markup for a generic list.
-	 * Use the multiple attribute to enable multiselect.
-	 *
-	 * @return  string  The field input markup.
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	protected function getInput()
-	{
-		return $this->getOptions() ? parent::getInput() : '';
-	}
-	/**/
-
-	/**
-	 * Method to get a list of options for a list input.
-	 *
-	 * @return  string array  The field option objects.
+    /**
+     * Method to get the field input markup for a generic list.
+     * Use the multiple attribute to enable multiselect.
+     *
+     * @return  string  The field input markup.
      *
      * @since __BUMP_VERSION__
-	 */
-	protected function getOptions()
-	{
-		$thumbs = [];
+     *
+     * protected function getInput()
+     * {
+     * return $this->getOptions() ? parent::getInput() : '';
+     * }
+     * /**/
+
+    /**
+     * Method to get a list of options for a list input.
+     *
+     * @return  string array  The field option objects.
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getOptions()
+    {
+        $thumbs  = [];
         $options = [];
 
-		try {
+        try {
             $galleryId = $this->form->getValue('id');
             //$galleryName = $this->form->getValue('name');
 
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
-	            ->select($db->quoteName('id', 'value'))
-	            ->select($db->quoteName('name', 'text'))
-
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db
+                ->getQuery(true)
+                ->select($db->quoteName('id', 'value'))
+                ->select($db->quoteName('name', 'text'))
                 ->from('#__rsg2_images')
                 ->where($db->quoteName('gallery_id') . '=' . (int)$galleryId)
 //				->where($db->quoteName('published') . ' = 1')
@@ -107,20 +107,15 @@ class ThumbListField extends ListField
 
 
             $options = $images;
-
-
-
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
-		catch (\RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-		}
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
 
         return $options;
-	}
+    }
 
 //    /**
 //     * Method to get the field input markup for a generic list.

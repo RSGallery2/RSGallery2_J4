@@ -36,58 +36,60 @@ class ExifListField extends ListField
      *
      * @since __BUMP_VERSION__
      */
-	protected $type = 'ExifList';
+    protected $type = 'ExifList';
 
-	/**
-	 * Method to get a list of options for a list input.
-	 *
-	 * @return  array  The field option objects.
+    /**
+     * Method to get a list of options for a list input.
+     *
+     * @return  array  The field option objects.
      *
      * @since __BUMP_VERSION__
-	 */
-	protected function getOptions()
-	{
+     */
+    protected function getOptions()
+    {
         $options = [];
 
-		try {
+        try {
             //--- load additional language file --------------------------------
 
             $lang = Factory::getApplication()->getLanguage();
-            $lang->load('com_rsg2_exif',
-                Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+            $lang->load(
+                'com_rsg2_exif',
+                Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
+                null,
+                false,
+                true,
+            );
 
             //--- exif tags ---------------------------------------------------------
 
             $enabledTags = ImageExif::supportedExifTags();
 
             foreach ($enabledTags as $enabledTag) {
-
                 //--- type, name and  translation text --------------------------------
 
-                [$type, $name] = ImageExif::tag2TypeAndName ($enabledTag);
-                $translationId = ImageExif::exifTranslationId($name);
+                [$type, $name] = ImageExif::tag2TypeAndName($enabledTag);
+                $translationId   = ImageExif::exifTranslationId($name);
                 $translationText = Text::_($translationId);
 
                 //--- create option element ----------------------------------------------
 
-                $option = new \stdClass();
+                $option        = new \stdClass();
                 $option->value = $enabledTag;
                 //$option->text  = $translationText;
-                $option->text  = $type . ':' . $translationText;
+                $option->text = $type . ':' . $translationText;
 
-                $options[]     = $option;
+                $options[] = $option;
             }
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
-		catch (\RuntimeException $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-		}
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
 
         return $options;
-	}
+    }
 
 }
 

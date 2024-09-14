@@ -19,7 +19,7 @@ Actual state:
 * Backend structure ready (some features are missing)
 
 Next steps:
-* J3x Lagacy on site: gallery display (root gallery, Menu, latest ,  ..., ) like in  J3x Version
+* J3x Legacy on site: gallery display (root gallery, Menu, latest ,  ..., ) like in  J3x Version
 
 ## **Upgrade from J3x RSG2 version**
 
@@ -31,15 +31,15 @@ Some steps may be necessary for the transfer of J3x configuration/galleries/imag
 - Image files: See configuration
 - Menu references: the old format may be still valid. New more separate selection will be available
 - Templates:
-- Slideshows: In J3 version the slideshow were based on mootols and are therefore not available any more. Similar slideshows will be available.
+- Slideshows: In J3 version the slideshow were based on mootols and are therefore not available anymore. Similar slideshows will be available.
 
 ### Changes for J4
 
-Each data type will be kept in a different table with different items. These are aligned to J4 standard tables. The original J3x items must be copied to the new place. (May be automatic, may be not automatic. Can't tell actually)
+Each data type will be kept in a different table with different items. These are aligned to J4 standard tables. The original J3x items must be copied to the new place. (Maybe automatic, may be not automatic. Can't tell actually)
 
-**Gallery data:** The galleries are organized now in a joomla standard nested tree. This makes it more easy to use the standard joomla sorting functions
+**Gallery data:** The galleries are organized now in a joomla standard nested tree. This makes it easier to use Joomla standard sorting features
 
-**Image files:** On the J4 RSG2 version the folder structure of image files has changed. They have a new starting folder ...\images\rsgallery2 (instead of ...\images\rsgallery). Images are organized by gallery ID. They are kept in subfolders beginning with the gallery ID and then each image destination resolution has its won folder. Examples:
+**Image files:** On the J4 RSG2 version the folder structure of image files has changed. They have a new starting folder ...\images\rsgallery2 (instead of ...\images\rsgallery). Images are organized by gallery ID. They are kept in subfolders beginning with the gallery ID and then each image destination resolution has its own folder. Examples:
 
 - images\rsgallery2\2\600\DSC_5521.JPG
 - images\rsgallery2\2\thumbs\DSC_5521.JPG Folder 600 keeps resized copy of width 600px
@@ -69,7 +69,7 @@ State:
 - Images can be uploaded to gallery
 - Image can be edited
 
-Otherwise the software is **not ready** to be used yet
+Otherwise, the software is **not ready** to be used yet
 
 Missing:
 

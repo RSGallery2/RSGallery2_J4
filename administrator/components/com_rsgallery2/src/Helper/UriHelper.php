@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (c) 2016-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package         RSGallery2
+ * @subpackage      com_rsgallery2
+ * @copyright  (c)  2016-2024 RSGallery2 Team
+ * @license         GNU General Public License version 2 or later
  * @author          finnern
  * RSGallery is Free Software
  */
@@ -20,15 +20,16 @@ class UriHelper
      *
      * @since version
      */
-	public static function join(): string
-	{
-		$uri = implode('/', func_get_args());
+    public static function join(): string
+    {
+        $uri = implode('/', func_get_args());
 
         $uri = str_replace('\\', "/", $uri);
+
         // needed ? $uri = str_replace('//', "/", $uri);
 
-		return $uri;
-	}
+        return $uri;
+    }
 
 
 //	public static function join(): string

@@ -1,15 +1,15 @@
 <?php
 /**
- * @package     RSGallery2
- * @subpackage  mod_rsg2_slideshow
+ * @package       RSGallery2
+ * @subpackage    mod_rsg2_slideshow
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright (c) 2005-2024 RSGallery2 Team
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 use Joomla\CMS\Layout\FileLayout;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 // use Joomla\CMS\Helper\ModuleHelper;
 
@@ -27,27 +27,24 @@ use Joomla\CMS\Layout\FileLayout;
 //		. '</span><br><br>';
 //}
 
-if (!empty($isDebugSite))
-{
-	echo '<br><br>--------------------------- mod_rsg2_slideshow start ------------------------------<br>';
+if (!empty($isDebugSite)) {
+    echo '<br><br>--------------------------- mod_rsg2_slideshow start ------------------------------<br>';
 }
 
 // message on empty data or other
-if ( ! empty ($msg)) {
+if (!empty ($msg)) {
+    echo $msg;
 
-	echo $msg;
+    if (!empty($isDebugSite)) {
+        echo $msg . '<br>';
+    }
 
-	if (!empty($isDebugSite))
-	{
-		echo $msg . '<br>';
-	}
-
-	return;
+    return;
 }
 
 
 // $layoutName = $this->getLayout();
-$layoutName = $params->get('slides_layout');
+$layoutName   = $params->get('slides_layout');
 $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 
 // default is 'ImagesAreaJ3x.default'
@@ -65,23 +62,27 @@ $displayData['images'] = $images;
 $displayData['params'] = $params->toObject();
 //$displayData['menuParams'] = $this->menuParams;
 
-$displayData['isDebugSite'] = $isDebugSite;
+$displayData['isDebugSite']   = $isDebugSite;
 $displayData['isDevelopSite'] = $isDevelopSite;
 
 ?>
 
-    <div class="rsg2_x_form rsg2__slide_area">
+<div class="rsg2_x_form rsg2__slide_area">
 
-        <?php if (!empty($isDebugSite)): ?>
-            <h1> Module RSGallery2 "slideshow" J3x view </h1>
-            <hr>
-        <?php endif; ?>
+    <?php
+    if (!empty($isDebugSite)): ?>
+        <h1> Module RSGallery2 "slideshow" J3x view </h1>
+        <hr>
+    <?php
+    endif; ?>
 
-        <?php //--- display images in J3x slideshow ---------- ?>
+    <?php
+    //--- display images in J3x slideshow ---------- ?>
 
-        <?php echo $layout->render($displayData); ?>
+    <?php
+    echo $layout->render($displayData); ?>
 
-    </div>
+</div>
 
 
 <?php

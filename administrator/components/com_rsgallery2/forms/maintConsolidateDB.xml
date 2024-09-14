@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
-	<fieldset name="maintConsolidateDB">
-		<!-- Parent gallery selection -->
-		<field
-				id="ParentGalleryId"
-				name="ParentGalleryId"
-				type="GallerySelect"
-				label="COM_RSGALLERY2_SELECT_FOR_PARENT_GALLERY"
-				description="COM_RSGALLERY2_SPECIFY_GALLERY_NAME_FOR_PARENT_GALLERY_DESC"
-				required="false"
-				class="inputbox"
-				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-				size="4"
-		/>
-	</fieldset>
+    <fieldset name="maintConsolidateDB">
+        <!-- Parent gallery selection -->
+        <field
+                id="ParentGalleryId"
+                name="ParentGalleryId"
+                type="GallerySelect"
+                label="COM_RSGALLERY2_SELECT_FOR_PARENT_GALLERY"
+                description="COM_RSGALLERY2_SPECIFY_GALLERY_NAME_FOR_PARENT_GALLERY_DESC"
+                required="false"
+                class="inputbox"
+                addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+                size="4"
+        />
+    </fieldset>
 </form>

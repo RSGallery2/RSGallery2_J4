@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Table;
@@ -27,24 +27,24 @@ use Joomla\String\StringHelper;
  */
 class ConfigJ3xTable extends Table
 {
-	/**
-	 * Constructor
-	 *
-	 * @param   DatabaseDriver  $db  Database connector object
+    /**
+     * Constructor
      *
-	 * @since __BUMP_VERSION__
-	 */
-	public function __construct(DatabaseDriver $db)
-	{
-		$this->typeAlias = 'com_rsgallery2.image';
+     * @param   DatabaseDriver  $db  Database connector object
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function __construct(DatabaseDriver $db)
+    {
+        $this->typeAlias = 'com_rsgallery2.image';
 
-		parent::__construct('#__rsgallery2_config', 'id', $db);
+        parent::__construct('#__rsgallery2_config', 'id', $db);
 
-        $this->access = (int) Factory::getApplication()->get('access');
-	}
+        $this->access = (int)Factory::getApplication()->get('access');
+    }
 
-	// check ? auto
+    // check ? auto
 
-	// store ? auto
+    // store ? auto
 
 }

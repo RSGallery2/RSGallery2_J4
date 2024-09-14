@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
  * @copyright  (c) 2021-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @license        GNU General Public License version 2 or later
  */
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -43,8 +43,8 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitize URLs -----------------------------------
 
-if ( ! isset($images)) {
-	$images = [];
+if (!isset($images)) {
+    $images = [];
 }
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
@@ -52,49 +52,48 @@ $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg'
 
 //--- assign dummy images if not found -----------------------------------
 
-if ( ! empty($images))
-{
-	foreach ($images as $idx => $image)
-	{
-
+if (!empty($images)) {
+    foreach ($images as $idx => $image) {
         // show dummy thumb on galleries with no images
-        if (! empty($image->isHasNoImages))
-        {
+        if (!empty($image->isHasNoImages)) {
             $image->UrlOriginalFile = $noImageUrl;
-            $image->UrlDisplayFiles = $noImageUrl;;
+            $image->UrlDisplayFiles = $noImageUrl;
             $image->UrlThumbFile = $noImageUrl;
         }
 
-    //    else {
-    //
-    //        if (!$image->isOriginalFileExist) {
-    //            $image->UrlOriginalFile = $missingUrl;
-    //            ;
-    //        }
-    //
-    //        if (!$image->isDisplayFileExist) {
-    //            $image->UrlDisplayFiles = $missingUrl;;
-    //        }
-    //
-    //        if (!$image->isThumbFileExist) {
-    //            $image->UrlThumbFile = $missingUrl;
-    //        }
-    //
-    //    }
+        //    else {
+        //
+        //        if (!$image->isOriginalFileExist) {
+        //            $image->UrlOriginalFile = $missingUrl;
+        //            ;
+        //        }
+        //
+        //        if (!$image->isDisplayFileExist) {
+        //            $image->UrlDisplayFiles = $missingUrl;;
+        //        }
+        //
+        //        if (!$image->isThumbFileExist) {
+        //            $image->UrlThumbFile = $missingUrl;
+        //        }
+        //
+        //    }
     }
 }
 
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php
+if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 images slideshow layout</h3>
     <div class="p-3 mb-2 bg-success bg-gradient text-white">Test with indicators</div>
     <hr>
-<?php endif; ?>
+<?php
+endif; ?>
 
 <div class="rsg2_gallery">
 
-    <?php /**/ ?>
+    <?php
+    /**/ ?>
     <h3>Test slideshow I</h3>
     <hr>
 
@@ -115,18 +114,18 @@ if ( ! empty($images))
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img
-                    src="http://127.0.0.1/joomla4x/images/rsgallery2/2/original/DSC_5501.JPG" alt="DSC_5501.JPG"
-                    class="d-block w-100">
+                        src="http://127.0.0.1/joomla4x/images/rsgallery2/2/original/DSC_5501.JPG" alt="DSC_5501.JPG"
+                        class="d-block w-100">
             </div>
             <div class="carousel-item">
                 <img
                         src="http://127.0.0.1/joomla4x/images/rsgallery2/2/original/DSC_5502.JPG" alt="DSC_5502.JPG"
-                    class="d-block w-100">
+                        class="d-block w-100">
             </div>
             <div class="carousel-item">
                 <img
                         src="http://127.0.0.1/joomla4x/images/rsgallery2/2/original/DSC_5503.JPG" alt="DSC_5503.JPG"
-                    class="d-block w-100">
+                        class="d-block w-100">
             </div>
         </div>
         <!-- Left and right controls/icons -->
@@ -144,9 +143,11 @@ if ( ! empty($images))
         </button>
     </div>
     <hr>
-    <?php /**/ ?>
+    <?php
+    /**/ ?>
 
-    <?php /**/ ?>
+    <?php
+    /**/ ?>
     <h3>Test slideshow II WWW3 + data </h3>
     <hr>
 
@@ -166,22 +167,25 @@ if ( ! empty($images))
 
         <div class="carousel-inner">
             <?php
-            $isActive="active";
+            $isActive = "active";
 
             foreach ($images as $image) {
                 ?>
 
-                <div class="carousel-item <?php echo $isActive; ?>" >
+                <div class="carousel-item <?php
+                echo $isActive; ?>">
                     <div class="d-block w-100">
                         <img class="d-block "
-                             src="<?php echo $image->UrlDisplayFile ?>"
-                             alt="<?php echo $image->name; ?>"
+                             src="<?php
+                             echo $image->UrlDisplayFile ?>"
+                             alt="<?php
+                             echo $image->name; ?>"
                         >
                     </div>
                 </div>
 
                 <?php
-                $isActive="";
+                $isActive = "";
             }
             ?>
 
@@ -199,93 +203,95 @@ if ( ! empty($images))
         </button>
     </div>
     <hr>
-    <?php /**/ ?>
+    <?php
+    /**/ ?>
 
 
-    <?php /** ?>
-    <div class="rsg2__slideshow" >
-
-        <?php if (!empty($isDebugSite)): ?>
-        <hr>
-        <?php endif; ?>
-
-        <!-- Carousel markup goes here -->
-
-        <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-
-                <?php
-                $isActive="active";
-
-                foreach ($images as $image) {
-                    ?>
-
-                    <div class="carousel-item <?php echo $isActive; ?>" >
-                        <div class="d-block w-100">
-                            <img class="d-block "
-                                 src="<?php echo $image->UrlOriginalFile ?>"
-                                 alt="<?php echo $image->name; ?>"
-                            >
-                        </div>
-                    </div>
-
-                    <?php
-                    $isActive="";
-                }
-                ?>
-
-
-                <a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="rsg2__slideshow" >
-
-        <?php if (!empty($isDebugSite)): ?>
-            <h3>Test slideshow III</h3>
-            <hr>
-        <?php endif; ?>
-
-        <div id="rsg2_carousel2" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-
-                <?php
-                $isActive="active";
-                foreach ($images as $image) {
-                ?>
-
-                <div class="carousel-item <?php echo $isActive; ?>" >
-                        <img class="d-block w-100"
-                             src="<?php echo $image->UrlOriginalFile ?>"
-                             alt="<?php echo $image->name; ?>"
-                        >
-                </div>
-
-                <?php
-                $isActive="";
-                }
-                ?>
-
-            </div>
-            <a class="carousel-control-prev" href="#rsg2_carousel2" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#rsg2_carousel2" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-    <?php /**/ ?>
+    <?php
+    /** ?>
+     * <div class="rsg2__slideshow" >
+     *
+     * <?php if (!empty($isDebugSite)): ?>
+     * <hr>
+     * <?php endif; ?>
+     *
+     * <!-- Carousel markup goes here -->
+     *
+     * <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
+     * <div class="carousel-inner">
+     *
+     * <?php
+     * $isActive="active";
+     *
+     * foreach ($images as $image) {
+     * ?>
+     *
+     * <div class="carousel-item <?php echo $isActive; ?>" >
+     * <div class="d-block w-100">
+     * <img class="d-block "
+     * src="<?php echo $image->UrlOriginalFile ?>"
+     * alt="<?php echo $image->name; ?>"
+     * >
+     * </div>
+     * </div>
+     *
+     * <?php
+     * $isActive="";
+     * }
+     * ?>
+     *
+     *
+     * <a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
+     * <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+     * <span class="sr-only">Previous</span>
+     * </a>
+     * <a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
+     * <span class="carousel-control-next-icon" aria-hidden="true"></span>
+     * <span class="sr-only">Next</span>
+     * </a>
+     * </div>
+     * </div>
+     * </div>
+     *
+     * <div class="rsg2__slideshow" >
+     *
+     * <?php if (!empty($isDebugSite)): ?>
+     * <h3>Test slideshow III</h3>
+     * <hr>
+     * <?php endif; ?>
+     *
+     * <div id="rsg2_carousel2" class="carousel slide" data-ride="carousel">
+     * <div class="carousel-inner">
+     *
+     * <?php
+     * $isActive="active";
+     * foreach ($images as $image) {
+     * ?>
+     *
+     * <div class="carousel-item <?php echo $isActive; ?>" >
+     * <img class="d-block w-100"
+     * src="<?php echo $image->UrlOriginalFile ?>"
+     * alt="<?php echo $image->name; ?>"
+     * >
+     * </div>
+     *
+     * <?php
+     * $isActive="";
+     * }
+     * ?>
+     *
+     * </div>
+     * <a class="carousel-control-prev" href="#rsg2_carousel2" role="button" data-slide="prev">
+     * <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+     * <span class="sr-only">Previous</span>
+     * </a>
+     * <a class="carousel-control-next" href="#rsg2_carousel2" role="button" data-slide="next">
+     * <span class="carousel-control-next-icon" aria-hidden="true"></span>
+     * <span class="sr-only">Next</span>
+     * </a>
+     * </div>
+     * </div>
+     * <?php /**/ ?>
 </div>
 
 
