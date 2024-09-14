@@ -9,17 +9,17 @@
  * @license         GNU General Public License version 2 or later
  * @license         GNU General Public License version 2 or later
  */
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Installer\InstallerAdapter;
+use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\Filesystem\Folder;
 
 //use Joomla\CMS\File;
 //use Joomla\CMS\Folder;
-use Joomla\Filesystem\Folder;
 
 /**
  * Script (install file of Rsgallery2 Component)
@@ -74,7 +74,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             try {
                 Log::add(Text::_('\n>>RSG2 Installer construct'), Log::INFO, 'rsg2');
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 // Informational log only
             }
         }
@@ -347,7 +347,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 $hasError = $this->upgradeSql();
                 if ($hasError) {
                     // The script failed, tell about it
-                    throw new \RuntimeException(
+                    throw new RuntimeException(
                         Text::_('RSG2 upgrade sql fails on install_rsg2. More see log file'),
                     );
                 }
@@ -472,7 +472,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('upd (10.2) '), Log::INFO, 'rsg2');
             $GalleryTreeClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel';
             Log::add(Text::_('upd (10.3) '), Log::INFO, 'rsg2');
-            \JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
+            JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
 
 //			Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
 //			include($GalleryTreeModelFileName);
@@ -506,13 +506,13 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                     Log::add('initGalleryTree: Failed writing tree root item into gallery database', Log::INFO, 'rsg2');
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::add(
                 Text::_('Exception in initGalleryTree: ') . $e->getMessage(),
                 Log::INFO,
                 'rsg2',
             );
-            throw new \RuntimeException($e->getMessage() . ' from initGalleryTree');
+            throw new RuntimeException($e->getMessage() . ' from initGalleryTree');
         }
 
         return $isGalleryTreeCreated;
@@ -537,11 +537,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $installMsgHelperFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
             $installMsgHelperClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage';
-            \JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
+            JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
 
             $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ChangeLogModel.php';
             $changeLogModelClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel';
-            \JLoader::register($changeLogModelClassName, $changeLogModelFileName);
+            JLoader::register($changeLogModelClassName, $changeLogModelFileName);
 
             $InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage
             (
@@ -551,13 +551,13 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add('installMessage: create message', Log::INFO, 'rsg2');
 
             $installMsg = $InstallMessageHelper->installMessageText($type);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::add(
                 Text::_('Exception in installMessage: ') . $e->getMessage(),
                 Log::INFO,
                 'rsg2',
             );
-            throw new \RuntimeException($e->getMessage() . ' from installMessage');
+            throw new RuntimeException($e->getMessage() . ' from installMessage');
         }
 
         return $installMsg;
@@ -619,7 +619,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             if (!empty ($jsonStr)) {
                 $manifest = json_decode($jsonStr, true);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception in readRsg2ExtensionManifest: ') . $e->getMessage(),
                 Log::INFO,
@@ -661,7 +661,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             $langPath = JPATH_ROOT . '/' . 'language';
 
             $isOneFileDeleted = $this->removeLangFilesInSubPaths($langPath);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception in removeAllOldLangFiles: ') . $e->getMessage()
                 . ' \n' . $langPath,
@@ -705,7 +705,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                     }
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception in removeLangFilesInSubPaths (1): ') . $e->getMessage()
                 . ' \n' . $langPath,
@@ -732,7 +732,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                     $isOneFileDeleted = $this->removeLangFilesInSubPaths($folderName);
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception in removeLangFilesInSubPaths (2): ') . $e->getMessage()
                 . ' \n' . $langPath,
@@ -791,7 +791,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
                 Log::add(Text::_('upd (50.13) '), Log::INFO, 'rsg2');
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('\n>> Exception: removeJ3xComponentFiles: ') . $e->getMessage(),
                 Log::INFO,
@@ -814,7 +814,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             if (version_compare($this->oldRelease, '5.0.12.999', 'lt')) {
                 $hasError = $this->upgradeSql_j3x_tables();
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception: upgradeSql: ') . $e->getMessage(),
                 Log::INFO,
@@ -873,7 +873,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_comments', 'checked_out_time', $db);
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_comments', 'datetime', $db);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception: upgradeSql_j3x_tables: ') . $e->getMessage(),
                 Log::INFO,
@@ -910,7 +910,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         try {
             $db->execute();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception: j3x_tables_fix_datatime: ') . $e->getMessage(),
                 Log::INFO,
@@ -949,7 +949,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('upd (20.2) '), Log::INFO, 'rsg2');
             $Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
             Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');
-            \JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
+            JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
 
             Log::add(Text::_('upd (20.4) '), Log::INFO, 'rsg2');
             $Rsg2ExtensionClass = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel();
@@ -978,7 +978,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             $Rsg2ExtensionClass->replaceRsg2ExtensionConfiguration($this->mergedParams);
 
             Log::add(Text::_('upd (20.9) '), Log::INFO, 'rsg2');
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception: upgradeSql: ') . $e->getMessage(),
                 Log::INFO,
