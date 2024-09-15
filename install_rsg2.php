@@ -7,7 +7,6 @@
  * @author          RSGallery2 Team <team2@rsgallery2.org>
  * @copyright  (c)  2003-2024 RSGallery2 Team
  * @license         GNU General Public License version 2 or later
- * @license         GNU General Public License version 2 or later
  */
 defined('_JEXEC') or die;
 
