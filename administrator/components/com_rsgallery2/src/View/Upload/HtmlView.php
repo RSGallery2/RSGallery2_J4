@@ -14,7 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Upload;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Helper;
+use Joomla\CMS\Filesystem\FilesystemHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\Router\Route;
