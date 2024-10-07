@@ -13,8 +13,9 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 \defined('_JEXEC') or die;
 
-use \Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
@@ -29,6 +30,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  */
 class ImageReference
 {
+    public $allImagePaths;
     /**
      * @var string
      */
@@ -125,7 +127,7 @@ class ImageReference
      */
     public function __construct1($watermarked)
     {
-        __construct();
+        $this->__construct();
 
         $this->UseWatermarked = $watermarked;
     }

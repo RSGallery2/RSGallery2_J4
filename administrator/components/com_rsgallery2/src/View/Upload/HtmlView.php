@@ -39,6 +39,7 @@ class HtmlView extends BaseHtmlView
      * The sidebar markup
      *
      * @var  string
+     * @since version
      */
     protected $sidebar;
     protected $form;

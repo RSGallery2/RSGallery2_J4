@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package         RSGallery2
  * @subpackage      com_rsgallery2
@@ -15,7 +14,7 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Folder;
 
 //use Joomla\CMS\File;
 //use Joomla\CMS\Folder;

@@ -23,7 +23,9 @@ if ($app->isClient('site')) {
     $this->checkToken();
 }
 
+// 2024.10.06
 JLoader::register('ContentHelperRoute', JPATH_ROOT . '/components/com_rsgallery2/helpers/route.php');
+// JLoader::registerAlias('ContentHelperRoute', JPATH_ROOT . '/components/com_rsgallery2/helpers/route.php');
 
 HTMLHelper::_('behavior.core');
 HTMLHelper::_('bootstrap.popover', '.hasPopover', ['placement' => 'bottom']);

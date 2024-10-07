@@ -1,1 +1,147 @@
-d:/Entwickl/2024/_github/RSGallery2_J4/rsgallery2.xml
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="component" method="upgrade">
+    <name>com_rsgallery2</name>
+    <creationDate>2024.10.05</creationDate>
+    <author>RSGallery2 Team</author>
+    <authorEmail>team2@rsgallery2.org</authorEmail>
+    <authorUrl>https://www.rsgallery2.org</authorUrl>
+    <copyright>(c) 2005-2024 RSGallery2 Team</copyright>
+    <license>GNU General Public License version 2 or later;</license>
+    <version>5.0.12.6</version>
+    <description>COM_RSGALLERY2_XML_DESCRIPTION</description>
+    <element></element>
+    <namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
+
+    <!-- Script to run on installation -->
+    <scriptfile>install_rsg2.php</scriptfile>
+
+    <!-- sql files --><!-- Runs on install -->
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall> <!-- Runs on uninstall -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <update>  <!-- Runs on update -->
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <!-- Back-end files -->
+    <administration>
+        <menu img="class:images">RSGallery2</menu>
+        <!--params>
+            <dashboard>rsgallery2</dashboard>
+        </params-->
+
+        <submenu>
+            <!--
+                Note that all & must be escaped to &amp; for the file to be valid
+                XML and be parsed by the installer
+            -->
+            <!-- menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu -->
+            <menu
+                    link="option=com_rsgallery2"
+                    view="COM_RSGALLERY2_MENU_CONTROL_PANEL"
+                    img="class:home"
+            >
+                COM_RSGALLERY2_MENU_CONTROL_PANEL
+            </menu>
+            <menu
+                    link="option=com_rsgallery2&amp;view=galleries"
+                    view="COM_RSGALLERY2_MENU_GALLERIES"
+                    img="class:images"
+            >
+                COM_RSGALLERY2_MENU_GALLERIES
+                <params>
+                    <menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title>
+                    <menu-quicktask>index.php?option=com_rsgallery2&amp;task=gallery.add</menu-quicktask>
+                </params>
+            </menu>
+            <menu
+                    link="option=com_rsgallery2&amp;view=upload"
+                    view="COM_RSGALLERY2_MENU_UPLOAD"
+                    img="class:upload"
+            >
+                COM_RSGALLERY2_MENU_UPLOAD
+            </menu>
+            <menu
+                    link="option=com_rsgallery2&amp;view=images"
+                    view="COM_RSGALLERY2_MENU_IMAGES"
+                    img="class:images"
+            >
+                COM_RSGALLERY2_MENU_IMAGES
+            </menu>
+            <menu
+                    link="option=com_config&amp;view=component&amp;component=com_rsgallery2"
+                    view="COM_RSGALLERY2_MENU_CONFIG"
+                    img="class:config"
+            >
+                COM_RSGALLERY2_MENU_CONFIG
+            </menu>
+            <menu
+                    link="option=com_rsgallery2&amp;view=maintenance"
+                    view="COM_RSGALLERY2_MENU_MAINTENANCE"
+                    img="class:equalizer"
+            >
+                COM_RSGALLERY2_MENU_MAINTENANCE
+            </menu>
+        </submenu>
+
+        <!-- Core files -->
+        <files folder="administrator/components/com_rsgallery2">
+            <filename>access.xml</filename>
+            <filename>changelog.xml</filename>
+            <filename>config.xml</filename>
+            <filename>LICENSE.txt</filename>
+            <!--filename>rsgallery2.xml</filename-->
+            <!--filename>install_rsg2.php</filename-->
+            <folder>forms</folder>
+            <folder>helpers</folder>
+            <folder>language</folder>
+            <folder>layouts</folder>
+            <folder>presets</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+        </files>
+
+    </administration>
+
+    <dashboards>
+        <dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-images">users</dashboard>
+    </dashboards>
+
+    <!-- Front-end files -->
+    <files folder="components/com_rsgallery2">
+        <!--folder>forms</folder-->
+        <folder>language</folder>
+        <folder>layouts</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <!-- css, js, images files, .... -->
+    <media folder="media/com_rsgallery2" destination="com_rsgallery2">
+        <filename>joomla.asset.json</filename>
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>js</folder>
+    </media>
+
+    <changelogurl>
+        https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml
+    </changelogurl>
+    <updateservers>
+        <server type="extension"
+                name="RSG2 for J4 Update server"
+        >https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml
+        </server>
+    </updateservers>
+</extension>

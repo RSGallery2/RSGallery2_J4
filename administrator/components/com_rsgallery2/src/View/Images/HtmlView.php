@@ -60,7 +60,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var    Pagination
+     * @var    pagination
      * @since __BUMP_VERSION__
      */
     protected $pagination;
@@ -214,7 +214,8 @@ class HtmlView extends BaseHtmlView
 
         //--- display --------------------------------------------------------------------
 
-        return parent::display($tpl);
+        parent::display($tpl);
+
     }
 
     /**

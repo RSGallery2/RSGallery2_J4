@@ -11,7 +11,7 @@
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Uri\Uri;
 

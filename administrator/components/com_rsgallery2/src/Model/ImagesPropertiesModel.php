@@ -72,7 +72,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
          * {
          * $config['filter_fields'][] = 'association';
          * }
-         * /**/
+         /**/
 
 		parent::__construct($config, $factory);
 	}
@@ -160,7 +160,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
     /**
      * Method to get a database query to list images.
      *
-     * @return  \DatabaseQuery object.
+     * @return  Queryinterface object.
      *
      * @since __BUMP_VERSION__
      */

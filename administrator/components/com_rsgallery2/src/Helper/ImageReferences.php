@@ -42,7 +42,6 @@ class ImageReferences
 
     /**
      * List of image references. Contains all items where a image is missing or surplus (additional in folder)
-     * @var LostAndFoundList []
      */
     protected $ImageLostAndFoundList;
 
@@ -88,7 +87,7 @@ class ImageReferences
      */
     public function __construct($watermarked = false)
     {
-        $this->ImageReferences = [];
+        $this->ImageReferenceList = [];
 
         $this->IsAnyImageMissingInDB          = false;
         $this->IsAnyImageMissingInDisplay     = false;
@@ -137,6 +136,7 @@ class ImageReferences
         if (property_exists($this, $property)) {
             return $this->$property;
         }
+        return null;
     }
 
     /**
