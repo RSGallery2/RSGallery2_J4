@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" method="upgrade">
     <name>com_rsgallery2</name>
-    <creationDate>2024.10.06</creationDate>
+    <creationDate>2024.10.07</creationDate>
     <author>RSGallery2 Team</author>
     <authorEmail>team2@rsgallery2.org</authorEmail>
     <authorUrl>https://www.rsgallery2.org</authorUrl>
     <copyright>(c) 2005-2024 RSGallery2 Team</copyright>
     <license>GNU General Public License version 2 or later;</license>
-    <version>5.0.12.6</version>
+    <version>5.0.12.7</version>
     <description>COM_RSGALLERY2_XML_DESCRIPTION</description>
     <element>RSGallery2</element>
     <namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
