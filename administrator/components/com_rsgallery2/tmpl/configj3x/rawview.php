@@ -9,7 +9,7 @@
  * RSGallery is Free Software
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -32,20 +32,20 @@ ksort($configVars);
 <form action="<?php
 echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-    <div class="d-flex flex-row">
+	<div class="d-flex flex-row">
         <?php
         if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class="">
                 <?php
                 echo $this->sidebar; ?>
-            </div>
+			</div>
         <?php
         endif; ?>
 
-        <!--div class="<?php
+		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-            <div id="j-main-container" class="j-main-container">
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
                 <?php
                 echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
@@ -58,9 +58,9 @@ echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); 
                     Text::_('COM_RSGALLERY2_CONFIG_J3X_MINUS_RAW_VIEW', true),
                 ); ?>
 
-                <div class="card">
-                    <div class="card-body">
-                        <legend><?php
+				<div class="card">
+					<div class="card-body">
+						<legend><?php
                             echo Text::_('COM_RSGALLERY2_CONFIG_J3X_VARIABLES_DESC'); ?></legend>
 
                         <?php
@@ -113,8 +113,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); 
 
                         ?>
 
-                    </div>
-                </div>
+					</div>
+				</div>
 
                 <?php
                 echo HTMLHelper::_('bootstrap.endTab'); ?>
@@ -129,11 +129,11 @@ echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); 
                 // <input type="hidden" name="task" value="" /> ?>
                 <?php
                 echo HTMLHelper::_('form.token'); ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
-    <input type="hidden" name="task" value=""/>
+	<input type="hidden" name="task" value=""/>
     <?php
     echo HTMLHelper::_('form.token'); ?>
 </form>

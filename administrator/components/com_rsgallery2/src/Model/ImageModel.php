@@ -10,28 +10,28 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JForm;
 use Joomla\CMS\Access\Rules;
-use Joomla\CMS\Association\AssociationServiceInterface;
-use Joomla\CMS\Categories\CategoryServiceInterface;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\Form;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\MVC\Model\ListModel;
-
-//use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
+use RuntimeException;
+
+use function defined;
+
+//use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * RSGallery2 Component Image Model
@@ -39,6 +39,12 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
  * @since __BUMP_VERSION__
  */
 //class ImageModel extends ListModel
+
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class ImageModel extends AdminModel
 {
     /**
@@ -142,7 +148,7 @@ class ImageModel extends AdminModel
      * @param   string  $prefix  The class prefix. Optional.
      * @param   array   $config  Configuration array for model. Optional.
      *
-     * @return  \Joomla\CMS\Table\Table  A JTable object
+     * @return  Table  A JTable object
      *
      * @since __BUMP_VERSION__
      */
@@ -224,14 +230,13 @@ class ImageModel extends AdminModel
         return $item;
     }
 
-
     /**
      * Method to get the row form.
      *
      * @param   array    $data      Data for the form.
      * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
      *
-     * @return  \JForm|boolean  A JForm object on success, false on failure
+     * @return  JForm|boolean  A JForm object on success, false on failure
      *
      * @since __BUMP_VERSION__
      */
@@ -262,7 +267,6 @@ class ImageModel extends AdminModel
 
         return $form;
     }
-
 
     /**
      * Method to get the data that should be injected in the form.
@@ -417,7 +421,6 @@ class ImageModel extends AdminModel
 
 //        Column 'checked_out_time' cannot be null
 
-
         /** -> table *
          * // no default value
          * if (empty($data['description']))
@@ -432,7 +435,6 @@ class ImageModel extends AdminModel
          * }
          * /**/
 
-
         // Load the row if saving an existing category.
         if ($pk > 0) {
             $table->load($pk);
@@ -446,7 +448,6 @@ class ImageModel extends AdminModel
          * $table->setLocation($data['parent_id'], 'last-child');
          * }
          * /**/
-
 
         /* ToDo: use following */
         /**
@@ -481,7 +482,6 @@ class ImageModel extends AdminModel
          * }
          * }
          * /**/
-
 
         // Bind the data.
         if (!$table->bind($data)) {
@@ -863,7 +863,7 @@ class ImageModel extends AdminModel
             $table->title = $this->generateNewImageName($fileName);
         }
         $table->alias = $table->title;
-        $table->alias = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($table->alias);
+        $table->alias = OutputFilter::stringURLSafe($table->alias);
 
         // Create unique alias and title
         [$title, $alias] = $this->generateNewTitle(null, $table->alias, $table->title);
@@ -991,7 +991,7 @@ class ImageModel extends AdminModel
             } else {
                 Factory::getApplication()->enqueueMessage(Text::_('*No valid gallery selected'), 'warning');
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing moveImagesTo: "' . $e->getMessage() . '"' . '<br>';
 
@@ -1029,7 +1029,7 @@ class ImageModel extends AdminModel
                 ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($GalleryId));
             $db->setQuery($query);
             $max = $db->loadResult();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing nextOrdering for GalleryId: "' . $GalleryId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1187,7 +1187,7 @@ class ImageModel extends AdminModel
             } else {
                 Factory::getApplication()->enqueueMessage(Text::_('No valid gallery selected'), 'warning');
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing copyImagesTo: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1330,7 +1330,6 @@ class ImageModel extends AdminModel
      * }
      * /**/
 
-
     /**
      * Save user input from image parameter annotation in database
      *
@@ -1379,7 +1378,7 @@ class ImageModel extends AdminModel
                     }
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Model image: Error executing save_imageProperties: for image id: "' . $id . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1414,7 +1413,6 @@ class ImageModel extends AdminModel
         try {
             $imgFileModel = $this->getInstance('imageFile', 'RSGallery2Model');
             //$imgFileModel = $this->getModel('imageFile');
-
 
             // Iterate the items to delete each one.
             foreach ($itemIds as $itemId) {
@@ -1476,7 +1474,7 @@ class ImageModel extends AdminModel
 
             // Clean the cache
             $this->cleanCache();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing image.table.delete: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1488,7 +1486,6 @@ class ImageModel extends AdminModel
         return $imgDeletedCount > 0;
     }
     /**/
-
 
     /**
      * public function delete_single_in_table_copy($pk=null)
@@ -1521,7 +1518,6 @@ class ImageModel extends AdminModel
      * }
      * /**/
 
-
     /**/
     public function exifDataAllOfFiles($filenames)
     {
@@ -1531,7 +1527,7 @@ class ImageModel extends AdminModel
             foreach ($filenames as $filename) {
                 $exifDataOfFiles [] = $this->exifDataOfFile($filename);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataAllOfFiles: "' . count($filenames) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1557,7 +1553,7 @@ class ImageModel extends AdminModel
             if (!empty ($exifData)) {
                 $exifDataOfFile = [$filename, $exifData];
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataOfFile: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1589,7 +1585,7 @@ class ImageModel extends AdminModel
             foreach ($filenames as $filename) {
                 $exifDataOfFiles [] = $this->exifDataUserSelected($filename, $userExifTags);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataFilesUserSelected: "' . count($filenames) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1634,7 +1630,7 @@ class ImageModel extends AdminModel
             if (!empty ($exifTranslated)) {
                 $exifDataOfFile = [$filename, $exifTranslated];
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataUserSelected: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

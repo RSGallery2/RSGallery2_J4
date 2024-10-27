@@ -12,14 +12,14 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Filesystem\Folder;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\Uri\Uri;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
+use RuntimeException;
 
-\defined('_JEXEC') or die;
+use function defined;
 
+defined('_JEXEC') or die;
 
 /**
  * Keeps the file location paths of an image for PHP use and URIs for HTML use
@@ -35,6 +35,10 @@ class ImagePathsJ3xModel
     // from config
 
     // files gallery defined
+    /**
+     * @var string
+     * @since version
+     */
     public $originalBasePath;
     public $displayBasePath;
     public $thumbBasePath;
@@ -86,7 +90,7 @@ class ImagePathsJ3xModel
             $this->originalUrl = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_original'));
             $this->displayUrl  = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_display'));
             $this->thumbUrl    = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_thumb'));
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing __construct: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -157,7 +161,7 @@ class ImagePathsJ3xModel
 
                 $isCreated = $isCreated & Folder::create($this->thumbBasePath);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing createAllPaths: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -189,7 +193,7 @@ class ImagePathsJ3xModel
 
                 $isPathsExisting = $isPathsExisting & is_dir($this->thumbBasePath);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing isPathsExisting: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

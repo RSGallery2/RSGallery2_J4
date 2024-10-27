@@ -9,12 +9,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Association\AssociationExtensionHelper;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
 use Rsgallery2\Component\Rsgallery2\Site\Helper\AssociationHelper;
+
+use function defined;
 
 /**
  * Content associations helper.

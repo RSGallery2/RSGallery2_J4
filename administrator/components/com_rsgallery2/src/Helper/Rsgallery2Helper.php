@@ -9,12 +9,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\Language\Text;
+
+use function defined;
 
 /**
  * Rsgallery2 component helper.
@@ -52,7 +54,6 @@ class Rsgallery2Helper extends ContentHelper
 
 //		echo "\$vname: $vName <br>";
 
-
 //        //--- toggle element ------------------------------------------------
 //
 ////        <span id="menu-collapse-icon" class="fas fa-fw fa-toggle-on" aria-hidden="true"></span>
@@ -65,13 +66,12 @@ class Rsgallery2Helper extends ContentHelper
 //
 //        HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/sidebar.css', array('version' => 'auto', 'relative' => true));
 
-
         //--- standard form elements ----------------------------------------
 
         // '<span class="sidebar-item-title">' . Home Dashboard . '</span>'
 
         $link = 'index.php?option=com_rsgallery2&view=rsgallery2';
-        \Joomla\CMS\HTML\Helpers\Sidebar::addEntry(
+        Sidebar::addEntry(
             '<span class="icon-home-2" ></span>&nbsp;' .
             '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL') . '</span>',
             $link,
@@ -79,7 +79,7 @@ class Rsgallery2Helper extends ContentHelper
         );
 
         $link = 'index.php?option=com_rsgallery2&view=galleries';
-        \Joomla\CMS\HTML\Helpers\Sidebar::addEntry(
+        Sidebar::addEntry(
             '<span class="icon-images" ></span>&nbsp;' .
             '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_GALLERIES') . '</span>',
             $link,
@@ -87,7 +87,7 @@ class Rsgallery2Helper extends ContentHelper
         );
 
         $link = 'index.php?option=com_rsgallery2&view=upload';
-        \Joomla\CMS\HTML\Helpers\Sidebar::addEntry(
+        Sidebar::addEntry(
             '<span class="icon-upload" ></span>&nbsp;' .
             '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_UPLOAD') . '</span>',
             $link,
@@ -97,7 +97,7 @@ class Rsgallery2Helper extends ContentHelper
         //--- Add images view link ------------------------------------
 
         $link = 'index.php?option=com_rsgallery2&view=images';
-        \Joomla\CMS\HTML\Helpers\Sidebar::addEntry(
+        Sidebar::addEntry(
             '<span class="icon-image" ></span>&nbsp;' .
             '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_IMAGES') . '</span>',
             // 'index.php?option=com_rsgallery2&rsgOption=images',
@@ -110,13 +110,12 @@ class Rsgallery2Helper extends ContentHelper
 
         $link = 'index.php?option=com_rsgallery2&view=maintenance';
         // In config add maintenance
-        \Joomla\CMS\HTML\Helpers\Sidebar::addEntry(
+        Sidebar::addEntry(
             '<span class="icon-cogs" ></span>&nbsp;' .
             '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_MAINTENANCE') . '</span>',
             $link,
             $vName == 'maintenance',
         );
-
 
         //--- Add develop view link ------------------------------------
 
@@ -126,7 +125,7 @@ class Rsgallery2Helper extends ContentHelper
         if ($isDevelop) {
             $link = 'index.php?option=com_rsgallery2&view=develop';
             // In config add maintenance
-            \Joomla\CMS\HTML\Helpers\Sidebar::addEntry(
+            Sidebar::addEntry(
                 '<span class="icon-cube" ></span>&nbsp;' . // cube'
                 '<span class="sidebar-item-title">' . Text::_('COM_RSGALLERY2_MENU_DEVELOP') . '</span>',
                 $link,

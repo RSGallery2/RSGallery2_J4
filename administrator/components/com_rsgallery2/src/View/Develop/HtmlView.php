@@ -9,28 +9,27 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Develop;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 //use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use \Joomla\Filesystem\File;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
+
+use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -139,7 +138,6 @@ class HtmlView extends BaseHtmlView
 
             case 'InstallMessage':
 
-
                 //--- Form --------------------------------------------------------------------
 
                 $xmlFile    = JPATH_COMPONENT_ADMINISTRATOR . '/forms/InstallMessage.xml';
@@ -168,7 +166,6 @@ class HtmlView extends BaseHtmlView
                 $this->installMessage = $installMessage->installMessageText('update');
 
                 break;
-
 
             case 'Rsg2GeneralInfo':
 
@@ -220,7 +217,6 @@ class HtmlView extends BaseHtmlView
 
             case 'defaultParams':
 
-
                 $this->actualParams  = Rsg2ExtensionModel::readRsg2ExtensionConfiguration();
                 $this->defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
                 $this->mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams(
@@ -230,12 +226,10 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::custom('develop.mergeParams', 'copy', '', 'Merge standard parameter ', false);
 
-
                 // ToDo: button with command on controller ;-)
 //				replaceRsg2ExtensionConfiguration($this->mergedParams);
                 break;
         }
-
 
         //		Factory::getApplication()->input->set('hidemainmenu', true);
 
@@ -243,7 +237,7 @@ class HtmlView extends BaseHtmlView
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
         Rsgallery2Helper::addSubmenu('develop');
-        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         $this->addToolbar($Layout);
 
@@ -390,7 +384,6 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::cancel('develop.cancel');
                 break;
         }
-
 
         // Options button.
         if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {

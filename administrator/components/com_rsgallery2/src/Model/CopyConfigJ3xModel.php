@@ -9,16 +9,17 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use function defined;
 
 /**
  * Model to handle J3x config items for transfer to j4x config
@@ -29,7 +30,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 {
     /**
      * @return array|mixed
-     * @throws \Exception
+     * @throws Exception
      */
     static function j3xConfigItems()
     {
@@ -48,7 +49,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             $db->setQuery($query);
 
             $oldItems = $db->loadAssocList('name', 'value');
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'j3xConfigItems: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -67,10 +68,19 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
      * @param $configVars
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     // Configuration test lists of variables:
     //      a) untouchedRsg2Config, b) untouchedJ3xConfig, c) 1:1 merged, d) assisted merges
+    /**
+     * @param $j3xConfigItems
+     * @param $j4xConfigItems
+     *
+     * @return array
+     *
+     * @throws Exception
+     * @since version
+     */
     static function MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems)
     {
         // component parameters to array
@@ -115,7 +125,6 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             //$assistedJ3xItems ['display_thumbs_maxPerPage'] = array('images_column_arrangement_j3x',
             //	$j3xConfigItems['display_thumbs_maxPerPage']);
 
-
             // displaySlideshow -> galleries_show_slideshow
             $assistedJ3xItems ['displaySlideshow'] = [
                 'galleries_show_slideshow',
@@ -139,7 +148,6 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
                 'galleries_show_date',
                 $j3xConfigItems['showGalleryDate'],
             ];
-
 
             //--- transform J4x to match J3x setting (preset new variable) --------------------------
 
@@ -177,7 +185,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             ksort($mergedItems);
             ksort($untouchedJ3xItems);
             ksort($untouchedJ4xItems);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'OldConfigItems: Error executing MergeJ3xConfiguration: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -212,10 +220,9 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             $db->setQuery($query);
 
             $galleries = $db->loadObjectList();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
-
 
         return $galleries;
     }
@@ -225,9 +232,10 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
      * Collects copy lists of type:
      *     merged: 1:1 tranferable items
      *     assisted: J3x old name -> j4x new name
+     *
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      * @since __BUMP_VERSION__
      */
     public function collectAndCopyJ3xConfig2J4xOptions()
@@ -263,7 +271,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             } else {
                 Factory::getApplication()->enqueueMessage(Text::_('No old configuration items'), 'warning');
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -281,7 +289,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
      *
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      * @since __BUMP_VERSION__
      */
     public function copyJ3xConfigItems2J4xOptions(
@@ -312,7 +320,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             // Save parameter
             $configModel = new ConfigRawModel ();
             $isSaved     = $configModel->saveItems($j4xConfigItems);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'MaintenanceJ3xModel: Error in copyJ3xConfigItems2J4xOptions: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -323,6 +331,5 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 
         return $isSaved;
     }
-
 
 }

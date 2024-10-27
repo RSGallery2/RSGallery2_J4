@@ -17,6 +17,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
 
 /**
  * Supports a modal gallery picker.
@@ -117,7 +118,7 @@ class GalleryField extends FormField
 
             try {
                 $title = $db->loadResult();
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
             }
         }

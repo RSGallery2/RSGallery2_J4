@@ -9,26 +9,27 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Images;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JForm;
+use JObject;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Helper\TagsHelper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\User\UserFactoryInterface;
-
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+
+use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -53,7 +54,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  JObject
      */
     protected $state;
 
@@ -67,7 +68,7 @@ class HtmlView extends BaseHtmlView
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  JForm
      */
     public $filterForm;
 
@@ -88,7 +89,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The actions the user is authorised to perform
      *
-     * @var  \JObject
+     * @var  JObject
      */
     protected $canDo;
 
@@ -159,7 +160,6 @@ class HtmlView extends BaseHtmlView
         $this->ImagePath    = new ImagePathsModel ();
         $this->ImagePathJ3x = new ImagePathsJ3xModel ();
 
-
 //		//--- thumb --------------------------------------------------------------------
 //
 //		// ToDo: HtmlPathThumb path must be taken from model (? file model ?)
@@ -173,7 +173,6 @@ class HtmlView extends BaseHtmlView
 
         $Layout = $this->getLayout();
 
-
         switch ($Layout) {
             case 'images_raw':
                 $imageModel  = $this->getModel();
@@ -183,14 +182,13 @@ class HtmlView extends BaseHtmlView
 
             default:
 
-
                 break;
         }
 
         if ($Layout !== 'modal') {
             HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
             Rsgallery2Helper::addSubmenu('images');
-            $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+            $this->sidebar = Sidebar::render();
 
             // $Layout = Factory::getApplication()->input->get('layout');
             $this->addToolbar($Layout);
@@ -215,7 +213,6 @@ class HtmlView extends BaseHtmlView
         //--- display --------------------------------------------------------------------
 
         parent::display($tpl);
-
     }
 
     /**
@@ -260,7 +257,6 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::editList('image.raw_edit');
                 ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
                 break;
-
 
             default:
                 // on develop show open tasks if existing
@@ -363,7 +359,6 @@ class HtmlView extends BaseHtmlView
         }
         // $toolbar->help('JHELP_CONTENT_ARTICLE_MANAGER');
     }
-
 
 }
 

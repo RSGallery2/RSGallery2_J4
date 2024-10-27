@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -24,10 +24,8 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.mainten
 
 Text::script('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES', true);
 
-
 //$script = 'var Token = \'' . Session::getFormToken() . '\';';
 //Factory::getApplication()->getDocument()->addScriptDeclaration(implode("\n", $script));
-
 
 class zoneContainer
 {
@@ -167,7 +165,6 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
     'viewGalleriesRaw',
 );
 
-
 //--- Repair zone -----------------------------
 
 $repair_Zone = new zoneContainer(
@@ -205,7 +202,8 @@ $repair_ZoneButtons[] = new zoneButtons(
 /**/
 $repair_ZoneButtons[] = new zoneButtons(
     Route::_(
-        'index.php?option=com_rsgallery2&task=MaintenanceCleanUp.ResetConfigToDefault&' . Session::getFormToken() . '=1',
+        'index.php?option=com_rsgallery2&task=MaintenanceCleanUp.ResetConfigToDefault&' . Session::getFormToken(
+        ) . '=1',
     ),
     Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT') . '</del>',
     Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT_DESC'),
@@ -346,7 +344,6 @@ $danger_ZoneButtons[] = new zoneButtons(
     'uninstallDataTables',
 );
 /**/
-
 
 //--- J3x upgrade zone -----------------------------
 
@@ -510,7 +507,6 @@ if ($this->isJ3xRsg2DataExisting) {
     /**/
 }
 
-
 //--- outdated zone -----------------------------
 
 $outdated_Zone = new zoneContainer(
@@ -603,7 +599,6 @@ $developer_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
-
 //--- developer test zone -----------------------------
 
 $developer4Test_Zone = new zoneContainer(
@@ -692,7 +687,6 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
-
 //---  -----------------------------
 
 function DisplayButton($button)
@@ -735,7 +729,6 @@ function DisplayButton($button)
     echo '</div>'; // rsg2-icon-button-container
 }
 
-
 //---  -----------------------------
 
 function DisplayZone($Zone, $Buttons)
@@ -754,7 +747,6 @@ function DisplayZone($Zone, $Buttons)
     echo '</div>';
     echo '</div>';
 }
-
 
 //---  -----------------------------
 
@@ -786,25 +778,25 @@ function zoneInfo($info = 'Unknown zone info')
 
 ?>
 
-    <form action="<?php
+	<form action="<?php
     echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
-          method="post" name="adminForm" id="adminForm" class="form-validate"
-          enctype="multipart/form-data">
-        <div class="d-flex flex-row">
+	      method="post" name="adminForm" id="adminForm" class="form-validate"
+	      enctype="multipart/form-data">
+		<div class="d-flex flex-row">
             <?php
             if (!empty($this->sidebar)) : ?>
-                <div id="j-sidebar-container" class="">
+				<div id="j-sidebar-container" class="">
                     <?php
                     echo $this->sidebar; ?>
-                </div>
+				</div>
             <?php
             endif; ?>
-            <!--div class="<?php
+			<!--div class="<?php
             echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-            <div class="flex-fill">
-                <div id="j-main-container" class="j-main-container">
+			<div class="flex-fill">
+				<div id="j-main-container" class="j-main-container">
 
-                    <div class="flex-main-row">
+					<div class="flex-main-row">
 
                         <?php
 
@@ -842,25 +834,25 @@ function zoneInfo($info = 'Unknown zone info')
                         /**/
 
                         ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <!--        <div id="hidden-input-buttons" style="display: none;">-->
-        <!--            <div class="control-group">-->
-        <!--                <label for="config_file" class="control-label">--><?php
+		<!--        <div id="hidden-input-buttons" style="display: none;">-->
+		<!--            <div class="control-group">-->
+		<!--                <label for="config_file" class="control-label">--><?php
         //echo Text::_('RSG2 import configuration from file'); ?><!--</label>-->
-        <!--                <div class="controls">-->
-        <!--                    <input class="form-control-file" id="config_file" name="config_file" type="file" >-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+		<!--                <div class="controls">-->
+		<!--                    <input class="form-control-file" id="config_file" name="config_file" type="file" >-->
+		<!--                </div>-->
+		<!--            </div>-->
+		<!--        </div>-->
 
-        <input type="hidden" name="task" value=""/>
+		<input type="hidden" name="task" value=""/>
         <?php
         echo HTMLHelper::_('form.token'); ?>
-    </form>
+	</form>
 
 <?php
 

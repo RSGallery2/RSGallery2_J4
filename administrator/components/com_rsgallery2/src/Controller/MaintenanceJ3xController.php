@@ -10,21 +10,24 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
+use JInput;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Log\Log;
-use Joomla\CMS\Response\JsonResponse;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-
+use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Session\Session;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use RuntimeException;
 
+use function defined;
 
 /**
  * global $Rsg2DebugActive;
@@ -49,7 +52,7 @@ class MaintenanceJ3xController extends AdminController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since __BUMP_VERSION__
      */
@@ -109,6 +112,7 @@ class MaintenanceJ3xController extends AdminController
     /**
      * Copies all old configuration items to new configuration
      * ...User: different return page
+     *
      * @since __BUMP_VERSION__
      */
     public function copyJ3xConfig2J4xOptionsUser()
@@ -158,7 +162,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at collectAndCopyJ3xConfig2J4xOptions items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing collectAndCopyJ3xConfig2J4xOptions: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -172,10 +176,10 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-
     /**
      * Copies all old J3x gallery items to J4 galleries in database
      * ...User: different return page
+     *
      * @since __BUMP_VERSION__
      */
     public function copyDbJ3xGalleries2J4xUser()
@@ -225,7 +229,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at copyDbJ3xGalleries2J4x items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyDbJ3xGalleries2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -286,7 +290,7 @@ class MaintenanceJ3xController extends AdminController
                         $msgType = 'error';
                     }
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyDbSelectedJ3xGalleries2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -303,6 +307,7 @@ class MaintenanceJ3xController extends AdminController
     /**
      * Reset image table to empty state (No images in RSG J4x
      * ? used in mantenance ?
+     *
      * @return bool
      *
      * @since __BUMP_VERSION__
@@ -325,7 +330,7 @@ class MaintenanceJ3xController extends AdminController
         } else {
             try {
                 // Get the model.
-                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+                /** @var MaintenanceJ3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 // Remove the items.
@@ -335,7 +340,7 @@ class MaintenanceJ3xController extends AdminController
                 } else {
                     $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_ERROR');
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing resetImagesTable: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -404,6 +409,12 @@ class MaintenanceJ3xController extends AdminController
 //		$this->setRedirect($link, $msg, $msgType);
 //	}
 
+    /**
+     *
+     *
+     * @throws Exception
+     * @since version
+     */
     public function copyDbImagesOfSelectedGalleries()
     {
         $msg     = "MaintenanceJ3xController.copyDbImagesOfSelectedGalleries: ";
@@ -438,7 +449,7 @@ class MaintenanceJ3xController extends AdminController
                         $msgType = 'error';
                     }
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyDbImagesOfSelectedGalleries: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -504,7 +515,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at copyDbJ3xImages2J4x items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyDbJ3xImages2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -557,7 +568,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at revertCopyDbJ3xImages2J4xUser items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing revertCopyDbJ3xImages2J4xUser: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -726,7 +737,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at updateMovedJ3xImages2J4x: Update database for J3x -> J4x image files ";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing updateMovedJ3xImages2J4x: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -741,11 +752,10 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -776,7 +786,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Missing pathes for images j3x found '";
                     $msgType = 'warning';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing CheckImagePaths: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -790,11 +800,10 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -825,7 +834,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at repair image paths'";
                     $msgType = 'warning';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing RepairImagePaths: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -838,7 +847,6 @@ class MaintenanceJ3xController extends AdminController
         $link = 'index.php?option=com_rsgallery2&view=Maintenance';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * From given gallery id all matching images are collected
@@ -896,7 +904,6 @@ class MaintenanceJ3xController extends AdminController
             $galleryName                     = $input->get('gallery_name', '', 'string');
             $ajaxImgDbObject['gallery_name'] = $galleryName;
 
-
             //--- gallery ID --------------------------------------------
 
             $galleryId = $input->get('gallery_id', 0, 'INT');
@@ -922,9 +929,8 @@ class MaintenanceJ3xController extends AdminController
             //----------------------------------------------------
 
             // Get the model.
-            /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+            /** @var MaintenanceJ3xModel */
             $j3xModel = $this->getModel('MaintenanceJ3x');
-
 
             // Collect image Ids
             $j3x_images = $j3xModel->j3x_imagesToBeMovedByGallery([$galleryId]);
@@ -960,7 +966,7 @@ class MaintenanceJ3xController extends AdminController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit ajaxRequestImageIds');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo new JsonResponse($e);
         }
 
@@ -975,7 +981,6 @@ class MaintenanceJ3xController extends AdminController
      * // etc.
      * }
      * /**/
-
 
     /**
      * Moves siblings of given image to new rsgallery2 folder structure
@@ -1077,7 +1082,7 @@ class MaintenanceJ3xController extends AdminController
             $isMovedDb = false;
 
             // Get the model.
-            /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
+            /** @var MaintenanceJ3xModel */
             $j3xModel = $this->getModel('MaintenanceJ3x');
 
             //  = self::J3X_IMG_NOT_FOUND;
@@ -1086,7 +1091,6 @@ class MaintenanceJ3xController extends AdminController
 
             $hasError  = false;
             $isMovedDb = true;
-
 
 //            // Get the model.
 //            /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel */
@@ -1132,7 +1136,7 @@ class MaintenanceJ3xController extends AdminController
             if ($isDebugBackend) {
                 Log::add('ajaxMoveJ3xImage <== ' . $hasError);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo new JsonResponse($e);
         }
 
@@ -1191,7 +1195,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at j3xUpgradeJ3xMenuLinks items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing j3xUpgradeJ3xMenuLinks: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1236,7 +1240,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at j3xLowerJ4xMenuLinks items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing j3xLowerJ4xMenuLinks: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1281,7 +1285,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at j3xUpperJ4xMenuLinks items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing j3xUpperJ4xMenuLinks: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1294,7 +1298,6 @@ class MaintenanceJ3xController extends AdminController
         $link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=lowerJ4xMenuLinks';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      *
@@ -1337,7 +1340,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= "Error at j3xDegradeUpgradedJ3xMenuLinks items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing j3xDegradeUpgradedJ3xMenuLinks: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1364,7 +1367,7 @@ class MaintenanceJ3xController extends AdminController
  *                   4: enqueueMessage types with NO error set
  *                   5: enqueueMessage types with thrown exception
  *
- * @throws \Exception
+ * @throws Exception
  * @since __BUMP_VERSION__
  */
 function issueError($errorType)
@@ -1416,7 +1419,7 @@ function issueError($errorType)
                 $app->enqueueMessage('Here was a small error 1', 'error');
                 $app->enqueueMessage('Here was a small error 2', 'error');
 
-                throw new \Exception('Attention: raised exception ');
+                throw new Exception('Attention: raised exception ');
 
                 // echo new JsonResponse($result, 'Response message with !!! no !!! error set');
                 break;

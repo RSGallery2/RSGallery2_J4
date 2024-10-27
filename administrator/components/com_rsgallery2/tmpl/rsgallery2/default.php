@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -23,31 +23,31 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
 
 ?>
 
-    <form action="<?php
+	<form action="<?php
     echo Route::_('index.php?option=com_rsgallery2'); ?>"
-          method="post" name="adminForm" id="adminForm" class="form-validate">
-        <div class="d-flex flex-row">
+	      method="post" name="adminForm" id="adminForm" class="form-validate">
+		<div class="d-flex flex-row">
             <?php
             if (false) : // ToDo: Remove this quick hack. do not show sidebar
                 //if (!empty($this->sidebar)) :
                 ?>
-                <div id="j-sidebar-container" class="">
+				<div id="j-sidebar-container" class="">
                     <?php
                     echo $this->sidebar; ?>
-                </div>
+				</div>
             <?php
             endif; ?>
-            <!--            <div class="--><?php
+			<!--            <div class="--><?php
             //            // if (!empty($this->sidebar)) {
             //            if (false) {
             //                echo 'col-md-10';
             //            } else {
             //                echo 'col-md-12';
             //            } ?><!--">-->
-            <!--div class="<?php
+			<!--div class="<?php
             echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-            <div class="flex-fill">
-                <div id="j-main-container" class="j-main-container">
+			<div class="flex-fill">
+				<div id="j-main-container" class="j-main-container">
 
                     <?php
 
@@ -126,17 +126,16 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
                     // echo '<hr>';
 
                     ?>
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 
-        <input type="hidden" name="task" value=""/>
+		<input type="hidden" name="task" value=""/>
         <?php
         echo HTMLHelper::_('form.token'); ?>
-    </form>
+	</form>
 
 <?php
-
 
 //--- Logo -----------------------------
 
@@ -310,7 +309,6 @@ function DisplayRequestJ3xActions(
     return $html;
 }
 
-
 //--- Control buttons ------------------
 
 /**
@@ -322,7 +320,6 @@ function DisplayRequestJ3xActions(
 function DisplayRSG2ControlButtons($buttons)
 {
     $htmlButtons = HTMLHelper::_('icons.buttons', $buttons);
-
 
     $html[] = '<div class="flex-buttons-table" >';
     $html[] = '';
@@ -361,7 +358,6 @@ function rsg2InfoHtml($Rsg2Version)
 
     $html[] = '<table class="table table-light w-auto table_morecondensed">';
     $html[] = '    <tbody>';
-
 
     $html[] = '        <tr>';
     $html[] = '            <td>' . Text::_('COM_RSGALLERY2_INSTALLED_VERSION') . ': ' . '</td>';
@@ -406,13 +402,11 @@ function rsg2InfoHtml($Rsg2Version)
     $html[] = '            </td>';
     $html[] = '        </tr>';
 
-
     $html[] = '    </tbody>';
     $html[] = '</table>';
 
     return implode($html);
 }
-
 
 //--- Latest galleries images ------------------
 
@@ -511,7 +505,6 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '                    <div id="credit-card-body" class="card-body">';
     echo '                        <div class="rsg2-images-info-table">';
 
-
     // no image existing
     if (count($lastImages) == 0) {
         echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
@@ -567,7 +560,6 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '    </div>';
 
     echo '    </div>'; // id="GalImg_outer"
-
 
     echo '</row>';
 

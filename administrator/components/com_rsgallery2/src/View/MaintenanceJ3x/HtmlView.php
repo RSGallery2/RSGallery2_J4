@@ -9,22 +9,24 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\MaintenanceJ3x;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use RuntimeException;
+
+use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -40,7 +42,6 @@ class HtmlView extends BaseHtmlView
     protected $form;
 
     protected $j3x_galleriesHtml;
-
 
     /**
      * Method to display the view.
@@ -96,7 +97,7 @@ class HtmlView extends BaseHtmlView
                         $this->untouchedJ3xItems,
                         $this->untouchedJ4xItems,
                     ] = $j3xModel->MergeJ3xConfigTestLists($this->j3xConfigItems, $this->j4xConfigItems);
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -117,7 +118,7 @@ class HtmlView extends BaseHtmlView
                         $this->j3x_galleriesSorted,
                         $this->j4x_galleries,
                     );
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -213,7 +214,7 @@ class HtmlView extends BaseHtmlView
                     }
 
                     $this->form = $form;
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -278,7 +279,6 @@ class HtmlView extends BaseHtmlView
                         $app->enqueueMessage($msg, 'notice');
                     }
 
-
                     $this->j3x_galleries = $this->j3x_galleriesSorted;
                     $this->j4x_galleries = [];
 
@@ -326,7 +326,7 @@ class HtmlView extends BaseHtmlView
                     }
 
                     $this->form = $form;
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -338,9 +338,8 @@ class HtmlView extends BaseHtmlView
                 break;
         }
 
-
         Rsgallery2Helper::addSubmenu('maintenance');
-        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         $this->addToolbar($Layout);
 

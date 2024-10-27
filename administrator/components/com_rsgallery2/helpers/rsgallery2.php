@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 /**
  * Content component helper.
@@ -16,4 +16,6 @@
  *
  * @deprecated  5.0 Use \Joomla\Component\Content\Administrator\Helper\ContentHelper instead
  */
-class Rsgallery2Helper extends \Joomla\Component\Content\Administrator\Helper\ContentHelper {}
+class Rsgallery2Helper extends \Joomla\Component\Content\Administrator\Helper\ContentHelper
+{
+}

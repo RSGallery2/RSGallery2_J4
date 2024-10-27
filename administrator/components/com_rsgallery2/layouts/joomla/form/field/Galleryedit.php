@@ -18,6 +18,7 @@ extract($displayData);
 /**
  * Layout variables
  * -----------------
+ *
  * @var   string  $autocomplete   Autocomplete attribute for the field.
  * @var   boolean $autofocus      Is autofocus enabled?
  * @var   string  $class          Classes for the input.
@@ -104,7 +105,7 @@ if ($readonly) {
     // Create a regular list.
     if (count($options) === 0) {
         // All Galleries have been deleted, so we need a new gallery (This will create one on save if selected).
-        $options[0]            = new \stdClass;
+        $options[0]            = new stdClass;
         $options[0]->value     = '0';
         $options[0]->text      = Text::_('JGLOBAL_ROOT_PARENT');  // COM_RSGALLERY2_NO_PARENT
         $options[0]->level     = '1';

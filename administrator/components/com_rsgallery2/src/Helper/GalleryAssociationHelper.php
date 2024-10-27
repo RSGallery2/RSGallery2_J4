@@ -9,7 +9,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-\defined('_JEXEC') or die;
+use function defined;
+
+defined('_JEXEC') or die;
 
 /**
  * Gallery Component Association Helper

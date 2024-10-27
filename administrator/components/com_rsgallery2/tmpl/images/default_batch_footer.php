@@ -7,7 +7,7 @@
  * @copyright  (c) 2005-2024 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 

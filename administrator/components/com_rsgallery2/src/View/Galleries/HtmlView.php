@@ -9,23 +9,24 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Galleries;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JForm;
+use JObject;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Helper\TagsHelper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\User\UserFactoryInterface;
-
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+
+use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -48,7 +49,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  JObject
      */
     protected $state;
 
@@ -62,7 +63,7 @@ class HtmlView extends BaseHtmlView
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  JForm
      */
     public $filterForm;
 
@@ -83,7 +84,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The actions the user is authorised to perform
      *
-     * @var  \JObject
+     * @var  JObject
      */
     protected $canDo;
 
@@ -170,7 +171,6 @@ class HtmlView extends BaseHtmlView
 
             default:
 
-
                 break;
         }
 
@@ -179,7 +179,7 @@ class HtmlView extends BaseHtmlView
         if ($Layout !== 'modal') {
             HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
             Rsgallery2Helper::addSubmenu('galleries');
-            $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+            $this->sidebar = Sidebar::render();
 
             // $Layout = Factory::getApplication()->input->get('layout');
             $this->addToolbar($Layout);
@@ -264,7 +264,6 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'), 'images');
 
                 break;
-
 
             default:
                 // on develop show open tasks if existing

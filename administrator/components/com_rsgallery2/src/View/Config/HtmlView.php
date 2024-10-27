@@ -9,19 +9,19 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Config;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+
+use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -57,7 +57,7 @@ class HtmlView extends BaseHtmlView
         /**/
         $Layout = Factory::getApplication()->input->get('layout');
         Rsgallery2Helper::addSubmenu('config');
-        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         $this->addToolbar($Layout);
 
@@ -123,7 +123,6 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_rsgallery2');
         }
     }
-
 
 }
 

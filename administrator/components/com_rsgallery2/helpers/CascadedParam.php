@@ -8,12 +8,12 @@
  * RSGallery is Free Software
  */
 
-namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper;
+// ToDo: 2024.10: namespace helper
+// namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-
 
 /**
  * @package     ${yyy}
@@ -40,7 +40,7 @@ class CascadedParam
      */
     public static function lastSet(...$paramValues)
     {
-        $paramValue = new \stdClass();
+        $paramValue = new stdClass();
 
         try {
             //foreach ($vars as &$value)
@@ -51,7 +51,7 @@ class CascadedParam
                     }
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 

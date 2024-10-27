@@ -16,4 +16,6 @@ defined('JPATH_BASE') or die;
  *
  * @since __BUMP_VERSION__
  */
-class AdministratorService {}
+class AdministratorService
+{
+}

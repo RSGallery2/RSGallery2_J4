@@ -9,14 +9,19 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use RuntimeException;
+
+use function defined;
 
 /**
  * Class MaintRemoveAllDataModel
+ *
  * @package Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
  * used for removing image files and remove of all data
@@ -26,6 +31,13 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 class MaintRemoveAllDataModel extends BaseDatabaseModel
 {
 
+    /**
+     *
+     * @return array
+     *
+     * @throws Exception
+     * @since version
+     */
     public function removeAllImageFiles()
     {
         global $rsgConfig;
@@ -49,7 +61,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             $isRemoved = true;
 //			$this->removeImagesInFolder($removePath);
 
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'MaintRemoveAllDataModel: Error executing removeAllImageFiles: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -61,7 +73,6 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 //		return array($isRemoved, $msg); // list($isRemoved, $msg)
         return [$isRemoved, $msg]; // [$isRemoved, $msg] = ...
     }
-
 
     /**
      * Remove image files in given folder
@@ -118,7 +129,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             }
 
             $msg .= ' successfully';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $msg .= '. error found: ' . $e->getMessage();
         }
 
@@ -130,7 +141,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
      * @param $configVars
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
 
     // ToDo: There may other merged operation needed instead of 1:1 copy
@@ -144,7 +155,6 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             $app    = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'notice');
             $isRemoved = true;
-
 
             if (false) {
                 // [$isRemoved_acl,       $msgTmp] = $this->PurgeTable('#__rsg2_acl', Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_ACL')) . '<br>';
@@ -185,7 +195,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
                     Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_COMMENTS'),
                 ) . '<br>';
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'MaintRemoveAllDataModel: Error executing removeDataInTables: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -193,7 +203,6 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
-
 
         return [$isRemoved, $msg]; // [$isRemoved, $msg] = ...
     }
@@ -219,7 +228,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             $db->execute();
 
             $isPurged = true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $msg = 'Purge table failure: "' . $tableId . '" ' . $e->getCode() . ':' . $e->getMessage() . '\n';
         }
 

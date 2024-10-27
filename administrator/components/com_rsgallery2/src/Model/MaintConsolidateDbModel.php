@@ -9,15 +9,20 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReferences;
+use RuntimeException;
 
+use function defined;
 
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class MaintConsolidateDbModel extends BaseDatabaseModel
 {
 
@@ -71,7 +76,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
             // toDo:
 
             $ImageReferences->CollectImageReferences();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing CollectImageReferences: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -123,7 +128,6 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
      * return $this->IsWatermarkActive;
      * }
      * /**/
-
 
 }
 

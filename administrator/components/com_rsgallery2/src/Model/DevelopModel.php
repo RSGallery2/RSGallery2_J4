@@ -9,16 +9,17 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use function defined;
 
-
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class DevelopModel extends BaseDatabaseModel
 {
 
@@ -135,7 +136,6 @@ class DevelopModel extends BaseDatabaseModel
 //
 //        return $now;
 //    }
-
 
 }
 

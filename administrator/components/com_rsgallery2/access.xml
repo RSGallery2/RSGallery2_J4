@@ -2,103 +2,103 @@
 <!-- $Id$ -->
 <!-- different actions can be defined by adding a new action name, e.g. core.test with its title and description -->
 <access component="com_rsgallery2">
-    <!-- define actions for com_rsgallery2 component (options button in control panel) -->
-    <section name="component">
-        <action name="core.admin"
-                title="JACTION_ADMIN"
-                description="JACTION_ADMIN_COMPONENT_DESC"/>
-        <action name="core.manage"
-                title="JACTION_MANAGE"
-                description="JACTION_MANAGE_COMPONENT_DESC"/>
-        <action name="core.create"
-                title="JACTION_CREATE"
-                description="JACTION_CREATE_COMPONENT_DESC"/>
-        <action name="rsgallery2.create.own"
-                title="COM_RSGALLERY2_ACCESS_COMPONENT_CREATE_OWN"
-                description="COM_RSGALLERY2_ACCESS_COMPONENT_CREATE_OWN_DESC"/>
-        <action name="core.delete"
-                title="JACTION_DELETE"
-                description="JACTION_DELETE_COMPONENT_DESC"/>
-        <action name="rsgallery2.delete.own"
-                title="COM_RSGALLERY2_ACCESS_COMPONENT_DELETE_OWN"
-                description="COM_RSGALLERY2_ACCESS_COMPONENT_DELETE_OWN_DESC"/>
-        <action name="core.edit"
-                title="JACTION_EDIT"
-                description="JACTION_EDIT_COMPONENT_DESC"/>
-        <action name="core.edit.own"
-                title="JACTION_EDITOWN"
-                description="JACTION_EDITOWN_COMPONENT_DESC"/>
-        <action name="core.edit.state"
-                title="JACTION_EDITSTATE"
-                description="JACTION_EDITSTATE_COMPONENT_DESC"/>
-        <action name="rsgallery2.edit.state.own"
-                title="COM_RSGALLERY2_ACCESS_COMPONENT_EDIT_STATE_OWN"
-                description="COM_RSGALLERY2_ACCESS_COMPONENT_EDIT_STATE_OWN_DESC"/>
-        <!-- RSGallery2 specific actions for the component -->
-        <action name="rsgallery2.vote"
-                title="COM_RSGALLERY2_ACCESS_COMPONENT_VOTE"
-                description="COM_RSGALLERY2_ACCESS_COMPONENT_VOTE_DESC"/>
-        <action name="rsgallery2.comment"
-                title="COM_RSGALLERY2_ACCESS_COMPONENT_COMMENT"
-                description="COM_RSGALLERY2_ACCESS_COMPONENT_COMMENT_DESC"/>
-    </section>
+	<!-- define actions for com_rsgallery2 component (options button in control panel) -->
+	<section name="component">
+		<action name="core.admin"
+		        title="JACTION_ADMIN"
+		        description="JACTION_ADMIN_COMPONENT_DESC"/>
+		<action name="core.manage"
+		        title="JACTION_MANAGE"
+		        description="JACTION_MANAGE_COMPONENT_DESC"/>
+		<action name="core.create"
+		        title="JACTION_CREATE"
+		        description="JACTION_CREATE_COMPONENT_DESC"/>
+		<action name="rsgallery2.create.own"
+		        title="COM_RSGALLERY2_ACCESS_COMPONENT_CREATE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_COMPONENT_CREATE_OWN_DESC"/>
+		<action name="core.delete"
+		        title="JACTION_DELETE"
+		        description="JACTION_DELETE_COMPONENT_DESC"/>
+		<action name="rsgallery2.delete.own"
+		        title="COM_RSGALLERY2_ACCESS_COMPONENT_DELETE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_COMPONENT_DELETE_OWN_DESC"/>
+		<action name="core.edit"
+		        title="JACTION_EDIT"
+		        description="JACTION_EDIT_COMPONENT_DESC"/>
+		<action name="core.edit.own"
+		        title="JACTION_EDITOWN"
+		        description="JACTION_EDITOWN_COMPONENT_DESC"/>
+		<action name="core.edit.state"
+		        title="JACTION_EDITSTATE"
+		        description="JACTION_EDITSTATE_COMPONENT_DESC"/>
+		<action name="rsgallery2.edit.state.own"
+		        title="COM_RSGALLERY2_ACCESS_COMPONENT_EDIT_STATE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_COMPONENT_EDIT_STATE_OWN_DESC"/>
+		<!-- RSGallery2 specific actions for the component -->
+		<action name="rsgallery2.vote"
+		        title="COM_RSGALLERY2_ACCESS_COMPONENT_VOTE"
+		        description="COM_RSGALLERY2_ACCESS_COMPONENT_VOTE_DESC"/>
+		<action name="rsgallery2.comment"
+		        title="COM_RSGALLERY2_ACCESS_COMPONENT_COMMENT"
+		        description="COM_RSGALLERY2_ACCESS_COMPONENT_COMMENT_DESC"/>
+	</section>
 
-    <!-- define actions for com_rsgallery2 gallery (permissions at bottom of edit gallery screen) -->
-    <section name="gallery">
-        <action name="core.create"
-                title="JACTION_CREATE"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_CREATE_DESC"/>
-        <action name="rsgallery2.create.own"
-                title="COM_RSGALLERY2_ACCESS_GALLERY_CREATE_OWN"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_CREATE_OWN_DESC"/>
-        <action name="core.delete"
-                title="JACTION_DELETE"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_DELETE_DESC"/>
-        <action name="rsgallery2.delete.own"
-                title="COM_RSGALLERY2_ACCESS_GALLERY_DELETE_OWN"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_DELETE_OWN_DESC"/>
-        <action name="core.edit"
-                title="JACTION_EDIT"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_EDIT_DESC"/>
-        <action name="core.edit.own"
-                title="JACTION_EDITOWN"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_EDITOWN_DESC"/>
-        <action name="core.edit.state"
-                title="JACTION_EDITSTATE"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_EDITSTATE_DESC"/>
-        <action name="rsgallery2.edit.state.own"
-                title="COM_RSGALLERY2_ACCESS_GALLERY_EDIT_STATE_OWN"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_EDIT_STATE_OWN_DESC"/>
-        <!-- RSGallery2 specific actions for galleries -->
-        <action name="rsgallery2.vote"
-                title="COM_RSGALLERY2_ACCESS_GALLERY_VOTE"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_VOTE_DESC"/>
-        <action name="rsgallery2.comment"
-                title="COM_RSGALLERY2_ACCESS_GALLERY_COMMENT"
-                description="COM_RSGALLERY2_ACCESS_GALLERY_COMMENT_DESC"/>
-    </section>
-    <!-- define actions for com_rsgallery2 images (permissions at bottom of edit image screen) -->
-    <section name="item">
-        <!--
-        <action name="core.create" title="JACTION_CREATE" description="COM_RSGALLERY2_ACCESS_ITEM_CREATE_DESC" />
-        -->
-        <action name="core.delete"
-                title="JACTION_DELETE"
-                description="COM_RSGALLERY2_ACCESS_ITEM_DELETE_DESC"/>
-        <action name="rsgallery2.delete.own"
-                title="COM_RSGALLERY2_ACCESS_ITEM_DELETE_OWN"
-                description="COM_RSGALLERY2_ACCESS_ITEM_DELETE_OWN_DESC"/>
-        <action name="core.edit"
-                title="JACTION_EDIT"
-                description="COM_RSGALLERY2_ACCESS_ITEM_EDIT_DESC"/>
-        <action name="core.edit.own"
-                title="JACTION_EDITOWN"
-                description="COM_RSGALLERY2_ACCESS_ITEM_EDITOWN_DESC"/>
-        <action name="core.edit.state"
-                title="JACTION_EDITSTATE"
-                description="COM_RSGALLERY2_ACCESS_ITEM_EDITSTATE_DESC"/>
-        <action name="rsgallery2.edit.state.own"
-                title="COM_RSGALLERY2_ACCESS_ITEM_EDIT_STATE_OWN"
-                description="COM_RSGALLERY2_ACCESS_ITEM_EDIT_STATE_OWN_DESC"/>
-    </section>
+	<!-- define actions for com_rsgallery2 gallery (permissions at bottom of edit gallery screen) -->
+	<section name="gallery">
+		<action name="core.create"
+		        title="JACTION_CREATE"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_CREATE_DESC"/>
+		<action name="rsgallery2.create.own"
+		        title="COM_RSGALLERY2_ACCESS_GALLERY_CREATE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_CREATE_OWN_DESC"/>
+		<action name="core.delete"
+		        title="JACTION_DELETE"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_DELETE_DESC"/>
+		<action name="rsgallery2.delete.own"
+		        title="COM_RSGALLERY2_ACCESS_GALLERY_DELETE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_DELETE_OWN_DESC"/>
+		<action name="core.edit"
+		        title="JACTION_EDIT"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_EDIT_DESC"/>
+		<action name="core.edit.own"
+		        title="JACTION_EDITOWN"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_EDITOWN_DESC"/>
+		<action name="core.edit.state"
+		        title="JACTION_EDITSTATE"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_EDITSTATE_DESC"/>
+		<action name="rsgallery2.edit.state.own"
+		        title="COM_RSGALLERY2_ACCESS_GALLERY_EDIT_STATE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_EDIT_STATE_OWN_DESC"/>
+		<!-- RSGallery2 specific actions for galleries -->
+		<action name="rsgallery2.vote"
+		        title="COM_RSGALLERY2_ACCESS_GALLERY_VOTE"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_VOTE_DESC"/>
+		<action name="rsgallery2.comment"
+		        title="COM_RSGALLERY2_ACCESS_GALLERY_COMMENT"
+		        description="COM_RSGALLERY2_ACCESS_GALLERY_COMMENT_DESC"/>
+	</section>
+	<!-- define actions for com_rsgallery2 images (permissions at bottom of edit image screen) -->
+	<section name="item">
+		<!--
+		<action name="core.create" title="JACTION_CREATE" description="COM_RSGALLERY2_ACCESS_ITEM_CREATE_DESC" />
+		-->
+		<action name="core.delete"
+		        title="JACTION_DELETE"
+		        description="COM_RSGALLERY2_ACCESS_ITEM_DELETE_DESC"/>
+		<action name="rsgallery2.delete.own"
+		        title="COM_RSGALLERY2_ACCESS_ITEM_DELETE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_ITEM_DELETE_OWN_DESC"/>
+		<action name="core.edit"
+		        title="JACTION_EDIT"
+		        description="COM_RSGALLERY2_ACCESS_ITEM_EDIT_DESC"/>
+		<action name="core.edit.own"
+		        title="JACTION_EDITOWN"
+		        description="COM_RSGALLERY2_ACCESS_ITEM_EDITOWN_DESC"/>
+		<action name="core.edit.state"
+		        title="JACTION_EDITSTATE"
+		        description="COM_RSGALLERY2_ACCESS_ITEM_EDITSTATE_DESC"/>
+		<action name="rsgallery2.edit.state.own"
+		        title="COM_RSGALLERY2_ACCESS_ITEM_EDIT_STATE_OWN"
+		        description="COM_RSGALLERY2_ACCESS_ITEM_EDIT_STATE_OWN_DESC"/>
+	</section>
 </access>

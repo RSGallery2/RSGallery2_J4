@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
-$app = Factory::getApplication();
+$app   = Factory::getApplication();
 $input = $app->input;
 
 $assoc = Associations::isEnabled();
@@ -48,17 +48,17 @@ echo Route::_(
     <?php
     echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
 
-    <div>
+	<div>
         <?php
         echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general']); ?>
 
         <?php
         echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('COM_RSGALLERY2_GENERAL')); ?>
-        <div class="row">
-            <div class="col-lg-9">
-                <div>
-                    <div class="card-body">
-                        <fieldset class="adminform">
+		<div class="row">
+			<div class="col-lg-9">
+				<div>
+					<div class="card-body">
+						<fieldset class="adminform">
                             <?php
                             //                            echo'-------------- start: ><br>';
                             echo $this->form->renderField('name');
@@ -71,19 +71,19 @@ echo Route::_(
                             echo $this->form->getLabel('description');
                             echo $this->form->getInput('description');
                             ?>
-                        </fieldset>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="bg-white px-3">
-                    <img src="<?php
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="bg-white px-3">
+					<img src="<?php
                     echo $this->imgUrl; ?>" class="img-fluid" alt="...">
                     <?php
                     echo LayoutHelper::render('joomla.edit.global', $this); ?>
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 
         <?php
         echo HTMLHelper::_('uitab.endTab'); ?>
@@ -93,28 +93,28 @@ echo Route::_(
 
         <?php
         echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('COM_RSGALLERY2_FIELDSET_PUBLISHING')); ?>
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <fieldset id="fieldset-publishingdata" class="options-form">
-                    <legend><?php
+		<div class="row">
+			<div class="col-12 col-lg-6">
+				<fieldset id="fieldset-publishingdata" class="options-form">
+					<legend><?php
                         echo Text::_('JGLOBAL_FIELDSET_PUBLISHING'); ?></legend>
-                    <div>
+					<div>
                         <?php
                         echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="col-12 col-lg-6">
-                <fieldset id="fieldset-metadata" class="options-form">
-                    <legend><?php
+					</div>
+				</fieldset>
+			</div>
+			<div class="col-12 col-lg-6">
+				<fieldset id="fieldset-metadata" class="options-form">
+					<legend><?php
                         echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
-                    <div>
+					<div>
                         <?php
                         echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
         <?php
         echo HTMLHelper::_('uitab.endTab'); ?>
 
@@ -127,8 +127,8 @@ echo Route::_(
             <?php
             echo HTMLHelper::_('uitab.endTab'); ?>
         <?php
-        elseif ($isModal && $assoc && $extensionassoc) : ?>
-            <div class="hidden"><?php
+		elseif ($isModal && $assoc && $extensionassoc) : ?>
+			<div class="hidden"><?php
                 echo $this->loadTemplate('associations'); ?></div>
         <?php
         endif; ?>
@@ -150,10 +150,10 @@ echo Route::_(
 
         <?php
         echo $this->form->getInput('extension'); ?>
-        <input type="hidden" name="task" value="">
-        <input type="hidden" name="forcedLanguage" value="<?php
+		<input type="hidden" name="task" value="">
+		<input type="hidden" name="forcedLanguage" value="<?php
         echo $input->get('forcedLanguage', '', 'cmd'); ?>">
         <?php
         echo HTMLHelper::_('form.token'); ?>
-    </div>
+	</div>
 </form>

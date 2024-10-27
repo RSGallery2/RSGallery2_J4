@@ -9,7 +9,7 @@
  * RSGallery is Free Software
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -23,19 +23,19 @@ use Joomla\CMS\Router\Route;
 <form action="<?php
 echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-    <div class="d-flex flex-row">
+	<div class="d-flex flex-row">
         <?php
         if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class="">
                 <?php
                 echo $this->sidebar; ?>
-            </div>
+			</div>
         <?php
         endif; ?>
-        <!--div class="<?php
+		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-            <div id="j-main-container" class="j-main-container">
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
                 <?php
                 echo '<h3>Config J3x default</h3>' . '<br>';
@@ -43,11 +43,11 @@ echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
                 ?>
 
 
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
-    <input type="hidden" name="task" value=""/>
+	<input type="hidden" name="task" value=""/>
     <?php
     echo HTMLHelper::_('form.token'); ?>
 </form>

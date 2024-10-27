@@ -11,13 +11,17 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
+
+use function defined;
 
 // required is used as classes may not be loaded on fresh install
 // !!! needed by install
@@ -31,6 +35,13 @@ use Joomla\Database\DatabaseInterface;
 class Rsg2ExtensionModel extends BaseModel
 {
 
+    /**
+     *
+     * @return array|mixed
+     *
+     * @throws Exception
+     * @since version
+     */
     static function readRsg2ExtensionManifest()
     {
         $manifest = [];
@@ -50,7 +61,7 @@ class Rsg2ExtensionModel extends BaseModel
             if (!empty ($jsonStr)) {
                 $manifest = json_decode($jsonStr, true);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rsg2ExtensionModel: readRsg2ExtensionManifest: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -61,7 +72,6 @@ class Rsg2ExtensionModel extends BaseModel
 
         return $manifest;
     }
-
 
     static function readRsg2ExtensionConfiguration()
     {
@@ -91,14 +101,13 @@ class Rsg2ExtensionModel extends BaseModel
             if (!empty ($jsonStr)) {
                 $params = json_decode($jsonStr, true);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rsg2ExtensionModel: readRsg2ExtensionConfiguration: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
-
 
             Log::add(Text::_('\n>> Exception: readRsg2ExtensionConfiguration: '), Log::INFO, 'rsg2');
         }
@@ -121,7 +130,7 @@ class Rsg2ExtensionModel extends BaseModel
             $db->setQuery($query);
 
             $extensionData = $db->loadAssoc();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rsg2ExtensionModel: readRsg2ExtensionData: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -187,7 +196,7 @@ class Rsg2ExtensionModel extends BaseModel
                 }
             } // elements
 
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rsg2ExtensionModel: readRsg2ExtensionDefaultConfiguration: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -201,7 +210,6 @@ class Rsg2ExtensionModel extends BaseModel
         return $params;
     }
 
-
     /**
      * mergeDefaultAndActualParams
      * reduces the parameter set to default vaues
@@ -212,7 +220,7 @@ class Rsg2ExtensionModel extends BaseModel
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      * @since version
      */
     public static function mergeDefaultAndActualParams($default, $actual)
@@ -235,7 +243,7 @@ class Rsg2ExtensionModel extends BaseModel
                     $merged [$name] = $actual [$name];
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rsg2ExtensionModel: mergeDefaultAndActualParams: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -248,7 +256,6 @@ class Rsg2ExtensionModel extends BaseModel
 
         return $merged;
     }
-
 
     /**
      * write parameter set into the component's row of the extension table
@@ -277,7 +284,7 @@ class Rsg2ExtensionModel extends BaseModel
                     $successful = true;
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rsg2ExtensionModel: replaceRsg2ExtensionConfiguration: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -307,7 +314,6 @@ class Rsg2ExtensionModel extends BaseModel
 //
 //        return $version;
 //    }
-
 
 } // class
 

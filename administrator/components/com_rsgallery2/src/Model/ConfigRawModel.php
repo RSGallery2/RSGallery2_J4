@@ -9,13 +9,18 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Table\Table;
+use RuntimeException;
+
+use function defined;
 
 /**
  * Item Model for a Configuration items (options).
@@ -45,13 +50,12 @@ class ConfigRawModel extends BaseModel
         return $isSaved;
     }
 
-
     /**
      * @param $configurationItems
      *
      * @return bool
      *
-     * @throws \Exception
+     * @throws Exception
      * @since __BUMP_VERSION__
      */
     public function saveItems($configurationItems): bool
@@ -67,7 +71,7 @@ class ConfigRawModel extends BaseModel
         $table  = Table::getInstance('extension');
         // Load the previous Data
         if (!$table->load($Rsg2Id)) {
-            throw new \RuntimeException($table->getError());
+            throw new RuntimeException($table->getError());
         }
 
         // ToDo: Use result
@@ -97,12 +101,18 @@ class ConfigRawModel extends BaseModel
         return $isSaved;
     }
 
-
+    /**
+     * @param $configurationItems
+     *
+     * @return array
+     *
+     * @since version
+     */
     public function SecureConfigurationItems($configurationItems)
     {
         $securedItems = [];
 
-        $filter = \Joomla\CMS\Filter\InputFilter::getInstance();
+        $filter = InputFilter::getInstance();
         //$filter         = FilterInput::getInstance();
 
 // ToDo: JFilterInput::clean Check other types in joomla doc
@@ -161,7 +171,7 @@ class ConfigRawModel extends BaseModel
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -178,7 +188,7 @@ class ConfigRawModel extends BaseModel
             // If there is nothing to load return
             if (empty($xmlOuter)) {
                 $OutTxt = '';
-                $OutTxt .= Text::_('Could not find config.xml file. No change applied');;
+                $OutTxt .= Text::_('Could not find config.xml file. No change applied');
 
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
@@ -221,14 +231,13 @@ class ConfigRawModel extends BaseModel
 
                             $configFromXml[$name] = $value;
                         }
-                    };
-
+                    }
 
                     // Save parameter
                     $isSaved = $this->saveItems($configFromXml);
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ConfigRawModel: Error in ResetConfigToDefault: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -237,10 +246,8 @@ class ConfigRawModel extends BaseModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-
         return $isSaved;
     }
-
 
     /**
      * Write single configuration parameter
@@ -268,16 +275,15 @@ class ConfigRawModel extends BaseModel
 
         // check for error
         if (!$table->check()) {
-            throw new \RuntimeException($table->getError());
+            throw new RuntimeException($table->getError());
         }
         // Save to database
         if (!$table->store()) {
-            throw new \RuntimeException($table->getError());
+            throw new RuntimeException($table->getError());
         }
 
         return true;
     }
-
 
 }
 

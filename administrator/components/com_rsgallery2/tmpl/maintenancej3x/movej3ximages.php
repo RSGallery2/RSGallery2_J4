@@ -9,7 +9,7 @@
  * RSGallery is Free Software
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -49,26 +49,26 @@ function j3x_moveButtonsHtml($movej3ximages)
     <?php
     if (!empty ($movej3ximages->j3x_galleries)): ?>
 
-        <button id="moveByGallery" type="button" class="btn btn-success btn-rsg2"
-                title="<?php
+		<button id="moveByGallery" type="button" class="btn btn-success btn-rsg2"
+		        title="<?php
                 echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY_DESC'); ?>"
 
-        >
-            <span class="icon-checkbox" aria-hidden="false"></span>
+		>
+			<span class="icon-checkbox" aria-hidden="false"></span>
             <?php
             echo Text::_('COM_RSGALLERY2_J3X_IMAGES_MOVE_BY_GALLERY'); ?>
-        </button>
-        <button id="moveByCheckedGalleries" type="button" class="btn btn-success btn-rsg2"
-                title="<?php
+		</button>
+		<button id="moveByCheckedGalleries" type="button" class="btn btn-success btn-rsg2"
+		        title="<?php
                 echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_BY_GALLERIES_CHECK_DESC'); ?>"
-                disabled
-        >
-            <span class="icon-out-2" aria-hidden="false"></span>
-            <span class="icon-image" aria-hidden="false"></span>
+		        disabled
+		>
+			<span class="icon-out-2" aria-hidden="false"></span>
+			<span class="icon-image" aria-hidden="false"></span>
             <?php
             echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_BY_GALLERIES_CHECK'); ?>
-        </button>
-        <!--button id="deSelectGallery" type="button" class="btn btn-success btn-rsg2"
+		</button>
+		<!--button id="deSelectGallery" type="button" class="btn btn-success btn-rsg2"
                 title="<?php
         echo "???" . Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY_DESC'); ?>"
         >
@@ -77,51 +77,51 @@ function j3x_moveButtonsHtml($movej3ximages)
         echo "???" . Text::_('COM_RSGALLERY2_J3X_IMAGES_DESELECT_BY_GALLERY'); ?>
         </button-->
 
-        <button id="moveAllJ3xImjages" type="button" class="btn btn-success btn-rsg2"
-                title="<?php
+		<button id="moveAllJ3xImjages" type="button" class="btn btn-success btn-rsg2"
+		        title="<?php
                 echo Text::_('COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES_DESC'); ?>"
-        >
-            <span class="icon-out-2" aria-hidden="false"></span>
-            <span class="icon-images" aria-hidden="false"></span>
+		>
+			<span class="icon-out-2" aria-hidden="false"></span>
+			<span class="icon-images" aria-hidden="false"></span>
             <?php
             echo Text::_('COM_RSGALLERY2_MOVE_ALL_J3X_IMAGES'); ?>
-        </button>
+		</button>
 
-        <hr>
+		<hr>
 
-        <button id="selectNextGallery" type="button" class="btn btn-info btn-rsg2"
-                title="<?php
+		<button id="selectNextGallery" type="button" class="btn btn-info btn-rsg2"
+		        title="<?php
                 echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY_DESC'); ?>"
 
-        >
-            <span class="icon-checkbox" aria-hidden="false"></span>
+		>
+			<span class="icon-checkbox" aria-hidden="false"></span>
             <?php
             echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY'); ?>
-        </button>
-        <button id="selectNextGalleries10" type="button" class="btn btn-info btn-rsg2"
-                title="<?php
+		</button>
+		<button id="selectNextGalleries10" type="button" class="btn btn-info btn-rsg2"
+		        title="<?php
                 echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
 
-        >
-            <span class="icon-checkbox" aria-hidden="false"></span>
+		>
+			<span class="icon-checkbox" aria-hidden="false"></span>
             <?php
             echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_10_GALLERIES'); ?>
-        </button>
-        <button id="selectNextGalleries100" type="button" class="btn btn-info btn-rsg2 "
-                title="<?php
+		</button>
+		<button id="selectNextGalleries100" type="button" class="btn btn-info btn-rsg2 "
+		        title="<?php
                 echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
-        >
-            <span class="icon-checkbox" aria-hidden="false"></span>
+		>
+			<span class="icon-checkbox" aria-hidden="false"></span>
             <?php
             echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERIES'); ?>
-        </button>
+		</button>
 
     <?php
     else : ?>
-        <h2>
+		<h2>
             <span class="badge badge-pill bg-success"><?php
                 echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_LIST_IS_EMPTY'); ?></span>
-        </h2>
+		</h2>
     <?php
     endif; ?>
 
@@ -137,45 +137,45 @@ function j4x_galleryListHtml($movej3ximages)
     $toBeMovedCount = 0;
 
     ?>
-    <!-- One or more J4 galleries exist (more than root node of tree) -->
+	<!-- One or more J4 galleries exist (more than root node of tree) -->
     <?php
     if (count($movej3ximages->j4x_galleries) > 1): ?>
 
-        <table class="table table-striped" id="imageList_j3x" style="width:100%">
+		<table class="table table-striped" id="imageList_j3x" style="width:100%">
 
-            <caption id="captionTable" class="sr-only">
+			<caption id="captionTable" class="sr-only">
                 <?php
                 echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
-                , <?php
+				, <?php
                 echo Text::_('JGLOBAL_SORTED_BY'); ?>
-            </caption>
-            <thead>
-            <tr>
-                <td style="width:1%" class="text-center">
+			</caption>
+			<thead>
+			<tr>
+				<td style="width:1%" class="text-center">
                     <?php
                     echo HTMLHelper::_('grid.checkall'); ?>
-                </td>
+				</td>
 
-                <!--th width="1%" class="text-center">
+				<!--th width="1%" class="text-center">
                     <?php
                 echo Text::_('JSTATUS'); ?>
                 </th-->
-                <th width="1%" class="center">
-                    `gallery_id j4x`
-                </th>
-                <th width="20%" class="center">
-                    `name`
-                </th>
-                <th width="10%" class="center">
-                    `%`
-                </th>
-                <th width="40%" class="center">
-                    `Info`
-                </th>
-            </tr>
-            </thead>
+				<th width="1%" class="center">
+					`gallery_id j4x`
+				</th>
+				<th width="20%" class="center">
+					`name`
+				</th>
+				<th width="10%" class="center">
+					`%`
+				</th>
+				<th width="40%" class="center">
+					`Info`
+				</th>
+			</tr>
+			</thead>
 
-            <tbody>
+			<tbody>
 
             <?php
 
@@ -183,7 +183,6 @@ function j4x_galleryListHtml($movej3ximages)
             // foreach ($movej3ximages->j4x_galleries as $i => $item) {
             foreach ($movej3ximages->j3x_galleriesSorted as $i => $item) {
                 $allMoved = false;
-
 
                 if (!in_array($item->id, $movej3ximages->galleryIdsJ3x_NotMoved)) {
                     $allMoved = true;
@@ -218,38 +217,38 @@ function j4x_galleryListHtml($movej3ximages)
                 $j3x_gid = $item->id;
 
                 ?>
-                <tr>
-                    <td class="text-center">
+				<tr>
+					<td class="text-center">
                         <?php
                         echo HTMLHelper::_('grid.id', $i, $j4x_gid);
                         ?>
-                    </td>
+					</td>
 
-                    <td class="center">
+					<td class="center">
                         <?php
                         $link = Route::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $j4x_gid);
                         echo '<a href="' . $link . '"">' . $j4x_gid . '</a>';
                         ?>
-                    </td>
-                    <td class="center">
+					</td>
+					<td class="center">
                         <?php
                         $link = Route::_("index.php?option=com_rsgallery2&view=image&task=gallery.edit&id=" . $j4x_gid);
                         echo '<a id="galleryId_' . $j4x_gid . '" href="' . $link . '"">' . $item->name . '</a>';
                         ?>
-                    </td>
+					</td>
 
-                    <td class="text-left">
+					<td class="text-left">
                         <?php
                         echo $mergedStatusHtml; ?>
-                        <!--/td>
+						<!--/td>
 
                         <td width="1%" class="center"-->
-                        <span class="badge badge-pill bg-primary">
+						<span class="badge badge-pill bg-primary">
                             <i class="icon-angle-double-right"></i>
                             <?php
                             echo $imgToBeMoved; ?>
                         </span>
-                        <span class="badge badge-pill bg-secondary">
+						<span class="badge badge-pill bg-secondary">
                             <i class="icon-images"></i>
                             <?php
                             //echo ' (' . $imgAvailable . ')';
@@ -257,12 +256,12 @@ function j4x_galleryListHtml($movej3ximages)
                             <?php
                             echo $imgAvailable; ?>
                         </span>
-                    </td>
-                    <td class="left">
+					</td>
+					<td class="left">
                         <?php
                         echo createImgFlagsArea($j4x_gid); ?>
-                    </td>
-                    <!--td width="1%" class="center">
+					</td>
+					<!--td width="1%" class="center">
                         <?php
                     //echo $item->alias;
                     ?>
@@ -349,22 +348,22 @@ function j4x_galleryListHtml($movej3ximages)
                     //echo $item->asset_id;
                     ?>
                     </td-->
-                </tr>
+				</tr>
 
                 <?php
             }
             ?>
-            </tbody>
+			</tbody>
 
-        </table>
+		</table>
 
 
     <?php
     else : ?>
-        <h2>
+		<h2>
             <span class="badge badge-pill bg-success"><?php
                 echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_LIST_IS_EMPTY'); ?></span>
-        </h2>
+		</h2>
     <?php
     endif; ?>
 
@@ -389,22 +388,22 @@ $this->j3xNotMovedInfo = [];
 
 ?>
 
-    <form action="<?php
+	<form action="<?php
     echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximages'); ?>"
-          method="post" name="adminForm" id="adminForm" class="form-validate">
-        <div class="d-flex flex-row">
+	      method="post" name="adminForm" id="adminForm" class="form-validate">
+		<div class="d-flex flex-row">
             <?php
             if (!empty($this->sidebar)) : ?>
-                <div id="j-sidebar-container" class="">
+				<div id="j-sidebar-container" class="">
                     <?php
                     echo $this->sidebar; ?>
-                </div>
+				</div>
             <?php
             endif; ?>
-            <!--div class="<?php
+			<!--div class="<?php
             echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-            <div class="flex-fill">
-                <div id="j-main-container" class="j-main-container">
+			<div class="flex-fill">
+				<div id="j-main-container" class="j-main-container">
 
                     <?php
                     echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'movej3ximages']); ?>
@@ -417,24 +416,24 @@ $this->j3xNotMovedInfo = [];
                         Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES', true),
                     ); ?>
 
-                    <!--legend><strong><?php
+					<!--legend><strong><?php
                     echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'); ?></strong></legend-->
 
                     <?php
                     if (!$this->isDoCopyJ3xImages): ?>
 
-                        <div class="card text-dark bg-light j3x-info-card">
-                            <div class="card-body">
-                                <div class="allJ3xMovedArea">
+						<div class="card text-dark bg-light j3x-info-card">
+							<div class="card-body">
+								<div class="allJ3xMovedArea">
                                 <span class="badge bg-success allJ3xMovedText">
                     	            <?php
                                     //--- ToDo: badge like in Dbcopy ------------------------------------------ ?>
                                     <?php
                                     echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
                                 </span>
-                                </div>
-                            </div>
-                        </div>
+								</div>
+							</div>
+						</div>
 
                     <?php
                     else : ?>
@@ -442,70 +441,70 @@ $this->j3xNotMovedInfo = [];
                         <?php
                         //--- Move instruction -------------------------------------------------------------------- ?>
 
-                        <div class="card text-dark bg-light j3x-info-card w-100">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php
+						<div class="card text-dark bg-light j3x-info-card w-100">
+							<div class="card-body">
+								<h5 class="card-title"><?php
                                     echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
                                 <?php
                                 echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC') . '.&nbsp'
                                     . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE_DESC_B'); ?>
-                            </div>
-                        </div>
+							</div>
+						</div>
 
                         <?php
                         //--- Select gallery and buttons ---------------------------------------------------------- ?>
 
-                        <div class="card text-dark bg-light j3x-gallery-card w-100">
-                            <div class="card-body">
+						<div class="card text-dark bg-light j3x-gallery-card w-100">
+							<div class="card-body">
                                 <?php
                                 // specify gallery
                                 // toDO: change name as used for all
                                 echo $this->form->renderFieldset('j3x_gallery');
                                 ?>
-                            </div>
-                        </div>
+							</div>
+						</div>
 
-                        <div class="card text-dark bg-light j3x--card">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php
+						<div class="card text-dark bg-light j3x--card">
+							<div class="card-body">
+								<h5 class="card-title"><?php
                                     echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
 
                                 <?php
                                 j3x_moveButtonsHtml($this); ?>
-                            </div>
-                        </div>
+							</div>
+						</div>
 
-                        <hr>
+						<hr>
 
                         <?php
                         //--- galleries info list ----------------------------------------------------------------- ?>
 
-                        <h3><?php
+						<h3><?php
                             echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_MOVE_IMAGES_LIST'); ?></h3>
 
-                        <div class="row">
-                            <div class="card text-dark bg-light j3x-info-card w-100">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php
+						<div class="row">
+							<div class="card text-dark bg-light j3x-info-card w-100">
+								<div class="card-body">
+									<h5 class="card-title"><?php
                                         echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
 
                                     <?php
                                     $toBeMovedCount = j4x_galleryListHtml($this); ?>
-                                </div>
-                            </div>
-                        </div>
+								</div>
+							</div>
+						</div>
 
 
                         <?php
                         // all images are moved, no gallery displayed
                         if ($toBeMovedCount == 0) { ?>
-                            <div class="allJ3xMovedArea">
+							<div class="allJ3xMovedArea">
                             <span class="badge bg-success allJ3xMovedText">
                                 <?php
                                 echo Text::_('COM_RSGALLERY2_J3X_ALL_IMAGES_MOVED'); ?>
                             </span>
-                            </div>
-                        <?php
+							</div>
+                            <?php
                         } ?>
 
                     <?php
@@ -518,21 +517,21 @@ $this->j3xNotMovedInfo = [];
                     <?php
                     echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-                    <!--input type="hidden" name="option" value="com_rsgallery2" />
-					<input type="hidden" name="rsgOption" value="maintenance" /-->
+					<!--input type="hidden" name="option" value="com_rsgallery2" />
+                    <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-                    <input type="hidden" name="boxchecked" value="0"/>
-                    <input type="hidden" name="task" value=""/>
+					<input type="hidden" name="boxchecked" value="0"/>
+					<input type="hidden" name="task" value=""/>
                     <?php
                     echo HTMLHelper::_('form.token'); ?>
 
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 
         <?php
         echo HTMLHelper::_('form.token'); ?>
-    </form>
+	</form>
 
 
 <?php
@@ -564,7 +563,6 @@ function isNotOkIconHtml($title)
 
     return $html;
 }
-
 
 function createImgFlagsArea($id)
 {

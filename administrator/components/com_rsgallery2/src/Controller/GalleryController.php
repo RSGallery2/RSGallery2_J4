@@ -9,15 +9,16 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JInput;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Session\Session;
-use Joomla\Registry\Registry;
+use RuntimeException;
+
+use function defined;
 
 /**
  * The Gallery Controller
@@ -40,7 +41,7 @@ class GalleryController extends FormController
      * @param   array                $config   An optional associative array of configuration settings.
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since  __BUMP_VERSION__
      * @see    \JControllerLegacy
@@ -95,7 +96,7 @@ class GalleryController extends FormController
                     $msg     .= ' failed';
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing rebuild: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

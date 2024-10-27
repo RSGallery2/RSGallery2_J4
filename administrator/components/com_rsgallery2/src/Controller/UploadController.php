@@ -10,24 +10,28 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
+use JInput;
 use Joomla\Archive\Archive;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Path;
-use Joomla\CMS\Log\Log;
-use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\Session\Session;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Response\JsonResponse;
-
+use Joomla\CMS\Session\Session;
+use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
+use RuntimeException;
+
+use function defined;
+use function dirname;
 
 /**
  * global $Rsg2DebugActive;
@@ -42,6 +46,12 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
  * }
  * /**/
 //class UploadController extends AdminController
+
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Controller
+ *
+ * @since       version
+ */
 class UploadController extends FormController
 {
     /**
@@ -52,7 +62,7 @@ class UploadController extends FormController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since __BUMP_VERSION__
      */
@@ -238,7 +248,7 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxReserveDbImageId');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errMsg   = $msg . $e->getMessage();
             $hasError = 1;
 
@@ -406,7 +416,6 @@ class UploadController extends FormController
                 // $origin = $input->get('origin', '', 'string'); // zip/server
                 $origin = 'uploadFile';
 
-
                 $modelFile = $this->getModel('imageFile');
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
                     $srcTempPathFileName,
@@ -415,7 +424,7 @@ class UploadController extends FormController
                     $origin,
                     $use_j3x_location,
                 );
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -461,7 +470,7 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxSingleFile');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errMsg   = $msg . $e; // $e->getMessage()
             $hasError = 1;
 
@@ -580,7 +589,7 @@ class UploadController extends FormController
             $tmpdir = uniqid('rsg2_zip_');
 
             // Clean the paths to use for archive extraction
-            $extractDir  = Path::clean(\dirname($srcTempPathFileName) . '/' . $tmpdir);
+            $extractDir  = Path::clean(dirname($srcTempPathFileName) . '/' . $tmpdir);
             $archiveName = Path::clean($archiveName);
 
             //--- gallery ID --------------------------------------------
@@ -662,10 +671,9 @@ class UploadController extends FormController
                             } else {
                                 // ToDo: ??? Keep for end result ???
 
-
                             }
                             /**/
-                        } catch (\RuntimeException $e) {
+                        } catch (RuntimeException $e) {
                             $OutTxt = '';
                             $OutTxt .= 'moveFile2OrignalDir: "' . $fileName . '" -> "' . $targetFileName . '"<br>';
                             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -679,11 +687,10 @@ class UploadController extends FormController
                         }
                     }
 
-
                     $ajaxImgObject ['files'] = $files;
                     $isCreated               = true;
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errMsg   = $msg . ' On extract file: ' . $archiveName . '<br>' . $e;
                 $hasError = 1;
 
@@ -694,7 +701,6 @@ class UploadController extends FormController
                 echo new JsonResponse($msg, $errMsg, $hasError);
                 // return false;
             }
-
 
             // clean up artefacts (zip file and extract dir content)
             if ($extract) {
@@ -712,7 +718,7 @@ class UploadController extends FormController
                             Folder::delete($extractDir);
                         }
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $errMsg   = $msg . ' On clean up: ' . $archiveName . ' / ' . $extractDir . '<br>' . $e;
                     $hasError = 1;
 
@@ -723,7 +729,6 @@ class UploadController extends FormController
                     echo new JsonResponse($msg, $errMsg, $hasError);
                 }
             }
-
 
             // No Images exist
             if (!$files) {
@@ -751,7 +756,7 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxSingleFile');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errMsg   = $msg . $e;
             $hasError = 1;
 
@@ -949,7 +954,7 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxSingleFile');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errMsg   = $msg . $e;
             $hasError = 1;
 
@@ -1109,7 +1114,7 @@ class UploadController extends FormController
                     $origin,
                 );
                 /**/
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'moveFile2OrignalDir: "' . $fileName . '" -> "' . $targetFileName . '"<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1153,7 +1158,7 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxTransferFolderFile');
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errMsg   = $msg . $e;
             $hasError = 1;
 
@@ -1257,7 +1262,7 @@ class UploadController extends FormController
      *                   4: enqueueMessage types with NO error set
      *                   5: enqueueMessage types with thrown exception
      *
-     * @throws \Exception
+     * @throws Exception
      * @since __BUMP_VERSION__
      */
     private function issueError($errorType)
@@ -1309,7 +1314,7 @@ class UploadController extends FormController
                     $app->enqueueMessage('Here was a small error 1', 'error');
                     $app->enqueueMessage('Here was a small error 2', 'error');
 
-                    throw new \Exception('Attention: raised exception ');
+                    throw new Exception('Attention: raised exception ');
 
                     echo new JsonResponse($result, 'Response message with !!! no !!! error set');
                     break;

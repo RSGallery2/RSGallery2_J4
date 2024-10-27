@@ -10,8 +10,10 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use DatabaseQuery;
+use JLoader;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Factory;
@@ -19,6 +21,10 @@ use Joomla\CMS\Language\Associations;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
+use stdClass;
+
+use function defined;
 
 /**
  * RSGallery2 Component Galleries Model
@@ -163,7 +169,7 @@ class GalleriesModel extends ListModel
     /**
      * Method to get a database query to list galleries.
      *
-     * @return  \DatabaseQuery object.
+     * @return  DatabaseQuery object.
      *
      * @since __BUMP_VERSION__
      */
@@ -454,7 +460,7 @@ class GalleriesModel extends ListModel
         }
 
         $hname = $cname . 'HelperAssociation';
-        \JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
+        JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
 
         $assoc = class_exists($hname) && !empty($hname::$category_association);
 
@@ -486,7 +492,7 @@ class GalleriesModel extends ListModel
     /**
      * Method to load the countItems method from the extensions
      *
-     * @param   \stdClass[]  &$items      The category items
+     * @param   stdClass[]  &$items      The category items
      * @param   string        $extension  The category extension
      *
      * @return  void
@@ -556,7 +562,7 @@ class GalleriesModel extends ListModel
 
                 $latest[] = $ImgInfo;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -567,7 +573,6 @@ class GalleriesModel extends ListModel
 
         return $latest;
     }
-
 
     /**
      * This function will retrieve the data of the n last uploaded images
@@ -614,7 +619,7 @@ class GalleriesModel extends ListModel
              * $latest[] = $ImgInfo;
              * }
              * /**/
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -625,6 +630,5 @@ class GalleriesModel extends ListModel
 
         return $rows;
     }
-
 
 } // class

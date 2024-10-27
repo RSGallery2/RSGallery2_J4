@@ -11,6 +11,14 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Component\ComponentHelper;
 
+use const SORT_FLAG_CASE;
+use const SORT_NATURAL;
+
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
+ *
+ * @since       version
+ */
 class ImageExif
 {
     // Tag names are not case-sensitive, so use it with lower case as often it is possible
@@ -69,7 +77,6 @@ class ImageExif
 
         // required_sections: (second parameter) FILE, COMPUTED, ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
 
-
         ini_set('exif.encode_unicode', 'UTF-8');
         // ini_set('exif.decode_unicode_motorola', 'UCS-2LE');
 
@@ -96,7 +103,7 @@ class ImageExif
         }
 
         // $test = natcasesort($items);
-        $test = ksort($items, \SORT_NATURAL | \SORT_FLAG_CASE);
+        $test = ksort($items, SORT_NATURAL | SORT_FLAG_CASE);
 
         return $items;
     }
@@ -129,7 +136,6 @@ class ImageExif
 
         return $selected;
     }
-
 
     public static function supportedExifTags()
     {
@@ -271,7 +277,6 @@ class ImageExif
 
         // lower case array
         $supportedTags = array_map('strtolower', self::supportedExifTags());
-
 
         foreach ($existingExifTags as $existingExifTag) {
             if (!in_array(strtolower($existingExifTag), $supportedTags)) {

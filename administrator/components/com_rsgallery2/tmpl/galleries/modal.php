@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -35,11 +35,10 @@ $function  = $app->input->getCmd('function', 'jSelectGallery');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 
-
 ?>
 <div class="container-popup">
 
-    <form action="<?php
+	<form action="<?php
     echo Route::_(
         'index.php?option=com_rsgallery2&view=galleries&layout=modal&tmpl=component&function=' . $function . '&' . Session::getFormToken(
         ) . '=1',
@@ -50,29 +49,29 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 
         <?php
         if (empty($this->items)) : ?>
-            <div class="alert alert-warning">
+			<div class="alert alert-warning">
                 <?php
                 echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
-            </div>
+			</div>
         <?php
         else : ?>
-            <table class="table" id="galleryList">
-                <caption id="captionTable" class="sr-only">
+			<table class="table" id="galleryList">
+				<caption id="captionTable" class="sr-only">
                     <?php
                     echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php
                     echo Text::_('JGLOBAL_SORTED_BY'); ?>
-                </caption>
-                <thead>
-                <tr>
-                    <th scope="col" style="width:1%" class="text-center">
+				</caption>
+				<thead>
+				<tr>
+					<th scope="col" style="width:1%" class="text-center">
                         <?php
                         echo HTMLHelper::_('searchtools.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
-                    </th>
-                    <th scope="col">
+					</th>
+					<th scope="col">
                         <?php
                         echo HTMLHelper::_('searchtools.sort', 'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-                    </th>
-                    <th scope="col" style="width:10%" class="d-none d-md-table-cell">
+					</th>
+					<th scope="col" style="width:10%" class="d-none d-md-table-cell">
                         <?php
                         echo HTMLHelper::_(
                             'searchtools.sort',
@@ -81,8 +80,8 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             $listDirn,
                             $listOrder,
                         ); ?>
-                    </th>
-                    <th scope="col" style="width:15%" class="d-none d-md-table-cell">
+					</th>
+					<th scope="col" style="width:15%" class="d-none d-md-table-cell">
                         <?php
                         echo HTMLHelper::_(
                             'searchtools.sort',
@@ -91,14 +90,14 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             $listDirn,
                             $listOrder,
                         ); ?>
-                    </th>
-                    <th scope="col" style="width:1%" class="d-none d-md-table-cell">
+					</th>
+					<th scope="col" style="width:1%" class="d-none d-md-table-cell">
                         <?php
                         echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
+					</th>
+				</tr>
+				</thead>
+				<tbody>
                 <?php
                 $iconStates = [
                     -2 => 'icon-trash',
@@ -123,16 +122,16 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                         $lang = '';
                     }
                     ?>
-                    <tr class="row<?php
+					<tr class="row<?php
                     echo $i % 2; ?>">
-                        <td class="text-center">
+						<td class="text-center">
                             <span class="<?php
                             echo $iconStates[$this->escape($item->published)]; ?>" aria-hidden="true"></span>
-                        </td>
-                        <th scope="row">
+						</td>
+						<th scope="row">
                             <?php
                             echo LayoutHelper::render('joomla.html.treeprefix', ['level' => $item->level]); ?>
-                            <a href="javascript:void(0)" onclick="if (window.parent) window.parent.<?php
+							<a href="javascript:void(0)" onclick="if (window.parent) window.parent.<?php
                             echo $this->escape($function); ?>('<?php
                             echo $item->id; ?>', '<?php
                             echo $this->escape(addslashes($item->title)); ?>', null, '<?php
@@ -142,7 +141,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             echo $this->escape($lang); ?>', null);">
                                 <?php
                                 echo $this->escape($item->title); ?></a>
-                            <span class="small" title="<?php
+							<span class="small" title="<?php
                             echo $this->escape($item->path); ?>">
 									<?php
                                     if (empty($item->note)) : ?>
@@ -159,24 +158,24 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                     <?php
                                     endif; ?>
 								</span>
-                        </th>
-                        <td class="small d-none d-md-table-cell">
+						</th>
+						<td class="small d-none d-md-table-cell">
                             <?php
                             echo $this->escape($item->access_level); ?>
-                        </td>
-                        <td class="small d-none d-md-table-cell">
+						</td>
+						<td class="small d-none d-md-table-cell">
                             <?php
                             echo LayoutHelper::render('joomla.content.language', $item); ?>
-                        </td>
-                        <td class="d-none d-md-table-cell">
+						</td>
+						<td class="d-none d-md-table-cell">
                             <?php
                             echo (int)$item->id; ?>
-                        </td>
-                    </tr>
+						</td>
+					</tr>
                 <?php
                 endforeach; ?>
-                </tbody>
-            </table>
+				</tbody>
+			</table>
 
             <?php
             // load the pagination. ?>
@@ -186,14 +185,14 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         <?php
         endif; ?>
 
-        <input type="hidden" name="extension" value="<?php
+		<input type="hidden" name="extension" value="<?php
         echo $extension; ?>">
-        <input type="hidden" name="task" value="">
-        <input type="hidden" name="boxchecked" value="0">
-        <input type="hidden" name="forcedLanguage" value="<?php
+		<input type="hidden" name="task" value="">
+		<input type="hidden" name="boxchecked" value="0">
+		<input type="hidden" name="forcedLanguage" value="<?php
         echo $app->input->get('forcedLanguage', '', 'CMD'); ?>">
         <?php
         echo HTMLHelper::_('form.token'); ?>
 
-    </form>
+	</form>
 </div>

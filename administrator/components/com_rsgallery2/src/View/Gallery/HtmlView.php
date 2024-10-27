@@ -9,18 +9,21 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Gallery;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JForm;
+use JObject;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Helper\TagsHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+
+use function defined;
 
 /**
  * HTML View class for gallery edit
@@ -32,7 +35,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The \JForm object
      *
-     * @var  \JForm
+     * @var  JForm
      */
     protected $form;
 
@@ -46,7 +49,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  JObject
      */
     protected $state;
 
@@ -60,7 +63,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The actions the user is authorised to perform
      *
-     * @var  \JObject
+     * @var  JObject
      */
     protected $canDo;
 
@@ -93,8 +96,8 @@ class HtmlView extends BaseHtmlView
 
         //--- Form --------------------------------------------------------------------
 
-        $this->form = $this->get('Form');
-        $this->item = $this->get('Item');
+        $this->form  = $this->get('Form');
+        $this->item  = $this->get('Item');
         $this->state = $this->get('State');
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
@@ -112,7 +115,6 @@ class HtmlView extends BaseHtmlView
         }
 
         Factory::getApplication()->input->set('hidemainmenu', true);
-
 
         /**
          * // If we are forcing a language in modal (used for associations).

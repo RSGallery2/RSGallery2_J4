@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package         RSGallery2
  * @subpackage      com_rsgallery2
@@ -14,7 +15,7 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 
 //use Joomla\CMS\File;
 //use Joomla\CMS\Folder;
@@ -46,7 +47,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
     protected $actualParams;
     protected $defaultParams;
     protected $mergedParams;
-
 
     /**
      * Extension script constructor.
@@ -147,7 +147,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 Log::add(Text::_('-> pre update'), Log::INFO, 'rsg2');
 
                 // ToDo: use J4 $this->>oldManifestData->Version
-
 
                 //--- Read manifest with old version ------------------------
 
@@ -516,7 +515,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         return $isGalleryTreeCreated;
     }
 
-
     /**
      * InstallMessage
      * Initializes the nested tree with a root element if not already exists
@@ -561,11 +559,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         return $installMsg;
     }
 
-
     /**
      *
      * Used in preflight update when the 'new' rsg2 files are not copied
      * Can not use standard function therefore
+     *
      * @return mixed|string
      *
      * @throws Exception
@@ -583,7 +581,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         return $oldRelease;
     }
-
 
     /**
      * readRsg2ExtensionManifest
@@ -652,7 +649,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             $langPath = JPATH_ROOT . '/administrator/' . 'language';
 
             $isOneFileDeleted = $this->removeLangFilesInSubPaths($langPath);
-
 
             //--- site\language path ---------------------------------
 
@@ -799,7 +795,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         return;
     }
-
 
     protected function upgradeSql()
     {

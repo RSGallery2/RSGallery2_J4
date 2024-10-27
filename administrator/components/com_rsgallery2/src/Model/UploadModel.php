@@ -9,15 +9,20 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use function defined;
 
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class UploadModel extends BaseDatabaseModel
 {
 
@@ -49,7 +54,7 @@ class UploadModel extends BaseDatabaseModel
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -89,7 +94,7 @@ class UploadModel extends BaseDatabaseModel
 
             $db->setQuery($query, 0, 1);
             $IdLatestGallery = $db->loadResult();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'IdLatestGallery: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -100,7 +105,6 @@ class UploadModel extends BaseDatabaseModel
 
         return $IdLatestGallery;
     }
-
 
 }
 

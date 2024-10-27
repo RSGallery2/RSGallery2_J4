@@ -10,16 +10,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Association\AssociationServiceInterface;
-use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Associations;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\MVC\Model\ListModel;
+
+use function defined;
 
 /**
  * RSGallery2 Component Images Model
@@ -324,7 +321,6 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
             }
         }
 
-
         /**
          * // Filter on the language.
          * if ($language = $this->getState('filter.language'))
@@ -373,43 +369,10 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
         }
 
         /**  * /
-         * 'a.id, '
-         * . 'a.name, '
-         * . 'a.alias, '
-         * . 'a.description, '
-         * . 'a.gallery_id, '
-         * . 'a.title, '
-         *
-         * . 'a.note, '
-         * . 'a.params, '
-         * . 'a.published, '
-         * //            . 'a.published_up, '
-         * //            . 'a.published_down, '
-         *
-         * . 'a.hits, '
-         * . 'a.rating, '
-         * . 'a.votes, '
-         * . 'a.comments, '
-         *
-         * . 'a.checked_out, '
-         * . 'a.checked_out_time, '
-         * . 'a.created, '
-         * . 'a.created_by, '
-         * . 'a.created_by_alias, '
-         * . 'a.modified, '
-         * . 'a.modified_by, '
-         *
-         * . 'a.ordering, '
-         * . 'a.approved, '
-         * . 'a.asset_id, '
-         * . 'a.access, '
-         * . 'a.use_j3x_location '
-         * /**  * /
          * );
          * /**/
 
         return $query;
     }
-
 
 } // class

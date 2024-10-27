@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -27,31 +27,31 @@ foreach ($fieldSets as $name => $fieldSet) : ?>
     ?>
     <?php
     foreach ($this->form->getFieldset($name) as $field) : ?>
-        <div class="control-group">
-            <div class="control-label">
+		<div class="control-group">
+			<div class="control-label">
                 <?php
                 echo $field->label; ?>
-            </div>
-            <div class="controls">
+			</div>
+			<div class="controls">
                 <?php
                 echo $field->input; ?>
-            </div>
-        </div>
+			</div>
+		</div>
     <?php
     endforeach; ?>
 
     <?php
     if ($name == 'basic') : ?>
-        <div class="control-group">
-            <div class="control-label">
+		<div class="control-group">
+			<div class="control-label">
                 <?php
                 echo $this->form->getLabel('note'); ?>
-            </div>
-            <div class="controls">
+			</div>
+			<div class="controls">
                 <?php
                 echo $this->form->getInput('note'); ?>
-            </div>
-        </div>
+			</div>
+		</div>
     <?php
     endif; ?>
     <?php

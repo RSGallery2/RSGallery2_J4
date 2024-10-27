@@ -9,19 +9,19 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JInput;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Session\Session;
-use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\User\UserFactoryInterface;
+use Joomla\Component\Menus\Administrator\Model\MenuModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
+use RuntimeException;
 
-use Symfony\Component\Yaml\Yaml;
+use function defined;
 
 /**
  * The Image Controller
@@ -44,7 +44,7 @@ class ImageController extends FormController
      * @param   array                $config   An optional associative array of configuration settings.
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since  __BUMP_VERSION__
      * @see    \JControllerLegacy
@@ -65,7 +65,7 @@ class ImageController extends FormController
      *
      * @since   1.6
      */
-    /** @var \Joomla\Component\Menus\Administrator\Model\MenuModel $model *
+    /** @var MenuModel $model *
      * $model = $this->getModel();
      *
      * // Make sure the item ids are integers
@@ -246,7 +246,7 @@ class ImageController extends FormController
                     $msgType = 'warning';
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rotate_image: "' . $direction . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -370,7 +370,7 @@ class ImageController extends FormController
                     $msgType = 'warning';
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing flip_image: "' . $flipMode . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -461,7 +461,7 @@ class ImageController extends FormController
      * $this->checkToken();
      *
      * // Set the model
-     * /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+     * /** @var GalleryModel $model *
      *                          $model = $this->getModel('Gallery');
      *
      * // Preset the redirect
@@ -509,7 +509,7 @@ class ImageController extends FormController
     /**
      * Function that allows child controller access to model data after the data has been saved.
      *
-     * @param   \Joomla\CMS\MVC\Model\BaseDatabaseModel  $model      The data model object.
+     * @param   BaseDatabaseModel  $model      The data model object.
      * @param   array                                    $validData  The validated data.
      *
      * @return  void

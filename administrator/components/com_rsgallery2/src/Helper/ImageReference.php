@@ -11,13 +11,15 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use RuntimeException;
 
+use function defined;
 
 // Include the JLog class.
 //jimport('joomla.log.log');
@@ -30,6 +32,10 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  */
 class ImageReference
 {
+    /**
+     * @var
+     * @since version
+     */
     public $allImagePaths;
     /**
      * @var string
@@ -80,9 +86,25 @@ class ImageReference
      */
     public $useWatermarked;
 
+    /**
+     * @var
+     * @since version
+     */
     public $originalFilePath;
+    /**
+     * @var
+     * @since version
+     */
     public $displayFilePath;
+    /**
+     * @var
+     * @since version
+     */
     public $thumbFilePath;
+    /**
+     * @var
+     * @since version
+     */
     public $sizeFilePaths; // 800x6000, ..., ? display:J3x
 
     //--- constants -----------------------------------------
@@ -132,6 +154,13 @@ class ImageReference
         $this->UseWatermarked = $watermarked;
     }
 
+    /**
+     * @param $Image
+     *
+     *
+     * @throws Exception
+     * @since version
+     */
     public function assignDbItem($Image)
     {
         // ToDo: path to original file on outside folder
@@ -162,7 +191,7 @@ class ImageReference
             foreach ($this->sizeFilePaths as $sizePath) {
                 $this->allImagePaths [] = $sizePath;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -174,7 +203,12 @@ class ImageReference
         return;
     }
 
-
+    /**
+     *
+     *
+     * @throws Exception
+     * @since version
+     */
     public function check4ImageIsNotExisting()
     {
         try {
@@ -207,7 +241,7 @@ class ImageReference
                     $this->IsSizes_ImageFound [$size] = true;
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -258,7 +292,7 @@ class ImageReference
             }
 
             $this->allImagePaths = [];
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing initLostItems: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -310,7 +344,7 @@ class ImageReference
                 $this->IsSizes_ImageFound [$sizeName] = true;
                 $isImageAssigned                      = true;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing AssignLostItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -384,7 +418,6 @@ class ImageReference
      * return $IsImageMissing;
      * }
      * /**/
-
 
     // toDo: ? Any size image missing ? ....
 

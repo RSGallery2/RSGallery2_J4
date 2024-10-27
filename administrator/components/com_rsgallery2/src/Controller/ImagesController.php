@@ -9,14 +9,19 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JInput;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Session\Session;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use RuntimeException;
+
+use function defined;
+
 
 /**
  * The Images List Controller
@@ -33,7 +38,7 @@ class ImagesController extends AdminController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since __BUMP_VERSION__
      */
@@ -49,7 +54,7 @@ class ImagesController extends AdminController
      * @param   string  $prefix  The class prefix. Optional.
      * @param   array   $config  The array of possible config values. Optional.
      *
-     * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel  The model.
+     * @return  BaseDatabaseModel  The model.
      *
      * @since __BUMP_VERSION__
      */
@@ -92,7 +97,7 @@ class ImagesController extends AdminController
                 } else {
                     $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_ERROR') . ': ' . $model->getError();
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing reinitImagesTable: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -142,7 +147,7 @@ class ImagesController extends AdminController
                     $msg     .= 'Move of images ... failed';
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing moveTo: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -189,7 +194,7 @@ class ImagesController extends AdminController
                     $msg     .= 'Copy of images ... failed';
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyTo: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -201,6 +206,5 @@ class ImagesController extends AdminController
 
         $this->setRedirect('index.php?option=com_rsgallery2&view=images', $msg, $msgType);
     }
-
 
 }

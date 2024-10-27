@@ -9,12 +9,11 @@
  * RSGallery is Free Software
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-
 
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
@@ -23,7 +22,6 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 // toDo: Checkout https://www.cssscript.com/clean-tree-diagram/
 
 HTMLHelper::_('bootstrap.framework');
-
 
 function GalleriesListAsHTML($galleries)
 {
@@ -34,7 +32,7 @@ function GalleriesListAsHTML($galleries)
             // all root galleries and nested ones
             $html = GalleriesOfLevelHTML($galleries, 0, 0);
         }
-    } catch (\RuntimeException $e) {
+    } catch (RuntimeException $e) {
         Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
     }
 
@@ -69,7 +67,7 @@ function GalleriesOfLevelHTML($galleries, $parentId, $indent)
 
             $html = $galleryHTML;
         }
-    } catch (\RuntimeException $e) {
+    } catch (RuntimeException $e) {
         Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
     }
 
@@ -77,7 +75,6 @@ function GalleriesOfLevelHTML($galleries, $parentId, $indent)
 }
 
 // ToDo use styling for nested from https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap
-
 
 function GalleryHTML($gallery, $indent)
 {
@@ -92,11 +89,11 @@ function GalleryHTML($gallery, $indent)
         $identHtml .= '-&nbsp;';
     }
 
-    $id = $gallery->id;
+    $id     = $gallery->id;
     $parent = $gallery->parent_id;
-    $level = $gallery->level;
-    $name = $gallery->name;
-    $path = '   [' . $gallery->path . ']';
+    $level  = $gallery->level;
+    $name   = $gallery->name;
+    $path   = '   [' . $gallery->path . ']';
 
     try {
         $html = <<<EOT
@@ -108,32 +105,31 @@ function GalleryHTML($gallery, $indent)
             $lineStart   <span> path: </span><span>$path</span>
             $lineStart</li>
             EOT;
-    } catch (\RuntimeException $e) {
+    } catch (RuntimeException $e) {
         Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
     }
 
     return $html;
 }
 
-
 ?>
 
 <form action="<?php
 echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-    <div class="d-flex flex-row">
+	<div class="d-flex flex-row">
         <?php
         if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class="">
                 <?php
                 echo $this->sidebar; ?>
-            </div>
+			</div>
         <?php
         endif; ?>
-        <!--div class="<?php
+		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-            <div id="j-main-container" class="j-main-container">
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
                 <?php
                 echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'dbtransferj3xgalleries']); ?>
@@ -146,7 +142,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtran
                     Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE', true),
                 ); ?>
 
-                <legend><strong><?php
+				<legend><strong><?php
                         echo Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'); ?></strong></legend>
 
                 <?php
@@ -164,7 +160,6 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtran
 
                     echo GalleriesListAsHTML($this->items);
 
-
                     if (count($this->items) == 1) {
                         $keyTranslation = Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_JUMP_TO_J3X_GALLERIES');
                         $link           = Route::_(
@@ -175,16 +170,15 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtran
                         echo '<br><h3></h3><a  class="badge badge-pill bg-notice" href="' . $link . '" " '
                             . ' title="' . Text::_(
                                 'COM_RSGALLERY2_JUMP_TO_FORUM',
-                            ) . '" >' . $keyTranslation . '</a></h3>';;
+                            ) . '" >' . $keyTranslation . '</a></h3>';
                     }
-
 
 //
 //                $j4x_galleries = $j3xModel->j4_GalleriesToJ3Form($j3xModel->j4x_galleriesList());
 //                $this->j4x_galleriesHtml = $j3xModel->GalleriesListAsHTML($j4x_galleries);
 
                     echo '<hr>';
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'dbtransferj3xgalleries' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -201,15 +195,15 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtran
                 <?php
                 echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-                <!--input type="hidden" name="option" value="com_rsgallery2" />
+				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-                <input type="hidden" name="task" value=""/>
+				<input type="hidden" name="task" value=""/>
                 <?php
                 echo HTMLHelper::_('form.token'); ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
     <?php
     echo HTMLHelper::_('form.token'); ?>

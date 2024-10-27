@@ -1,1260 +1,1264 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-    <!-- ... Tab General ................................. -->
-
-    <fieldset
-            name="rsgallery2"
-            label="COM_RSGALLERY2_CONFIG_TAB_GENERAL"
-            description="COM_RSGALLERY2_CONFIG_TAB_GENERAL_DESC"
-    >
-        <!-- needed when more entries are general ...
-                field name="intro_text"
-                type="editor"
-                label="COM_RSGALLERY2_INTRODUCTION_TEXT"
-                description="COM_RSGALLERY2_INTRODUCTION_DESC"
-                filter="JComponentHelper::filterText"
-                buttons="false"
-        /-->
-
-        <field
-                name="ToDo_list_general"
-                type="list"
-                default="0"
-                label="!!! ToDo !!!: In config - general"
-                description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
-                class="text text-danger"
-                showon="isDevelop:1"
-        >
-            <option value="0">* add _NOTE_ part to lang of note elements</option>
-            <option value="1">* use display instead of show for const and menu ...</option>
-            <option value="2">*</option>
-            <option value="3">*</option>
-            <option value="4">*</option>
-        </field>
-
-
-        <field
-                name="sef_ids"
-                type="radio"
-                layout="joomla.form.field.radio.switcher"
-                default="0"
-                label="JGLOBAL_SEF_NOIDS_LABEL"
-                filter="integer"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-
-        <!--field
-                id="advancedSef"
-                name="advancedSef"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_ADVANCED_SEF"
-                description="COM_RSGALLERY2_ADVANCED_SEF_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field-->
-
-        <field
-                type="spacer"
-                name="spacer_admin"
-                hr="true"
-        />
-
-    </fieldset>
-
-    <!-- ... Tab Upload ................................. -->
-
-    <fieldset
-            name="upload"
-            label="COM_RSGALLERY2_CONFIG_TAB_UPLOAD"
-            description="COM_RSGALLERY2_CONFIG_TAB_UPLOAD_DESC"
-    >
-        <!--field
-                type="spacer"
-                name="spacer_upload_01"
-                hr="true"
-        /-->
-
-        <field
-                name="ToDo_list_upload"
-                type="list"
-                default="0"
-                label="!!! ToDo !!!: In config - upload"
-                description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
-                class="text text-danger"
-                showon="isDevelop:1"
-        >
-            <option value="0">*</option>
-            <option value="1">*</option>
-            <option value="2">*</option>
-            <option value="3">*</option>
-            <option value="4">*</option>
-        </field>
-
-
-        <!-- ... block upload images ... -->
-
-        <field name="note_images_upload"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
-               description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION_DESC"
-        />
-
-        <field
-                name="image_size"
-                type="text"
-                default="800,600,400"
-                label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE"
-                description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_DESC"
-                class="">
-        </field>
-        <field
-                name="thumb_size"
-                type="number"
-                default="120"
-                label="COM_RSGALLERY2_THUMBNAIL_SIZE"
-                description="COM_RSGALLERY2_THUMBNAIL_SIZE_DESC"
-                class="">
-        </field>
-        <field
-                name="thumb_style"
-                type="list"
-                default="0"
-                label="COM_RSGALLERY2_THUMBNAIL_STYLE"
-                description="COM_RSGALLERY2_THUMBNAIL_STYLE_DESC"
-                class=""
-        >
-            <option value="0">COM_RSGALLERY2_PROPORTIONAL</option>
-            <option value="1">COM_RSGALLERY2_SQUARE</option>
-        </field>
-        <field
-                name="jpegQuality"
-                type="number"
-                default="80"
-                label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE"
-                description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC"
-                class="">
-        </field>
-        <field
-                name="allowedFileTypes"
-                type="text"
-                default="jpg,jpeg,gif,png"
-                label="COM_RSGALLERY2_ALLOWED_FILETYPES"
-                description="COM_RSGALLERY2_ALLOWED_FILETYPES_DESC"
-                readonly="true"
-                class="readonly"
-        >
-        </field>
-        <field
-                name="keepOriginalImage"
-                type="radio"
-                default="1"
-                label="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE"
-                description="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <field
-                id="isPreSelectLatestGallery"
-                name="isPreSelectLatestGallery"
-                type="radio"
-                default="1"
-                label="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_LABEL"
-                description="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <!-- ... block general section ... -->
-
-        <field
-                type="spacer"
-                name="spacer_upload_ftp_01"
-                hr="true"
-        />
-
-        <field
-                name="note_upload_general"
-                type="note"
-                class="alert alert-primary"
-                close="true"
-                label="COM_RSGALLERY2_CFG_UPLOAD_GENERAL"
-                description="COM_RSGALLERY2_CFG_UPLOAD_GENERAL_DESC"
-        />
-
-        <field
-                name="ftp_path"
-                type="text"
-                default=""
-                label="COM_RSGALLERY2_FTP_PATH"
-                description="COM_RSGALLERY2_FTP_PATH_DESC"
-                class="input-large-text input-xxlarge"
-        >
-        </field>
-
-        <!-- ... block location ... -->
-
-        <field
-                type="spacer"
-                name="spacer_upload_location_01"
-                hr="true"
-        />
-
-        <field name="note_upload_location"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CFG_IMAGES_LOCATION"
-               description="COM_RSGALLERY2_CFG_IMAGES_LOCATION_DESC"
-        />
-
-        <field
-                name="imgPath_root"
-                type="text"
-                default="/images/rsgallery2"
-                label="COM_RSGALLERY2_CFG_ROOT_LOCATION"
-                description="COM_RSGALLERY2_CFG_ROOT_LOCATION_DESC"
-                class="input-large-text input-xxlarge"
-        >
-        </field>
-
-        <!-- ... block J3x ... -->
-
-        <field name="note_images_outdated"
-               type="note"
-               class="alert alert-error"
-               close="true"
-               label="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED"
-               description="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED_DESC"
-        />
-
-        <field
-                name="useJ3xOldPaths"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_USE_J3X_PATHS"
-                description="COM_RSGALLERY2_USE_J3X_PATHS_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <field
-                name="imgPath_original"
-                type="text"
-                default="/images/rsgallery/original"
-                label="COM_RSGALLERY2_ORIGINAL_IMAGE_PATH"
-                description=""
-                class="input-large-text input-xxlarge"
-        >
-        </field>
-        <field
-                name="imgPath_display"
-                type="text"
-                default="/images/rsgallery/display"
-                label="COM_RSGALLERY2_DISPLAY_IMAGE_PATH"
-                description=""
-                class="input-large-text input-xxlarge"
-        >
-        </field>
-        <field
-                name="imgPath_thumb"
-                type="text"
-                default="/images/rsgallery/thumb"
-                label="COM_RSGALLERY2_THUMB_PATH"
-                description=""
-                class="input-large-text input-xxlarge"
-        >
-        </field>
-        <field
-                name="image_width"
-                type="text"
-                default="400"
-                label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
-                description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
-                class="">
-            >
-        </field>
-    </fieldset>
-
-    <!-- ... Tab Galleries view ................................. -->
-
-    <fieldset
-            name="GalleriesView"
-            label="COM_RSGALLERY2_CONFIG_TAB_GALLERIES"
-            description="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_DESC"
-    >
-
-        <field
-                name="ToDo_list_galleries_view"
-                type="list"
-                default="0"
-                label="!!! ToDo !!!: In config - galleries view"
-                description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
-                class="text text-danger"
-                showon="isDevelop:1"
-        >
-            <option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
-            <option value="1">* Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox ....</option>
-            <option value="2">* Order of galleries: auto, time, name , ...</option>
-            <option value="3">*</option>
-            <option value="4">*</option>
-        </field>
-
-        <!-- ... block  ... -->
-
-        <field name="note_galleries_view_layout"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT"
-               description="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT_DESC"
-        />
-
-        <field
-                name="images_layout"
-                type="LayoutGallery"
-                label="JFIELD_ALT_LAYOUT_LABEL"
-                class="custom-select"
-                extension="com_rsgallery2"
-        />
-
-        <field
-                name="galleries_column_arrangement"
-                type="list"
-                default="1"
-                label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE"
-                description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_DESC"
-        >
-            <option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_AUTO</option>
-            <option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_COUNT</option>
-        </field>
-
-        <field
-                name="max_columns_in_galleries_view"
-                type="number"
-                default="4"
-                label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS"
-                description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS_DESC"
-                showon="galleries_column_arrangement:1"
-        >
-        </field>
-
-        <field
-                name="galleries_row_arrangement"
-                type="list"
-                default="1"
-                label="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE"
-                description="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_DESC"
-                showon="galleries_column_arrangement:1"
-        >
-            <option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO</option>
-            <option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_ROW_COUNT</option>
-            <option value="2">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_MAX_COUNT</option>
-        </field>
-
-        <field
-                name="max_rows_in_galleries_view"
-                type="number"
-                default="5"
-                label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS"
-                description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS_DESC"
-                showon="galleries_row_arrangement:1[AND]galleries_column_arrangement:1"
-        >
-        </field>
-
-        <field
-                name="max_thumbs_in_galleries_view"
-                type="number"
-                default="20"
-                label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS"
-                description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS_DESC"
-                showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:2[OR]galleries_column_arrangement:0"
-        >
-        </field>
-
-        <field
-                name="layout_galleries_thumbs"
-                type="list"
-                default="layout02"
-                label="*Galleries thumbs layout"
-                description="*Select layout of thumbs in gallery overview"
-        >
-            <option value="layout01">*layout 1</option>
-            <option value="layout02">*layout 2</option>
-        </field>
-
-        <field
-                name="galleries_show_title"
-                type="list"
-                default="0"
-                label="*Show gallery title"
-                description="*Show title of gallery near thumb"
-        >
-            <option value="0">JNO</option>
-            <option value="1">*Above thumb</option>
-            <option value="2">*Below thumb</option>
-            <option value="3">*Above description</option>
-            <option value="4">*Below description</option>
-        </field>
-
-        <field
-                name="galleries_show_description"
-                type="list"
-                default="layout01"
-                label="*Show gallery description"
-                description="*Select display location of gellery description"
-        >
-            <option value="0">JNO</option>
-            <option value="1">*Above thumb</option>
-            <option value="2">*Right beside thumb</option>
-            <option value="3">*Below thumb</option>
-            <option value="4">*Left beside thumb</option>
-        </field>
-
-
-        <!-- ... block  ... -->
-
-        <field name="note_galleries_view_YYYY"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
-               description="Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... "
-        />
-    </fieldset>
-
-    <!-- ... Tab Images ................................. -->
-
-    <fieldset
-            name="Images"
-            label="COM_RSGALLERY2_CONFIG_TAB_IMAGES"
-            description="COM_RSGALLERY2_CONFIG_TAB_IMAGES_DESC"
-    >
-        <field
-                type="spacer"
-                name="spacer_images_01"
-                hr="true"
-        />
-
-        <field
-                name="ToDo_list_images_view"
-                type="list"
-                default="0"
-                label="!!! ToDo !!!: In config - images view"
-                description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
-                class="text text-danger"
-                showon="isDevelop:1"
-        >
-            <option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
-            <option value="1">* order of images: auto, time, name , ...</option>
-            <option value="2">*</option>
-            <option value="3">*</option>
-            <option value="4">*</option>
-        </field>
-
-        <!-- ... block  ... -->
-
-        <field name="note_images_view_layout"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT"
-               description="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT_DESC"
-        />
-
-        <field
-                name="images_column_arrangement"
-                type="list"
-                default="1"
-                label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
-                description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
-        >
-            <option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
-            <option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
-        </field>
-
-        <field
-                name="max_columns_in_images_view"
-                type="number"
-                default="4"
-                label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS"
-                description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS_DESC"
-                showon="images_column_arrangement:1"
-        >
-        </field>
-
-        <field
-                name="images_row_arrangement"
-                type="list"
-                default="2"
-                label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
-                description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
-                showon="images_column_arrangement:1"
-        >
-            <option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
-            <option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
-            <option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
-        </field>
-
-        <field
-                name="max_rows_in_images_view"
-                type="number"
-                default="5"
-                label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
-                description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
-                showon="images_row_arrangement:1[AND]images_column_arrangement:1"
-        >
-        </field>
-
-        <field
-                name="max_thumbs_in_images_view"
-                type="number"
-                default="20"
-                label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
-                description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
-                showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
-        >
-        </field>
-
-        <field
-                name="layout_images_thumbs"
-                type="list"
-                default="Layout of images thumbs"
-                label="*Thumbs layout"
-                description="Select layout of thumbs in this gallery"
-        >
-            <option value="layout01">*layout 1</option>
-            <option value="layout02">*layout 2</option>
-        </field>
-
-        <field
-                name="images_show_title"
-                type="list"
-                default="0"
-                label="*Show image title"
-                description="*Show title of image near thumb"
-        >
-            <option value="0">JNO</option>
-            <option value="1">*Above thumb</option>
-            <option value="2">*Below thumb</option>
-            <option value="3">*Above description</option>
-            <option value="4">*Below description</option>
-        </field>
-
-        <field
-                name="images_show_description"
-                type="list"
-                default="layout01"
-                label="*Show gallery description"
-                description="Select display location of gellery description"
-        >
-            <option value="0">JNO</option>
-            <option value="1">*Above thumb</option>
-            <option value="2">*Right beside thumb</option>
-            <option value="3">*Below thumb</option>
-            <option value="4">*Left beside thumb</option>
-        </field>
-
-        <field
-                name="image_order_right_to_left"
-                type="radio"
-                label="COM_RSGALLERY2_MENU_GALLERY_ORDER_IMG_FROM_RIGHT"
-                description="COM_RSGALLERY2_MENU_GALLERY_ORDER_IMG_FROM_RIGHT_DESC"
-                default="0"
-                class="btn-group btn-group-yesno">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-        <field
-                name="image_order_by"
-                type="list"
-                label="*Sort images by "
-                description="*"
-                default="0"
-                class="btn-group btn-group-yesno">
-            <option value="0">*Date/time ASC</option>
-            <option value="1">*Date/time ASC</option>
-            <option value="2">*Name Asc</option>
-            <option value="3">*Name Desc</option>
-            <option value="4">*Random</option>
-        </field>
-    </fieldset>
-
-    <!-- ... Tab Debug ................................. -->
-
-    <fieldset
-            name="debug"
-            label="COM_RSGALLERY2_CONFIG_TAB_DEBUG"
-            description="COM_RSGALLERY2_CONFIG_TAB_DEBUG_DESC"
-    >
-        <field type="spacer" name="test_inner_02" hr="true"/>
-        <!-- ... block  ... -->
-
-        <!--field
-                id="j3x_db_config_copied"
-                name="j3x_db_config_copied"
-                type="hidden"
-                default="0"
-        /-->
-
-        <field
-                id="j3x_db_galleries_copied"
-                name="j3x_db_galleries_copied"
-                type="hidden"
-                default="0"
-        />
-
-        <field
-                id="j3x_db_images_copied"
-                name="j3x_db_images_copied"
-                type="hidden"
-                default="0"
-        />
-
-        <field
-                id="isDebugBackend"
-                name="isDebugBackend"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_DEBUG_BACKEND"
-                description="COM_RSGALLERY2_DEBUG_BACKEND_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-        <field
-                id="isDebugSite"
-                name="isDebugSite"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_DEBUG_SITE"
-                description="COM_RSGALLERY2_DEBUG_SITE_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-        <field
-                id="isDevelop"
-                name="isDevelop"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_DEVELOP"
-                description="COM_RSGALLERY2_DEVELOP_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-    </fieldset>
-
-
-    <!--	&lt;!&ndash; ... Tab j3x legacy layout ................................. &ndash;&gt;-->
-
-    <!--	<fieldset-->
-    <!--			name="j3x_legacy_layout"-->
-    <!--			label=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"-->
-    <!--			description=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"-->
-    <!--	>-->
-    <!--		&lt;!&ndash;field-->
-    <!--				type="spacer"-->
-    <!--				name="spacer_findings_01"-->
-    <!--				hr="true"-->
-    <!--		/&ndash;&gt;-->
-
-    <!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
-
-    <!--		<field-->
-    <!--				name="galDisplayCountJ3x"-->
-    <!--				type="number"-->
-    <!--				default="5"-->
-    <!--				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"-->
-    <!--				description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"-->
-    <!--				class="">-->
-    <!--		</field>-->
-
-    <!--		&lt;!&ndash;field-->
-    <!--				name="image_size"-->
-    <!--				type="text"-->
-    <!--				default="800,600,400"-->
-    <!--				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"-->
-    <!--				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"-->
-    <!--				class=""-->
-    <!--		>-->
-    <!--		</field&ndash;&gt;-->
-    <!--		-->
-    <!--	</fieldset>-->
-
-    <!-- ... Tab j3x legacy root galleries ................................. -->
-
-    <fieldset
-            name="j3x_legacy_galleries"
-            label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"
-            description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"
-    >
-        <!--field
-                type="spacer"
-                name="spacer_findings_01"
-                hr="true"
-        /-->
-
-        <!-- ... block j3x gallery header ... -->
-
-        <field name="note_j3x_gallery_data"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA"
-               description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA_DESC"
-        />
-
-        <field
-                name="galleries_show_slideshow"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
-                description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
-                class="btn-group btn-group-yesno">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-        <field
-                name="galleries_show_owner"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
-                description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
-                class="btn-group btn-group-yesno"
-        >
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-        <field
-                name="galleries_show_size"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE"
-                description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE_DESC"
-                class="btn-group btn-group-yesno">
-            >
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-        <field
-                name="galleries_show_date"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
-                description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
-                class="btn-group btn-group-yesno">
-            >
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-
-        <!-- ... block images layout... -->
-
-        <field name="note_images_upload"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT"
-               description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT_DESC"
-        />
-
-
-        <field
-                name="max_thumbs_in_root_galleries_view_j3x"
-                type="number"
-                default="5"
-                label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
-                description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
-                class="">
-        </field>
-
-        <!--field
-                name="galThumbDisplaySizeJ3x"
-                type="text"
-                default="800,600,400"
-                label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
-                description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
-                class=""
-        >
-        </field-->
-
-        <!-- ==== ToDo: rootThumbDisplaySizeJ3x ========= -->
-        <!-- ==== ToDo: isRootShowGallerySearchJ3x yes/no ========= -->
-        <!-- ==== ToDo: isRootShowGallerySelectionJ3x yes/no ========= -->
-        <!-- ==== ToDo: isRootShowGalNameJ3x yes/no ========= -->
-        <!-- ==== ToDo: isRootShowGalDescriptionJ3x yes/no ========= -->
-        <!-- ==== ToDo: isRootShowSlideshowJ3x yes/no ========= -->
-        <!-- ==== ToDo: isRootShowGalImageSearchJ3x yes/no ========= -->
-        <!-- ==== ToDo:  ========= -->
-        <!-- ==== ToDo:  yes/no ========= -->
-        <!-- ==== ToDo: isRootLatestImagesJ3x yes / no ========= -->
-        <!-- ==== ToDo: isRootRandomImagesJ3x yes no ========= -->
-
-        <!-- ==== ToDo:  ========= -->
-        <!-- ==== ToDo:  yes/no ========= -->
-
-    </fieldset>
-
-    <!-- ... Tab j3x legacy gallery ................................. -->
-
-    <fieldset
-            name="j3x_legacy_gallery"
-            label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_GALLERY"
-            description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_GALLERY_DESC"
-    >
-        <!--field
-                type="spacer"
-                name="spacer_findings_01"
-                hr="true"
-        /-->
-
-        <!-- ... block gallery header ... -->
-
-        <field name="note_j3x_gallery_data"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES"
-               description="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES_DESC"
-        />
-
-        <field
-                name="gallery_show_title"
-                type="radio"
-                label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
-                description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
-                default="0"
-                class="btn-group btn-group-yesno">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-        <field
-                name="gallery_show_description"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
-                description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
-                class="btn-group btn-group-yesno">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-        <field
-                name="gallery_show_slideshow"
-                type="radio"
-                default="1"
-                label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
-                description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
-                class="btn-group btn-group-yesno">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-
-        <!-- ... block images layout... -->
-
-        <field name="note_images_upload"
-               type="note"
-               class="alert alert-primary"
-               close="true"
-               label="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT"
-               description="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT_DESC"
-        />
-
-
-        <!-- ... thumb style float table ... -->
-        <field
-                name="images_column_arrangement_j3x"
-                type="list"
-                default="1"
-                label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
-                description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
-        >
-            <option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
-            <option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
-        </field>
-
-        <!-- ...   ... -->
-        <field
-                name="max_columns_in_images_view_j3x"
-                type="number"
-                default="5"
-                label="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS"
-                description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC"
-                showon="images_column_arrangement_j3x:1"
-                class="">
-        </field>
-
-        <!-- ...   ... -->
-        <field
-                name="max_thumbs_in_images_view_j3x"
-                type="number"
-                default="5"
-                label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
-                description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
-                showon="images_column_arrangement_j3x:1"
-                class="">
-        </field>
-
-        <!--field
-                name="image_size"
-                type="text"
-                default="800,600,400"
-                label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
-                description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
-                class=""
-        >
-        </field-->
-
-        <!-- ==== ToDo: imgThumbDisplaySizeJ3x ========= -->
-        <!-- ==== ToDo: isImgDescriptionJ3x yes/no ========= -->
-        <!-- ==== ToDo: isImgShowSlideshowJ3x yes/no ========= -->
-        <!-- ==== ToDo: isImgImageSearchJ3x yes/no ========= -->
-        <!-- ==== ToDo:  ========= -->
-        <!-- ==== ToDo:  ========= -->
-        <!-- ==== ToDo:  idGalShowPartent (link/thumb) yes/no ========= -->
-        <!-- ==== ToDo:  yes/no ========= -->
-        <!-- ==== ToDo:  yes/no ========= -->
-
-    </fieldset>
-
-    <!-- ... Tab j3x legacy slide image ................................. -->
-
-    <fieldset
-            name="j3x_legacy_image_slide_page"
-            label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_IMAGE_SLIDE_PAGE"
-            description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_IMAGE_SLIDE_PAGE_DESC"
-    >
-        <!--field
-                type="spacer"
-                name="spacer_findings_01"
-                hr="true"
-        /-->
-
-        <!-- ... block  ... -->
-
-        <field
-                name="imageSizeSlpJ3x"
-                type="text"
-                default="800x600"
-                label="COM_RSGALLERY2_J3X_SLP_DISPLAY_IMAGE_SIZE"
-                description="COM_RSGALLERY2_J3X_SLP_DISPLAY_IMAGE_SIZE_DESC"
-                class=""
-        >
-        </field>
-
-        <!--field
-                name="image_size"
-                type="text"
-                default="800,600,400"
-                label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
-                description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
-                class=""
-        >
-        </field-->
-
-        <!--field
-                name="image_size"
-                type="text"
-                default="800,600,400"
-                label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
-                description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
-                class=""
-        >
-        </field-->
-
-        <field
-                name="isSlpShowImgDescriptionJ3x"
-                type="radio"
-                default="1"
-                label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DESCRIPTION"
-                description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DESCRIPTION_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <!-- ==== ToDo: isSlpShowDownloadJ3x yes/no ========= -->
-        <field
-                name="isSlpShowDownloadJ3x"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DOWNLOAD"
-                description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DOWNLOAD_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <!-- ==== ToDo: isSlpShowVotingJ3x yes/no ========= -->
-        <field
-                name="isSlpShowVotingJ3x"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_VOTING"
-                description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_VOTING_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <!-- ==== ToDo: isSlpShowCommentsJ3x yes/no ========= -->
-        <field
-                name="isSlpShowCommentsJ3x"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_COMMENTS"
-                description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_COMMENTS_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <!-- ==== ToDo: isSlpShowExif yes/no ========= -->
-        <field
-                name="isSlpShowExifJ3x"
-                type="radio"
-                default="0"
-                label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_EXIF"
-                description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_EXIF_DESC"
-                layout="joomla.form.field.radio.switcher"
-                filter="integer"
-                validate="options"
-        >
-            <option value="0">JNO</option>
-            <option value="1">JYES</option>
-        </field>
-
-        <!-- ==== ToDo: isSlpExifTagSelection yes/no ========= -->
-
-        <!-- ==== Exif selection ========= -->
-
-        <field
-                id="exifTagsJ3x"
-                name="exifTagsJ3x"
-                type="ExifList"
-                label="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY"
-                description="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY_DESC"
-                class="inputbox"
-                size="5"
-                multiple="true"
-                addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-                showon="isSlpShowExifJ3x:1"
-        >
-        </field>
-
-        <!-- ==== ToDo:  ========= -->
-        <!-- ==== ToDo:  yes/no ========= -->
-        <!-- ==== ToDo:  yes/no ========= -->
-
-    </fieldset>
-
-    <!-- ... Tab j3x legacy slide show ................................. -->
-
-    <fieldset
-            name="j3x_legacy_slideshow"
-            label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW"
-            description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW_DESC"
-    >
-        <field type="spacer" name="test_inner_01" hr="true"/>
-
-        <field
-                name="slides_layout"
-                type="SlideshowSelect"
-                label="JFIELD_ALT_LAYOUT_LABEL"
-                class="custom-select"
-                extension="com_rsgallery2"
-        />
-
-        <field
-                name="auto_start"
-                type="list"
-                default="1"
-                label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
-                description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
-        >
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-        <field name="interval"
-               type="number"
-               default="2500"
-               label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
-               description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
-        >
-        </field>
-
-        <field name="showArrows"
-               type="list"
-               default="1"
-               label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
-               description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-        <field
-                name="darkMode"
-                type="list"
-                default="1"
-                label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
-                description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
-        >
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>
-        </field>
-
-
-    </fieldset>
-
-    <!-- ... Tab 01 ................................. -->
-
-    <!--	<fieldset-->
-    <!--			name="TestInner01"-->
-    <!--			label="TestInner01"-->
-    <!--			description="Testinner01 description"-->
-    <!--	>-->
-    <!--		<field type="spacer" name="test_inner_01" hr="true" />-->
-    <!--		<field name="jpegQuality_01" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />-->
-    <!--		<field name="jpegQuality_02" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_02" type="note" class="alert alert-secondary" close="true" label="LOREMIPSUM" description="secondary " />-->
-    <!--		<field name="jpegQuality_03" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_03" type="note" class="alert alert-success" close="true" label="LOREMIPSUM" description="success" />-->
-    <!--		<field name="jpegQuality_04" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_04" type="note" class="alert alert-danger" close="true" label="LOREMIPSUM" description="danger" />-->
-    <!--		<field name="jpegQuality_05" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_05" type="note" class="alert alert-warning" close="true" label="LOREMIPSUM" description="warning" />-->
-    <!--		<field name="jpegQuality_06" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_06" type="note" class="alert alert-info" close="true" label="LOREMIPSUM" description="info" />-->
-    <!--		<field name="jpegQuality_07" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_07" type="note" class="alert alert-light" close="true" label="LOREMIPSUM" description="light" />-->
-    <!--		<field name="jpegQuality_08" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-    <!--		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />-->
-    <!--		<field name="jpegQuality_09" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-
-    <!--	</fieldset>-->
-
-    <!-- ... Tab 02 ................................. -->
-
-    <!--	<fieldset-->
-    <!--			name="TestInner02"-->
-    <!--			label="TestInner02"-->
-    <!--			description="TestInner02 description"-->
-    <!--	>-->
-    <!--		<field type="spacer" name="test_inner_02" hr="true" />-->
-    <!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
-
-    <!--		<field -->
-    <!--				name="media_query_page_width" -->
-    <!--				type="note" -->
-    <!--				class="alert alert-primary" -->
-    <!--				close="true" -->
-    <!--				label="LOREMIPSUM" -->
-    <!--				description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," -->
-    <!--		/>-->
-
-    <!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
-
-    <!--		<field -->
-    <!--				name="media_query_" -->
-    <!--				type="note" -->
-    <!--				class="alert alert-dark" -->
-    <!--				close="true" -->
-    <!--				label="LOREMIPSUM" -->
-    <!--				description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" -->
-    <!--		/>-->
-
-    <!--		<field -->
-    <!--				name="note31" -->
-    <!--				type="note" -->
-    <!--				class="alert alert-dark" -->
-    <!--				close="true" -->
-    <!--				label="LOREMIPSUM" -->
-    <!--				description="02_LOREMIPSUM_DESC" -->
-    <!--		/>-->
-    <!--		-->
-    <!--	</fieldset>-->
-
-    <!-- ... Tab Permissions ................................. -->
-
-    <fieldset
-            name="permissions"
-            label="JCONFIG_PERMISSIONS_LABEL"
-            description="JCONFIG_PERMISSIONS_DESC"
-    >
-
-        <!-- ... block  ... -->
-
-        <!-- field name="note31" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="02_LOREMIPSUM_DESC" /-->
-
-        <field
-                name="rules"
-                type="rules"
-                label="JCONFIG_PERMISSIONS_LABEL"
-                validate="rules"
-                filter="rules"
-                component="com_rsgallery2"
-                section="component"
-        />
-
-    </fieldset>
-
-    <!-- ... Temp  ................................. -->
-
-
-    <!-- ... End Temp .............................. -->
+	<!-- ... Tab General ................................. -->
+
+	<fieldset
+			name="rsgallery2"
+			label="COM_RSGALLERY2_CONFIG_TAB_GENERAL"
+			description="COM_RSGALLERY2_CONFIG_TAB_GENERAL_DESC"
+	>
+		<!-- needed when more entries are general ...
+				field name="intro_text"
+				type="editor"
+				label="COM_RSGALLERY2_INTRODUCTION_TEXT"
+				description="COM_RSGALLERY2_INTRODUCTION_DESC"
+				filter="JComponentHelper::filterText"
+				buttons="false"
+		/-->
+
+		<field
+				name="ToDo_list_general"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - general"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">* add _NOTE_ part to lang of note elements</option>
+			<option value="1">* use display instead of show for const and menu ...</option>
+			<option value="2">*</option>
+			<option value="3">*</option>
+			<option value="4">*</option>
+		</field>
+
+
+		<field
+				name="sef_ids"
+				type="radio"
+				layout="joomla.form.field.radio.switcher"
+				default="0"
+				label="JGLOBAL_SEF_NOIDS_LABEL"
+				filter="integer"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+
+		<!--field
+				id="advancedSef"
+				name="advancedSef"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_ADVANCED_SEF"
+				description="COM_RSGALLERY2_ADVANCED_SEF_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field-->
+
+		<field
+				type="spacer"
+				name="spacer_admin"
+				hr="true"
+		/>
+
+	</fieldset>
+
+	<!-- ... Tab Upload ................................. -->
+
+	<fieldset
+			name="upload"
+			label="COM_RSGALLERY2_CONFIG_TAB_UPLOAD"
+			description="COM_RSGALLERY2_CONFIG_TAB_UPLOAD_DESC"
+	>
+		<!--field
+				type="spacer"
+				name="spacer_upload_01"
+				hr="true"
+		/-->
+
+		<field
+				name="ToDo_list_upload"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - upload"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">*</option>
+			<option value="1">*</option>
+			<option value="2">*</option>
+			<option value="3">*</option>
+			<option value="4">*</option>
+		</field>
+
+
+		<!-- ... block upload images ... -->
+
+		<field name="note_images_upload"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
+		       description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION_DESC"
+		/>
+
+		<field
+				name="image_size"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_DESC"
+				class="">
+		</field>
+		<field
+				name="thumb_size"
+				type="number"
+				default="120"
+				label="COM_RSGALLERY2_THUMBNAIL_SIZE"
+				description="COM_RSGALLERY2_THUMBNAIL_SIZE_DESC"
+				class="">
+		</field>
+		<field
+				name="thumb_style"
+				type="list"
+				default="0"
+				label="COM_RSGALLERY2_THUMBNAIL_STYLE"
+				description="COM_RSGALLERY2_THUMBNAIL_STYLE_DESC"
+				class=""
+		>
+			<option value="0">COM_RSGALLERY2_PROPORTIONAL</option>
+			<option value="1">COM_RSGALLERY2_SQUARE</option>
+		</field>
+		<field
+				name="jpegQuality"
+				type="number"
+				default="80"
+				label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE"
+				description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC"
+				class="">
+		</field>
+		<field
+				name="allowedFileTypes"
+				type="text"
+				default="jpg,jpeg,gif,png"
+				label="COM_RSGALLERY2_ALLOWED_FILETYPES"
+				description="COM_RSGALLERY2_ALLOWED_FILETYPES_DESC"
+				readonly="true"
+				class="readonly"
+		>
+		</field>
+		<field
+				name="keepOriginalImage"
+				type="radio"
+				default="1"
+				label="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE"
+				description="COM_RSGALLERY2_KEEP_ORIGINAL_IMAGE_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field
+				id="isPreSelectLatestGallery"
+				name="isPreSelectLatestGallery"
+				type="radio"
+				default="1"
+				label="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_LABEL"
+				description="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ... block general section ... -->
+
+		<field
+				type="spacer"
+				name="spacer_upload_ftp_01"
+				hr="true"
+		/>
+
+		<field
+				name="note_upload_general"
+				type="note"
+				class="alert alert-primary"
+				close="true"
+				label="COM_RSGALLERY2_CFG_UPLOAD_GENERAL"
+				description="COM_RSGALLERY2_CFG_UPLOAD_GENERAL_DESC"
+		/>
+
+		<field
+				name="ftp_path"
+				type="text"
+				default=""
+				label="COM_RSGALLERY2_FTP_PATH"
+				description="COM_RSGALLERY2_FTP_PATH_DESC"
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+
+		<!-- ... block location ... -->
+
+		<field
+				type="spacer"
+				name="spacer_upload_location_01"
+				hr="true"
+		/>
+
+		<field name="note_upload_location"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_IMAGES_LOCATION"
+		       description="COM_RSGALLERY2_CFG_IMAGES_LOCATION_DESC"
+		/>
+
+		<field
+				name="imgPath_root"
+				type="text"
+				default="/images/rsgallery2"
+				label="COM_RSGALLERY2_CFG_ROOT_LOCATION"
+				description="COM_RSGALLERY2_CFG_ROOT_LOCATION_DESC"
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+
+		<!-- ... block J3x ... -->
+
+		<field name="note_images_outdated"
+		       type="note"
+		       class="alert alert-error"
+		       close="true"
+		       label="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED"
+		       description="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED_DESC"
+		/>
+
+		<field
+				name="useJ3xOldPaths"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_USE_J3X_PATHS"
+				description="COM_RSGALLERY2_USE_J3X_PATHS_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<field
+				name="imgPath_original"
+				type="text"
+				default="/images/rsgallery/original"
+				label="COM_RSGALLERY2_ORIGINAL_IMAGE_PATH"
+				description=""
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+		<field
+				name="imgPath_display"
+				type="text"
+				default="/images/rsgallery/display"
+				label="COM_RSGALLERY2_DISPLAY_IMAGE_PATH"
+				description=""
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+		<field
+				name="imgPath_thumb"
+				type="text"
+				default="/images/rsgallery/thumb"
+				label="COM_RSGALLERY2_THUMB_PATH"
+				description=""
+				class="input-large-text input-xxlarge"
+		>
+		</field>
+		<field
+				name="image_width"
+				type="text"
+				default="400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class="">
+			>
+		</field>
+	</fieldset>
+
+	<!-- ... Tab Galleries view ................................. -->
+
+	<fieldset
+			name="GalleriesView"
+			label="COM_RSGALLERY2_CONFIG_TAB_GALLERIES"
+			description="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_DESC"
+	>
+
+		<field
+				name="ToDo_list_galleries_view"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - galleries view"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
+			<option value="1">* Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox ....</option>
+			<option value="2">* Order of galleries: auto, time, name , ...</option>
+			<option value="3">*</option>
+			<option value="4">*</option>
+		</field>
+
+		<!-- ... block  ... -->
+
+		<field name="note_galleries_view_layout"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT"
+		       description="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT_DESC"
+		/>
+
+		<field
+				name="images_layout"
+				type="LayoutGallery"
+				label="JFIELD_ALT_LAYOUT_LABEL"
+				class="custom-select"
+				extension="com_rsgallery2"
+		/>
+
+		<field
+				name="galleries_column_arrangement"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_DESC"
+		>
+			<option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_COUNT</option>
+		</field>
+
+		<field
+				name="max_columns_in_galleries_view"
+				type="number"
+				default="4"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS_DESC"
+				showon="galleries_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="galleries_row_arrangement"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_DESC"
+				showon="galleries_column_arrangement:1"
+		>
+			<option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_ROW_COUNT</option>
+			<option value="2">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_MAX_COUNT</option>
+		</field>
+
+		<field
+				name="max_rows_in_galleries_view"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS_DESC"
+				showon="galleries_row_arrangement:1[AND]galleries_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="max_thumbs_in_galleries_view"
+				type="number"
+				default="20"
+				label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS"
+				description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS_DESC"
+				showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:2[OR]galleries_column_arrangement:0"
+		>
+		</field>
+
+		<field
+				name="layout_galleries_thumbs"
+				type="list"
+				default="layout02"
+				label="*Galleries thumbs layout"
+				description="*Select layout of thumbs in gallery overview"
+		>
+			<option value="layout01">*layout 1</option>
+			<option value="layout02">*layout 2</option>
+		</field>
+
+		<field
+				name="galleries_show_title"
+				type="list"
+				default="0"
+				label="*Show gallery title"
+				description="*Show title of gallery near thumb"
+		>
+			<option value="0">JNO</option>
+			<option value="1">*Above thumb</option>
+			<option value="2">*Below thumb</option>
+			<option value="3">*Above description</option>
+			<option value="4">*Below description</option>
+		</field>
+
+		<field
+				name="galleries_show_description"
+				type="list"
+				default="layout01"
+				label="*Show gallery description"
+				description="*Select display location of gellery description"
+		>
+			<option value="0">JNO</option>
+			<option value="1">*Above thumb</option>
+			<option value="2">*Right beside thumb</option>
+			<option value="3">*Below thumb</option>
+			<option value="4">*Left beside thumb</option>
+		</field>
+
+
+		<!-- ... block  ... -->
+
+		<field name="note_galleries_view_YYYY"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
+		       description="Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... "
+		/>
+	</fieldset>
+
+	<!-- ... Tab Images ................................. -->
+
+	<fieldset
+			name="Images"
+			label="COM_RSGALLERY2_CONFIG_TAB_IMAGES"
+			description="COM_RSGALLERY2_CONFIG_TAB_IMAGES_DESC"
+	>
+		<field
+				type="spacer"
+				name="spacer_images_01"
+				hr="true"
+		/>
+
+		<field
+				name="ToDo_list_images_view"
+				type="list"
+				default="0"
+				label="!!! ToDo !!!: In config - images view"
+				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+				class="text text-danger"
+				showon="isDevelop:1"
+		>
+			<option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
+			<option value="1">* order of images: auto, time, name , ...</option>
+			<option value="2">*</option>
+			<option value="3">*</option>
+			<option value="4">*</option>
+		</field>
+
+		<!-- ... block  ... -->
+
+		<field name="note_images_view_layout"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT"
+		       description="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT_DESC"
+		/>
+
+		<field
+				name="images_column_arrangement"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
+		>
+			<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
+		</field>
+
+		<field
+				name="max_columns_in_images_view"
+				type="number"
+				default="4"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMNS_DESC"
+				showon="images_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="images_row_arrangement"
+				type="list"
+				default="2"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
+				showon="images_column_arrangement:1"
+		>
+			<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
+			<option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
+		</field>
+
+		<field
+				name="max_rows_in_images_view"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
+				showon="images_row_arrangement:1[AND]images_column_arrangement:1"
+		>
+		</field>
+
+		<field
+				name="max_thumbs_in_images_view"
+				type="number"
+				default="20"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_THUMBS_DESC"
+				showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0"
+		>
+		</field>
+
+		<field
+				name="layout_images_thumbs"
+				type="list"
+				default="Layout of images thumbs"
+				label="*Thumbs layout"
+				description="Select layout of thumbs in this gallery"
+		>
+			<option value="layout01">*layout 1</option>
+			<option value="layout02">*layout 2</option>
+		</field>
+
+		<field
+				name="images_show_title"
+				type="list"
+				default="0"
+				label="*Show image title"
+				description="*Show title of image near thumb"
+		>
+			<option value="0">JNO</option>
+			<option value="1">*Above thumb</option>
+			<option value="2">*Below thumb</option>
+			<option value="3">*Above description</option>
+			<option value="4">*Below description</option>
+		</field>
+
+		<field
+				name="images_show_description"
+				type="list"
+				default="layout01"
+				label="*Show gallery description"
+				description="Select display location of gellery description"
+		>
+			<option value="0">JNO</option>
+			<option value="1">*Above thumb</option>
+			<option value="2">*Right beside thumb</option>
+			<option value="3">*Below thumb</option>
+			<option value="4">*Left beside thumb</option>
+		</field>
+
+		<field
+				name="image_order_right_to_left"
+				type="radio"
+				label="COM_RSGALLERY2_MENU_GALLERY_ORDER_IMG_FROM_RIGHT"
+				description="COM_RSGALLERY2_MENU_GALLERY_ORDER_IMG_FROM_RIGHT_DESC"
+				default="0"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+				name="image_order_by"
+				type="list"
+				label="*Sort images by "
+				description="*"
+				default="0"
+				class="btn-group btn-group-yesno">
+			<option value="0">*Date/time ASC</option>
+			<option value="1">*Date/time ASC</option>
+			<option value="2">*Name Asc</option>
+			<option value="3">*Name Desc</option>
+			<option value="4">*Random</option>
+		</field>
+	</fieldset>
+
+	<!-- ... Tab Debug ................................. -->
+
+	<fieldset
+			name="debug"
+			label="COM_RSGALLERY2_CONFIG_TAB_DEBUG"
+			description="COM_RSGALLERY2_CONFIG_TAB_DEBUG_DESC"
+	>
+		<field type="spacer"
+		       name="test_inner_02"
+		       hr="true"/>
+		<!-- ... block  ... -->
+
+		<!--field
+				id="j3x_db_config_copied"
+				name="j3x_db_config_copied"
+				type="hidden"
+				default="0"
+		/-->
+
+		<field
+				id="j3x_db_galleries_copied"
+				name="j3x_db_galleries_copied"
+				type="hidden"
+				default="0"
+		/>
+
+		<field
+				id="j3x_db_images_copied"
+				name="j3x_db_images_copied"
+				type="hidden"
+				default="0"
+		/>
+
+		<field
+				id="isDebugBackend"
+				name="isDebugBackend"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEBUG_BACKEND"
+				description="COM_RSGALLERY2_DEBUG_BACKEND_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field
+				id="isDebugSite"
+				name="isDebugSite"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEBUG_SITE"
+				description="COM_RSGALLERY2_DEBUG_SITE_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		<field
+				id="isDevelop"
+				name="isDevelop"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_DEVELOP"
+				description="COM_RSGALLERY2_DEVELOP_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+	</fieldset>
+
+
+	<!--	&lt;!&ndash; ... Tab j3x legacy layout ................................. &ndash;&gt;-->
+
+	<!--	<fieldset-->
+	<!--			name="j3x_legacy_layout"-->
+	<!--			label=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"-->
+	<!--			description=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"-->
+	<!--	>-->
+	<!--		&lt;!&ndash;field-->
+	<!--				type="spacer"-->
+	<!--				name="spacer_findings_01"-->
+	<!--				hr="true"-->
+	<!--		/&ndash;&gt;-->
+
+	<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+
+	<!--		<field-->
+	<!--				name="galDisplayCountJ3x"-->
+	<!--				type="number"-->
+	<!--				default="5"-->
+	<!--				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"-->
+	<!--				description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"-->
+	<!--				class="">-->
+	<!--		</field>-->
+
+	<!--		&lt;!&ndash;field-->
+	<!--				name="image_size"-->
+	<!--				type="text"-->
+	<!--				default="800,600,400"-->
+	<!--				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"-->
+	<!--				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"-->
+	<!--				class=""-->
+	<!--		>-->
+	<!--		</field&ndash;&gt;-->
+	<!--		-->
+	<!--	</fieldset>-->
+
+	<!-- ... Tab j3x legacy root galleries ................................. -->
+
+	<fieldset
+			name="j3x_legacy_galleries"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"
+	>
+		<!--field
+				type="spacer"
+				name="spacer_findings_01"
+				hr="true"
+		/-->
+
+		<!-- ... block j3x gallery header ... -->
+
+		<field name="note_j3x_gallery_data"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA"
+		       description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA_DESC"
+		/>
+
+		<field
+				name="galleries_show_slideshow"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="galleries_show_owner"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
+				class="btn-group btn-group-yesno"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="galleries_show_size"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE_DESC"
+				class="btn-group btn-group-yesno">
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="galleries_show_date"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
+				class="btn-group btn-group-yesno">
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
+		<!-- ... block images layout... -->
+
+		<field name="note_images_upload"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT"
+		       description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT_DESC"
+		/>
+
+
+		<field
+				name="max_thumbs_in_root_galleries_view_j3x"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
+				description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
+				class="">
+		</field>
+
+		<!--field
+				name="galThumbDisplaySizeJ3x"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<!-- ==== ToDo: rootThumbDisplaySizeJ3x ========= -->
+		<!-- ==== ToDo: isRootShowGallerySearchJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGallerySelectionJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGalNameJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGalDescriptionJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowSlideshowJ3x yes/no ========= -->
+		<!-- ==== ToDo: isRootShowGalImageSearchJ3x yes/no ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+		<!-- ==== ToDo: isRootLatestImagesJ3x yes / no ========= -->
+		<!-- ==== ToDo: isRootRandomImagesJ3x yes no ========= -->
+
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+
+	</fieldset>
+
+	<!-- ... Tab j3x legacy gallery ................................. -->
+
+	<fieldset
+			name="j3x_legacy_gallery"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_GALLERY"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_GALLERY_DESC"
+	>
+		<!--field
+				type="spacer"
+				name="spacer_findings_01"
+				hr="true"
+		/-->
+
+		<!-- ... block gallery header ... -->
+
+		<field name="note_j3x_gallery_data"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES"
+		       description="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES_DESC"
+		/>
+
+		<field
+				name="gallery_show_title"
+				type="radio"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
+				default="0"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="gallery_show_description"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="gallery_show_slideshow"
+				type="radio"
+				default="1"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
+				class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
+		<!-- ... block images layout... -->
+
+		<field name="note_images_upload"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT"
+		       description="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT_DESC"
+		/>
+
+
+		<!-- ... thumb style float table ... -->
+		<field
+				name="images_column_arrangement_j3x"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE"
+				description="COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_DESC"
+		>
+			<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_AUTO</option>
+			<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_COLUMN_TYPE_COUNT</option>
+		</field>
+
+		<!-- ...   ... -->
+		<field
+				name="max_columns_in_images_view_j3x"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS"
+				description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC"
+				showon="images_column_arrangement_j3x:1"
+				class="">
+		</field>
+
+		<!-- ...   ... -->
+		<field
+				name="max_thumbs_in_images_view_j3x"
+				type="number"
+				default="5"
+				label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
+				description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW_DESC"
+				showon="images_column_arrangement_j3x:1"
+				class="">
+		</field>
+
+		<!--field
+				name="image_size"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<!-- ==== ToDo: imgThumbDisplaySizeJ3x ========= -->
+		<!-- ==== ToDo: isImgDescriptionJ3x yes/no ========= -->
+		<!-- ==== ToDo: isImgShowSlideshowJ3x yes/no ========= -->
+		<!-- ==== ToDo: isImgImageSearchJ3x yes/no ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  idGalShowPartent (link/thumb) yes/no ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+
+	</fieldset>
+
+	<!-- ... Tab j3x legacy slide image ................................. -->
+
+	<fieldset
+			name="j3x_legacy_image_slide_page"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_IMAGE_SLIDE_PAGE"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_IMAGE_SLIDE_PAGE_DESC"
+	>
+		<!--field
+				type="spacer"
+				name="spacer_findings_01"
+				hr="true"
+		/-->
+
+		<!-- ... block  ... -->
+
+		<field
+				name="imageSizeSlpJ3x"
+				type="text"
+				default="800x600"
+				label="COM_RSGALLERY2_J3X_SLP_DISPLAY_IMAGE_SIZE"
+				description="COM_RSGALLERY2_J3X_SLP_DISPLAY_IMAGE_SIZE_DESC"
+				class=""
+		>
+		</field>
+
+		<!--field
+				name="image_size"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<!--field
+				name="image_size"
+				type="text"
+				default="800,600,400"
+				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
+				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
+				class=""
+		>
+		</field-->
+
+		<field
+				name="isSlpShowImgDescriptionJ3x"
+				type="radio"
+				default="1"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DESCRIPTION"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DESCRIPTION_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpShowDownloadJ3x yes/no ========= -->
+		<field
+				name="isSlpShowDownloadJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DOWNLOAD"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_DOWNLOAD_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpShowVotingJ3x yes/no ========= -->
+		<field
+				name="isSlpShowVotingJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_VOTING"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_VOTING_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpShowCommentsJ3x yes/no ========= -->
+		<field
+				name="isSlpShowCommentsJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_COMMENTS"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_COMMENTS_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpShowExif yes/no ========= -->
+		<field
+				name="isSlpShowExifJ3x"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_EXIF"
+				description="COM_RSGALLERY2_CFG_J3X_SLP_SHOW_EXIF_DESC"
+				layout="joomla.form.field.radio.switcher"
+				filter="integer"
+				validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+
+		<!-- ==== ToDo: isSlpExifTagSelection yes/no ========= -->
+
+		<!-- ==== Exif selection ========= -->
+
+		<field
+				id="exifTagsJ3x"
+				name="exifTagsJ3x"
+				type="ExifList"
+				label="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY"
+				description="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY_DESC"
+				class="inputbox"
+				size="5"
+				multiple="true"
+				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+				showon="isSlpShowExifJ3x:1"
+		>
+		</field>
+
+		<!-- ==== ToDo:  ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+		<!-- ==== ToDo:  yes/no ========= -->
+
+	</fieldset>
+
+	<!-- ... Tab j3x legacy slide show ................................. -->
+
+	<fieldset
+			name="j3x_legacy_slideshow"
+			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW"
+			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW_DESC"
+	>
+		<field type="spacer"
+		       name="test_inner_01"
+		       hr="true"/>
+
+		<field
+				name="slides_layout"
+				type="SlideshowSelect"
+				label="JFIELD_ALT_LAYOUT_LABEL"
+				class="custom-select"
+				extension="com_rsgallery2"
+		/>
+
+		<field
+				name="auto_start"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_SLIDESHOW_AUTOSTART"
+				description="COM_RSGALLERY2_SLIDESHOW_AUTOSTART_DESC"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field name="interval"
+		       type="number"
+		       default="2500"
+		       label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
+		       description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
+		>
+		</field>
+
+		<field name="showArrows"
+		       type="list"
+		       default="1"
+		       label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
+		       description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+		<field
+				name="darkMode"
+				type="list"
+				default="1"
+				label="COM_RSGALLERY2_SLIDESHOW_DARK_MODE"
+				description="COM_RSGALLERY2_SLIDESHOW_DARK_MODE_DESC"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
+
+	</fieldset>
+
+	<!-- ... Tab 01 ................................. -->
+
+	<!--	<fieldset-->
+	<!--			name="TestInner01"-->
+	<!--			label="TestInner01"-->
+	<!--			description="Testinner01 description"-->
+	<!--	>-->
+	<!--		<field type="spacer" name="test_inner_01" hr="true" />-->
+	<!--		<field name="jpegQuality_01" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />-->
+	<!--		<field name="jpegQuality_02" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_02" type="note" class="alert alert-secondary" close="true" label="LOREMIPSUM" description="secondary " />-->
+	<!--		<field name="jpegQuality_03" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_03" type="note" class="alert alert-success" close="true" label="LOREMIPSUM" description="success" />-->
+	<!--		<field name="jpegQuality_04" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_04" type="note" class="alert alert-danger" close="true" label="LOREMIPSUM" description="danger" />-->
+	<!--		<field name="jpegQuality_05" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_05" type="note" class="alert alert-warning" close="true" label="LOREMIPSUM" description="warning" />-->
+	<!--		<field name="jpegQuality_06" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_06" type="note" class="alert alert-info" close="true" label="LOREMIPSUM" description="info" />-->
+	<!--		<field name="jpegQuality_07" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_07" type="note" class="alert alert-light" close="true" label="LOREMIPSUM" description="light" />-->
+	<!--		<field name="jpegQuality_08" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />-->
+	<!--		<field name="jpegQuality_09" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+
+	<!--	</fieldset>-->
+
+	<!-- ... Tab 02 ................................. -->
+
+	<!--	<fieldset-->
+	<!--			name="TestInner02"-->
+	<!--			label="TestInner02"-->
+	<!--			description="TestInner02 description"-->
+	<!--	>-->
+	<!--		<field type="spacer" name="test_inner_02" hr="true" />-->
+	<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+
+	<!--		<field -->
+	<!--				name="media_query_page_width" -->
+	<!--				type="note" -->
+	<!--				class="alert alert-primary" -->
+	<!--				close="true" -->
+	<!--				label="LOREMIPSUM" -->
+	<!--				description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," -->
+	<!--		/>-->
+
+	<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+
+	<!--		<field -->
+	<!--				name="media_query_" -->
+	<!--				type="note" -->
+	<!--				class="alert alert-dark" -->
+	<!--				close="true" -->
+	<!--				label="LOREMIPSUM" -->
+	<!--				description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" -->
+	<!--		/>-->
+
+	<!--		<field -->
+	<!--				name="note31" -->
+	<!--				type="note" -->
+	<!--				class="alert alert-dark" -->
+	<!--				close="true" -->
+	<!--				label="LOREMIPSUM" -->
+	<!--				description="02_LOREMIPSUM_DESC" -->
+	<!--		/>-->
+	<!--		-->
+	<!--	</fieldset>-->
+
+	<!-- ... Tab Permissions ................................. -->
+
+	<fieldset
+			name="permissions"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			description="JCONFIG_PERMISSIONS_DESC"
+	>
+
+		<!-- ... block  ... -->
+
+		<!-- field name="note31" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="02_LOREMIPSUM_DESC" /-->
+
+		<field
+				name="rules"
+				type="rules"
+				label="JCONFIG_PERMISSIONS_LABEL"
+				validate="rules"
+				filter="rules"
+				component="com_rsgallery2"
+				section="component"
+		/>
+
+	</fieldset>
+
+	<!-- ... Temp  ................................. -->
+
+
+	<!-- ... End Temp .............................. -->
 
 </config>

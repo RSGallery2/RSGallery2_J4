@@ -9,24 +9,25 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Upload;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Form\Form;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\FilesystemHelper;
-use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
-use Joomla\CMS\Router\Route;
+use Joomla\CMS\HTML\Helpers\Sidebar;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-
-//use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\UploadModel;
+
+use function defined;
+
+//use Joomla\CMS\Toolbar\Toolbar;
 
 /**
  * View class for a list of rsgallery2.
@@ -175,19 +176,17 @@ class HtmlView extends BaseHtmlView
         // $this->form = $form;
         // $this->item = $item;
 
-
         //---  --------------------------------------------------------------------
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
         Rsgallery2Helper::addSubmenu('upload');
-        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         //$Layout = Factory::getApplication()->input->get('layout');
         $this->addToolbar();
 
         return parent::display($tpl);
     }
-
 
     /**
      * Add the page title and toolbar.

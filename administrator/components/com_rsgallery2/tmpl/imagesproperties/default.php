@@ -7,8 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -18,7 +17,6 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\String\Inflector;
-
 
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/imagesProperties.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/imagesProperties.js', ['version' => 'auto', 'relative' => true]);
@@ -34,47 +32,47 @@ $extension = $this->escape($this->state->get('filter.extension'));
 echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
       method="post" name="adminForm" id="adminForm">
 
-    <div class="d-flex flex-row">
+	<div class="d-flex flex-row">
         <?php
         if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class="">
                 <?php
                 echo $this->sidebar; ?>
-            </div>
+			</div>
         <?php
         endif; ?>
-        <!--div class="<?php
+		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-            <div id="j-main-container" class="j-main-container">
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
-                <legend></legend>
-                <h2>
+				<legend></legend>
+				<h2>
                         <span class="mb-2">
 					<?php
                     echo Text::_('COM_RSGALLERY2_PROPERTIES_UPLOADED_IMAGES'); ?>
                         </span>
-                </h2>
+				</h2>
 
                 <?php
                 if (empty($this->items)) : ?>
-                    <div class="alert alert-no-items">
+					<div class="alert alert-no-items">
                         <?php
                         echo Text::_('COM_RSGALLERY2_NO_IMAGES_SELECTED_FOR_VIEW'); ?>
-                    </div>
+					</div>
                 <?php
                 else : ?>
 
-                    <span class="">
+					<span class="">
                             <?php
                             echo HTMLHelper::_('grid.checkall');
                             echo " ";
                             echo Text::_("COM_RSGALLERY2_SELECT_ALL");
                             ?>
                         </span>
-                    <br><br>
+					<br><br>
 
-                    <ul class="imagesPropArea">
+					<ul class="imagesPropArea">
                         <?php
                         $Idx = 0;
 
@@ -92,48 +90,48 @@ echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
                             }
 
                             ?>
-                            <li class="imagePropItem">
-                                <div class=" imgProperty">
-                                    <div class='imgContainer'>
-                                        <img src="<?php
+							<li class="imagePropItem">
+								<div class=" imgProperty">
+									<div class='imgContainer'>
+										<img src="<?php
                                         echo $src; ?>" class="img-rounded modalActive" alt="<?php
                                         echo $this->escape($item->name); ?>">
-                                    </div>
+									</div>
 
-                                    <div class="caption">
+									<div class="caption">
                                         <?php
                                         echo HTMLHelper::_('grid.id', $Idx, $item->id, false, 'sid'); ?>
-                                        <small>&nbsp;<?php
+										<small>&nbsp;<?php
                                             echo $this->escape($item->name); ?>&nbsp;(ID: <?php
                                             echo $this->escape($item->id); ?>)</small><br>
-                                    </div>
+									</div>
 
-                                    <div class="control-group">
-                                        <label class="control-label" for="title[]"><?php
+									<div class="control-group">
+										<label class="control-label" for="title[]"><?php
                                             echo Text::_('COM_RSGALLERY2_TITLE'); ?></label>
-                                        <div class="controls">
-                                            <input name="title[]" type="text" size="15" aria-invalid="false"
-                                                   value="<?php
+										<div class="controls">
+											<input name="title[]" type="text" size="15" aria-invalid="false"
+											       value="<?php
                                                    echo $this->escape($item->title); ?>"
-                                                   style="width:95%;>
+											       style="width:95%;>
                                         </div>
                                     </div>
 
                                     <!-- Gallery can't be changed. Disable input -->
                                     <div class=" control-group">
-                                        </div>
-                                        <label class="control-label" for="galleryID[]"><?php
+										</div>
+										<label class="control-label" for="galleryID[]"><?php
                                             echo Text::_('COM_RSGALLERY2_GALLERY'); ?></label>
-                                        <div class="controls">
-                                            <input type="text" name="galleryID[]" placeholder="Idx:"
-                                                   value="<?php
+										<div class="controls">
+											<input type="text" name="galleryID[]" placeholder="Idx:"
+											       value="<?php
                                                    echo $this->escape($item->gallery_name); ?>"
-                                                   disabled style="width:95%;>
+											       disabled style="width:95%;>
                                         </div>
                                     </div>
 
                                     <div class=" control-group">
-                                            <!-- label class="control-label" for="description2[]" ><?php
+											<!-- label class="control-label" for="description2[]" ><?php
                                             echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
                                                 <div class="controls">
                                                 <textarea cols="15" rows="" name="description[]"
@@ -142,9 +140,9 @@ echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
                                             echo $this->escape($item->descr); ?></textarea>
                                                 </div-->
 
-                                            <label class="control-label" for="description[]"><?php
+											<label class="control-label" for="description[]"><?php
                                                 echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
-                                            <div class="controls">
+											<div class="controls">
                                                 <?php
                                                 if (!empty($this->editor)) {
                                                     // ToDo: Leave out some editor buttons : use config ...
@@ -164,42 +162,42 @@ echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
                                                     );
                                                 }
                                                 ?>
-                                            </div>
-                                        </div>
+											</div>
+										</div>
 
-                                        <input type="hidden" name="cid[]" value="<?php
+										<input type="hidden" name="cid[]" value="<?php
                                         echo $item->id; ?>">
-                                    </div>
-                            </li>
+									</div>
+							</li>
 
                             <?php
                         }
                         ?>
-                    </ul>
+					</ul>
 
-                    <div id="popupModal" class="Xmodal">
-                        <span id="popupClose" class="close">&times;</span>
-                        <img id="popupImage" class="modal-content">
-                        <div id="popupCaption"></div>
-                    </div>
+					<div id="popupModal" class="Xmodal">
+						<span id="popupClose" class="close">&times;</span>
+						<img id="popupImage" class="modal-content">
+						<div id="popupCaption"></div>
+					</div>
 
 
                 <?php
                 endif; ?>
 
-            </div>
+			</div>
 
-            <input type="hidden" name="extension" value="<?php
+			<input type="hidden" name="extension" value="<?php
             echo $extension; ?>">
-            <input type="hidden" name="task" value="">
-            <input type="hidden" name="boxchecked" value="0">
+			<input type="hidden" name="task" value="">
+			<input type="hidden" name="boxchecked" value="0">
             <?php
             echo HTMLHelper::_('form.token'); ?>
 
-        </div>
+		</div>
 
-    </div>
-    </div>
+	</div>
+	</div>
 </form>
 
 

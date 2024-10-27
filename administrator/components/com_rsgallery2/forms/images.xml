@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 >
-    <fieldset>
-        <field
-                name="gallery_id"
-                type="GallerySelect"
-                label="COM_RSGALLERY2_COPY_OR_MOVE_TO_GALLERY"
-                addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-        >
-        </field>
-    </fieldset>
+	<fieldset>
+		<field
+				name="gallery_id"
+				type="GallerySelect"
+				label="COM_RSGALLERY2_COPY_OR_MOVE_TO_GALLERY"
+				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+		>
+		</field>
+	</fieldset>
 
 
 </form>

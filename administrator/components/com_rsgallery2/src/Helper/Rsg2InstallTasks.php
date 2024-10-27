@@ -9,15 +9,12 @@
  * @license         GNU General Public License version 2 or later
  */
 
-
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // No direct access to this file
-\defined('_JEXEC') or die;
+use function defined;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Log\Log;
+defined('_JEXEC') or die;
 
 // required is used as classes may not be loaded on  fresh install
 // !!! needed by install
@@ -40,6 +37,11 @@ class Rsg2InstallTasks
      * @since __BUMP_VERSION__
      */
     // prepared, may not be used later
+    /**
+     *
+     *
+     * @since version
+     */
     static function initConfigFromXmlFile()
     {
         // Read extension manifest data,

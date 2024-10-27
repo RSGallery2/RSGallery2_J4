@@ -9,7 +9,7 @@
  * RSGallery is Free Software
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -25,19 +25,19 @@ use Joomla\CMS\Router\Route;
 <form action="<?php
 echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultparams'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-    <div class="d-flex flex-row">
+	<div class="d-flex flex-row">
         <?php
         if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class="">
                 <?php
                 echo $this->sidebar; ?>
-            </div>
+			</div>
         <?php
         endif; ?>
-        <!--div class="<?php
+		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-            <div id="j-main-container" class="j-main-container">
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
                 <?php
                 echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'PreparedButNotReady']); ?>
@@ -49,14 +49,14 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultparams
                     'PreparedButNotReady',
                     Text::_('RSG2 Parameter', true),
                 ); ?>
-                <p></p>
-                <legend><strong><?php
+				<p></p>
+				<legend><strong><?php
                         // echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC');
                         echo 'Check extension parameter: use before update ==> exchange config.xml and then check again';
 
                         ?></strong></legend>
-                <p>
-                <h3><?php
+				<p>
+				<h3><?php
                     // echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW');
                     ?></h3></p>
 
@@ -64,22 +64,22 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultparams
 
                 try {
                     ?>
-                    <h2>RSG2 Parameter</h2>
+					<h2>RSG2 Parameter</h2>
 
-                    <p>Default: from XML, Actual: RSG2, Merged: Add default to actual</p>
+					<p>Default: from XML, Actual: RSG2, Merged: Add default to actual</p>
 
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th>Default</th>
-                            <th>&lt;=&gt;</th>
-                            <th>Actual</th>
-                            <th>Merged</th>
-                        </tr>
-                        </thead>
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th scope="col">Name</th>
+							<th>Default</th>
+							<th>&lt;=&gt;</th>
+							<th>Actual</th>
+							<th>Merged</th>
+						</tr>
+						</thead>
 
-                        <tbody>
+						<tbody>
 
                         <?php
                         foreach ($this->mergedParams as $mergeName => $mergedValue) {
@@ -102,42 +102,40 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultparams
                                 $delta = '&lt;=&gt;';
                             }
 
-
                             ?>
 
-                            <tr>
-                                <td>
+							<tr>
+								<td>
                                     <?php
                                     echo $mergeName ?>
-                                </td>
-                                <td>
+								</td>
+								<td>
                                     <?php
                                     echo $defaultValue ?>
-                                </td>
-                                <td>
+								</td>
+								<td>
                                     <?php
                                     echo $delta ?>
-                                </td>
-                                <td>
+								</td>
+								<td>
                                     <?php
                                     echo $actualValue ?>
-                                </td>
-                                <td>
+								</td>
+								<td>
                                     <?php
                                     echo $mergedValue ?>
-                                </td>
-                            </tr>
+								</td>
+							</tr>
 
                             <?php
-                            ;
                         }
                         ?>
 
-                        </tbody>
-                    </table>
+						</tbody>
+					</table>
 
                     <?php
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -152,46 +150,46 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultparams
 
                 try {
                     ?>
-                    <h2>RSG2 surplus (old) parameter</h2>
+					<h2>RSG2 surplus (old) parameter</h2>
 
-                    <p>Additinal parameter which will be removed</p>
+					<p>Additinal parameter which will be removed</p>
 
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th>Actual</th>
-                        </tr>
-                        </thead>
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th scope="col">Name</th>
+							<th>Actual</th>
+						</tr>
+						</thead>
 
-                        <tbody>
+						<tbody>
 
                         <?php
                         foreach ($this->actualParams as $oldName => $oldValue) {
                             if (empty ($this->defaultParams[$mergeName])) {
                                 ?>
 
-                                <tr>
-                                    <td>
+								<tr>
+									<td>
                                         <?php
                                         echo $oldName ?>
-                                    </td>
-                                    <td>
+									</td>
+									<td>
                                         <?php
                                         echo $oldValue ?>
-                                    </td>
-                                </tr>
+									</td>
+								</tr>
 
                                 <?php
                             }
                         }
                         ?>
 
-                        </tbody>
-                    </table>
+						</tbody>
+					</table>
 
                     <?php
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -208,15 +206,15 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=defaultparams
                 <?php
                 echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-                <!--input type="hidden" name="option" value="com_rsgallery2" />
+				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-                <input type="hidden" name="task" value=""/>
+				<input type="hidden" name="task" value=""/>
                 <?php
                 echo HTMLHelper::_('form.token'); ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
     <?php
     echo HTMLHelper::_('form.token'); ?>

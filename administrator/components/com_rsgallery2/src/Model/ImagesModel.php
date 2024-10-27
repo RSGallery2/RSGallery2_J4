@@ -10,8 +10,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use DatabaseQuery;
+use Exception;
+use JLoader;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Factory;
@@ -20,9 +23,11 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
+use stdClass;
+use Table;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
-
+use function defined;
 
 /**
  * RSGallery2 Component Images Model
@@ -39,7 +44,7 @@ class ImagesModel extends ListModel
      *
      * @param   MVCFactoryInterface|null  $factory
      *
-     * @throws \Exception
+     * @throws Exception
      * @see     \JController
      * @since   5.0
      */
@@ -109,12 +114,10 @@ class ImagesModel extends ListModel
     {
         $app = Factory::getApplication();
 
-
         // Adjust the context to support modal layouts.
         if ($layout = $app->input->get('layout')) {
             $this->context .= '.' . $layout;
         }
-
 
         //$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
         //// Adjust the context to support forced languages.
@@ -185,7 +188,7 @@ class ImagesModel extends ListModel
     /**
      * Method to get a database query to list images.
      *
-     * @return  \DatabaseQuery object.
+     * @return  DatabaseQuery object.
      *
      * @since __BUMP_VERSION__
      */
@@ -425,7 +428,7 @@ class ImagesModel extends ListModel
     /**
      * Prepare and sanitize the table prior to saving.
      *
-     * @param   \Table  $table  A Table object.
+     * @param   Table  $table  A Table object.
      *
      * @return  void
      *
@@ -503,7 +506,7 @@ class ImagesModel extends ListModel
         }
 
         $hname = $cname . 'HelperAssociation';
-        \JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
+        JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
 
         $assoc = class_exists($hname) && !empty($hname::$category_association);
 
@@ -535,7 +538,7 @@ class ImagesModel extends ListModel
     /**
      * Method to load the countItems method from the extensions
      *
-     * @param   \stdClass[]  &$items      The category items
+     * @param   stdClass[]  &$items      The category items
      * @param   string        $extension  The category extension
      *
      * @return  void
@@ -601,7 +604,7 @@ class ImagesModel extends ListModel
 
                 $latest[] = $ImgInfo;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -659,7 +662,7 @@ class ImagesModel extends ListModel
              * $latest[] = $ImgInfo;
              * }
              * /**/
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'allImages: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -671,6 +674,13 @@ class ImagesModel extends ListModel
         return $rows;
     }
 
+    /**
+     * @param $id
+     *
+     * @return string
+     *
+     * @since version
+     */
     protected static function GalleryName($id)
     {
         // Create a new query object.
@@ -724,8 +734,8 @@ class ImagesModel extends ListModel
 
             $isImagesReset = $db->execute();
         } //catch (\RuntimeException $e)
-        catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage() . ' from InitImages');
+        catch (Exception $e) {
+            throw new RuntimeException($e->getMessage() . ' from InitImages');
         }
 
         return $isImagesReset;
@@ -786,7 +796,7 @@ class ImagesModel extends ListModel
             $db->setQuery($query);
 
             $fileNames = $db->loadObjectList(); // wrong $db->loadObjectList();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing query: "' . $query . '" in fileNamesFromIds $ImageIds count:' . count(
                     $ImageIds,
@@ -867,7 +877,7 @@ class ImagesModel extends ListModel
             $db->execute();
 
             $galleryId = $db->loadResult();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing query: "' . $query . '" in galleryIdFromId $ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -878,6 +888,5 @@ class ImagesModel extends ListModel
 
         return $galleryId;
     }
-
 
 } // class

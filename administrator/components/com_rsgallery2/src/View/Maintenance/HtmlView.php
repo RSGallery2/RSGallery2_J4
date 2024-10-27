@@ -9,27 +9,26 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Maintenance;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Finnern\Component\Lang4dev\Administrator\Helper\langFileNamesSet;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use Joomla\Utilities\ArrayHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 
-//use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+use function defined;
 
+//use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
 
 /**
  * View class for a list of rsgallery2.
@@ -122,7 +121,7 @@ class HtmlView extends BaseHtmlView
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
         Rsgallery2Helper::addSubmenu('maintenance');
-        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         $Layout = Factory::getApplication()->input->get('layout');
 
@@ -171,7 +170,7 @@ class HtmlView extends BaseHtmlView
                         if (!empty ($exifFileNames)) {
                             //--- extract exif data -----------------------------
 
-                            $imgModel                 = new \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel (
+                            $imgModel                 = new ImageModel (
                             );
                             $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
 
@@ -217,7 +216,6 @@ class HtmlView extends BaseHtmlView
                     } else {
                     }
                 }
-
 
                 $this->exifUserSelected  = imageExif::userExifTagsJ3x();
                 $this->exifTagsSupported = imageExif::supportedExifTags();
@@ -342,7 +340,6 @@ class HtmlView extends BaseHtmlView
                     'Undo prepare remove of RSG2',
                     false,
                 );
-
 
                 break;
         }

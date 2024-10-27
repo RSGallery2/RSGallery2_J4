@@ -15,8 +15,10 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 
+use function defined;
+
 // no direct access
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 /**
  * Version information class. Lives from the manifest file which it loads
@@ -30,6 +32,10 @@ class rsgallery2Version
 
     //Note: also set version number in config.class.php function rsgConfig
 //    var $PRODUCT = 'RSGallery2';
+    /**
+     * @var mixed|string
+     * @since version
+     */
     protected $name = 'RSGallery2';
     // Main Release Level: x.y.z
 //    var $RELEASE = '5.0.999';
@@ -134,6 +140,7 @@ class rsgallery2Version
      * /**/
     /**
      * Plain version
+     *
      * @return string PHP standardized version format
      * @since __BUMP_VERSION__
      */

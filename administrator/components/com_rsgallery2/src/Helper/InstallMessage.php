@@ -17,11 +17,12 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
+use RuntimeException;
 
-\defined('_JEXEC') or die;
+use function defined;
+
+defined('_JEXEC') or die;
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
@@ -30,6 +31,10 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
  */
 class InstallMessage
 {
+    /**
+     * @var string
+     * @since version
+     */
     protected $linksHtml = '';
     public $newRelease = '-1.0.0.1';
     public $oldRelease = '';
@@ -176,14 +181,14 @@ class InstallMessage
             $collapsed = false;
             // Cord display collapsed or not
             $changeLogText = ChangeLogModel::collapseContent($changelogTables, $id, $collapsed);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error in InstallMessage view: "' . 'ChangeLogHtml' . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         return $changeLogText;

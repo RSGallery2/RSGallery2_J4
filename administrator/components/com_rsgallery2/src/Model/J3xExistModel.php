@@ -9,11 +9,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
+
+use function defined;
 
 /**
  * Item Model for a Configuration items (options).
@@ -25,6 +28,12 @@ class J3xExistModel extends BaseModel
 
     // ToDo: attention a double of this function exist. Remove either of them
 
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
     static function J3xConfigTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_config');
@@ -52,7 +61,7 @@ class J3xExistModel extends BaseModel
             $checkTable = $db->replacePrefix($findTable);
 
             $tableExist = in_array($checkTable, $existingTables);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'J3xExistModel: J3xTableExist: Error executing query: "' . "SHOW_TABLES" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -63,7 +72,6 @@ class J3xExistModel extends BaseModel
 
         return $tableExist;
     }
-
 
 }
 

@@ -10,17 +10,18 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
+use JInput;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Controller\AdminController;
-use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Response\JsonResponse;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use RuntimeException;
+
+use function defined;
 
 /**
  * global $Rsg2DebugActive;
@@ -44,7 +45,7 @@ class ConfigController extends AdminController // FormController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since __BUMP_VERSION__
      */
@@ -225,7 +226,7 @@ class ConfigController extends AdminController // FormController
     /**
      *
      *
-     * @throws \Exception
+     * @throws Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -269,7 +270,7 @@ class ConfigController extends AdminController // FormController
                     $msg     .= "Error at uploading and inserting configuration file data'";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing prepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

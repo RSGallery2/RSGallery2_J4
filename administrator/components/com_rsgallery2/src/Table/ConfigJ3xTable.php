@@ -9,16 +9,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Table;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
-use Joomla\CMS\Language\Text;
-use Joomla\Registry\Registry;
-use Joomla\String\StringHelper;
+
+use function defined;
 
 /**
  * J3x config table

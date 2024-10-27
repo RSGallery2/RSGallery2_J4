@@ -9,13 +9,19 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use RuntimeException;
 
+use function defined;
+
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class MaintenanceModel extends BaseDatabaseModel
 {
 
@@ -44,7 +50,7 @@ class MaintenanceModel extends BaseDatabaseModel
                 $notPathList = implode('<br>', $notExisitnPaths);
                 Factory::getApplication()->enqueueMessage('No paths found for <br>' . $notPathList);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -65,7 +71,7 @@ class MaintenanceModel extends BaseDatabaseModel
                 $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
                 $isPathsRepaired &= $j4xImagePath->createAllPaths();
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -95,13 +101,12 @@ class MaintenanceModel extends BaseDatabaseModel
             // Get the options.
             //$galleryIds = $db->setQuery($query)->loadObjectList();
             $galleryIds = $db->setQuery($query)->loadColumn();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $galleryIds;
     }
-
 
 }
 

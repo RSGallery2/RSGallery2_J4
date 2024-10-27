@@ -9,16 +9,18 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Table;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Associations;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
-use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
-use Joomla\String\StringHelper;
+use UnexpectedValueException;
+
+use function defined;
 
 /**
  * Image table
@@ -26,6 +28,7 @@ use Joomla\String\StringHelper;
  * @since __BUMP_VERSION__
  */
 class ImageTable extends Table
+
 {
     /**
      * Constructor
@@ -70,14 +73,14 @@ class ImageTable extends Table
      *
      * @return  boolean  True on success.
      *
-     * @throws  \UnexpectedValueException
+     * @throws  UnexpectedValueException
      * @since __BUMP_VERSION__
      */
     public function check()
     {
         try {
             parent::check();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
 
             return false;
@@ -85,7 +88,7 @@ class ImageTable extends Table
 
         // Check for valid name.
         if (trim($this->name) == '') {
-            throw new \UnexpectedValueException(sprintf('The name is empty'));
+            throw new UnexpectedValueException(sprintf('The name is empty'));
         }
 
         //--- alias -------------------------------------------------------------
@@ -104,7 +107,7 @@ class ImageTable extends Table
 
         // Check the publish down date is not earlier than publish up.
         if (!empty($this->publish_down) && !empty($this->publish_up) && $this->publish_down < $this->publish_up) {
-            throw new \UnexpectedValueException(sprintf('End publish date is before start publish date.'));
+            throw new UnexpectedValueException(sprintf('End publish date is before start publish date.'));
         }
 
         // Clean up description -- eliminate quotes and <> brackets
@@ -129,7 +132,6 @@ class ImageTable extends Table
             $this->params = '{}';
         }
 
-
         if (!(int)$this->checked_out_time) {
             $this->checked_out_time = null;
         }
@@ -144,7 +146,6 @@ class ImageTable extends Table
 
         return true;
     }
-
 
     /**
      * Stores a image reference.

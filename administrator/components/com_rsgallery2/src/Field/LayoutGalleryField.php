@@ -12,7 +12,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
@@ -20,7 +20,9 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\DatabaseInterface;
+use RuntimeException;
+
+use function defined;
 
 /**
  * Collects available gallery ids and names and creates
@@ -89,7 +91,6 @@ class LayoutGalleryField extends ListField
 //			// Get the options.
 //			$galleries = $db->setQuery($query)->loadObjectList();
 
-
             /**
              * Detect available slideshows
              * Search in source folders
@@ -119,7 +120,7 @@ class LayoutGalleryField extends ListField
                     }
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -141,6 +142,13 @@ class LayoutGalleryField extends ListField
         return $options;
     }
 
+    /**
+     * @param   string  $layoutFolder
+     *
+     * @return array
+     *
+     * @since version
+     */
     private function subLayouts(string $layoutFolder)
     {
         $subLayouts = [];

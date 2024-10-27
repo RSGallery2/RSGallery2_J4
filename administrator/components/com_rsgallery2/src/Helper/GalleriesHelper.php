@@ -9,12 +9,15 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JLoader;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
+use Joomla\Filesystem\Path;
+
+use function defined;
 
 /**
  * Galleries helper.
@@ -55,7 +58,7 @@ class GalleriesHelper
             $prefix = ucfirst(str_replace('com_', '', $component));
             $cName  = $prefix . 'Helper';
 
-            \JLoader::register($cName, $file);
+            JLoader::register($cName, $file);
 
             if (class_exists($cName)) {
                 if (is_callable([$cName, 'addSubmenu'])) {

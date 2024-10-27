@@ -7,7 +7,7 @@
  * @copyright  (c) 2005-2024 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -22,15 +22,15 @@ $user = Factory::getApplication()->getIdentity();
 ?>
 
 <div class="container">
-    <div class="row">
-        <div class="form-group col-md-12">
-            <div class="controls">
+	<div class="row">
+		<div class="form-group col-md-12">
+			<div class="controls">
                 <?php
                 echo $this->form->renderField('gallery_id');
                 ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

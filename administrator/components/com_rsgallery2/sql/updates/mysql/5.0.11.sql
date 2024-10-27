@@ -2,42 +2,43 @@
 -- galleries
 --
 
-CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `thumb_id` int unsigned NOT NULL DEFAULT '0',
-  `base_path` varchar(255) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `#__rsg2_galleries`
+(
+	`id`               int                                                    NOT NULL AUTO_INCREMENT,
+	`name`             varchar(255)                                           NOT NULL DEFAULT '',
+	`alias`            varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+	`description`      text                                                   NOT NULL,
+	`thumb_id`         int unsigned                                           NOT NULL DEFAULT '0',
+	`base_path`        varchar(255)                                           NOT NULL DEFAULT '',
 
-  `note` varchar(255) NOT NULL,
-  `params` text NOT NULL,
-  `published` tinyint NOT NULL DEFAULT '1',
-  `publish_up` datetime,
-  `publish_down` datetime,
+	`note`             varchar(255)                                           NOT NULL,
+	`params`           text                                                   NOT NULL,
+	`published`        tinyint                                                NOT NULL DEFAULT '1',
+	`publish_up`       datetime,
+	`publish_down`     datetime,
 
-  `hits` int unsigned NOT NULL DEFAULT 0, 
+	`hits`             int unsigned                                           NOT NULL DEFAULT 0,
 
-  `checked_out` int unsigned NOT NULL DEFAULT 0,
-  `checked_out_time` datetime, 
-  `created` datetime NOT NULL,
-  `created_by` int unsigned NOT NULL DEFAULT 0,
-  `created_by_alias` varchar(255) NOT NULL DEFAULT '',
-  `modified` datetime NOT NULL,
-  `modified_by` int unsigned NOT NULL DEFAULT 0, 
-  
-  `parent_id` int NOT NULL DEFAULT 0,
-  `level` int DEFAULT 0 NOT NULL,
-  `path` varchar(400) NOT NULL DEFAULT '',
-  `lft` int DEFAULT 0 NOT NULL,
-  `rgt` int DEFAULT 0 NOT NULL,
+	`checked_out`      int unsigned                                           NOT NULL DEFAULT 0,
+	`checked_out_time` datetime,
+	`created`          datetime                                               NOT NULL,
+	`created_by`       int unsigned                                           NOT NULL DEFAULT 0,
+	`created_by_alias` varchar(255)                                           NOT NULL DEFAULT '',
+	`modified`         datetime                                               NOT NULL,
+	`modified_by`      int unsigned                                           NOT NULL DEFAULT 0,
 
-  `approved` tinyint unsigned NOT NULL DEFAULT '1',
-  `asset_id` int NOT NULL DEFAULT 0,
-  `access` int unsigned NOT NULL DEFAULT 0,
+	`parent_id`        int                                                    NOT NULL DEFAULT 0,
+	`level`            int                                                             DEFAULT 0 NOT NULL,
+	`path`             varchar(400)                                           NOT NULL DEFAULT '',
+	`lft`              int                                                             DEFAULT 0 NOT NULL,
+	`rgt`              int                                                             DEFAULT 0 NOT NULL,
 
-  `version` int unsigned NOT NULL DEFAULT 1,
-  `sizes` text NOT NULL,
+	`approved`         tinyint unsigned                                       NOT NULL DEFAULT '1',
+	`asset_id`         int                                                    NOT NULL DEFAULT 0,
+	`access`           int unsigned                                           NOT NULL DEFAULT 0,
+
+	`version`          int unsigned                                           NOT NULL DEFAULT 1,
+	`sizes`            text                                                   NOT NULL,
 
 --  `metakey` text NOT NULL,
 --  `metadesc` text NOT NULL,
@@ -49,13 +50,15 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 --  KEY `idx_catid` (`catid`),
 --  KEY `idx_language` (`language`),
 
-  PRIMARY KEY (`id`),
-  KEY `idx_access` (`access`),  
-  KEY `idx_checkout` (`checked_out`),
-  KEY `idx_state` (`published`),
-  KEY `idx_left_right` (`lft`, `rgt`), 
-  KEY `idx_createdby` (`created_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+	PRIMARY KEY (`id`),
+	KEY `idx_access` (`access`),
+	KEY `idx_checkout` (`checked_out`),
+	KEY `idx_state` (`published`),
+	KEY `idx_left_right` (`lft`, `rgt`),
+	KEY `idx_createdby` (`created_by`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 -- INSERT INTO `#__rsg2_galleries` (`name`,`alias`,`description`, `parent_id`, `level`, `path`, `lft`, `rgt`) VALUES
 -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
@@ -65,52 +68,55 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries` (
 -- images / files
 --
 
-CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
-  `id` serial NOT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `original_path` varchar(255) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `#__rsg2_images`
+(
+	`id`               serial                                                 NOT NULL,
+	`name`             varchar(255)                                           NOT NULL DEFAULT '',
+	`alias`            varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+	`description`      text                                                   NOT NULL,
+	`original_path`    varchar(255)                                           NOT NULL DEFAULT '',
 
-  `gallery_id` int unsigned NOT NULL DEFAULT '0',
-  `title` varchar(255) NOT NULL DEFAULT '',
+	`gallery_id`       int unsigned                                           NOT NULL DEFAULT '0',
+	`title`            varchar(255)                                           NOT NULL DEFAULT '',
 
-  `note` varchar(255) NOT NULL DEFAULT '',
-  `params` text NOT NULL,
-  `published` tinyint NOT NULL DEFAULT '1',
+	`note`             varchar(255)                                           NOT NULL DEFAULT '',
+	`params`           text                                                   NOT NULL,
+	`published`        tinyint                                                NOT NULL DEFAULT '1',
 
-  `hits` int unsigned NOT NULL DEFAULT '0',
-  `rating` int unsigned NOT NULL DEFAULT '0',
-  `votes` int unsigned NOT NULL DEFAULT '0',
-  `comments` int unsigned NOT NULL DEFAULT '0',
+	`hits`             int unsigned                                           NOT NULL DEFAULT '0',
+	`rating`           int unsigned                                           NOT NULL DEFAULT '0',
+	`votes`            int unsigned                                           NOT NULL DEFAULT '0',
+	`comments`         int unsigned                                           NOT NULL DEFAULT '0',
 
-  `publish_up` datetime,
-  `publish_down` datetime,
+	`publish_up`       datetime,
+	`publish_down`     datetime,
 
-  `checked_out` int unsigned NOT NULL DEFAULT 0,
-  `checked_out_time` datetime, 
-  `created` datetime NOT NULL,
-  `created_by` int unsigned NOT NULL DEFAULT 0,
-  `created_by_alias` varchar(255) NOT NULL DEFAULT '',
-  `modified` datetime NOT NULL,
-  `modified_by` int unsigned NOT NULL DEFAULT 0, 
+	`checked_out`      int unsigned                                           NOT NULL DEFAULT 0,
+	`checked_out_time` datetime,
+	`created`          datetime                                               NOT NULL,
+	`created_by`       int unsigned                                           NOT NULL DEFAULT 0,
+	`created_by_alias` varchar(255)                                           NOT NULL DEFAULT '',
+	`modified`         datetime                                               NOT NULL,
+	`modified_by`      int unsigned                                           NOT NULL DEFAULT 0,
 
-  `ordering` int unsigned NOT NULL DEFAULT '0',
+	`ordering`         int unsigned                                           NOT NULL DEFAULT '0',
 
-  `approved` tinyint unsigned NOT NULL DEFAULT '1',
-  `asset_id` int unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-  `access` int NOT NULL DEFAULT 0,
+	`approved`         tinyint unsigned                                       NOT NULL DEFAULT '1',
+	`asset_id`         int unsigned                                           NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+	`access`           int                                                    NOT NULL DEFAULT 0,
 
-  `use_j3x_location` tinyint DEFAULT 0 NOT NULL,
-  `sizes` text NOT NULL,
+	`use_j3x_location` tinyint                                                         DEFAULT 0 NOT NULL,
+	`sizes`            text                                                   NOT NULL,
 
-  `version` int unsigned NOT NULL DEFAULT 1,
+	`version`          int unsigned                                           NOT NULL DEFAULT 1,
 
-  PRIMARY KEY  (`id`),
+	PRIMARY KEY (`id`),
 #  UNIQUE KEY `UK_name` (`name`),
 #  KEY `id` (`id`)
-  KEY `idx_access` (`access`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+	KEY `idx_access` (`access`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 
 --
@@ -129,12 +135,15 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images` (
 --    )
 --
 
-CREATE TABLE IF NOT EXISTS `#__rsg2_state` (
-  `id` int unsigned NOT NULL auto_increment,
-  `name` text NOT NULL,
-  `value` text NOT NULL,
- PRIMARY KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE IF NOT EXISTS `#__rsg2_state`
+(
+	`id`    int unsigned NOT NULL auto_increment,
+	`name`  text         NOT NULL,
+	`value` text         NOT NULL,
+	PRIMARY KEY `id` (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  DEFAULT COLLATE = utf8mb4_unicode_ci;
 
 
 --

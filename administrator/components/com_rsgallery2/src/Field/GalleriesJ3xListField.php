@@ -12,14 +12,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Utilities\ArrayHelper;
+use RuntimeException;
+
+use function defined;
 
 /**
  * Collects available j3x gallery table ids and names
@@ -54,7 +54,6 @@ class GalleriesJ3xListField extends ListField
      */
 //	protected $layout = 'joomla.form.field.ParentList';
 
-
     /**
      * Method to get a list of galleries (?that respects access controls and can be used for
      * either gallery assignment or parent gallery assignment in edit screens?).
@@ -87,7 +86,7 @@ class GalleriesJ3xListField extends ListField
 
             // Get the options.
             $galleries = $db->setQuery($query)->loadObjectList();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -125,7 +124,6 @@ class GalleriesJ3xListField extends ListField
 //		}
 //
 
-
 //		foreach ($options as $i => $option)
 //		{
 //			/*
@@ -137,7 +135,6 @@ class GalleriesJ3xListField extends ListField
 //				unset($options[$i]);
 //			}
 //		}
-
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);

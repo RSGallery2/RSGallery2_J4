@@ -9,7 +9,7 @@
  * RSGallery is Free Software
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -26,19 +26,19 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 <form action="<?php
 echo Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-    <div class="d-flex flex-row">
+	<div class="d-flex flex-row">
         <?php
         if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class="">
                 <?php
                 echo $this->sidebar; ?>
-            </div>
+			</div>
         <?php
         endif; ?>
-        <!--div class="<?php
+		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-            <div id="j-main-container" class="j-main-container">
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
                 <?php
                 echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'PreparedButNotReady']); ?>
@@ -50,17 +50,17 @@ echo Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared'
                     'PreparedButNotReady',
                     Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY', true),
                 ); ?>
-                <p></p>
-                <legend><strong><?php
+				<p></p>
+				<legend><strong><?php
                         echo Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY_DESC'); ?></strong></legend>
-                <p>
-                <h3><?php
+				<p>
+				<h3><?php
                     echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
 
                 <?php
 
                 try {
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -77,15 +77,15 @@ echo Route::_('index.php?option=com_rsgallery2&view=Maintenance&layout=Prepared'
                 <?php
                 echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-                <!--input type="hidden" name="option" value="com_rsgallery2" />
+				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-                <input type="hidden" name="task" value=""/>
+				<input type="hidden" name="task" value=""/>
                 <?php
                 echo HTMLHelper::_('form.token'); ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
     <?php
     echo HTMLHelper::_('form.token'); ?>

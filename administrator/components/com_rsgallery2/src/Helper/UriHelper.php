@@ -10,12 +10,16 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-use Joomla\CMS\Uri\Uri;
-
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
+ *
+ * @since       version
+ */
 class UriHelper
 {
     /**
      * Does create a path with join of rgiven arguments and cleans the path afterwards
+     *
      * @return string
      *
      * @since version

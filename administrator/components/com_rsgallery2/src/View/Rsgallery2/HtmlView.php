@@ -9,33 +9,31 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Rsgallery2;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
-
-//use Joomla\CMS\Helper\ContentHelper;
-//use Joomla\CMS\Factory;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Component\ComponentHelper;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\CreditsEnumeration;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\CreditsExternal;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
+use function defined;
+
+//use Joomla\CMS\Helper\ContentHelper;
+//use Joomla\CMS\Factory;
 
 /**
  * View class for a list of rsgallery2.
@@ -179,7 +177,7 @@ class HtmlView extends BaseHtmlView
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2');
         Rsgallery2Helper::addSubmenu('control');
-        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         $this->addToolbar();
 
@@ -277,6 +275,5 @@ class HtmlView extends BaseHtmlView
 
         return $buttons;
     }
-
 
 }

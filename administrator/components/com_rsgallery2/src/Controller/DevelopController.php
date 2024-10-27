@@ -9,18 +9,21 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use DateTime;
+use JInput;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Image\Image;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Session\Session;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
+use RuntimeException;
+
+use function defined;
 
 // use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
 
 /**
  * Rsgallery2 master display controller.
@@ -37,7 +40,7 @@ class DevelopController extends BaseController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since __BUMP_VERSION__
      *
@@ -127,7 +130,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_001 1 items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_001: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -140,7 +143,6 @@ class DevelopController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -177,7 +179,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_010 10 items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_010: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -190,7 +192,6 @@ class DevelopController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -227,7 +228,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_100 100 items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_100: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -240,7 +241,6 @@ class DevelopController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -277,7 +277,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_random 1 items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_random: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -333,7 +333,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_001 1 items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_001: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -346,7 +346,6 @@ class DevelopController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -373,7 +372,6 @@ class DevelopController extends BaseController
                 $galleryId = 2;
                 $count     = 10;
 
-
 //                $j3xModel = $this->getModel('Develop');
 //
 //                $isOk = $j3xModel->createImages(10, $galleryId);
@@ -386,7 +384,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_010 10 items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_010: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -399,7 +397,6 @@ class DevelopController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -426,7 +423,6 @@ class DevelopController extends BaseController
                 $galleryId = 2;
                 $count     = 100;
 
-
 //                $j3xModel = $this->getModel('Develop');
 //
 //                $isOk = $j3xModel->createImages(100, $galleryId);
@@ -440,7 +436,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_100 100 items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_100: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -453,7 +449,6 @@ class DevelopController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -494,7 +489,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_random ' . $count . ' items";
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_random: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -507,7 +502,6 @@ class DevelopController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     public function createGalleries($count, $parentId = 1)
     {
@@ -545,7 +539,7 @@ class DevelopController extends BaseController
             }
 
             $isCreated = $allCreated;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -623,7 +617,7 @@ class DevelopController extends BaseController
             }
 
             $isCreated = $allCreated;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -636,10 +630,10 @@ class DevelopController extends BaseController
         $now = '2020_error_stdDateTime';
 
         try {
-            $datetime = new \DateTime();
+            $datetime = new DateTime();
 //            $now = $datetime->format('Y.m.d_H.i.s.v');
             $now = $datetime->format('Y.m.d_H.i.s.u');
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -662,7 +656,6 @@ class DevelopController extends BaseController
 
         return true;
     }
-
 
     /**
      * On cevelop check install message the version number may be
@@ -702,7 +695,7 @@ class DevelopController extends BaseController
                 //$link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage'
                 //    . '&lowerVersion=' . $lowerVersion;
                 $link .= '&lowerVersion=' . $lowerVersion;
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing useOldVersion: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -756,7 +749,7 @@ class DevelopController extends BaseController
                     $msg     .= 'Error at assignment of RSG2 version: ' . $lowerVersion;
                     $msgType = 'error';
                 }
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing assignVersion: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -770,7 +763,6 @@ class DevelopController extends BaseController
         $link = Route::_('index.php?option=com_rsgallery2&view=develop&layout=InstallMessage');
         $this->setRedirect($link);
     }
-
 
     public function mergeParams()
     {

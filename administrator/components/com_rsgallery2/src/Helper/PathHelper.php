@@ -12,10 +12,16 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\Filesystem\Path;
 
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
+ *
+ * @since       version
+ */
 class PathHelper
 {
     /**
      * Does create a path with join of rgiven arguments and cleans the path afterwards
+     *
      * @return string
      *
      * @since version

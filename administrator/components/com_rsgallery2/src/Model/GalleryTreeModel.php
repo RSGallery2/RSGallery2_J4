@@ -9,11 +9,15 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
+use RuntimeException;
+
+use function defined;
 
 // required may be needed as classes may not be loaded on fresh install
 // !!! needed by install
@@ -37,6 +41,13 @@ class GalleryTreeModel extends BaseModel
      * @since __BUMP_VERSION__
      */
     // ToDo: change to static ?
+    /**
+     *
+     * @return bool
+     *
+     * @throws Exception
+     * @since version
+     */
     public function isRootItemExisting()
     {
         $is1GalleryExisting = false;
@@ -57,7 +68,7 @@ class GalleryTreeModel extends BaseModel
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleryTreeModel::is1GalleryRootItemExisting: Error count in "__rsg2_galleries" table' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -184,8 +195,8 @@ class GalleryTreeModel extends BaseModel
                 );
             }
         } //catch (\RuntimeException $e)
-        catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage() . ' from InitGalleryTree');
+        catch (Exception $e) {
+            throw new RuntimeException($e->getMessage() . ' from InitGalleryTree');
         }
 
         return $isGalleryTreeReset;

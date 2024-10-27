@@ -9,11 +9,12 @@
  * RSGallery is Free Software
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
 
 // HTMLHelper::_('bootstrap.framework');
@@ -34,7 +35,6 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 {
     $html = [];
 
-
 //-------------------------------------
 // Header
 //-------------------------------------
@@ -51,7 +51,6 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     $html[] = Text::_('COM_RSGALLERY2_NUM');
     $html[] = '</th>';
 
-
     /*
     $html = array (); // Check all empty
     $html[] = '<th class="center" width="1%">';
@@ -65,13 +64,11 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     $html[] = HtmlHelper::_('grid.checkall');
     $html[] = '</th>';
 
-
     // filename
     $html[] = '<th class="align-left" width="20%">';
     // $html[] =  '3';
     $html[] = Text::_('COM_RSGALLERY2_FILENAME');
     $html[] = '</th>';
-
 
     // In Database
     $html[] = '<th class="center">';
@@ -79,13 +76,11 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     $html[] = Text::_('COM_RSGALLERY2_IN_BR_DATABASE');
     $html[] = '</th>';
 
-
     // display
     $html[] = '<th class="center">';
     //$html[] = '5';
     $html[] = Text::_('COM_RSGALLERY2_DISPLAY_BR_FOLDER');
     $html[] = '</th>';
-
 
     // In original
     $html[] = '<th class="center">';
@@ -93,13 +88,11 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     $html[] = Text::_('COM_RSGALLERY2_ORIGINAL_BR_FOLDER');
     $html[] = '</th>';
 
-
     // thumb
     $html[] = '<th class="center">';
     //$html[] = '7';
     $html[] = Text::_('COM_RSGALLERY2_THUMB_BR_FOLDER');
     $html[] = '</th>';
-
 
 //    // watermarked
 //    if ($ImageReferences->UseWatermarked)
@@ -118,13 +111,11 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     $html[] = Text::_('COM_RSGALLERY2_SIZES_BR_FOLDERS');
     $html[] = '</th>';
 
-
     // action
     $html[] = '<th class="center">';
     //$html[] =  '9';
     $html[] = Text::_('COM_RSGALLERY2_ACTION');
     $html[] = '</th>';
-
 
     // parent gallery
     $html[] = '<th class="center" width="20%">';
@@ -132,17 +123,14 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     $html[] = Text::_('COM_RSGALLERY2_GALLERY'); // COM_RSGALLERY2_PARENT_BR_GALLERY
     $html[] = '</th>';
 
-
     // image
     $html[] = '<th class="center" width="10%">';
     //$html[] = '11';
     $html[] = Text::_('COM_RSGALLERY2_IMAGE');
     $html[] = '</th>';
 
-
     $html[] = '        </tr>'; // end of row
     $html[] = '    </thead>';
-
 
 //-------------------------------------
 // table body
@@ -272,7 +260,6 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 //
 //        }
 
-
         // sizes
         $html[] = '<td class="center">';
 
@@ -295,9 +282,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
             $html[] = '</div>';
         }
 
-
         $html[] = '</td>';
-
 
         // action
         $html[] = '<td class="center">';
@@ -352,7 +337,6 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         }
         $html[] = '</td>';
 
-
         //  parent gallery
         $html[] = '<td class="center">';
         //$html[] = '    10';
@@ -375,7 +359,6 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 
         $html[] = '</td>';
 
-
         // image
 
         // Image is defined
@@ -384,7 +367,7 @@ function DisplayImageDataTable($ImageLostAndFoundList)
             $html[] = '       <div class="img_border">';
             //$html[] =         '11';
             $html[] = '       <img  class="img_thumb" alt="' . $ImageReference->imageName . '" '
-                . 'name="image" src="' . \Joomla\CMS\Uri\Uri::root(false) . $ImageReference->imagePath . '">';
+                . 'name="image" src="' . Uri::root(false) . $ImageReference->imagePath . '">';
             $html[] = '       </div>';
             $html[] = '   </td>';
         } else {
@@ -393,7 +376,6 @@ function DisplayImageDataTable($ImageLostAndFoundList)
             $html[] = '        <span class="icon-cancel">';
             $html[] = '   </td>';
         }
-
 
         $html[] = '        </tr>';
     }
@@ -416,19 +398,19 @@ if (!empty ($ImageLostAndFoundList)) {
 <form action="<?php
 echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-    <div class="d-flex flex-row">
+	<div class="d-flex flex-row">
         <?php
         if (!empty($this->sidebar)) : ?>
-            <div id="j-sidebar-container" class="">
+			<div id="j-sidebar-container" class="">
                 <?php
                 echo $this->sidebar; ?>
-            </div>
+			</div>
         <?php
         endif; ?>
-        <!--div class="<?php
+		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
-            <div id="j-main-container" class="j-main-container">
+		<div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
 
                 <?php
                 echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'MaintConsolidateDb']); ?>
@@ -441,67 +423,67 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
                     Text::_('COM_RSGALLERY2_IMAGES_LOST_AND_FOUND_TITLE', true),
                 ); ?>
 
-                <div style="max-width: 400px;">
-                    <strong><?php
+				<div style="max-width: 400px;">
+					<strong><?php
                         echo Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'); ?></strong>
-                </div>
+				</div>
 
                 <?php
                 // if (count($ImageLostAndFoundList) == 0) :
                 if (empty($ImageLostAndFoundList)) :
                     ?>
-                    <div class="alert alert-no-items">
+					<div class="alert alert-no-items">
                         <?php
                         // echo Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_NO_MISSING_ITEMS_TXT');
                         echo Text::_('COM_RSGALLERY2_NO_INCONSISTENCIES_IN_DATABASE');
                         ?>
-                    </div>
+					</div>
                 <?php
                 else : ?>
 
-                    <div class="pull-right">
+					<div class="pull-right">
                         <?php
                         // Specify parent gallery selection
                         //						echo $this->form->renderFieldset('maintConsolidateDB');
                         ?>
-                    </div>
+					</div>
 
-                    <div class="span12">
-                        <div class="row-fluid">
+					<div class="span12">
+						<div class="row-fluid">
                             <?php
                             // Info about lost and found images
                             // DisplayImageDataTable();
                             echo $LostAndFountHtml;
 
                             ?>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
                 <?php
                 endif; ?>
 
-                <div class="form-actions">
-                    <br>
-                </div>
+				<div class="form-actions">
+					<br>
+				</div>
 
-                <fieldset class="refresh">
-                    <!--legend><?php
+				<fieldset class="refresh">
+					<!--legend><?php
                     echo Text::_('COM_RSGALLERY2_REFRESH_TEXT'); ?>XXXXX</legend-->
-                    <div class="form-actions">
-                        <a class="btn btn-primary jgrid "
-                           title="<?php
+					<div class="form-actions">
+						<a class="btn btn-primary jgrid "
+						   title="<?php
                            echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING_INCONSITENCIES_DESC'); ?>"
-                           href="index.php?option=com_rsgallery2&amp;view=maintConsolidateDB">
+						   href="index.php?option=com_rsgallery2&amp;view=maintConsolidateDB">
                             <?php
                             echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING'); ?>
-                        </a>
-                        <a class="btn btn-primary jgrid"
-                           href="index.php?option=com_rsgallery2&amp;view=maintenance">
+						</a>
+						<a class="btn btn-primary jgrid"
+						   href="index.php?option=com_rsgallery2&amp;view=maintenance">
                             <?php
                             echo Text::_('COM_RSGALLERY2_CANCEL'); ?>
-                        </a>
-                    </div>
-                </fieldset>
+						</a>
+					</div>
+				</fieldset>
 
 
                 <?php
@@ -510,12 +492,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
                 <?php
                 echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-                <!--input type="hidden" name="option" value="com_rsgallery2" />
+				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-                <input type="hidden" name="task" value=""/>
-                <input type="hidden" name="boxchecked" value="0"/>
-                <input type="hidden" name="ImageReferenceList" value="<?php
+				<input type="hidden" name="task" value=""/>
+				<input type="hidden" name="boxchecked" value="0"/>
+				<input type="hidden" name="ImageReferenceList" value="<?php
                 // $ImageReferenceList = $this->ImageReferences->ImageReferenceList;
                 // $JsonEncoded        = json_encode($ImageReferenceList);
                 // //$JsonEncoded = json_encode($ImageReferenceList, JSON_HEX_QUOT);
@@ -526,9 +508,9 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
 
                 <?php
                 echo HTMLHelper::_('form.token'); ?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
     <?php
     echo HTMLHelper::_('form.token'); ?>

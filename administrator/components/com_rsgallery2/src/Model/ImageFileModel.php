@@ -10,23 +10,23 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-
-//use Joomla\CMS\Image;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Log\Log;
-use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\MVC\Model\BaseModel;
-use Joomla\CMS\MVC\Model\ListModel;
-
+use Joomla\Filesystem\Path;
+use LogicException;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
+use RuntimeException;
+
+use function defined;
+
+//use Joomla\CMS\Image;
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 
@@ -41,6 +41,9 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 class ImageFileModel extends BaseDatabaseModel // AdminModel
 {
 
+    /**
+     *
+     */
     const THUMB_PORTRAIT = 0;
     const THUMB_SQUARE = 1;
 
@@ -105,14 +108,13 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
             // Make sure the resource handle is valid.
             if (!$memImage->isLoaded()) {
-                throw new \LogicException('createDisplayImageFile: No valid image was loaded.');
+                throw new LogicException('createDisplayImageFile: No valid image was loaded.');
             }
 
             // Make sure the target width is given
             if (!$targetWidth) {
-                throw new \LogicException('createDisplayImageFile: Wrong target size');
+                throw new LogicException('createDisplayImageFile: Wrong target size');
             }
-
 
             //---- target size -------------------------------------
 
@@ -150,7 +152,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
              * $memImage->destroy();
              * }
              * /**/
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing createDisplayImageFile for image name: "' . $targetFileName . '" size: ' . $targetWidth . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -210,7 +212,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
             // Make sure the resource handle is valid.
             if (!$memImage->isLoaded()) {
-                throw new \LogicException('createThumbImageFile: No valid image was loaded.');
+                throw new LogicException('createThumbImageFile: No valid image was loaded.');
             }
 
             //---- target size -------------------------------------
@@ -224,7 +226,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createThumbImageFile: No value given for "Thumb Size"  in configuration';
 
-                throw new \LogicException($OutTxt);
+                throw new LogicException($OutTxt);
             }
 
             // source sizes
@@ -283,7 +285,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
              * $memImage->destroy();
              * }
              * /**/
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing createThumbImageFile for image name: "' . $thumbPathFileName . '" size: ' . $thumbSize . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -366,7 +368,6 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
     // create watermark -> watermark has separate class
 
     // ToDo: The sizes may be defined (overwritten) in the gallery or image data (override) a) create gallery b) Upload image c) handling later
-
 
     public function allFilePathsOf($imageFileName, $galleryId, $use_j3x_location)
     {
@@ -456,7 +457,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                     $failedCount += 1;
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing deleteRowItemImages: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -495,7 +496,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 // it is not existing so it may be true
                 $IsImageDeleted = true;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing DeleteImage for image name: "' . $filename . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -599,7 +600,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                     // ToDo: follow up this message + debug message
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             if ($Rsg2DebugActive) {
                 Log::add('MoveImageAndCreateRSG2Images: RuntimeException');
             }
@@ -775,7 +776,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                          * $memImage->destroy();
                          * }
                          * /**/
-                    } catch (\RuntimeException $e) {
+                    } catch (RuntimeException $e) {
                         $memImage->destroy();
                         throw $e;
                     }
@@ -908,7 +909,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                      * $memImage->destroy();
                      * }
                      * /**/
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $memImage->destroy();
                     throw $e;
                 }
@@ -1034,7 +1035,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                     }
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing SelectImagesFromFolder: "' . $file . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1045,7 +1046,6 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
         return [$files, $ignored];
     }
-
 
     /**
      * rotate_image rotates the master image by given degrees.
@@ -1113,7 +1113,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                     $isRotated = $this->CreateRSG2ImagesJ3x($imagePathJ3x, $imgSrcPath, $fileName);
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rotate_image: "' . $fileName . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1191,7 +1191,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                     $isFlipped = $this->CreateRSG2ImagesJ3x($imagePathJ3x, $imgSrcPath, $fileName);
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing flip_image: "' . $fileName . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1227,7 +1227,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
             $db->setQuery($query);
             $use_j3x = $db->loadResult();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing use_j3x_location for ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1272,7 +1272,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             $fileName         = $imageDb->name;
             $galleryId        = $imageDb->gallery_id;
             $use_j3x_location = $imageDb->use_j3x_location;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing use_j3x_location for ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1287,7 +1287,6 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
     }
 
     /**/
-
 
     public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location)
     {
@@ -1315,7 +1314,6 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         return [$OriginalPathFileName, $OriginalFileNameUri];
     }
 
-
     public function downloadImageFile($OriginalFilePath, $OriginalFileUri)
     {
         $IsDownloaded = false;
@@ -1338,7 +1336,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
             //  tells if successful
             $IsDownloaded = true;
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

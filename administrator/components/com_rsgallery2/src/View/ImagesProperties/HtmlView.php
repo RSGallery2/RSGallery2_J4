@@ -9,23 +9,19 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\ImagesProperties;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Editor;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Button\customButton;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
-use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+
+use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -47,7 +43,6 @@ class HtmlView extends BaseHtmlView
 
     protected $isDebugBackend;
     protected $isDevelop;
-
 
     /**
      * Method to display the view.
@@ -81,7 +76,6 @@ class HtmlView extends BaseHtmlView
         $ImageWidths           = $rsgConfig->get('image_size');
         $exploded              = explode(',', $ImageWidths);
         $this->DisplayImgWidth = $exploded[0];
-
 
         $editor       = Factory::getApplication()->get('editor');
         $this->editor = Editor::getInstance($editor);
@@ -120,7 +114,6 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'yyyRawView':
-
 
                 break;
 
@@ -239,7 +232,6 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_rsgallery2');
         }
     }
-
 
 }
 

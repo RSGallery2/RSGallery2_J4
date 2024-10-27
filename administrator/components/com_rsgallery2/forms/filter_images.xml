@@ -1,113 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
 
-    <fields name="filter">
+	<fields name="filter">
 
-        <field
-                name="search"
-                type="text"
-                label="COM_RSGALLERY2_IMAGES_FILTER_SEARCH_LABEL"
-                description="COM_RSGALLERY2_IMAGES_FILTER_SEARCH_DESC"
-                hint="JSEARCH_FILTER"
-        />
+		<field
+				name="search"
+				type="text"
+				label="COM_RSGALLERY2_IMAGES_FILTER_SEARCH_LABEL"
+				description="COM_RSGALLERY2_IMAGES_FILTER_SEARCH_DESC"
+				hint="JSEARCH_FILTER"
+		/>
 
-        <field
-                name="gallery_id"
-                type="GallerySelect"
-                label="COM_RSGALLERY2_FILTER_GALLERY_NAME"
-                description="COM_RSGALLERY2_FILTER_GALLERY_NAME_DESC"
-                onchange="this.form.submit();"
-        >
-        </field>
+		<field
+				name="gallery_id"
+				type="GallerySelect"
+				label="COM_RSGALLERY2_FILTER_GALLERY_NAME"
+				description="COM_RSGALLERY2_FILTER_GALLERY_NAME_DESC"
+				onchange="this.form.submit();"
+		>
+		</field>
 
-        <field
-                name="published"
-                type="status"
-                label="JOPTION_SELECT_PUBLISHED"
-                onchange="this.form.submit();"
-        >
-            <option value="">JOPTION_SELECT_PUBLISHED</option>
-        </field>
+		<field
+				name="published"
+				type="status"
+				label="JOPTION_SELECT_PUBLISHED"
+				onchange="this.form.submit();"
+		>
+			<option value="">JOPTION_SELECT_PUBLISHED</option>
+		</field>
 
-        <field
-                name="access"
-                type="accesslevel"
-                label="JOPTION_SELECT_ACCESS"
-                onchange="this.form.submit();"
-        >
-            <option value="">JOPTION_SELECT_ACCESS</option>
-        </field>
+		<field
+				name="access"
+				type="accesslevel"
+				label="JOPTION_SELECT_ACCESS"
+				onchange="this.form.submit();"
+		>
+			<option value="">JOPTION_SELECT_ACCESS</option>
+		</field>
 
-        <field
-                name="created"
-                type="author"
-                label="JOPTION_SELECT_AUTHOR"
-                multiple="true"
-                layout="joomla.form.field.list-fancy-select"
-                description="COM_CONTENT_FILTER_AUTHOR_DESC"
-                hint="JOPTION_SELECT_AUTHOR"
-                onchange="this.form.submit();"
-        >
-        </field>
+		<field
+				name="created"
+				type="author"
+				label="JOPTION_SELECT_AUTHOR"
+				multiple="true"
+				layout="joomla.form.field.list-fancy-select"
+				description="COM_CONTENT_FILTER_AUTHOR_DESC"
+				hint="JOPTION_SELECT_AUTHOR"
+				onchange="this.form.submit();"
+		>
+		</field>
 
-        <field
-                name="tag"
-                type="tag"
-                label="JOPTION_SELECT_TAG"
-                mode="nested"
-                custom="false"
-                onchange="this.form.submit();"
-        >
-            <option value="">JOPTION_SELECT_TAG</option>
-        </field>
+		<field
+				name="tag"
+				type="tag"
+				label="JOPTION_SELECT_TAG"
+				mode="nested"
+				custom="false"
+				onchange="this.form.submit();"
+		>
+			<option value="">JOPTION_SELECT_TAG</option>
+		</field>
 
-    </fields>
+	</fields>
 
-    <fields name="list">
+	<fields name="list">
 
-        <field
-                name="fullordering"
-                type="list"
-                label="JGLOBAL_SORT_BY"
-                default="a.lft ASC"
-                statuses="*,0,1,2,-2"
-                onchange="this.form.submit();"
-        >
-            <option value="">JGLOBAL_SORT_BY</option>
+		<field
+				name="fullordering"
+				type="list"
+				label="JGLOBAL_SORT_BY"
+				default="a.lft ASC"
+				statuses="*,0,1,2,-2"
+				onchange="this.form.submit();"
+		>
+			<option value="">JGLOBAL_SORT_BY</option>
 
-            <option value="a.name ASC">COM_RSGALLERY2_NAME_ASC</option>
-            <option value="a.name DESC">COM_RSGALLERY2_NAME_DESC</option>
+			<option value="a.name ASC">COM_RSGALLERY2_NAME_ASC</option>
+			<option value="a.name DESC">COM_RSGALLERY2_NAME_DESC</option>
 
-            <option value="gallery_name ASC">COM_RSGALLERY2_GALLERY_NAME_ASC</option>
-            <option value="gallery_name DESC">COM_RSGALLERY2_GALLERY_NAME_ASC</option>
+			<option value="gallery_name ASC">COM_RSGALLERY2_GALLERY_NAME_ASC</option>
+			<option value="gallery_name DESC">COM_RSGALLERY2_GALLERY_NAME_ASC</option>
 
-            <option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
-            <option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
+			<option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
 
-            <option value="a.gallery_id ASC">COM_RSGALLERY2_GALLERY_ID_ASC</option>
-            <option value="a.gallery_id DESC">COM_RSGALLERY2_GALLERY_ID_DESC</option>
+			<option value="a.gallery_id ASC">COM_RSGALLERY2_GALLERY_ID_ASC</option>
+			<option value="a.gallery_id DESC">COM_RSGALLERY2_GALLERY_ID_DESC</option>
 
-            <option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
-            <option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>Order
+			<option value="a.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
+			<option value="a.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>Order
 
-            <option value="a.published ASC">JSTATUS_ASC</option>
-            <option value="a.published DESC">JSTATUS_DESC</option>
-            <option value="access_level ASC">JGRID_HEADING_ACCESS_ASC</option>
-            <option value="access_level DESC">JGRID_HEADING_ACCESS_DESC</option>
-            <option value="association ASC" requires="associations">JASSOCIATIONS_ASC</option>
-            <option value="association DESC" requires="associations">JASSOCIATIONS_DESC</option>
-            <option value="language_title ASC" requires="multilanguage">JGRID_HEADING_LANGUAGE_ASC</option>
-            <option value="language_title DESC" requires="multilanguage">JGRID_HEADING_LANGUAGE_DESC</option>
-            <option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
-            <option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
-        </field>
+			<option value="a.published ASC">JSTATUS_ASC</option>
+			<option value="a.published DESC">JSTATUS_DESC</option>
+			<option value="access_level ASC">JGRID_HEADING_ACCESS_ASC</option>
+			<option value="access_level DESC">JGRID_HEADING_ACCESS_DESC</option>
+			<option value="association ASC"
+			        requires="associations">JASSOCIATIONS_ASC
+			</option>
+			<option value="association DESC"
+			        requires="associations">JASSOCIATIONS_DESC
+			</option>
+			<option value="language_title ASC"
+			        requires="multilanguage">JGRID_HEADING_LANGUAGE_ASC
+			</option>
+			<option value="language_title DESC"
+			        requires="multilanguage">JGRID_HEADING_LANGUAGE_DESC
+			</option>
+			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="a.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
 
-        <field
-                name="limit"
-                type="limitbox"
-                label="JGLOBAL_LIST_LIMIT"
-                default="25"
-                onchange="this.form.submit();"
-        />
-    </fields>
+		<field
+				name="limit"
+				type="limitbox"
+				label="JGLOBAL_LIST_LIMIT"
+				default="25"
+				onchange="this.form.submit();"
+		/>
+	</fields>
 </form>

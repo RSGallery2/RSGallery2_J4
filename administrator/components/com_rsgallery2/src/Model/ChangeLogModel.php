@@ -9,14 +9,18 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 use Exception;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+
+use RuntimeException;
+
+use function defined;
+use function is_array;
 
 /**
  * Rsgallery2 Component changelog model
@@ -30,6 +34,10 @@ class ChangeLogModel
 {
     // no on install (com_installer) public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
     // will be taken from manifest file
+    /**
+     * @var mixed|string
+     * @since version
+     */
     public $changeLogUrl = ""; //URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
 
     /**
@@ -54,7 +62,6 @@ class ChangeLogModel
         $app = Factory::getApplication();
         $app->getLanguage()->load('com_installer');
     }
-
 
     /**
      * changeLogUrlFromExtension
@@ -90,7 +97,7 @@ class ChangeLogModel
             if ($handle) {
                 $changeLogUrl = $externUrl;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ChangeLogModel: changeLogUrl_manifest: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -106,10 +113,8 @@ class ChangeLogModel
     {
         $manifest = [];
 
-
         return $manifest;
     }
-
 
     /**
      * Selects array of changelog sections
@@ -221,7 +226,6 @@ class ChangeLogModel
         $html[] = '    </strong>';
         $html[] = '    </caption>';
 
-
         foreach ($versionChangeLog as $key => $value) {
             // create badge title (May not exist)
             $sectionTitle = self::changeLogSectionTitle2Html($key);
@@ -258,7 +262,6 @@ class ChangeLogModel
 
         return join('', $html);
     }
-
 
     /**
      * Returns html string of a bootstrap badge depending of the given type.
@@ -347,7 +350,7 @@ class ChangeLogModel
         $html = [];
 
         // single item ?
-        if (!\is_array($items)) {
+        if (!is_array($items)) {
             $items = [$items];
         }
 

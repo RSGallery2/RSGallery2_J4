@@ -9,18 +9,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Access\Rules;
-use Joomla\CMS\Association\AssociationServiceInterface;
-use Joomla\CMS\Categories\CategoryServiceInterface;
+use Exception;
+use JForm;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Date\Date;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Path;
-use Joomla\CMS\Helper\TagsHelper;
+use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Language\Associations;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
@@ -29,11 +25,12 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\UCM\UCMType;
 use Joomla\CMS\Workflow\Workflow;
-use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+use JTableCategory;
+use RuntimeException;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
+use function defined;
 
 /**
  * Rsgallery2 Component Gallery Model
@@ -143,7 +140,7 @@ class GalleryModel extends AdminModel
      * @param   string  $prefix  The class prefix. Optional.
      * @param   array   $config  Configuration array for model. Optional.
      *
-     * @return  \Joomla\CMS\Table\Table  A JTable object
+     * @return  Table  A JTable object
      *
      * @since __BUMP_VERSION__
      */
@@ -307,7 +304,7 @@ class GalleryModel extends AdminModel
      * @param   array    $data      Data for the form.
      * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
      *
-     * @return  \JForm|boolean  A JForm object on success, false on failure
+     * @return  JForm|boolean  A JForm object on success, false on failure
      *
      * @since __BUMP_VERSION__
      */
@@ -366,7 +363,7 @@ class GalleryModel extends AdminModel
      * A protected method to get the where clause for the reorder
      * This ensures that the row will be moved relative to a row with the same extension
      *
-     * @param   \JTableCategory  $table  Current table instance
+     * @param   JTableCategory  $table  Current table instance
      *
      * @return  array  An array of conditions to add to ordering queries.
      *
@@ -428,13 +425,13 @@ class GalleryModel extends AdminModel
     /**
      * Method to preprocess the form.
      *
-     * @param   \JForm  $form   A JForm object.
+     * @param   JForm  $form   A JForm object.
      * @param   mixed   $data   The data expected for the form.
      * @param   string  $group  The name of the plugin group to import.
      *
      * @return  void
      *
-     * @throws  \Exception if there is an error in the form event.
+     * @throws  Exception if there is an error in the form event.
      *
      * protected function preprocessForm(\JForm $form, $data, $group = 'content')
      * {
@@ -552,7 +549,6 @@ class GalleryModel extends AdminModel
      * @see     \JFormField
      */
 
-
     /**
      * Transform some data before it is displayed ? Saved ?
      * extension development 129 bottom
@@ -562,6 +558,13 @@ class GalleryModel extends AdminModel
      * @since __BUMP_VERSION__
      */
     /**/
+    /**
+     * @param $table
+     *
+     *
+     * @throws Exception
+     * @since version
+     */
     protected function prepareTable($table)
     {
         $date        = Factory::getDate()->toSql();
@@ -610,7 +613,6 @@ class GalleryModel extends AdminModel
         // Increment the content version number.
         // $table->version++;
     }
-
 
     /**
      * Method to save the form data.
@@ -681,13 +683,15 @@ class GalleryModel extends AdminModel
         }
 
         // Automatic handling of alias for empty fields
-        if (in_array($input->get('task'), ['apply', 'save', 'save2new'],
+        if (in_array(
+                $input->get('task'),
+                ['apply', 'save', 'save2new'],
             ) && (!isset($data['id']) || (int)$data['id'] == 0)) {
             if ($data['alias'] == null) {
                 if (Factory::getApplication()->get('unicodeslugs') == 1) {
-                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['title']);
+                    $data['alias'] = OutputFilter::stringURLUnicodeSlug($data['title']);
                 } else {
-                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
+                    $data['alias'] = OutputFilter::stringURLSafe($data['title']);
                 }
 
                 $table = Table::getInstance('Content', 'JTable');
@@ -876,6 +880,17 @@ class GalleryModel extends AdminModel
     }
 
     // expected name/alias  is unique
+
+    /**
+     * @param $galleryName
+     * @param $parentId
+     * @param $description
+     *
+     * @return bool
+     *
+     * @throws Exception
+     * @since version
+     */
     public function createGallery($galleryName, $parentId = 1, $description = '')
     {
         $isCreated = false;
@@ -890,23 +905,19 @@ class GalleryModel extends AdminModel
 
             $data ['note'] = '';
 
-
             $isCreated = $this->save($data);
             // $isCreated = true;
-
 
             // Check for errors.
             if (count($errors = $this->get('_errors'))) {
                 throw new GenericDataException(implode("\n", $errors), 500);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
-
         return $isCreated;
     }
-
 
     /**
      * Method to change the published state of one or more records.
@@ -1033,7 +1044,7 @@ class GalleryModel extends AdminModel
                     $successful[] = $id;
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1120,7 +1131,7 @@ class GalleryModel extends AdminModel
 
         try {
             $count = $db->loadResult();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->setError($e->getMessage());
 
             return false;
@@ -1331,7 +1342,7 @@ class GalleryModel extends AdminModel
 
                 try {
                     $children = array_merge($children, (array)$db->loadColumn());
-                } catch (\RuntimeException $e) {
+                } catch (RuntimeException $e) {
                     $this->setError($e->getMessage());
 
                     return false;

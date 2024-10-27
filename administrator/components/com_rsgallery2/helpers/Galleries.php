@@ -7,10 +7,10 @@
  * @license        GNU General Public License version 2 or later
  */
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
-namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper;
-
+// ToDo: 2024.10: namespace helper
+namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
 
 /**
  * Galleries helper.
@@ -18,4 +18,6 @@ namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper;
  * @since       __BUMP_VERSION__
  * @deprecated  5.0 Use \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper instead
  */
-class GalleriesHelper extends \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper {}
+class GalleriesHelper extends \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper
+{
+}

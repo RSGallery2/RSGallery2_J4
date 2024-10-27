@@ -9,15 +9,18 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
+use JInput;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\Session\Session;
-use Joomla\CMS\User\UserFactoryInterface;
+use RuntimeException;
+use stdClass;
+
+use function defined;
 
 /**
  * The image properties Controller
@@ -34,7 +37,7 @@ class ImagesPropertiesController extends AdminController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   JInput              $input    Input
      *
      * @since __BUMP_VERSION__
      */
@@ -86,14 +89,14 @@ class ImagesPropertiesController extends AdminController
             $cids = $this->input->get('cid', 0, 'int');
             //$this->setRedirect('index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(array('cid' => $cids)));
             $this->setRedirect(
-                'index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(['cid' => $cids],
+                'index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(
+                    ['cid' => $cids],
                 ),
             );
 
             parent::display();
         }
     }
-
 
     /**
      * Save user changes from imagesPropertiesView
@@ -106,7 +109,6 @@ class ImagesPropertiesController extends AdminController
 
         $ImgCount  = 0;
         $ImgFailed = 0;
-
 
         $msg     = "save_imagesProperties: " . '<br>';
         $msgType = 'notice';
@@ -146,7 +148,7 @@ class ImagesPropertiesController extends AdminController
                     Factory::getApplication()->enqueueMessage($msg_bad, 'error');
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing save_imagesProperties: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -158,7 +160,6 @@ class ImagesPropertiesController extends AdminController
         $link = 'index.php?option=com_rsgallery2&view=images';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Apply changes from imagesPropertiesView
@@ -208,7 +209,7 @@ class ImagesPropertiesController extends AdminController
                     Factory::getApplication()->enqueueMessage($msg_bad, 'error');
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing apply_imagesProperties: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -238,7 +239,6 @@ class ImagesPropertiesController extends AdminController
         $link = 'index.php?option=com_rsgallery2&view=images';
         $this->setRedirect($link);
     }
-
 
     /**
      * Delete selected images
@@ -284,7 +284,7 @@ class ImagesPropertiesController extends AdminController
                 // success
                 $msg = 'Deleted ' . count($sids) . ' images';
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing delete_imagesProperties: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -421,7 +421,7 @@ class ImagesPropertiesController extends AdminController
                     $msgType = 'warning';
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rotate_images: ""' . $direction . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -436,7 +436,8 @@ class ImagesPropertiesController extends AdminController
         $link = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(
                 ['cid' => $cids],
             );
-        $link = 'index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(['cid' => $cids],
+        $link = 'index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(
+                ['cid' => $cids],
             );
         //$this->setRedirect($link, $msg, $msgType);
         $this->setRedirect($link);
@@ -555,7 +556,7 @@ class ImagesPropertiesController extends AdminController
                     $msgType = 'warning';
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing flip_images: ""' . $flipMode . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -593,7 +594,7 @@ class ImagesPropertiesController extends AdminController
 
             $idx = 0;
             foreach ($cids as $Idx => $cid) {
-                $ImagesProperty = new \stdClass();
+                $ImagesProperty = new stdClass();
 
                 $ImagesProperty->cid = $cids [$Idx];
                 // ToDo: Check for not HTML input
@@ -602,7 +603,7 @@ class ImagesPropertiesController extends AdminController
 
                 $ImagesProperties [] = $ImagesProperty;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing ImagesPropertiesFromInput: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -613,6 +614,5 @@ class ImagesPropertiesController extends AdminController
 
         return $ImagesProperties;
     }
-
 
 }

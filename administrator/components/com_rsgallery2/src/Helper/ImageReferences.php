@@ -13,14 +13,16 @@
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 // no direct access
+use Exception;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\Path;
 use Joomla\Database\DatabaseInterface;
-use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReference;
+use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use RuntimeException;
 
-\defined('_JEXEC') or die;
+use function defined;
 
+defined('_JEXEC') or die;
 
 /**
  * ImageReferences collect all information about image artefacts
@@ -36,6 +38,7 @@ class ImageReferences
 {
     /**
      * List of image references
+     *
      * @var ImageReference []
      */
     protected $ImageReferenceList;
@@ -136,6 +139,7 @@ class ImageReferences
         if (property_exists($this, $property)) {
             return $this->$property;
         }
+
         return null;
     }
 
@@ -167,10 +171,15 @@ class ImageReferences
         // reduce list
         $this->ImageLostAndFoundList = $this->reduceList4LostAndFounds();
 
-
         return; // $this->ImageReferenceList;
     }
 
+    /**
+     *
+     *
+     * @throws Exception
+     * @since version
+     */
     private function imageReferencesByDb()
     {
         try {
@@ -184,7 +193,7 @@ class ImageReferences
 
                 $this->ImageReferenceList [] = $ImageReference;
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -202,7 +211,7 @@ class ImageReferences
             foreach ($this->ImageReferenceList as $ImageReference) {
                 $ImageReference->check4ImageIsNotExisting();
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -220,13 +229,11 @@ class ImageReferences
         try {
             // go through all
 
-
             // toDo: Outside originals ....
 
             // only base path needed so galleryid == 0
             $imagePaths             = new ImagePathsModel (0); // ToDo: J3x
             $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
-
 
             // all found gallery ids in folder
             $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
@@ -234,7 +241,7 @@ class ImageReferences
             foreach ($galleryIdDirs as $galleryIdDir) {
                 $this->testSizesDir4Orphans($galleryIdDir);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -245,7 +252,6 @@ class ImageReferences
 
         return;
     }
-
 
     // search for files not in list
     private function testSizesDir4Orphans($galleryIdDir)
@@ -264,7 +270,7 @@ class ImageReferences
             foreach ($sizeDirs as $sizeDir) {
                 $this->testImageDir4Orphans($sizeDir, $galleryId);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -275,7 +281,6 @@ class ImageReferences
 
         return;
     }
-
 
     // search for files not in list
     private function testImageDir4Orphans($sizeDir, $galleryId)
@@ -292,7 +297,6 @@ class ImageReferences
 
 //	            $testClean = Path::clean ($imageFilePath);
 //	            $testResolve = Path::resolve ($imageFilePath);
-
 
                 // toDo: check extension by config
                 // $ext =  File::getExt($filename);
@@ -331,7 +335,6 @@ class ImageReferences
                 //   return TRUE;
                 //}
 
-
                 $isImage = true;
 
                 if ($isImage) {
@@ -357,7 +360,7 @@ class ImageReferences
                     }
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -400,7 +403,7 @@ class ImageReferences
                     }
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -437,12 +440,12 @@ class ImageReferences
         return $rows;
     }
 
-
     /**
      * collect all items in ImageReferenceList where a image is missing or surplus (additional in folder
+     *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      * @since version
      */
     private function reduceList4LostAndFounds()
@@ -458,7 +461,7 @@ class ImageReferences
                     $List4LostAndFounds [] = $ImageReference;
                 }
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing reduceList4LostAndFounds: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -469,7 +472,6 @@ class ImageReferences
 
         return $List4LostAndFounds;
     }
-
 
 } // class
 

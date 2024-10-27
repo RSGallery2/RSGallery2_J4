@@ -9,21 +9,21 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\MaintConsolidateDb;
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 //use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
+
+use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -50,9 +50,7 @@ class HtmlView extends BaseHtmlView
      */
     protected $oImgRefs;
 
-
     protected $IsAnyDbRefMissing; // header
-
 
     protected $isDebugBackend;
     protected $isDevelop;
@@ -75,7 +73,6 @@ class HtmlView extends BaseHtmlView
         $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
         $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-
         //--- get needed data ------------------------------------------
 
         // Check rights of user
@@ -90,9 +87,7 @@ class HtmlView extends BaseHtmlView
 //		$xmlFile    = JPATH_COMPONENT . '/models/forms/maintConsolidateDB.xml';
 //		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
 
-
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
-
 
         //--- Check user rights ---------------------------------------------
 
@@ -112,7 +107,7 @@ class HtmlView extends BaseHtmlView
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
         Rsgallery2Helper::addSubmenu('maintenance');
-        $this->sidebar = \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         $Layout = Factory::getApplication()->input->get('layout');
 
