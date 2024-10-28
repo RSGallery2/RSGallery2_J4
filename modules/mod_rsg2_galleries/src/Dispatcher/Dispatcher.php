@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package        RSGallery2
+ * @subpackage     mod_rsg2_galleries
+ * @copyright  (c) 2016-2024 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
+ * @author         finnern
+ * RSGallery is Free Software
+ */
 
 namespace Rsgallery2\Module\Rsg2_galleries\Site\Dispatcher;
 

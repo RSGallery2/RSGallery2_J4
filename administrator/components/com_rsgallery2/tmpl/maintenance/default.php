@@ -201,10 +201,7 @@ $repair_ZoneButtons[] = new zoneButtons(
 
 /**/
 $repair_ZoneButtons[] = new zoneButtons(
-    Route::_(
-        'index.php?option=com_rsgallery2&task=MaintenanceCleanUp.ResetConfigToDefault&' . Session::getFormToken(
-        ) . '=1',
-    ),
+    Route::_('index.php?option=com_rsgallery2&task=MaintenanceCleanUp.ResetConfigToDefault&' . Session::getFormToken() . '=1'),
     Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT') . '</del>',
     Text::_('COM_RSGALLERY2_CONFIG_RESET_TO_DEFAULT_DESC'),
     ['icon-equalizer', 'icon-undo'],
@@ -246,9 +243,7 @@ $repair_ZoneButtons[] = new zoneButtons(
 /**/
 
 $repair_ZoneButtons[] = new zoneButtons(
-    Route::_(
-        'index.php?option=com_rsgallery2&task=Galleries.reinitNestedGalleryTable&' . Session::getFormToken() . '=1',
-    ),
+    Route::_('index.php?option=com_rsgallery2&task=Galleries.reinitNestedGalleryTable&' . Session::getFormToken() . '=1'),
     Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET'),
     Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_DESC'),
     ['icon-images', 'icon-database', 'icon-undo'],
@@ -304,9 +299,7 @@ $danger_ZoneButtons = [];
 
 /**/
 $danger_ZoneButtons[] = new zoneButtons(
-    Route::_(
-        'index.php?option=com_rsgallery2&task=MaintenanceCleanUp.purgeImagesAndData&' . Session::getFormToken() . '=1',
-    ),
+    Route::_('index.php?option=com_rsgallery2&task=MaintenanceCleanUp.purgeImagesAndData&' . Session::getFormToken() . '=1'),
     Text::_('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES'),
     Text::_('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES_DESC'),
     ['icon-database', 'icon-purge', 'icon-notification-2'],
@@ -321,9 +314,7 @@ $danger_ZoneButtons[] = new zoneButtons(
 
 /**/
 $danger_ZoneButtons[] = new zoneButtons(
-    Route::_(
-        'index.php?option=com_rsgallery2&task=MaintenanceCleanUp.prepareRemoveTables&' . Session::getFormToken() . '=1',
-    ),
+    Route::_('index.php?option=com_rsgallery2&task=MaintenanceCleanUp.prepareRemoveTables&' . Session::getFormToken() . '=1'),
     Text::_('COM_RSGALLERY2_PREPARE_REMOVE_RSGALLERY2'),
     Text::_('COM_RSGALLERY2_PREPARE_REMOVE_RSGALLERY2_DESC'),
     ['icon-database', 'icon-delete'],
@@ -333,10 +324,7 @@ $danger_ZoneButtons[] = new zoneButtons(
 
 /**/
 $danger_ZoneButtons[] = new zoneButtons(
-    Route::_(
-        'index.php?option=com_rsgallery2&task=MaintenanceCleanUp.undoPrepareRemoveTables&' . Session::getFormToken(
-        ) . '=1',
-    ),
+    Route::_('index.php?option=com_rsgallery2&task=MaintenanceCleanUp.undoPrepareRemoveTables&' . Session::getFormToken() . '=1'),
     Text::_('COM_RSGALLERY2_UNDO_PREPARE_REMOVE_RSGALLERY2'),
     Text::_('COM_RSGALLERY2_UNDO_PREPARE_REMOVE_RSGALLERY2_DESC'),
 //    array('icon-database', 'icon-delete', 'icon-arrow-left'),
@@ -462,9 +450,7 @@ if ($this->isJ3xRsg2DataExisting) {
 
     /**/
     $upgrade_ZoneButtons[] = new zoneButtons(
-        Route::_(
-            'index.php?option=com_rsgallery2&task=MaintenanceJ3x.CheckImagePathsJ3x&' . Session::getFormToken() . '=1',
-        ),
+        Route::_('index.php?option=com_rsgallery2&task=MaintenanceJ3x.CheckImagePathsJ3x&' . Session::getFormToken() . '=1'),
         Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS_J3X'),
         Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS_J3X_DESC'),
         ['icon-search', 'icon-folder', 'icon-image'],
@@ -474,9 +460,7 @@ if ($this->isJ3xRsg2DataExisting) {
 
     /**/
     $upgrade_ZoneButtons[] = new zoneButtons(
-        Route::_(
-            'index.php?option=com_rsgallery2&task=MaintenanceJ3x.RepairImagePathsJ3x&' . Session::getFormToken() . '=1',
-        ),
+        Route::_('index.php?option=com_rsgallery2&task=MaintenanceJ3x.RepairImagePathsJ3x&' . Session::getFormToken() . '=1'),
         Text::_('COM_RSGALLERY2_REPAIR_IMAGE_PATHS_J3X'),
         Text::_('COM_RSGALLERY2_REPAIR_IMAGE_PATHS_J3X_DESC'),
         ['icon-undo', 'icon-folder', 'icon-image'],
@@ -850,8 +834,7 @@ function zoneInfo($info = 'Unknown zone info')
 		<!--        </div>-->
 
 		<input type="hidden" name="task" value=""/>
-        <?php
-        echo HTMLHelper::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
 	</form>
 
 <?php
