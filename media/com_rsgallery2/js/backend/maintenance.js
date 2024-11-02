@@ -1,11 +1,11 @@
 /**
- * @package     RSGallery2
+ * @package    RSGallery2
  *
  * supports maintenance user confirm messages
  *
- * @subpackage  com_rsgallery2
- * @copyright (c) 2016-2023 RSGallery2 Team
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @subpackage com_rsgallery2
+ * @copyright  (c) 2016-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * @author      finnern
  * @since       5.0.0.4
  */
@@ -19,27 +19,70 @@ var Token;
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function (event) {
-    joomla.submitbutton = function (buttonName) {
-        var confirmMessage = '';
-        // ToDo: switch for several pressbutton s -> change text, on not empty text let confirm
-        switch (buttonName) {
-            case '':
+    joomla.submitbutton = function (task) {
+        alert('task: ' + JSON.stringify(task));
+        //--- confirmation message --------------------------------
+        var confirmMessage;
+        // assign text to confirm
+        switch (task) {
+            case 'MaintenanceCleanUp.purgeImagesAndData':
                 // eslint-disable-next-line no-restricted-globals
-                confirmMessage = joomla.JText._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
+                // confirmMessage = joomla.JText._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
+                confirmMessage = joomla.Text._('COM_RSGALLERY2_CONFIRM_PURGE_TABLES_DEL_IMAGES');
+                break;
+            case 'MaintenanceCleanUp.prepareRemoveTables':
+            case 'Galleries.reinitNestedGalleryTable':
+                confirmMessage = joomla.Text._('COM_RSGALLERY2_CONFIRM_CONSIDER_BACKUP_OR_CONTINUE');
+                break;
+            case 'MaintenanceCleanUp.ResetConfigToDefault':
+                confirmMessage = joomla.Text._('COM_RSGALLERY2_CONFIRM_RESET_CONFIG_DEFAULT');
+                break;
+            case 'config.importConfigFile':
+                confirmMessage = joomla.Text._('COM_RSGALLERY2_CONFIRM_IMPORT_CONFIG_FILE');
+                break;
+            case 'Galleries.reinitNestedGalleryTable':
+                confirmMessage = joomla.Text._('COM_RSGALLERY2_CONFIRM_REINIT_GALLERIES');
+                break;
+            case 'Images.reinitImagesTable':
+                confirmMessage = joomla.Text._('COM_RSGALLERY2_CONFIRM_REINIT_IMAGES');
                 break;
             default:
+                // test
+                confirmMessage = joomla.Text._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
+                alert('confirmMessage: ' + JSON.stringify(confirmMessage));
                 break;
         }
-        // Task possible without further attention (confirmation)
-        if (empty(confirmMessage)) {
-            joomla.submitform(pressbutton);
+        //--- issue task --------------------------------
+        // Task without further confirmation
+        if (confirmMessage == '') {
+            joomla.submitform(task);
         }
         else {
             // confirmation requested
             if (confirm(confirmMessage)) {
-                joomla.submitform(pressbutton);
+                alert('submitform: ');
+                joomla.submitform(task);
+            }
+            else {
+                // user cancel
+                return false;
             }
         }
         return true;
     };
-});
+    // Joomla.submitbutton = function (task) {
+    //     if (task == 'item.cancel') {
+    //         Joomla.submitform(task, document.getElementById('save'));
+    //     } else {
+    //         if (task != 'item.cancel' && document.formvalidator.isValid(document.id('save'))) {
+    //             Joomla.submitform(task, document.getElementById('save'));
+    //         } else {
+    //             alert('<?php echo $this->escape(JText::_('
+    //             JGLOBAL_VALIDATION_FORM_FAILED
+    //             ')); ?>'
+    //         )
+    //             ;
+    //         }
+    //     }
+    // }
+}); // addEventListener

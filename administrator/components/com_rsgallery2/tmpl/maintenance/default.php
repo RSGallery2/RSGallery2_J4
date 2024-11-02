@@ -22,7 +22,14 @@ use Joomla\Filesystem\Path;
 //HTMLHelper::_('script', 'com_rsgallery2/backend/maintenance.js', ['version' => 'auto', 'relative' => true]);
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.maintenance');
 
-Text::script('COM_RSGALLERY2_PURGE_DATA_AND_IMAGES', true);
+Text::script('COM_RSGALLERY2_CONFIRM_PURGE_TABLES_DEL_IMAGES', true);
+Text::script('COM_RSGALLERY2_CONFIRM_CONSIDER_BACKUP_OR_CONTINUE', true);
+Text::script('COM_RSGALLERY2_CONFIRM_RESET_CONFIG_DEFAULT', true);
+Text::script('COM_RSGALLERY2_CONFIRM_IMPORT_CONFIG_FILE', true);
+Text::script('COM_RSGALLERY2_CONFIRM_REINIT_GALLERIES', true);
+Text::script('COM_RSGALLERY2_CONFIRM_REINIT_IMAGES', true);
+Text::script('', true);
+Text::script('', true);
 
 //$script = 'var Token = \'' . Session::getFormToken() . '\';';
 //Factory::getApplication()->getDocument()->addScriptDeclaration(implode("\n", $script));
@@ -237,7 +244,7 @@ $repair_ZoneButtons[] = new zoneButtons(
 $repair_ZoneButtons[] = new zoneButtons(
     '',
     Route::_('index.php?option=com_rsgallery2&view=config&format=json'),
-    Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE'),
+    '?' . Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE') . '?',
     Text::_('COM_RSGALLERY2_CONFIG_SAVE_TO_FILE_DESC'),
     ['icon-equalizer', 'icon-file', 'icon-download'],
     'viewEditConfigRaw',
@@ -245,13 +252,13 @@ $repair_ZoneButtons[] = new zoneButtons(
 /**/
 /**/
 $repair_ZoneButtons[] = new zoneButtons(
-//    'config.config&',
-    'config.importConfigFile&',
+//    'config.config',
+    'config.importConfigFile',
     '',
 //    Route::_('index.php?option=com_rsgallery2&view=config'),
 //    'javascript:alert(\'Hello\');',
 //    '#',
-    Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE'),
+    '?' .Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE') . '?',
     Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC'),
     ['icon-equalizer', 'icon-file', 'icon-upload'],
     'ConfigRawReadFromFile',
@@ -259,7 +266,7 @@ $repair_ZoneButtons[] = new zoneButtons(
 /**/
 
 $repair_ZoneButtons[] = new zoneButtons(
-    'Galleries.reinitNestedGalleryTable&',
+    'Galleries.reinitNestedGalleryTable',
     '',
     Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET'),
     Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_DESC'),
@@ -304,6 +311,42 @@ $repair_ZoneButtons[] = new zoneButtons(
     Text::_('COM_RSGALLERY2_REPAIR_IMAGE_PATHS_DESC'),
     ['icon-undo', 'icon-folder', 'icon-image'],
     'viewImagePaths',
+);
+/**/
+
+/**/
+
+// ToDo: As  view ? timeout (old: regenerateThumbs)
+$repair_ZoneButtons[] = new zoneButtons(
+    'Maintenance.regenerateImages',
+    '', // -> view
+    '?' . Text::_('COM_RSGALLERY2_REGENERATE_IMAGES') . '?',
+    Text::_('COM_RSGALLERY2_REGENERATE_IMAGES_DESC'),
+    ['icon-redo', 'icon-image'],
+    'regenerateImages',
+);
+/**/
+
+// ToDo: As  view ? timeout (old: regenerateThumbs)
+$repair_ZoneButtons[] = new zoneButtons(
+    'Maintenance.optimizeDB',
+    '', // -> view
+    '?' . Text::_('COM_RSGALLERY2_OPTIMIZE_DB') . '?',
+    Text::_('COM_RSGALLERY2_OPTIMIZE_DB_DESC'),
+    ['icon-redo', 'icon-database'],
+    'optimizeDB',
+);
+/**/
+
+/**
+// ToDo: As  view ? timeout (old: regenerateThumbs)
+$repair_ZoneButtons[] = new zoneButtons(
+    'Maintenance.yyy',
+    '', // -> view
+    Text::_('COM_RSGALLERY2_OPTIMIZE_DB'),
+    Text::_('COM_RSGALLERY2_OPTIMIZE_DB_DESC'),
+    ['icon-redo', 'icon-db'],
+    'optimizeDB',
 );
 /**/
 
@@ -639,6 +682,17 @@ $developer4Test_Zone = new zoneContainer(
 
 $developer4Test_ZoneButtons = [];
 
+/**/
+// $repair_ZoneButtons[] = new zoneButtons(
+$developer4Test_ZoneButtons[] = new zoneButtons(
+    'Maintenance.CheckImagePaths',
+    '',
+    Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS'),
+    Text::_('COM_RSGALLERY2_CHECK_IMAGE_PATHS_DESC'),
+    ['icon-search', 'icon-folder', 'icon-image'],
+    'viewImagePaths',
+);
+/**/
 //$developer4Test_ZoneButtons[] = new zoneButtons(
 //    '',
 //    Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_tree'),
@@ -732,14 +786,19 @@ function DisplayButton($button)
 
         /** button */
 
+        //                                               onclick="Joomla.submitbutton('Maintenance.CheckImagePaths'); return false;"
+		// <button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('contact.batch');return false;">
         // <button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('banner.batch');return false;">
         //    <?php echo Text::_('JGLOBAL_BATCH_PROCESS');
         //</button>
 
+		$submitTask = "'" . $button->task . "'";
+		$onclick = "Joomla.submitbutton(" . $submitTask . "); return false;";
+
         echo '<div class="rsg2-icon-button-container">';
         echo '<button type="submit"
 			class="rsg2-icon-button-container"
-			onclick="Joomla.submitbutton("' . $button->task . '"); return false;"'
+			onclick="' . $onclick . '"'
 			. '>';
 
         echo '    <figure class="rsg2-icon">';
