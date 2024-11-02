@@ -312,7 +312,7 @@ class GalleryModel extends AdminModel
     {
         /**
          * $extension = $this->getState('category.extension');
-         * $jinput = Factory::getApplication()->input;
+         * $input = Factory::getApplication()->input;
          *
          * // A workaround to get the extension into the model for save requests.
          * if (empty($extension) && isset($data['extension']))
@@ -340,7 +340,7 @@ class GalleryModel extends AdminModel
          * $data['extension'] = $extension;
          * }
          *
-         * $categoryId = $jinput->get('id');
+         * $categoryId = $input->get('id');
          * $parts      = explode('.', $extension);
          * $assetKey   = $categoryId ? $extension . '.category.' . $categoryId : $parts[0];
          *

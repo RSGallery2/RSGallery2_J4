@@ -11,7 +11,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
-use JInput;
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -37,7 +37,7 @@ class ImagesPropertiesController extends AdminController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   JInput              $input    Input
+     * @param   Input              $input    Input
      *
      * @since __BUMP_VERSION__
      */

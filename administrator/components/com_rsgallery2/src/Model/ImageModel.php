@@ -244,7 +244,7 @@ class ImageModel extends AdminModel
     {
         /**
          * $extension = $this->getState('category.extension');
-         * $jinput = Factory::getApplication()->input;
+         * $input = Factory::getApplication()->input;
          *
          * // A workaround to get the extension into the model for save requests.
          * if (empty($extension) && isset($data['extension']))
@@ -944,7 +944,7 @@ class ImageModel extends AdminModel
         $IsMoved = false;
 
         try {
-            // ToDo: Jinput should be handled in  a controller
+            // ToDo: input should be handled in  a controller
             $input = Factory::getApplication()->input;
             $cids  = $input->get('cid', [], 'ARRAY');
             ArrayHelper::toInteger($cids);
@@ -1061,7 +1061,7 @@ class ImageModel extends AdminModel
         $IsOneCopied    = false;
 
         try {
-            // ToDo: Jinput should be handled in  a controller
+            // ToDo: input should be handled in  a controller
             $input = Factory::getApplication()->input;
             $cids  = $input->get('cid', [], 'ARRAY');
             ArrayHelper::toInteger($cids);

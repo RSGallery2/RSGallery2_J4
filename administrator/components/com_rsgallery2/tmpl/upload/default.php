@@ -326,7 +326,8 @@ function LimitsAndMaxInfo($UploadLimit, $PostMaxSize, $MemoryLimit)
      * </div>
      *
      * <?php
-     * /**/
+     *
+    /**/
     ?>
 	<hr>
 	<div style="display-box">

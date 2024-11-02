@@ -13,7 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Exception;
-use JInput;
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -52,7 +52,7 @@ class MaintenanceJ3xController extends AdminController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   JInput              $input    Input
+     * @param   Input              $input    Input
      *
      * @since __BUMP_VERSION__
      */
