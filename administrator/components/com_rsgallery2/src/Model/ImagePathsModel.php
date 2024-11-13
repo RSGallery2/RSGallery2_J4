@@ -91,7 +91,7 @@ class ImagePathsModel
 
             $this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
 
-            // remove starting slah or backslash for URL
+            // remove starting slash or backslash for URL
             if ($this->rsgImagesBasePath[0] == '\\' || $this->rsgImagesBasePath[0] == '/') {
                 $this->rsgImagesBaseUrl = substr($this->rsgImagesBasePath, 1);
             } else {
@@ -106,6 +106,7 @@ class ImagePathsModel
 
             //--- user may keep original image --------------------------------------------
 
+            // ToDo: check existence of orignal image instead
             $this->isUsePath_Original = $rsgConfig->get('keepOriginalImage');
 
             //--- prepare path / URI names ------------------------------------------

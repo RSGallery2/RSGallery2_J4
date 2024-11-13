@@ -189,6 +189,7 @@ class ImageReferences
 
             foreach ($dbImagesList as $dbImage) {
                 $ImageReference = new ImageReference ();
+                // name / gallery id / useWatermarked
                 $ImageReference->assignDbItem($dbImage);
 
                 $this->ImageReferenceList [] = $ImageReference;
@@ -430,7 +431,7 @@ class ImageReferences
         // ToDo: add path to original file
         // ToDo: add image sizes
         $query
-            ->select($db->quoteName(['name', 'gallery_id']))
+            ->select($db->quoteName(['name', 'gallery_id', 'use_j3x_location']))
             ->from($db->quoteName('#__rsg2_images'))
             ->order('name');
 

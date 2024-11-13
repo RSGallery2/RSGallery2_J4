@@ -16,7 +16,10 @@ defined('_JEXEC') or die;
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 use RuntimeException;
 
 use function defined;
@@ -81,10 +84,16 @@ class ImageReference
      * @var int
      */
     public $parentGalleryId;
+
     /**
      * @var bool
      */
     public $useWatermarked;
+
+    /**
+     * @var bool
+     */
+    public $use_j3x_location;
 
     /**
      * @var
@@ -155,13 +164,15 @@ class ImageReference
     }
 
     /**
-     * @param $Image
+     * $Image: /name / gallery id
+     *
+     * @param $image
      *
      *
      * @throws Exception
      * @since version
      */
-    public function assignDbItem($Image)
+    public function assignDbItem($image)
     {
         // ToDo: path to original file on outside folder
         // ToDo: image sizes check local ones also
@@ -169,17 +180,30 @@ class ImageReference
 
         try {
             $this->IsImageInDatabase = true;
-            $this->imageName         = $Image ['name'];
-            $this->parentGalleryId   = $Image ['gallery_id'];
+            $this->imageName         = $image ['name'];
+            $this->parentGalleryId   = $image ['gallery_id'];
+            $this->use_j3x_location  = $image ['use_j3x_location'];
 
-            $imagePaths = new ImagePathsModel ($this->parentGalleryId);  // ToDo: J3x
-            $imagePaths->createAllPaths();
+            // J4x path
+            if (!$this->use_j3x_location) {
 
-            $this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);
-            $this->displayFilePath  = $imagePaths->getDisplayPath($this->imageName);
-            $this->thumbFilePath    = $imagePaths->getThumbPath($this->imageName);
+                $imagePaths = new ImagePathsData ($this->parentGalleryId);
 
-            $this->sizeFilePaths = $imagePaths->getSizePaths($this->imageName);
+                $imagePaths->assignPathData($image);
+
+                $imagePaths->createAllPaths();
+                $this->sizeFilePaths = $image->SizePaths;
+
+            } else {
+                // J3x path
+                $imagePathJ3x = new ImagePathsJ3xData ();
+                $imagePathJ3x->assignPathData($image);
+
+            }
+
+            $this->originalFilePath = $image->OriginalFile;
+            $this->displayFilePath  = $image->DisplayFile;
+            $this->thumbFilePath    = $image->ThumbFile;
 
             // Helper list for faster detection of images lost and found
             $this->allImagePaths = [];
