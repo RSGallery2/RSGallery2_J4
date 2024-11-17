@@ -169,7 +169,6 @@ class HtmlView extends BaseHtmlView
         if (!empty ($this->isDevelop)) {
             echo '<span style="color:red">'
                 . 'Tasks: <br>'
-                . '* show image in edit<br>'
                 . '* published_up, published_down: preset on first save with published <br>'
                 . '* <br>'
                 . '* description to each input parameter "_DESC"<br>'

@@ -180,9 +180,12 @@ class ImageReference
 
         try {
             $this->IsImageInDatabase = true;
-            $this->imageName         = $image ['name'];
-            $this->parentGalleryId   = $image ['gallery_id'];
-            $this->use_j3x_location  = $image ['use_j3x_location'];
+//            $this->imageName         = $image ['name'];
+//            $this->parentGalleryId   = $image ['gallery_id'];
+//            $this->use_j3x_location  = $image ['use_j3x_location'];
+            $this->imageName         = $image->name;
+            $this->parentGalleryId   = $image->gallery_id;
+            $this->use_j3x_location  = $image->use_j3x_location;
 
             // J4x path
             if (!$this->use_j3x_location) {

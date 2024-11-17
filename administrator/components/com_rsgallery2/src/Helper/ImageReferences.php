@@ -436,7 +436,8 @@ class ImageReferences
             ->order('name');
 
         $db->setQuery($query);
-        $rows = $db->loadAssocList();
+        // $rows = $db->loadResult();
+        $rows = $db->loadObjectList();
 
         return $rows;
     }

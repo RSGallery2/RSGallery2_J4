@@ -173,7 +173,8 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         } else {
             // Not found -> button
             $html[] = '<td class="center">';
-            $html[] = '    <a class="btn btn-danger btn-small jgrid data-bs-toggle="tooltip" data-bs-placement="top" db_missing inside_button" ';
+            $html[] = '    <a class="btn btn-danger btn-small jgrid  db_missing inside_button"';
+            $html[] = '         data-bs-toggle="tooltip" data-bs-placement="top" ';
             $html[] = '         title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_CREATE_DATABASE_ENTRY') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.createImageDbItems\')" ';
             $html[] = '         href="javascript:void(0);"';
@@ -289,10 +290,9 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         // if ($ImageReference->IsMainImageMissing(ImageReference::dontCareForWatermarked))
         {
             //$html[] = '9';
-            $html[] = '    <a class="btn btn-primary btn-small jgrid hasTooltip inside_button" ';
-            $html[] = '         data-original-title="' . HtmlHelper::tooltipText(
-                    'COM_RSGALLERY2_CREATE_MISSING_IMAGES_IN_ROW',
-                ) . '" ';
+            $html[] = '    <a class="btn btn-primary btn-small jgrid inside_button" ';
+            $html[] = '         data-bs-toggle="tooltip" data-bs-placement="top" ';
+            $html[] = '         title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_CREATE_MISSING_IMAGES_IN_ROW') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.createMissingImages\')" ';
             $html[] = '         href="javascript:void(0);"';
             $html[] = '     >';
@@ -302,9 +302,8 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         // if($ImageReferences->)
         {
             $html[] = '     <a class="btn btn-secondary btn-small jgrid hasTooltip inside_button" ';
-            $html[] = '         data-original-title="' . HtmlHelper::tooltipText(
-                    'COM_RSGALLERY2_ASSIGN_GALLLERY_IN_ROW',
-                ) . '" ';
+            $html[] = '         data-bs-toggle="tooltip" data-bs-placement="top" ';
+            $html[] = '         title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_ASSIGN_GALLLERY_IN_ROW') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.assignParentGallery\')" ';
             $html[] = '         href="javascript:void(0);"';
             $html[] = '     >';
@@ -314,9 +313,8 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         //if($ImageReferences->)
         {
             $html[] = '     <a class="btn btn-success btn-small jgrid hasTooltip inside_button" ';
-            $html[] = '         data-original-title="' . HtmlHelper::tooltipText(
-                    'COM_RSGALLERY2_REPAIR_ISSUES_IN_ROW',
-                ) . '" ';
+            $html[] = '         data-bs-toggle="tooltip" data-bs-placement="top" ';
+            $html[] = '         title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_REPAIR_ISSUES_IN_ROW') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.repairAllIssuesItems\')" ';
             $html[] = '         href="javascript:void(0);"';
             $html[] = '     >';
@@ -326,13 +324,15 @@ function DisplayImageDataTable($ImageLostAndFoundList)
         //if($ImageReferences->)
         {
             $html[] = '     <a class="btn btn-danger btn-small jgrid hasTooltip inside_button" ';
-            $html[] = '         data-original-title="' . HtmlHelper::tooltipText(
-                    'COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS_IN_ROW',
-                ) . '" ';
+            $html[] = '         data-bs-toggle="tooltip" data-bs-placement="top" ';
+            $html[] = '         title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS_IN_ROW') . '" ';
             $html[] = '         onclick="return listItemTask(\'cb' . $Idx . '\',\'MaintConsolidateDb.deleteRowItems\')" ';
             $html[] = '         href="javascript:void(0);"';
             $html[] = '     >';
-            $html[] = '         <span class="icon-delete"></span>';
+//            $html[] = '         <span class="icon-delete"></span>';
+            $html[] = '         <span class="icon-xxx fa fa-solid fa-trash"></span>';
+//            $html[] = '         <span class="fa fa-solid fa-trash"></span>';
+            $html[] = '     </a>';
             $html[] = '     </a>';
         }
         $html[] = '</td>';
