@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -443,8 +441,9 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
 
 					<div class="pull-right">
                         <?php
+
                         // Specify parent gallery selection
-                        //						echo $this->form->renderFieldset('maintConsolidateDB');
+                        echo $this->form->renderFieldset('maintConsolidateDB');
                         ?>
 					</div>
 

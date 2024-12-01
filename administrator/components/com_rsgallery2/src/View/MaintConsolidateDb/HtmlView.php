@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 //use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -84,8 +85,10 @@ class HtmlView extends BaseHtmlView
         // contains lost and found items
         $this->oImgRefs = $ConsolidateModel->GetImageReferences();
 
-//		$xmlFile    = JPATH_COMPONENT . '/models/forms/maintConsolidateDB.xml';
-//		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
+// Factory::getContainer()->get(FormFactoryInterface::class)->createForm($name, $options);
+		$xmlFile    = JPATH_BASE . '/components/com_rsgallery2' . '/forms/maintConsolidateDB.xml';
+
+		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
 
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
 
