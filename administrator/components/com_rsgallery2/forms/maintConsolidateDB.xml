@@ -11,7 +11,7 @@
 				required="false"
 				class="inputbox"
 				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-				size="4"
+				size="1"
 		/>
 	</fieldset>
 </form>

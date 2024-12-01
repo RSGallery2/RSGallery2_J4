@@ -439,7 +439,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
                 <?php
                 else : ?>
 
-					<div class="pull-right">
+					<div class="pull-right ParentGalleryId">
                         <?php
 
                         // Specify parent gallery selection
