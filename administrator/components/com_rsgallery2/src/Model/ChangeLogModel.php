@@ -35,27 +35,40 @@ class ChangeLogModel
     // no on install (com_installer) public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
     // will be taken from manifest file
     /**
-     * @var mixed|string
+     * @var string
      * @since version
      */
     public $changeLogUrl = ""; //URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
-
+    public $changeLogPath = "";
+    private $isUseLocalDir = true;
     /**
      * ChangeLogModel constructor.
      *
-     * @param   null  $changeLogUrl  path to changelog file different from standard
+     * @param   bool  $isUseLocalDir  use URL to git /self or path
+     * @param   null  $changeLogUrl   path to changelog file different from standard
      *
      * @throws Exception
      * @since __BUMP_VERSION__
      */
-    public function __construct($changeLogUrl = null)
+    public function __construct(bool $isUseLocalDir=true, $changeLogUrl = "")
     {
-        // standard from manifest
-        if (empty ($changeLogUrl)) {
-            $this->changeLogUrl = $this->changeLogUrlFromExtension();
-        } else {
-            // user path
-            $this->changeLogUrl = $changeLogUrl;
+        $this->isUseLocalDir = $isUseLocalDir;
+
+        if ( ! $isUseLocalDir) {
+            // standard from manifest
+            if (empty ($changeLogUrl)) {
+                $this->changeLogUrl = $this->changeLogUrlFromExtension();
+                echo "__construct (empty): " . json_encode($this->changeLogUrl);
+            } else {
+                // user path
+                $this->changeLogUrl = $changeLogUrl;
+                echo "__construct (given): " . json_encode($this->changeLogUrl);
+            }
+        }
+        else
+        {
+            $this->changeLogPath = $this->changeLogPath();
+
         }
 
         // standard joomla texts for title
@@ -109,13 +122,6 @@ class ChangeLogModel
         return $changeLogUrl;
     }
 
-    static function readRsg2ExtensionManifest()
-    {
-        $manifest = [];
-
-        return $manifest;
-    }
-
     /**
      * Selects array of changelog sections
      * On given previous version all older are omitted
@@ -130,54 +136,72 @@ class ChangeLogModel
     {
         $jsonChangeLogs = [];
 
-        // content of file
-        $context = stream_context_create(['http' => ['header' => 'Accept: application/xml']]);
-        $xml     = file_get_contents($this->changeLogUrl, false, $context);
+        //--- load contents of file -------------------------------------------------------
 
-        // Data is valid
-        if ($xml) {
-            //--- read xml to json ---------------------------------------------------
+        if ( $this->isUseLocalDir) {
+            if (file_exists($this->changeLogPath)) {
 
-            $changelogs = simplexml_load_string($xml);
+                // local file in root directory
+                $changelogs = simplexml_load_file($this->changeLogPath);
+            } else {
+                // Xml file not found
+                $OutTxt = 'changeLogFile: No valid xml file found ' . $this->changeLogPath . '"';
+                Factory::getApplication()->enqueueMessage($OutTxt, 'error');
+            }
+        } else {
+            // url file in github or url to local
 
-            if (!empty ($changelogs)) {
-                //Encode the SimpleXMLElement object into a JSON string.
-                $jsonString = json_encode($changelogs);
-                //Convert it back into an associative array
-                $jsonArray = json_decode($jsonString, true);
+            // $context = stream_context_create(['http' => ['header' => 'Accept: application/xml']]);
+            $context = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+            $xml     = file_get_contents($this->changeLogUrl, false, $context);
 
-                //--- reduce to version items -------------------------------------------
+            if ($xml !== false) {
+                // read xml to json
+                $changelogs = simplexml_load_string($xml);
+            } else {
+                // Xml file not found
+                $OutTxt = 'changeLogFile: No valid xml file found ' . $this->changeLogUrl . '"';
+                Factory::getApplication()->enqueueMessage($OutTxt, 'error');
+            }
+        }
 
-                // standard : change log for each version are sub items
-                if (array_key_exists('changelog', $jsonArray)) {
-                    $testLogs = $jsonArray ['changelog'];
+        if (!empty ($changelogs)) {
+            //Encode the SimpleXMLElement object into a JSON string.
+            $jsonString = json_encode($changelogs);
+            //Convert it back into an associative array
+            $jsonArray = json_decode($jsonString, true);
 
-                    foreach ($testLogs as $changeLog) {
-                        // all versions
-                        if (empty ($previousVersion)) {
-                            $jsonChangeLogs [] = $changeLog;
-                        } else {
-                            $logVersion = $changeLog ['version'];
+            //--- reduce to version items -------------------------------------------
 
-                            // above old version
-                            if (version_compare($logVersion, $previousVersion, '>')) {
-                                // all above lower are valid when actual is not given
-                                if (empty ($actualVersion)) {
+            // standard : change log for each version are sub items
+            if (array_key_exists('changelog', $jsonArray)) {
+                $testLogs = $jsonArray ['changelog'];
+
+                foreach ($testLogs as $changeLog) {
+                    // all versions
+                    if (empty ($previousVersion)) {
+                        $jsonChangeLogs [] = $changeLog;
+                    } else {
+                        $logVersion = $changeLog ['version'];
+
+                        // above old version
+                        if (version_compare($logVersion, $previousVersion, '>')) {
+                            // all above lower are valid when actual is not given
+                            if (empty ($actualVersion)) {
+                                $jsonChangeLogs [] = $changeLog;
+                            } else {
+                                // below and including actual version
+                                if (version_compare($logVersion, $actualVersion, '<=')) {
                                     $jsonChangeLogs [] = $changeLog;
-                                } else {
-                                    // below and including actual version
-                                    if (version_compare($logVersion, $actualVersion, '<=')) {
-                                        $jsonChangeLogs [] = $changeLog;
-                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        } else {
-            // No valid xml file found
-            $OutTxt = 'changeLogFile: No valid xml file found ' . $this->changeLogUrl . '"';
+        }  else {
+            // Invalid xml file found
+            $OutTxt = 'changeLogFile: Invalid xml file found ' . $this->changeLogUrl . '"';
             Factory::getApplication()->enqueueMessage($OutTxt, 'error');
         }
 
@@ -482,7 +506,19 @@ EOT;
         return $html;
     }
 
+    /**
+     * returns actual
+     * @return string
+     *
+     * @since version
+     */
+    private function changeLogPath()
+    {
+        $adminRSG2_Path = JPATH_ROOT . '/administrator/components/' . 'com_rsgallery2';
+        $changeLogPath = $adminRSG2_Path . '/changelog.xml';
+
+        return $changeLogPath;
+    }
+
 } // class
-
-
 

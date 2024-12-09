@@ -579,7 +579,13 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
 function DisplayChangeLog($changelogs)
 {
     $title   = Text::_('COM_RSGALLERY2_CHANGELOG');
-    $content = tableFromXml($changelogs);
+
+    if (!empty($changelogs)) {
+        $content = tableFromXml($changelogs);
+    } else {
+        $content = "DisplayChangeLog: \$changelogs was empty and could not be extracted";
+    }
+
     $id      = 'rsg2_changelog';
 
     collapseContent($title, $content, $id);
@@ -594,12 +600,23 @@ function DisplayChangeLog($changelogs)
  */
 function tableFromXml($changelogs)
 {
-    foreach ($changelogs as $htmlElements) {
-        $html[] = '            ' . $htmlElements;
+	$html = "";
+
+	if (!empty($changelogs)) {
+
+		if (is_array($changelogs)) {
+            $logElements = [];
+            foreach ($changelogs as $htmlElements) {
+                $logElements[] = '            ' . $htmlElements;
+            }
+
+            $html = implode('</br>', $logElements);
+        } else {
+			$html = $changelogs;
+		}
     }
 
-    // return implode($html);
-    return implode('</br>', $html);
+    return $html;
 }
 
 //--- Credits ------------------

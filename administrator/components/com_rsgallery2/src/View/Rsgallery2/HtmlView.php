@@ -168,6 +168,9 @@ class HtmlView extends BaseHtmlView
         $ChangeLogModel = new ChangeLogModel ();
         // ToDo: add previous version
         $jsonChangelogs = $ChangeLogModel->changeLogElements();
+
+        echo "\$jsonChangelogs: " . json_encode($jsonChangelogs);
+        
         // Array: Html table each log item
         $this->changelogs = $ChangeLogModel->changeLogsData2Html($jsonChangelogs);
 
