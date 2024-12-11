@@ -1,56 +1,52 @@
 .sidebar-nav {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
-
 .sidebar-nav ul {
-    padding-left: 0rem;
+  padding-left: 0rem;
 }
-
 .sidebar-nav li {
-    padding: 0;
+  padding: 0;
 }
-
 .sidebar-nav li a {
-    padding: 0 0.12rem 0 0.12rem;
+  padding: 0 0.12rem 0 0.12rem;
 }
-
 .sidebar-nav li a::before {
-    display: none;
+  display: none;
 }
 
 #j-toggle-sidebar {
-    display: none;
+  display: none;
 }
 
 .configMatching {
-    color: #58a323;
-    font-weight: bold;
+  color: #58a323;
+  font-weight: bold;
 }
 
 .configNotMatching {
-    color: #e52626;
-    font-weight: bold;
-    background-color: lightyellow;
+  color: #e52626;
+  font-weight: bold;
+  background-color: lightyellow;
 }
 
 .configOnlyNew {
-    color: #0d6dab;
-    font-weight: bold;
+  color: #0d6dab;
+  font-weight: bold;
 }
 
 .configTransfer {
-    color: #ff6600;
-    font-weight: bold;
+  color: #ff6600;
+  font-weight: bold;
 }
 
 .configValueOldHeader {
-    word-wrap: break-word;
-    max-width: 20%;
+  word-wrap: break-word;
+  max-width: 20%;
 }
 
 .configValueOld {
-    word-wrap: break-word;
-    max-width: 20%;
+  word-wrap: break-word;
+  max-width: 20%;
 }
 
 /*# sourceMappingURL=dbCopyOldConfig.css.map */

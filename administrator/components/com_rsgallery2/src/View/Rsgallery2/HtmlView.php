@@ -169,7 +169,7 @@ class HtmlView extends BaseHtmlView
         // ToDo: add previous version
         $jsonChangelogs = $ChangeLogModel->changeLogElements();
 
-        echo "\$jsonChangelogs: " . json_encode($jsonChangelogs);
+        // echo "\$jsonChangelogs: " . json_encode($jsonChangelogs);
         
         // Array: Html table each log item
         $this->changelogs = $ChangeLogModel->changeLogsData2Html($jsonChangelogs);
@@ -184,7 +184,8 @@ class HtmlView extends BaseHtmlView
 
         $this->addToolbar();
 
-        return parent::display($tpl);
+        parent::display($tpl);
+        return;
     }
 
     /**

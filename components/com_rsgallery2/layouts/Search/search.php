@@ -45,9 +45,15 @@ $link        = Route::_(
 ); // \Joomla\CMS\Router\Route::_('index.php'); ? >search?Itemid=101
 $placeholder = Text::_('COM_RSGALLERY2_SEARCH_GALLERIES_IMAGES');
 
+/* 2024.12.09 Deprecated: Creation of dynamic property
+   Joomla\CMS\Layout\FileLayout::$filterForm is deprecated in
+  /homepages/4/d92360456/htdocs/rsgallery2_J4x_upgrade/components/com_rsgallery2/layouts/Search/search.php
+  on line 48
+**
+**
 $this->filterForm    = $this->get('FilterForm');
 $this->activeFilters = $this->get('ActiveFilters');
-
+/**/
 ?>
 
 <!--<fields name="filter">-->

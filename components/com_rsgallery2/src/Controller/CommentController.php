@@ -13,7 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\site\Controller;
 
 defined('_JEXEC') or die;
 
-use JInput;
+use Joomla\CMS\Input;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -41,7 +41,7 @@ class CommentController extends BaseController
      * @param   array                $config   An optional associative array of configuration settings.
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   JInput              $input    Input
+     * @param   Input              $input    Input
      *
      * @since  __BUMP_VERSION__
      * @see    \JControllerLegacy

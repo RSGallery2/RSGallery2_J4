@@ -241,7 +241,8 @@ class HtmlView extends BaseHtmlView
 
         $this->addToolbar($Layout);
 
-        return parent::display($tpl);
+        parent::display($tpl);
+        return;
     }
 
     /**

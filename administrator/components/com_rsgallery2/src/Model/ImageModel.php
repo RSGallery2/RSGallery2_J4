@@ -12,7 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 defined('_JEXEC') or die;
 
-use JForm;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Access\Rules;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -236,7 +236,7 @@ class ImageModel extends AdminModel
      * @param   array    $data      Data for the form.
      * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
      *
-     * @return  JForm|boolean  A JForm object on success, false on failure
+     * @return  Form|boolean  A Form object on success, false on failure
      *
      * @since __BUMP_VERSION__
      */

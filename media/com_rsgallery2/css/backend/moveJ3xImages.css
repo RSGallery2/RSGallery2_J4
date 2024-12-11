@@ -1,72 +1,68 @@
 .sidebar-nav {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
-
 .sidebar-nav ul {
-    padding-left: 0rem;
+  padding-left: 0rem;
 }
-
 .sidebar-nav li {
-    padding: 0;
+  padding: 0;
 }
-
 .sidebar-nav li a {
-    padding: 0 0.12rem 0 0.12rem;
+  padding: 0 0.12rem 0 0.12rem;
 }
-
 .sidebar-nav li a::before {
-    display: none;
+  display: none;
 }
 
 #j-toggle-sidebar {
-    display: none;
+  display: none;
 }
 
 /**/
 /**/
 [class^=icon-] {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .allJ3xMovedArea {
-    padding: 50px 0 0 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  padding: 50px 0 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .allJ3xMovedText {
-    padding: 50px 25px;
-    font-size: 1.5em;
-    border: 2px solid black;
-    border-radius: 0.4rem;
-    box-shadow: 4px 7px #888888;
+  padding: 50px 25px;
+  font-size: 1.5em;
+  border: 2px solid black;
+  border-radius: 0.4rem;
+  box-shadow: 4px 7px #888888;
 }
 
 .j3x-info-card {
-    max-width: 48rem;
-    margin-bottom: 1rem;
+  max-width: 48rem;
+  margin-bottom: 1rem;
 }
 
 .j3x-galleries-card {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .j3x-galleries-as-tree-card {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .j3x-galleries-as-raw-card {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .j4x-info-card {
-    max-width: 36rem;
-    margin-bottom: 1rem;
+  max-width: 36rem;
+  margin-bottom: 1rem;
 }
 
 .j4x-galleries-card {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=moveJ3xImages.css.map */

@@ -58,17 +58,17 @@ class ChangeLogModel
             // standard from manifest
             if (empty ($changeLogUrl)) {
                 $this->changeLogUrl = $this->changeLogUrlFromExtension();
-                echo "__construct (empty): " . json_encode($this->changeLogUrl);
+                // echo "__construct (empty): " . json_encode($this->changeLogUrl);
             } else {
                 // user path
                 $this->changeLogUrl = $changeLogUrl;
-                echo "__construct (given): " . json_encode($this->changeLogUrl);
+                // echo "__construct (given): " . json_encode($this->changeLogUrl);
             }
         }
         else
         {
             $this->changeLogPath = $this->changeLogPath();
-
+            // echo "__construct (empty): " . json_encode($this->changeLogPath);
         }
 
         // standard joomla texts for title

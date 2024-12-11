@@ -14,8 +14,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
@@ -1251,7 +1251,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * @since __BUMP_VERSION__
      */
     /**/
-    private function imageFileAttrib($ImageId)
+    public function imageFileAttrib($ImageId)
     {
         $fileName         = "";
         $galleryId        = "";

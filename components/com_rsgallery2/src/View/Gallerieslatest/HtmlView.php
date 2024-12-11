@@ -11,7 +11,7 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallerieslatest;
 
 defined('_JEXEC') or die;
 
-use JObject;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Registry\Registry;
@@ -44,7 +44,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The item object details
      *
-     * @var    JObject
+     * @var    \stdClass
      * @since  __BUMP_VERSION__
      */
     protected $item;

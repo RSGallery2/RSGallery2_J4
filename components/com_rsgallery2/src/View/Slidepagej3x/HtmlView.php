@@ -11,7 +11,7 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Slidepagej3x;
 
 defined('_JEXEC') or die;
 
-use JObject;
+
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
-use JUser;
+use \Joomla\CMS\User\User;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 use function defined;
@@ -35,7 +35,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var    JObject
+     * @var    \stdClass
      * @since  3.1
      */
     protected $state;
@@ -80,7 +80,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The logged in user
      *
-     * @var    JUser|null
+     * @var    User|null
      * @since  4.0.0
      */
     protected $user = null;

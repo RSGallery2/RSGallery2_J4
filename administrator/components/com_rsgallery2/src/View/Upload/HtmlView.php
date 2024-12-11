@@ -13,7 +13,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\FilesystemHelper;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\Helpers\Sidebar;
@@ -26,8 +25,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\UploadModel;
 
 use function defined;
-
-//use Joomla\CMS\Toolbar\Toolbar;
 
 /**
  * View class for a list of rsgallery2.
@@ -98,7 +95,11 @@ class HtmlView extends BaseHtmlView
         $this->UploadLimit = round($mediaHelper->toBytes(ini_get('upload_max_filesize')) / (1024 * 1024));
         $this->PostMaxSize = round($mediaHelper->toBytes(ini_get('post_max_size')) / (1024 * 1024));
         $this->MemoryLimit = round($mediaHelper->toBytes(ini_get('memory_limit')) / (1024 * 1024));
-        $this->MaxSize     = FilesystemHelper::fileUploadMaxSize();
+
+        // Max size to be used (previously defined by joomla function but ...)
+        // j old: $max_size   = parseSize(ini_get('post_max_size'));
+        // j old: $upload_max = parseSize(ini_get('upload_max_filesize'));
+        $this->MaxSize = min($this->UploadLimit, $this->PostMaxSize);
 
         //--- FtpUploadPath ------------------------
 
@@ -185,7 +186,8 @@ class HtmlView extends BaseHtmlView
         //$Layout = Factory::getApplication()->input->get('layout');
         $this->addToolbar();
 
-        return parent::display($tpl);
+        parent::display($tpl);
+        return;
     }
 
     /**

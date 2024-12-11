@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 $app = Factory::getApplication();
 
@@ -136,7 +137,8 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             echo $item->id; ?>', '<?php
                             echo $this->escape(addslashes($item->title)); ?>', null, '<?php
                             echo $this->escape(
-                                ContentHelperRoute::getGalleryRoute($item->id, $item->language),
+//                                ContentHelperRoute::getGalleryRoute($item->id, $item->language),
+                                RouteHelper::getGalleryRoute($item->id, $item->language),
                             ); ?>', '<?php
                             echo $this->escape($lang); ?>', null);">
                                 <?php

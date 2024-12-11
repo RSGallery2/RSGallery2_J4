@@ -13,15 +13,14 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Slideshow;
 
 defined('_JEXEC') or die;
 
-use JObject;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\User\User;
 use Joomla\Registry\Registry;
-use JUser;
 
 use function defined;
 
@@ -35,7 +34,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var    JObject
+     * @var    CMSObject
      * @since  3.1
      */
     protected $state;
@@ -75,7 +74,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The logged in user
      *
-     * @var    JUser|null
+     * @var    User|null
      * @since  4.0.0
      */
     protected $user = null;
@@ -185,7 +184,9 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
-        return parent::display($tpl);
+        parent::display($tpl);
+
+        return;
     }
 
 

@@ -12,7 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Exception;
-use JForm;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
@@ -27,7 +27,6 @@ use Joomla\CMS\UCM\UCMType;
 use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use JTableCategory;
 use RuntimeException;
 
 use function defined;
@@ -304,7 +303,7 @@ class GalleryModel extends AdminModel
      * @param   array    $data      Data for the form.
      * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
      *
-     * @return  JForm|boolean  A JForm object on success, false on failure
+     * @return  Form|boolean  A Form object on success, false on failure
      *
      * @since __BUMP_VERSION__
      */
@@ -363,7 +362,7 @@ class GalleryModel extends AdminModel
      * A protected method to get the where clause for the reorder
      * This ensures that the row will be moved relative to a row with the same extension
      *
-     * @param   JTableCategory  $table  Current table instance
+     * @param   Table  $table  Current table instance
      *
      * @return  array  An array of conditions to add to ordering queries.
      *
@@ -425,7 +424,7 @@ class GalleryModel extends AdminModel
     /**
      * Method to preprocess the form.
      *
-     * @param   JForm  $form   A JForm object.
+     * @param   Form  $form   A Form object.
      * @param   mixed   $data   The data expected for the form.
      * @param   string  $group  The name of the plugin group to import.
      *
@@ -433,7 +432,7 @@ class GalleryModel extends AdminModel
      *
      * @throws  Exception if there is an error in the form event.
      *
-     * protected function preprocessForm(\JForm $form, $data, $group = 'content')
+     * protected function preprocessForm(\Form $form, $data, $group = 'content')
      * {
      * $lang = Factory::getApplication()->getLanguage();
      * $component = $this->getState('category.component');
@@ -546,14 +545,14 @@ class GalleryModel extends AdminModel
      * parent::preprocessForm($form, $data, $group);
      * }
      * /**@since __BUMP_VERSION__
-     * @see     \JFormField
+     * @see     \FormField
      */
 
     /**
      * Transform some data before it is displayed ? Saved ?
      * extension development 129 bottom
      *
-     * @param   JTable  $table
+     * @param   Table  $table
      *
      * @since __BUMP_VERSION__
      */

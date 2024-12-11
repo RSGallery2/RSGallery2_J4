@@ -11,8 +11,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Images;
 
 defined('_JEXEC') or die;
 
-use JForm;
-use JObject;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
@@ -54,7 +52,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var  JObject
+     * @var  \stdClass
      */
     protected $state;
 
@@ -68,7 +66,7 @@ class HtmlView extends BaseHtmlView
     /**
      * Form object for search filters
      *
-     * @var  JForm
+     * @var  Form
      */
     public $filterForm;
 
@@ -89,7 +87,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The actions the user is authorised to perform
      *
-     * @var  JObject
+     * @var  \stdClass
      */
     protected $canDo;
 
@@ -213,6 +211,8 @@ class HtmlView extends BaseHtmlView
         //--- display --------------------------------------------------------------------
 
         parent::display($tpl);
+
+        return;
     }
 
     /**

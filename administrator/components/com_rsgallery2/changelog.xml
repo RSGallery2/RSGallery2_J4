@@ -3,15 +3,17 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>5.0.14.0</version>
-		<date>2024-06-11</date>
+		<version>5.0.20.0</version>
+		<date>2024-12-11</date>
+		<change>
+			<item>Improved transfer of J3x RSG2 Version data to actual version</item>
+			<item>Checked options for using same names from configuration to menu </item>
+			<item></item>
+		</change>
 		<fix>
 			<item>Can not find view in menu path: Upper case in template and module files</item>
-			<item>Item b</item>
+			<item>Slideshow parameter</item>
 		</fix>
-		<note>
-			<item>Item c</item>
-		</note>
 	</changelog>
 	<changelog>
 		<element>com_rsgallery2</element>
@@ -23,7 +25,7 @@
 			<item>Basic Slideshow works</item>
 			<item>Introduce slide pages for single images view</item>
 			<item>Maintenance J3x column</item>
-			<item></item>
+			<item/>
 		</addition>
 		<note>
 			<item>Missing: commenting</item>
