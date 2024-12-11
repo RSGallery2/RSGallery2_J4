@@ -49,48 +49,43 @@
 				XML and be parsed by the installer
 			-->
 			<!-- menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu -->
+			<!-- view="option=com_rsgallery2" -->
 			<menu
-					link="option=com_rsgallery2"
-					view="COM_RSGALLERY2_MENU_CONTROL_PANEL"
+					view=""
 					img="class:home"
 			>
 				COM_RSGALLERY2_MENU_CONTROL_PANEL
 			</menu>
 			<menu
-					link="option=com_rsgallery2&amp;view=galleries"
-					view="COM_RSGALLERY2_MENU_GALLERIES"
+					view="galleries"
 					img="class:images"
 			>
 				COM_RSGALLERY2_MENU_GALLERIES
-				<params>
-					<menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title>
-					<menu-quicktask>index.php?option=com_rsgallery2&amp;task=gallery.add</menu-quicktask>
-				</params>
+				<!-- <params> -->
+					<!-- <menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title> -->
+					<!-- <menu-quicktask>index.php?option=com_rsgallery2&amp;task=gallery.add</menu-quicktask> -->
+				<!-- </params> -->
 			</menu>
 			<menu
-					link="option=com_rsgallery2&amp;view=upload"
-					view="COM_RSGALLERY2_MENU_UPLOAD"
+					view="upload"
 					img="class:upload"
 			>
 				COM_RSGALLERY2_MENU_UPLOAD
 			</menu>
 			<menu
-					link="option=com_rsgallery2&amp;view=images"
-					view="COM_RSGALLERY2_MENU_IMAGES"
+					view="images"
 					img="class:images"
 			>
 				COM_RSGALLERY2_MENU_IMAGES
 			</menu>
 			<menu
 					link="option=com_config&amp;view=component&amp;component=com_rsgallery2"
-					view="COM_RSGALLERY2_MENU_CONFIG"
 					img="class:config"
 			>
 				COM_RSGALLERY2_MENU_CONFIG
 			</menu>
 			<menu
-					link="option=com_rsgallery2&amp;view=maintenance"
-					view="COM_RSGALLERY2_MENU_MAINTENANCE"
+					view="maintenance"
 					img="class:equalizer"
 			>
 				COM_RSGALLERY2_MENU_MAINTENANCE
@@ -98,7 +93,7 @@
 		</submenu>
 
 		<!-- Core files -->
-		<files folder="administrator/components/com_rsgallery2">
+		<files folder="administrator/components/com_rsgallery2/">
 			<filename>access.xml</filename>
 			<filename>changelog.xml</filename>
 			<filename>config.xml</filename>

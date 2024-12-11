@@ -394,7 +394,11 @@ class GalleryModel extends AdminModel
             // Pre-select some filters (Status, Language, Access) in edit form if those have been selected in Category Manager
             if (!$data->id) {
                 // Check for which extension the Category Manager is used and get selected fields
-                $extension = substr($app->getUserState('com_rsgallery2.galleries.filter.extension'), 4);
+                $extUserState = $app->getUserState('com_rsgallery2.galleries.filter.extension');
+                $extension = "";
+                if ( ! empty ($extUserState)) {
+                    $extension = substr($extUserState, 4);
+                }
                 $filters   = (array)$app->getUserState('com_rsgallery2.galleries.' . $extension . '.filter');
 
                 $data->set(
