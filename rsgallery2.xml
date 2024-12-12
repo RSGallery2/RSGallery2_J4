@@ -15,7 +15,6 @@
 	<!-- Script to run on installation -->
 	<scriptfile>install_rsg2.php</scriptfile>
 
-	<!-- sql files --><!-- Runs on install -->
 	<install>
 		<sql>
 			<file driver="mysql"
@@ -23,83 +22,60 @@
 			</file>
 		</sql>
 	</install>
-	<uninstall> <!-- Runs on uninstall -->
+	<uninstall> 
 		<sql>
 			<file driver="mysql"
 			      charset="utf8">sql/uninstall.mysql.utf8.sql
 			</file>
 		</sql>
 	</uninstall>
-	<update>  <!-- Runs on update -->
+	<update>  
 		<schemas>
 			<schemapath type="mysql">sql/updates/mysql</schemapath>
 		</schemas>
 	</update>
 
-	<!-- Back-end files -->
 	<administration>
+	
+		<!-- Back-end menu -->
 		<menu img="class:images">RSGallery2</menu>
-		<!--params>
-			<dashboard>rsgallery2</dashboard>
-		</params-->
-
 		<submenu>
 			<!--
 				Note that all & must be escaped to &amp; for the file to be valid
 				XML and be parsed by the installer
 			-->
-			<!-- menu link="option=com_rsgallery2">COM_RSGALLERY2_MENU</menu -->
-			<!-- view="option=com_rsgallery2" -->
 			<menu
 					view=""
 					img="class:home"
-			>
-				COM_RSGALLERY2_MENU_CONTROL_PANEL
-			</menu>
+			>COM_RSGALLERY2_MENU_CONTROL_PANEL</menu>
 			<menu
 					view="galleries"
 					img="class:images"
-			>
-				COM_RSGALLERY2_MENU_GALLERIES
-				<!-- <params> -->
-					<!-- <menu-quicktask-title>COM_RSGALLERY2_DASHBOARD_ADD_GALLERY</menu-quicktask-title> -->
-					<!-- <menu-quicktask>index.php?option=com_rsgallery2&amp;task=gallery.add</menu-quicktask> -->
-				<!-- </params> -->
-			</menu>
+			>COM_RSGALLERY2_MENU_GALLERIES</menu>
 			<menu
 					view="upload"
 					img="class:upload"
-			>
-				COM_RSGALLERY2_MENU_UPLOAD
-			</menu>
+			>COM_RSGALLERY2_MENU_UPLOAD</menu>
 			<menu
 					view="images"
 					img="class:images"
-			>
-				COM_RSGALLERY2_MENU_IMAGES
-			</menu>
+			>COM_RSGALLERY2_MENU_IMAGES</menu>
 			<menu
 					link="option=com_config&amp;view=component&amp;component=com_rsgallery2"
 					img="class:config"
-			>
-				COM_RSGALLERY2_MENU_CONFIG
-			</menu>
+			>COM_RSGALLERY2_MENU_CONFIG</menu>
 			<menu
 					view="maintenance"
 					img="class:equalizer"
-			>
-				COM_RSGALLERY2_MENU_MAINTENANCE
-			</menu>
+			>COM_RSGALLERY2_MENU_MAINTENANCE</menu>
 		</submenu>
 
-		<!-- Core files -->
+		<!-- Back-end files -->
 		<files folder="administrator/components/com_rsgallery2/">
 			<filename>access.xml</filename>
 			<filename>changelog.xml</filename>
 			<filename>config.xml</filename>
 			<filename>LICENSE.txt</filename>
-			<!--filename>rsgallery2.xml</filename-->
-			<!--filename>install_rsg2.php</filename-->
 			<folder>forms</folder>
 			<folder>helpers</folder>
 			<folder>language</folder>
