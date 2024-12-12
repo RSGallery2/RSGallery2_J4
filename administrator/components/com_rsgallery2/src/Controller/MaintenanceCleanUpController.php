@@ -218,7 +218,7 @@ class MaintenanceCleanUpController extends BaseController
             $sqlUninstallFile = JPATH_COMPONENT_ADMINISTRATOR . '/sql/uninstall.mysql.utf8.sql';
 
             // file found
-            if (File::exists($sqlUninstallFile)) {
+            if (file_exists($sqlUninstallFile)) {
                 // Read all lines
                 $lines = file($sqlUninstallFile);
 

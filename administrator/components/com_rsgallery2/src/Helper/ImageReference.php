@@ -247,21 +247,21 @@ class ImageReference
 
             $this->IsSizes_ImageFound = [];
 
-            if (!File::exists($this->originalFilePath)) {
+            if (!file_exists($this->originalFilePath)) {
                 $this->IsOriginalImageFound  = false;
                 $this->IsAllSizesImagesFound = false;
             }
-            if (!File::exists($this->displayFilePath)) {
+            if (!file_exists($this->displayFilePath)) {
                 $this->IsDisplayImageFound   = false;
                 $this->IsAllSizesImagesFound = false;
             }
-            if (!File::exists($this->thumbFilePath)) {
+            if (!file_exists($this->thumbFilePath)) {
                 $this->IsThumbImageFound     = false;
                 $this->IsAllSizesImagesFound = false;
             }
 
             foreach ($this->sizeFilePaths as $size => $sizePath) {
-                if (!File::exists($sizePath)) {
+                if (!file_exists($sizePath)) {
                     $this->IsSizes_ImageFound [$size] = false;
                     $this->IsAllSizesImagesFound      = false;
                 } else {

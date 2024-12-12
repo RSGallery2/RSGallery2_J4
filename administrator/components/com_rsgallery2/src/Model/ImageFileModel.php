@@ -585,7 +585,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 } else {
                     // don't delete files on folder upload ToDo: ? config ?
                     if ($uploadOrigin != 'server') {
-                        if (File::exists($srcTempPathFileName)) {
+                        if (file_exists($srcTempPathFileName)) {
                             File::delete($srcTempPathFileName);
                         }
                     }
@@ -734,7 +734,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         // ToDo: try ... catch
 
         // source file exists
-        if (File::exists($srcFileName)) {
+        if (file_exists($srcFileName)) {
             //--- Create thumb files ----------------------------------
 
             // Create memory image
@@ -863,7 +863,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         // ToDo: try ... catch
 
         // source file exists
-        if (File::exists($srcFileName)) {
+        if (file_exists($srcFileName)) {
             //--- Create thumb files ----------------------------------
 
             // Create memory image
@@ -1086,14 +1086,14 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             $imgSrcPath = $originalPath;
 
             // fallback display file
-            if (!File::exists($originalPath)) {
+            if (!file_exists($originalPath)) {
                 // displayBasePath
                 $imgSrcPath = $displayDPath;
             }
 
             $memImage = null;
 
-            if (File::exists($imgSrcPath)) {
+            if (file_exists($imgSrcPath)) {
                 $memImage = new image ($imgSrcPath);
             }
 
@@ -1164,14 +1164,14 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             $imgSrcPath = $originalPath;
 
             // fallback display file
-            if (!File::exists($originalPath)) {
+            if (!file_exists($originalPath)) {
                 // displayBasePath
                 $imgSrcPath = $displayPath;
             }
 
             $memImage = null;
 
-            if (File::exists($imgSrcPath)) {
+            if (file_exists($imgSrcPath)) {
                 $memImage = new image ($imgSrcPath);
             }
 
