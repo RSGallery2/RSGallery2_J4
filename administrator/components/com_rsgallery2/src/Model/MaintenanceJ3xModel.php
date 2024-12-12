@@ -372,7 +372,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
             // collects galleries of given level
             foreach ($dbGalleries as $gallery) {
-                if ($gallery['parent'] == $parentId) {
+                if ($gallery['parent_id'] == $parentId) {
                     $gallery['level'] = $level;
 
                     // collect gallery

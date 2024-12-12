@@ -215,9 +215,16 @@ class ImageReference
             $this->allImagePaths [] = $this->displayFilePath;
             $this->allImagePaths [] = $this->thumbFilePath;
 
-            foreach ($this->sizeFilePaths as $sizePath) {
-                $this->allImagePaths [] = $sizePath;
-            }
+	        // ToDo: what when only 3x files exist
+	        if (!empty ($this->sizeFilePaths)) {
+		        foreach ($this->sizeFilePaths as $sizePath) {
+			        $this->allImagePaths [] = $sizePath;
+		        }
+	        } else {
+
+		        // ToDo: 3x files  : use_j3x_location
+
+	        }
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -260,13 +267,24 @@ class ImageReference
                 $this->IsAllSizesImagesFound = false;
             }
 
-            foreach ($this->sizeFilePaths as $size => $sizePath) {
-                if (!file_exists($sizePath)) {
-                    $this->IsSizes_ImageFound [$size] = false;
-                    $this->IsAllSizesImagesFound      = false;
-                } else {
-                    $this->IsSizes_ImageFound [$size] = true;
-                }
+	        // ToDo: what when only 3x files exist
+	        if (!empty ($this->sizeFilePaths)) {
+	            foreach ($this->sizeFilePaths as $size => $sizePath)
+	            {
+		            if (!file_exists($sizePath))
+		            {
+			            $this->IsSizes_ImageFound [$size] = false;
+			            $this->IsAllSizesImagesFound      = false;
+		            }
+		            else
+		            {
+			            $this->IsSizes_ImageFound [$size] = true;
+		            }
+	            }
+            } else {
+
+		        // ToDo: 3x files  : use_j3x_location
+
             }
         } catch (RuntimeException $e) {
             $OutTxt = '';
@@ -314,9 +332,18 @@ class ImageReference
             $this->IsThumbImageFound     = false;
             $this->IsAllSizesImagesFound = false;
 
-            foreach ($this->sizeFilePaths as $size => $sizePath) {
-                $this->IsSizes_ImageFound [$size] = false; // $sizePath;
-            }
+	        // ToDo: what when only 3x files exist
+	        if (!empty ($this->sizeFilePaths))
+	        {
+		        foreach ($this->sizeFilePaths as $size => $sizePath)
+		        {
+			        $this->IsSizes_ImageFound [$size] = false; // $sizePath;
+		        }
+	        } else {
+
+		        // ToDo: 3x files  : use_j3x_location
+
+	        }
 
             $this->allImagePaths = [];
         } catch (RuntimeException $e) {
@@ -356,14 +383,25 @@ class ImageReference
                 $isImageAssigned         = true;
             }
 
-            // size  assignment
-            if (!$isImageAssigned) {
-                foreach ($this->sizeFilePaths as $size => $sizePath) {
-                    if ($imageFilePath === $sizePath) {
-                        $this->IsSizes_ImageFound [$size] = true;
-                        $isImageAssigned                  = true;
-                    }
-                }
+            // size assignment
+            if (!$isImageAssigned)
+            {
+	            // ToDo: what when only 3x files exist
+	            if (!empty ($this->sizeFilePaths))
+	            {
+		            foreach ($this->sizeFilePaths as $size => $sizePath)
+		            {
+			            if ($imageFilePath === $sizePath)
+			            {
+				            $this->IsSizes_ImageFound [$size] = true;
+				            $isImageAssigned                  = true;
+			            }
+		            }
+	            } else {
+
+		            // ToDo: 3x files  : use_j3x_location
+
+	            }
             }
 
             // size  assignment ? -> may differ from expected
@@ -449,5 +487,4 @@ class ImageReference
     // toDo: ? Any size image missing ? ....
 
 }
-
 
