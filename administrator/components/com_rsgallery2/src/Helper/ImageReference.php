@@ -183,48 +183,50 @@ class ImageReference
 //            $this->imageName         = $image ['name'];
 //            $this->parentGalleryId   = $image ['gallery_id'];
 //            $this->use_j3x_location  = $image ['use_j3x_location'];
-            $this->imageName         = $image->name;
-            $this->parentGalleryId   = $image->gallery_id;
-            $this->use_j3x_location  = $image->use_j3x_location;
+            $this->imageName = $image->name;
+            $this->parentGalleryId = $image->gallery_id;
+            $this->use_j3x_location = $image->use_j3x_location;
 
             // J4x path
             if (!$this->use_j3x_location) {
-
                 $imagePaths = new ImagePathsData ($this->parentGalleryId);
 
                 $imagePaths->assignPathData($image);
 
                 $imagePaths->createAllPaths();
                 $this->sizeFilePaths = $image->SizePaths;
-
             } else {
                 // J3x path
                 $imagePathJ3x = new ImagePathsJ3xData ();
                 $imagePathJ3x->assignPathData($image);
-
             }
 
             $this->originalFilePath = $image->OriginalFile;
-            $this->displayFilePath  = $image->DisplayFile;
-            $this->thumbFilePath    = $image->ThumbFile;
+            $this->displayFilePath = $image->DisplayFile;
+            $this->thumbFilePath = $image->ThumbFile;
 
             // Helper list for faster detection of images lost and found
             $this->allImagePaths = [];
 
             $this->allImagePaths [] = $this->originalFilePath;
-            $this->allImagePaths [] = $this->displayFilePath;
             $this->allImagePaths [] = $this->thumbFilePath;
 
-	        // ToDo: what when only 3x files exist
-	        if (!empty ($this->sizeFilePaths)) {
-		        foreach ($this->sizeFilePaths as $sizePath) {
-			        $this->allImagePaths [] = $sizePath;
-		        }
-	        } else {
+            // J4x path
+            if (!$this->use_j3x_location) {
+                if (!empty ($this->sizeFilePaths)) {
+                    foreach ($this->sizeFilePaths as $sizePath) {
+                        $this->allImagePaths [] = $sizePath;
+                    }
+                } else {
+                    $OutTxt = 'assignDbItem: file sizes in config may be missing';
 
-		        // ToDo: 3x files  : use_j3x_location
-
-	        }
+                    $app = Factory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'notice');
+                }
+            } else {
+                // J3x path
+                $this->allImagePaths [] = $this->displayFilePath;
+            }
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -258,34 +260,39 @@ class ImageReference
                 $this->IsOriginalImageFound  = false;
                 $this->IsAllSizesImagesFound = false;
             }
-            if (!file_exists($this->displayFilePath)) {
-                $this->IsDisplayImageFound   = false;
-                $this->IsAllSizesImagesFound = false;
-            }
+
             if (!file_exists($this->thumbFilePath)) {
                 $this->IsThumbImageFound     = false;
                 $this->IsAllSizesImagesFound = false;
             }
 
-	        // ToDo: what when only 3x files exist
-	        if (!empty ($this->sizeFilePaths)) {
-	            foreach ($this->sizeFilePaths as $size => $sizePath)
-	            {
-		            if (!file_exists($sizePath))
-		            {
-			            $this->IsSizes_ImageFound [$size] = false;
-			            $this->IsAllSizesImagesFound      = false;
-		            }
-		            else
-		            {
-			            $this->IsSizes_ImageFound [$size] = true;
-		            }
-	            }
+            // J4x path
+            if ($this->use_j3x_location) {
+                if (!empty ($this->sizeFilePaths)) {
+                    foreach ($this->sizeFilePaths as $size => $sizePath) {
+                        if (!file_exists($sizePath)) {
+                            $this->IsSizes_ImageFound [$size] = false;
+                            $this->IsAllSizesImagesFound = false;
+                        } else {
+                            $this->IsSizes_ImageFound [$size] = true;
+                        }
+                    }
+                } else {
+                    $OutTxt = 'check4ImageIsNotExisting: file sizes in config may be missing';
+
+                    $app = Factory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'notice');
+                }
+
             } else {
+                // J3x path
 
-		        // ToDo: 3x files  : use_j3x_location
-
+                if (!file_exists($this->displayFilePath)) {
+                    $this->IsDisplayImageFound = false;
+                    $this->IsAllSizesImagesFound = false;
+                }
             }
+
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';

@@ -122,7 +122,7 @@ class ImageReferences
         return $this->ImageReferenceList;
     }
 
-    // ToDO: Do i need this function ?
+    // ToDo: Do i need this function ?
 
     /**
      * property accessor
@@ -163,8 +163,10 @@ class ImageReferences
 
         // Create references for items from database view. Contains path to all expected images (-> original, thumb, sizes ...)
         $this->imageReferencesByDb();
+
         // flag not existing images
         $this->checkList4NotExisting();
+
         // search for files not in list
         $this->findOrphans_add2List();
 
@@ -228,12 +230,14 @@ class ImageReferences
     private function findOrphans_Add2List()
     {
         try {
-            // go through all
+            //--- j4x style -----------------------------------
 
             // toDo: Outside originals ....
 
+            // go through all
+
             // only base path needed so galleryid == 0
-            $imagePaths             = new ImagePathsModel (0); // ToDo: J3x
+            $imagePaths             = new ImagePathsModel (0);
             $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
             // all found gallery ids in folder
@@ -242,6 +246,22 @@ class ImageReferences
             foreach ($galleryIdDirs as $galleryIdDir) {
                 $this->testSizesDir4Orphans($galleryIdDir);
             }
+
+            //--- j3x style -----------------------------------
+
+            // only base path needed so galleryid == 0
+            $imagePaths             = new ImagePathsJ3xModel (0); // ToDo: J3x
+            $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
+
+            // original, thumb, display ? watermarked
+            $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
+            foreach ($galleryIdDirs as $galleryIdDir) {
+                $this->testJ3xDir4Orphans($galleryIdDir);
+            }
+
+
+
+
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
@@ -255,7 +275,7 @@ class ImageReferences
     }
 
     // search for files not in list
-    private function testSizesDir4Orphans($galleryIdDir)
+    private function testSizesDir4Orphans($galleryIdDir='')
     {
         try {
             // gallery ID
@@ -473,6 +493,41 @@ class ImageReferences
         }
 
         return $List4LostAndFounds;
+    }
+
+    private function testJ3xDir4Orphans($galleryIdDir='')
+    {
+        try {
+            // gallery ID
+            $galleryId = basename($galleryIdDir);
+
+            if (!is_numeric($galleryId)) {
+                return;
+            }
+
+            // all found gallery ids in folder
+            $sizeDirs = glob($galleryIdDir . '/*', GLOB_ONLYDIR);
+
+            foreach ($sizeDirs as $sizeDir) {
+                $this->testImageJ3xDir4Orphans($sizeDir, $galleryId);
+            }
+        } catch(RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return;
+    }
+
+    private function testImageJ3xDir4Orphans(mixed $sizeDir, float|int|string $galleryId) {
+
+        yyyy
+
+
     }
 
 } // class
