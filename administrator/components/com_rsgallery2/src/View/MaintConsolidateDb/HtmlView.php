@@ -54,7 +54,9 @@ class HtmlView extends BaseHtmlView
     protected $IsAnyDbRefMissing; // header
 
     protected $isDebugBackend;
-    protected $isDevelop;
+	protected $isDevelop;
+	protected $hasJ3xFile;
+	protected $hasJ4xFile; // J4x ++
 
     /**
      * Method to display the view.
@@ -74,18 +76,22 @@ class HtmlView extends BaseHtmlView
         $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
         $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-        //--- get needed data ------------------------------------------
+	    //------------------------------------------
+	    // image file data
+	    //------------------------------------------
 
-        // Check rights of user
-        //$this->UserIsRoot = $this->CheckUserIsRoot();
-
-        $ConsolidateModel = $this->getModel(
-        ); // use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
+		// use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
+        $ConsolidateModel = $this->getModel();
 
         // contains lost and found items
         $this->oImgRefs = $ConsolidateModel->GetImageReferences();
 
-// Factory::getContainer()->get(FormFactoryInterface::class)->createForm($name, $options);
+	    $this->hasJ3xFile = $this->oImgRefs->hasJ3xFile();
+	    $this->hasJ4xFile = $this->oImgRefs->hasJ4xFile();
+
+	    //--- form ------------------------------------------
+
+	    // Factory::getContainer()->get(FormFactoryInterface::class)->createForm($name, $options);
 		$xmlFile    = JPATH_BASE . '/components/com_rsgallery2' . '/forms/maintConsolidateDB.xml';
 
 		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
@@ -94,7 +100,7 @@ class HtmlView extends BaseHtmlView
 
         //--- Check user rights ---------------------------------------------
 
-        // toDo: More detailed for rsgallery admin
+        // ToDo: More detailed for rsgallery admin
         $app = Factory::getApplication();
 
         //$user = $app->getIdentity();
@@ -102,11 +108,7 @@ class HtmlView extends BaseHtmlView
         $canAdmin         = $user->authorise('core.admin');
         $this->UserIsRoot = $canAdmin;
 
-        //--- begin to display ----------------------------------------------
-
-//		Factory::getApplication()->input->set('hidemainmenu', true);
-
-        //---  --------------------------------------------------------------
+        //--- display settings ----------------------------------------------
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
         Rsgallery2Helper::addSubmenu('maintenance');

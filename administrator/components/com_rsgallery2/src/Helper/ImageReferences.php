@@ -191,7 +191,12 @@ class ImageReferences
             $dbImagesList = $this->getDbImagesList();  // Is tunneled to create it only once
 
             foreach ($dbImagesList as $dbImage) {
-                $ImageReference = new ImageReference ();
+	            if ( ! $dbImage->use_j3x_location)
+	            {
+		            $ImageReference = new ImageReference ();
+	            } else {
+		            $ImageReference = new ImageReferenceJ3x ();
+	            }
                 // name / gallery id / useWatermarked
                 $ImageReference->assignDbItem($dbImage);
 
@@ -240,9 +245,9 @@ class ImageReferences
             // all found gallery ids in folder
             $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
 
-//            foreach ($galleryIdDirs as $galleryIdDir) {
-//                $this->testSizesDir4Orphans($galleryIdDir);
-//            }
+            foreach ($galleryIdDirs as $galleryIdDir) {
+                $this->testSizesDir4Orphans($galleryIdDir);
+            }
 
             //--- j3x style -----------------------------------
 
@@ -253,8 +258,8 @@ class ImageReferences
             // original, thumb, display ? watermarked
 
 	        $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'original');
-	        $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'thumb');
-	        $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'display');
+	        $this->testJ3xDir4Orphans($imagePaths->thumbBasePath, 'thumb');
+	        $this->testJ3xDir4Orphans($imagePaths->displayBasePath, 'display');
 	        // $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'watermarked');
 
 
@@ -318,6 +323,8 @@ class ImageReferences
                 $imageFilePath = Path::clean($imageFilePath);
                 $imageName     = basename($imageFilePath);
 
+				$isImage = $this->isFileAnImage($imageFilePath);
+
 //	            $testClean = Path::clean ($imageFilePath);
 //	            $testResolve = Path::resolve ($imageFilePath);
 
@@ -371,8 +378,8 @@ class ImageReferences
                         // No -> create new item
                         if (!$ImageReference) {
                             $ImageReference = new ImageReference ();
-                            $ImageReference->initLostItems($galleryId, $imageName);
-                            $ImageReference->assignLostItem($sizeName, $imageFilePath);
+                            $ImageReference->initOrphanedItem($galleryId, $imageName);
+                            $ImageReference->assignOrphanedItem($sizeName, $imageFilePath);
 
                             $this->ImageReferenceList [] = $ImageReference;
                         } else {
@@ -399,17 +406,16 @@ class ImageReferences
     private function findImageInList($galleryId, $imageName, $ImageFilePath)
     {
         $isFound = false;
-
-        $partlyItem = false;
+        $ImageReference = false;
 
         try {
-            foreach ($this->ImageReferenceList as $ImageReference) {
+            foreach ($this->ImageReferenceList as $TestImageReference) {
                 // gallery and image name must match
-                if ($ImageReference->parentGalleryId == $galleryId) {
-                    if ($ImageReference->imageName == $imageName) {
-                        $partlyItem = $ImageReference;
+                if ($TestImageReference->parentGalleryId == $galleryId) {
+                    if ($TestImageReference->imageName == $imageName) {
+                        $ImageReference = $TestImageReference;
 
-                        foreach ($ImageReference->allImagePaths as $TestImagePath) {
+                        foreach ($TestImageReference->allImagePaths as $TestImagePath) {
                             if ($ImageFilePath === $TestImagePath) {
                                 $isFound = true;
                                 break;
@@ -428,14 +434,14 @@ class ImageReferences
             }
         } catch (RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+            $OutTxt .= 'Error executing findImageInList: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return [$isFound, $partlyItem];
+        return [$isFound, $ImageReference];
     }
 
     /**
@@ -497,23 +503,64 @@ class ImageReferences
         return $List4LostAndFounds;
     }
 
-    private function testJ3xDir4Orphans($galleryIdDir='', string $dirType)
+	/**
+	 * @param   string  $galleryIdDir
+	 * @param   string  $dirType ('original', 'thumb', 'display')
+	 *
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+    private function testJ3xDir4Orphans(string $galleryIdDir, string $dirType)
     {
         try {
 
 	        $imageFiles = array_filter(glob($galleryIdDir . '/*'), 'is_file');
-	        foreach ($imageFiles as $imageFilePath) {
-		        $imageFilePath = Path::clean($imageFilePath);
-		        $imageName     = basename($imageFilePath);
 
+			// each file
+	        foreach ($imageFiles as $imageFilePath)
+	        {
+		        $isImage = $this->isFileAnImage ($imageFilePath);
 
+		        if ($isImage)
+		        {
+			        $imageFilePath = Path::clean($imageFilePath);
+			        $imageName     = basename($imageFilePath);
 
+					// remove extension
+					if ($dirType != 'original') {
+						$imageName = substr($imageName, 0, -4);
+					}
 
+			        // check if image, check if exist in list, check if other part of item exists (different size ...)
+			        //$isInList = findImageInList ($galleryId, $sizeName, $imageName, $imageFilePath);
+			        [$isInList, $ImageReference] = $this->findImageJ3xInList($imageName, $imageFilePath);
 
+			        // Unknown item
+			        if (!$isInList)
+			        {
+				        // Find item with gallery and name ?
+				        // No -> create new item
+				        if (!$ImageReference)
+				        {
+					        $ImageReference = new ImageReferenceJ3x ();
+							$ImageReference->use_j3x_location = true;
+						    $ImageReference->initOrphanedItem(-1, $imageName);
+						    $ImageReference->assignOrphanedItem($dirType, $imageFilePath);
 
+					        $this->ImageReferenceList [] = $ImageReference;
+				        }
+				        else
+				        {
+					        // Yes -> add flags for this
 
+//						    $ImageReference->assignLostItem($sizeName, $imageFilePath);
+				        }
+			        }
 
-	        } catch(RuntimeException $e) {
+		        }
+	        }
+        } catch(RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -531,13 +578,13 @@ class ImageReferences
 		    $imageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
 		    foreach ($imageFiles as $imageFilePath)
 		    {
-			    $imageFilePath = Path::clean($imageFilePath);
-			    $imageName     = basename($imageFilePath);
-
-			    $isImage = true;
+			    $isImage = $this->isFileAnImage ($imageFilePath);
 
 			    if ($isImage)
 			    {
+				    $imageFilePath = Path::clean($imageFilePath);
+				    $imageName     = basename($imageFilePath);
+
 				    // check if image, check if exist in list, check if other part of item exists (different size ...)
 				    //$isInList = findImageInList ($galleryId, $sizeName, $imageName, $imageFilePath);
 				    [$isInList, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
@@ -577,6 +624,82 @@ class ImageReferences
 
 	    return;
     }
+
+	private function isFileAnImage(string $imageFilePath)
+	{
+		// For PHP >= 5.3 use finfo_open() or mime_content_type()
+
+		// ToDo: What about webp or svg ...
+
+		$isImage = false;
+		if (@is_array(getimagesize($imageFilePath))){
+			$isImage = true;
+		}
+
+		return $isImage;
+	}
+
+	private function findImageJ3xInList(string $imageName, string $imageFilePath)
+	{
+		$isInList = false;
+		$ImageReference = false;
+
+		try {
+			foreach ($this->ImageReferenceList as $TestImageReference)
+			{
+				// checking j3x images
+				if ($TestImageReference->use_j3x_location)
+				{
+					if ($TestImageReference->imageName == $imageName)
+					{
+						$ImageReference = $TestImageReference;
+
+						$isInList = true;
+						break;
+					}
+				}
+			}
+		} catch (RuntimeException $e) {
+			$OutTxt = '';
+			$OutTxt .= 'Error executing findImageJ3xInList: "' . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return [$isInList, $ImageReference];
+	}
+
+	public function hasJ3xFile() {
+		$hasJ3xFile = false;
+
+		foreach ($this->ImageLostAndFoundList as $ImageReference)
+		{
+			if ($ImageReference->use_j3x_location)
+			{
+				$hasJ3xFile = true;
+				break;
+			}
+		}
+
+		return $hasJ3xFile;
+	}
+
+	public function hasJ4xFile() {
+		$hasJ4xFile = false;
+
+		foreach ($this->ImageLostAndFoundList as $ImageReference)
+		{
+			if (! $ImageReference->use_j3x_location)
+			{
+				$hasJ4xFile = true;
+				break;
+			}
+		}
+
+		return $hasJ4xFile;
+	}
 
 } // class
 

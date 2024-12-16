@@ -29,7 +29,7 @@ $ImageLostAndFoundList = $this->oImgRefs->ImageLostAndFoundList;
  *
  * @since 4.3.0
  */
-function DisplayImageDataTable($ImageLostAndFoundList)
+function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
 {
     $html = [];
 
@@ -74,11 +74,11 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     $html[] = Text::_('COM_RSGALLERY2_IN_BR_DATABASE');
     $html[] = '</th>';
 
-    // display
-    $html[] = '<th class="center">';
-    //$html[] = '5';
-    $html[] = Text::_('COM_RSGALLERY2_DISPLAY_BR_FOLDER');
-    $html[] = '</th>';
+//    // display
+//    $html[] = '<th class="center">';
+//    //$html[] = '5';
+//    $html[] = Text::_('COM_RSGALLERY2_DISPLAY_BR_FOLDER');
+//    $html[] = '</th>';
 
     // In original
     $html[] = '<th class="center">';
@@ -103,13 +103,23 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 //
 //    }
 
-    // thumb
-    $html[] = '<th class="center sizes_column" >';
-    //$html[] = '7';
-    $html[] = Text::_('COM_RSGALLERY2_SIZES_BR_FOLDERS');
-    $html[] = '</th>';
+    // j4x ++ has sizes
+	if ($hasJ4xFile)
+	{
+		// j4x sizes
+		$html[] = '<th class="center sizes_column" >';
+		//$html[] = '7';
+		$html[] = Text::_('COM_RSGALLERY2_SIZES_BR_FOLDERS');
+		$html[] = '</th>';
+	} else 	{
+		// $hasJxxFile
+		$html[] = '<th class="center">';
+		//$html[] = '5';
+		$html[] = Text::_('COM_RSGALLERY2_DISPLAY_BR_FOLDER');
+		$html[] = '</th>';
+	}
 
-    // action
+	// action
     $html[] = '<th class="center">';
     //$html[] =  '9';
     $html[] = Text::_('COM_RSGALLERY2_ACTION');
@@ -182,22 +192,22 @@ function DisplayImageDataTable($ImageLostAndFoundList)
             $html[] = '</td>';
         }
 
-        // display entry found
-        if ($ImageReference->IsDisplayImageFound) {
-            $html[] = '<td class="center">';
-            //$html[] = '5';
-            $html[] = '    <i class="icon-ok hasTooltip" data-original-title="display image found" ';
-            $html[] = '      title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_DISPLAY_IMAGE_FOUND') . '" ';
-            $html[] = '    />';
-            $html[] = '</td>';
-        } else {
-            $html[] = '<td class="center">';
-            //$html[] = '5';
-            $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="display image not found" ';
-            $html[] = '      title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_DISPLAY_IMAGE_NOT_FOUND') . '" ';
-            $html[] = '    />';
-            $html[] = '</td>';
-        }
+//        // display entry found
+//        if ($ImageReference->IsDisplayImageFound) {
+//            $html[] = '<td class="center">';
+//            //$html[] = '5';
+//            $html[] = '    <i class="icon-ok hasTooltip" data-original-title="display image found" ';
+//            $html[] = '      title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_DISPLAY_IMAGE_FOUND') . '" ';
+//            $html[] = '    />';
+//            $html[] = '</td>';
+//        } else {
+//            $html[] = '<td class="center">';
+//            //$html[] = '5';
+//            $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="display image not found" ';
+//            $html[] = '      title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_DISPLAY_IMAGE_NOT_FOUND') . '" ';
+//            $html[] = '    />';
+//            $html[] = '</td>';
+//        }
 
         // original image found
         if ($ImageReference->IsOriginalImageFound) {
@@ -259,26 +269,52 @@ function DisplayImageDataTable($ImageLostAndFoundList)
 //
 //        }
 
-        // sizes
+        // sizes folder / display folder
         $html[] = '<td class="center">';
 
-        foreach ($ImageReference->sizeFilePaths as $size => $sizePath) {
-            $isSizeFound = $ImageReference->IsSizes_ImageFound [$size];
+        // J4x -> sizes
+	    if ( ! $ImageReference->use_j3x_location)
+	    {
+		    if (!empty ($ImageReference->sizeFilePaths))
+		    {
+			    foreach ($ImageReference->sizeFilePaths as $size => $sizePath)
+			    {
+				    $isSizeFound = $ImageReference->IsSizes_ImageFound [$size];
 
-            $html[] = '<div class="img_sizes">';
-            //$html[] = '<span>' . $size . ': </span>';
-            $html[] = $size . ': ';
+				    $html[] = '<div class="img_sizes">';
+				    //$html[] = '<span>' . $size . ': </span>';
+				    $html[] = $size . ': ';
 
-            if ($isSizeFound) {
-                $html[] = '    <i class="icon-ok hasTooltip" data-original-title="size image found" ';
-                $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_FOUND') . '" ';
-                $html[] = '    ></i>';
+				    if ($isSizeFound)
+				    {
+					    $html[] = '    <i class="icon-ok hasTooltip" data-original-title="size image found" ';
+					    $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_FOUND') . '" ';
+					    $html[] = '    ></i>';
+				    }
+				    else
+				    {
+					    $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="size image not found" ';
+					    $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_NOT_FOUND') . '" ';
+					    $html[] = '    ></i>';
+				    }
+				    $html[] = '</div>';
+			    }
+		    }
+	    } else {
+            // J3x -> display folder
+
+            // display entry found
+            if ($ImageReference->IsDisplayImageFound) {
+                //$html[] = '5';
+                $html[] = '    <i class="icon-ok hasTooltip" data-original-title="display image found" ';
+                $html[] = '      title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_DISPLAY_IMAGE_FOUND') . '" ';
+                $html[] = '    />';
             } else {
-                $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="size image not found" ';
-                $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_NOT_FOUND') . '" ';
-                $html[] = '    ></i>';
+                //$html[] = '5';
+                $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="display image not found" ';
+                $html[] = '      title="' . HTMLHelper::tooltipText('COM_RSGALLERY2_DISPLAY_IMAGE_NOT_FOUND') . '" ';
+                $html[] = '    />';
             }
-            $html[] = '</div>';
         }
 
         $html[] = '</td>';
@@ -387,9 +423,9 @@ function DisplayImageDataTable($ImageLostAndFoundList)
     return implode(' ', $html);
 }
 
-$LostAndFountHtml = '';
+$LostAndFoundHtml = '';
 if (!empty ($ImageLostAndFoundList)) {
-    $LostAndFountHtml = DisplayImageDataTable($ImageLostAndFoundList);
+    $LostAndFoundHtml = DisplayImageDataTable($ImageLostAndFoundList, $this->hasJ3xFile, $this->hasJ4xFile);
 }
 ?>
 
@@ -452,7 +488,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
                             <?php
                             // Info about lost and found images
                             // DisplayImageDataTable();
-                            echo $LostAndFountHtml;
+                            echo $LostAndFoundHtml;
 
                             ?>
 						</div>
