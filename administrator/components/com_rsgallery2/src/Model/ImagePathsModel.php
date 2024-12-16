@@ -40,6 +40,7 @@ class ImagePathsModel
      */
     public $rsgImagesBasePath;
     public $rsgImagesBaseUrl;
+	// ToDo: Single gallery name ? used for search path ?
     public $rsgImagesGalleriesBasePath; // ToDo: Single gallery name ? used for search path ?
 
     // includes galleryid

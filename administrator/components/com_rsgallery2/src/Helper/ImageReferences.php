@@ -17,6 +17,7 @@ use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Path;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use RuntimeException;
 
@@ -232,20 +233,16 @@ class ImageReferences
         try {
             //--- j4x style -----------------------------------
 
-            // toDo: Outside originals ....
-
-            // go through all
-
-            // only base path needed so galleryid == 0
+            // only base path needed so galleryId == 0
             $imagePaths             = new ImagePathsModel (0);
             $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
             // all found gallery ids in folder
             $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
 
-            foreach ($galleryIdDirs as $galleryIdDir) {
-                $this->testSizesDir4Orphans($galleryIdDir);
-            }
+//            foreach ($galleryIdDirs as $galleryIdDir) {
+//                $this->testSizesDir4Orphans($galleryIdDir);
+//            }
 
             //--- j3x style -----------------------------------
 
@@ -254,12 +251,17 @@ class ImageReferences
             $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
             // original, thumb, display ? watermarked
-            $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
-            foreach ($galleryIdDirs as $galleryIdDir) {
-                $this->testJ3xDir4Orphans($galleryIdDir);
-            }
+
+	        $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'original');
+	        $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'thumb');
+	        $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'display');
+	        // $this->testJ3xDir4Orphans($imagePaths->originalBasePath, 'watermarked');
 
 
+//            $galleryIdDirs = glob($rsgImagesGalleriesPath . '/*', GLOB_ONLYDIR);
+//            foreach ($galleryIdDirs as $galleryIdDir) {
+//                $this->testJ3xDir4Orphans($galleryIdDir);
+//            }
 
 
         } catch (RuntimeException $e) {
@@ -495,23 +497,23 @@ class ImageReferences
         return $List4LostAndFounds;
     }
 
-    private function testJ3xDir4Orphans($galleryIdDir='')
+    private function testJ3xDir4Orphans($galleryIdDir='', string $dirType)
     {
         try {
-            // gallery ID
-            $galleryId = basename($galleryIdDir);
 
-            if (!is_numeric($galleryId)) {
-                return;
-            }
+	        $imageFiles = array_filter(glob($galleryIdDir . '/*'), 'is_file');
+	        foreach ($imageFiles as $imageFilePath) {
+		        $imageFilePath = Path::clean($imageFilePath);
+		        $imageName     = basename($imageFilePath);
 
-            // all found gallery ids in folder
-            $sizeDirs = glob($galleryIdDir . '/*', GLOB_ONLYDIR);
 
-            foreach ($sizeDirs as $sizeDir) {
-                $this->testImageJ3xDir4Orphans($sizeDir, $galleryId);
-            }
-        } catch(RuntimeException $e) {
+
+
+
+
+
+
+	        } catch(RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -524,10 +526,56 @@ class ImageReferences
     }
 
     private function testImageJ3xDir4Orphans(mixed $sizeDir, float|int|string $galleryId) {
+	    try {
 
-        yyyy
+		    $imageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
+		    foreach ($imageFiles as $imageFilePath)
+		    {
+			    $imageFilePath = Path::clean($imageFilePath);
+			    $imageName     = basename($imageFilePath);
 
+			    $isImage = true;
 
+			    if ($isImage)
+			    {
+				    // check if image, check if exist in list, check if other part of item exists (different size ...)
+				    //$isInList = findImageInList ($galleryId, $sizeName, $imageName, $imageFilePath);
+				    [$isInList, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
+
+				    // Unknown item
+				    if (!$isInList)
+				    {
+					    // Find item with gallery and name ?
+					    // No -> create new item
+					    if (!$ImageReference)
+					    {
+						    $ImageReference = new ImageReference ();
+//						    $ImageReference->initLostItems($galleryId, $imageName);
+//						    $ImageReference->assignLostItem($sizeName, $imageFilePath);
+
+						    $this->ImageReferenceList [] = $ImageReference;
+					    }
+					    else
+					    {
+						    // Yes -> add flags for this
+
+//						    $ImageReference->assignLostItem($sizeName, $imageFilePath);
+					    }
+				    }
+
+			    }
+		    }
+		} catch(RuntimeException $e)
+	    {
+		    $OutTxt = '';
+		    $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
+		    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+		    $app = Factory::getApplication();
+		    $app->enqueueMessage($OutTxt, 'error');
+	    }
+
+	    return;
     }
 
 } // class

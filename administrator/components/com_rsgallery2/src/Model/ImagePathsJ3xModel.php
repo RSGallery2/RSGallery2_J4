@@ -14,6 +14,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
 use RuntimeException;
@@ -35,7 +36,14 @@ class ImagePathsJ3xModel
 {
     // from config
 
-    // files gallery defined
+	public $rsgImagesBasePath;
+	public $rsgImagesBaseUrl;
+	// ToDo: Single gallery name ? used for search path ?
+	public $rsgImagesGalleriesBasePath;
+
+
+
+	// files gallery defined
     /**
      * @var string
      * @since version
@@ -69,7 +77,27 @@ class ImagePathsJ3xModel
                 $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
             }
 
-            //--- user may keep original image --------------------------------------------
+	        //--- config root path --------------------------------------------
+
+	        // Attention: imgPath_original may not lead to "images/rsgallery"
+	        $this->rsgImagesBasePath = dirname ($rsgConfig->get('imgPath_original'));
+
+	        // Fall back
+	        if (empty ($this->rsgImagesBasePath)) {
+		        $this->rsgImagesBasePath = "images/rsgallery";
+	        }
+	        $this->rsgImagesBasePath = Path::Clean($this->rsgImagesBasePath);
+
+	        $this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
+
+	        // remove starting slash or backslash for URL
+	        if ($this->rsgImagesBasePath[0] == '\\' || $this->rsgImagesBasePath[0] == '/') {
+		        $this->rsgImagesBaseUrl = substr($this->rsgImagesBasePath, 1);
+	        } else {
+		        $this->rsgImagesBaseUrl = $this->rsgImagesBasePath;
+	        }
+
+	        //--- user may keep original image --------------------------------------------
 
             $this->isUsePath_Original = $rsgConfig->get('keepOriginalImage');
 

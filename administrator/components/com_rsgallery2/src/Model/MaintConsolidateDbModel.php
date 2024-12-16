@@ -65,13 +65,15 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
         // ToDo: Instead of message return HasError;
         $msg = ''; //  ": " . '<br>';
 
+        // Include watermarked files to search and check for missing
+        //$ImageReferences->UseWatermarked = $this->IsWatermarkActive();
+        // $ImageReferences->UseWatermarked = true; // ToDO: remove
+        //$ImageReferences       = new ImageReferences ($this->IsWatermarkActive());
+        $ImageReferences       = new ImageReferences (1);
+        $this->ImageReferences = $ImageReferences;
+
         try {
-            // Include watermarked files to search and check for missing
-            //$ImageReferences->UseWatermarked = $this->IsWatermarkActive();
-            // $ImageReferences->UseWatermarked = true; // ToDO: remove
-            //$ImageReferences       = new ImageReferences ($this->IsWatermarkActive());
-            $ImageReferences       = new ImageReferences (true);
-            $this->ImageReferences = $ImageReferences;
+            // toDo:
 
             $ImageReferences->CollectImageReferences();
         } catch (RuntimeException $e) {
