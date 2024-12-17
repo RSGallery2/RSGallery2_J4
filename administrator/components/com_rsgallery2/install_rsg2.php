@@ -180,8 +180,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('newRelease:') . $this->newRelease, Log::INFO, 'rsg2');
 
             if ($type === 'update') {
+				
                 // Previous j3x version:
                 if (version_compare($this->oldRelease, '5.0.0', 'lt')) {
+					
                     //--- Remove lang files  ---------------------------------------------
 
                     // Remove old language files (RSG2 J3x) in joomla base lang folders
@@ -785,6 +787,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
                 Log::add(Text::_('upd (50.13) '), Log::INFO, 'rsg2');
             }
+
         } catch (RuntimeException $e) {
             Log::add(
                 Text::_('\n>> Exception: removeJ3xComponentFiles: ') . $e->getMessage(),
