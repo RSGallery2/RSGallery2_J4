@@ -245,7 +245,7 @@ class ImageReferenceJ3x extends ImageReference
         } else {
             if ($this->IsThumbImageFound) {
                 // display
-                $this->imageUrl = $imagePathJ3x->getThumbsUrl($this->imageName);
+                $this->imageUrl = $imagePathJ3x->getThumbUrl($this->imageName);
             } else {
                 if ($this->IsOriginalImageFound) {
                     // display
