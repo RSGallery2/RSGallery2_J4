@@ -92,12 +92,6 @@ class ImageReferenceJ3x extends ImageReference
             // Helper list for faster detection of images lost and found
             $this->allImagePaths = [];
 
-//            $this->allImagePaths [] = $this->originalFilePath;
-//            $this->allImagePaths [] = $this->thumbFilePath;
-//
-//            // J3x path
-//            $this->allImagePaths [] = $this->displayFilePath;
-
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignDbItem: "' . '<br>';
@@ -174,11 +168,11 @@ class ImageReferenceJ3x extends ImageReference
             $this->parentGalleryId   = $galleryId;
 
             $imagePaths = new ImagePathsJ3xModel ($this->parentGalleryId);
-            $imagePaths->createAllPaths();
+            // $imagePaths->createAllPaths();
 
             $this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);
             $this->displayFilePath  = $imagePaths->getDisplayPath($this->imageName);
-            $this->thumbFilePath    = $imagePaths->getThumbPath($this->imageName);
+	        $this->thumbFilePath    = $imagePaths->getThumbPath($this->imageName);
 
             //--- set images to not found  -----------------------------------
 
@@ -236,6 +230,32 @@ class ImageReferenceJ3x extends ImageReference
         }
 
         return $isImageAssigned;
+    }
+
+    public function assignImageUrl ()
+    {
+        $this->imageUrl = '';
+
+        // J3x path
+        $imagePathJ3x = new ImagePathsJ3xData ();
+
+        if ($this->IsDisplayImageFound) {
+            // display
+            $this->imageUrl = $imagePathJ3x->getDisplayUrl($this->imageName);
+        } else {
+            if ($this->IsThumbImageFound) {
+                // display
+                $this->imageUrl = $imagePathJ3x->getThumbsUrl($this->imageName);
+            } else {
+                if ($this->IsOriginalImageFound) {
+                    // display
+                    $this->imageUrl = $imagePathJ3x->getOriginalUrl($this->imageName);
+                }
+//                else {
+//                }
+            }
+        }
+
     }
 
     /**

@@ -119,8 +119,16 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
 		$html[] = '</th>';
 	}
 
+    if ($hasJ3xFile)
+    {
+	    // filename
+	    $html[] = '<th class="align-left ">';
+	    // $html[] =  '3';
+	    $html[] = Text::_('J3x');
+	    $html[] = '</th>';
+    }
 	// action
-    $html[] = '<th class="center">';
+    $html[] = '<th class="center" width="20%">';
     //$html[] =  '9';
     $html[] = Text::_('COM_RSGALLERY2_ACTION');
     $html[] = '</th>';
@@ -319,6 +327,22 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
 
         $html[] = '</td>';
 
+	    if ($hasJ3xFile)
+	    {
+		    if ($ImageReference->use_j3x_location) {
+			    $html[] = '<td class="center">';
+			    //$html[] = '6';
+			    $html[] = '<span class="icon-cancel">';
+			    $html[] = '</td>';
+		    } else {
+			    // database
+			    $html[] = '<td class="center">';
+			    //$html[] = '6';
+			    $html[] = '</td>';
+		    }
+
+	    }
+
         // action
         $html[] = '<td class="center">';
         // if ($ImageReference->IsMainImageMissing(ImageReference::dontCareForWatermarked))
@@ -396,17 +420,17 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
         // image
 
         // Image is defined
-        if ($ImageReference->imagePath !== '') {
+        if (! empty ($ImageReference->imageUrl)) {
             $html[] = '   <td class="center">';
             $html[] = '       <div class="img_border">';
-            //$html[] =         '11';
+            $html[] =         '11A';
             $html[] = '       <img  class="img_thumb" alt="' . $ImageReference->imageName . '" '
-                . 'name="image" src="' . Uri::root(false) . $ImageReference->imagePath . '">';
+                . 'name="image" src="' . $ImageReference->imageUrl . '">';
             $html[] = '       </div>';
             $html[] = '   </td>';
         } else {
             $html[] = '   <td class="center">';
-            //$html[] =         '11';
+            $html[] =         '11B';
             $html[] = '        <span class="icon-cancel">';
             $html[] = '   </td>';
         }
@@ -441,25 +465,26 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
 			</div>
         <?php
         endif; ?>
+
 		<!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
                 <?php
-                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'MaintConsolidateDb']); ?>
+//                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'MaintConsolidateDb']); ?>
 
                 <?php
-                echo HTMLHelper::_(
-                    'bootstrap.addTab',
-                    'myTab',
-                    'MaintConsolidateDb',
-                    Text::_('COM_RSGALLERY2_IMAGES_LOST_AND_FOUND_TITLE', true),
-                ); ?>
+//                echo HTMLHelper::_(
+//                    'bootstrap.addTab',
+//                    'myTab',
+//                    'MaintConsolidateDb',
+//                    Text::_('COM_RSGALLERY2_IMAGES_LOST_AND_FOUND_TITLE', true),
+//                ); ?>
 
 				<div style="max-width: 400px;">
-					<strong><?php
-                        echo Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'); ?></strong>
+					<strong><?php echo Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'); ?></strong>
+                    <BR><BR>
 				</div>
 
                 <?php
@@ -522,10 +547,10 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
 
 
                 <?php
-                echo HTMLHelper::_('bootstrap.endTab'); ?>
+//                echo HTMLHelper::_('bootstrap.endTab'); ?>
 
                 <?php
-                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+//                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->

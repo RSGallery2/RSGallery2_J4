@@ -52,7 +52,7 @@ class ImageReference
      * @var string the path to the base file including image name. If exist first original, then display, thumb (? watermarked)
      *
      */
-    public $imagePath;
+    public $imageUrl;
     /**
      * @var bool
      */
@@ -144,7 +144,7 @@ class ImageReference
     public function __construct()
     {
         $this->imageName = '';
-        $this->imagePath = '';
+        $this->imageUrl = '';
 
         $this->IsImageInDatabase       = false;
         $this->IsDisplayImageFound     = false;
@@ -245,6 +245,11 @@ class ImageReference
     public function check4ImageIsNotExisting()
     {
         try {
+
+            if ($this->imageName == '2019-09-17_00305.jpg') {
+                $this->IsDisplayImageFound  = true;
+            }
+
             $this->IsDisplayImageFound  = true;
             $this->IsOriginalImageFound = true;
             $this->IsThumbImageFound    = true;
@@ -406,6 +411,39 @@ class ImageReference
         }
 
         return $isImageAssigned;
+    }
+
+    public function assignImageUrl ()
+    {
+
+        $this->imageUrl = '';
+
+        // J3x path
+        $imagePath = new ImagePathsModel ($this->parentGalleryId);
+
+        if ($this->IsDisplayImageFound) {
+            // display
+            $this->imageUrl = $imagePath->getDisplayUrl($this->imageName);
+        } else {
+            if ($this->IsThumbImageFound) {
+                // display
+                $this->imageUrl = $imagePath->getThumbUrl($this->imageName);
+            } else {
+
+                if (!empty ($this->sizeFilePaths))
+                {
+                    foreach ($this->sizeFilePaths as $size => $sizePath)
+                    {
+                        if ($this->IsSizes_ImageFound [$size]) // $sizePath;
+                        {
+                            $this->imageUrl = $imagePath->getSizeUrl($size, $this->imageName);
+                        }
+                    }
+                }
+
+            }
+        }
+
     }
 
     /**

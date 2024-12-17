@@ -174,6 +174,9 @@ class ImageReferences
         // reduce list
         $this->ImageLostAndFoundList = $this->reduceList4LostAndFounds();
 
+        // Add one Url to each error
+        $this->AddUrlToLostAndfound ();
+
         return; // $this->ImageReferenceList;
     }
 
@@ -325,51 +328,8 @@ class ImageReferences
 
 				$isImage = $this->isFileAnImage($imageFilePath);
 
-//	            $testClean = Path::clean ($imageFilePath);
-//	            $testResolve = Path::resolve ($imageFilePath);
-
-                // toDo: check extension by config
-                // $ext =  File::getExt($filename);
-
-                // toDo: check for valid image file
-                //---
-                // "Do not use getimagesize() to check that a given file is a valid image.Use a purpose-built solution such as the Fileinfo extension instead."
-                //
-                //Here is an example:
-                //
-                //$finfo = finfo_open(FILEINFO_MIME_TYPE);
-                //$type = finfo_file($finfo, "test.jpg");
-                //
-                //if (isset($type) && in_array($type, array("image/png", "image/jpeg", "image/gif"))) {
-                //    echo 'This is an image file';
-                //} else {
-                //    echo 'Not an image :(';
-                //}
-                //---
-                //    $a = getimagesize($path);
-                //    $image_type = $a[2];
-                //
-                //    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP)))
-                //    {
-                //        return true;
-                //    }
-                //    return false;
-                //---
-                // exif_imagetype is much faster than getimagesize and doesn't use gd-Lib (leaving a leaner mem footprint)
-                //
-                //function isImage($pathToFile)
-                //{
-                //  if( false === exif_imagetype($pathToFile) )
-                //   return FALSE;
-                //
-                //   return TRUE;
-                //}
-
-                $isImage = true;
-
                 if ($isImage) {
-                    // check if image, check if exist in list, check if other part of item exists (different size ...)
-                    //$isInList = findImageInList ($galleryId, $sizeName, $imageName, $imageFilePath);
+                    // check if image exists in list, check if other part of item exists (different size ...)
                     [$isInList, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
 
                     // Unknown item
@@ -385,7 +345,7 @@ class ImageReferences
                         } else {
                             // Yes -> add flags for this
 
-                            $ImageReference->assignLostItem($sizeName, $imageFilePath);
+                            $ImageReference->assignOrphanedItem($sizeName, $imageFilePath);
                         }
                     }
                 }
@@ -405,7 +365,7 @@ class ImageReferences
     // search for files not in list
     private function findImageInList($galleryId, $imageName, $ImageFilePath)
     {
-        $isFound = false;
+        $isInList = false;
         $ImageReference = false;
 
         try {
@@ -413,22 +373,16 @@ class ImageReferences
                 // gallery and image name must match
                 if ($TestImageReference->parentGalleryId == $galleryId) {
                     if ($TestImageReference->imageName == $imageName) {
-                        $ImageReference = $TestImageReference;
 
                         foreach ($TestImageReference->allImagePaths as $TestImagePath) {
+                            // Reference Item exists already
                             if ($ImageFilePath === $TestImagePath) {
-                                $isFound = true;
+                                $ImageReference = $TestImageReference;
+
+                                $isInList = true;
                                 break;
                             }
                         }
-
-                        if (!$isFound) {
-                            break;
-                        }
-
-                        // matched galleryId ... no further search needed
-                        // actual image name is checked
-                        break;
                     }
                 }
             }
@@ -441,7 +395,7 @@ class ImageReferences
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return [$isFound, $ImageReference];
+        return [$isInList, $ImageReference];
     }
 
     /**
@@ -572,58 +526,45 @@ class ImageReferences
         return;
     }
 
-    private function testImageJ3xDir4Orphans(mixed $sizeDir, float|int|string $galleryId) {
-	    try {
+//	            $testClean = Path::clean ($imageFilePath);
+//	            $testResolve = Path::resolve ($imageFilePath);
 
-		    $imageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
-		    foreach ($imageFiles as $imageFilePath)
-		    {
-			    $isImage = $this->isFileAnImage ($imageFilePath);
+	// toDo: check extension by config
+	// $ext =  File::getExt($filename);
 
-			    if ($isImage)
-			    {
-				    $imageFilePath = Path::clean($imageFilePath);
-				    $imageName     = basename($imageFilePath);
-
-				    // check if image, check if exist in list, check if other part of item exists (different size ...)
-				    //$isInList = findImageInList ($galleryId, $sizeName, $imageName, $imageFilePath);
-				    [$isInList, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
-
-				    // Unknown item
-				    if (!$isInList)
-				    {
-					    // Find item with gallery and name ?
-					    // No -> create new item
-					    if (!$ImageReference)
-					    {
-						    $ImageReference = new ImageReference ();
-//						    $ImageReference->initLostItems($galleryId, $imageName);
-//						    $ImageReference->assignLostItem($sizeName, $imageFilePath);
-
-						    $this->ImageReferenceList [] = $ImageReference;
-					    }
-					    else
-					    {
-						    // Yes -> add flags for this
-
-//						    $ImageReference->assignLostItem($sizeName, $imageFilePath);
-					    }
-				    }
-
-			    }
-		    }
-		} catch(RuntimeException $e)
-	    {
-		    $OutTxt = '';
-		    $OutTxt .= 'Error executing imageReferencesByDb: "' . '<br>';
-		    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-		    $app = Factory::getApplication();
-		    $app->enqueueMessage($OutTxt, 'error');
-	    }
-
-	    return;
-    }
+	// toDo: check for valid image file
+	//---
+	// "Do not use getimagesize() to check that a given file is a valid image.Use a purpose-built solution such as the Fileinfo extension instead."
+	//
+	//Here is an example:
+	//
+	//$finfo = finfo_open(FILEINFO_MIME_TYPE);
+	//$type = finfo_file($finfo, "test.jpg");
+	//
+	//if (isset($type) && in_array($type, array("image/png", "image/jpeg", "image/gif"))) {
+	//    echo 'This is an image file';
+	//} else {
+	//    echo 'Not an image :(';
+	//}
+	//---
+	//    $a = getimagesize($path);
+	//    $image_type = $a[2];
+	//
+	//    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP)))
+	//    {
+	//        return true;
+	//    }
+	//    return false;
+	//---
+	// exif_imagetype is much faster than getimagesize and doesn't use gd-Lib (leaving a leaner mem footprint)
+	//
+	//function isImage($pathToFile)
+	//{
+	//  if( false === exif_imagetype($pathToFile) )
+	//   return FALSE;
+	//
+	//   return TRUE;
+	//}
 
 	private function isFileAnImage(string $imageFilePath)
 	{
@@ -650,6 +591,7 @@ class ImageReferences
 				// checking j3x images
 				if ($TestImageReference->use_j3x_location)
 				{
+                    // Reference Item exists already
 					if ($TestImageReference->imageName == $imageName)
 					{
 						$ImageReference = $TestImageReference;
@@ -700,6 +642,14 @@ class ImageReferences
 
 		return $hasJ4xFile;
 	}
+
+    private function AddUrlToLostAndfound()
+    {
+
+        foreach ($this->ImageLostAndFoundList as $ImageReference){
+            $ImageReference->assignImageUrl();
+        }
+    }
 
 } // class
 
