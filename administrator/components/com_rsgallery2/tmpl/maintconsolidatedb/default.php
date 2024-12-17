@@ -448,6 +448,44 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
     //--- footer ----------------------------------
     $html[] = '</table>';
 
+
+    //=== outside files =====================================================
+
+    if ($ImageReference->IsOutsideFilesExist)
+    {
+	    $html[] = '<hr>';
+	    $html[] = '<h3>Attention! Outside Files exists</h3>';
+
+        if ( ! empty($ImageReference->OutsideFiles ['j4x'])) {
+
+	        $html[] = '<h4>Outside Files J4x</h4>';
+
+            $OutsideFiles = $ImageReference->OutsideFiles ['j4x'];
+
+            $Line = '';
+            foreach ($OutsideFiles as $OutsideFile) {
+	            $Line .= $OutsideFile . ', ';
+            }
+
+	        $html[] = $Line; // 0. -1
+        }
+
+        if ( ! empty($ImageReference->OutsideFiles ['j3x'])) {
+
+	        $html[] = '<h4>Outside Files J3x</h4>';
+
+            $OutsideFiles = $ImageReference->OutsideFiles ['j3x'];
+
+            $Line = '';
+            foreach ($OutsideFiles as $OutsideFile) {
+	            $Line .= $OutsideFile . ', ';
+            }
+
+	        $html[] = $Line; // 0. -1
+        }
+
+    }
+
     return implode(' ', $html);
 }
 

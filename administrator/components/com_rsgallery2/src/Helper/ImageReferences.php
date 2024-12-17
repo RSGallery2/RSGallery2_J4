@@ -80,7 +80,16 @@ class ImageReferences
     /**
      * @var bool
      */
-    public $UseWatermarked;
+	public $UseWatermarked;
+
+	public bool $IsOutsideFilesExist;
+
+	/**
+	 * @var [string to []]
+	 * @since version
+	 */
+	public $OutsideFiles;
+
 
     /**
      * ImageReferences constructor. init all variables
@@ -108,6 +117,10 @@ class ImageReferences
          * }
          * /**/
         $this->UseWatermarked = $watermarked;
+
+
+        $this->IsOutsideFilesExist = false;
+
     }
 
     /**
@@ -176,6 +189,12 @@ class ImageReferences
 
         // Add one Url to each error
         $this->AddUrlToLostAndfound ();
+
+		// OutsideFiles -> Check files in root of j4x++ and J3x ++ where they do not belong
+	    $this->IsOutsideFilesExist = $this->CollecOutsideFiles ();
+
+
+
 
         return; // $this->ImageReferenceList;
     }
@@ -657,6 +676,41 @@ class ImageReferences
             $ImageReference->assignImageUrl();
         }
     }
+
+	private function CollecOutsideFiles()
+	{
+        $this->IsOutsideFilesExist = false;
+
+		//--- j4x style -----------------------------------
+
+		// only base path needed so galleryId == 0
+		$imagePaths             = new ImagePathsModel (0);
+		$rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
+
+		// all files found in root folder
+		$outsideJ4x = array_filter(glob($rsgImagesGalleriesPath . "/*"), 'is_file');
+
+		if ( ! empty($outsideJ4x)) {
+			$this->OutsideFiles ['j4x'] = $outsideJ4x;
+			$this->IsOutsideFilesExist  = true;
+		}
+
+		//--- j3x style -----------------------------------
+
+		// only base path needed so galleryid == 0
+		$imagePaths             = new ImagePathsJ3xModel (0); // ToDo: J3x
+		$rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
+
+		// all files found in root folder
+		$outsideJ3x = array_filter(glob($rsgImagesGalleriesPath . "/*"), 'is_file');
+
+		if ( ! empty($outsideJ3x)) {
+			$this->OutsideFiles ['j3x'] = $outsideJ3x;
+			$this->IsOutsideFilesExist  = true;
+		}
+
+        return $this->IsOutsideFilesExist;
+	}
 
 } // class
 
