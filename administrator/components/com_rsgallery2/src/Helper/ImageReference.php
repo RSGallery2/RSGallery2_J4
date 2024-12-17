@@ -246,11 +246,12 @@ class ImageReference
     {
         try {
 
-            if ($this->imageName == '2019-09-17_00305.jpg') {
-                $this->IsDisplayImageFound  = true;
-            }
+//            // debug stop
+//            if ($this->imageName == '2019-09-17_00305.jpg') {
+//              $this->IsDisplayImageFound  = $this->IsDisplayImageFound;
+//            }
 
-            $this->IsDisplayImageFound  = true;
+            // $this->IsDisplayImageFound  = true; // -> has no display
             $this->IsOriginalImageFound = true;
             $this->IsThumbImageFound    = true;
 
@@ -364,15 +365,16 @@ class ImageReference
     {
         $isImageAssigned = false;
 
+
         try {
             if ($imagePath === $this->originalFilePath) {
                 $this->IsOriginalImageFound = true;
                 $isImageAssigned            = true;
             }
-            if ($imagePath === $this->displayFilePath) {
-                $this->IsDisplayImageFound = true;
-                $isImageAssigned           = true;
-            }
+//            if ($imagePath === $this->displayFilePath) {
+//                $this->IsDisplayImageFound = true;
+//                $isImageAssigned           = true;
+//            }
             if ($imagePath === $this->thumbFilePath) {
                 $this->IsThumbImageFound = true;
                 $isImageAssigned         = true;
@@ -381,10 +383,15 @@ class ImageReference
             // size assignment
             if (!$isImageAssigned)
             {
-	            // ToDo: what when only 3x files exist
 	            if (!empty ($this->sizeFilePaths))
 	            {
-		            foreach ($this->sizeFilePaths as $size => $sizePath)
+                    // debug stop
+                    // if ($this->imageName == '2019-09-17_00305.jpg') {
+                    if ($this->imageName == 'DSC_5520.JPG') {
+                        $this->IsDisplayImageFound  = $this->IsDisplayImageFound;
+                    }
+
+                    foreach ($this->sizeFilePaths as $size => $sizePath)
 		            {
 			            if ($imagePath === $sizePath)
 			            {
@@ -415,19 +422,24 @@ class ImageReference
 
     public function assignImageUrl ()
     {
+        // debug stop
+        // if ($this->imageName == '2019-09-17_00305.jpg') {
+        if ($this->imageName == 'DSC_5520.JPG') {
+            $this->IsDisplayImageFound  = $this->IsDisplayImageFound;
+        }
 
         $this->imageUrl = '';
 
         // J3x path
         $imagePath = new ImagePathsModel ($this->parentGalleryId);
 
-        if ($this->IsDisplayImageFound) {
+        if ($this->IsThumbImageFound) {
             // display
-            $this->imageUrl = $imagePath->getDisplayUrl($this->imageName);
+            $this->imageUrl = $imagePath->getThumbUrl($this->imageName);
         } else {
-            if ($this->IsThumbImageFound) {
+            if ($this->IsDisplayImageFound) {
                 // display
-                $this->imageUrl = $imagePath->getThumbUrl($this->imageName);
+                $this->imageUrl = $imagePath->getDisplayUrl($this->imageName);
             } else {
 
                 if (!empty ($this->sizeFilePaths))
@@ -448,68 +460,70 @@ class ImageReference
 
     /**
      * Tells from the data collected if any of the expected images exist
-     *
      * @param   int   $careForWatermarked
-     *
      * @param   bool  $careForWatermarked
-     *
      * @return bool
-     *
-     * @return bool
-     *
      * @since version 4.3
-     *
-     * public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
-     * {
-     * // toDo:
-     * $IsImageExisting =
-     * $this->IsDisplayImageFound
-     * || $this->IsOriginalImageFound
-     * || $this->IsThumbImageFound
-     * || $this->IsWatermarkedImageFound;
-     *
-     * // Image of watermarked is only counting when no other
-     * // image is missing.
-     * if ($careForWatermarked)
-     * {
-     * if ($this->UseWatermarked)
-     * {
-     * $IsImageExisting |= $this->IsWatermarkedImageFound;
-     * }
-     * }
-     *
-     * return $IsImageExisting;
-     * }
-     *
-     * /*
+     */
+     public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
+     {
+//         // debug stop
+//         if ($this->imageName == 'DSC_5520.JPG') {
+//             $this->IsDisplayImageFound  = $this->IsDisplayImageFound;
+//         }
+//
+         $IsImageExisting = false
+             // || $this->IsDisplayImageFound // Not used in j4x
+             || $this->IsOriginalImageFound
+             || $this->IsThumbImageFound
+             || $this->IsAllSizesImagesFound;
+
+         if (!empty ($this->IsSizes_ImageFound)) {
+             foreach ($this->IsSizes_ImageFound as $size => $isFound) {
+                 if ($isFound) {
+                    $IsImageExisting  = true;
+                    break;
+                 }
+             }
+         }
+
+//         // Image of watermarked is only counting when no other
+//         // image is missing.
+//         if ($careForWatermarked) {
+//             if ($this->UseWatermarked) {
+//                 $IsImageExisting |= $this->IsWatermarkedImageFound;
+//             }
+//         }
+
+         return $IsImageExisting;
+     }
+
+     /**
      * Tells from the data collected if any of the main images is missing
      * Main: Display, Original or Thumb images
      *
      * watermarked images are not missing as such. watermarked images will be created when displaying image
      * @since version 4.3
-     *
-     * public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
-     * {
-     * $IsImageMissing =
-     * !$this->IsDisplayImageFound
-     * || !$this->IsOriginalImageFound
-     * || !$this->IsThumbImageFound;
-     *
-     * // Image of watermarked is only counting when no other
-     * // image is missing.
-     * if ($careForWatermarked)
-     * {
-     * if ($this->UseWatermarked)
-     * {
-     * $IsImageMissing |= !$this->IsWatermarkedImageFound;
-     * }
-     * }
-     *
-     * return $IsImageMissing;
-     * }
-     * /**/
+     */
+     public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
+     {
+         $IsImageMissing =  false
+             // || !$this->IsDisplayImageFound // Not used in j4x
+             || !$this->IsOriginalImageFound
+             || !$this->IsThumbImageFound
+             || !$this->IsAllSizesImagesFound;
 
-    // toDo: ? Any size image missing ? ....
+//         // Image of watermarked is only counting when no other
+//         // image is missing.
+//         if ($careForWatermarked) {
+//             if ($this->UseWatermarked) {
+//                 $IsImageMissing |= !$this->IsWatermarkedImageFound;
+//             }
+//         }
+
+         return $IsImageMissing;
+     }
+     /**/
 
 }
 

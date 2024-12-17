@@ -330,13 +330,12 @@ class ImageReferences
 
                 if ($isImage) {
                     // check if image exists in list, check if other part of item exists (different size ...)
-                    [$isInList, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
+                    [$isImgFound, $isImgReferenceExist, $ImageReference] = $this->findImageInList($galleryId, $imageName, $imageFilePath);
 
                     // Unknown item
-                    if (!$isInList) {
-                        // Find item with gallery and name ?
-                        // No -> create new item
-                        if (!$ImageReference) {
+                    if (!$isImgFound) {
+                        // No previous image from set found ?
+                        if (!$isImgReferenceExist) {
                             $ImageReference = new ImageReference ();
                             $ImageReference->initOrphanedItem($galleryId, $imageName);
                             $ImageReference->assignOrphanedItem($sizeName, $imageFilePath);
@@ -344,7 +343,6 @@ class ImageReferences
                             $this->ImageReferenceList [] = $ImageReference;
                         } else {
                             // Yes -> add flags for this
-
                             $ImageReference->assignOrphanedItem($sizeName, $imageFilePath);
                         }
                     }
@@ -365,21 +363,30 @@ class ImageReferences
     // search for files not in list
     private function findImageInList($galleryId, $imageName, $ImageFilePath)
     {
-        $isInList = false;
+        $isImgFound = false;
+        $isImgReferenceExist = false;
         $ImageReference = false;
+
+         // debug stop
+         if ($imageName == 'DSC_5520.JPG') {
+             $imageName  = $imageName;
+         }
 
         try {
             foreach ($this->ImageReferenceList as $TestImageReference) {
                 // gallery and image name must match
                 if ($TestImageReference->parentGalleryId == $galleryId) {
+                    // Any image already defined
                     if ($TestImageReference->imageName == $imageName) {
+
+                        $isImgReferenceExist = true;
+                        $ImageReference = $TestImageReference;
 
                         foreach ($TestImageReference->allImagePaths as $TestImagePath) {
                             // Reference Item exists already
                             if ($ImageFilePath === $TestImagePath) {
-                                $ImageReference = $TestImageReference;
 
-                                $isInList = true;
+                                $isImgFound = true;
                                 break;
                             }
                         }
@@ -395,7 +402,7 @@ class ImageReferences
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return [$isInList, $ImageReference];
+        return [$isImgFound, $isImgReferenceExist, $ImageReference];
     }
 
     /**

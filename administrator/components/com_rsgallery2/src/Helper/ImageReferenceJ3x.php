@@ -260,68 +260,55 @@ class ImageReferenceJ3x extends ImageReference
 
     /**
      * Tells from the data collected if any of the expected images exist
-     *
      * @param   int   $careForWatermarked
-     *
      * @param   bool  $careForWatermarked
-     *
      * @return bool
-     *
-     * @return bool
-     *
      * @since version 4.3
-     *
-     * public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
-     * {
-     * // toDo:
-     * $IsImageExisting =
-     * $this->IsDisplayImageFound
-     * || $this->IsOriginalImageFound
-     * || $this->IsThumbImageFound
-     * || $this->IsWatermarkedImageFound;
-     *
-     * // Image of watermarked is only counting when no other
-     * // image is missing.
-     * if ($careForWatermarked)
-     * {
-     * if ($this->UseWatermarked)
-     * {
-     * $IsImageExisting |= $this->IsWatermarkedImageFound;
-     * }
-     * }
-     *
-     * return $IsImageExisting;
-     * }
-     *
-     * /*
+     */
+    public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
+    {
+        // toDo:
+        $IsImageExisting = false
+            || $this->IsDisplayImageFound // Not used in j4x
+            || $this->IsOriginalImageFound
+            || $this->IsThumbImageFound;
+
+//         // Image of watermarked is only counting when no other
+//         // image is missing.
+//         if ($careForWatermarked) {
+//             if ($this->UseWatermarked) {
+//                 $IsImageExisting |= $this->IsWatermarkedImageFound;
+//             }
+//         }
+
+        return $IsImageExisting;
+    }
+
+    /**
      * Tells from the data collected if any of the main images is missing
      * Main: Display, Original or Thumb images
      *
      * watermarked images are not missing as such. watermarked images will be created when displaying image
      * @since version 4.3
-     *
-     * public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
-     * {
-     * $IsImageMissing =
-     * !$this->IsDisplayImageFound
-     * || !$this->IsOriginalImageFound
-     * || !$this->IsThumbImageFound;
-     *
-     * // Image of watermarked is only counting when no other
-     * // image is missing.
-     * if ($careForWatermarked)
-     * {
-     * if ($this->UseWatermarked)
-     * {
-     * $IsImageMissing |= !$this->IsWatermarkedImageFound;
-     * }
-     * }
-     *
-     * return $IsImageMissing;
-     * }
-     * /**/
+     */
+    public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
+    {
+        $IsImageMissing =  false
+            || !$this->IsDisplayImageFound
+            || !$this->IsOriginalImageFound
+            || !$this->IsThumbImageFound;
 
-    // toDo: ? Any size image missing ? ....
+//         // Image of watermarked is only counting when no other
+//         // image is missing.
+//         if ($careForWatermarked) {
+//             if ($this->UseWatermarked) {
+//                 $IsImageMissing |= !$this->IsWatermarkedImageFound;
+//             }
+//         }
+
+        return $IsImageMissing;
+    }
+    /**/
 
 }
 

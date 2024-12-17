@@ -411,26 +411,30 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
             $html[] = '<span class="icon-cancel">';
         }
 
-        //$html[] = $form->renderFieldset('maintConsolidateDB');
-//	    $field = $form->getFieldset('maintConsolidateDB');
-//	    $html[] = $field->input;
 
         $html[] = '</td>';
 
         // image
 
+        // debug stop
+        // if ($this->imageName == '2019-09-17_00305.jpg') {
+        if ($ImageReference->imageName == 'DSC_5520.JPG') {
+            $ImageReference->IsDisplayImageFound  = $ImageReference->IsDisplayImageFound;
+        }
+
         // Image is defined
-        if (! empty ($ImageReference->imageUrl)) {
+//        if (! empty ($ImageReference->imageUrl)) {
+        if ($ImageReference->IsAnyImageExisting()) {
             $html[] = '   <td class="center">';
             $html[] = '       <div class="img_border">';
-            $html[] =         '11A';
+            //$html[] =         '11A';
             $html[] = '       <img  class="img_thumb" alt="' . $ImageReference->imageName . '" '
                 . 'name="image" src="' . $ImageReference->imageUrl . '">';
             $html[] = '       </div>';
             $html[] = '   </td>';
         } else {
             $html[] = '   <td class="center">';
-            $html[] =         '11B';
+            // $html[] =         '11B';
             $html[] = '        <span class="icon-cancel">';
             $html[] = '   </td>';
         }
