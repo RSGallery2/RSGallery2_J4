@@ -110,6 +110,10 @@ class HtmlView extends BaseHtmlView
         //--- Check for J3x parts ------------------------------
 
         $this->isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
+        /**
+        // debug flags / view see below
+        $this->isJ3xDataExisting = true;
+        /**/
         if ($this->isJ3xDataExisting) {
 // j3x configuration not copied by installation actually
 //            // j3x configuration will be copied immediately
@@ -130,13 +134,13 @@ class HtmlView extends BaseHtmlView
             $this->isDoChangeJ3xMenuLinks = !$rsgConfig->get('j3x_menu_gid_increased');
             $this->isDoCopyJ3xImages      = !$rsgConfig->get('j3x_images_copied');
             /**
-             * // debug flags
-             * $this->isDoCopyJ3xDbConfig = true;
-             * $this->isDoCopyJ3xDbGalleries = true;
-             * $this->isDoCopyJ3xDbImages = true;
-             * $this->isDoChangeJ3xMenuLinks = true;
-             * $this->isDoCopyJ3xImages = true;
-             * /**/
+            // debug flags / view see above
+            $this->isDoCopyJ3xDbConfig = true;
+            $this->isDoCopyJ3xDbGalleries = true;
+            $this->isDoCopyJ3xDbImages = true;
+            $this->isDoChangeJ3xMenuLinks = true;
+            $this->isDoCopyJ3xImages = true;
+            /**/
         }
 
         /*-------------------------------------------------------------------------------

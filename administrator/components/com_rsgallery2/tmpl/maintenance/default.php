@@ -18,8 +18,6 @@ use Joomla\Filesystem\Path;
 
 //use Joomla\CMS\Session\Session;
 
-//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/maintenance.css', array('version' => 'auto', 'relative' => true));
-//HTMLHelper::_('script', 'com_rsgallery2/backend/maintenance.js', ['version' => 'auto', 'relative' => true]);
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.maintenance');
 
 Text::script('COM_RSGALLERY2_CONFIRM_PURGE_TABLES_DEL_IMAGES', true);

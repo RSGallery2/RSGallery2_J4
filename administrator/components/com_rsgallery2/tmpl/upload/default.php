@@ -20,8 +20,6 @@ HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive'); // On long waiting ...  or ToDo: on post forms like edit otherwise ...
 //HTMLHelper::_('behavior.core');
 
-// HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/upload.css', array('version' => 'auto', 'relative' => true));
-// HTMLHelper::_('script', 'com_rsgallery2/backend/upload.js', ['version' => 'auto', 'relative' => true]);
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.upload');
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);

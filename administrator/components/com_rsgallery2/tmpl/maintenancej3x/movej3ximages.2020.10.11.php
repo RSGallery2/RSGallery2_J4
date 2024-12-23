@@ -18,10 +18,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/moveJ3xImages.css', ['version' => 'auto', 'relative' => true]);
+//$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
 // Items exist
 if ($this->isMissingJ3xImages) {
     HTMLHelper::_('script', 'com_rsgallery2/moveJ3xImages.js', ['version' => 'auto', 'relative' => true]);
+    //$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 }
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);

@@ -65,6 +65,7 @@ class GalleryField extends FormField
 
         // Add the modal field script to the document head.
         HTMLHelper::_('script', 'system/fields/modal-fields.min.js', ['version' => 'auto', 'relative' => true]);
+        //$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
         // Script to proxy the select modal function to the modal-fields.js file.
         if ($allowSelect) {

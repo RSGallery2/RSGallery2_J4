@@ -34,31 +34,56 @@ div.rsg2logo img {
 div.quickicon-icon {
   //	position: relative;
   left: -8px;
+
+  div.fa-cog {
+    color: map-get($rsg2-colors, blue);
+  }
+
+
+  div.fa-th {
+    color: map-get($rsg2-colors, green);
+  }
+
+
+  div.fa-upload {
+    color: map-get($rsg2-colors, green);
+  }
+
+
+  div.fa-image {
+    color: map-get($rsg2-colors, green);
+  }
+
+
+  div.fa-cogs {
+    color: map-get($rsg2-colors, red);
+  }
+
 }
 
-div.quickicon-icon div.fa-cog {
-  color: map-get($rsg2-colors, blue);
-}
-
-
-div.quickicon-icon div.fa-th {
-  color: map-get($rsg2-colors, green);
-}
-
-
-div.quickicon-icon div.fa-upload {
-  color: map-get($rsg2-colors, green);
-}
-
-
-div.quickicon-icon div.fa-image {
-  color: map-get($rsg2-colors, green);
-}
-
-
-div.quickicon-icon div.fa-cogs {
-  color: map-get($rsg2-colors, red);
-}
+//div.quickicon-icon div.fa-cog {
+//  color: map-get($rsg2-colors, blue);
+//}
+//
+//
+//div.quickicon-icon div.fa-th {
+//  color: map-get($rsg2-colors, green);
+//}
+//
+//
+//div.quickicon-icon div.fa-upload {
+//  color: map-get($rsg2-colors, green);
+//}
+//
+//
+//div.quickicon-icon div.fa-image {
+//  color: map-get($rsg2-colors, green);
+//}
+//
+//
+//div.quickicon-icon div.fa-cogs {
+//  color: map-get($rsg2-colors, red);
+//}
 
 
 flex-buttons-table {
@@ -78,6 +103,11 @@ li.quickicon-single {
   border-radius: 2px;
 
   background: white;
+  @media (prefers-color-scheme: dark) {
+    background: #ffffff1a;
+    border: thick solid darkgray; /**/
+  }
+
   /**
   padding-left: auto;
   padding-right: auto;
@@ -92,6 +122,7 @@ li.quickicon-single {
 
   /*	flex-basis: 0; /**/
   flex: 1;
+
 }
 
 li.quickicon-single:hover {
@@ -99,6 +130,12 @@ li.quickicon-single:hover {
   background: lightgray; /**/
   border: thick solid darkgray; /**/
   //	text-decoration: none;
+
+  @media (prefers-color-scheme: dark) {
+    background: #ffffff26;
+    border: thick solid lightgray; /**/
+  }
+
 }
 
 li.quickicon-single a {
@@ -262,6 +299,36 @@ row > .card {
   margin-bottom: 15px;
 }
 
-//.card.forCollapse {
-//	padding: 10px;
-//}
+.card.forCollapse {
+  //	padding: 10px;
+  @media (prefers-color-scheme: dark) {
+    background: #ffffff26;
+    color: lightgrey;
+    // border: thick solid darkgray; /**/
+  }
+}
+
+
+//.rsg2requestJ3xActions.card-title,
+//.rsg2requestJ3xActions.card-text
+.rsg2requestJ3xActions
+{
+  //@media (prefers-color-scheme: dark) {
+  //  background: red;
+  //  color: lightgrey;
+  //  // border: thick solid darkgray; /**/
+  //
+  //}
+  .card
+  {
+    @media (prefers-color-scheme: dark) {
+      background: blue;
+      color: lightgrey;
+      // border: thick solid darkgray; /**/
+
+    }
+  }
+}
+
+
+

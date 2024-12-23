@@ -17,13 +17,11 @@ use Joomla\Filesystem\Path;
 
 HTMLHelper::_('bootstrap.framework');
 
-//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/controlPanel.css', array('version' => 'auto', 'relative' => true));
-// on more use preset ....
-$this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlPanel');
+$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.controlPanel');
 
 ?>
 
-	<form action="<?php
+<form action="<?php
     echo Route::_('index.php?option=com_rsgallery2'); ?>"
 	      method="post" name="adminForm" id="adminForm" class="form-validate">
 		<div class="d-flex flex-row">
@@ -74,7 +72,8 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.controlP
                             || $this->isDoCopyJ3xDbGalleries
                             || $this->isDoCopyJ3xDbImages
                             || $this->isDoChangeJ3xMenuLinks
-                            || $this->isDoCopyJ3xImages) {
+                            || $this->isDoCopyJ3xImages)
+                        {
                             echo DisplayRequestJ3xActions(
                                 $this->isDoCopyJ3xDbConfig,
                                 $this->isDoCopyJ3xDbGalleries,
@@ -356,7 +355,7 @@ function rsg2InfoHtml($Rsg2Version)
 {
     $html[] = '';
 
-    $html[] = '<table class="table table-light w-auto table_morecondensed">';
+    $html[] = '<table class="table w-auto table_morecondensed">';
     $html[] = '    <tbody>';
 
     $html[] = '        <tr>';
@@ -421,7 +420,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '    <div>';
     echo '        <div class="custom-column">';
     echo '            <div class="custom-column-content">';
-    echo '                <div class="card bg-light" id="galleriesCard" >';
+    echo '                <div class="card " id="galleriesCard" >';
     echo '                    <div class="card-header">';
     echo '                        ' . Text::_('COM_RSGALLERY2_GALLERIES');
     echo '                    </div>';
@@ -497,7 +496,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '    <div>';
     echo '        <div class="custom-column">';
     echo '            <div class="custom-column-content">';
-    echo '                <div class="card bg-light" id="imagesCard" >';
+    echo '                <div class="card " id="imagesCard" >';
     echo '                    <div class="card-header">';
     echo '                        ' . Text::_('COM_RSGALLERY2_IMAGES');
     echo '                    </div>';
@@ -522,7 +521,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     } else {
         // Header ----------------------------------
 
-        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
+        echo '<table class="table table-striped w-auto table_morecondensed" id="imagesTable" >';
         echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
         echo '    <thead>';
         echo '        <tr>';

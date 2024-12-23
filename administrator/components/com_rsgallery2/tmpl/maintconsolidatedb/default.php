@@ -17,8 +17,6 @@ use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
 
 // HTMLHelper::_('bootstrap.framework');
 
-//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/maintConsolidateDB.css', array('version' => 'auto', 'relative' => true));
-// HTMLHelper::_('script', 'com_rsgallery2/backend/maintConsolidateDB.js', ['version' => 'auto', 'relative' => true]);
 // on more use preset ....
 $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.maintConsolidateDB');
 

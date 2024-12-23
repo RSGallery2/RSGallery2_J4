@@ -28,23 +28,18 @@ div.rsg2logo img {
 div.quickicon-icon {
   left: -8px;
 }
-
 div.quickicon-icon div.fa-cog {
   color: #0d6dab;
 }
-
 div.quickicon-icon div.fa-th {
   color: #58a323;
 }
-
 div.quickicon-icon div.fa-upload {
   color: #58a323;
 }
-
 div.quickicon-icon div.fa-image {
   color: #58a323;
 }
-
 div.quickicon-icon div.fa-cogs {
   color: #e52626;
 }
@@ -70,11 +65,23 @@ li.quickicon-single {
   /*	flex-basis: 0; /**/
   flex: 1;
 }
+@media (prefers-color-scheme: dark) {
+  li.quickicon-single {
+    background: rgba(255, 255, 255, 0.1019607843);
+    border: thick solid darkgray; /**/
+  }
+}
 
 li.quickicon-single:hover {
   /*	background: lightblue;  /**/
   background: lightgray; /**/
   border: thick solid darkgray; /**/
+}
+@media (prefers-color-scheme: dark) {
+  li.quickicon-single:hover {
+    background: rgba(255, 255, 255, 0.1490196078);
+    border: thick solid lightgray; /**/
+  }
 }
 
 li.quickicon-single a {
@@ -200,6 +207,20 @@ div.quickicon-icon {
 
 row > .card {
   margin-bottom: 15px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card.forCollapse {
+    background: rgba(255, 255, 255, 0.1490196078);
+    color: lightgrey;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .rsg2requestJ3xActions .card {
+    background: blue;
+    color: lightgrey;
+  }
 }
 
 /*# sourceMappingURL=controlPanel.css.map */
