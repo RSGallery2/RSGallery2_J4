@@ -23,6 +23,13 @@ $img-height: $base-img-width;
   background-color: #fafbfc;
   /* border: 1px dashed #999; /**/
   border: 5px dotted darkgreen; /**/
+
+  @media (prefers-color-scheme: dark) {
+    background: #ffffff1a;
+    //border: thick solid darkgray; /**/
+  }
+
+
   /* border: 5px dotted lightgreen; /**/
   box-sizing: border-box;
   padding: 10px 0;
@@ -33,6 +40,11 @@ $img-height: $base-img-width;
     border-color: #666;
     //    background-color: #eee;
     background-color: lightgrey;
+    @media (prefers-color-scheme: dark) {
+      background: #ffffff26;
+      //border: thick solid darkgray; /**/
+    }
+
   }
 
   &.dragareaDisabled {
@@ -106,6 +118,7 @@ $img-height: $base-img-width;
 
 .statusbar {
   border-top: 1px solid #A9CCD1;
+  //border-top: 1px solid red;
   min-height: 25px;
   width: 100%;
   padding: 10px 10px 0px 10px;
@@ -116,6 +129,20 @@ $img-height: $base-img-width;
 
   &:nth-of-type(2n-1) {
     background: #EBEFF0;
+    @media (prefers-color-scheme: dark) {
+      background: #ffffff1a;
+      //border-top: 1px solid green;
+    }
+
+  }
+
+  &:nth-of-type(2n) {
+//    background: #EBEFF0;
+    @media (prefers-color-scheme: dark) {
+      background: #ffffff26;
+      //border-top: 1px solid blue;
+    }
+
   }
 
 }

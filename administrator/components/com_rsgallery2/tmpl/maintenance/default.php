@@ -795,14 +795,16 @@ function DisplayButton($button)
 
         echo '<div class="rsg2-icon-button-container">';
         echo '<button type="submit"
-			class="rsg2-icon-button-container"
+			class="rsg2-icon-button-button"
 			onclick="' . $onclick . '"'
 			. '>';
 
         echo '    <figure class="rsg2-icon">';
+        echo '        <div class="rsg2-icon-icon">';
         foreach ($button->classIcons as $Idx => $imageClass) {
-            echo '            <span class="' . $imageClass . ' icoMoon icoMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
+            echo '              <span class="' . $imageClass . ' icoMoon icoMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
         }
+        echo '            </div>';
         echo '        <figcaption class="rsg2-text">';
         echo '            <div class="maint-title">' . $button->textTitle . '</div>';
         echo '            <div class="maint-text">' . $button->textInfo . '</div>';
@@ -820,10 +822,12 @@ function DisplayButton($button)
         echo '<div class="rsg2-icon-button-container">';
 
         echo '<a href="' . $button->link . '" class="' . $button->classButton . '">';
+        echo '        <div class="rsg2-icon-icon">';
         echo '    <figure class="rsg2-icon">';
         foreach ($button->classIcons as $Idx => $imageClass) {
-            echo '            <span class="' . $imageClass . ' icoMoon icoMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
+            echo '            <span class="rsg2-icon-button-link ' . $imageClass . ' icoMoon icoMoon0' . $Idx . '" style="font-size:30px;"></span>'; // style="font-size:30px;"
         }
+        echo '            </div>';
         echo '        <figcaption class="rsg2-text">';
         echo '            <div class="maint-title">' . $button->textTitle . '</div>';
         echo '            <div class="maint-text">' . $button->textInfo . '</div>';

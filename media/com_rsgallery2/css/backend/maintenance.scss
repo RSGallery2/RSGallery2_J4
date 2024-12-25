@@ -91,6 +91,16 @@ $button_border_radius: 2px; // 3px;
 
   a {
     background-color: white;
+    border: 5px solid lightgrey;
+
+    @media (prefers-color-scheme: dark) {
+      //background-color: #ffffff1a; // darker
+      //background-color: #ffffff26;
+      // background-color: grey;
+      background-color: lightgrey;
+      border: 5px solid darkgrey;
+    }
+
 
     margin: 5px;
     padding: 25px 25px 0px 25px;
@@ -124,14 +134,22 @@ $button_border_radius: 2px; // 3px;
 
   button {
     background-color: white;
+    border: 5px solid lightgrey;
+
 //    background-color: lightgreen; // to be removed
+    @media (prefers-color-scheme: dark) {
+      //background-color: #ffffff1a; // darker
+      //background-color: #ffffff26;
+      // background-color: grey;
+      background-color: lightgrey;
+      border: 5px solid darkgrey;
+	}
 
     margin: 5px;
     padding: 25px 25px 0px 25px;
     display: inline-block;
 
     border-radius: $button_border_radius;
-    border: 5px solid lightgrey;
     box-shadow: 2px 2px 1px #888888;
 
     &:hover {
@@ -155,12 +173,19 @@ $button_border_radius: 2px; // 3px;
       color: black;
     }
   }
-}
 
-.whatEver {
-
-  background-color: lightgreen;
 
 }
+
+.rsg2-icon-icon {
+  // border: 3px solid red;
+  background-color: lightgrey;
+}
+
+//.rsg2-icon-button-container {
+//
+//  background-color: lightgreen;
+//
+//}
 
 

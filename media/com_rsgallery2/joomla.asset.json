@@ -27,11 +27,25 @@
     },
 	
     {
+      "name": "com_rsgallery2.lib.bs_set2dark",
+      "description": "JavaScript: On dark mode exchange class '...-light' with '...-dark'",
+      "type": "script",
+      "uri": "com_rsgallery2/lib/bs_set2dark.js",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
+      ]
+    },
+	
+    {
       "name": "com_rsgallery2.backend.controlPanel",
       "type": "preset",
       "dependencies": [
         "com_rsgallery2.backend.controlPanel#style",
-        "com_rsgallery2.backend.controlPanel#script"
+        "com_rsgallery2.backend.controlPanel#script",
+        "com_rsgallery2.lib.bs_set2dark#script"
       ]
     },
 	

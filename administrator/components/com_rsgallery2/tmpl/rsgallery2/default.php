@@ -355,7 +355,7 @@ function rsg2InfoHtml($Rsg2Version)
 {
     $html[] = '';
 
-    $html[] = '<table class="table w-auto table_morecondensed">';
+    $html[] = '<table class="table table-light w-auto table_morecondensed">';
     $html[] = '    <tbody>';
 
     $html[] = '        <tr>';
@@ -420,7 +420,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '    <div>';
     echo '        <div class="custom-column">';
     echo '            <div class="custom-column-content">';
-    echo '                <div class="card " id="galleriesCard" >';
+    echo '                <div class="card bg-light" id="galleriesCard" >';
     echo '                    <div class="card-header">';
     echo '                        ' . Text::_('COM_RSGALLERY2_GALLERIES');
     echo '                    </div>';
@@ -496,7 +496,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     echo '    <div>';
     echo '        <div class="custom-column">';
     echo '            <div class="custom-column-content">';
-    echo '                <div class="card " id="imagesCard" >';
+    echo '                <div class="card bg-light" id="imagesCard" >';
     echo '                    <div class="card-header">';
     echo '                        ' . Text::_('COM_RSGALLERY2_IMAGES');
     echo '                    </div>';
@@ -521,7 +521,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
     } else {
         // Header ----------------------------------
 
-        echo '<table class="table table-striped w-auto table_morecondensed" id="imagesTable" >';
+        echo '<table class="table table-striped table-light w-auto table_morecondensed" id="imagesTable" >';
         echo '    <caption>' . Text::_('COM_RSGALLERY2_MOST_RECENTLY_ADDED_ITEMS') . '</caption>';
         echo '    <thead>';
         echo '        <tr>';

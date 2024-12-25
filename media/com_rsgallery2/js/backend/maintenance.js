@@ -12,7 +12,7 @@
 /**/
 //declare var joomla: Joomla;
 //const joomla = window.Joomla || {};
-var joomla = window.Joomla || {};
+const joomla = window.Joomla || {};
 // Joomla form token
 var Token;
 //--------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     joomla.submitbutton = function (task) {
         alert('task: ' + JSON.stringify(task));
         //--- confirmation message --------------------------------
-        var confirmMessage;
+        let confirmMessage;
         // assign text to confirm
         switch (task) {
             case 'MaintenanceCleanUp.purgeImagesAndData':

@@ -218,12 +218,19 @@
 }
 .rsg2-icon-bar a {
   background-color: white;
+  border: 5px solid lightgrey;
   margin: 5px;
   padding: 25px 25px 0px 25px;
   display: inline-block;
   border-radius: 2px;
   border: 5px solid lightgrey;
   box-shadow: 2px 2px 1px #888888;
+}
+@media (prefers-color-scheme: dark) {
+  .rsg2-icon-bar a {
+    background-color: lightgrey;
+    border: 5px solid darkgrey;
+  }
 }
 .rsg2-icon-bar a:hover {
   text-decoration: none;
@@ -242,12 +249,18 @@
 }
 .rsg2-icon-bar button {
   background-color: white;
+  border: 5px solid lightgrey;
   margin: 5px;
   padding: 25px 25px 0px 25px;
   display: inline-block;
   border-radius: 2px;
-  border: 5px solid lightgrey;
   box-shadow: 2px 2px 1px #888888;
+}
+@media (prefers-color-scheme: dark) {
+  .rsg2-icon-bar button {
+    background-color: lightgrey;
+    border: 5px solid darkgrey;
+  }
 }
 .rsg2-icon-bar button:hover {
   text-decoration: none;
@@ -265,8 +278,8 @@
   color: black;
 }
 
-.whatEver {
-  background-color: lightgreen;
+.rsg2-icon-icon {
+  background-color: lightgrey;
 }
 
 /*# sourceMappingURL=maintenance.css.map */

@@ -1,11 +1,11 @@
 /**
- * @package     RSGallery2
+ * @package    RSGallery2
  *
  * supports maintenance user confirm messages
  *
- * @subpackage  com_rsgallery2
- * @copyright (c) 2016-2023 RSGallery2 Team
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @subpackage com_rsgallery2
+ * @copyright  (c) 2016-2024 RSGallery2 Team
+ * @license    GNU General Public License version 2 or later
  * @author      finnern
  * @since       5.0.0.4
  */
@@ -15,19 +15,19 @@
    (with rsg2 additions found in internet)
 ----------------------------------------------------------------*/
 /**
-interface Joomla {
-    JText: {
-        _(String)
-    }
+ interface Joomla {
+ JText: {
+ _(String)
+ }
 
-    // submitbutton: any;
-    submitbutton (task: string, formSelector: string, validate: boolean|undefined|null) : void;
-    submitform (task, form: HTMLElement|undefined|null, validate: boolean|undefined|null) : void;
+ // submitbutton: any;
+ submitbutton (task: string, formSelector: string, validate: boolean|undefined|null) : void;
+ submitform (task, form: HTMLElement|undefined|null, validate: boolean|undefined|null) : void;
 
-    isChecked (isitchecked: boolean, form: string | undefined): boolean;
-    checkAll (elem: HTMLElement): void ;
-}
-/**/
+ isChecked (isitchecked: boolean, form: string | undefined): boolean;
+ checkAll (elem: HTMLElement): void ;
+ }
+ /**/
 // import {Joomla} from "./dbTransferJ3xImages";
 // Only define the Joomla namespace if not defined.
 //window.Joomla = window.Joomla || {};
