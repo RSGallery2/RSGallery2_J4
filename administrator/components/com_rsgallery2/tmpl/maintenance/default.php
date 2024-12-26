@@ -879,7 +879,7 @@ function zoneTitle($title = 'Unknown title', $zoneClass = '')
 function zoneInfo($info = 'Unknown zone info')
 {
     $html[] = '<div class="icons-panel-info ">';
-    $html[] = '<strong>' . Text::_($info) . '</strong>';
+    $html[] = '<header>' . Text::_($info) . '</header>';
     $html[] = '</div>';
 
     // implode($html);
