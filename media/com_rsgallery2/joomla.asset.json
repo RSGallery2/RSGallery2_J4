@@ -48,8 +48,22 @@
         "com_rsgallery2.lib.bs_set2dark#script"
       ]
     },
-	
-	
+
+    {
+      "name": "com_rsgallery2.backend.image",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.lib.bs_set2dark#script"
+      ]
+    },
+    {
+      "name": "com_rsgallery2.backend.gallery",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.lib.bs_set2dark#script"
+      ]
+    },
+
     {
       "name": "com_rsgallery2.backend.images",
       "description": "Backend styling.",

@@ -16,8 +16,16 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('behavior.keepalive');
+//HTMLHelper::_('behavior.formvalidator');
+//HTMLHelper::_('behavior.keepalive');
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->getDocument()->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_contenthistory');
+$wa->useScript('keepalive')
+    ->useScript('form.validate')
+    ->useScript('com_contenthistory.admin-history-versions');
+$wa->usePreset('com_rsgallery2.backend.gallery');
+
 
 $app   = Factory::getApplication();
 $input = $app->input;
@@ -67,7 +75,7 @@ echo Route::_(
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="bg-white px-3">
+				<div class="bg-light px-3">
                     <?php
                     echo $this->getForm()->renderField('thumb_id') ?>
                     <?php
