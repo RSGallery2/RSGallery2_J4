@@ -30,7 +30,8 @@ class ImageFileController extends BaseController
      * @var    string
      * @since __BUMP_VERSION__
      */
-    protected $extension;
+    // 2025.01.10 ToDo: followin is not working do we need  'extension' ?
+    // protected $extension;
 
     /**
      * Constructor.
@@ -47,9 +48,13 @@ class ImageFileController extends BaseController
     {
         parent::__construct($config, $factory, $app, $input);
 
+        // 2025.01.10 ToDo: followin is not working do we need  'extension' ?
+        /**
         if (empty($this->extension)) {
+            //
             $this->extension = $this->input->get('extension', 'com_rsgallery2');
         }
+        /**/
     }
     /**/
 

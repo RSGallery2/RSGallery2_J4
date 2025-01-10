@@ -22,7 +22,8 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
-$extension = $this->escape($this->state->get('filter.extension'));
+// 2025.01.10 ToDo: followin is not working do we need  'extension' ?
+// $extension = $this->escape($this->state->get('filter.extension'));
 
 ?>
 
@@ -109,63 +110,65 @@ echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
                                             echo Text::_('COM_RSGALLERY2_TITLE'); ?></label>
 										<div class="controls">
 											<input name="title[]" type="text" size="15" aria-invalid="false"
-											       value="<?php
-                                                   echo $this->escape($item->title); ?>"
-											       style="width:95%;>
+											       value="<?php echo $this->escape($item->title); ?>"
+											       style="width:95%;"
+											/>
                                         </div>
                                     </div>
 
-                                    <!-- Gallery can't be changed. Disable input -->
-                                    <div class=" control-group">
-										</div>
+                                    <!-- Gallery can not be changed. Disable input -->
+									<div class="control-group">
 										<label class="control-label" for="galleryID[]"><?php
                                             echo Text::_('COM_RSGALLERY2_GALLERY'); ?></label>
 										<div class="controls">
 											<input type="text" name="galleryID[]" placeholder="Idx:"
-											       value="<?php
-                                                   echo $this->escape($item->gallery_name); ?>"
-											       disabled style="width:95%;>
+											       value="<?php echo $this->escape($item->gallery_name); ?>"
+											       disabled style="width:95%;"
+											/>
                                         </div>
                                     </div>
 
                                     <div class=" control-group">
-											<!-- label class="control-label" for="description2[]" ><?php
+										<!-- label class="control-label" for="description2[]" >
+										<?php echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?>
+										</label>
+                                        <div class="controls">
+                                            <textarea cols="15" rows="" name="description[]"
+	                                              placeholder="Text input"
+	                                              style="width:95%;">
+	                                              <?php echo $this->escape($item->descr); ?>
+                                            </textarea>
+                                         </div-->
+
+										<label class="control-label" for="description[]"><?php
                                             echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
-                                                <div class="controls">
-                                                <textarea cols="15" rows="" name="description[]"
-                                                  placeholder="Text input"
-                                                  style="width:95%;"><?php
-                                            echo $this->escape($item->descr); ?></textarea>
-                                                </div-->
-
-											<label class="control-label" for="description[]"><?php
-                                                echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
-											<div class="controls">
-                                                <?php
-                                                if (!empty($this->editor)) {
-                                                    // ToDo: Leave out some editor buttons : use config ...
-                                                    echo $this->editor->display(
-                                                        'description[]',
-                                                        $this->escape($item->description),
-                                                        '
-                                                                90%',
-                                                        '100',
-                                                        '20',
-                                                        '20',
-                                                        false,
-                                                        'description_' . $Idx,
-                                                        null,
-                                                        null,
-                                                        $this->editorParams,
-                                                    );
-                                                }
-                                                ?>
-											</div>
+										<div class="controls">
+                                            <?php
+                                            if (!empty($this->editor)) {
+                                                // ToDo: Leave out some editor buttons : use config ...
+                                                echo $this->editor->display(
+                                                    'description[]',
+                                                    $this->escape($item->description),
+                                                    '
+                                                            90%',
+                                                    '100',
+                                                    '20',
+                                                    '20',
+                                                    false,
+                                                    'description_' . $Idx,
+                                                    null,
+                                                    null,
+                                                    $this->editorParams,
+                                                );
+                                            }
+                                            ?>
 										</div>
-
-										<input type="hidden" name="cid[]" value="<?php
-                                        echo $item->id; ?>">
 									</div>
+
+									<input type="hidden" name="cid[]"
+									       value="<?php echo $item->id; ?>"
+									/>
+								</div>
 							</li>
 
                             <?php
@@ -185,16 +188,16 @@ echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
 
 			</div>
 
-			<input type="hidden" name="extension" value="<?php
-            echo $extension; ?>">
-			<input type="hidden" name="task" value="">
-			<input type="hidden" name="boxchecked" value="0">
-            <?php
-            echo HTMLHelper::_('form.token'); ?>
+			<!--
+	        // 2025.01.10 ToDo: followin is not working do we need  'extension' ?
+			input type="hidden" name="extension" value="<?php echo $extension; ?>" /
+			-->
+			<input type="hidden" name="task" value="" />
+			<input type="hidden" name="boxchecked" value="0" />
+            <?php echo HTMLHelper::_('form.token'); ?>
 
 		</div>
 
-	</div>
 	</div>
 </form>
 
