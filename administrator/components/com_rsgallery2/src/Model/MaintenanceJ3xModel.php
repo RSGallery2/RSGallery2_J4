@@ -2,7 +2,7 @@
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
- * @copyright  (C) 2021-2024 RSGallery2 Team
+ * @copyright  (c)  2021-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */

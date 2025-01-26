@@ -6,7 +6,7 @@
  * @version        $Id: CreditsExternal.php  2012-07-09 18:52:20Z mirjam $
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
- * @copyright  (C) 2003-2024 RSGallery2 Team
+ * @copyright  (c)  2003-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */

@@ -5,7 +5,7 @@
  * @version        $Id: version.rsgallery2.php 1099 2012-10-08 11:37:43Z mirjam $
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
- * @copyright  (C) 2003-2024 RSGallery2 Team
+ * @copyright  (c)  2003-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  *                RSGallery is Free Software
  */

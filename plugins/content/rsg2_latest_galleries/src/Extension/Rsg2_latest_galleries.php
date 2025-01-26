@@ -6,7 +6,7 @@ namespace Rsgallery2\Plugin\Content\Rsg2_latest_galleries\Extension;
  * @package         Joomla.Plugin
  * @subpackage      Content.contact
  *
- * @copyright   (C) 2014 Open Source Matters, Inc. <https://www.joomla.org>
+ * @copyright  (c)  2019-2025 RSGallery2 Team
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
