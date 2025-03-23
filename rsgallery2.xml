@@ -71,7 +71,7 @@
         </submenu>
 
         <!-- Back-end files -->
-        <files folder="administrator/components/com_rsgallery2/">
+        <files folder="administrator/components/com_rsgallery2">
             <filename>access.xml</filename>
             <filename>changelog.xml</filename>
             <filename>config.xml</filename>
