@@ -15,9 +15,9 @@
     <namespace path="src">Rsgallery2\Plugin\Content\Rsg2_images</namespace>
 
     <files>
-        <folder>services</folder>
+        <folder plugin="rsg2_images">services</folder>
         <folder>language</folder>
-        <filename plugin="rsg2_images">rsg2_images.php</filename>
+        <filename ToDo="user src folder ...">rsg2_images.php</filename>
     </files>
 
     <languages>
