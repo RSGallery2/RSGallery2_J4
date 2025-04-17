@@ -11,4 +11,8 @@
 **/*.pyc
 
 
+# org and temp files
+**/*.org.*
+**/*.tmp
+
 

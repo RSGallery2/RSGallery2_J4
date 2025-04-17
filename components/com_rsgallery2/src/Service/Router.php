@@ -63,7 +63,7 @@ class Router extends RouterView
         SiteApplication $app,
         AbstractMenu $menu,
         CategoryFactoryInterface $categoryFactory,
-        DatabaseInterface $db,
+        DatabaseInterface $db
     ) {
         /**
          * $this->categoryFactory = $categoryFactory;
