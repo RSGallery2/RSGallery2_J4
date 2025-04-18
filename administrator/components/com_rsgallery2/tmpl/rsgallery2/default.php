@@ -3,7 +3,7 @@
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
  *
- * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
 
@@ -204,7 +204,7 @@ function DisplayRequestJ3xActions(
     $isDoCopyJ3xDbGalleries = false,
     $isDoCopyJ3xDbImages = false,
     $isDoChangeJ3xMenuLinks = false,
-    $isDoCopyJ3xImages = false,
+    $isDoCopyJ3xImages = false
 ) {
     $html = '';
 
