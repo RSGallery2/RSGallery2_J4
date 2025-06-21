@@ -170,7 +170,7 @@ class GalleriesModel extends ListModel
         // Not defined
         if ($this->galleryId < 0) {
             $input           = Factory::getApplication()->input;
-            $this->galleryId = $input->getInt('gid', 0);
+            $this->galleryId = $input->getInt('id', 0);
         }
 
         return $this->galleryId;
@@ -189,7 +189,7 @@ class GalleriesModel extends ListModel
 //			// gallery parameter
 //			$app = Factory::getApplication();
 //			$input = $app->input;
-//			$gid = $input->get('gid', '', 'INT');
+//			$gid = $input->get('id', '', 'INT');
 
 
             foreach ($galleries as $gallery) {
@@ -270,7 +270,7 @@ class GalleriesModel extends ListModel
 //			// gallery parameter
 //			$app = Factory::getApplication();
 //			$input = $app->input;
-//			$gid = $input->get('gid', '', 'INT');
+//			$gid = $input->get('id', '', 'INT');
 
             // Create a new query object.
             $db = $this->getDatabase();
@@ -459,22 +459,20 @@ class GalleriesModel extends ListModel
 
 //            $gallery->UrlGallery = Route::_('index.php?option=com_rsgallery2 ....
 //                . '/gallery/' . $gallery->id . ''
-////                . '&gid=' . $image->gallery_id
+////                . '&id=' . $image->gallery_id
 ////                . '&iid=' . $gallery->id
 ////                . '&layout=galleryJ3xAsInline'
 //                ,true,0,true);
 
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=galleries&gid=0
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=galleries&id=0
 
 
             $gallery->UrlGallery = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '&view=/gallery&gid=' . $gallery->id
-                ,
+                . '&view=/gallery&id=' . $gallery->id,
                 true,
                 0,
-                true,
-            );
+                true);
 
             /**/
             // ToDo: watermarked file
@@ -495,21 +493,19 @@ class GalleriesModel extends ListModel
 
 //            $gallery->UrlSlideshow = 'index.php?option=com_rsgallery2 ....
 //                . '/gallery/' . $gallery->id . '/slideshow'
-////                . '&gid=' . $image->gallery_id
+////                . '&id=' . $image->gallery_id
 ////                . '&iid=' . $gallery->id
 ////                . '&layout=galleryJ3xAsInline'
 //                ,true,0,true);
 
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2&slides_layout=_:default&Itemid=130
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&id=2&slides_layout=_:default&Itemid=130
 
             $gallery->UrlSlideshow = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '/gallery&gid=' . $gallery->id . '/slideshow'
-                ,
+                . '/gallery&id=' . $gallery->id . '/slideshow',
                 true,
                 0,
-                true,
-            );
+                true);
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
@@ -603,7 +599,7 @@ class GalleriesModel extends ListModel
         //	$this->context .= '.' . $forcedLanguage;
         //}
 
-        $this->setState('gallery.id', $app->input->getInt('gid'));
+        $this->setState('gallery.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.

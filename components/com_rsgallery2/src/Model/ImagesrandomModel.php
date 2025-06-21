@@ -114,7 +114,7 @@ class imagesrandomModel extends ListModel
         $groups = $user->getAuthorisedViewLevels();
         $input  = Factory::getApplication()->input;
 
-        $gid = $input->getInt('gid', 0);
+        $gid = $input->getInt('id', 0);
 
         if ($this->_item === null) {
             $this->_item = [];

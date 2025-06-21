@@ -48,7 +48,7 @@ if (!isset($images)) {
 
 // "/joomla3x/index.php?option=com_rsgallery2&amp;page=inline&amp;id=157&amp;Itemid=114"
 $voteLink = Route::_('index.php?option=com_rsgallery2&page=inline&id=' . $image->id);
-$voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&gid=2&iid=' . $image->id);
+$voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&id=2&iid=' . $image->id);
 
 
 ?>

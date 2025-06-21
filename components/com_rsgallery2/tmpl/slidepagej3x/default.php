@@ -135,7 +135,7 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
     //--- result of rating ------------------------------------
 
     // ToDo: add limit here and remove from *js
-    //$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
+    //$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery$id=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
     //                                                                                         index.php/single-gallery/item/1/asInline
     //                                                                                         index.php?option=com_rsgallery2&page=inline&id=" . $item->id
 //		$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&&page=inline&id="&id=' . $imageId) .'" id="rsgVoteForm">';
@@ -353,7 +353,7 @@ function htmlExifData($exifTags)
 //	$html[] = '<div class="clearfix" >';
 //
 //	$html[] = '                <form name="rsgCommentForm" class="form-horizontal" method="post"';
-//	$html[] = '                    action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&gid=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
+//	$html[] = '                    action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery$id=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
 //
 //	$html[] = '                    <div class ="well">';
 //	$html[] = '                        <h4>'. Text::_('COM_RSGALLERY2_CREATE_COMMENT') . '</h4>';

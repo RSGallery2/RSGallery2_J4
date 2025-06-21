@@ -90,7 +90,7 @@ class HtmlView extends BaseHtmlView
     {
         $app             = Factory::getApplication();
         $input           = Factory::getApplication()->input;
-        $this->galleryId = $input->get('gid', 0, 'INT');
+        $this->galleryId = $input->get('id', 0, 'INT');
 
         /* wrong call but why ? */
         if ($this->galleryId < 2) {
@@ -140,8 +140,8 @@ class HtmlView extends BaseHtmlView
         // ??? include actual meu item ???
 
 
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryj3x&gid=2');
-        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryj3x&gid=2&asSlideshow');
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryj3x&id=2');
+        $route01 = Route::_('index.php?option=com_rsgallery2&view=galleryj3x&id=2&asSlideshow');
         $route01 = Route::_('index.php?option=com_rsgallery2&view=imagej3x&item=83&asInline');
 
         // J3x extract

@@ -90,7 +90,7 @@ class HtmlView extends BaseHtmlView
 
         // toDo: use image list from user not from gallery
         $input           = $app->input;
-        $this->galleryId = $input->get('gid', 0, 'INT');
+        $this->galleryId = $input->get('id', 0, 'INT');
 
         // Get some data from the models
         $this->state      = $this->get('State');

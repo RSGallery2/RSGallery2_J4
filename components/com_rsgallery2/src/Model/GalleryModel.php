@@ -197,7 +197,7 @@ class GalleryModel extends ListModel
             if (!empty ($image->gallery_id)) {
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
-                    . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
+                    . '&id=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
                     . '&img_id=' . $image->id// test bad ordering                    . '&start=' . $idx
                 ;
             } else {
@@ -234,12 +234,10 @@ class GalleryModel extends ListModel
         try {
             $image->UrlDownload = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '&task=imagefile.downloadfile&id=' . $image->id
-                ,
+                . '&task=imagefile.downloadfile&id=' . $image->id,
                 true,
                 0,
-                true,
-            );
+                true);
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
@@ -328,17 +326,17 @@ class GalleryModel extends ListModel
 
 //            $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
 //                . '/gallery/' . $gallery->id . '/slideshow'
-////                . '&gid=' . $image->gallery_id
+////                . '&id=' . $image->gallery_id
 ////                . '&iid=' . $gallery->id
 ////                . '&layout=galleryJ3xAsInline'
 //                ,true,0,true);
 
 
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&id=2
 
             $gallery->UrlSlideshow = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '&view=slideshow&gid=' . $gallery->id
+                . '&view=slideshow&id=' . $gallery->id
                 ,
                 true,
                 0,
@@ -441,7 +439,7 @@ class GalleryModel extends ListModel
 //
 //            // ToDo: gid: one get access function keep result ...
 //            // gallery parameter
-//            $gid = $input->get('gid', '', 'INT');
+//            $gid = $input->get('id', '', 'INT');
 //
 //			// ToDo: check gid == 0 => error or selection control
 //
@@ -549,7 +547,7 @@ class GalleryModel extends ListModel
 
         $app = Factory::getApplication();
 
-        $this->setState('gallery.id', $app->input->getInt('gid'));
+        $this->setState('gallery.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.

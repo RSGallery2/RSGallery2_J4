@@ -2875,9 +2875,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      * Can only be run once to match the changed gallery id
      * On double call use j3xDegradeUpgradedJ4xMenuLinks
      *
-     * index.php?option=com_rsgallery2&view=gallery&gid=0
-     * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
-     * index.php?option=com_rsgallery2&view=slideshow&gid=227
+     * index.php?option=com_rsgallery2&view=gallery&id=0
+     * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+     * index.php?option=com_rsgallery2&view=slideshow&id=227
      *
      * @return bool
      *
@@ -3007,9 +3007,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
     /**
      * Uppercase to lower case in 'J'
-     * index.php?option=com_rsgallery2&view=gallery&gid=0
-     * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
-     * index.php?option=com_rsgallery2&view=slideshow&gid=227
+     * index.php?option=com_rsgallery2&view=gallery&id=0
+     * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+     * index.php?option=com_rsgallery2&view=slideshow&id=227
      *
      * @return bool
      *
@@ -3052,9 +3052,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
     /**
      * Uppercase to lower case in 'J'
-     * index.php?option=com_rsgallery2&view=gallery&gid=0
-     * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
-     * index.php?option=com_rsgallery2&view=slideshow&gid=227
+     * index.php?option=com_rsgallery2&view=gallery&id=0
+     * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+     * index.php?option=com_rsgallery2&view=slideshow&id=227
      *
      * @return bool
      *
@@ -3101,9 +3101,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      * @return int|string
      *
      * examples
-     *    index.php?option=com_rsgallery2&view=gallery&gid=0
-     *    index.php?option=com_rsgallery2&view=gallery&gid=2
-     *    index.php?option=com_rsgallery2&view=slideshow&gid=227
+     *    index.php?option=com_rsgallery2&view=gallery&id=0
+     *    index.php?option=com_rsgallery2&view=gallery&id=2
+     *    index.php?option=com_rsgallery2&view=slideshow&id=227
      *
      * @since version
      */
@@ -3113,7 +3113,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
         //--- extract gallery id --------------------------
 
-        $gidIdx    = strpos($oldLink, '&gid=') + 5;
+        $gidIdx    = strpos($oldLink, '&id=') + 5;
         $gidEndIdx = strpos($oldLink, '&', $gidIdx);
         // no further ...
         if ($gidEndIdx == false) {
@@ -3155,7 +3155,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         try {
             //--- extract gallery id --------------------------
 
-            $gidIdx    = strpos($oldLink, '&gid=') + 5;
+            $gidIdx    = strpos($oldLink, '&id=') + 5;
             $gidEndIdx = strpos($oldLink, '&', $gidIdx);
             // no further characters
             if ($gidEndIdx == false) {
@@ -3383,9 +3383,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      * @return int|string
      *
      * examples
-     *     index.php?option=com_rsgallery2&view=gallery&gid=0 => ...&view=rootgalleriesj3x&...
-     *     index.php?option=com_rsgallery2&view=gallery&gid=2
-     *     index.php?option=com_rsgallery2&view=slideshow&gid=227
+     *     index.php?option=com_rsgallery2&view=gallery&id=0 => ...&view=rootgalleriesj3x&...
+     *     index.php?option=com_rsgallery2&view=gallery&id=2
+     *     index.php?option=com_rsgallery2&view=slideshow&id=227
      *
      * @since version
      */
@@ -3394,7 +3394,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         try {
             //--- extract gallery id --------------------------
 
-            $gidIdx    = strpos($newLink, '&gid=') + 5;
+            $gidIdx    = strpos($newLink, '&id=') + 5;
             $gidEndIdx = strpos($newLink, '&', $gidIdx);
             // no further characters
             if ($gidEndIdx == false) {
@@ -3480,9 +3480,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      * @return int|string
      *
      * examples
-     *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
-     *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
-     *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+     *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0 => ...&view=gallery&id=0
+     *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
+     *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
      *
      * @since version
      */
@@ -3491,7 +3491,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         try {
             //--- extract gallery id --------------------------
 
-            $gidIdx    = strpos($newLink, '&gid=') + 5;
+            $gidIdx    = strpos($newLink, '&id=') + 5;
             $gidEndIdx = strpos($newLink, '&', $gidIdx);
             // no further characters
             if ($gidEndIdx == false) {
@@ -3540,9 +3540,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      * @return int|string
      *
      * examples
-     *      index.php?option=com_rsgallery2&view=gallery&gid=0
-     *      index.php?option=com_rsgallery2&view=gallery&gid=2
-     *      index.php?option=com_rsgallery2&view=slideshow&gid=227
+     *      index.php?option=com_rsgallery2&view=gallery&id=0
+     *      index.php?option=com_rsgallery2&view=gallery&id=2
+     *      index.php?option=com_rsgallery2&view=slideshow&id=227
      *
      * @since version
      */
@@ -3571,9 +3571,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      * @return int|string
      *
      * examples
-     *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
-     *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
-     *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+     *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0 => ...&view=gallery&id=0
+     *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
+     *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
      *
      * @since version
      */
@@ -3582,7 +3582,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         try {
             //--- extract gallery id --------------------------
 
-            $gidIdx    = strpos($newLink, '&gid=') + 5;
+            $gidIdx    = strpos($newLink, '&id=') + 5;
             $gidEndIdx = strpos($newLink, '&', $gidIdx);
             // no further characters
             if ($gidEndIdx == false) {
@@ -3633,9 +3633,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      * @return int|string
      *
      * examples
-     *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
-     *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
-     *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+     *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0 => ...&view=gallery&id=0
+     *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
+     *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
      *
      * @since version
      */
@@ -3644,7 +3644,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         try {
             //--- extract gallery id --------------------------
 
-            $gidIdx    = strpos($newLink, '&gid=') + 5;
+            $gidIdx    = strpos($newLink, '&id=') + 5;
             $gidEndIdx = strpos($newLink, '&', $gidIdx);
             // no further characters
             if ($gidEndIdx == false) {

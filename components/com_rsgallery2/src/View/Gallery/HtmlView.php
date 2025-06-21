@@ -94,7 +94,7 @@ class HtmlView extends BaseHtmlView
         $app = Factory::getApplication();
 
         $input           = $app->input;
-        $this->galleryId = $input->get('gid', 0, 'INT');
+        $this->galleryId = $input->get('id', 0, 'INT');
 
         // gid = 0 ==> root view
         $isDisplayRootGalleries = $this->galleryId === 0;

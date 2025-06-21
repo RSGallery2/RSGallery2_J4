@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -73,13 +72,17 @@ class Router extends RouterView
          * $categories = new RouterViewConfiguration('categories');
          * $categories->setKey('id');
          * $this->registerView($categories);
+         *
          * $category = new RouterViewConfiguration('category');
          * $category->setKey('id')->setParent($categories, 'catid')->setNestable();
          * $this->registerView($category);
+         *
          * $foo = new RouterViewConfiguration('foo');
          * $foo->setKey('id')->setParent($category, 'catid');
          * $this->registerView($foo);
+         *
          * $this->registerView(new RouterViewConfiguration('featured'));
+         *
          * $form = new RouterViewConfiguration('form');
          * $form->setKey('id');
          * $this->registerView($form);
@@ -91,6 +94,7 @@ class Router extends RouterView
 
         $params      = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool)$params->get('sef_ids');
+	    $this->db              = $db;
 
 
         //--- rules for J3x rsg2_legacy links ----------------------------------------
@@ -98,7 +102,7 @@ class Router extends RouterView
         /* use parent instead ??? */
         // rules for rootgalleriesj3x
         $rootgalleriesJ3x = new RouterViewConfiguration('rootgalleriesj3x');
-        $rootgalleriesJ3x->setKey('gid');
+        $rootgalleriesJ3x->setKey('id');
         $this->registerView($rootgalleriesJ3x);
         /**/
 
@@ -106,23 +110,24 @@ class Router extends RouterView
 
         // rules for galleriesJ3x,
         $galleriesJ3x = new RouterViewConfiguration('galleriesj3x');
-        $galleriesJ3x->setKey('gid');
+        $galleriesJ3x->setKey('id');
         $this->registerView($galleriesJ3x);
 
-        // rules for galleriesJ3x,
+        // rules for galleryJ3x,
         $galleryJ3x = new RouterViewConfiguration('galleryj3x');
-        $galleryJ3x->setKey('gid');
+        $galleryJ3x->setKey('id');
         $this->registerView($galleryJ3x);
 
         // rules for slideshowJ3x
         $slideshowJ3x = new RouterViewConfiguration('slideshowj3x');
-        $slideshowJ3x->setKey('gid');
+        $slideshowJ3x->setKey('id');
         $this->registerView($slideshowJ3x);
 
         // rules for slidepagej3x
-        // http://127.0.0.1/JoomlaFinnern/index.php/kaffee?view=slidepagej3x&gid=2&img_id=23
+        // http://127.0.0.1/JoomlaFinnern/index.php/kaffee?view=slidepagej3x$id=2&img_id=23
         $slidepagej3x = new RouterViewConfiguration('slidepagej3x');
-        $slidepagej3x->setKey('gid');
+        //$slidepagej3x->setKey('id');
+        $slidepagej3x->setKey('id');
         $this->registerView($slidepagej3x);
 
         $img_id = new RouterViewConfiguration('img_id');
@@ -133,23 +138,28 @@ class Router extends RouterView
 
         // rules for galleries
         $galleries = new RouterViewConfiguration('galleries');
-        // $galleries->setKey('gid');
+        // $galleries->setKey('id');
         $this->registerView($galleries);
 
         // rules for galleries,
         $gallery = new RouterViewConfiguration('gallery');
-        // $gallery->setKey('gid');
+        // $gallery->setKey('id');
         $this->registerView($gallery);
 
         // rules for images
         $images = new RouterViewConfiguration('images');
-        // $images->setKey('gid');
+        // $images->setKey('id');
         $this->registerView($images);
 
         // rules for slideshow
         $slideshow = new RouterViewConfiguration('slideshow');
-        // $slideshow->setKey('gid');
+        // $slideshow->setKey('id');
         $this->registerView($slideshow);
+
+        // rules for slideshow
+        $develop = new RouterViewConfiguration('develop');
+        // $develop->setKey('id');
+        $this->registerView($develop);
 
         //---  ---------------------------------------
 
@@ -165,140 +175,169 @@ class Router extends RouterView
 
     /* use parent instead ??? */
 // J3x - Root Gallery overview
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=rootgalleriesj3x$id=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&displaySearch=1&displayRandom=0&displayLatest=0&galleries_count=4&display_limitbox=1&galleries_show_title=1&galleries_show_description=0&galleries_show_owner=0&galleries_show_size=0&galleries_show_date=0&galleries_show_pre_label=0&displaySlideshow=0&galleries_description_side=global&latest_count=4&random_images=5&intro_text=%3Cp%3EHeader%20for%20galleries%20below%3C/p%3E&random_count=4&galleries_show_slideshow=1&Itemid=148
     public function getRootgalleriesJ3xSegment($gid, $query)
     {
-        //return array((int) $gid => $gid);
+	    if (!strpos($gid, ':'))
+	    {
+		    // root has no gallery ID
+		    // ToDo: $path[0] = '1:root'; if ($this->noIDs) { and below
+		    // parent gallery
+		    if ($gid > 0)
+		    {
+			    $db      = Factory::getContainer()->get(DatabaseInterface::class);
+			    $dbquery = $db->getQuery(true);
 
-        // root has no gallery ID
-        $void    = '0';
-        $segment = '';
+			    $dbquery
+				    ->select($dbquery->qn('alias'))
+				    ->from($db->qn('__rsg2_galleries'))
+				    ->where('id = ' . $db->q($gid));
 
-        // parent gallery
-        if ($gid > 0) {
-            $db      = Factory::getContainer()->get(DatabaseInterface::class);
-            $dbquery = $db->getQuery(true);
+			    $db->setQuery($dbquery);
 
-            $dbquery
-                ->select($dbquery->qn('alias'))
-                ->from($db->qn('__rsg2_galleries'))
-                ->where('id = ' . $db->q($gid));
+			    $gid .= ':' . $db->loadResult();
 
-            $db->setQuery($dbquery);
+			    [$void, $segment] = explode(':', $gid, 2);
+		    }
+	    }
 
-            $gid .= ':' . $db->loadResult();
+	    if ($this->noIDs) {
+		    list($void, $segment) = explode(':', $gid, 2);
 
-            [$void, $segment] = explode(':', $gid, 2);
-        }
+		    return [$void => $segment];
+	    }
 
-        return [$void => $segment];
+	    return [(int) $gid => $gid];
     }
 
     public function getRootgalleriesJ3xId($segment, $query)
     {
-//		return (int) $segment;
+	    if ($this->noIDs)
+	    {
+		    // parent gallery
+		    $dbquery = $this->db->getQuery(true);
 
-        $gid = 0; // root gallery
+		    $dbquery
+			    ->select($dbquery->qn('id'))
+			    ->from($dbquery->qn('#__rsg2_galleries'))
+			    ->where('alias = ' . $dbquery->q($segment));
 
-        // parent gallery
-        if (!empty ($segment)) {
-            $db      = Factory::getContainer()->get(DatabaseInterface::class);
-            $dbquery = $db->getQuery(true);
+		    $this->db->setQuery($dbquery);
 
-            $dbquery
-                ->select($dbquery->qn('id'))
-                ->from($dbquery->qn('#__rsg2_galleries'))
-                ->where('alias = ' . $dbquery->q($segment));
+		    return (int) $this->db->loadResult();
+	    }
 
-            $db->setQuery($dbquery);
-
-            if (!(int)$db->loadResult()) {
-                $gid = false;
-            }
-
-            $gid = $db->loadResult();
-        }
-
-        return $gid;
+        return (int) $segment;
     }
 
     /* use parent instead */
 
 // J3x - Galleries by Parent
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x&gid=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&Itemid=160
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x$id=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&Itemid=160
     public function getGalleriesJ3xSegment($gid, $query)
     {
-//		return array((int) $gid => $gid);
+	    if (!strpos($gid, ':'))
+	    {
+		    // parent gallery
+		    if ($gid > 0)
+		    {
+			    $db      = Factory::getContainer()->get(DatabaseInterface::class);
+			    $dbquery = $db->getQuery(true);
 
-        // fall back
-        $void    = '0';
-        $segment = '';
+			    $dbquery
+				    ->select($dbquery->qn('alias'))
+				    ->from($db->qn('#__rsg2_galleries'))
+				    ->where('id = ' . $db->q($gid));
 
-        // parent gallery
-        if ($gid > 0) {
-            $db      = Factory::getContainer()->get(DatabaseInterface::class);
-            $dbquery = $db->getQuery(true);
+			    $db->setQuery($dbquery);
 
-            $dbquery
-                ->select($dbquery->qn('alias'))
-                ->from($db->qn('#__rsg2_galleries'))
-                ->where('id = ' . $db->q($gid));
+			    $gid .= ':' . $db->loadResult();
+		    }
+	    }
 
-            $db->setQuery($dbquery);
+	    if ($this->noIDs) {
+		    list($void, $segment) = explode(':', $gid, 2);
 
-            $gid .= ':' . $db->loadResult();
+		    return [$void => $segment];
+	    }
 
-            [$void, $segment] = explode(':', $gid, 2);
-        }
-
-        return [$void => $segment];
+	    return [(int) $gid => $gid];
     }
 
     public function getGalleriesJ3xId($segment, $query)
     {
-//		return (int) $segment;
-        $gid = 0; // root gallery
+	    if ($this->noIDs)
+		{
+		    $dbquery = $this->db->getQuery(true);
 
-        // parent gallery
-        if (!empty ($segment)) {
-            $db      = Factory::getContainer()->get(DatabaseInterface::class);
-            $dbquery = $db->getQuery(true);
-
-            $dbquery
-                ->select($dbquery->qn('id'))
+		    $dbquery
+			    ->select($this->db->quoteName('id'))
                 ->from($dbquery->qn('#__rsg2_galleries'))
-                ->where('alias = ' . $dbquery->q($segment));
+			    ->where($this->db->quoteName('alias') . ' = :segment')
+			    ->bind(':segment', $segment);
 
-            $db->setQuery($dbquery);
+		    $this->db->setQuery($dbquery);
 
-            if (!(int)$db->loadResult()) {
-                $gid = false;
-            }
-
-            $gid = $db->loadResult();
+		    return (int) $this->db->loadResult();
         }
 
-        return $gid;
+	    return (int) $segment;
     }
 
 
 // J3x - Single Gallery
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryj3x&gid=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryj3x$id=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
     public function getGalleryJ3xSegment($gid, $query)
     {
-        // ToDo: parent ?
-        return [(int)$gid => $gid];
+	    if (!strpos($gid, ':'))
+	    {
+		    if ($gid > 0)
+		    {
+			    $gid     = (int) $gid;
+			    $dbquery = $this->db->getQuery(true);
+			    $dbquery
+				    ->select($this->db->quoteName('alias'))
+				    ->from($this->db->quoteName('#__rsg2_galleries'))
+				    ->where($this->db->quoteName('id') . ' = :id')
+				    ->bind(':id', $gid, ParameterType::INTEGER);
+			    $this->db->setQuery($dbquery);
+
+			    $gid .= ':' . $this->db->loadResult();
+		    }
+	    }
+
+	    if ($this->noIDs) {
+		    list($void, $segment) = explode(':', $gid, 2);
+
+		    return [$void => $segment];
+	    }
+
+	    return [(int) $gid => $gid];
     }
 
-    public function XgetGalleriesJ3xId($segment, $query)
+    public function getGalleryJ3xId($segment, $query)
     {
-        // ToDo: parent ?
-        return (int)$segment;
+	    if ($this->noIDs)
+		{
+		    $dbquery = $this->db->getQuery(true);
+
+		    $dbquery
+			    ->select($this->db->quoteName('id'))
+			    ->from($dbquery->qn('#__rsg2_galleries'))
+			    ->where($this->db->quoteName('alias') . ' = :segment')
+			    ->bind(':segment', $segment);
+
+		    $this->db->setQuery($dbquery);
+
+			return (int) $this->db->loadResult();
+	    }
+
+	    return (int) $segment;
     }
 
 
 // J3x - Slideshow
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshowj3x&gid=2&Itemid=419
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshowj3x$id=2&Itemid=419
     public function getSlideshowJ3xSegment($gid, $query)
     {
         return [(int)$gid => $gid];
@@ -310,7 +349,7 @@ class Router extends RouterView
     }
 
 // J3x - Slidepagej3x
-    // http://127.0.0.1/JoomlaFinnern/index.php/kaffee?view=slidepagej3x&gid=2&img_id=23
+    // http://127.0.0.1/JoomlaFinnern/index.php/kaffee?view=slidepagej3x$id=2&img_id=23
     public function getSlidepagej3xSegment($gid, $query)
     {
         return [(int)$gid => $gid];
@@ -359,7 +398,7 @@ class Router extends RouterView
 
 
 // RSG2 Root Galleries
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleries&gid=0&galleries_show_intro=0&galleries_show_title=2&galleries_show_description=0&galleries_show_search=0&galleries_column_arrangement=1&max_columns_in_galleries_view=4&galleries_row_arrangement=2&max_rows_in_galleries_view=5&max_galleries_in_galleries_view=20&Itemid=127
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleries$id=0&galleries_show_intro=0&galleries_show_title=2&galleries_show_description=0&galleries_show_search=0&galleries_column_arrangement=1&max_columns_in_galleries_view=4&galleries_row_arrangement=2&max_rows_in_galleries_view=5&max_galleries_in_galleries_view=20&Itemid=127
     public function getGalleriesSegment($gid, $query)
     {
         return [(int)$gid => $gid];
@@ -372,7 +411,7 @@ class Router extends RouterView
 
 
 // RSG2 Galleries by Parent
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleries&gid=3&galleries_show_intro=0&galleries_show_title=2&galleries_show_description=0&galleries_show_search=0&galleries_column_arrangement=1&max_columns_in_galleries_view=4&galleries_row_arrangement=2&max_rows_in_galleries_view=5&max_galleries_in_galleries_view=20&Itemid=153
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleries$id=3&galleries_show_intro=0&galleries_show_title=2&galleries_show_description=0&galleries_show_search=0&galleries_column_arrangement=1&max_columns_in_galleries_view=4&galleries_row_arrangement=2&max_rows_in_galleries_view=5&max_galleries_in_galleries_view=20&Itemid=153
     public function getZBGalleriesJ3xSegment($gid, $query)
     {
         return [(int)$gid => $gid];
@@ -385,7 +424,7 @@ class Router extends RouterView
 
 
 // RSG2 Gallery Images
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=gallery&gid=2&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&Itemid=154
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=gallery$id=2&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&Itemid=154
     public function getGallerySegment($gid, $query)
     {
         return [(int)$gid => $gid];
@@ -398,7 +437,7 @@ class Router extends RouterView
 
 
 // RSG2 Slideshow
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2&Itemid=155
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=slideshow$id=2&Itemid=155
     public function getSlideshowSegment($gid, $query)
     {
         return [(int)$gid => $gid];
@@ -411,7 +450,7 @@ class Router extends RouterView
 
 
 // RSG2 gallery images
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=images&gid=2&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=16&images_show_title=2&images_show_description=0&images_show_search=0&Itemid=109
+// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=images$id=2&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=16&images_show_title=2&images_show_description=0&images_show_search=0&Itemid=109
     public function getImagesSegment($gid, $query)
     {
         return [(int)$gid => $gid];

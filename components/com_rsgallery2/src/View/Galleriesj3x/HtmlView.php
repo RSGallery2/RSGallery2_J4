@@ -72,7 +72,7 @@ class HtmlView extends BaseHtmlView
         $this->parentGallery = $this->get('ParentGallery');
 
         //http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x
-        //&gid=63
+        //$id=63
         //&images_show_title=2
         //&images_show_description=0
         //&images_show_search=0

@@ -96,7 +96,7 @@ class HtmlView extends BaseHtmlView
     {
         $app             = Factory::getApplication();
         $input           = Factory::getApplication()->input;
-        $this->galleryId = $input->get('gid', 0, 'INT');
+        $this->galleryId = $input->get('id', 0, 'INT');
 
         /* wrong call but not expected. Happens but why ? */
         if ($this->galleryId < 2) {
@@ -257,7 +257,7 @@ class HtmlView extends BaseHtmlView
 
         // gid should be zero ToDo: is this really needed *?
         $input = Factory::getApplication()->input;
-        //$this->galleryId = $input->get('gid', 0, 'INT');
+        //$this->galleryId = $input->get('id', 0, 'INT');
 
 //        // $this->menuParams = new \stdClass();
 //        $this->menuParams = (object)[];

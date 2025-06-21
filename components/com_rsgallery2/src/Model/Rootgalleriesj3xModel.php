@@ -46,7 +46,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
             /**
              * $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
              * . '/galleryJ3x/' . $gallery->id . '/slideshow'
-             * //                . '&gid=' . $image->gallery_id
+             * //                . '&id=' . $image->gallery_id
              * //                . '&iid=' . $gallery->id
              * //                . '&layout=galleryJ3xAsInline'
              * ,true,0,true);
@@ -54,7 +54,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 
             $gallery->UrlSlideshow = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&gid=' . $gallery->id,
+                . '&view=slideshowj3x&id=' . $gallery->id,
             );
         } catch (RuntimeException $e) {
             $OutTxt = '';

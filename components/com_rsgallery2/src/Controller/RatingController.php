@@ -66,9 +66,9 @@ class RatingController extends BaseController
         $imageId   = $input->get('iid', 0, 'INT');
         $galleryId = $input->get('iid', 0, 'INT');
 
-        // http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=42&advancedSef=1&startShowSingleImage=1&Itemid=218
+        // http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&id=42&advancedSef=1&startShowSingleImage=1&Itemid=218
         //$link = 'index.php?option=com_rsgallery2'; // &startShowSingleImage=1&Itemid=218
-        $link = 'index.php?option=com_rsgallery2&view=slidepagej3x&gid=' . $galleryId . '&img_id=' . $imageId . '&tab=vote';
+        $link = 'index.php?option=com_rsgallery2&view=slidepagej3x&id=' . $galleryId . '&img_id=' . $imageId . '&tab=vote';
 
         // Access check
         $canVote = $this->app->getIdentity()->authorise('core.admin', 'com_rsgallery2');
@@ -86,7 +86,7 @@ class RatingController extends BaseController
                 {
                 }
 
-                $galleryId  = $input->get('gid', 0, 'INT');
+                $galleryId  = $input->get('id', 0, 'INT');
                 $userRating = $input->get('rating', 0, 'INT');
                 // Show same image -> pagination limitstart
                 $limitStart = $input->get('paginationImgIdx', 0, 'INT');
@@ -102,8 +102,8 @@ class RatingController extends BaseController
                 }
 
                 //	limitstart=3 ....
-                // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
-                // $link = 'index.php?option=com_rsgallery2&view=gallery&gid=' . $galleryId . '&id=' . $imageId
+                // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&id=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
+                // $link = 'index.php?option=com_rsgallery2&view=gallery&id=' . $galleryId . '&id=' . $imageId
                 //	. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
                 // $link = 'index.php?option=com_rsgallery2&page=inline'; // &id=' . $imageId) .'" id="rsgVoteForm">';
                 $link = $link . '&id=' . $imageId;

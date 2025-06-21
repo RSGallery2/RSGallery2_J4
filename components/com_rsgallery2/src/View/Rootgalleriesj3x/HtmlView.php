@@ -97,7 +97,7 @@ class HtmlView extends BaseHtmlView
 
         $input = $app->input;
 
-        $this->galleryId = $input->get('gid', 0, 'INT');
+        $this->galleryId = $input->get('id', 0, 'INT');
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
         $state            =
@@ -118,8 +118,10 @@ class HtmlView extends BaseHtmlView
 //	    // wrong: $this->params = $menuParams->merge($this->params);
 //	    $params = $this->params->merge($menuParams);
 
-        $this->isDebugSite   = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
-        $this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
+        //$this->isDebugSite   = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
+        $this->isDebugSite   = $this->params->get('isDebugSite') || $input->getBool('isDebugSite');
+        //$this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
+        $this->isDevelopSite = $this->params->get('isDevelop') || $input->getBool('isDevelop');
 
         // J3x old parameter for limit
         $limit = $input->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');

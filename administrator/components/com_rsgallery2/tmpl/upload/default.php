@@ -25,7 +25,6 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.upload'
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
 // Drag and Drop security id on ajax call.
-$script = [];
 $script[] = 'var Token = \'' . Session::getFormToken() . '\';';
 
 // Factory::getApplication()->getDocument()->addScriptDeclaration(implode("\n", $script));

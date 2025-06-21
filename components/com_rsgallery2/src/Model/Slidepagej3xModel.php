@@ -164,7 +164,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
         $query = parent::getListQuery();
 
         $input     = Factory::getApplication()->input;
-        $galleryId = $input->get('gid', 0, 'INT');
+        $galleryId = $input->get('id', 0, 'INT');
 
         // If gallery ID is given
         if ($galleryId) {

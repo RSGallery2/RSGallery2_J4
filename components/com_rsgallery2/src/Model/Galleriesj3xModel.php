@@ -164,7 +164,7 @@ class Galleriesj3xModel extends ListModel
         // Not defined
         if ($this->galleryId < 0) {
             $input           = Factory::getApplication()->input;
-            $this->galleryId = $input->getInt('gid', 0);
+            $this->galleryId = $input->getInt('id', 0);
         }
 
         return $this->galleryId;
@@ -276,7 +276,7 @@ class Galleriesj3xModel extends ListModel
 //			// gallery parameter
 //			$app = Factory::getApplication();
 //			$input = $app->input;
-//			$gid = $input->get('gid', '', 'INT');
+//			$gid = $input->get('id', '', 'INT');
 
 
             foreach ($galleries as $gallery) {
@@ -344,7 +344,7 @@ class Galleriesj3xModel extends ListModel
 //			// gallery parameter
 //			$app = Factory::getApplication();
 //			$input = $app->input;
-//			$gid = $input->get('gid', '', 'INT');
+//			$gid = $input->get('id', '', 'INT');
 
             // Create a new query object.
             $db = $this->getDatabase();
@@ -536,22 +536,20 @@ class Galleriesj3xModel extends ListModel
 
 //            $gallery->UrlGallery = Route::_(index.php?option=com_rsgallery2 ....
 //                . '/gallery/' . $gallery->id . ''
-////                . '&gid=' . $image->gallery_id
+////                . '&id=' . $image->gallery_id
 ////                . '&iid=' . $gallery->id
 ////                . '&layout=galleryJ3xAsInline'
 //                ,true,0,true);
 
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=galleries&gid=0
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=galleries&id=0
 
 
             $gallery->UrlGallery = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '&view=galleryj3x&gid=' . $gallery->id
-                ,
+                . '&view=galleryj3x&id=' . $gallery->id,
                 true,
                 0,
-                true,
-            );
+                true);
 
             /**/
             // ToDo: watermarked file
@@ -575,21 +573,19 @@ class Galleriesj3xModel extends ListModel
 
 //            $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
 //                . '/gallery/' . $gallery->id . '/slideshow'
-////                . '&gid=' . $image->gallery_id
+////                . '&id=' . $image->gallery_id
 ////                . '&iid=' . $gallery->id
 ////                . '&layout=galleryJ3xAsInline'
 //                ,true,0,true);
 
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&gid=2&slides_layout=default&Itemid=130
+            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&id=2&slides_layout=default&Itemid=130
 
             $gallery->UrlSlideshow = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '/gallery&gid=' . $gallery->id . '/slideshow'
-                ,
+                . '/gallery&id=' . $gallery->id . '/slideshow',
                 true,
                 0,
-                true,
-            );
+                true);
         } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleriesj3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
@@ -634,7 +630,7 @@ class Galleriesj3xModel extends ListModel
 
         $app = Factory::getApplication();
 
-        $this->setState('gallery.id', $app->input->getInt('gid'));
+        $this->setState('gallery.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.
@@ -975,7 +971,7 @@ class Galleriesj3xModel extends ListModel
 //
 //            $input = Factory::getApplication()->input;
 //
-////            $menuParams->set('gid', $input->getInt('gid', true));
+////            $menuParams->set('id', $input->getInt('id', true));
 ////            $menuParams->set('galleries_show_title', $input->getBool('galleries_show_title', true));
 ////            $menuParams->set('galleries_show_description', $input->getBool('galleries_show_description', true));
 ////

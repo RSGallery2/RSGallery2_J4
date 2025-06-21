@@ -89,7 +89,7 @@ class HtmlView extends BaseHtmlView
 
         //		// toDo: use image list by image parent not from gallery
 //        $input  = Factory::getApplication()->input;
-//        $this->galleryId = $input->get('gid', 0, 'INT');
+//        $this->galleryId = $input->get('id', 0, 'INT');
 
 
         // Get some data from the models

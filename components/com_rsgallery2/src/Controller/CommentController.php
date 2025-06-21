@@ -69,13 +69,13 @@ class CommentController extends BaseController
         $input   = Factory::getApplication()->getInput();
         $imageId = $input->get('id', 0, 'INT');
 
-        // http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=42&advancedSef=1&startShowSingleImage=1&Itemid=218
+        // http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&id=42&advancedSef=1&startShowSingleImage=1&Itemid=218
         //$link = 'index.php?option=com_rsgallery2'; // &startShowSingleImage=1&Itemid=218
         $link = 'index.php?option=com_rsgallery2&page=inline&id=' . $imageId . '&tab=comment';
 
 
         // Access check
-        $galleryId = $input->get('gid', 0, 'INT');
+        $galleryId = $input->get('id', 0, 'INT');
         //$canComment = $this->app->getIdentity()->authorise('core.admin', 'com_rsgallery2');
         $canComment = $this->app->getIdentity()->authorise(
             'rsgallery2.comment',
@@ -156,8 +156,8 @@ class CommentController extends BaseController
                     }
 
                     // limitstart=3 ....
-                    // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
-                    //$link = 'index.php?option=com_rsgallery2&view=gallery&gid=' . $galleryId . '&id=' . $imageId
+                    // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&id=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
+                    //$link = 'index.php?option=com_rsgallery2&view=gallery&id=' . $galleryId . '&id=' . $imageId
                     //	. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
                 } catch
                 (RuntimeException $e) {
@@ -186,12 +186,12 @@ class CommentController extends BaseController
 
         // Align like above
 
-        // http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=42&advancedSef=1&startShowSingleImage=1&Itemid=218
+        // http://127.0.0.1/Joomla3x/index.php?option=com_rsgallery2&view=gallery&id=42&advancedSef=1&startShowSingleImage=1&Itemid=218
         $link = 'index.php?option=com_rsgallery2'; // &startShowSingleImage=1&Itemid=218
 
         $input = Factory::getApplication()->getInput();
 
-        $galleryId = $input->get('gid', 0, 'INT');
+        $galleryId = $input->get('id', 0, 'INT');
         // ToDo: check for appearance
         $limitStart = $input->get('paginationImgIdx', 0, 'INT');
         $userRating = $input->get('rating', 0, 'INT');
@@ -211,7 +211,7 @@ class CommentController extends BaseController
 
                 $input = Factory::getApplication()->getInput();
 
-                $galleryId = $input->get('gid', 0, 'INT');
+                $galleryId = $input->get('id', 0, 'INT');
                 $imageId   = $input->get('id', 0, 'INT');
 
                 /**
@@ -232,8 +232,8 @@ class CommentController extends BaseController
                 }
 
 //				limitstart=3 ....
-// http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&gid=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
-                $link = 'index.php?option=com_rsgallery2&view=gallery&gid=' . $galleryId . '&id=' . $imageId
+// http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&id=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
+                $link = 'index.php?option=com_rsgallery2&view=gallery&id=' . $galleryId . '&id=' . $imageId
                     . '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
             } catch (RuntimeException $e) {
                 $OutTxt = '';

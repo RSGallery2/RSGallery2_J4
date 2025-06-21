@@ -210,7 +210,7 @@ class ImagesModel extends ListModel
 
             // ToDo: gid: one get access function keep result ...
             // gallery parameter
-            $gid           = $input->get('gid', '', 'INT');
+            $gid           = $input->get('id', '', 'INT');
             $gallery_param = $this->gallery_parameter($gid);
 
             // overwrite config and new if chosen
@@ -333,7 +333,7 @@ class ImagesModel extends ListModel
         $input  = Factory::getApplication()->input;
 
         // ToDo: ? use state instead ?
-        $gid = $input->getInt('gid', 0);
+        $gid = $input->getInt('id', 0);
 
         if ($this->_item === null) {
             $this->_item = [];
@@ -638,7 +638,7 @@ class ImagesModel extends ListModel
         // ToDo: ? move to view html and model (plugin?)
 
         // gallery id
-        $galleryId = $app->input->get('gid', '', 'INT');
+        $galleryId = $app->input->get('id', '', 'INT');
         $this->setState('images.galleryId', $galleryId);
 
         // image id

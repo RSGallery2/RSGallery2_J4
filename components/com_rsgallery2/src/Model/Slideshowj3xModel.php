@@ -129,10 +129,10 @@ class SlideshowJ3xModel extends Galleryj3xModel {}
  *
  * // ToDo: move to view html and model (plugion?)
  * // gallery id
- * $gid = $app->input->get('gid', '', 'INT');
+ * $gid = $app->input->get('id', '', 'INT');
  * $this->setState('images.galleryId', $gid);
  * // ??? See above
- * $this->setState('gallery.id', $app->input->getInt('gid'));
+ * $this->setState('gallery.id', $app->input->getInt('id'));
  * $this->setState('params', $app->getParams());
  *
  * // Adjust the context to support modal layouts.
@@ -275,7 +275,7 @@ class SlideshowJ3xModel extends Galleryj3xModel {}
  * $groups = $user->getAuthorisedViewLevels();
  * $input = Factory::getApplication()->input;
  *
- * $gid = $input->getInt('gid', 0);
+ * $gid = $input->getInt('id', 0);
  *
  * if ($this->_item === null) {
  * $this->_item = array();
@@ -335,7 +335,7 @@ class SlideshowJ3xModel extends Galleryj3xModel {}
  * // gallery parameter
  * $app = Factory::getApplication();
  * $input = $app->input;
- * $gid = $input->get('gid', '', 'INT');
+ * $gid = $input->get('id', '', 'INT');
  *
  * $ImagePaths = new ImagePathsModel ($gid);
  *

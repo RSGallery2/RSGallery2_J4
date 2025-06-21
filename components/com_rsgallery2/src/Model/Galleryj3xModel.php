@@ -81,10 +81,11 @@ class Galleryj3xModel extends GalleryModel
             if (!empty ($image->gallery_id)) {
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
-                    . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
+                    . '&id=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
                     . '&img_id=' . $image->id// test bad ordering                    . '&start=' . $idx
                 ;
             } else {
+				// Bad gallery id missing
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
                     . '&img_id=' . $image->id// test bad ordering                    . '&start=' . $idx
@@ -112,7 +113,7 @@ class Galleryj3xModel extends GalleryModel
 
             $gallery->UrlSlideshow = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&gid=' . $gallery->id
+                . '&view=slideshowj3x&id=' . $gallery->id
                 ,
                 true,
                 0,
