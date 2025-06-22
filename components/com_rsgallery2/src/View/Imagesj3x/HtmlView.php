@@ -91,7 +91,6 @@ class HtmlView extends BaseHtmlView
 //        $input  = Factory::getApplication()->input;
 //        $this->galleryId = $input->get('id', 0, 'INT');
 
-
         // Get some data from the models
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');

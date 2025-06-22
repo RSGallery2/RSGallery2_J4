@@ -665,7 +665,8 @@ class ImagesModel extends ListModel
         $value = $app->input->get('filter_tag', 0, 'uint');
         $this->setState('filter.tag', $value);
 
-        $orderCol = $app->input->get('filter_order', 'a.ordering');
+        // $orderCol = $app->input->get('filter_order', 'a.ordering');
+        $orderCol = $app->input->get('filter_order', 'ordering');
 
         if (!in_array($orderCol, $this->filter_fields)) {
             $orderCol = 'a.ordering';
@@ -937,7 +938,7 @@ class ImagesModel extends ListModel
          * /**/
 
         $listOrdering = $this->getState('list.ordering', 'a.ordering');
-        $listDirn     = $db->escape($this->getState('list.direction', 'DESC'));
+        $listDirn     = $db->escape($this->getState('list.direction', 'ASC'));
 
         if ($listOrdering == 'a.access') {
             $query->order('a.access ' . $listDirn . ', a.id ' . $listDirn);

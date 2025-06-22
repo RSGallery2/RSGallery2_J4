@@ -682,11 +682,15 @@ class GalleryModel extends ListModel
         $userId = $user->get('id');
         $guest  = $user->get('guest');
 
-        $orderby        = $this->state->params->get('all_tags_orderby', 'title');
-        $published      = (int)$this->state->params->get('published', 1);
-        $orderDirection = $this->state->params->get('all_tags_orderby_direction', 'ASC');
+	    $listOrdering = $this->getState('list.ordering', 'a.ordering');
 
-        // 2024.04.21: $gid = $input->getInt ('gid', 0);
+	    $orderby        = $this->state->params->get('all_tags_orderby', $listOrdering);
+	    $listDirn       = $this->getState('list.direction', 'ASC');
+        $orderDirection = $this->state->params->get('all_tags_orderby_direction', $listDirn);
+
+	    $published      = (int)$this->state->params->get('published', 1);
+
+	    // 2024.04.21: $gid = $input->getInt ('gid', 0);
         $gid = (int)$this->getState('gallery.id', 0);
 
         // Create a new query object.

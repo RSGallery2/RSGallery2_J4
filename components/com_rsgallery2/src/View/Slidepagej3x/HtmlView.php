@@ -100,17 +100,18 @@ class HtmlView extends BaseHtmlView
 
         /* wrong call but not expected. Happens but why ? */
         if ($this->galleryId < 2) {
-            Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
+            Factory::getApplication()->enqueueMessage(
+				"gallery id is zero or not allowed -> why",
+				'error'
+            );
         }
 
         $this->mergeMenuOptions();
 
-        // State need items so it fetches them
         $this->state = $this->get('State');
 
         // Need state defined here. Items will be fetched already there
         $this->items = $this->get('Items');
-
 
         $params     =
         $this->params = $this->state->get('params');
