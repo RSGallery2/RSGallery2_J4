@@ -72,6 +72,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
                             || $this->isDoCopyJ3xDbGalleries
                             || $this->isDoCopyJ3xDbImages
                             || $this->isDoChangeJ3xMenuLinks
+                            || $this->isDoChangeGidMenuLinks
                             || $this->isDoCopyJ3xImages)
                         {
                             echo DisplayRequestJ3xActions(
@@ -79,6 +80,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
                                 $this->isDoCopyJ3xDbGalleries,
                                 $this->isDoCopyJ3xDbImages,
                                 $this->isDoChangeJ3xMenuLinks,
+                                $this->isDoChangeGidMenuLinks,
                                 $this->isDoCopyJ3xImages,
                             );
                         }
@@ -204,6 +206,7 @@ function DisplayRequestJ3xActions(
     $isDoCopyJ3xDbGalleries = false,
     $isDoCopyJ3xDbImages = false,
     $isDoChangeJ3xMenuLinks = false,
+    $isDoChangeGidMenuLinks = false,
     $isDoCopyJ3xImages = false
 ) {
     $html = '';
@@ -224,6 +227,9 @@ function DisplayRequestJ3xActions(
     $rsg2J3xCopyImagesLink          = Route::_(
         'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser',
     );
+	$rsg2j3xUpgradeGidMenuLinksLink = Route::_(
+		'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks',
+	);
 
     $CopyDbConfig     = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG');
     $CopyDbConfigDesc = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC');
@@ -237,6 +243,12 @@ function DisplayRequestJ3xActions(
     $changeJ3xMenuLinks     = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID');
     $changeJ3xMenuLinksDesc = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID_DESC');
 
+    $changeGidMenuLinks     = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID');
+    $changeGidMenuLinksDesc = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC');
+
+
+
+
     $CopyImages     = '<del>' . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES') . '</del>';
     $CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
 
@@ -247,6 +259,7 @@ function DisplayRequestJ3xActions(
     $link2 = '';
     $link3 = '';
     $link4 = '';
+    $link6 = '';
     $link5 = '';
 
     // config
@@ -275,11 +288,16 @@ function DisplayRequestJ3xActions(
             <span class="badge badge-pill bg-success">4</span> <a href="$rsg2j3xUpgradeJ3xMenuLinksLink" class="btn btn-success btn-sm" Title="$changeJ3xMenuLinksDesc" role="button">$changeJ3xMenuLinks</a>
             EOT;
     }
-
-    // copy images seperately
-    if ($isDoCopyJ3xImages) {
+    // isDoChangeGidMenuLinks
+    if ($isDoChangeGidMenuLinks) {
         $link5 = <<<EOT
-            <span class="badge badge-pill bg-success">5</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm disabled" Title="$CopyImagesDesc" role="button" aria-disabled="true">$CopyImages</a></del>
+            <span class="badge badge-pill bg-success">5</span> <a href="$rsg2j3xUpgradeGidMenuLinksLink" class="btn btn-success btn-sm" Title="$changeGidMenuLinksDesc" role="button">$changeGidMenuLinks</a>
+            EOT;
+    }
+    // copy images separately
+    if ($isDoCopyJ3xImages) {
+        $link6 = <<<EOT
+            <span class="badge badge-pill bg-success">6</span> <a href="$rsg2J3xCopyImagesLink" class="btn btn-success btn-sm disabled" Title="$CopyImagesDesc" role="button" aria-disabled="true">$CopyImages</a></del>
             EOT;
     }
 
@@ -295,7 +313,8 @@ function DisplayRequestJ3xActions(
                         <li style="list-style: none; margin-bottom: 10px">$link2</li>
                         <li style="list-style: none; margin-bottom: 10px">$link3</li>
                         <li style="list-style: none; margin-bottom: 10px">$link4</li>
-                        <li style="list-style: none; margin-bottom:  0px">$link5</li>
+                        <li style="list-style: none; margin-bottom: 10px">$link5</li>
+                        <li style="list-style: none; margin-bottom: 0px">$link6</li>
                     </ul>
                 </div>
         

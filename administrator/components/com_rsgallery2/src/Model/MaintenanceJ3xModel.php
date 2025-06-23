@@ -3095,7 +3095,108 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         return $successful;
     }
 
-    /**
+	/**
+	 * Use start templates matching a ..J3x folder.
+	 * This enables to separate J3x from new J4x
+	 * folders with same name
+	 * Change j3x 'gallery' to root galleries, (?galleries) or keep it
+	 *    On gid=0 = use root galleries J3x
+	 *    On gid!=0 still use gallery J3x
+	 *   * ToDo: Detect parent galleries
+	 * Find in menus all GID references and increase them
+	 * On transfer of gallery ids to new balanced tree the
+	 * id is increased. Therefore, links in menu are now invalid
+	 * Applies to gallery and slideshow menu items
+	 * Can only be run once to match the changed gallery id
+	 * On double call use j3xDegradeUpgradedJ4xMenuLinks
+	 *
+	 * index.php?option=com_rsgallery2&view=gallery&id=0
+	 * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshow&id=227
+	 *
+	 * @return bool
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public function j3xReplaceGid2IdMenuLinks()
+	{
+		$successful = false;
+
+		try {
+			// link includes '&view=gallery' or '&view=slideshow&'
+			$menuItemsDB = $this->dbValidGid2IdMenuItems();
+
+			if (!empty ($menuItemsDB)) {
+				$successful = true;
+
+				foreach ($menuItemsDB as $id => $menuItem) {
+					[$oldLink, $oldParams] = $menuItem;
+
+					//--- exchange or remove 'gid=' -----------------------------
+
+					$newLink = $this->linkReplaceGid2Id($oldLink);
+
+					//--- change menu parameter for type ----------------------------------------
+
+					// valid link ?
+					if (!empty($newLink)) {
+						$successful &= $this->updateMenuItem($id, $newLink, $oldParams);
+					} else { $successful = false; }
+				}
+			}
+		} catch (RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
+	 * Opposite of j3xReplaceGid2IdMenuLinks
+	 * Needed if above done too many times
+	 * Attention gid==0 special case with double meaning can't be solved
+	 * 0: root gallery 0-> 1: change to gallery if (1: forbidden as tree root)
+	 *
+	 * @return bool
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
+	public function j3xReplaceId2GidMenuLinks()
+	{
+		$successful = false;
+
+		try {
+			$menuItemsDB = $this->dbValidId2GidMenuItems();
+
+			// upgraded links found
+			if (!empty ($menuItemsDB)) {
+				$successful = true;
+
+				foreach ($menuItemsDB as $id => $menuItem) {
+					[$oldLink, $oldParams] = $menuItem;
+
+					//--- change link for gid++ ----------------------------------------------
+
+					$newLink = $this->linkReplaceId2Gid($oldLink);
+
+					//--- change menu parameter for type ----------------------------------------
+
+					// valid link ?
+					if (!empty($newLink)) {
+						$successful &= $this->updateMenuItem($id, $newLink, $oldParams);
+					} else { $successful = false; }
+				}
+			}
+		} catch (RuntimeException $e) {
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
      * @param $oldLink
      *
      * @return int|string
@@ -3826,7 +3927,127 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         return $menuLinks;
     }
 
-    /**
+	/**
+	 * Select menu link item for rsg2 old j3x menu items
+	 * link includes '&view=gallery' or '&view=slideshow&'
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public function dbValidGid2IdMenuItems()
+	{
+		$menuLinks = [];
+
+		//--- list from #__menu table in DB  -------------------------------------------
+
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		// select all menus with com_rsgallery2 and a gid > 0 (leave out root galleries)
+
+		$query
+			->select(['id', 'link', 'params'])
+			->from('#__menu')
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%&gid=%')))
+//			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
+
+		$db->setQuery($query);
+
+		// $menuItemsDB = $db->loadAssocList('id', 'link');
+		$menuItemsDB = $db->loadAssocList('id');
+		// $menuItemsDB = $db->loadObjectList();
+
+		//--- restrict to gallery id using menu items -------------------------------------------
+
+		if (!empty ($menuItemsDB)) {
+			foreach ($menuItemsDB as $id => $menuItemDb) {
+				// [$idDummy, $link, $params] = $menuItemDb;
+				$link   = $menuItemDb ['link'];
+				$params = json_decode($menuItemDb ['params'], true);
+
+				// add matching link
+				if (   str_contains($link, '&view=galleries&')
+					|| str_contains($link, '&view=gallery&')
+					|| str_contains($link, '&view=slidepage&')
+					|| str_contains($link, '&view=slideshow&')
+
+					|| str_contains($link, '&view=galleriesj3x&')
+					|| str_contains($link, '&view=galleryj3x&')
+					|| str_contains($link, '&view=rootgalleriesj3x&')
+					|| str_contains($link, '&view=slidepagej3x&')
+					|| str_contains($link, '&view=slideshowj3x&')
+				) {
+					$menuLinks[$id] = [$link, $params];
+				}
+			}
+		}
+
+		return $menuLinks;
+	}
+
+	/**
+	 * Select menu link item for rsg2 which have already been upgraded to J4x
+	 * link includes '&view=galleryj3x&' or '&view=slideshowj3x&'
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public function dbValidId2GidMenuItems()
+	{
+		$menuLinks = [];
+
+		//--- list from #__menu table in DB  -------------------------------------------
+
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		// select all menus with com_rsgallery2 and a gid
+
+		$query
+			->select(['id', 'link', 'params'])
+			->from('#__menu')
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%&id=%')))
+//			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=%')))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
+
+		$db->setQuery($query);
+
+		// $menuItemsDB = $db->loadAssocList('id', 'link');
+		$menuItemsDB = $db->loadAssocList('id');
+		// $menuItemsDB = $db->loadObjectList();
+
+		//--- restrict to 'legacy' j3x menu items -------------------------------------------
+
+		if (!empty ($menuItemsDB)) {
+			foreach ($menuItemsDB as $id => $menuItemDb) {
+				// [$idDummy, $link, $params] = $menuItemDb;
+				$link   = $menuItemDb ['link'];
+				$params = json_decode($menuItemDb ['params'], true);
+
+				// add matching link
+				if (   str_contains($link, '&view=galleries&')
+					|| str_contains($link, '&view=gallery&')
+					|| str_contains($link, '&view=slidepage&')
+					|| str_contains($link, '&view=slideshow&')
+
+					|| str_contains($link, '&view=galleriesj3x&')
+					|| str_contains($link, '&view=galleryj3x&')
+					|| str_contains($link, '&view=rootgalleriesj3x&')
+					|| str_contains($link, '&view=slidepagej3x&')
+					|| str_contains($link, '&view=slideshowj3x&')
+				) {
+					$menuLinks[$id] = [$link, $params];
+				}
+			}
+		}
+
+		return $menuLinks;
+	}
+
+	/**
      * Select menu link item for rsg2 which have already been upgraded to J4x
      * link includes '&view=galleryj3x&' or '&view=slideshowj3x&'
      *
@@ -3877,5 +4098,46 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
         return $menuLinks;
     }
+
+	private function linkReplaceGid2Id(string $oldLink)
+	{
+		$newLink = $oldLink;
+
+		//--- extract gallery id --------------------------
+
+		$gidIdx = strpos($oldLink, '&gid=');
+		$idIdx  = strpos($oldLink, '&id=');
+
+		// link contains '&gid=' and new '&Id='
+		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&id=0
+		if ($idIdx !== false) {
+			$endIdx = strpos($oldLink, '&', $gidIdx+1);
+			$newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $endIdx);
+		} else {
+			// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0
+			$gidIdx++;
+			$newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $gidIdx + 1);
+		}
+
+		return $newLink;
+	}
+
+	private function linkReplaceId2Gid(string $oldLink)
+	{
+		$newLink = $oldLink;
+
+		//--- extract gallery id --------------------------
+
+		$idIdx  = strpos($oldLink, '&id=');
+
+		// link contains '&gid=' and new '&Id='
+		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&id=0
+		if ($idIdx !== false) {
+			$idIdx++;
+			$newLink = substr($oldLink, 0, $idIdx) . 'g' . substr($oldLink, $idIdx);
+		}
+
+		return $newLink;
+	}
 
 } // class

@@ -71,6 +71,9 @@ class HtmlView extends BaseHtmlView
     protected $isDoCopyJ3xDbConfig;
     protected $isDoCopyJ3xDbGalleries;
     protected $isDoCopyJ3xDbImages;
+
+	protected $isDoChangeJ3xMenuLinks;
+	protected $isDoChangeGidMenuLinks;
     protected $isDoCopyJ3xImages;
 
     /**
@@ -110,7 +113,7 @@ class HtmlView extends BaseHtmlView
         //--- Check for J3x parts ------------------------------
 
         $this->isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
-        /**
+        /**/
         // debug flags / view see below
         $this->isJ3xDataExisting = true;
         /**/
@@ -132,14 +135,16 @@ class HtmlView extends BaseHtmlView
             $this->isDoCopyJ3xDbGalleries = !$rsgConfig->get('j3x_db_galleries_copied');
             $this->isDoCopyJ3xDbImages    = !$rsgConfig->get('j3x_db_images_copied');
             $this->isDoChangeJ3xMenuLinks = !$rsgConfig->get('j3x_menu_gid_increased');
+	        $this->isDoChangeGidMenuLinks = !$rsgConfig->get('j3x_menu_gid_moved_to_id');
             $this->isDoCopyJ3xImages      = !$rsgConfig->get('j3x_images_copied');
-            /**
+            /**/
             // debug flags / view see above
-            $this->isDoCopyJ3xDbConfig = true;
-            $this->isDoCopyJ3xDbGalleries = true;
-            $this->isDoCopyJ3xDbImages = true;
-            $this->isDoChangeJ3xMenuLinks = true;
-            $this->isDoCopyJ3xImages = true;
+//            $this->isDoCopyJ3xDbConfig = true;
+//            $this->isDoCopyJ3xDbGalleries = true;
+//            $this->isDoCopyJ3xDbImages = true;
+//            $this->isDoChangeJ3xMenuLinks = true;
+//            $this->isDoChangeGidMenuLinks = true;
+//            $this->isDoCopyJ3xImages = true;
             /**/
         }
 

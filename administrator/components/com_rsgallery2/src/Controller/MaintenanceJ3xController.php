@@ -1216,7 +1216,7 @@ class MaintenanceJ3xController extends AdminController
      */
     public function j3xLowerJ4xMenuLinks()
     {
-        $msg     = "MaintenanceJ3xController.j3xUpgradeJ3xMenuLinks: ";
+        $msg     = "MaintenanceJ3xController.j3xLowerJ4xMenuLinks: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -1299,7 +1299,110 @@ class MaintenanceJ3xController extends AdminController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-    /**
+	/**
+	 *
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function j3xReplaceGid2IdMenuLinks()
+	{
+		$msg     = "MaintenanceJ3xController.j3xReplaceGid2IdMenuLinks: ";
+		$msgType = 'notice';
+
+		$this->checkToken();
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
+
+				$isOk = $j3xModel->j3xReplaceGid2IdMenuLinks();
+
+				if ($isOk) {
+					$msg .= "Successful changed '&gid=' menu inks to '&id=' ";
+
+					$isOk = ConfigRawModel::writeConfigParam('j3x_menu_gid_moved_to_id', true);
+					if ($isOk) {
+						$msg .= " and assigned j3x_menu_gid_moved_to_id  flag";
+					} else {
+						$msg     .= "!!! but error at writeConfigParam !!!";
+						$msgType = 'error';
+					}
+				} else {
+					$msg     .= "Error at j3xReplaceGid2IdMenuLinks items";
+					$msgType = 'error';
+				}
+			} catch (RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing j3xReplaceGid2IdMenuLinks: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
+	 *
+	 *
+	 * @since __BUMP_VERSION__
+	 */
+	public function j3xReplaceId2GidMenuLinks()
+	{
+		$msg     = "MaintenanceJ3xController.j3xReplaceId2GidMenuLinks: ";
+		$msgType = 'notice';
+
+		$this->checkToken();
+
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
+		if (!$canAdmin) {
+			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
+			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+			try {
+				$j3xModel = $this->getModel('MaintenanceJ3x');
+
+				$isOk = $j3xModel->j3xReplaceId2GidMenuLinks();
+
+				if ($isOk) {
+					$msg .= "Successful changed '&id=' menu inks to '&gid=' ";
+
+					$isOk = ConfigRawModel::writeConfigParam('j3x_menu_gid_moved_to_id', false);
+					if ($isOk) {
+						$msg .= " and assigned j3x_menu_gid_moved_to_id  flag";
+					}
+				} else {
+					$msg     .= "Error at j3xReplaceId2GidMenuLinks items";
+					$msgType = 'error';
+				}
+			} catch (RuntimeException $e) {
+				$OutTxt = '';
+				$OutTxt .= 'Error executing j3xReplaceId2GidMenuLinks: "' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
      *
      *
      * @since __BUMP_VERSION__

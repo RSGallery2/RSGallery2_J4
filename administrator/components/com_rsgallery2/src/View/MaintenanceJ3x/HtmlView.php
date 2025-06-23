@@ -225,12 +225,23 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
+				// gid ++
             case 'changeJ3xMenuLinks':
 
                 // to be upgraded
                 $this->j3xRsg2MenuLinks = $j3xModel->dbValidJ3xGidMenuItems();
                 // to be degraded
                 $this->j4xRsg2MenuLinks = $j3xModel->dbValidJ4xGidMenuItems();
+
+                break;
+
+				// gid = id
+            case 'changeGidMenuLinks':
+
+                // to be upgraded
+                $this->j3xRsg2MenuLinks = $j3xModel->dbValidGid2IdMenuItems();
+                // to be degraded
+                $this->j4xRsg2MenuLinks = $j3xModel->dbValidId2GidMenuItems();
 
                 break;
 
@@ -556,7 +567,7 @@ class HtmlView extends BaseHtmlView
                 if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
-                        . '* Seperate link and parameter (parameter as hidden option)<br>'
+                        . '* separate link and parameter (parameter as hidden option)<br>'
 //		        		. '* <br>'
 //				        . '* <br>'
 //      				. '* <br>'
