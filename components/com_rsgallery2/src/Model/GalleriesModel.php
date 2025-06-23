@@ -122,7 +122,7 @@ class GalleriesModel extends ListModel
         // not fetched already
         if (!isset($this->_item[$galleryId])) {
             try {
-// Wrong parent gallery must be fetched seperately
+// Wrong parent gallery must be fetched separately
 //                // Root galleries, No parent is defined
 //                if ($galleryId == 0) {
 //                    $galleries = parent::getItems();

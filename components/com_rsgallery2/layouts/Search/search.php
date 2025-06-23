@@ -31,7 +31,7 @@ if (!empty($isDevelopSite)) {
         . '* HTML 5 layout, bootstrap * <br>'
         . 'Search tasks: <br>'
         . '* link from extern ??<br>'
-        . '* separate searches for gallery / images -> seperate answers<br>'
+        . '* separate searches for gallery / images -> separate answers<br>'
         . '* Height of button -> BS 5<br>'
         //	. '* <br>'
         //	. '* <br>'
