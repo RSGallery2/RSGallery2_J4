@@ -65,17 +65,10 @@ echo Route::_('index.php?option=com_rsgallery2&view=slideshow'); ?>" method="pos
 
     <div class="rsg2__form rsg2__slide_area">
 
-        <?php
-        if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)): ?>
             <h1> Menu RSGallery2 "slideshow" view </h1>
-        <?php
-        endif; ?>
-
-        <?php
-        if (!empty($this->isDebugSite)): ?>
             <hr>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
         <?php
         echo $layout->render($displayData);

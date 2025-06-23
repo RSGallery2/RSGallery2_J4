@@ -12,7 +12,7 @@
                   addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
         >
             <field
-                    name="gid" type="hidden" default="0"
+                    name="id" type="hidden" default="0"
             />
 
         </fieldset>

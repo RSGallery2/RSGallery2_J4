@@ -13,7 +13,7 @@
         >
 
             <field
-                    name="gid"
+                    name="id"
                     type="RootGallerySelect"
                     label="COM_RSGALLERY2_MENU_J3X_SELECT_PARENT_GALLERY_LABEL"
                     description="COM_RSGALLERY2_MENU_J3X_SELECT_PARENT_GALLERY_LABEL_DESC"

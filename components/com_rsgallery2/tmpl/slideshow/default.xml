@@ -11,8 +11,8 @@
         <fieldset name="request"
                   addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
         >
-            <field id="gid"
-                   name="gid"
+            <field id="id"
+                   name="id"
                    type="GallerySelect"
                    label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
                    description="COM_RSGALLERY2_MENU_IMAGES_SELECT_GALLERY_DESC"
