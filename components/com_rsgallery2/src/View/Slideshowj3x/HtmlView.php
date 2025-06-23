@@ -121,12 +121,14 @@ class HtmlView extends BaseHtmlView
         $model         = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
 
+	    $slides_layout = $params->get('slides_layout');
+		// Fall back
+	    if ($slides_layout == 'default') {
+		    $slides_layout = 'SlideshowJ3x.default';
+	    }
+	    $this->slides_layout = $slides_layout;
 
-        // ToDo: Status of images
-
-
-        $this->slides_layout = $params->get('slides_layout');
-        //$this->slides_layout = "SlideshowJ3x";
+       //$this->slides_layout = "SlideshowJ3x";
         // Fix wrong / others: 			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
         //$this->slides_layout = ??? $input->getText('slides_layout', $this->slides_layout);
 
