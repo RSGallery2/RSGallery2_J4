@@ -113,40 +113,25 @@ class HtmlView extends BaseHtmlView
         //--- Check for J3x parts ------------------------------
 
         $this->isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
-        /**/
-        // debug flags / view see below
-        $this->isJ3xDataExisting = true;
-        /**/
-        if ($this->isJ3xDataExisting) {
-// j3x configuration not copied by installation actually
-//            // j3x configuration will be copied immediately
-//            $isj3xDbConfigCopied = $rsgConfig->get('j3x_db_config_copied');
-//            if ( ! $isj3xDbConfigCopied) {
-//                $j3xModel = new MaintenanceJ3xModel ();
-//
-//                $isCopied = $j3xModel->collectAndCopyJ3xConfig2J4xOptions ();
-//                if ($isCopied) {
-//                    $rsgConfig->set('j3x_db_config_copied', true);
-//                    ConfigRawModel::writeConfigParam ('j3x_db_config_copied', true);
-//                }
-//            }
 
+        // activate flags for debug
+	    // $this->isJ3xDataExisting = true;
+
+        if ($this->isJ3xDataExisting) {
+
+			// ToDo: use form data see $form->setValue('dbcopyj3xconfiguser', null, $rsgConfig->get('j3x_db_config_copied'));
+
+			// which transfer actions are needed ?
             $this->isDoCopyJ3xDbConfig    = !$rsgConfig->get('j3x_db_config_copied');
             $this->isDoCopyJ3xDbGalleries = !$rsgConfig->get('j3x_db_galleries_copied');
             $this->isDoCopyJ3xDbImages    = !$rsgConfig->get('j3x_db_images_copied');
             $this->isDoChangeJ3xMenuLinks = !$rsgConfig->get('j3x_menu_gid_increased');
-	        $this->isDoChangeGidMenuLinks = !$rsgConfig->get('j3x_menu_gid_moved_to_id');
             $this->isDoCopyJ3xImages      = !$rsgConfig->get('j3x_images_copied');
-            /**/
-            // debug flags / view see above
-//            $this->isDoCopyJ3xDbConfig = true;
-//            $this->isDoCopyJ3xDbGalleries = true;
-//            $this->isDoCopyJ3xDbImages = true;
-//            $this->isDoChangeJ3xMenuLinks = true;
-//            $this->isDoChangeGidMenuLinks = true;
-//            $this->isDoCopyJ3xImages = true;
-            /**/
+
         }
+
+	    // ToDo: use form data see $form->setValue('dbcopyj3xconfiguser', null, $rsgConfig->get('j3x_db_config_copied'));
+	    $this->isDoChangeGidMenuLinks = !$rsgConfig->get('j3x_menu_gid_moved_to_id');
 
         /*-------------------------------------------------------------------------------
         Standard
