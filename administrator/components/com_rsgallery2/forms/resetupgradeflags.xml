@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
+    <fieldset
+            name="resetupgradeflags"
+            addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+    >
+        <field
+                id="dbcopyj3xconfiguser"
+                name="dbcopyj3xconfiguser"
+                type="radio"
+                label="COM_RSGALLERY2_DB_COPY_J3X_CONFIG"
+                description="COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC"
+                layout="joomla.form.field.radio.switcher"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+        <field
+                id="dbtransferj3xgalleries"
+                name="dbtransferj3xgalleries"
+                type="radio"
+                label="COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES"
+                description="COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_ALL_DESC"
+                layout="joomla.form.field.radio.switcher"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+        <field
+                id="dbtransferj3ximages"
+                name="dbtransferj3ximages"
+                type="radio"
+                label="COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES"
+                description="COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL_DESC"
+                layout="joomla.form.field.radio.switcher"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+        <!-- menu increase gid -->
+        <field
+                id="changeJ3xMenuLinks"
+                name="changeJ3xMenuLinks"
+                type="radio"
+                label="COM_RSGALLERY2_INCREASE_MENU_GID"
+                description="COM_RSGALLERY2_INCREASE_MENU_GID_DESC"
+                layout="joomla.form.field.radio.switcher"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+        <field
+                id="movej3ximagesuser"
+                name="movej3ximagesuser"
+                type="radio"
+                label="COM_RSGALLERY2_MOVE_J3X_IMAGES"
+                description="COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC"
+                layout="joomla.form.field.radio.switcher"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+        <!-- menu gid to id -->
+        <field
+                id="changeGidMenuLinks"
+                name="changeGidMenuLinks"
+                type="radio"
+                label="COM_RSGALLERY2_EXCHANGE_MENU_GID2ID"
+                description="COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC"
+                layout="joomla.form.field.radio.switcher"
+                filter="integer"
+                validate="options"
+        >
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+
+    </fieldset>
+
+</form>

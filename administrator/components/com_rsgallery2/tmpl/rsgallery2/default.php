@@ -221,12 +221,14 @@ function DisplayRequestJ3xActions(
     $rsg2J3xCopyDbImagesLink        = Route::_(
         'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages',
     );
+    // gid increase
     $rsg2j3xUpgradeJ3xMenuLinksLink = Route::_(
         'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeJ3xMenuLinks',
     );
     $rsg2J3xCopyImagesLink          = Route::_(
         'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser',
     );
+    // gid -> id
 	$rsg2j3xUpgradeGidMenuLinksLink = Route::_(
 		'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks',
 	);
@@ -243,16 +245,13 @@ function DisplayRequestJ3xActions(
     $changeJ3xMenuLinks     = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID');
     $changeJ3xMenuLinksDesc = Text::_('COM_RSGALLERY2_INCREASE_MENU_GID_DESC');
 
-    $changeGidMenuLinks     = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID');
-    $changeGidMenuLinksDesc = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC');
-
-
-
-
     $CopyImages     = '<del>' . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES') . '</del>';
     $CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
 
-    $header     = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
+	$changeGidMenuLinks     = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID');
+	$changeGidMenuLinksDesc = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC');
+
+	$header     = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
     $headerDesc = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED_DESC');
 
     $link1 = '';
@@ -314,7 +313,7 @@ function DisplayRequestJ3xActions(
                         <li style="list-style: none; margin-bottom: 10px">$link3</li>
                         <li style="list-style: none; margin-bottom: 10px">$link4</li>
                         <li style="list-style: none; margin-bottom: 10px">$link5</li>
-                        <li style="list-style: none; margin-bottom: 0px">$link6</li>
+                        <li style="list-style: none; margin-bottom: 0">$link6</li>
                     </ul>
                 </div>
         

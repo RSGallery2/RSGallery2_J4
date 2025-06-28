@@ -89,7 +89,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=change
 				<div class="card text-center">
 					<div class="card-body">
 						<h3 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID', true); ?></h3>
+                            echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?></h3>
 
 						<p class="card-text"><?php
                             echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
@@ -107,6 +107,15 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=change
                             <?php
                             echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_ID2GID'); ?>
 						</button>
+
+					</div>
+				</div>
+
+				<div class="card text-center">
+					<div class="card-body">
+						<p class="card-text">
+                            <?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC'); ?>
+						</p>
 
 					</div>
 				</div>

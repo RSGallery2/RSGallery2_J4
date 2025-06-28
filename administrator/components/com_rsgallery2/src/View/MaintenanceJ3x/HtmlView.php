@@ -24,9 +24,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
-use RuntimeException;
-
-use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -97,7 +94,7 @@ class HtmlView extends BaseHtmlView
                         $this->untouchedJ3xItems,
                         $this->untouchedJ4xItems,
                     ] = $j3xModel->MergeJ3xConfigTestLists($this->j3xConfigItems, $this->j4xConfigItems);
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -118,7 +115,7 @@ class HtmlView extends BaseHtmlView
                         $this->j3x_galleriesSorted,
                         $this->j4x_galleries,
                     );
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -214,7 +211,7 @@ class HtmlView extends BaseHtmlView
                     }
 
                     $this->form = $form;
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -232,16 +229,6 @@ class HtmlView extends BaseHtmlView
                 $this->j3xRsg2MenuLinks = $j3xModel->dbValidJ3xGidMenuItems();
                 // to be degraded
                 $this->j4xRsg2MenuLinks = $j3xModel->dbValidJ4xGidMenuItems();
-
-                break;
-
-				// gid = id
-            case 'changeGidMenuLinks':
-
-                // to be upgraded
-                $this->j3xRsg2MenuLinks = $j3xModel->dbValidGid2IdMenuItems();
-                // to be degraded
-                $this->j4xRsg2MenuLinks = $j3xModel->dbValidId2GidMenuItems();
 
                 break;
 
@@ -337,7 +324,7 @@ class HtmlView extends BaseHtmlView
                     }
 
                     $this->form = $form;
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -347,6 +334,53 @@ class HtmlView extends BaseHtmlView
                 }
 
                 break;
+
+	        case 'resetupgradeflags':
+				try
+				{
+					//--- Form --------------------------------------------------------------------
+
+					$xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/resetupgradeflags.xml';
+					$form    = Form::getInstance('movej3ximages', $xmlFile);
+
+					// Check for errors. Form must beloaded before
+					if ($errors = $this->get('Errors'))
+					{
+						if (count($errors))
+						{
+							throw new GenericDataException(implode("\n", $errors), 500);
+						}
+					}
+
+					$c1 = $rsgConfig->get('j3x_db_config_copied');
+					$c2 = $rsgConfig->get('j3x_db_galleries_copied');
+					$c3 = $rsgConfig->get('j3x_db_images_copied');
+					$c4 = $rsgConfig->get('j3x_menu_gid_increased');
+					$c5 = $rsgConfig->get('j3x_images_copied');
+					$c6 = $rsgConfig->get('j3x_menu_gid_moved_to_id');
+
+					$form->setValue('dbcopyj3xconfiguser', null, $rsgConfig->get('j3x_db_config_copied'));
+					$form->setValue('dbtransferj3xgalleries', null, $rsgConfig->get('j3x_db_galleries_copied'));
+					$form->setValue('dbtransferj3ximages', null, $rsgConfig->get('j3x_db_images_copied'));
+					$form->setValue('changeJ3xMenuLinks', null, $rsgConfig->get('j3x_menu_gid_increased'));
+					$form->setValue('movej3ximagesuser', null, $rsgConfig->get('j3x_images_copied'));
+					$form->setValue('changeGidMenuLinks', null, $rsgConfig->get('j3x_menu_gid_moved_to_id'));
+
+					$this->form = $form;
+
+                } catch (\RuntimeException $e)
+				{
+					$OutTxt = '';
+					$OutTxt .= 'Error collecting config data for: "' . $Layout . '"<br>';
+					$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+					$app = Factory::getApplication();
+					$app->enqueueMessage($OutTxt, 'error');
+				}
+
+
+		        break;
+
         }
 
         Rsgallery2Helper::addSubmenu('maintenance');

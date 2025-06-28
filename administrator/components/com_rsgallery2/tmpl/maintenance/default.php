@@ -336,6 +336,29 @@ $repair_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
+
+$repair_ZoneButtons[] = new zoneButtons( // resetUpgradeFlags
+	'',
+	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=resetupgradeflags'),
+	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS'),
+	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS_DESC'),
+	['icon-flag', 'icon-images', 'icon-equalizer'],
+	'viewResetUpgradeFlags',
+);
+/**/
+
+
+$repair_ZoneButtons[] = new zoneButtons(
+	'',
+	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks'),
+	Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'),
+	Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC'),
+	['icon-flag', 'icon-images', 'icon-equalizer'],
+	'viewChangeGidMenuLinks',
+);
+/**/
+
+
 /**
 // ToDo: As  view ? timeout (old: regenerateThumbs)
 $repair_ZoneButtons[] = new zoneButtons(
@@ -680,6 +703,18 @@ $developer4Test_Zone = new zoneContainer(
 
 $developer4Test_ZoneButtons = [];
 
+
+// $repair_ZoneButtons[] = new zoneButtons(
+$developer4Test_ZoneButtons[] = new zoneButtons(
+	'',
+	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=resetupgradeflags'),
+	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS'),
+	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS_DESC'),
+	['icon-flag', 'icon-images', 'icon-equalizer'],
+	'viewResetUpgradeFlags',
+);
+/**/
+
 /**/
 // $repair_ZoneButtons[] = new zoneButtons(
 $developer4Test_ZoneButtons[] = new zoneButtons(
@@ -743,7 +778,7 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
 //);
 ///**/
 
-/**/
+/**
 $developer4Test_ZoneButtons[] = new zoneButtons(
     '',
     Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximages'),
@@ -753,6 +788,9 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
     'viewdbtransferj3ximages',
 );
 /**/
+
+
+
 
 /**/
 $developer4Test_ZoneButtons[] = new zoneButtons(
