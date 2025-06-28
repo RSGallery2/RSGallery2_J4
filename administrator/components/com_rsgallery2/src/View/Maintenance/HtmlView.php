@@ -317,7 +317,7 @@ class HtmlView extends BaseHtmlView
                         . '* ! Db J3x gallery transfer: enable single transfers <br>'
                         . '* <br>'
                         . '* Install: finish -> Move J3x images<br>'
-                        . '* Repair: Consolidade images<br>'
+                        . '* Repair: Consolidate images<br>'
                         . '* Raw J3x galleries list<br>'
                         . '* Raw J3x images list<br>'
                         . '* Raw J3x .... list<br>'
@@ -333,13 +333,13 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::cancel('maintenance.cancel_rsg2', 'JTOOLBAR_CLOSE');
                 // ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-                ToolBarHelper::custom(
-                    'MaintenanceCleanUp.undoPrepareRemoveTables',
-                    'none fas fa-undo fa-delete',
-                    'icon-undo',
-                    'Undo prepare remove of RSG2',
-                    false,
-                );
+//                ToolBarHelper::custom(
+//                    'MaintenanceCleanUp.undoPrepareRemoveTables',
+//                    'none fas fa-undo fa-delete',
+//                    'icon-undo',
+//                    'Undo prepare remove of RSG2',
+//                    false,
+//                );
 
                 break;
         }

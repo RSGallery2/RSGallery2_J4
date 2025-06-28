@@ -248,7 +248,9 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::editList('gallery.raw_edit');
                 ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH');
-                break;
+	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+
+	            break;
 
             case 'galleries_tree':
                 // on develop show open tasks if existing
@@ -263,6 +265,7 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'), 'images');
+	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -343,6 +346,8 @@ class HtmlView extends BaseHtmlView
                     }
                     // ToolBarHelper::editList('gallery.edit');
                 }
+
+	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
         }

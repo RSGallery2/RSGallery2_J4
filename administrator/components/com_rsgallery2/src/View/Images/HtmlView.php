@@ -256,7 +256,10 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::editList('image.raw_edit');
                 ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
-                break;
+
+	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+
+	            break;
 
             default:
                 // on develop show open tasks if existing
@@ -350,7 +353,9 @@ class HtmlView extends BaseHtmlView
                     // ToolBarHelper::editList('image.edit');
                 }
 
-                break;
+	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+
+	            break;
         }
 
         // Options button.
