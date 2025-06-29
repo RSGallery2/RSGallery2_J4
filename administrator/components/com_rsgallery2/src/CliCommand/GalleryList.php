@@ -170,7 +170,7 @@ class GalleryList extends AbstractCommand
       [
         'ID', 'Name',
 		    'Published', // 'Published Up', 'Published Down',
-		    'Created', 'Created', 'Modified by', 'Modified',
+		    'Created by', 'Created', 'Modified by', 'Modified',
 		    'Parent', 'ImgCount',
 		    'O:Level', 'O:path', 'O:lft', 'O:rgt',
 	    ],

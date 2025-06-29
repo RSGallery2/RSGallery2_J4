@@ -26,104 +26,108 @@ use Joomla\CMS\MVC\Factory\MVCFactoryAwareTrait;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\Config;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigGet;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigSet;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\GalleryList;
 
 class Rsg2_console extends CMSPlugin implements SubscriberInterface
 {
-    use MVCFactoryAwareTrait;
+	use MVCFactoryAwareTrait;
 
-    /**
-     * Global application object
-     *
-     * @var array of comman d class definition
-     *
-     * @since   4.1.0
-     */
-    private static $commands = [
+	/**
+	 * Global application object
+	 *
+	 * @var array of comman d class definition
+	 *
+	 * @since   4.1.0
+	 */
+	private static $commands = [
 //        Galleries::class,
 //        GalleryAdd::class,
-        GalleryList::class,
+		GalleryList::class,
 //        GalleryParams::class,
-//        Config::class,
-//        ConfigGet::class,
-//        ConfigSet::class,
+		Config::class,
+		// ToDo: ResetConfigToDefault
+        ConfigGet::class,
+        ConfigSet::class,
 //        Image::class,
 //        ImageList::class,
 //        ImageMetadata::class,
 //        ImageParams::class,
-    ];
+	];
 
-    /**
-     * Load the language file on instantiation.
-     *
-     * @var    boolean
-     *
-     * @since 4.1.0
-     */
-    protected $autoloadLanguage = true;
+	/**
+	 * Load the language file on instantiation.
+	 *
+	 * @var    boolean
+	 *
+	 * @since 4.1.0
+	 */
+	protected $autoloadLanguage = true;
 
-    /**
-     * load language on init
-     *
-     * @var    boolean
-     *
-     * @since  4.1.0
-     */
-    public function init(): void
-    {
-        $this->loadLanguage();
-    }
+	/**
+	 * load language on init
+	 *
+	 * @var    boolean
+	 *
+	 * @since  4.1.0
+	 */
+	public function init(): void
+	{
+		$this->loadLanguage();
+	}
 
-    /**
-     * Returns an array of events this subscriber will listen to.
-     *
-     * @return array
-     *
-     * @since   4.0.0
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            ApplicationEvents::BEFORE_EXECUTE => 'registerCLICommands',
-        ];
-    }
+	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return array
+	 *
+	 * @since   4.0.0
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			ApplicationEvents::BEFORE_EXECUTE => 'registerCLICommands',
+		];
+	}
 
-    /**
-     * load command classes and add valid ones
-     *
-     * @return void
-     *
-     * @since   4.0.0
-     */
-    public function registerCLICommands(ApplicationEvent $event): void
-    {
-        // all commands are class definitions
-        foreach (self::$commands as $commandFQN)
-        {
-            try
-            {
-                if (!class_exists($commandFQN))
-                {
-                    continue;
-                }
+	/**
+	 * load command classes and add valid ones
+	 *
+	 * @return void
+	 *
+	 * @since   4.0.0
+	 */
+	public function registerCLICommands(ApplicationEvent $event): void
+	{
+		// all commands are class definitions
+		foreach (self::$commands as $commandFQN)
+		{
+			try
+			{
+				if (!class_exists($commandFQN))
+				{
+					continue;
+				}
 
-                // create command (class)
-                $command = new $commandFQN();
+				// create command (class)
+				$command = new $commandFQN();
 
-                if (method_exists($command, 'setMVCFactory'))
-                {
-                    $command->setMVCFactory($this->getMVCFactory());
-                }
+				if (method_exists($command, 'setMVCFactory'))
+				{
+					$command->setMVCFactory($this->getMVCFactory());
+				}
 
-                // tell the command
-                $this->getApplication()->addCommand($command);
-            }
-            catch (\Throwable $e)
-            {
-                print ($commandFQN . ': error ' . $e->getMessage());
-                continue;
-            }
-        }
-    }
+				// tell the command
+				$this->getApplication()->addCommand($command);
+			}
+			catch (\Throwable $e)
+			{
+				print ($commandFQN . ': error ' . $e->getMessage());
+				continue;
+			}
+		}
+	}
 
 } // class
