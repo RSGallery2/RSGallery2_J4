@@ -18,7 +18,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
-use RSGallery\Plugin\Console\Rsg2_console\Extension\Rsg2_console;
+use Rsgallery2\Plugin\Console\Rsg2_console\Extension\Rsg2_console;
 
 return new class implements ServiceProviderInterface {
     public function register(Container $container)

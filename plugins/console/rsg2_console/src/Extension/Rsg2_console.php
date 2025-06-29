@@ -26,6 +26,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryAwareTrait;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\GalleryList;
+
 class Rsg2_console extends CMSPlugin implements SubscriberInterface
 {
     use MVCFactoryAwareTrait;
@@ -38,18 +40,17 @@ class Rsg2_console extends CMSPlugin implements SubscriberInterface
      * @since   4.1.0
      */
     private static $commands = [
-        Galleries::class,
-        GalleryAdd::class,
+//        Galleries::class,
+//        GalleryAdd::class,
         GalleryList::class,
-        GalleryParams::class,
-        Config::class,
-        ConfigGet::class,
-        ConfigSet::class,
-        Image::class,
-        ImageList::class,
-        ImageMetadata::class,
-        ImageParams::class,
-        // GalleryAdd::class,
+//        GalleryParams::class,
+//        Config::class,
+//        ConfigGet::class,
+//        ConfigSet::class,
+//        Image::class,
+//        ImageList::class,
+//        ImageMetadata::class,
+//        ImageParams::class,
     ];
 
     /**
