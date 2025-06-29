@@ -120,7 +120,7 @@ class Rsg2_latest_galleries extends CMSPlugin implements SubscriberInterface
 
         } catch (Exception $e) {
             $msg = Text::_(
-                    'PLG_CONTENT_PLG_CONTENT_RSG2_LATEST_GALLERIES',
+                    'PLG_CONSOLE_RSG2_CONSOLE',
                 ) . ' getRsg2_latest_galleriesDisplay: ' . ' Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
@@ -161,7 +161,7 @@ class Rsg2_latest_galleries extends CMSPlugin implements SubscriberInterface
             }
         } catch (Exception $e) {
             $msg = Text::_(
-                    'PLG_CONTENT_PLG_CONTENT_RSG2_LATEST_GALLERIES' . 'extractUserParams: "',
+                    'PLG_CONSOLE_RSG2_CONSOLE' . 'extractUserParams: "',
                 ) . $usrString . '" Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');

@@ -7,7 +7,7 @@
   <authorUrl>https://www.rsgallery2.org</authorUrl>
   <copyright>(c) 2005-2025 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later;</license>
-  <version>5.1.0</version>
+  <version>5.0.30</version>
   <description>COM_RSGALLERY2_XML_DESCRIPTION</description>
   <element>RSGallery2</element>
   <namespace path="src">Rsgallery2\Component\Rsgallery2</namespace>
@@ -15,14 +15,12 @@
   <scriptfile>install_rsg2.php</scriptfile>
   <install>
     <sql>
-      <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql
-            </file>
+      <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
     </sql>
   </install>
   <uninstall>
     <sql>
-      <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql
-            </file>
+      <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
     </sql>
   </uninstall>
   <update>
@@ -35,9 +33,9 @@
     <menu img="class:images">RSGallery2</menu>
     <submenu>
       <!--
-                Note that all & must be escaped to &amp; for the file to be valid
-                XML and be parsed by the installer
-            -->
+		Note that all & must be escaped to &amp; for the file to be valid
+		XML and be parsed by the installer
+      -->
       <menu view="" img="class:home">COM_RSGALLERY2_MENU_CONTROL_PANEL</menu>
       <menu view="galleries" img="class:images">COM_RSGALLERY2_MENU_GALLERIES</menu>
       <menu view="upload" img="class:upload">COM_RSGALLERY2_MENU_UPLOAD</menu>
@@ -63,8 +61,7 @@
     </files>
   </administration>
   <dashboards>
-    <dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-images">users
-        </dashboard>
+    <dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-images">users</dashboard>
   </dashboards>
   <!-- Front-end files -->
   <files folder="components/com_rsgallery2">
@@ -81,11 +78,8 @@
     <folder>images</folder>
     <folder>js</folder>
   </media>
-  <changelogurl>
-        https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml
-    </changelogurl>
+  <changelogurl>https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml</changelogurl>
   <updateservers>
-    <server type="extension" name="RSG2 for J4 Update server">https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml
-        </server>
+    <server type="extension" name="RSG2 for J4 Update server">https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml</server>
   </updateservers>
 </extension>

@@ -3,6 +3,21 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
+		<version>5.1.0.0</version>
+		<date>2025-06-28</date>
+		<fix>
+			<item>Slideshow did not show images</item>
+			<item>Slidepage had wrong pagination links</item>
+		</fix>
+		<change>
+			<item>The URL part 'gid=' has been replaced by 'id=' to comply with Joomla SEF rules</item>
+			<item>!!!! vtoDo: check git checkins !!!!</item>
+			<item></item>
+		</change>
+	</changelog>
+	<changelog>
+		<element>com_rsgallery2</element>
+		<type>component</type>
 		<version>5.0.20.0</version>
 		<date>2024-12-11</date>
 		<change>
