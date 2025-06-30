@@ -12,7 +12,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\CliCommand;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Console\Command\AbstractCommand;
@@ -24,7 +23,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class Config extends AbstractCommand
+class ImageParams extends AbstractCommand
 {
 	use DatabaseAwareTrait;
 
@@ -33,7 +32,7 @@ class Config extends AbstractCommand
 	 *
 	 * @var    string
 	 */
-	protected static $defaultName = 'rsgallery2:config';
+	protected static $defaultName = 'rsgallery2:image:parameters';
 
 	/**
 	 * @var   SymfonyStyle
@@ -84,16 +83,16 @@ class Config extends AbstractCommand
 	 */
 	protected function configure(): void
 	{
-		$this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim lenght of variable for item keeps in one line');
+		$this->addOption('id', null, InputOption::VALUE_REQUIRED, 'image ID');
 
-		$help = "<info>%command.name%</info> list variables of RSG2 configuration
+		$help = "<info>%command.name%</info> display parameters of params field from table of selected image
   Usage: <info>php %command.full_name%</info>
+    * You must specify an ID of the image with the <info>--id<info> option. Otherwise, it will be requested
     * You may restrict the value string length using the <info>--max_line_length</info> option. A result line that is too long will confuse the output lines
-";
-		$this->setDescription(Text::_('List all configuration variables'));
+  ";
+		$this->setDescription(Text::_('List all variables in params field of selected image'));
 		$this->setHelp($help);
 	}
-
 
 	/**
 	 * Internal function to execute the command.
@@ -109,67 +108,83 @@ class Config extends AbstractCommand
 	{
 		// Configure the Symfony output helper
 		$this->configureIO($input, $output);
-		$this->ioStyle->title('RSGallery2 Configuration');
+		$this->ioStyle->title('RSGallery2 Image Parameter Field');
 
-		$max_line_length = $input->getOption('max_line_length') ?? null;
+		$galleryId = $input->getOption('id') ?? '';
 
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-
-		$configurationAssoc = $rsgConfig; // $this->getItemAssocFromDB($rsgConfig);
-
-		if (empty ($configurationAssoc))
+		if (empty ($galleryId))
 		{
-			$this->ioStyle->error("The joomla RSG2 configuration could not be read");
+			$this->ioStyle->error("The image id '" . $galleryId . "' is invalid (empty) !");
 
 			return Command::FAILURE;
 		}
 
+		$galleryParams = $this->getParamsAsJsonFromDB($galleryId);
 
-		$strConfigurationAssoc = $this->assoc2DefinitionList($rsgConfig, $max_line_length);
 
-		// ToDo: Use horizontal table again ;-)
-		foreach ($strConfigurationAssoc as $value)
+		// If no categories are found show a warning and set the exit code to 1.
+		if (empty($galleryParams))
 		{
-			if (!\is_array($value))
-			{
-				throw new \InvalidArgumentException('Value should be an array, string, or an instance of TableSeparator.');
-			}
+			$this->ioStyle->error("The image id '" . $galleryId . "' is invalid, No image found matching your criteria!");
 
-			$headers[] = key($value);
-			$row[]     = current($value);
+			return Command::FAILURE;
 		}
 
-		$this->ioStyle->horizontalTable($headers, [$row]);
+		// pretty print json data
+		$encoded    = json_decode($galleryParams);
+		$jsonParams = json_encode($encoded, JSON_PRETTY_PRINT);
 
-
-// ToDo: check out following (original joomla config)
-
-//		$options = [];
-//
-//		array_walk(
-//			$configs,
-//			function ($value, $key) use (&$options) {
-//				$options[] = [$key, $this->formatConfigValue($value)];
-//			}
-//		);
-//
-//		$this->ioStyle->title("Current options in Configuration");
-//		$this->ioStyle->table(['Option', 'Value'], $options);
+		$this->ioStyle->writeln($jsonParams);
 
 		return Command::SUCCESS;
 	}
 
 	/**
-	 * trim length of each value in array $configVars to max_len
+	 * Retrieves extension list from DB
 	 *
-	 * @param   array  $configVars
+	 * @return array
+	 *
+	 * @since  4.0.X
+	 */
+	private function getParamsAsJsonFromDB(string $galleryId): string
+	{
+		$sParams = '';
+		try
+		{
+			$db    = $this->getDatabase();
+			$query = $db->getQuery(true);
+			$query
+				->select('params')
+				->from('#__rsg2_galleries')
+				->where($db->quoteName('id') . ' = ' . (int) $galleryId);
+
+			$db->setQuery($query);
+			$sParams = $db->loadResult();
+		}
+		catch (\Exception $e)
+		{
+			$this->ioStyle->error(
+				Text::sprintf(
+					'Retrieving params from DB failed for ID: "' . $galleryId . '\n%s',
+					$e->getMessage()
+				)
+			);
+		}
+
+		return $sParams;
+	}
+
+	/**
+	 * Trim length of each value in array $categoryAssoc to max_len
+	 *
+	 * @param   array  $categoryAssoc  in data as association key => val
 	 * @param          $max_len
 	 *
 	 * @return array
 	 *
 	 * @since version
 	 */
-	private function assoc2DefinitionList($configVars, $max_len = 70)
+	private function assoc2DefinitionList(array $categoryAssoc, $max_len = 70)
 	{
 		$items = [];
 
@@ -178,9 +193,9 @@ class Config extends AbstractCommand
 			$max_len = 70;
 		}
 
-		foreach ($configVars as $name => $value)
+		foreach ($categoryAssoc as $key => $value)
 		{
-			$items[] = [$name => mb_strimwidth((string) $value, 0, $max_len, '...')];
+			$items[] = [$key => mb_strimwidth((string) $value, 0, $max_len, '...')];
 		}
 
 		return $items;

@@ -87,11 +87,11 @@ class ConfigGet extends AbstractCommand
 	{
 		$this->addArgument('option', InputArgument::REQUIRED, 'Name of the option');
 
-		$help = "<info>%command.name%</info>displays values of selected RSG2 configuration
+		$help = "<info>%command.name%</info> display a value of the RSG2 configuration   
   Usage: <info>php %command.full_name%</info> <option>
     * You may restrict the value string length using the <info>--max_line_length</info> option. A result line that is too long will confuse the output lines
      ";
-		$this->setDescription(Text::_('List all rsgallery2 galleries'));
+		$this->setDescription(Text::_('Display value of selected parameter in configuration'));
 		$this->setHelp($help);
 	}
 

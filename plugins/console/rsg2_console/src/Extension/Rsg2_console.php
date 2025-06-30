@@ -25,11 +25,15 @@ use Joomla\Application\Event\ApplicationEvent;
 use Joomla\CMS\MVC\Factory\MVCFactoryAwareTrait;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\Config;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigGet;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigSet;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\Gallery;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\GalleryList;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\GalleryParams;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\Image;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ImageList;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ImageParams;
 
 class Rsg2_console extends CMSPlugin implements SubscriberInterface
 {
@@ -38,23 +42,29 @@ class Rsg2_console extends CMSPlugin implements SubscriberInterface
 	/**
 	 * Global application object
 	 *
-	 * @var array of comman d class definition
+	 * @var array of command class definition
 	 *
 	 * @since   4.1.0
 	 */
+
+	// Todo: image:check / state ?? -> image: is existing, pathes ...
+	// Todo: galleries by ordering gallery:list:ordering
+    // ToDo: layout json for image/gallery /
+	// ToDo: check jsonify out put JsonResponse echo new JsonResponse($output);
+	// ToDo: ResetConfigToDefault
+	// ToDo: ImageMetadata::class, // ? exif
+
 	private static $commands = [
-//        Galleries::class,
+		Gallery::class,
 //        GalleryAdd::class,
 		GalleryList::class,
-//        GalleryParams::class,
+        GalleryParams::class,
 		Config::class,
-		// ToDo: ResetConfigToDefault
-        ConfigGet::class,
-        ConfigSet::class,
-//        Image::class,
-//        ImageList::class,
-//        ImageMetadata::class,
-//        ImageParams::class,
+		ConfigGet::class,
+		ConfigSet::class,
+        Image::class,
+        ImageList::class,
+        ImageParams::class,
 	];
 
 	/**

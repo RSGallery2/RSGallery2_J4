@@ -85,17 +85,18 @@ class GalleryList extends AbstractCommand
   {
     $this->addOption('owner', null, InputOption::VALUE_OPTIONAL, 'user ID (created_by)');
     $this->addOption('created', null, InputOption::VALUE_OPTIONAL, 'created_by');
-    $this->addOption('parent', null, InputOption::VALUE_OPTIONAL, 'parent gallery');
+    $this->addOption('parent_id', null, InputOption::VALUE_OPTIONAL, 'parent gallery');
 
     // ToDo: option to limit by user (owner), ?parent ...
 
-    $help = "<info>%command.name%</info>will list all rsgallery2 galleries
+    $help = "<info>%command.name%</info> list all existing rsgallery2 galleries
   Usage: <info>php %command.full_name%</info>
     * You may filter on the user id of gallery using the <info>--owner</info> option.
     * You may filter on created_by of gallery using the <info>--created</info> option.
     * You may filter on the parent id of gallery using the <info>--parent_id</info> option.
-    Example: <info>php %command.full_name% --created_by=291</info>";
-    $this->setDescription(Text::_('List all rsgallery2 galleries'));
+    Example: <info>php %command.full_name% --created_by=291</info>
+    ";
+    $this->setDescription(Text::_('List all galleries'));
     $this->setHelp($help);
   }
 
@@ -122,7 +123,8 @@ class GalleryList extends AbstractCommand
       $created_by_id = $input->getOption('owner') ?? '';
     }
 
-    $parent_id  = $input->getOption('parent') ?? '';
+    $parent_id  = $input->getOption('parent_id') ?? '';
+
     $galleries = $this->getItemsFromDB($created_by_id, $parent_id);
 
 	$this->addImagesAssigneCount ($galleries);
@@ -141,6 +143,7 @@ class GalleryList extends AbstractCommand
         return [
           $item->id,
           $item->name,
+          $item->alias,
 
 	      $item->published,
 //          $item->publish_up,
@@ -168,7 +171,7 @@ class GalleryList extends AbstractCommand
     // Display the galleries in a table and set the exit code to 0
     $this->ioStyle->table(
       [
-        'ID', 'Name',
+        'ID', 'Name', 'Alias',
 		    'Published', // 'Published Up', 'Published Down',
 		    'Created by', 'Created', 'Modified by', 'Modified',
 		    'Parent', 'ImgCount',
@@ -228,7 +231,6 @@ class GalleryList extends AbstractCommand
 			$db->setQuery($query);
 			$imgCount = $db->loadResult();
 
-			echo "imgCount: {$imgCount}\n";
 			$gallery->imgCount = $imgCount;
 		}
 	}

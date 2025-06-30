@@ -90,11 +90,11 @@ class ConfigSet extends AbstractCommand
 		$this->addArgument('value', null, 'Value of the option');
 		$this->addOption('verify', null, InputOption::VALUE_OPTIONAL, 'configuration ID', false);
 
-		$help = "<info>%command.name%</info>sets the value for a RSG2 configuration option (Table)
+		$help = "<info>%command.name%</info> set a parameter value in the RSG2 configuration 
   Usage: <info>php %command.full_name%</info>  <option> <value>
     * You may verify the written value with <info>--veryfy=true<info> option. This compares the given option with the resulting table value
 		";
-		$this->setDescription(Text::_('List all rsgallery2 galleries'));
+		$this->setDescription(Text::_('Sets the value of selected parameter name in configuration'));
 		$this->setHelp($help);
 	}
 
