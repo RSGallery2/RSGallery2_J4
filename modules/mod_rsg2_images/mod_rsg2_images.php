@@ -1,25 +1,28 @@
 <?php
 /**
-/**
  * @package     RSGallery2
  * @subpackage  mod_rsg2_images
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Helper\ModuleHelper;
 use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
 
-HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('stylesheet', 'com_rsgallery2/site/images.css', ['version' => 'auto', 'relative' => true]);
 
 // echo "<h1>mod_rsg2_images.php</h1>";
 
-$model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('Images', 'Site', ['ignore_request' => true]);
+$model  = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel(
+    'Images',
+    'Site',
+    ['ignore_request' => true],
+);
 $images = Rsg2_imagesHelper::getList($params, $model, $app);
 
 // standard display

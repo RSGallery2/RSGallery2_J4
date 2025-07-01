@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package        RSGallery2
+ * @subpackage     mod_rsg2_galleries
+ * @copyright  (c)  2016-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
+ * @author         finnern
+ * RSGallery is Free Software
+ */
 
 namespace Rsgallery2\Module\Rsg2_galleries\Site\Dispatcher;
 
@@ -9,7 +17,9 @@ use Joomla\CMS\Helper\HelperFactoryAwareTrait;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 
-\defined('_JEXEC') or die;
+use function defined;
+
+defined('_JEXEC') or die;
 
 class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
 {
@@ -20,7 +30,8 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         // module(self) params, input , app, ? module? , ,
         $data = parent::getLayoutData();
 
-        $helper = $this->getHelperFactory()
+        $helper = $this
+            ->getHelperFactory()
             ->getHelper('Rsg2_galleriesHelper', $data);
 
 		// ToDo flag that tells to identify ...
@@ -54,14 +65,11 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 
         // gid = 0 ==> root view
         $isRootGallerySelected = $gid == 0;
-        if (! $isRootGallerySelected)
-        {
-
+        if (!$isRootGallerySelected) {
 	        //--- gallery data -----------------------------------------------------
 
 	        $galleryData = $helper->getGalleryData($gid);
 	        $data['galleryData'] = $galleryData;
-
         }
 
 	    //--- galleries  -----------------------------------------------------

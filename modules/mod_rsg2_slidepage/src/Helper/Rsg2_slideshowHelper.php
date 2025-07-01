@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_rsg2_slideshow
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -21,6 +21,7 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
+use RuntimeException;
 
 \defined('_JEXEC') or die;
 
@@ -54,89 +55,9 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 
     }
 
-    public function getGalleryData(int $gid)
-    {
-        return $this->galleryModel->galleryData($gid);
-    }
 
-    /**
-	 * Get a list of the gallery images from the slideshow model.     *
-     *
-	 * @param   Registry        $params  The module parameters
-	 * @param   CMSApplication  $app     The application
-	 *
-	 * @return  array
-	 */
-    public function getImagesOfGallery(int $gid, Registry $params, SiteApplication $app)
-    {
-        $images = [];
-
-        try {
-            $model = $this->galleryModel;
-
-            //--- state -------------------------------------------------
-
-            $state = $model->getState();
-
-            // Set application parameters in model
-            $appParams = $app->getParams();
-
-            $model->setState('params', $params);
-
-            $model->setState('list.start', 0);
-            $model->setState('filter.published', 1);
-
-            // Set the filters based on the module params
-            // $model->setState('list.limit', (int) $params->get('count', 5));
-            $model->setState('list.limit', 99);
-
-            // This module does not use tags data
-            $model->setState('load_tags', false);
-
-	        $model->setState('gallery.id', $gid);
-	        $model->setState('gid', $gid);
-
-	        //--- images -----------------------------------------------------------------------
-
-//             $this->galleryModel->populateState();
-
-            // $images= $this->galleryModel->get('Items');
-            $images = $this->galleryModel->getItems();
-
-            if (!empty($images)) {
-                // Add image paths, image params ...
-                $data = $this->galleryModel->AddLayoutData($images);
-            }
-
-        } catch (\RuntimeException $e) {
-            // ToDo: Message more explicit
-            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
-        }
-
-        return $images;
-    }
-
-
-
-
-
-
-
-
-
-	/**
-	 * Get a list of the latest articles from the article model
-	 *
-	 * @param   \Joomla\Registry\Registry  &$params  object holding the models parameters
-	 *
-	 * @return  mixed
-	 *
-	 * @since 1.6
-	 */
-//	public static function getList(Registry $params, BannersModel $model, CMSApplication $app)
 	public static function getList($params, $model, $app)
 	{
-
         // Set application parameters in model
 		$appParams = $app->getParams();
 		$model->setState('params', $appParams);
@@ -211,7 +132,6 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 		$SelectGallery = $params->get('SelectGallery', 1);
 
 
-
         //$input = Factory::getApplication()->input;
         $input = $app->input;
         //$input->set( 'gid' , '2' );
@@ -220,8 +140,7 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 		// Retrieve Content
 		$items = $model->getItems();
 
-		foreach ($items as &$item)
-		{
+        foreach ($items as &$item) {
 //			$item->readmore = \strlen(trim($item->fulltext));
 //			$item->slug     = $item->id . ':' . $item->alias;
 //
@@ -458,6 +377,85 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 //		return $items;
 	}
 
+    public function getGalleryData(int $gid)
+    {
+        return $this->galleryModel->galleryData($gid);
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     * Get a list of the latest articles from the article model
+     *
+     * @param   Registry  &$params  object holding the models parameters
+     *
+     * @return  mixed
+     *
+     * @since 1.6
+     */
+//	public static function getList(Registry $params, BannersModel $model, CMSApplication $app)
+    /**
+     * Get a list of the gallery images from the slideshow model.     *
+     *
+     * @param   Registry        $params  The module parameters
+     * @param   CMSApplication  $app     The application
+     *
+     * @return  array
+     */
+    public function getImagesOfGallery(int $gid, Registry $params, SiteApplication $app)
+    {
+        $images = [];
+
+        try {
+            $model = $this->galleryModel;
+
+            //--- state -------------------------------------------------
+
+            $state = $model->getState();
+
+            // Set application parameters in model
+            $appParams = $app->getParams();
+
+            $model->setState('params', $params);
+
+            $model->setState('list.start', 0);
+            $model->setState('filter.published', 1);
+
+            // Set the filters based on the module params
+            // $model->setState('list.limit', (int) $params->get('count', 5));
+            $model->setState('list.limit', 99);
+
+            // This module does not use tags data
+            $model->setState('load_tags', false);
+
+            $model->setState('gallery.id', $gid);
+            $model->setState('gid', $gid);
+
+            //--- images -----------------------------------------------------------------------
+
+//             $this->galleryModel->populateState();
+
+            // $images= $this->galleryModel->get('Items');
+            $images = $this->galleryModel->getItems();
+
+            if (!empty($images)) {
+                // Add image paths, image params ...
+                $data = $this->galleryModel->AddLayoutData($images);
+            }
+        } catch (RuntimeException $e) {
+            // ToDo: Message more explicit
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return $images;
+    }
+
 
 
 
@@ -504,13 +502,12 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 //    }
 //
 
-
     public function getText()
     {
         $msg = "    --- Rsg2_slideshow module ----- ";
+
         return $msg;
     }
-
 
 
 }

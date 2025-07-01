@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_rsg2_images
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -14,9 +14,11 @@ namespace Rsgallery2\Module\Rsg2_images\Site\Helper;
 //use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\Images;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\Images;
+
+use function defined;
 
 /**
  * Helper for mod_rsg2_images
@@ -43,7 +45,7 @@ class Rsg2_imagesHelper
 	/**
 	 * Get a list of the latest articles from the article model
 	 *
-	 * @param   \Joomla\Registry\Registry  &$params  object holding the models parameters
+     * @param   Registry  &$params  object holding the models parameters
 	 *
 	 * @return  mixed
 	 *
@@ -52,7 +54,6 @@ class Rsg2_imagesHelper
 //	public static function getList(Registry $params, BannersModel $model, CMSApplication $app)
 	public static function getList($params, $model, $app)
 	{
-
         // Set application parameters in model
 		$appParams = $app->getParams();
 		$model->setState('params', $appParams);
@@ -127,7 +128,6 @@ class Rsg2_imagesHelper
 		$SelectGallery = $params->get('SelectGallery', 1);
 
 
-
         //$input = Factory::getApplication()->input;
         $input = $app->input;
         //$input->set( 'gid' , '2' );
@@ -136,8 +136,7 @@ class Rsg2_imagesHelper
 		// Retrieve Content
 		$items = $model->getItems();
 
-		foreach ($items as &$item)
-		{
+        foreach ($items as &$item) {
 //			$item->readmore = \strlen(trim($item->fulltext));
 //			$item->slug     = $item->id . ':' . $item->alias;
 //

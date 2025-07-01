@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_rsg2_gallery
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -34,12 +34,11 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 {
     use DatabaseAwareTrait;
 
+    public $pagination;
     protected $galleryModel;
 
-	public $pagination;
-
-    public function __construct(array $data ){
-
+    public function __construct(array $data)
+    {
         // boot component only once Model('Gallery', 'Site')
 
         $app = $data['app'];
@@ -47,11 +46,11 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         // ToDo: add params, app to local vars
 
         // SiteApplication $app
-        $this->galleryModel = $app->bootComponent('com_rsgallery2')
+        $this->galleryModel = $app
+            ->bootComponent('com_rsgallery2')
             ->getMVCFactory()
             // ->createModel('Gallery', 'Site', ['ignore_request' => true]);
             ->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
-
     }
 
     public function getGalleryData(int $gid)
@@ -72,8 +71,6 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         $images = [];
 
         try {
-
-
             $model = $this->galleryModel;
 
             //--- state -------------------------------------------------
@@ -117,9 +114,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
 	        // Flag indicates to not add limitstart=0 to URL
 	        $this->pagination->hideEmptyLimitstart = true;
-
-
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             // ToDO: Message more explicit
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
@@ -297,15 +292,16 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     public function HtmlImages() : string
     {
         $msg = "    --- HtmlImages from Rsg2_gallery plugin    ----- \nxxx\n";
+
         return $msg;
     }
 
     public function getText()
     {
         $msg = "    --- Rsg2_gallery plugin ----- ";
+
         return $msg;
     }
-
 
 
 }

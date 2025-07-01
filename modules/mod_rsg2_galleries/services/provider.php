@@ -4,7 +4,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_articles_latest
  *
- * @copyright   (C) 2022 Open Source Matters, Inc. <https://www.joomla.org>
+ * @copyright  (c)  2019-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 

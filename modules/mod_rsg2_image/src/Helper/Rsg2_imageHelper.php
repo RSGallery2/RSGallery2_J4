@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_rsg2_images
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -15,9 +15,12 @@ namespace Rsgallery2\Module\Rsg2_image\Site\Helper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
-use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
+use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Images;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
+use RuntimeException;
+
+use function defined;
 
 /**
  * Helper for mod_rsg2_image
@@ -44,10 +47,10 @@ class Rsg2_imageHelper
     {
         $dbImage = false;
 
-        try
-        {
-            $db    =  Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
+        try {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db
+                ->getQuery(true)
                 ->select('*')
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
@@ -55,9 +58,7 @@ class Rsg2_imageHelper
             //$dbImage = $db->loadResult();
             //$dbImage = $db->loadRow();
             $dbImage = $db->loadObject();
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing Rsg2_imageHelper.getList for ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -73,7 +74,7 @@ class Rsg2_imageHelper
     /**
 	 * Get a list of the latest articles from the article model
 	 *
-	 * @param   \Joomla\Registry\Registry  &$params  object holding the models parameters
+     * @param   Registry  &$params  object holding the models parameters
 	 *
 	 * @return  mixed
 	 *
@@ -81,7 +82,6 @@ class Rsg2_imageHelper
 	 */
 	public static function getList($params, $model, $app)
 	{
-
         // Set application parameters in model
 		$appParams = $app->getParams();
 		$model->setState('params', $appParams);
@@ -156,7 +156,6 @@ class Rsg2_imageHelper
 		$SelectGallery = $params->get('SelectGallery', 1);
 
 
-
         //$input = Factory::getApplication()->input;
         $input = $app->input;
         //$input->set( 'gid' , '2' );
@@ -165,8 +164,7 @@ class Rsg2_imageHelper
 		// Retrieve Content
 		$items = $model->getItems();
 
-		foreach ($items as &$item)
-		{
+        foreach ($items as &$item) {
 //			$item->readmore = \strlen(trim($item->fulltext));
 //			$item->slug     = $item->id . ':' . $item->alias;
 //
@@ -412,9 +410,7 @@ class Rsg2_imageHelper
      */
     public static function AssignImageUrl($image)
     {
-
         try {
-
             // ToDo: check for J3x style of gallery (? all in construct ?)
             $gallery_id = $image->gallery_id;
 

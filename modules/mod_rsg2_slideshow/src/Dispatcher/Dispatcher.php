@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package         RSGallery2
+ * @subpackage      com_rsgallery2
+ *
+ * @author          RSGallery2 Team <team2@rsgallery2.org>
+ * @copyright  (c)  2020-2025 RSGallery2 Team
+ * @license         GNU General Public License version 2 or later
+ */
+
 
 namespace Rsgallery2\Module\Rsg2_slideshow\Site\Dispatcher;
 
@@ -20,7 +29,8 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         // module(self) params, input , app, ? module? , ,
         $data = parent::getLayoutData();
 
-        $helper = $this->getHelperFactory()
+        $helper = $this
+            ->getHelperFactory()
             ->getHelper('Rsg2_slideshowHelper', $data);
 
 		// ToDo flag that tells to identify ...
@@ -54,8 +64,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 
         // gid = 0 ==> root view
         $isNoGallerySelected = $gid == 0;
-        if ($isNoGallerySelected)
-        {
+        if ($isNoGallerySelected) {
             // Tell to select a gallery in the module instead
             $msg = Text::_('COM_RSGALLERY2_GALLERY_NOT_SPECIFIED_MODULE');
             $data['msg'] = $msg;

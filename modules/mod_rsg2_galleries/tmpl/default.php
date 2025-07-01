@@ -3,7 +3,7 @@
  * @package     Joomla.Administrator
  * @subpackage  mod_rsg2_images
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -12,18 +12,15 @@ use Joomla\CMS\Layout\FileLayout;
 \defined('_JEXEC') or die;
 
 
-if (!empty($isDebugSite))
-{
+if (!empty($isDebugSite)) {
 	echo '<br><br>--------------------------- mod_rsg2_galleries start ------------------------------<br>';
 }
 
 // message on empty data or other
 if ( ! empty ($msg)) {
-
 	echo $msg;
 
-	if (!empty($isDebugSite))
-	{
+    if (!empty($isDebugSite)) {
 		echo $msg . '<br>';
 	}
 
@@ -84,7 +81,6 @@ if ($displaySearch) {
 
 <?php
 
-if (!empty($isDebugSite))
-{
+if (!empty($isDebugSite)) {
 	echo '<br>--------------------------- mod_rsg2_galleries end   ------------------------------<br>';
 }

@@ -3,7 +3,7 @@
  * @package     RSGallery2
  * @subpackage  mod_rsg2_slideshow
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -27,18 +27,15 @@ use Joomla\CMS\Layout\FileLayout;
 //		. '</span><br><br>';
 //}
 
-if (!empty($isDebugSite))
-{
+if (!empty($isDebugSite)) {
 	echo '<br><br>--------------------------- mod_rsg2_slideshow start ------------------------------<br>';
 }
 
 // message on empty data or other
 if ( ! empty ($msg)) {
-
 	echo $msg;
 
-	if (!empty($isDebugSite))
-	{
+    if (!empty($isDebugSite)) {
 		echo $msg . '<br>';
 	}
 
