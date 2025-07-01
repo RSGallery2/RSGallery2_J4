@@ -1,4 +1,3 @@
-
 //---------------------------
 
 @each $theme in $columnThemes {
@@ -17,11 +16,10 @@
 }
 
 
-
 /*--- sections repair / danger ------*/
 
 .icons-panel {
-/*  clear: left; /**/
+  /*  clear: left; /**/
   /* background-color: #df3e3e; /**/
   border-radius: 3px;
   /* padding: 10px; /**/
@@ -148,14 +146,14 @@
   /*	padding: 4em; /**/
   padding-top: 1em; /**/
   padding-bottom: 1em; /**/
-  margin-left : 10px; /**/
+  margin-left: 10px; /**/
   min-height: 2em;
 }
 
 .icons-panel-info {
-  margin      : 10px; /**/
+  margin: 10px; /**/
   /*	margin-left : 40px; /**/
-  max-width   :  20em; /**/
+  max-width: 20em; /**/
 }
 
 
@@ -164,35 +162,35 @@
 .rsg2-icon-bar a {
 
   a {
-    float            : left; /**/
+    float: left; /**/
 
-    background-color : white; /**/
-    border-radius    : 8px; /**/
-    border           : 5px solid lightgrey; /**/
+    background-color: white; /**/
+    border-radius: 8px; /**/
+    border: 5px solid lightgrey; /**/
 
     /*	margin: 10px 20px; /**/
     /*	margin: 5px 10px; /**/
     /* margin           : 5px 15px; /**/
     /* margin           : 5px 5px 0 5px; /**/
     /* padding          : 7px; /**/
-    padding           : 10px 5px 0 5px;
+    padding: 10px 5px 0 5px;
     /* margin: 5px; /**/
     /*	width: 80%; /**/
 
     /*	display: block; /**/
-    display          : inline-block; /**/
+    display: inline-block; /**/
 
     /* width: 448px !important; /**/
     /* width: 450px;  /**/
 
-    vertical-align   : middle;
+    vertical-align: middle;
 
-    box-shadow       : 2px 2px 1px #888888; /**/
+    box-shadow: 2px 2px 1px #888888; /**/
 
     width: 100%;
 
     :link {
-      color : #808080;
+      color: #808080;
       color: blue;
     }
 
@@ -200,7 +198,7 @@
       /*	color : #333;  /**/
       /*    color: #08c; /**/
       /*	background-color: #f1e8e6;  /**/
-      border-color : green; /**/
+      border-color: green; /**/
       /*	border: 1px solid #c24733; /**/
       /*	padding: 3px 4px 0px 6px; /**/
       /*	position: relative; /**/
@@ -210,43 +208,43 @@
 
     :active {
       /*	color : darkred; /**/
-      background-color : sandybrown;
+      background-color: sandybrown;
     }
 
   }
 
   button {
-    float            : left; /**/
+    float: left; /**/
 
-    background-color : white; /**/
-    border-radius    : 8px; /**/
-    border           : 5px solid lightgrey; /**/
+    background-color: white; /**/
+    border-radius: 8px; /**/
+    border: 5px solid lightgrey; /**/
 
     /*	margin: 10px 20px; /**/
     /*	margin: 5px 10px; /**/
-    margin           : 5px 15px; /**/
+    margin: 5px 15px; /**/
     /*	padding: 7px; /**/
     /*	width: 80%; /**/
 
     /*	display: block; /**/
-    display          : inline-block; /**/
+    display: inline-block; /**/
 
     /* width: 448px !important; /**/
     /* width: 450px;  /**/
 
-    vertical-align   : middle;
+    vertical-align: middle;
 
-    box-shadow       : 2px 2px 1px #888888; /**/
+    box-shadow: 2px 2px 1px #888888; /**/
 
     :link {
-      color : #808080; /**/
+      color: #808080; /**/
     }
 
     :hover {
       /*	color : #333;  /**/
       /*    color: #08c; /**/
       /*	background-color: #f1e8e6;  /**/
-      border-color : green; /**/
+      border-color: green; /**/
       /*	border: 1px solid #c24733; /**/
       /*	padding: 3px 4px 0px 6px; /**/
       /*	position: relative; /**/
@@ -256,7 +254,7 @@
 
     :active {
       /*	color : darkred; /**/
-      background-color : sandybrown;
+      background-color: sandybrown;
     }
 
   }
@@ -274,10 +272,8 @@ figure span {
   /*	padding: 10px; /**/
   /*	padding: 0px 10px 0px 10px; /**/
   /*	padding: 0px 10px 0px 10px; /**/
-  display : inline-block; /**/
+  display: inline-block; /**/
 }
-
-
 
 
 .maint-title {
@@ -287,7 +283,7 @@ figure span {
 .maint-text {
   /* font-size: smaller; /**/
   /* color: blue; /**/
-  color : black; /**/
+  color: black; /**/
 }
 
 
