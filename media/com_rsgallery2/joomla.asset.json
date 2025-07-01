@@ -11,6 +11,59 @@
       "type": "style",
       "uri": "com_rsgallery2/backend/controlPanel.css"
     },
+	
+	
+    {
+      "name": "com_rsgallery2.backend.controlPanel",
+      "description": "JavaScript for the backend control panel",
+      "type": "script",
+      "uri": "com_rsgallery2/backend/controlPanel.js",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
+      ]
+    },
+	
+    {
+      "name": "com_rsgallery2.lib.bs_set2dark",
+      "description": "JavaScript: On dark mode exchange class '...-light' with '...-dark'",
+      "type": "script",
+      "uri": "com_rsgallery2/lib/bs_set2dark.js",
+      "attributes": {
+        "defer": true
+      },
+      "dependencies": [
+        "core"
+      ]
+    },
+	
+    {
+      "name": "com_rsgallery2.backend.controlPanel",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.backend.controlPanel#style",
+        "com_rsgallery2.backend.controlPanel#script",
+        "com_rsgallery2.lib.bs_set2dark#script"
+      ]
+    },
+
+    {
+      "name": "com_rsgallery2.backend.image",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.lib.bs_set2dark#script"
+      ]
+    },
+    {
+      "name": "com_rsgallery2.backend.gallery",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.lib.bs_set2dark#script"
+      ]
+    },
+
     {
       "name": "com_rsgallery2.backend.images",
       "description": "Backend styling.",
@@ -42,7 +95,7 @@
       "description": "JavaScript for the backend Items page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/imagesProperties.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -74,7 +127,7 @@
       "description": "JavaScript for the backend Items page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/upload.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -100,7 +153,7 @@
       "description": "JavaScript for the backend Items page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/maintenance.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -126,7 +179,7 @@
       "description": "JavaScript for the backend move images page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/moveJ3xImages.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -153,7 +206,7 @@
       "description": "JavaScript for the backend db transfer images page.",
       "type": "script",
       "uri": "com_rsgallery2/backend/dbTransferJ3xImages.js",
-      "attributes" : {
+      "attributes": {
         "defer": true
       },
       "dependencies": [
@@ -237,6 +290,5 @@
         "com_rsgallery2.site.slideshowJ3x#style"
       ]
     }
-
   ]
 }

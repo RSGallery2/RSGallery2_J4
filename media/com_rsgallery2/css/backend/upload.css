@@ -39,9 +39,19 @@
   transition: all 0.2s ease 0s;
   width: 100%;
 }
+@media (prefers-color-scheme: dark) {
+  #dragarea {
+    background: rgba(255, 255, 255, 0.1019607843);
+  }
+}
 #dragarea:hover {
   border-color: #666;
   background-color: lightgrey;
+}
+@media (prefers-color-scheme: dark) {
+  #dragarea:hover {
+    background: rgba(255, 255, 255, 0.1490196078);
+  }
 }
 #dragarea.dragareaDisabled {
   border: 6px dotted red;
@@ -107,6 +117,16 @@
 }
 .statusbar:nth-of-type(2n-1) {
   background: #EBEFF0;
+}
+@media (prefers-color-scheme: dark) {
+  .statusbar:nth-of-type(2n-1) {
+    background: rgba(255, 255, 255, 0.1019607843);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .statusbar:nth-of-type(2n) {
+    background: rgba(255, 255, 255, 0.1490196078);
+  }
 }
 
 .filename {

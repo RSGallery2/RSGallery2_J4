@@ -18,175 +18,203 @@ div.quickicon-icon {
 }
 /**/
 
-div.rsg2logo
-{
-	padding-top: 0;
-	margin-top: 0;
+div.rsg2logo {
+  padding-top: 0;
+  margin-top: 0;
 
-/*	border: 2px solid red; /**/
+  /*	border: 2px solid red; /**/
 
 }
 
 div.rsg2logo img {
-	vertical-align: top;
-	/** border: 4px solid blue; /**/
+  vertical-align: top;
+  /** border: 4px solid blue; /**/
 }
 
 div.quickicon-icon {
-//	position: relative;
-	left: -8px;
+  //	position: relative;
+  left: -8px;
+
+  div.fa-cog {
+    color: map-get($rsg2-colors, blue);
+  }
+
+
+  div.fa-th {
+    color: map-get($rsg2-colors, green);
+  }
+
+
+  div.fa-upload {
+    color: map-get($rsg2-colors, green);
+  }
+
+
+  div.fa-image {
+    color: map-get($rsg2-colors, green);
+  }
+
+
+  div.fa-cogs {
+    color: map-get($rsg2-colors, red);
+  }
+
 }
 
-div.quickicon-icon div.fa-cog
-{
-	color: map-get($rsg2-colors, blue);
-}
-
-
-div.quickicon-icon div.fa-th
-{
-	color: map-get($rsg2-colors, green);
-}
-
-
-div.quickicon-icon div.fa-upload
-{
-	color: map-get($rsg2-colors, green);
-}
-
-
-div.quickicon-icon div.fa-image
-{
-	color: map-get($rsg2-colors, green);
-}
-
-
-div.quickicon-icon div.fa-cogs
-{
-	color: map-get($rsg2-colors, red);
-}
+//div.quickicon-icon div.fa-cog {
+//  color: map-get($rsg2-colors, blue);
+//}
+//
+//
+//div.quickicon-icon div.fa-th {
+//  color: map-get($rsg2-colors, green);
+//}
+//
+//
+//div.quickicon-icon div.fa-upload {
+//  color: map-get($rsg2-colors, green);
+//}
+//
+//
+//div.quickicon-icon div.fa-image {
+//  color: map-get($rsg2-colors, green);
+//}
+//
+//
+//div.quickicon-icon div.fa-cogs {
+//  color: map-get($rsg2-colors, red);
+//}
 
 
 flex-buttons-table {
 
-/*	flex-basis: 0; /**/
+  /*	flex-basis: 0; /**/
 
 }
 
 /* border-radius: 25px; */
-li.quickicon-single
-{
-	display: block;
-	border: thick solid lightgray; /**/
+li.quickicon-single {
+  display: block;
+  border: thick solid lightgray; /**/
 
-	/*	border-color: red;
-        border-width: thick;
-    /**/
-	border-radius: 2px;
+  /*	border-color: red;
+      border-width: thick;
+  /**/
+  border-radius: 2px;
 
-	background: white;
-	/**
-	padding-left: auto;
-	padding-right: auto;
-	/**/
+  background: white;
+  @media (prefers-color-scheme: dark) {
+    background: #ffffff1a;
+    border: thick solid darkgray; /**/
+  }
 
-	// padding: 4px; /**/
+  /**
+  padding-left: auto;
+  padding-right: auto;
+  /**/
 
-	// margin-left: auto;
-	// margin-right: auto;
-	// margin: 4px; /**/
-	margin: 0 8px 0 0; /**/
+  // padding: 4px; /**/
 
-/*	flex-basis: 0; /**/
-	flex: 1;
+  // margin-left: auto;
+  // margin-right: auto;
+  // margin: 4px; /**/
+  margin: 0 8px 0 0; /**/
+
+  /*	flex-basis: 0; /**/
+  flex: 1;
+
 }
 
 li.quickicon-single:hover {
-    /*	background: lightblue;  /**/
-	background: lightgray;  /**/
-	border: thick solid darkgray; /**/
-//	text-decoration: none;
+  /*	background: lightblue;  /**/
+  background: lightgray; /**/
+  border: thick solid darkgray; /**/
+  //	text-decoration: none;
+
+  @media (prefers-color-scheme: dark) {
+    background: #ffffff26;
+    border: thick solid lightgray; /**/
+  }
+
 }
 
 li.quickicon-single a {
-	text-decoration: none;
-/*	flex-basis: 0; /**/
+  text-decoration: none;
+  /*	flex-basis: 0; /**/
 
 }
 
 li.quickicon-single:hover .quickicon-text {
-//	text-decoration: none;
-	color:black; /**/
+  //	text-decoration: none;
+  color: black; /**/
 }
 
 li.quickicon-single:hover .quickicon-icon div.fa {
-//	text-decoration: none;
-//	border: 1px solid red;
+  //	text-decoration: none;
+  //	border: 1px solid red;
 }
 
 li.quickicon-single:link {
-//	text-decoration: none;
-/*	flex-basis: 0; /**/
+  //	text-decoration: none;
+  /*	flex-basis: 0; /**/
 
 }
 
 
 /* border-radius: 25px; */
-div.quickicon-icon
-{
-	font-size: xx-large;
+div.quickicon-icon {
+  font-size: xx-large;
 
-//	text-align: center;
-	text-align: left;
+  //	text-align: center;
+  text-align: left;
 
-/*	width: 5em;  /**/
-	width: auto;  /**/
+  /*	width: 5em;  /**/
+  width: auto; /**/
 
-/*	border: 2px solid red; /**/
+  /*	border: 2px solid red; /**/
 
-/*	border-color: red; /**/
-/*    border-width: thick; /**/
+  /*	border-color: red; /**/
+  /*    border-width: thick; /**/
 
-/*	border-radius: 5px; /**/
+  /*	border-radius: 5px; /**/
 
-	padding: 0 4px; /**/
-	margin: 0 4px; /**/
+  padding: 0 4px; /**/
+  margin: 0 4px; /**/
 
-/*	flex-basis: 0; /**/
+  /*	flex-basis: 0; /**/
 
 }
+
 .quickicon .quickicon-name {
 
-	padding: 0 4px; /**/
-	margin: 0 4px; /**/
-
+  padding: 0 4px; /**/
+  margin: 0 4px; /**/
 
 
 }
 
 //----------------------------------------------------------------------------------
 
-.table_morecondensed>thead>tr>th,
-.table_morecondensed>tbody>tr>th,
-.table_morecondensed>tfoot>tr>th,
-.table_morecondensed>thead>tr>td,
-.table_morecondensed>tbody>tr>td,
-.table_morecondensed>tfoot>tr>td
-{
-	padding: 4px;
+.table_morecondensed > thead > tr > th,
+.table_morecondensed > tbody > tr > th,
+.table_morecondensed > tfoot > tr > th,
+.table_morecondensed > thead > tr > td,
+.table_morecondensed > tbody > tr > td,
+.table_morecondensed > tfoot > tr > td {
+  padding: 4px;
 }
 
 /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
 
 /* Large */
 .flex-buttons-table {
-	display: flex;
-	flex-flow: row wrap;
-	/* This aligns items to the end line on main-axis */
-	/* justify-content: flex-end; /**/
-	justify-content: space-around; /**/
-	/* justify-content: center; /**/
-	align-content:stretch; /**/
+  display: flex;
+  flex-flow: row wrap;
+  /* This aligns items to the end line on main-axis */
+  /* justify-content: flex-end; /**/
+  justify-content: space-around; /**/
+  /* justify-content: center; /**/
+  align-content: stretch; /**/
 }
 
 /* Medium screens *
@@ -207,72 +235,100 @@ div.quickicon-icon
 
 /* ToDo: More specific add dictionaries with class= gallery/images ... */
 .table caption {
-	caption-side: top;
-	white-space: nowrap;
-//	overflow: hidden;
+  caption-side: top;
+  white-space: nowrap;
+  //	overflow: hidden;
 }
-
-
 
 
 //----------------------------------------------------------------------------------
 
 .changelog_area {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-//	justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly | start | end | left | right ... + safe | unsafe;
-	justify-content: flex-start; // | flex-end | center | space-between | space-around | space-evenly | start | end | left | right ... + safe | unsafe;
+  //	justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly | start | end | left | right ... + safe | unsafe;
+  justify-content: flex-start; // | flex-end | center | space-between | space-around | space-evenly | start | end | left | right ... + safe | unsafe;
 }
 
 .changelog_key {
-	min-width: 100px;
-	border-right: 2px solid red;
+  min-width: 100px;
+  border-right: 2px solid red;
 }
 
-.changelog_value_area{
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
+.changelog_value_area {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .change-log-caption {
-	color: black;
+  color: black;
 }
 
 .change-log-table {
-	border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
 }
 
 //----------------------------------------------------------------------------------
 
 .card-header .fa {
-	transition: .3s transform ease-in-out;
+  transition: .3s transform ease-in-out;
 }
 
 .card-header .collapsed .fa {
-	transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 
 //----------------------------------------------------------------------------------
 
 #GalImg_outer {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
 
-	margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 #galleriesCard {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 row > .card {
-	margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
-//.card.forCollapse {
-//	padding: 10px;
-//}
+.card.forCollapse {
+  //	padding: 10px;
+  @media (prefers-color-scheme: dark) {
+    background: #ffffff26;
+    color: lightgrey;
+    // border: thick solid darkgray; /**/
+  }
+}
+
+
+//.rsg2requestJ3xActions.card-title,
+//.rsg2requestJ3xActions.card-text
+.rsg2requestJ3xActions
+{
+  //@media (prefers-color-scheme: dark) {
+  //  background: red;
+  //  color: lightgrey;
+  //  // border: thick solid darkgray; /**/
+  //
+  //}
+  .card
+  {
+    @media (prefers-color-scheme: dark) {
+      background: blue;
+      color: lightgrey;
+      // border: thick solid darkgray; /**/
+
+    }
+  }
+}
+
+
+

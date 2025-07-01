@@ -1,7 +1,5 @@
-
 // thin icons no padding
 @import "Rsg2_sidebar";
-
 
 
 $break-small: 500px;
@@ -41,13 +39,30 @@ $button_border_radius: 2px; // 3px;
   .icons-panel-info {
     margin: 10px;
     max-width: 20em;
+
+    @media (prefers-color-scheme: dark) {
+      color: lightgrey;
+    }
+
   }
 
-  .icons-panel-title header {
-    min-height: 2em;
+  .icons-panel-title {
+
+    @media (prefers-color-scheme: dark) {
+      color: lightgrey;
+    }
+
+    .icons-panel-title header {
+      min-height: 2em;
+    }
+
   }
 
   @each $theme, $color in $columnThemes {
+
+    @media (prefers-color-scheme: dark) {
+      $color: darken($color, 20%);
+    }
 
     .#{$theme}Zone {
       padding: 5px;
@@ -60,10 +75,21 @@ $button_border_radius: 2px; // 3px;
 
       color: white;
       background-color: $color;
+
+      @media (prefers-color-scheme: dark) {
+        //color: white;
+        color: lightgrey;
+        // background-color: darken($color, 20%);
+      }
+
     }
   }
 
   @each $theme, $color in $columnThemes {
+
+    @media (prefers-color-scheme: dark) {
+      $color: darken($color, 20%);
+    }
 
     @debug "theme: #{$theme}";
     @debug "color: #{$color}";
@@ -88,20 +114,28 @@ $button_border_radius: 2px; // 3px;
 .rsg2-icon-bar {
   display: flex;
   flex-direction: column;
-  flex-basis: 100%;
+  // flex-basis: 100%;
   flex: 1;
 
   a {
     background-color: white;
+    border: 5px solid lightgrey;
+
+    @media (prefers-color-scheme: dark) {
+      //background-color: #ffffff1a; // darker
+      //background-color: #ffffff26;
+      background-color: grey;
+      // background-color: lightgrey;
+      border: 5px solid darkgrey;
+      // border: 5px solid lightgrey;
+    }
+
 
     margin: 5px;
     padding: 25px 25px 0px 25px;
     display: inline-block;
 
-    background-color: white;
-
     border-radius: $button_border_radius;
-    border: 5px solid lightgrey;
     box-shadow: 2px 2px 1px #888888;
 
     &:hover {
@@ -119,18 +153,85 @@ $button_border_radius: 2px; // 3px;
     .maint-title {
       color: blue;
       //display: inline-block;
+      @media (prefers-color-scheme: dark) {
+        //color: white;
+        color: lightgrey;
+      }
     }
 
     .maint-text {
       color: black;
     }
   }
+
+  button {
+    background-color: white;
+    border: 5px solid lightgrey;
+
+//    background-color: lightgreen; // to be removed
+    @media (prefers-color-scheme: dark) {
+      //background-color: #ffffff1a; // darker
+      //background-color: #ffffff26;
+      background-color: grey;
+      //background-color: lightgrey;
+      border: 5px solid darkgrey;
+      // border: 5px solid lightgrey;
+	}
+
+    margin: 5px;
+    padding: 25px 25px 0px 25px;
+    display: inline-block;
+
+    border-radius: $button_border_radius;
+    box-shadow: 2px 2px 1px #888888;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &:active {
+      background-color: sandybrown;
+    }
+
+    span.icoMoon {
+      margin-right: 22px;
+    }
+
+    .maint-title {
+      color: blue;
+      //display: inline-block;
+      @media (prefers-color-scheme: dark) {
+        //color: white;
+        color: lightgrey;
+      }
+    }
+
+    .maint-text {
+      color: black;
+    }
+  }
+
+
 }
 
-.whatEver {
-
-  background-color: lightgreen;
-
-}
+//.rsg2-icon-icon {
+//  @media (prefers-color-scheme: dark) {
+//  // border: 3px solid red;
+//  // background-color: lightgrey;
+//  // background-color: grey;
+//}
+//}
+//
+//.rsg2-text {
+//  // border: 3px solid red;
+//  // background-color: lightgrey;
+//  // background-color: grey;
+//}
+//
+//.rsg2-icon-button-container {
+//
+//  background-color: lightgreen;
+//
+//}
 
 

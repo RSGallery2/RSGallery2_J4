@@ -18,19 +18,19 @@
 ----------------------------------------------------------------*/
 
 /**
-interface Joomla {
-    JText: {
-        _(String)
-    }
+ interface Joomla {
+ JText: {
+ _(String)
+ }
 
-    // submitbutton: any;
-    submitbutton (task: string, formSelector: string, validate: boolean|undefined|null) : void;
-    submitform (task, form: HTMLElement|undefined|null, validate: boolean|undefined|null) : void;
+ // submitbutton: any;
+ submitbutton (task: string, formSelector: string, validate: boolean|undefined|null) : void;
+ submitform (task, form: HTMLElement|undefined|null, validate: boolean|undefined|null) : void;
 
-    isChecked (isitchecked: boolean, form: string | undefined): boolean;
-    checkAll (elem: HTMLElement): void ;
-}
-/**/
+ isChecked (isitchecked: boolean, form: string | undefined): boolean;
+ checkAll (elem: HTMLElement): void ;
+ }
+ /**/
 
 // import {Joomla} from "./dbTransferJ3xImages";
 
@@ -80,11 +80,11 @@ function markImages_nGalleryTimes(maxGalleries: number) {
 
     // all gallery rows
 
-    j3x_form = <HTMLFormElement> document.getElementById('adminForm');
+    j3x_form = <HTMLFormElement>document.getElementById('adminForm');
     // boxchecked = <HTMLInputElement>j3x_form.querySelector('input[name="boxchecked"]');
-    boxchecked = <HTMLInputElement> document.getElementsByName('boxchecked')[0];
+    boxchecked = <HTMLInputElement>document.getElementsByName('boxchecked')[0];
 
-    j3x_rows.forEach ((j3x_row) => {
+    j3x_rows.forEach((j3x_row) => {
 
         // within range ?
         if (galleries.length < maxGalleries) {
@@ -92,7 +92,7 @@ function markImages_nGalleryTimes(maxGalleries: number) {
             // enable not merged galleries
 
             let isMerged = j3x_row.hasAttribute("is_merged");
-            if ( ! isMerged) {
+            if (!isMerged) {
 
                 galleryId = j3x_row.getAttribute("gallery_id");
                 gallery_checkbox = <HTMLInputElement>j3x_row.querySelector('input[type="checkbox"]');

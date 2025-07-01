@@ -23,6 +23,7 @@ interface Joomla {
     // submitbutton: any;
     // submitform: any;
 }
+
 /**/
 
 //declare var joomla: Joomla;
@@ -31,13 +32,13 @@ interface Joomla {
 // const joomla:Joomla = window.Joomla || {};
 
 // Joomla form token
-var Token:string;
+var Token: string;
 
 //--------------------------------------------------------------------------------------
 // On start:  DOM is loaded and ready
 //--------------------------------------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
 
 
     /**/
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         //       Find by class, change class to hide  or ...
 
         let liElements = element.querySelector('li');
-        alert ('liElements: ' + liElements.length);
+        alert('liElements: ' + liElements.length);
 
         for (let idx = 0; idx < liElements.length; idx++) {
 

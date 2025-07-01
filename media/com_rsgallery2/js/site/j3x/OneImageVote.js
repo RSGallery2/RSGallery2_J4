@@ -22,30 +22,30 @@ jQuery(document).ready(function ($) {
 
     buttonStars.on('click', function (e) {
 
-        console.log ("vote.01");
+        console.log("vote.01");
 //        alert("jquery: " + jQuery.fn.jquery);
 //        console.log ("vote.03");
 
         //--- voting value ---------------------------------
 
         let ratingValue = $(this).attr('id').substr(-1);
-        console.log ("rateValue: " + ratingValue);
-        console.log ("vote.03");
+        console.log("rateValue: " + ratingValue);
+        console.log("vote.03");
 
-        let ratingInput = $( "input[name=rating]:first" );
-        console.log ("vote.04");
+        let ratingInput = $("input[name=rating]:first");
+        console.log("vote.04");
 
         ratingInput.value = ratingValue;
-        console.log ("vote.05");
+        console.log("vote.05");
 
 
         //--- set task ---------------------------------
 
-        let taskInput = $( "input[name=task]:first" );
-        console.log ("vote.06");
+        let taskInput = $("input[name=task]:first");
+        console.log("vote.06");
 
         taskInput.value = "rating.rateSingleImage";
-        console.log ("vote.07");
+        console.log("vote.07");
 
 
         //--- limit start ---------------------------------
@@ -56,26 +56,26 @@ jQuery(document).ready(function ($) {
 
         // transfer actual pagination 'limitstart'
         // <input type="hidden" name="limitstart" value="2">
-        let limitStartInput = $( "input[name=limitstart]:first" );
-        console.log ("vote.08");
+        let limitStartInput = $("input[name=limitstart]:first");
+        console.log("vote.08");
 
         let limitStart = limitStartInput.val();
-        console.log ("vote.09");
+        console.log("vote.09");
 
-        let paginationImgIdx = $( "input[name=paginationImgIdx]:first" );
-        console.log ("vote.10");
+        let paginationImgIdx = $("input[name=paginationImgIdx]:first");
+        console.log("vote.10");
 
         paginationImgIdx.value = limitStart;
-        console.log ("vote.11");
+        console.log("vote.11");
 
         //--- submit form ---------------------------------
 
 //        var form = document.getElementById('rsgVoteForm');
         let form = $(this.form);
-        console.log ("vote.20");
+        console.log("vote.20");
 
         form.submit();
-        console.log ("vote.21");
+        console.log("vote.21");
 
     });
 

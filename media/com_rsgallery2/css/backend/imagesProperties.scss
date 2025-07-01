@@ -17,13 +17,13 @@ ul.imagesPropArea {
 }
 
 .imagePropItem {
-//  border: 5px dotted darkgreen; /**/
+  //  border: 5px dotted darkgreen; /**/
   max-width: 250px; /**/
   background-color: white;
 
-//  width: 240px; /* center img https://stackoverflow.com/questions/7273338/how-to-vertically-align-an-image-inside-a-div*/
-//  height: 240px; /**/
-//  position: relative;
+  //  width: 240px; /* center img https://stackoverflow.com/questions/7273338/how-to-vertically-align-an-image-inside-a-div*/
+  //  height: 240px; /**/
+  //  position: relative;
 
   margin: 10px;
 
@@ -34,8 +34,8 @@ ul.imagesPropArea {
   display: block;
   padding: 4px;
   line-height: 18px;
-//  border: 1px solid #ddd;
-//  border-radius: 3px;
+  //  border: 1px solid #ddd;
+  //  border-radius: 3px;
   box-shadow: 0 1px 3px rgb(0 0 0 / 6%);
   transition: all .2s ease-in-out;
 }
@@ -67,24 +67,24 @@ ul.imagesPropArea {
 
 .img-rounded {
 
-//  border: 5px dotted darkcyan; /**/
+  //  border: 5px dotted darkcyan; /**/
 
   display: block;
-//
+  //
   border-radius: 6px;
   max-width: 100%;
 
-//  width: auto \9;
+  //  width: auto \9;
 
   //  height: auto;
   max-height: 250px; /**/
   margin: auto;
 
-//  margin-left: auto;
-//  margin-right: auto;
+  //  margin-left: auto;
+  //  margin-right: auto;
 
   vertical-align: middle;
-  text-align:center;
+  text-align: center;
 
   position: absolute;
   left: 50%;
@@ -92,18 +92,17 @@ ul.imagesPropArea {
   transform: translate(-50%, -50%);
 
 
-//  max-height: 100%;
-//  max-width: 100%;
-//  //width: auto;
-//  //height: auto;
-//  //position: absolute;
-//  //top: 0;
-//  //bottom: 0;
-//  //left: 0;
-//  //right: 0;
-//  margin: auto;
+  //  max-height: 100%;
+  //  max-width: 100%;
+  //  //width: auto;
+  //  //height: auto;
+  //  //position: absolute;
+  //  //top: 0;
+  //  //bottom: 0;
+  //  //left: 0;
+  //  //right: 0;
+  //  margin: auto;
 }
-
 
 
 /*--------------------------------------------------------------------------------------
@@ -111,7 +110,9 @@ ul.imagesPropArea {
 --------------------------------------------------------------------------------------*/
 
 /**/
-.modalActive:hover {opacity: 0.7;}
+.modalActive:hover {
+  opacity: 0.7;
+}
 
 /* The Modal (background) */
 #popupModal {
@@ -124,8 +125,8 @@ ul.imagesPropArea {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
 }
 
 /* Modal Content (image) */
@@ -157,19 +158,27 @@ ul.imagesPropArea {
 }
 
 @-webkit-keyframes zoom {
-  from {-webkit-transform:scale(0)}
-  to {-webkit-transform:scale(1)}
+  from {
+    -webkit-transform: scale(0)
+  }
+  to {
+    -webkit-transform: scale(1)
+  }
 }
 
 @keyframes zoom {
-  from {transform:scale(0)}
-  to {transform:scale(1)}
+  from {
+    transform: scale(0)
+  }
+  to {
+    transform: scale(1)
+  }
 }
 
 /* The Close Button */
 #popupClose {
   position: absolute;
-  top: 65px;  /**/
+  top: 65px; /**/
   right: 35px; /**/
   /* color: #f1f1f1; /**/
   color: white; /**/
@@ -187,7 +196,7 @@ ul.imagesPropArea {
 }
 
 /* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
+@media only screen and (max-width: 700px) {
   .modal-content {
     width: 100%;
   }

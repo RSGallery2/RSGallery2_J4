@@ -4,9 +4,9 @@ div.intro_text {
 }
 
 div.rsg2-title {
-	/* border         : 1px #999999 solid; /**/
-	margin-left  : 20px;
-	margin-top   : -11px; 
+    /* border         : 1px #999999 solid; /**/
+    margin-left: 20px;
+    margin-top: -11px;
 }
 
 /* General style for all images within the rsg2 container */
@@ -16,127 +16,127 @@ div.rsg2-title {
 */
 /* Style form labels with this tag */
 div.rsg2_exif_container .rsg2_label {
-	font-weight : bold;
+    font-weight: bold;
 }
 
 /* Style EXIF container */
 div.rsg2_exif_container {
-	font-size : 12px;
+    font-size: 12px;
 }
 
 /* Style gallery details block here */
 .rsg2_details {
-	font-size   : smaller;
-	font-weight : bold;
-	color       : silver;
+    font-size: smaller;
+    font-weight: bold;
+    color: silver;
 }
 
 /* Style My Galleries link on frontpage */
 div.rsg2-mygalleries {
-	float : right;
+    float: right;
 }
 
 .rsg2 {
-	width   : 100%;
-	margin  : 0;
-	padding : 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .rsg_galleryblock, .rsg_galleryblock_double_1, .rsg_galleryblock_double_2 {
-	border         : 1px #999999 solid;
-	padding        : 8px;
-	float          : left;
-	position       : relative;
-	margin         : 0 0 10px 0;
-	vertical-align : top;
+    border: 1px #999999 solid;
+    padding: 8px;
+    float: left;
+    position: relative;
+    margin: 0 0 10px 0;
+    vertical-align: top;
 }
 
 .rsg_galleryblock {
-	width : 97%;
+    width: 97%;
 }
 
 .rsg_galleryblock_double_1 {
-	width  : 46%;
-	margin : 0 10px 10px 0;
+    width: 46%;
+    margin: 0 10px 10px 0;
 }
 
 .rsg_galleryblock_double_2 {
-	width  : 46%;
-	margin : 0 0 10px 0;
+    width: 46%;
+    margin: 0 0 10px 0;
 }
 
 .rsg_double_fix {
-	display : table;
-	width   : 100%;
-	margin  : 0;
-	padding : 0;
+    display: table;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .rsg_box_block {
-	width      : 100%;
-	border     : 0;
-	background : red;
+    width: 100%;
+    border: 0;
+    background: red;
 }
 
 .rsg_box_box_1, .rsg_box_box_2, .rsg_box_box_3 {
-	width          : 200px;
-	vertical-align : top;
+    width: 200px;
+    vertical-align: top;
 }
 
 .rsg_box_box_2, .rsg_box_box_3 {
-	position : relative;
-	float    : left;
+    position: relative;
+    float: left;
 }
 
 .rsg2-galleryList-text_box {
-	position : relative;
-	float    : right;
+    position: relative;
+    float: right;
 }
 
 .rsg2-galleryList-description_box {
-	width       : 100%;
-	float       : left;
-	padding-top : 5px;
+    width: 100%;
+    float: left;
+    padding-top: 5px;
 }
 
 .rsg_sub_url {
-	width       : 100%;
-	float       : left;
-	padding-top : 5px;
+    width: 100%;
+    float: left;
+    padding-top: 5px;
 }
 
 .rsg_sub_url_single {
-	width       : 90%;
-	float       : left;
-	padding-top : 5px;
+    width: 90%;
+    float: left;
+    padding-top: 5px;
 }
 
 /* Status icons */
 img.status {
-	text-decoration : none;
-	border          : none;
+    text-decoration: none;
+    border: none;
 }
 
 /* Thumbs shadow css. If you don't want shadow, comment out the next 3 CSS-declarations */
 /* toDo: create shadow with CSS */
 .img-shadow {
-	float      : left;
-	margin     : 10px 0 0 5px !important;
+    float: left;
+    margin: 10px 0 0 5px !important;
 }
 
 .img-shadow img {
-	display          : block;
-	position         : relative;
-	background-color : #fff;
-	border           : 1px solid #a9a9a9;
-	margin           : -6px 6px 6px -6px;
-	padding          : 4px;
+    display: block;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #a9a9a9;
+    margin: -6px 6px 6px -6px;
+    padding: 4px;
 }
 
 .shadow-box {
-	margin-left  : auto;
-	margin-right : auto;
-	width        : 120px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 120px;
 }
 
 /* end Thumbs shadow */
@@ -149,277 +149,275 @@ img.status {
 */
 
 .rsg2_slideshow {
-	width      : 100%;
-	text-align : center;
-	padding    : 2px;
-	margin     : 0;
+    width: 100%;
+    text-align: center;
+    padding: 2px;
+    margin: 0;
 }
 
 #rsg2-adminButtons img {
-	border : none;
+    border: none;
 }
 
 .rsg2-toolbar {
-	text-align     : center;
-	padding-bottom : 5px;
-	padding-left   : 5px;
-	padding-right  : 5px;
-	padding-top    : 5px;
-	margin         : 0;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    margin: 0;
 }
 
 .rsg2-toolbar img {
-	border : 0;
+    border: 0;
 }
 
 .rsg2_display_name {
-	/*display:none;*/
-	text-align: center;
+    /*display:none;*/
+    text-align: center;
 }
 
 .rsg2_thumb_name {
-	/*display:none;*/
-	text-align: center;
+    /*display:none;*/
+    text-align: center;
 }
 
 .rsg2-galleryList-newImages {
-	color       : Red;
-	font-weight : bold;
+    color: Red;
+    font-weight: bold;
 }
 
 .rsg2-galleryList-totalImages {
-	font-size : 8px;
+    font-size: 8px;
 }
 
 #rsg2-navigation {
-	float      : right;
-	text-align : right;
+    float: right;
+    text-align: right;
 }
 
 #rsg2-navigation li {
-	list-style       : none;
-	background-image : none;
+    list-style: none;
+    background-image: none;
 }
 
 #rsg2-footer {
-	text-align : center;
-	font-size  : 10px;
-	color      : Silver;
+    text-align: center;
+    font-size: 10px;
+    color: Silver;
 }
 
 /* gallery list */
 
 ul#rsg2-galleryList {
-	clear   : both;
-	padding : 0;
-	border  : 1px solid #ccc; /*Added in J1.6*/
+    clear: both;
+    padding: 0;
+    border: 1px solid #ccc; /*Added in J1.6*/
 }
 
 .rsg2-galleryList-status {
-	text-align : right;
-	float      : right;
+    text-align: right;
+    float: right;
 }
 
 .rsg2-galleryList-item {
-	clear            : both;
-	padding          : 5px;
-	margin           : 5px 0 5px 0;
-	list-style       : none;
-	background-image : none;
-	/*    border: 1px solid #ccc;*/ /*Removed in J1.6*/
+    clear: both;
+    padding: 5px;
+    margin: 5px 0 5px 0;
+    list-style: none;
+    background-image: none;
+    /*    border: 1px solid #ccc;*/ /*Removed in J1.6*/
 }
 
 .rsg2-galleryList-item td, .rsg2-galleryList-item tr { /*Added in J1.6*/
-	border : none;
+    border: none;
 }
 
 .rsg2-galleryList-thumb {
-	float  : left;
-	margin : 0 5px 5px 0;
+    float: left;
+    margin: 0 5px 5px 0;
 }
 
 .rsg2-galleryList-text {
 }
 
 .rsg2-galleryList-thumb_double {
-	float          : left;
-	position       : relative;
-	margin         : 0 5px 5px 0;
-	vertical-align : top;
-	width          : 35%;
-	padding        : 0;
+    float: left;
+    position: relative;
+    margin: 0 5px 5px 0;
+    vertical-align: top;
+    width: 35%;
+    padding: 0;
 }
 
 .rsg2-galleryList-text_double {
-	float      : left;
-	text-align : left;
-	position   : relative;
-	width      : 60%;
-	padding    : 0;
+    float: left;
+    text-align: left;
+    position: relative;
+    width: 60%;
+    padding: 0;
 }
 
 /* sub gallery list */
 
 .rsg2-subGalleryList-container {
-	margin-top : 1ex;
+    margin-top: 1ex;
 }
 
 .rsg2-subGalleryList-title {
-	float : left;
+    float: left;
 }
 
 .rsg2-subGalleryList-list {
-	float            : left;
+    float: left;
 
-	margin           : 0 0 0 5px;
-	padding          : 0px;
+    margin: 0 0 0 5px;
+    padding: 0px;
 
-	list-style       : none;
-	background-image : none;
+    list-style: none;
+    background-image: none;
 }
 
 /* thumbnail list */
 
 ul#rsg2-thumbsList {
-	margin : auto;
+    margin: auto;
 }
 
 ul#rsg2-thumbsList li {
-	display          : block;
-	float            : left;
-	overflow         : hidden;
-	padding          : 5px 5px;
+    display: block;
+    float: left;
+    overflow: hidden;
+    padding: 5px 5px;
 
-	text-align       : center;
+    text-align: center;
 
-	/*     get rid of other possible list styles */
-	list-style       : none;
-	background-image : none;
+    /*     get rid of other possible list styles */
+    list-style: none;
+    background-image: none;
 }
 
 table#rsg2-thumbsList {
-	width : 100%;
+    width: 100%;
 }
 
 table#rsg2-thumbsList td {
-	overflow   : hidden;
-	padding    : 5px 5px;
-	text-align : center;
-	border     : none;
+    overflow: hidden;
+    padding: 5px 5px;
+    text-align: center;
+    border: none;
 }
 
 table#rsg2-thumbsList tr {
-	border : none;
+    border: none;
 }
 
 .rsg_sem_inl_dispImg table {
-	border-collapse: collapse;
-	width: 100%
+    border-collapse: collapse;
+    width: 100%
 }
 
 .rsg_sem_inl_dispImg tr, .rsg_sem_inl_dispImg td {
-	border : none;
-	padding: 0;
+    border: none;
+    padding: 0;
 }
 
 
 .rsg_sem_inl_ImgDetails {
-	/* background-color : #f5f5f5; /**/
-	padding: 10px; /**/
-	/* border: solid 1px green;  /**/
+    /* background-color : #f5f5f5; /**/
+    padding: 10px; /**/
+    /* border: solid 1px green;  /**/
 }
 
 .rsg_sem_inl_ImgDetails .nav-item {
 
-	font-weight: bold; /**/
+    font-weight: bold; /**/
 }
 
 /**/
 .page_inline_tabs_description {
-	/**
-	background-color : lightgrey;
-	padding: 10px;
-	/* margin: 10px; /**/
-	/* border: solid 1px green; /**/
+    /**
+    background-color : lightgrey;
+    padding: 10px;
+    /* margin: 10px; /**/
+    /* border: solid 1px green; /**/
 }
+
 /**/
 
-.page_inline_hits  {
-	/*
-	padding: 10px;
-	margin: 10px;
-	background-color : white;
-	/* border: solid 1px red; /**/
-	text-align: center;
+.page_inline_hits {
+    /*
+    padding: 10px;
+    margin: 10px;
+    background-color : white;
+    /* border: solid 1px red; /**/
+    text-align: center;
 }
 
-.page_inline_description  {
-	margin: 10px;
-	background-color : white;
-	/* border: solid 1px blue; /**/
+.page_inline_description {
+    margin: 10px;
+    background-color: white;
+    /* border: solid 1px blue; /**/
 }
 
 
-
-.rsg_sem_inl_dispImg  {
-	border-collapse: collapse;
-	width: 100%
+.rsg_sem_inl_dispImg {
+    border-collapse: collapse;
+    width: 100%
 }
 
 .rsg_sem_inl_img_a_link {
 
-	text-align:center;
+    text-align: center;
 
 }
-
-
 
 
 .rsg2-pageNav {
-	text-align : center;
-	font-size  : 12px;
+    text-align: center;
+    font-size: 12px;
 }
 
 .rsg2-pagenav-limitbox {
-	text-align : right;
+    text-align: right;
 }
 
 /* utility selector, this is common in many templates, but we can't count on it being there */
 .rsg2-clr {
-	clear       : both;
-	line-height : 0px;
+    clear: both;
+    line-height: 0px;
 }
 
 /*************************************/
 /* Classes for tab pane */
 
 .rsg2 dl.tabs {
-	margin-bottom  : 0;
-	padding-bottom : 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .rsg2 dl.tabs dt {
-	background-color : White;
-	display          : inline;
-	border           : 1px solid #919B9C;
-	padding          : 0.25em 0.5em;
-	float            : left;
+    background-color: White;
+    display: inline;
+    border: 1px solid #919B9C;
+    padding: 0.25em 0.5em;
+    float: left;
 }
 
 .rsg2 dl.tabs dt.open {
-	border-bottom : 1px solid white;
-	font-weight   : bold;
+    border-bottom: 1px solid white;
+    font-weight: bold;
 }
 
 .rsg2 div.current {
-	border     : 1px solid #919B9C;
-	padding    : 0.5em;
-	margin-top : 0.25em;
-	clear      : both;
+    border: 1px solid #919B9C;
+    padding: 0.5em;
+    margin-top: 0.25em;
+    clear: both;
 }
 
 .rsg2 dl.tabs dt.tabs span h3 {
-	margin : 0.25em;
+    margin: 0.25em;
 }
 
 /****************** OLD CLASSES ********************/
@@ -427,140 +425,140 @@ table#rsg2-thumbsList tr {
 
 /* standard list style table */
 table.adminlist {
-	background-color : #FFFFFF;
-	margin           : 0px;
-	padding          : 0px;
-	border           : 1px solid #ddd;
-	border-spacing   : 0px;
-	width            : 100%;
-	border-collapse  : collapse;
+    background-color: #FFFFFF;
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid #ddd;
+    border-spacing: 0px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 table.adminlist th {
-	margin            : 0px;
-	padding           : 6px 4px 2px 4px;
-	height            : 25px;
-	background-repeat : repeat;
-	font-size         : 11px;
-	color             : #000;
+    margin: 0px;
+    padding: 6px 4px 2px 4px;
+    height: 25px;
+    background-repeat: repeat;
+    font-size: 11px;
+    color: #000;
 }
 
 table.adminlist th.title {
-	text-align : left;
+    text-align: left;
 }
 
 table.adminlist th a:link, table.adminlist th a:visited {
-	color           : #c64934;
-	text-decoration : none;
+    color: #c64934;
+    text-decoration: none;
 }
 
 table.adminlist th a:hover {
-	text-decoration : underline;
+    text-decoration: underline;
 }
 
 table.adminlist tr.row0 {
-	background-color : #F9F9F9;
+    background-color: #F9F9F9;
 }
 
 table.adminlist tr.row1 {
-	background-color : #FFF;
+    background-color: #FFF;
 }
 
 table.adminlist td {
-	border-bottom : 1px solid #e5e5e5;
-	padding       : 4px;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 4px;
 }
 
 table.adminlist tr.row0:hover {
-	background-color : #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 table.adminlist tr.row1:hover {
-	background-color : #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 table.adminlist td.options {
-	background-color : #ffffff;
-	font-size        : 8px;
+    background-color: #ffffff;
+    font-size: 8px;
 }
 
 select.options, input.options {
-	font-size   : 8px;
-	font-weight : normal;
-	border      : 1px solid #999999;
+    font-size: 8px;
+    font-weight: normal;
+    border: 1px solid #999999;
 }
 
 /* standard form style table */
 table.adminform {
-	background-color : #f9f9f9;
-	border           : 1px solid #d5d5d5;
-	padding          : 0px;
-	border-collapse  : collapse;
-	margin           : 0px;
-	border-spacing   : 0px;
-	width            : 100%;
+    background-color: #f9f9f9;
+    border: 1px solid #d5d5d5;
+    padding: 0px;
+    border-collapse: collapse;
+    margin: 0px;
+    border-spacing: 0px;
+    width: 100%;
 }
 
 table.adminform tr.row0 {
-	background-color : #f9f9f9;
+    background-color: #f9f9f9;
 }
 
 table.adminform tr.row1 {
-	background-color : #eeeeee;
+    background-color: #eeeeee;
 }
 
 table.adminform th {
-	font-size         : 11px;
-	padding-top       : 6px;
-	padding-bottom    : 2px;
-	padding-left      : 4px;
-	padding-right     : 4px;
-	text-align        : left;
-	height            : 25px;
-	color             : #000;
-	background-repeat : repeat;
+    font-size: 11px;
+    padding-top: 6px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-align: left;
+    height: 25px;
+    color: #000;
+    background-repeat: repeat;
 }
 
 table.adminform td {
-	padding    : 3px;
-	text-align : left;
+    padding: 3px;
+    text-align: left;
 }
 
 table.adminform td.editor {
-	font-size : 9px;
+    font-size: 9px;
 }
 
 /*************** modal popup style ************/
 
 #sbox-window.rsg2 {
-	background-color : #fff;
-	padding          : 2px;
+    background-color: #fff;
+    padding: 2px;
 }
 
 #sbox-overlay.rsg2 {
-	background-color : #000;
+    background-color: #000;
 }
 
 .rsg2 #sbox-btn-close {
-	display : none;
+    display: none;
 }
 
 p.rsg2-popup-description,
 p.rsg2-popup-title {
-	text-align : center;
-	font-size  : small;
-	margin     : 0.5em 0 0 0;
-	padding    : 0;
-	color      : #fff;
+    text-align: center;
+    font-size: small;
+    margin: 0.5em 0 0 0;
+    padding: 0;
+    color: #fff;
 }
 
 p.rsg2-popup-description {
-	border-top     : 1px solid #999;
-	padding-bottom : 1.5em;
+    border-top: 1px solid #999;
+    padding-bottom: 1.5em;
 }
 
 img.rsg2-displayImage {
-	cursor : pointer;
+    cursor: pointer;
 }
 
 /*** Pagination (based on http://joomla-css.nl/index.php/en/content-a-component-styles-en-16/pagination-general-en-16) ***/
@@ -592,15 +590,15 @@ div.rsg_sem_inl_Nav div div.pagination ul li {
 
 /* slidePage pagination */
 .rsg2-j3x-pagination .rsg2-j3x-pagination--buttons {
-/**
-	display: inline;
-	margin: 1px auto;
-/**/
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 1ch;
+    /**
+        display: inline;
+        margin: 1px auto;
+    /**/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1ch;
 }
 
 /*.dl-horizontal dt{*/
@@ -609,6 +607,6 @@ div.rsg_sem_inl_Nav div div.pagination ul li {
 
 .rsg2_exif_container {
 
-	margin : 0px auto;
+    margin: 0px auto;
 
 }

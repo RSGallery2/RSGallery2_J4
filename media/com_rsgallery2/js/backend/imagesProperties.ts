@@ -17,12 +17,12 @@
  /**/
 
 /**
-interface Joomla {
-    JText: {
-        _(String)
-    }
-    submitbutton: any;
-    submitform: any;
-}
-/**/
+ interface Joomla {
+ JText: {
+ _(String)
+ }
+ submitbutton: any;
+ submitform: any;
+ }
+ /**/
 

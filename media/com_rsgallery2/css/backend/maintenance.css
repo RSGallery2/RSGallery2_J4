@@ -46,185 +46,239 @@
   margin: 10px;
   max-width: 20em;
 }
-.icons-panel .icons-panel-title header {
+@media (prefers-color-scheme: dark) {
+  .icons-panel .icons-panel-info {
+    color: lightgrey;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .icons-panel-title {
+    color: lightgrey;
+  }
+}
+.icons-panel .icons-panel-title .icons-panel-title header {
   min-height: 2em;
 }
 .icons-panel .rsg2Zone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid green;
+  border: 3px solid #001a00;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: green;
+  background-color: #001a00;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .rsg2Zone {
+    color: lightgrey;
+  }
 }
 .icons-panel .rawDbZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid darkorange;
+  border: 3px solid #995400;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: darkorange;
+  background-color: #995400;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .rawDbZone {
+    color: lightgrey;
+  }
 }
 .icons-panel .repairZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid DodgerBlue;
+  border: 3px solid #005db7;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: DodgerBlue;
+  background-color: #005db7;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .repairZone {
+    color: lightgrey;
+  }
 }
 .icons-panel .dangerZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #df3e3e;
+  border: 3px solid #9d1a1a;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #df3e3e;
+  background-color: #9d1a1a;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .dangerZone {
+    color: lightgrey;
+  }
 }
 .icons-panel .upgradeZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid purple;
+  border: 3px solid #1a001a;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: purple;
+  background-color: #1a001a;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .upgradeZone {
+    color: lightgrey;
+  }
 }
 .icons-panel .developerZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #3056ff;
+  border: 3px solid #0025c9;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #3056ff;
+  background-color: #0025c9;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .developerZone {
+    color: lightgrey;
+  }
 }
 .icons-panel .devTestZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #96a918;
+  border: 3px solid #47500b;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #96a918;
+  background-color: #47500b;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .devTestZone {
+    color: lightgrey;
+  }
 }
 .icons-panel .outdatedZone {
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid goldenrod;
+  border: 3px solid #816213;
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: goldenrod;
+  background-color: #816213;
+}
+@media (prefers-color-scheme: dark) {
+  .icons-panel .outdatedZone {
+    color: lightgrey;
+  }
 }
 .icons-panel.rsg2 {
   border: 3px solid;
-  border-color: green;
+  border-color: #001a00;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.rsg2 span.icoMoon {
-  color: green;
+  color: #001a00;
 }
 .icons-panel.rsg2 .rsg2-icon-bar a:hover {
-  border-color: green;
+  border-color: #001a00;
 }
 .icons-panel.rawDb {
   border: 3px solid;
-  border-color: darkorange;
+  border-color: #995400;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.rawDb span.icoMoon {
-  color: darkorange;
+  color: #995400;
 }
 .icons-panel.rawDb .rsg2-icon-bar a:hover {
-  border-color: darkorange;
+  border-color: #995400;
 }
 .icons-panel.repair {
   border: 3px solid;
-  border-color: DodgerBlue;
+  border-color: #005db7;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.repair span.icoMoon {
-  color: DodgerBlue;
+  color: #005db7;
 }
 .icons-panel.repair .rsg2-icon-bar a:hover {
-  border-color: DodgerBlue;
+  border-color: #005db7;
 }
 .icons-panel.danger {
   border: 3px solid;
-  border-color: #df3e3e;
+  border-color: #9d1a1a;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.danger span.icoMoon {
-  color: #df3e3e;
+  color: #9d1a1a;
 }
 .icons-panel.danger .rsg2-icon-bar a:hover {
-  border-color: #df3e3e;
+  border-color: #9d1a1a;
 }
 .icons-panel.upgrade {
   border: 3px solid;
-  border-color: purple;
+  border-color: #1a001a;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.upgrade span.icoMoon {
-  color: purple;
+  color: #1a001a;
 }
 .icons-panel.upgrade .rsg2-icon-bar a:hover {
-  border-color: purple;
+  border-color: #1a001a;
 }
 .icons-panel.developer {
   border: 3px solid;
-  border-color: #3056ff;
+  border-color: #0025c9;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.developer span.icoMoon {
-  color: #3056ff;
+  color: #0025c9;
 }
 .icons-panel.developer .rsg2-icon-bar a:hover {
-  border-color: #3056ff;
+  border-color: #0025c9;
 }
 .icons-panel.devTest {
   border: 3px solid;
-  border-color: #96a918;
+  border-color: #47500b;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.devTest span.icoMoon {
-  color: #96a918;
+  color: #47500b;
 }
 .icons-panel.devTest .rsg2-icon-bar a:hover {
-  border-color: #96a918;
+  border-color: #47500b;
 }
 .icons-panel.outdated {
   border: 3px solid;
-  border-color: goldenrod;
+  border-color: #816213;
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.outdated span.icoMoon {
-  color: goldenrod;
+  color: #816213;
 }
 .icons-panel.outdated .rsg2-icon-bar a:hover {
-  border-color: goldenrod;
+  border-color: #816213;
 }
 
 .rsg2-icon-bar {
   display: flex;
   flex-direction: column;
-  flex-basis: 100%;
   flex: 1;
 }
 .rsg2-icon-bar a {
   background-color: white;
+  border: 5px solid lightgrey;
   margin: 5px;
   padding: 25px 25px 0px 25px;
   display: inline-block;
-  background-color: white;
   border-radius: 2px;
-  border: 5px solid lightgrey;
   box-shadow: 2px 2px 1px #888888;
+}
+@media (prefers-color-scheme: dark) {
+  .rsg2-icon-bar a {
+    background-color: grey;
+    border: 5px solid darkgrey;
+  }
 }
 .rsg2-icon-bar a:hover {
   text-decoration: none;
@@ -238,12 +292,48 @@
 .rsg2-icon-bar a .maint-title {
   color: blue;
 }
+@media (prefers-color-scheme: dark) {
+  .rsg2-icon-bar a .maint-title {
+    color: lightgrey;
+  }
+}
 .rsg2-icon-bar a .maint-text {
   color: black;
 }
-
-.whatEver {
-  background-color: lightgreen;
+.rsg2-icon-bar button {
+  background-color: white;
+  border: 5px solid lightgrey;
+  margin: 5px;
+  padding: 25px 25px 0px 25px;
+  display: inline-block;
+  border-radius: 2px;
+  box-shadow: 2px 2px 1px #888888;
+}
+@media (prefers-color-scheme: dark) {
+  .rsg2-icon-bar button {
+    background-color: grey;
+    border: 5px solid darkgrey;
+  }
+}
+.rsg2-icon-bar button:hover {
+  text-decoration: none;
+}
+.rsg2-icon-bar button:active {
+  background-color: sandybrown;
+}
+.rsg2-icon-bar button span.icoMoon {
+  margin-right: 22px;
+}
+.rsg2-icon-bar button .maint-title {
+  color: blue;
+}
+@media (prefers-color-scheme: dark) {
+  .rsg2-icon-bar button .maint-title {
+    color: lightgrey;
+  }
+}
+.rsg2-icon-bar button .maint-text {
+  color: black;
 }
 
 /*# sourceMappingURL=maintenance.css.map */
