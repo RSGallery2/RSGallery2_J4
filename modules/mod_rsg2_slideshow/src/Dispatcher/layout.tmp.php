@@ -11,8 +11,7 @@
 
 // assign local layout
 
-protected
-function getLayoutData(): array
+protected function getLayoutData(): array
 {
     $data = parent::getLayoutData();
 

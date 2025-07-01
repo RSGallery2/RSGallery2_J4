@@ -16,10 +16,8 @@ use Joomla\Event\EventInterface;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 
-use function defined;
-
 // phpcs:disable PSR1.Files.SideEffects
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 {
@@ -119,9 +117,7 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
             // $event->stopPropagation();
 
         } catch (Exception $e) {
-            $msg = Text::_(
-                    'PLG_CONTENT_RSG2_RANDOM_IMAGES',
-                ) . ' getRsg2_random_imagesDisplay: ' . ' Error (01): ' . $e->getMessage();
+			$msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES') . ' getRsg2_random_imagesDisplay: '. ' Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
 
@@ -158,11 +154,10 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
                 {
                     $usrParams->set($name, $value);
                 }
+
             }
         } catch (Exception $e) {
-            $msg = Text::_(
-                    'PLG_CONTENT_RSG2_RANDOM_IMAGES' . 'extractUserParams: "',
-                ) . $usrString . '" Error (01): ' . $e->getMessage();
+			$msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
 

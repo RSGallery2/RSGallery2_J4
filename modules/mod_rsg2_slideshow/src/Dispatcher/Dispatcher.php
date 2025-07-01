@@ -18,9 +18,7 @@ use Joomla\CMS\Helper\HelperFactoryAwareTrait;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
 
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
 {

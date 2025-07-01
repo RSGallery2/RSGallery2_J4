@@ -1,6 +1,5 @@
 <?php
 /**
- * /**
  * @package       RSGallery2
  * @subpackage    mod_rsg2_slideshow
  *
@@ -8,7 +7,7 @@
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -20,11 +19,7 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/imagesSlideshow.css', ['version
 
 // echo "<h1>mod_rsg2_slideshow.php</h1>";
 
-$model  = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel(
-    'ImagesSlideshow',
-    'Site',
-    ['ignore_request' => true],
-);
+$model = $app->bootComponent('com_rsgallery2')->getMVCFactory()->createModel('ImagesSlideshow', 'Site', ['ignore_request' => true]);
 $images = Rsg2_slideshowHelper::getList($params, $model, $app);
 
 // standard display

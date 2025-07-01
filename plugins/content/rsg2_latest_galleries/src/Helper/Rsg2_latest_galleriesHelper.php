@@ -15,11 +15,8 @@ use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
-use RuntimeException;
 
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Helper for mod_rsg2_galleries
@@ -102,7 +99,8 @@ class Rsg2_latest_galleriesHelper //implements DatabaseAwareInterface
                 // Add image paths, image params ...
                 $data = $this->galleriesModel->AddLayoutData($galleries);
             }
-        } catch (RuntimeException $e) {
+
+		} catch (\RuntimeException $e) {
             // ToDo: Message more explicit
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }

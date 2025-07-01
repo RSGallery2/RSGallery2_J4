@@ -7,7 +7,7 @@
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 // global $msg;
 
@@ -40,15 +40,12 @@ echo '<br>--------------------------- mod_rsg2_gallery masonry end   -----------
 ?>
 
 <!--<div class="grid-container">-->
-<!--        --><?php
-//foreach ($images as $image) : ?>
+<!--        --><?php //foreach ($images as $image) : ?>
 <!---->
 <!--            <figure class=”gallery__item gallery__item--1">-->
-<!--                <img src="--><?php
-//echo $image; ?><!--" class="gallery__img" alt="Image 1">-->
+<!--                <img src="--><?php //echo $image; ?><!--" class="gallery__img" alt="Image 1">-->
 <!--            </figure>-->
 <!---->
-<!--        --><?php
-//endforeach; ?>
+<!--        --><?php //endforeach; ?>
 <!--    </div>-->
 <!--</div>-->

@@ -1,6 +1,5 @@
 <?php
 /**
- * /**
  * @package       Joomla.Administrator
  * @subpackage    mod_rsg2_images
  *
@@ -8,7 +7,7 @@
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
 use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_galleriesHelper;
@@ -66,7 +65,7 @@ $images = [];
  *
  *
  * require ModuleHelper::getLayoutPath('mod_rsg2_images', $params->get('layout', 'default'));
- * /**/
+ /**/
 
 ?>
 

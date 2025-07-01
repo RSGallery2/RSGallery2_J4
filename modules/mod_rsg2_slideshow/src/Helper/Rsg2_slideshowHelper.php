@@ -21,11 +21,8 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
-use RuntimeException;
 
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Helper for mod_rsg2_slideshow
@@ -38,8 +35,8 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 
     protected $galleryModel; // ToDo: rename to slideshowModel
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data ){
+
         // boot component only once Model('Gallery', 'Site')
 
         $app = $data['app'];
@@ -115,12 +112,12 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
         $ordering = $params->get('ordering', 'a.publish_up');
         $model->setState('list.ordering', $ordering);
 
-        if (trim($ordering) === 'rand()') {
-            $model->setState(
-                'list.ordering',
-                Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand(),
-            );
-        } else {
+		if (trim($ordering) === 'rand()')
+		{
+			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
+		}
+		else
+		{
             $direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
             $model->setState('list.direction', $direction);
             $model->setState('list.ordering', $ordering);

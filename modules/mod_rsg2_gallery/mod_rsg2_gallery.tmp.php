@@ -1,6 +1,5 @@
 <?php
 /**
- * /**
  * @package       Joomla.Administrator
  * @subpackage    mod_rsg2_gallery
  *
@@ -8,7 +7,7 @@
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Uri\Uri;
@@ -43,9 +42,7 @@ if ($selectGallery > 0) {
             $images = Rsg2_galleryHelper::getImageNamesOfUrl($folderUrl);
         } else {
             // Nothing selected
-            Factory::getApplication()->enqueueMessage(
-                'mod_rsg2_gallery: source path for images is not defined in module "' . $module->title . '" definition',
-            );  // . __LINE__);
+            Factory::getApplication()->enqueueMessage('mod_rsg2_gallery: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
         }
     }
 }

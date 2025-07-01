@@ -9,7 +9,7 @@
 
 use Joomla\CMS\Layout\FileLayout;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 // global $msg;
 
@@ -83,50 +83,36 @@ if ($displaySearch) {
 ?>
 
 <!--<div class="grid-container">-->
-<!--        --><?php
-//foreach ($images as $image) : ?>
+<!--        --><?php //foreach ($images as $image) : ?>
 <!---->
 <!--            <figure class=”gallery__item gallery__item--1">-->
-<!--                <img src="--><?php
-//echo $image; ?><!--" class="gallery__img" alt="Image 1">-->
+<!--                <img src="--><?php //echo $image; ?><!--" class="gallery__img" alt="Image 1">-->
 <!--            </figure>-->
 <!---->
-<!--        --><?php
-//endforeach; ?>
+<!--        --><?php //endforeach; ?>
 <!--    </div>-->
 <!--</div>-->
 
 <div class="rsg2_x_form rsg2__images_area">
 
-    <?php
-    if (!empty($isDebugSite)): ?>
-        <h1><?php
-            echo text::_('Module RSGallery2 "gallery j3x legacy" J3x view'); ?> view </h1>
+	<?php if (!empty($isDebugSite)): ?>
+        <h1><?php echo text::_('Module RSGallery2 "gallery j3x legacy" J3x view'); ?> view </h1>
         <hr>
-    <?php
-    endif; ?>
+	<?php endif; ?>
 
-    <?php
-    //--- display search ---------- ?>
+	<?php //--- display search ---------- ?>
 
-    <?php
-    if ($displaySearch): ?>
-        <?php
-        echo $searchLayout->render(); ?>
-    <?php
-    endif; ?>
+	<?php if ($displaySearch): ?>
+		<?php echo $searchLayout->render(); ?>
+	<?php endif; ?>
 
-    <?php
-    //--- display images in J3x slideshow ---------- ?>
+    <?php //--- display images in J3x slideshow ---------- ?>
 
-    <?php
-    echo $layout->render($displayData); ?>
+	<?php echo $layout->render($displayData); ?>
 
-    <?php
-    //--- display pagination ---------- ?>
+	<?php //--- display pagination ---------- ?>
 
-    <?php
-    echo $pagination->getListFooter(); ?>
+    <?php echo $pagination->getListFooter(); ?>
 
 </div>
 

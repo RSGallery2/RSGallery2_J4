@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Module\Rsg2_images\Site\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 //use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\Component\ComponentHelper;
@@ -112,12 +112,12 @@ class Rsg2_imagesHelper
         $ordering = $params->get('ordering', 'a.publish_up');
         $model->setState('list.ordering', $ordering);
 
-        if (trim($ordering) === 'rand()') {
-            $model->setState(
-                'list.ordering',
-                Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand(),
-            );
-        } else {
+		if (trim($ordering) === 'rand()')
+		{
+			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
+		}
+		else
+		{
             $direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
             $model->setState('list.direction', $direction);
             $model->setState('list.ordering', $ordering);

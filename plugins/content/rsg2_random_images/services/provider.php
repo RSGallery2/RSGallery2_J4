@@ -45,7 +45,7 @@ return new class () implements ServiceProviderInterface {
                 //$plugin->setMyCustomService($container->get(MyCustomService::class));
 
                 return $plugin;
-            },
+            }
         );
     }
 };

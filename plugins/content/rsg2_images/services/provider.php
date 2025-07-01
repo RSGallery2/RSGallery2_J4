@@ -18,6 +18,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
+
 use Rsgallery2\Plugin\Content\Rsg2_images\Extension\Rsg2_images;
 
 
@@ -45,7 +46,7 @@ return new class () implements ServiceProviderInterface {
                 //$plugin->setMyCustomService($container->get(MyCustomService::class));
 
                 return $plugin;
-            },
+            }
         );
     }
 };

@@ -9,7 +9,7 @@
 
 use Joomla\CMS\Layout\FileLayout;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 // use Joomla\CMS\Helper\ModuleHelper;
 
@@ -69,18 +69,14 @@ $displayData['isDevelopSite'] = $isDevelopSite;
 
 <div class="rsg2_x_form rsg2__slide_area">
 
-    <?php
-    if (!empty($isDebugSite)): ?>
-        <h1> Module RSGallery2 "slideshow" J3x view </h1>
-        <hr>
-    <?php
-    endif; ?>
+        <?php if (!empty($isDebugSite)): ?>
+            <h1> Module RSGallery2 "slideshow" J3x view </h1>
+            <hr>
+        <?php endif; ?>
 
-    <?php
-    //--- display images in J3x slideshow ---------- ?>
+        <?php //--- display images in J3x slideshow ---------- ?>
 
-    <?php
-    echo $layout->render($displayData); ?>
+        <?php echo $layout->render($displayData); ?>
 
 </div>
 

@@ -15,14 +15,12 @@
   <scriptfile>install_rsg2.php</scriptfile>
   <install>
     <sql>
-      <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql
-            </file>
+      <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
     </sql>
   </install>
   <uninstall>
     <sql>
-      <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql
-            </file>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
     </sql>
   </uninstall>
   <update>
@@ -63,8 +61,7 @@
     </files>
   </administration>
   <dashboards>
-    <dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-images">users
-        </dashboard>
+		<dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-images">users</dashboard>
   </dashboards>
   <!-- Front-end files -->
   <files folder="components/com_rsgallery2">
@@ -81,11 +78,8 @@
     <folder>images</folder>
     <folder>js</folder>
   </media>
-  <changelogurl>
-        https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml
-    </changelogurl>
+	<changelogurl>https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml</changelogurl>
   <updateservers>
-    <server type="extension" name="RSG2 for J4 Update server">https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml
-        </server>
+		<server type="extension" name="RSG2 for J4 Update server" >https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml</server>
   </updateservers>
 </extension>

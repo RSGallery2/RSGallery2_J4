@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Module\Rsg2_image\Site\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 //use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\Component\ComponentHelper;
@@ -58,7 +58,7 @@ class Rsg2_imageHelper
             //$dbImage = $db->loadResult();
             //$dbImage = $db->loadRow();
             $dbImage = $db->loadObject();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing Rsg2_imageHelper.getList for ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -140,12 +140,12 @@ class Rsg2_imageHelper
         $ordering = $params->get('ordering', 'a.publish_up');
         $model->setState('list.ordering', $ordering);
 
-        if (trim($ordering) === 'rand()') {
-            $model->setState(
-                'list.ordering',
-                Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand(),
-            );
-        } else {
+		if (trim($ordering) === 'rand()')
+		{
+			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
+		}
+		else
+		{
             $direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
             $model->setState('list.direction', $direction);
             $model->setState('list.ordering', $ordering);
@@ -421,7 +421,9 @@ class Rsg2_imageHelper
             // $ImagePaths->urlReplaceMissingImages_ByChild ($image);
 
             // ToDo: watermarked file
-        } catch (RuntimeException $e) {
+        }
+        catch (\RuntimeException $e)
+        {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: AssignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -429,6 +431,7 @@ class Rsg2_imageHelper
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
+
     }
 
 
