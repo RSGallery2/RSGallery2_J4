@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     com_rsgallery2
- * @subpackage  plg_rsg2_gallery
+ * @package       com_rsgallery2
+ * @subpackage    plg_rsg2_gallery
  *
- * @copyright (c) 2005-2024 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // https://docs.joomla.org/JDOC:Joomla_4_Tutorials_Project/en
@@ -17,15 +17,16 @@
 // $this->db: das Datenbankobjekt
 // $this->app: das Anwendungsobjekt
 
-\defined('_JEXEC') or die;
+defined('_JEXEC') or die;
 
 //use Joomla\CMS\Event\Event;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Registry\Registry;
 
 // use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
@@ -44,11 +45,11 @@ use Joomla\Registry\Registry;
  */
 class PlgContentRsg2_gallery extends CMSPlugin
 {
-    /** @var \Joomla\CMS\Application\CMSApplication */
+    /** @var CMSApplication */
     /**
-    protected $app;
-    protected $db;
-    /**/
+     * protected $app;
+     * protected $db;
+     * /**/
 
     protected $debugActive = 0;
 
@@ -77,7 +78,6 @@ class PlgContentRsg2_gallery extends CMSPlugin
         }
 
         try {
-
             //--- collect all appearances ---------------------------------------
 
             // ToDo: use pre fetch regex ...
@@ -86,11 +86,12 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             // Find all instances of plugin and put in $matches.
             $matches = [];
-            \preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER);
+            preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER);
 
             // there should be matches as text is searched
-            if(empty ($matches)) {
+            if (empty ($matches)) {
                 echo "<br><br>!!! article has no text !!!<br>";
+
                 return null;
             }
 
@@ -109,20 +110,19 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             //--- Perform the replacement ------------------------------
 
-            $article->text = preg_replace_callback($regex,
-                array(&$this, '_replacer'),
-                $article->text);
-
-
+            $article->text = preg_replace_callback(
+                $regex,
+                [&$this, '_replacer'],
+                $article->text,
+            );
 //            echo "<br>----------------------------------<br>";
-
-
 
 
         } catch (Exception $e) {
             $msg = Text::_('PLG_CONTENT_RSG2_GALLERY') . ' Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
+
             return false;
         }
 
@@ -133,7 +133,8 @@ class PlgContentRsg2_gallery extends CMSPlugin
     /**
      * Replaces the matched tags with gallery html output
      *
-     * @param array $matches An array of matches (see preg_match_all)
+     * @param   array  $matches  An array of matches (see preg_match_all)
+     *
      * @return bool|string
      * @throws Exception
      */
@@ -157,44 +158,44 @@ class PlgContentRsg2_gallery extends CMSPlugin
             // by reference).
             // $original_rsgConfig = clone $rsgConfig;
 
-            $rsgConfig = ComponentHelper::getParams( 'com_rsgallery2' );
+            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 
             // toDo: debug site !!!
             $DebugActive = $rsgConfig->get('isDebugSite');
             /**
-            if ($DebugActive) {
-                // Include the JLog class.
-                jimport('joomla.log.log');
-
-                // Get the date for log file name
-                $date = Factory::getDate()->format('Y-m-d');
-
-                // Add the logger.
-                JLog::addLogger(
-                // Pass an array of configuration options
-                    array(
-                        // Set the name of the log file
-                        //'text_file' => substr($application->scope, 4) . ".log.php",
-                        'text_file' => 'rsgallery2.GalleryDisplay.log.' . $date . '.php',
-
-                        // (optional) you can change the directory
-                        'text_file_path' => 'logs'
-                    ),
-                    //JLog::ALL ^ JLog::DEBUG // leave out db messages
-                    JLog::ALL
-                );
-
-                // start logging...
-                JLog::add('Start plg_rsg2_gallerydisplay: debug active in RSGallery2', JLog::DEBUG);
-            }
-            /**/
+             * if ($DebugActive) {
+             * // Include the JLog class.
+             * jimport('joomla.log.log');
+             *
+             * // Get the date for log file name
+             * $date = Factory::getDate()->format('Y-m-d');
+             *
+             * // Add the logger.
+             * JLog::addLogger(
+             * // Pass an array of configuration options
+             * array(
+             * // Set the name of the log file
+             * //'text_file' => substr($application->scope, 4) . ".log.php",
+             * 'text_file' => 'rsgallery2.GalleryDisplay.log.' . $date . '.php',
+             *
+             * // (optional) you can change the directory
+             * 'text_file_path' => 'logs'
+             * ),
+             * //JLog::ALL ^ JLog::DEBUG // leave out db messages
+             * JLog::ALL
+             * );
+             *
+             * // start logging...
+             * JLog::add('Start plg_rsg2_gallerydisplay: debug active in RSGallery2', JLog::DEBUG);
+             * }
+             * /**/
 
             //----------------------------------------------------------------
             // Get attributes from matches and create "clean" array from them
             //----------------------------------------------------------------
 
             $attribs = explode(',', $matches[1]);
-            if ( ! is_array($attribs)) {
+            if (!is_array($attribs)) {
                 // ToDo: add outer query so its clear where it came from ...
                 $errText = '??? ' . $matches[1] . '->No attributes ???';
                 if ($DebugActive) {
@@ -204,13 +205,13 @@ class PlgContentRsg2_gallery extends CMSPlugin
                 return $errText;
             }
 
-            $usrParams = $this->extractParams ($attribs);
+            $usrParams = $this->extractParams($attribs);
 
             // ToDo: use gids in first place: change Rsg2_imagesHelper -> modul ?mod_... ?? ....
-            $usrParams->set ('SelectGallery', $usrParams->get('gid'));
+            $usrParams->set('SelectGallery', $usrParams->get('gid'));
 
-            $MVCFactory  = $app->bootComponent('com_rsgallery2')->getMVCFactory();
-            $model = $MVCFactory->createModel('Images', 'Site', ['ignore_request' => true]);
+            $MVCFactory = $app->bootComponent('com_rsgallery2')->getMVCFactory();
+            $model      = $MVCFactory->createModel('Images', 'Site', ['ignore_request' => true]);
 
             // $images = Rsg2_imagesHelper::getList($usrParams, $model, $app);
             $images = [];
@@ -218,8 +219,8 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
 // Test
 //$layout = new FileLayout('Test.search');
-            $layoutSearch    = new FileLayout('components.com_rsgallery2.layouts.Search.search', JPATH_SITE);
-            $layoutImages    = new FileLayout('components.com_rsgallery2.layouts.ImagesArea.default', JPATH_SITE);
+            $layoutSearch = new FileLayout('components.com_rsgallery2.layouts.Search.search', JPATH_SITE);
+            $layoutImages = new FileLayout('components.com_rsgallery2.layouts.ImagesArea.default', JPATH_SITE);
 //echo $tabLayout->render(array('id' => $id, 'active' => $active, 'title' => $title));
 // echo $layout->render();
 
@@ -228,7 +229,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
             $html[] = '<h1> Plugin RSGallery2 PLG "gallery - images" view </h1>';
             $html[] = '<hr>';
-            $html[] =  $layoutSearch->render($displayData);;
+            $html[] = $layoutSearch->render($displayData);
             $html[] = '<hr>';
             $html[] = $layoutImages->render($displayData);
             $html[] = '<hr>';
@@ -246,133 +247,39 @@ class PlgContentRsg2_gallery extends CMSPlugin
             $content_output = implode($html);
 
             /**
-            // Go over attribs to get template, gid and possible parameters
-            foreach ($clean_attribs as $key => $value) {//$key is 0, 1, etc. $value is semantic, etc.
-                switch ($key) {
-                    // template (required), e.g. semantic
-                    case 0:
-                        if (isset($clean_attribs[0]) and (string)$clean_attribs[0]) {
-                            $template = strtolower($clean_attribs[0]);
-                        } else {
-                            $template = Null;
-                        }
-                        break;
-                    //  gallery id(required), e.g. 2
-                    case 1:
-                        if (isset($clean_attribs[1]) and (int)$clean_attribs[1]) {
-                            $gallery_id = $clean_attribs[1];
-                        } else {
-                            $gallery_id = Null;
-                        }
-                        break;
-                    // parameters like displaySearch=0;
-                    default:
-                        $pieces = explode("=", $clean_attribs[$key]);
-                        // Change the configuration parameter with the value
-                        if (count($pieces) > 1) {
-                            //$rsgConfig->$pieces[0] = $pieces[1];
-                            //$rsgConfig [$pieces] = $pieces[1];
-                            $rsgConfig->set($pieces[0], $pieces[1]);
-                        }
-                }
-            }
-            /**/
+             * // Go over attribs to get template, gid and possible parameters
+             * foreach ($clean_attribs as $key => $value) {//$key is 0, 1, etc. $value is semantic, etc.
+             * switch ($key) {
+             * // template (required), e.g. semantic
+             * case 0:
+             * if (isset($clean_attribs[0]) and (string)$clean_attribs[0]) {
+             * $template = strtolower($clean_attribs[0]);
+             * } else {
+             * $template = Null;
+             * }
+             * break;
+             * //  gallery id(required), e.g. 2
+             * case 1:
+             * if (isset($clean_attribs[1]) and (int)$clean_attribs[1]) {
+             * $gallery_id = $clean_attribs[1];
+             * } else {
+             * $gallery_id = Null;
+             * }
+             * break;
+             * // parameters like displaySearch=0;
+             * default:
+             * $pieces = explode("=", $clean_attribs[$key]);
+             * // Change the configuration parameter with the value
+             * if (count($pieces) > 1) {
+             * //$rsgConfig->$pieces[0] = $pieces[1];
+             * //$rsgConfig [$pieces] = $pieces[1];
+             * $rsgConfig->set($pieces[0], $pieces[1]);
+             * }
+             * }
+             * }
+             * /**/
 
             //--- Start: Several checks on template and gallery id --------------------------------
-
-            /**
-            // Check we have a template name
-            if (!isset($template)) {
-                if ($DebugActive) {
-                    $msg = Text::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_TEMPLATE_NAME_GIVEN');
-                    $app->enqueueMessage($msg, 'message');
-                    JLog::add('Template not found: "' . $template . '"', JLog::DEBUG);
-                }
-
-                return false;
-            }
-
-            // Check the template is indeed installed
-            $templateLocation = JPATH_RSGALLERY2_SITE . '/templates/' . $template . '/index.php';
-            if (!file_exists($templateLocation)) {
-                if ($DebugActive) {
-                    $msg = Text::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_TEMPLATE_DIRECTORY_NOT_FOUND', $template);
-                    $app->enqueueMessage($msg, 'message');
-                    JLog::add('Template location not found: "' . $templateLocation . '"', JLog::DEBUG);
-                }
-                return false;
-            }
-
-            // Check we have a gallery id
-            if (!isset($gallery_id)) {
-                if ($DebugActive) {
-                    $msg = Text::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_GALLERY_ID_GIVEN');
-                    $app->enqueueMessage($msg, 'message');
-                    JLog::add('no gallery id found: "' . $gallery_id . '"', JLog::DEBUG);
-                }
-                return false;
-            }
-
-            // Check if a gallery with gallery id exists
-            // Get gallery details first
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
-            $query->select('id, name, published'); // ToDo: Perhaps access could be checked as well
-            $query->from('#__rsgallery2_galleries');
-            $query->where('id = ' . (int)$gallery_id);
-            $db->setQuery($query);
-            $galleryDetails = $db->loadAssoc();
-
-            // Does the gallery exist?
-            if (!$galleryDetails) {
-                if ($DebugActive) {
-                    $msg = Text::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_NO_SUCH_GALLERY_ID_EXISTS', $gallery_id);
-                    $app->enqueueMessage($msg, 'message');
-                    JLog::add('gallery id not found in DB: "' . $gallery_id . '"', JLog::DEBUG);
-                }
-                return false;
-            }
-
-            // Is the gallery published?
-            if (!$galleryDetails['published']) {
-                if ($DebugActive) {
-                    $msg = Text::sprintf('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY_GALLERY_UNPUBLISHED', $galleryDetails['name'], $gallery_id);
-                    $app->enqueueMessage($msg, 'message');
-                    JLog::add('gallery not published: "' . $gallery_id . '"', JLog::DEBUG);
-                }
-                return false;
-            }
-            //--- End: Several checks on template and gallery id ---------------------------------
-
-
-            // Cache the current request array to a variable before doing anything
-            $original_request = $_REQUEST;
-            $original_get = $_GET;
-            $original_post = $_POST;
-
-            //--- patch the input variables ---------------
-
-            //The article has lang, language, Itemid, option, view, catid and id
-            //Get rid of catid and id, change option and view, set gallery_id (gid).
-            $input = Factory::getApplication()->input;
-            //JRequest::setVar('catid',Null);   //Is there a way to unset this?
-
-            // Id may otherwise try to retrieve a image
-            JRequest::setVar('id', Null);    //Is there a way to unset this?
-            //JRequest::setVar('option','com_rsgallery2');
-            //JRequest::setVar('view', 'gallery');
-
-            //JRequest::setVar('gid', $gallery_id);
-            $input->set('gid', $gallery_id);
-            //JRequest::setVar('rsgTemplate', $template);
-            $input->set('rsgTemplate', $template);
-
-
-            //--- Get the RSGallery2 gallery template HTML! -----------------------
-            ob_start();
-            rsgInstance::instance(); // With option $showTemplate = true
-            $content_output = ob_get_contents();
-            ob_end_clean();
 
             /**
              * if ($DebugActive) {
@@ -381,22 +288,21 @@ class PlgContentRsg2_gallery extends CMSPlugin
              * /**/
 
             /**
-            // Reset the original request array when finished
-            $_REQUEST = $original_request;
-            $_GET = $original_get;
-            $_POST = $original_post;
-            $rsgConfig = clone $original_rsgConfig;
-            /**/
+             * // Reset the original request array when finished
+             * $_REQUEST = $original_request;
+             * $_GET = $original_get;
+             * $_POST = $original_post;
+             * $rsgConfig = clone $original_rsgConfig;
+             * /**/
 
             return $content_output;
-
         } catch (Exception $e) {
             $msg = Text::_('PLG_CONTENT_RSGALLERY2_GALLERYDISPLAY') . ' Error (02): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
+
             return false;
         }
-
         // return false;
     }
 
@@ -412,36 +318,30 @@ class PlgContentRsg2_gallery extends CMSPlugin
     {
         $params = new Registry();
 
-        try
-        {
+        try {
             foreach ($attributes as $attribute) {
-
                 $items = explode('=', $attribute);
 
-                if (count ($items) > 0) {
-
-                    $name = $this->clean_string($items[0]);
+                if (count($items) > 0) {
+                    $name  = $this->clean_string($items[0]);
                     $value = '';
 
-                    if (count ($items) > 1) {
+                    if (count($items) > 1) {
                         $value = trim($items[1]);
                     }
 
                     // ToDo: ? multiple gids?
 
                     // Handle plugin specific variables or J3x to j4x transformations
-                    $isHandled = $this->handleSpecificParams ($params, $name, $value);
+                    $isHandled = $this->handleSpecificParams($params, $name, $value);
 
                     // standard assignment
-                    if (! $isHandled) {
-                        $params->set ($name, $value);
+                    if (!$isHandled) {
+                        $params->set($name, $value);
                     }
                 }
-
             }
-        }
-        catch (RuntimeException $e)
-        {
+        } catch (RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing PLG Rsg2_images::extractParams: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -457,7 +357,8 @@ class PlgContentRsg2_gallery extends CMSPlugin
     /**
      * Remove spaces (&nbsp;) from attributes and trim white space
      *
-     * @param string $attributeIn
+     * @param   string  $attributeIn
+     *
      * @return  string
      */
     function clean_string($attributeIn)
@@ -482,11 +383,10 @@ class PlgContentRsg2_gallery extends CMSPlugin
      *
      * @since version
      */
-    function handleSpecificParams ($params, $name, $value)
+    function handleSpecificParams($params, $name, $value)
     {
         // ToDo: prepare indexed values template/layout ...
         $isHandled = false;
-
 
 
         return $isHandled;
@@ -496,61 +396,61 @@ class PlgContentRsg2_gallery extends CMSPlugin
 }
 
 /**
-
-public
-function dummy()
-{
-     * // $app = Factory::getApplication();
-     *
-     * //--- Retrieve params -----------------------
-     *
-     * $selectGallery = $params->get('SelectGallery');
-     * $localFolder = $params->get('LocalFolder');
-     * $folderUrl = $params->get('FolderUrl');
-     *
-     *
-     * $images = [];
-     *
-     * // Use gallery images (?org/display/thumb ?)
-     * if ($selectGallery > 0) {
-     *
-     * // ToDo: retrieve path to thumbs ? ....
-     *
-     * } else {
-     *
-     * // Use local folder images ?
-     * if ( $localFolder) {
-     *
-     * $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
-     *
-     * } else {
-     * // Use gallery is expected ?
-     * if ($folderUrl) {
-     *
-     * $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
-     *
-     * } else {
-     *
-     * // Nothing selected
-     * $app->enqueueMessage('plg_rsg2_images: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
-     * }
-     * }
-     * }
-     *
-     *
-     * // Tests
-     * $localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
-     * $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
-     *
-     * $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
-     * $folderUrl = \Joomla\CMS\Uri\Uri::root() . '/images/rsgallery2/2/thumbs/';
-     * $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
-     *
-     *
-     * require ModuleHelper::getLayoutPath('plg_rsg2_images', $params->get('layout', 'default'));
-     *
-
-}
-/**/
+ *
+ * public
+ * function dummy()
+ * {
+ * // $app = Factory::getApplication();
+ *
+ * //--- Retrieve params -----------------------
+ *
+ * $selectGallery = $params->get('SelectGallery');
+ * $localFolder = $params->get('LocalFolder');
+ * $folderUrl = $params->get('FolderUrl');
+ *
+ *
+ * $images = [];
+ *
+ * // Use gallery images (?org/display/thumb ?)
+ * if ($selectGallery > 0) {
+ *
+ * // ToDo: retrieve path to thumbs ? ....
+ *
+ * } else {
+ *
+ * // Use local folder images ?
+ * if ( $localFolder) {
+ *
+ * $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
+ *
+ * } else {
+ * // Use gallery is expected ?
+ * if ($folderUrl) {
+ *
+ * $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
+ *
+ * } else {
+ *
+ * // Nothing selected
+ * $app->enqueueMessage('plg_rsg2_images: source path for images is not defined in module "' . $module->title . '" definition');  // . __LINE__);
+ * }
+ * }
+ * }
+ *
+ *
+ * // Tests
+ * $localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
+ * $images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
+ *
+ * $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
+ * $folderUrl = \Joomla\CMS\Uri\Uri::root() . '/images/rsgallery2/2/thumbs/';
+ * $images = Rsg2_imagesHelper::getImageNamesOfUrl($folderUrl);
+ *
+ *
+ * require ModuleHelper::getLayoutPath('plg_rsg2_images', $params->get('layout', 'default'));
+ *
+ *
+ * }
+ * /**/
 
 

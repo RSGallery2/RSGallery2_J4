@@ -6,14 +6,14 @@ namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Extension;
  * @package     Joomla.Plugin
  * @subpackage  Content.contact
  *
- * @copyright   (C) 2014 Open Source Matters, Inc. <https://www.joomla.org>
+ * @copyright  (c)  2019-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Joomla\Event\EventInterface;
-use Joomla\Event\SubscriberInterface;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\Event;
+use Joomla\Event\EventInterface;
+use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -34,7 +34,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 	public static function getSubscribedEvents () : array
 	{
 		return [
-			'onContentPrepare' => 'getRsg2_galleryDisplay'
+            'onContentPrepare' => 'getRsg2_galleryDisplay',
 		];
 	}
 
@@ -45,7 +45,6 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 		$usrParams = new Registry ();
 
 		try {
-
 			// support J4 (and J5)
 			if (version_compare(JVERSION, '4.999999.999999', 'lt')) {
 				[$context, $article, $params] = $event->getArguments();
@@ -63,8 +62,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
 			//--- replacement may exist --------------------------------------------------
 
-			if (str_contains($article->text, '{rsg2_gallery'))
-			{
+            if (str_contains($article->text, '{rsg2_gallery')) {
 				$lastUserTestIdx = 0;
 
 				//--- collect all appearances ---------------------------------------
@@ -81,14 +79,12 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 //				}
 
 				// Replace all matches
-				if ($matches)
-				{
+                if ($matches) {
 					//--- Load plugin language file -------------------------------
 
 					$this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
 
-					foreach ($matches as $usrDefinition)
-					{
+                    foreach ($matches as $usrDefinition) {
 						$insertHtml = '';
 
 						$replaceText = $usrDefinition[0]; // develop check
@@ -117,8 +113,8 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 							$article->text,
 							$insertHtml,
 							$replaceStart,
-							$replaceLen);
-
+                            $replaceLen,
+                        );
 					}
 				}
 			}
@@ -129,6 +125,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 			$msg = Text::_('PLG_CONTENT_RSG2_GALLERY') . ' getRsg2_galleryDisplay: '. ' Error (01): ' . $e->getMessage();
 			$app = Factory::getApplication();
 			$app->enqueueMessage($msg, 'error');
+
 			return false;
 		}
 
@@ -140,17 +137,13 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 	{
 		$usrParams = new Registry();
 
-		try
-		{
+        try {
 			$usrString = trim($usrString);
 			//$paramSets = explode('=', $usrParams);
 			$paramSets = explode(',', $usrString);
 
-			foreach ($paramSets as $paramSet)
-			{
-
-				if ( !empty ($paramSet))
-				{
+            foreach ($paramSets as $paramSet) {
+                if (!empty ($paramSet)) {
 					[$name, $value] = explode(':', $paramSet, 2);
 
 					$name  = trim($name);
@@ -168,12 +161,12 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 						$usrParams->set($name, $value);
 					}
 				}
-
 			}
 		} catch (Exception $e) {
 			$msg = Text::_('PLG_CONTENT_RSG2_GALLERY' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
 			$app = Factory::getApplication();
 			$app->enqueueMessage($msg, 'error');
+
 			return false;
 		}
 

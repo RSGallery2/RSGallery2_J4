@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_rsg2_galleries
  *
- * @copyright (c) 2005-2024 RSGallery2 Team 
+ * @copyright  (c)  2005-2025 RSGallery2 Team
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -27,12 +27,11 @@ class Rsg2_imagesHelper //implements DatabaseAwareInterface
 {
 	use DatabaseAwareTrait;
 
+    public $pagination;
 	protected $galleriesModel;
 
-	public $pagination;
-
-	public function __construct(array $data ){
-
+    public function __construct(array $data)
+    {
 		// boot component only once Model('Gallery', 'Site')
 
 		$app = $data['app'];
@@ -40,11 +39,11 @@ class Rsg2_imagesHelper //implements DatabaseAwareInterface
 		// ToDo: add params, app to local vars
 
 		// SiteApplication $app
-		$this->galleriesModel = $app->bootComponent('com_rsgallery2')
+        $this->galleriesModel = $app
+            ->bootComponent('com_rsgallery2')
 			->getMVCFactory()
 			// ->createModel('Gallery', 'Site', ['ignore_request' => true]);
 			->createModel('Galleries', 'Site', ['ignore_request' => true]);
-
 	}
 
 	public function getGalleryData(int $gid)
@@ -153,6 +152,7 @@ class Rsg2_imagesHelper //implements DatabaseAwareInterface
 	public function getText()
 	{
 		$msg = "    --- Rsg2_images module ----- ";
+
 		return $msg;
 	}
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="console" version="4.0" method="upgrade">
+  <name>plg_console_rsg2_console</name>
+  <author>RSGallery2 Team</author>
+  <creationDate>2025.06.29</creationDate>
+  <copyright>(c) 2025-2025 RSGallery2 Team</copyright>
+  <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+  <authorEmail>team2@rsgallery2.org</authorEmail>
+  <authorUrl>https://www.rsgallery2.org</authorUrl>
+  <version>5.0.0.5</version>
+  <description>PLG_CONSOLE_RSG2_CONSOLE_XML_DESCRIPTION</description>
+  <namespace path="src">Rsgallery2\Plugin\Console\Rsg2_console</namespace>
+  <files>
+    <folder>services</folder>
+    <folder>language</folder>
+    <folder plugin="rsg2_console">src</folder>
+  </files>
+  <!--    <languages>-->
+  <!--        <language tag="en-GB">language/en-GB/plg_console_rsg2_console.ini</language>-->
+  <!--        <language tag="en-GB">language/en-GB/plg_console_rsg2_console.sys.ini</language>-->
+  <!--    </languages>-->
+</extension>
