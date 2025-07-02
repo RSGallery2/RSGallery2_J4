@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
@@ -15,9 +15,9 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
@@ -28,18 +28,26 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
  * @since  __BUMP_VERSION__
  */
-class SlideshowJ3xModel extends Galleryj3xModel
-{
+class SlideshowJ3xModel extends Galleryj3xModel {}
 
-}
-
-    //
-    // we don't know which parts below may be needed
-    //
-
+//
+// we don't know which parts below may be needed
+//
     /**
      * Model context string.
      *
+ * @param   array                     $config     An optional associative array of configuration settings.
+ * @param   MVCFactoryInterface|null  $factory
+ * @param   string                    $ordering   An optional ordering field.
+ * @param   string                    $direction  An optional direction (asc|desc).
+ *
+ * @param   string                    $id         A prefix for the store id.
+ *
+ * @return  void
+ *
+ * @return  string  A store id.
+ *
+ * @throws Exception
      * @var    string
      * @since  3.1
      *

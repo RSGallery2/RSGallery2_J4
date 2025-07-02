@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Helper;
@@ -24,88 +24,82 @@ use Joomla\CMS\Language\Multilanguage;
  */
 abstract class RouteHelper
 {
-	/**
-	 * Get the URL route for a rsgallery2 from a foo ID, rsgallery2 category ID and language
-	 *
+    /**
+     * Get the URL route for a rsgallery2 from a foo ID, rsgallery2 category ID and language
+     *
      * @param   integer  $id        The route of the content item.
      * @param   integer  $catid     The category ID.
      * @param   integer  $language  The language code.
      * @param   string   $layout    The layout value.
-	 *
-	 * @return  string  The link to the rsgallery2
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 */
-	public static function getRsgallery2Route($id, $catid, $language = 0, $layout = null)
-	{
-		// Create the link
-		$link = 'index.php?option=com_rsgallery2&view=rsgallery2&id=' . $id;
+     *
+     * @return  string  The link to the rsgallery2
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    public static function getRsgallery2Route($id, $catid, $language = 0, $layout = null)
+    {
+        // Create the link
+        $link = 'index.php?option=com_rsgallery2&view=rsgallery2&id=' . $id;
 
-		if ($catid > 1)
-		{
-			$link .= '&catid=' . $catid;
-		}
+        if ($catid > 1) {
+            $link .= '&catid=' . $catid;
+        }
 
-		if ($language && $language !== '*' && Multilanguage::isEnabled())
-		{
-			$link .= '&lang=' . $language;
-		}
+        if ($language && $language !== '*' && Multilanguage::isEnabled()) {
+            $link .= '&lang=' . $language;
+        }
 
-        if ($layout)
-        {
+        if ($layout) {
             $link .= '&layout=' . $layout;
         }
 
         return $link;
-	}
+    }
 
-	/**
-	 * Get the URL route for a foo from a foo ID, rsgallery2 category ID and language
-	 *
-	 * @param   integer  $id        The id of the rsgallery2
-	 * @param   integer  $catid     The id of the rsgallery2's category
-	 * @param   mixed    $language  The id of the language being used.
+    /**
+     * Get the URL route for a foo from a foo ID, rsgallery2 category ID and language
+     *
+     * @param   integer  $id        The id of the rsgallery2
+     * @param   integer  $catid     The id of the rsgallery2's category
+     * @param   mixed    $language  The id of the language being used.
      * @param   string   $layout    The layout value.
-	 *
-	 * @return  string  The link to the rsgallery2
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 */
-	public static function getYYYYRoute($id, $catid, $language = 0, $layout = null)
-	{
-	    // for further routes (category ?) see com_content article routehelper
+     *
+     * @return  string  The link to the rsgallery2
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    public static function getYYYYRoute($id, $catid, $language = 0, $layout = null)
+    {
+        // for further routes (category ?) see com_content article routehelper
 
-		// Create the link
-		$link = 'index.php?option=com_rsgallery2&view=foo&id=' . $id;
+        // Create the link
+        $link = 'index.php?option=com_rsgallery2&view=foo&id=' . $id;
 
-		if ($catid > 1)
-		{
-			$link .= '&catid=' . $catid;
-		}
+        if ($catid > 1) {
+            $link .= '&catid=' . $catid;
+        }
 
-		if ($language && $language !== '*' && Multilanguage::isEnabled())
-		{
-			$link .= '&lang=' . $language;
-		}
+        if ($language && $language !== '*' && Multilanguage::isEnabled()) {
+            $link .= '&lang=' . $language;
+        }
 
-        if ($layout)
-        {
+        if ($layout) {
             $link .= '&layout=' . $layout;
         }
 
-		return $link;
-	}
+        return $link;
+    }
 
-	/**
-	 * Get the URL route for a rsgallery2 category from a rsgallery2 category ID and language
-	 *
-	 * @param   mixed  $catid     The id of the rsgallery2's category either an integer id or an instance of CategoryNode
-	 * @param   mixed  $language  The id of the language being used.
-	 *
-	 * @return  string  The link to the rsgallery2
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 */
+    /**
+     * Get the URL route for a rsgallery2 category from a rsgallery2 category ID and language
+     *
+     * @param   mixed  $catid     The id of the rsgallery2's category either an integer id or an instance of CategoryNode
+     * @param   mixed  $language  The id of the language being used.
+     *
+     * @return  string  The link to the rsgallery2
+     *
+     * @since   __DEPLOY_VERSION__
+     */
     /**
 	public static function getCategoryRoute($catid, $language = 0)
 	{

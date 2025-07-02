@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2021-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2021-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 use Joomla\CMS\Language\Text;
@@ -45,7 +45,7 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitize URLs -----------------------------------
 
-if ( ! isset($images)) {
+if (!isset($images)) {
     $images = [];
 }
 
@@ -54,18 +54,14 @@ $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg'
 
 //--- assign dummy images if not found -----------------------------------
 
-if ( ! empty($images))
-{
-	foreach ($images as $idx => $image)
-	{
-
-		// show dummy thumb on galleries with no images
-		if (!empty($image->isHasNoImages))
-		{
-			$image->UrlOriginalFile = $noImageUrl;
-			$image->UrlDisplayFiles = $noImageUrl;;
-			$image->UrlThumbFile = $noImageUrl;
-		}
+if (!empty($images)) {
+    foreach ($images as $idx => $image) {
+        // show dummy thumb on galleries with no images
+        if (!empty($image->isHasNoImages)) {
+            $image->UrlOriginalFile = $noImageUrl;
+            $image->UrlDisplayFiles = $noImageUrl;
+            $image->UrlThumbFile = $noImageUrl;
+        }
 
 //    else {
 //
@@ -83,15 +79,14 @@ if ( ! empty($images))
 //        }
 //
 //    }
-	}
+    }
 }
 
 // max_columns_in_images_view
 // $cols = $params->max_columns_in_images_view;
 $cols = $params->max_columns_in_images_view_j3x;
 if ($cols < 2) {
-
-	$cols = 2;
+    $cols = 2;
 }
 ?>
 
@@ -191,50 +186,50 @@ if ($cols < 2) {
 
 <div id="rsg2_gallery" class="rsg2">
 
-	<?php if( ! empty($gallery)) : ?>
-		<?php if ($params->gallery_show_title): ?>
+    <?php if (!empty($gallery)) : ?>
+        <?php if ($params->gallery_show_title): ?>
             <h2>
                 <div class="rsg_gallery_title"><?php echo $gallery->name ?></div>
             </h2>
-		<?php endif; ?>
+        <?php endif; ?>
 
-		<?php if ($params->gallery_show_description): ?>
+        <?php if ($params->gallery_show_description): ?>
             <div class="intro_text"><p><?php echo $gallery->description ?></p></div>
-		<?php endif; ?>
+        <?php endif; ?>
 
         <div class="rsg2-clr"></div>
 
-		<?php if ($params->gallery_show_slideshow): ?>
+        <?php if ($params->gallery_show_slideshow): ?>
             <div class="rsg2_slideshow_link">
                 <a href="<?php echo $gallery->UrlSlideshow; ?>">
-					<?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
+                    <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
                 </a>
             </div>
-		<?php endif; ?>
+        <?php endif; ?>
 
-	<?php else : ?>
+    <?php else : ?>
         <h2><?php
 			//echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
-			echo Text::_('Gallery (name) not defined in this situation');
-			?> </h2>
-	<?php endif; ?>
+            echo Text::_('Gallery (name) not defined in this situation');
+            ?> </h2>
+    <?php endif; ?>
     <table id="rsg2-thumbsList">
         <tbody>
 
 		<?php
 		foreach ($images as $idx => $image) {
-		$row = $idx % $cols;
-		?>
+        $row = $idx % $cols;
+        ?>
 
-		<?php if ($row == 0 ): ?>
+        <?php if ($row == 0): ?>
         <tr>
-			<?php endif ?>
+            <?php endif ?>
 
             <td>
 
                 <div class="shadow-box">
                     <div class="img-shadow">
-                        <a href="<?php echo $image->UrlImageAsInline?>">
+                        <a href="<?php echo $image->UrlImageAsInline ?>">
                             <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
                         </a>
                     </div>
@@ -247,13 +242,13 @@ if ($cols < 2) {
 
             </td>
 
-			<?php if ($row == $cols-1 ): ?>
+            <?php if ($row == $cols - 1): ?>
         <tr>
-			<?php endif ?>
+            <?php endif ?>
 
 			<?php
 			}
-			?>
+            ?>
 
         </tbody>
     </table>
@@ -262,12 +257,12 @@ if ($cols < 2) {
 		<?php
 		if(isset ($pagination))
 		{
-			echo $pagination->getListFooter();
-		}
-		?>
+            echo $pagination->getListFooter();
+        }
+        ?>
     </div>
 
-	<?php /**
+    <?php /**
 	<?php if (!empty($isDebugSite)): ?>
 	<h3>RSGallery2 j3x images area layout III</h3>
 	<hr>

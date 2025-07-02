@@ -1,18 +1,18 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsgallery2;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Registry\Registry;
 
 /**
@@ -22,79 +22,75 @@ use Joomla\Registry\Registry;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The page parameters
-	 *
-	 * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $params = null;
+    /**
+     * The page parameters
+     *
+     * @var    Registry|null
+     * @since  __BUMP_VERSION__
+     */
+    protected $params = null;
 
-	/**
-	 * The item model state
-	 *
-	 * @var    \Joomla\Registry\Registry
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $state;
+    /**
+     * The item model state
+     *
+     * @var    Registry
+     * @since  __BUMP_VERSION__
+     */
+    protected $state;
 
-	/**
-	 * The item object details
-	 *
-	 * @var    \JObject
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $item;
+    /**
+     * The item object details
+     *
+     * @var    \stdClass
+     * @since  __BUMP_VERSION__
+     */
+    protected $item;
 
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
-	public function display($tpl = null)
-	{
-		$item =
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
+     */
+    public function display($tpl = null)
+    {
+        $item   =
         $this->item = $this->get('Item');
-		$state =
+        $state  =
         $this->state = $this->get('State');
-		$params =
+        $params =
         $this->params = $state->get('params');
 
-        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
-		$test = json_decode($item->params);
+        $test = json_decode($item->params);
 
-		$itemparams = new Registry(json_decode($item->params));
+        $itemparams = new Registry(json_decode($item->params));
         // ToDO: use registry merge $itemparams ??? on oter displays ...
 
-		// ToDo: remove
+        // ToDo: remove
         $item = new \stdClass;
 
 
-		$temp = clone $params;
-		$temp->merge($itemparams);
-		$item->params = $temp;
+        $temp = clone $params;
+        $temp->merge($itemparams);
+        $item->params = $temp;
 
-		Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
+        Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.rsgallery2', &$item]);
 
-		// Store the events for later
+        // Store the events for later
 		$item->event = new \stdClass;
 		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-		$item->event->afterDisplayTitle = trim(implode("\n", $results));
-
-
-
-
+        $item->event->afterDisplayTitle = trim(implode("\n", $results));
 
 		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-		$item->event->beforeDisplayContent = trim(implode("\n", $results));
+        $item->event->beforeDisplayContent = trim(implode("\n", $results));
 
 		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-		$item->event->afterDisplayContent = trim(implode("\n", $results));
+        $item->event->afterDisplayContent = trim(implode("\n", $results));
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 }

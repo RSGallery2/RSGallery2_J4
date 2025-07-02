@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2021-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2021-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -38,8 +38,8 @@ if (!empty($isDevelopSite)) {
 
 //--- sanitize URLs -----------------------------------
 
-if ( ! isset($images)) {
-	$images = [];
+if (!isset($images)) {
+    $images = [];
 }
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
@@ -52,22 +52,18 @@ $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg'
 // $interval = $params['interval'];
 
 $auto_start = $params->auto_start;
-$interval = $params->interval;
+$interval   = $params->interval;
 $showArrows = $params->showArrows;
-$darkMode = $params->darkMode;
+$darkMode   = $params->darkMode;
 
 //--- assign dummy images if not found -----------------------------------
 
-if ( ! empty($images))
-{
-	foreach ($images as $idx => $image)
-	{
-
+if (!empty($images)) {
+    foreach ($images as $idx => $image) {
         // show dummy thumb on galleries with no images
-        if (! empty($image->isHasNoImages))
-        {
+        if (!empty($image->isHasNoImages)) {
             $image->UrlOriginalFile = $noImageUrl;
-            $image->UrlDisplayFiles = $noImageUrl;;
+            $image->UrlDisplayFiles = $noImageUrl;
             $image->UrlThumbFile = $noImageUrl;
         }
 
@@ -119,15 +115,15 @@ if ( ! empty($images))
 	}
 	/**/
 
-	/**/
-	.carousel-inner  {
-		/*margin: 0 auto;*/
-		/*border: 5px solid lightcyan;*/
-	}
-	/**/
+    /**/
+    .carousel-inner {
+        /*margin: 0 auto;*/
+        /*border: 5px solid lightcyan;*/
+    }
+    /**/
 
-	/**/
-    .carousel-inner > .carousel-item  {
+    /**/
+    .carousel-inner > .carousel-item {
         /*margin: 0 auto; Bad */
         /*border: 5px solid lightblue;*/
     }
@@ -180,7 +176,7 @@ if ( ! empty($images))
              class="carousel slide <?php if ($darkMode): ?>carousel-dark<?php endif; ?>"
             <?php if ($auto_start): ?>
                 data-bs-ride="carousel"
-	        <?php endif; ?>
+            <?php endif; ?>
         >
 
             <div class="carousel-indicators">
@@ -192,7 +188,7 @@ if ( ! empty($images))
                     <button type="button"
                             data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>"
                             data-bs-slide-to="<?php echo $idx; ?>"
-                            aria-label="Slide <?php echo $idx+1; ?>" <?php echo $isActive; ?>
+                            aria-label="Slide <?php echo $idx + 1; ?>" <?php echo $isActive; ?>
                     >
                     </button>
 
@@ -212,15 +208,15 @@ if ( ! empty($images))
                     ?>
 
                     <div class="carousel-item <?php echo $isActive; ?>"
-    	                <?php if ($auto_start): ?>
-                             data-bs-interval="<?php echo $interval; ?>"
-	                    <?php else: ?>
+                        <?php if ($auto_start): ?>
+                            data-bs-interval="<?php echo $interval; ?>"
+                        <?php else: ?>
                             data-bs-interval="false"
-	                    <?php endif; ?>
+                        <?php endif; ?>
                     >
-                            <img
-                             src="<?php echo $image->UrlDisplayFile; ?>"
-                             alt="<?php echo $image->name; ?>"
+                        <img
+                                src="<?php echo $image->UrlDisplayFile; ?>"
+                                alt="<?php echo $image->name; ?>"
                         >
                         <div class="carousel-caption">
                             <h3><?php echo $image->name; ?></h3>
@@ -242,9 +238,9 @@ if ( ! empty($images))
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>" data-bs-slide="next">
-	                <?php if ($showArrows): ?>
+                    <?php if ($showArrows): ?>
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	                <?php else: ?>
+                    <?php else: ?>
                         <span class="carousel-control-next-icon" aria-hidden="true" hidden></span>
                     <?php endif; ?>
                     <span class="visually-hidden">Next</span>

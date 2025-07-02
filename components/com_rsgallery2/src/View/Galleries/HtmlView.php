@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Galleries;
@@ -23,51 +23,51 @@ use Joomla\Registry\Registry;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The page parameters
-	 *
-	 * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $params = null;
+    /**
+     * The page parameters
+     *
+     * @var    Registry|null
+     * @since  __BUMP_VERSION__
+     */
+    protected $params = null;
 
-	/**
-	 * The item model state
-	 *
-	 * @var    \Joomla\Registry\Registry
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $state;
+    /**
+     * The item model state
+     *
+     * @var    Registry
+     * @since  __BUMP_VERSION__
+     */
+    protected $state;
 
-	/**
-	 * The item object details
-	 *
-	 * @var    \JObject
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $items;
+    /**
+     * The item object details
+     *
+     * @var    \stdClass
+     * @since  __BUMP_VERSION__
+     */
+    protected $items;
 
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
-	public function display($tpl = null)
-	{
-        $app  = Factory::getApplication();
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
+     */
+    public function display($tpl = null)
+    {
+        $app = Factory::getApplication();
 
-        $state = $this->state = $this->get('State');
+        $state       = $this->state = $this->get('State');
         $this->items = $this->get('Items');
-        $params =
-		$this->params = $state->get('params');
+        $params      =
+        $this->params = $state->get('params');
 
         $this->pagination = $this->get('Pagination');
-        $this->user =
-	    $user = $app->getIdentity();
+        $this->user       =
+        $user = $app->getIdentity();
 
-        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
 
@@ -84,13 +84,12 @@ class HtmlView extends BaseHtmlView
 //
 
 
-
 //		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 }

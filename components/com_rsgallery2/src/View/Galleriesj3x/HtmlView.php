@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Galleriesj3x;
@@ -12,9 +12,9 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Galleriesj3x;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 
 /**
@@ -24,40 +24,40 @@ use Joomla\Registry\Registry;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The page parameters
-	 *
-	 * @var    \Joomla\Registry\Registry|null
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $params = null;
+    /**
+     * The page parameters
+     *
+     * @var    Registry|null
+     * @since  __BUMP_VERSION__
+     */
+    protected $params = null;
 
-	/**
-	 * The item model state
-	 *
-	 * @var    \Joomla\Registry\Registry
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $state;
+    /**
+     * The item model state
+     *
+     * @var    Registry
+     * @since  __BUMP_VERSION__
+     */
+    protected $state;
 
-	/**
-	 * The item object details
-	 *
-	 * @var    \JObject
-	 * @since  __BUMP_VERSION__
-	 */
-	protected $items;
+    /**
+     * The item object details
+     *
+     * @var    \stdClass
+     * @since  __BUMP_VERSION__
+     */
+    protected $items;
 
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
-	public function display($tpl = null)
-	{
-        $app = Factory::getApplication();
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
+     */
+    public function display($tpl = null)
+    {
+        $app   = Factory::getApplication();
         $input = Factory::getApplication()->input;
 
         $state =
@@ -69,7 +69,7 @@ class HtmlView extends BaseHtmlView
         $this->parentGallery = $this->get('ParentGallery');
 
         //http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x
-        //&gid=63
+        //$id=63
         //&images_show_title=2
         //&images_show_description=0
         //&images_show_search=0
@@ -89,10 +89,10 @@ class HtmlView extends BaseHtmlView
         $this->pagination->hideEmptyLimitstart = true;
         // ToDo: Why is this necessary ?
 //		$this->pagination->setTotal (count($this->items));
-        $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
+        $this->user = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        $user = $app->getIdentity();
 
-        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
 
@@ -101,8 +101,7 @@ class HtmlView extends BaseHtmlView
 //		// wrong: $this->params = $menuParams->merge($this->params);
 //		$this->params->merge($menuParams);
 
-        if (count($errors = $this->get('Errors')))
-        {
+        if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -120,7 +119,6 @@ class HtmlView extends BaseHtmlView
 //
 
 
-
 //		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
@@ -128,6 +126,6 @@ class HtmlView extends BaseHtmlView
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
 
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 }

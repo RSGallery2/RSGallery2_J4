@@ -1,11 +1,11 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
- * @author      finnern
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
+ * @author         finnern
  * RSGallery is Free Software
  */
 
@@ -16,14 +16,13 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
 /**
@@ -34,102 +33,87 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 class Galleryj3xModel extends GalleryModel
 {
 
-	/**
-	 * Add "asInline" Url to each image
-	 * @param $images
-	 *
-	 *
-	 * @since 4.5.0.0
-	 */
-	public function AddLayoutData($images)
-	{
-		// ToDo: check for J3x style of gallery (? all in construct ?)
-		parent::AddLayoutData($images);
+    /**
+     * Add "asInline" Url to each image
+     *
+     * @param $images
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public function AddLayoutData($images)
+    {
+        // ToDo: check for J3x style of gallery (? all in construct ?)
+        parent::AddLayoutData($images);
 
-		try
-		{
-			foreach ($images as $idx => $image)
-			{
+        try {
+            foreach ($images as $idx => $image) {
                 // One image on the complete page with pagination
                 $this->AssignUrlImageAsInline($image, $idx);
 
-				$this->AssignUrlDownloadImage($image);
+                $this->AssignUrlDownloadImage($image);
+            }
+        } catch (/RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Galleryj3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			}
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Galleryj3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
+        return $images;
+    }
 
-		return $images;
-	}
+    /**
+     * @param $images
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public function AssignUrlImageAsInline($image, $idx)
+    {
+        try {
+            $image->UrlGallery_AsInline = ''; // fall back
 
-	/**
-	 * @param $images
-	 *
-	 *
-	 * @since 4.5.0.0
-	 */
-	public function AssignUrlImageAsInline($image, $idx)
-	{
-
-		try {
-
-			$image->UrlGallery_AsInline = ''; // fall back
-
-            if ( ! empty ($image->gallery_id)) {
+            if (!empty ($image->gallery_id)) {
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
-                    . '&gid=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
-                    . '&img_id=' . $image->id
-// test bad ordering                    . '&start=' . $idx
+                    . '&id=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
+                    . '&img_id=' . $image->id // test bad ordering                    . '&start=' . $idx
                 ;
             } else {
-
+				// Bad gallery id missing
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
-                    . '&img_id=' . $image->id
-// test bad ordering                    . '&start=' . $idx
+                    . '&img_id=' . $image->id // test bad ordering                    . '&start=' . $idx
                 ;
             }
 
-            $image->UrlImageAsInline = Route::_($route,true,0,true);
+            $image->UrlImageAsInline = Route::_($route, true, 0, true);
 
-			/**/
-			// ToDo: watermarked file
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Galleryj3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+            /**/
+            // ToDo: watermarked file
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Galleryj3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-	}
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+    }
 
     public function assignSlideshowUrl($gallery)
     {
-
         try {
-
             //$gallery->UrlSlideshow = ''; // fall back
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&gid=' . $gallery->id
-                ,true,0,true);
+                . '&view=slideshowj3x&gid=' . $gallery->id,
+                true,0,true);
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -137,7 +121,6 @@ class Galleryj3xModel extends GalleryModel
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
-
     }
 
 //    public function getRsg2MenuParams()

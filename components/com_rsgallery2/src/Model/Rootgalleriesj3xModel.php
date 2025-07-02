@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
@@ -15,15 +15,12 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
-
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
-use Rsgallery2\Component\Rsgallery2\Site\Model;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+use RuntimeException;
 
 
 /**
@@ -34,58 +31,17 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 class Rootgalleriesj3xModel extends Galleriesj3xModel
 {
     /**
-    protected $layoutParams = null; // col/row count
-	/**/
-
-	/**
-     * Add "asInline" Url to each image
-     * @param $galleries
-     *
-     *
-     * @since 4.5.0.0
-     */
-    public function AddLayoutData($galleries)
-    {
-        // ToDo: check for J3x style of gallery (? all in construct ?)
-        parent::AddLayoutData($galleries);
-
-        /**
-        try
-        {
-            foreach ($galleries as $gallery)
-            {
-
-                $this->AssignGalleryUrl($gallery);
-// Maybe already done
-//                $this->AssignUrl_AsInline($gallery);
-
-
-            }
-        }
-        catch (\RuntimeException $e)
-        {
-            $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-
-        /**/
-        return $galleries;
-    }
+     * protected $layoutParams = null; // col/row count
+     * /**/
 
     public function assignSlideshowUrl($gallery)
     {
-
         try {
-
             // $gallery->UrlSlideshow = ''; // fall back
 
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
-/**
+            /**
             $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
                 . '/galleryJ3x/' . $gallery->id . '/slideshow'
 //                . '&gid=' . $image->gallery_id
@@ -95,11 +51,9 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 /**/
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&gid=' . $gallery->id);
+                . '&view=slideshowj3x&id=' . $gallery->id,);
 
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rootgalleriesj3xModel: assignSlideshowUrl ()' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -107,9 +61,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
         }
-
     }
-
 
     /**
      * @param $gallery
@@ -137,25 +89,65 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
     }
     /**/
 
-    public function randomImages ($random_count)
+    public function randomImages($random_count)
     {
         $randomImages = [];
 
         // ToDo: try catch ...
 
         if ($random_count > 0) {
-
             // toDo: create imagesJ3x model which does set the url to j3x
-            $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
+            $imagesModel  = $this->getInstance('Images', 'RSGallery2Model');
             $randomImages = $imagesModel->randomImages($random_count);
 
             $galleryJ3xModel = $this->getInstance('Galleryj3x', 'RSGallery2Model');
             $galleryJ3xModel->AddLayoutData($randomImages);
         }
+
         return $randomImages;
     }
 
-    public function latestImages ($latest_count)
+    /**
+     * Add "asInline" Url to each image
+     *
+     * @param $galleries
+     *
+     *
+     * @since 4.5.0.0
+     */
+    public function AddLayoutData($galleries)
+    {
+        // ToDo: check for J3x style of gallery (? all in construct ?)
+        parent::AddLayoutData($galleries);
+
+        /**
+         * try
+         * {
+         * foreach ($galleries as $gallery)
+         * {
+         *
+         * $this->AssignGalleryUrl($gallery);
+         * // Maybe already done
+         * //                $this->AssignUrl_AsInline($gallery);
+         *
+         *
+         * }
+         * }
+         * catch (\RuntimeException $e)
+         * {
+         * $OutTxt = '';
+         * $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
+         * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+         *
+         * $app = Factory::getApplication();
+         * $app->enqueueMessage($OutTxt, 'error');
+         * }
+         *
+         * /**/
+        return $galleries;
+    }
+
+    public function latestImages($latest_count)
     {
         $latestImages = [];
 
@@ -163,7 +155,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 
         if ($latest_count > 0) {
             // toDo: create imagesJ3x model which does set the url to j3x
-            $imagesModel = $this->getInstance('Images', 'RSGallery2Model');
+            $imagesModel  = $this->getInstance('Images', 'RSGallery2Model');
             $latestImages = $imagesModel->latestImages($latest_count);
 
             $galleryJ3xModel = $this->getInstance('Galleryj3x', 'RSGallery2Model');

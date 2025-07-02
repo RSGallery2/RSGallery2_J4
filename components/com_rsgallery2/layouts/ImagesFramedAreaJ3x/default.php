@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2021-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2021-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 use Joomla\CMS\Language\Text;
@@ -28,16 +28,16 @@ if (!empty($isDevelopSite)) {
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . '* modal image (->slider)<br>'
-    //	. '* <br>'
-    //	. '* <br>'
-    //	. '* <br>'
+        //	. '* <br>'
+        //	. '* <br>'
+        //	. '* <br>'
         . '</span><br><br>';
 }
 
 //--- sanitize URLs -----------------------------------
 
-if ( ! isset($images)) {
-	$images = [];
+if (!isset($images)) {
+    $images = [];
 }
 
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
@@ -45,18 +45,14 @@ $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg'
 
 //--- assign dummy images if not found -----------------------------------
 
-if ( ! empty($images))
-{
-	foreach ($images as $idx => $image)
-	{
-
-		// show dummy thumb on galleries with no images
-		if (!empty($image->isHasNoImages))
-		{
-			$image->UrlOriginalFile = $noImageUrl;
-			$image->UrlDisplayFiles = $noImageUrl;;
-			$image->UrlThumbFile = $noImageUrl;
-		}
+if (!empty($images)) {
+    foreach ($images as $idx => $image) {
+        // show dummy thumb on galleries with no images
+        if (!empty($image->isHasNoImages)) {
+            $image->UrlOriginalFile = $noImageUrl;
+            $image->UrlDisplayFiles = $noImageUrl;
+            $image->UrlThumbFile = $noImageUrl;
+        }
 
 //    else {
 //
@@ -74,7 +70,7 @@ if ( ! empty($images))
 //        }
 //
 //    }
-	}
+    }
 }
 
 $imgCount = count($images);
@@ -91,36 +87,36 @@ $imgCount = count($images);
     <li class="rsg2-galleryList-item">
         <table class="table_border" cellspacing="0" cellpadding="0" border="0" width="100%">
             <tbody>
-                <tr>
-                    <td colspan="<?php echo $imgCount; ?>"><?php echo $title  . ': ' ?></td>
-                </tr>
-                <tr>
+            <tr>
+                <td colspan="<?php echo $imgCount; ?>"><?php echo $title . ': ' ?></td>
+            </tr>
+            <tr>
                     <td colspan="<?php echo $imgCount; ?>">&nbsp;</td>
-                </tr>
-                <tr>
+            </tr>
+            <tr>
 
-                    <?php foreach ($images as $idx => $image): ?>
+                <?php foreach ($images as $idx => $image): ?>
 
-                        <td align="center">
-                            <div class="shadow-box">
-                                <div class="img-shadow">
-                                    <a href="<?php echo $image->UrlImageAsInline?>">
-                                        <img src="<?php echo $image->UrlThumbFile; ?>" alt="<?php echo $image->name; ?>"  width="80">
-                                    </a>
-                                </div>
-                                <div class="rsg2-clr"></div>
-                                <div class="rsg2_details">
-	                                <?php echo Text::_('COM_RSGALLERY2_UPLOADED') . ': ' . $image->created; ?>
-                                </div>
+                    <td align="center">
+                        <div class="shadow-box">
+                            <div class="img-shadow">
+                                <a href="<?php echo $image->UrlImageAsInline ?>">
+                                    <img src="<?php echo $image->UrlThumbFile; ?>" alt="<?php echo $image->name; ?>" width="80">
+                                </a>
                             </div>
-                        </td>
+                            <div class="rsg2-clr"></div>
+                            <div class="rsg2_details">
+                                <?php echo Text::_('COM_RSGALLERY2_UPLOADED') . ': ' . $image->created; ?>
+                            </div>
+                        </div>
+                    </td>
 
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
 
-                </tr>
-                <tr>
+            </tr>
+            <tr>
                     <td colspan="<?php echo $imgCount; ?>">&nbsp;</td>
-                </tr>
+            </tr>
             </tbody>
         </table>
     </li>

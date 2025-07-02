@@ -1,172 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<!-- J4x galleries (pure root/parent) -->
-	<layout title="COM_RSGALLERY2_MENU_VIEW_GALLERIES_TITLE">
-		<message>
-			<![CDATA[COM_RSGALLERY2_MENU_VIEW_GALLERIES_DESC]]>
-		</message>
-	</layout>
-	<!-- Add fields to the request variables for the layout. -->
-	<fields name="request">
-		<fieldset name="request"
-			addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
-		>
-		
-			<field
-				name="gid"
-				type="MenuGalleriesList"
-				label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
-				description="COM_RSGALLERY2_MENU_SELECT_GALLERY_DESC"
-				required="true"
-				select="true"
-				new="true"
-				edit="true"
-				clear="true"
-			/>
-			
+    <!-- J4x galleries (pure root/parent) -->
+    <layout title="COM_RSGALLERY2_MENU_VIEW_GALLERIES_TITLE">
+        <message>
+            <![CDATA[COM_RSGALLERY2_MENU_VIEW_GALLERIES_DESC]]>
+        </message>
+    </layout>
+    <!-- Add fields to the request variables for the layout. -->
+    <fields name="request">
+        <fieldset name="request"
+                  addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
+        >
 
-			<field
-					name="gallery_layout"
-					type="componentlayout"
-					label="JFIELD_ALT_LAYOUT_LABEL"
-					class="custom-select"
-					extension="com_rsgallery2"
-					view="galleries"
-					useglobal="true"
-			/>
-
-		</fieldset>
-	</fields>
-
-	<!-- Add fields to the parameters object for the layout. -->
-	<fields name="params">
-		<fieldset name="basic">
+            <field
+                    name="id"
+                    type="MenuGalleriesList"
+                    label="COM_RSGALLERY2_MENU_SELECT_GALLERY_LABEL"
+                    description="COM_RSGALLERY2_MENU_SELECT_GALLERY_DESC"
+                    required="true"
+                    select="true"
+                    new="true"
+                    edit="true"
+                    clear="true"
+            />
 
 
-			<field
-					name="galleries_show_intro"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_CONFIG_GALLERY_SHOW_INTRO"
-					description="COM_RSGALLERY2_CONFIG_GALLERY_SHOW_INTRO_DESC"
-			>
-				<option value="0">JNO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_ABOVE </option>
-				<option value="2">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_RIGHT</option>
-				<option value="3">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_BELOW</option>
-				<option value="4">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_LEFT</option>
-			</field>
+            <field
+                    name="gallery_layout"
+                    type="componentlayout"
+                    label="JFIELD_ALT_LAYOUT_LABEL"
+                    class="custom-select"
+                    extension="com_rsgallery2"
+                    view="galleries"
+                    useglobal="true"
+            />
 
-			<field name="galleries_intro_text"
-				   type="editor"
-				   label="COM_RSGALLERY2_GALLERIES_INTRODUCTION_TEXT"
-				   description="COM_RSGALLERY2_GALLERIES_INTRODUCTION_DESC"
-				   buttons="false"
-				   filter="JComponentHelper::filterText"
-				   asset_id="com_content"
-				   showon="galleries_show_intro!:0"
-			/>
+        </fieldset>
+    </fields>
 
-			<field
-					name="galleries_show_title"
-					type="list"
-					default="2"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_TITLE"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_TITLE_DESC"
-			>
-				<option value="0">JNO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
-				<option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
-				<option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
-			</field>
+    <!-- Add fields to the parameters object for the layout. -->
+    <fields name="params">
+        <fieldset name="basic">
 
-			<field
-					name="galleries_show_description"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_DESC"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_DESC_DESC"
-			>
-				<option value="0">JNO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_DESC_POS_ABOVE_THUMB</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_DESC_POS_RIGHT_BESIDE_THUMB</option>
-				<option value="3">COM_RSGALLERY2_CONFIG_DESC_POS_BELOW_THUMB</option>
-				<option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>
-			</field>
 
-			<field
-					name="galleries_show_search"
-					type="list"
-					default="0"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_SEARCH"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_SEARCH_DESC"
-			>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+            <field
+                    name="galleries_show_intro"
+                    type="list"
+                    default="0"
+                    label="COM_RSGALLERY2_CONFIG_GALLERY_SHOW_INTRO"
+                    description="COM_RSGALLERY2_CONFIG_GALLERY_SHOW_INTRO_DESC"
+            >
+                <option value="0">JNO</option>
+                <option value="1">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_ABOVE</option>
+                <option value="2">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_RIGHT</option>
+                <option value="3">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_BELOW</option>
+                <option value="4">COM_RSGALLERY2_CONFIG_GALLERY_INTRO_LEFT</option>
+            </field>
 
-		</fieldset>
+            <field name="galleries_intro_text"
+                   type="editor"
+                   label="COM_RSGALLERY2_GALLERIES_INTRODUCTION_TEXT"
+                   description="COM_RSGALLERY2_GALLERIES_INTRODUCTION_DESC"
+                   buttons="false"
+                   filter="JComponentHelper::filterText"
+                   asset_id="com_content"
+                   showon="galleries_show_intro!:0"
+            />
 
-		<fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_GALLERIES_LAYOUT_THUMBS">
-			<field
-					name="galleries_column_arrangement"
-					type="list"
-					default="1"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_DESC"
-			>
-				<option value="global">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_AUTO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_COUNT</option>
-			</field>
+            <field
+                    name="galleries_show_title"
+                    type="list"
+                    default="2"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_TITLE"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_TITLE_DESC"
+            >
+                <option value="0">JNO</option>
+                <option value="1">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_THUMB</option>
+                <option value="2">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_THUMB</option>
+                <option value="3">COM_RSGALLERY2_CONFIG_TITLE_POS_ABOVE_DESC</option>
+                <option value="4">COM_RSGALLERY2_CONFIG_TITLE_POS_BELOW_DESC</option>
+            </field>
 
-			<field
-					name="max_columns_in_galleries_view"
-					type="number"
-					default="4"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS_DESC"
-					showon="galleries_column_arrangement:1"
-			>
-			</field>
+            <field
+                    name="galleries_show_description"
+                    type="list"
+                    default="0"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_DESC"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_DESC_DESC"
+            >
+                <option value="0">JNO</option>
+                <option value="1">COM_RSGALLERY2_CONFIG_DESC_POS_ABOVE_THUMB</option>
+                <option value="2">COM_RSGALLERY2_CONFIG_DESC_POS_RIGHT_BESIDE_THUMB</option>
+                <option value="3">COM_RSGALLERY2_CONFIG_DESC_POS_BELOW_THUMB</option>
+                <option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>
+            </field>
 
-			<field
-					name="galleries_row_arrangement"
-					type="list"
-					default="2"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_DESC"
-					showon="galleries_column_arrangement:1"
-			>
-				<option value="global">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO</option>
-				<option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_ROW_COUNT</option>
-				<option value="2">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_MAX_COUNT</option>
-			</field>
+            <field
+                    name="galleries_show_search"
+                    type="list"
+                    default="0"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_SEARCH"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_SHOW_SEARCH_DESC"
+            >
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
 
-			<field
-					name="max_rows_in_galleries_view"
-					type="number"
-					default="5"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS_DESC"
-					showon="galleries_row_arrangement:1[AND]galleries_column_arrangement:1"
-			>
-			</field>
+        </fieldset>
 
-			<field
-					name="max_galleries_in_galleries_view"
-					type="number"
-					default="20"
-					label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS"
-					description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS_DESC"
-					showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:1"
-			>
-			</field>
+        <fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_GALLERIES_LAYOUT_THUMBS">
+            <field
+                    name="galleries_column_arrangement"
+                    type="list"
+                    default="1"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_DESC"
+            >
+                <option value="global">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_AUTO</option>
+                <option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_COLUMN_TYPE_COUNT</option>
+            </field>
 
-		</fieldset>
-	</fields>
+            <field
+                    name="max_columns_in_galleries_view"
+                    type="number"
+                    default="4"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_COLUMNS_DESC"
+                    showon="galleries_column_arrangement:1"
+            >
+            </field>
+
+            <field
+                    name="galleries_row_arrangement"
+                    type="list"
+                    default="2"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_DESC"
+                    showon="galleries_column_arrangement:1"
+            >
+                <option value="global">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_AUTO</option>
+                <option value="1">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_ROW_COUNT</option>
+                <option value="2">COM_RSGALLERY2_CONFIG_GALLERIES_ROW_TYPE_MAX_COUNT</option>
+            </field>
+
+            <field
+                    name="max_rows_in_galleries_view"
+                    type="number"
+                    default="5"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_ROWS_DESC"
+                    showon="galleries_row_arrangement:1[AND]galleries_column_arrangement:1"
+            >
+            </field>
+
+            <field
+                    name="max_galleries_in_galleries_view"
+                    type="number"
+                    default="20"
+                    label="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS"
+                    description="COM_RSGALLERY2_CONFIG_GALLERIES_MAX_THUMBS_DESC"
+                    showon="galleries_row_arrangement:2[AND]galleries_column_arrangement:1"
+            >
+            </field>
+
+        </fieldset>
+    </fields>
 </metadata>
 
 

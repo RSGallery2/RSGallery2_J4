@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 \defined('_JEXEC') or die;
@@ -26,9 +26,7 @@ use Joomla\CMS\Language\Text;
 echo '<h1> RSGallery2 "galleries latest" view </h1>';
 
 foreach ($this->items as $gallery) {
-
     echo 'gallery: ' . $gallery->name . '<br>';
-
 }
 
 //

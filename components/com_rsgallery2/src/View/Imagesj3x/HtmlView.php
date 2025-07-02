@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Imagesj3x;
@@ -12,9 +12,11 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Imagesj3x;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
+use \Joomla\CMS\User\User;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -26,7 +28,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var    \JObject
+     * @var \Joomla\Registry\Registry
      * @since  3.1
      */
     protected $state;
@@ -42,7 +44,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var    \Joomla\CMS\Pagination\Pagination
+     * @var    Pagination
      * @since  3.1
      */
     protected $pagination;
@@ -50,7 +52,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The page parameters
      *
-     * @var    \Joomla\Registry\Registry|null
+     * @var    Registry|null
      * @since  3.1
      */
     protected $params = null;
@@ -66,7 +68,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The logged in user
      *
-     * @var    \JUser|null
+     * @var    User|null
      * @since  4.0.0
      */
     protected $user = null;
@@ -78,25 +80,24 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-	public function display($tpl = null)
-	{
+    public function display($tpl = null)
+    {
         $app = Factory::getApplication();
 
         //		// toDo: use image list by image parent not from gallery
 //        $input  = Factory::getApplication()->input;
-//        $this->galleryId = $input->get('gid', 0, 'INT');
-
+//        $this->galleryId = $input->get('id', 0, 'INT');
 
         // Get some data from the models
         $this->state      = $this->get('State');
         $this->items      = $this->get('Items');
         $this->pagination = $this->get('Pagination');
-        $params =
-        $this->params     = $this->state->get('params');
+        $params           =
+        $this->params = $this->state->get('params');
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
+        $user = $app->getIdentity();
 
-        $this->isDebugSite = $params->get('isDebugSite');
+        $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
         $this->galleryId = $this->state->get('galleryId');
@@ -128,16 +129,12 @@ class HtmlView extends BaseHtmlView
 //
 
 
-
-
-
-
 //		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
-		return parent::display($tpl);
-	}
+        return parent::display($tpl);
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (c) 2016-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package         RSGallery2
+ * @subpackage      com_rsgallery2
+ * @copyright  (c)  2016-2025 RSGallery2 Team
+ * @license         GNU General Public License version 2 or later
  * @author          finnern
  * RSGallery is Free Software
  */
@@ -14,17 +14,15 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use \Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
-//use Joomla\CMS\Image;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\Image\Image;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 
@@ -42,13 +40,13 @@ class ImageFileModel extends BaseModel // AdminModel
     const THUMB_PORTRAIT = 0;
     const THUMB_SQUARE = 1;
 
-	/**
-	 * Constructor.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function __construct()
-	{
+    /**
+     * Constructor.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function __construct()
+    {
 //		global $rsgConfig, $Rsg2DebugActive;
 
 //		parent::__construct($config = array());
@@ -58,18 +56,18 @@ class ImageFileModel extends BaseModel // AdminModel
 //			Log::add('==>Start __construct ImageFile');
 //		}
 
-		// JComponentHelper::getParams();
-		// $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		//
+        // JComponentHelper::getParams();
+        // $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //
 //		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 
-        parent::__construct(array());
-
-	}
+        parent::__construct([]);
+    }
 
 
     /**
      * image file attributes to handle the file paths later
+     *
      * @param $ImageId
      *
      * @return bool
@@ -79,16 +77,16 @@ class ImageFileModel extends BaseModel // AdminModel
     /**/
     public function imageFileAttrib($ImageId)
     {
-        $fileName = "";
-        $galleryId = "";
+        $fileName         = "";
+        $galleryId        = "";
         $use_j3x_location = "";
 
-        try
-        {
-            $db    = $this->getDatabase();
+        try {
+            $db = $this->getDatabase();
 
-            $query = $db->getQuery(true)
-                ->select($db->quoteName(array('name', 'gallery_id', 'use_j3x_location')))
+            $query = $db
+                ->getQuery(true)
+                ->select($db->quoteName(['name', 'gallery_id', 'use_j3x_location']))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
             $db->setQuery($query);
@@ -97,13 +95,10 @@ class ImageFileModel extends BaseModel // AdminModel
             // $imageDb = $db->loadRow();
             // $imageDb = $db->loadAssoc();
 
-            $fileName = $imageDb->name;
-            $galleryId = $imageDb->gallery_id;
+            $fileName         = $imageDb->name;
+            $galleryId        = $imageDb->gallery_id;
             $use_j3x_location = $imageDb->use_j3x_location;
-
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing use_j3x_location for ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -120,21 +115,17 @@ class ImageFileModel extends BaseModel // AdminModel
 
 
     public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location) {
-
         $OriginalPathFileName = "";
 
         // J4x ?
-        if( ! $use_j3x_location) {
-
+        if (!$use_j3x_location) {
             $imagePaths = new ImagePathsModel ($galleryId);
 
             //---  -------------------------------------------------
 
             $OriginalPathFileName = $imagePaths->getOriginalPath($imageFileName);
-            $OriginalFileNameUri = $imagePaths->getOriginalUrl($imageFileName);
-
+            $OriginalFileNameUri  = $imagePaths->getOriginalUrl($imageFileName);
         } else {
-
             // J3x
 
             $ImagePathJ3x = new ImagePathsJ3xModel ();
@@ -142,7 +133,7 @@ class ImageFileModel extends BaseModel // AdminModel
             //---  -------------------------------------------------
 
             $OriginalPathFileName = $ImagePathJ3x->getOriginalPath($imageFileName);
-            $OriginalFileNameUri = $ImagePathJ3x->getOriginalUrl($imageFileName);
+            $OriginalFileNameUri  = $ImagePathJ3x->getOriginalUrl($imageFileName);
         }
 
         return [$OriginalPathFileName, $OriginalFileNameUri];
@@ -153,9 +144,8 @@ class ImageFileModel extends BaseModel // AdminModel
         $IsDownloaded = false;
 
         try {
-
-            $size = filesize($OriginalFilePath);
-            $mimeType =  mime_content_type($OriginalFilePath);
+            $size     = filesize($OriginalFilePath);
+            $mimeType = mime_content_type($OriginalFilePath);
             $fileName = basename($OriginalFilePath);
 
             //--- header ------------------------------------------------
@@ -177,7 +167,7 @@ class ImageFileModel extends BaseModel // AdminModel
             // get my db data and echo it as csv data
 
             // Close the application gracefully.
-            Factory::getApplication()->close();            //--- exit success ------------------------------------------------
+            Factory::getApplication()->close();
 
         } catch (\RuntimeException $e) {
             $OutTxt = '';

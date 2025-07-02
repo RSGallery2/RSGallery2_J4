@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
@@ -15,9 +15,9 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
@@ -28,10 +28,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
  * @since  __BUMP_VERSION__
  */
-class SlideshowModel extends GalleryModel
-{
-
-}
+class SlideshowModel extends GalleryModel {}
 
 //
 // we don't know which parts below may be needed
@@ -40,8 +37,20 @@ class SlideshowModel extends GalleryModel
 /**
  * Model context string.
  *
+ * @param   array                     $config     An optional associative array of configuration settings.
+ * @param   MVCFactoryInterface|null  $factory
+ * @param   string                    $ordering   An optional ordering field.
+ * @param   string                    $direction  An optional direction (asc|desc).
+ *
+ * @param   string                    $id         A prefix for the store id.
+ *
+ * @return  void
+ *
+ * @return  string  A store id.
+ *
+ * @throws Exception
  * @var    string
- * @since  3.1
+ * @since   3.1
  *
 public $_context = 'com_rsgallery2.slideshowJ3x';
 
@@ -128,10 +137,10 @@ $app = Factory::getApplication();
 
 // ToDo: move to view html and model (plugion?)
 // gallery id
-$gid = $app->input->get('gid', '', 'INT');
+$gid = $app->input->get('id', '', 'INT');
 $this->setState('images.galleryId', $gid);
 // ??? See above
-$this->setState('gallery.id', $app->input->getInt('gid'));
+$this->setState('gallery.id', $app->input->getInt('id'));
 $this->setState('params', $app->getParams());
 
 // Adjust the context to support modal layouts.
@@ -264,7 +273,7 @@ $guest = $user->get('guest');
 $groups = $user->getAuthorisedViewLevels();
 $input = Factory::getApplication()->input;
 
-$gid = $input->getInt('gid', 0);
+$gid = $input->getInt('id', 0);
 
 if ($this->_item === null) {
 $this->_item = array();
@@ -338,7 +347,7 @@ try {
 // gallery parameter
 $app = Factory::getApplication();
 $input = $app->input;
-$gid = $input->get('gid', '', 'INT');
+$gid = $input->get('id', '', 'INT');
 
 $ImagePaths = new ImagePathsModel ($gid);
 

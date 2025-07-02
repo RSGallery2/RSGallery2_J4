@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 \defined('_JEXEC') or die;
@@ -13,8 +13,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite))
-{
+if (!empty ($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: default_random images view<br>'
         . '* Change date format<br>'
@@ -30,8 +29,7 @@ if (!empty ($this->isDevelopSite))
 $layoutName = $this->getLayout();
 
 // default is 'ImagesAreaJ3x.default'
-if($layoutName == 'default') {
-
+if ($layoutName == 'default') {
     $layoutName = 'ImagesFramedAreaJ3x.default';
 }
 
@@ -39,9 +37,9 @@ $layout = new FileLayout($layoutName);
 
 $displayData['images'] = $this->randomImages;
 $displayData['params'] = $this->params->toObject();
-$displayData['title'] = Text::_('COM_RSGALLERY2_RANDOM_IMAGES');
+$displayData['title']  = Text::_('COM_RSGALLERY2_RANDOM_IMAGES');
 
-$displayData['isDebugSite'] = $this->isDebugSite;
+$displayData['isDebugSite']   = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 if (!empty($this->isDebugSite)) {

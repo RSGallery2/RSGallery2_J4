@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Slidepagej3x;
@@ -12,12 +12,13 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Slidepagej3x;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
+use \Joomla\CMS\User\User;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 /**
@@ -31,7 +32,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var    \JObject
+     * @var    \stdClass
      * @since  3.1
      */
     protected $state;
@@ -52,7 +53,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var    \Joomla\CMS\Pagination\Pagination
+     * @var    Pagination
      * @since  3.1
      */
     protected $pagination;
@@ -60,7 +61,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The page parameters
      *
-     * @var    \Joomla\Registry\Registry|null
+     * @var    Registry|null
      * @since  3.1
      */
     protected $params = null;
@@ -76,7 +77,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The logged in user
      *
-     * @var    \JUser|null
+     * @var    User|null
      * @since  4.0.0
      */
     protected $user = null;
@@ -88,64 +89,60 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-	public function display($tpl = null)
-	{
-        $app = Factory::getApplication();
-        $input  = Factory::getApplication()->input;
-        $this->galleryId = $input->get('gid', 0, 'INT');
+    public function display($tpl = null)
+    {
+        $app             = Factory::getApplication();
+        $input           = Factory::getApplication()->input;
+        $this->galleryId = $input->get('id', 0, 'INT');
 
         /* wrong call but not expected. Happens but why ? */
-        if ($this->galleryId < 2)
-        {
+        if ($this->galleryId < 2) {
             Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
 
         $this->mergeMenuOptions();
 
-        // State need items so it fetches them
-        $this->state      = $this->get('State');
+        $this->state = $this->get('State');
 
-		// Need state defined here. Items will be fetched already there
-		$this->items      = $this->get('Items');
+        // Need state defined here. Items will be fetched already there
+        $this->items = $this->get('Items');
 
+        $params     =
+        $this->params = $this->state->get('params');
+        $this->user = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        $user = $app->getIdentity();
 
-		$params =
-        $this->params     = $this->state->get('params');
-        $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
-
-        $this->isShowPagination = $params->get('show_pagination', 2);
+        $this->isShowPagination  = $params->get('show_pagination', 2);
         $this->isShowDescription = $params->get('isSlpShowImgDescriptionJ3x', false);
-        $this->isShowDownload = $params->get('isSlpShowDownloadJ3x', false);
-        $this->isShowVoting = $params->get('isSlpShowVotingJ3x', false);
-        $this->isShowComments = $params->get('isSlpShowCommentsJ3x', false);
-        $this->isShowExif = $params->get('isSlpShowExifJ3x', false);
+        $this->isShowDownload    = $params->get('isSlpShowDownloadJ3x', false);
+        $this->isShowVoting      = $params->get('isSlpShowVotingJ3x', false);
+        $this->isShowComments    = $params->get('isSlpShowCommentsJ3x', false);
+        $this->isShowExif        = $params->get('isSlpShowExifJ3x', false);
 
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
-		// In slide page view a single item is shown.
-		// Pagination parameters are changed to match it
-		$model = $this->getModel();
-		$model->setState2SingleItem ($this->items);
+        // In slide page view a single item is shown.
+        // Pagination parameters are changed to match it
+        $model = $this->getModel();
+        $model->setState2SingleItem($this->items);
 
-		//--- create pagination -------------------------------------------
+        //--- create pagination -------------------------------------------
 
-		$limitstart = $this->state->get('list.start');
-		$total =$this->state->get('list.total');
+        $limitstart = $this->state->get('list.start');
+        $total      = $this->state->get('list.total');
 
-		$this->pagination = new Pagination ($total, $limitstart, 1);
+        $this->pagination = new Pagination ($total, $limitstart, 1);
 
-		// Flag indicates to not add limitstart=0 to URL
-		// commented to show also for IDX 0
+        // Flag indicates to not add limitstart=0 to URL
+        // commented to show also for IDX 0
         // $this->pagination->hideEmptyLimitstart = true;
 
         //--- select start image --------------------------------------------------------------------
 
         $this->imageIdx = $this->state->get('list.start');
-        $this->image = null;
-        if (count ($this->items) >= $this->imageIdx) {
-
+        $this->image    = null;
+        if (count($this->items) >= $this->imageIdx) {
             $this->image = $this->items [$this->imageIdx];
         }
 
@@ -157,24 +154,21 @@ class HtmlView extends BaseHtmlView
         $this->gallery = $model->galleryData($this->galleryId);
 
         // add slideshow url
-        if (! empty ($gallery)) {
-            $model->assignSlideshowUrl ($gallery);
+        if (!empty ($gallery)) {
+            $model->assignSlideshowUrl($gallery);
         }
 
-        if ( ! empty($this->items)) {
+        if (!empty($this->items)) {
             // Add image paths, image params ...
             //$data = $model->AddLayoutData ($this->items);
         }
 
         //--- exif data --------------------------------------------------------
 
-        if ( ! empty ($this->image )) {
-
-            if($this->isShowExif){
-
+        if (!empty ($this->image)) {
+            if ($this->isShowExif) {
                 // image to display exits
-                if ( ! empty ($this->image)) {
-
+                if (!empty ($this->image)) {
                     //--- load additional language file --------------------------------
 
                     $lang = Factory::getApplication()->getLanguage();
@@ -190,8 +184,7 @@ class HtmlView extends BaseHtmlView
 
                     // tags in second item of array
                     $ImageExifTags = [];
-                    if (! empty ($ImageExifFileTags[1])) {
-
+                    if (!empty ($ImageExifFileTags[1])) {
                         $ImageExifTags = $ImageExifFileTags[1];
                     }
 
@@ -200,8 +193,7 @@ class HtmlView extends BaseHtmlView
             }
         }
 
-        if (count($errors = $this->get('Errors')))
-        {
+        if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -222,19 +214,14 @@ class HtmlView extends BaseHtmlView
 //
 
 
-
-
-
-
 //		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
-		return parent::display($tpl);
-	}
-
+        return parent::display($tpl);
+    }
 
 
 //  ToDo: movoe to model
@@ -260,7 +247,7 @@ class HtmlView extends BaseHtmlView
 
         // gid should be zero ToDo: is this really needed *?
         $input = Factory::getApplication()->input;
-        //$this->galleryId = $input->get('gid', 0, 'INT');
+        //$this->galleryId = $input->get('id', 0, 'INT');
 
 //        // $this->menuParams = new \stdClass();
 //        $this->menuParams = (object)[];

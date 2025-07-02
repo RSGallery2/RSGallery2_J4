@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
@@ -15,9 +15,9 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Registry\Registry;
 
 /**
@@ -38,24 +38,25 @@ class imageslatestModel extends ListModel
     /**
      * The category context (allows other extensions to derived from this model).
      *
-     * @var		string
+     * @var        string
      */
     protected $_extension = 'com_rsgallery2';
+
+    protected $_item = null;
 
     /**
      * Constructor.
      *
-     * @param array $config An optional associative array of configuration settings.
-     * @param MVCFactoryInterface|null $factory
+     * @param   array                     $config  An optional associative array of configuration settings.
+     * @param   MVCFactoryInterface|null  $factory
      * @throws \Exception
      * @see     \JController
      * @since   1.6
      */
-    public function __construct($config = array(), MVCFactoryInterface $factory = null)
+    public function __construct($config = [], MVCFactoryInterface $factory = null)
     {
-        if (empty($config['filter_fields']))
-        {
-            $config['filter_fields'] = array(
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = [
                 'id', 'a.id',
                 'title', 'a.title',
                 'alias', 'a.alias',
@@ -75,13 +76,99 @@ class imageslatestModel extends ListModel
 //                'images', 'a.images',
 //                'urls', 'a.urls',
                 'filter_tag',
-            );
+            ];
         }
 
         parent::__construct($config, $factory);
     }
 
 
+    public function getItems()
+    {
+        $items  = parent::getItems();
+        $app    = Factory::getApplication();
+        $user   = $app->getIdentity();
+        $userId = $user->get('id');
+        $guest  = $user->get('guest');
+        $groups = $user->getAuthorisedViewLevels();
+        $input  = Factory::getApplication()->input;
+
+        $gid = $input->getInt('id', 0);
+
+        if ($this->_item === null) {
+            $this->_item = [];
+        }
+
+        $images = new stdClass(); // ToDo: all to (object)[];
+
+        // not fetched already
+        if (!isset($this->_item[$gid])) {
+            try {
+                $db    = $this->getDatabase();
+                $query = $db->getQuery(true);
+
+                $query
+                    ->select('*')
+                    //->from($db->quoteName('#__rsg2_galleries', 'a'))
+                    ->from($db->quoteName('#__rsg2_images', 'a'))
+                    //->where('a.id = ' . (int) $gid);
+                    ->where('a.gallery_id = ' . (int)$gid)
+//                    ->order('rand()')
+                    ->order('created DSC')
+                    ->setLimit('5');
+
+                $db->setQuery($query);
+                $data = $db->loadObjectList();
+
+                if (!empty($data)) {
+                    $this->_item[$gid] = $data;
+                } else {
+                    // may< be empty
+                    $this->_item[$gid] = false;
+                    // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
+                }
+            } catch (Exception $e) {
+                $this->setError($e);
+                $this->_item[$gid] = false;
+            }
+        }
+
+        $images = $this->_item[$gid];
+
+        return $images;
+    }
+
+
+    /**
+     * @var string item
+     */
+    /**/
+    /**
+     * Method to get the starting number of items for the data set.
+     *
+     * @return  integer  The starting number of items available in the data set.
+     *
+     * @since   3.0.1
+     */
+    public function getStart()
+    {
+        return $this->getState('list.start');
+    }
+    /**/
+
+    /**
+     * Method to get a list of images
+     *
+     * ??? Overridden to inject convert the attribs field into a Registry object.
+     *
+     * @param   integer  $gid  Id for the gallery
+     *
+     * @return  mixed  An array of objects on success, false on failure.
+     *
+     * @since   1.6
+     */
+
+    // toDo: rights ...
     /**
      * Method to auto-populate the model state.
      *
@@ -102,7 +189,7 @@ class imageslatestModel extends ListModel
     {
         $app = Factory::getApplication();
 
-		//$this->setState('foo.id', $app->input->getInt('id'));
+        //$this->setState('foo.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.
@@ -122,8 +209,7 @@ class imageslatestModel extends ListModel
 
         $orderCol = $app->input->get('filter_order', 'a.ordering');
 
-        if (!in_array($orderCol, $this->filter_fields))
-        {
+        if (!in_array($orderCol, $this->filter_fields)) {
             $orderCol = 'a.ordering';
         }
 
@@ -131,8 +217,7 @@ class imageslatestModel extends ListModel
 
         $listOrder = $app->input->get('filter_order_Dir', 'ASC');
 
-        if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', '')))
-        {
+        if (!in_array(strtoupper($listOrder), ['ASC', 'DESC', ''])) {
             $listOrder = 'ASC';
         }
 
@@ -141,10 +226,9 @@ class imageslatestModel extends ListModel
         $params = $app->getParams();
         $this->setState('params', $params);
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
+        $user = $app->getIdentity();
 
-        if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content')))
-        {
+        if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
             // Filter on published for those who do not have edit or edit.state rights.
             $this->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
         }
@@ -153,12 +237,9 @@ class imageslatestModel extends ListModel
 
         // toDo: ??? when is it needed
         // Process show_noauth parameter
-        if ((!$params->get('show_noauth')) || (!ComponentHelper::getParams('com_content')->get('show_noauth')))
-        {
+        if ((!$params->get('show_noauth')) || (!ComponentHelper::getParams('com_content')->get('show_noauth'))) {
             $this->setState('filter.access', true);
-        }
-        else
-        {
+        } else {
             $this->setState('filter.access', false);
         }
 
@@ -167,7 +248,7 @@ class imageslatestModel extends ListModel
         //--- RSG2 ---------------------------------
 
         $this->setState('rsgallery2.id', $app->input->getInt('id'));
-	}
+    }
 
     /**
      * Method to get a store id based on model configuration state.
@@ -204,104 +285,6 @@ class imageslatestModel extends ListModel
         $id .= ':' . serialize($this->getState('filter.tag'));
 
         return parent::getStoreId($id);
-    }
-
-
-    /**
-	 * @var string item
-	 */
-    /**/
-	protected $_item = null;
-    /**/
-
-    /**
-     * Method to get a list of images
-     *
-     * ??? Overridden to inject convert the attribs field into a Registry object.
-     *
-     * @param   integer  $gid  Id for the gallery
-     *
-     * @return  mixed  An array of objects on success, false on failure.
-     *
-     * @since   1.6
-     */
-
-    // toDo: rights ...
-
-	public function getItems()
-	{
-        $items  = parent::getItems();
-        $app = Factory::getApplication();
-        $user = $app->getIdentity();
-        $userId = $user->get('id');
-        $guest  = $user->get('guest');
-        $groups = $user->getAuthorisedViewLevels();
-        $input  = Factory::getApplication()->input;
-
-        $gid = $input->getInt ('gid', 0);
-
-		if ($this->_item === null)
-		{
-			$this->_item = array();
-		}
-
-        $images = new \stdClass(); // ToDo: all to (object)[];
-
-		// not fetched already
-		if ( ! isset($this->_item[$gid])) {
-
-			try
-			{
-				$db    = $this->getDatabase();
-				$query = $db->getQuery(true);
-
-				$query->select('*')
-					//->from($db->quoteName('#__rsg2_galleries', 'a'))
-					->from($db->quoteName('#__rsg2_images', 'a'))
-					//->where('a.id = ' . (int) $gid);
-					->where('a.gallery_id = ' . (int) $gid)
-//                    ->order('rand()')
-                    ->order('created DSC')
-                    ->setLimit('5');
-
-				$db->setQuery($query);
-				$data = $db->loadObjectList();
-
-				if ( ! empty($data)) {
-                    $this->_item[$gid] = $data;
-                }
-				else
-                {
-                    // may< be empty
-                    $this->_item[$gid] = false;
-                    // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
-				}
-			}
-			catch (\Exception $e)
-			{
-				$this->setError($e);
-				$this->_item[$gid] = false;
-			}
-		}
-
-        $images = $this->_item[$gid];
-
-		return $images;
-	}
-
-
-
-
-    /**
-     * Method to get the starting number of items for the data set.
-     *
-     * @return  integer  The starting number of items available in the data set.
-     *
-     * @since   3.0.1
-     */
-    public function getStart()
-    {
-        return $this->getState('list.start');
     }
 
 

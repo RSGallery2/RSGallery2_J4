@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (C) 2014-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @copyright  (c)  2014-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -25,26 +25,25 @@ class ImagePathsData extends ImagePathsModel
      */
     public function assignPathData ($image) {
 
-        $image->OriginalFile = $this->getOriginalPath ($image->name);
-        $image->DisplayFile = $this->getDisplayPath ($image->name);
-        $image->ThumbFile = $this->getThumbPath ($image->name);
+        $image->OriginalFile = $this->getOriginalPath($image->name);
+        $image->DisplayFile  = $this->getDisplayPath($image->name);
+        $image->ThumbFile    = $this->getThumbPath($image->name);
 
-        $image->SizePaths = $this->getSizePaths ();
+        $image->SizePaths = $this->getSizePaths();
 
-        $image->UrlThumbFile = $this->getThumbUrl ($image->name);
+        $image->UrlThumbFile = $this->getThumbUrl($image->name);
         // $image->UrlDisplayFile = $this->getSizeUrl ('400', $image->name); // toDo: image size to path
-        $image->UrlDisplayFile = $this->getDisplayUrl ($image->name);
-        $image->UrlOriginalFile = $this->getOriginalUrl ($image->name);
+        $image->UrlDisplayFile  = $this->getDisplayUrl($image->name);
+        $image->UrlOriginalFile = $this->getOriginalUrl($image->name);
 
-        $image->SizeUrls = $this->getSizeUrls ($image->name);
+        $image->SizeUrls = $this->getSizeUrls($image->name);
 
         // does exist markers
 
 
         $image->isOriginalFileExist = file_exists($image->OriginalFile);
-        $image->isDisplayFileExist = file_exists($image->DisplayFile);
-        $image->isThumbFileExist = file_exists($image->DisplayFile);
-
+        $image->isDisplayFileExist  = file_exists($image->DisplayFile);
+        $image->isThumbFileExist    = file_exists($image->DisplayFile);
         //$image->isSizePaths = $this->getSizePaths ();
 
     }
@@ -68,7 +67,7 @@ class ImagePathsData extends ImagePathsModel
         }
 
         if (!$image->isDisplayFileExist) {
-            $image->UrlDisplayFile = $missingUrl;;
+            $image->UrlDisplayFile = $missingUrl;
         }
 
         if (!$image->isOriginalFileExist) {
@@ -87,10 +86,8 @@ class ImagePathsData extends ImagePathsModel
      * @since version
      */
     public function urlReplaceMissingImages_ByChild ($image) {
-
-
         if (!$image->isThumbFileExist) {
-            $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
+            $missingUrl          = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
             $image->UrlThumbFile = $missingUrl;
         }
 
@@ -102,7 +99,6 @@ class ImagePathsData extends ImagePathsModel
             $image->UrlOriginalFile = $image->UrlDisplayFile;
         }
     }
-
 
 
 }
