@@ -11,7 +11,7 @@
 //  J3x legacy view default => gallery images
 
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
@@ -77,38 +77,27 @@ if ($displaySearch) {
 
 <!-- ToDo: is form here needed ? check core ...  -->
 <!-- ToDo: form link ...  -->
-<form id="rsg2_gallery__form" action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=gallery'); ?>"
+<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=gallery'); ?>"
       method="post" class="form-validate form-horizontal well">
 
     <div class="rsg2__form rsg2__images_area">
 
-        <?php
-        if (!empty($this->isDebugSite)): ?>
-            <h3><?php
-                echo text::_('RSGallery2 "gallery j3x legacy standard (default)"'); ?> view </h3>
-            <div><?php
-                echo ' GID: ' . $this->galleryId; ?>
+        <?php if (!empty($this->isDebugSite)): ?>
+            <h3><?php echo text::_('RSGallery2 "gallery j3x legacy standard (default)"'); ?> view </h3>
+            <div><?php echo ' Gallery ID: ' . $this->galleryId; ?>
             </div>
             <hr>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-        <?php
-        //--- display search ---------- ?>
+        <?php //--- display search ---------- ?>
 
-        <?php
-        if ($displaySearch): ?>
-            <?php
-            echo $searchLayout->render(); ?>
-        <?php
-        endif; ?>
+        <?php if ($displaySearch): ?>
+            <?php echo $searchLayout->render(); ?>
+        <?php endif; ?>
 
-        <?php
-        //--- display gallery images ---------- ?>
+        <?php //--- display gallery images ---------- ?>
 
-        <?php
-        echo $layout->render($displayData); ?>
+        <?php echo $layout->render($displayData); ?>
 
     </div>
 </form>

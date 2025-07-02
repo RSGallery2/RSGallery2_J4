@@ -10,7 +10,7 @@
 
 //  J3x legacy view => slideshow
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -59,8 +59,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 ?>
 
-<form id="rsg2_gallery__form" action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=slideshow'); ?>" method="post"
+<form id="rsg2_gallery__form" action="<?ph echo Route::_('index.php?option=com_rsgallery2&view=slideshow'); ?>" method="post"
       class="form-validate form-horizontal well">
 
     <div class="rsg2__form rsg2__slide_area">
@@ -70,9 +69,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=slideshow'); ?>" method="pos
             <hr>
         <?php endif; ?>
 
-        <?php
-        echo $layout->render($displayData);
-        ?>
+        <?php echo $layout->render($displayData); ?>
 
     </div>
 </form>

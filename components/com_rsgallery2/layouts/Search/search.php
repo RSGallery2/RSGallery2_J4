@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -40,9 +40,7 @@ if (!empty($isDevelopSite)) {
         . '</span><br><br>';
 }
 
-$link        = Route::_(
-    'index.php?option=com_rsgallery2&view=searchresult',
-); // \Joomla\CMS\Router\Route::_('index.php'); ? >search?Itemid=101
+$link = Route::_('index.php?option=com_rsgallery2&view=searchresult'); // \Joomla\CMS\Router\Route::_('index.php'); ? >search?Itemid=101
 $placeholder = Text::_('COM_RSGALLERY2_SEARCH_GALLERIES_IMAGES');
 
 /* 2024.12.09 Deprecated: Creation of dynamic property
@@ -68,8 +66,7 @@ $this->activeFilters = $this->get('ActiveFilters');
 
 
 <form class="rsg2_search"
-      action="<?php
-      echo $link; ?>"
+      action="<?php echo $link; ?>"
       method="get"
       role="search">
     <div class="container">
@@ -83,8 +80,7 @@ $this->activeFilters = $this->get('ActiveFilters');
                     <input class="form-control "
                            type="search"
                            value=""
-                           placeholder="<?php
-                           echo $placeholder; ?>"
+                                       placeholder="<?php echo $placeholder;?>"
                            id="rsg2_search_input"
                     >
                     <span class="input-group-append">
@@ -105,8 +101,7 @@ $this->activeFilters = $this->get('ActiveFilters');
         <!--                                <input class="form-control rounded-pill"-->
         <!--                                       type="search"-->
         <!--                                       value=""-->
-        <!--                                       placeholder="--><?php
-        //echo $placeholder;?><!--"-->
+<!--                                       placeholder="--><?php //echo $placeholder;?><!--"-->
         <!--                                       id="rsg2_search_input"-->
         <!--                                >-->
         <!--                                <span class="input-group-append">-->
@@ -131,14 +126,12 @@ $this->activeFilters = $this->get('ActiveFilters');
         <!--                    <input class="form-control py-2 border-left-0 border"-->
         <!--                           type="search"-->
         <!--                           value=""-->
-        <!--                           placeholder="--><?php
-        //echo $placeholder;?><!--"-->
+<!--                           placeholder="--><?php //echo $placeholder;?><!--"-->
         <!--                           id="rsg2_search_input">-->
         <!--                    >-->
         <!--                    <span class="input-group-append">-->
         <!--                        <button class="btn btn-primary" type="submit">-->
-        <!--                            --><?php
-        //echo Text::_('JSEARCH_FILTER_SUBMIT');?>
+<!--                            --><?php //echo Text::_('JSEARCH_FILTER_SUBMIT');?>
         <!--                        </button>-->
         <!--                    </span>-->
         <!--                </div>-->
@@ -150,8 +143,6 @@ $this->activeFilters = $this->get('ActiveFilters');
     </div>
 </form>
 
-<?php
-if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)): ?>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>

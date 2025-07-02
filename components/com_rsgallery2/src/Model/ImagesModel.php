@@ -10,10 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use DatabaseQuery;
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -22,11 +20,6 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
-use RuntimeException;
-use stdClass;
-
-use function defined;
-
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 
@@ -62,8 +55,7 @@ class ImagesModel extends ListModel
      *
      * @param   array                     $config  An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory
-     *
-     * @throws Exception
+     * @throws \Exception
      * @see     \JController
      * @since   5.0
      */
@@ -72,39 +64,25 @@ class ImagesModel extends ListModel
         //  which fields are needed for filter function
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id',
-                'a.id',
-                'title',
-                'a.title',
-                'name',
-                'a.name',
-                'gallery_id',
-                'a.gallery_id',
+                'id', 'a.id',
+                'title', 'a.title',
+                'name', 'a.name',
+                'gallery_id', 'a.gallery_id',
 
-                'published',
-                'a.published',
+                'published', 'a.published',
 
-                'created',
-                'a.created',
-                'created_by',
-                'a.created_by',
+                'created', 'a.created',
+                'created_by', 'a.created_by',
 
-                'modified',
-                'a.modified',
-                'modified_by',
-                'a.modified_by',
+                'modified', 'a.modified',
+                'modified_by', 'a.modified_by',
 
-                'ordering',
-                'a.ordering',
+                'ordering', 'a.ordering',
 
-                'hits',
-                'a.hits',
-                'rating',
-                'a.rating',
-                'votes',
-                'a.votes',
-                'comments',
-                'a.comments',
+                'hits', 'a.hits',
+                'rating', 'a.rating',
+                'votes', 'a.votes',
+                'comments', 'a.comments',
                 'tag',
                 'gallery_name',
             ];
@@ -138,7 +116,7 @@ class ImagesModel extends ListModel
 
     private function CascadedLayoutParameter() // For gallery images view
     {
-        $layoutParameter                             = new stdClass();
+        $layoutParameter = new \stdClass();
         $layoutParameter->images_column_arrangement  = 0; // 0: auto
         $layoutParameter->max_columns_in_images_view = 0;
         $layoutParameter->images_row_arrangement     = 0; // 0: auto
@@ -162,45 +140,25 @@ class ImagesModel extends ListModel
             $input = $app->input;
 
             // overwrite config if chosen
-            $images_column_arrangement_menu = $input->get(
-                'images_column_arrangement',
-                $images_column_arrangement,
-                'STRING',
-            );
+            $images_column_arrangement_menu = $input->get('images_column_arrangement', $images_column_arrangement, 'STRING');
 
             if ($images_column_arrangement_menu != 'global') {
                 $images_column_arrangement = (int)$images_column_arrangement_menu;
 
                 // toDo: switch when more selections .. (0 auto)
                 if ($images_column_arrangement_menu == '1') {
-                    $max_columns_in_images_view = $input->get(
-                        'max_columns_in_images_view',
-                        $max_columns_in_images_view,
-                        'INT',
-                    );
+                    $max_columns_in_images_view = $input->get('max_columns_in_images_view', $max_columns_in_images_view, 'INT');
 
-                    $images_row_arrangement_menu = $input->get(
-                        'images_row_arrangement',
-                        $images_row_arrangement,
-                        'INT',
-                    );
+                    $images_row_arrangement_menu = $input->get('images_row_arrangement', $images_row_arrangement, 'INT');
                     if ($images_row_arrangement_menu != 'global') {
                         $images_row_arrangement = (int)$images_row_arrangement_menu;
 
                         // toDo: switch when more selections .. (0 auto)
 
                         if ($images_row_arrangement_menu == '1') {
-                            $max_rows_in_images_view = $input->get(
-                                'max_rows_in_images_view',
-                                $max_rows_in_images_view,
-                                'INT',
-                            );
+                            $max_rows_in_images_view = $input->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
                         } else {
-                            $max_thumbs_in_images_view = $input->get(
-                                'max_thumbs_in_images_view',
-                                $max_thumbs_in_images_view,
-                                'INT',
-                            );
+                            $max_thumbs_in_images_view = $input->get('max_thumbs_in_images_view', $max_thumbs_in_images_view, 'INT');
                         }
                     }
                 }
@@ -223,28 +181,16 @@ class ImagesModel extends ListModel
                 if ($images_column_arrangement_gallery == '1') {
                     $max_columns_in_images_view = $gallery_param->get('max_columns_in_images_view');
 
-                    $images_row_arrangement_gallery = $gallery_param->get(
-                        'images_row_arrangement',
-                        $images_row_arrangement,
-                        'INT',
-                    );
+                    $images_row_arrangement_gallery = $gallery_param->get('images_row_arrangement', $images_row_arrangement, 'INT');
                     if ($images_row_arrangement_gallery != 'global') {
                         $images_row_arrangement = (int)$images_row_arrangement_gallery;
 
                         // toDo: switch when more selections .. (0 auto)
 
                         if ($images_row_arrangement_gallery == '1') {
-                            $max_rows_in_images_view = $gallery_param->get(
-                                'max_rows_in_images_view',
-                                $max_rows_in_images_view,
-                                'INT',
-                            );
+                            $max_rows_in_images_view = $gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
                         } else {
-                            $max_thumbs_in_images_view = $gallery_param->get(
-                                'max_thumbs_in_images_view',
-                                $max_thumbs_in_images_view,
-                                'INT',
-                            );
+                            $max_thumbs_in_images_view = $gallery_param->get('max_thumbs_in_images_view', $max_thumbs_in_images_view, 'INT');
                         }
                     }
                 }
@@ -277,7 +223,7 @@ class ImagesModel extends ListModel
             }
 
             $layoutParameter->limit = $limit;
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: CascadedLayoutParameter: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -288,7 +234,6 @@ class ImagesModel extends ListModel
 
         return $layoutParameter;
     }
-
 
     /**
      * @var string item
@@ -371,7 +316,7 @@ class ImagesModel extends ListModel
                 }
 
                 $this->_item[$gid] = $data;
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -417,7 +362,7 @@ class ImagesModel extends ListModel
                 // ==> watermark or not shown single => call in inherited instead
                 $this->AssignUrlDownloadImage($image);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -449,7 +394,7 @@ class ImagesModel extends ListModel
                 $imagePathJ3x = new ImagePathsJ3xData ();
                 $imagePathJ3x->assignPathData($image);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -468,15 +413,10 @@ class ImagesModel extends ListModel
 
         // ToDo: use one function instead of two
         try {
-            $image->UrlDownload = Route::_(
-                'index.php?option=com_rsgallery2'
+            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
                 . '&task=imagefile.downloadfile&id=' . $image->id
-                ,
-                true,
-                0,
-                true,
-            );
-        } catch (RuntimeException $e) {
+                ,true,0,true);
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagesModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -505,7 +445,7 @@ class ImagesModel extends ListModel
      *
      * @return array rows with image name, images name, date, and user name as rows
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     public function latestImages($limit)
@@ -552,7 +492,7 @@ class ImagesModel extends ListModel
      *
      * @return array rows with image name, images name, date, and user name as rows
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     public function randomImages($limit)
@@ -594,7 +534,7 @@ class ImagesModel extends ListModel
 
     public function galleryData($gid = 0)
     {
-        $gallery = new stdClass();
+        $gallery = new \stdClass();
 
         // Not root gallery (tree root == 1)
         if ($gid > 1) {
@@ -749,7 +689,7 @@ class ImagesModel extends ListModel
     /**
      * Method to get a database query to list images.
      *
-     * @return  DatabaseQuery object.
+     * @return  \DatabaseQuery object.
      *
      * @since __BUMP_VERSION__
      */
@@ -800,16 +740,13 @@ class ImagesModel extends ListModel
                 . 'a.asset_id, '
                 . 'a.access, '
                 . 'a.use_j3x_location ',
-            ),
+            )
         );
         $query->from('#__rsg2_images as a');
 
         /* parent gallery name */
-        $query
-            ->select('gal.name as gallery_name')
-            ->join(
-                'LEFT',
-                '#__rsg2_galleries AS gal ON gal.id = a.gallery_id',
+        $query->select('gal.name as gallery_name')
+            ->join('LEFT', '#__rsg2_galleries AS gal ON gal.id = a.gallery_id'
             );
 
         //// Join over the language
@@ -832,25 +769,25 @@ class ImagesModel extends ListModel
             ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
         /**
-         * // Join over the associations.
-         * $assoc = $this->getAssoc();
-         *
-         * if ($assoc)
-         * {
-         * $query->select('COUNT(asso2.id)>1 as association')
-         * ->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
-         * ->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
-         * ->group('a.id, l.title, uc.name, ag.title, ua.name');
-         * }
-         * /**/
+        // Join over the associations.
+        $assoc = $this->getAssoc();
+
+        if ($assoc)
+        {
+        $query->select('COUNT(asso2.id)>1 as association')
+        ->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
+        ->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
+        ->group('a.id, l.title, uc.name, ag.title, ua.name');
+        }
+        /**/
 
         /**
-         * // Filter on the level.
-         * if ($level = $this->getState('filter.level'))
-         * {
-         * $query->where('a.level <= ' . (int) $level);
-         * }
-         * /**/
+        // Filter on the level.
+        if ($level = $this->getState('filter.level'))
+        {
+        $query->where('a.level <= ' . (int) $level);
+        }
+        /**/
 
         // Filter by access level.
         if ($access = $this->getState('filter.access')) {
@@ -909,33 +846,33 @@ class ImagesModel extends ListModel
 
         // Filter by a single tag.
         /**
-         * $tagId = $this->getState('filter.tag');
-         *
-         * if (is_numeric($tagId))
-         * {
-         * $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
-         * ->join(
-         * 'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
-         * . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
-         * . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
-         * );
-         * }
-         * /**/
+        $tagId = $this->getState('filter.tag');
+
+        if (is_numeric($tagId))
+        {
+        $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+        ->join(
+        'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
+        . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+        . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
+        );
+        }
+        /**/
 
         // Add the list ordering clause
 
         /**
-         * // changes need changes above too -> populateState
-         * $orderCol  = $this->state->get('list.ordering', 'a.id');
-         * $orderDirn = $this->state->get('list.direction', 'desc');
-         *
-         * if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
-         * {
-         * $orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
-         * }
-         *
-         * $query->order($db->escape($orderCol . ' ' . $orderDirn));
-         * /**/
+        // changes need changes above too -> populateState
+        $orderCol  = $this->state->get('list.ordering', 'a.id');
+        $orderDirn = $this->state->get('list.direction', 'desc');
+
+        if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
+        {
+        $orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
+        }
+
+        $query->order($db->escape($orderCol . ' ' . $orderDirn));
+        /**/
 
         $listOrdering = $this->getState('list.ordering', 'a.ordering');
         $listDirn     = $db->escape($this->getState('list.direction', 'ASC'));

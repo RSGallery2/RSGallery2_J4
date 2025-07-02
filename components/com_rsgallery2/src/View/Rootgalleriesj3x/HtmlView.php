@@ -9,8 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Rootgalleriesj3x;
 
-defined('_JEXEC') or die;
-
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -19,8 +18,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
 use \Joomla\CMS\User\User;
-
-use function defined;
 
 //use Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel;
 

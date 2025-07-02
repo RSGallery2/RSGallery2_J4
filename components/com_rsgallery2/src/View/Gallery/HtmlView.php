@@ -11,8 +11,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallery;
 
-defined('_JEXEC') or die;
-
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -22,8 +21,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
 use \Joomla\CMS\User\User;
-
-use function defined;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -100,13 +97,10 @@ class HtmlView extends BaseHtmlView
         $isDisplayRootGalleries = $this->galleryId === 0;
         if ($isDisplayRootGalleries) {
             // Tell to use ... instead
-            $msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "' . Text::_(
-                    'COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE',
-                ) . '"';
+			$msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "' 
+					. Text::_('COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE') . '"';
             $app->enqueueMessage($msg, 'Notice');
             // ToDo: ? redirect ?
-
-
         }
 
         // Get some data from the models

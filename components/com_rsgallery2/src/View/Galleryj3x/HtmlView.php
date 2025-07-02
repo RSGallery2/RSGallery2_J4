@@ -11,8 +11,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Galleryj3x;
 
-defined('_JEXEC') or die;
-
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -21,8 +20,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
 use \Joomla\CMS\User\User;
-
-use function defined;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -97,10 +94,7 @@ class HtmlView extends BaseHtmlView
 
         /* wrong call but why ? gallery should be a number > 0 */
         if ($this->galleryId < 2) {
-            Factory::getApplication()->enqueueMessage(
-                "gallery id is zero or not allowed -> why does it happen ?",
-                'error',
-            );
+	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why does it happen ?", 'error');
         }
 
         // Get some data from the models

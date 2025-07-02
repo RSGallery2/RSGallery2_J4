@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\site\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Input;
@@ -20,9 +20,6 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
-use RuntimeException;
-
-use function defined;
 
 /**
  * The Controller
@@ -94,11 +91,7 @@ class ImageFileController extends BaseController
                 $msgType = 'error';
                 $app->enqueueMessage($msg, $msgType);
             } else {
-                [$OriginalFilePath, $OriginalFileUri] = $model->getOriginalPaths(
-                    $fileName,
-                    $galleryId,
-                    $use_j3x_location,
-                );
+                [$OriginalFilePath, $OriginalFileUri] = $model->getOriginalPaths($fileName, $galleryId, $use_j3x_location);
 
                 $isDownloaded = $model->downloadImageFile($OriginalFilePath, $OriginalFileUri);
 
@@ -114,7 +107,7 @@ class ImageFileController extends BaseController
                     $app->enqueueMessage($msg, $msgType);
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

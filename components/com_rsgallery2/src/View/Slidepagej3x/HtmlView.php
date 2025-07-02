@@ -9,8 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Slidepagej3x;
 
-defined('_JEXEC') or die;
-
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -21,8 +20,6 @@ use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use \Joomla\CMS\User\User;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
-
-use function defined;
 
 /**
  * Single image with pagination
@@ -100,10 +97,7 @@ class HtmlView extends BaseHtmlView
 
         /* wrong call but not expected. Happens but why ? */
         if ($this->galleryId < 2) {
-            Factory::getApplication()->enqueueMessage(
-				"gallery id is zero or not allowed -> why",
-				'error'
-            );
+            Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
 
         $this->mergeMenuOptions();
@@ -178,13 +172,8 @@ class HtmlView extends BaseHtmlView
                     //--- load additional language file --------------------------------
 
                     $lang = Factory::getApplication()->getLanguage();
-                    $lang->load(
-                        'com_rsg2_exif',
-                        Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
-                        null,
-                        false,
-                        true,
-                    );
+                    $lang->load('com_rsg2_exif',
+                        Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 
                     //--- selected tags from original file --------------------------------
 
@@ -239,22 +228,22 @@ class HtmlView extends BaseHtmlView
     public function mergeMenuOptions()
     {
         /**
-         * $app = Factory::getApplication();
-         *
-         * if ($menu = $app->getMenu()->getActive())
-         * {
-         * $menuParams = $menu->getParams();
-         * }
-         * else
-         * {
-         * $menuParams = new Registry;
-         * }
-         *
-         * $mergedParams = clone $this->params;
-         * $mergedParams->merge($menuParams);
-         *
-         * $this->params = $mergedParams;
-         * /**/
+        $app = Factory::getApplication();
+
+        if ($menu = $app->getMenu()->getActive())
+        {
+        $menuParams = $menu->getParams();
+        }
+        else
+        {
+        $menuParams = new Registry;
+        }
+
+        $mergedParams = clone $this->params;
+        $mergedParams->merge($menuParams);
+
+        $this->params = $mergedParams;
+        /**/
 
         // gid should be zero ToDo: is this really needed *?
         $input = Factory::getApplication()->input;

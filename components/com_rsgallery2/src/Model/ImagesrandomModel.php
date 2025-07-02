@@ -10,9 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -20,9 +19,6 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
-use stdClass;
-
-use function defined;
 
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
@@ -53,8 +49,7 @@ class imagesrandomModel extends ListModel
      *
      * @param   array                     $config  An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory
-     *
-     * @throws Exception
+     * @throws \Exception
      * @see     \JController
      * @since   1.6
      */
@@ -62,38 +57,22 @@ class imagesrandomModel extends ListModel
     {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id',
-                'a.id',
-                'title',
-                'a.title',
-                'alias',
-                'a.alias',
-                'checked_out',
-                'a.checked_out',
-                'checked_out_time',
-                'a.checked_out_time',
-                'catid',
-                'a.catid',
-                'category_title',
-                'state',
-                'a.state',
-                'access',
-                'a.access',
-                'access_level',
-                'created',
-                'a.created',
-                'created_by',
-                'a.created_by',
-                'ordering',
-                'a.ordering',
+                'id', 'a.id',
+                'title', 'a.title',
+                'alias', 'a.alias',
+                'checked_out', 'a.checked_out',
+                'checked_out_time', 'a.checked_out_time',
+                'catid', 'a.catid', 'category_title',
+                'state', 'a.state',
+                'access', 'a.access', 'access_level',
+                'created', 'a.created',
+                'created_by', 'a.created_by',
+                'ordering', 'a.ordering',
 //                'featured', 'a.featured',
 //                'language', 'a.language',
-                'hits',
-                'a.hits',
-                'publish_up',
-                'a.publish_up',
-                'publish_down',
-                'a.publish_down',
+                'hits', 'a.hits',
+                'publish_up', 'a.publish_up',
+                'publish_down', 'a.publish_down',
 //                'images', 'a.images',
 //                'urls', 'a.urls',
                 'filter_tag',

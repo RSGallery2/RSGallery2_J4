@@ -9,14 +9,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Input;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
-use function defined;
 
 /**
  * Rsgallery2 Component Controller

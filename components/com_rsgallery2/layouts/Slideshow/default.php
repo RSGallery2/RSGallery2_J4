@@ -82,18 +82,15 @@ if (!empty($images)) {
 
 ?>
 
-<?php
-if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 images slideshow layout</h3>
     <div class="p-3 mb-2 bg-success bg-gradient text-white">Test with indicators</div>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>
 
 <div class="rsg2_gallery">
 
-    <?php
-    /**/ ?>
+    <?php /**/ ?>
     <h3>Test slideshow I</h3>
     <hr>
 
@@ -143,11 +140,9 @@ endif; ?>
         </button>
     </div>
     <hr>
-    <?php
-    /**/ ?>
+    <?php /**/ ?>
 
-    <?php
-    /**/ ?>
+    <?php /**/ ?>
     <h3>Test slideshow II WWW3 + data </h3>
     <hr>
 
@@ -167,25 +162,22 @@ endif; ?>
 
         <div class="carousel-inner">
             <?php
-            $isActive = "active";
+            $isActive="active";
 
             foreach ($images as $image) {
                 ?>
 
-                <div class="carousel-item <?php
-                echo $isActive; ?>">
+                <div class="carousel-item <?php echo $isActive; ?>">
                     <div class="d-block w-100">
                         <img class="d-block "
-                             src="<?php
-                             echo $image->UrlDisplayFile ?>"
-                             alt="<?php
-                             echo $image->name; ?>"
+                             src="<?php echo $image->UrlDisplayFile ?>"
+                             alt="<?php echo $image->name; ?>"
                         >
                     </div>
                 </div>
 
                 <?php
-                $isActive = "";
+                $isActive="";
             }
             ?>
 
@@ -203,12 +195,11 @@ endif; ?>
         </button>
     </div>
     <hr>
-    <?php
-    /**/ ?>
+    <?php /**/ ?>
 
 
-    <?php
-    /** ?>
+    <?php 
+     /** 
      * <div class="rsg2__slideshow" >
      *
      * <?php if (!empty($isDebugSite)): ?>
@@ -220,8 +211,7 @@ endif; ?>
      * <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
      * <div class="carousel-inner">
      *
-     * <?php
-     * $isActive="active";
+     * <?php * $isActive="active";
      *
      * foreach ($images as $image) {
      * ?>

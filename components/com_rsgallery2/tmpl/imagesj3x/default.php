@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -67,24 +67,18 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 ?>
 
 <div class="rsg2__form rsg2__images_area">
-    <form id="rsg2_gallery__form" action="<?php
-    echo Route::_('index.php?option=com_rsgallery2&view=imagesj3x'); ?>" method="post"
+    <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=imagesj3x'); ?>" method="post"
           class="form-validate form-horizontal well">
 
-        <?php
-        if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)): ?>
             <h1> RSGallery2 "images list" view </h1>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-        <?php
-        if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)): ?>
             <hr>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-        <?php
-        echo $layout->render($displayData);
+        <?php echo $layout->render($displayData);
         ?>
 
 

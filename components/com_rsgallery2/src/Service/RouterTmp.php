@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Service;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Categories\CategoryFactoryInterface;
@@ -24,8 +24,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
-
-use function defined;
 
 /**
  * Routing class of com_rsgallery2
@@ -58,12 +56,8 @@ class Router extends RouterView
      * @param   CategoryFactoryInterface  $categoryFactory  The category object
      * @param   DatabaseInterface         $db               The database object
      */
-    public function __construct(
-        SiteApplication $app,
-        AbstractMenu $menu,
-        CategoryFactoryInterface $categoryFactory,
-        DatabaseInterface $db
-    ) {
+    public function __construct(SiteApplication $app, AbstractMenu $menu, CategoryFactoryInterface $categoryFactory,
+        DatabaseInterface $db) {
         /**
          * $this->categoryFactory = $categoryFactory;
          * $this->db              = $db;

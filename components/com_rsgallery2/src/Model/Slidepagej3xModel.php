@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use DatabaseQuery;
 use Exception;
@@ -24,8 +24,6 @@ use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 use RuntimeException;
-
-use function defined;
 
 
 /**
@@ -42,7 +40,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
      * Pagination parameters are changed to match it
      * It can not be added to populatian as it needs ...
      *
-     * @throws Exception
+	 * @throws \Exception
      * @since version
      */
 

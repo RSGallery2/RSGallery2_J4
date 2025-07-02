@@ -9,15 +9,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsgallery2;
 
-defined('_JEXEC') or die;
-
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Registry\Registry;
-use stdClass;
-
-use function defined;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -75,7 +71,7 @@ class HtmlView extends BaseHtmlView
         // ToDO: use registry merge $itemparams ??? on oter displays ...
 
         // ToDo: remove
-        $item = new stdClass;
+        $item = new \stdClass;
 
 
         $temp = clone $params;
@@ -85,24 +81,14 @@ class HtmlView extends BaseHtmlView
         Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.rsgallery2', &$item]);
 
         // Store the events for later
-        $item->event                    = new stdClass;
-        $results                        = Factory::getApplication()->triggerEvent(
-            'onContentAfterTitle',
-            ['com_rsgallery2.rsgallery2', &$item, &$item->params],
-        );
+		$item->event = new \stdClass;
+		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
         $item->event->afterDisplayTitle = trim(implode("\n", $results));
 
-
-        $results                           = Factory::getApplication()->triggerEvent(
-            'onContentBeforeDisplay',
-            ['com_rsgallery2.rsgallery2', &$item, &$item->params],
-        );
+		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
         $item->event->beforeDisplayContent = trim(implode("\n", $results));
 
-        $results                          = Factory::getApplication()->triggerEvent(
-            'onContentAfterDisplay',
-            ['com_rsgallery2.rsgallery2', &$item, &$item->params],
-        );
+		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
         $item->event->afterDisplayContent = trim(implode("\n", $results));
 
         return parent::display($tpl);

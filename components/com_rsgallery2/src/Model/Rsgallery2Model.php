@@ -10,15 +10,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Registry\Registry;
-
-use function defined;
 
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.

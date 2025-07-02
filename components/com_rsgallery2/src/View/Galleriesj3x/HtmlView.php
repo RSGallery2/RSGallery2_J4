@@ -9,16 +9,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Galleriesj3x;
 
-defined('_JEXEC') or die;
-
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\Registry\Registry;
-
-use function defined;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component

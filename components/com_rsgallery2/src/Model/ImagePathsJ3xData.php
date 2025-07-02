@@ -9,12 +9,10 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Uri\Uri;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
-
-use function defined;
 
 
 class ImagePathsJ3xData extends ImagePathsJ3xModel
@@ -87,8 +85,8 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      *
      * @since version
      */
-    public function urlReplaceMissingImages_ByChild($image)
-    {
+    public function urlReplaceMissingImages_ByChild ($image) {
+
         if (!$image->isThumbFileExist) {
             $missingUrl          = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
             $image->UrlThumbFile = $missingUrl;

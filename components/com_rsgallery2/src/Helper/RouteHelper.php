@@ -9,12 +9,10 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Categories\CategoryNode;
 use Joomla\CMS\Language\Multilanguage;
-
-use function defined;
 
 /**
  * Rsgallery2 Component Route Helper
@@ -103,35 +101,35 @@ abstract class RouteHelper
      * @since   __DEPLOY_VERSION__
      */
     /**
-     * public static function getCategoryRoute($catid, $language = 0)
-     * {
-     * if ($catid instanceof CategoryNode)
-     * {
-     * $id = $catid->id;
-     * }
-     * else
-     * {
-     * $id = (int) $catid;
-     * }
-     *
-     * if ($id < 1)
-     * {
-     * $link = '';
-     * }
-     * else
-     * {
-     * // Create the link
-     * $link = 'index.php?option=com_rsgallery2&view=category&id=' . $id;
-     *
-     * if ($language && $language !== '*' && Multilanguage::isEnabled())
-     * {
-     * $link .= '&lang=' . $language;
-     * }
-     * }
-     *
-     * return $link;
-     * }
-     * /**/
+	public static function getCategoryRoute($catid, $language = 0)
+	{
+		if ($catid instanceof CategoryNode)
+		{
+			$id = $catid->id;
+		}
+		else
+		{
+			$id = (int) $catid;
+		}
+
+		if ($id < 1)
+		{
+			$link = '';
+		}
+		else
+		{
+			// Create the link
+			$link = 'index.php?option=com_rsgallery2&view=category&id=' . $id;
+
+			if ($language && $language !== '*' && Multilanguage::isEnabled())
+			{
+				$link .= '&lang=' . $language;
+			}
+		}
+
+		return $link;
+	}
+    /**/
 
 
     /**
@@ -144,11 +142,11 @@ abstract class RouteHelper
      * @since   1.5
      */
     /**
-     * public static function getFormRoute($id)
-     * {
-     * // toDo for edit ...
-     * return 'index.php?option=com_content&task=article.edit&a_id=' . (int) $id;
-     * }
-     * /**/
+    public static function getFormRoute($id)
+    {
+        // toDo for edit ...
+        return 'index.php?option=com_content&task=article.edit&a_id=' . (int) $id;
+    }
+    /**/
 
 }

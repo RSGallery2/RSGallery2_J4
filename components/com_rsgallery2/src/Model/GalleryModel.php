@@ -11,10 +11,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use DatabaseQuery;
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
@@ -25,10 +23,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Database\ParameterType;
 use Joomla\Registry\Registry;
-use RuntimeException;
-use stdClass;
 
-use function defined;
 
 
 /**
@@ -62,8 +57,7 @@ class GalleryModel extends ListModel
      *
      * @param   array                     $config  An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory
-     *
-     * @throws Exception
+     * @throws \Exception
      * @see     \JController
      * @since   1.6
      */
@@ -71,38 +65,22 @@ class GalleryModel extends ListModel
     {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id',
-                'a.id',
-                'title',
-                'a.title',
-                'alias',
-                'a.alias',
-                'checked_out',
-                'a.checked_out',
-                'checked_out_time',
-                'a.checked_out_time',
-                'catid',
-                'a.catid',
-                'category_title',
-                'state',
-                'a.state',
-                'access',
-                'a.access',
-                'access_level',
-                'created',
-                'a.created',
-                'created_by',
-                'a.created_by',
-                'ordering',
-                'a.ordering',
+                'id', 'a.id',
+                'title', 'a.title',
+                'alias', 'a.alias',
+                'checked_out', 'a.checked_out',
+                'checked_out_time', 'a.checked_out_time',
+                'catid', 'a.catid', 'category_title',
+                'state', 'a.state',
+                'access', 'a.access', 'access_level',
+                'created', 'a.created',
+                'created_by', 'a.created_by',
+                'ordering', 'a.ordering',
 //                'featured', 'a.featured',
 //                'language', 'a.language',
-                'hits',
-                'a.hits',
-                'publish_up',
-                'a.publish_up',
-                'publish_down',
-                'a.publish_down',
+                'hits', 'a.hits',
+                'publish_up', 'a.publish_up',
+                'publish_down', 'a.publish_down',
 //                'images', 'a.images',
 //                'urls', 'a.urls',
                 'filter_tag',
@@ -141,7 +119,7 @@ class GalleryModel extends ListModel
 
                 $this->AssignUrlDownloadImage($image);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleryModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -263,7 +241,7 @@ class GalleryModel extends ListModel
 
     public function gallery_parameter($gid = 0)
     {
-        $parameter = new stdClass();
+        $parameter = new \stdClass();
 
         // Not root gallery (tree root == 1)
         if ($gid > 1) {
@@ -291,7 +269,7 @@ class GalleryModel extends ListModel
 
     public function galleryData($gid = 0)
     {
-        $gallery = new stdClass();
+        $gallery = new \stdClass();
 
         // Not root gallery (tree root == 1)
         if ($gid > 1) {

@@ -89,12 +89,10 @@ if (!empty($images)) {
 // allow:
 ?>
 
-<?php
-if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 J3x images slideshow layout</h3>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>
 
 <style>
 
@@ -122,7 +120,6 @@ endif; ?>
         /*margin: 0 auto;*/
         /*border: 5px solid lightcyan;*/
     }
-
     /**/
 
     /**/
@@ -130,7 +127,6 @@ endif; ?>
         /*margin: 0 auto; Bad */
         /*border: 5px solid lightblue;*/
     }
-
     /**/
 
     /**/
@@ -138,7 +134,6 @@ endif; ?>
         /*margin: 0 auto;*/
         /*border: 5px solid darkred;*/
     }
-
     /**/
 
     .carousel-control-prev {
@@ -169,47 +164,36 @@ endif; ?>
 <div class="rsg2_slideshow_box">
     <div class="rsg2_x__slideshowJ3x">
 
-        <?php
-        if (!empty($isDebugSite)): ?>
+        <?php if (!empty($isDebugSite)): ?>
             rsg2_x__slideshowJ3x<br>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
         <?php
-        $uniqueId = substr(md5(uniqid()), 0, 12);
+        $uniqueId = substr(md5(uniqid()), 0, 12);;
         ?>
 
-        <div id="rsg2_carousel_<?php
-        echo $uniqueId; ?>"
-             class="carousel slide <?php
-             if ($darkMode): ?>carousel-dark<?php
-             endif; ?>"
-            <?php
-            if ($auto_start): ?>
+        <div id="rsg2_carousel_<?php echo $uniqueId; ?>"
+             class="carousel slide <?php if ($darkMode): ?>carousel-dark<?php endif; ?>"
+            <?php if ($auto_start): ?>
                 data-bs-ride="carousel"
-            <?php
-            endif; ?>
+            <?php endif; ?>
         >
 
             <div class="carousel-indicators">
                 <?php
-                $isActive = 'aria-current="true" class="active"';
+                $isActive='aria-current="true" class="active"';
                 foreach ($images as $idx => $image) {
                     ?>
 
                     <button type="button"
-                            data-bs-target="#rsg2_carousel_<?php
-                            echo $uniqueId; ?>"
-                            data-bs-slide-to="<?php
-                            echo $idx; ?>"
-                            aria-label="Slide <?php
-                            echo $idx + 1; ?>" <?php
-                    echo $isActive; ?>
+                            data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>"
+                            data-bs-slide-to="<?php echo $idx; ?>"
+                            aria-label="Slide <?php echo $idx + 1; ?>" <?php echo $isActive; ?>
                     >
                     </button>
 
                     <?php
-                    $isActive = "";
+                    $isActive="";
                 }
                 ?>
 
@@ -219,63 +203,46 @@ endif; ?>
             <div class="carousel-inner">
 
                 <?php
-                $isActive = "active";
+                $isActive="active";
                 foreach ($images as $idx => $image) {
                     ?>
 
-                    <div class="carousel-item <?php
-                    echo $isActive; ?>"
-                        <?php
-                        if ($auto_start): ?>
-                            data-bs-interval="<?php
-                            echo $interval; ?>"
-                        <?php
-                        else: ?>
+                    <div class="carousel-item <?php echo $isActive; ?>"
+                        <?php if ($auto_start): ?>
+                            data-bs-interval="<?php echo $interval; ?>"
+                        <?php else: ?>
                             data-bs-interval="false"
-                        <?php
-                        endif; ?>
+                        <?php endif; ?>
                     >
                         <img
-                                src="<?php
-                                echo $image->UrlDisplayFile; ?>"
-                                alt="<?php
-                                echo $image->name; ?>"
+                                src="<?php echo $image->UrlDisplayFile; ?>"
+                                alt="<?php echo $image->name; ?>"
                         >
                         <div class="carousel-caption">
-                            <h3><?php
-                                echo $image->name; ?></h3>
-                            <p><?php
-                                echo $image->description; ?></p>
+                            <h3><?php echo $image->name; ?></h3>
+                            <p><?php echo $image->description; ?></p>
                         </div>
                     </div>
 
                     <?php
-                    $isActive = "";
+                    $isActive="";
                 }
                 ?>
 
-                <button class="carousel-control-prev" type="button" data-bs-target="#rsg2_carousel_<?php
-                echo $uniqueId; ?>" data-bs-slide="prev">
-                    <?php
-                    if ($showArrows): ?>
+                <button class="carousel-control-prev" type="button" data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>" data-bs-slide="prev">
+                    <?php if ($showArrows): ?>
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <?php
-                    else: ?>
+                    <?php else: ?>
                         <span class="carousel-control-prev-icon" aria-hidden="true" hidden></span>
-                    <?php
-                    endif; ?>
+                    <?php endif; ?>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#rsg2_carousel_<?php
-                echo $uniqueId; ?>" data-bs-slide="next">
-                    <?php
-                    if ($showArrows): ?>
+                <button class="carousel-control-next" type="button" data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>" data-bs-slide="next">
+                    <?php if ($showArrows): ?>
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <?php
-                    else: ?>
+                    <?php else: ?>
                         <span class="carousel-control-next-icon" aria-hidden="true" hidden></span>
-                    <?php
-                    endif; ?>
+                    <?php endif; ?>
                     <span class="visually-hidden">Next</span>
                 </button>
 
@@ -283,6 +250,5 @@ endif; ?>
         </div>
     </div>
 
-</div> <?php
-// box ?>
+</div> <?php // box ?>
 

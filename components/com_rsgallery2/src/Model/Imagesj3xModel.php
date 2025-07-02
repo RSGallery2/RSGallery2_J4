@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -20,9 +20,6 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
-use RuntimeException;
-
-use function defined;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
@@ -40,13 +37,13 @@ class imagesj3xModel extends ImagesModel
         try {
             // $gallery->UrlSlideshow = ''; // fall back
 
-            $gallery->UrlSlideshow = Route::_(
-                'index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&id=' . $gallery->id,
-                true,
-                0,
-                true);
-        } catch (RuntimeException $e) {
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
+                . '&view=slideshowj3x&gid=' . $gallery->id
+                ,true,0,true);
+
+        }
+        catch (\RuntimeException $e)
+        {
             $OutTxt = '';
             $OutTxt .= 'GallerysModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -83,8 +83,8 @@ class RatingController extends BaseController
                 echo "<br><br><br>*RateSingleImage<br><br><br>";
 
                 //if ($vote->alreadyVoted((int) $id))
-                {
-                }
+				//{
+				//}
 
                 $galleryId  = $input->get('id', 0, 'INT');
                 $userRating = $input->get('rating', 0, 'INT');
@@ -108,7 +108,7 @@ class RatingController extends BaseController
                 // $link = 'index.php?option=com_rsgallery2&page=inline'; // &id=' . $imageId) .'" id="rsgVoteForm">';
                 $link = $link . '&id=' . $imageId;
                 //	. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing rateSingleImage: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

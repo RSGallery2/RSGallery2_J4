@@ -62,63 +62,44 @@ $displayRandom = $this->params->get('displayRandom');
 ?>
 <!-- ToDo: is form here needed ? check core ...  -->
 <!-- ToDo: form link ...  -->
-<form id="rsg2_root_galleryJ3x__form" action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=rootgalleriesj3x'); ?>"
+<form id="rsg2_root_galleryJ3x__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=rootgalleriesj3x'); ?>"
       method="post" class="form-validate form-horizontal well">
 
     <div class="rsg2__form rsg2__galleries_area">
 
-        <?php
-        if (!empty($isDebugSite)): ?>
+        <?php if (!empty($isDebugSite)): ?>
             <h5>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h5>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-        <?php
-        //--- display search ---------- ?>
+        <?php //--- display search ---------- ?>
 
-        <?php
-        if ($displaySearch): ?>
-            <?php
-            echo $searchLayout->render(); ?>
-        <?php
-        endif; ?>
+        <?php if ($displaySearch): ?>
+            <?php echo $searchLayout->render(); ?>
+        <?php endif; ?>
 
 
-        <?php
-        //--- display root galleries ---------- ?>
+        <?php //--- display root galleries ---------- ?>
 
-        <?php
-        echo $layout->render($displayData); ?>
+        <?php echo $layout->render($displayData); ?>
 
-        <?php
-        if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)): ?>
             <hr>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
 
         <div class="rsg2-clr"></div>
 
-        <?php
-        //--- display latest images ---------- ?>
+        <?php //--- display latest images ---------- ?>
 
-        <?php
-        if ($displayLatest): ?>
-            <?php
-            echo $this->loadTemplate('latest_images'); ?>
-        <?php
-        endif; ?>
+        <?php if ($displayLatest): ?>
+            <?php echo $this->loadTemplate('latest_images'); ?>
+        <?php endif; ?>
 
-        <?php
-        //--- display random images ---------- ?>
+        <?php //--- display random images ---------- ?>
 
-        <?php
-        if ($displayRandom): ?>
-            <?php
-            echo $this->loadTemplate('random_images'); ?>
-        <?php
-        endif; ?>
+        <?php if ($displayRandom): ?>
+            <?php echo $this->loadTemplate('random_images'); ?>
+        <?php endif; ?>
 
     </div>
 </form>

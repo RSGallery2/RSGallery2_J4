@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -22,11 +22,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
-use RuntimeException;
 
-use function defined;
-
-//use Joomla\CMS\Image;
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 
@@ -102,7 +98,7 @@ class ImageFileModel extends BaseModel // AdminModel
             $fileName         = $imageDb->name;
             $galleryId        = $imageDb->gallery_id;
             $use_j3x_location = $imageDb->use_j3x_location;
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing use_j3x_location for ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -115,12 +111,10 @@ class ImageFileModel extends BaseModel // AdminModel
 
         return [$fileName, $galleryId, $use_j3x_location];
     }
-
     /**/
 
 
-    public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location)
-    {
+    public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location) {
         $OriginalPathFileName = "";
 
         // J4x ?
@@ -146,8 +140,7 @@ class ImageFileModel extends BaseModel // AdminModel
     }
 
 
-    public function downloadImageFile($OriginalFilePath, $OriginalFileUri)
-    {
+    public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
         $IsDownloaded = false;
 
         try {
@@ -174,10 +167,9 @@ class ImageFileModel extends BaseModel // AdminModel
             // get my db data and echo it as csv data
 
             // Close the application gracefully.
-            Factory::getApplication()->close(
-            );            //--- exit success ------------------------------------------------
+            Factory::getApplication()->close();
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

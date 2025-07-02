@@ -71,49 +71,38 @@ if (!empty($image->isHasNoImages)) {
 
 ?>
 
-<?php
-if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 J3x slide image layout</h3>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>
 
-<?php
-if (true || $params->galleries_show_slideshow): ?>
+<?php if (true || $params->galleries_show_slideshow): ?>
     <div class="rsg2_slideshow_link">
-        <a href="<?php
-        echo $gallery->UrlSlideshow; ?>">
-            <?php
-            echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
+        <a href="<?php echo $gallery->UrlSlideshow; ?>">
+            <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
         </a>
     </div>
-<?php
-endif; ?>
+<?php endif; ?>
 
 <div class="rsg_sem_inl_dispImg">
     <table>
         <tbody>
         <tr>
             <td>
-                <h2 class="rsg2_display_name"><?php
-                    echo $image->name; ?></h2>
+                <h2 class="rsg2_display_name"><?php echo $image->name; ?></h2>
             </td>
         </tr>
         <tr>
             <td>
                 <!--div align="center"-->
                 <div class="rsg_sem_inl_img_a_link">
-                    <a href="<?php
-                    echo $image->UrlOriginalFile; ?>"
+                    <a href="<?php echo $image->UrlOriginalFile; ?>"
                        target="_blank"
                     >
                         <img class="rsg2-displayImage"
-                             src="<?php
-                             echo $image->UrlDisplayFile; ?>"
-                             alt="<?php
-                             echo $image->name; ?>"
-                             title="<?php
-                             echo $image->title; ?>">
+                             src="<?php echo $image->UrlDisplayFile; ?>"
+                             alt="<?php echo $image->name; ?>"
+                             title="<?php echo $image->title; ?>">
                     </a>
                 </div>
             </td>
@@ -122,8 +111,7 @@ endif; ?>
             <td>
                 <div class="rsg2-toolbar">
                     <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
-                    <a href="<?php
-                    echo $image->UrlDownload; ?>"
+                    <a href="<?php echo $image->UrlDownload; ?>"
                        title="Download"
                        class="btn btn-light"
                     >
@@ -138,39 +126,32 @@ endif; ?>
 </div>
 
 
-<?php
-echo $this->pagination->getListFooter(); ?>
+<?php echo $this->pagination->getListFooter(); ?>
 
 
-<?php
-if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 slide (?page) properties J3x layout</h3>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>
 
 <div class="rsg_sem_inl_ImgDetails">
 
-    <?php
-    echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'DescriptionTab']); ?>
+    <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'DescriptionTab']); ?>
 
-    <?php
-    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DescriptionTab', Text::_('COM_RSGALLERY2_DESCRIPTION', true)); ?>
+    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DescriptionTab', Text::_('COM_RSGALLERY2_DESCRIPTION', true)); ?>
 
     <div class="page_inline_tabs_description">
         <div class="card bg-light ">
             <div class="card-body">
                 <div class="container page_inline_hits">
                     <i class="fas fa-flag"></i>
-                    <strong><?php
-                        echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
+                    <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
                 </div>
             </div>
         </div>
         <div class="card bg-light ">
             <div class="card-body">
-                <?php
-                echo $image->description; ?>
+                <?php echo $image->description; ?>
             </div>
         </div>
         <div class="page_inline_description">
@@ -178,22 +159,18 @@ endif; ?>
     </div>
 
 
-    <?php
-    echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 
-    <?php
-    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
+    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
 
-    <p>
-    <h3>This may be a voting </h3></p>
+	<p><h3>This may be a voting  </h3></p>
 
     <div class="rating-block row-fluid text-center">
         <h4>Average user rating</h4>
         <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
         </h2>
-        <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php
-        echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
+        <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
         <button id="star_1"
                 type="button"
                 class="btn btn-default btn-grey  btn-mini btn_star "
@@ -229,30 +206,22 @@ endif; ?>
         </label>
     </div>
 
-    <?php
-    echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-    <?php
-    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
+    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 
-    <p>
-    <h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
+	<p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
 
-    <?php
-    echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-    <?php
-    echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
+    <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 
-    <p>
-    <h3>ToDo: Display selected image exif info </h3></p>
+	<p><h3>ToDo: Display selected image exif info  </h3></p>
 
-    <?php
-    echo HTMLHelper::_('bootstrap.endTab'); ?>
+    <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 
-    <?php
-    echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+    <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 
     <input type="hidden"
@@ -269,8 +238,7 @@ endif; ?>
            value="157">
     <!--input id="token"
            type="hidden"
-           name="<?php
-    // Session::getFormToken() ?>"
+           name="<?php // Session::getFormToken() ?>"
            value="1"-->
 
 </div>

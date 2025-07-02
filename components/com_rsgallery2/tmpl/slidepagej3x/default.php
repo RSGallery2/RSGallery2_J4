@@ -7,7 +7,7 @@
  * @license         GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -104,21 +104,17 @@ function _showDescription()
 	$gallery = rsgGalleryManager::get();
 	$item    = $gallery->getItem();
 
-	if ($rsgConfig->get('displayHits')):
+	if ($rsgConfig->get('displayHits')){
 		?>
-        <p class="rsg2_hits"><?php
-			echo Text::_('COM_RSGALLERY2_HITS'); ?> <span><?php
-				echo $item->hits; ?></span>
-        </p>
+		<p class="rsg2_hits"><?php echo Text::_('COM_RSGALLERY2_HITS'); ?> <span><?php echo $item->hits; ?></span></p>
 	<?php
-	endif;
+	}
 
-	if ($item->descr):
+	if ($item->descr) {
 		?>
-        <p class="rsg2_description"><?php
-			echo stripslashes($item->descr); ?></p>
-	<?php
-	endif;
+		<p class="rsg2_description"><?php echo stripslashes($item->descr); ?></p>
+		<?php
+	}
 }
 
 // voting
@@ -135,14 +131,12 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 	//--- result of rating ------------------------------------
 
 	// ToDo: add limit here and remove from *js
-	//$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery$id=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
+	//$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&id=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
 	//                                                                                         index.php/single-gallery/item/1/asInline
 	//                                                                                         index.php?option=com_rsgallery2&page=inline&id=" . $item->id
 //		$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&&page=inline&id="&id=' . $imageId) .'" id="rsgVoteForm">';
 	$html[] = '                <form name="rsgvoteform" method="post" action="'
-		. Route::_(
-			'index.php?option=com_rsgallery2&page=inline&id=' . $imageId,
-		) . '" id="rsgVoteForm">';
+		. \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&page=inline&id=' . $imageId) .'" id="rsgVoteForm">';
 
 	$html[] = '                <div class="rating-block row-fluid text-center" >';
 
@@ -156,9 +150,7 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
 
 	if ($isVotingEnabled)
 	{
-		$html[] = '                <label id="DoVote" title="' . Text::_(
-				'COM_RSGALLERY2_AVERAGE_RATE_IMAGE_DESC',
-			) . '">' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE') . '&nbsp;&nbsp;</label>';
+		$html[] = '                <label id="DoVote" title="' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE_DESC') . '">' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE') . '&nbsp;&nbsp;</label>';
 
 //		$templateName = $rsgConfig->get('template');
 //		$templateUri = JURI_SITE . "/components/com_rsgallery2/templates/" . $templateName;
@@ -194,24 +186,17 @@ function htmlExifData($exifTags)
         <div class="rsg2_exif_container">
             <div class="card-body">
 
-                <h4 class="card-title"><?php
-					echo Text::_('COM_RSGALLERY2_EXIF_DATA'); ?></h4>
+                <h4 class="card-title"><?php echo Text::_('COM_RSGALLERY2_EXIF_DATA'); ?></h4>
 
                 <div class="card-text">
 
                     <dl class="dl-horizontal text-center">
 
-						<?php
-						// user requested EXIF tags
-						?>
-						<?php
-						foreach ($exifTags as $exifKey => $exifValue): ?>
-                            <dt class="text-end col-sm-x3"><?php
-								echo Text::_($exifKey); ?></dt>
-                            <dd class="text-start col-sm-9"><?php
-								echo $exifValue; ?></dd>
-						<?php
-						endforeach; ?>
+		            <?php // user requested EXIF tags ?>
+						<?php foreach ($exifTags as $exifKey => $exifValue): ?>
+                            <dt class="text-end col-sm-x3"><?php echo Text::_($exifKey); ?></dt>
+                            <dd class="text-start col-sm-9"><?php echo $exifValue; ?></dd>
+						<?php endforeach; ?>
 
                     </dl>
                 </div>
@@ -219,7 +204,7 @@ function htmlExifData($exifTags)
         </div>
     </div>
 
-	<?php
+<?php
 }
 
 //	// toDo improve ....
@@ -393,26 +378,22 @@ function htmlComments($comments, $gallery_id, $image_id)
         <div class="rsg2_comments_container">
             <div class="card-body">
 
-                <h4 class="card-title"><?php
-					echo Text::_('COM_RSGALLERY2_COMMENTS'); ?></h4>
+                <h4 class="card-title"><?php echo Text::_('COM_RSGALLERY2_COMMENTS'); ?></h4>
 
                 <div class="card-text">
 
-					<?php
-					if (!empty ($comments)) : ?>
+					<?php if (!empty ($comments)) : ?>
 
-					<?php
-					else : ?>
+					<?php else : ?>
                         <p><h5>Script for comments not activated</h5></p>
-					<?php
-					endif; ?>
+					<?php endif; ?>
 
                 </div>
             </div>
         </div>
     </div>
 
-	<?php
+<?php
 }
 
 
@@ -445,8 +426,7 @@ function htmlStars($idx, $average, $lastRating)
 		}
 	}
 
-	if ($isHalfStar)
-	{
+	if ($isHalfStar) {
 		$iconClass = "icon-star-2";
 	}
 	else
@@ -478,48 +458,37 @@ $image = $this->image;
 
 ?>
 
-<form id="rsg2_gallery__form" action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="post"
-      class="form-validate form-horizontal well">
+<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="post" class="form-validate form-horizontal well">
 
     <div class="rsg2__form rsg2__slide_page">
 
-		<?php
-		if (!empty($this->isDebugSite)): ?>
+		<?php if (!empty($this->isDebugSite)): ?>
             <h1> Menu RSGallery2 "slide page J3x" view </h1>
             <hr>
-		<?php
-		endif; ?>
+		<?php endif; ?>
 
-		<?php
-		//--- display images in J3x slideshow ---------- ?>
+		<?php //--- display images in J3x slideshow ---------- ?>
 
         <!-- removed 2022.11.12       <div class="rsg2">-->
         <!---->
-        <!--            --><?php
-		//if (!empty($layoutSlidePage)): ?>
-        <!--            --><?php
-		////	            echo $layoutImage->render($displayData);
+        <!--            --><?php //if (!empty($layoutSlidePage)): ?>
+        <!--            --><?php ////	            echo $layoutImage->render($displayData);
 		////	            echo $layoutProperties->render($displayData);
 		//
 		//	            echo $layoutSlidePage->render($displayData);
 		//
 		//                ?>
-        <!--            --><?php
-		//endif; ?>
+        <!--            --><?php //endif; ?>
         <!---->
         <!--        </div>-->
 
-		<?php
-		if (true || $params->galleries_show_slideshow): ?>
+		<?php if (true || $params->galleries_show_slideshow): ?>
             <div class="rsg2_slideshow_link">
-                <a href="<?php
-				echo $gallery->UrlSlideshow ?>">
+                <a href="<?php echo $gallery->UrlSlideshow ?>">
                     Slideshow
                 </a>
             </div>
-		<?php
-		endif; ?>
+		<?php endif; ?>
 
         <div class="rsg_sem_inl_dispImg">
             <table class="table table-borderless">
@@ -536,16 +505,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
                     <td>
                         <!--div align="center"-->
                         <div class="rsg_sem_inl_img_a_link">
-                            <a href="<?php
-							echo $image->UrlOriginalFile; ?>"
+                            <a href="<?php echo $image->UrlOriginalFile; ?>"
                                target="_blank">
                                 <img class="rsg2-displayImage"
-                                     src="<?php
-								     echo $image->UrlDisplayFile; ?>"
-                                     alt="<?php
-								     echo $image->name; ?>"
-                                     title="<?php
-								     echo $image->title; ?>">
+                                     src="<?php echo $image->UrlDisplayFile; ?>"
+                                     alt="<?php echo $image->name; ?>"
+                                     title="<?php echo $image->title; ?>">
                             </a>
                         </div>
                     </td>
@@ -554,8 +519,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
                     <td>
                         <div class="rsg2-toolbar">
                             <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
-                            <a href=<?php
-							echo $image->UrlDownload; ?>
+                            <a href=<?php echo $image->UrlDownload; ?>
                                title="Download"
                                class="btn btn-light">
                                 <i class="fas fa-download"></i>
@@ -567,8 +531,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
 
                 <tr>
                     <td>
-						<?php
-						if ($this->isShowPagination) : ?>
+						<?php if ($this->isShowPagination) : ?>
                         <!--						    <p>-->
                         <div class="rsg2-j3x-pagination">
 
@@ -576,36 +539,30 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
                             <div class="rsg2-j3x-pagination--buttons">
 
                                 <!-- must be before 			    </p>-->
-								<?php
-								if ($this->params->def('show_pagination_results', 1)) : ?>
+								<?php if ($this->params->def('show_pagination_results', 1)) : ?>
                                 <!--				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
                                 <!--									    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
                                 <div class="com-contact-category__counter counter float-end pt-3 pe-2">
                                     <div class="rsg2-j3x-pagination--counter">
                                         <!--				    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
-										<?php
-										echo $this->pagination->getPagesCounter(); ?>
+										<?php echo $this->pagination->getPagesCounter(); ?>
                                     </div>
                                     <div>
                                         <!--									    </p>-->
-										<?php
-										endif; ?>
+										<?php endif; ?>
 
-										<?php
-										echo $this->pagination->getPagesLinks(); ?>
+										<?php echo $this->pagination->getPagesLinks(); ?>
                                     </div>
 
                                 </div>
                                 <!--						    </p>-->
-								<?php
-								endif; ?>
+								<?php endif; ?>
                                 <td>
                 </tr>
 
                 <tr>
                     <td>
-						<?php
-						if ($this->isShowDescription) : ?>
+						<?php if ($this->isShowDescription) : ?>
 
                             <!--					    <p><h3>Todo description if or not if </h3></p>-->
                             <!--					    <div class="page_inline_tabs_description">-->
@@ -613,40 +570,31 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
                                 <div class="card-body">
                                     <div class="container page_inline_hits">
                                         <i class="fas fa-flag"></i>
-                                        <strong><?php
-											echo ' ' . Text::_(
-													'COM_RSGALLERY2_HITS',
-													true,
-												) . ' ' . $image->hits; ?></strong>
+										    <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
                                     </div>
                                 </div>
                             </div>
                             <div class="card bg-light ">
                                 <div class="card-body">
-									<?php
-									echo $image->description; ?>
+									<?php echo $image->description; ?>
                                 </div>
                             </div>
                             <div class="page_inline_description">
                             </div>
-						<?php
-						endif; ?>
+						<?php endif; ?>
                     </td>
 
                 </tr>
 
                 <tr>
                     <td>
-						<?php
-						if ($this->isShowVoting) : ?>
+						<?php if ($this->isShowVoting) : ?>
 
                             <div class="rating-block row-fluid text-center">
-                                <h4><?php
-									echo Text::_('COM_RSGALLERY2_AVERAGE_USER_RATING'); ?></h4>
+                                <h4><?php echo Text::_('COM_RSGALLERY2_AVERAGE_USER_RATING'); ?></h4>
                                 <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
                                 </h2>
-                                <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php
-								echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
+                                <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
                                 <button id="star_1"
                                         type="button"
                                         class="btn btn-default btn-grey  btn-mini btn_star "
@@ -681,33 +629,26 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
                                        title="Rate image by click on star button">Rate image&nbsp;&nbsp;
                                 </label>
                             </div>
-						<?php
-						endif; ?>
+						<?php endif; ?>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-						<?php
-						if ($this->isShowExif) : ?>
+						<?php if ($this->isShowExif) : ?>
 
-							<?php
-							htmlExifData($image->exifTags); ?>
+							<?php htmlExifData($image->exifTags); ?>
 
-						<?php
-						endif; ?>
+						<?php endif; ?>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-						<?php
-						if ($this->isShowComments) : ?>
+						<?php if ($this->isShowComments) : ?>
 
-							<?php
-							htmlComments($image->comments, $image->gallery_id, $image->id); ?>
-						<?php
-						endif; ?>
+							<?php htmlComments($image->comments, $image->gallery_id, $image->id); ?>
+						<?php endif; ?>
                     </td>
                 </tr>
 
@@ -716,40 +657,29 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
         </div>
 
 
-		<?php
-		if (!empty($isDebugSite)): ?>
+		<?php if (!empty($isDebugSite)): ?>
             <h5>RSGallery2 slide (?page) properties J3x layout</h5>
             <hr>
-		<?php
-		endif; ?>
+		<?php endif; ?>
 
         <div class="rsg_sem_inl_ImgDetails">
 
-			<?php
-			echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'DescriptionTab']); ?>
+			<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'DescriptionTab']); ?>
 
-			<?php
-			echo HTMLHelper::_(
-				'bootstrap.addTab',
-				'myTab',
-				'DescriptionTab',
-				Text::_('COM_RSGALLERY2_DESCRIPTION', true),
-			); ?>
+            <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'DescriptionTab', Text::_('COM_RSGALLERY2_DESCRIPTION', true)); ?>
 
             <div class="page_inline_tabs_description">
                 <div class="card bg-light ">
                     <div class="card-body">
                         <div class="container page_inline_hits">
                             <i class="fas fa-flag"></i>
-                            <strong><?php
-								echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
+                            <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
                         </div>
                     </div>
                 </div>
                 <div class="card bg-light ">
                     <div class="card-body">
-						<?php
-						echo $image->description; ?>
+						<?php echo $image->description; ?>
                     </div>
                 </div>
                 <div class="page_inline_description">
@@ -758,22 +688,18 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
 
 
             <div class="text-center">
-				<?php
-				echo HTMLHelper::_('bootstrap.endTab'); ?>
+				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
             </div>
 
-			<?php
-			echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
 
-            <p>
-            <h3>Todo script for voting</h3></p>
+		    <p><h3>Todo script for voting</h3></p>
 
             <div class="rating-block row-fluid text-center">
                 <h4>Average user rating</h4>
                 <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
                 </h2>
-                <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php
-				echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
+                <!--button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button-->
                 <button id="star_1"
                         type="button"
                         class="btn btn-default btn-grey  btn-mini btn_star "
@@ -809,38 +735,30 @@ echo Route::_('index.php?option=com_rsgallery2&view=slidepagej3x'); ?>" method="
                 </label>
             </div>
 
-			<?php
-			echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-			<?php
-			echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 
-            <p>
-            <h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
+		    <p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
 
-			<?php
-			echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-			<?php
-			echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
+			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 
-            <p>
-            <h3>ToDo: Display selected image exif info </h3></p>
+		    <p><h3>ToDo: Display selected image exif info  </h3></p>
 
-			<?php
-			echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 
-			<?php
-			echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+			<?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+
 
 
             <input type="hidden" name="task" value="">
             <input type="hidden" name="rating" value="">
             <input type="hidden" name="paginationImgIdx" value="">
             <input type="hidden" name="id" value="157">
-			<?php
-			echo HTMLHelper::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 
         </div>
     </div>

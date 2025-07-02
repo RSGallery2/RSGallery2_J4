@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -21,8 +21,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
 use RuntimeException;
-
-use function defined;
 
 
 /**
@@ -44,19 +42,18 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
             // Link to single gallery in actual menu
             // /joomla3x/index.php/j3x-galleries-overview/gallery/8
             /**
-             * $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
-             * . '/galleryJ3x/' . $gallery->id . '/slideshow'
-             * //                . '&id=' . $image->gallery_id
-             * //                . '&iid=' . $gallery->id
-             * //                . '&layout=galleryJ3xAsInline'
-             * ,true,0,true);
-             * /**/
+            $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
+                . '/galleryJ3x/' . $gallery->id . '/slideshow'
+//                . '&gid=' . $image->gallery_id
+//                . '&iid=' . $gallery->id
+//                . '&layout=galleryJ3xAsInline'
+                ,true,0,true);
+/**/
 
-            $gallery->UrlSlideshow = Route::_(
-                'index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&id=' . $gallery->id,
-            );
-        } catch (RuntimeException $e) {
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
+                . '&view=slideshowj3x&id=' . $gallery->id,);
+
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rootgalleriesj3xModel: assignSlideshowUrl ()' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -72,25 +69,25 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
      *
      * @since 4.5.0.0
      *
-     * public function AssignGalleryUrl($gallery)
-     * {
-     * try {
-     *
-     * parent::AssignGalleryUrl($gallery);
-     *
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Rootgalleriesj3xModel: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
-     * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     *
-     * }
-     * /**/
+    public function AssignGalleryUrl($gallery)
+    {
+        try {
+
+            parent::AssignGalleryUrl($gallery);
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Rootgalleriesj3xModel: AssignUrl_AsInline: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+    }
+    /**/
 
     public function randomImages($random_count)
     {

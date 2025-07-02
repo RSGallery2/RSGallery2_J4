@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Service;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Categories\CategoryFactoryInterface;
@@ -24,8 +24,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
-
-use function defined;
 
 /**
  * Routing class of com_rsgallery2
@@ -58,43 +56,36 @@ class Router extends RouterView
      * @param   CategoryFactoryInterface  $categoryFactory  The category object
      * @param   DatabaseInterface         $db               The database object
      */
-    public function __construct(
-        SiteApplication $app,
-        AbstractMenu $menu,
-        CategoryFactoryInterface $categoryFactory,
-        DatabaseInterface $db
-    ) {
+	public function __construct(SiteApplication $app, AbstractMenu $menu, CategoryFactoryInterface $categoryFactory, 
+		DatabaseInterface $db)
+	{
         /**
-         * $this->categoryFactory = $categoryFactory;
-         * $this->db              = $db;
-         * $params = ComponentHelper::getParams('com_foos');
-         * $this->noIDs = (bool) $params->get('sef_ids');
-         * $categories = new RouterViewConfiguration('categories');
-         * $categories->setKey('id');
-         * $this->registerView($categories);
-         *
-         * $category = new RouterViewConfiguration('category');
-         * $category->setKey('id')->setParent($categories, 'catid')->setNestable();
-         * $this->registerView($category);
-         *
-         * $foo = new RouterViewConfiguration('foo');
-         * $foo->setKey('id')->setParent($category, 'catid');
-         * $this->registerView($foo);
-         *
-         * $this->registerView(new RouterViewConfiguration('featured'));
-         *
-         * $form = new RouterViewConfiguration('form');
-         * $form->setKey('id');
-         * $this->registerView($form);
-         * parent::__construct($app, $menu);
-         * $this->attachRule(new MenuRules($this));
-         * $this->attachRule(new StandardRules($this));
-         * $this->attachRule(new NomenuRules($this));
-         * /**/
+		$this->categoryFactory = $categoryFactory;
+		$this->db              = $db;
+		$params = ComponentHelper::getParams('com_foos');
+		$this->noIDs = (bool) $params->get('sef_ids');
+		$categories = new RouterViewConfiguration('categories');
+		$categories->setKey('id');
+		$this->registerView($categories);
+		$category = new RouterViewConfiguration('category');
+		$category->setKey('id')->setParent($categories, 'catid')->setNestable();
+		$this->registerView($category);
+		$foo = new RouterViewConfiguration('foo');
+		$foo->setKey('id')->setParent($category, 'catid');
+		$this->registerView($foo);
+		$this->registerView(new RouterViewConfiguration('featured'));
+		$form = new RouterViewConfiguration('form');
+		$form->setKey('id');
+		$this->registerView($form);
+		parent::__construct($app, $menu);
+		$this->attachRule(new MenuRules($this));
+		$this->attachRule(new StandardRules($this));
+		$this->attachRule(new NomenuRules($this));
+        /**/
 
         $params      = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool)$params->get('sef_ids');
-	    $this->db              = $db;
+	    $this->db    = $db;
 
 
         //--- rules for J3x rsg2_legacy links ----------------------------------------
@@ -183,8 +174,7 @@ class Router extends RouterView
 		    // root has no gallery ID
 		    // ToDo: $path[0] = '1:root'; if ($this->noIDs) { and below
 		    // parent gallery
-		    if ($gid > 0)
-		    {
+        if ($gid > 0) {
 			    $db      = Factory::getContainer()->get(DatabaseInterface::class);
 			    $dbquery = $db->getQuery(true);
 

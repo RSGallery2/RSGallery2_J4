@@ -10,10 +10,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use DatabaseQuery;
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -24,10 +23,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-use RuntimeException;
-use stdClass;
 
-use function defined;
 
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
@@ -62,7 +58,7 @@ class GalleriesModel extends ListModel
      * @param   array                     $config  An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory
      *
-     * @throws Exception
+     * @throws \Exception
      * @see     \JController
      * @since   1.6
      */
@@ -70,29 +66,21 @@ class GalleriesModel extends ListModel
     {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id',
-                'a.id',
-                'name',
-                'a.name',
+                'id', 'a.id',
+                'name', 'a.name',
 
-                'created',
-                'a.created',
-                'created_by',
-                'a.created_by',
+                'created', 'a.created',
+                'created_by', 'a.created_by',
 
-                'published',
-                'a.published',
+                'published', 'a.published',
 
 //				'modified', 'a.modified',
 //				'modified_by', 'a.modified_by',
 
-                'parent_id',
-                'a.parent_id',
-                'lft',
-                'a.lft',
+                'parent_id', 'a.parent_id',
+                'lft', 'a.lft',
 
-                'hits',
-                'a.hits',
+                'hits', 'a.hits',
 //				'tag',
                 'a.access',
                 'image_count',
@@ -607,12 +595,7 @@ class GalleriesModel extends ListModel
             $this->context .= '.' . $layout;
         }
 
-        $extension = $app->getUserStateFromRequest(
-            $this->context . '.filter.extension',
-            'extension',
-            'com_rsgallery2',
-            'cmd',
-        );
+        $extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
         $this->setState('filter.extension', $extension);
         $parts = explode('.', $extension);
 
@@ -683,7 +666,7 @@ class GalleriesModel extends ListModel
     /**
      * Method to get a database query to list galleries.
      *
-     * @return  DatabaseQuery object.
+     * @return  \DatabaseQuery object.
      *
      * @since __BUMP_VERSION__
      */
@@ -931,7 +914,7 @@ class GalleriesModel extends ListModel
             $db->setQuery($query);
             //$data = $db->loadObjectList();
             $galleries = $db->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

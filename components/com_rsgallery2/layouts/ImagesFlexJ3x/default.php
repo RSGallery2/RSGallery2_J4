@@ -76,61 +76,45 @@ if ($cols < 2) {
 
 ?>
 
-<?php
-if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)): ?>
     <h5>RSGallery2 j3x images area J3x layout II</h5>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>
 
 <div id="rsg2_gallery" class="rsg2">
 
-    <?php
-    if (!empty($gallery)) : ?>
-        <?php
-        if ($params->gallery_show_title): ?>
+    <?php if (!empty($gallery)) : ?>
+        <?php if ($params->gallery_show_title): ?>
             <h2>
-                <div class="rsg_gallery_title"><?php
-                    echo $gallery->name ?></div>
+                <div class="rsg_gallery_title"><?php echo $gallery->name ?></div>
             </h2>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-        <?php
-        if ($params->gallery_show_description): ?>
-            <div class="intro_text"><p><?php
-                    echo $gallery->description ?></p></div>
-        <?php
-        endif; ?>
+        <?php if ($params->gallery_show_description): ?>
+            <div class="intro_text"><p><?php echo $gallery->description ?></p></div>
+        <?php endif; ?>
 
         <div class="rsg2-clr"></div>
 
-        <?php
-        if ($params->gallery_show_slideshow): ?>
+        <?php if ($params->gallery_show_slideshow): ?>
             <div class="rsg2_slideshow_link">
-                <a href="<?php
-                echo $gallery->UrlSlideshow; ?>">
-                    <?php
-                    echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
+                <a href="<?php echo $gallery->UrlSlideshow; ?>">
+                    <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
                 </a>
             </div>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-    <?php
-    else : ?>
-        <h2><?php
-            //echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
+    <?php else : ?>
+		<h2><?php
+			//echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
             echo Text::_('Gallery (name) not defined in this situation');
             ?> </h2>
-    <?php
-    endif; ?>
+    <?php endif; ?>
 
 
     <div class="rsg2-flex-thumbs">
 
-        <?php
-        // <div class="d-flex p-2 justify-content-center align-items-center ?  flex-flow"> ?>
+        <?php // <div class="d-flex p-2 justify-content-center align-items-center ?  flex-flow"> ?>
         <div class="d-flex p-2 justify-content-around align-items-center flex-wrap">
 
             <?php
@@ -142,25 +126,21 @@ endif; ?>
                         <div class="d-flex justify-content-center ">
                             <div class="shadow-box">
                                 <div class="img-shadow">
-                                    <a href="<?php
-                                    echo $image->UrlImageAsInline ?>">
-                                        <img src="<?php
-                                        echo $image->UrlThumbFile ?>" alt="<?php
-                                        echo $image->name; ?>">
+                                    <a href="<?php echo $image->UrlImageAsInline ?>">
+                                        <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center ">
                             <span class="rsg2_thumb_name">
-                                <?php
-                                echo $image->title ?>
+                                <?php echo $image->title ?>
                             </span>
                         </div>
                     </div>
                 </div>
 
-                <?php
+            <?php
             }
             ?>
 
@@ -168,15 +148,16 @@ endif; ?>
     </div>
 
     <div class="pagination">
-        <?php
-        if (isset ($pagination)) {
+		<?php
+		if(isset ($pagination))
+		{
             echo $pagination->getListFooter();
         }
         ?>
     </div>
 
-    <?php
-    /**
+    <?php 
+/**
      * <?php if (!empty($isDebugSite)): ?>
      * <h3>RSGallery2 j3x images area J3x layout III</h3>
      * <hr>
@@ -184,8 +165,7 @@ endif; ?>
      *
      * <div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
      *
-     * <?php
-     * foreach ($images as $idx => $image) {
+     * <?php * foreach ($images as $idx => $image) {
      * ?>
      * <figure>
      * <img src="<?php echo $image->UrlThumbFile ?>"
@@ -196,8 +176,7 @@ endif; ?>
      * >
      * <figcaption><?php echo $image->title; ?></figcaption>
      * </figure>
-     * <?php
-     * }
+     * <?php * }
      * ?>
      * </div>
      *
@@ -218,8 +197,7 @@ endif; ?>
      *
      * <div class="carousel-inner">
      *
-     * <?php
-     * $isActive="active";
+     * <?php * $isActive="active";
      * foreach ($images as $image) {
      * ?>
      *
@@ -232,8 +210,7 @@ endif; ?>
      * </div>
      * </div>
      *
-     * <?php
-     * $isActive="";
+     * <?php * $isActive="";
      * }
      * ?>
      *
@@ -256,5 +233,7 @@ endif; ?>
      * </div>
      * </div>
      * </div>
-     * /**/ ?>
+     * 
+     */ 
+?>
 </div>

@@ -77,13 +77,10 @@ $imgCount = count($images);
 
 ?>
 
-<?php
-if (!empty($isDebugSite)): ?>
-    <h3>RSGallery2 Images framed J3x area layout (<?php
-        echo $title; ?>)I</h3>
+<?php if (!empty($isDebugSite)): ?>
+    <h3>RSGallery2 Images framed J3x area layout (<?php echo $title; ?>)I</h3>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>
 
 
 <ul id="rsg2-galleryList">
@@ -91,46 +88,34 @@ endif; ?>
         <table class="table_border" cellspacing="0" cellpadding="0" border="0" width="100%">
             <tbody>
             <tr>
-                <td colspan="<?php
-                echo $imgCount; ?>"><?php
-                    echo $title . ': ' ?></td>
+                <td colspan="<?php echo $imgCount; ?>"><?php echo $title . ': ' ?></td>
             </tr>
             <tr>
-                <td colspan="<?php
-                echo $imgCount; ?>">&nbsp;
-                </td>
+                    <td colspan="<?php echo $imgCount; ?>">&nbsp;</td>
             </tr>
             <tr>
 
-                <?php
-                foreach ($images as $idx => $image): ?>
+                <?php foreach ($images as $idx => $image): ?>
 
                     <td align="center">
                         <div class="shadow-box">
                             <div class="img-shadow">
-                                <a href="<?php
-                                echo $image->UrlImageAsInline ?>">
-                                    <img src="<?php
-                                    echo $image->UrlThumbFile; ?>" alt="<?php
-                                    echo $image->name; ?>" width="80">
+                                <a href="<?php echo $image->UrlImageAsInline ?>">
+                                    <img src="<?php echo $image->UrlThumbFile; ?>" alt="<?php echo $image->name; ?>" width="80">
                                 </a>
                             </div>
                             <div class="rsg2-clr"></div>
                             <div class="rsg2_details">
-                                <?php
-                                echo Text::_('COM_RSGALLERY2_UPLOADED') . ': ' . $image->created; ?>
+                                <?php echo Text::_('COM_RSGALLERY2_UPLOADED') . ': ' . $image->created; ?>
                             </div>
                         </div>
                     </td>
 
-                <?php
-                endforeach; ?>
+                <?php endforeach; ?>
 
             </tr>
             <tr>
-                <td colspan="<?php
-                echo $imgCount; ?>">&nbsp;
-                </td>
+                    <td colspan="<?php echo $imgCount; ?>">&nbsp;</td>
             </tr>
             </tbody>
         </table>

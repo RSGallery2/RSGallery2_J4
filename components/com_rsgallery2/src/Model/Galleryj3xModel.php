@@ -11,7 +11,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -22,9 +22,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Registry\Registry;
-use RuntimeException;
 
-use function defined;
 
 
 /**
@@ -55,7 +53,7 @@ class Galleryj3xModel extends GalleryModel
 
                 $this->AssignUrlDownloadImage($image);
             }
-        } catch (RuntimeException $e) {
+        } catch (/RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -82,13 +80,13 @@ class Galleryj3xModel extends GalleryModel
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
                     . '&id=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
-                    . '&img_id=' . $image->id// test bad ordering                    . '&start=' . $idx
+                    . '&img_id=' . $image->id // test bad ordering                    . '&start=' . $idx
                 ;
             } else {
 				// Bad gallery id missing
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
-                    . '&img_id=' . $image->id// test bad ordering                    . '&start=' . $idx
+                    . '&img_id=' . $image->id // test bad ordering                    . '&start=' . $idx
                 ;
             }
 
@@ -96,7 +94,7 @@ class Galleryj3xModel extends GalleryModel
 
             /**/
             // ToDo: watermarked file
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -111,15 +109,11 @@ class Galleryj3xModel extends GalleryModel
         try {
             //$gallery->UrlSlideshow = ''; // fall back
 
-            $gallery->UrlSlideshow = Route::_(
-                'index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&id=' . $gallery->id
-                ,
-                true,
-                0,
-                true,
-            );
-        } catch (RuntimeException $e) {
+            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
+                . '&view=slideshowj3x&gid=' . $gallery->id,
+                true,0,true);
+
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

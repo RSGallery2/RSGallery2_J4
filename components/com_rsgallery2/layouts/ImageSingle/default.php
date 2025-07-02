@@ -43,32 +43,27 @@ if (!isset($image)) {
 
 ?>
 
-<?php
-if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)): ?>
     <h3>RSGallery2 image single layout</h3>
     <hr>
-<?php
-endif; ?>
+<?php endif; ?>
 
 <div id="rsg2_image" class="rsg2_image__container">
 
     <div class="rsg2_image__xxx" id="gallery" data-bs-toggle="modal" data-bs-target="#exampleModal">
 
-        <?php
-        //foreach ($images as $idx => $image) {
+		<?php
+		//foreach ($images as $idx => $image) {
         ?>
         <figure>
-            <img src="<?php
-            echo $image->UrlThumbFile ?>"
-                 alt="<?php
-                 echo $image->name; ?>"
+            <img src="<?php echo $image->UrlThumbFile ?>"
+                 alt="<?php echo $image->name; ?>"
                  class="img-thumbnail rsg2_gallery__images_image"
             >
-            <figcaption><?php
-                echo $image->name; ?></figcaption>
+            <figcaption><?php echo $image->name; ?></figcaption>
         </figure>
-        <?php
-        //}
+			<?php
+		//}
         ?>
     </div>
 
@@ -89,27 +84,22 @@ endif; ?>
     <!---->
     <!--						<div class="carousel-inner">-->
     <!---->
-    <!--							--><?php
-    //							$isActive="active";
+<!--							--><?php
+//							$isActive="active";
     ////							foreach ($images as $image) {
     //								?>
     <!---->
-    <!--								<div class="carousel-item --><?php
-    //echo $isActive ?><!--" >-->
+    <!--								<div class="carousel-item --><?php //echo $isActive ?><!--" >-->
     <!--									<div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">-->
-    <!--										<!--                                        <img class="d-block " src="-->
-    --><?php
-    ////echo $image->UrlDisplayFiles[400] ?><!--<!--"--> -->
-    <!--										<img class="d-block " src="--><?php
-    //echo $image->UrlOriginalFile ?><!--"-->
-    <!--										     alt="--><?php
-    //echo $image->name ?><!--"-->
+<!--										<!--                                        <img class="d-block " src="-->--><?php ////echo $image->UrlDisplayFiles[400] ?><!--<!--"-->-->
+    <!--										<img class="d-block " src="--><?php //echo $image->UrlOriginalFile ?><!--"-->
+    <!--										     alt="--><?php //echo $image->name ?><!--"-->
     <!--										>-->
     <!--									</div>-->
     <!--								</div>-->
     <!---->
-    <!--								--><?php
-    //								$isActive="";
+<!--								--><?php
+//								$isActive="";
     ////							}
     //							?>
     <!---->

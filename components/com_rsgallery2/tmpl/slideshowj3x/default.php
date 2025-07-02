@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -74,18 +74,14 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
     <div class="rsg2_x_form rsg2__slide_area">
 
-        <?php
-        if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)): ?>
             <h1> Menu RSGallery2 "slideshow" J3x view </h1>
             <hr>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-        <?php
-        //--- display images in J3x slideshow ---------- ?>
+        <?php //--- display images in J3x slideshow ---------- ?>
 
-        <?php
-        echo $layout->render($displayData); ?>
+        <?php echo $layout->render($displayData); ?>
 
     </div>
 </form>
