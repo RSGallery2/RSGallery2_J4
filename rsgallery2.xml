@@ -60,6 +60,11 @@
 			<folder>tmpl</folder>
 		</files>		
 	</administration>
+	<api>
+		<files folder="api/components/com_rsgallery2">
+			<folder>src</folder>
+		</files>
+	</api>
 	<dashboards>
 		<dashboard title="COM_RSGALLERY2_MENU_DASHBOARD_XML" icon="icon-images">users</dashboard>
 	</dashboards>
