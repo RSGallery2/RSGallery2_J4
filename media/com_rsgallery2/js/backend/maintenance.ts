@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     joomla.submitbutton = function (task) {
 
-        alert('task: ' + JSON.stringify(task));
+        // alert('task: ' + JSON.stringify(task));
 
         //--- confirmation message --------------------------------
 
@@ -78,9 +78,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 break;
 
             default:
-                // test
-                confirmMessage = joomla.Text._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
-                alert('confirmMessage: ' + JSON.stringify(confirmMessage));
+                confirmMessage = "";
+                // // test
+                // confirmMessage = joomla.Text._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
+                // alert('confirmMessage: ' + JSON.stringify(confirmMessage));
                 break;
         }
 

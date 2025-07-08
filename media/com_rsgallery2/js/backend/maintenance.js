@@ -20,7 +20,7 @@ var Token;
 //--------------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function (event) {
     joomla.submitbutton = function (task) {
-        alert('task: ' + JSON.stringify(task));
+        // alert('task: ' + JSON.stringify(task));
         //--- confirmation message --------------------------------
         let confirmMessage;
         // assign text to confirm
@@ -47,9 +47,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 confirmMessage = joomla.Text._('COM_RSGALLERY2_CONFIRM_REINIT_IMAGES');
                 break;
             default:
-                // test
-                confirmMessage = joomla.Text._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
-                alert('confirmMessage: ' + JSON.stringify(confirmMessage));
+                confirmMessage = "";
+                // // test
+                // confirmMessage = joomla.Text._('COM_ASSOCIATIONS_PURGE_CONFIRM_PROMPT');
+                // alert('confirmMessage: ' + JSON.stringify(confirmMessage));
                 break;
         }
         //--- issue task --------------------------------
