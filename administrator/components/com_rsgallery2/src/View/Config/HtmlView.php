@@ -83,7 +83,7 @@ class HtmlView extends BaseHtmlView
                 . '* Secure user input <br>'
                 . '* copy to file <br>'
                 . '* copy to clipboard <br>'
-                . '* RawView: dt dl dd definition on small width will interleap <br>'
+                . '* RawView: dt dl dd definition on small width will overlap<br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
