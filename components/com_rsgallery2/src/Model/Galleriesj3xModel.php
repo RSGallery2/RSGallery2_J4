@@ -564,7 +564,7 @@ class Galleriesj3xModel extends ListModel
             // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&id=2&slides_layout=default&Itemid=130
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '/gallery&gid=' . $gallery->id . '/slideshow',
+                . '/gallery&id=' . $gallery->id . '/slideshow',
                 true,0,true);
 
         } catch (\RuntimeException $e) {

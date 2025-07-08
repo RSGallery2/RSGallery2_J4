@@ -44,7 +44,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
             /**
             $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
                 . '/galleryJ3x/' . $gallery->id . '/slideshow'
-//                . '&gid=' . $image->gallery_id
+//                . '&id=' . $image->gallery_id
 //                . '&iid=' . $gallery->id
 //                . '&layout=galleryJ3xAsInline'
                 ,true,0,true);
