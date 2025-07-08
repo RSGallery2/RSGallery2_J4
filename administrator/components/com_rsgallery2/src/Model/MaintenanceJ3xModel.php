@@ -4270,7 +4270,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		$query
 			->select(['id', 'link', 'params'])
 			->from('#__menu')
-			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%&gid=%')))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%&id=%')))
 //			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
 
@@ -4435,11 +4435,11 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		//--- extract gallery id --------------------------
 
-		$gidIdx = strpos($oldLink, '&gid=');
+		$gidIdx = strpos($oldLink, '&id=');
 		$idIdx  = strpos($oldLink, '&id=');
 
-		// link contains '&gid=' and new '&Id='
-		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&id=0
+		// link contains '&id=' and new '&Id='
+		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0&id=0
 		if ($idIdx !== false)
 		{
 			$endIdx  = strpos($oldLink, '&', $gidIdx + 1);
@@ -4447,7 +4447,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		}
 		else
 		{
-			// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0
+			// index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0
 			$gidIdx++;
 			$newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $gidIdx + 1);
 		}
@@ -4463,8 +4463,8 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		$idIdx = strpos($oldLink, '&id=');
 
-		// link contains '&gid=' and new '&Id='
-		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&id=0
+		// link contains '&id=' and new '&Id='
+		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0&id=0
 		if ($idIdx !== false)
 		{
 			$idIdx++;

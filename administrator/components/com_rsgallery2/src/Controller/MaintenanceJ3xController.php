@@ -1407,7 +1407,7 @@ class MaintenanceJ3xController extends AdminController
 
 				if ($isOk)
 				{
-					$msg .= "Successful changed '&gid=' menu inks to '&id=' ";
+					$msg .= "Successful changed '&id=' menu inks to '&id=' ";
 
 					$isOk = ConfigRawModel::writeConfigParam('j3x_menu_gid_moved_to_id', true);
 					if ($isOk)
@@ -1472,7 +1472,7 @@ class MaintenanceJ3xController extends AdminController
 
 				if ($isOk)
 				{
-					$msg .= "Successful changed '&id=' menu inks to '&gid=' ";
+					$msg .= "Successful changed '&id=' menu inks to '&id=' ";
 
 					$isOk = ConfigRawModel::writeConfigParam('j3x_menu_gid_moved_to_id', false);
 					if ($isOk)
