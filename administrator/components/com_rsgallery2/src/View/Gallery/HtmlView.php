@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Gallery;
@@ -13,9 +13,9 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Gallery;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Helper\TagsHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -29,94 +29,91 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The \JForm object
-	 *
-	 * @var  \JForm
-	 */
-	protected $form;
+    /**
+     * The \Form object
+     *
+     * @var  Form
+     */
+    protected $form;
 
-	/**
-	 * The active item
-	 *
-	 * @var  object
-	 */
-	protected $item;
+    /**
+     * The active item
+     *
+     * @var  object
+     */
+    protected $item;
 
-	/**
-	 * The model state
-	 *
-	 * @var  \JObject
-	 */
-	protected $state;
+    /**
+     * The model state
+     *
+     * @var  \stdClass
+     */
+    protected $state;
 
-	/**
-	 * Flag if an association exists
-	 *
-	 * @var  boolean
-	 */
-	protected $assoc;
+    /**
+     * Flag if an association exists
+     *
+     * @var  boolean
+     */
+    protected $assoc;
 
-	/**
-	 * The actions the user is authorised to perform
-	 *
-	 * @var  \JObject
-	 */
-	protected $canDo;
+    /**
+     * The actions the user is authorised to perform
+     *
+     * @var  \stdClass
+     */
+    protected $canDo;
 
-	/**
-	 * Is there a content type associated with this gallery aias
-	 *
-	 * @var    boolean
-	 * @since __BUMP_VERSION__
-	 */
-	protected $checkTags = false;
+    /**
+     * Is there a content type associated with this gallery aias
+     *
+     * @var    boolean
+     * @since __BUMP_VERSION__
+     */
+    protected $checkTags = false;
 
-	protected $isDebugBackend;
-	protected $isDevelop;
+    protected $isDebugBackend;
+    protected $isDevelop;
 
-	/**
-	 * Display the view.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 */
-	public function display($tpl = null)
-	{
-		//--- config --------------------------------------------------------------------
+    /**
+     * Display the view.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
+     */
+    public function display($tpl = null)
+    {
+        //--- config --------------------------------------------------------------------
 
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
-		$this->isDevelop = $rsgConfig->get('isDevelop');
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+        $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-		//--- Form --------------------------------------------------------------------
+        //--- Form --------------------------------------------------------------------
 
-		$this->form = $this->get('Form');
-		$this->item = $this->get('Item');
-		$this->state = $this->get('State');
-		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
-		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
-		$this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
-		$this->assoc = $this->get('Assoc');
+        $this->form  = $this->get('Form');
+        $this->item  = $this->get('Item');
+        $this->state = $this->get('State');
+        //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
+        //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
+        $this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
+        $this->assoc = $this->get('Assoc');
 
-		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
+        // Check for errors.
+        if (count($errors = $this->get('Errors'))) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
-		// Check if we have a content type for this alias
-		if (!empty(TagsHelper::getTypes('objectList', array($this->state->get('gallery.extension') . '.gallery'), true)))
-		{
-			$this->checkTags = true;
-		}
+        // Check if we have a content type for this alias
+        if (!empty(TagsHelper::getTypes('objectList', [$this->state->get('gallery.extension') . '.gallery'], true))) {
+            $this->checkTags = true;
+        }
 
-		Factory::getApplication()->input->set('hidemainmenu', true);
+        Factory::getApplication()->input->set('hidemainmenu', true);
 
-
-		/**
+        /**
 		// If we are forcing a language in modal (used for associations).
 		if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
 		{
@@ -132,32 +129,32 @@ class HtmlView extends BaseHtmlView
 		}
 		/**/
 
-		// different toolbar on different layouts
-		$Layout = Factory::getApplication()->input->get('layout');
-		$this->addToolbar($Layout);
+        // different toolbar on different layouts
+        $Layout = Factory::getApplication()->input->get('layout');
+        $this->addToolbar($Layout);
 
-		Factory::getApplication()->input->set('hidemainmenu', true);
+        Factory::getApplication()->input->set('hidemainmenu', true);
 
-		return parent::display($tpl);
-	}
+        parent::display($tpl);
+        return;
+    }
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function addToolbar($Layout = 'default')
-	{
-		// Get the toolbar object instance
-		$toolbar = Toolbar::getInstance('toolbar');
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function addToolbar($Layout = 'default')
+    {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance('toolbar');
 
-		// on develop show open tasks if existing
-		if (!empty ($this->isDevelop))
-		{
-			echo '<span style="color:red">'
-				. 'Tasks: <br>'
+        // on develop show open tasks if existing
+        if (!empty ($this->isDevelop)) {
+            echo '<span style="color:red">'
+                . 'Tasks: <br>'
                 . '* Fix: Save as copy with parent set does not save <br>'
                 . '* Fix: Save as copy with published does not retunr published <br>'
                 . '* Fix: cancel in batch<br>'
@@ -166,60 +163,54 @@ class HtmlView extends BaseHtmlView
                 . '* Thumb nails as images<br>'
                 . '* Cancel ?or save ? -> Close Image edit -> Fehlöer Null ...<br>'
                 . '* description to each input parameter "_DESC"<br>'
-				. '* start as published ? external parameter<br>'
-				. '* options: Values not defined and add params<br>'
+                . '* start as published ? external parameter<br>'
+                . '* options: Values not defined and add params<br>'
                 . '* options: show user, layout ... see article<br>'
                 . '* test published_up, published_down: on Web page <br>'
 //				. '* <br>'
 //				. '* <br>'
-				. '</span><br><br>';
-		}
+                . '</span><br><br>';
+        }
 
-		switch ($Layout)
-		{
-			case 'raw_edit':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_RAW_EDIT_GALLERY', 'image'));
+        switch ($Layout) {
+            case 'raw_edit':
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_RAW_EDIT_GALLERY', 'image'));
 
-				//--- apply, save and close ... -----------------------------------
+                //--- apply, save and close ... -----------------------------------
 
-				// ...
+                // ...
 
-				break;
+                break;
 
-			case 'edit':
-			default:
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_GALLERY', 'images'));
+            case 'edit':
+            default:
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_GALLERY', 'images'));
 
-				ToolBarHelper::apply('gallery.apply');
-				ToolBarHelper::save('gallery.save');
-				ToolBarHelper::save2new('gallery.save2new');
+                ToolBarHelper::apply('gallery.apply');
+                ToolBarHelper::save('gallery.save');
+                ToolBarHelper::save2new('gallery.save2new');
                 ToolBarHelper::save2copy('gallery.save2copy');
 
-                if (empty($this->item->id))
-				{
-					ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
-				}
-				else
-				{
-					ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
-				}
+                if (empty($this->item->id)) {
+                    ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+                } else {
+                    ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+                }
 
-				// Goto upload with selected gallery id
+                // Goto upload with selected gallery id
                 ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
 
 //                $link = 'index.php?option=com_rsgallery2&view=upload' . '&id=' . $this->item->id;
 //                $toolbar->appendButton( 'Link', 'upload', 'COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', $link);
 
-				break;
-		}
+                break;
+        }
 
-		// Options button.
-		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
-		{
-			$toolbar->preferences('com_rsgallery2');
-		}
-
-		/**
+        // Options button.
+        if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {
+            $toolbar->preferences('com_rsgallery2');
+        }
+        /**
 		$extension = Factory::getApplication()->input->get('extension');
 		$user = Factory::getApplication()->getIdentity();
 		$userId = $user->id;
@@ -345,11 +336,11 @@ class HtmlView extends BaseHtmlView
 		}
 
 		/*
-		 * Get help for the gallery/section view for the component by
-		 * -remotely searching in a language defined dedicated URL: *component*_HELP_URL
-		 * -locally  searching in a component help file if helpURL param exists in the component and is set to ''
-		 * -remotely searching in a component URL if helpURL param exists in the component and is NOT set to ''
-		 *
+         * Get help for the gallery/section view for the component by
+         * -remotely searching in a language defined dedicated URL: *component*_HELP_URL
+         * -locally  searching in a component help file if helpURL param exists in the component and is set to ''
+         * -remotely searching in a component URL if helpURL param exists in the component and is NOT set to ''
+         *
 		if ($lang->hasKey($lang_help_url = strtoupper($component) . '_HELP_URL'))
 		{
 			$debug = $lang->setDebug(false);
@@ -363,5 +354,5 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
 		/**/
-	}
+    }
 }

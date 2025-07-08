@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Develop;
@@ -15,22 +15,20 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Develop;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use \Joomla\Filesystem\File;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
+
 
 /**
  * View class for a list of rsgallery2.
@@ -39,27 +37,27 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
  */
 class HtmlView extends BaseHtmlView
 {
-	/**
-	 * The sidebar markup
-	 *
-	 * @var  string
-	 */
-	protected $sidebar;
+    /**
+     * The sidebar markup
+     *
+     * @var  string
+     */
+    protected $sidebar;
     protected $form;
 
-	protected $buttons = [];
+    protected $buttons = [];
 
-	protected $isDebugBackend;
-	protected $isDevelop;
+    protected $isDebugBackend;
+    protected $isDevelop;
 
-	protected $rsg2Manifest = [];
+    protected $rsg2Manifest = [];
     protected $readRsg2ExtensionData = [];
 
-	protected $actualParams = [];
+    protected $actualParams = [];
     protected $defaultParams = [];
     protected $mergedParams = [];
 
-	/**
+    /**
 	protected $isDangerActive;
 	protected $isRawDbActive;
 	protected $isUpgradeActive;
@@ -69,58 +67,56 @@ class HtmlView extends BaseHtmlView
 
 	protected $intended;
 	/**/
-	// ToDo: Use other rights instead of core.admin -> IsRoot ?
-	// core.admin is the permission used to control access to
-	// the global config
-	protected $UserIsRoot;
+    // ToDo: Use other rights instead of core.admin -> IsRoot ?
+    // core.admin is the permission used to control access to
+    // the global config
+    protected $UserIsRoot;
 
-	/**
-	 * Method to display the view.
-	 *
-	 * @param   string  $tpl  A template file to load. [optional]
-	 *
-	 * @return  mixed  A string if successful, otherwise an \Exception object.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function display($tpl = null)
-	{
+    /**
+     * Method to display the view.
+     *
+     * @param   string  $tpl  A template file to load. [optional]
+     *
+     * @return  mixed  A string if successful, otherwise an \Exception object.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function display($tpl = null)
+    {
+        //--- config --------------------------------------------------------------------
 
-		//--- config --------------------------------------------------------------------
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+        $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
-		$this->isDevelop = $rsgConfig->get('isDevelop');
+        $this->isRawDbActive   = true; // false / true;
+        $this->isDangerActive  = true; // false / true;
+        $this->isUpgradeActive = true; // false / true;
+        if ($this->isDevelop) {
+            $this->isTestActive  = true; // false / true;
+            $this->developActive = true; // false / true;
+        }
 
-		$this->isRawDbActive   = true; // false / true;
-		$this->isDangerActive  = true; // false / true;
-		$this->isUpgradeActive = true; // false / true;
-		if ($this->isDevelop)
-		{
-			$this->isTestActive    = true; // false / true;
-			$this->developActive = true; // false / true;
-		}
+        //--- Check user rights ---------------------------------------------
 
-		//--- Check user rights ---------------------------------------------
-
-		// toDo: More detailed for rsgallery admin
-		$app       = Factory::getApplication();
+        // toDo: More detailed for rsgallery admin
+        $app = Factory::getApplication();
 
 //		$user = $app->getIdentity();
 //		//$user     = Factory::getApplication()->getIdentity();
-		$user  = $this->getCurrentUser();
+        $user = $this->getCurrentUser();
 
-		$canAdmin = $user->authorise('core.admin');
-		$this->UserIsRoot = $canAdmin;
+        $canAdmin         = $user->authorise('core.admin');
+        $this->UserIsRoot = $canAdmin;
 
-		//--- begin to display ----------------------------------------------
+        //--- begin to display ----------------------------------------------
 
-		$Layout = Factory::getApplication()->input->get('layout');
+        $Layout = Factory::getApplication()->input->get('layout');
 
-		// collect data dependent on layout
-		switch ($Layout) {
-		    /**
+        // collect data dependent on layout
+        switch ($Layout) {
+            /**
 			case 'DebugGalleryOrder':
 
 				$this->GalleriesOrderModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('GalleriesOrder', 'rsgallery2Model');
@@ -131,23 +127,22 @@ class HtmlView extends BaseHtmlView
 
             case 'ManifestInfo':
 
-                $rsg2Manifest = Rsg2ExtensionModel::readRsg2ExtensionManifest ();
+                $rsg2Manifest       = Rsg2ExtensionModel::readRsg2ExtensionManifest();
                 $this->rsg2Manifest = $rsg2Manifest;
 
-                $readRsg2ExtensionData = Rsg2ExtensionModel::readRsg2ExtensionData();
+                $readRsg2ExtensionData       = Rsg2ExtensionModel::readRsg2ExtensionData();
                 $this->readRsg2ExtensionData = $readRsg2ExtensionData;
 
                 break;
 
             case 'InstallMessage':
 
-
                 //--- Form --------------------------------------------------------------------
 
-                $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/InstallMessage.xml';
+                $xmlFile    = JPATH_COMPONENT_ADMINISTRATOR . '/forms/InstallMessage.xml';
                 $this->form = Form::getInstance('upload', $xmlFile);
 
-                $input = Factory::getApplication()->input;
+                $input        = Factory::getApplication()->input;
                 $lowerVersion = $input->get('lowerVersion', '', 'STRING');
                 if (empty ($lowerVersion)) {
                     $lowerVersion = '5.0.0.3';
@@ -156,12 +151,12 @@ class HtmlView extends BaseHtmlView
                 $this->lowerVersion = $lowerVersion;
 
                 // actual (new) version
-                $oRsg2Version = new rsgallery2Version();
+                $oRsg2Version      = new rsgallery2Version();
                 $this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
                 $this->Rsg2Version = $oRsg2Version->getVersion(); // getLongVersion, getVersion
 
                 // ausschnitt
-                $installMessage = new InstallMessage ($this->Rsg2Version, $lowerVersion);
+                $installMessage        = new InstallMessage ($this->Rsg2Version, $lowerVersion);
                 $this->installMessage2 = $installMessage->installMessageText('update');
 
                 // show all
@@ -171,19 +166,17 @@ class HtmlView extends BaseHtmlView
 
                 break;
 
-
             case 'Rsg2GeneralInfo':
 
-                $rsg2Manifest = Rsg2ExtensionModel::readRsg2ExtensionManifest ();
+                $rsg2Manifest       = Rsg2ExtensionModel::readRsg2ExtensionManifest();
                 $this->rsg2Manifest = $rsg2Manifest;
 
-                $rsg2configuration = Rsg2ExtensionModel::readRsg2ExtensionConfiguration ();
+                $rsg2configuration       = Rsg2ExtensionModel::readRsg2ExtensionConfiguration();
                 $this->rsg2Configuration = $rsg2configuration;
 
                 $this->rsg2Configuration_j3x = [];
-                if (J3xExistModel::J3xConfigTableExist ()) {
-
-                    $rsg2configuration_j3x = MaintenanceJ3xModel::j3xConfigItems ();
+                if (J3xExistModel::J3xConfigTableExist()) {
+                    $rsg2configuration_j3x       = MaintenanceJ3xModel::j3xConfigItems();
                     $this->rsg2Configuration_j3x = $rsg2configuration_j3x;
                 }
 
@@ -194,14 +187,12 @@ class HtmlView extends BaseHtmlView
                 //--- Form --------------------------------------------------------------------
 
                 $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/createImages.xml';
-                $form = Form::getInstance('createImages', $xmlFile);
+                $form    = Form::getInstance('createImages', $xmlFile);
 
                 // Check for errors.
                 /* Must load form before */
-                if ($errors = $this->get('Errors'))
-                {
-                    if (count($errors))
-                    {
+                if ($errors = $this->get('Errors')) {
+                    if (count($errors)) {
                         throw new GenericDataException(implode("\n", $errors), 500);
                     }
                 }
@@ -221,109 +212,104 @@ class HtmlView extends BaseHtmlView
 
                 $this->form = $form;
 
-	            break;
+                break;
 
-			case 'defaultParams':
+            case 'defaultParams':
 
-
-	            $this->actualParams = Rsg2ExtensionModel::readRsg2ExtensionConfiguration ();
+                $this->actualParams  = Rsg2ExtensionModel::readRsg2ExtensionConfiguration();
                 $this->defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
-                $this->mergedParams = Rsg2ExtensionModel::mergeDefaultAndActualParams ($this->defaultParams, $this->actualParams);
+                $this->mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams(
+                    $this->defaultParams,
+                    $this->actualParams,
+                );
 
-                ToolBarHelper::custom ('develop.mergeParams','copy','','Merge standard parameter ', false);
-
-
+                ToolBarHelper::custom('develop.mergeParams', 'copy', '', 'Merge standard parameter ', false);
 
                 // ToDo: button with command on controller ;-)
 //				replaceRsg2ExtensionConfiguration($this->mergedParams);
-			break;
-		}
+                break;
+        }
 
+        //		Factory::getApplication()->input->set('hidemainmenu', true);
 
-		//		Factory::getApplication()->input->set('hidemainmenu', true);
+        //---  --------------------------------------------------------------
 
-		//---  --------------------------------------------------------------
+        HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
+        Rsgallery2Helper::addSubmenu('develop');
+        $this->sidebar = Sidebar::render();
 
-		HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
-		Rsgallery2Helper::addSubmenu('develop');
-		$this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->addToolbar($Layout);
 
-		$this->addToolbar($Layout);
+        parent::display($tpl);
+        return;
+    }
 
-		return parent::display($tpl);
-	}
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function addToolbar($Layout)
+    {
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance('toolbar');
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function addToolbar($Layout)
-	{
-		// Get the toolbar object instance
-		$toolbar = Toolbar::getInstance('toolbar');
+        switch ($Layout) {
+            case 'ManifestInfo':
 
-		switch ($Layout)
-		{
-			case 'ManifestInfo':
-
-				// on develop show open tasks if existing
-				if (!empty ($this->isDevelop))
-				{
-					echo '<span style="color:red">'
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop)) {
+                    echo '<span style="color:red">'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
-						. '</span><br><br>';
-				}
+                        . '</span><br><br>';
+                }
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
 					. ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
-				break;
+                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                break;
 
-			case 'Rsg2GeneralInfo':
-				// on develop show open tasks if existing
-				if (!empty ($this->isDevelop))
-				{
-					echo '<span style="color:red">'
-						. '* Button for copy to clipboard -> add typescript copy<br>'
+            case 'Rsg2GeneralInfo':
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop)) {
+                    echo '<span style="color:red">'
+                        . '* Button for copy to clipboard -> add typescript copy<br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
-						. '</span><br><br>';
-				}
+                        . '</span><br><br>';
+                }
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
 					. ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
-				ToolBarHelper::cancel('config.cancel_rawView');
-				break;
+                ToolBarHelper::cancel('config.cancel_rawView');
+                break;
 
-			case 'InstallMessage':
-				if (!empty ($this->isDevelop))
-				{
-					echo '<span style="color:red">'
+            case 'InstallMessage':
+                if (!empty ($this->isDevelop)) {
+                    echo '<span style="color:red">'
                         . '* button goto "create galleries"<br>'
-						. '* <br>'
+                        . '* <br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
-						. '</span><br><br>';
-				}
+                        . '</span><br><br>';
+                }
 
 				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
 					. ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
                 // ToDo: write into manifest value; read first -> Rsg2ExtensionModel
                 // ToolBarHelper::custom ('develop.assignVersion','arrow-up-4','','Assign version to RSG2', false);
-                ToolBarHelper::custom ('develop.useOldVersion','pencil-2','','Use old version', false);
-				ToolBarHelper::cancel('config.cancel_rawView');
-				break;
+                ToolBarHelper::custom('develop.useOldVersion', 'pencil-2', '', 'Use old version', false);
+                ToolBarHelper::cancel('config.cancel_rawView');
+                break;
 
             case 'createGalleries':
-                if (!empty ($this->isDevelop))
-                {
+                if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* Implement parent gallery selection<br>'
                         . '* button goto "create images"<br>'
@@ -337,17 +323,16 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create galleries');
 
-                ToolBarHelper::custom ('develop.createGalleries_001','upload','','Create 1 ', false);
-                ToolBarHelper::custom ('develop.createGalleries_010','upload','','Create 10 ', false);
-                ToolBarHelper::custom ('develop.createGalleries_100','upload','','Create 100 ', false);
-                ToolBarHelper::custom ('develop.createGalleries_random','upload','','Create random (>10) ', false);
+                ToolBarHelper::custom('develop.createGalleries_001', 'upload', '', 'Create 1 ', false);
+                ToolBarHelper::custom('develop.createGalleries_010', 'upload', '', 'Create 10 ', false);
+                ToolBarHelper::custom('develop.createGalleries_100', 'upload', '', 'Create 100 ', false);
+                ToolBarHelper::custom('develop.createGalleries_random', 'upload', '', 'Create random (>10) ', false);
 
                 ToolBarHelper::cancel('config.cancel_rawView');
                 break;
 
             case 'createImages':
-                if (!empty ($this->isDevelop))
-                {
+                if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* Implement parent gallery selection<br>'
                         . '* button goto "create images"<br>'
@@ -361,51 +346,48 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create images');
-                ToolBarHelper::custom ('develop.createImages_001','upload','','Create 1 ', false);
-                ToolBarHelper::custom ('develop.createImages_010','upload','','Create 10 ', false);
-                ToolBarHelper::custom ('develop.createImages_100','upload','','Create 100 ', false);
-                ToolBarHelper::custom ('develop.createImages_random','upload','','Create random (>10) ', false);
+                ToolBarHelper::custom('develop.createImages_001', 'upload', '', 'Create 1 ', false);
+                ToolBarHelper::custom('develop.createImages_010', 'upload', '', 'Create 10 ', false);
+                ToolBarHelper::custom('develop.createImages_100', 'upload', '', 'Create 100 ', false);
+                ToolBarHelper::custom('develop.createImages_random', 'upload', '', 'Create random (>10) ', false);
 
                 ToolBarHelper::cancel('config.cancel_rawView');
                 break;
 
             default:
-				// on develop show open tasks if existing
-				if (!empty ($this->isDevelop))
-				{
-					echo '<span style="color:red">'
-						. '* <br>'
-						. '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
-						. '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
-						. '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop)) {
+                    echo '<span style="color:red">'
+                        . '* <br>'
+                        . '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
+                        . '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
+                        . '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
 //				. '* <br>'
 //				. '* <br>'
 //				. '* <br>'
-						. '</span><br><br>';
-				}
+                        . '</span><br><br>';
+                }
 
-				// Set the title
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP_VIEW'), 'cube'); // 'maintenance');
-				//ToolBarHelper::cancel('config.cancel_rawEdit');
-				//ToolBarHelper::cancel('maintenance.cancel');
-				ToolBarHelper::cancel('develop.cancel');
-				break;
-		}
+                // Set the title
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP_VIEW'), 'cube'); // 'maintenance');
+                //ToolBarHelper::cancel('config.cancel_rawEdit');
+                //ToolBarHelper::cancel('maintenance.cancel');
+                ToolBarHelper::cancel('develop.cancel');
+                break;
+        }
 
+        // Options button.
+        if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {
+            $toolbar->preferences('com_rsgallery2');
+        }
+    }
 
-		// Options button.
-		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
-		{
-			$toolbar->preferences('com_rsgallery2');
-		}
-	}
-
-	/**
-	public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
-	/**/
+    /**
+     * public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
+     * {
+     * return parent::getModel($name, $prefix, $config);
+     * }
+     * /**/
 
 }
 

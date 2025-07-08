@@ -4,28 +4,28 @@
 	<fields name="filter">
 
 		<field
-			name="search"
-			type="text"
-			label="COM_RSGALLERY2_GALLERIES_FILTER_SEARCH_LABEL"
-			description="COM_RSGALLERY2_GALLERIES_FILTER_SEARCH_DESC"
-			hint="JSEARCH_FILTER"
+				name="search"
+				type="text"
+				label="COM_RSGALLERY2_GALLERIES_FILTER_SEARCH_LABEL"
+				description="COM_RSGALLERY2_GALLERIES_FILTER_SEARCH_DESC"
+				hint="JSEARCH_FILTER"
 		/>
 
 		<field
-			name="published"
-			type="status"
-			label="JOPTION_SELECT_PUBLISHED"
-			onchange="this.form.submit();"
-			>
+				name="published"
+				type="status"
+				label="JOPTION_SELECT_PUBLISHED"
+				onchange="this.form.submit();"
+		>
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
 
 		<field
-			name="access"
-			type="accesslevel"
-			label="JOPTION_SELECT_ACCESS"
-			onchange="this.form.submit();"
-			>
+				name="access"
+				type="accesslevel"
+				label="JOPTION_SELECT_ACCESS"
+				onchange="this.form.submit();"
+		>
 			<option value="">JOPTION_SELECT_ACCESS</option>
 		</field>
 
@@ -43,26 +43,26 @@
 		</field>
 
 		<field
-			name="tag"
-			type="tag"
-			label="JOPTION_SELECT_TAG"
-			mode="nested"
-			custom="false"
-			onchange="this.form.submit();"
-			>
+				name="tag"
+				type="tag"
+				label="JOPTION_SELECT_TAG"
+				mode="nested"
+				custom="false"
+				onchange="this.form.submit();"
+		>
 			<option value="">JOPTION_SELECT_TAG</option>
 		</field>
 
 		<field
-			name="level"
-			type="integer"
-			label="JOPTION_SELECT_MAX_LEVELS"
-			first="1"
-			last="10"
-			step="1"
-			languages="*"
-			onchange="this.form.submit();"
-			>
+				name="level"
+				type="integer"
+				label="JOPTION_SELECT_MAX_LEVELS"
+				first="1"
+				last="10"
+				step="1"
+				languages="*"
+				onchange="this.form.submit();"
+		>
 			<option value="">JOPTION_SELECT_MAX_LEVELS</option>
 		</field>
 	</fields>
@@ -70,13 +70,13 @@
 	<fields name="list">
 
 		<field
-			name="fullordering"
-			type="list"
-			label="JGLOBAL_SORT_BY"
-			default="a.lft ASC"
-			statuses="*,0,1,2,-2"
-			onchange="this.form.submit();"
-			>
+				name="fullordering"
+				type="list"
+				label="JGLOBAL_SORT_BY"
+				default="a.lft ASC"
+				statuses="*,0,1,2,-2"
+				onchange="this.form.submit();"
+		>
 			<option value="">JGLOBAL_SORT_BY</option>
 
 			<option value="a.created ASC">JDATE_ASC</option>
@@ -88,11 +88,11 @@
 			<option value="a.name ASC">JGLOBAL_NAME_ASC</option>
 			<option value="a.name DESC">JGLOBAL_NAME_DESC</option>
 
-<!--			<option value="a.modified ASC">COM_RSGALLERY2_MODIFIED_ASC</option>-->
-<!--			<option value="a.modified DESC">COM_RSGALLERY2_MODIFIED_DESC</option>-->
+			<!--			<option value="a.modified ASC">COM_RSGALLERY2_MODIFIED_ASC</option>-->
+			<!--			<option value="a.modified DESC">COM_RSGALLERY2_MODIFIED_DESC</option>-->
 
-<!--			<option value="a.modified_by ASC">COM_RSGALLERY2_MODIFIED_BY_ASC</option>-->
-<!--			<option value="a.modified_by DESC">COM_RSGALLERY2_MODIFIED_BY_DESC</option>-->
+			<!--			<option value="a.modified_by ASC">COM_RSGALLERY2_MODIFIED_BY_ASC</option>-->
+			<!--			<option value="a.modified_by DESC">COM_RSGALLERY2_MODIFIED_BY_DESC</option>-->
 
 			<option value="a.published ASC">JSTATUS_ASC</option>
 			<option value="a.published DESC">JSTATUS_DESC</option>
@@ -111,11 +111,11 @@
 		</field>
 
 		<field
-			name="limit"
-			type="limitbox"
-			label="JGLOBAL_LIST_LIMIT"
-			default="25"
-			onchange="this.form.submit();"
+				name="limit"
+				type="limitbox"
+				label="JGLOBAL_LIST_LIMIT"
+				default="25"
+				onchange="this.form.submit();"
 		/>
 	</fields>
 </form>

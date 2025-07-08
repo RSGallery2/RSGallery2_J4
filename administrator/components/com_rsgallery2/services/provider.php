@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 \defined('_JEXEC') or die;
@@ -30,40 +30,38 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\AssociationsHelper;
  *
  * @since __BUMP_VERSION__
  */
-return new class implements ServiceProviderInterface
-{
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function register(Container $container)
-	{
+return new class implements ServiceProviderInterface {
+    /**
+     * Registers the service provider with a DI container.
+     *
+     * @param   Container  $container  The DI container.
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function register(Container $container)
+    {
 //		$container->set(AssociationExtensionInterface::class, new AssociationsHelper);
 
-		$container->registerServiceProvider(new CategoryFactory('\\Rsgallery2\\Component\\Rsgallery2'));
-		$container->registerServiceProvider(new MVCFactory('\\Rsgallery2\\Component\\Rsgallery2'));
-		$container->registerServiceProvider(new ComponentDispatcherFactory('\\Rsgallery2\\Component\\Rsgallery2'));
-		$container->registerServiceProvider(new RouterFactory('\\Rsgallery2\\Component\\Rsgallery2'));
+        $container->registerServiceProvider(new CategoryFactory('\\Rsgallery2\\Component\\Rsgallery2'));
+        $container->registerServiceProvider(new MVCFactory('\\Rsgallery2\\Component\\Rsgallery2'));
+        $container->registerServiceProvider(new ComponentDispatcherFactory('\\Rsgallery2\\Component\\Rsgallery2'));
+        $container->registerServiceProvider(new RouterFactory('\\Rsgallery2\\Component\\Rsgallery2'));
 
-		$container->set(
-			ComponentInterface::class,
-			function (Container $container)
-			{
-				$component = new Rsgallery2Component($container->get(ComponentDispatcherFactoryInterface::class));
+        $container->set(
+            ComponentInterface::class,
+            function (Container $container) {
+                $component = new Rsgallery2Component($container->get(ComponentDispatcherFactoryInterface::class));
 
-				$component->setRegistry($container->get(Registry::class));
-				$component->setMVCFactory($container->get(MVCFactoryInterface::class));
+                $component->setRegistry($container->get(Registry::class));
+                $component->setMVCFactory($container->get(MVCFactoryInterface::class));
 //				$component->setCategoryFactory($container->get(CategoryFactoryInterface::class));
 //				$component->setAssociationExtension($container->get(AssociationExtensionInterface::class));
-				$component->setRouterFactory($container->get(RouterFactoryInterface::class));
+                $component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
-				return $component;
+                return $component;
 			}
-		);
-	}
+        );
+    }
 };

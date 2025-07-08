@@ -3,15 +3,32 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
-		<version>5.0.14.0</version>
-		<date>2024-06-11</date>
-        <fix>
-            <item>Can not find view in menu path: Upper case in template and module files </item>
-            <item>Item b</item>
-        </fix>
-		<note>
-			<item>Item c</item>
-		</note>
+		<version>5.0.30</version>
+		<date>2025-07-01</date>
+		<fix>
+			<item>Slideshow did not show images</item>
+			<item>Slidepage had wrong pagination links</item>
+		</fix>
+		<change>
+			<item>Removed text on sidebar, so more space for the page itself as only icons are showing</item>
+			<item>The URL part 'gid=' has been replaced by 'id=' to comply with Joomla SEF rules</item>
+			<item></item>
+		</change>
+	</changelog>
+	<changelog>
+		<element>com_rsgallery2</element>
+		<type>component</type>
+		<version>5.0.20.0</version>
+		<date>2024-12-11</date>
+		<change>
+			<item>Improved transfer of J3x RSG2 Version data to actual version</item>
+			<item>Checked options for using same names from configuration to menu </item>
+			<item></item>
+		</change>
+		<fix>
+			<item>Can not find view in menu path: Upper case in template and module files</item>
+			<item>Slideshow parameter</item>
+		</fix>
 	</changelog>
 	<changelog>
 		<element>com_rsgallery2</element>
@@ -21,13 +38,13 @@
 		<addition>
 			<item>J3x Menu structure will be automatically adjusted (J3x Menues definitions shall work seamless)</item>
 			<item>Basic Slideshow works</item>
-			<item>Introduce  slide pages for single images view</item>
+			<item>Introduce slide pages for single images view</item>
 			<item>Maintenance J3x column</item>
-			<item></item>
+			<item/>
 		</addition>
 		<note>
-			<item>Missing: commenting </item>
-			<item>Missing: voting </item>
+			<item>Missing: commenting</item>
+			<item>Missing: voting</item>
 		</note>
 	</changelog>
 	<changelog>
@@ -36,7 +53,7 @@
 		<version>5.0.1.0</version>
 		<date>2023-05-11</date>
 		<note>
-			<item>First pre-release </item>
+			<item>First pre-release</item>
 		</note>
 	</changelog>
 </changelogs>

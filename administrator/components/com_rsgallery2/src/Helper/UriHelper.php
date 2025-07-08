@@ -1,34 +1,39 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (c) 2016-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package         RSGallery2
+ * @subpackage      com_rsgallery2
+ * @copyright  (c)  2016-2025 RSGallery2 Team
+ * @license         GNU General Public License version 2 or later
  * @author          finnern
  * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-use Joomla\CMS\Uri\Uri;
-
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
+ *
+ * @since       version
+ */
 class UriHelper
 {
     /**
      * Does create a path with join of rgiven arguments and cleans the path afterwards
+     *
      * @return string
      *
      * @since version
      */
-	public static function join(): string
-	{
-		$uri = implode('/', func_get_args());
+    public static function join(): string
+    {
+        $uri = implode('/', func_get_args());
 
         $uri = str_replace('\\', "/", $uri);
+
         // needed ? $uri = str_replace('//', "/", $uri);
 
-		return $uri;
-	}
+        return $uri;
+    }
 
 
 //	public static function join(): string

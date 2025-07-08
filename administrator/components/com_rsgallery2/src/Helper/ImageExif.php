@@ -1,16 +1,24 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2023-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2023-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Component\ComponentHelper;
 
+use const SORT_FLAG_CASE;
+use const SORT_NATURAL;
+
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
+ *
+ * @since       version
+ */
 class ImageExif
 {
     // Tag names are not case-sensitive, so use it with lower case as often it is possible
@@ -28,10 +36,9 @@ class ImageExif
      *
      * @since version 4.3
      */
-    public function __construct(string $imagPathFileName='')
+    public function __construct(string $imagPathFileName = '')
     {
-        if ( ! empty ($imagPathFileName)) {
-
+        if (!empty ($imagPathFileName)) {
             // $this->readExifData ($imagPathFileName);
             $this->imagPathFileName = $imagPathFileName;
         }
@@ -47,14 +54,12 @@ class ImageExif
             $imagPathFileName = $this->imagPathFileName;
         }
 
-        if (!function_exists('exif_read_data'))
-        {
+        if (!function_exists('exif_read_data')) {
             return false;
         }
 
         // filename not defined
-        if (empty($imagPathFileName))
-        {
+        if (empty($imagPathFileName)) {
             return false;
         }
 
@@ -72,7 +77,6 @@ class ImageExif
 
         // required_sections: (second parameter) FILE, COMPUTED, ANY_TAG, IFD0, EXIF, IFD0, THUMBNAIL, COMMENT,
 
-
         ini_set('exif.encode_unicode', 'UTF-8');
         // ini_set('exif.decode_unicode_motorola', 'UCS-2LE');
 
@@ -82,10 +86,9 @@ class ImageExif
             $exifData = exif_read_data($imagPathFileName, 0, true);
 
             foreach ($exifData as $key => $section) {
-
                 foreach ($section as $name => $val) {
-                    $type = gettype ($val);
-                    if (json_encode ($val) === false){
+                    $type = gettype($val);
+                    if (json_encode($val) === false) {
                         $val = '%binary%';
                     }
 
@@ -97,7 +100,6 @@ class ImageExif
                     $items [$key . '.' . $name] = $val;
                 }
             }
-
         }
 
         // $test = natcasesort($items);
@@ -110,7 +112,7 @@ class ImageExif
     {
         $selected = [];
 
-        $exifItems = $this->readExifDataAll ($this->imagPathFileName);
+        $exifItems = $this->readExifDataAll($this->imagPathFileName);
 
         // $supportedTags = $this->userExifTags();
 
@@ -124,10 +126,8 @@ class ImageExif
 //        }
 
         // user has selected tags
-        if (! empty ($supportedTags)) {
-
+        if (!empty ($supportedTags)) {
             foreach ($exifItems as $name => $value) {
-
                 if (in_array(strtolower($name), $supportedTags)) {
                     $selected [$name] = $value;
                 }
@@ -136,7 +136,6 @@ class ImageExif
 
         return $selected;
     }
-
 
     public static function supportedExifTags () {
 
@@ -235,8 +234,7 @@ class ImageExif
         $type = '';
         $name = '';
 
-        if ( ! empty($ExifTag)) {
-
+        if (!empty($ExifTag)) {
             $exifParts = explode(".", $ExifTag);
 
             if (!empty ($exifParts[0])) {
@@ -246,18 +244,18 @@ class ImageExif
 
             // use second part as name
             if (!empty ($exifParts[1])) {
-
                 // Tag names are not case senitive, so use it with lower cas as often it is possible
-                $name = strtolower ($exifParts [1]);
+                $name = strtolower($exifParts [1]);
             }
         }
 
         return [$type, $name];
     }
 
-    public static function exifTranslationId ($ExifName) {
-
+    public static function exifTranslationId($ExifName)
+    {
         $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifName);
+
         return $translationId;
     }
 
@@ -278,13 +276,10 @@ class ImageExif
         $notSupportedTags = [];
 
         // lower case array
-        $supportedTags = array_map('strtolower', self::supportedExifTags ());
-
+        $supportedTags = array_map('strtolower', self::supportedExifTags());
 
         foreach ($existingExifTags as $existingExifTag) {
-
-            if ( ! in_array(strtolower($existingExifTag), $supportedTags)) {
-
+            if (!in_array(strtolower($existingExifTag), $supportedTags)) {
                 $notSupportedTags [] = $existingExifTag;
             }
         }
@@ -298,17 +293,14 @@ class ImageExif
     {
         $notUserExifTags = [];
 
-        $userTags = self::userExifTagsJ3x ();
+        $userTags = self::userExifTagsJ3x();
 
 //        foreach ($existingExifTags as $existingExifTag) {
         foreach ($existingExifTags as $existingExifTagSections) {
-
-            $existingExifTag = explode ('.', $existingExifTagSections);
-            if ( ! in_array($existingExifTag, $userTags)) {
-
+            $existingExifTag = explode('.', $existingExifTagSections);
+            if (!in_array($existingExifTag, $userTags)) {
                 // $userTags [] = $existingExifTag;
                 $notUserExifTags [] = $existingExifTagSections;
-
             }
         }
 
@@ -321,11 +313,10 @@ class ImageExif
     {
         $neededIds = [];
 
-        $supportedExifTags = self::supportedExifTags ();
+        $supportedExifTags = self::supportedExifTags();
 
         foreach ($supportedExifTags as $exifTag) {
-
-            [$type, $name] = ImageExif::tag2TypeAndName ($exifTag);
+            [$type, $name] = ImageExif::tag2TypeAndName($exifTag);
             $neededIds [] = ImageExif::exifTranslationId($name);
         }
 

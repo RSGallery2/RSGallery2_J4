@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Maintenance;
@@ -14,22 +14,19 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Maintenance;
 use Finnern\Component\Lang4dev\Administrator\Helper\langFileNamesSet;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Image\Image;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
 use Joomla\Utilities\ArrayHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
+
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-
-
 
 /**
  * View class for a list of rsgallery2.
@@ -110,7 +107,7 @@ class HtmlView extends BaseHtmlView
         $app = Factory::getApplication();
 
         //$user             = $app->getIdentity();
-	    $user  = $this->getCurrentUser();
+        $user             = $this->getCurrentUser();
         $canAdmin         = $user->authorise('core.admin');
         $this->UserIsRoot = $canAdmin;
 
@@ -122,7 +119,7 @@ class HtmlView extends BaseHtmlView
 
         HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=maintenance');
         Rsgallery2Helper::addSubmenu('maintenance');
-        $this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        $this->sidebar = Sidebar::render();
 
         $Layout = Factory::getApplication()->input->get('layout');
 
@@ -137,35 +134,32 @@ class HtmlView extends BaseHtmlView
 
                 //--- files and ids from last call --------------------------------------
 
-                $cids         = ArrayHelper::toInteger($input->get('cids', array(), 'ARRAY'));
-                $inGalleryIds = ArrayHelper::toInteger($input->get('galIds', array(), 'array'));
-                //$inFileNames  = ArrayHelper::toString($input->get('imgNames', array(), 'array'));
-                $inFileNames  = $input->get('imgNames', array(), 'array');
+                $cids         = ArrayHelper::toInteger($input->get('cids', [], 'ARRAY'));
+                $inGalleryIds = ArrayHelper::toInteger($input->get('galIds', [], 'array'));
+                //$inFileNames  = ArrayHelper::toString($input->get('imgNames', [], 'array'));
+                $inFileNames = $input->get('imgNames', [], 'array');
 
                 //--- self call by user -------------------------------------------------
                 // (self call with user input )
 
-                if ( ! empty ($inFileNames)) {
-
+                if (!empty ($inFileNames)) {
                     $test1 = json_encode($inFileNames);
 
                     //--- reuse files ---------------------------------------------------
 
                     $this->exifImageFiles = [];
                     foreach ($inFileNames as $idx => $fileName) {
-
                         $GalleryId = '';
                         if ($inGalleryIds[$idx] > 0) {
                             $GalleryId = $inGalleryIds[$idx];
                         }
-                        $this->exifImageFiles [] = array($GalleryId, $fileName);
+                        $this->exifImageFiles [] = [$GalleryId, $fileName];
                     }
 
                     //--- collect files exif data --------------------------------
 
                     // selections
                     if (!empty($cids)) {
-
                         // create absolute paths (ToDo: improve for galleries ...
                         $pathFileNames = $this->filenamesByGalIdAndImgName($inGalleryIds, $inFileNames);
                         // select chosen files
@@ -174,7 +168,8 @@ class HtmlView extends BaseHtmlView
                         if (!empty ($exifFileNames)) {
                             //--- extract exif data -----------------------------
 
-                            $imgModel                 = new \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel ();
+                            $imgModel                 = new ImageModel (
+                            );
                             $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
 
                             //--- match exif names with enabled / supported --------------------------------
@@ -182,9 +177,7 @@ class HtmlView extends BaseHtmlView
                             // ToDo: rename name to tags
                             $exifTags = [];
                             foreach ($this->exifDataRawOfFiles as $exifDataOfFile) {
-
-                                if ( ! empty ($exifDataOfFile[1])) {
-
+                                if (!empty ($exifDataOfFile[1])) {
                                     // $fileName = $exifDataOfFile[0];
                                     $exifData = $exifDataOfFile[1];
 
@@ -207,13 +200,11 @@ class HtmlView extends BaseHtmlView
                                 }
                             }
 
-                            $this->exifAllTagsCollected = $exifTags;
+                            $this->exifAllTagsCollected  = $exifTags;
                             $this->exifIsNotSupported    = imageExif::checkTagsNotSupported($exifTags);
                             $this->exifIsNotUserSelected = imageExif::checkNotUserSelected($exifTags);
-
                         }
                     }
-
                 } else {
                     //--- first call -------------------------------------------------
 
@@ -221,19 +212,16 @@ class HtmlView extends BaseHtmlView
                         // preset file list
                         $this->exifImageFiles = $this->presetExifFileList();
                     } else {
-
-
                     }
                 }
 
-
-                $this->exifUserSelected      = imageExif::userExifTagsJ3x();
-                $this->exifTagsSupported     = imageExif::supportedExifTags();
+                $this->exifUserSelected  = imageExif::userExifTagsJ3x();
+                $this->exifTagsSupported = imageExif::supportedExifTags();
 
                 $this->exifTagsTranslationIds = [];
                 if (!empty ($this->exifTagsSupported)) {
                     foreach ($this->exifTagsSupported as $exifTag) {
-                        [$type, $name] = ImageExif::tag2TypeAndName ($exifTag);
+                        [$type, $name] = ImageExif::tag2TypeAndName($exifTag);
                         $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($name);
                     }
 
@@ -241,25 +229,23 @@ class HtmlView extends BaseHtmlView
 
                     $neededIds = imageExif::neededTranslationIds();
 
-                    $this->exifMissingTranslations = $this->CheckExifMissingTranslationIds ($neededIds);
-
+                    $this->exifMissingTranslations = $this->CheckExifMissingTranslationIds($neededIds);
                 }
 
                 //--- prepare empty input for files -------------------------------------
 
                 for ($idx = count($this->exifImageFiles); $idx < 10; $idx++) {
-                    $this->exifImageFiles [] = array('', '');
+                    $this->exifImageFiles [] = ['', ''];
                 }
 
                 break;
-
         } // switch
 
         $this->addToolbar($Layout);
 
         parent::display($tpl);
 
-        return ;
+        return;
     }
 
     /**
@@ -282,7 +268,7 @@ class HtmlView extends BaseHtmlView
                     . ': ' . '<strong>' . $this->intended . '<strong>'
 //					. ': ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY')
                     ,
-                    'screwdriver'
+                    'screwdriver',
                 );
                 ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
                 break;
@@ -303,7 +289,7 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(
                     Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF'),
-                    'fas fa-camera-retro'
+                    'fas fa-camera-retro',
                 ); // 'maintenance');
                 ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
@@ -312,7 +298,7 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::link(
                     'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif',
                     'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',
-                    'none fas fa-camera-retro'
+                    'none fas fa-camera-retro',
                 );
 
                 break;
@@ -321,13 +307,13 @@ class HtmlView extends BaseHtmlView
                 // on develop show open tasks if existing
                 if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
-	                    . '* ! Db J3x gallery transfer: enable single transfers <br>'
-	                    . '* <br>'
+                        . '* ! Db J3x gallery transfer: enable single transfers <br>'
+                        . '* <br>'
                         . '* Install: finish -> Move J3x images<br>'
-                        . '* Repair: Consolidade images<br>'
-	                    . '* Raw J3x galleries list<br>'
-	                    . '* Raw J3x images list<br>'
-	                    . '* Raw J3x .... list<br>'
+                        . '* Repair: Consolidate images<br>'
+                        . '* Raw J3x galleries list<br>'
+                        . '* Raw J3x images list<br>'
+                        . '* Raw J3x .... list<br>'
                         . '* !!! Purge / delete of database variables should be confirmed !!!<br>'
                         . '* Do shorten CSS by *.SCSS<br>'
 //                        . '* <br>'
@@ -340,9 +326,13 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::cancel('maintenance.cancel_rsg2', 'JTOOLBAR_CLOSE');
                 // ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
-	            ToolBarHelper::custom('MaintenanceCleanUp.undoPrepareRemoveTables', 'none fas fa-undo fa-delete',
-		            'icon-undo', 'Undo prepare remove of RSG2', false);
-
+//                ToolBarHelper::custom(
+//                    'MaintenanceCleanUp.undoPrepareRemoveTables',
+//                    'none fas fa-undo fa-delete',
+//                    'icon-undo',
+//                    'Undo prepare remove of RSG2',
+//                    false,
+//                );
 
                 break;
         }
@@ -389,7 +379,7 @@ class HtmlView extends BaseHtmlView
      *
      * @since version
      */
-    public function selectedFileNames($cids = [], $inFileNames=[])
+    public function selectedFileNames($cids = [], $inFileNames = [])
     {
         $fileNames = [];
 
@@ -409,21 +399,24 @@ class HtmlView extends BaseHtmlView
         $exifImageFiles = [];
 
         // gallery ID , image
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/2019-09-21_00126.jpg');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/8054.jpg');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0240.JPG');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0377.JPG');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0711.JPG');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_3871.JPG');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSCF0258.JPG');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSCN1956.JPG');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/fith04bar01.jpg');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_0018.JPG');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230114_094341.jpg');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230323_120558.jpg');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230401_115447.jpg');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG-20230106-WA0002.jpg');
-        $exifImageFiles [] = array('', JPATH_ROOT . '/images/rsgallery2/ExifTest/Screenshot_20200613_150114_com.huawei.android.launcher.jpg');
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/2019-09-21_00126.jpg'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/8054.jpg'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0240.JPG'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0377.JPG'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_0711.JPG'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSC_3871.JPG'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSCF0258.JPG'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/DSCN1956.JPG'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/fith04bar01.jpg'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_0018.JPG'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230114_094341.jpg'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230323_120558.jpg'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG_20230401_115447.jpg'];
+        $exifImageFiles [] = ['', JPATH_ROOT . '/images/rsgallery2/ExifTest/IMG-20230106-WA0002.jpg'];
+        $exifImageFiles [] = [
+            '',
+            JPATH_ROOT . '/images/rsgallery2/ExifTest/Screenshot_20200613_150114_com.huawei.android.launcher.jpg',
+        ];
 
         return $exifImageFiles;
     }
@@ -431,23 +424,20 @@ class HtmlView extends BaseHtmlView
     private function CheckExifMissingTranslationIds(array $neededIds)
     {
         $existingIds = [];
-        $missingIds = [];
+        $missingIds  = [];
 
         //--- read exif language file ---------------------------------------------
 
-        $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/language/en-GB/com_rsg2_exif.ini';
+        $changeLogModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/language/en-GB/com_rsg2_exif.ini';
 
         $handle = fopen($changeLogModelFileName, "r");
         if ($handle) {
+            //--- extract language items ---------------------------------------------
 
-	        //--- extract language items ---------------------------------------------
+            while (($line = fgets($handle)) !== false) {
+                $existingId = $this->lineExtractTransId($line);
 
-	        while (($line = fgets($handle)) !== false) {
-
-                $existingId = $this->lineExtractTransId ($line);
-
-                if ( ! empty ($existingId)) {
-
+                if (!empty ($existingId)) {
                     $existingIds [] = $existingId;
                 }
             }
@@ -456,11 +446,8 @@ class HtmlView extends BaseHtmlView
         }
 
         if (count($existingIds) > 0) {
-
             foreach ($neededIds as $neededId) {
-
-                if ( ! in_array ($neededId, $existingIds)){
-
+                if (!in_array($neededId, $existingIds)) {
                     $missingIds [] = $neededId;
                 }
             }
@@ -475,15 +462,12 @@ class HtmlView extends BaseHtmlView
 
         // COM_RSGALLERY2_EXIF_TAG_FILEMODIFIEDDATE="File modified date"
 
-        if (str_starts_with ($line, 'COM_RSGALLERY2_EXIF_TAG')) {
-
+        if (str_starts_with($line, 'COM_RSGALLERY2_EXIF_TAG')) {
             $parts = explode('=', $line);
 
-            if ( ! empty($parts[0])) {
-
+            if (!empty($parts[0])) {
                 $transId = $parts[0];
             }
-
         }
 
         return $transId;

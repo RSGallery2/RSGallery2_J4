@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  mod_rsg2_gallery
+ * @package       Joomla.Site
+ * @subpackage    mod_rsg2_gallery
  *
  * @copyright  (c)  2005-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Rsgallery2\Module\Rsg2_gallery\Site\Helper;
@@ -59,13 +59,13 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     }
 
     /**
-	 * Get a list of the gallery images from the gallery model.     *
+     * Get a list of the gallery images from the gallery model.     *
      *
-	 * @param   Registry        $params  The module parameters
-	 * @param   CMSApplication  $app     The application
-	 *
-	 * @return  array
-	 */
+     * @param   Registry        $params  The module parameters
+     * @param   CMSApplication  $app     The application
+     *
+     * @return  array
+     */
     public function getImagesOfGallery(int $gid, Registry $params, SiteApplication $app)
     {
         $images = [];
@@ -83,20 +83,20 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
             $model->setState('params', $params);
 
             $model->setState('list.start', 0);
-	        $model->setState('filter.published', 1);
+            $model->setState('filter.published', 1);
 
-	        $limit  = $params->get('max_thumbs_in_images_view_j3x');
-	        $model->setState('list.limit', $limit);
+            $limit = $params->get('max_thumbs_in_images_view_j3x');
+            $model->setState('list.limit', $limit);
 
             // This module does not use tags data
             $model->setState('load_tags', false);
 
-	        //--- state gid -------------------------------------------------
+            //--- state gid -------------------------------------------------
 
-	        $model->setState('gallery.id', $gid);
-	        $model->setState('gid', $gid);
+            $model->setState('gallery.id', $gid);
+            $model->setState('gid', $gid);
 
-	        //--- images -----------------------------------------------------------------------
+            //--- images -----------------------------------------------------------------------
 
 //             $this->galleryModel->populateState();
 
@@ -108,12 +108,12 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
                 $data = $this->galleryModel->AddLayoutData($images);
             }
 
-	        //--- pagination -------------------------------------------------
+            //--- pagination -------------------------------------------------
 
-	        $this->pagination = $model->getPagination ();
+            $this->pagination = $model->getPagination();
 
-	        // Flag indicates to not add limitstart=0 to URL
-	        $this->pagination->hideEmptyLimitstart = true;
+            // Flag indicates to not add limitstart=0 to URL
+            $this->pagination->hideEmptyLimitstart = true;
         } catch (RuntimeException $e) {
             // ToDO: Message more explicit
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
@@ -289,7 +289,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 //    }
 //
 
-    public function HtmlImages() : string
+    public function HtmlImages(): string
     {
         $msg = "    --- HtmlImages from Rsg2_gallery plugin    ----- \nxxx\n";
 

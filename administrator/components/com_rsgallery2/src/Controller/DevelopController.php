@@ -1,25 +1,28 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
 \defined('_JEXEC') or die;
 
+use DateTime;
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Image\Image;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Session\Session;
-// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
+
+
+
+// use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 /**
  * Rsgallery2 master display controller.
@@ -32,15 +35,15 @@ class DevelopController extends BaseController
      * Constructor.
      *
      * @param   array                $config   An optional associative array of configuration settings.
-     * Recognized key values include 'name', 'default_task', 'model_path', and
-     * 'view_path' (this list is not meant to be comprehensive).
+     *                                         Recognized key values include 'name', 'default_task', 'model_path', and
+     *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   Input              $input    Input
      *
      * @since __BUMP_VERSION__
      *
-    public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
 
@@ -48,41 +51,42 @@ class DevelopController extends BaseController
     /**/
 
     /**
-	 * The default view.
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
+     * The default view.
+     *
+     * @var    string
+     * @since __BUMP_VERSION__
+     */
 //	protected $default_view = 'rsgallery2';
 
-	/**
-	 * Method to display a view.
-	 *
-	 * @param   boolean  $cachable   If true, the view output will be cached
- * @license    GNU General Public License version 2 or later
-	 *
-	 * @return  BaseController|bool  This object to support chaining.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function display($cachable = false, $urlparams = array())
-	{
+    /**
+     * Method to display a view.
+     *
+     * @param   boolean  $cachable  If true, the view output will be cached
+     *
+     * @return  BaseController|bool  This object to support chaining.
+     *
+     * @license    GNU General Public License version 2 or later
+     *
+     * @since      __BUMP_VERSION__
+     */
+    public function display($cachable = false, $urlparams = [])
+    {
+        // $model = $this->getModel('');
 
-		// $model = $this->getModel('');
+        return parent::display();
+    }
 
-		return parent::display();
-	}
-
-	/**
-	 * Proxy for getModel.
-	 * @param string $name
-	 * @param string $prefix
-	 * @param array  $config
-	 *
-	 * @return mixed
-	 *
-	 * @since __BUMP_VERSION__
-	 *
+    /**
+     * Proxy for getModel.
+     *
+     * @param   string  $name
+     * @param   string  $prefix
+     * @param   array   $config
+     *
+     * @return mixed
+     *
+     * @since __BUMP_VERSION__
+     *
 
     public function getModel($name = 'Develop', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
@@ -97,7 +101,7 @@ class DevelopController extends BaseController
      */
     public function createGalleries_001()
     {
-        $msg = "DevelopController.createGalleries_001: ";
+        $msg     = "DevelopController.createGalleries_001: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -105,7 +109,7 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -122,10 +126,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created 1 items";
                 } else {
-                    $msg .= "Error at createGalleries_001 1 items";
+                    $msg     .= "Error at createGalleries_001 1 items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_001: "' . '<br>';
@@ -134,13 +137,11 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -149,7 +150,7 @@ class DevelopController extends BaseController
      */
     public function createGalleries_010()
     {
-        $msg = "DevelopController.createGalleries_010: ";
+        $msg     = "DevelopController.createGalleries_010: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -157,7 +158,7 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -174,10 +175,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created 10 items";
                 } else {
-                    $msg .= "Error at createGalleries_010 10 items";
+                    $msg     .= "Error at createGalleries_010 10 items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_010: "' . '<br>';
@@ -186,13 +186,11 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -201,7 +199,7 @@ class DevelopController extends BaseController
      */
     public function createGalleries_100()
     {
-        $msg = "DevelopController.createGalleries_100: ";
+        $msg     = "DevelopController.createGalleries_100: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -209,7 +207,7 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -226,10 +224,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created 100 items";
                 } else {
-                    $msg .= "Error at createGalleries_100 100 items";
+                    $msg     .= "Error at createGalleries_100 100 items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_100: "' . '<br>';
@@ -238,13 +235,11 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createGalleries';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -253,7 +248,7 @@ class DevelopController extends BaseController
      */
     public function createGalleries_random()
     {
-        $msg = "DevelopController.createGalleries_random: ";
+        $msg     = "DevelopController.createGalleries_random: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -261,13 +256,13 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                $count = random_int (10, 40) + 10; // 10-50
+                $count = random_int(10, 40) + 10; // 10-50
 
 //                $j3xModel = $this->getModel('Develop');
 //
@@ -278,10 +273,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created 1 items";
                 } else {
-                    $msg .= "Error at createGalleries_random 1 items";
+                    $msg     .= "Error at createGalleries_random 1 items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_random: "' . '<br>';
@@ -290,7 +284,6 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createGalleries';
@@ -308,7 +301,7 @@ class DevelopController extends BaseController
      */
     public function createImages_001()
     {
-        $msg = "DevelopController.createImages_001: ";
+        $msg     = "DevelopController.createImages_001: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -316,7 +309,7 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -324,7 +317,7 @@ class DevelopController extends BaseController
             try {
                 // ToDo: determine gallery from input
                 $galleryId = 2;
-                $count = 1;
+                $count     = 1;
 
 //                $j3xModel = $this->getModel('Develop');
 //
@@ -336,10 +329,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created 1 items";
                 } else {
-                    $msg .= "Error at createImages_001 1 items";
+                    $msg     .= "Error at createImages_001 1 items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_001: "' . '<br>';
@@ -348,13 +340,11 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -363,7 +353,7 @@ class DevelopController extends BaseController
      */
     public function createImages_010()
     {
-        $msg = "DevelopController.createImages_010: ";
+        $msg     = "DevelopController.createImages_010: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -371,7 +361,7 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -379,8 +369,7 @@ class DevelopController extends BaseController
             try {
                 // ToDo: determine gallery from input
                 $galleryId = 2;
-                $count = 10;
-
+                $count     = 10;
 
 //                $j3xModel = $this->getModel('Develop');
 //
@@ -391,10 +380,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created 10 items";
                 } else {
-                    $msg .= "Error at createImages_010 10 items";
+                    $msg     .= "Error at createImages_010 10 items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_010: "' . '<br>';
@@ -403,13 +391,11 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -418,7 +404,7 @@ class DevelopController extends BaseController
      */
     public function createImages_100()
     {
-        $msg = "DevelopController.createImages_100: ";
+        $msg     = "DevelopController.createImages_100: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -426,7 +412,7 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -434,8 +420,7 @@ class DevelopController extends BaseController
             try {
                 // ToDo: determine gallery from input
                 $galleryId = 2;
-                $count = 100;
-
+                $count     = 100;
 
 //                $j3xModel = $this->getModel('Develop');
 //
@@ -447,10 +432,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created 100 items";
                 } else {
-                    $msg .= "Error at createImages_100 100 items";
+                    $msg     .= "Error at createImages_100 100 items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_100: "' . '<br>';
@@ -459,13 +443,11 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Copies all old configuration items to new configuration
@@ -474,7 +456,7 @@ class DevelopController extends BaseController
      */
     private function createImages_random()
     {
-        $msg = "DevelopController.createImages_random: ";
+        $msg     = "DevelopController.createImages_random: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -482,7 +464,7 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -491,7 +473,7 @@ class DevelopController extends BaseController
                 // ToDo: determine gallery from input
                 $galleryId = 2;
 
-                $count = random_int (10, 40) + 10; // 10-50
+                $count = random_int(10, 40) + 10; // 10-50
 
 //                $j3xModel = $this->getModel('Develop');
 //
@@ -503,10 +485,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= "Successful created ' . $count . ' items";
                 } else {
-                    $msg .= "Error at createImages_random ' . $count . ' items";
+                    $msg     .= "Error at createImages_random ' . $count . ' items";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_random: "' . '<br>';
@@ -515,26 +496,22 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=createImages';
         $this->setRedirect($link, $msg, $msgType);
     }
 
-
-    public function createGalleries($count, $parentId=1)
+    public function createGalleries($count, $parentId = 1)
     {
         $isCreated = false;
 
         try {
-
             $allCreated = true;
 
             for ($idx = 0; $idx < $count; $idx++) {
-
                 $dateTime = $this->stdDateTime();
-                $title = $dateTime . ' (' . $idx . ')';
+                $title    = $dateTime . ' (' . $idx . ')';
 
                 $description = 'dev created';
 
@@ -551,7 +528,6 @@ class DevelopController extends BaseController
                 $isCreated = $modelDb->createGallery($title, $parentId, $description);
 
                 if (empty($isCreated)) {
-
                     $allCreated = false;
 
                     // actual give an error
@@ -559,11 +535,9 @@ class DevelopController extends BaseController
                     $msg = 'Create gallery DB item for "' . $title . '" failed. Use maintenance -> Consolidate image database to check it ';
                     Factory::getApplication()->enqueueMessage($msg, 'error');
                 }
-
             }
 
             $isCreated = $allCreated;
-
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
@@ -576,14 +550,12 @@ class DevelopController extends BaseController
         $isCreated = false;
 
         try {
-
             $allCreated = true;
 
             for ($idx = 0; $idx < $count; $idx++) {
-
-                $dateTime = $this->stdDateTime();
+                $dateTime    = $this->stdDateTime();
                 $useFileName = $dateTime . '.jpg';
-                $title = $dateTime . ' (' . $idx . ')';
+                $title       = $dateTime . ' (' . $idx . ')';
 
                 $description = 'dev created';
 
@@ -600,7 +572,6 @@ class DevelopController extends BaseController
                 $imageId = $modelDb->createImageDbItem($useFileName, $title, $galleryId, $description);
 
                 if (empty($imageId)) {
-
                     $allCreated = false;
 
                     // actual give an error
@@ -619,7 +590,6 @@ class DevelopController extends BaseController
                 imagepng($im);
                 imagedestroy($im);
                 /**/
-
                 /**
                 // Erzeut ein leeres Bild und fügt ein wenig Text hinzu
                 $im = imagecreatetruecolor(120, 20);
@@ -646,7 +616,6 @@ class DevelopController extends BaseController
             }
 
             $isCreated = $allCreated;
-
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
@@ -658,15 +627,11 @@ class DevelopController extends BaseController
     private function stdDateTime () {
         $now = '2020_error_stdDateTime';
 
-        try
-        {
-            $datetime = new \DateTime();
+        try {
+            $datetime = new DateTime();
 //            $now = $datetime->format('Y.m.d_H.i.s.v');
             $now = $datetime->format('Y.m.d_H.i.s.u');
-
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -690,7 +655,6 @@ class DevelopController extends BaseController
         return true;
     }
 
-
     /**
      * On cevelop check install message the version number may be
      * patched for the changelog display from / to version
@@ -699,7 +663,7 @@ class DevelopController extends BaseController
      */
     public function useOldVersion()
     {
-        $msg = "DevelopController.useOldVersion: ";
+        $msg     = "DevelopController.useOldVersion: ";
         $msgType = 'notice';
         echo "test";
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage';
@@ -709,14 +673,13 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-
-                $input = Factory::getApplication()->input;
+                $input        = Factory::getApplication()->input;
                 $lowerVersion = $input->get('PreviousVersion', '', 'STRING');
                 if (empty ($lowerVersion)) {
                     $lowerVersion = '5.0.0.1';
@@ -729,8 +692,7 @@ class DevelopController extends BaseController
 
                 //$link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage'
                 //    . '&lowerVersion=' . $lowerVersion;
-                 $link .= '&lowerVersion=' . $lowerVersion;
-
+                $link .= '&lowerVersion=' . $lowerVersion;
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing useOldVersion: "' . '<br>';
@@ -739,10 +701,9 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
-        $this->setRedirect($link,);
+        $this->setRedirect($link);
     }
 
     /**
@@ -755,7 +716,7 @@ class DevelopController extends BaseController
     public function assignVersion()
     {
         // ??? maintenance / manifest ....
-        $msg = "DevelopController.assignVersion: ";
+        $msg     = "DevelopController.assignVersion: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -763,14 +724,13 @@ class DevelopController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-
-                $input = Factory::getApplication()->input;
+                $input        = Factory::getApplication()->input;
                 $lowerVersion = $input->get('PreviousVersion', '', 'STRING');
                 if (empty ($lowerVersion)) {
                     $lowerVersion = '5.0.0.1';
@@ -784,10 +744,9 @@ class DevelopController extends BaseController
                 if ($isOk) {
                     $msg .= ' Successful assigned RSG2 version: ' . $lowerVersion;
                 } else {
-                    $msg .= 'Error at assignment of RSG2 version: ' . $lowerVersion;
+                    $msg     .= 'Error at assignment of RSG2 version: ' . $lowerVersion;
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing assignVersion: "' . '<br>';
@@ -796,7 +755,6 @@ class DevelopController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage';
@@ -804,14 +762,12 @@ class DevelopController extends BaseController
         $this->setRedirect($link);
     }
 
-
     public function mergeParams()
     {
-
-        $actualParams = Rsg2ExtensionModel::readRsg2ExtensionConfiguration ();
+        $actualParams  = Rsg2ExtensionModel::readRsg2ExtensionConfiguration();
         $defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
-        $mergedParams = Rsg2ExtensionModel::mergeDefaultAndActualParams ($this->defaultParams, $this->actualParams);
-        Rsg2ExtensionModel::replaceRsg2ExtensionConfiguration ($mergedParams);
+        $mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($this->defaultParams, $this->actualParams);
+        Rsg2ExtensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
     }
 
 }

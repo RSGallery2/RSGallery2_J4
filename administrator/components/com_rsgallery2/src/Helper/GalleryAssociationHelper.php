@@ -1,15 +1,14 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
-
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Gallery Component Association Helper
@@ -18,41 +17,36 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
  */
 abstract class GalleryAssociationHelper
 {
-	public static $gallery_association = true;
+    public static $gallery_association = true;
 
-	/**
-	 * Method to get the associations for a given gallery
-	 *
-	 * @param   integer  $id         Id of the item
-	 * @param   string   $extension  Name of the component
-	 *
-	 * @return  array    Array of associations for the component galleries
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public static function getGalleryAssociations($id = 0, $extension = 'com_rsgallery2')
-	{
-		$return = array();
+    /**
+     * Method to get the associations for a given gallery
+     *
+     * @param   integer  $id         Id of the item
+     * @param   string   $extension  Name of the component
+     *
+     * @return  array    Array of associations for the component galleries
+     *
+     * @since __BUMP_VERSION__
+     */
+    public static function getGalleryAssociations($id = 0, $extension = 'com_rsgallery2')
+    {
+        $return = [];
 
-		if ($id)
-		{
-			$helperClassname = ucfirst(substr($extension, 4)) . 'HelperRoute';
+        if ($id) {
+            $helperClassname = ucfirst(substr($extension, 4)) . 'HelperRoute';
 
-			$associations = GalleriesHelper::getAssociations($id, $extension);
+            $associations = GalleriesHelper::getAssociations($id, $extension);
 
-			foreach ($associations as $tag => $item)
-			{
-				if (class_exists($helperClassname) && is_callable(array($helperClassname, 'getGalleryRoute')))
-				{
-					$return[$tag] = $helperClassname::getGalleryRoute($item, $tag);
-				}
-				else
-				{
-					$return[$tag] = 'index.php?option=' . $extension . '&view=gallery&id=' . $item;
-				}
-			}
-		}
+            foreach ($associations as $tag => $item) {
+                if (class_exists($helperClassname) && is_callable([$helperClassname, 'getGalleryRoute'])) {
+                    $return[$tag] = $helperClassname::getGalleryRoute($item, $tag);
+                } else {
+                    $return[$tag] = 'index.php?option=' . $extension . '&view=gallery&id=' . $item;
+                }
+            }
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 }

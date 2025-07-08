@@ -1,26 +1,23 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Session\Session;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\User\UserFactoryInterface;
 
 /**
  * Rsgallery2 master display controller.
@@ -33,22 +30,18 @@ class MaintenanceController extends BaseController
      * Constructor.
      *
      * @param   array                $config   An optional associative array of configuration settings.
-     * Recognized key values include 'name', 'default_task', 'model_path', and
-     * 'view_path' (this list is not meant to be comprehensive).
+     *                                         Recognized key values include 'name', 'default_task', 'model_path', and
+     *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   \JInput              $input    Input
+     * @param   Input              $input    Input
      *
      * @since __BUMP_VERSION__
      */
-    public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
-
-
-
     }
-
 
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
@@ -61,33 +54,28 @@ class MaintenanceController extends BaseController
     {
         $isOk = false;
 
-        $msg = "MaintenanceCleanUp.CheckImagePaths: ";
+        $msg     = "MaintenanceCleanUp.CheckImagePaths: ";
         $msgType = 'notice';
 
         $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-
             try {
-
-                $MaintModel = $this->getModel('Maintenance');
+                $MaintModel      = $this->getModel('Maintenance');
                 $isPathsExisting = $MaintModel->CheckImagePaths();
                 if ($isPathsExisting) {
                     // config saved message
                     $msg .= Text::_('All paths to images exist', true);
-                }
-                else
-                {
-                    $msg .= "Missing pathes for images found (dependend on gallery id or size)'";
+                } else {
+                    $msg     .= "Missing pathes for images found (dependend on gallery id or size)'";
                     $msgType = 'warning';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing CheckImagePaths: "' . '<br>';
@@ -102,8 +90,6 @@ class MaintenanceController extends BaseController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-
-
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
@@ -115,34 +101,29 @@ class MaintenanceController extends BaseController
     {
         $isOk = false;
 
-        $msg = "MaintenanceCleanUp.RepairImagePaths: ";
+        $msg     = "MaintenanceCleanUp.RepairImagePaths: ";
         $msgType = 'notice';
 
         $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-
             try {
-
                 $MaintModel = $this->getModel('Maintenance');
-                $isSaved = $MaintModel->RepairImagePaths();
+                $isSaved    = $MaintModel->RepairImagePaths();
 
                 if ($isSaved) {
                     // config saved message
                     $msg .= Text::_('Image paths are created', true);
-                }
-                else
-                {
-                    $msg .= "Error at repair image paths'";
+                } else {
+                    $msg     .= "Error at repair image paths'";
                     $msgType = 'warning';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing RepairImagePaths: "' . '<br>';
@@ -159,24 +140,25 @@ class MaintenanceController extends BaseController
 
 
     /**
-	 * The default view.
-	 *
-	 * @var    string
-	 * @since __BUMP_VERSION__
-	 */
+     * The default view.
+     *
+     * @var    string
+     * @since __BUMP_VERSION__
+     */
 //	protected $default_view = 'rsgallery2';
 
-	/**
-	 * Method to display a view.
-	 *
-	 * @param   boolean  $cachable   If true, the view output will be cached
- * @license    GNU General Public License version 2 or later
-	 *
-	 * @return  BaseController|bool  This object to support chaining.
-	 *
-	 * @since __BUMP_VERSION__
-	 *
-	public function display($cachable = false, $urlparams = array())
+    /**
+     * Method to display a view.
+     *
+     * @param   boolean  $cachable  If true, the view output will be cached
+     *
+     * @return  BaseController|bool  This object to support chaining.
+     *
+     * @license    GNU General Public License version 2 or later
+     *
+     * @since      __BUMP_VERSION__
+     *
+	public function display($cachable = false, $urlparams = [])
 	{
 
 		// $model = $this->getModel('');
@@ -188,17 +170,18 @@ class MaintenanceController extends BaseController
 	}
     /**/
 
-	/**
-	 * Proxy for getModel.
-	 * @param string $name
-	 * @param string $prefix
-	 * @param array  $config
-	 *
-	 * @return mixed
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	/**
+    /**
+     * Proxy for getModel.
+     *
+     * @param   string  $name
+     * @param   string  $prefix
+     * @param   array   $config
+     *
+     * @return mixed
+     *
+     * @since __BUMP_VERSION__
+     */
+    /**
     public function getModel($name = 'Maintenance', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
         return parent::getModel($name, $prefix, $config);
@@ -219,27 +202,25 @@ class MaintenanceController extends BaseController
         $this->checkToken();
 
         $msgType = 'notice';
-        $link = 'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif';
+        $link    = 'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif';
 
         try {
             // Access check
             $canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
             if (!$canAdmin) {
-
                 $msg     = Text::_('JERROR_ALERTNOAUTHOR');
                 $msgType = 'warning';
                 // replace newlines with html line breaks.
                 $msg = nl2br($msg);
                 $this->setRedirect($link, $msg, $msgType);
-
             } else {
 //                //--- input: collect selected gallery id, and file names -----------------------------------
 //
 //                // ToDo: collect selected gallery id, and filenames
 ////                $id = $this->input->get('id', 0, 'int');
-//                $imageNames = $this->input->get('jform', array(), 'array');
+//                $imageNames = $this->input->get('jform', [], 'array');
 //
-//                $cids = $this->input->get('cid', array(), 'ARRAY');
+//                $cids = $this->input->get('cid', [], 'ARRAY');
 //                ArrayHelper::toInteger($cids);
 //
 //                // ToDo: Determine filenames with real paths
@@ -278,15 +259,15 @@ class MaintenanceController extends BaseController
 
                 $input = $this->input;
 
-                $data    = $input->post->get('jform', array(), 'array');
+                $data  = $input->post->get('jform', [], 'array');
                 $test1 = json_encode($data);
 
-                $cids = $input->get('cid', array(), 'ARRAY');
-//                $galleryIds = $input->get('galIds', array(), 'array');
-//                $imageNames  = $input->get('imgNames', array(), 'array');
-                $galleryIds  = ArrayHelper::toInteger($data ['galIds']);
+                $cids = $input->get('cid', [], 'ARRAY');
+//                $galleryIds = $input->get('galIds', [], 'array');
+//                $imageNames  = $input->get('imgNames', [], 'array');
+                $galleryIds = ArrayHelper::toInteger($data ['galIds']);
 //                $imageNames  = ArrayHelper::toString ($data ['imgNames']);
-                $imageNames  = $data ['imgNames'];
+                $imageNames = $data ['imgNames'];
 
 //                $link .= ''
 //                    . '&' . http_build_query(array('cids' => $cids))
@@ -294,10 +275,9 @@ class MaintenanceController extends BaseController
 //                    . '&' . http_build_query(array('imgNames' => $imageNames))
 //                    ;
                 $link .= ''
-                    . '&' . http_build_query(array('cids' => $cids))
-                    . '&' . http_build_query(array('galIds' => $galleryIds))
-                    . '&' . http_build_query(array('imgNames' => $imageNames))
-                    ;
+                    . '&' . http_build_query(['cids' => $cids])
+                    . '&' . http_build_query(['galIds' => $galleryIds])
+                    . '&' . http_build_query(['imgNames' => $imageNames]);
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';

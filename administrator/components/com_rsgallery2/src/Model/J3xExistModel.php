@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
@@ -14,6 +14,8 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
+
+
 
 /**
  * Item Model for a Configuration items (options).
@@ -25,6 +27,12 @@ class J3xExistModel extends BaseModel
 
     // ToDo: attention a double of this function exist. Remove either of them
 
+    /**
+     *
+     * @return bool
+     *
+     * @since version
+     */
     static function J3xConfigTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_config');
@@ -63,7 +71,6 @@ class J3xExistModel extends BaseModel
 
         return $tableExist;
     }
-
 
 }
 

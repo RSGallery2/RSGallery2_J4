@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  mod_rsg2_gallery
+ * @package       Joomla.Administrator
+ * @subpackage    mod_rsg2_gallery
  *
  * @copyright  (c)  2005-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 \defined('_JEXEC') or die;
@@ -22,8 +22,8 @@ use Rsgallery2\Module\Rsgallery2\Site\Helper\Rsg2_galleryHelper;
 //--- Retrieve params -----------------------
 
 $selectGallery = $params->get('SelectGallery');
-$localFolder = $params->get('LocalFolder');
-$folderUrl = $params->get('FolderUrl');
+$localFolder   = $params->get('LocalFolder');
+$folderUrl     = $params->get('FolderUrl');
 
 
 $images = [];
@@ -50,11 +50,11 @@ if ($selectGallery > 0) {
 
 // Tests
 $localFolder = JPATH_ROOT . '/images/rsgallery2/2/thumbs/';
-$images = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
+$images      = Rsg2_imagesHelper::getImageNamesOfFolder($localFolder);
 
 $folderUrl = 'http://localhost/joomla4x/images/rsgallery2/2/thumbs/';
 $folderUrl = Uri::root() . '/images/rsgallery2/2/thumbs/';
-$images = Rsg2_galleryHelper::getImageNamesOfUrl($folderUrl);
+$images    = Rsg2_galleryHelper::getImageNamesOfUrl($folderUrl);
 
 
 require ModuleHelper::getLayoutPath('mod_rsg2_gallery', $params->get('layout', 'default'));
@@ -64,13 +64,13 @@ require ModuleHelper::getLayoutPath('mod_rsg2_gallery', $params->get('layout', '
 
 <div class="rsg2__mod rsg2__image_area">
 
-		<h1> Module RSGallery2 "gallery" view </h1>
+    <h1> Module RSGallery2 "gallery" view </h1>
 
-		<hr>
+    <hr>
 
-	<?php
-//	echo $layoutImages->render($displayData);
-	?>
+    <?php
+    //	echo $layoutImages->render($displayData);
+    ?>
 
 </div>
 

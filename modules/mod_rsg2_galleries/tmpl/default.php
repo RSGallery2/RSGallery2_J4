@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  mod_rsg2_images
+ * @package       Joomla.Administrator
+ * @subpackage    mod_rsg2_images
  *
  * @copyright  (c)  2005-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 use Joomla\CMS\Layout\FileLayout;
@@ -13,18 +13,18 @@ use Joomla\CMS\Layout\FileLayout;
 
 
 if (!empty($isDebugSite)) {
-	echo '<br><br>--------------------------- mod_rsg2_galleries start ------------------------------<br>';
+    echo '<br><br>--------------------------- mod_rsg2_galleries start ------------------------------<br>';
 }
 
 // message on empty data or other
-if ( ! empty ($msg)) {
-	echo $msg;
+if (!empty ($msg)) {
+    echo $msg;
 
     if (!empty($isDebugSite)) {
-		echo $msg . '<br>';
-	}
+        echo $msg . '<br>';
+    }
 
-	return;
+    return;
 }
 
 $wa = $app->getDocument()->getWebAssetManager();
@@ -32,7 +32,7 @@ $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
 
 $wa->usePreset('com_rsgallery2.site.galleryJ3x');
 
-$layoutName = $params->get('images_layout');
+$layoutName   = $params->get('images_layout');
 $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 
 
@@ -42,16 +42,16 @@ $displayData['images'] = $images;
 $displayData['params'] = $params->toObject();
 //$displayData['menuParams'] = $this->menuParams;
 
-$displayData['isDebugSite'] = $isDebugSite;
+$displayData['isDebugSite']   = $isDebugSite;
 $displayData['isDevelopSite'] = $isDevelopSite;
 
-$displayData['gallery'] = $galleryData;
+$displayData['gallery']   = $galleryData;
 $displayData['galleryId'] = $galleryData->id;
 
 $displaySearch = $params->get('displaySearch', false);
 if ($displaySearch) {
-	$searchLayout = new FileLayout('Search.search');
-	// $searchData['options'] = $searchOptions ...; // gallery
+    $searchLayout = new FileLayout('Search.search');
+    // $searchData['options'] = $searchOptions ...; // gallery
 }
 ?>
 
@@ -82,5 +82,5 @@ if ($displaySearch) {
 <?php
 
 if (!empty($isDebugSite)) {
-	echo '<br>--------------------------- mod_rsg2_galleries end   ------------------------------<br>';
+    echo '<br>--------------------------- mod_rsg2_galleries end   ------------------------------<br>';
 }

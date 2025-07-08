@@ -2,11 +2,11 @@
 /**
  * This class handles version management for RSGallery2
  *
- * @version       $Id: version.rsgallery2.php 1099 2012-10-08 11:37:43Z mirjam $
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (C) 2003-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @version        $Id: version.rsgallery2.php 1099 2012-10-08 11:37:43Z mirjam $
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @copyright  (c)  2003-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  *                RSGallery is Free Software
  */
 
@@ -14,9 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
-
-// no direct access
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Version information class. Lives from the manifest file which it loads
@@ -30,28 +28,31 @@ class rsgallery2Version
 
     //Note: also set version number in config.class.php function rsgConfig
 //    var $PRODUCT = 'RSGallery2';
-   protected $name = 'RSGallery2';
+    /**
+     * @var mixed|string
+     * @since version
+     */
+    protected $name = 'RSGallery2';
     // Main Release Level: x.y.z
 //    var $RELEASE = '5.0.999';
-	protected $version = '5.0.999';
+    protected $version = '5.0.999';
 //    var $RELDATE = '28 Feb. 2016';
-	protected $creationDate = '04 Oct. 2019';
+    protected $creationDate = '04 Oct. 2019';
 //    var $COPYRIGHT = '&copy; 2005 - 2019';
-	protected $copyright = '04 Oct. 2019';
+    protected $copyright = '04 Oct. 2019';
 
 //    var $URL = '<strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>';
 
-	/**
-
-	 * @since __BUMP_VERSION__
-    */
+    /**
+     * @since __BUMP_VERSION__
+     */
     function __construct()
     {
         //--- collect data from manifest -----------------
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         $query = $db->getQuery(true)
-			->select($db->quoteName('manifest_cache'))
+            ->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
         $db->setQuery($query);
@@ -75,27 +76,27 @@ class rsgallery2Version
         //--- assign data from manifest -----------------
 
         //	[name] => com_rsg2
-	    //	* $this->PRODUCT = $manifest['name'];
-	    $this->name = $manifest['name'];
+        //	* $this->PRODUCT = $manifest['name'];
+        $this->name = $manifest['name'];
         //	[creationDate] => July 2014
-	    //	* $this->RELDATE = $manifest['creationDate'];
-	    $this->creationDate = $manifest['creationDate'];
+        //	* $this->RELDATE = $manifest['creationDate'];
+        $this->creationDate = $manifest['creationDate'];
         //	[author] => RSGallery2 Team
-	    //	* $this->AUTHOR = $manifest['author'];
+        //	* $this->AUTHOR = $manifest['author'];
         //	[copyright] => (c) 2014 RSGallery2 Team
-	    //	* $this->COPYRIGHT = $manifest['copyright'];
-	    $this->copyright = $manifest['copyright'];
+        //	* $this->COPYRIGHT = $manifest['copyright'];
+        $this->copyright = $manifest['copyright'];
         //	[authorEmail] => team@rsgallery2.org
-	    //	* $this->EMAIL = $manifest['authorEmail'];
+        //	* $this->EMAIL = $manifest['authorEmail'];
         //	[authorUrl] => http://www.rsgallery2.org
         // Old: = '<strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>';
-	    //	* $this->URL = $manifest['authorUrl'];
+        //	* $this->URL = $manifest['authorUrl'];
         //	[version] => 1.0.2
-	    //	* $this->RELEASE = $manifest['version'];
-	    $this->version = $manifest['version'];
-	     //    [description] => COM_RSGALLERY2_XML_DESCRIPTION
-	     //	* $this->DESCRIPTION = $manifest['description'];
-	    /**/
+        //	* $this->RELEASE = $manifest['version'];
+        $this->version = $manifest['version'];
+        //    [description] => COM_RSGALLERY2_XML_DESCRIPTION
+        //	* $this->DESCRIPTION = $manifest['description'];
+        /**/
     }
 
     /**
@@ -107,8 +108,7 @@ class rsgallery2Version
         return $this->name . ' '
             . ' [' . $this->version . '] '
             . '(' . $this->creationDate . ')' . ' '
-	        . $this->copyright
-            ;
+            . $this->copyright;
     }
 
     /**
@@ -117,10 +117,9 @@ class rsgallery2Version
      */
     function getShortVersion()
     {
-	    return $this->name . ' '
-		    . ' [' . $this->version . '] '
-		    . '(' . $this->creationDate . ')' . ' '
-		    ;
+        return $this->name . ' '
+            . ' [' . $this->version . '] '
+            . '(' . $this->creationDate . ')' . ' ';
     }
 
     /**
@@ -136,6 +135,7 @@ class rsgallery2Version
 	/**/
     /**
      * Plain version
+     *
      * @return string PHP standardized version format
      * @since __BUMP_VERSION__
      */

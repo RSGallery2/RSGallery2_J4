@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     RSGallery2
- * @subpackage  mod_rsg2_image
+ * @package       RSGallery2
+ * @subpackage    mod_rsg2_image
  *
  * @copyright  (c)  2005-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 \defined('_JEXEC') or die;
@@ -45,7 +45,7 @@ Rsg2_imageHelper::AssignImageUrl($image);
 
 // $lang = Factory::getApplication->getLanguage();
 // toDO:
-$lang =  $app->getLanguage();
+$lang = $app->getLanguage();
 //$lang->load('com_rsgallery2', JPATH_SITE, 'en-GB', true);
 //$lang->load('com_rsgallery2', JPATH_SITE, $lang->getTag(), true);
 $lang->load('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
@@ -53,7 +53,7 @@ $lang->load('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
 // Test
 //$layout = new FileLayout('Test.search');
 //$layoutSearch    = new FileLayout('components.com_rsgallery2.layouts.Search.search', JPATH_SITE);
-$layoutImage    = new FileLayout('components.com_rsgallery2.layouts.ImageSingle.default', JPATH_SITE);
+$layoutImage = new FileLayout('components.com_rsgallery2.layouts.ImageSingle.default', JPATH_SITE);
 //echo $tabLayout->render(array('id' => $id, 'active' => $active, 'title' => $title));
 // echo $layout->render();
 
@@ -69,11 +69,11 @@ $displayData['image'] = $image;
 
     <hr>
 
-	<?php
-    if (! empty($image)) {
+    <?php
+    if (!empty($image)) {
         echo $layoutImage->render($displayData);
     }
 
-	?>
+    ?>
 
 </div>

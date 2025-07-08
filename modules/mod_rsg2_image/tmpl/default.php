@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     RSGallery2
- * @subpackage  mod_rsg2_images
+ * @package       RSGallery2
+ * @subpackage    mod_rsg2_images
  *
  * @copyright  (c)  2005-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 \defined('_JEXEC') or die;

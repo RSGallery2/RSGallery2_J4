@@ -1,9 +1,9 @@
-<?php // no direct access
+<?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (C) 2003-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @copyright  (c)  2003-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -25,20 +25,19 @@ HTMLHelper::_('bootstrap.framework');
 			</div>
 		<?php endif; ?>
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
+		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php
-				echo '<h3> MaintenanceJ3x default</h3>' . '<br>';
-				echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
-			?>
+                <?php echo '<h3> MaintenanceJ3x default</h3>' . '<br>';
+                echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+                ?>
 
 
 			</div>
 		</div>
 	</div>
 
-	<input type="hidden" name="task" value="" />
+	<input type="hidden" name="task" value=""/>
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 

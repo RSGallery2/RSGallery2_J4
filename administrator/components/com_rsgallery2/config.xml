@@ -3,15 +3,15 @@
 	<!-- ... Tab General ................................. -->
 
 	<fieldset
-		name="rsgallery2"
-		label="COM_RSGALLERY2_CONFIG_TAB_GENERAL"
-		description="COM_RSGALLERY2_CONFIG_TAB_GENERAL_DESC"
+			name="rsgallery2"
+			label="COM_RSGALLERY2_CONFIG_TAB_GENERAL"
+			description="COM_RSGALLERY2_CONFIG_TAB_GENERAL_DESC"
 	>
 		<!-- needed when more entries are general ...
 				field name="intro_text"
-                type="editor"
-                label="COM_RSGALLERY2_INTRODUCTION_TEXT"
-	            description="COM_RSGALLERY2_INTRODUCTION_DESC"
+				type="editor"
+				label="COM_RSGALLERY2_INTRODUCTION_TEXT"
+				description="COM_RSGALLERY2_INTRODUCTION_DESC"
 				filter="JComponentHelper::filterText"
 				buttons="false"
 		/-->
@@ -27,9 +27,9 @@
 		>
 			<option value="0">* add _NOTE_ part to lang of note elements</option>
 			<option value="1">* use display instead of show for const and menu ...</option>
-			<option value="2">* </option>
-			<option value="3">* </option>
-			<option value="4">* </option>
+			<option value="2">*</option>
+			<option value="3">*</option>
+			<option value="4">*</option>
 		</field>
 
 
@@ -91,22 +91,22 @@
 				class="text text-danger"
 				showon="isDevelop:1"
 		>
-			<option value="0">* </option>
-			<option value="1">* </option>
-			<option value="2">* </option>
-			<option value="3">* </option>
-			<option value="4">* </option>
+			<option value="0">*</option>
+			<option value="1">*</option>
+			<option value="2">*</option>
+			<option value="3">*</option>
+			<option value="4">*</option>
 		</field>
 
 
 		<!-- ... block upload images ... -->
 
 		<field name="note_images_upload"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
-			   description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
+		       description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION_DESC"
 		/>
 
 		<field
@@ -178,7 +178,7 @@
 				layout="joomla.form.field.radio.switcher"
 				filter="integer"
 				validate="options"
-				>
+		>
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
@@ -219,11 +219,11 @@
 		/>
 
 		<field name="note_upload_location"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="COM_RSGALLERY2_CFG_IMAGES_LOCATION"
-			   description="COM_RSGALLERY2_CFG_IMAGES_LOCATION_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_IMAGES_LOCATION"
+		       description="COM_RSGALLERY2_CFG_IMAGES_LOCATION_DESC"
 		/>
 
 		<field
@@ -239,11 +239,11 @@
 		<!-- ... block J3x ... -->
 
 		<field name="note_images_outdated"
-			   type="note"
-			   class="alert alert-error"
-			   close="true"
-			   label="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED"
-			   description="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED_DESC"
+		       type="note"
+		       class="alert alert-error"
+		       close="true"
+		       label="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED"
+		       description="COM_RSGALLERY2_IMAGE_PATH_J3X_DEPRECATED_DESC"
 		/>
 
 		<field
@@ -294,7 +294,7 @@
 				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"
 				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"
 				class="">
-		>
+			>
 		</field>
 	</fieldset>
 
@@ -316,20 +316,20 @@
 				showon="isDevelop:1"
 		>
 			<option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
-			<option value="1">* Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... </option>
+			<option value="1">* Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox ....</option>
 			<option value="2">* Order of galleries: auto, time, name , ...</option>
-			<option value="3">* </option>
-			<option value="4">* </option>
+			<option value="3">*</option>
+			<option value="4">*</option>
 		</field>
 
 		<!-- ... block  ... -->
 
 		<field name="note_galleries_view_layout"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT"
-			   description="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT"
+		       description="COM_RSGALLERY2_CONFIG_NOTE_GALLERIES_LAYOUT_DESC"
 		/>
 
 		<field
@@ -413,7 +413,7 @@
 				description="*Show title of gallery near thumb"
 		>
 			<option value="0">JNO</option>
-			<option value="1">*Above thumb </option>
+			<option value="1">*Above thumb</option>
 			<option value="2">*Below thumb</option>
 			<option value="3">*Above description</option>
 			<option value="4">*Below description</option>
@@ -427,8 +427,8 @@
 				description="*Select display location of gellery description"
 		>
 			<option value="0">JNO</option>
-			<option value="1">*Above thumb </option>
-			<option value="2">*Right beside thumb </option>
+			<option value="1">*Above thumb</option>
+			<option value="2">*Right beside thumb</option>
 			<option value="3">*Below thumb</option>
 			<option value="4">*Left beside thumb</option>
 		</field>
@@ -437,11 +437,11 @@
 		<!-- ... block  ... -->
 
 		<field name="note_galleries_view_YYYY"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
-			   description="Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... "
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
+		       description="Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... "
 		/>
 	</fieldset>
 
@@ -452,11 +452,11 @@
 			label="COM_RSGALLERY2_CONFIG_TAB_IMAGES"
 			description="COM_RSGALLERY2_CONFIG_TAB_IMAGES_DESC"
 	>
-	<field
-			type="spacer"
-			name="spacer_images_01"
-			hr="true"
-	/>
+		<field
+				type="spacer"
+				name="spacer_images_01"
+				hr="true"
+		/>
 
 		<field
 				name="ToDo_list_images_view"
@@ -469,19 +469,19 @@
 		>
 			<option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
 			<option value="1">* order of images: auto, time, name , ...</option>
-			<option value="2">* </option>
-			<option value="3">* </option>
-			<option value="4">* </option>
+			<option value="2">*</option>
+			<option value="3">*</option>
+			<option value="4">*</option>
 		</field>
 
 		<!-- ... block  ... -->
 
 		<field name="note_images_view_layout"
-		   type="note"
-		   class="alert alert-primary"
-		   close="true"
-		   label="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT"
-		   description="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT"
+		       description="COM_RSGALLERY2_CONFIG_NOTE_IMAGES_LAYOUT_DESC"
 		/>
 
 		<field
@@ -557,7 +557,7 @@
 				description="*Show title of image near thumb"
 		>
 			<option value="0">JNO</option>
-			<option value="1">*Above thumb </option>
+			<option value="1">*Above thumb</option>
 			<option value="2">*Below thumb</option>
 			<option value="3">*Above description</option>
 			<option value="4">*Below description</option>
@@ -571,8 +571,8 @@
 				description="Select display location of gellery description"
 		>
 			<option value="0">JNO</option>
-			<option value="1">*Above thumb </option>
-			<option value="2">*Right beside thumb </option>
+			<option value="1">*Above thumb</option>
+			<option value="2">*Right beside thumb</option>
 			<option value="3">*Below thumb</option>
 			<option value="4">*Left beside thumb</option>
 		</field>
@@ -643,7 +643,7 @@
 				layout="joomla.form.field.radio.switcher"
 				filter="integer"
 				validate="options"
-			>
+		>
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
@@ -677,43 +677,43 @@
 		</field>
 
 	</fieldset>
-	
-	
-<!--	&lt;!&ndash; ... Tab j3x legacy layout ................................. &ndash;&gt;-->
 
-<!--	<fieldset-->
-<!--			name="j3x_legacy_layout"-->
-<!--			label=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"-->
-<!--			description=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"-->
-<!--	>-->
-<!--		&lt;!&ndash;field-->
-<!--				type="spacer"-->
-<!--				name="spacer_findings_01"-->
-<!--				hr="true"-->
-<!--		/&ndash;&gt;-->
 
-<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+	<!--	&lt;!&ndash; ... Tab j3x legacy layout ................................. &ndash;&gt;-->
 
-<!--		<field-->
-<!--				name="galDisplayCountJ3x"-->
-<!--				type="number"-->
-<!--				default="5"-->
-<!--				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"-->
-<!--				description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"-->
-<!--				class="">-->
-<!--		</field>-->
+	<!--	<fieldset-->
+	<!--			name="j3x_legacy_layout"-->
+	<!--			label=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES"-->
+	<!--			description=";COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_ROOT_GALLERIES_DESC"-->
+	<!--	>-->
+	<!--		&lt;!&ndash;field-->
+	<!--				type="spacer"-->
+	<!--				name="spacer_findings_01"-->
+	<!--				hr="true"-->
+	<!--		/&ndash;&gt;-->
 
-<!--		&lt;!&ndash;field-->
-<!--				name="image_size"-->
-<!--				type="text"-->
-<!--				default="800,600,400"-->
-<!--				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"-->
-<!--				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"-->
-<!--				class=""-->
-<!--		>-->
-<!--		</field&ndash;&gt;-->
-<!--		-->
-<!--	</fieldset>-->
+	<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+
+	<!--		<field-->
+	<!--				name="galDisplayCountJ3x"-->
+	<!--				type="number"-->
+	<!--				default="5"-->
+	<!--				label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"-->
+	<!--				description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"-->
+	<!--				class="">-->
+	<!--		</field>-->
+
+	<!--		&lt;!&ndash;field-->
+	<!--				name="image_size"-->
+	<!--				type="text"-->
+	<!--				default="800,600,400"-->
+	<!--				label="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X"-->
+	<!--				description="COM_RSGALLERY2_DISPLAY_PICTURE_SIZE_J3X_DESC"-->
+	<!--				class=""-->
+	<!--		>-->
+	<!--		</field&ndash;&gt;-->
+	<!--		-->
+	<!--	</fieldset>-->
 
 	<!-- ... Tab j3x legacy root galleries ................................. -->
 
@@ -731,11 +731,11 @@
 		<!-- ... block j3x gallery header ... -->
 
 		<field name="note_j3x_gallery_data"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA"
-			   description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA"
+		       description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_DATA_DESC"
 		/>
 
 		<field
@@ -756,7 +756,7 @@
 				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
 				class="btn-group btn-group-yesno"
-			>
+		>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -773,30 +773,28 @@
 			<option value="0">JNO</option>
 		</field>
 
-			<field
-					name="galleries_show_date"
-					type="radio"
-					default="0"
-					label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
-					description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
-					class="btn-group btn-group-yesno">
-				>
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
+		<field
+				name="galleries_show_date"
+				type="radio"
+				default="0"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
+				class="btn-group btn-group-yesno">
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 
 
 		<!-- ... block images layout... -->
 
 		<field name="note_images_upload"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT"
-			   description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT"
+		       description="COM_RSGALLERY2_CFG_J3X_ROOT_GALLERY_LAYOUT_DESC"
 		/>
-
-
 
 
 		<field
@@ -851,11 +849,11 @@
 		<!-- ... block gallery header ... -->
 
 		<field name="note_j3x_gallery_data"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES"
-			   description="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES"
+		       description="COM_RSGALLERY2_CFG_J3X_GALLERY_DATA_IMAGES_DESC"
 		/>
 
 		<field
@@ -895,13 +893,12 @@
 		<!-- ... block images layout... -->
 
 		<field name="note_images_upload"
-			   type="note"
-			   class="alert alert-primary"
-			   close="true"
-			   label="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT"
-			   description="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT_DESC"
+		       type="note"
+		       class="alert alert-primary"
+		       close="true"
+		       label="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT"
+		       description="COM_RSGALLERY2_CFG_J3X_GALLERY_IMAGES_LAYOUT_DESC"
 		/>
-
 
 
 		<!-- ... thumb style float table ... -->
@@ -1086,12 +1083,12 @@
 		<field
 				id="exifTagsJ3x"
 				name="exifTagsJ3x"
- 		        type="ExifList"
-		        label="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY"
-		        description="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY_DESC"
-		        class="inputbox"
-		        size="5"
-		        multiple="true"
+				type="ExifList"
+				label="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY"
+				description="COM_RSGALLERY2_SELECT_EXIF_TAGS_TO_DISPLAY_DESC"
+				class="inputbox"
+				size="5"
+				multiple="true"
 				addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
 				showon="isSlpShowExifJ3x:1"
 		>
@@ -1132,18 +1129,18 @@
 		</field>
 
 		<field name="interval"
-			   type="number"
-			   default="2500"
-			   label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
-			   description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
+		       type="number"
+		       default="2500"
+		       label="COM_RSGALLERY2_SLIDESHOW_INTERVAL"
+		       description="COM_RSGALLERY2_SLIDESHOW_INTERVAL_DESC"
 		>
 		</field>
 
 		<field name="showArrows"
-			   type="list"
-			   default="1"
-			   label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
-			   description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
+		       type="list"
+		       default="1"
+		       label="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS"
+		       description="COM_RSGALLERY2_SLIDESHOW_SHOWARROWS_DESC">
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -1160,98 +1157,97 @@
 		</field>
 
 
-
 	</fieldset>
 
 	<!-- ... Tab 01 ................................. -->
 
-<!--	<fieldset-->
-<!--			name="TestInner01"-->
-<!--			label="TestInner01"-->
-<!--			description="Testinner01 description"-->
-<!--	>-->
-<!--		<field type="spacer" name="test_inner_01" hr="true" />-->
-<!--		<field name="jpegQuality_01" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />-->
-<!--		<field name="jpegQuality_02" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_02" type="note" class="alert alert-secondary" close="true" label="LOREMIPSUM" description="secondary " />-->
-<!--		<field name="jpegQuality_03" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_03" type="note" class="alert alert-success" close="true" label="LOREMIPSUM" description="success" />-->
-<!--		<field name="jpegQuality_04" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_04" type="note" class="alert alert-danger" close="true" label="LOREMIPSUM" description="danger" />-->
-<!--		<field name="jpegQuality_05" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_05" type="note" class="alert alert-warning" close="true" label="LOREMIPSUM" description="warning" />-->
-<!--		<field name="jpegQuality_06" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_06" type="note" class="alert alert-info" close="true" label="LOREMIPSUM" description="info" />-->
-<!--		<field name="jpegQuality_07" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_07" type="note" class="alert alert-light" close="true" label="LOREMIPSUM" description="light" />-->
-<!--		<field name="jpegQuality_08" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
-<!--		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />-->
-<!--		<field name="jpegQuality_09" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--	<fieldset-->
+	<!--			name="TestInner01"-->
+	<!--			label="TestInner01"-->
+	<!--			description="Testinner01 description"-->
+	<!--	>-->
+	<!--		<field type="spacer" name="test_inner_01" hr="true" />-->
+	<!--		<field name="jpegQuality_01" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_01" type="note" class="alert alert-primary" close="true" label="LOREMIPSUM" description="primary" />-->
+	<!--		<field name="jpegQuality_02" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_02" type="note" class="alert alert-secondary" close="true" label="LOREMIPSUM" description="secondary " />-->
+	<!--		<field name="jpegQuality_03" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_03" type="note" class="alert alert-success" close="true" label="LOREMIPSUM" description="success" />-->
+	<!--		<field name="jpegQuality_04" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_04" type="note" class="alert alert-danger" close="true" label="LOREMIPSUM" description="danger" />-->
+	<!--		<field name="jpegQuality_05" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_05" type="note" class="alert alert-warning" close="true" label="LOREMIPSUM" description="warning" />-->
+	<!--		<field name="jpegQuality_06" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_06" type="note" class="alert alert-info" close="true" label="LOREMIPSUM" description="info" />-->
+	<!--		<field name="jpegQuality_07" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_07" type="note" class="alert alert-light" close="true" label="LOREMIPSUM" description="light" />-->
+	<!--		<field name="jpegQuality_08" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
+	<!--		<field name="media_query_08" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="dark" />-->
+	<!--		<field name="jpegQuality_09" type="text" label="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE" description="COM_RSGALLERY2_JPEG_QUALITY_PERCENTAGE_DESC" class=""></field>-->
 
-<!--	</fieldset>-->
+	<!--	</fieldset>-->
 
 	<!-- ... Tab 02 ................................. -->
 
-<!--	<fieldset-->
-<!--			name="TestInner02"-->
-<!--			label="TestInner02"-->
-<!--			description="TestInner02 description"-->
-<!--	>-->
-<!--		<field type="spacer" name="test_inner_02" hr="true" />-->
-<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+	<!--	<fieldset-->
+	<!--			name="TestInner02"-->
+	<!--			label="TestInner02"-->
+	<!--			description="TestInner02 description"-->
+	<!--	>-->
+	<!--		<field type="spacer" name="test_inner_02" hr="true" />-->
+	<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
 
-<!--		<field -->
-<!--				name="media_query_page_width" -->
-<!--				type="note" -->
-<!--				class="alert alert-primary" -->
-<!--				close="true" -->
-<!--				label="LOREMIPSUM" -->
-<!--				description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," -->
-<!--		/>-->
+	<!--		<field -->
+	<!--				name="media_query_page_width" -->
+	<!--				type="note" -->
+	<!--				class="alert alert-primary" -->
+	<!--				close="true" -->
+	<!--				label="LOREMIPSUM" -->
+	<!--				description="Page Widths: 320px, 480px, 600px, 768px, 900px, 1024px, 1200px," -->
+	<!--		/>-->
 
-<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
+	<!--		&lt;!&ndash; ... block  ... &ndash;&gt;-->
 
-<!--		<field -->
-<!--				name="media_query_" -->
-<!--				type="note" -->
-<!--				class="alert alert-dark" -->
-<!--				close="true" -->
-<!--				label="LOREMIPSUM" -->
-<!--				description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" -->
-<!--		/>-->
+	<!--		<field -->
+	<!--				name="media_query_" -->
+	<!--				type="note" -->
+	<!--				class="alert alert-dark" -->
+	<!--				close="true" -->
+	<!--				label="LOREMIPSUM" -->
+	<!--				description="https://www.toptal.com/responsive-web/introduction-to-responsive-web-design-pseudo-elements-media-queries" -->
+	<!--		/>-->
 
-<!--		<field -->
-<!--				name="note31" -->
-<!--				type="note" -->
-<!--				class="alert alert-dark" -->
-<!--				close="true" -->
-<!--				label="LOREMIPSUM" -->
-<!--				description="02_LOREMIPSUM_DESC" -->
-<!--		/>-->
-<!--		-->
-<!--	</fieldset>-->
+	<!--		<field -->
+	<!--				name="note31" -->
+	<!--				type="note" -->
+	<!--				class="alert alert-dark" -->
+	<!--				close="true" -->
+	<!--				label="LOREMIPSUM" -->
+	<!--				description="02_LOREMIPSUM_DESC" -->
+	<!--		/>-->
+	<!--		-->
+	<!--	</fieldset>-->
 
 	<!-- ... Tab Permissions ................................. -->
 
 	<fieldset
-		name="permissions"
-		label="JCONFIG_PERMISSIONS_LABEL"
-		description="JCONFIG_PERMISSIONS_DESC"
-		>
+			name="permissions"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			description="JCONFIG_PERMISSIONS_DESC"
+	>
 
 		<!-- ... block  ... -->
 
 		<!-- field name="note31" type="note" class="alert alert-dark" close="true" label="LOREMIPSUM" description="02_LOREMIPSUM_DESC" /-->
 
 		<field
-			name="rules"
-			type="rules"
-			label="JCONFIG_PERMISSIONS_LABEL"
-			validate="rules"
-			filter="rules"
-			component="com_rsgallery2"
-			section="component"
+				name="rules"
+				type="rules"
+				label="JCONFIG_PERMISSIONS_LABEL"
+				validate="rules"
+				filter="rules"
+				component="com_rsgallery2"
+				section="component"
 		/>
 
 	</fieldset>

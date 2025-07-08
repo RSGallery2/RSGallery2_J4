@@ -8,17 +8,17 @@
 	<fieldset name="request">
 		<fields name="request">
 			<field
-				name="extension"
-				type="componentsimage"
-				label="COM_RSGALLERY2_CHOOSE_COMPONENT_LABEL"
-				required="true"
-				>
+					name="extension"
+					type="componentsimage"
+					label="COM_RSGALLERY2_CHOOSE_COMPONENT_LABEL"
+					required="true"
+			>
 				<option value="">COM_MENUS_OPTION_SELECT_COMPONENT</option>
 			</field>
 			<field
-				name="id"
-				type="hidden"
-				default="0"
+					name="id"
+					type="hidden"
+					default="0"
 			/>
 		</fields>
 	</fieldset>

@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  mod_rsg2_gallery
+ * @package       Joomla.Administrator
+ * @subpackage    mod_rsg2_gallery
  *
  * @copyright  (c)  2005-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 \defined('_JEXEC') or die;
@@ -30,7 +30,7 @@
 
 echo '<br><br>--------------------------- mod_rsg2_gallery masonry start ------------------------------<br>';
 
-if ( ! empty ($msg)) {
+if (!empty ($msg)) {
     echo $msg;
     // return;
 }

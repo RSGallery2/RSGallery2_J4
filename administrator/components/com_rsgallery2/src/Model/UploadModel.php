@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (C) 2014-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @copyright  (c)  2014-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -11,14 +11,15 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
-//use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\DatabaseInterface;
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class UploadModel extends BaseDatabaseModel
 {
 
@@ -34,8 +35,7 @@ class UploadModel extends BaseDatabaseModel
     {
         $is1GalleryExisting = false;
 
-        try
-        {
+        try {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
@@ -46,13 +46,11 @@ class UploadModel extends BaseDatabaseModel
                 ->from('#__rsg2_galleries');
 
             $db->setQuery($query, 0, 1);
-            $IdGallery          = $db->loadResult();
+            $IdGallery = $db->loadResult();
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -76,7 +74,7 @@ class UploadModel extends BaseDatabaseModel
         $IdLatestGallery = 0;
 
         try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->getQuery(true);
 
             $test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
@@ -102,9 +100,6 @@ class UploadModel extends BaseDatabaseModel
 
         return $IdLatestGallery;
     }
-
-
-
 
 }
 

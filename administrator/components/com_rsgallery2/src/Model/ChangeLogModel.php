@@ -11,12 +11,12 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
-use Exception;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+
+use function is_array;
 
 /**
  * Rsgallery2 Component changelog model
@@ -30,30 +30,47 @@ class ChangeLogModel
 {
     // no on install (com_installer) public $changeLogFile = JPATH_COMPONENT_ADMINISTRATOR . '/changelog.xml';
     // will be taken from manifest file
+    /**
+     * @var string
+     * @since version
+     */
     public $changeLogUrl = ""; //URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
-
+    public $changeLogPath = "";
+    private $isUseLocalDir = true;
     /**
      * ChangeLogModel constructor.
-     * @param null $changeLogUrl path to changelog file different from standard
      *
-     * @throws Exception
+     * @param   bool  $isUseLocalDir  use URL to git /self or path
+     * @param   null  $changeLogUrl   path to changelog file different from standard
+     *
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
-    public function __construct($changeLogUrl = null)
+    public function __construct(bool $isUseLocalDir=true, $changeLogUrl = "")
     {
-        // standard from manifest
-        if (empty ($changeLogUrl)) {
-            $this->changeLogUrl = $this->changeLogUrlFromExtension();
-        } else {
-            // user path
-            $this->changeLogUrl = $changeLogUrl;
+        $this->isUseLocalDir = $isUseLocalDir;
+
+        if ( ! $isUseLocalDir) {
+            // standard from manifest
+            if (empty ($changeLogUrl)) {
+                $this->changeLogUrl = $this->changeLogUrlFromExtension();
+                // echo "__construct (empty): " . json_encode($this->changeLogUrl);
+            } else {
+                // user path
+                $this->changeLogUrl = $changeLogUrl;
+                // echo "__construct (given): " . json_encode($this->changeLogUrl);
+            }
+        }
+        else
+        {
+            $this->changeLogPath = $this->changeLogPath();
+            // echo "__construct (empty): " . json_encode($this->changeLogPath);
         }
 
         // standard joomla texts for title
         $app = Factory::getApplication();
         $app->getLanguage()->load('com_installer');
     }
-
 
     /**
      * changeLogUrlFromExtension
@@ -62,17 +79,16 @@ class ChangeLogModel
      *
      * @return mixed|string
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     public function changeLogUrlFromExtension()
     {
         $changeLogUrl = URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
 
-        try
-        {
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
-	        // $db = $this->getDatabase();
+        try {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            // $db = $this->getDatabase();
 
 	        $query = $db->getQuery(true)
                 ->select('changelogurl')
@@ -82,17 +98,14 @@ class ChangeLogModel
 
             $externUrl = $db->loadResult();
 
-			//Test oOpen file
-	        $handle = @fopen($externUrl, 'r');
+            //Test oOpen file
+            $handle = @fopen($externUrl, 'r');
 
-			// Use if file exists (reachable)
-	        if($handle){
-		        $changeLogUrl = $externUrl;
-	        }
-
-        }
-        catch (\RuntimeException $e)
-        {
+            // Use if file exists (reachable)
+            if ($handle) {
+                $changeLogUrl = $externUrl;
+            }
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ChangeLogModel: changeLogUrl_manifest: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -104,20 +117,11 @@ class ChangeLogModel
         return $changeLogUrl;
     }
 
-    static function readRsg2ExtensionManifest ()
-    {
-        $manifest = [];
-
-
-        return $manifest;
-    }
-
-
     /**
      * Selects array of changelog sections
      * On given previous version all older are omitted
      *
-     * @param string $previousVersion leave out this and older
+     * @param   string  $previousVersion  leave out this and older
      *
      * @return array associative array of changelog items per release version
      *
@@ -127,58 +131,72 @@ class ChangeLogModel
     {
         $jsonChangeLogs = [];
 
-        // content of file
-        $context  = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
-        $xml = file_get_contents($this->changeLogUrl, false, $context);
+        //--- load contents of file -------------------------------------------------------
 
-        // Data is valid
-        if ($xml)
-        {
-            //--- read xml to json ---------------------------------------------------
+        if ( $this->isUseLocalDir) {
+            if (file_exists($this->changeLogPath)) {
 
-            $changelogs = simplexml_load_string($xml);
+                // local file in root directory
+                $changelogs = simplexml_load_file($this->changeLogPath);
+            } else {
+                // Xml file not found
+                $OutTxt = 'changeLogFile: No valid xml file found ' . $this->changeLogPath . '"';
+                Factory::getApplication()->enqueueMessage($OutTxt, 'error');
+            }
+        } else {
+            // url file in github or url to local
 
-            if (!empty ($changelogs)) {
-                //Encode the SimpleXMLElement object into a JSON string.
-                $jsonString = json_encode($changelogs);
-                //Convert it back into an associative array
-                $jsonArray = json_decode($jsonString, true);
+            // $context = stream_context_create(['http' => ['header' => 'Accept: application/xml']]);
+            $context = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+            $xml     = file_get_contents($this->changeLogUrl, false, $context);
 
-                //--- reduce to version items -------------------------------------------
+            if ($xml !== false) {
+                // read xml to json
+                $changelogs = simplexml_load_string($xml);
+            } else {
+                // Xml file not found
+                $OutTxt = 'changeLogFile: No valid xml file found ' . $this->changeLogUrl . '"';
+                Factory::getApplication()->enqueueMessage($OutTxt, 'error');
+            }
+        }
 
-                // standard : change log for each version are sub items
-                if (array_key_exists('changelog', $jsonArray)) {
+        if (!empty ($changelogs)) {
+            //Encode the SimpleXMLElement object into a JSON string.
+            $jsonString = json_encode($changelogs);
+            //Convert it back into an associative array
+            $jsonArray = json_decode($jsonString, true);
 
-                    $testLogs = $jsonArray ['changelog'];
+            //--- reduce to version items -------------------------------------------
 
-                    foreach ($testLogs as $changeLog) {
+            // standard : change log for each version are sub items
+            if (array_key_exists('changelog', $jsonArray)) {
+                $testLogs = $jsonArray ['changelog'];
 
-                        // all versions
-                        if (empty ($previousVersion)) {
-                            $jsonChangeLogs [] = $changeLog;
-                        } else {
+                foreach ($testLogs as $changeLog) {
+                    // all versions
+                    if (empty ($previousVersion)) {
+                        $jsonChangeLogs [] = $changeLog;
+                    } else {
+                        $logVersion = $changeLog ['version'];
 
-                            $logVersion = $changeLog ['version'];
-
-                            // above old version
-                            if (version_compare($logVersion, $previousVersion, '>')) {
-                                // all above lower are valid when actual is not given
-                                if (empty ($actualVersion)) {
+                        // above old version
+                        if (version_compare($logVersion, $previousVersion, '>')) {
+                            // all above lower are valid when actual is not given
+                            if (empty ($actualVersion)) {
+                                $jsonChangeLogs [] = $changeLog;
+                            } else {
+                                // below and including actual version
+                                if (version_compare($logVersion, $actualVersion, '<=')) {
                                     $jsonChangeLogs [] = $changeLog;
-                                } else {
-                                    // below and including actual version
-                                    if (version_compare($logVersion, $actualVersion, '<=')) {
-                                        $jsonChangeLogs [] = $changeLog;
-                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        } else {
-            // No valid xml file found
-            $OutTxt = 'changeLogFile: No valid xml file found ' . $this->changeLogUrl . '"';
+        }  else {
+            // Invalid xml file found
+            $OutTxt = 'changeLogFile: Invalid xml file found ' . $this->changeLogUrl . '"';
             Factory::getApplication()->enqueueMessage($OutTxt, 'error');
         }
 
@@ -187,7 +205,7 @@ class ChangeLogModel
 
     /**
      *
-     * @param array $jsonChangeLogs associative array of changelog items per release version
+     * @param   array  $jsonChangeLogs  associative array of changelog items per release version
      *
      * @return string [] array of html tables per release version
      *
@@ -207,7 +225,7 @@ class ChangeLogModel
     /**
      * Creates a striped table for this version
      *
-     * @param array $versionChangeLog associative array of changelog items of one version
+     * @param   array  $versionChangeLog  associative array of changelog items of one version
      *
      * @return string html: striped table with header from version and date.
      *                rows containing the elements column title and text
@@ -227,16 +245,13 @@ class ChangeLogModel
         $html[] = '    </strong>';
         $html[] = '    </caption>';
 
-
         foreach ($versionChangeLog as $key => $value) {
-
             // create badge title (May not exist)
             $sectionTitle = self::changeLogSectionTitle2Html($key);
 
             // valid item
             if (!empty ($sectionTitle)) {
-
-				$items = $value['item'];
+                $items = $value['item'];
 
                 // item texts
                 $sectionDtaList = self::changeLogSectionData2Html($items);
@@ -246,7 +261,6 @@ class ChangeLogModel
 
             // valid item
             if (!empty ($sectionTitle)) {
-
                 $html[] = '<tr>';
 
                 // key
@@ -268,12 +282,11 @@ class ChangeLogModel
         return join('', $html);
     }
 
-
     /**
      * Returns html string of a bootstrap badge depending of the given type.
      * The title text is also depending on given type. standard joomla translations are used
      *
-     * @param string $type defines the type of badge.
+     * @param   string  $type  defines the type of badge.
      *
      * @return string html of a bootstrap badge.
      *                If type is like version then an empty string will be returned
@@ -298,37 +311,37 @@ class ChangeLogModel
         $html = '';
 
         $keyTranslation = '';
-        $class = '';
+        $class          = '';
 
         /**/
         switch ($type) {
             case ("security"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_SECURITY');
-                $class = 'bg-danger';
+                $class          = 'bg-danger';
                 break;
             case ("fix"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_FIX');
-                $class = 'bg-dark';
+                $class          = 'bg-dark';
                 break;
             case ("language"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_LANGUAGE');
-                $class = 'bg-light';
+                $class          = 'bg-light';
                 break;
             case ("addition"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_ADDITION');
-                $class = 'bg-success';
+                $class          = 'bg-success';
                 break;
             case ("change"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_CHANGE');
-                $class = 'bg-danger';
+                $class          = 'bg-danger';
                 break;
             case ("remove"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_REMOVE');
-                $class = 'bg-info';
+                $class          = 'bg-info';
                 break;
             case ("note"):
                 $keyTranslation = Text::_('COM_INSTALLER_CHANGELOG_NOTE');
-                $class = 'bg-info';
+                $class          = 'bg-info';
                 break;
         }
         /**/
@@ -345,7 +358,7 @@ class ChangeLogModel
      * A nested list of items is used for a html unsigned list
      * The hierarchy is ignored
      *
-     * @param string [[]] $values array of string variables, nested depth is two
+     * @param   string [[]] $values array of string variables, nested depth is two
      *
      * @return string html: unsigned list of changelog texts
      *
@@ -355,11 +368,10 @@ class ChangeLogModel
     {
         $html = [];
 
-		// single item ?
-		if (! \is_array($items))
-		{
-			$items = array($items);
-		}
+        // single item ?
+        if (!\is_array($items)) {
+            $items = [$items];
+        }
 
         //--- collect item html --------------------
 
@@ -383,9 +395,9 @@ class ChangeLogModel
     /**
      * surround given html in collapse html string
      *
-     * @param string [] $changelogHtmlTables array of html tables per release version
-     * @param string $id added to aria and div ids
-     * @param bool $isCollapsed start state
+     * @param   string []  $changelogHtmlTables  array of html tables per release version
+     * @param   string     $id                   added to aria and div ids
+     * @param   bool       $isCollapsed          start state
      *
      * @return string html: collapsible element
      *
@@ -393,7 +405,6 @@ class ChangeLogModel
      */
     public static function collapseContent($changelogHtmlTables, $id, $isCollapsed = true)
     {
-
         $changelogCss = self::changelogCss();
 
         //--- table html(s) to one string --------------
@@ -406,31 +417,32 @@ class ChangeLogModel
 
         //--- collapsable frame around content ------------------------------------------
 
-        $title = Text::_('COM_INSTALLER_CHANGELOG');
-        $show = $isCollapsed ? '' : 'show';
-        $collapsed = $isCollapsed ? 'collapsed' : '';
+        $title        = Text::_('COM_INSTALLER_CHANGELOG');
+        $show         = $isCollapsed ? '' : 'show';
+        $collapsed    = $isCollapsed ? 'collapsed' : '';
         $ariaExpanded = $isCollapsed ? 'false' : 'true';
 
         $collapsedHtml = <<<EOT
-        <row>
-            <div class="card forCollapse">
-                <h5 class="card-header">
-                    <button class="btn $collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-collapsed-$id"
-                        aria-expanded="$ariaExpanded" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">
-                        <i class="fa fa-chevron-down pull-right"></i>
-                        $title
-                    </button>
-                </h5>
-                <div id="collapse-collapsed-$id" class="collapse $show" aria-labelledby="heading-collapsed-$id">
-                    <div class="card-body">
-                        $changelogsHtml
+            <row>
+                <div class="card forCollapse">
+                    <h5 class="card-header">
+                        <button class="btn $collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-collapsed-$id"
+                            aria-expanded="$ariaExpanded" aria-controls="collapse-collapsed-$id" id="heading-collapsed-$id">
+                            <i class="fa fa-chevron-down pull-right"></i>
+                            $title
+                        </button>
+                    </h5>
+                    <div id="collapse-collapsed-$id" class="collapse $show" aria-labelledby="heading-collapsed-$id">
+                        <div class="card-body">
+                            $changelogsHtml
+                        </div>
                     </div>
                 </div>
-            </div>
-        </row>
-EOT;
+            </row>
+            EOT;
 
         $collapsedContent = $changelogCss . $collapsedHtml;
+
         return $collapsedContent;
     }
 
@@ -443,7 +455,6 @@ EOT;
      */
     private static function changelogCss()
     {
-
         $html = <<<EOT
             <style>
                 /* ToDo: More specific add dictionaries with class= gallery/images ... */
@@ -490,7 +501,19 @@ EOT;
         return $html;
     }
 
+    /**
+     * returns actual
+     * @return string
+     *
+     * @since version
+     */
+    private function changeLogPath()
+    {
+        $adminRSG2_Path = JPATH_ROOT . '/administrator/components/' . 'com_rsgallery2';
+        $changeLogPath = $adminRSG2_Path . '/changelog.xml';
+
+        return $changeLogPath;
+    }
+
 } // class
-
-
 

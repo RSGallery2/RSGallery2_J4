@@ -1,10 +1,10 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  mod_rsg2_images
+ * @package       Joomla.Site
+ * @subpackage    mod_rsg2_images
  *
  * @copyright  (c)  2005-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Rsgallery2\Module\Rsg2_image\Site\Helper;
@@ -27,21 +27,21 @@ use function defined;
  *
  * @since  __BUMP_VERSION__
  */
- // abstract ???
+// abstract ???
 class Rsg2_imageHelper
 {
-	/**
-	 * Retrieve rsg2_image test
-	 *
-	 * @param   Registry        $params  The module parameters
-	 * @param   CMSApplication  $app     The application
-	 *
-	 * @return  array
-	 */
-	public static function getText()
-	{
-		return 'Rsg2_imageHelper Test';
-	}
+    /**
+     * Retrieve rsg2_image test
+     *
+     * @param   Registry        $params  The module parameters
+     * @param   CMSApplication  $app     The application
+     *
+     * @return  array
+     */
+    public static function getText()
+    {
+        return 'Rsg2_imageHelper Test';
+    }
 
     public static function getItem($ImageId)
     {
@@ -67,39 +67,39 @@ class Rsg2_imageHelper
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-		return $dbImage;
+        return $dbImage;
     }
 
 
     /**
-	 * Get a list of the latest articles from the article model
-	 *
+     * Get a list of the latest articles from the article model
+     *
      * @param   Registry  &$params  object holding the models parameters
-	 *
-	 * @return  mixed
-	 *
-	 * @since 1.6
-	 */
-	public static function getList($params, $model, $app)
-	{
+     *
+     * @return  mixed
+     *
+     * @since 1.6
+     */
+    public static function getList($params, $model, $app)
+    {
         // Set application parameters in model
-		$appParams = $app->getParams();
-		$model->setState('params', $appParams);
+        $appParams = $app->getParams();
+        $model->setState('params', $appParams);
 
-		$model->setState('list.start', 0);
-		//$model->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
-		//$model->setState('filter.condition', Rsgallery2Component::CONDITION_PUBLISHED);
+        $model->setState('list.start', 0);
+        //$model->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
+        //$model->setState('filter.condition', Rsgallery2Component::CONDITION_PUBLISHED);
 
-		// Set the filters based on the module params
-		$model->setState('list.limit', (int) $params->get('count', 5));
+        // Set the filters based on the module params
+        $model->setState('list.limit', (int)$params->get('count', 5));
 
-		// This module does not use tags data
-		$model->setState('load_tags', false);
+        // This module does not use tags data
+        $model->setState('load_tags', false);
 
-		// Access filter
-		$access     = !ComponentHelper::getParams('com_rsgallery2')->get('show_noauth');
-		//$authorised = Access::getAuthorisedViewLevels(Factory::getContainer()->get(UserFactoryInterface::class)->get('id'));
-		//$model->setState('filter.access', $access);
+        // Access filter
+        $access = !ComponentHelper::getParams('com_rsgallery2')->get('show_noauth');
+        //$authorised = Access::getAuthorisedViewLevels(Factory::getContainer()->get(UserFactoryInterface::class)->get('id'));
+        //$model->setState('filter.access', $access);
 
 //		// Category filter
 //		$model->setState('filter.category_id', $params->get('catid', array()));
@@ -136,9 +136,9 @@ class Rsg2_imageHelper
 //			$model->setState('filter.article_id.include', false);
 //		}
 
-		// Set ordering
-		$ordering = $params->get('ordering', 'a.publish_up');
-		$model->setState('list.ordering', $ordering);
+        // Set ordering
+        $ordering = $params->get('ordering', 'a.publish_up');
+        $model->setState('list.ordering', $ordering);
 
 		if (trim($ordering) === 'rand()')
 		{
@@ -146,23 +146,23 @@ class Rsg2_imageHelper
 		}
 		else
 		{
-			$direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
-			$model->setState('list.direction', $direction);
-			$model->setState('list.ordering', $ordering);
-		}
+            $direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
+            $model->setState('list.direction', $direction);
+            $model->setState('list.ordering', $ordering);
+        }
 
-		// Check if we should trigger additional plugin events
-		$triggerEvents = $params->get('triggerevents', 1);
-		$SelectGallery = $params->get('SelectGallery', 1);
+        // Check if we should trigger additional plugin events
+        $triggerEvents = $params->get('triggerevents', 1);
+        $SelectGallery = $params->get('SelectGallery', 1);
 
 
         //$input = Factory::getApplication()->input;
         $input = $app->input;
         //$input->set( 'gid' , '2' );
-        $input->set( 'gid' , $SelectGallery );
+        $input->set('gid', $SelectGallery);
 
-		// Retrieve Content
-		$items = $model->getItems();
+        // Retrieve Content
+        $items = $model->getItems();
 
         foreach ($items as &$item) {
 //			$item->readmore = \strlen(trim($item->fulltext));
@@ -239,9 +239,9 @@ class Rsg2_imageHelper
 //				$item->beforeDisplayContent = '';
 //				$item->afterDisplayContent  = '';
 //			}
-		}
+        }
 
-		return $items;
+        return $items;
 //		/** @var \Joomla\Component\Content\Site\Model\ArticlesModel $model */
 //		$model = $app->bootComponent('com_content')
 //			->getMVCFactory()->createModel('Articles', 'Site', ['ignore_request' => true]);
@@ -399,7 +399,7 @@ class Rsg2_imageHelper
 //		}
 //
 //		return $items;
-	}
+    }
 
 
     /**
@@ -416,8 +416,8 @@ class Rsg2_imageHelper
 
             $ImagePaths = new ImagePathsData ($gallery_id);
 
-            $ImagePaths->assignPathData ($image);
-            $ImagePaths->urlReplaceMissing_BySign ($image);
+            $ImagePaths->assignPathData($image);
+            $ImagePaths->urlReplaceMissing_BySign($image);
             // $ImagePaths->urlReplaceMissingImages_ByChild ($image);
 
             // ToDo: watermarked file

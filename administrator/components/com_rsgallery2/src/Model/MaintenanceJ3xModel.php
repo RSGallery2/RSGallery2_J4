@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (C) 2021-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package         RSGallery2
+ * @subpackage      com_rsgallery2
+ * @copyright  (c)  2021-2025 RSGallery2 Team
+ * @license         GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -15,14 +15,10 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Utilities\ArrayHelper;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 /**
  * Class MaintenanceJ3xModel
@@ -100,10 +96,10 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //        return $isOk;
 //    }
 
-
 	/**
 	 * !!! ToDo: Count j3x child images query wrong
 	 * List of J3x galleries that are also present in J4x supplemented by image count
+	 *
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
@@ -111,31 +107,36 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 */
 	public function j3x_galleries4DbImagesList()
 	{
-		$galleries = array();
+		$galleries = [];
 
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true)
+			$query = $db
+				->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
-				->select($db->quoteName(array('j3x.id', 'j3x.alias', 'j3x.name', 'j3x.description')))
+				->select($db->quoteName(['j3x.id', 'j3x.alias', 'j3x.name', 'j3x.description']))
 				->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
 				->order('id ASC')
 				// !!! ToDo: Count j3x child images query wrong
 				->select('COUNT(img.gallery_id) as j3x_img_count')
-				->join('LEFT', $db->quoteName('#__rsgallery2_files', 'img')
+				->join(
+					'LEFT',
+					$db->quoteName('#__rsgallery2_files', 'img')
 					. ' ON ('
 					. $db->quoteName('img.gallery_id') . ' = ' . $db->quoteName('j3x.id')
-					. ')'
+					. ')',
 				)
 				->group('j3x.id')
 				// !!! ToDo: Count j4x child images query wrong
 				->select('COUNT(j4x.gallery_id) as j4x_img_count')
-				->join('LEFT', $db->quoteName('#__rsg2_images', 'j4x')
+				->join(
+					'LEFT',
+					$db->quoteName('#__rsg2_images', 'j4x')
 					. ' ON ( '
 //		            . '(' . $db->quoteName('j3x.id') . '+1) = ' . $db->quoteName('j4x.gallery_id')
 					. $db->quoteName('j4x.gallery_id') . ' = ( ' . $db->quoteName('j3x.id') . ' +1 )'
-					. ')'
+					. ')',
 				)//	             ->group('j4x.gallery_id')
 			;
 
@@ -143,13 +144,11 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$db->setQuery($query);
 
 			$galleries = $db->loadObjectList();
-
 		}
 		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
-
 
 		return $galleries;
 	}
@@ -190,14 +189,11 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		try
 		{
-
 			foreach ($j3xItems as $j3xItem)
 			{
-
 				// fetch from db
 				foreach ($j4xItems as $j4xItem)
 				{
-
 //                    if ($j3xItem->title == $j4xitem->title)
 					if ($j3xItem->title == $j4xItem->title)
 					{
@@ -233,7 +229,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// All J3x db items
 			foreach ($j3xItems as $j3xItem)
 			{
-
 				// against all j4x db itemsAll
 				foreach ($j4xItems as $j4xItem)
 				{
@@ -259,7 +254,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		return $mergedId;
 	}
 
-
 	/**
 	 * @param $j3xItems
 	 * @param $j4xItems
@@ -275,14 +269,11 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		try
 		{
-
 			foreach ($j3xItems as $j3xitem)
 			{
-
 				// fetch from db
 				foreach ($j4xItems as $j4xItem)
 				{
-
 //                    if ($j3xitem->title == $j4xitem->title)
 					if ($j3xitem->name == $j4xItem->name)
 					{
@@ -300,7 +291,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		return $mergedId;
 	}
 
-
 	/**
 	 *
 	 * @return array
@@ -310,7 +300,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 */
 	public function j3x_galleriesListSorted()
 	{
-		$galleries = array();
+		$galleries = [];
 
 		try
 		{
@@ -327,7 +317,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		return $galleries;
 	}
-
 
 	/**
 	 * @param $dbGalleries
@@ -351,10 +340,8 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// galleries of given level
 			foreach ($dbGalleries as $gallery)
 			{
-
 				if ($gallery->parent == $parentId)
 				{
-
 					$gallery->level = $level;
 
 					// collect gallery
@@ -369,7 +356,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// Sort galleries of level
 			if (count($galleries) > 1)
 			{
-				usort($galleries, array($this, 'cmpJ4xGalleries'));
+				usort($galleries, [$this, 'cmpJ4xGalleries']);
 			}
 
 			// Collect sorted list with childs
@@ -417,10 +404,8 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// collects galleries of given level
 			foreach ($dbGalleries as $gallery)
 			{
-
-				if ($gallery['parent'] == $parentId)
+				if ($gallery['parent_id'] == $parentId)
 				{
-
 					$gallery['level'] = $level;
 
 					// collect gallery
@@ -435,7 +420,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// Sort galleries of level (Needs additional ordering from j3x gallery data
 			if (count($galleries) > 1)
 			{
-				usort($galleries, array($this, 'cmpJ4xGalleries'));
+				usort($galleries, [$this, 'cmpJ4xGalleries']);
 			}
 
 			// Collect sorted list with childs
@@ -487,10 +472,8 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// collect galleries of given level
 			foreach ($sortedGalleries as $idx => $gallery)
 			{
-
 				if ($gallery['parent_id'] == $parentId)
 				{
-
 					$sortedGalleries [$idx]['level'] = $level;
 					$sortedGalleries [$idx]['lft']   = $lastNodeIdx;
 
@@ -503,7 +486,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 					$lastNodeIdx++;
 				}
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -522,12 +504,13 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 */
 	public function j4x_galleriesList()
 	{
-		$galleries = array();
+		$galleries = [];
 
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true)
+			$query = $db
+				->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
 				->select('*')
 				->from('#__rsg2_galleries')
@@ -537,7 +520,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$db->setQuery($query);
 
 			$galleries = $db->loadObjectList();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -546,7 +528,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		return $galleries;
 	}
-
 
 	/**
 	 * @param $j4x_galleries
@@ -564,7 +545,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			foreach ($j4x_galleries as $j4x_gallery)
 			{
-
 				// leave out root gallery in nested form
 				{ // if ($j4x_gallery->id != 1) {
 					$j3x_gallery = new \stdClass();
@@ -607,7 +587,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		try
 		{
-
 			if (!empty ($galleries))
 			{
 				// all root galleries and nested ones
@@ -638,15 +617,12 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		try
 		{
-
 			$galleryHTML = [];
 
 			foreach ($galleries as $gallery)
 			{
-
 				if ($gallery->parent == $parentId)
 				{
-
 					// html of this gallery
 					$galleryHTML [] = $this->GalleryHTML($gallery, $level);
 
@@ -661,7 +637,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// surround with <ul>
 			if (!empty ($galleryHTML))
 			{
-
 				$lineStart = str_repeat(" ", 3 * ($parentId));
 
 				array_unshift($galleryHTML, $lineStart . '<ul class="list-group">');
@@ -669,7 +644,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 				$html = $galleryHTML;
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -711,16 +685,14 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 		try
 		{
-
 			$html = <<<EOT
-$lineStart<li class="list-group-item">
-$lineStart   $identHtml<span> id: </span><span>$id</span>
-$lineStart   <span> parent: </span><span>$parent</span>
-$lineStart   <span> order: </span><span>$order</span>
-$lineStart   <span> name:</span><span>$name</span>
-$lineStart</li>
-EOT;
-
+                $lineStart<li class="list-group-item">
+                $lineStart   $identHtml<span> id: </span><span>$id</span>
+                $lineStart   <span> parent: </span><span>$parent</span>
+                $lineStart   <span> order: </span><span>$order</span>
+                $lineStart   <span> name:</span><span>$name</span>
+                $lineStart</li>
+                EOT;
 		}
 		catch (\RuntimeException $e)
 		{
@@ -740,19 +712,15 @@ EOT;
 	 */
 	public function convertJ3xGalleriesToJ4x($J3xGalleryItemsSorted)
 	{
-
 		$J4Galleries = [];
 
 		try
 		{
-
 			// galleries of given level
 			foreach ($J3xGalleryItemsSorted as $j3xGallery)
 			{
-
 				$J4Galleries[] = $this->convertJ3xGallery($j3xGallery);
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -761,7 +729,6 @@ EOT;
 
 		return $J4Galleries;
 	}
-
 
 	/**
 	 * @param $j3x_gallery
@@ -772,7 +739,6 @@ EOT;
 	 */
 	private function convertJ3xGallery($j3x_gallery)
 	{
-
 		$j4x_GalleryItem = [];
 
 		// `id` int(11) NOT NULL auto_increment,
@@ -821,7 +787,6 @@ EOT;
 
 //>>>yyyy===================================================================================================
 
-
 	/**
 	 *
 	 * @return bool|int
@@ -831,15 +796,12 @@ EOT;
 	 */
 	public function copyDbAllJ3xGalleries2J4x()
 	{
-
 		$isOk = false;
 
 		try
 		{
-
 			$j3xGalleriesItems = $this->j3x_galleriesList();
 			$isOk              = $this->copyDbJ3xGalleries2J4x($j3xGalleriesItems);
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -862,16 +824,13 @@ EOT;
 
 		try
 		{
-
 			//$j3xGalleriesItems = $this->j3x_galleriesListSorted();
 			$j3xGalleriesItems = $this->j3x_galleries4DbImagesList();
 
 			foreach ($j3xGalleriesItems as $j3xGalleriesItem)
 			{
-
 				$this->assignDbImagesTransferredFlag($j3xGalleriesItem);
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -898,7 +857,6 @@ EOT;
 
 		try
 		{
-
 			//--- J3x image count of gallery ---------------------
 
 			$db = $this->getDatabase();
@@ -929,7 +887,6 @@ EOT;
 			$db->setQuery($query, 0, 1);
 			$countJ4x = $db->loadResult();
 
-
 //			//--- j4x image count of gallery ---------------------
 //
 //			// where image is not use_j3x_location
@@ -955,7 +912,6 @@ EOT;
 			{
 				$j3xGalleriesItem->isTransferred = false;
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -965,10 +921,10 @@ EOT;
 		return $isOk;
 	}
 
-
 	/**
 	 *
 	 * Is used for DB copy and image file copy
+	 *
 	 * @param $j3xGalleriesItems
 	 *
 	 * @return bool
@@ -986,14 +942,12 @@ EOT;
 			// find first transfer active
 			foreach ($j3xGalleriesItems as $j3xGalleriesItem)
 			{
-				if ( ! $j3xGalleriesItem->isTransferred)
+				if (!$j3xGalleriesItem->isTransferred)
 				{
 					$isDbImagesTransfer = true;
 					break;
 				}
-
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1002,7 +956,6 @@ EOT;
 
 		return $isDbImagesTransfer;
 	}
-
 
 	/**
 	 *
@@ -1017,16 +970,13 @@ EOT;
 
 		try
 		{
-
 			//$j3xGalleriesItems = $this->j3x_galleriesListSorted();
 			$j3xGalleriesItems = $this->j3x_galleries4DbImagesList();
 
 			foreach ($j3xGalleriesItems as $j3xGalleriesItem)
 			{
-
 				$this->assignImagesTransferredFlag($j3xGalleriesItem);
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1052,7 +1002,6 @@ EOT;
 
 		try
 		{
-
 			//--- J3x image count of gallery ---------------------
 
 			$db = $this->getDatabase();
@@ -1108,7 +1057,6 @@ EOT;
 		return $isOk;
 	}
 
-
 	/**
 	 * @param $selectedIds
 	 *
@@ -1123,11 +1071,9 @@ EOT;
 
 		try
 		{
-
 			$j3xGalleriesItems = $this->j3x_galleriesListOfIds($selectedIds);
 
 			$isOk = $this->copyDbJ3xGalleries2J4x($j3xGalleriesItems);
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1147,16 +1093,13 @@ EOT;
 	 */
 	public function copyDbJ3xGalleries2J4x($j3xGalleriesItems)
 	{
-
 		$isOk = false;
 
 		try
 		{
-
 			// items exist ?
 			if (count($j3xGalleriesItems))
 			{
-
 				$j4xGalleriesItems = $this->convertJ3xGalleriesToJ4x($j3xGalleriesItems);
 
 				// sort by parent and id recursively
@@ -1171,17 +1114,14 @@ EOT;
 				$galleryTreeModel->reinitNestedGalleryTable($lastNodeIdx);
 
 				$isOk = $this->writeGalleryList2Db($j4xGalleryItemsSorted);
-
 				// ToDo: rebuild nested ....
 
 			}
 			else
 			{
-
 				Factory::getApplication()->enqueueMessage(Text::_('No items to insert into db'), 'warning');
 				//Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1201,19 +1141,15 @@ EOT;
 	 */
 	public function writeGalleryList2Db($j4xGalleriesItems)
 	{
-
 		$isOk = true;
 
 		try
 		{
-
 			// all gallery objects
 			foreach ($j4xGalleriesItems as $j4xImageItem)
 			{
-
 				$isOk &= $this->writeGalleryItem2Db($j4xImageItem);
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1233,12 +1169,10 @@ EOT;
 	 */
 	public function writeGalleryItem2Db($j4x_GalleryItem)
 	{
-
 		$isOk = false;
 
 		try
 		{
-
 			// https://stackoverflow.com/questions/22373852/how-to-use-prepared-statements-in-joomla
 			$columns = [];
 			$values  = [];
@@ -1320,7 +1254,6 @@ EOT;
 			// https://stackoverflow.com/questions/42385248/joomla-insert-multiple-rows-using-single-query
 			// $db->quote(
 
-
 			// Prepare the insert query.
 			$query
 				->insert($db->quoteName('#__rsg2_galleries')) //make sure you keep #__
@@ -1334,7 +1267,6 @@ EOT;
 //
 			$db->setQuery($query);
 			$isOk = $db->execute();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1353,7 +1285,7 @@ EOT;
 	 */
 	public function j3x_imagesList()
 	{
-		$images = array();
+		$images = [];
 
 		try
 		{
@@ -1369,7 +1301,6 @@ EOT;
 			$db->setQuery($query);
 
 			$images = $db->loadObjectList();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1388,14 +1319,14 @@ EOT;
 	 */
 	public function j3x_imagesInfoList()
 	{
-		$images = array();
+		$images = [];
 
 		try
 		{
 			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
-				->select($db->quoteName(array('id', 'name', 'alias', 'gallery_id', 'title')))
+				->select($db->quoteName(['id', 'name', 'alias', 'gallery_id', 'title']))
 				->from('#__rsgallery2_files')
 				->order('id ASC');
 
@@ -1403,13 +1334,11 @@ EOT;
 			$db->setQuery($query);
 
 			$images = $db->loadObjectList();
-
 		}
 		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
-
 
 		return $images;
 	}
@@ -1424,7 +1353,7 @@ EOT;
 	 */
 	public function j3x_imagesListOfIds($selectedIds)
 	{
-		$images = array();
+		$images = [];
 
 		try
 		{
@@ -1443,13 +1372,11 @@ EOT;
 			$db->setQuery($query);
 
 			$images = $db->loadObjectList();
-
 		}
 		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
-
 
 		return $images;
 	}
@@ -1464,7 +1391,7 @@ EOT;
 	 */
 	public function j3x_galleriesListOfIds($selectedIds)
 	{
-		$galleries = array();
+		$galleries = [];
 
 		try
 		{
@@ -1482,13 +1409,11 @@ EOT;
 			$db->setQuery($query);
 
 			$galleries = $db->loadObjectList();
-
 		}
 		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
-
 
 		return $galleries;
 	}
@@ -1502,7 +1427,7 @@ EOT;
 	 */
 	public function j4x_imagesList()
 	{
-		$images = array();
+		$images = [];
 
 		try
 		{
@@ -1517,7 +1442,6 @@ EOT;
 			$db->setQuery($query);
 
 			$images = $db->loadObjectList();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1539,7 +1463,7 @@ EOT;
 	 */
 	public function j3x_imagesMergeList()
 	{
-		$images = array();
+		$images = [];
 
 		$select = [
 			'id',
@@ -1589,7 +1513,7 @@ EOT;
 //    // ToDo: May be useful with gallery id
 //    public function j4x_imagesMergeList()
 //    {
-//        $images = array();
+//        $images = [];
 //
 //        $select = [
 //            'id',
@@ -1651,7 +1575,6 @@ EOT;
 //        return $images;
 //    }
 
-
 	/**
 	 *
 	 * @return bool|int
@@ -1661,18 +1584,15 @@ EOT;
 	 */
 	public function copyDbAllJ3xImages2J4x()
 	{
-
 		$isOk = false;
 
 		try
 		{
-
 			$isOk = $this->resetImagesTable();
 
 			$j3xImageItems = $this->j3x_imagesList();
 
 			$isOk &= $this->copyDbJ3xImages2J4x($j3xImageItems);
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1698,7 +1618,6 @@ EOT;
 
 		try
 		{
-
 //            $j3xGalleryItems = $this->j3x_galleriesListOfIds($selectedJ3xGalleryIds);
 
 			$db    = $this->getDatabase();
@@ -1706,7 +1625,12 @@ EOT;
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				->from('#__rsgallery2_files')
-				->where($db->quoteName('gallery_id') . ' IN (' . implode(',', ArrayHelper::toInteger($selectedJ3xGalleryIds)) . ')')
+				->where(
+					$db->quoteName('gallery_id') . ' IN (' . implode(
+						',',
+						ArrayHelper::toInteger($selectedJ3xGalleryIds),
+					) . ')',
+				)
 				->order('id ASC');
 
 			// Get the options.
@@ -1718,7 +1642,6 @@ EOT;
 			{
 				$isOk = $this->copyDbJ3xImages2J4x($imageIds);
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1728,10 +1651,9 @@ EOT;
 		return $isOk;
 	}
 
-
-
 	/**
 	 * revertCopyDbJ3xImages2J4xUser (trunctate table)
+	 *
 	 * @param $selectedIds
 	 *
 	 * @return bool|int
@@ -1752,7 +1674,6 @@ EOT;
 
 			$db->setQuery($query);
 			$isOk = $db->execute();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1776,11 +1697,9 @@ EOT;
 
 		try
 		{
-
 			$j3xImageItems = $this->j3x_imagesListOfIds($selectedIds);
 
 			$isOk = $this->copyDbJ3xImages2J4x($j3xImageItems);
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1800,27 +1719,22 @@ EOT;
 	 */
 	public function copyDbJ3xImages2J4x($j3xImageItems)
 	{
-
 		$isOk = false;
 
 		try
 		{
-
 			// items exist ?
 			if (count($j3xImageItems))
 			{
-
 				$j4ImageItems = $this->convertDbJ3xImagesToJ4x($j3xImageItems);
 
 				$isOk = $this->writeImageList2Db($j4ImageItems);
 			}
 			else
 			{
-
 				Factory::getApplication()->enqueueMessage(Text::_('No items to insert into db'), 'warning');
 				//Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1829,7 +1743,6 @@ EOT;
 
 		return $isOk;
 	}
-
 
 	/**
 	 * @param $selectedIds
@@ -1845,7 +1758,6 @@ EOT;
 
 		try
 		{
-
 			// ...
 
 		}
@@ -1867,20 +1779,15 @@ EOT;
 	 */
 	public function convertDbJ3xImagesToJ4x($J3xImagesItems)
 	{
-
 		$j4ImageItems = [];
 
 		try
 		{
-
 			// galleries of given level
 			foreach ($J3xImagesItems as $j3xImage)
 			{
-
 				$j4ImageItems[] = $this->convertDbJ3xImage($j3xImage);
-
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1889,7 +1796,6 @@ EOT;
 
 		return $j4ImageItems;
 	}
-
 
 	/**
 	 * @param $j4ImageItems
@@ -1901,20 +1807,15 @@ EOT;
 	 */
 	public function writeImageList2Db($j4ImageItems)
 	{
-
 		$isOk = true;
 
 		try
 		{
-
 			// all image objects
 			foreach ($j4ImageItems as $j4xImageItem)
 			{
-
 				$isOk &= $this->writeImageItem2Db($j4xImageItem);
-
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -1923,7 +1824,6 @@ EOT;
 
 		return $isOk;
 	}
-
 
 	/**
 	 * @param $j4ImageItem
@@ -1935,12 +1835,10 @@ EOT;
 	 */
 	public function writeImageItem2Db($j4ImageItem)
 	{
-
 		$isOk = false;
 
 		try
 		{
-
 			// https://stackoverflow.com/questions/22373852/how-to-use-prepared-statements-in-joomla
 			$columns = [];
 			$values  = [];
@@ -2028,7 +1926,6 @@ EOT;
 
 			$db->setQuery($query);
 			$isOk = $db->execute();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -2037,7 +1934,6 @@ EOT;
 
 		return $isOk;
 	}
-
 
 	/**
 	 * @param $j3x_image
@@ -2048,7 +1944,6 @@ EOT;
 	 */
 	private function convertDbJ3xImage($j3x_image)
 	{
-
 		$j4_imageItem = []; //new \stdClass();
 
 		//`id` serial NOT NULL,
@@ -2102,9 +1997,9 @@ EOT;
 		//`created_by_alias` varchar(255) NOT NULL DEFAULT '',
 		//$j4_imageItem['created_by_alias'] = $j3x_image->created_by_alias;
 		//`modified` datetime NOT NULL,
-		$j4_imageItem['modified'] = $j3x_image->date;;
+		$j4_imageItem['modified'] = $j3x_image->date;
 		//`modified_by` int(10) unsigned NOT NULL DEFAULT 0,
-		$j4_imageItem['modified_by'] = $j3x_image->userid;;
+		$j4_imageItem['modified_by'] = $j3x_image->userid;
 
 		//`ordering` int(9) unsigned NOT NULL default '0',
 		$j4_imageItem['ordering'] = $j3x_image->ordering;
@@ -2213,7 +2108,6 @@ EOT;
 				$test = $gallery_id_j4x;
 				$test = $gallery_id_j4x;
 			}
-
 		} //catch (\RuntimeException $e)
 		catch (\Exception $e)
 		{
@@ -2251,7 +2145,6 @@ EOT;
 			$db->setQuery($query);
 
 			$isImagesReset = $db->execute();
-
 		} //catch (\RuntimeException $e)
 		catch (\Exception $e)
 		{
@@ -2271,16 +2164,16 @@ EOT;
 	 */
 	public function imageNamesById($cids)
 	{
-		$imageNamesById = array();
+		$imageNamesById = [];
 
-		$dbImages = array();
+		$dbImages = [];
 
 		try
 		{
 			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
-				->select($db->quoteName(array('name', 'id', 'gallery_id')))
+				->select($db->quoteName(['name', 'id', 'gallery_id']))
 				->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($cids)) . ')')
 				->from('#__rsgallery2_files')
 				->order('id ASC');
@@ -2292,7 +2185,6 @@ EOT;
 
 			if (!empty ($dbImages))
 			{
-
 				foreach ($dbImages as $dbImage)
 				{
 					$imageNamesById[$dbImage->id] =
@@ -2300,11 +2192,10 @@ EOT;
 							'id'         => $dbImage->id,
 							'name'       => $dbImage->name,
 							// J4x gallery id is one higher as j3x
-							'gallery_id' => 1 + $dbImage->gallery_id
+							'gallery_id' => 1 + $dbImage->gallery_id,
 						];
 				}
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -2313,7 +2204,6 @@ EOT;
 
 		return $imageNamesById;
 	}
-
 
 	/**
 	 * @param $j3xImageIds
@@ -2328,7 +2218,6 @@ EOT;
 
 		try
 		{
-
 			//--- image names -----------------------------------------------
 
 			// name, id, gallery_id
@@ -2356,7 +2245,6 @@ EOT;
 			{
 				$isDbUpdated = true;
 			}
-
 		} //catch (\RuntimeException $e)
 		catch (\Exception $e)
 		{
@@ -2365,7 +2253,6 @@ EOT;
 
 		return $isDbUpdated;
 	}
-
 
 	/**
 	 *
@@ -2380,10 +2267,8 @@ EOT;
 
 		try
 		{
-
 			$j3xImagePath    = new ImagePathsJ3xModel ();
 			$isPathsExisting = $j3xImagePath->isPathsExisting();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -2392,7 +2277,6 @@ EOT;
 
 		return $isPathsExisting;
 	}
-
 
 	/**
 	 *
@@ -2407,10 +2291,8 @@ EOT;
 
 		try
 		{
-
 			$j3xImagePath    = new ImagePathsJ3xModel ();
 			$isPathsRepaired = $j3xImagePath->createAllPaths();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -2434,7 +2316,6 @@ EOT;
 	 */
 	public function j3x_transformGalleryIdsTo_j4x($j3x_galleries)
 	{
-
 		$j4xGalleryIds = [];
 
 		// otherwise convertDbJ3xGalleryId2J4xId
@@ -2457,13 +2338,10 @@ EOT;
 	 */
 	public function j3xGalleriesWithImgCount()
 	{
-
 		$j3xGalleriesWithImgCount = [];
 
 		try
 		{
-
-
 //		    $db = $this->getDatabase();
 //		    //$db      = $this->getDatabase();
 //
@@ -2500,12 +2378,14 @@ EOT;
 				->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
 				/* Count child images */
 				->select('COUNT(img.gallery_id) as img_count')
-				->join('LEFT', $db->quoteName('#__rsgallery2_files', 'img')
+				->join(
+					'LEFT',
+					$db->quoteName('#__rsgallery2_files', 'img')
 					. ' ON ('
 					. $db->quoteName('img.gallery_id') . ' = ' . $db->quoteName('j3x.id')
-					. ')'
+					. ')',
 				)
-				->group('j3x.id');;
+				->group('j3x.id');
 
 			$db->setQuery($query);
 
@@ -2514,14 +2394,11 @@ EOT;
 
 			foreach ($j3xGalleries as $j3xGallery)
 			{
-
 				$gallery_id = $j3xGallery->gallery_id;
 
 				$j3xGalleriesWithImgCount[$gallery_id]               = [];
 				$j3xGalleriesWithImgCount[$gallery_id] ['img_count'] = $j3xGallery->img_count;
 			}
-
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -2613,7 +2490,7 @@ EOT;
 //	 */
 //	public function galleryIdsJ3x_dbImagesNotMoved($j4xGalleryIds)
 //	{
-//		$galleryIdsJ3x_NotMoved = []; // ToDo: array() ==> []
+//		$galleryIdsJ3x_NotMoved = []; // ToDo: [] ==> []
 //
 //		try
 //		{
@@ -2687,20 +2564,18 @@ EOT;
 	 */
 	public function galleryIdsJ3x_ImagesNotMoved($j3xGalleriesItems)
 	{
-		$galleryIdsJ3x_NotMoved = []; // ToDo: array() ==> []
+		$galleryIdsJ3x_NotMoved = []; // ToDo: [] ==> []
 
 		try
 		{
 			// find first transfer active
 			foreach ($j3xGalleriesItems as $j3xGalleriesItem)
 			{
-				if ( ! $j3xGalleriesItem->isTransferred)
+				if (!$j3xGalleriesItem->isTransferred)
 				{
 					$galleryIdsJ3x_NotMoved [] = $j3xGalleriesItem->id;
 				}
-
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -2725,7 +2600,7 @@ EOT;
 	 */
 	public function j3x_imagesToBeMovedByGallery($j4xGalleryIds)
 	{
-		$imagesToBeMoved = []; // ToDo: array() ==> []
+		$imagesToBeMoved = []; // ToDo: [] ==> []
 
 		try
 		{
@@ -2738,7 +2613,7 @@ EOT;
 			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true)
-				->select($db->qn(array('id', 'name')))
+				->select($db->qn(['id', 'name']))
 				->from('#__rsg2_images')
 				->where($db->quoteName('use_j3x_location') . ' = 1')
 				->where("gallery_id IN (" . implode(',', $db->q($j4xGalleryIds)) . ")")//->order('id ASC');
@@ -2889,14 +2764,14 @@ EOT;
 
 		try
 		{
-
 			$db = $this->getDatabase();
 
 			$query = $db->getQuery(true);
 
 			// $testImplode = implode(',', ArrayHelper::toInteger($movedIds));
 
-			$query->update('#__rsg2_images')
+			$query
+				->update('#__rsg2_images')
 				->set($db->quoteName('use_j3x_location') . ' = ' . (int) $isUse_j3x_location)
 				->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($movedIds)) . ')');
 
@@ -2906,7 +2781,6 @@ EOT;
 			$db->setQuery($query);
 
 			$isIdsMarked = $db->execute();
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -2915,7 +2789,6 @@ EOT;
 
 		return $isIdsMarked;
 	}
-
 
 	/**
 	 * @param $imgObjects
@@ -2932,7 +2805,6 @@ EOT;
 
 		try
 		{
-
 			$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
 			$ImageWidths   = $rsgConfig->get('image_size');
@@ -2941,7 +2813,6 @@ EOT;
 
 			$j4xImagePath = new ImagePathsModel (); // ToDo: J3x
 			//$j3xImagePath = new ImagePathsJ3xModel (); // ToDo: J3x
-
 
 			// ToDo: Watermarked
 			foreach ($imgObjects as $imgObject)
@@ -2956,7 +2827,6 @@ EOT;
 				$isPathsExisting = $j4xImagePath->isPathsExisting();
 				if (!$isPathsExisting)
 				{
-
 					throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
 				}
 
@@ -2982,7 +2852,6 @@ EOT;
 //                }
 
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -3000,7 +2869,6 @@ EOT;
 	const J3X_IMG_MOVING_FAILED = 4;
 	const J3X_IMG_MOVED_AND_DB = 5;
 
-
 	/**
 	 * @param $id
 	 * @param $name
@@ -3013,7 +2881,6 @@ EOT;
 	 */
 	public function j3x_moveImage($id, $name, $galleryId)
 	{
-
 		global $rsgConfig, $isDebugBackend, $isDevelop;
 
 		if ($isDebugBackend)
@@ -3046,7 +2913,6 @@ EOT;
 
 			// create path
 			$j4xImagePath->createAllPaths();
-
 		}
 
 		//--- original -----------------------------
@@ -3132,13 +2998,11 @@ EOT;
 	 */
 	private function RenameJ3xImageFile(string $j3xFile, string $j4xFile)
 	{
-
 		$state = MaintenanceJ3xModel::J3X_IMG_NOT_FOUND;
 
 		// source exist
 		if (file_exists($j3xFile))
 		{
-
 			// destination exists
 			if (file_exists($j4xFile))
 			{
@@ -3149,7 +3013,6 @@ EOT;
 			}
 			else
 			{
-
 				//---  do move --------------------------------------------
 
 				$isMoved = rename($j3xFile, $j4xFile);
@@ -3175,7 +3038,6 @@ EOT;
 			{
 //                $state = J3X_IMG_NOT_FOUND;
 			}
-
 		}
 
 		return $state;
@@ -3197,7 +3059,6 @@ EOT;
 		return $isMoved;
 	}
 
-
 	/**
 	 * Use start templates matching a ..J3x folder.
 	 * This enables to separate J3x from new J4x
@@ -3213,9 +3074,9 @@ EOT;
 	 * Can only be run once to match the changed gallery id
 	 * On double call use j3xDegradeUpgradedJ4xMenuLinks
 	 *
-	 * index.php?option=com_rsgallery2&view=gallery&gid=0
-	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
-	 * index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 * index.php?option=com_rsgallery2&view=gallery&id=0
+	 * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
 	 * @return bool
 	 *
@@ -3233,12 +3094,10 @@ EOT;
 
 			if (!empty ($menuItemsDB))
 			{
-
 				$successful = true;
 
 				foreach ($menuItemsDB as $id => $menuItem)
 				{
-
 					[$oldLink, $oldParams] = $menuItem;
 
 					//--- add parameters from j3x config by link type -----------------------------
@@ -3297,12 +3156,10 @@ EOT;
 			// upgraded links found
 			if (!empty ($menuItemsDB))
 			{
-
 				$successful = true;
 
 				foreach ($menuItemsDB as $id => $menuItem)
 				{
-
 					[$oldLink, $oldParams] = $menuItem;
 
 					//--- change link for gid++ ----------------------------------------------
@@ -3329,19 +3186,16 @@ EOT;
 			}
 			else
 			{
-
 				//--- decrease on already downgraded links ---------------------------------
 
 				$menuItemsDB = $this->dbValidJ3xGidMenuItems();
 
 				if (!empty ($menuItemsDB))
 				{
-
 					$successful = true;
 
 					foreach ($menuItemsDB as $id => $menuItem)
 					{
-
 						[$oldLink, $oldParams] = $menuItem;
 
 						//--- change link for gid++ ----------------------------------------------
@@ -3357,10 +3211,7 @@ EOT;
 						}
 					}
 				}
-
-
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -3372,9 +3223,9 @@ EOT;
 
 	/**
 	 * Uppercase to lower case in 'J'
-	 * index.php?option=com_rsgallery2&view=gallery&gid=0
-	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
-	 * index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 * index.php?option=com_rsgallery2&view=gallery&id=0
+	 * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
 	 * @return bool
 	 *
@@ -3392,12 +3243,10 @@ EOT;
 
 			if (!empty ($menuItemsDB))
 			{
-
 				$successful = true;
 
 				foreach ($menuItemsDB as $id => $menuItem)
 				{
-
 					[$oldLink, $oldParams] = $menuItem;
 
 					//--- change link for type: ----------------------------------------------
@@ -3425,9 +3274,9 @@ EOT;
 
 	/**
 	 * Uppercase to lower case in 'J'
-	 * index.php?option=com_rsgallery2&view=gallery&gid=0
-	 * index.php?option=com_rsgallery2&view=gallery&gid=227&displaySearch=0
-	 * index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 * index.php?option=com_rsgallery2&view=gallery&id=0
+	 * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
 	 * @return bool
 	 *
@@ -3445,12 +3294,10 @@ EOT;
 
 			if (!empty ($menuItemsDB))
 			{
-
 				$successful = true;
 
 				foreach ($menuItemsDB as $id => $menuItem)
 				{
-
 					[$oldLink, $oldParams] = $menuItem;
 
 					//--- change link for type: ----------------------------------------------
@@ -3477,14 +3324,135 @@ EOT;
 	}
 
 	/**
+	 * Use start templates matching a ..J3x folder.
+	 * This enables to separate J3x from new J4x
+	 * folders with same name
+	 * Change j3x 'gallery' to root galleries, (?galleries) or keep it
+	 *    On gid=0 = use root galleries J3x
+	 *    On gid!=0 still use gallery J3x
+	 *   * ToDo: Detect parent galleries
+	 * Find in menus all GID references and increase them
+	 * On transfer of gallery ids to new balanced tree the
+	 * id is increased. Therefore, links in menu are now invalid
+	 * Applies to gallery and slideshow menu items
+	 * Can only be run once to match the changed gallery id
+	 * On double call use j3xDegradeUpgradedJ4xMenuLinks
+	 *
+	 * index.php?option=com_rsgallery2&view=gallery&id=0
+	 * index.php?option=com_rsgallery2&view=gallery&id=227&displaySearch=0
+	 * index.php?option=com_rsgallery2&view=slideshow&id=227
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function j3xReplaceGid2IdMenuLinks()
+	{
+		$successful = false;
+
+		try
+		{
+			// link includes '&view=gallery' or '&view=slideshow&'
+			$menuItemsDB = $this->dbValidGid2IdMenuItems();
+
+			if (!empty ($menuItemsDB))
+			{
+				$successful = true;
+
+				foreach ($menuItemsDB as $id => $menuItem)
+				{
+					[$oldLink, $oldParams] = $menuItem;
+
+					//--- exchange or remove 'gid=' -----------------------------
+
+					$newLink = $this->linkReplaceGid2Id($oldLink);
+
+					//--- change menu parameter for type ----------------------------------------
+
+					// valid link ?
+					if (!empty($newLink))
+					{
+						$successful &= $this->updateMenuItem($id, $newLink, $oldParams);
+					}
+					else
+					{
+						$successful = false;
+					}
+				}
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
+	 * Opposite of j3xReplaceGid2IdMenuLinks
+	 * Needed if above done too many times
+	 * Attention gid==0 special case with double meaning can't be solved
+	 * 0: root gallery 0-> 1: change to gallery if (1: forbidden as tree root)
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function j3xReplaceId2GidMenuLinks()
+	{
+		$successful = false;
+
+		try
+		{
+			$menuItemsDB = $this->dbValidId2GidMenuItems();
+
+			// upgraded links found
+			if (!empty ($menuItemsDB))
+			{
+				$successful = true;
+
+				foreach ($menuItemsDB as $id => $menuItem)
+				{
+					[$oldLink, $oldParams] = $menuItem;
+
+					//--- change link for gid++ ----------------------------------------------
+
+					$newLink = $this->linkReplaceId2Gid($oldLink);
+
+					//--- change menu parameter for type ----------------------------------------
+
+					// valid link ?
+					if (!empty($newLink))
+					{
+						$successful &= $this->updateMenuItem($id, $newLink, $oldParams);
+					}
+					else
+					{
+						$successful = false;
+					}
+				}
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $successful;
+	}
+
+	/**
 	 * @param $oldLink
 	 *
 	 * @return int|string
 	 *
 	 * examples
-	 *    index.php?option=com_rsgallery2&view=gallery&gid=0
-	 *    index.php?option=com_rsgallery2&view=gallery&gid=2
-	 *    index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 *    index.php?option=com_rsgallery2&view=gallery&id=0
+	 *    index.php?option=com_rsgallery2&view=gallery&id=2
+	 *    index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
 	 * @since version
 	 */
@@ -3494,12 +3462,11 @@ EOT;
 
 		//--- extract gallery id --------------------------
 
-		$gidIdx    = strpos($oldLink, '&gid=') + 5;
+		$gidIdx    = strpos($oldLink, '&id=') + 5;
 		$gidEndIdx = strpos($oldLink, '&', $gidIdx);
 		// no further ...
 		if ($gidEndIdx == false)
 		{
-
 			$gidEndIdx = strlen($oldLink);
 		}
 
@@ -3541,12 +3508,11 @@ EOT;
 		{
 			//--- extract gallery id --------------------------
 
-			$gidIdx    = strpos($oldLink, '&gid=') + 5;
+			$gidIdx    = strpos($oldLink, '&id=') + 5;
 			$gidEndIdx = strpos($oldLink, '&', $gidIdx);
 			// no further characters
 			if ($gidEndIdx == false)
 			{
-
 				$gidEndIdx = strlen($oldLink);
 			}
 
@@ -3593,14 +3559,11 @@ EOT;
 				*
 			 /**/
 
-
 			if (str_contains($oldLink, '&view=gallery&'))
 			{
-
 				// root gallery
 				if (intval($galleryId) == 0)
 				{
-
 					/**
 					 * --- original J3x names root galleries front view -------------------------
 					 * name="displaySearch"
@@ -3642,7 +3605,6 @@ EOT;
 						name="random_count"
 					/**/
 
-
 					// ??? $newParams['images_show_search'] = $rsgJ3xConfig ['displaySearch'];
 					$newParams['images_column_arrangement_j3x'] = '1';
 					// $newParams['max_columns_in_images_view_j3x'] = $rsgJ3xConfig ['']; // not used as root = vertical
@@ -3669,8 +3631,6 @@ EOT;
 					 * - displayBranding
 					 * -
 					 * /**/
-
-
 					/* ToDo: include left outs:
 						* Thumbnail Style
 						* direction left to right
@@ -3678,11 +3638,9 @@ EOT;
 						*
 						*
 					/**/
-
 				}
 				else
 				{
-
 					/**
 					 * --- original J3x names gallery view -----------------------------------------------
 					 * name="template"
@@ -3732,17 +3690,13 @@ EOT;
 						*
 						*
 					/**/
-
-
 				}
 			}
 			else
 			{
-
 				// slideshow
 				if (str_contains($oldLink, '&view=slideshow&'))
 				{
-
 					/* needed in galleryj3x view
 					$paraPart = ""
 						. "&displaySearch=" . $params['displaySearch'] . '"'
@@ -3766,8 +3720,6 @@ EOT;
 						*
 						*
 					/**/
-
-
 					/**
 					 * $newParams['max_columns_in_images_view_j3x'] = $max_columns_in_images_view_j3x;
 					 * $newParams['max_thumbs_in_images_view_j3x']  = $max_thumbs_in_images_view_j3x;
@@ -3776,7 +3728,6 @@ EOT;
 					 * /**/
 				}
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -3796,25 +3747,23 @@ EOT;
 	 * @return int|string
 	 *
 	 * examples
-	 *     index.php?option=com_rsgallery2&view=gallery&gid=0 => ...&view=rootgalleriesj3x&...
-	 *     index.php?option=com_rsgallery2&view=gallery&gid=2
-	 *     index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 *     index.php?option=com_rsgallery2&view=gallery&id=0 => ...&view=rootgalleriesj3x&...
+	 *     index.php?option=com_rsgallery2&view=gallery&id=2
+	 *     index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
 	 * @since version
 	 */
 	public function linkUpgradeByJ3xType(string $newLink, $params)
 	{
-
 		try
 		{
 			//--- extract gallery id --------------------------
 
-			$gidIdx    = strpos($newLink, '&gid=') + 5;
+			$gidIdx    = strpos($newLink, '&id=') + 5;
 			$gidEndIdx = strpos($newLink, '&', $gidIdx);
 			// no further characters
 			if ($gidEndIdx == false)
 			{
-
 				$gidEndIdx = strlen($newLink);
 			}
 
@@ -3888,7 +3837,6 @@ EOT;
 					$newLink = str_replace('&view=slideshow&', '&view=slideshowj3x&', $newLink);
 				}
 			}
-
 		}
 		catch (\RuntimeException $e)
 		{
@@ -3908,25 +3856,23 @@ EOT;
 	 * @return int|string
 	 *
 	 * examples
-	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
-	 *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
-	 *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0 => ...&view=gallery&id=0
+	 *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
+	 *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
 	 *
 	 * @since version
 	 */
 	public function linkDegradeByJ4xType(string $newLink)
 	{
-
 		try
 		{
 			//--- extract gallery id --------------------------
 
-			$gidIdx    = strpos($newLink, '&gid=') + 5;
+			$gidIdx    = strpos($newLink, '&id=') + 5;
 			$gidEndIdx = strpos($newLink, '&', $gidIdx);
 			// no further characters
 			if ($gidEndIdx == false)
 			{
-
 				$gidEndIdx = strlen($newLink);
 			}
 
@@ -3983,15 +3929,14 @@ EOT;
 	 * @return int|string
 	 *
 	 * examples
-	 *      index.php?option=com_rsgallery2&view=gallery&gid=0
-	 *      index.php?option=com_rsgallery2&view=gallery&gid=2
-	 *      index.php?option=com_rsgallery2&view=slideshow&gid=227
+	 *      index.php?option=com_rsgallery2&view=gallery&id=0
+	 *      index.php?option=com_rsgallery2&view=gallery&id=2
+	 *      index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
 	 * @since version
 	 */
 	public function linkIncreaseGalleryId($link)
 	{
-
 		return $this->linkAddToGalleryId($link, +1);
 	}
 
@@ -4004,7 +3949,6 @@ EOT;
 	 */
 	public function linkDecreaseGalleryId($oldLink)
 	{
-
 		return $this->linkAddToGalleryId($oldLink, -1);
 	}
 
@@ -4016,20 +3960,19 @@ EOT;
 	 * @return int|string
 	 *
 	 * examples
-	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
-	 *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
-	 *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0 => ...&view=gallery&id=0
+	 *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
+	 *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
 	 *
 	 * @since version
 	 */
 	public function linkLowercaseJ4xType(string $newLink)
 	{
-
 		try
 		{
 			//--- extract gallery id --------------------------
 
-			$gidIdx    = strpos($newLink, '&gid=') + 5;
+			$gidIdx    = strpos($newLink, '&id=') + 5;
 			$gidEndIdx = strpos($newLink, '&', $gidIdx);
 			// no further characters
 			if ($gidEndIdx == false)
@@ -4092,25 +4035,23 @@ EOT;
 	 * @return int|string
 	 *
 	 * examples
-	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0 => ...&view=gallery&gid=0
-	 *     index.php?option=com_rsgallery2&view=galleryj3x&gid=2       => ...2&view=gallery&gid=2
-	 *     index.php?option=com_rsgallery2&view=slideshowj3x&gid=227   => ...&view=slideshow&gid=227
+	 *     index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0 => ...&view=gallery&id=0
+	 *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
+	 *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
 	 *
 	 * @since version
 	 */
 	public function linkUppercaseJ4xType(string $newLink)
 	{
-
 		try
 		{
 			//--- extract gallery id --------------------------
 
-			$gidIdx    = strpos($newLink, '&gid=') + 5;
+			$gidIdx    = strpos($newLink, '&id=') + 5;
 			$gidEndIdx = strpos($newLink, '&', $gidIdx);
 			// no further characters
 			if ($gidEndIdx == false)
 			{
-
 				$gidEndIdx = strlen($newLink);
 			}
 
@@ -4183,7 +4124,8 @@ EOT;
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
-		$query->update($db->quoteName('#__menu'))
+		$query
+			->update($db->quoteName('#__menu'))
 			->set($db->quoteName('link') . ' = ' . $db->quote($newLink))
 			->set($db->quoteName('params') . ' = ' . $db->quote($jsonParameter))
 			->where($db->quoteName('id') . ' = ' . $id);
@@ -4216,7 +4158,8 @@ EOT;
 
 		// select all menus with com_rsgallery2 and a gid > 0 (leave out root galleries)
 
-		$query->select(['id', 'link', 'params'])
+		$query
+			->select(['id', 'link', 'params'])
 			->from('#__menu')
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
 //			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
@@ -4232,10 +4175,8 @@ EOT;
 
 		if (!empty ($menuItemsDB))
 		{
-
 			foreach ($menuItemsDB as $id => $menuItemDb)
 			{
-
 				// [$idDummy, $link, $params] = $menuItemDb;
 				$link   = $menuItemDb ['link'];
 				$params = json_decode($menuItemDb ['params'], true);
@@ -4246,7 +4187,6 @@ EOT;
 				{
 					$menuLinks[$id] = [$link, $params];
 				}
-
 			}
 		}
 
@@ -4256,6 +4196,7 @@ EOT;
 	/**
 	 * Select menu link item for rsg2 which have already been upgraded to J4x
 	 * link includes '&view=galleryj3x&' or '&view=slideshowj3x&'
+	 *
 	 * @return mixed
 	 *
 	 * @since version
@@ -4271,7 +4212,8 @@ EOT;
 
 		// select all menus with com_rsgallery2 and a gid
 
-		$query->select(['id', 'link', 'params'])
+		$query
+			->select(['id', 'link', 'params'])
 			->from('#__menu')
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
 //			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
@@ -4287,10 +4229,8 @@ EOT;
 
 		if (!empty ($menuItemsDB))
 		{
-
 			foreach ($menuItemsDB as $id => $menuItemDb)
 			{
-
 				// [$idDummy, $link, $params] = $menuItemDb;
 				$link   = $menuItemDb ['link'];
 				$params = json_decode($menuItemDb ['params'], true);
@@ -4302,7 +4242,69 @@ EOT;
 				{
 					$menuLinks[$id] = [$link, $params];
 				}
+			}
+		}
 
+		return $menuLinks;
+	}
+
+	/**
+	 * Select menu link item for rsg2 old j3x menu items
+	 * link includes '&view=gallery' or '&view=slideshow&'
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public function dbValidGid2IdMenuItems()
+	{
+		$menuLinks = [];
+
+		//--- list from #__menu table in DB  -------------------------------------------
+
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		// select all menus with com_rsgallery2 and a gid > 0 (leave out root galleries)
+
+		$query
+			->select(['id', 'link', 'params'])
+			->from('#__menu')
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%&gid=%')))
+//			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
+
+		$db->setQuery($query);
+
+		// $menuItemsDB = $db->loadAssocList('id', 'link');
+		$menuItemsDB = $db->loadAssocList('id');
+		// $menuItemsDB = $db->loadObjectList();
+
+		//--- restrict to gallery id using menu items -------------------------------------------
+
+		if (!empty ($menuItemsDB))
+		{
+			foreach ($menuItemsDB as $id => $menuItemDb)
+			{
+				// [$idDummy, $link, $params] = $menuItemDb;
+				$link   = $menuItemDb ['link'];
+				$params = json_decode($menuItemDb ['params'], true);
+
+				// add matching link
+				if (str_contains($link, '&view=galleries&')
+					|| str_contains($link, '&view=gallery&')
+					|| str_contains($link, '&view=slidepage&')
+					|| str_contains($link, '&view=slideshow&')
+
+					|| str_contains($link, '&view=galleriesj3x&')
+					|| str_contains($link, '&view=galleryj3x&')
+					|| str_contains($link, '&view=rootgalleriesj3x&')
+					|| str_contains($link, '&view=slidepagej3x&')
+					|| str_contains($link, '&view=slideshowj3x&')
+				)
+				{
+					$menuLinks[$id] = [$link, $params];
+				}
 			}
 		}
 
@@ -4312,6 +4314,70 @@ EOT;
 	/**
 	 * Select menu link item for rsg2 which have already been upgraded to J4x
 	 * link includes '&view=galleryj3x&' or '&view=slideshowj3x&'
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public function dbValidId2GidMenuItems()
+	{
+		$menuLinks = [];
+
+		//--- list from #__menu table in DB  -------------------------------------------
+
+		$db    = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+
+		// select all menus with com_rsgallery2 and a gid
+
+		$query
+			->select(['id', 'link', 'params'])
+			->from('#__menu')
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%&id=%')))
+//			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=%')))
+			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%option=com_rsgallery2%')));
+
+		$db->setQuery($query);
+
+		// $menuItemsDB = $db->loadAssocList('id', 'link');
+		$menuItemsDB = $db->loadAssocList('id');
+		// $menuItemsDB = $db->loadObjectList();
+
+		//--- restrict to 'legacy' j3x menu items -------------------------------------------
+
+		if (!empty ($menuItemsDB))
+		{
+			foreach ($menuItemsDB as $id => $menuItemDb)
+			{
+				// [$idDummy, $link, $params] = $menuItemDb;
+				$link   = $menuItemDb ['link'];
+				$params = json_decode($menuItemDb ['params'], true);
+
+				// add matching link
+				if (str_contains($link, '&view=galleries&')
+					|| str_contains($link, '&view=gallery&')
+					|| str_contains($link, '&view=slidepage&')
+					|| str_contains($link, '&view=slideshow&')
+
+					|| str_contains($link, '&view=galleriesj3x&')
+					|| str_contains($link, '&view=galleryj3x&')
+					|| str_contains($link, '&view=rootgalleriesj3x&')
+					|| str_contains($link, '&view=slidepagej3x&')
+					|| str_contains($link, '&view=slideshowj3x&')
+				)
+				{
+					$menuLinks[$id] = [$link, $params];
+				}
+			}
+		}
+
+		return $menuLinks;
+	}
+
+	/**
+	 * Select menu link item for rsg2 which have already been upgraded to J4x
+	 * link includes '&view=galleryj3x&' or '&view=slideshowj3x&'
+	 *
 	 * @return mixed
 	 *
 	 * @since version
@@ -4327,7 +4393,8 @@ EOT;
 
 		// select all menus with com_rsgallery2 and a gid
 
-		$query->select(['id', 'link', 'params'])
+		$query
+			->select(['id', 'link', 'params'])
 			->from('#__menu')
 			->where($db->quoteName('link') . ' LIKE ' . $db->quote($db->escape('%gid=%')))
 //			->where($db->quoteName('link') . ' NOT LIKE ' . $db->quote($db->escape('%gid=0%')))
@@ -4343,10 +4410,8 @@ EOT;
 
 		if (!empty ($menuItemsDB))
 		{
-
 			foreach ($menuItemsDB as $id => $menuItemDb)
 			{
-
 				// [$idDummy, $link, $params] = $menuItemDb;
 				$link   = $menuItemDb ['link'];
 				$params = json_decode($menuItemDb ['params'], true);
@@ -4358,11 +4423,97 @@ EOT;
 				{
 					$menuLinks[$id] = [$link, $params];
 				}
-
 			}
 		}
 
 		return $menuLinks;
+	}
+
+	private function linkReplaceGid2Id(string $oldLink)
+	{
+		$newLink = $oldLink;
+
+		//--- extract gallery id --------------------------
+
+		$gidIdx = strpos($oldLink, '&gid=');
+		$idIdx  = strpos($oldLink, '&id=');
+
+		// link contains '&gid=' and new '&Id='
+		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&id=0
+		if ($idIdx !== false)
+		{
+			$endIdx  = strpos($oldLink, '&', $gidIdx + 1);
+			$newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $endIdx);
+		}
+		else
+		{
+			// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0
+			$gidIdx++;
+			$newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $gidIdx + 1);
+		}
+
+		return $newLink;
+	}
+
+	private function linkReplaceId2Gid(string $oldLink)
+	{
+		$newLink = $oldLink;
+
+		//--- extract gallery id --------------------------
+
+		$idIdx = strpos($oldLink, '&id=');
+
+		// link contains '&gid=' and new '&Id='
+		// index.php?option=com_rsgallery2&view=rootgalleriesj3x&gid=0&id=0
+		if ($idIdx !== false)
+		{
+			$idIdx++;
+			$newLink = substr($oldLink, 0, $idIdx) . 'g' . substr($oldLink, $idIdx);
+		}
+
+		return $newLink;
+	}
+
+	/**
+	 * @param $sortedGalleries
+	 * @param $parentId
+	 * @param $level
+	 * @param $lastNodeIdx
+	 *
+	 * @return int|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function resetUpgradeFlags()
+	{
+		$isOk = true;
+
+		try
+		{
+			$input = Factory::getApplication()->input;
+
+			$dbcopyj3xconfiguser    = $input->getInt('dbcopyj3xconfiguser');
+			$dbtransferj3xgalleries = $input->getInt('dbtransferj3xgalleries');
+			$dbtransferj3ximages    = $input->getInt('dbtransferj3ximages');
+			$changeJ3xMenuLinks     = $input->getInt('changeJ3xMenuLinks');
+			$movej3ximagesuser      = $input->getInt('movej3ximagesuser');
+			$changeGidMenuLinks     = $input->getInt('changeGidMenuLinks');
+
+			$isOk &= ConfigRawModel::writeConfigParam('j3x_db_config_copied', $dbcopyj3xconfiguser);
+			$isOk &= ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', $dbtransferj3xgalleries);
+			$isOk &= ConfigRawModel::writeConfigParam('j3x_db_images_copied', $dbtransferj3ximages);
+			$isOk &= ConfigRawModel::writeConfigParam('j3x_menu_gid_increased', $changeJ3xMenuLinks);
+			$isOk &= ConfigRawModel::writeConfigParam('j3x_images_copied', $movej3ximagesuser);
+			$isOk &= ConfigRawModel::writeConfigParam('j3x_menu_gid_moved_to_id', $changeGidMenuLinks);
+
+		}
+		catch (\RuntimeException $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+		}
+
+		return $isOk;
 	}
 
 } // class

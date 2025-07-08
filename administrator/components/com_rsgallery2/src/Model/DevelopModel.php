@@ -1,9 +1,9 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (C) 2014-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @copyright  (c)  2014-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  * RSGallery is Free Software
  */
 
@@ -11,15 +11,14 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
-use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
 
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-
-
+/**
+ * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
+ *
+ * @since       version
+ */
 class DevelopModel extends BaseDatabaseModel
 {
 
@@ -136,10 +135,6 @@ class DevelopModel extends BaseDatabaseModel
 //
 //        return $now;
 //    }
-
-
-
-
 
 }
 

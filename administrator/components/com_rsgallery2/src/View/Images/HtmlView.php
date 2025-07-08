@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Images;
@@ -15,20 +15,18 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Helper\TagsHelper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\User\UserFactoryInterface;
-
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
+
 
 /**
  * View class for a list of rsgallery2.
@@ -37,129 +35,127 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
  */
 class HtmlView extends BaseHtmlView
 {
-	// ToDo: Use other rights instead of core.admin -> IsRoot ?
-	// core.admin is the permission used to control access to
-	// the global config
+    // ToDo: Use other rights instead of core.admin -> IsRoot ?
+    // core.admin is the permission used to control access to
+    // the global config
 
-	protected $UserIsRoot;
+    protected $UserIsRoot;
 
-	/**
-	 * An array of items
-	 *
-	 * @var  array
-	 */
-	protected $items;
+    /**
+     * An array of items
+     *
+     * @var  array
+     */
+    protected $items;
 
-	/**
-	 * The model state
-	 *
-	 * @var  \JObject
-	 */
-	protected $state;
+    /**
+     * The model state
+     *
+     * @var  \stdClass
+     */
+    protected $state;
 
-	/**
-	 * The pagination object
-	 *
-	 * @var    Pagination
-	 * @since __BUMP_VERSION__
-	 */
-	protected $pagination;
-	/**
-	 * Form object for search filters
-	 *
-	 * @var  \JForm
-	 */
-	public $filterForm;
+    /**
+     * The pagination object
+     *
+     * @var    pagination
+     * @since __BUMP_VERSION__
+     */
+    protected $pagination;
+    /**
+     * Form object for search filters
+     *
+     * @var  Form
+     */
+    public $filterForm;
 
-	/**
-	 * The active search filters
-	 *
-	 * @var  array
-	 */
-	public $activeFilters;
+    /**
+     * The active search filters
+     *
+     * @var  array
+     */
+    public $activeFilters;
 
-	/**
-	 * The sidebar markup
-	 *
-	 * @var  string
-	 */
-	protected $sidebar;
+    /**
+     * The sidebar markup
+     *
+     * @var  string
+     */
+    protected $sidebar;
 
-	/**
-	 * The actions the user is authorised to perform
-	 *
-	 * @var  \JObject
-	 */
-	protected $canDo;
+    /**
+     * The actions the user is authorised to perform
+     *
+     * @var  \stdClass
+     */
+    protected $canDo;
 
-	/**
-	 * Is there a content type associated with this gallery alias
-	 *
-	 * @var    boolean
-	 * @since __BUMP_VERSION__
-	 */
-	protected $checkTags = false;
+    /**
+     * Is there a content type associated with this gallery alias
+     *
+     * @var    boolean
+     * @since __BUMP_VERSION__
+     */
+    protected $checkTags = false;
 
-	protected $isDebugBackend;
-	protected $isDevelop;
+    protected $isDebugBackend;
+    protected $isDevelop;
 
-	protected $HtmlPathThumb;
+    protected $HtmlPathThumb;
 
-	/**
-	 * Display the view.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  mixed  A string if successful, otherwise an Error object.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function display($tpl = null)
-	{
-		//--- get needed form data ------------------------------------------
+    /**
+     * Display the view.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  mixed  A string if successful, otherwise an Error object.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function display($tpl = null)
+    {
+        //--- get needed form data ------------------------------------------
 
-		// Check rights of user
+        // Check rights of user
 //		$this->UserIsRoot = $this->CheckUserIsRoot();
 
-		$this->items         = $this->get('Items');
-        $errors = $this->get('Errors');
+        $this->items         = $this->get('Items');
+        $errors              = $this->get('Errors');
         $this->filterForm    = $this->get('FilterForm');
-        $errors = $this->get('Errors');
+        $errors              = $this->get('Errors');
         $this->pagination    = $this->get('Pagination');
-        $errors = $this->get('Errors');
+        $errors              = $this->get('Errors');
         $this->state         = $this->get('State');
-        $errors = $this->get('Errors');
-		$this->activeFilters = $this->get('ActiveFilters');
+        $errors              = $this->get('Errors');
+        $this->activeFilters = $this->get('ActiveFilters');
 
         // for batch ToDo: remove
 
-        $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/images.xml';
+        $xmlFile    = JPATH_COMPONENT_ADMINISTRATOR . '/forms/images.xml';
         $this->form = Form::getInstance('images', $xmlFile);
 
         // Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new GenericDataException(implode("\n", $errors), 500);
-		}
+        if (count($errors = $this->get('Errors'))) {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
 
-		//$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
-		//$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
-		//$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id'));
-		$this->canDo = ContentHelper::getActions('com_rsgallery2');
-		//$this->assoc = $this->get('Assoc');
+        //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
+        //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
+        //$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id'));
+        $this->canDo = ContentHelper::getActions('com_rsgallery2');
+        //$this->assoc = $this->get('Assoc');
 
-		//--- config --------------------------------------------------------------------
+        //--- config --------------------------------------------------------------------
 
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		//$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		$this->isDebugBackend = $rsgConfig->get('isDebugBackend');
-		$this->isDevelop = $rsgConfig->get('isDevelop');
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
+        $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-		// ToDo: Use function AddLayoutData / assignImageUrl
+        // ToDo: Use function AddLayoutData / assignImageUrl
         // paths to image (over galleryid or j3x style)
-        $this->ImagePath = new ImagePathsModel ();
+        $this->ImagePath    = new ImagePathsModel ();
         $this->ImagePathJ3x = new ImagePathsJ3xModel ();
-
 
 //		//--- thumb --------------------------------------------------------------------
 //
@@ -170,38 +166,31 @@ class HtmlView extends BaseHtmlView
 //		////echo 'ImagePathThumb: ' . URI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
 //		//echo $this->HtmlPathThumb . '<br>';
 
-		//--- sidebar --------------------------------------------------------------------
+        //--- sidebar --------------------------------------------------------------------
 
-		$Layout = $this->getLayout();
+        $Layout = $this->getLayout();
 
-
-        switch ($Layout)
-        {
+        switch ($Layout) {
             case 'images_raw':
-                $imageModel = $this->getModel();
+                $imageModel  = $this->getModel();
                 $this->items = $imageModel->allImages();
 
                 break;
 
             default:
 
-
                 break;
-
         }
 
-        if ($Layout !== 'modal')
-		{
-			HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
-			Rsgallery2Helper::addSubmenu('images');
-			$this->sidebar =  \Joomla\CMS\HTML\Helpers\Sidebar::render();
+        if ($Layout !== 'modal') {
+            HTMLHelper::_('sidebar.setAction', 'index.php?option=com_rsgallery2&view=Upload');
+            Rsgallery2Helper::addSubmenu('images');
+            $this->sidebar = Sidebar::render();
 
-			// $Layout = Factory::getApplication()->input->get('layout');
-			$this->addToolbar($Layout);
-		}
-		else
-		{
-			/**
+            // $Layout = Factory::getApplication()->input->get('layout');
+            $this->addToolbar($Layout);
+        } else {
+            /**
 			// If we are forcing a language in modal (used for associations).
 			if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
 			{
@@ -216,67 +205,68 @@ class HtmlView extends BaseHtmlView
 				$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
 			}
 			/**/
-		}
+        }
 
-		//--- display --------------------------------------------------------------------
+        //--- display --------------------------------------------------------------------
 
-		return parent::display($tpl);
-	}
+        parent::display($tpl);
 
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function addToolbar($Layout = 'default')
-	{
+        return;
+    }
+
+    /**
+     * Add the page title and toolbar.
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function addToolbar($Layout = 'default')
+    {
         $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
         //$user  = Factory::getContainer()->get(UserFactoryInterface::class);
-		$user  = $this->getCurrentUser();
+        $user = $this->getCurrentUser();
 
         // Get the toolbar object instance
-		$toolbar = Toolbar::getInstance('toolbar');
+        $toolbar = Toolbar::getInstance('toolbar');
 
-		switch ($Layout)
-		{
-			case 'images_raw':
-				// on develop show open tasks if existing
-				if (!empty ($this->isDevelop))
-				{
-					echo '<span style="color:red">'
-						. 'Tasks: <br>'
-						. '* Raw edit form<br>'
-						. '* Can do ...<br>'
-						. '* Add pagination<br>'
-						. '* Test: archived, trashed, (delete)<br>'
-						. '* Add delete function<br>'
-						//	. '* <br>'
-						//	. '* <br>'
-						//	. '* <br>'
-						. '</span><br><br>';
-				}
-
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'image');
-
-				ToolBarHelper::editList('image.raw_edit');
-				ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
-				break;
-
-
-			default:
-				// on develop show open tasks if existing
-				if (!empty ($this->isDevelop))
-				{
+        switch ($Layout) {
+            case 'images_raw':
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
-	                    . '* Batch: improve like menu ... process ...<br>'
-	                    . '* Ordering: Mouse move not working<br>'
+                        . '* Raw edit form<br>'
+                        . '* Can do ...<br>'
+                        . '* Add pagination<br>'
+                        . '* Test: archived, trashed, (delete)<br>'
+                        . '* Add delete function<br>'
+                        //	. '* <br>'
+                        //	. '* <br>'
+                        //	. '* <br>'
+                        . '</span><br><br>';
+                }
+
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'image');
+
+                ToolBarHelper::editList('image.raw_edit');
+                ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
+
+	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+
+	            break;
+
+            default:
+                // on develop show open tasks if existing
+                if (!empty ($this->isDevelop)) {
+                    echo '<span style="color:red">'
+                        . 'Tasks: <br>'
+                        . '* Batch: improve like menu ... process ...<br>'
+                        . '* Ordering: Mouse move not working<br>'
                         . '* Delete images for real <br>'
                         . '* Batch : turn images, move .... <br>'
                         . '* params test write, read back -> json_enmcode registry<br>'
-	                    . '* ---<br>'
+                        . '* ---<br>'
                         . '* Can do ...<br>'
                         . '* __associations <br>'
                         . '* HtmlPathThumb path must be taken from model (? file model ?) <br>'
@@ -294,15 +284,15 @@ class HtmlView extends BaseHtmlView
                         //	. '* <br>'
                         //	. '* <br>'
                         . '</span><br><br>';
-				}
+                }
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'image');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_IMAGES'), 'image');
 
-				//ToolBarHelper::addNew('image.add');
+                //ToolBarHelper::addNew('image.add');
 
-                if ($canDo->get('core.edit.state') || count($this->transitions))
-                {
-                    $dropdown = $toolbar->dropdownButton('status-group')
+                if ($canDo->get('core.edit.state') || count($this->transitions)) {
+                    $dropdown = $toolbar
+                        ->dropdownButton('status-group')
                         ->text('JTOOLBAR_CHANGE_STATUS')
                         ->toggleSplit(false)
                         ->icon('fa fa-ellipsis-h')
@@ -311,8 +301,7 @@ class HtmlView extends BaseHtmlView
 
                     $childBar = $dropdown->getChildToolbar();
 
-                    if ($canDo->get('core.edit.state'))
-                    {
+                    if ($canDo->get('core.edit.state')) {
                         $childBar->publish('images.publish')->listCheck(true);
 
                         $childBar->unpublish('images.unpublish')->listCheck(true);
@@ -332,18 +321,18 @@ class HtmlView extends BaseHtmlView
                     // Add a batch button
                     if ($user->authorise('core.create', 'com_content')
                         && $user->authorise('core.edit', 'com_content')
-                        && $user->authorise('core.execute.transition', 'com_content'))
-                    {
-                        $childBar->popupButton('batch')
+                        && $user->authorise('core.execute.transition', 'com_content')) {
+                        $childBar
+                            ->popupButton('batch')
                             ->text('JTOOLBAR_BATCH')
                             ->selector('collapseModal')
                             ->listCheck(true);
                     }
 
                     if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED
-                        && $canDo->get('core.delete'))
-                    {
-                        $toolbar->delete('images.delete')
+                        && $canDo->get('core.delete')) {
+                        $toolbar
+                            ->delete('images.delete')
                             ->text('JTOOLBAR_EMPTY_TRASH')
                             ->message('JGLOBAL_CONFIRM_DELETE')
                             ->listCheck(true);
@@ -351,22 +340,20 @@ class HtmlView extends BaseHtmlView
 
 	                ToolBarHelper::custom('imagesProperties.PropertiesView', 'next', 'next',
                         'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES', true);
-	                // ToolBarHelper::editList('image.edit');
+                    // ToolBarHelper::editList('image.edit');
                 }
 
-				break;
-		}
+	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
-		// Options button.
-		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
-		{
-			$toolbar->preferences('com_rsgallery2');
-		}
+	            break;
+        }
 
+        // Options button.
+        if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {
+            $toolbar->preferences('com_rsgallery2');
+        }
         // $toolbar->help('JHELP_CONTENT_ARTICLE_MANAGER');
-	}
-
-
+    }
 
 }
 

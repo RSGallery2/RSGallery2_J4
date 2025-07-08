@@ -1,11 +1,11 @@
-<?php // no direct access
+<?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (C) 2003-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
-* RSGallery is Free Software
-*/
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @copyright  (c)  2003-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
+ * RSGallery is Free Software
+ */
 
 \defined('_JEXEC') or die;
 
@@ -15,14 +15,12 @@ use Joomla\CMS\Router\Route;
 
 // HTMLHelper::_('bootstrap.framework');
 
-//HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version' => 'auto', 'relative' => true));
-//HTMLHelper::_('script', 'com_rsgallery2/backend/images.js', ['version' => 'auto', 'relative' => true]);
+//$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
 /* Sort config variables */
-$configVars = array();
-foreach ($this->configVars as $name => $value)
-{
-	$configVars [$name] = $value;
+$configVars = [];
+foreach ($this->configVars as $name => $value) {
+    $configVars [$name] = $value;
 }
 ksort($configVars);
 
@@ -31,23 +29,23 @@ ksort($configVars);
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-		<?php if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-				<?php echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-		<?php endif; ?>
+        <?php endif; ?>
 
-        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-        <div class="flex-fill">
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-				<?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'ConfigRawView')); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
 
 				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_J3X_MINUS_RAW_VIEW', true)); ?>
 
-                <div class="card">
-                    <div class="card-body">
-                        <legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_VARIABLES_DESC'); ?></legend>
+				<div class="card">
+					<div class="card-body">
+						<legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_VARIABLES_DESC'); ?></legend>
 
                         <?php
                         /**
@@ -66,8 +64,7 @@ ksort($configVars);
                         echo '<div class="card-text">';
 
                         echo '<dl class="row">';
-                        foreach ($configVars as  $key => $value)  {
-
+                        foreach ($configVars as $key => $value) {
                             // Handle empty string
                             if (strlen($value) == 0) {
                                 // $value = "''";
@@ -76,7 +73,6 @@ ksort($configVars);
 
                             echo '    <dt class="col-sm-3">' . $key . '</dt>';
                             echo '    <dd class="col-sm-9">' . $value . '</dd>';
-
                         }
                         echo '</dl>';
 
@@ -94,14 +90,14 @@ ksort($configVars);
                         echo '<div class="form-group  purple-border">';
                         echo '    <label for="usr">RSGallery2 Configuration J3x</label>';
                         echo '    <textarea class="form-control manifest_input" id="manifest_input"  cols="40" rows="40" readonly >';
-                        echo             $json_string . '";';
+                        echo $json_string . '";';
                         echo '     </textarea>';
                         echo '</div>';
 
                         ?>
 
-                    </div>
-                </div>
+					</div>
+				</div>
 
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
@@ -109,14 +105,14 @@ ksort($configVars);
 
 
                 <?php
-                    // <!--input type="hidden" name="option" value="com_rsgallery2" />
-                    // <input type="hidden" name="rsgOption" value="maintenance" /-->
-                    // <input type="hidden" name="task" value="" /> ?>
+                // <!--input type="hidden" name="option" value="com_rsgallery2" />
+                // <input type="hidden" name="rsgOption" value="maintenance" /-->
+                // <input type="hidden" name="task" value="" /> ?>
                 <?php echo HTMLHelper::_('form.token'); ?>
-            </div>
+			</div>
 		</div>
 	</div>
 
-    <input type="hidden" name="task" value="" />
-	<?php echo HTMLHelper::_('form.token'); ?>
+	<input type="hidden" name="task" value=""/>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

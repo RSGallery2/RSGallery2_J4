@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  mod_articles_latest
+ * @package         Joomla.Site
+ * @subpackage      mod_articles_latest
  *
  * @copyright  (c)  2019-2025 RSGallery2 Team
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;

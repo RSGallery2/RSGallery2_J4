@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (c) 2016-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
- * @author      finnern
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @copyright  (c)  2016-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
+ * @author         finnern
  * RSGallery is Free Software
  */
 
@@ -27,21 +27,20 @@ use Joomla\Database\DatabaseInterface;
  */
 class GalleriesModel extends ListModel
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 *
-	 * @see     \JControllerLegacy
-	 * @since __BUMP_VERSION__
-	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null)
-	{
-		//  which fields are needed for filter function
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
+    /**
+     * Constructor.
+     *
+     * @param   array                $config   An optional associative array of configuration settings.
+     * @param   MVCFactoryInterface  $factory  The factory.
+     *
+     * @see     \JControllerLegacy
+     * @since   __BUMP_VERSION__
+     */
+    public function __construct($config = [], MVCFactoryInterface $factory = null)
+    {
+        //  which fields are needed for filter function
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = [
 				'id', 'a.id',
 				'name', 'a.name',
 
@@ -60,171 +59,169 @@ class GalleriesModel extends ListModel
 //				'tag',
 				'a.access',
 				'image_count'
-			);
-		}
+            ];
+        }
 
-		if (Associations::isEnabled())
-		{
-			$config['filter_fields'][] = 'association';
-		}
+        if (Associations::isEnabled()) {
+            $config['filter_fields'][] = 'association';
+        }
 
-		parent::__construct($config, $factory);
-	}
+        parent::__construct($config, $factory);
+    }
 
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @param   string  $ordering   An optional ordering field.
-	 * @param   string  $direction  An optional direction (asc|desc).
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function populateState($ordering = 'a.lft', $direction = 'asc')
-	{
-		$app = Factory::getApplication();
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @param   string  $ordering   An optional ordering field.
+     * @param   string  $direction  An optional direction (asc|desc).
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function populateState($ordering = 'a.lft', $direction = 'asc')
+    {
+        $app = Factory::getApplication();
 
-		// Adjust the context to support modal layouts.
-		if ($layout = $app->input->get('layout'))
-		{
-			$this->context .= '.' . $layout;
-		}
+        // Adjust the context to support modal layouts.
+        if ($layout = $app->input->get('layout')) {
+            $this->context .= '.' . $layout;
+        }
 
-		//$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
-		//// Adjust the context to support forced languages.
-		//if ($forcedLanguage)
-		//{
-		//	$this->context .= '.' . $forcedLanguage;
-		//}
+        //$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
+        //// Adjust the context to support forced languages.
+        //if ($forcedLanguage)
+        //{
+        //	$this->context .= '.' . $forcedLanguage;
+        //}
 
 		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
-		$this->setState('filter.extension', $extension);
-		$parts = explode('.', $extension);
+        $this->setState('filter.extension', $extension);
+        $parts = explode('.', $extension);
 
-		// Extract the component name
-		$this->setState('filter.component', $parts[0]);
+        // Extract the component name
+        $this->setState('filter.component', $parts[0]);
 
-		// Extract the optional section name
-		$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
+        // Extract the optional section name
+        $this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
 
-		$search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
-		$this->setState('filter.search', $search);
+        $search = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
+        $this->setState('filter.search', $search);
 
-		// List state information.
-		parent::populateState($ordering, $direction);
+        // List state information.
+        parent::populateState($ordering, $direction);
 
-		//// Force a language.
-		//if (!empty($forcedLanguage))
-		//{
-		//	$this->setState('filter.language', $forcedLanguage);
-		//}
-	}
+        //// Force a language.
+        //if (!empty($forcedLanguage))
+        //{
+        //	$this->setState('filter.language', $forcedLanguage);
+        //}
+    }
 
-	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string  $id  A prefix for the store id.
-	 *
-	 * @return  string  A store id.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
+    /**
+     * Method to get a store id based on model configuration state.
+     *
+     * This is necessary because the model is used by the component and
+     * different modules that might need different sets of data or different
+     * ordering requirements.
+     *
+     * @param   string  $id  A prefix for the store id.
+     *
+     * @return  string  A store id.
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getStoreId($id = '')
+    {
+        // Compile the store id.
 //		$id .= ':' . $this->getState('filter.extension');
-		$id .= ':' . $this->getState('filter.search');
-		$id .= ':' . $this->getState('filter.published');
-		$id .= ':' . $this->getState('filter.access');
+        $id .= ':' . $this->getState('filter.search');
+        $id .= ':' . $this->getState('filter.published');
+        $id .= ':' . $this->getState('filter.access');
 //		$id .= ':' . $this->getState('filter.language');
 //		$id .= ':' . $this->getState('filter.level');
 //		$id .= ':' . $this->getState('filter.tag');
 
-		return parent::getStoreId($id);
-	}
+        return parent::getStoreId($id);
+    }
 
-	/**
-	 * Method to get a database query to list galleries.
-	 *
+    /**
+     * Method to get a database query to list galleries.
+     *
 	 * @return  \DatabaseQuery object.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function getListQuery()
-	{
-		// Create a new query object.
-		$db = $this->getDatabase();
-		$query = $db->getQuery(true);
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function getListQuery()
+    {
+        // Create a new query object.
+        $db    = $this->getDatabase();
+        $query = $db->getQuery(true);
 
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
         // Select the required fields from the table.
-		$query->select(
-			$this->getState(
-				/**/
-				'list.select',
-				'a.id, '
-				. 'a.name, '
-				. 'a.alias, '
-				. 'a.description, '
+        $query->select(
+            $this->getState(
+            /**/
+                'list.select',
+                'a.id, '
+                . 'a.name, '
+                . 'a.alias, '
+                . 'a.description, '
                 . 'a.thumb_id, '
 
                 . 'a.note, '
-				. 'a.params, '
-				. 'a.published, '
+                . 'a.params, '
+                . 'a.published, '
                 . 'a.publish_up,'
                 . 'a.publish_down,'
 
                 . 'a.hits, '
 
-				. 'a.checked_out, '
-				. 'a.checked_out_time, '
-				. 'a.created, '
-				. 'a.created_by, '
-				. 'a.created_by_alias, '
-				. 'a.modified, '
-				. 'a.modified_by, '
+                . 'a.checked_out, '
+                . 'a.checked_out_time, '
+                . 'a.created, '
+                . 'a.created_by, '
+                . 'a.created_by_alias, '
+                . 'a.modified, '
+                . 'a.modified_by, '
 
-				. 'a.parent_id,'
-				. 'a.level, '
-				. 'a.path, '
-				. 'a.lft, '
-				. 'a.rgt,'
+                . 'a.parent_id,'
+                . 'a.level, '
+                . 'a.path, '
+                . 'a.lft, '
+                . 'a.rgt,'
 
-				. 'a.approved,'
+                . 'a.approved,'
                 . 'a.asset_id,'
-				. 'a.access'
-			)
-		);
-		$query->from('#__rsg2_galleries AS a');
+                . 'a.access',
+            ),
+        );
+        $query->from('#__rsg2_galleries AS a');
 
-		/* Count child images */
+        /* Count child images */
 		$query->select('COUNT(img.gallery_id) as image_count')
-			->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id');
+            ->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id');
 
-		//// Join over the language
-		//$query->select('l.title AS language_title, l.image AS language_image')
-		//	->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+        //// Join over the language
+        //$query->select('l.title AS language_title, l.image AS language_image')
+        //	->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
 
-		// Join over the users for the checked out user.
+        // Join over the users for the checked out user.
 		$query->select('uc.name AS editor')
-			->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+            ->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 
-		// Join over the asset groups.
+        // Join over the asset groups.
 		$query->select('ag.title AS access_level')
-			->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+            ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
-		// Join over the users for the author.
+        // Join over the users for the author.
 		$query->select('ua.name AS author_name')
-			->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
+            ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
 //		// Join over the associations.
 //		$assoc = $this->getAssoc();
@@ -237,56 +234,49 @@ class GalleriesModel extends ListModel
 //				->group('a.id, l.title, uc.name, ag.title, ua.name');
 //		}
 
-		// Filter on the level.
-		if ($level = $this->getState('filter.level'))
-		{
-			$query->where('a.level <= ' . (int) $level);
-		}
+        // Filter on the level.
+        if ($level = $this->getState('filter.level')) {
+            $query->where('a.level <= ' . (int)$level);
+        }
 
-		// Filter by access level.
-		if ($access = $this->getState('filter.access'))
-		{
-			$query->where('a.access = ' . (int) $access);
-		}
+        // Filter by access level.
+        if ($access = $this->getState('filter.access')) {
+            $query->where('a.access = ' . (int)$access);
+        }
 
-		// Implement View Level Access
-		if (!$user->authorise('core.admin'))
-		{
-			$groups = implode(',', $user->getAuthorisedViewLevels());
-			$query->where('a.access IN (' . $groups . ')');
-		}
+        // Implement View Level Access
+        if (!$user->authorise('core.admin')) {
+            $groups = implode(',', $user->getAuthorisedViewLevels());
+            $query->where('a.access IN (' . $groups . ')');
+        }
 
-		// Filter by published state
-		$published = (string) $this->getState('filter.published');
+        // Filter by published state
+        $published = (string)$this->getState('filter.published');
 
-		if (is_numeric($published))
-		{
-			$query->where('a.published = ' . (int) $published);
-		}
-		elseif ($published === '')
-		{
-			$query->where('(a.published IN (0, 1))');
-		}
+        if (is_numeric($published)) {
+            $query->where('a.published = ' . (int)$published);
+        } elseif ($published === '') {
+            $query->where('(a.published IN (0, 1))');
+        }
 
-		// Filter by search in name and others
-		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			$search = $db->quote('%' . $db->escape($search, true) . '%');
-			$query->where(
-				'a.name LIKE ' . $search
-				. ' OR a.alias LIKE ' . $search
-				. ' OR a.description LIKE ' . $search
-				. ' OR a.note LIKE ' . $search
-				. ' OR a.created LIKE ' . $search
-				. ' OR a.modified LIKE ' . $search
-			);
-		}
+        // Filter by search in name and others
+        $search = $this->getState('filter.search');
+        if (!empty($search)) {
+            $search = $db->quote('%' . $db->escape($search, true) . '%');
+            $query->where(
+                'a.name LIKE ' . $search
+                . ' OR a.alias LIKE ' . $search
+                . ' OR a.description LIKE ' . $search
+                . ' OR a.note LIKE ' . $search
+                . ' OR a.created LIKE ' . $search
+                . ' OR a.modified LIKE ' . $search,
+            );
+        }
 
-		// exclude root gallery record
+        // exclude root gallery record
 //		$query->where('a.id > 1');
 
-		/**
+        /**
 		// Filter on the language.
 		if ($language = $this->getState('filter.language'))
 		{
@@ -294,8 +284,8 @@ class GalleriesModel extends ListModel
 		}
 		/**/
 
-		// Filter by a single tag.
-		/**
+        // Filter by a single tag.
+        /**
 		$tagId = $this->getState('filter.tag');
 
 		if (is_numeric($tagId))
@@ -309,26 +299,23 @@ class GalleriesModel extends ListModel
 		}
 		/**/
 
-		// Add the list ordering clause
-		$listOrdering = $this->getState('list.ordering', 'a.lft');
-		$listDirn = $db->escape($this->getState('list.direction', 'ASC'));
+        // Add the list ordering clause
+        $listOrdering = $this->getState('list.ordering', 'a.lft');
+        $listDirn     = $db->escape($this->getState('list.direction', 'ASC'));
 
-		if ($listOrdering == 'a.access')
-		{
-			$query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
-		}
-		else
-		{
-			$query->order($db->escape($listOrdering) . ' ' . $listDirn);
-		}
+        if ($listOrdering == 'a.access') {
+            $query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
+        } else {
+            $query->order($db->escape($listOrdering) . ' ' . $listDirn);
+        }
 
-		// Group by on Galleries for \JOIN with component tables to count items
-		$query->group(
-		/**/
-			'a.id, '
-			. 'a.name, '
-			. 'a.alias, '
-			. 'a.description, '
+        // Group by on Galleries for \JOIN with component tables to count items
+        $query->group(
+        /**/
+            'a.id, '
+            . 'a.name, '
+            . 'a.alias, '
+            . 'a.description, '
             . 'a.thumb_id, '
 
             . 'a.note, '
@@ -340,56 +327,55 @@ class GalleriesModel extends ListModel
             . 'a.hits, '
 
             . 'a.checked_out, '
-			. 'a.checked_out_time, '
-			. 'a.created, '
-			. 'a.created_by, '
-			. 'a.created_by_alias, '
-			. 'a.modified, '
-			. 'a.modified_by, '
+            . 'a.checked_out_time, '
+            . 'a.created, '
+            . 'a.created_by, '
+            . 'a.created_by_alias, '
+            . 'a.modified, '
+            . 'a.modified_by, '
 
-			. 'a.parent_id, '
-			. 'a.level, '
-			. 'a.path, '
-			. 'a.lft, '
-			. 'a.rgt, '
+            . 'a.parent_id, '
+            . 'a.level, '
+            . 'a.path, '
+            . 'a.lft, '
+            . 'a.rgt, '
 
             . 'a.approved,'
             . 'a.asset_id,'
             . 'a.access, '
 
-			. 'uc.name, '
-		    . 'ua.name '
+            . 'uc.name, '
+            . 'ua.name ',
 
 //				. 'a.language, '
 //			. 'ag.title, '
 //			. 'l.title, '
 //			. 'l.image, '
 //no good			. 'image_count '
-		/**/
-		);
+        /**/
+        );
 
-		return $query;
-	}
+        return $query;
+    }
 
-	/**
-	 * Prepare and sanitise the table prior to saving.
-	 *
-	 * @param   Table  $table  A Table object.
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	protected function prepareTable($table)
-	{
-		$date = Factory::getDate();
-		$user = Factory::getApplication()->getIdentity();
+    /**
+     * Prepare and sanitise the table prior to saving.
+     *
+     * @param   Table  $table  A Table object.
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    protected function prepareTable($table)
+    {
+        $date = Factory::getDate();
+        $user = Factory::getApplication()->getIdentity();
 
-		if (empty($table->id))
-		{
-			// Set the values
-			$table->created    = $date->toSql();
-			$table->created_by = $user->id;
+        if (empty($table->id)) {
+            // Set the values
+            $table->created    = $date->toSql();
+            $table->created_by = $user->id;
 
 //			// Set ordering to the last item if not set
 //			if (empty($table->ordering))
@@ -404,99 +390,93 @@ class GalleriesModel extends ListModel
 //
 //				$table->ordering = $max + 1;
 //			}
-		}
-		else
-		{
-			// Set the values
-			$table->modified    = $date->toSql();
-			$table->modified_by = $user->id;
-		}
+        } else {
+            // Set the values
+            $table->modified    = $date->toSql();
+            $table->modified_by = $user->id;
+        }
 
-		// Increment the content version number.
-		$table->version++;
-	}
+        // Increment the content version number.
+        $table->version++;
+    }
 
-	/**
-	 * Method to determine if an association exists
-	 *
-	 * @return  boolean  True if the association exists
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function getAssoc()
-	{
-		static $assoc = null;
+    /**
+     * Method to determine if an association exists
+     *
+     * @return  boolean  True if the association exists
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function getAssoc()
+    {
+        static $assoc = null;
 
-		if (!is_null($assoc))
-		{
-			return $assoc;
-		}
+        if (!is_null($assoc)) {
+            return $assoc;
+        }
 
-		$extension = $this->getState('filter.extension');
+        $extension = $this->getState('filter.extension');
 
-		$assoc = Associations::isEnabled();
-		$extension = explode('.', $extension);
-		$component = array_shift($extension);
-		$cname = str_replace('com_', '', $component);
+        $assoc     = Associations::isEnabled();
+        $extension = explode('.', $extension);
+        $component = array_shift($extension);
+        $cname     = str_replace('com_', '', $component);
 
-		if (!$assoc || !$component || !$cname)
-		{
-			$assoc = false;
+        if (!$assoc || !$component || !$cname) {
+            $assoc = false;
 
-			return $assoc;
-		}
+            return $assoc;
+        }
 
-		$componentObject = $this->bootComponent($component);
+        $componentObject = $this->bootComponent($component);
 
-		if ($componentObject instanceof AssociationServiceInterface && $componentObject instanceof CategoryServiceInterface)
-		{
-			$assoc = true;
+        if ($componentObject instanceof AssociationServiceInterface && $componentObject instanceof CategoryServiceInterface) {
+            $assoc = true;
 
-			return $assoc;
-		}
+            return $assoc;
+        }
 
-		$hname = $cname . 'HelperAssociation';
+        $hname = $cname . 'HelperAssociation';
 		\JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
 
-		$assoc = class_exists($hname) && !empty($hname::$category_association);
+        $assoc = class_exists($hname) && !empty($hname::$category_association);
 
-		return $assoc;
-	}
+        return $assoc;
+    }
 
-	/**
-	 * Method to get an array of data items.
-	 *
-	 * @return  mixed  An array of data items on success, false on failure.
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public function getItems()
-	{
-		$items = parent::getItems();
+    /**
+     * Method to get an array of data items.
+     *
+     * @return  mixed  An array of data items on success, false on failure.
+     *
+     * @since __BUMP_VERSION__
+     */
+    public function getItems()
+    {
+        $items = parent::getItems();
 
-		if ($items != false)
-		{
-			/**
+        if ($items != false) {
+            /**
 			$extension = $this->getState('filter.extension');
 
 			$this->countItems($items, $extension);
 			/**/
-		}
+        }
 
-		return $items;
-	}
+        return $items;
+    }
 
-	/**
-	 * Method to load the countItems method from the extensions
-	 *
-	 * @param   \stdClass[]  &$items     The category items
-	 * @param   string       $extension  The category extension
-	 *
-	 * @return  void
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	/**
+    /**
+     * Method to load the countItems method from the extensions
+     *
+     * @param   \stdClass[]  &$items      The category items
+     * @param   string        $extension  The category extension
+     *
+     * @return  void
+     *
+     * @since __BUMP_VERSION__
+     */
+    /**
 	public function countItems(&$items, $extension)
 	{
 		$parts     = explode('.', $extension, 2);
@@ -516,101 +496,94 @@ class GalleriesModel extends ListModel
 	}
 	/**/
 
-	/**
-	 * This function will retrieve the data of the n last uploaded images
-	 *
-	 * @param int $limit > 0 will limit the number of lines returned
-	 *
-	 * @return array rows with image name, gallery name, date, and user name as rows
-	 *
-	 * @since __BUMP_VERSION__
-	 * @throws Exception
-	 */
-	public static function latestGalleries($limit)
-	{
-		$latest = array();
+    /**
+     * This function will retrieve the data of the n last uploaded images
+     *
+     * @param   int  $limit  > 0 will limit the number of lines returned
+     *
+     * @return array rows with image name, gallery name, date, and user name as rows
+     *
+     * @throws \Exception
+     * @since __BUMP_VERSION__
+     */
+    public static function latestGalleries($limit)
+    {
+        $latest = [];
 
-		try
-		{
-			// Create a new query object.
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true);
+        try {
+            // Create a new query object.
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true);
 
-			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
-			//	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
+            //$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
+            //	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
 
-			$query
-				->select('*')
-				->from($db->quoteName('#__rsg2_galleries'))
-				->order($db->quoteName('id') . ' DESC');
+            $query
+                ->select('*')
+                ->from($db->quoteName('#__rsg2_galleries'))
+                ->order($db->quoteName('id') . ' DESC');
 
-			$db->setQuery($query, 0, $limit);
-			$rows = $db->loadObjectList();
+            $db->setQuery($query, 0, $limit);
+            $rows = $db->loadObjectList();
 
+            foreach ($rows as $row) {
+                $ImgInfo         = [];
+                $ImgInfo['name'] = $row->name;
+                $ImgInfo['id']   = $row->id;
+
+                //$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
+                $user = Factory::getUser($row->created_by);
+                //$ImgInfo['user'] = $user->get('username');
+                $ImgInfo['user'] = $user->name;
+                //$ImgInfo['user'] = "*Finnern was auch immer";
+
+                $latest[] = $ImgInfo;
+            }
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $latest;
+    }
+
+    /**
+     * This function will retrieve the data of the n last uploaded images
+     *
+     * @param   int  $limit  > 0 will limit the number of lines returned
+     *
+     * @return array rows with image name, gallery name, date, and user name as rows
+     *
+     * @since __BUMP_VERSION__
+     */
+    public static function allGalleries()
+    {
+        $latest = [];
+
+        try {
+            // Create a new query object.
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true);
+
+            //$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
+            //	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
+
+            $query
+                ->select('*')
+                ->from($db->quoteName('#__rsg2_galleries'))
+                //->where date ... ???
+                ->order($db->quoteName('id') . ' DESC');
+
+            $db->setQuery($query);
+            $rows = $db->loadObjectList();
+            /**
 			foreach ($rows as $row)
 			{
-				$ImgInfo         = array();
-				$ImgInfo['name'] = $row->name;
-				$ImgInfo['id']   = $row->id;
-
-				//$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
-				$user            = Factory::getUser($row->created_by);
-				//$ImgInfo['user'] = $user->get('username');
-				$ImgInfo['user'] = $user->name;
-				//$ImgInfo['user'] = "*Finnern was auch immer";
-
-				$latest[] = $ImgInfo;
-			}
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
-
-		return $latest;
-	}
-
-
-	/**
-	 * This function will retrieve the data of the n last uploaded images
-	 *
-	 * @param int $limit > 0 will limit the number of lines returned
-	 *
-	 * @return array rows with image name, gallery name, date, and user name as rows
-	 *
-	 * @since __BUMP_VERSION__
-	 */
-	public static function allGalleries()
-	{
-		$latest = array();
-
-		try
-		{
-			// Create a new query object.
-			$db = Factory::getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true);
-
-			//$query = 'SELECT * FROM `#__rsgallery2_files` WHERE (`date` >= '. $database->quote($lastweek)
-			//	.' AND `published` = 1) ORDER BY `id` DESC LIMIT 0,5';
-
-			$query
-				->select('*')
-				->from($db->quoteName('#__rsg2_galleries'))
-				//->where date ... ???
-				->order($db->quoteName('id') . ' DESC');
-
-			$db->setQuery($query);
-			$rows = $db->loadObjectList();
-
-			/**
-			foreach ($rows as $row)
-			{
-				$ImgInfo         = array();
+				$ImgInfo         = [];
 				$ImgInfo['name'] = $row->name;
 				$ImgInfo['id']   = $row->id;
 
@@ -626,16 +599,15 @@ class GalleriesModel extends ListModel
 		}
 		catch (\RuntimeException $e)
 		{
-			$OutTxt = '';
-			$OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+            $OutTxt = '';
+            $OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
-		return $rows;
-	}
-
+        return $rows;
+    }
 
 } // class

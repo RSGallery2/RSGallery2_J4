@@ -1,10 +1,10 @@
 <?php
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
  *
- * @copyright  (c) 2005-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2005-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
@@ -12,11 +12,9 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\Session\Session;
-use \Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
@@ -32,16 +30,16 @@ class MaintenanceCleanUpController extends BaseController
     /**
      * Constructor.
      *
-     * @param array $config An optional associative array of configuration settings.
-     * Recognized key values include 'name', 'default_task', 'model_path', and
-     * 'view_path' (this list is not meant to be comprehensive).
-     * @param MVCFactoryInterface $factory The factory.
-     * @param CMSApplication $app The JApplication for the dispatcher
-     * @param Input $input Input
+     * @param   array                $config   An optional associative array of configuration settings.
+     *                                         Recognized key values include 'name', 'default_task', 'model_path', and
+     *                                         'view_path' (this list is not meant to be comprehensive).
+     * @param   MVCFactoryInterface  $factory  The factory.
+     * @param   CMSApplication       $app      The JApplication for the dispatcher
+     * @param   Input                $input    Input
      *
      * @since __BUMP_VERSION__
      *
-     * public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+     * public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
      * {
      * parent::__construct($config, $factory, $app, $input);
      *
@@ -57,7 +55,7 @@ class MaintenanceCleanUpController extends BaseController
      */
     public function purgeImagesAndData()
     {
-        $msg = "MaintenanceCleanUp.purgeImagesAndData: ";
+        $msg     = "MaintenanceCleanUp.purgeImagesAndData: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -65,7 +63,7 @@ class MaintenanceCleanUpController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
@@ -92,12 +90,9 @@ class MaintenanceCleanUpController extends BaseController
                 }
 
                 if (!$isRemoved) {
-
                     //$msgType = 'warning';
                     $msgType = 'error';
-
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing purgeImagesAndData: "' . '<br>';
@@ -106,13 +101,11 @@ class MaintenanceCleanUpController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=Maintenance';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Change file uninstall.mysql.utf8.sql so it does remove the RSG2 Tables
@@ -123,7 +116,7 @@ class MaintenanceCleanUpController extends BaseController
      */
     public function prepareRemoveTables()
     {
-        $msg = "MaintenanceCleanUp.prepareRemoveTables: ";
+        $msg     = "MaintenanceCleanUp.prepareRemoveTables: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -131,22 +124,20 @@ class MaintenanceCleanUpController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-
                 $isUpdated = $this->activateDrop4RSG2Tables(true);
 
                 if ($isUpdated) {
                     $msg .= "Successful activated drop of tables on uninstall";
                 } else {
-                    $msg .= "Error at activation 'drop of tables on uninstall'";
+                    $msg     .= "Error at activation 'drop of tables on uninstall'";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing prepareRemoveTables: "' . '<br>';
@@ -155,13 +146,11 @@ class MaintenanceCleanUpController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=Maintenance';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
     /**
      * Change file uninstall.mysql.utf8.sql so it does not remove the RSG2 Tables
@@ -170,7 +159,7 @@ class MaintenanceCleanUpController extends BaseController
      */
     public function undoPrepareRemoveTables()
     {
-        $msg = "MaintenanceCleanUp.undoPrepareRemoveTables: ";
+        $msg     = "MaintenanceCleanUp.undoPrepareRemoveTables: ";
         $msgType = 'notice';
 
         $this->checkToken();
@@ -178,22 +167,20 @@ class MaintenanceCleanUpController extends BaseController
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
             //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-
                 $isUpdated = $this->activateDrop4RSG2Tables(false);
 
                 if ($isUpdated) {
                     $msg .= "Successful prevented drop of tables on uninstall";
                 } else {
-                    $msg .= "Error at prevent 'drop of tables on uninstall'";
+                    $msg     .= "Error at prevent 'drop of tables on uninstall'";
                     $msgType = 'error';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing undoPrepareRemoveTables: "' . '<br>';
@@ -202,7 +189,6 @@ class MaintenanceCleanUpController extends BaseController
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'error');
             }
-
         }
 
         $link = 'index.php?option=com_rsgallery2&view=Maintenance';
@@ -211,26 +197,31 @@ class MaintenanceCleanUpController extends BaseController
 
     // uninstall.mysql.utf8.sql
 
+    /**
+     * @param $DoDrop
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     * @since version
+     */
     private function activateDrop4RSG2Tables($DoDrop = true)
     {
-
         $isOk = false;
 
-        $dropText = 'DROP TABLE IF EXISTS ';
+        $dropText      = 'DROP TABLE IF EXISTS ';
         $doNotDropText = '#DROP TABLE IF EXISTS ';
 
         try {
             $sqlUninstallFile = JPATH_COMPONENT_ADMINISTRATOR . '/sql/uninstall.mysql.utf8.sql';
 
             // file found
-            if (File::exists($sqlUninstallFile)) {
-
+            if (file_exists($sqlUninstallFile)) {
                 // Read all lines
                 $lines = file($sqlUninstallFile);
 
                 // content found
                 if (!empty ($lines)) {
-
                     /*-------------------------------------------------------------------
                     Write back all (changed) lines
                     -------------------------------------------------------------------*/
@@ -239,16 +230,12 @@ class MaintenanceCleanUpController extends BaseController
 
                     // check all lines for drop ....
                     foreach ($lines as $line) {
-
                         $changedLine = $line;
 
                         if ($DoDrop) {
-
                             // activate drop tables on uninstall RSG2
                             $changedLine = str_replace($doNotDropText, $dropText, $line);
-
                         } else {
-
                             // do not drop tables on uninstall RSG2
 
                             // ? is not already set
@@ -274,7 +261,6 @@ class MaintenanceCleanUpController extends BaseController
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-
         return $isOk;
     }
 
@@ -289,34 +275,29 @@ class MaintenanceCleanUpController extends BaseController
     {
         $isOk = false;
 
-        $msg = "MaintenanceCleanUp.ResetConfigToDefault: ";
+        $msg     = "MaintenanceCleanUp.ResetConfigToDefault: ";
         $msgType = 'notice';
 
         $this->checkToken();
 
         $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
         if (!$canAdmin) {
-            $msg .= Text::_('JERROR_ALERTNOAUTHOR');
+            $msg     .= Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-
             try {
-
                 $configModel = $this->getModel('ConfigRaw');
-                $isSaved = $configModel->ResetConfigToDefault();
+                $isSaved     = $configModel->ResetConfigToDefault();
 
                 if ($isSaved) {
                     // config saved message
                     $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
-                }
-                else
-                {
-                    $msg .= "Error at resetting configuration to default'";
+                } else {
+                    $msg     .= "Error at resetting configuration to default'";
                     $msgType = 'warning';
                 }
-
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing ResetConfigToDefault: "' . '<br>';
@@ -330,6 +311,5 @@ class MaintenanceCleanUpController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=Maintenance';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 
 } // class

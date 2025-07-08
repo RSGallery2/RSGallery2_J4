@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @package         RSGallery2
  * @subpackage      com_rsgallery2
@@ -36,13 +36,13 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
-				$plgHelper =(array)PluginHelper::getPlugin('content', 'rsg2_random_images');
+                $plgHelper  = (array)PluginHelper::getPlugin('content', 'rsg2_random_images');
                 $dispatcher = $container->get(DispatcherInterface::class);
 
-                $plugin     = new Rsg2_random_images($dispatcher, $plgHelper);
+                $plugin = new Rsg2_random_images($dispatcher, $plgHelper);
                 $plugin->setApplication(Factory::getApplication());
                 //$plugin->setDatabase($container->get(DatabaseInterface::class));
-				//$plugin->setMyCustomService($container->get(MyCustomService::class));
+                //$plugin->setMyCustomService($container->get(MyCustomService::class));
 
                 return $plugin;
             }
