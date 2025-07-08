@@ -53,7 +53,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null)
+    public function display($tpl = null) : void
     {
         $item   =
         $this->item = $this->get('Item');
@@ -91,6 +91,6 @@ class HtmlView extends BaseHtmlView
 		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
         $item->event->afterDisplayContent = trim(implode("\n", $results));
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 }

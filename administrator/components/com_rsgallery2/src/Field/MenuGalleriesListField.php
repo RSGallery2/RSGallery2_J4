@@ -64,7 +64,7 @@ class MenuGalleriesListField extends ListField
     /**
      * Method to get a list of options for a list input.
      *
-     * @return  string array  The field option objects.
+     * @return  array  The field option objects.
      *
      * @since __BUMP_VERSION__
      */

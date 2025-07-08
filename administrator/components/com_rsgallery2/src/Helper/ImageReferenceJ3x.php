@@ -21,7 +21,8 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 
-
+
+
 
 // Include the JLog class.
 //jimport('joomla.log.log');
@@ -34,7 +35,9 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
  */
 class ImageReferenceJ3x extends ImageReference
 {
-    /**
+	public bool $UseWatermarked;
+
+	/**
      * ImageReference constructor. init all variables
      *
      * @since version 4.3

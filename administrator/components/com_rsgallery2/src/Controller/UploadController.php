@@ -29,7 +29,8 @@ use Joomla\CMS\Session\Session;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 
-
+
+
 use function dirname;
 
 /**
@@ -129,7 +130,7 @@ class UploadController extends FormController
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-            issueError($errorType);
+	        $this->issueError($errorType);
         }
 
         try {
@@ -328,7 +329,7 @@ out:
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-            issueError($errorType);
+	        $this->issueError($errorType);
         }
 
         try {
@@ -521,7 +522,7 @@ out:
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-            issueError($errorType);
+	        $this->issueError($errorType);
         }
 
         try {
@@ -802,7 +803,7 @@ out:
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-            issueError($errorType);
+	        $this->issueError($errorType);
         }
 
         try {
@@ -1021,7 +1022,7 @@ interface IResponseTransfer {
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-            issueError($errorType);
+            $this->issueError($errorType);
         }
 
         try {
@@ -1300,8 +1301,8 @@ interface IResponseTransfer {
 
                     throw new \Exception('Attention: raised \Exception ');
 
-                    echo new JsonResponse($result, 'Response message with !!! no !!! error set');
-                    break;
+                    //echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+                    //break;
             }
 
             $app->close();

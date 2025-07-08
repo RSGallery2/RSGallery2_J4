@@ -30,7 +30,7 @@ use Joomla\Database\ParameterType;
  *
  * @since  3.3
  */
-class Router extends RouterView
+class XXRouter extends RouterView
 {
     /**
      * Flag to remove IDs

@@ -19,6 +19,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+use Joomla\Database\QueryInterface;
 use Joomla\Registry\Registry;
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
@@ -181,16 +182,16 @@ class ImagesModel extends ListModel
                 if ($images_column_arrangement_gallery == '1') {
                     $max_columns_in_images_view = $gallery_param->get('max_columns_in_images_view');
 
-                    $images_row_arrangement_gallery = $gallery_param->get('images_row_arrangement', $images_row_arrangement, 'INT');
+                    $images_row_arrangement_gallery = (int)$gallery_param->get('images_row_arrangement', $images_row_arrangement);
                     if ($images_row_arrangement_gallery != 'global') {
                         $images_row_arrangement = (int)$images_row_arrangement_gallery;
 
                         // toDo: switch when more selections .. (0 auto)
 
                         if ($images_row_arrangement_gallery == '1') {
-                            $max_rows_in_images_view = $gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view, 'INT');
+                            $max_rows_in_images_view = (int)$gallery_param->get('max_rows_in_images_view', $max_rows_in_images_view);
                         } else {
-                            $max_thumbs_in_images_view = $gallery_param->get('max_thumbs_in_images_view', $max_thumbs_in_images_view, 'INT');
+                            $max_thumbs_in_images_view = (int)$gallery_param->get('max_thumbs_in_images_view', $max_thumbs_in_images_view);
                         }
                     }
                 }
@@ -241,7 +242,7 @@ class ImagesModel extends ListModel
     /**/
     private function gallery_parameter($gid = 0)
     {
-        $parameter = new stdClass();
+        $parameter = new \stdClass();
 
         // Not root gallery (tree root == 1)
         if ($gid > 1) {
@@ -473,7 +474,7 @@ class ImagesModel extends ListModel
 
                 $images[] = $image;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -520,7 +521,7 @@ class ImagesModel extends ListModel
 
                 $images[] = $image;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -689,7 +690,7 @@ class ImagesModel extends ListModel
     /**
      * Method to get a database query to list images.
      *
-     * @return  \DatabaseQuery object.
+     * @return  QueryInterface object.
      *
      * @since __BUMP_VERSION__
      */

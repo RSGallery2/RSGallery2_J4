@@ -59,7 +59,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
 ?>
 
-<form id="rsg2_gallery__form" action="<?ph echo Route::_('index.php?option=com_rsgallery2&view=slideshow'); ?>" method="post"
+<form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=slideshow'); ?>" method="post"
       class="form-validate form-horizontal well">
 
     <div class="rsg2__form rsg2__slide_area">

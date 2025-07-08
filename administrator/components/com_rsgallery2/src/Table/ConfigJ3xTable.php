@@ -22,6 +22,8 @@ use Joomla\Database\DatabaseDriver;
  */
 class ConfigJ3xTable extends Table
 {
+	public $access = null;
+
     /**
      * Constructor
      *

@@ -12,7 +12,6 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 \defined('_JEXEC') or die;
 
-use DatabaseQuery;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -21,7 +20,9 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+use Joomla\Database\QueryInterface;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
@@ -104,7 +105,7 @@ class GalleriesModel extends ListModel
             $this->_item = [];
         }
 
-        $galleries = new stdClass(); // ToDo: all to (object)[];
+        $galleries = new \stdClass(); // ToDo: all to (object)[];
         $galleryId = $this->getGalleryId();
 
         // not fetched already
@@ -133,7 +134,7 @@ class GalleriesModel extends ListModel
                 }
 
                 $this->_item[$galleryId] = $data;
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'GalleriesModel: getItems: Error executing query: "' . "" . '"' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -219,7 +220,7 @@ class GalleriesModel extends ListModel
                 // view single gallery as slideshow on click
                 $this->assignSlideshowUrl($gallery);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -288,7 +289,7 @@ class GalleriesModel extends ListModel
 //			return $list;
 //
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: RandomImageId: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -308,7 +309,7 @@ class GalleriesModel extends ListModel
      */
     public function ImageById($imageId)
     {
-        $image = new stdClass();
+        $image = new \stdClass();
 
         try {
             // Create a new query object.
@@ -326,7 +327,7 @@ class GalleriesModel extends ListModel
 
             $image    = $db->loadObject();
             $testName = $image->name;
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: ImageById: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -358,7 +359,7 @@ class GalleriesModel extends ListModel
                 $imagePathJ3x = new ImagePathsJ3xModel ();
                 $imagePathJ3x->assignPathData($image);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -396,7 +397,7 @@ class GalleriesModel extends ListModel
 
                 $gallery->subGalleryList[] = $subData;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -422,7 +423,7 @@ class GalleriesModel extends ListModel
             $db->setQuery($query);
 
             $imageCount = $db->loadResult();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: imageCount: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -464,7 +465,7 @@ class GalleriesModel extends ListModel
 
             /**/
             // ToDo: watermarked file
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -494,7 +495,7 @@ class GalleriesModel extends ListModel
                 true,
                 0,
                 true);
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -546,7 +547,7 @@ class GalleriesModel extends ListModel
             //$data = $db->loadObjectList();
             //$galleries = $db->loadObjectList();
             $parentGallery = $db->loadObject();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -666,7 +667,7 @@ class GalleriesModel extends ListModel
     /**
      * Method to get a database query to list galleries.
      *
-     * @return  \DatabaseQuery object.
+     * @return  QueryInterface object.
      *
      * @since __BUMP_VERSION__
      */

@@ -13,17 +13,20 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Galleries;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\HTML\Helpers\Sidebar;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-
+
+
 
 /**
  * View class for a list of rsgallery2.
@@ -85,6 +88,10 @@ class HtmlView extends BaseHtmlView
      */
     protected $canDo;
 
+    protected $ordering;
+
+    protected $transitions;
+
     /**
      * Is there a content type associated with this gallery alias
      *
@@ -119,9 +126,14 @@ class HtmlView extends BaseHtmlView
         }
 
         // Preprocess the list of items to find ordering divisions.
+	    $this->ordering = [];
         foreach ($this->items as &$item) {
+			// ToDo:
             $this->ordering[$item->parent_id][] = $item->id;
         }
+
+		// TODO: when is is set , used below
+		$this->transitions = [];
 
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);

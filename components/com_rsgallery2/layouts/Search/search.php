@@ -80,7 +80,7 @@ $this->activeFilters = $this->get('ActiveFilters');
                     <input class="form-control "
                            type="search"
                            value=""
-                                       placeholder="<?php echo $placeholder;?>"
+                           placeholder="<?php echo $placeholder;?>"
                            id="rsg2_search_input"
                     >
                     <span class="input-group-append">

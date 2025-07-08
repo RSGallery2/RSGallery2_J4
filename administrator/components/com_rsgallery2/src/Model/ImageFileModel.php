@@ -176,7 +176,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @param   image   $memImage
      *
-     * @return image if successful
+     * @return bool true if successful
      *
      * @throws \Exception
      * @since __BUMP_VERSION__
@@ -308,7 +308,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * @param   string  $singleFileName  Destination base file name
      * @param   int     $galleryId       May be used in destination path
      *
-     * @return bool success
+     * @return array
      *
      * @throws \Exception
      *
@@ -410,7 +410,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @param   string  $imageFileName  Base filename for images to be deleted
      *
-     * @return bool True on success
+     * @return array
      *
      * @throws \Exception
      * @since __BUMP_VERSION__
@@ -716,9 +716,8 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @throws \Exception
      * @since __BUMP_VERSION__
-     * @since __BUMP_VERSION__
      */
-    public function CreateRSG2Images(ImagePathsModel $imagePaths, $srcFileName = '', $targetFileName = '')//: array
+    public function CreateRSG2Images(ImagePathsModel $imagePaths, $srcFileName = '', $targetFileName = '') : bool
     {
         global $rsgConfig, $Rsg2DebugActive;
 
@@ -851,7 +850,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         ImagePathsJ3xModel $imagePaths,
         $srcFileName = '',
         $targetFileName = '',
-    )//: array
+    ) : bool
     {
         global $rsgConfig, $Rsg2DebugActive;
 
@@ -969,7 +968,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * Selects all recognised images names in given folder
      * All other file names will be returned in the ignores list
      *
-     * @param $extractDir folder with sub folders and images
+     * @param string $extractDir folder with sub folders and images
      *
      * @return array  List of valid image files and List of ignored files (directories do npt count)
      *
@@ -1250,7 +1249,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @param $ImageId
      *
-     * @return bool
+     * @return array
      *
      * @since __BUMP_VERSION__
      */

@@ -16,6 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Table\Table;
+use Joomla\Filter\InputFilter;
 
 /**
  * Item Model for a Configuration items (options).

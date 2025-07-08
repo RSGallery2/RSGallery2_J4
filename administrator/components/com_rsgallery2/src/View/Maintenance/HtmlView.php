@@ -55,6 +55,7 @@ class HtmlView extends BaseHtmlView
     protected $developActive;
 
     protected $intended;
+    protected $exifImageFiles;
 
     // ToDo: Use other rights instead of core.admin -> IsRoot ?
     // core.admin is the permission used to control access to
@@ -234,6 +235,7 @@ class HtmlView extends BaseHtmlView
 
                 //--- prepare empty input for files -------------------------------------
 
+	            $this->exifImageFiles = [];
                 for ($idx = count($this->exifImageFiles); $idx < 10; $idx++) {
                     $this->exifImageFiles [] = ['', ''];
                 }

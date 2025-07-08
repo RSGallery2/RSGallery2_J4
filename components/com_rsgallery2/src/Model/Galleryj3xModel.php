@@ -53,7 +53,7 @@ class Galleryj3xModel extends GalleryModel
 
                 $this->AssignUrlDownloadImage($image);
             }
-        } catch (/RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: AddLayoutData: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

@@ -13,8 +13,10 @@ namespace Rsgallery2\Component\Rsgallery2\site\Controller;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Input;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
@@ -33,6 +35,7 @@ use stdClass;
  */
 class CommentController extends BaseController
 {
+	protected $extension;
 
     /**
      * Constructor.
@@ -153,7 +156,7 @@ class CommentController extends BaseController
                     // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&id=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
                     //$link = 'index.php?option=com_rsgallery2&view=gallery&id=' . $galleryId . '&id=' . $imageId
                     //	. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error executing addComment: "' . '<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

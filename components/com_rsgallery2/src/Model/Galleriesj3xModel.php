@@ -109,7 +109,7 @@ class Galleriesj3xModel extends ListModel
                 if ($galleryId == 0) {
                     $galleries = parent::getItems();
                 } else {
-                    $galleries = $this->getchildGalleries($galleryId);
+                    $galleries = $this->getChildGalleries($galleryId);
                 }
 
                 // see above $galleries = parent::getItems();
@@ -204,12 +204,12 @@ class Galleriesj3xModel extends ListModel
      * /    /**
      * @since version
      */
-    public function getchildGalleries()
+    public function getChildGalleries(int $gid)
     {
         $parentGallery = null;
 
         try {
-            $gid = $this->galleryId;
+            // old: $gid = $this->galleryId;
 
             // Select parent and child galleries
             $db = $this->getDatabase();
@@ -225,7 +225,7 @@ class Galleriesj3xModel extends ListModel
             //$data = $db->loadObjectList();
             //$galleries = $db->loadObjectList();
             $parentGallery = $db->loadObject();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleriesj3xModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -398,7 +398,7 @@ class Galleriesj3xModel extends ListModel
 
             $image    = $db->loadObject();
             $testName = $image->name;
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleriesj3xModel: ImageById: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

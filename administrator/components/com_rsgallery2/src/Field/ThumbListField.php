@@ -18,7 +18,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Database\DatabaseInterface;
 
-
+
+
 
 /**
  * Collects available gallery ids and names and creates
@@ -64,7 +65,7 @@ class ThumbListField extends ListField
     /**
      * Method to get a list of options for a list input.
      *
-     * @return  string array  The field option objects.
+     * @return  array  The field option objects.
      *
      * @since __BUMP_VERSION__
      */

@@ -255,7 +255,7 @@ class Rsg2ExtensionModel extends BaseModel
      *
      * @param $params
      */
-    function replaceRsg2ExtensionConfiguration($params)
+	public static function replaceRsg2ExtensionConfiguration($params)
     {
         $isWritten = false;
 

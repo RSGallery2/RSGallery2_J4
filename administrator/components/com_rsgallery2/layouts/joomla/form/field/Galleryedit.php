@@ -15,6 +15,8 @@ use Joomla\CMS\Language\Text;
 
 extract($displayData);
 
+// ToDo: $value is string/array ??? -> $values ?
+
 /**
  * Layout variables
  * -----------------
@@ -53,6 +55,8 @@ $html    = [];
 $classes = [];
 $attr    = '';
 $attr2   = '';
+$value = [];
+
 
 // Initialize some field attributes.
 $attr .= !empty($size) ? ' size="' . $size . '"' : '';

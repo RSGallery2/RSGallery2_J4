@@ -61,7 +61,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null)
+    public function display($tpl = null) : void
     {
 //        $item   = $this->item = $this->get('Item');
 //        $state  =

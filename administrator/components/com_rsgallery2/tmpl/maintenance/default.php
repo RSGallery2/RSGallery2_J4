@@ -16,8 +16,6 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Filesystem\Path;
 
-//use Joomla\CMS\Session\Session;
-
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.maintenance');
 
 Text::script('COM_RSGALLERY2_CONFIRM_PURGE_TABLES_DEL_IMAGES', true);
@@ -1007,7 +1005,7 @@ function zoneInfo($info = 'Unknown zone info')
 
 
 		<input type="hidden" name="task" value=""/>
-		<!--input id="token" type="hidden" name="' . \Joomla\CMS\Session\Session::getFormToken() . '" value="1" /-->';
+		<!--input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" /-->';
 		<?php echo HTMLHelper::_('form.token'); ?>
 	</form>
 

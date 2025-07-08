@@ -15,6 +15,8 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Database\DatabaseQuery;
+use Joomla\Database\QueryInterface;
 
 /**
  * RSGallery2 Component Images Model
@@ -155,7 +157,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
     /**
      * Method to get a database query to list images.
      *
-	 * @return  \DatabaseQuery object.
+	 * @return  Queryinterface object.
      *
      * @since __BUMP_VERSION__
      */

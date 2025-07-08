@@ -26,7 +26,9 @@ use UnexpectedValueException;
  */
 class ImageTable extends Table
 {
-    /**
+	public $access = null;
+
+	/**
      * Constructor
      *
      * @param   DatabaseDriver  $db  Database connector object
@@ -51,7 +53,7 @@ class ImageTable extends Table
      *
      * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
      *
-     * @see     \JTable::bind
+     * @see     \Table::bind
      * @since   __BUMP_VERSION__
      */
     public function bind($array, $ignore = '')

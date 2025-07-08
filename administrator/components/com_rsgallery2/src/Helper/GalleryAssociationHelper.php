@@ -8,7 +8,8 @@
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
-\defined('_JEXEC') or die;
+
+\defined('_JEXEC') or die;
 
 /**
  * Gallery Component Association Helper
@@ -39,7 +40,9 @@ abstract class GalleryAssociationHelper
             $associations = GalleriesHelper::getAssociations($id, $extension);
 
             foreach ($associations as $tag => $item) {
+	            // ToDo: getGalleryRoute not defined as such
                 if (class_exists($helperClassname) && is_callable([$helperClassname, 'getGalleryRoute'])) {
+	                // ToDo: getGalleryRoute not defined as such
                     $return[$tag] = $helperClassname::getGalleryRoute($item, $tag);
                 } else {
                     $return[$tag] = 'index.php?option=' . $extension . '&view=gallery&id=' . $item;

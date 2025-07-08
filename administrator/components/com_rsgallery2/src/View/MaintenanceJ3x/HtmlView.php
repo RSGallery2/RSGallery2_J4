@@ -40,6 +40,9 @@ class HtmlView extends BaseHtmlView
 
     protected $j3x_galleriesHtml;
 
+	protected $j3x_galleryIdsMerged = null;
+	protected $j3x_galleriesSorted = null;
+
     /**
      * Method to display the view.
      *

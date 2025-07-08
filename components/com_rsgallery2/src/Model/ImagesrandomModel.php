@@ -99,7 +99,7 @@ class imagesrandomModel extends ListModel
             $this->_item = [];
         }
 
-        $images = new stdClass(); // ToDo: all to (object)[];
+        $images = new \stdClass(); // ToDo: all to (object)[];
 
         // not fetched already
         if (!isset($this->_item[$gid])) {
@@ -127,7 +127,7 @@ class imagesrandomModel extends ListModel
                     $this->_item[$gid] = false;
                     // throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_RSGALLERY2_NOT_FOUND'), 404);
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->setError($e);
                 $this->_item[$gid] = false;
             }

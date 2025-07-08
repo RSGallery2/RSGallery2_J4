@@ -22,6 +22,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Database\ParameterType;
+use Joomla\Database\QueryInterface;
 use Joomla\Registry\Registry;
 
 
@@ -151,7 +152,7 @@ class GalleryModel extends ListModel
                 $imagePathJ3x = new ImagePathsJ3xData ();
                 $imagePathJ3x->assignPathData($image);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleriesModel: assignImageUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -189,7 +190,7 @@ class GalleryModel extends ListModel
 
             /**/
             // ToDo: watermarked file
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: AssignUrlImageAsInline: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -216,7 +217,7 @@ class GalleryModel extends ListModel
                 true,
                 0,
                 true);
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -320,7 +321,7 @@ class GalleryModel extends ListModel
                 0,
                 true,
             );
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GallerysModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -645,7 +646,7 @@ class GalleryModel extends ListModel
     /**
      * Method to get a database query to list images.
      *
-     * @return  DatabaseQuery object.
+     * @return  QueryInterface object.
      *
      * @since __BUMP_VERSION__
      */

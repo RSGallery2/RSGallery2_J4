@@ -135,7 +135,7 @@ class GalleryModel extends AdminModel
      * @param   string  $prefix  The class prefix. Optional.
      * @param   array   $config  Configuration array for model. Optional.
      *
-     * @return  Table  A JTable object
+     * @return  Table  A Table object
      *
      * @since __BUMP_VERSION__
      */
@@ -232,7 +232,7 @@ class GalleryModel extends AdminModel
 
 			// Convert the metadata field to an array.
 			$registry = new Registry($result->metadata);
-			$result->metadata = $registry->to[];
+			$result->metadata = $registry->toArray();
 
 			// Convert the created and modified dates to local user time for display in the form.
 			$tz = new \DateTimeZone(Factory::getApplication()->get('offset'));
@@ -685,7 +685,7 @@ class GalleryModel extends AdminModel
                     $data['alias'] = OutputFilter::stringURLSafe($data['title']);
                 }
 
-                $table = Table::getInstance('Content', 'JTable');
+                $table = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
 
                 if ($table->load(['alias' => $data['alias'], 'catid' => $data['catid']])) {
                     $msg = Text::_('COM_CONTENT_SAVE_WARNING');
@@ -933,6 +933,8 @@ class GalleryModel extends AdminModel
 
             return true;
         }
+
+		return false;
     }
 
     /**

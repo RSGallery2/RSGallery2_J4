@@ -20,7 +20,8 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 
-
+
+
 
 // Include the JLog class.
 //jimport('joomla.log.log');
@@ -122,6 +123,8 @@ class ImageReference
      * @since version
      */
     public $sizeFilePaths; // 800x6000, ..., ? display:J3x
+
+	public bool $UseWatermarked;
 
     //--- constants -----------------------------------------
 

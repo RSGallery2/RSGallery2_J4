@@ -83,7 +83,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null)
+    public function display($tpl = null) : void
     {
         //--- gallery (j4x++ try) --------------------------------------------------
 
@@ -176,7 +176,7 @@ class HtmlView extends BaseHtmlView
                 . '</span><br><br>';
         }
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
 }

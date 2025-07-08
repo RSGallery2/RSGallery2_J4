@@ -18,7 +18,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\QueryInterface;
 
 /**
  * RSGallery2 Component Galleries Model
@@ -150,7 +152,7 @@ class GalleriesModel extends ListModel
     /**
      * Method to get a database query to list galleries.
      *
-	 * @return  \DatabaseQuery object.
+	 * @return  Queryinterface object.
      *
      * @since __BUMP_VERSION__
      */

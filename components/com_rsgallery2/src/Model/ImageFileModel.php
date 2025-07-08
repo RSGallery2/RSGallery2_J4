@@ -22,6 +22,8 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Filesystem\File;
 use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
@@ -34,7 +36,7 @@ use Joomla\Filesystem\Path;
  *
  * @since __BUMP_VERSION__
  */
-class ImageFileModel extends BaseModel // AdminModel
+class ImageFileModel extends ListModel // BaseModel
 {
 
     const THUMB_PORTRAIT = 0;
@@ -70,7 +72,7 @@ class ImageFileModel extends BaseModel // AdminModel
      *
      * @param $ImageId
      *
-     * @return bool
+     * @return array
      *
      * @since __BUMP_VERSION__
      */

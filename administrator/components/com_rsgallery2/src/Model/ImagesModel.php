@@ -19,7 +19,10 @@ use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\DatabaseQuery;
+use Joomla\Database\QueryInterface;
 
 
 /**
@@ -162,7 +165,7 @@ class ImagesModel extends ListModel
     /**
      * Method to get a database query to list images.
      *
-	 * @return  \DatabaseQuery object.
+	 * @return  Queryinterface object.
      *
      * @since __BUMP_VERSION__
      */
@@ -402,7 +405,7 @@ class ImagesModel extends ListModel
     /**
      * Prepare and sanitize the table prior to saving.
      *
-     * @param   \Table  $table  A Table object.
+     * @param   Table  $table  A Table object.
      *
      * @return  void
      *

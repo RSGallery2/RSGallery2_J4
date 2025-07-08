@@ -15,12 +15,14 @@ use DateTime;
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
 
-
+
+
 
 // use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
@@ -766,8 +768,11 @@ class DevelopController extends BaseController
     {
         $actualParams  = Rsg2ExtensionModel::readRsg2ExtensionConfiguration();
         $defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
-        $mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($this->defaultParams, $this->actualParams);
-        Rsg2ExtensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
+	    //$mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($this->defaultParams, $this->actualParams);
+	    $mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($defaultParams, $actualParams);
+	    $isWritten     = Rsg2ExtensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
+
+		return $mergedParams;
     }
 
 }

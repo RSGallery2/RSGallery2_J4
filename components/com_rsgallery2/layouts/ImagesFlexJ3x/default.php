@@ -86,7 +86,7 @@ if ($cols < 2) {
     <?php if (!empty($gallery)) : ?>
         <?php if ($params->gallery_show_title): ?>
             <h2>
-                <div class="rsg_gallery_title"><?php echo $gallery->name ?></div>
+                <span class="rsg_gallery_title"><?php echo $gallery->name ?></span>
             </h2>
         <?php endif; ?>
 

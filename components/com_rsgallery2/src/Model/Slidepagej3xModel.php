@@ -12,8 +12,6 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 \defined('_JEXEC') or die;
 
-use DatabaseQuery;
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -21,6 +19,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+use Joomla\Database\QueryInterface;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 use RuntimeException;
@@ -110,7 +109,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
      * @param $filename
      * @param $userExifTags
      *
-     * @return arrayReturn exif item list of 'translation Id' => value
+     * @return array Return exif item list of 'translation Id' => value
      *
      * @since version
      */
@@ -138,7 +137,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
             if (!empty ($exifTranslated)) {
                 $exifDataOfFile = [$filename, $exifTranslated];
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataUserSelected: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -153,7 +152,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
     /**
      * Method to get a database query to list images.
      *
-     * @return  DatabaseQuery object.
+     * @return  QueryInterface object.
      *
      * @since __BUMP_VERSION__
      */

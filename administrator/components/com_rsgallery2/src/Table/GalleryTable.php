@@ -15,11 +15,13 @@ use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Table\Nested;
+use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
 use Joomla\Registry\Registry;
 
 use UnexpectedValueException;
-
+
+
 
 /**
  * Gallery table
@@ -28,6 +30,8 @@ use UnexpectedValueException;
  */
 class GalleryTable extends Nested
 {
+	public $access = null;
+
     /**
      * Constructor
      *
@@ -53,7 +57,7 @@ class GalleryTable extends Nested
      *
      * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
      *
-     * @see     \JTable::bind
+     * @see     \Table::bind
      * @since   __BUMP_VERSION__
      */
     public function bind($array, $ignore = '')

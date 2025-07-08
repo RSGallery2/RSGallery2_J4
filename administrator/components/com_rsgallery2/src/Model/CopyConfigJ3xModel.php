@@ -241,7 +241,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
         try {
             $j3xConfigItems = $this->j3xConfigItems();
             $rsgConfig      = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-            $j4xConfigItems = $rsgConfig->to[];
+            $j4xConfigItems = $rsgConfig->toArray();
 
             // Configuration test lists: untouchedRsg2Config, untouchedJ3xConfig, 1:1 merged, assisted merges
             [

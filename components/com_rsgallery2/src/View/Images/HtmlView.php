@@ -79,9 +79,9 @@ class HtmlView extends BaseHtmlView
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *
-     * @return  mixed   A string if successful, otherwise an Error object.
+     * @return
      */
-    public function display($tpl = null)
+    public function display($tpl = null) : void
     {
         $app = Factory::getApplication();
 
@@ -132,6 +132,6 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 }

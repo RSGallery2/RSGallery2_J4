@@ -844,7 +844,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * Assigns flag isTransferred = true when number of images match in J3x and J4x gallery
 	 * ? regarding state use_j3x_location ???
 	 *
-	 * @param $j3xGalleriesItem item of J3x galleries that are also present in J4x supplemented by image count
+	 * @param object $j3xGalleriesItem item of J3x galleries that are also present in J4x supplemented by image count
 	 *
 	 * @return false
 	 *
@@ -989,7 +989,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	/**
 	 * Assigns flag isTransferred = true when number of images match in J3x and J4x gallery
 	 *
-	 * @param $j3xGalleriesItem item of J3x galleries that are also present in J4x supplemented by image count
+	 * @param object $j3xGalleriesItem item of J3x galleries that are also present in J4x supplemented by image count
 	 *
 	 * @return false
 	 *

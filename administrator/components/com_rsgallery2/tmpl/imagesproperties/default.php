@@ -151,8 +151,8 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 			</div>
 
 			<!--
-	        // 2025.01.10 ToDo: followin is not working do we need  'extension' ?
-			input type="hidden" name="extension" value="<?php echo $extension; ?>" /
+	        // 2025.01.10 ToDo: following is not working do we need  'extension' ?
+			input type="hidden" name="extension" value="<?php // echo $extension; ?>" /
 			-->
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />

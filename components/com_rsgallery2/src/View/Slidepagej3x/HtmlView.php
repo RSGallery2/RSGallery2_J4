@@ -89,7 +89,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null)
+    public function display($tpl = null) : void
     {
         $app             = Factory::getApplication();
         $input           = Factory::getApplication()->input;
@@ -158,10 +158,10 @@ class HtmlView extends BaseHtmlView
             $model->assignSlideshowUrl($gallery);
         }
 
-        if (!empty($this->items)) {
-            // Add image paths, image params ...
-            //$data = $model->AddLayoutData ($this->items);
-        }
+//        if (!empty($this->items)) {
+//            // Add image paths, image params ...
+//            //$data = $model->AddLayoutData ($this->items);
+//        }
 
         //--- exif data --------------------------------------------------------
 
@@ -220,7 +220,7 @@ class HtmlView extends BaseHtmlView
 //		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
 //		$item->event->afterDisplayContent = trim(implode("\n", $results));
 //
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
 

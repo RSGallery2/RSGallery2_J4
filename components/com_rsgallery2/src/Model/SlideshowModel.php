@@ -48,7 +48,7 @@ class SlideshowModel extends GalleryModel {}
  *
  * @return  string  A store id.
  *
- * @throws Exception
+ * @throws \Exception
  * @var    string
  * @since   3.1
  *

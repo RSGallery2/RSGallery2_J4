@@ -24,7 +24,8 @@ use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-
+
+
 
 /**
  * global $Rsg2DebugActive;
@@ -1626,7 +1627,7 @@ class MaintenanceJ3xController extends AdminController
 					throw new \Exception('Attention: raised \Exception ');
 
 					// echo new JsonResponse($result, 'Response message with !!! no !!! error set');
-					break;
+					//break;
 			}
 
 			$app->close();

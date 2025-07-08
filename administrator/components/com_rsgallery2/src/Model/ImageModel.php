@@ -140,7 +140,7 @@ class ImageModel extends AdminModel
      * @param   string  $prefix  The class prefix. Optional.
      * @param   array   $config  Configuration array for model. Optional.
      *
-     * @return  Table  A JTable object
+     * @return  Table  A Table object
      *
      * @since __BUMP_VERSION__
      */
@@ -300,7 +300,7 @@ class ImageModel extends AdminModel
      * Transform some data before it is displayed ? Saved ?
      * extension development 129 bottom
      *
-     * @param   JTable  $table
+     * @param   Table  $table
      *
      * @since __BUMP_VERSION__
      */
@@ -448,7 +448,7 @@ class ImageModel extends AdminModel
                     $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
                 }
 
-                $table = Table::getInstance('Content', 'JTable');
+                $table = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
 
                 if ($table->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
                 {
@@ -661,6 +661,8 @@ class ImageModel extends AdminModel
 
             return true;
         }
+
+	    return false;
     }
 
 
@@ -850,7 +852,7 @@ class ImageModel extends AdminModel
         $table->alias = OutputFilter::stringURLSafe($table->alias);
 
         // Create unique alias and title
-        [$title, $alias] = $this->generateNewTitle(null, $table->alias, $table->title);
+        [$title, $alias] = $this->generateNewTitle('dummy', $table->alias, $table->title);
         $table->title = $title;
         $table->alias = $alias;
 
@@ -1081,7 +1083,7 @@ class ImageModel extends AdminModel
                         $item->name = $this->generateNewImageName($oldName);
 
                         // Create unique alias and title
-                        [$title, $alias] = $this->generateNewTitle(null, $item->alias, $item->name);
+                        [$title, $alias] = $this->generateNewTitle('dummy', $item->alias, $item->name);
                         $item->title = $title;
                         $item->alias = $alias;
 
@@ -1576,7 +1578,7 @@ class ImageModel extends AdminModel
      * @param $filename
      * @param $userExifTags
      *
-     * @return arrayReturn exif item list of 'translation Id' => value
+     * @return array Exif item list of 'translation Id' => value
      *
      * @since version
      */

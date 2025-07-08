@@ -99,22 +99,29 @@ if (!empty ($this->isDevelopSite))
  */
 function _showDescription()
 {
-	global $rsgConfig;
-	// $item = rsgInstance::getItem(); deprecated
-	$gallery = rsgGalleryManager::get();
-	$item    = $gallery->getItem();
+//	global $rsgConfig;
+//	// $item = rsgInstance::getItem(); deprecated
+//	$gallery = rsgGalleryManager::get();
+//	$item    = $gallery->getItem();
+//
+//	if ($rsgConfig->get('displayHits')){
+//		?>
+<!--		<p class="rsg2_hits">--><?php //echo Text::_('COM_RSGALLERY2_HITS'); ?><!-- <span>--><?php //echo $item->hits; ?><!--</span></p>-->
+<!--	--><?php
+//	}
+//
+//	if ($item->descr) {
+//		?>
+<!--		<p class="rsg2_description">--><?php //echo stripslashes($item->descr); ?><!--</p>-->
+<!--		--><?php
+//	}
 
-	if ($rsgConfig->get('displayHits')){
-		?>
-		<p class="rsg2_hits"><?php echo Text::_('COM_RSGALLERY2_HITS'); ?> <span><?php echo $item->hits; ?></span></p>
-	<?php
-	}
+	?>
+        <p class="rsg2_hits"><?php echo Text::_('COM_RSGALLERY2_HITS'); ?> <span><?php echo '?????'; ?></span></p>
+        <p class="rsg2_description"><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?> <span><?php echo '?????'; ?></span></p>
+   	<?php
 
-	if ($item->descr) {
-		?>
-		<p class="rsg2_description"><?php echo stripslashes($item->descr); ?></p>
-		<?php
-	}
+
 }
 
 // voting
@@ -359,7 +366,7 @@ function htmlExifData($exifTags)
 //	$html[] = '                    	   <input type="hidden" name="rating" value="" />';
 //	$html[] = '                    	   <input type="hidden" name="paginationImgIdx" value="" />';
 //	$html[] = '                    	   <input type="hidden" name="id" value="' . $imageId . '" />';
-//	$html[] = '                    	   <input id="token" type="hidden" name="' . \Joomla\CMS\Session\Session::getFormToken() . '" value="1" />';
+//	$html[] = '                    	   <input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" />';
 //
 //	$html[] = '                    </div>';
 //	$html[] = '                </form>';
@@ -385,7 +392,7 @@ function htmlComments($comments, $gallery_id, $image_id)
 					<?php if (!empty ($comments)) : ?>
 
 					<?php else : ?>
-                        <p><h5>Script for comments not activated</h5></p>
+                        <h5>Script for comments not activated</h5>
 					<?php endif; ?>
 
                 </div>
@@ -519,7 +526,7 @@ $image = $this->image;
                     <td>
                         <div class="rsg2-toolbar">
                             <!--a href="/joomla3x/index.php?option=com_rsgallery2&amp;task=downloadfile&amp;id=157&amp;Itemid=114" -->
-                            <a href=<?php echo $image->UrlDownload; ?>
+                            <a href="<?php echo $image->UrlDownload; ?>"
                                title="Download"
                                class="btn btn-light">
                                 <i class="fas fa-download"></i>
@@ -693,7 +700,7 @@ $image = $this->image;
 
 			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
 
-		    <p><h3>Todo script for voting</h3></p>
+		    <h3>Todo script for voting</h3>
 
             <div class="rating-block row-fluid text-center">
                 <h4>Average user rating</h4>
@@ -739,13 +746,13 @@ $image = $this->image;
 
 			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 
-		    <p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
+		    <h3>ToDo: This may be a comment</h3> <br>with more than one line .....
 
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 			<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 
-		    <p><h3>ToDo: Display selected image exif info  </h3></p>
+		    <h3>ToDo: Display selected image exif info  </h3>
 
 			<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 

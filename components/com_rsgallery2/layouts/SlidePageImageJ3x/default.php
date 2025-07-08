@@ -164,7 +164,7 @@ if (!empty($image->isHasNoImages)) {
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
 
-	<p><h3>This may be a voting  </h3></p>
+	<h3>This may be a voting  </h3>
 
     <div class="rating-block row-fluid text-center">
         <h4>Average user rating</h4>
@@ -210,13 +210,13 @@ if (!empty($image->isHasNoImages)) {
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 
-	<p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>
+	<h3>ToDo: This may be a comment</h3> <br>with more than one line .....
 
     <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 
-	<p><h3>ToDo: Display selected image exif info  </h3></p>
+	<h3>ToDo: Display selected image exif info  </h3>
 
     <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 

@@ -47,7 +47,7 @@ class SlideshowJ3xModel extends Galleryj3xModel {}
  *
  * @return  string  A store id.
  *
- * @throws Exception
+ * @throws \Exception
      * @var    string
      * @since  3.1
      *

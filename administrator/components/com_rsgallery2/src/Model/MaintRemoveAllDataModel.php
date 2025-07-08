@@ -13,6 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 /**
@@ -152,45 +153,45 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             $app->enqueueMessage($OutTxt, 'notice');
             $isRemoved = true;
 
-            if (false) {
-                // [$isRemoved_acl,       $msgTmp] = $this->PurgeTable('#__rsg2_acl', Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_ACL')) . '<br>';
-                [$isRemoved_images, $msgTmp] = $this->PurgeTable(
-                    '#__rsg2_images',
-                    Text::_('COM_RSGALLERY2_PURGED_IMAGE_ENTRIES_FROM_DATABASE'),
-                ) . '<br>';
-                [$isRemoved_galleries, $msgTmp] = $this->PurgeTable(
-                    '#__rsg2_galleries',
-                    Text::_('COM_RSGALLERY2_PURGED_GALLERIES_FROM_DATABASE'),
-                ) . '<br>';
-                // [$isRemoved_comments,  $msgTmp] = $this->PurgeTable('#__rsg2_comments', Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_COMMENTS')) . '<br>';
-
-                // $isRemoved is defined by necessary existing tables
-                //$isRemoved = $isRemoved_acl && $isRemoved_images && $isRemoved_galleries && $isRemoved_comments;
-                $isRemoved = $isRemoved_images && $isRemoved_galleries;
-
-                // J3x old tables
-                [$isRemoved, $msgTmp] = $this->PurgeTable(
-                    '#__rsgallery2_acl',
-                    Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_ACL'),
-                ) . '<br>';
-                [$isRemoved, $msgTmp] = $this->PurgeTable(
-                    '#__rsgallery2_files',
-                    Text::_('COM_RSGALLERY2_PURGED_IMAGE_ENTRIES_FROM_DATABASE'),
-                ) . '<br>';
-                //[$isRemoved, $msgTmp] = $this->PurgeTable('#__rsgallery2_cats', Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_CATS')) . '<br>';
-                [$isRemoved, $msgTmp] = $this->PurgeTable(
-                    '#__rsgallery2_galleries',
-                    Text::_('COM_RSGALLERY2_PURGED_GALLERIES_FROM_DATABASE'),
-                ) . '<br>';
-                [$isRemoved, $msgTmp] = $this->PurgeTable(
-                    '#__rsgallery2_config',
-                    Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_CONFIG'),
-                ) . '<br>';
-                [$isRemoved, $msgTmp] = $this->PurgeTable(
-                    '#__rsgallery2_comments',
-                    Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_COMMENTS'),
-                ) . '<br>';
-            }
+//            if (false) {
+//                // [$isRemoved_acl,       $msgTmp] = $this->PurgeTable('#__rsg2_acl', Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_ACL')) . '<br>';
+//                [$isRemoved_images, $msgTmp] = $this->PurgeTable(
+//                    '#__rsg2_images',
+//                    Text::_('COM_RSGALLERY2_PURGED_IMAGE_ENTRIES_FROM_DATABASE'),
+//                ) . '<br>';
+//                [$isRemoved_galleries, $msgTmp] = $this->PurgeTable(
+//                    '#__rsg2_galleries',
+//                    Text::_('COM_RSGALLERY2_PURGED_GALLERIES_FROM_DATABASE'),
+//                ) . '<br>';
+//                // [$isRemoved_comments,  $msgTmp] = $this->PurgeTable('#__rsg2_comments', Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_COMMENTS')) . '<br>';
+//
+//                // $isRemoved is defined by necessary existing tables
+//                //$isRemoved = $isRemoved_acl && $isRemoved_images && $isRemoved_galleries && $isRemoved_comments;
+//                $isRemoved = $isRemoved_images && $isRemoved_galleries;
+//
+//                // J3x old tables
+//                [$isRemoved, $msgTmp] = $this->PurgeTable(
+//                    '#__rsgallery2_acl',
+//                    Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_ACL'),
+//                ) . '<br>';
+//                [$isRemoved, $msgTmp] = $this->PurgeTable(
+//                    '#__rsgallery2_files',
+//                    Text::_('COM_RSGALLERY2_PURGED_IMAGE_ENTRIES_FROM_DATABASE'),
+//                ) . '<br>';
+//                //[$isRemoved, $msgTmp] = $this->PurgeTable('#__rsgallery2_cats', Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_CATS')) . '<br>';
+//                [$isRemoved, $msgTmp] = $this->PurgeTable(
+//                    '#__rsgallery2_galleries',
+//                    Text::_('COM_RSGALLERY2_PURGED_GALLERIES_FROM_DATABASE'),
+//                ) . '<br>';
+//                [$isRemoved, $msgTmp] = $this->PurgeTable(
+//                    '#__rsgallery2_config',
+//                    Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_CONFIG'),
+//                ) . '<br>';
+//                [$isRemoved, $msgTmp] = $this->PurgeTable(
+//                    '#__rsgallery2_comments',
+//                    Text::_('COM_RSGALLERY2_PURGED_TABLE_RSGALLERY2_COMMENTS'),
+//                ) . '<br>';
+//            }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'MaintRemoveAllDataModel: Error executing removeDataInTables: <br>';
@@ -208,7 +209,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
      *
      * @param   string  $tableId
      *
-     * @return string bool success or error message
+     * @return array
      *
      * @since __BUMP_VERSION__
      */
@@ -218,7 +219,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
         $msg      = 'Purge table: ' . $tableId;
 
         try {
-            $db = $this->getDatabase();
+            $db = Factory::getDbo();
 
             $db->truncateTable($tableId);
             $db->execute();

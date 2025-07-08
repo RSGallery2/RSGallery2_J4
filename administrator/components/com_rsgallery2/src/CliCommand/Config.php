@@ -18,6 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Console\Command\AbstractCommand;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Registry\Registry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -124,7 +125,7 @@ class Config extends AbstractCommand
 			return Command::FAILURE;
 		}
 
-
+		// ToDo: $rsgConfig is Registry
 		$strConfigurationAssoc = $this->assoc2DefinitionList($rsgConfig, $max_line_length);
 
 		// ToDo: Use horizontal table again ;-)
@@ -162,13 +163,15 @@ class Config extends AbstractCommand
 	/**
 	 * trim length of each value in array $configVars to max_len
 	 *
-	 * @param   array  $configVars
+	 * @param   Registry  $configVars
 	 * @param          $max_len
 	 *
 	 * @return array
 	 *
 	 * @since version
 	 */
+	// ToDo: $configVars -> $rsgConfig is Registry
+	// ToDo: assoc2DefinitionList is declared multiple
 	private function assoc2DefinitionList($configVars, $max_len = 70)
 	{
 		$items = [];

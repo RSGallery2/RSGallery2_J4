@@ -15,6 +15,7 @@ use JLoader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Path;
 
 /**
@@ -92,7 +93,7 @@ class GalleriesHelper
             // Include only published galleries with user access
             $arrId   = explode(':', $langAssociation->id);
             $assocId = $arrId[0];
-            $db      = \Factory::getContainer()->get(DatabaseInterface::class);
+            $db      = Factory::getContainer()->get(DatabaseInterface::class);
 
 			$query = $db->getQuery(true)
                 ->select($db->quoteName('published'))
