@@ -285,8 +285,7 @@
 		/>
 	</fieldset>
 
-	<fields name="params"
-	        label="COM_RSGALLERY2_FIELD_BASIC_LABEL">
+	<fields name="params" label="COM_RSGALLERY2_FIELD_BASIC_LABEL">
 
 		<fieldset name="basic">
 
@@ -315,11 +314,9 @@
 		</fieldset>
 	</fields>
 
-	<fields name="metadata"
-	        label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 
-		<fieldset name="jmetadata"
-		          label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 
 			<field
 					name="author"

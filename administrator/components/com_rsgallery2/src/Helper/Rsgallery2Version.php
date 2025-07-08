@@ -14,11 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
-
-use function defined;
-
-// no direct access
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Version information class. Lives from the manifest file which it loads
@@ -55,8 +51,7 @@ class rsgallery2Version
         //--- collect data from manifest -----------------
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-        $query = $db
-            ->getQuery(true)
+        $query = $db->getQuery(true)
             ->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -131,13 +126,13 @@ class rsgallery2Version
      * @return string with footer added
      * @since __BUMP_VERSION__
      * /
-     * //function getCopyrightVersion()
-     * function getFooterCopyrightVersion()
-     * {
-     * return $this->name . ' ' . $this->version . '<br />'
-     * . $this->COPYRIGHT . ' <strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>. All rights reserved.';
-     * }
-     * /**/
+    //function getCopyrightVersion()
+    function getFooterCopyrightVersion()
+    {
+        return $this->name . ' ' . $this->version . '<br />'
+            . $this->COPYRIGHT . ' <strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>. All rights reserved.';
+    }
+	/**/
     /**
      * Plain version
      *

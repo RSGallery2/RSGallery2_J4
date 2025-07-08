@@ -9,18 +9,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Table\Table;
-use RuntimeException;
-
-use function defined;
 
 /**
  * Item Model for a Configuration items (options).
@@ -55,7 +51,7 @@ class ConfigJ3xRawModel extends BaseModel
      *
      * @return bool
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     public function saveItems($configurationItems): bool
@@ -71,7 +67,7 @@ class ConfigJ3xRawModel extends BaseModel
         $table  = Table::getInstance('extension');
         // Load the previous Data
         if (!$table->load($Rsg2Id)) {
-            throw new RuntimeException($table->getError());
+            throw new \RuntimeException($table->getError());
         }
 
         // ToDo: Use result
@@ -82,19 +78,13 @@ class ConfigJ3xRawModel extends BaseModel
 
         // check for error
         if (!$table->check()) {
-            Factory::getApplication()->enqueueMessage(
-                Text::_('ConfigJ3xRaw: Check for save failed ') . $table->getError(),
-                'error',
-            );
+			Factory::getApplication()->enqueueMessage(Text::_('ConfigJ3xRaw: Check for save failed ') . $table->getError(), 'error');
         } else {
             // Save to database
             if ($table->store()) {
                 $isSaved = true;
             } else {
-                Factory::getApplication()->enqueueMessage(
-                    Text::_('ConfigJ3xRaw: Store for save failed ') . $table->getError(),
-                    'error',
-                );
+				Factory::getApplication()->enqueueMessage(Text::_('ConfigJ3xRaw: Store for save failed ') . $table->getError(), 'error');
             }
         }
 
@@ -197,11 +187,11 @@ class ConfigJ3xRawModel extends BaseModel
 
         // check for error
         if (!$table->check()) {
-            throw new RuntimeException($table->getError());
+            throw new \RuntimeException($table->getError());
         }
         // Save to database
         if (!$table->store()) {
-            throw new RuntimeException($table->getError());
+            throw new \RuntimeException($table->getError());
         }
 
         return true;

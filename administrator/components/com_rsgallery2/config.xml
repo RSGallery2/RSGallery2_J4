@@ -609,9 +609,7 @@
 			label="COM_RSGALLERY2_CONFIG_TAB_DEBUG"
 			description="COM_RSGALLERY2_CONFIG_TAB_DEBUG_DESC"
 	>
-		<field type="spacer"
-		       name="test_inner_02"
-		       hr="true"/>
+		<field type="spacer" name="test_inner_02" hr="true" />
 		<!-- ... block  ... -->
 
 		<!--field
@@ -1109,9 +1107,7 @@
 			label="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW"
 			description="COM_RSGALLERY2_CONFIG_TAB_J3X_LEGACY_SLIDESHOW_DESC"
 	>
-		<field type="spacer"
-		       name="test_inner_01"
-		       hr="true"/>
+	<field type="spacer" name="test_inner_01" hr="true" />
 
 		<field
 				name="slides_layout"

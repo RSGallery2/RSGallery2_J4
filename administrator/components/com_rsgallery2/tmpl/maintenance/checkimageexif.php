@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -36,35 +34,27 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+		<?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+				<?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
+		<?php endif; ?>
 
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 
-        <?php
-        if (empty($exifDataOfFiles)) : ?>
+        <?php if (empty($exifDataOfFiles)) : ?>
 		<div class="card-body">
 
 			<div class="card-text">
 
-				<h3>*<?php
-                    echo Text::_('No Exif data available: Select file(s) manually and use button above'); ?></h3>
+				<h3>*<?php echo Text::_('No Exif data available: Select file(s) manually and use button above'); ?></h3>
 
 				<div>
 					<div>
-                        <?php
-                        endif; ?>
+                        <?php endif; ?>
 
 						<div class="flex-fill">
 							<div id="j-main-container" class="j-main-container">
@@ -79,15 +69,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimag
 												<table class="table w-auto" id="imageFileList">
 
 													<caption id="captionTable" class="sr-only">
-                                                        <?php
-                                                        echo Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF_LIST'); ?>, <?php
-                                                        echo Text::_('JGLOBAL_SORTED_BY'); ?>
+                                                        <?php echo Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF_LIST'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
 													</caption>
 													<thead>
 													<tr>
 														<th scope="col">
-                                                            <?php
-                                                            echo HTMLHelper::_('grid.checkall'); ?>
+												<?php echo HTMLHelper::_('grid.checkall'); ?>
 														</th>
 
 														<th scope="col" class="text-center">
@@ -120,36 +107,27 @@ echo Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimag
                                                         ?>
 														<tr class="table-secondary"></tr>
 														<th scope="row">
-                                                            <?php
-                                                            echo HTMLHelper::_('grid.id', $i, $i, false); ?>
+                                                            <?php echo HTMLHelper::_('grid.id', $i, $i, false); ?>
 														</th>
 
 														<td class="text-center mb-3 ">
 															<div>
-                                                                <?php
-                                                                echo $i ?>
+                                                                <?php echo $i ?>
 															</div>
 														</td>
 
 														<td class="text-center">
 															<div class="input-group mb-3 ">
-																<input id="jform_gal_<?php
-                                                                echo $galleryId ?>" class="form-control w-25 "
-																       type="text"
-																       value="<?php
-                                                                       echo $galleryId ?>" size="25"
-																       name="jform[galIds][] aria-invalid=" false">
+																<input id="jform_gal_<?php echo $galleryId ?>" class="form-control w-25 " type="text"
+																       value="<?php echo $galleryId ?>" size="25" name="jform[galIds][] aria-invalid=" false">
 															</div>
 														</td>
 
 														<td class="text-center">
 
 															<div class="input-group mb-3 w-100">
-																<input id="jform_file_<?php
-                                                                echo $imageName ?>" class="form-control" type="text"
-																       value="<?php
-                                                                       echo $imageName ?>" size="75"
-																       name="jform[imgNames][] aria-invalid=" false">
+																<input id="jform_file_<?php echo $imageName ?>" class="form-control" type="text" 
+																	value="<?php echo $imageName ?>" size="75" name="jform[imgNames][] aria-invalid=" false">
 															</div>
 
 														</td>
@@ -168,8 +146,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimag
 									</div>
 								</div>
 
-                                <?php
-                                if (!empty($exifDataOfFiles)) : ?>
+				<?php if ( ! empty($exifDataOfFiles)) : ?>
 
                                     <?php
 
@@ -233,8 +210,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimag
                                     }
 
                                     ?>
-                                <?php
-                                endif; ?>
+				<?php endif; ?>
 
                                 <?php
                                 //					$json_beautified = str_replace(array("{", "}", '","'), array("{<br />&nbsp;&nbsp;&nbsp;&nbsp;", "<br />}", '",<br />&nbsp;&nbsp;&nbsp;&nbsp;"'), $exifDataOfFiles);
@@ -292,15 +268,13 @@ echo Route::_('index.php?option=com_rsgallery2&view=maintenance&layout=checkimag
                                 ?>
 
 								<input type="hidden" name="task" value=""/>
-                                <?php
-                                echo HTMLHelper::_('form.token'); ?>
+                                <?php echo HTMLHelper::_('form.token'); ?>
 
 							</div>
 						</div>
 					</div>
 
-                    <?php
-                    echo HTMLHelper::_('form.token'); ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

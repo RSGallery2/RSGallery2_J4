@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 // ToDo: 2024.10: namespace helper
 namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;

@@ -9,13 +9,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use RuntimeException;
 
-use function defined;
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
@@ -50,7 +48,7 @@ class MaintenanceModel extends BaseDatabaseModel
                 $notPathList = implode('<br>', $notExisitnPaths);
                 Factory::getApplication()->enqueueMessage('No paths found for <br>' . $notPathList);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -71,7 +69,7 @@ class MaintenanceModel extends BaseDatabaseModel
                 $j4xImagePath->setPaths_URIs_byGalleryId($galleryId);
                 $isPathsRepaired &= $j4xImagePath->createAllPaths();
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -87,8 +85,7 @@ class MaintenanceModel extends BaseDatabaseModel
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleryIds
             $db = $this->getDatabase();
 
-            $query = $db
-                ->getQuery(true)
+	        $query = $db->getQuery(true)
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id')
                 ->from($db->quoteName('#__rsg2_galleries'))
@@ -101,7 +98,7 @@ class MaintenanceModel extends BaseDatabaseModel
             // Get the options.
             //$galleryIds = $db->setQuery($query)->loadObjectList();
             $galleryIds = $db->setQuery($query)->loadColumn();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 

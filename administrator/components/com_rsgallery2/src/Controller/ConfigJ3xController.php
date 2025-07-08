@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
@@ -19,20 +19,19 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
-use function defined;
-
 /**
- * global $Rsg2DebugActive;
- *
- * if ($Rsg2DebugActive)
- * {
- * // Include the JLog class.
- * //    jimport('joomla.log.log');
- *
- * // identify active file
- * JLog::add('==> ctrl.config.php ');
- * }
- * /**/
+global $Rsg2DebugActive;
+
+if ($Rsg2DebugActive)
+{
+	// Include the JLog class.
+//	jimport('joomla.log.log');
+
+	// identify active file
+	JLog::add('==> ctrl.config.php ');
+}
+/**/
+
 class ConfigJ3xController extends AdminController // FormController
 {
     /**
@@ -65,11 +64,11 @@ class ConfigJ3xController extends AdminController // FormController
      * @since __BUMP_VERSION__
      */
     /**
-     * public function getModel($name = 'Config', $prefix = 'Administrator', $config = array('ignore_request' => true))
-     * {
-     * return parent::getModel($name, $prefix, $config);
-     * }
-     * /**/
+    public function getModel($name = 'Config', $prefix = 'Administrator', $config = array('ignore_request' => true))
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
+	/**/
 
     /*
         $params = ComponentHelper::getParams('com_rsgallery2');
@@ -86,7 +85,7 @@ class ConfigJ3xController extends AdminController // FormController
         {
             Log::add('Starting the indexer', Log::INFO);
         }
-        catch (\RuntimeException $exception)
+		catch (\RuntimeException $exception)
         {
             // Informational log only
         }
@@ -226,42 +225,42 @@ class ConfigJ3xController extends AdminController // FormController
      *
      * @since version 4.3
      *
-     * public function reset2default()
-     * {
-     * $this->checkToken();
-     *
-     * $msg     = "reset2default: " . '<br>';
-     * $msgType = 'notice';
-     *
-     * $this->checkToken();
-     *
-     * // Access check
-     * $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-     * if (!$canAdmin) {
-     * $msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-     * $msgType = 'warning';
-     * // replace newlines with html line breaks.
-     * $msg = nl2br ($msg);
-     * } else {
-     * $model = $this->getModel('ConfigRaw');
-     *
-     * $isSaved = $model->reset2default();
-     *
-     * $msg  = "Reset configuration to default values ";
-     * if ($isSaved)
-     * {
-     * $msg .= "successful";
-     * }
-     * else
-     * {
-     * $msg .= "failed !!!";
-     * }
-     * }
-     *
-     * $link = 'index.php?option=com_rsgallery2&view=maintenance';
-     * $this->setRedirect($link, $msg, $msgType);
-     * }
-     * /**/
+	public function reset2default()
+	{
+	$this->checkToken();
+
+		$msg     = "reset2default: " . '<br>';
+		$msgType = 'notice';
+
+	$this->checkToken();
+
+		// Access check
+		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+		if (!$canAdmin) {
+			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			$msg = nl2br ($msg);
+		} else {
+			$model = $this->getModel('ConfigRaw');
+
+			$isSaved = $model->reset2default();
+
+			$msg  = "Reset configuration to default values ";
+			if ($isSaved)
+			{
+				$msg .= "successful";
+			}
+			else
+			{
+				$msg .= "failed !!!";
+			}
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=maintenance';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+	/**/
 
     /**
      * Standard save of configuration

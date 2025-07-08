@@ -17,11 +17,8 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
-use RuntimeException;
 
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Keeps the file location paths of an image for PHP use and URIs for HTML use
@@ -32,16 +29,13 @@ defined('_JEXEC') or die;
  *
  * @since       version
  */
-class ImagePathsJ3xModel
-{
+class ImagePathsJ3xModel {
     // from config
 
 	public $rsgImagesBasePath;
 	public $rsgImagesBaseUrl;
 	// ToDo: Single gallery name ? used for search path ?
 	public $rsgImagesGalleriesBasePath;
-
-
 
 	// files gallery defined
     /**
@@ -67,8 +61,7 @@ class ImagePathsJ3xModel
 
     // root of images, image sizes from configuration build the paths
     // ToDo: watermarked path
-    public function __construct()
-    {
+	public function __construct() {
         global $rsgConfig;
 
         try {
@@ -119,7 +112,7 @@ class ImagePathsJ3xModel
             $this->originalUrl = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_original'));
             $this->displayUrl  = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_display'));
             $this->thumbUrl    = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_thumb'));
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing __construct: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -133,18 +126,13 @@ class ImagePathsJ3xModel
     File paths
     --------------------------------------------------------------------*/
 
-    public function getOriginalPath($fileName = '')
-    {
+	public function getOriginalPath ($fileName=''){
         return PathHelper::join($this->originalBasePath, $fileName);
     }
-
-    public function getDisplayPath($fileName = '')
-    {
+	public function getDisplayPath ($fileName=''){
         return PathHelper::join($this->displayBasePath, $fileName . '.jpg');
     }
-
-    public function getThumbPath($fileName = '')
-    {
+	public function getThumbPath ($fileName=''){
         return PathHelper::join($this->thumbBasePath, $fileName . '.jpg');
     }
 
@@ -152,20 +140,15 @@ class ImagePathsJ3xModel
     URIs
     --------------------------------------------------------------------*/
 
-    public function getOriginalUrl($fileName = '')
-    {
+	public function getOriginalUrl ($fileName=''){
         return UriHelper::join($this->originalUrl, $fileName);
 //		return $this->originalUrl . '/' . $fileName;
     }
-
-    public function getDisplayUrl($fileName = '')
-    {
+	public function getDisplayUrl ($fileName=''){
         return UriHelper::join($this->displayUrl, $fileName . '.jpg');
 //		return $this->displayUrl . '/' . $fileName . '.jpg';
     }
-
-    public function getThumbUrl($fileName = '')
-    {
+	public function getThumbUrl ($fileName=''){
         return UriHelper::join($this->thumbUrl, $fileName . '.jpg');
 //		return $this->thumbUrl . '/' . $fileName . '.jpg';
     }
@@ -176,8 +159,7 @@ class ImagePathsJ3xModel
      *
      * @since __BUMP_VERSION__
      */
-    public function createAllPaths()
-    {
+    public function createAllPaths() {
         $isCreated = false;
 
         try {
@@ -190,7 +172,7 @@ class ImagePathsJ3xModel
 
                 $isCreated = $isCreated & Folder::create($this->thumbBasePath);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing createAllPaths: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -222,7 +204,7 @@ class ImagePathsJ3xModel
 
                 $isPathsExisting = $isPathsExisting & is_dir($this->thumbBasePath);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing isPathsExisting: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

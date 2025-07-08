@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -21,29 +21,10 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
 
 ?>
 
-<form action="<?php
-    echo Route::_('index.php?option=com_rsgallery2'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
 	      method="post" name="adminForm" id="adminForm" class="form-validate">
 		<div class="d-flex flex-row">
-            <?php
-            if (false) : // ToDo: Remove this quick hack. do not show sidebar
-                //if (!empty($this->sidebar)) :
-                ?>
-				<div id="j-sidebar-container" class="">
-                    <?php
-                    echo $this->sidebar; ?>
-				</div>
-            <?php
-            endif; ?>
-			<!--            <div class="--><?php
-            //            // if (!empty($this->sidebar)) {
-            //            if (false) {
-            //                echo 'col-md-10';
-            //            } else {
-            //                echo 'col-md-12';
-            //            } ?><!--">-->
-			<!--div class="<?php
-            echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+
 			<div class="flex-fill">
 				<div id="j-main-container" class="j-main-container">
 
@@ -60,13 +41,8 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
                         //--- load additional language file --------------------------------
 
                         $lang = Factory::getApplication()->getLanguage();
-                        $lang->load(
-                            'com_rsg2_j3x',
-                            Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
-                            null,
-                            false,
-                            true,
-                        );
+						$lang->load('com_rsg2_j3x',
+							Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 
                         if ($this->isDoCopyJ3xDbConfig
                             || $this->isDoCopyJ3xDbGalleries
@@ -132,8 +108,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
 		</div>
 
 		<input type="hidden" name="task" value=""/>
-        <?php
-        echo HTMLHelper::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
 	</form>
 
 <?php
@@ -149,13 +124,7 @@ function DisplayRSG2Logo()
 {
     echo '    <div class="rsg2logo">';
 //	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
-    echo HTMLHelper::_(
-        'image',
-        'com_rsgallery2/RSG2_logoText.svg',
-        Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'),
-        null,
-        true,
-    );
+	echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
     echo '     </div>';
 //	echo '<p class="test">';
 //	echo '</p>

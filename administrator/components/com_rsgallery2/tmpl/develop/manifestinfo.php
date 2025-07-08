@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -21,33 +19,21 @@ use Joomla\CMS\Router\Route;
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+		<?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <?php endif; ?>
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-                <?php
-                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ManifestInfoView']); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ManifestInfoView']); ?>
 
-                <?php
-                echo HTMLHelper::_(
-                    'bootstrap.addTab',
-                    'myTab',
-                    'ManifestInfoView',
-                    Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true),
-                ); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ManifestInfoView', Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true)); ?>
 
 				<p>
                     <?php
@@ -59,8 +45,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'
                     ?>
 				</p>
 				<p>
-				<h3><?php
-                    echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
+				<h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
 
                 <?php
 
@@ -104,7 +89,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'
                     echo $json_string . '";';
                     echo '     </textarea>';
                     echo '</div>';
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -115,20 +100,11 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'
 
                 ?>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTab'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-                <?php
-                echo HTMLHelper::_(
-                    'bootstrap.addTab',
-                    'myTab',
-                    'ExtensionInfoView',
-                    Text::_('COM_RSGALLERY2_EXTENSION_INFO_VIEW', true),
-                ); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExtensionInfoView', Text::_('COM_RSGALLERY2_EXTENSION_INFO_VIEW', true)); ?>
 
-				<p>
-				<h3><?php
-                    echo Text::_('COM_RSGALLERY2_EXTENSION_INFO_VIEW'); ?></h3></p>
+                <p><h3><?php echo Text::_('COM_RSGALLERY2_EXTENSION_INFO_VIEW'); ?></h3></p>
 
                 <?php
 
@@ -172,7 +148,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'
                     echo $json_string . '";';
                     echo '     </textarea>';
                     echo '</div>';
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error rawEdit view: "' . 'PreparedButNotReady' . '"<br>';
                     $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -183,24 +159,20 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'
 
                 ?>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTab'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
 				<input type="hidden" name="task" value=""/>
-                <?php
-                echo HTMLHelper::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
 			</div>
 		</div>
 	</div>
 
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

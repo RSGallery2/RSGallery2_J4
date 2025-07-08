@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -42,14 +40,10 @@ function displayRsgMenuLinks($Rsg2MenuLinks)
                 ?>
 
 				<tr>
-					<th scope="row"><?php
-                        echo $row_id; ?></th>
-					<td><?php
-                        echo $idx; ?></td>
-					<td><?php
-                        echo $link; ?></td>
-					<!--td><?php
-                    echo "%"; // $params;
+					<th scope="row"><?php echo $row_id; ?></th>
+					<td><?php echo $idx; ?></td>
+					<td><?php echo $link; ?></td>
+					<!--td><?php echo "%"; // $params;
                     ?></td-->
 				</tr>
 
@@ -69,43 +63,33 @@ function displayRsgMenuLinks($Rsg2MenuLinks)
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks'); ?>"
       method="post" name="adminForm" id="adminForm">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <?php endif; ?>
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
 				<div class="card text-center">
 					<div class="card-body">
-						<h3 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?></h3>
+						<h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?></h3>
 
-						<p class="card-text"><?php
-                            echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
+						<p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
 						<button class="btn btn-success" type="submit"
 						        onclick="Joomla.submitbutton('MaintenanceJ3x.j3xReplaceGid2IdMenuLinks');return false;">
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?>
+                            <?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?>
 						</button>
 
-                        <?php
-                        // 				// ToDo: remove  ?>
+                        <?php // 				// ToDo: remove  ?>
 						<button class="btn btn-info" type="submit"
 						        onclick="Joomla.submitbutton('MaintenanceJ3x.j3xReplaceId2GidMenuLinks');return false;">
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_ID2GID'); ?>
+                            <?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_ID2GID'); ?>
 						</button>
 
 					</div>
@@ -122,12 +106,10 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=change
 
 				<div class="card text-center">
 					<div class="card-body">
-						<h3 class="card-title"><?php
-                            echo Text::_('Links which will be upgraded', true); ?></h3>
+						<h3 class="card-title"><?php echo Text::_('Links which will be upgraded', true); ?></h3>
 
 						<p class="card-text">
-                            <?php
-                            displayRsgMenuLinks($this->j3xRsg2MenuLinks); ?>
+                            <?php displayRsgMenuLinks($this->j3xRsg2MenuLinks); ?>
 						</p>
 
 					</div>
@@ -135,12 +117,10 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=change
 
 				<div class="card text-center">
 					<div class="card-body">
-						<h3 class="card-title"><?php
-                            echo Text::_('Links which have been upgraded', true); ?></h3>
+						<h3 class="card-title"><?php echo Text::_('Links which have been upgraded', true); ?></h3>
 
 						<p class="card-text">
-                            <?php
-                            displayRsgMenuLinks($this->j4xRsg2MenuLinks); ?>
+                            <?php displayRsgMenuLinks($this->j4xRsg2MenuLinks); ?>
 						</p>
 
 					</div>
@@ -149,13 +129,11 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=change
 
 				<input type="hidden" name="boxchecked" value="0"/>
 				<input type="hidden" name="task" value=""/>
-                <?php
-                echo HTMLHelper::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
 			</div>
 		</div>
 	</div>
 
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 

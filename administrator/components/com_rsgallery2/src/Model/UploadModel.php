@@ -9,14 +9,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
-
-use function defined;
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
@@ -43,8 +40,7 @@ class UploadModel extends BaseDatabaseModel
             $query = $db->getQuery(true);
 
             // count gallery items
-            $query
-                ->select('COUNT(*)')
+            $query->select('COUNT(*)')
                 // ignore root item  where id is "1"
                 ->where($db->quoteName('id') . ' != 1')
                 ->from('#__rsg2_galleries');
@@ -54,7 +50,7 @@ class UploadModel extends BaseDatabaseModel
 
             // > 0 galleries exist
             $is1GalleryExisting = !empty ($IdGallery);
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -83,8 +79,7 @@ class UploadModel extends BaseDatabaseModel
 
             $test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
 
-            $query
-                ->select($db->quoteName('id'))
+            $query->select($db->quoteName('id'))
                 ->from('#__rsg2_galleries')
                 ->where($db->quoteName('id') . ' != 1')
                 ->setLimit(1)
@@ -94,7 +89,7 @@ class UploadModel extends BaseDatabaseModel
 
             $db->setQuery($query, 0, 1);
             $IdLatestGallery = $db->loadResult();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'IdLatestGallery: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

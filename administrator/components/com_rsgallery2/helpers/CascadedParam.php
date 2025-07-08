@@ -11,7 +11,7 @@
 // ToDo: 2024.10: namespace helper
 // namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 
@@ -38,9 +38,8 @@ class CascadedParam
      *
      * @since version
      */
-    public static function lastSet(...$paramValues)
-    {
-        $paramValue = new stdClass();
+    public static function lastSet(...$paramValues) {
+		$paramValue = new \stdClass();
 
         try {
             //foreach ($vars as &$value)
@@ -51,7 +50,7 @@ class CascadedParam
                     }
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 

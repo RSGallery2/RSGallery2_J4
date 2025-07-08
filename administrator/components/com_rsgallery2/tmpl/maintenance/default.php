@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -32,8 +32,7 @@ Text::script('', true);
 //$script = 'var Token = \'' . Session::getFormToken() . '\';';
 //Factory::getApplication()->getDocument()->addScriptDeclaration(implode("\n", $script));
 
-class zoneContainer
-{
+class zoneContainer {
     public $textTitle;
     public $textInfo;
     public $classContainer;
@@ -109,12 +108,7 @@ class zoneButtons
 //
 //--- Raw database zone -----------------------------
 
-$rawDatabase_Zone = new zoneContainer(
-    Text::_('COM_RSGALLERY2_RAW_DB_ZONE'),
-    Text::_('COM_RSGALLERY2_RAW_DB_ZONE_DESCRIPTION'),
-    'rawDb',
-    'rawDbZone',
-);
+$rawDatabase_Zone = new zoneContainer(Text::_('COM_RSGALLERY2_RAW_DB_ZONE'), Text::_('COM_RSGALLERY2_RAW_DB_ZONE_DESCRIPTION'), 'rawDb', 'rawDbZone');
 
 $rawDatabase_ZoneButtons[] = new zoneButtons(
     '',
@@ -928,8 +922,7 @@ function zoneInfo($info = 'Unknown zone info')
 
 ?>
 
-	<form action="<?php
-    echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
+	<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
 	      method="post" name="adminForm" id="adminForm" class="form-validate"
 	      enctype="multipart/form-data"
 	>
@@ -937,13 +930,10 @@ function zoneInfo($info = 'Unknown zone info')
             <?php
             if (!empty($this->sidebar)) : ?>
 				<div id="j-sidebar-container" class="">
-                    <?php
-                    echo $this->sidebar; ?>
+                    <?php echo $this->sidebar; ?>
 				</div>
-            <?php
-            endif; ?>
-			<!--div class="<?php
-            echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+            <?php endif; ?>
+			<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 			<div class="flex-fill">
 				<div id="j-main-container" class="j-main-container">
 

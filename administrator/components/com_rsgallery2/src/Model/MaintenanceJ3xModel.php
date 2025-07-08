@@ -9,23 +9,19 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Utilities\ArrayHelper;
-use RuntimeException;
-use stdClass;
-use function defined;
+
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 /**
  * Class MaintenanceJ3xModel
- *
  * @package Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
  * Handles old J3x RSG23 data structures. Especially for transferring the config data
@@ -106,7 +102,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_galleries4DbImagesList()
@@ -149,7 +145,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$galleries = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -184,7 +180,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function MergedJ3xIdsDbImages($j3xItems, $j4xItems)
@@ -207,7 +203,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -221,7 +217,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function MergedJ3xImageIds($j3xItems, $j4xItems)
@@ -250,7 +246,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -264,7 +260,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function MergedJ3xIdsDbGalleries($j3xItems, $j4xItems)
@@ -287,7 +283,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -299,7 +295,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_galleriesListSorted()
@@ -314,7 +310,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// sort recursively
 			$galleries = $this->j3x_galleriesSortedByParent($dbGalleries, 0, 0);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -329,7 +325,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_galleriesSortedByParent($dbGalleries, $parentId = 0, $level = 0)
@@ -378,7 +374,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -393,7 +389,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j4x_galleriesSortedByParent($dbGalleries, $parentId = 0, $level = 0)
@@ -442,7 +438,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -461,7 +457,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return int|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function setNestingNodes2J4xGalleries(&$sortedGalleries, $parentId = 0, $level = 0, $lastNodeIdx = 1)
@@ -484,19 +480,14 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 					$lastNodeIdx++;
 
 					// add node ids recursively
-					$lastNodeIdx = $this->setNestingNodes2J4xGalleries(
-						$sortedGalleries,
-						$gallery ['id'],
-						$level + 1,
-						$lastNodeIdx,
-					);
+					$lastNodeIdx = $this->setNestingNodes2J4xGalleries($sortedGalleries, $gallery ['id'], $level + 1, $lastNodeIdx);
 
 					$sortedGalleries [$idx]['rgt'] = $lastNodeIdx;
 					$lastNodeIdx++;
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -508,7 +499,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j4x_galleriesList()
@@ -530,7 +521,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$galleries = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -543,7 +534,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j4_GalleriesToJ3Form($j4x_galleries)
@@ -556,7 +547,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			{
 				// leave out root gallery in nested form
 				{ // if ($j4x_gallery->id != 1) {
-					$j3x_gallery = new stdClass();
+					$j3x_gallery = new \stdClass();
 
 					$j3x_gallery->id   = $j4x_gallery->id;
 					$j3x_gallery->name = $j4x_gallery->name;
@@ -574,7 +565,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -587,7 +578,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function GalleriesListAsHTML($galleries)
@@ -602,7 +593,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$html = $this->GalleriesOfLevelHTML($galleries, 0, 0);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -617,7 +608,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	private function GalleriesOfLevelHTML($galleries, $parentId, $level)
@@ -654,7 +645,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$html = $galleryHTML;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -670,7 +661,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return string
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	private function GalleryHTML($gallery, $level)
@@ -703,7 +694,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
                 $lineStart</li>
                 EOT;
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -716,7 +707,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function convertJ3xGalleriesToJ4x($J3xGalleryItemsSorted)
@@ -731,7 +722,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$J4Galleries[] = $this->convertJ3xGallery($j3xGallery);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -800,7 +791,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbAllJ3xGalleries2J4x()
@@ -812,7 +803,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$j3xGalleriesItems = $this->j3x_galleriesList();
 			$isOk              = $this->copyDbJ3xGalleries2J4x($j3xGalleriesItems);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -824,7 +815,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_DbGalleryList_imagesTransferred_YN()
@@ -841,7 +832,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$this->assignDbImagesTransferredFlag($j3xGalleriesItem);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -857,7 +848,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return false
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	private function assignDbImagesTransferredFlag($j3xGalleriesItem)
@@ -870,8 +861,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsgallery2_files')
@@ -888,8 +878,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsg2_images')
@@ -924,7 +913,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$j3xGalleriesItem->isTransferred = false;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -940,7 +929,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since versio
 	 * n
 	 */
@@ -960,7 +949,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -972,7 +961,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_GalleryList_imagesTransferred_YN()
@@ -989,7 +978,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$this->assignImagesTransferredFlag($j3xGalleriesItem);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1004,7 +993,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return false
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	private function assignImagesTransferredFlag($j3xGalleriesItem)
@@ -1017,8 +1006,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsgallery2_files')
@@ -1036,8 +1024,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// where image is not use_j3x_location
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsg2_images')
@@ -1062,7 +1049,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$j3xGalleriesItem->countJ3x = $countJ3x;
 			$j3xGalleriesItem->countJ4x = $countJ4x;
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1075,7 +1062,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbSelectedJ3xGalleries2J4x($selectedIds)
@@ -1088,7 +1075,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$isOk = $this->copyDbJ3xGalleries2J4x($j3xGalleriesItems);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1101,7 +1088,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbJ3xGalleries2J4x($j3xGalleriesItems)
@@ -1136,7 +1123,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				//Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1149,7 +1136,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return int|true
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function writeGalleryList2Db($j4xGalleriesItems)
@@ -1164,7 +1151,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$isOk &= $this->writeGalleryItem2Db($j4xImageItem);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1177,7 +1164,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function writeGalleryItem2Db($j4x_GalleryItem)
@@ -1281,7 +1268,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$db->setQuery($query);
 			$isOk = $db->execute();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1293,7 +1280,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_imagesList()
@@ -1304,8 +1291,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				->from('#__rsgallery2_files')
@@ -1316,7 +1302,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$images = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1328,7 +1314,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_imagesInfoList()
@@ -1339,8 +1325,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				->select($db->quoteName(['id', 'name', 'alias', 'gallery_id', 'title']))
 				->from('#__rsgallery2_files')
 				->order('id ASC');
@@ -1350,7 +1335,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$images = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1363,7 +1348,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_imagesListOfIds($selectedIds)
@@ -1374,8 +1359,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				// https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
@@ -1389,7 +1373,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$images = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1402,7 +1386,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_galleriesListOfIds($selectedIds)
@@ -1412,8 +1396,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				// https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
@@ -1427,7 +1410,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$galleries = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1439,7 +1422,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j4x_imagesList()
@@ -1449,8 +1432,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
 				->select('*')
 				->from('#__rsg2_images')
@@ -1461,7 +1443,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$images = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1476,7 +1458,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_imagesMergeList()
@@ -1508,22 +1490,19 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				->select($db->quoteName($select))
 				->from('#__rsgallery2_files')
 //                ->order('gallery_id ASC, ordering ASC');
-				->order(
-					$db->quoteName('gallery_id') . ' ASC, '
-					. $db->quoteName('ordering') . ' ASC',
-				);
+				->order($db->quoteName('gallery_id') . ' ASC, '
+					. $db->quoteName('ordering') . ' ASC');
 
 			// Get the options.
 			$db->setQuery($query);
 
 			$images = $db->loadObjectList();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1534,7 +1513,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //    // ToDo: May be useful with gallery id
 //    public function j4x_imagesMergeList()
 //    {
-//        $images = array();
+//        $images = [];
 //
 //        $select = [
 //            'id',
@@ -1600,7 +1579,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbAllJ3xImages2J4x()
@@ -1615,7 +1594,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$isOk &= $this->copyDbJ3xImages2J4x($j3xImageItems);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1630,7 +1609,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbImagesOfSelectedGalleries($selectedJ3xGalleryIds)
@@ -1642,8 +1621,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //            $j3xGalleryItems = $this->j3x_galleriesListOfIds($selectedJ3xGalleryIds);
 
 			$db    = $this->getDatabase();
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				->from('#__rsgallery2_files')
@@ -1665,7 +1643,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$isOk = $this->copyDbJ3xImages2J4x($imageIds);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1680,7 +1658,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function revertCopyDbJ3xImages2J4xUser()
@@ -1697,7 +1675,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$db->setQuery($query);
 			$isOk = $db->execute();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1710,7 +1688,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbSelectedJ3xImages2J4x($selectedIds)
@@ -1723,7 +1701,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$isOk = $this->copyDbJ3xImages2J4x($j3xImageItems);
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1736,7 +1714,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool|int
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbJ3xImages2J4x($j3xImageItems)
@@ -1758,7 +1736,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				//Factory::getApplication()->enqueueMessage('No items to insert into db', 'warning');
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1771,7 +1749,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return false
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function convertSelectedJ3xImages2J4x($selectedIds)
@@ -1783,7 +1761,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// ...
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1796,7 +1774,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function convertDbJ3xImagesToJ4x($J3xImagesItems)
@@ -1811,7 +1789,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$j4ImageItems[] = $this->convertDbJ3xImage($j3xImage);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1824,7 +1802,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return int|true
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function writeImageList2Db($j4ImageItems)
@@ -1839,7 +1817,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$isOk &= $this->writeImageItem2Db($j4xImageItem);
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -1852,7 +1830,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function writeImageItem2Db($j4ImageItem)
@@ -1949,7 +1927,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$db->setQuery($query);
 			$isOk = $db->execute();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2116,8 +2094,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				// ->select($db->quoteName(array('id')))
 				->select('id')
 				->from('#__rsg2_galleries')
@@ -2132,9 +2109,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$test = $gallery_id_j4x;
 			}
 		} //catch (\RuntimeException $e)
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
-			throw new RuntimeException($e->getMessage() . ' from resetImagesTable');
+			throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
 		}
 
 		return $gallery_id_j4x;
@@ -2169,9 +2146,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$isImagesReset = $db->execute();
 		} //catch (\RuntimeException $e)
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
-			throw new RuntimeException($e->getMessage() . ' from resetImagesTable');
+			throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
 		}
 
 		return $isImagesReset;
@@ -2182,7 +2159,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function imageNamesById($cids)
@@ -2195,8 +2172,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				->select($db->quoteName(['name', 'id', 'gallery_id']))
 				->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($cids)) . ')')
 				->from('#__rsgallery2_files')
@@ -2221,7 +2197,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2270,9 +2246,9 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$isDbUpdated = true;
 			}
 		} //catch (\RuntimeException $e)
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
-			throw new RuntimeException($e->getMessage() . ' from resetImagesTable');
+			throw new \RuntimeException($e->getMessage() . ' from resetImagesTable');
 		}
 
 		return $isDbUpdated;
@@ -2282,7 +2258,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function CheckImagePaths()
@@ -2294,7 +2270,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$j3xImagePath    = new ImagePathsJ3xModel ();
 			$isPathsExisting = $j3xImagePath->isPathsExisting();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2306,7 +2282,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function RepairImagePaths()
@@ -2318,7 +2294,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$j3xImagePath    = new ImagePathsJ3xModel ();
 			$isPathsRepaired = $j3xImagePath->createAllPaths();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2357,7 +2333,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3xGalleriesWithImgCount()
@@ -2397,8 +2373,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				->select($db->quoteName('j3x.id', 'gallery_id'))
 				->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
 				/* Count child images */
@@ -2425,7 +2400,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$j3xGalleriesWithImgCount[$gallery_id] ['img_count'] = $j3xGallery->img_count;
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2515,7 +2490,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //	 */
 //	public function galleryIdsJ3x_dbImagesNotMoved($j4xGalleryIds)
 //	{
-//		$galleryIdsJ3x_NotMoved = []; // ToDo: array() ==> []
+//		$galleryIdsJ3x_NotMoved = []; // ToDo: [] ==> []
 //
 //		try
 //		{
@@ -2584,12 +2559,12 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function galleryIdsJ3x_ImagesNotMoved($j3xGalleriesItems)
 	{
-		$galleryIdsJ3x_NotMoved = []; // ToDo: array() ==> []
+		$galleryIdsJ3x_NotMoved = []; // ToDo: [] ==> []
 
 		try
 		{
@@ -2602,7 +2577,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2620,12 +2595,12 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_imagesToBeMovedByGallery($j4xGalleryIds)
 	{
-		$imagesToBeMoved = []; // ToDo: array() ==> []
+		$imagesToBeMoved = []; // ToDo: [] ==> []
 
 		try
 		{
@@ -2637,8 +2612,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db
-				->getQuery(true)
+			$query = $db->getQuery(true)
 				->select($db->qn(['id', 'name']))
 				->from('#__rsg2_images')
 				->where($db->quoteName('use_j3x_location') . ' = 1')
@@ -2652,7 +2626,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// $imagesToBeMoved = $db->loadColumn();
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 			throw $e;
@@ -2781,7 +2755,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	protected function dbMarkImagesAsTransferred($movedIds, $isUse_j3x_location = false)
@@ -2808,7 +2782,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$isIdsMarked = $db->execute();
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2821,7 +2795,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array[]
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function check4ExistingDisplayImage($imgObjects)
@@ -2853,7 +2827,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				$isPathsExisting = $j4xImagePath->isPathsExisting();
 				if (!$isPathsExisting)
 				{
-					throw new RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
+					throw new \RuntimeException('Folder missing in path ' . $j4xImagePath->galleryRoot);
 				}
 
 //                $j4xOrgFile = $j4xImagePath->getOriginalPath ($name);
@@ -2879,7 +2853,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -2888,10 +2862,6 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	}
 
 	// Image moving stage -> separate for original, display, thumb, ...
-
-	/**
-	 *
-	 */
 	const J3X_IMG_NOT_FOUND = 0;
 	const J3X_IMG_MOVED = 1;
 	const J3X_IMG_ALREADY_MOVED = 2;
@@ -2906,7 +2876,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3x_moveImage($id, $name, $galleryId)
@@ -3010,9 +2980,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		if ($isDebugBackend)
 		{
 			// identify active file
-			Log::add(
-				'j3x_moveImage <== state [Display: ' . $stateDisplay . ' thumb: ' . $stateThumb . ' water: ' . $stateWatermarked . ' imgDb: ' . $stateImageDb . ']',
-			);
+			Log::add('j3x_moveImage <== state [Display: ' . $stateDisplay . ' thumb: ' . $stateThumb . ' water: ' . $stateWatermarked . ' imgDb: ' . $stateImageDb . ']');
 		}
 
 		return [$stateOriginal, $stateDisplay, $stateThumb, $stateWatermarked, $stateImageDb];
@@ -3112,7 +3080,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3xUpgradeJ3xMenuLinks()
@@ -3156,7 +3124,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3172,7 +3140,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3xDegradeUpgradedJ4xMenuLinks()
@@ -3245,7 +3213,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3261,7 +3229,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3xLowerJ4xMenuLinks()
@@ -3296,7 +3264,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3312,7 +3280,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3xUpperJ4xMenuLinks()
@@ -3347,7 +3315,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3376,7 +3344,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3xReplaceGid2IdMenuLinks()
@@ -3414,7 +3382,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3430,7 +3398,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function j3xReplaceId2GidMenuLinks()
@@ -3468,7 +3436,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3761,7 +3729,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3870,7 +3838,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -3947,7 +3915,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -4051,7 +4019,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -4126,7 +4094,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 				}
 			}
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
@@ -4514,7 +4482,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return int|mixed
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function resetUpgradeFlags()
@@ -4540,7 +4508,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$isOk &= ConfigRawModel::writeConfigParam('j3x_menu_gid_moved_to_id', $changeGidMenuLinks);
 
 		}
-		catch (RuntimeException $e)
+		catch (\RuntimeException $e)
 		{
 			Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}

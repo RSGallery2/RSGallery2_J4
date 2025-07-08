@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Maintenance;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Finnern\Component\Lang4dev\Administrator\Helper\langFileNamesSet;
 use Joomla\CMS\Component\ComponentHelper;
@@ -25,8 +25,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
-
-use function defined;
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Model\Image;
 
@@ -138,7 +136,7 @@ class HtmlView extends BaseHtmlView
 
                 $cids         = ArrayHelper::toInteger($input->get('cids', [], 'ARRAY'));
                 $inGalleryIds = ArrayHelper::toInteger($input->get('galIds', [], 'array'));
-                //$inFileNames  = ArrayHelper::toString($input->get('imgNames', array(), 'array'));
+                //$inFileNames  = ArrayHelper::toString($input->get('imgNames', [], 'array'));
                 $inFileNames = $input->get('imgNames', [], 'array');
 
                 //--- self call by user -------------------------------------------------
@@ -295,13 +293,8 @@ class HtmlView extends BaseHtmlView
                 ); // 'maintenance');
                 ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-                ToolBarHelper::custom(
-                    'maintenance.checkImageExifData',
-                    'none fas fa-camera-retro',
-                    'image',
-                    'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',
-                    false,
-                );
+                ToolBarHelper::custom('maintenance.checkImageExifData', 'none fas fa-camera-retro',
+                    'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
                 ToolBarHelper::link(
                     'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif',
                     'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',

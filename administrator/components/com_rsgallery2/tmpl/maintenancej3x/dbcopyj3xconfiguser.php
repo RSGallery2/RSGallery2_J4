@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -25,35 +23,26 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3
 --------------------------------------------------------------------------------*/
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfig'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopyj3xconfig'); ?>"
       method="post" name="adminForm" id="adminForm">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+		<?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <?php endif; ?>
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
 				<div class="card text-center">
 					<div class="card-body">
-						<h3 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG', true); ?></h3>
+						<h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG', true); ?></h3>
 
-						<p class="card-text"><?php
-                            echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
+						<p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-						<button class="btn btn-success" type="submit"
-						        onclick="Joomla.submitbutton('MaintenanceJ3x.copyJ3xConfig2J4xOptionsUser');return false;">
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'); ?>
+                        <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyJ3xConfig2J4xOptionsUser');return false;">
+                            <?php echo Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'); ?>
 						</button>
 
 					</div>
@@ -64,8 +53,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbcopy
 
 	<input type="hidden" name="boxchecked" value="0"/>
 	<input type="hidden" name="task" value=""/>
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

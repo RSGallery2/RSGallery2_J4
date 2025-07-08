@@ -12,7 +12,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
@@ -20,9 +20,6 @@ use Joomla\Filesystem\Folder;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use RuntimeException;
-
-use function defined;
 
 /**
  * Collects available gallery ids and names and creates
@@ -59,11 +56,11 @@ class SlideshowSelectField extends ListField
      *
      * @since __BUMP_VERSION__
      *
-     * protected function getInput()
-     * {
-     * return $this->getOptions() ? parent::getInput() : '';
-     * }
-     * /**/
+	protected function getInput()
+	{
+		return $this->getOptions() ? parent::getInput() : '';
+	}
+	/**/
 
     /**
      * Method to get a list of options for a list input.
@@ -120,7 +117,7 @@ class SlideshowSelectField extends ListField
                     }
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 

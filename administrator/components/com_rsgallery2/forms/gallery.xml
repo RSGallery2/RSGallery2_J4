@@ -272,8 +272,7 @@
 		/>
 	</fieldset>
 
-	<fields name="params"
-	        label="COM_RSGALLERY2_FIELD_BASIC_LABEL">
+	<fields name="params" label="COM_RSGALLERY2_FIELD_BASIC_LABEL">
 
 		<fieldset name="basic">
 
@@ -302,10 +301,8 @@
 
 		</fieldset>
 
-		<fieldset name="layout"
-		          label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
-			<fieldset name="layout1"
-			          label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
+		<fieldset name="layout" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
+			<fieldset name="layout1" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
 
 				<field
 						name="images_column_arrangement"
@@ -365,8 +362,7 @@
 
 			</fieldset>
 
-			<fieldset name="layout2"
-			          label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
+			<fieldset name="layout2" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
 				<field
 						name="Layout of images (thumbs)"
 						type="list"
@@ -394,8 +390,7 @@
 
 			</fieldset>
 
-			<fieldset name="voting"
-			          label="COM_RSGALLERY2_FIELD_VOTING_LABEL">
+			<fieldset name="voting" label="COM_RSGALLERY2_FIELD_VOTING_LABEL">
 
 				<field
 						name="voting_view"
@@ -428,11 +423,9 @@
 		</fieldset>
 	</fields>
 
-	<fields name="metadata"
-	        label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+	<fields name="metadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 
-		<fieldset name="jmetadata"
-		          label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
+		<fieldset name="jmetadata" label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
 
 			<field
 					name="author"

@@ -10,9 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -25,8 +24,7 @@ use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
-use RuntimeException;
-use function defined;
+
 
 /**
  * global $Rsg2DebugActive;
@@ -135,45 +133,38 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+        if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+        } else {
+
+            try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				$isOk = $j3xModel->collectAndCopyJ3xConfig2J4xOptions();
 
-				if ($isOk)
-				{
+                if ($isOk) {
 					$msg .= "Successful applied J3x configuration items";
 
 					$isOk = ConfigRawModel::writeConfigParam('j3x_db_config_copied', true);
-					if ($isOk)
-					{
+	                if ($isOk) {
 						$msg .= " and assigned copied flag";
-					}
-					else
-					{
+
+	                } else {
 						$msg     .= "!!! but error at writeConfigParam !!!";
 						$msgType = 'error';
 					}
-				}
-				else
-				{
+
+
+                } else {
 					$msg     .= "Error at collectAndCopyJ3xConfig2J4xOptions items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+            } catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing collectAndCopyJ3xConfig2J4xOptions: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -214,8 +205,7 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+        if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
@@ -230,29 +220,25 @@ class MaintenanceJ3xController extends AdminController
 
 				$isOk = $j3xModel->copyDbAllJ3xGalleries2J4x();
 
-				if ($isOk)
-				{
+                if ($isOk) {
+
 					$msg .= "Successful applied J3x gallery items ";
 
 					$isOk = ConfigRawModel::writeConfigParam('j3x_db_galleries_copied', true);
-					if ($isOk)
-					{
+	                if ($isOk) {
 						$msg .= " and assigned copied flag";
-					}
-					else
-					{
+
+	                } else {
 						$msg     .= "!!! but error at writeConfigParam !!!";
 						$msgType = 'error';
 					}
-				}
-				else
-				{
+
+                } else {
 					$msg     .= "Error at copyDbJ3xGalleries2J4x items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+            } catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing copyDbJ3xGalleries2J4x: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -279,28 +265,22 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+        if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+        } else {
+            try {
 				$cids = $this->input->get('cid', [], 'array');
 
-				if (!is_array($cids) || count($cids) < 1)
-				{
+                if (!is_array($cids) || count($cids) < 1) {
 					//$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
 					$msg     .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
 					$msgType = 'warning';
-				}
-				else
-				{
+                } else {
+
 					$j3xModel = $this->getModel('MaintenanceJ3x');
 
 					$isOk = $j3xModel->copyDbSelectedJ3xGalleries2J4x($cids);
@@ -327,7 +307,7 @@ class MaintenanceJ3xController extends AdminController
 					}
 				}
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing copyDbSelectedJ3xGalleries2J4x: "' . '<br>';
@@ -360,34 +340,27 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+        if (!$canAdmin) {
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+        } else {
+
+            try {
 				// Get the model.
 				/** @var MaintenanceJ3xModel */
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				// Remove the items.
 				$isOk = $j3xModel->resetImagesTable();
-				if ($isOk)
-				{
+                if ($isOk) {
 					$msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_SUCCESS');
-				}
-				else
-				{
+                } else {
 					$msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_ERROR');
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+            } catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing resetImagesTable: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -419,7 +392,7 @@ class MaintenanceJ3xController extends AdminController
 //			str_replace('\n', '<br>', $msg);
 //		} else {
 //			try {
-//				$cids = $this->input->get('cid', array(), 'array');
+//				$cids = $this->input->get('cid', [], 'array');
 //
 //				if (!is_array($cids) || count($cids) < 1) {
 //					//$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
@@ -459,7 +432,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since version
 	 */
 	public function copyDbImagesOfSelectedGalleries()
@@ -470,28 +443,22 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+		if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+		} else {
+			try {
 				$cids = $this->input->get('cid', [], 'array');
 
-				if (!is_array($cids) || count($cids) < 1)
-				{
+				if (!is_array($cids) || count($cids) < 1) {
 					//$this->app->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'warning');
 					$msg     .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
 					$msgType = 'warning';
-				}
-				else
-				{
+				} else {
+
 					$j3xModel = $this->getModel('MaintenanceJ3x');
 
 					//$isOk = $j3xModel->copyDbSelectedJ3xImages2J4x($cids);
@@ -506,9 +473,7 @@ class MaintenanceJ3xController extends AdminController
 						$msgType = 'error';
 					}
 				}
-			}
-			catch (RuntimeException $e)
-			{
+			} catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing copyDbImagesOfSelectedGalleries: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -549,44 +514,35 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+		if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+		} else {
+			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				$isOk = $j3xModel->copyDbAllJ3xImages2J4x();
-				if ($isOk)
-				{
+				if ($isOk) {
 					$msg .= "Successful applied J3x image items";
 
 					$isOk = ConfigRawModel::writeConfigParam('j3x_db_images_copied', true);
-					if ($isOk)
-					{
+					if ($isOk) {
 						$msg .= " and assigned copied flag";
-					}
-					else
-					{
+
+					} else {
 						$msg     .= "!!! but error at writeConfigParam !!!";
 						$msgType = 'error';
 					}
-				}
-				else
-				{
+
+				} else {
 					$msg     .= "Error at copyDbJ3xImages2J4x items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+			} catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing copyDbJ3xImages2J4x: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -614,44 +570,35 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+		if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+		} else {
+			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				$isOk = $j3xModel->revertCopyDbJ3xImages2J4xUser();
-				if ($isOk)
-				{
+				if ($isOk) {
 					$msg .= "Successful reverted copy of J3x image items";
 
 					$isOk = ConfigRawModel::writeConfigParam('j3x_db_images_copied', false);
-					if ($isOk)
-					{
+					if ($isOk) {
 						$msg .= " and assigned copied flag";
-					}
-					else
-					{
+
+					} else {
 						$msg     .= "!!! but error at writeConfigParam !!!";
 						$msgType = 'error';
 					}
-				}
-				else
-				{
+
+				} else {
 					$msg     .= "Error at revertCopyDbJ3xImages2J4xUser items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+			} catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing revertCopyDbJ3xImages2J4xUser: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -746,7 +693,7 @@ class MaintenanceJ3xController extends AdminController
 //        } else {
 //            try {
 //                // Get items to remove from the request.
-//                $cids = $this->input->get('cid', array(), 'array');
+//                $cids = $this->input->get('cid', [], 'array');
 //                $extension = $this->input->getCmd('extension', null);
 //
 //                if (!is_array($cids) || count($cids) < 1) {
@@ -796,41 +743,33 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+        if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+        } else {
+            try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				// Collect image Ids (ToDo: collect ids by db query in $j3xModel)
 				$j3x_images   = $j3xModel->j3x_imagesMergeList();
 				$j3x_imageIds = [];
-				foreach ($j3x_images as $j3x_image)
-				{
+                foreach ($j3x_images as $j3x_image) {
+
 					$j3x_imageIds [] = $j3x_image->id;
 				}
 
 				$isOk = $j3xModel->updateMovedJ3xImages2J4x($j3x_imageIds);
-				if ($isOk)
-				{
+                if ($isOk) {
 					$msg .= "Successful updated database for J3x -> J4x image files";
-				}
-				else
-				{
+                } else {
 					$msg     .= "Error at updateMovedJ3xImages2J4x: Update database for J3x -> J4x image files ";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+            } catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing updateMovedJ3xImages2J4x: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -848,7 +787,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Extract configuration variables from RSG2 config file to reset to original values
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 *
 	 * @since __BUMP_VERSION__
 	 */
@@ -862,22 +801,19 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+        if (!$canAdmin) {
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+        } else {
+
+            try {
+
 				$MaintModel = $this->getModel('MaintenanceJ3x');
 
 				$isPathsExisting = $MaintModel->CheckImagePaths();
-				if ($isPathsExisting)
-				{
+                if ($isPathsExisting) {
 					// config saved message
 					$msg .= Text::_('All paths to images j3x exist', true);
 				}
@@ -886,9 +822,8 @@ class MaintenanceJ3xController extends AdminController
 					$msg     .= "Missing pathes for images j3x found '";
 					$msgType = 'warning';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+            } catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing CheckImagePaths: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -905,7 +840,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Extract configuration variables from RSG2 config file to reset to original values
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 *
 	 * @since __BUMP_VERSION__
 	 */
@@ -919,22 +854,19 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+        if (!$canAdmin) {
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+        } else {
+
+            try {
+
 				$MaintModel = $this->getModel('MaintenanceJ3x');
 				$isSaved    = $MaintModel->RepairImagePaths();
 
-				if ($isSaved)
-				{
+                if ($isSaved) {
 					// config saved message
 					$msg .= Text::_('Image paths are created', true);
 				}
@@ -943,9 +875,8 @@ class MaintenanceJ3xController extends AdminController
 					$msg     .= "Error at repair image paths'";
 					$msgType = 'warning';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+            } catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing RepairImagePaths: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -963,7 +894,7 @@ class MaintenanceJ3xController extends AdminController
 	 * From given gallery id all matching images are collected
 	 * Returns id and names of all found images
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since __BUMP_VERSION__
 	 */
 	function ajaxRequestImageIds()
@@ -997,7 +928,7 @@ class MaintenanceJ3xController extends AdminController
 		/**/
 
 		// for debug ajax response errors / notice
-		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
 		if ($errorType)
 		{
 			$this->issueError($errorType);
@@ -1086,7 +1017,7 @@ class MaintenanceJ3xController extends AdminController
 				Log::add('<== Exit ajaxRequestImageIds');
 			}
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			echo new JsonResponse($e);
 		}
@@ -1095,20 +1026,21 @@ class MaintenanceJ3xController extends AdminController
 	}
 
 	/** enum ==>
-	 * abstract class DaysOfWeek
-	 * {
-	 * const Sunday = 0;
-	 * const Monday = 1;
-	 * // etc.
-	 * }
-	 * /**/
+    abstract class DaysOfWeek
+    {
+        const Sunday = 0;
+        const Monday = 1;
+        // etc.
+    }
+    /**/
+
 
 	/**
 	 * Moves siblings of given image to new rsgallery2 folder structure
 	 * single J3x image
 	 *
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since __BUMP_VERSION__
 	 */
 	function ajaxMoveJ3xImage()
@@ -1158,7 +1090,7 @@ class MaintenanceJ3xController extends AdminController
 		/**/
 
 		// for debug ajax response errors / notice
-		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+		$errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
 		if ($errorType)
 		{
 			$this->issueError($errorType);
@@ -1265,7 +1197,7 @@ class MaintenanceJ3xController extends AdminController
 				Log::add('ajaxMoveJ3xImage <== ' . $hasError);
 			}
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			echo new JsonResponse($e);
 		}
@@ -1299,45 +1231,38 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+		if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
-			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msg .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+		} else {
+
+			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				$isOk = $j3xModel->j3xUpgradeJ3xMenuLinks();
 
-				if ($isOk)
-				{
+				if ($isOk) {
+
 					$msg .= "Successful changed j3x menu inks and increased menu J3x gallery gids ";
 
-					$isOk = ConfigRawModel::writeConfigParam('j3x_menu_gid_increased', true);
-					if ($isOk)
-					{
+					$isOk = ConfigRawModel::writeConfigParam ('j3x_menu_gid_increased', true);
+					if ($isOk) {
 						$msg .= " and assigned copied flag";
-					}
-					else
-					{
-						$msg     .= "!!! but error at writeConfigParam !!!";
+
+					} else {
+						$msg .= "!!! but error at writeConfigParam !!!";
 						$msgType = 'error';
 					}
-				}
-				else
-				{
-					$msg     .= "Error at j3xUpgradeJ3xMenuLinks items";
+
+				} else {
+					$msg .= "Error at j3xUpgradeJ3xMenuLinks items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+			} catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing j3xUpgradeJ3xMenuLinks: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1345,6 +1270,7 @@ class MaintenanceJ3xController extends AdminController
 				$app = Factory::getApplication();
 				$app->enqueueMessage($OutTxt, 'error');
 			}
+
 		}
 
 		$link = 'index.php?option=com_rsgallery2';
@@ -1364,34 +1290,29 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+		if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+		} else {
+
+			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				$isOk = $j3xModel->j3xLowerJ4xMenuLinks();
 
-				if ($isOk)
-				{
+				if ($isOk) {
+
 					$msg .= "Successful lower j3x menu inks";
-				}
-				else
-				{
+
+				} else {
 					$msg     .= "Error at j3xLowerJ4xMenuLinks items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+			} catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing j3xLowerJ4xMenuLinks: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1418,34 +1339,29 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+		if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+		} else {
+
+			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				$isOk = $j3xModel->j3xUpperJ4xMenuLinks();
 
-				if ($isOk)
-				{
+				if ($isOk) {
+
 					$msg .= "Successful lower j3x menu inks";
-				}
-				else
-				{
+
+				} else {
 					$msg     .= "Error at j3xUpperJ4xMenuLinks items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+			} catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing j3xUpperJ4xMenuLinks: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1509,7 +1425,7 @@ class MaintenanceJ3xController extends AdminController
 					$msgType = 'error';
 				}
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing j3xReplaceGid2IdMenuLinks: "' . '<br>';
@@ -1569,7 +1485,7 @@ class MaintenanceJ3xController extends AdminController
 					$msgType = 'error';
 				}
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing j3xReplaceId2GidMenuLinks: "' . '<br>';
@@ -1597,24 +1513,21 @@ class MaintenanceJ3xController extends AdminController
 		$this->checkToken();
 
 		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.manage', 'com_rsgallery2');
-		if (!$canAdmin)
-		{
+		if (!$canAdmin) {
 			//Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
 			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
 			$msgType = 'warning';
 			// replace newlines with html line breaks.
 			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			try
-			{
+		} else {
+
+			try {
 				$j3xModel = $this->getModel('MaintenanceJ3x');
 
 				$isOk = $j3xModel->j3xDegradeUpgradedJ4xMenuLinks();
 
-				if ($isOk)
-				{
+				if ($isOk) {
+
 					$msg .= "Successful decreased menu J3x gallery gids ";
 
 //					$isOk = ConfigRawModel::writeConfigParam ('j3x_menu_gid_increased', true);
@@ -1626,15 +1539,12 @@ class MaintenanceJ3xController extends AdminController
 //						$msgType = 'error';
 //					}
 
-				}
-				else
-				{
+				} else {
 					$msg     .= "Error at j3xDegradeUpgradedJ3xMenuLinks items";
 					$msgType = 'error';
 				}
-			}
-			catch (RuntimeException $e)
-			{
+
+			} catch (\RuntimeException $e) {
 				$OutTxt = '';
 				$OutTxt .= 'Error executing j3xDegradeUpgradedJ3xMenuLinks: "' . '<br>';
 				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1657,9 +1567,9 @@ class MaintenanceJ3xController extends AdminController
 	 *                   2: notice
 	 *                   3: enqueueMessage types with error set
 	 *                   4: enqueueMessage types with NO error set
-	 *                   5: enqueueMessage types with thrown exception
+	 *                   5: enqueueMessage types with thrown \Exception
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @since __BUMP_VERSION__
 	 */
 	function issueError($errorType)
@@ -1713,7 +1623,7 @@ class MaintenanceJ3xController extends AdminController
 					$app->enqueueMessage('Here was a small error 1', 'error');
 					$app->enqueueMessage('Here was a small error 2', 'error');
 
-					throw new Exception('Attention: raised exception ');
+					throw new \Exception('Attention: raised \Exception ');
 
 					// echo new JsonResponse($result, 'Response message with !!! no !!! error set');
 					break;
@@ -1775,7 +1685,7 @@ class MaintenanceJ3xController extends AdminController
 					$msgType = 'error';
 				}
 			}
-			catch (RuntimeException $e)
+			catch (\RuntimeException $e)
 			{
 				$OutTxt = '';
 				$OutTxt .= 'Error executing resetUpgradeFlags: "' . '<br>';

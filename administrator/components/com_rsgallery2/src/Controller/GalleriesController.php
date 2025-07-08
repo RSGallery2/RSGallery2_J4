@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
@@ -20,9 +20,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel;
-use RuntimeException;
 
-use function defined;
+
 
 /**
  * The Galleries List Controller
@@ -97,7 +96,7 @@ class GalleriesController extends AdminController
                 } else {
                     $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing rebuild: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -146,7 +145,7 @@ class GalleriesController extends AdminController
                 } else {
                     $msg .= Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_ERROR') . ': ' . $model->getError();
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing reinitNestedGalleryTable: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

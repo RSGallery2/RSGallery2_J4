@@ -13,16 +13,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-use Exception;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
-use RuntimeException;
 
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
@@ -98,8 +95,8 @@ class InstallMessage
         $controlPanelText     = Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL');
         $controlPanelTitle    = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONTROL_PANEL_TITLE');
 
-        $rsg2ConfigurationLink = URI::root(
-            ) . '/administrator/index.php?option=com_config&view=component&component=com_rsgallery2';
+        $rsg2ConfigurationLink = URI::root() 
+			. '/administrator/index.php?option=com_config&view=component&component=com_rsgallery2';
         $configurationText     = Text::_('COM_RSGALLERY2_MENU_CONFIG');
         $configurationTitle    = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONFIGURATION_TITLE');
 
@@ -147,7 +144,7 @@ class InstallMessage
      *
      * @return string html card containing tables for each version
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     private function changeLogHtml()
@@ -181,14 +178,14 @@ class InstallMessage
             $collapsed = false;
             // Cord display collapsed or not
             $changeLogText = ChangeLogModel::collapseContent($changelogTables, $id, $collapsed);
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error in InstallMessage view: "' . 'ChangeLogHtml' . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
         }
 
         return $changeLogText;

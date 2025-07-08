@@ -7,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -22,57 +22,44 @@ $ListDirn  = '';
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_raw'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_raw'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 	</div>
 
 	<div class="d-flex flex-row">
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 				<div>
-                    <?php
-                    if (empty($this->items)) : ?>
+                    <?php if (empty($this->items)) : ?>
 						<div class="alert alert-info">
-							<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php
-                                echo Text::_('INFO'); ?></span>
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
+							<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
+                            <?php echo Text::_('COM_RSGALLERY2_NO_GALLERY_CREATED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
 						</div>
-                    <?php
-                    else : ?>
-                        <?php
-                        // echo 'galleries: ' . count($this->items); ?>
+                    <?php else : ?>
+                        <?php // echo 'galleries: ' . count($this->items); ?>
 
 						<table class="table table-striped" id="galleryList">
 
 							<caption id="captionTable" class="sr-only">
-                                <?php
-                                echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php
-                                echo Text::_('JGLOBAL_SORTED_BY'); ?>
+                                <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
 							</caption>
 							<thead>
 							<tr>
 								<td style="width:1%" class="text-center">
-                                    <?php
-                                    echo HTMLHelper::_('grid.checkall'); ?>
+                                    <?php echo HTMLHelper::_('grid.checkall'); ?>
 								</td>
 
 								<th width="1%" class="text-center">
 									`id`
 								</th>
 								<th width="1%" class="text-center">
-                                    <?php
-                                    // ToDo: add tag ?>
+                                        <?php // ToDo: add tag ?>
 									`name/alias/note`
 								</th>
 								<th width="1%" class="text-center">
@@ -151,143 +138,102 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_r
 
                             foreach ($this->items as $i => $item) {
                                 ?>
-								<tr class="row<?php
-                                echo $i % 2; ?>">
+								<tr class="row<?php echo $i % 2; ?>">
 
 									<td class="text-center">
-                                        <?php
-                                        echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                                        <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $item->id; ?>
+                                        <?php echo $item->id; ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $this->escape($item->name); ?>
-										<span class="small" title="<?php
-                                        echo $this->escape($item->path); ?>">
-                                            <?php
-                                            if (empty($item->note)) : ?>
-	                                            (<?php
-                                                echo Text::sprintf(
-                                                    'JGLOBAL_LIST_ALIAS',
-                                                    $this->escape($item->alias),
-                                                ); ?>)
-                                            <?php
-                                            else : ?>
-	                                            (<?php
-                                                echo Text::sprintf(
-                                                    'JGLOBAL_LIST_ALIAS_NOTE',
-                                                    $this->escape($item->alias),
-                                                    $this->escape($item->note),
-                                                ); ?>)
-                                            <?php
-                                            endif; ?>
+                                        <?php echo $this->escape($item->name); ?>
+										<span class="small" title="<?php echo $this->escape($item->path); ?>">
+                                            <?php if (empty($item->note)) : ?>
+                                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>)
+                                            <?php else : ?>
+                                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>)
+                                            <?php endif; ?>
                                             </span>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $item->description; ?>
+                                        <?php echo $item->description; ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $item->thumb_id; ?>
+                                        <?php echo $item->thumb_id; ?>
 									</td>
 
-									<td class="text-center"
-									    style="width:200px; word-wrap:break-word; display:inline-block;">
-										"<?php
-                                        echo $item->params; ?>"
+                                        <td class="text-center" style="width:200px; word-wrap:break-word; display:inline-block;">
+										"<?php echo $item->params; ?>"
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->published; ?>
+                                        <?php echo $item->published; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->publish_up; ?>
+                                        <?php echo $item->publish_up; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->publish_down; ?>
+                                        <?php echo $item->publish_down; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->hits; ?>
+                                        <?php echo $item->hits; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->checked_out; ?>
+                                        <?php echo $item->checked_out; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->checked_out_time; ?>
+                                        <?php echo $item->checked_out_time; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->created; ?>
+                                        <?php echo $item->created; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->created_by; ?>
+                                        <?php echo $item->created_by; ?>
 									</td>
 									<td width="1%" class="text-center">
-										"<?php
-                                        echo $item->created_by_alias; ?>"
+										"<?php echo $item->created_by_alias; ?>"
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->modified; ?>
+                                        <?php echo $item->modified; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->modified_by; ?>
+                                        <?php echo $item->modified_by; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        // ToDo: Name of parent gallery as title
-                                        ?>
-                                        <?php
-                                        echo $item->parent_id; ?>
+                                            <?php // ToDo: Name of parent gallery as title ?>
+                                        <?php echo $item->parent_id; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->level; ?>
+                                        <?php echo $item->level; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->path; ?>
+                                        <?php echo $item->path; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->lft; ?>
+                                        <?php echo $item->lft; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->rgt; ?>
+                                        <?php echo $item->rgt; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->asset_id; ?>
+                                        <?php echo $item->asset_id; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->access; ?>
+                                        <?php echo $item->access; ?>
 									</td>
 
 								</tr>
@@ -303,8 +249,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_r
                         }
 
                         ?>
-                    <?php
-                    endif; ?>
+                    <?php endif; ?>
 
 				</div>
 			</div>
@@ -313,6 +258,5 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries&layout=galleries_r
 
 	<input type="hidden" name="boxchecked" value="0"/>
 	<input type="hidden" name="task" value=""/>
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

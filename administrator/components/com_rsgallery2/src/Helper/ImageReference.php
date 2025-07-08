@@ -11,18 +11,16 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
-use RuntimeException;
 
-use function defined;
+
 
 // Include the JLog class.
 //jimport('joomla.log.log');
@@ -178,7 +176,7 @@ class ImageReference
      * @param $image
      *
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     public function assignDbItem($image)
@@ -224,7 +222,7 @@ class ImageReference
                 $app->enqueueMessage($OutTxt, 'notice');
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignDbItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -239,7 +237,7 @@ class ImageReference
     /**
      * Check all epected pathes for image existance
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     public function check4ImageIsNotExisting()
@@ -286,7 +284,7 @@ class ImageReference
                 $app->enqueueMessage($OutTxt, 'notice');
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing check4ImageIsNotExisting: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -342,7 +340,7 @@ class ImageReference
 
             $this->allImagePaths = [];
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing initOrphanedItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -408,7 +406,7 @@ class ImageReference
                 $isImageAssigned                      = true;
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignOrphanedItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

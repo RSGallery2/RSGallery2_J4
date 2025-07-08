@@ -88,24 +88,16 @@ if ($readonly) {
         }
 
         foreach ($value as $val) {
-            $html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars(
-                    $val,
-                    ENT_COMPAT,
-                    'UTF-8',
-                ) . '">';
+			$html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($val, ENT_COMPAT, 'UTF-8') . '">';
         }
     } else {
-        $html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars(
-                $value,
-                ENT_COMPAT,
-                'UTF-8',
-            ) . '">';
+		$html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '">';
     }
 } else {
     // Create a regular list.
     if (count($options) === 0) {
         // All Galleries have been deleted, so we need a new gallery (This will create one on save if selected).
-        $options[0]            = new stdClass;
+		$options[0]            = new \stdClass;
         $options[0]->value     = '0';
         $options[0]->text      = Text::_('JGLOBAL_ROOT_PARENT');  // COM_RSGALLERY2_NO_PARENT
         $options[0]->level     = '1';
@@ -124,6 +116,6 @@ Factory::getApplication()->getDocument()->getWebAssetManager()
     ->useScript('webcomponent.field-fancy-select');
 ?>
 
-<joomla-field-fancy-select <?php
-echo $attr2; ?>><?php
-    echo implode($html); ?></joomla-field-fancy-select>
+<joomla-field-fancy-select <?php echo $attr2; ?>><?php echo implode($html); ?></joomla-field-fancy-select>
+
+

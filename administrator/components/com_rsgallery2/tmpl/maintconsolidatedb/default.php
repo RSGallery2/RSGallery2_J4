@@ -7,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -48,7 +48,7 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
     $html[] = '</th>';
 
     /*
-    $html = array (); // Check all empty
+    $html = []; // Check all empty
     $html[] = '<th class="center" width="1%">';
     //$html[] = '2'; // empty
     $html[] = '</th>';
@@ -493,29 +493,21 @@ if (!empty ($ImageLostAndFoundList)) {
 }
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-                <?php
-//                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'MaintConsolidateDb']); ?>
+                <?php //                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'MaintConsolidateDb']); ?>
 
-                <?php
-//                echo HTMLHelper::_(
+                <?php //                echo HTMLHelper::_(
 //                    'bootstrap.addTab',
 //                    'myTab',
 //                    'MaintConsolidateDb',
@@ -537,8 +529,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
                         echo Text::_('COM_RSGALLERY2_NO_INCONSISTENCIES_IN_DATABASE');
                         ?>
 					</div>
-                <?php
-                else : ?>
+                <?php else : ?>
 
 					<div class="pull-right ParentGalleryId">
                         <?php
@@ -559,38 +550,31 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
 						</div>
 					</div>
 
-                <?php
-                endif; ?>
+                <?php endif; ?>
 
 				<div class="form-actions">
 					<br>
 				</div>
 
 				<fieldset class="refresh">
-					<!--legend><?php
-                    echo Text::_('COM_RSGALLERY2_REFRESH_TEXT'); ?>XXXXX</legend-->
+					<!--legend><?php echo Text::_('COM_RSGALLERY2_REFRESH_TEXT'); ?>XXXXX</legend-->
 					<div class="form-actions">
 						<a class="btn btn-primary jgrid "
-						   title="<?php
-                           echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING_INCONSITENCIES_DESC'); ?>"
+						   title="<?php echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING_INCONSITENCIES_DESC'); ?>"
 						   href="index.php?option=com_rsgallery2&amp;view=maintConsolidateDB">
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING'); ?>
+                            <?php echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING'); ?>
 						</a>
 						<a class="btn btn-primary jgrid"
 						   href="index.php?option=com_rsgallery2&amp;view=maintenance">
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_CANCEL'); ?>
+                            <?php echo Text::_('COM_RSGALLERY2_CANCEL'); ?>
 						</a>
 					</div>
 				</fieldset>
 
 
-                <?php
-//                echo HTMLHelper::_('bootstrap.endTab'); ?>
+                <?php //                echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-                <?php
-//                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+                <?php //                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
@@ -606,14 +590,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
                 // echo $HtmlOut;
                 ?>"/>
 
-                <?php
-                echo HTMLHelper::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
 			</div>
 		</div>
 	</div>
 
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

@@ -10,17 +10,16 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
-use RuntimeException;
-use stdClass;
 
-use function defined;
+
+
 
 /**
  * Collects available gallery ids and names and creates
@@ -56,13 +55,8 @@ class ExifListField extends ListField
             //--- load additional language file --------------------------------
 
             $lang = Factory::getApplication()->getLanguage();
-            $lang->load(
-                'com_rsg2_exif',
-                Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
-                null,
-                false,
-                true,
-            );
+            $lang->load('com_rsg2_exif',
+                Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
 
             //--- exif tags ---------------------------------------------------------
 
@@ -77,14 +71,14 @@ class ExifListField extends ListField
 
                 //--- create option element ----------------------------------------------
 
-                $option        = new stdClass();
+                $option        = new \stdClass();
                 $option->value = $enabledTag;
                 //$option->text  = $translationText;
                 $option->text = $type . ':' . $translationText;
 
                 $options[] = $option;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 

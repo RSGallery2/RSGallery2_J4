@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\ImagesProperties;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Editor\Editor;
@@ -21,7 +21,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
-use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -192,32 +191,12 @@ class HtmlView extends BaseHtmlView
 
                 $dropdownButton->configure(
                     function (Toolbar $childBar) {
-                        $childBar->standardButton(
-                            'undo-2',
-                            'COM_RSGALLERY2_ROTATE_LEFT',
-                            'imagesProperties.rotate_images_left',
-                        )->icon('fa fa-undo');
-                        $childBar->standardButton(
-                            'redo-2',
-                            'COM_RSGALLERY2_ROTATE_RIGHT',
-                            'imagesProperties.rotate_images_right',
-                        )->icon('fa fa-redo');
-                        $childBar->standardButton(
-                            'backward-2',
-                            'COM_RSGALLERY2_ROTATE_180',
-                            'imagesProperties.rotate_images_180',
-                        )->icon('fa fa-sync fa-rotate-180');
-                        $childBar->divider('      ');
-                        $childBar->standardButton(
-                            'fa-arrows',
-                            'COM_RSGALLERY2_FLIP_HORIZONTAL',
-                            'imagesProperties.flip_images_horizontal',
-                        )->icon('fa fa-arrows-alt-h');
-                        $childBar->standardButton(
-                            'arrow-down-4',
-                            'COM_RSGALLERY2_FLIP_VERTICAL',
-                            'imagesProperties.flip_images_vertical',
-                        )->icon('fa fa-arrows-alt-v');
+                        $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left')->icon('fa fa-undo');
+						$childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right')->icon('fa fa-redo');
+						$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180')->icon('fa fa-sync fa-rotate-180');
+						$childBar->divider('      ');
+						$childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal')->icon('fa fa-arrows-alt-h');
+						$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical')->icon('fa fa-arrows-alt-v');
                     },
                 );
 

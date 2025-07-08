@@ -9,12 +9,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Image;
 
-defined('_JEXEC') or die;
-
-use Joomla\CMS\Form\Form;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Language\Text;
@@ -24,8 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-
-use function defined;
+
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
@@ -129,20 +127,20 @@ class HtmlView extends BaseHtmlView
         }
 
         /**
-         * // If we are forcing a language in modal (used for associations).
-         * if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
-         * {
-         * // Set the language field to the forcedLanguage and disable changing it.
-         * $this->form->setValue('language', null, $forcedLanguage);
-         * $this->form->setFieldAttribute('language', 'readonly', 'true');
-         *
-         * // Only allow to select galleries with All language or with the forced language.
-         * $this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
-         *
-         * // Only allow to select tags with All language or with the forced language.
-         * $this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
-         * }
-         * /**/
+		// If we are forcing a language in modal (used for associations).
+		if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
+		{
+			// Set the language field to the forcedLanguage and disable changing it.
+			$this->form->setValue('language', null, $forcedLanguage);
+			$this->form->setFieldAttribute('language', 'readonly', 'true');
+
+			// Only allow to select galleries with All language or with the forced language.
+			$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
+
+			// Only allow to select tags with All language or with the forced language.
+			$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
+		}
+		/**/
 
         // different toolbar on different layouts
         $Layout = Factory::getApplication()->input->get('layout');
@@ -218,33 +216,13 @@ class HtmlView extends BaseHtmlView
 
                 $dropdownButton->configure(
                     function (Toolbar $childBar) {
-                        $childBar->standardButton(
-                            'undo-2',
-                            'COM_RSGALLERY2_ROTATE_LEFT',
-                            'image.rotate_image_left',
-                        )->icon('fa fa-undo');
-                        $childBar->standardButton(
-                            'redo-2',
-                            'COM_RSGALLERY2_ROTATE_RIGHT',
-                            'images.rotate_image_right',
-                        )->icon('fa fa-redo');
-                        $childBar->standardButton(
-                            'backward-2',
-                            'COM_RSGALLERY2_ROTATE_180',
-                            'images.rotate_image_180',
-                        )->icon('fa fa-sync fa-rotate-180');
+                        $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT', 'image.rotate_image_left')->icon('fa fa-undo');
+                        $childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT', 'images.rotate_image_right')->icon('fa fa-redo');
+                        $childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180', 'images.rotate_image_180')->icon('fa fa-sync fa-rotate-180');
                         $childBar->divider('      ');
-                        $childBar->standardButton(
-                            'fa-arrows',
-                            'COM_RSGALLERY2_FLIP_HORIZONTAL',
-                            'image.flip_image_horizontal',
-                        )->icon('fa fa-arrows-alt-h');
-                        $childBar->standardButton(
-                            'arrow-down-4',
-                            'COM_RSGALLERY2_FLIP_VERTICAL',
-                            'image.flip_image_vertical',
-                        )->icon('fa fa-arrows-alt-v');
-                    },
+                        $childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL', 'image.flip_image_horizontal')->icon('fa fa-arrows-alt-h');
+                        $childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL', 'image.flip_image_vertical')->icon('fa fa-arrows-alt-v');
+                    }
                 );
 
                 //--- cancel  -----------------------------------

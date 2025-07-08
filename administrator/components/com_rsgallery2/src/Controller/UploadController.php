@@ -10,9 +10,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
+
 use Joomla\CMS\Input\Input;
 use Joomla\Archive\Archive;
 use Joomla\CMS\Application\CMSApplication;
@@ -28,9 +28,8 @@ use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
-use RuntimeException;
 
-use function defined;
+
 use function dirname;
 
 /**
@@ -94,7 +93,7 @@ class UploadController extends FormController
      * ordering before uploading the images
      * Reason: The parallel uploaded images may appear unordered
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     function uploadAjaxReserveDbImageId()
@@ -128,7 +127,7 @@ class UploadController extends FormController
         /**/
 
         // for debug ajax response errors / notice
-        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
             issueError($errorType);
         }
@@ -248,13 +247,13 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxReserveDbImageId');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg   = $msg . $e->getMessage();
             $hasError = 1;
 
             if ($Rsg2DebugActive) {
                 $errMsg = $msg . $e;
-                Log::add('    Exception: ' . $errMsg);
+                Log::add('    \Exception: ' . $errMsg);
             }
 
             echo new JsonResponse($msg, $errMsg, $hasError);
@@ -265,28 +264,28 @@ class UploadController extends FormController
     }
 
     /**
-     * in:
-     * interface IDroppedFile
-     * {
-     * file: File;
-     * galleryId: string;
-     * ...
-     * }
-     * interface ITransferFile extends IDroppedFile {
-     * imageId: string;
-     * fileName: string;
-     * dstFileName: string;
-     * }
-     *
-     * out:
-     * interface IResponseTransfer {
-     * fileName: string;
-     * imageId: string; //number
-     * fileUrl: string;
-     * safeFileName: string;
-     * }
-     *
-     * /**/
+in:
+interface IDroppedFile
+{
+	file: File;
+	galleryId: string;
+	...
+}
+interface ITransferFile extends IDroppedFile {
+	imageId: string;
+	fileName: string;
+	dstFileName: string;
+}
+
+out:
+	interface IResponseTransfer {
+	fileName: string;
+	imageId: string; //number
+	fileUrl: string;
+	safeFileName: string;
+}
+
+/**/
 
     /**
      * The dropped file will be uploaded. The dependent files
@@ -327,7 +326,7 @@ class UploadController extends FormController
         /**/
 
         // for debug ajax response errors / notice
-        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
             issueError($errorType);
         }
@@ -418,13 +417,8 @@ class UploadController extends FormController
 
                 $modelFile = $this->getModel('imageFile');
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
-                    $srcTempPathFileName,
-                    $targetFileName,
-                    $galleryId,
-                    $origin,
-                    $use_j3x_location,
-                );
-            } catch (RuntimeException $e) {
+                    $srcTempPathFileName, $targetFileName, $galleryId, $origin, $use_j3x_location);
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -440,9 +434,7 @@ class UploadController extends FormController
             if (!$isCreated) {
                 // ToDo: remove $imageId fom image database
                 if ($Rsg2DebugActive) {
-                    Log::add(
-                        'MoveImageAndCreateRSG2Images failed: ' . $srcTempPathFileName . '" -> "' . $targetFileName,
-                    );
+					Log::add('MoveImageAndCreateRSG2Images failed: ' . $srcTempPathFileName . '" -> "' . $targetFileName);
                 }
 
                 echo new JsonResponse($ajaxImgObject, $msg, true);
@@ -470,12 +462,12 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxSingleFile');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg   = $msg . $e; // $e->getMessage()
             $hasError = 1;
 
             if ($Rsg2DebugActive) {
-                Log::add('    Exception: ' . $errMsg);
+                Log::add('    \Exception: ' . $errMsg);
             }
 
             echo new JsonResponse($msg, $errMsg, $hasError);
@@ -494,7 +486,7 @@ class UploadController extends FormController
      * ordering before uploading the images
      * Reason: The parallel uploaded images may appear unordered
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     function uploadAjaxZipExtractReserveDbImageId()
@@ -527,7 +519,7 @@ class UploadController extends FormController
         /**/
 
         // for debug ajax response errors / notice
-        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
             issueError($errorType);
         }
@@ -658,11 +650,8 @@ class UploadController extends FormController
 //                            check out MoveImageAndCreateRSG2Images
 
                             // toDo check origin and config for copy / or move file call below
-                            [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
-                                $fileName,
-                                $targetFileName,
-                                $galleryId,
-                                $origin,
+                            [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images( 
+                                $fileName, $targetFileName, $galleryId, $origin,
                             );
 
                             if ($isCreated) {
@@ -673,7 +662,7 @@ class UploadController extends FormController
 
                             }
                             /**/
-                        } catch (RuntimeException $e) {
+                        } catch (\RuntimeException $e) {
                             $OutTxt = '';
                             $OutTxt .= 'moveFile2OrignalDir: "' . $fileName . '" -> "' . $targetFileName . '"<br>';
                             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -690,12 +679,12 @@ class UploadController extends FormController
                     $ajaxImgObject ['files'] = $files;
                     $isCreated               = true;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $errMsg   = $msg . ' On extract file: ' . $archiveName . '<br>' . $e;
                 $hasError = 1;
 
                 if ($Rsg2DebugActive) {
-                    Log::add('    Exception: ' . $errMsg);
+                    Log::add('    \Exception: ' . $errMsg);
                 }
 
                 echo new JsonResponse($msg, $errMsg, $hasError);
@@ -718,12 +707,12 @@ class UploadController extends FormController
                             Folder::delete($extractDir);
                         }
                     }
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     $errMsg   = $msg . ' On clean up: ' . $archiveName . ' / ' . $extractDir . '<br>' . $e;
                     $hasError = 1;
 
                     if ($Rsg2DebugActive) {
-                        Log::add('    Exception: ' . $errMsg);
+                        Log::add('    \Exception: ' . $errMsg);
                     }
 
                     echo new JsonResponse($msg, $errMsg, $hasError);
@@ -734,8 +723,7 @@ class UploadController extends FormController
             if (!$files) {
                 $ajaxImgObject = [];
 
-                $app->enqueueMessage(
-                    Text::_('COM_RSGALLERY2_ZIP_FILE_NO_IMAGE_EXIST') . '<br>'
+                $app->enqueueMessage(Text::_('COM_RSGALLERY2_ZIP_FILE_NO_IMAGE_EXIST') . '<br>'
                     . 'Zip Name: ' . $oFile['name'] . '<br>'
                     . 'Used Path: ' . $srcTempPathFileName, // . '<br>'
                 );
@@ -756,12 +744,12 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxSingleFile');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg   = $msg . $e;
             $hasError = 1;
 
             if ($Rsg2DebugActive) {
-                Log::add('    Exception: ' . $errMsg);
+                Log::add('    \Exception: ' . $errMsg);
             }
 
             echo new JsonResponse($msg, $errMsg, $hasError);
@@ -779,7 +767,7 @@ class UploadController extends FormController
      * ordering before uploading the images
      * Reason: The parallel uploaded images may appear unordered
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     function uploadAjaxFilesInFolderReserveDbImageId()
@@ -812,7 +800,7 @@ class UploadController extends FormController
         /**/
 
         // for debug ajax response errors / notice
-        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
             issueError($errorType);
         }
@@ -876,8 +864,7 @@ class UploadController extends FormController
             if (!is_dir($ftpPath)) {
                 $ajaxImgObject = [];
 
-                $app->enqueueMessage(
-                    Text::_('COM_RSGALLERY2_SERVER_DIR_NOT_EXIST') . '<br>'
+                $app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_DIR_NOT_EXIST') . '<br>'
                     . '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
                     . '$Ftp path server root based: ' . $ftpPathServer, // . '<br>'
                 );
@@ -904,8 +891,7 @@ class UploadController extends FormController
             if (!$files) {
                 $ajaxImgObject = [];
 
-                $app->enqueueMessage(
-                    Text::_('COM_RSGALLERY2_SERVER_FILES_DO_NOT_EXIST') . '<br>'
+                $app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_FILES_DO_NOT_EXIST') . '<br>'
                     . '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
                     . '$Ftp path server root based: ' . $ftpPathServer, // . '<br>'
                 );
@@ -954,12 +940,12 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxSingleFile');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg   = $msg . $e;
             $hasError = 1;
 
             if ($Rsg2DebugActive) {
-                Log::add('    Exception: ' . $errMsg);
+                Log::add('    \Exception: ' . $errMsg);
             }
 
             echo new JsonResponse($msg, $errMsg, $hasError);
@@ -971,36 +957,36 @@ class UploadController extends FormController
 
 
     /**
-     * in:
-     * interface IRequestTransferFolderFile {
-     * fileName: string;
-     * imageId: string; //number
-     * baseName: string;
-     * dstFileName: string;
-     * size: number;
-     *
-     * galleryId: string;
-     * origin: string; // ftp/server
-     *
-     * statusBar: createStatusBar | null;
-     * errorZone: HTMLElement | null;
-     * }
-     *
-     * out:
-     * interface IResponseTransfer {
-     * fileName: string;
-     * imageId: string; //number
-     * fileUrl: string;
-     * safeFileName: string;
-     * }
-     *
-     * /**/
+in:
+interface IRequestTransferFolderFile {
+	fileName: string;
+	imageId: string; //number
+	baseName: string;
+	dstFileName: string;
+	size: number;
+
+	galleryId: string;
+	origin: string; // ftp/server
+
+	statusBar: createStatusBar | null;
+	errorZone: HTMLElement | null;
+}
+
+out:
+interface IResponseTransfer {
+	fileName: string;
+	imageId: string; //number
+	fileUrl: string;
+	safeFileName: string;
+}
+
+/**/
 
     /**
      * The already uploaded file will be copied,
      * display and thumb files created
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     function uploadAjaxTransferFolderFile()
@@ -1033,7 +1019,7 @@ class UploadController extends FormController
         /**/
 
         // for debug ajax response errors / notice
-        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: exception
+        $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
             issueError($errorType);
         }
@@ -1053,17 +1039,18 @@ class UploadController extends FormController
             // toDo: rename dstFileName to safe file name ... so it matches function uploadAjaxSingleFile()
             $targetFileName = $input->get('dstFileName', '', 'string');
             /**
-             * fileName: string;
-             * imageId: string; //number
-             * baseName: string;
-             * dstFileName: string;
-             * size: number;
-             *
-             * galleryId: string;
-             * origin: string; // ftp/server
-             * /**/
+			fileName: string;
+			imageId: string; //number
+			baseName: string;
+			dstFileName: string;
+			size: number;
 
-            if ($Rsg2DebugActive) {
+			galleryId: string;
+			origin: string; // ftp/server
+/**/
+
+			if ($Rsg2DebugActive)
+			{
                 // identify active file
                 Log::add('$fileName: "' . $fileName . '"');
                 Log::add('$targetFileName: "' . $targetFileName . '"');
@@ -1108,13 +1095,10 @@ class UploadController extends FormController
                 $modelFile = $this->getModel('imageFile');
                 // toDo check origin and config for copy / or move file call below
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
-                    $fileName,
-                    $targetFileName,
-                    $galleryId,
-                    $origin,
+                    $fileName, $targetFileName, $galleryId, $origin,
                 );
                 /**/
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'moveFile2OrignalDir: "' . $fileName . '" -> "' . $targetFileName . '"<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1158,12 +1142,12 @@ class UploadController extends FormController
             if ($Rsg2DebugActive) {
                 Log::add('<== Exit uploadAjaxTransferFolderFile');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg   = $msg . $e;
             $hasError = 1;
 
             if ($Rsg2DebugActive) {
-                Log::add('    Exception: ' . $errMsg);
+                Log::add('    \Exception: ' . $errMsg);
             }
 
             echo new JsonResponse($msg, $errMsg, $hasError);
@@ -1260,9 +1244,9 @@ class UploadController extends FormController
      *                   2: notice
      *                   3: enqueueMessage types with error set
      *                   4: enqueueMessage types with NO error set
-     *                   5: enqueueMessage types with thrown exception
+     *                   5: enqueueMessage types with thrown \Exception
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     private function issueError($errorType)
@@ -1314,7 +1298,7 @@ class UploadController extends FormController
                     $app->enqueueMessage('Here was a small error 1', 'error');
                     $app->enqueueMessage('Here was a small error 2', 'error');
 
-                    throw new Exception('Attention: raised exception ');
+                    throw new \Exception('Attention: raised \Exception ');
 
                     echo new JsonResponse($result, 'Response message with !!! no !!! error set');
                     break;

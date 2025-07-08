@@ -12,20 +12,17 @@
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
-
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 class CreditsExternal
 {
     /** use for external libraries
-     * <h4>extension name </h4>
-     * <dl>
-     * <dt>Name</dt>
-     * <dd>link, copyright and License</dd>
-     * </dl>
-     * /**/
+	<h4>extension name </h4>
+	<dl>
+		<dt>Name</dt>
+		<dd>link, copyright and License</dd>
+	</dl>
+	/**/
 
     const CreditsExternalText = <<<EOT
               <h3>Used external components</h3>

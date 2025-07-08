@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -19,25 +17,19 @@ use Joomla\CMS\Router\Route;
 //$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
 ?>
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <?php endif; ?>
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-                <?php
-                echo '<h3>Config J3x default</h3>' . '<br>';
+                <?php echo '<h3>Config J3x default</h3>' . '<br>';
                 echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
                 ?>
 
@@ -46,9 +38,28 @@ echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
 		</div>
 	</div>
 
+// HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version' => 'auto', 'relative' => true));
+//HTMLHelper::_('script', 'com_rsgallery2/backend/images.js', ['version' => 'auto', 'relative' => true]);
+
+?>
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
+      method="post" name="adminForm" id="adminForm" class="form-validate">
+	<div class="d-flex flex-row">
+		<?php if (!empty($this->sidebar)) : ?>
+			<div id="j-sidebar-container" class="">
+				<?php echo $this->sidebar; ?>
+			</div>
+		<?php endif; ?>
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+			<div id="j-main-container" class="j-main-container">
+
+				<?php echo '<h3>Config J3x default</h3>' . '<br>';
+				echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+			?>
+
 	<input type="hidden" name="task" value=""/>
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

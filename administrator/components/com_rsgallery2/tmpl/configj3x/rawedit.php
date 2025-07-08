@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -58,18 +56,12 @@ function configInputField($name = 'unknown', $value = '')
 
 		<div class="control-group">
 			<div class="control-label">
-				<label id="jform_<?php
-                echo $name ?>-lbl" class="jform_control-label"
-				       for="jform_<?php
-                       echo $name ?>"><?php
-                    echo $name ?>:</label>
+				<label id="jform_<?php echo $name ?>-lbl" class="jform_control-label"
+				       for="jform_<?php echo $name ?>"><?php echo $name ?>:</label>
 			</div>
 			<div class="controls">
-				<input id="jform_<?php
-                echo $name ?>" class="input-xxlarge input_box" type="text"
-				       value="<?php
-                       echo $value ?>" size="70" name="jform[<?php
-                echo $name ?>] aria-invalid=" false">
+				<input id="jform_<?php echo $name ?>" class="input-xxlarge input_box" type="text"
+				       value="<?php echo $value ?>" size="70" name="jform[<?php echo $name ?>] aria-invalid=" false">
 			</div>
 		</div>
 
@@ -88,7 +80,7 @@ function configInputField($name = 'unknown', $value = '')
             <input type="text" value="4.1.0" name="version">
         </td>
         */
-    } catch (RuntimeException $e) {
+    } catch (\RuntimeException $e) {
         $OutTxt = '';
         $OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';
         $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -100,38 +92,25 @@ function configInputField($name = 'unknown', $value = '')
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <?php endif; ?>
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-                <?php
-                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
 
-                <?php
-                echo HTMLHelper::_(
-                    'bootstrap.addTab',
-                    'myTab',
-                    'ConfigRawView',
-                    Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT', true),
-                ); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT', true)); ?>
 
 				<div class="card">
 					<div class="card-body">
-						<legend><?php
-                            echo Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT_DESC'); ?></legend>
+						<legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT_DESC'); ?></legend>
 
                         <?php
 
@@ -140,7 +119,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'); ?>"
                             foreach ($configVars as $name => $value) {
                                 configInputField($name, $value);
                             }
-                        } catch (RuntimeException $e) {
+                        } catch (\RuntimeException $e) {
                             $OutTxt = '';
                             $OutTxt .= 'Error rawEdit view: "' . 'configInputField' . '"<br>';
                             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -154,11 +133,9 @@ echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'); ?>"
 					</div>
 				</div>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTab'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 				<!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
@@ -167,8 +144,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'); ?>"
 		</div>
 
 		<input type="hidden" name="task" value=""/>
-        <?php
-        echo HTMLHelper::_('form.token'); ?>
+        <?php echo HTMLHelper::_('form.token'); ?>
 	</div>
 
 </form>

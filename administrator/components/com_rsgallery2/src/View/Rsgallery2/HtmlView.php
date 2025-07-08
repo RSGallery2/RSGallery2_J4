@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Rsgallery2;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -30,7 +30,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 
-use function defined;
 
 //use Joomla\CMS\Helper\ContentHelper;
 //use Joomla\CMS\Factory;

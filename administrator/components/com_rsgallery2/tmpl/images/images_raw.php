@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -24,49 +22,37 @@ $ListDirn  = '';
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 	</div>
 
 	<div class="d-flex flex-row">
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 				<div>
-                    <?php
-                    if (empty($this->items)) : ?>
+                    <?php if (empty($this->items)) : ?>
 						<div class="alert alert-info">
-							<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php
-                                echo Text::_('INFO'); ?></span>
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_NO_IMAGE_UPLOADED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
+							<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
+                            <?php echo Text::_('COM_RSGALLERY2_NO_IMAGE_UPLOADED'); // JGLOBAL_NO_MATCHING_RESULTS ?>
 						</div>
-                    <?php
-                    else : ?>
-                        <?php
-                        // echo 'images: ' . count($this->items); ?>
+                    <?php else : ?>
+                        <?php // echo 'images: ' . count($this->items); ?>
 
 						<table class="table table-striped" id="imageList">
 
 							<caption id="captionTable" class="sr-only">
-                                <?php
-                                echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php
-                                echo Text::_('JGLOBAL_SORTED_BY'); ?>
+                                <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
 							</caption>
 							<thead>
 							<tr>
 								<td style="width:1%" class="text-center">
-                                    <?php
-                                    echo HTMLHelper::_('grid.checkall'); ?>
+                                    <?php echo HTMLHelper::_('grid.checkall'); ?>
 								</td>
 
 								<th width="1%" class="text-center">
@@ -155,57 +141,35 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
 							</thead>
 
 							<tbody>
-                            <?php
-
-                            foreach ($this->items as $i => $item) {
-                                ?>
-								<tr class="row<?php
-                                echo $i % 2; ?>">
+							
+                            <?php foreach ($this->items as $i => $item) { ?>
+								<tr class="row<?php echo $i % 2; ?>">
 
 									<td class="text-center">
-                                        <?php
-                                        echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                                        <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $item->id; ?>
+                                        <?php echo $item->id; ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $this->escape($item->name); ?>
-										<span class="small" title="<?php
-                                        // echo $this->escape($item->path);
-                                        ?>">
-                                            <?php
-                                            if (!isset($item->note)) : ?>
-	                                            (<?php
-                                                echo Text::sprintf(
-                                                    'JGLOBAL_LIST_ALIAS',
-                                                    $this->escape($item->alias),
-                                                ); ?>)
-                                            <?php
-                                            else : ?>
-	                                            (<?php
-                                                echo Text::sprintf(
-                                                    'JGLOBAL_LIST_ALIAS_NOTE',
-                                                    $this->escape($item->alias),
-                                                    $this->escape($item->note),
-                                                ); ?>)
-                                            <?php
-                                            endif; ?>
+                                        <?php echo $this->escape($item->name); ?>
+										<span class="small" title="<?php // echo $this->escape($item->path); ?>">
+                                            <?php if (!isset($item->note)) : ?>
+                                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>)
+                                            <?php else : ?>
+                                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>)
+                                            <?php endif; ?>
                                             </span>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo '"' . $item->description . '"'; ?>
+                                        <?php echo '"' . $item->description . '"'; ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $item->gallery_id; ?>
+                                        <?php echo $item->gallery_id; ?>
 									</td>
 
 									<td class="text-center">
@@ -229,12 +193,10 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->published; ?>
+                                        <?php echo $item->published; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        if (!!isset($item->publish_up)) {
+                                        <?php if (!!isset($item->publish_up)) {
                                             echo '"' . $item->publish_up . '"';
                                         } else {
                                             echo '???';
@@ -242,8 +204,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
                                         ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        if (!!isset($item->publish_down)) {
+                                        <?php if (!!isset($item->publish_down)) {
                                             echo '"' . $item->publish_down . '"';
                                         } else {
                                             echo '???';
@@ -252,23 +213,19 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->hits; ?>
+                                        <?php echo $item->hits; ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $item->rating; ?>
+                                        <?php echo $item->rating; ?>
 									</td>
 
 									<td class="text-center">
-                                        <?php
-                                        echo $item->votes; ?>
+                                        <?php echo $item->votes; ?>
 									</td>
 
 									<td class="text-center">
-										"<?php
-                                        echo $item->comments; ?>"
+										"<?php echo $item->comments; ?>"
 									</td>
 
 
@@ -292,8 +249,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->created; ?>
+                                        <?php echo $item->created; ?>
 									</td>
 									<td width="1%" class="text-center">
                                         <?php
@@ -314,18 +270,15 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
                                         ?>"
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->modified; ?>
+                                        <?php echo $item->modified; ?>
 									</td>
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->modified_by; ?>
+                                        <?php echo $item->modified_by; ?>
 									</td>
 
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->ordering; ?>
+                                        <?php echo $item->ordering; ?>
 									</td>
 
 									<td width="1%" class="text-center">
@@ -349,24 +302,19 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->access; ?>
+                                        <?php echo $item->access; ?>
 									</td>
 
 									<td width="1%" class="text-center">
-                                        <?php
-                                        echo $item->use_j3x_location; ?>
+                                        <?php echo $item->use_j3x_location; ?>
 									</td>
 
 								</tr>
-                                <?php
-                            }
-                            ?>
+                                <?php } ?>
 							</tbody>
 						</table>
 
-                    <?php
-                    endif; ?>
+                    <?php endif; ?>
 
 				</div>
 			</div>
@@ -375,6 +323,5 @@ echo Route::_('index.php?option=com_rsgallery2&view=images&layout=images_raw'); 
 
 	<input type="hidden" name="boxchecked" value="0"/>
 	<input type="hidden" name="task" value=""/>
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

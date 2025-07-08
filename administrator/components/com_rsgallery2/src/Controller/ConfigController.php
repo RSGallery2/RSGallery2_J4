@@ -10,18 +10,17 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
+
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use RuntimeException;
 
-use function defined;
+
 
 /**
  * global $Rsg2DebugActive;
@@ -88,7 +87,7 @@ class ConfigController extends AdminController // FormController
         {
             Log::add('Starting the indexer', Log::INFO);
         }
-        catch (\RuntimeException $exception)
+        catch (\RuntimeException \Exception)
         {
             // Informational log only
         }
@@ -226,7 +225,7 @@ class ConfigController extends AdminController // FormController
     /**
      *
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -270,7 +269,7 @@ class ConfigController extends AdminController // FormController
                     $msg     .= "Error at uploading and inserting configuration file data'";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing prepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -292,42 +291,42 @@ class ConfigController extends AdminController // FormController
      * @since __BUMP_VERSION__
      */
     /**
-     * public function remove_OldConfigData()
-     * {
-     * $this->checkToken();
-     *
-     *
-     * $msg     = "remove_OldConfigData: " . '<br>';
-     * $msgType = 'notice';
-     *
-     * // Access check
-     * $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
-     * if (!$canAdmin) {
-     * $msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-     * $msgType = 'warning';
-     * // replace newlines with html line breaks.
-     * str_replace('\n', '<br>', $msg);
-     * }
-     * else
-     * {
-     * $model     = $this->getModel('ConfigRaw');
-     * $isRemoved = $model->removeOldConfigData();
-     *
-     * if ($isRemoved)
-     * {
-     * $msg .= 'Successfully removed J2.5 configuration data';
-     * }
-     * else
-     * {
-     * $msg .= '!!! Failed at removing J2.5 configuration data !!! ';
-     * $msgType = 'error';
-     * }
-     * }
-     *
-     * $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEditOld';
-     * $this->setRedirect($link, $msg, $msgType);
-     * }
-     * /**/
+	public function remove_OldConfigData()
+	{
+		$this->checkToken();
+
+
+	$msg     = "remove_OldConfigData: " . '<br>';
+		$msgType = 'notice';
+
+		// Access check
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
+		if (!$canAdmin) {
+			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		}
+		else
+		{
+			$model     = $this->getModel('ConfigRaw');
+			$isRemoved = $model->removeOldConfigData();
+
+			if ($isRemoved)
+			{
+				$msg .= 'Successfully removed J2.5 configuration data';
+			}
+			else
+			{
+				$msg .= '!!! Failed at removing J2.5 configuration data !!! ';
+				$msgType = 'error';
+			}
+		}
+
+	    $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEditOld';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+	/**/
 
 }
 

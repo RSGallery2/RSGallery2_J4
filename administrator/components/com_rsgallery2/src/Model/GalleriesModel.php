@@ -10,10 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use DatabaseQuery;
-use JLoader;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Factory;
@@ -21,10 +19,6 @@ use Joomla\CMS\Language\Associations;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
-use stdClass;
-
-use function defined;
 
 /**
  * RSGallery2 Component Galleries Model
@@ -47,32 +41,24 @@ class GalleriesModel extends ListModel
         //  which fields are needed for filter function
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id',
-                'a.id',
-                'name',
-                'a.name',
+				'id', 'a.id',
+				'name', 'a.name',
 
-                'created',
-                'a.created',
-                'created_by',
-                'a.created_by',
+				'created', 'a.created',
+				'created_by', 'a.created_by',
 
-                'published',
-                'a.published',
+                'published', 'a.published',
 
 //				'modified', 'a.modified',
 //				'modified_by', 'a.modified_by',
 
-                'parent_id',
-                'a.parent_id',
-                'lft',
-                'a.lft',
+				'parent_id', 'a.parent_id',
+				'lft', 'a.lft',
 
-                'hits',
-                'a.hits',
+				'hits', 'a.hits',
 //				'tag',
-                'a.access',
-                'image_count',
+				'a.access',
+				'image_count'
             ];
         }
 
@@ -111,12 +97,7 @@ class GalleriesModel extends ListModel
         //	$this->context .= '.' . $forcedLanguage;
         //}
 
-        $extension = $app->getUserStateFromRequest(
-            $this->context . '.filter.extension',
-            'extension',
-            'com_rsgallery2',
-            'cmd',
-        );
+		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
         $this->setState('filter.extension', $extension);
         $parts = explode('.', $extension);
 
@@ -169,7 +150,7 @@ class GalleriesModel extends ListModel
     /**
      * Method to get a database query to list galleries.
      *
-     * @return  DatabaseQuery object.
+	 * @return  \DatabaseQuery object.
      *
      * @since __BUMP_VERSION__
      */
@@ -223,8 +204,7 @@ class GalleriesModel extends ListModel
         $query->from('#__rsg2_galleries AS a');
 
         /* Count child images */
-        $query
-            ->select('COUNT(img.gallery_id) as image_count')
+		$query->select('COUNT(img.gallery_id) as image_count')
             ->join('LEFT', '#__rsg2_images AS img ON img.gallery_id = a.id');
 
         //// Join over the language
@@ -232,18 +212,15 @@ class GalleriesModel extends ListModel
         //	->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
 
         // Join over the users for the checked out user.
-        $query
-            ->select('uc.name AS editor')
+		$query->select('uc.name AS editor')
             ->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
 
         // Join over the asset groups.
-        $query
-            ->select('ag.title AS access_level')
+		$query->select('ag.title AS access_level')
             ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 
         // Join over the users for the author.
-        $query
-            ->select('ua.name AS author_name')
+		$query->select('ua.name AS author_name')
             ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
 //		// Join over the associations.
@@ -300,27 +277,27 @@ class GalleriesModel extends ListModel
 //		$query->where('a.id > 1');
 
         /**
-         * // Filter on the language.
-         * if ($language = $this->getState('filter.language'))
-         * {
-         * $query->where('a.language = ' . $db->quote($language));
-         * }
-         * /**/
+		// Filter on the language.
+		if ($language = $this->getState('filter.language'))
+		{
+			$query->where('a.language = ' . $db->quote($language));
+		}
+		/**/
 
         // Filter by a single tag.
         /**
-         * $tagId = $this->getState('filter.tag');
-         *
-         * if (is_numeric($tagId))
-         * {
-         * $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
-         * ->join(
-         * 'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
-         * . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
-         * . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
-         * );
-         * }
-         * /**/
+		$tagId = $this->getState('filter.tag');
+
+		if (is_numeric($tagId))
+		{
+			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+				->join(
+					'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
+					. ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+					. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
+				);
+		}
+		/**/
 
         // Add the list ordering clause
         $listOrdering = $this->getState('list.ordering', 'a.lft');
@@ -460,7 +437,7 @@ class GalleriesModel extends ListModel
         }
 
         $hname = $cname . 'HelperAssociation';
-        JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
+		\JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
 
         $assoc = class_exists($hname) && !empty($hname::$category_association);
 
@@ -480,10 +457,10 @@ class GalleriesModel extends ListModel
 
         if ($items != false) {
             /**
-             * $extension = $this->getState('filter.extension');
-             *
-             * $this->countItems($items, $extension);
-             * /**/
+			$extension = $this->getState('filter.extension');
+
+			$this->countItems($items, $extension);
+			/**/
         }
 
         return $items;
@@ -492,7 +469,7 @@ class GalleriesModel extends ListModel
     /**
      * Method to load the countItems method from the extensions
      *
-     * @param   stdClass[]  &$items      The category items
+     * @param   \stdClass[]  &$items      The category items
      * @param   string        $extension  The category extension
      *
      * @return  void
@@ -500,24 +477,24 @@ class GalleriesModel extends ListModel
      * @since __BUMP_VERSION__
      */
     /**
-     * public function countItems(&$items, $extension)
-     * {
-     * $parts     = explode('.', $extension, 2);
-     * $section   = '';
-     *
-     * if (count($parts) > 1)
-     * {
-     * $section = $parts[1];
-     * }
-     *
-     * $component = Factory::getApplication()->bootComponent($parts[0]);
-     *
-     * if ($component instanceof CategoryServiceInterface)
-     * {
-     * $component->countItems($items, $section);
-     * }
-     * }
-     * /**/
+	public function countItems(&$items, $extension)
+	{
+		$parts     = explode('.', $extension, 2);
+		$section   = '';
+
+		if (count($parts) > 1)
+		{
+			$section = $parts[1];
+		}
+
+		$component = Factory::getApplication()->bootComponent($parts[0]);
+
+		if ($component instanceof CategoryServiceInterface)
+		{
+			$component->countItems($items, $section);
+		}
+	}
+	/**/
 
     /**
      * This function will retrieve the data of the n last uploaded images
@@ -526,7 +503,7 @@ class GalleriesModel extends ListModel
      *
      * @return array rows with image name, gallery name, date, and user name as rows
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     public static function latestGalleries($limit)
@@ -562,7 +539,7 @@ class GalleriesModel extends ListModel
 
                 $latest[] = $ImgInfo;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -604,22 +581,24 @@ class GalleriesModel extends ListModel
             $db->setQuery($query);
             $rows = $db->loadObjectList();
             /**
-             * foreach ($rows as $row)
-             * {
-             * $ImgInfo         = array();
-             * $ImgInfo['name'] = $row->name;
-             * $ImgInfo['id']   = $row->id;
-             *
-             * //$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
-             * $user            = Factory::getUser($row->created_by);
-             * //$ImgInfo['user'] = $user->get('username');
-             * $ImgInfo['user'] = $user->name;
-             * //$ImgInfo['user'] = "*Finnern was auch immer";
-             *
-             * $latest[] = $ImgInfo;
-             * }
-             * /**/
-        } catch (RuntimeException $e) {
+			foreach ($rows as $row)
+			{
+				$ImgInfo         = [];
+				$ImgInfo['name'] = $row->name;
+				$ImgInfo['id']   = $row->id;
+
+				//$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
+				$user            = Factory::getUser($row->created_by);
+				//$ImgInfo['user'] = $user->get('username');
+				$ImgInfo['user'] = $user->name;
+				//$ImgInfo['user'] = "*Finnern was auch immer";
+
+				$latest[] = $ImgInfo;
+			}
+			 /**/
+		}
+		catch (\RuntimeException $e)
+		{
             $OutTxt = '';
             $OutTxt .= 'latestGalleries: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

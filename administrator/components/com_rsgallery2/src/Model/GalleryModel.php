@@ -9,9 +9,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -27,9 +26,6 @@ use Joomla\CMS\UCM\UCMType;
 use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use RuntimeException;
-
-use function defined;
 
 /**
  * Rsgallery2 Component Gallery Model
@@ -71,17 +67,17 @@ class GalleryModel extends AdminModel
      * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
      * @since   __BUMP_VERSION__
      *
-     * public function __construct($config = array(), MVCFactoryInterface $factory = null)
-     * {
-     * $extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
-     * $this->typeAlias = $extension . '.category';
-     *
-     * // Add a new batch command
-     * $this->batch_commands['flip_ordering'] = 'batchFlipordering';
-     *
-     * parent::__construct($config, $factory);
-     * }
-     * /**/
+	public function __construct($config = [], MVCFactoryInterface $factory = null)
+	{
+		$extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
+		$this->typeAlias = $extension . '.category';
+
+		// Add a new batch command
+		$this->batch_commands['flip_ordering'] = 'batchFlipordering';
+
+		parent::__construct($config, $factory);
+	}
+	/**/
 
     /**
      * Method to test whether a record can be deleted.
@@ -203,14 +199,7 @@ class GalleryModel extends AdminModel
             $item->associations = [];
 
             if ($item->id != null) {
-                $associations = Associations::getAssociations(
-                    'com_foos',
-                    '#__foos_details',
-                    'com_foos.item',
-                    $item->id,
-                    'id',
-                    null,
-                );
+				$associations = Associations::getAssociations('com_foos', '#__foos_details', 'com_foos.item', $item->id, 'id', null);
 
                 foreach ($associations as $tag => $association) {
                     $item->associations[$tag] = $association->id;
@@ -230,72 +219,72 @@ class GalleryModel extends AdminModel
      *
      * @since __BUMP_VERSION__
      *
-     * public function getItem($pk = null)
-     * {
-     * if ($result = parent::getItem($pk))
-     * {
-     * // Prime required properties.
-     * if (empty($result->id))
-     * {
-     * $result->parent_id = $this->getState('category.parent_id');
-     * $result->extension = $this->getState('category.extension');
-     * }
-     *
-     * // Convert the metadata field to an array.
-     * $registry = new Registry($result->metadata);
-     * $result->metadata = $registry->toArray();
-     *
-     * // Convert the created and modified dates to local user time for display in the form.
-     * $tz = new \DateTimeZone(Factory::getApplication()->get('offset'));
-     *
-     * if ((int) $result->created_time)
-     * {
-     * $date = new Date($result->created_time);
-     * $date->setTimezone($tz);
-     * $result->created_time = $date->toSql(true);
-     * }
-     * else
-     * {
-     * $result->created_time = null;
-     * }
-     *
-     * if ((int) $result->modified_time)
-     * {
-     * $date = new Date($result->modified_time);
-     * $date->setTimezone($tz);
-     * $result->modified_time = $date->toSql(true);
-     * }
-     * else
-     * {
-     * $result->modified_time = null;
-     * }
-     *
-     * if (!empty($result->id))
-     * {
-     * //                $result->tags = new TagsHelper;
-     * //                $result->tags->getTagIds($result->id, $result->extension . '.category');
-     * }
-     * }
-     *
-     * /**
-     * $assoc = $this->getAssoc();
-     *
-     * if ($assoc)
-     * {
-     * if ($result->id != null)
-     * {
-     * $result->associations = ArrayHelper::toInteger(GalleriesHelper::getAssociations($result->id, $result->extension));
-     * }
-     * else
-     * {
-     * $result->associations = array();
-     * }
-     * }
-     * /**
-     *
-     * return $result;
-     * }
-     * /**/
+	public function getItem($pk = null)
+	{
+		if ($result = parent::getItem($pk))
+		{
+			// Prime required properties.
+			if (empty($result->id))
+			{
+				$result->parent_id = $this->getState('category.parent_id');
+				$result->extension = $this->getState('category.extension');
+			}
+
+			// Convert the metadata field to an array.
+			$registry = new Registry($result->metadata);
+			$result->metadata = $registry->to[];
+
+			// Convert the created and modified dates to local user time for display in the form.
+			$tz = new \DateTimeZone(Factory::getApplication()->get('offset'));
+
+			if ((int) $result->created_time)
+			{
+				$date = new Date($result->created_time);
+				$date->setTimezone($tz);
+				$result->created_time = $date->toSql(true);
+			}
+			else
+			{
+				$result->created_time = null;
+			}
+
+			if ((int) $result->modified_time)
+			{
+				$date = new Date($result->modified_time);
+				$date->setTimezone($tz);
+				$result->modified_time = $date->toSql(true);
+			}
+			else
+			{
+				$result->modified_time = null;
+			}
+
+			if (!empty($result->id))
+			{
+//				$result->tags = new TagsHelper;
+//				$result->tags->getTagIds($result->id, $result->extension . '.category');
+			}
+		}
+
+		/**
+		$assoc = $this->getAssoc();
+
+		if ($assoc)
+		{
+			if ($result->id != null)
+			{
+				$result->associations = ArrayHelper::toInteger(GalleriesHelper::getAssociations($result->id, $result->extension));
+			}
+			else
+			{
+				$result->associations = [];
+			}
+		}
+		/**
+
+		return $result;
+	}
+	/**/
 
     /**
      * Method to get the row form.
@@ -310,20 +299,20 @@ class GalleryModel extends AdminModel
     public function getForm($data = [], $loadData = true)
     {
         /**
-         * $extension = $this->getState('category.extension');
-         * $input = Factory::getApplication()->input;
-         *
-         * // A workaround to get the extension into the model for save requests.
-         * if (empty($extension) && isset($data['extension']))
-         * {
-         * $extension = $data['extension'];
-         * $parts = explode('.', $extension);
-         *
-         * $this->setState('category.extension', $extension);
-         * $this->setState('category.component', $parts[0]);
-         * $this->setState('category.section', @$parts[1]);
-         * }
-         * /**/
+		$extension = $this->getState('category.extension');
+		$jinput = Factory::getApplication()->input;
+
+		// A workaround to get the extension into the model for save requests.
+		if (empty($extension) && isset($data['extension']))
+		{
+			$extension = $data['extension'];
+			$parts = explode('.', $extension);
+
+			$this->setState('category.extension', $extension);
+			$this->setState('category.component', $parts[0]);
+			$this->setState('category.section', @$parts[1]);
+		}
+		/**/
         // Get the form.
 //		$form = $this->loadForm('com_rsgallery2.category' . $extension, 'category', array('control' => 'jform', 'load_data' => $loadData));
         $form = $this->loadForm('com_rsgallery2.gallery', 'gallery', ['control' => 'jform', 'load_data' => $loadData]);
@@ -333,28 +322,28 @@ class GalleryModel extends AdminModel
         }
 
         /**
-         * // Modify the form based on Edit State access controls.
-         * if (empty($data['extension']))
-         * {
-         * $data['extension'] = $extension;
-         * }
-         *
-         * $categoryId = $input->get('id');
-         * $parts      = explode('.', $extension);
-         * $assetKey   = $categoryId ? $extension . '.category.' . $categoryId : $parts[0];
-         *
-         * if (!Factory::getApplication()->getIdentity()->authorise('core.edit.state', $assetKey))
-         * {
-         * // Disable fields for display.
-         * $form->setFieldAttribute('ordering', 'disabled', 'true');
-         * $form->setFieldAttribute('published', 'disabled', 'true');
-         *
-         * // Disable fields while saving.
-         * // The controller has already verified this is a record you can edit.
-         * $form->setFieldAttribute('ordering', 'filter', 'unset');
-         * $form->setFieldAttribute('published', 'filter', 'unset');
-         * }
-         * /**/
+		// Modify the form based on Edit State access controls.
+		if (empty($data['extension']))
+		{
+			$data['extension'] = $extension;
+		}
+
+		$categoryId = $jinput->get('id');
+		$parts      = explode('.', $extension);
+		$assetKey   = $categoryId ? $extension . '.category.' . $categoryId : $parts[0];
+
+		if (!Factory::getApplication()->getIdentity()->authorise('core.edit.state', $assetKey))
+		{
+			// Disable fields for display.
+			$form->setFieldAttribute('ordering', 'disabled', 'true');
+			$form->setFieldAttribute('published', 'disabled', 'true');
+
+			// Disable fields while saving.
+			// The controller has already verified this is a record you can edit.
+			$form->setFieldAttribute('ordering', 'filter', 'unset');
+			$form->setFieldAttribute('published', 'filter', 'unset');
+		}
+		/**/
         return $form;
     }
 
@@ -434,123 +423,122 @@ class GalleryModel extends AdminModel
      *
      * @return  void
      *
-     * @throws  Exception if there is an error in the form event.
+     * @throws  \Exception if there is an error in the form event.
      *
-     * protected function preprocessForm(\Form $form, $data, $group = 'content')
-     * {
-     * $lang = Factory::getApplication()->getLanguage();
-     * $component = $this->getState('category.component');
-     * $section = $this->getState('category.section');
-     * $extension = Factory::getApplication()->input->get('extension', null);
-     *
-     * // Get the component form if it exists
-     * $name = 'category' . ($section ? ('.' . $section) : '');
-     *
-     * // Looking first in the component forms folder
-     * $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/forms/$name.xml");
-     *
-     * // Looking in the component models/forms folder (J! 3)
-     * if (!file_exists($path))
-     * {
-     * $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/models/forms/$name.xml");
-     * }
-     *
-     * // Old way: looking in the component folder
-     * if (!file_exists($path))
-     * {
-     * $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/$name.xml");
-     * }
-     *
-     * if (file_exists($path))
-     * {
-     * $lang->load($component, JPATH_BASE, null, false, true);
-     * $lang->load($component, JPATH_BASE . '/components/' . $component, null, false, true);
-     *
-     * if (!$form->loadFile($path, false))
-     * {
-     * throw new \Exception(Text::_('JERROR_LOADFILE_FAILED'));
-     * }
-     * }
-     *
-     * $componentInterface = Factory::getApplication()->bootComponent($component);
-     *
-     * if ($componentInterface instanceof CategoryServiceInterface)
-     * {
-     * $componentInterface->prepareForm($form, $data);
-     * }
-     * else
-     * {
-     * // Try to find the component helper.
-     * $eName = str_replace('com_', '', $component);
-     * $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/helpers/category.php");
-     *
-     * if (file_exists($path))
-     * {
-     * $cName = ucfirst($eName) . ucfirst($section) . 'HelperCategory';
-     *
-     * \JLoader::register($cName, $path);
-     *
-     * if (class_exists($cName) && is_callable(array($cName, 'onPrepareForm')))
-     * {
-     * $lang->load($component, JPATH_BASE, null, false, false)
-     * || $lang->load($component, JPATH_BASE . '/components/' . $component, null, false, false)
-     * || $lang->load($component, JPATH_BASE, $lang->getDefault(), false, false)
-     * || $lang->load($component, JPATH_BASE . '/components/' . $component, $lang->getDefault(), false, false);
-     * call_user_func_array(array($cName, 'onPrepareForm'), array(&$form));
-     *
-     * // Check for an error.
-     * if ($form instanceof \Exception)
-     * {
-     * $this->setError($form->getMessage());
-     *
-     * return false;
-     * }
-     * }
-     * }
-     * }
-     *
-     * // Set the access control rules field component value.
-     * $form->setFieldAttribute('rules', 'component', $component);
-     * $form->setFieldAttribute('rules', 'section', $name);
-     *
-     * // Association category items
-     * if ($this->getAssoc())
-     * {
-     * $languages = LanguageHelper::getContentLanguages(false, true, null, 'ordering', 'asc');
-     *
-     * if (count($languages) > 1)
-     * {
-     * $addform = new \SimpleXMLElement('<form />');
-     * $fields = $addform->addChild('fields');
-     * $fields->addAttribute('name', 'associations');
-     * $fieldset = $fields->addChild('fieldset');
-     * $fieldset->addAttribute('name', 'item_associations');
-     *
-     * foreach ($languages as $language)
-     * {
-     * $field = $fieldset->addChild('field');
-     * $field->addAttribute('name', $language->lang_code);
-     * $field->addAttribute('type', 'modal_category');
-     * $field->addAttribute('language', $language->lang_code);
-     * $field->addAttribute('label', $language->title);
-     * $field->addAttribute('translate_label', 'false');
-     * $field->addAttribute('extension', $extension);
-     * $field->addAttribute('select', 'true');
-     * $field->addAttribute('new', 'true');
-     * $field->addAttribute('edit', 'true');
-     * $field->addAttribute('clear', 'true');
-     * }
-     *
-     * $form->load($addform, false);
-     * }
-     * }
-     *
-     * // Trigger the default form events.
-     * parent::preprocessForm($form, $data, $group);
-     * }
-     * /**@since __BUMP_VERSION__
-     * @see     \FormField
-     */
+	protected function preprocessForm(\JForm $form, $data, $group = 'content')
+	{
+		$lang = Factory::getApplication()->getLanguage();
+		$component = $this->getState('category.component');
+		$section = $this->getState('category.section');
+		$extension = Factory::getApplication()->input->get('extension', null);
+
+		// Get the component form if it exists
+		$name = 'category' . ($section ? ('.' . $section) : '');
+
+		// Looking first in the component forms folder
+		$path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/forms/$name.xml");
+
+		// Looking in the component models/forms folder (J! 3)
+		if (!file_exists($path))
+		{
+			$path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/models/forms/$name.xml");
+		}
+
+		// Old way: looking in the component folder
+		if (!file_exists($path))
+		{
+			$path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/$name.xml");
+		}
+
+		if (file_exists($path))
+		{
+			$lang->load($component, JPATH_BASE, null, false, true);
+			$lang->load($component, JPATH_BASE . '/components/' . $component, null, false, true);
+
+			if (!$form->loadFile($path, false))
+			{
+				throw new \Exception(Text::_('JERROR_LOADFILE_FAILED'));
+			}
+		}
+
+		$componentInterface = Factory::getApplication()->bootComponent($component);
+
+		if ($componentInterface instanceof CategoryServiceInterface)
+		{
+			$componentInterface->prepareForm($form, $data);
+		}
+		else
+		{
+			// Try to find the component helper.
+			$eName = str_replace('com_', '', $component);
+			$path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/helpers/category.php");
+
+			if (file_exists($path))
+			{
+				$cName = ucfirst($eName) . ucfirst($section) . 'HelperCategory';
+
+				\JLoader::register($cName, $path);
+
+				if (class_exists($cName) && is_callable(array($cName, 'onPrepareForm')))
+				{
+					$lang->load($component, JPATH_BASE, null, false, false)
+						|| $lang->load($component, JPATH_BASE . '/components/' . $component, null, false, false)
+						|| $lang->load($component, JPATH_BASE, $lang->getDefault(), false, false)
+						|| $lang->load($component, JPATH_BASE . '/components/' . $component, $lang->getDefault(), false, false);
+					call_user_func_array(array($cName, 'onPrepareForm'), array(&$form));
+
+					// Check for an error.
+					if ($form instanceof \Exception)
+					{
+						$this->setError($form->getMessage());
+
+						return false;
+					}
+				}
+			}
+		}
+
+		// Set the access control rules field component value.
+		$form->setFieldAttribute('rules', 'component', $component);
+		$form->setFieldAttribute('rules', 'section', $name);
+
+		// Association category items
+		if ($this->getAssoc())
+		{
+			$languages = LanguageHelper::getContentLanguages(false, true, null, 'ordering', 'asc');
+
+			if (count($languages) > 1)
+			{
+				$addform = new \SimpleXMLElement('<form />');
+				$fields = $addform->addChild('fields');
+				$fields->addAttribute('name', 'associations');
+				$fieldset = $fields->addChild('fieldset');
+				$fieldset->addAttribute('name', 'item_associations');
+
+				foreach ($languages as $language)
+				{
+					$field = $fieldset->addChild('field');
+					$field->addAttribute('name', $language->lang_code);
+					$field->addAttribute('type', 'modal_category');
+					$field->addAttribute('language', $language->lang_code);
+					$field->addAttribute('label', $language->title);
+					$field->addAttribute('translate_label', 'false');
+					$field->addAttribute('extension', $extension);
+					$field->addAttribute('select', 'true');
+					$field->addAttribute('new', 'true');
+					$field->addAttribute('edit', 'true');
+					$field->addAttribute('clear', 'true');
+				}
+
+				$form->load($addform, false);
+			}
+		}
+
+		// Trigger the default form events.
+		parent::preprocessForm($form, $data, $group);
+	}
+	/**/
+
 
     /**
      * Transform some data before it is displayed ? Saved ?
@@ -565,7 +553,7 @@ class GalleryModel extends AdminModel
      * @param $table
      *
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     protected function prepareTable($table)
@@ -575,23 +563,23 @@ class GalleryModel extends AdminModel
 
         if (empty($table->id)) {
             /**
-             * // Set ordering to the last item if not set
-             * if (empty($table->ordering))
-             * {
-             * $db = $this->getDatabase();
-             * $query = $db->getQuery(true)
-             * ->select('MAX(ordering)')
-             * ->from($db->quoteName('#__rsg2_images'));
-             * $db->setQuery($query);
-             * $max = $db->loadResult();
-             *
-             * $table->ordering = $max + 1;
-             *
-             * // Set the values
-             * $table->date = $date;
-             * $table->userid = Factory::getApplication()->getIdentity()->id;
-             * }
-             * /**/
+            // Set ordering to the last item if not set
+            if (empty($table->ordering))
+            {
+                $db = $this->getDatabase();
+                $query = $db->getQuery(true)
+                    ->select('MAX(ordering)')
+                    ->from($db->quoteName('#__rsg2_images'));
+                $db->setQuery($query);
+                $max = $db->loadResult();
+
+                $table->ordering = $max + 1;
+
+                // Set the values
+                $table->date = $date;
+                $table->userid = Factory::getApplication()->getIdentity()->id;
+            }
+            /**/
 
             //$table->ordering = $table->getNextOrder('gallery_id = ' . (int) $table->gallery_id); // . ' AND state >= 0');
 
@@ -639,18 +627,18 @@ class GalleryModel extends AdminModel
         }
 
         /** -> table *
-         * // no default value
-         * if (empty($data['description']))
-         * {
-         * $data['description'] = '';
-         * }
-         *
-         * // no default value
-         * if (empty($data['params']))
-         * {
-         * $data['params'] = '';
-         * }
-         * /**/
+		// no default value
+		if (empty($data['description']))
+		{
+			$data['description'] = '';
+		}
+
+		// no default value
+		if (empty($data['params']))
+		{
+			$data['params'] = '';
+		}
+		/**/
 
         // Include the plugins for the save events.
         PluginHelper::importPlugin($this->events_map['save']);
@@ -761,7 +749,7 @@ class GalleryModel extends AdminModel
              * if ($assoc)
              * {
              * // Adding self to the association
-             * $associations = $data['associations'] ?? array();
+             * $associations = $data['associations'] ?? [];
              *
              * // Unset any invalid associations
              * $associations = ArrayHelper::toInteger($associations);
@@ -891,7 +879,7 @@ class GalleryModel extends AdminModel
      *
      * @return bool
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     public function createGallery($galleryName, $parentId = 1, $description = '')
@@ -915,7 +903,7 @@ class GalleryModel extends AdminModel
             if (count($errors = $this->get('_errors'))) {
                 throw new GenericDataException(implode("\n", $errors), 500);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1024,8 +1012,7 @@ class GalleryModel extends AdminModel
              * Re-order with max - ordering
              */
             foreach ($pks as $id) {
-                $query
-                    ->select('MAX(ordering)')
+                $query->select('MAX(ordering)')
                     ->from('#__content')
                     ->where($db->quoteName('catid') . ' = ' . $db->quote($id));
 
@@ -1047,7 +1034,7 @@ class GalleryModel extends AdminModel
                     $successful[] = $id;
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -1126,15 +1113,14 @@ class GalleryModel extends AdminModel
         $parents = [];
 
         // Calculate the emergency stop count as a precaution against a runaway loop bug
-        $query = $db
-            ->getQuery(true)
+		$query = $db->getQuery(true)
             ->select('COUNT(id)')
             ->from($db->quoteName('#__rsg2_galleries'));
         $db->setQuery($query);
 
         try {
             $count = $db->loadResult();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $this->setError($e->getMessage());
 
             return false;
@@ -1345,7 +1331,7 @@ class GalleryModel extends AdminModel
 
                 try {
                     $children = array_merge($children, (array)$db->loadColumn());
-                } catch (RuntimeException $e) {
+                } catch (\RuntimeException $e) {
                     $this->setError($e->getMessage());
 
                     return false;
@@ -1387,27 +1373,27 @@ class GalleryModel extends AdminModel
      *
      * @since __BUMP_VERSION__
      *
-     * protected function cleanCache($group = null, $client_id = 0)
-     * {
-     * $extension = Factory::getApplication()->input->get('extension');
-     *
-     * switch ($extension)
-     * {
-     * case 'com_rsgallery2':
-     * parent::cleanCache('com_rsgallery2');
-     * parent::cleanCache('mod_articles_archive');
-     * parent::cleanCache('mod_articles_categories');
-     * parent::cleanCache('mod_articles_category');
-     * parent::cleanCache('mod_articles_latest');
-     * parent::cleanCache('mod_articles_news');
-     * parent::cleanCache('mod_articles_popular');
-     * break;
-     * default:
-     * parent::cleanCache($extension);
-     * break;
-     * }
-     * }
-     * /**/
+	protected function cleanCache($group = null, $client_id = 0)
+	{
+		$extension = Factory::getApplication()->input->get('extension');
+
+		switch ($extension)
+		{
+			case 'com_rsgallery2':
+				parent::cleanCache('com_rsgallery2');
+				parent::cleanCache('mod_articles_archive');
+				parent::cleanCache('mod_articles_categories');
+				parent::cleanCache('mod_articles_category');
+				parent::cleanCache('mod_articles_latest');
+				parent::cleanCache('mod_articles_news');
+				parent::cleanCache('mod_articles_popular');
+				break;
+			default:
+				parent::cleanCache($extension);
+				break;
+		}
+	}
+	/**/
 
     /**
      * Method to change the title & alias.
@@ -1439,45 +1425,45 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean True if a category association is available; false otherwise.
      *
-     * public function getAssoc()
-     * {
-     * static $assoc = null;
-     *
-     * if (!is_null($assoc))
-     * {
-     * return $assoc;
-     * }
-     *
-     * $extension = $this->getState('category.extension');
-     *
-     * $assoc = Associations::isEnabled();
-     * $extension = explode('.', $extension);
-     * $component = array_shift($extension);
-     * $cname = str_replace('com_', '', $component);
-     *
-     * if (!$assoc || !$component || !$cname)
-     * {
-     * $assoc = false;
-     *
-     * return $assoc;
-     * }
-     *
-     * $componentObject = $this->bootComponent($component);
-     *
-     * if ($componentObject instanceof AssociationServiceInterface && $componentObject instanceof CategoryServiceInterface)
-     * {
-     * $assoc = true;
-     *
-     * return $assoc;
-     * }
-     *
-     * $hname = $cname . 'HelperAssociation';
-     * \JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
-     *
-     * $assoc = class_exists($hname) && !empty($hname::$category_association);
-     *
-     * return $assoc;
-     * }
-     * /**/
+	public function getAssoc()
+	{
+		static $assoc = null;
+
+		if (!is_null($assoc))
+		{
+			return $assoc;
+		}
+
+		$extension = $this->getState('category.extension');
+
+		$assoc = Associations::isEnabled();
+		$extension = explode('.', $extension);
+		$component = array_shift($extension);
+		$cname = str_replace('com_', '', $component);
+
+		if (!$assoc || !$component || !$cname)
+		{
+			$assoc = false;
+
+			return $assoc;
+		}
+
+		$componentObject = $this->bootComponent($component);
+
+		if ($componentObject instanceof AssociationServiceInterface && $componentObject instanceof CategoryServiceInterface)
+		{
+			$assoc = true;
+
+			return $assoc;
+		}
+
+		$hname = $cname . 'HelperAssociation';
+		\JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
+
+		$assoc = class_exists($hname) && !empty($hname::$category_association);
+
+		return $assoc;
+	}
+	/**/
 
 }

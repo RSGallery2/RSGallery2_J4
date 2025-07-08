@@ -7,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -18,66 +18,53 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-			<!--div class="<?php
-            echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+			<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 			<div class="flex-fill">
 				<div id="j-sidebar-container" class="">
 					<div id="j-toggle-sidebar-wrapper">
 						<div id="sidebar" class="sidebar">
 
-							<button class="btn btn-sm btn-secondary my-2 options-menu" type="button"
-							        data-bs-toggle="collapse" data-bs-target=".sub-sidebar-item"
+                            <button class="btn btn-sm btn-secondary my-2 options-menu" type="button"  data-bs-toggle="collapse" data-bs-target=".sub-sidebar-item"
 							        aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle Menu">
 								<span class="fas fa-toggle-on" aria-hidden="true"></span>
 								<!--span class="sidebar-item-title">Toggle Menu</span-->
 							</button>
 
-							<nav class="main-nav-container sidebar-nav" aria-label="Main Menu" tabindex="-1"
-							     id="ui-skip-50">
+                            <nav class="main-nav-container sidebar-nav" aria-label="Main Menu" tabindex="-1" id="ui-skip-50">
 								<ul id="sub-menu12" class="nav flex-column main-nav ">
 									<li class="item item-level-1">
-										<a class="no-dropdown"
-										   href="index.php?option=com_rsgallery2&amp;view=rsgallery2"
-										   aria-label="Home Dashboard">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=rsgallery2" aria-label="Home Dashboard">
 											<span class="icon-home-2" aria-hidden="true"/>
 											<span class="sidebar-item-title sub-sidebar-item">Control panel</span>
 										</a>
 									</li>
 									<li class="item item-level-1">
-										<a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=galleries"
-										   aria-label="Help">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=galleries" aria-label="Help">
 											<span class="icon-images" aria-hidden="true"/>
 											<span class="sidebar-item-title sub-sidebar-item">Galleries</span>
 										</a>
 									</li>
 									<li class="item item-level-1">
-										<a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=upload"
-										   aria-label="Help">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=upload" aria-label="Help">
 											<span class="icon-upload" aria-hidden="true"/>
 											<span class="sidebar-item-title sub-sidebar-item">Upload</span>
 										</a>
 									</li>
 									<li class="item item-level-1">
-										<a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=images"
-										   aria-label="Help">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=images" aria-label="Help">
 											<span class="icon-image" aria-hidden="true"/>
 											<span class="sidebar-item-title sub-sidebar-item">Images</span>
 										</a>
 									</li>
 									<li class="item item-level-1 active">
-										<a class="no-dropdown"
-										   href="index.php?option=com_rsgallery2&amp;view=maintenance"
-										   aria-label="Help">
+                                        <a class="no-dropdown" href="index.php?option=com_rsgallery2&amp;view=maintenance" aria-label="Help">
                                 <span class="fas fa-wrench fa-fw" aria-hidden="true">
                                     <span class="sidebar-item-title sub-sidebar-item">Maintenance</span>
                                 </span>
@@ -92,14 +79,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
 				</div>
 			</div>
 
-        <?php
-        endif; ?>
-		<div class="<?php
-        if (!empty($this->sidebar)) {
-            echo 'col-md-10';
-        } else {
-            echo 'col-md-12';
-        } ?>">
+        <?php endif; ?>
+        <div class="<?php if (!empty($this->sidebar)) {echo 'col-md-10'; } else { echo 'col-md-12'; } ?>">
 			<div id="j-main-container" class="j-main-container">
 
                 <?php
@@ -125,15 +106,13 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
 			<div id="j-toggle-sidebar-wrapper">
 				<div id="sidebar" class="sidebar">
 
-					<button class="btn btn-sm btn-secondary my-2 options-menu" type="button" data-bs-toggle="collapse"
-					        data-bs-target=".sidebar-nav"
+                    <button class="btn btn-sm btn-secondary my-2 options-menu" type="button"  data-bs-toggle="collapse" data-bs-target=".sidebar-nav"
 					        aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle Menu">
 						<span class="fas fa-align-justify" aria-hidden="true"></span>
 						<span class="sidebar-item-title">Toggle Menu</span>
 					</button>
 
-					<button class="btn btn-sm btn-secondary my-2 options-menu d-md-none" type="button"
-					        data-bs-toggle="collapse" data-bs-target=".sidebar-nav"
+                    <button class="btn btn-sm btn-secondary my-2 options-menu d-md-none" type="button" data-bs-toggle="collapse" data-bs-target=".sidebar-nav"
 					        aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle Menu">
 						<span class="fas fa-align-justify" aria-hidden="true"></span>
 						Toggle Menu
@@ -141,24 +120,19 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
 					<div class="sidebar-nav bg-light p-2 my-2">
 						<ul class="nav flex-column">
 							<li class="active">
-								<a href="index.php?option=com_rsgallery2&amp;view=rsgallery2"><span
-											class="icon-home-2">  </span>Control panel</a>
+                                <a href="index.php?option=com_rsgallery2&amp;view=rsgallery2"><span class="icon-home-2">  </span>Control panel</a>
 							</li>
 							<li class="active">
-								<a href="index.php?option=com_rsgallery2&amp;view=galleries"><span
-											class="icon-images">  </span>Galleries</a>
+                                <a href="index.php?option=com_rsgallery2&amp;view=galleries"><span class="icon-images">  </span>Galleries</a>
 							</li>
 							<li class="active">
-								<a href="index.php?option=com_rsgallery2&amp;view=upload"><span
-											class="icon-upload">  </span>Upload</a>
+                                <a href="index.php?option=com_rsgallery2&amp;view=upload"><span class="icon-upload">  </span>Upload</a>
 							</li>
 							<li class="active">
-								<a href="index.php?option=com_rsgallery2&amp;view=images"><span
-											class="icon-image">  </span>Images</a>
+                                <a href="index.php?option=com_rsgallery2&amp;view=images"><span class="icon-image">  </span>Images</a>
 							</li>
 							<li>
-								<a href="index.php?option=com_rsgallery2&amp;view=maintenance"><span
-											class="icon-screwdriver">  </span>Maintenance</a>
+                                <a href="index.php?option=com_rsgallery2&amp;view=maintenance"><span class="icon-screwdriver">  </span>Maintenance</a>
 							</li>
 						</ul>
 					</div>
@@ -282,8 +256,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
 
 
 	<input type="hidden" name="task" value=""/>
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

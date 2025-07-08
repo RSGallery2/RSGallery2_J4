@@ -17,7 +17,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
 
 /**
  * Supports a modal gallery picker.
@@ -119,16 +118,12 @@ class GalleryField extends FormField
 
             try {
                 $title = $db->loadResult();
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
             }
         }
 
-        $title = empty($title) ? Text::_('COM_RSGALLERY2_SELECT_A_GALLERY') : htmlspecialchars(
-            $title,
-            ENT_QUOTES,
-            'UTF-8',
-        );
+		$title = empty($title) ? Text::_('COM_RSGALLERY2_SELECT_A_GALLERY') : htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
         // The current gallery display field.
         $html = '';
@@ -274,11 +269,7 @@ class GalleryField extends FormField
         $class = $this->required ? ' class="required modal-value"' : '';
 
         $html .= '<input type="hidden" id="' . $this->id . '_id"' . $class . ' data-required="' . (int)$this->required . '" name="' . $this->name
-            . '" data-text="' . htmlspecialchars(
-                Text::_('COM_RSGALLERY2_SELECT_A_GALLERY', true),
-                ENT_COMPAT,
-                'UTF-8',
-            ) . '" value="' . $value . '">';
+			. '" data-text="' . htmlspecialchars(Text::_('COM_RSGALLERY2_SELECT_A_GALLERY', true), ENT_COMPAT, 'UTF-8') . '" value="' . $value . '">';
 
         return $html;
     }

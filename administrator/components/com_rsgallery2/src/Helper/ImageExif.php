@@ -103,7 +103,7 @@ class ImageExif
         }
 
         // $test = natcasesort($items);
-        $test = ksort($items, SORT_NATURAL | SORT_FLAG_CASE);
+        $test = ksort($items, \SORT_NATURAL | \SORT_FLAG_CASE);
 
         return $items;
     }
@@ -137,8 +137,8 @@ class ImageExif
         return $selected;
     }
 
-    public static function supportedExifTags()
-    {
+    public static function supportedExifTags () {
+
         $supportedTags = [];
 
         $supportedTags [] = 'EXIF.aperture';
@@ -229,8 +229,8 @@ class ImageExif
         return $supportedTags;
     }
 
-    public static function tag2TypeAndName($ExifTag)
-    {
+    public static function tag2TypeAndName ($ExifTag) {
+
         $type = '';
         $name = '';
 
@@ -271,8 +271,8 @@ class ImageExif
         return $userExifTags;
     }
 
-    public static function checkTagsNotSupported($existingExifTags)
-    {
+    public static function checkTagsNotSupported ($existingExifTags)    {
+
         $notSupportedTags = [];
 
         // lower case array

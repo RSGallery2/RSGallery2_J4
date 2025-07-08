@@ -9,9 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Galleries;
 
-defined('_JEXEC') or die;
-
-use Joomla\CMS\Form\Form;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -25,8 +23,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
-
-use function defined;
+
 
 /**
  * View class for a list of rsgallery2.
@@ -146,13 +143,13 @@ class HtmlView extends BaseHtmlView
         //}
 
         /**
-         * // Prepare a mapping from parent id to the ids of its children
-         * $this->ordering = array();
-         * foreach ($this->items as $item)
-         * {
-         * $this->ordering[$item->parent_id][] = $item->id;
-         * }
-         * /**/
+		// Prepare a mapping from parent id to the ids of its children
+		$this->ordering = [];
+		foreach ($this->items as $item)
+		{
+			$this->ordering[$item->parent_id][] = $item->id;
+		}
+		/**/
 
         $Layout = $this->getLayout();
 
@@ -185,20 +182,20 @@ class HtmlView extends BaseHtmlView
             $this->addToolbar($Layout);
         } else {
             /**
-             * // If we are forcing a language in modal (used for associations).
-             * if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
-             * {
-             * // Set the language field to the forcedLanguage and disable changing it.
-             * $this->form->setValue('language', null, $forcedLanguage);
-             * $this->form->setFieldAttribute('language', 'readonly', 'true');
-             *
-             * // Only allow to select galleries with All language or with the forced language.
-             * $this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
-             *
-             * // Only allow to select tags with All language or with the forced language.
-             * $this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
-             * }
-             * /**/
+			// If we are forcing a language in modal (used for associations).
+			if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
+			{
+				// Set the language field to the forcedLanguage and disable changing it.
+				$this->form->setValue('language', null, $forcedLanguage);
+				$this->form->setFieldAttribute('language', 'readonly', 'true');
+
+				// Only allow to select galleries with All language or with the forced language.
+				$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
+
+				// Only allow to select tags with All language or with the forced language.
+				$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
+			}
+			/**/
         }
 
         //--- display --------------------------------------------------------------------
@@ -216,11 +213,7 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar($Layout = 'default')
     {
-        $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions(
-            'com_content',
-            'category',
-            $this->state->get('filter.category_id'),
-        );
+        $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));
         // $user  = Factory::getContainer()->get(UserFactoryInterface::class);
         $user = $this->getCurrentUser();
 
@@ -357,149 +350,149 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_rsgallery2');
         }
         /** ? joomla media .... ?
-         * $extension = Factory::getApplication()->input->get('extension');
-         * $user = Factory::getApplication()->getIdentity();
-         * $userId = $user->id;
-         *
-         * $isNew = ($this->item->id == 0);
-         * $checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
-         *
-         * // Avoid nonsense situation.
-         * if ($extension == 'com_rsgallery2')
-         * {
-         * return;
-         * }
-         *
-         * // The extension can be in the form com_foo.section
-         * $parts = explode('.', $extension);
-         * $component = $parts[0];
-         * $section = (count($parts) > 1) ? $parts[1] : null;
-         * $componentParams = ComponentHelper::getParams($component);
-         *
-         * // Need to load the menu language file as mod_menu hasn't been loaded yet.
-         * $lang = Factory::getApplication()->getLanguage();
-         * $lang->load($component, JPATH_BASE, null, false, true)
-         * || $lang->load($component, JPATH_ADMINISTRATOR . '/components/' . $component, null, false, true);
-         *
-         * // Get the results for each action.
-         * $canDo = $this->canDo;
-         *
-         * // If a component galleries title string is present, let's use it.
-         * if ($lang->hasKey($component_title_key = $component . ($section ? "_$section" : '') . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE'))
-         * {
-         * $title = Text::_($component_title_key);
-         * }
-         * // Else if the component section string exits, let's use it
-         * elseif ($lang->hasKey($component_section_key = $component . ($section ? "_$section" : '')))
-         * {
-         * $title = Text::sprintf('COM_RSGALLERY2_GALLERY_' . ($isNew ? 'ADD' : 'EDIT')
-         * . '_TITLE', $this->escape(Text::_($component_section_key))
-         * );
-         * }
-         * // Else use the base title
-         * else
-         * {
-         * $title = Text::_('COM_RSGALLERY2_GALLERY_BASE_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE');
-         * }
-         *
-         * // Load specific css component
-         * // HTMLHelper::_('stylesheet', $component . '/administrator/ ??? galleries.css', array('version' => 'auto', 'relative' => true));
-         * $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.images');
-         *
-         * // Prepare the toolbar.
-         * ToolbarHelper::title(
-         * $title,
-         * 'folder gallery-' . ($isNew ? 'add' : 'edit')
-         * . ' ' . substr($component, 4) . ($section ? "-$section" : '') . '-gallery-' . ($isNew ? 'add' : 'edit')
-         * );
-         *
-         * // For new records, check the create permission.
-         * if ($isNew && (count($user->getAuthorisedCategories($component, 'core.create')) > 0))
-         * {
-         * ToolbarHelper::saveGroup(
-         * [
-         * ['apply', 'gallery.apply'],
-         * ['save', 'gallery.save'],
-         * ['save2new', 'gallery.save2new']
-         * ],
-         * 'btn-success'
-         * );
-         *
-         * ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
-         * }
-         *
-         * // If not checked out, can save the item.
-         * else
-         * {
-         * // Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
-         * $itemEditable = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId);
-         *
-         * $toolbarButtons = [];
-         *
-         * // Can't save the record if it's checked out and editable
-         * if (!$checkedOut && $itemEditable)
-         * {
-         * $toolbarButtons[] = ['apply', 'gallery.apply'];
-         * $toolbarButtons[] = ['save', 'gallery.save'];
-         *
-         * if ($canDo->get('core.create'))
-         * {
-         * $toolbarButtons[] = ['save2new', 'gallery.save2new'];
-         * }
-         * }
-         *
-         * // If an existing item, can save to a copy.
-         * if ($canDo->get('core.create'))
-         * {
-         * $toolbarButtons[] = ['save2copy', 'gallery.save2copy'];
-         * }
-         *
-         * ToolbarHelper::saveGroup(
-         * $toolbarButtons,
-         * 'btn-success'
-         * );
-         *
-         * if (ComponentHelper::isEnabled('com_history') && $componentParams->get('save_history', 0) && $itemEditable)
-         * {
-         * $typeAlias = $extension . '.gallery';
-         * ToolbarHelper::versions($typeAlias, $this->item->id);
-         * }
-         *
-         * ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
-         * }
-         *
-         * ToolbarHelper::divider();
-         *
-         * // Compute the ref_key
-         * $ref_key = strtoupper($component . ($section ? "_$section" : '')) . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_HELP_KEY';
-         *
-         * // Check if thr computed ref_key does exist in the component
-         * if (!$lang->hasKey($ref_key))
-         * {
-         * $ref_key = 'JHELP_COMPONENTS_'
-         * . strtoupper(substr($component, 4) . ($section ? "_$section" : ''))
-         * . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT');
-         * }
-         *
-         * /*
+		$extension = Factory::getApplication()->input->get('extension');
+		$user = Factory::getApplication()->getIdentity();
+		$userId = $user->id;
+
+		$isNew = ($this->item->id == 0);
+		$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
+
+		// Avoid nonsense situation.
+		if ($extension == 'com_rsgallery2')
+		{
+			return;
+		}
+
+		// The extension can be in the form com_foo.section
+		$parts = explode('.', $extension);
+		$component = $parts[0];
+		$section = (count($parts) > 1) ? $parts[1] : null;
+		$componentParams = ComponentHelper::getParams($component);
+
+		// Need to load the menu language file as mod_menu hasn't been loaded yet.
+		$lang = Factory::getApplication()->getLanguage();
+		$lang->load($component, JPATH_BASE, null, false, true)
+		|| $lang->load($component, JPATH_ADMINISTRATOR . '/components/' . $component, null, false, true);
+
+		// Get the results for each action.
+		$canDo = $this->canDo;
+
+		// If a component galleries title string is present, let's use it.
+		if ($lang->hasKey($component_title_key = $component . ($section ? "_$section" : '') . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE'))
+		{
+			$title = Text::_($component_title_key);
+		}
+		// Else if the component section string exits, let's use it
+		elseif ($lang->hasKey($component_section_key = $component . ($section ? "_$section" : '')))
+		{
+			$title = Text::sprintf('COM_RSGALLERY2_GALLERY_' . ($isNew ? 'ADD' : 'EDIT')
+					. '_TITLE', $this->escape(Text::_($component_section_key))
+					);
+		}
+		// Else use the base title
+		else
+		{
+			$title = Text::_('COM_RSGALLERY2_GALLERY_BASE_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE');
+		}
+
+		// Load specific css component
+		// HTMLHelper::_('stylesheet', $component . '/administrator/ ??? galleries.css', array('version' => 'auto', 'relative' => true));
+        $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.images');
+
+		// Prepare the toolbar.
+		ToolbarHelper::title(
+			$title,
+			'folder gallery-' . ($isNew ? 'add' : 'edit')
+				. ' ' . substr($component, 4) . ($section ? "-$section" : '') . '-gallery-' . ($isNew ? 'add' : 'edit')
+		);
+
+		// For new records, check the create permission.
+		if ($isNew && (count($user->getAuthorisedCategories($component, 'core.create')) > 0))
+		{
+			ToolbarHelper::saveGroup(
+				[
+					['apply', 'gallery.apply'],
+					['save', 'gallery.save'],
+					['save2new', 'gallery.save2new']
+				],
+				'btn-success'
+			);
+
+			ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+		}
+
+		// If not checked out, can save the item.
+		else
+		{
+			// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
+			$itemEditable = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId);
+
+			$toolbarButtons = [];
+
+			// Can't save the record if it's checked out and editable
+			if (!$checkedOut && $itemEditable)
+			{
+				$toolbarButtons[] = ['apply', 'gallery.apply'];
+				$toolbarButtons[] = ['save', 'gallery.save'];
+
+				if ($canDo->get('core.create'))
+				{
+					$toolbarButtons[] = ['save2new', 'gallery.save2new'];
+				}
+			}
+
+			// If an existing item, can save to a copy.
+			if ($canDo->get('core.create'))
+			{
+				$toolbarButtons[] = ['save2copy', 'gallery.save2copy'];
+			}
+
+			ToolbarHelper::saveGroup(
+				$toolbarButtons,
+				'btn-success'
+			);
+
+			if (ComponentHelper::isEnabled('com_history') && $componentParams->get('save_history', 0) && $itemEditable)
+			{
+				$typeAlias = $extension . '.gallery';
+				ToolbarHelper::versions($typeAlias, $this->item->id);
+			}
+
+			ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+		}
+
+		ToolbarHelper::divider();
+
+		// Compute the ref_key
+		$ref_key = strtoupper($component . ($section ? "_$section" : '')) . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_HELP_KEY';
+
+		// Check if thr computed ref_key does exist in the component
+		if (!$lang->hasKey($ref_key))
+		{
+			$ref_key = 'JHELP_COMPONENTS_'
+						. strtoupper(substr($component, 4) . ($section ? "_$section" : ''))
+						. '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT');
+		}
+
+		/*
          * Get help for the gallery/section view for the component by
          * -remotely searching in a language defined dedicated URL: *component*_HELP_URL
          * -locally  searching in a component help file if helpURL param exists in the component and is set to ''
          * -remotely searching in a component URL if helpURL param exists in the component and is NOT set to ''
          *
-         * if ($lang->hasKey($lang_help_url = strtoupper($component) . '_HELP_URL'))
-         * {
-         * $debug = $lang->setDebug(false);
-         * $url = Text::_($lang_help_url);
-         * $lang->setDebug($debug);
-         * }
-         * else
-         * {
-         * $url = null;
-         * }
-         *
-         * ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
-         * /**/
+		if ($lang->hasKey($lang_help_url = strtoupper($component) . '_HELP_URL'))
+		{
+			$debug = $lang->setDebug(false);
+			$url = Text::_($lang_help_url);
+			$lang->setDebug($debug);
+		}
+		else
+		{
+			$url = null;
+		}
+
+		ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
+		/**/
     }
 
     /**

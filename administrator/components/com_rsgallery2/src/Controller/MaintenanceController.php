@@ -9,9 +9,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
@@ -19,9 +18,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\Utilities\ArrayHelper;
-use RuntimeException;
-
-use function defined;
 
 /**
  * Rsgallery2 master display controller.
@@ -50,7 +46,7 @@ class MaintenanceController extends BaseController
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -80,7 +76,7 @@ class MaintenanceController extends BaseController
                     $msg     .= "Missing pathes for images found (dependend on gallery id or size)'";
                     $msgType = 'warning';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing CheckImagePaths: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -97,7 +93,7 @@ class MaintenanceController extends BaseController
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -128,7 +124,7 @@ class MaintenanceController extends BaseController
                     $msg     .= "Error at repair image paths'";
                     $msgType = 'warning';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing RepairImagePaths: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -162,17 +158,17 @@ class MaintenanceController extends BaseController
      *
      * @since      __BUMP_VERSION__
      *
-     * public function display($cachable = false, $urlparams = array())
-     * {
-     *
-     * // $model = $this->getModel('');
-     *
-     *
-     *
-     *
-     * return parent::display();
-     * }
-     * /**/
+	public function display($cachable = false, $urlparams = [])
+	{
+
+		// $model = $this->getModel('');
+
+
+
+
+		return parent::display();
+	}
+    /**/
 
     /**
      * Proxy for getModel.
@@ -186,11 +182,13 @@ class MaintenanceController extends BaseController
      * @since __BUMP_VERSION__
      */
     /**
-     * public function getModel($name = 'Maintenance', $prefix = 'Administrator', $config = array('ignore_request' => true))
-     * {
-     * return parent::getModel($name, $prefix, $config);
-     * }
-     * /**/
+    public function getModel($name = 'Maintenance', $prefix = 'Administrator', $config = array('ignore_request' => true))
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
+	/**/
+
+
 
     /**
      *
@@ -220,9 +218,9 @@ class MaintenanceController extends BaseController
 //
 //                // ToDo: collect selected gallery id, and filenames
 ////                $id = $this->input->get('id', 0, 'int');
-//                $imageNames = $this->input->get('jform', array(), 'array');
+//                $imageNames = $this->input->get('jform', [], 'array');
 //
-//                $cids = $this->input->get('cid', array(), 'ARRAY');
+//                $cids = $this->input->get('cid', [], 'ARRAY');
 //                ArrayHelper::toInteger($cids);
 //
 //                // ToDo: Determine filenames with real paths
@@ -265,8 +263,8 @@ class MaintenanceController extends BaseController
                 $test1 = json_encode($data);
 
                 $cids = $input->get('cid', [], 'ARRAY');
-//                $galleryIds = $input->get('galIds', array(), 'array');
-//                $imageNames  = $input->get('imgNames', array(), 'array');
+//                $galleryIds = $input->get('galIds', [], 'array');
+//                $imageNames  = $input->get('imgNames', [], 'array');
                 $galleryIds = ArrayHelper::toInteger($data ['galIds']);
 //                $imageNames  = ArrayHelper::toString ($data ['imgNames']);
                 $imageNames = $data ['imgNames'];
@@ -281,7 +279,7 @@ class MaintenanceController extends BaseController
                     . '&' . http_build_query(['galIds' => $galleryIds])
                     . '&' . http_build_query(['imgNames' => $imageNames]);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing checkImageExifData: ' . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

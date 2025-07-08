@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\CliCommand;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -279,7 +279,7 @@ class ConfigSet extends AbstractCommand
 			if (!empty ($jsonStr)) {
 				$params = json_decode($jsonStr, true);
 			}
-		} catch (RuntimeException $e) {
+		} catch (\RuntimeException $e) {
 			$OutTxt = '';
 			$OutTxt .= 'ConfigSet: readRsg2ExtensionParameterDb: Error executing query: "' . $query . '"' . '<br>';
 			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

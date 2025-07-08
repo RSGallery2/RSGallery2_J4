@@ -10,11 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use DatabaseQuery;
-use Exception;
-use JLoader;
 use Joomla\CMS\Association\AssociationServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Factory;
@@ -23,11 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
-use stdClass;
-use Table;
 
-use function defined;
 
 /**
  * RSGallery2 Component Images Model
@@ -44,7 +37,7 @@ class ImagesModel extends ListModel
      *
      * @param   MVCFactoryInterface|null  $factory
      *
-     * @throws Exception
+     * @throws \Exception
      * @see     \JController
      * @since   5.0
      */
@@ -53,41 +46,27 @@ class ImagesModel extends ListModel
         //  which fields are needed for filter function
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id',
-                'a.id',
-                'title',
-                'a.title',
-                'name',
-                'a.name',
-                'gallery_id',
-                'a.gallery_id',
+				'id', 'a.id',
+				'title', 'a.title',
+				'name', 'a.name',
+				'gallery_id', 'a.gallery_id',
 
-                'published',
-                'a.published',
+                'published', 'a.published',
 
-                'created',
-                'a.created',
-                'created_by',
-                'a.created_by',
+                'created', 'a.created',
+                'created_by', 'a.created_by',
 
-                'modified',
-                'a.modified',
-                'modified_by',
-                'a.modified_by',
+                'modified', 'a.modified',
+                'modified_by', 'a.modified_by',
 
-                'ordering',
-                'a.ordering',
+                'ordering', 'a.ordering',
 
-                'hits',
-                'a.hits',
-                'rating',
-                'a.rating',
-                'votes',
-                'a.votes',
-                'comments',
-                'a.comments',
-                'tag',
-                'gallery_name',
+                'hits', 'a.hits',
+                'rating', 'a.rating',
+                'votes', 'a.votes',
+                'comments', 'a.comments',
+				'tag',
+				'gallery_name'
             ];
         }
 
@@ -126,12 +105,7 @@ class ImagesModel extends ListModel
         //	$this->context .= '.' . $forcedLanguage;
         //}
 
-        $extension = $app->getUserStateFromRequest(
-            $this->context . '.filter.extension',
-            'extension',
-            'com_rsgallery2',
-            'cmd',
-        );
+		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
         $this->setState('filter.extension', $extension);
         $parts = explode('.', $extension);
 
@@ -188,7 +162,7 @@ class ImagesModel extends ListModel
     /**
      * Method to get a database query to list images.
      *
-     * @return  DatabaseQuery object.
+	 * @return  \DatabaseQuery object.
      *
      * @since __BUMP_VERSION__
      */
@@ -238,8 +212,8 @@ class ImagesModel extends ListModel
                 . 'a.approved, '
                 . 'a.asset_id, '
                 . 'a.access, '
-                . 'a.use_j3x_location ',
-            ),
+				. 'a.use_j3x_location '
+			)
         );
         $query->from('#__rsg2_images as a');
 
@@ -271,25 +245,25 @@ class ImagesModel extends ListModel
             ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
         /**
-         * // Join over the associations.
-         * $assoc = $this->getAssoc();
-         *
-         * if ($assoc)
-         * {
-         * $query->select('COUNT(asso2.id)>1 as association')
-         * ->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
-         * ->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
-         * ->group('a.id, l.title, uc.name, ag.title, ua.name');
-         * }
-         * /**/
+		// Join over the associations.
+		$assoc = $this->getAssoc();
+
+		if ($assoc)
+		{
+			$query->select('COUNT(asso2.id)>1 as association')
+				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
+				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
+				->group('a.id, l.title, uc.name, ag.title, ua.name');
+		}
+		/**/
 
         /**
-         * // Filter on the level.
-         * if ($level = $this->getState('filter.level'))
-         * {
-         * $query->where('a.level <= ' . (int) $level);
-         * }
-         * /**/
+		// Filter on the level.
+		if ($level = $this->getState('filter.level'))
+		{
+			$query->where('a.level <= ' . (int) $level);
+		}
+        /**/
 
         // Filter by access level.
         if ($access = $this->getState('filter.access')) {
@@ -348,33 +322,33 @@ class ImagesModel extends ListModel
 
         // Filter by a single tag.
         /**
-         * $tagId = $this->getState('filter.tag');
-         *
-         * if (is_numeric($tagId))
-         * {
-         * $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
-         * ->join(
-         * 'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
-         * . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
-         * . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
-         * );
-         * }
-         * /**/
+		$tagId = $this->getState('filter.tag');
+
+		if (is_numeric($tagId))
+		{
+			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+				->join(
+					'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
+					. ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+					. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
+				);
+		}
+		/**/
 
         // Add the list ordering clause
 
         /**
-         * // changes need changes above too -> populateState
-         * $orderCol  = $this->state->get('list.ordering', 'a.id');
-         * $orderDirn = $this->state->get('list.direction', 'desc');
-         *
-         * if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
-         * {
-         * $orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
-         * }
-         *
-         * $query->order($db->escape($orderCol . ' ' . $orderDirn));
-         * /**/
+		// changes need changes above too -> populateState
+		$orderCol  = $this->state->get('list.ordering', 'a.id');
+		$orderDirn = $this->state->get('list.direction', 'desc');
+
+		if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
+		{
+			$orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
+		}
+
+		$query->order($db->escape($orderCol . ' ' . $orderDirn));
+/**/
 
         $listOrdering = $this->getState('list.ordering', 'a.ordering');
         $listDirn     = $db->escape($this->getState('list.direction', 'DESC'));
@@ -428,7 +402,7 @@ class ImagesModel extends ListModel
     /**
      * Prepare and sanitize the table prior to saving.
      *
-     * @param   Table  $table  A Table object.
+     * @param   \Table  $table  A Table object.
      *
      * @return  void
      *
@@ -449,8 +423,7 @@ class ImagesModel extends ListModel
             if (empty($table->ordering)) {
                 $db = $this->getDatabase();
 
-                $query = $db
-                    ->getQuery(true)
+                $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from('#__rsg2_images');
 
@@ -506,7 +479,7 @@ class ImagesModel extends ListModel
         }
 
         $hname = $cname . 'HelperAssociation';
-        JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
+		\JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
 
         $assoc = class_exists($hname) && !empty($hname::$category_association);
 
@@ -526,10 +499,10 @@ class ImagesModel extends ListModel
 
         if ($items != false) {
             /**
-             * $extension = $this->getState('filter.extension');
-             *
-             * $this->countItems($items, $extension);
-             * /**/
+			$extension = $this->getState('filter.extension');
+
+			$this->countItems($items, $extension);
+            /**/
         }
 
         return $items;
@@ -538,7 +511,7 @@ class ImagesModel extends ListModel
     /**
      * Method to load the countItems method from the extensions
      *
-     * @param   stdClass[]  &$items      The category items
+     * @param   \stdClass[]  &$items      The category items
      * @param   string        $extension  The category extension
      *
      * @return  void
@@ -546,24 +519,24 @@ class ImagesModel extends ListModel
      * @since __BUMP_VERSION__
      */
     /**
-     * public function countItems(&$items, $extension)
-     * {
-     * $parts     = explode('.', $extension, 2);
-     * $section   = '';
-     *
-     * if (count($parts) > 1)
-     * {
-     * $section = $parts[1];
-     * }
-     *
-     * $component = Factory::getApplication()->bootComponent($parts[0]);
-     *
-     * if ($component instanceof CategoryServiceInterface)
-     * {
-     * $component->countItems($items, $section);
-     * }
-     * }
-     * /**/
+	public function countItems(&$items, $extension)
+	{
+		$parts     = explode('.', $extension, 2);
+		$section   = '';
+
+		if (count($parts) > 1)
+		{
+			$section = $parts[1];
+		}
+
+		$component = Factory::getApplication()->bootComponent($parts[0]);
+
+		if ($component instanceof CategoryServiceInterface)
+		{
+			$component->countItems($items, $section);
+		}
+	}
+    /**/
 
     /**
      * This function will retrieve the data of the n last uploaded images
@@ -572,7 +545,7 @@ class ImagesModel extends ListModel
      *
      * @return array rows with image name, gallery name, date, and user name as rows
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     public static function latestImages($limit)
@@ -604,7 +577,7 @@ class ImagesModel extends ListModel
 
                 $latest[] = $ImgInfo;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'latestImages: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -647,22 +620,24 @@ class ImagesModel extends ListModel
             $db->setQuery($query);
             $rows = $db->loadObjectList();
             /**
-             * foreach ($rows as $row)
-             * {
-             * $ImgInfo         = array();
-             * $ImgInfo['name'] = $row->name;
-             * $ImgInfo['id']   = $row->id;
-             *
-             * //$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
-             * $user            = Factory::getUser($row->created_by);
-             * //$ImgInfo['user'] = $user->get('username');
-             * $ImgInfo['user'] = $user->name;
-             * //$ImgInfo['user'] = "*Finnern was auch immer";
-             *
-             * $latest[] = $ImgInfo;
-             * }
-             * /**/
-        } catch (RuntimeException $e) {
+			foreach ($rows as $row)
+			{
+			$ImgInfo         = [];
+			$ImgInfo['name'] = $row->name;
+			$ImgInfo['id']   = $row->id;
+
+			//$ImgInfo['user'] = rsgallery2ModelGalleries::getUsernameFromId($row->uid);
+			$user            = Factory::getUser($row->created_by);
+			//$ImgInfo['user'] = $user->get('username');
+			$ImgInfo['user'] = $user->name;
+			//$ImgInfo['user'] = "*Finnern was auch immer";
+
+			$latest[] = $ImgInfo;
+			}
+			/**/
+		}
+		catch (\RuntimeException $e)
+		{
             $OutTxt = '';
             $OutTxt .= 'allImages: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -734,8 +709,8 @@ class ImagesModel extends ListModel
 
             $isImagesReset = $db->execute();
         } //catch (\RuntimeException $e)
-        catch (Exception $e) {
-            throw new RuntimeException($e->getMessage() . ' from InitImages');
+        catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage() . ' from InitImages');
         }
 
         return $isImagesReset;
@@ -751,35 +726,35 @@ class ImagesModel extends ListModel
      * @since   3.7.0
      */
     /** see below
-     * public function delete(&$pks)
-     * {
-     * $return = parent::delete($pks);
-     *
-     * if ($return)
-     * {
-     *
-     * // Now check to see if this articles was featured if so delete it from the #__content_frontpage table
-     * $db = $this->>getDatabase();
-     * $query = $db->getQuery(true)
-     * ->delete($db->quoteName('#__content_frontpage'))
-     * ->whereIn($db->quoteName('content_id'), $pks);
-     * $db->setQuery($query);
-     * $db->execute();
-     *
-     * $this->workflow->deleteAssociation($pks);
-     * }
-     *
-     * return $return;
-     * }
-     *
-     * /**
+    public function delete(&$pks)
+    {
+        $return = parent::delete($pks);
+
+        if ($return)
+        {
+
+            // Now check to see if this articles was featured if so delete it from the #__content_frontpage table
+            $db = $this->>getDatabase();
+            $query = $db->getQuery(true)
+                ->delete($db->quoteName('#__content_frontpage'))
+                ->whereIn($db->quoteName('content_id'), $pks);
+            $db->setQuery($query);
+            $db->execute();
+
+            $this->workflow->deleteAssociation($pks);
+        }
+
+        return $return;
+    }
+
+	/**
      * Fetches base file names identified by the list of given image ids
      *
      * @param $ImageIds array List of image ids from database
      *
      * @return string [] file names
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 4.3.2
      */
     public function ids2FileData($ImageIds)
@@ -788,19 +763,16 @@ class ImagesModel extends ListModel
 
         try {
             $db    = $this->getDatabase();
-            $query = $db
-                ->getQuery(true)
+            $query = $db->getQuery(true)
                 ->select($db->quoteName(['id', 'name', 'gallery_id']))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' IN ' . ' (' . implode(',', $ImageIds) . ')');
             $db->setQuery($query);
 
             $fileNames = $db->loadObjectList(); // wrong $db->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'Error executing query: "' . $query . '" in fileNamesFromIds $ImageIds count:' . count(
-                    $ImageIds,
-                ) . '<br>';
+			$OutTxt .= 'Error executing query: "' . $query . '" in fileNamesFromIds $ImageIds count:' . count ($ImageIds) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -818,7 +790,7 @@ class ImagesModel extends ListModel
 //	 * @return string [] file names
 //	 *
 //	 * @since 4.3.2
-//	 * @throws Exception
+//	 * @throws \Exception
 //	 */
 //	public function fileNamesFromIds($ImageIds)
 //	{
@@ -858,7 +830,7 @@ class ImagesModel extends ListModel
      *
      * @return string filename
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 4.3.2
      */
     public function galleryIdFromId($ImageId)
@@ -869,15 +841,14 @@ class ImagesModel extends ListModel
             $db    = $this->getDatabase();
             $query = $db->getQuery(true);
 
-            $query
-                ->select($db->quoteName('gallery_id'))
+			$query->select($db->quoteName('gallery_id'))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where([$db->quoteName('id') . '=' . $ImageId]);
             $db->setQuery($query);
             $db->execute();
 
             $galleryId = $db->loadResult();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing query: "' . $query . '" in galleryIdFromId $ImageId: "' . $ImageId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

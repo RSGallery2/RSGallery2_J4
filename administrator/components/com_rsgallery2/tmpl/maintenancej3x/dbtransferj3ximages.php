@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
@@ -20,8 +18,8 @@ use Joomla\CMS\Language\Text;
 // responsible for moveJ3xImages, dbtransferj3xgalleries, dbtransferj3ximages, dbcopyj3xconfig
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTransferJ3xImages');
 
-function isOKIconHtml($title)
-{
+function isOKIconHtml ($title) {
+
     $html = <<<EOT
         <div class="btn-group">
             <a class="tbody-icon" href="javascript:void(0);" aria-labelledby="cbpublish1-desc">
@@ -34,8 +32,8 @@ function isOKIconHtml($title)
     return $html;
 }
 
-function isNotOkIconHtml($title)
-{
+function isNotOkIconHtml ($title) {
+
     $html = <<<EOT
         <div class="btn-group">
             <a class="tbody-icon active" href="javascript:void(0);" aria-labelledby="cbunpublish2-desc">
@@ -51,30 +49,25 @@ function isNotOkIconHtml($title)
 /*--------------------------------------------------------------------------------
 	J3x galleries
 --------------------------------------------------------------------------------*/
-function j3x_galleryListHtml($dbtransferj3ximages)
-{
+function j3x_galleryListHtml ($dbtransferj3ximages) {
+
 //	$html = <<<EOT
     ?>
-    <?php
-    if (!empty ($dbtransferj3ximages->j3x_galleriesSorted)): ?>
+	<?php if (! empty ($dbtransferj3ximages->j3x_galleriesSorted)): ?>
 		<table class="table table-striped" id="j3x_galleryList">
 
 			<caption id="j3x_captionTable" class="sr-only">
-                <?php
-                echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
-				, <?php
-                echo Text::_('JGLOBAL_SORTED_BY'); ?>
+                <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
+				, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
 			</caption>
 			<thead>
 			<tr>
 				<td style="width:1%" class="text-center">
-                    <?php
-                    echo HTMLHelper::_('grid.checkall'); ?>
+                    <?php echo HTMLHelper::_('grid.checkall'); ?>
 				</td>
 
 				<th class="text-center">
-                    <?php
-                    echo Text::_('JSTATUS'); ?>
+                    <?php echo Text::_('JSTATUS'); ?>
 				</th>
 				<th class="text-center">
 					`id`
@@ -118,45 +111,29 @@ function j3x_galleryListHtml($dbtransferj3ximages)
                 }
 
                 ?>
-				<tr class="row<?php
-                echo $i % 2; ?>" name="j3x_gal_row" <?php
-                echo $attributeGalleryIdHtml; ?> <?php
-                echo $attributeIsMergedHtml; ?> >
+				<tr class="row<?php echo $i % 2; ?>" name="j3x_gal_row" <?php echo $attributeGalleryIdHtml; ?> <?php echo $attributeIsMergedHtml; ?> >
 
 					<td class="text-center">
-                        <?php
-                        echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                        <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 					</td>
 
 					<td class="text-center">
-                        <?php
-                        echo $isMergedHtml; ?>
+                        <?php echo $isMergedHtml; ?>
 					</td>
 
 					<td class="text-center">
-                        <?php
-                        echo $item->id; ?>
+                        <?php echo $item->id; ?>
 					</td>
 
 					<td class="text-left">
-                        <?php
-                        echo $dbtransferj3ximages->escape($item->name); ?>
-						<span class="small" title="<?php
-                        echo $dbtransferj3ximages->escape($item->path); ?>">
-                            <?php
-                            if (empty($item->description)) : ?>
-                                <?php
-                                echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3ximages->escape($item->alias)); ?>
-                            <?php
-                            else : ?>
-	                            (<?php
-                                echo Text::sprintf(
-                                    'JGLOBAL_LIST_ALIAS_NOTE',
-                                    $dbtransferj3ximages->escape($item->alias),
-                                    $dbtransferj3ximages->escape($item->description),
-                                ); ?>)
-                            <?php
-                            endif; ?>
+                        <?php echo $dbtransferj3ximages->escape($item->name); ?>
+						<span class="small" title="<?php echo $dbtransferj3ximages->escape($item->path); ?>">
+                            <?php if (empty($item->description)) : ?>
+                                <?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $dbtransferj3ximages->escape($item->alias)); ?>
+                            <?php else : ?>
+                                (<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $dbtransferj3ximages->escape($item->alias),
+                                    $dbtransferj3ximages->escape($item->description)); ?>)
+                            <?php endif; ?>
                         </span>
 					</td>
 					<td class="text-center">
@@ -177,12 +154,9 @@ function j3x_galleryListHtml($dbtransferj3ximages)
 			</tbody>
 		</table>
 
-    <?php
-    else : ?>
-		<h2><span class="badge badge-pill bg-error"><?php
-                echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
-    <?php
-    endif; ?>
+    <?php else : ?>
+		<h2><span class="badge badge-pill bg-error"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
+    <?php endif; ?>
 
     <?php
 
@@ -194,32 +168,26 @@ function j3x_galleryListHtml($dbtransferj3ximages)
 /*--------------------------------------------------------------------------------
 	J3x images
 --------------------------------------------------------------------------------*/
-function j3x_imageInfoListHtml($dbtransferj3ximages)
-{
+function j3x_imageInfoListHtml ($dbtransferj3ximages) {
     $toBeMovedCount = 0;
 
     ?>
-    <?php
-    if (!empty ($dbtransferj3ximages->j3x_images)): ?>
+	<?php if (! empty ($dbtransferj3ximages->j3x_images)): ?>
 
 		<table class="table table-striped" id="galleryList">
 
 			<caption id="captionTable" class="sr-only">
-                <?php
-                echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
-				, <?php
-                echo Text::_('JGLOBAL_SORTED_BY'); ?>
+                <?php echo Text::_('COM_RSGALLERY2_TABLE_CAPTION'); ?>
+				, <?php echo Text::_('JGLOBAL_SORTED_BY'); ?>
 			</caption>
 			<thead>
 			<tr>
 				<td style="width:1%" class="text-center">
-                    <?php
-                    echo HTMLHelper::_('grid.checkall'); ?>
+                    <?php echo HTMLHelper::_('grid.checkall'); ?>
 				</td>
 
 				<th width="1%" class="text-center">
-                    <?php
-                    echo Text::_('JSTATUS'); ?>
+                    <?php echo Text::_('JSTATUS'); ?>
 				</th>
 				<th width="1%" class="center">
 					`id`
@@ -257,17 +225,14 @@ function j3x_imageInfoListHtml($dbtransferj3ximages)
                 }
 
                 ?>
-				<tr class="row<?php
-                echo $i % 2; ?>">
+				<tr class="row<?php echo $i % 2; ?>">
 
 					<td class="text-center">
-                        <?php
-                        echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                        <?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 					</td>
 
 					<td class="text-center">
-                        <?php
-                        echo $mergedStatusHtml; ?>
+                        <?php echo $mergedStatusHtml; ?>
 					</td>
 
 					<td width="1%" class="center">
@@ -283,20 +248,16 @@ function j3x_imageInfoListHtml($dbtransferj3ximages)
                         ?>
 					</td>
 					<td width="1%" class="center">
-                        <?php
-                        echo $item->alias; ?>
+                        <?php echo $item->alias; ?>
 					</td>
 					<td width="1%" class="center">
-                        <?php
-                        // echo $item->descr; ?>
+                        <?php // echo $item->descr; ?>
 					</td>
 					<td width="1%" class="center">
-                        <?php
-                        echo $item->gallery_id; ?>
+                        <?php echo $item->gallery_id; ?>
 					</td>
 					<td width="1%" class="center">
-                        <?php
-                        echo $item->title; ?>
+                        <?php echo $item->title; ?>
 					</td>
 				</tr>
 
@@ -306,12 +267,9 @@ function j3x_imageInfoListHtml($dbtransferj3ximages)
 			</tbody>
 		</table>
 
-    <?php
-    else : ?>
-		<h2><span class="badge badge-pill bg-error"><?php
-                echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST_IS_EMPTY'); ?></span></h2>
-    <?php
-    endif; ?>
+    <?php else : ?>
+		<h2><span class="badge badge-pill bg-error"><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST_IS_EMPTY'); ?></span></h2>
+    <?php endif; ?>
 
     <?php
 
@@ -321,13 +279,12 @@ function j3x_imageInfoListHtml($dbtransferj3ximages)
 /*--------------------------------------------------------------------------------
 	Move buttons
 --------------------------------------------------------------------------------*/
-function j3xdTransferButtonsHtml($movej3ximages)
-{
+function j3xdTransferButtonsHtml ($movej3ximages) {
+
 //	$html = <<<EOT
 
     ?>
-    <?php
-    if (!empty ($movej3ximages->j3x_galleriesSorted)): ?>
+	<?php if (! empty ($movej3ximages->j3x_galleriesSorted)): ?>
         <?php
         /*
                <button id="transferByGallery" type="button" class="btn btn-success btn-rsg2"
@@ -365,38 +322,29 @@ function j3xdTransferButtonsHtml($movej3ximages)
                /**/
         ?>
 		<button id="selectNextGallery" type="button" class="btn btn-info btn-rsg2"
-		        title="<?php
-                echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY_DESC'); ?>"
+		        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY_DESC'); ?>"
 
 		>
 			<span class="icon-checkbox" aria-hidden="false"></span>
-            <?php
-            echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY'); ?>
+            <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_GALLERY'); ?>
 		</button>
 		<button id="selectNextGalleries10" type="button" class="btn btn-info btn-rsg2"
-		        title="<?php
-                echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
+		        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
 
 		>
 			<span class="icon-checkbox" aria-hidden="false"></span>
-            <?php
-            echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_10_GALLERIES'); ?>
+            <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_10_GALLERIES'); ?>
 		</button>
 		<button id="selectNextGalleries100" type="button" class="btn btn-info btn-rsg2 "
-		        title="<?php
-                echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
+		        title="<?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERY_DESC'); ?>"
 		>
 			<span class="icon-checkbox" aria-hidden="false"></span>
-            <?php
-            echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERIES'); ?>
+            <?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_SELECT_NEXT_100_GALLERIES'); ?>
 		</button>
 
-    <?php
-    else : ?>
-		<h2><span class="badge badge-pill bg-success"><?php
-                echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
-    <?php
-    endif; ?>
+    <?php else : ?>
+		<h2><span class="badge badge-pill bg-success"><?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_LIST_IS_EMPTY'); ?></span></h2>
+    <?php endif; ?>
 
     <?php
 }
@@ -407,58 +355,39 @@ function j3xdTransferButtonsHtml($movej3ximages)
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3ximages'); ?>"
       method="post" name="adminForm" id="adminForm">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-                <?php
-                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'tabDbtransferj3ximages']); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'tabDbtransferj3ximages']); ?>
 
-                <?php
-                echo HTMLHelper::_(
-                    'bootstrap.addTab',
-                    'myTab',
-                    'tabDbtransferj3ximages',
-                    Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true),
-                ); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'tabDbtransferj3ximages',
+                    Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES', true)); ?>
 
-                <?php
-                //--- all at once ------------------------------------------------------------------------ ?>
+                    <?php //--- all at once ------------------------------------------------------------------------ ?>
 
 				<div class="card text-center">
 					<div class="card-body">
-						<h3 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL', true); ?></h3>
+						<h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL', true); ?></h3>
 
-						<p class="card-text"><?php
-                            echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL_DESC'); ?></p>
-						<p class="card-text"><?php
-                            echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
+						<p class="card-text"><?php echo Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_ALL_DESC'); ?></p>
+						<p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-						<button class="btn btn-success" type="submit"
-						        onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
+                            <button class="btn btn-success" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.copyDbJ3xImages2J4xUser');return false;">
+                            <?php echo Text::_('COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES'); ?>
 						</button>
 
-						<button class="btn btn-warning" type="submit"
-						        onclick="Joomla.submitbutton('MaintenanceJ3x.revertCopyDbJ3xImages2J4xUser');return false;">
-                            <?php
-                            echo Text::_('COM_RSGALLERY2_DB_REVERT_COPY_ALL_J3X_IMAGES'); ?>
+                            <button class="btn btn-warning" type="submit" onclick="Joomla.submitbutton('MaintenanceJ3x.revertCopyDbJ3xImages2J4xUser');return false;">
+                            <?php echo Text::_('COM_RSGALLERY2_DB_REVERT_COPY_ALL_J3X_IMAGES'); ?>
 						</button>
 
 					</div>
@@ -466,24 +395,18 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtran
 
 				<br>
 
-                <?php
-                //--- copy instruction ------------------------------------------------------------------------ ?>
+                    <?php //--- copy instruction ------------------------------------------------------------------------ ?>
 
 				<div class="card text-dark bg-light j3x-info-card">
 					<div class="card-body">
-						<h5 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION'); ?><?php
-                            echo Text::_('COM_RSGALLERY2_J3X_IMAGES'); ?></h5>
-                        <?php
-                        echo Text::_('COM_RSGALLERY2_J3X_DB_IMAGES_COPY_INSTRUCTION_DESC'); ?>
+						<h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_COPY_INSTRUCTION'); ?><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES'); ?></h5>
+                        <?php echo Text::_('COM_RSGALLERY2_J3X_DB_IMAGES_COPY_INSTRUCTION_DESC'); ?>
 					</div>
 				</div>
 
-                <?php
-                //--- Select gallery and buttons ---------------------------------------------------------- ?>
+                    <?php //--- Select gallery and buttons ---------------------------------------------------------- ?>
 
-                <?php
-                /*
+                    <?php /*
                                    //                <div class="card text-dark bg-light j3x-gallery-card">
                                        <div class="card-body">
                                            <?php
@@ -494,73 +417,58 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtran
                                        </div>
                                    </div>
                                    */
-
                 ?>
 				<div class="card text-dark bg-light j3x--card">
 					<div class="card-body">
-						<h5 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
+						<h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_USE'); ?></h5>
 
-                        <?php
-                        j3xdTransferButtonsHtml($this); ?>
+                            <?php j3xdTransferButtonsHtml ($this); ?>
 					</div>
 				</div>
 
 				<hr>
 
-                <?php
-                //--- J3x gallery image status list --------------------------------------------------------------------- ?>
+                    <?php //--- J3x gallery image status list --------------------------------------------------------------------- ?>
 
 				<div class="card text-dark bg-light j3x-galleries-card">
 					<div class="card-body">
-						<h5 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h5>
+						<h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_GALLERY_LIST'); ?></h5>
 
-                        <?php
-                        j3x_galleryListHtml($this); ?>
+                            <?php j3x_galleryListHtml ($this); ?>
 					</div>
 				</div>
 
 				<hr>
 
 
-                <?php
-                //--- J3x image info list --------------------------------------------------------------------- ?>
+                    <?php //--- J3x image info list --------------------------------------------------------------------- ?>
 
 				<div class="card text-dark bg-light j3x-galleries-card">
 					<div class="card-body">
-						<h5 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h5>
+						<h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J3X_IMAGES_LIST'); ?></h5>
 
-                        <?php
-                        // j3x_imageInfoListHtml ($this); ?>
+                            <?php // j3x_imageInfoListHtml ($this); ?>
 					</div>
 				</div>
 
 				<hr>
 
-                <?php
-                //--- J4x info about must have been transferred ----------------------------------------------- ?>
+                    <?php //--- J4x info about must have been transferred ----------------------------------------------- ?>
 
 				<div class="card text-dark bg-light j4x-info-card" style="max-width: 36rem;">
 					<div class="card-header">
-                        <?php
-                        echo Text::_('COM_RSGALLERY2_J3X_J4_GALLERIES_AS_TREE'); ?>
+                        <?php echo Text::_('COM_RSGALLERY2_J3X_J4_GALLERIES_AS_TREE'); ?>
 					</div>
 					<div class="card-body">
-						<h5 class="card-title"><?php
-                            echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_INFO'); ?></h5>
-                        <?php
-                        echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_MUST_BE_TRANSFERRED'); ?>
+						<h5 class="card-title"><?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_INFO'); ?></h5>
+                        <?php echo Text::_('COM_RSGALLERY2_J4X_GALLERIES_MUST_BE_TRANSFERRED'); ?>
 					</div>
 				</div>
 
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTab'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 
 				<input type="hidden" name="boxchecked" value="0"/>
@@ -569,8 +477,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtran
 		</div>
 	</div>
 
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

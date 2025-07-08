@@ -9,11 +9,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
-
-use function defined;
 
 // not ready
 echo 'default.php: ' . realpath(dirname(__FILE__));

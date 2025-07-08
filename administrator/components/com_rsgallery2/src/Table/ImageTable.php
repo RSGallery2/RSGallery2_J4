@@ -9,9 +9,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Table;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -20,15 +19,12 @@ use Joomla\Database\DatabaseDriver;
 use Joomla\Registry\Registry;
 use UnexpectedValueException;
 
-use function defined;
-
 /**
  * Image table
  *
  * @since __BUMP_VERSION__
  */
 class ImageTable extends Table
-
 {
     /**
      * Constructor
@@ -73,14 +69,14 @@ class ImageTable extends Table
      *
      * @return  boolean  True on success.
      *
-     * @throws  UnexpectedValueException
+     * @throws  \UnexpectedValueException
      * @since __BUMP_VERSION__
      */
     public function check()
     {
         try {
             parent::check();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->setError($e->getMessage());
 
             return false;
@@ -88,7 +84,7 @@ class ImageTable extends Table
 
         // Check for valid name.
         if (trim($this->name) == '') {
-            throw new UnexpectedValueException(sprintf('The name is empty'));
+            throw new \UnexpectedValueException(sprintf('The name is empty'));
         }
 
         //--- alias -------------------------------------------------------------
@@ -107,7 +103,7 @@ class ImageTable extends Table
 
         // Check the publish down date is not earlier than publish up.
         if (!empty($this->publish_down) && !empty($this->publish_up) && $this->publish_down < $this->publish_up) {
-            throw new UnexpectedValueException(sprintf('End publish date is before start publish date.'));
+            throw new \UnexpectedValueException(sprintf('End publish date is before start publish date.'));
         }
 
         // Clean up description -- eliminate quotes and <> brackets
@@ -220,38 +216,38 @@ class ImageTable extends Table
     public function delete($pk = null)
     {
         /**
-         * $IsDeleted = false;
-         *
-         * try
-         * {
-         *
-         * // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
-         *
-         * $filename          = $this->name;
-         *
-         * //$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
-         * $imgFileModel = $this->getModel ('imageFile');
-         *
-         * $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
-         * if (! $IsFilesAreDeleted)
-         * {
-         * // Remove from database
-         * }
-         *
-         * $IsDeleted = parent::delete($pk);
-         * }
-         * catch (\RuntimeException $e)
-         * {
-         * $OutTxt = '';
-         * $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
-            * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-         *
-         * $app = Factory::getApplication();
-         * $app->enqueueMessage($OutTxt, 'error');
-         * }
-         *
-         * return $IsDeleted;
-         * /**/
+		$IsDeleted = false;
+
+		try
+		{
+
+		    // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
+
+            $filename          = $this->name;
+
+			//$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
+			$imgFileModel = $this->getModel ('imageFile');
+
+			$IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
+			if (! $IsFilesAreDeleted)
+			{
+				// Remove from database
+			}
+
+            $IsDeleted = parent::delete($pk);
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+        return $IsDeleted;
+        /**/
 
         $return = parent::delete($pk);
 

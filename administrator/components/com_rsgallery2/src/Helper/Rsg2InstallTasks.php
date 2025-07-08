@@ -11,10 +11,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-// No direct access to this file
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 // required is used as classes may not be loaded on  fresh install
 // !!! needed by install
@@ -54,21 +51,22 @@ class Rsg2InstallTasks
 
         // insert configuration standard values
         /**
-         * //$configModel = $this->getModel('ConfigRaw');
-         * $configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
-         * $isSaved = $configModel->ResetConfigToDefault();
-         *
-         * if ($isSaved) {
-         * // config saved message
-         * $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
-         * }
-         * else
-         * {
-         * $msg .= "Error at resetting configuration to default'";
-         * $msgType = 'warning';
-         * }
-         * echo $msg;
-         * /**/
+		//$configModel = $this->getModel('ConfigRaw');
+		$configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
+		$isSaved = $configModel->ResetConfigToDefault();
+
+		if ($isSaved) {
+		// config saved message
+		$msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
+		}
+		else
+		{
+		$msg .= "Error at resetting configuration to default'";
+		$msgType = 'warning';
+		}
+		echo $msg;
+		/**/
+
     }
 
 } // class

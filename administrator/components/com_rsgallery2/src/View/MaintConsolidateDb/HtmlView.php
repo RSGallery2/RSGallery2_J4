@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\MaintConsolidateDb;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 //use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
@@ -24,7 +24,6 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 
-use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -161,48 +160,12 @@ class HtmlView extends BaseHtmlView
 
         ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-        ToolBarHelper::custom(
-            'MaintConsolidateDb.createImageDbItems',
-            'database',
-            '',
-            'COM_RSGALLERY2_CREATE_DATABASE_ENTRIES',
-            true,
-        );
-        ToolBarHelper::custom(
-            'MaintConsolidateDb.createMissingImages',
-            'image',
-            '',
-            'COM_RSGALLERY2_CREATE_MISSING_IMAGES',
-            true,
-        );
-        ToolBarHelper::custom(
-            'MaintConsolidateDb.createWatermarkImages',
-            'scissors',
-            '',
-            'COM_RSGALLERY2_CREATE_MISSING_WATERMARKS',
-            true,
-        );
-        ToolBarHelper::custom(
-            'MaintConsolidateDb.assignParentGallery',
-            'images',
-            '',
-            'COM_RSGALLERY2_ASSIGN_SELECTED_GALLERY',
-            true,
-        );
-        ToolBarHelper::custom(
-            'MaintConsolidateDb.deleteRowItems',
-            'delete',
-            '',
-            'COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS',
-            true,
-        );
-        ToolBarHelper::custom(
-            'MaintConsolidateDb.repairAllIssuesItems',
-            'refresh',
-            '',
-            'COM_RSGALLERY2_REPAIR_ALL_ISSUES',
-            true,
-        );
+                ToolBarHelper::custom('MaintConsolidateDb.createImageDbItems', 'database', '', 'COM_RSGALLERY2_CREATE_DATABASE_ENTRIES', true);
+        		ToolBarHelper::custom('MaintConsolidateDb.createMissingImages', 'image', '', 'COM_RSGALLERY2_CREATE_MISSING_IMAGES', true);
+        		ToolBarHelper::custom('MaintConsolidateDb.createWatermarkImages', 'scissors', '', 'COM_RSGALLERY2_CREATE_MISSING_WATERMARKS', true);
+                ToolBarHelper::custom('MaintConsolidateDb.assignParentGallery', 'images', '', 'COM_RSGALLERY2_ASSIGN_SELECTED_GALLERY', true);
+                ToolBarHelper::custom('MaintConsolidateDb.deleteRowItems', 'delete', '', 'COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS', true);
+                ToolBarHelper::custom('MaintConsolidateDb.repairAllIssuesItems', 'refresh', '', 'COM_RSGALLERY2_REPAIR_ALL_ISSUES', true);
 
 //				break;
 //
@@ -222,11 +185,11 @@ class HtmlView extends BaseHtmlView
     }
 
     /**
-     * public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
-     * {
-     * return parent::getModel($name, $prefix, $config);
-     * }
-     * /**/
+	public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
+	{
+		return parent::getModel($name, $prefix, $config);
+	}
+	/**/
 
 }
 

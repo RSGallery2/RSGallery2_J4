@@ -12,14 +12,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
 
-use function defined;
+
 
 /**
  * Collects available j3x gallery table ids and names
@@ -86,7 +85,7 @@ class GalleriesJ3xListField extends ListField
 
             // Get the options.
             $galleries = $db->setQuery($query)->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 

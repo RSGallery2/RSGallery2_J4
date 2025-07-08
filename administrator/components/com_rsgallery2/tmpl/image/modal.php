@@ -7,11 +7,9 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 ?>
 <div class="container-popup">
-    <?php
-    $this->setLayout('edit'); ?>
-    <?php
-    echo $this->loadTemplate(); ?>
+	<?php $this->setLayout('edit'); ?>
+	<?php echo $this->loadTemplate(); ?>
 </div>

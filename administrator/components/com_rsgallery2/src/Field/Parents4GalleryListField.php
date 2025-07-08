@@ -12,14 +12,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
-
-use function defined;
 
 /**
  * Collects available gallery ids and names and creates
@@ -74,8 +71,7 @@ class Parents4GalleryListField extends ListField
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db
-                ->getQuery(true)
+		    $query = $db->getQuery(true)
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id AS value, name AS text, level')
                 ->from($db->quoteName('#__rsg2_galleries'))
@@ -87,7 +83,7 @@ class Parents4GalleryListField extends ListField
 
             // Get the options.
             $galleries = $db->setQuery($query)->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -117,12 +113,12 @@ class Parents4GalleryListField extends ListField
 //				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
 //			}
             /**
-             * // Displays language code if not set to All
-             * if ($options[$i]->language !== '*')
-             * {
-             * $options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
-             * }
-             * /**/
+			// Displays language code if not set to All
+			if ($options[$i]->language !== '*')
+			{
+				$options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
+			}
+			/**/
         }
 
 //		foreach ($options as $i => $option)

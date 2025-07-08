@@ -9,17 +9,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 
-use RuntimeException;
-
-use function defined;
 use function is_array;
 
 /**
@@ -47,7 +43,7 @@ class ChangeLogModel
      * @param   bool  $isUseLocalDir  use URL to git /self or path
      * @param   null  $changeLogUrl   path to changelog file different from standard
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     public function __construct(bool $isUseLocalDir=true, $changeLogUrl = "")
@@ -83,7 +79,7 @@ class ChangeLogModel
      *
      * @return mixed|string
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     public function changeLogUrlFromExtension()
@@ -94,8 +90,7 @@ class ChangeLogModel
             $db = Factory::getContainer()->get(DatabaseInterface::class);
             // $db = $this->getDatabase();
 
-            $query = $db
-                ->getQuery(true)
+	        $query = $db->getQuery(true)
                 ->select('changelogurl')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -110,7 +105,7 @@ class ChangeLogModel
             if ($handle) {
                 $changeLogUrl = $externUrl;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ChangeLogModel: changeLogUrl_manifest: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -374,7 +369,7 @@ class ChangeLogModel
         $html = [];
 
         // single item ?
-        if (!is_array($items)) {
+        if (!\is_array($items)) {
             $items = [$items];
         }
 

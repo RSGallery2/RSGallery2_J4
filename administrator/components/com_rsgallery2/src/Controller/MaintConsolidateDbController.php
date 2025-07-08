@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -17,9 +17,8 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
-use RuntimeException;
 
-use function defined;
+
 
 /**
  * The Galleries List Controller
@@ -81,23 +80,24 @@ class MaintConsolidateDbController extends AdminController
             $msg = nl2br($msg);
         } else {
             try {
-                /** @var GalleryModel $model *
-                 * $model = $this->getModel();
-                 *
-                 * $isOk = $model->rebuild();
-                 * if ($isOk) {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-                 * } else {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-                 * }
-                 * /**/
+				/**
+				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+				$model = $this->getModel();
+
+				$isOk = $model->rebuild();
+				if ($isOk) {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+				} else {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+				}
+				/**/
 
 //				$msg .= ' started';
 //				Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImageDbItems: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -137,23 +137,24 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                /** @var GalleryModel $model *
-                 * $model = $this->getModel();
-                 *
-                 * $isOk = $model->rebuild();
-                 * if ($isOk) {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-                 * } else {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-                 * }
-                 * /**/
+				/**
+				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+				$model = $this->getModel();
+
+				$isOk = $model->rebuild();
+				if ($isOk) {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+				} else {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+				}
+				/**/
 
 //				$msg .= ' started';
 //				Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createMissingImages: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -193,23 +194,24 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                /** @var GalleryModel $model *
-                 * $model = $this->getModel();
-                 *
-                 * $isOk = $model->rebuild();
-                 * if ($isOk) {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-                 * } else {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-                 * }
-                 * /**/
+				/**
+				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+				$model = $this->getModel();
+
+				$isOk = $model->rebuild();
+				if ($isOk) {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+				} else {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+				}
+				/**/
 
 //				$msg .= ' started';
 //				Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createWatermarkImages: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -249,23 +251,24 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                /** @var GalleryModel $model *
-                 * $model = $this->getModel();
-                 *
-                 * $isOk = $model->rebuild();
-                 * if ($isOk) {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-                 * } else {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-                 * }
-                 * /**/
+				/**
+				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+				$model = $this->getModel();
+
+				$isOk = $model->rebuild();
+				if ($isOk) {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+				} else {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+				}
+				/**/
 
 //				$msg .= ' started';
 //				Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing assignParentGallery: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -305,23 +308,24 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                /** @var GalleryModel $model *
-                 * $model = $this->getModel();
-                 *
-                 * $isOk = $model->rebuild();
-                 * if ($isOk) {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-                 * } else {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-                 * }
-                 * /**/
+				/**
+				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+				$model = $this->getModel();
+
+				$isOk = $model->rebuild();
+				if ($isOk) {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+				} else {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+				}
+				/**/
 
 //				$msg .= ' started';
 //				Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing deleteRowItems: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -359,23 +363,24 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                /** @var GalleryModel $model *
-                 * $model = $this->getModel();
-                 *
-                 * $isOk = $model->rebuild();
-                 * if ($isOk) {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-                 * } else {
-                 * $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-                 * }
-                 * /**/
+				/**
+				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+				$model = $this->getModel();
+
+				$isOk = $model->rebuild();
+				if ($isOk) {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+				} else {
+				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+				}
+				/**/
 
 //				$msg .= ' started';
 //				Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing repairAllIssuesItems: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

@@ -9,14 +9,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReferences;
-use RuntimeException;
 
-use function defined;
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
@@ -76,7 +74,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
             // toDo:
 
             $ImageReferences->CollectImageReferences();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing CollectImageReferences: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -96,38 +94,42 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
      * @since 4.3.0
      */
     /** read config more direct global$rsgconfig ...
-     * public function IsWatermarkActive()
-     * {
-     * if (empty($this->IsWatermarkActive))
-     * {
-     * $this->IsWatermarkActive = false;
-     *
-     * try
-     * {
-     * $db    = $this->getDatabase();
-     * $query = $db->getQuery(true)
-     * ->select($db->quoteName('value'))
-     * ->from($db->quoteName('#__rsgallery2_config'))
-     * ->where($db->quoteName('name') . " = " . $db->quote('watermark'));
-     * $db->setQuery($query);
-     *
-     * $this->IsWatermarkActive = $db->loadResult();
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Error executing query: "' . $query . '"' . '<br>';
-     * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     *
-     * }
-     * }
-     *
-     * return $this->IsWatermarkActive;
-     * }
-     * /**/
+	public function IsWatermarkActive()
+	{
+		if (empty($this->IsWatermarkActive))
+		{
+			$this->IsWatermarkActive = false;
+
+			try
+			{
+				$db    = $this->getDatabase();
+				$query = $db->getQuery(true)
+					->select($db->quoteName('value'))
+					->from($db->quoteName('#__rsgallery2_config'))
+					->where($db->quoteName('name') . " = " . $db->quote('watermark'));
+				$db->setQuery($query);
+
+				$this->IsWatermarkActive = $db->loadResult();
+			}
+			catch (\RuntimeException $e)
+			{
+				$OutTxt = '';
+				$OutTxt .= 'Error executing query: "' . $query . '"' . '<br>';
+				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+
+			}
+		}
+
+		return $this->IsWatermarkActive;
+	}
+	/**/
+
+
+
+
 
 }
 

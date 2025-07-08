@@ -17,11 +17,8 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
-use RuntimeException;
 
-use function defined;
-
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 /**
  * Keeps the file location paths of an image for PHP use and URIs for HTML use
@@ -115,7 +112,7 @@ class ImagePathsModel
 
             // file paths and URIs derived by gallery ID
             $this->setPaths_URIs_byGalleryId($galleryId);
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing __construct: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -270,7 +267,7 @@ class ImagePathsModel
                     $isCreated = $isCreated & Folder::create($sizePath);
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing createAllPaths: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -307,7 +304,7 @@ class ImagePathsModel
                     $isPathsExisting = $isPathsExisting & is_dir($sizePath);
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagePathsModel: Error executing isPathsExisting: <br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

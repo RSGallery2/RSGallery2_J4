@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use DateTime;
 use Joomla\CMS\Input\Input;
@@ -19,9 +19,8 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Router\Route;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
-use RuntimeException;
 
-use function defined;
+
 
 // use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
@@ -44,12 +43,12 @@ class DevelopController extends BaseController
      *
      * @since __BUMP_VERSION__
      *
-     * public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
-     * {
-     * parent::__construct($config, $factory, $app, $input);
-     *
-     * }
-     * /**/
+    public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+    {
+        parent::__construct($config, $factory, $app, $input);
+
+    }
+    /**/
 
     /**
      * The default view.
@@ -88,12 +87,12 @@ class DevelopController extends BaseController
      *
      * @since __BUMP_VERSION__
      *
-     *
-     * public function getModel($name = 'Develop', $prefix = 'Administrator', $config = array('ignore_request' => true))
-     * {
-     * return parent::getModel($name, $prefix, $config);
-     * }
-     * /**/
+
+    public function getModel($name = 'Develop', $prefix = 'Administrator', $config = array('ignore_request' => true))
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
+    /**/
 
     /**
      * Copies all old configuration items to new configuration
@@ -130,7 +129,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_001 1 items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_001: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -179,7 +178,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_010 10 items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_010: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -228,7 +227,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_100 100 items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_100: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -277,7 +276,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createGalleries_random 1 items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createGalleries_random: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -333,7 +332,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_001 1 items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_001: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -384,7 +383,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_010 10 items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_010: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -436,7 +435,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_100 100 items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_100: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -489,7 +488,7 @@ class DevelopController extends BaseController
                     $msg     .= "Error at createImages_random ' . $count . ' items";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing createImages_random: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -539,7 +538,7 @@ class DevelopController extends BaseController
             }
 
             $isCreated = $allCreated;
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -592,32 +591,32 @@ class DevelopController extends BaseController
                 imagedestroy($im);
                 /**/
                 /**
-                 * // Erzeut ein leeres Bild und fügt ein wenig Text hinzu
-                 * $im = imagecreatetruecolor(120, 20);
-                 * $text_color = imagecolorallocate($im, 233, 14, 91);
-                 * imagestring($im, 1, 5, 5,  'A Simple Text String', $text_color);
-                 *
-                 * // Die Content-Type-Kopfzeile senden, in diesem Fall image/jpeg
-                 * header('Content-Type: image/jpeg');
-                 *
-                 * //// Das Bild ausgeben
-                 * //imagejpeg($im);
-                 *
-                 * // Das Bild als 'simpletext.jpg' speichern
-                 * imagejpeg($im, 'simpletext.jpg');
-                 *
-                 * // sets background to red
-                 * $red = imagecolorallocate($im, 255, 0, 0);
-                 * imagefill($im, 0, 0, $red);
-                 *
-                 * // Den Speicher freigeben
-                 * imagedestroy($im);
-                 *
-                 * /**/
+                // Erzeut ein leeres Bild und fügt ein wenig Text hinzu
+                $im = imagecreatetruecolor(120, 20);
+                $text_color = imagecolorallocate($im, 233, 14, 91);
+                imagestring($im, 1, 5, 5,  'A Simple Text String', $text_color);
+
+                // Die Content-Type-Kopfzeile senden, in diesem Fall image/jpeg
+                header('Content-Type: image/jpeg');
+
+                //// Das Bild ausgeben
+                //imagejpeg($im);
+
+                // Das Bild als 'simpletext.jpg' speichern
+                imagejpeg($im, 'simpletext.jpg');
+
+                // sets background to red
+                $red = imagecolorallocate($im, 255, 0, 0);
+                imagefill($im, 0, 0, $red);
+
+                // Den Speicher freigeben
+                imagedestroy($im);
+
+                /**/
             }
 
             $isCreated = $allCreated;
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -625,15 +624,14 @@ class DevelopController extends BaseController
     }
 
     // ToDo: Move to own helper class
-    private function stdDateTime()
-    {
+    private function stdDateTime () {
         $now = '2020_error_stdDateTime';
 
         try {
             $datetime = new DateTime();
 //            $now = $datetime->format('Y.m.d_H.i.s.v');
             $now = $datetime->format('Y.m.d_H.i.s.u');
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -695,7 +693,7 @@ class DevelopController extends BaseController
                 //$link = 'index.php?option=com_rsgallery2&view=develop&layout=InstallMessage'
                 //    . '&lowerVersion=' . $lowerVersion;
                 $link .= '&lowerVersion=' . $lowerVersion;
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing useOldVersion: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -749,7 +747,7 @@ class DevelopController extends BaseController
                     $msg     .= 'Error at assignment of RSG2 version: ' . $lowerVersion;
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing assignVersion: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

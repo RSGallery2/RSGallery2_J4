@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package         RSGallery2
  * @subpackage      com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -24,17 +22,13 @@ use Joomla\CMS\Router\Route;
       method="post" name="adminForm" id="adminForm"
 >
     <div class="d-flex flex-row">
-		<?php
-		if (!empty($this->sidebar)) : ?>
+		<?php if (!empty($this->sidebar)) : ?>
             <div id="j-sidebar-container" class="">
-				<?php
-				echo $this->sidebar; ?>
+				<?php echo $this->sidebar; ?>
             </div>
-		<?php
-		endif; ?>
+		<?php endif; ?>
 
-        <!--div class="<?php
-		echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
@@ -59,8 +53,7 @@ use Joomla\CMS\Router\Route;
                     <div class="card-body">
                         <button class="btn btn-success" type="submit"
                                 onclick="Joomla.submitbutton('MaintenanceJ3x.resetUpgradeFlags');return false;">
-							<?php
-							echo Text::_('COM_RSGALLERY2_DO_UPDATE_CHANGED_FLAGS'); ?>
+							<?php echo Text::_('COM_RSGALLERY2_DO_UPDATE_CHANGED_FLAGS'); ?>
                         </button>
                     </div>
                 </div>
@@ -72,8 +65,7 @@ use Joomla\CMS\Router\Route;
         </div>
     </div>
 
-	<?php
-	echo HTMLHelper::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
 

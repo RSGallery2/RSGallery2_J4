@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
@@ -17,10 +17,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-use RuntimeException;
-use stdClass;
-
-use function defined;
 
 /**
  * The image properties Controller
@@ -88,11 +84,7 @@ class ImagesPropertiesController extends AdminController
             //127.0.0.1/Joomla3x/administrator/index.php?option=com_rsgallery2&view=imagesProperties&cid[]=1&cid[]=2&cid[]=3&cid[]=4
             $cids = $this->input->get('cid', 0, 'int');
             //$this->setRedirect('index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(array('cid' => $cids)));
-            $this->setRedirect(
-                'index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(
-                    ['cid' => $cids],
-                ),
-            );
+			$this->setRedirect('index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(array('cid' => $cids)));
 
             parent::display();
         }
@@ -148,7 +140,7 @@ class ImagesPropertiesController extends AdminController
                     Factory::getApplication()->enqueueMessage($msg_bad, 'error');
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing save_imagesProperties: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -209,7 +201,7 @@ class ImagesPropertiesController extends AdminController
                     Factory::getApplication()->enqueueMessage($msg_bad, 'error');
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing apply_imagesProperties: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -284,7 +276,7 @@ class ImagesPropertiesController extends AdminController
                 // success
                 $msg = 'Deleted ' . count($sids) . ' images';
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing delete_imagesProperties: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -356,7 +348,7 @@ class ImagesPropertiesController extends AdminController
      * @param   string  $msg        start of message to be given to the user on setRedirect
      *
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version 4.3
      */
     public function rotate_images($direction = -90.000, $msg)
@@ -421,7 +413,7 @@ class ImagesPropertiesController extends AdminController
                     $msgType = 'warning';
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rotate_images: ""' . $direction . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -556,7 +548,7 @@ class ImagesPropertiesController extends AdminController
                     $msgType = 'warning';
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing flip_images: ""' . $flipMode . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -594,7 +586,7 @@ class ImagesPropertiesController extends AdminController
 
             $idx = 0;
             foreach ($cids as $Idx => $cid) {
-                $ImagesProperty = new stdClass();
+                $ImagesProperty = new \stdClass();
 
                 $ImagesProperty->cid = $cids [$Idx];
                 // ToDo: Check for not HTML input
@@ -603,7 +595,7 @@ class ImagesPropertiesController extends AdminController
 
                 $ImagesProperties [] = $ImagesProperty;
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing ImagesPropertiesFromInput: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

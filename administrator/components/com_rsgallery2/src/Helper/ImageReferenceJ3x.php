@@ -11,18 +11,17 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
+
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
-use RuntimeException;
 
-use function defined;
+
 
 // Include the JLog class.
 //jimport('joomla.log.log');
@@ -67,7 +66,7 @@ class ImageReferenceJ3x extends ImageReference
      * @param $image
      *
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     public function assignDbItem($image)
@@ -92,7 +91,7 @@ class ImageReferenceJ3x extends ImageReference
             // Helper list for faster detection of images lost and found
             $this->allImagePaths = [];
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignDbItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -107,7 +106,7 @@ class ImageReferenceJ3x extends ImageReference
     /**
      * Check all epected pathes for image existance
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     public function check4ImageIsNotExisting()
@@ -137,7 +136,7 @@ class ImageReferenceJ3x extends ImageReference
                 $this->IsAllSizesImagesFound = false;
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing check4ImageIsNotExisting: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -183,7 +182,7 @@ class ImageReferenceJ3x extends ImageReference
 
             $this->allImagePaths = [];
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing initOrphanedItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -220,7 +219,7 @@ class ImageReferenceJ3x extends ImageReference
                 $isImageAssigned         = true;
             }
 
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignOrphanedItem: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

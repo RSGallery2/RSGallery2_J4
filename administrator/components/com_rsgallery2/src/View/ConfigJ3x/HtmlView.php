@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\ConfigJ3x;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -18,8 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
-use function defined;
+
 
 /**
  * View class for a list of rsgallery2.
@@ -110,21 +109,15 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'RawView':
-                ToolBarHelper::title(
-                    Text::_('COM_RSGALLERY2_MAINTENANCE')
-                    . ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_VIEW'),
-                    'screwdriver',
-                );
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_VIEW'), 'screwdriver');
                 ToolBarHelper::cancel('configJ3x.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 break;
 
             case 'RawEdit':
-                ToolBarHelper::title(
-                    Text::_('COM_RSGALLERY2_MAINTENANCE')
-                    . ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT'),
-                    'screwdriver',
-                );
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+					. ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT'), 'screwdriver');
                 ToolBarHelper::apply('configJ3x.apply_rawEdit');
                 ToolBarHelper::save('configJ3x.save_rawEdit');
                 ToolBarHelper::cancel('configJ3x.cancel_rawEdit', 'JTOOLBAR_CLOSE');

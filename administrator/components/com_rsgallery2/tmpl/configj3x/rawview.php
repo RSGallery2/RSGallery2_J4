@@ -1,6 +1,4 @@
 <?php
-// no direct access
-
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -9,7 +7,7 @@
  * RSGallery is Free Software
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -28,49 +26,35 @@ ksort($configVars);
 
 ?>
 
-<form action="<?php
-echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); ?>"
+<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
 	<div class="d-flex flex-row">
-        <?php
-        if (!empty($this->sidebar)) : ?>
+        <?php if (!empty($this->sidebar)) : ?>
 			<div id="j-sidebar-container" class="">
-                <?php
-                echo $this->sidebar; ?>
+                <?php echo $this->sidebar; ?>
 			</div>
-        <?php
-        endif; ?>
+        <?php endif; ?>
 
-		<!--div class="<?php
-        echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
 		<div class="flex-fill">
 			<div id="j-main-container" class="j-main-container">
 
-                <?php
-                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
 
-                <?php
-                echo HTMLHelper::_(
-                    'bootstrap.addTab',
-                    'myTab',
-                    'ConfigRawView',
-                    Text::_('COM_RSGALLERY2_CONFIG_J3X_MINUS_RAW_VIEW', true),
-                ); ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_J3X_MINUS_RAW_VIEW', true)); ?>
 
 				<div class="card">
 					<div class="card-body">
-						<legend><?php
-                            echo Text::_('COM_RSGALLERY2_CONFIG_J3X_VARIABLES_DESC'); ?></legend>
+						<legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_VARIABLES_DESC'); ?></legend>
 
                         <?php
                         /**
-                         * echo '<pre>';
-                         * // Old RSG2 config vars echo json_encode(get_object_vars($configVars), JSON_PRETTY_PRINT);
-                         * echo json_encode($configVars, JSON_PRETTY_PRINT);
-                         * echo '</pre>';
-                         * echo '<HR>';
-                         * /**/
-
+                        echo '<pre>';
+                        // Old RSG2 config vars echo json_encode(get_object_vars($configVars), JSON_PRETTY_PRINT);
+                        echo json_encode($configVars, JSON_PRETTY_PRINT);
+                        echo '</pre>';
+                        echo '<HR>';
+                        /**/
                         // echo '<pre>';
                         // Old RSG2 config vars echo json_encode(get_object_vars($configVars), JSON_PRETTY_PRINT);
 
@@ -115,24 +99,20 @@ echo Route::_('index.php?option=com_rsgallery2&view=configJ3x&layout=RawView'); 
 					</div>
 				</div>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTab'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
-                <?php
-                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 
                 <?php
                 // <!--input type="hidden" name="option" value="com_rsgallery2" />
                 // <input type="hidden" name="rsgOption" value="maintenance" /-->
                 // <input type="hidden" name="task" value="" /> ?>
-                <?php
-                echo HTMLHelper::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
 			</div>
 		</div>
 	</div>
 
 	<input type="hidden" name="task" value=""/>
-    <?php
-    echo HTMLHelper::_('form.token'); ?>
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>

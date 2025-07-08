@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Factory;
@@ -19,9 +19,6 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\Menus\Administrator\Model\MenuModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
-use RuntimeException;
-
-use function defined;
 
 /**
  * The Image Controller
@@ -65,71 +62,100 @@ class ImageController extends FormController
      *
      * @since   1.6
      */
-    /** @var MenuModel $model *
-     * $model = $this->getModel();
-     *
-     * // Make sure the item ids are integers
-     * $cids = ArrayHelper::toInteger($cids);
-     *
-     * // Remove the items.
-     * if (!$model->delete($cids))
-     * {
-     * $this->setMessage($model->getError(), 'error');
-     * }
-     * else
-     * {
-     * // Delete image files physically
-     *
-     * /** ToDo: following
-     * $IsDeleted = false;
-     *
-     * try
-     * {
-     *
-     * // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
-     *
-     * $filename          = $this->name;
-     *
-     * //$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
-     * $imgFileModel = $this->getModel ('imageFile');
-     *
-     * $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
-     * if (! $IsFilesAreDeleted)
-     * {
-     * // Remove from database
-     * }
-     *
-     * $IsDeleted = parent::delete($pk);
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
-                        * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     *
-     * return $IsDeleted;
-     * /**
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * $this->setMessage(Text::plural('COM_RSGALLERY2_N_ITEMS_DELETED', count($cids)));
-     * }
-     * }
-     * }
-     *
-     * $this->setRedirect('index.php?option=com_menus&view=menus');
-     * }
-     * /**/
+    /**
+    public function delete()
+    {
+        // Check for request forgeries
+        $this->checkToken();
+
+        $user = $this->app->getIdentity();
+        $cids = (array) $this->input->get('cid', [], 'array');
+
+        if (count($cids) < 1)
+        {
+            $this->setMessage(Text::_('COM_RSGALLERY2_NO_IMAGE_SELECTED'), 'warning');
+        }
+        else
+        {
+            // Access checks.
+            foreach ($cids as $i => $id)
+            {
+                if (!$user->authorise('core.delete', 'com_menus.menu.' . (int) $id))
+                {
+                    // Prune items that you can't change.
+                    unset($cids[$i]);
+                    $this->app->enqueueMessage(Text::_('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED'), 'error');
+                }
+            }
+
+            if (count($cids) > 0)
+            {
+                // Get the model.
+                /** @var \Joomla\Component\Menus\Administrator\Model\MenuModel $model *
+                $model = $this->getModel();
+
+                // Make sure the item ids are integers
+                $cids = ArrayHelper::toInteger($cids);
+
+                // Remove the items.
+                if (!$model->delete($cids))
+                {
+                    $this->setMessage($model->getError(), 'error');
+                }
+                else
+                {
+                    // Delete image files physically
+
+                    /** ToDo: following
+                    $IsDeleted = false;
+
+                    try
+                    {
+
+                        // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
+
+                        $filename          = $this->name;
+
+                        //$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
+                        $imgFileModel = $this->getModel ('imageFile');
+
+                        $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
+                        if (! $IsFilesAreDeleted)
+                        {
+                            // Remove from database
+                        }
+
+                        $IsDeleted = parent::delete($pk);
+                    }
+                    catch (\RuntimeException $e)
+                    {
+                        $OutTxt = '';
+                        $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
+                        $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+                        $app = Factory::getApplication();
+                        $app->enqueueMessage($OutTxt, 'error');
+                    }
+
+                    return $IsDeleted;
+                    /**
+
+
+
+
+
+
+
+
+
+                    $this->setMessage(Text::plural('COM_RSGALLERY2_N_ITEMS_DELETED', count($cids)));
+                }
+            }
+        }
+
+        $this->setRedirect('index.php?option=com_menus&view=menus');
+    }
+    /**/
 
     /**
      * rotate_image_left directs the master image and all dependent images to be turned left against the clock
@@ -184,7 +210,7 @@ class ImageController extends FormController
      * @param   string  $msg        start of message to be given to the user on setRedirect
      *
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version 4.3
      */
     public function rotate_image($direction = -90.000, $msg = '')
@@ -246,7 +272,7 @@ class ImageController extends FormController
                     $msgType = 'warning';
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rotate_image: "' . $direction . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -312,7 +338,7 @@ class ImageController extends FormController
      * @param   int     $flipMode  mode horizontal, vertical or both
      * @param   string  $msg       start of message to be given to the user on setRedirect
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version 4.3
      */
     public function flip_image($flipMode = 0, $msg = '')
@@ -370,7 +396,7 @@ class ImageController extends FormController
                     $msgType = 'warning';
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing flip_image: "' . $flipMode . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -392,14 +418,14 @@ class ImageController extends FormController
      *
      * @since __BUMP_VERSION__
      *
-     * protected function allowAdd($data = array())
-     * {
-     * $app  = Factory::getApplication();
-     * $user = $app->getIdentity();
-     *
-     * return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
-     * }
-     * /**/
+	protected function allowAdd($data = [])
+	{
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
+
+		return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
+	}
+	/**/
 
     /**
      * Method to check if you can edit a record.
@@ -411,41 +437,41 @@ class ImageController extends FormController
      *
      * @since __BUMP_VERSION__
      *
-     * protected function allowEdit($data = array(), $key = 'parent_id')
-     * {
-     * $recordId = (int) isset($data[$key]) ? $data[$key] : 0;
-     * $app  = Factory::getApplication();
-     * $user = $app->getIdentity();
-     *
-     * // Check "edit" permission on record asset (explicit or inherited)
-     * if ($user->authorise('core.edit', $this->extension . '.gallery.' . $recordId))
-     * {
-     * return true;
-     * }
-     *
-     * // Check "edit own" permission on record asset (explicit or inherited)
-     * if ($user->authorise('core.edit.own', $this->extension . '.gallery.' . $recordId))
-     * {
-     * // Need to do a lookup from the model to get the owner
-     * $record = $this->getModel()->getItem($recordId);
-     *
-     * if (empty($record))
-     * {
-     * return false;
-     * }
-     *
-     * $ownerId = $record->created_user_id;
-     *
-     * // If the owner matches 'me' then do the test.
-     * if ($ownerId == $user->id)
-     * {
-     * return true;
-     * }
-     * }
-     *
-     * return false;
-     * }
-     * /**/
+	protected function allowEdit($data = [], $key = 'parent_id')
+	{
+		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
+
+		// Check "edit" permission on record asset (explicit or inherited)
+		if ($user->authorise('core.edit', $this->extension . '.gallery.' . $recordId))
+		{
+			return true;
+		}
+
+		// Check "edit own" permission on record asset (explicit or inherited)
+		if ($user->authorise('core.edit.own', $this->extension . '.gallery.' . $recordId))
+		{
+			// Need to do a lookup from the model to get the owner
+			$record = $this->getModel()->getItem($recordId);
+
+			if (empty($record))
+			{
+				return false;
+			}
+
+			$ownerId = $record->created_user_id;
+
+			// If the owner matches 'me' then do the test.
+			if ($ownerId == $user->id)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+	/**/
 
     /**
      * Method to run batch operations.
@@ -456,20 +482,20 @@ class ImageController extends FormController
      *
      * @since __BUMP_VERSION__
      *
-     * public function batch($model = null)
-     * {
-     * $this->checkToken();
-     *
-     * // Set the model
-     * /** @var GalleryModel $model *
-     *                          $model = $this->getModel('Gallery');
-     *
-     * // Preset the redirect
-     * $this->setRedirect('index.php?option=com_rsgallery2&view=galleries&extension=' . $this->extension);
-     *
-     * return parent::batch($model);
-     * }
-     * /**/
+	public function batch($model = null)
+	{
+	$this->checkToken();
+
+		// Set the model
+		/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+		$model = $this->getModel('Gallery');
+
+		// Preset the redirect
+		$this->setRedirect('index.php?option=com_rsgallery2&view=galleries&extension=' . $this->extension);
+
+		return parent::batch($model);
+	}
+	/**/
 
     /**
      * Gets the URL arguments to append to an item redirect.
@@ -481,14 +507,14 @@ class ImageController extends FormController
      *
      * @since __BUMP_VERSION__
      *
-     * protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
-     * {
-     * $append = parent::getRedirectToItemAppend($recordId);
-     * $append .= '&extension=' . $this->extension;
-     *
-     * return $append;
-     * }
-     * /**/
+	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
+	{
+		$append = parent::getRedirectToItemAppend($recordId);
+		$append .= '&extension=' . $this->extension;
+
+		return $append;
+	}
+	/**/
 
     /**
      * Gets the URL arguments to append to a list redirect.
@@ -497,14 +523,14 @@ class ImageController extends FormController
      *
      * @since __BUMP_VERSION__
      *
-     * protected function getRedirectToListAppend()
-     * {
-     * $append = parent::getRedirectToListAppend();
-     * $append .= '&extension=' . $this->extension;
-     *
-     * return $append;
-     * }
-     * /**/
+	protected function getRedirectToListAppend()
+	{
+		$append = parent::getRedirectToListAppend();
+		$append .= '&extension=' . $this->extension;
+
+		return $append;
+	}
+	/**/
 
     /**
      * Function that allows child controller access to model data after the data has been saved.
@@ -516,21 +542,21 @@ class ImageController extends FormController
      *
      * @since __BUMP_VERSION__
      *
-     * protected function postSaveHook(BaseDatabaseModel $model, $validData = array())
-     * {
-     * $item = $model->getItem();
-     *
-     * if (isset($item->params) && is_array($item->params))
-     * {
-     * $registry = new Registry($item->params);
-     * $item->params = (string) $registry;
-     * }
-     *
-     * if (isset($item->metadata) && is_array($item->metadata))
-     * {
-     * $registry = new Registry($item->metadata);
-     * $item->metadata = (string) $registry;
-     * }
-     * }
-     * /**/
+	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+	{
+		$item = $model->getItem();
+
+		if (isset($item->params) && is_array($item->params))
+		{
+			$registry = new Registry($item->params);
+			$item->params = (string) $registry;
+		}
+
+		if (isset($item->metadata) && is_array($item->metadata))
+		{
+			$registry = new Registry($item->metadata);
+			$item->metadata = (string) $registry;
+		}
+	}
+	/**/
 }

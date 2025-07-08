@@ -9,15 +9,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use JLoader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
 use Joomla\Filesystem\Path;
-
-use function defined;
 
 /**
  * Galleries helper.
@@ -67,13 +65,7 @@ class GalleriesHelper
                     // Loading language file from the administrator/language directory then
                     // loading language file from the administrator/components/*extension*/language directory
                     $lang->load($component, JPATH_BASE, null, false, true)
-                    || $lang->load(
-                        $component,
-                        Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component),
-                        null,
-                        false,
-                        true,
-                    );
+					|| $lang->load($component, Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component), null, false, true);
 
                     call_user_func([$cName, 'addSubmenu'], 'galleries' . (isset($section) ? '.' . $section : ''));
                 }
@@ -91,15 +83,7 @@ class GalleriesHelper
      */
     public static function getAssociations($pk, $extension = 'com_rsgallery2')
     {
-        $langAssociations = Associations::getAssociations(
-            $extension,
-            '#__galleries',
-            'com_rsgallery2.item',
-            $pk,
-            'id',
-            'alias',
-            '',
-        );
+		$langAssociations = Associations::getAssociations($extension, '#__galleries', 'com_rsgallery2.item', $pk, 'id', 'alias', '');
         $associations     = [];
         $user             = Factory::getApplication()->getIdentity();
         $groups           = implode(',', $user->getAuthorisedViewLevels());
@@ -110,8 +94,7 @@ class GalleriesHelper
             $assocId = $arrId[0];
             $db      = \Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db
-                ->getQuery(true)
+			$query = $db->getQuery(true)
                 ->select($db->quoteName('published'))
                 ->from($db->quoteName('#__galleries'))
                 ->where('access IN (' . $groups . ')')

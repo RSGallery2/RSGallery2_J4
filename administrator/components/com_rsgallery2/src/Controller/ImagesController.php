@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
@@ -18,9 +18,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use RuntimeException;
 
-use function defined;
+
 
 
 /**
@@ -97,7 +96,7 @@ class ImagesController extends AdminController
                 } else {
                     $msg .= Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_ERROR') . ': ' . $model->getError();
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing reinitImagesTable: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -117,7 +116,7 @@ class ImagesController extends AdminController
     /**
      * Moves one or more items (images) to another gallery, ordering each item as the last one.
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 4.3.0
      */
     public function moveImagesToGallery()
@@ -147,7 +146,7 @@ class ImagesController extends AdminController
                     $msg     .= 'Move of images ... failed';
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing moveTo: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -164,7 +163,7 @@ class ImagesController extends AdminController
     /**
      * Saves changed manual ordering of galleries
      *
-     * @throws Exception
+     * @throws \Exception
      * @since 4.3.0
      */
     public function copyImagesToGallery()
@@ -194,7 +193,7 @@ class ImagesController extends AdminController
                     $msg     .= 'Copy of images ... failed';
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing copyTo: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

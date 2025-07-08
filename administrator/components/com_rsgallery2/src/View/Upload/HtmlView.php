@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Upload;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -23,8 +23,6 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\UploadModel;
-
-use function defined;
 
 /**
  * View class for a list of rsgallery2.
@@ -166,12 +164,12 @@ class HtmlView extends BaseHtmlView
         $this->form = $form;
 
         /**
-         * // Check for errors.
-         * if (count($errors = $this->get('Errors')))
-         * {
-         * throw new RuntimeException(implode('<br />', $errors), 500);
-         * }
-         * /**/
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
+		{
+			throw new \RuntimeException(implode('<br />', $errors), 500);
+		}
+		/**/
 
         // Assign the Data
         // $this->form = $form;

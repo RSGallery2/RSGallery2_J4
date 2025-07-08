@@ -10,13 +10,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
-
-use function defined;
 
 /**
  * RSGallery2 Component Images Model
@@ -37,38 +35,38 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
     public function __construct($config = [], MVCFactoryInterface $factory = null)
     {
         /**
-         * //  which fields are needed for filter function
-         * if (empty($config['filter_fields']))
-         * {
-         * $config['filter_fields'] = array(
-         * 'id', 'a.id',
-         * 'title', 'a.title',
-         * 'name', 'a.name',
-         * 'gallery_id', 'a.gallery_id',
-         *
-         * 'published', 'a.published',
-         *
-         * 'created', 'a.created',
-         * 'created_by', 'a.created_by',
-         *
-         * 'modified', 'a.modified',
-         * 'modified_by', 'a.modified_by',
-         *
-         * 'ordering', 'a.ordering',
-         *
-         * 'hits', 'a.hits',
-         * 'rating', 'a.rating',
-         * 'votes', 'a.votes',
-         * 'comments', 'a.comments',
-         * 'tag',
-         * 'gallery_name'
-         * );
-         * }
-         *
-         * if (Associations::isEnabled())
-         * {
-         * $config['filter_fields'][] = 'association';
-         * }
+		//  which fields are needed for filter function
+		if (empty($config['filter_fields']))
+		{
+			$config['filter_fields'] = array(
+				'id', 'a.id',
+				'title', 'a.title',
+				'name', 'a.name',
+				'gallery_id', 'a.gallery_id',
+
+                'published', 'a.published',
+
+                'created', 'a.created',
+                'created_by', 'a.created_by',
+
+                'modified', 'a.modified',
+                'modified_by', 'a.modified_by',
+
+                'ordering', 'a.ordering',
+
+                'hits', 'a.hits',
+                'rating', 'a.rating',
+                'votes', 'a.votes',
+                'comments', 'a.comments',
+				'tag',
+				'gallery_name'
+			);
+		}
+
+		if (Associations::isEnabled())
+		{
+			$config['filter_fields'][] = 'association';
+		}
          /**/
 
 		parent::__construct($config, $factory);
@@ -89,38 +87,38 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
     protected function populateState($ordering = 'a.id', $direction = 'desc')
     {
         /**
-         * // $app = Factory::getApplication();
-         *
-         * // Adjust the context to support modal layouts.
-         * if ($layout = $app->input->get('layout'))
-         * {
-         * $this->context .= '.' . $layout;
-         * }
-         *
-         *
-         * //$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
-         * //// Adjust the context to support forced languages.
-         * //if ($forcedLanguage)
-         * //{
-         * //    $this->context .= '.' . $forcedLanguage;
-         * //}
-         *
-         * $extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
-         * $this->setState('filter.extension', $extension);
-         * $parts = explode('.', $extension);
-         *
-         * // Extract the component name
-         * $this->setState('filter.component', $parts[0]);
-         *
-         * // Extract the optional section name
-         * $this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
-         *
-         * $search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
-         * $this->setState('filter.search', $search);
-         *
-         * $gallery_id = $this->getUserStateFromRequest($this->context . '.filter.gallery_id', 'filter_gallery_id');
-         * $this->setState('filter.gallery_id', $gallery_id);
-         * /**/
+		// $app = Factory::getApplication();
+
+		// Adjust the context to support modal layouts.
+		if ($layout = $app->input->get('layout'))
+		{
+			$this->context .= '.' . $layout;
+		}
+
+
+		//$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
+		//// Adjust the context to support forced languages.
+		//if ($forcedLanguage)
+		//{
+		//	$this->context .= '.' . $forcedLanguage;
+		//}
+
+		$extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
+		$this->setState('filter.extension', $extension);
+		$parts = explode('.', $extension);
+
+		// Extract the component name
+		$this->setState('filter.component', $parts[0]);
+
+		// Extract the optional section name
+		$this->setState('filter.section', (count($parts) > 1) ? $parts[1] : null);
+
+		$search   = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
+		$this->setState('filter.search', $search);
+
+		$gallery_id = $this->getUserStateFromRequest($this->context . '.filter.gallery_id', 'filter_gallery_id');
+		$this->setState('filter.gallery_id', $gallery_id);
+		/**/
 
         // List state information.
         parent::populateState($ordering, $direction);
@@ -157,7 +155,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
     /**
      * Method to get a database query to list images.
      *
-     * @return  Queryinterface object.
+	 * @return  \DatabaseQuery object.
      *
      * @since __BUMP_VERSION__
      */
@@ -207,8 +205,8 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
                 . 'a.approved, '
                 . 'a.asset_id, '
                 . 'a.access, '
-                . 'a.use_j3x_location ',
-            ),
+				. 'a.use_j3x_location '
+			)
         );
         $query->from('#__rsg2_images as a');
 
@@ -240,25 +238,25 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
             ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
 
         /**
-         * // Join over the associations.
-         * $assoc = $this->getAssoc();
-         *
-         * if ($assoc)
-         * {
-         * $query->select('COUNT(asso2.id)>1 as association')
-         * ->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
-         * ->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
-         * ->group('a.id, l.title, uc.name, ag.title, ua.name');
-         * }
-         * /**/
+		// Join over the associations.
+		$assoc = $this->getAssoc();
+
+		if ($assoc)
+		{
+			$query->select('COUNT(asso2.id)>1 as association')
+				->join('LEFT', '#__associations AS asso ON asso.id = a.id AND asso.context=' . $db->quote('com_rsgallery2.item'))
+				->join('LEFT', '#__associations AS asso2 ON asso2.key = asso.key')
+				->group('a.id, l.title, uc.name, ag.title, ua.name');
+		}
+		/**/
 
         /**
-         * // Filter on the level.
-         * if ($level = $this->getState('filter.level'))
-         * {
-         * $query->where('a.level <= ' . (int) $level);
-         * }
-         * /**/
+		// Filter on the level.
+		if ($level = $this->getState('filter.level'))
+		{
+			$query->where('a.level <= ' . (int) $level);
+		}
+        /**/
 
         // Filter by access level.
         if ($access = $this->getState('filter.access')) {
@@ -322,42 +320,42 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
         }
 
         /**
-         * // Filter on the language.
-         * if ($language = $this->getState('filter.language'))
-         * {
-         * $query->where('a.language = ' . $db->quote($language));
-         * }
-         * /**/
+		// Filter on the language.
+		if ($language = $this->getState('filter.language'))
+		{
+			$query->where('a.language = ' . $db->quote($language));
+		}
+		/**/
 
         // Filter by a single tag.
         /**
-         * $tagId = $this->getState('filter.tag');
-         *
-         * if (is_numeric($tagId))
-         * {
-         * $query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
-         * ->join(
-         * 'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
-         * . ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
-         * . ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
-         * );
-         * }
-         * /**/
+		$tagId = $this->getState('filter.tag');
+
+		if (is_numeric($tagId))
+		{
+			$query->where($db->quoteName('tagmap.tag_id') . ' = ' . (int) $tagId)
+				->join(
+					'LEFT', $db->quoteName('#__contentitem_tag_map', 'tagmap')
+					. ' ON ' . $db->quoteName('tagmap.content_item_id') . ' = ' . $db->quoteName('a.id')
+					. ' AND ' . $db->quoteName('tagmap.type_alias') . ' = ' . $db->quote($extension . '.category')
+				);
+		}
+		/**/
 
         // Add the list ordering clause
 
         /**
-         * // changes need changes above too -> populateState
-         * $orderCol  = $this->state->get('list.ordering', 'a.id');
-         * $orderDirn = $this->state->get('list.direction', 'desc');
-         *
-         * if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
-         * {
-         * $orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
-         * }
-         *
-         * $query->order($db->escape($orderCol . ' ' . $orderDirn));
-         * /**/
+		// changes need changes above too -> populateState
+		$orderCol  = $this->state->get('list.ordering', 'a.id');
+		$orderDirn = $this->state->get('list.direction', 'desc');
+
+		if ($orderCol == 'a.ordering' || $orderCol == 'ordering')
+		{
+			$orderCol = 'a.gallery_id ' . $orderDirn . ', a.ordering';
+		}
+
+		$query->order($db->escape($orderCol . ' ' . $orderDirn));
+/**/
 
         $listOrdering = $this->getState('list.ordering', 'a.id');
         $listDirn     = $db->escape($this->getState('list.direction', 'DESC'));

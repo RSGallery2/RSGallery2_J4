@@ -9,13 +9,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Table;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
-
-use function defined;
 
 /**
  * J3x config table

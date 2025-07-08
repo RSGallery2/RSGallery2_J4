@@ -9,16 +9,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use RuntimeException;
 
-use function defined;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 /**
  * Clean up and prepare for uninstall of RSG2
@@ -41,7 +39,7 @@ class MaintenanceCleanUpController extends BaseController
      *
      * @since __BUMP_VERSION__
      *
-     * public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
+     * public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
      * {
      * parent::__construct($config, $factory, $app, $input);
      *
@@ -95,7 +93,7 @@ class MaintenanceCleanUpController extends BaseController
                     //$msgType = 'warning';
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing purgeImagesAndData: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -112,7 +110,7 @@ class MaintenanceCleanUpController extends BaseController
     /**
      * Change file uninstall.mysql.utf8.sql so it does remove the RSG2 Tables
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -140,7 +138,7 @@ class MaintenanceCleanUpController extends BaseController
                     $msg     .= "Error at activation 'drop of tables on uninstall'";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing prepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -183,7 +181,7 @@ class MaintenanceCleanUpController extends BaseController
                     $msg     .= "Error at prevent 'drop of tables on uninstall'";
                     $msgType = 'error';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing undoPrepareRemoveTables: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -204,7 +202,7 @@ class MaintenanceCleanUpController extends BaseController
      *
      * @return bool
      *
-     * @throws Exception
+     * @throws \Exception
      * @since version
      */
     private function activateDrop4RSG2Tables($DoDrop = true)
@@ -254,7 +252,7 @@ class MaintenanceCleanUpController extends BaseController
                     $isOk = true;
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing activateDrop4RSG2Tables: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -269,7 +267,7 @@ class MaintenanceCleanUpController extends BaseController
     /**
      * Extract configuration variables from RSG2 config file to reset to original values
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @since __BUMP_VERSION__
      */
@@ -300,7 +298,7 @@ class MaintenanceCleanUpController extends BaseController
                     $msg     .= "Error at resetting configuration to default'";
                     $msgType = 'warning';
                 }
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing ResetConfigToDefault: "' . '<br>';
                 $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';

@@ -9,17 +9,15 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Config;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-use Exception;
 use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\AbstractView;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsgallery2Version;
-
-use function defined;
+
 
 /**
  * Sysinfo View class for the Admin component
@@ -35,7 +33,7 @@ class JsonView extends AbstractView
      *
      * @return  void
      *
-     * @throws  Exception
+     * @throws  \Exception
      * @since __BUMP_VERSION__
      *
      */

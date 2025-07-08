@@ -9,7 +9,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Develop;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 //use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
@@ -28,8 +28,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
-
-use function defined;
+
 
 /**
  * View class for a list of rsgallery2.
@@ -59,15 +58,15 @@ class HtmlView extends BaseHtmlView
     protected $mergedParams = [];
 
     /**
-     * protected $isDangerActive;
-     * protected $isRawDbActive;
-     * protected $isUpgradeActive;
-     * protected $isTestActive;
-     * protected $isJ3xRsg2DataExisting;
-     * protected $developActive;
-     *
-     * protected $intended;
-     * /**/
+	protected $isDangerActive;
+	protected $isRawDbActive;
+	protected $isUpgradeActive;
+	protected $isTestActive;
+	protected $isJ3xRsg2DataExisting;
+	protected $developActive;
+
+	protected $intended;
+	/**/
     // ToDo: Use other rights instead of core.admin -> IsRoot ?
     // core.admin is the permission used to control access to
     // the global config
@@ -118,13 +117,13 @@ class HtmlView extends BaseHtmlView
         // collect data dependent on layout
         switch ($Layout) {
             /**
-             * case 'DebugGalleryOrder':
-             *
-             * $this->GalleriesOrderModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('GalleriesOrder', 'rsgallery2Model');
-             * $this->OrderedGalleries = $this->GalleriesOrderModel->OrderedGalleries();
-             * $this->LeftJoinGalleries = $this->GalleriesOrderModel->LeftJoinGalleries();
-             * break;
-             * /**/
+			case 'DebugGalleryOrder':
+
+				$this->GalleriesOrderModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('GalleriesOrder', 'rsgallery2Model');
+				$this->OrderedGalleries = $this->GalleriesOrderModel->OrderedGalleries();
+				$this->LeftJoinGalleries = $this->GalleriesOrderModel->LeftJoinGalleries();
+				break;
+            /**/
 
             case 'ManifestInfo':
 
@@ -200,16 +199,16 @@ class HtmlView extends BaseHtmlView
                 /**/
 
                 /**
-                 * // upload_zip, upload_folder
-                 * $formParam = array(
-                 * 'all_img_in_step1_01' => $isUseOneGalleryNameForAllImages,
-                 * 'all_img_in_step1_02' => $isUseOneGalleryNameForAllImages,
-                 * 'SelectGalleries01_01' => $IdGallerySelect,
-                 * 'SelectGalleries02_02' => $IdGallerySelect
-                 * );
-                 *
-                 * $form->bind($formParam);
-                 * /**/
+                // upload_zip, upload_folder
+                $formParam = array(
+                    'all_img_in_step1_01' => $isUseOneGalleryNameForAllImages,
+                    'all_img_in_step1_02' => $isUseOneGalleryNameForAllImages,
+                    'SelectGalleries01_01' => $IdGallerySelect,
+                    'SelectGalleries02_02' => $IdGallerySelect
+                );
+
+                $form->bind($formParam);
+                /**/
 
                 $this->form = $form;
 
@@ -269,11 +268,8 @@ class HtmlView extends BaseHtmlView
                         . '</span><br><br>';
                 }
 
-                ToolBarHelper::title(
-                    Text::_('COM_RSGALLERY2_DEVELOP')
-                    . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'),
-                    'screwdriver',
-                );
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+					. ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
                 ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
                 break;
 
@@ -288,11 +284,8 @@ class HtmlView extends BaseHtmlView
                         . '</span><br><br>';
                 }
 
-                ToolBarHelper::title(
-                    Text::_('COM_RSGALLERY2_DEVELOP')
-                    . ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'),
-                    'screwdriver',
-                );
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+					. ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
                 ToolBarHelper::cancel('config.cancel_rawView');
                 break;
 
@@ -307,11 +300,8 @@ class HtmlView extends BaseHtmlView
                         . '</span><br><br>';
                 }
 
-                ToolBarHelper::title(
-                    Text::_('COM_RSGALLERY2_DEVELOP')
-                    . ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'),
-                    'screwdriver',
-                );
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+					. ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
                 // ToDo: write into manifest value; read first -> Rsg2ExtensionModel
                 // ToolBarHelper::custom ('develop.assignVersion','arrow-up-4','','Assign version to RSG2', false);
                 ToolBarHelper::custom('develop.useOldVersion', 'pencil-2', '', 'Use old version', false);

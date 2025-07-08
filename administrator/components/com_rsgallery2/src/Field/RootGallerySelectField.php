@@ -12,16 +12,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
-
-use function defined;
 
 /**
  * Collects available gallery ids and names and creates
@@ -58,11 +55,11 @@ class RootGallerySelectField extends ListField
      *
      * @since __BUMP_VERSION__
      *
-     * protected function getInput()
-     * {
-     * return $this->getOptions() ? parent::getInput() : '';
-     * }
-     * /**/
+	protected function getInput()
+	{
+		return $this->getOptions() ? parent::getInput() : '';
+	}
+	/**/
 
     /**
      * Method to get a list of options for a list input.
@@ -79,8 +76,7 @@ class RootGallerySelectField extends ListField
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db
-                ->getQuery(true)
+			$query = $db->getQuery(true)
                 ->select('id AS value, name AS text, level')
                 ->from($db->quoteName('#__rsg2_galleries'))
                 ->where($db->quoteName('id') . ' != 1')
@@ -90,7 +86,7 @@ class RootGallerySelectField extends ListField
 
             // Get the options.
             $galleries = $db->setQuery($query)->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -105,10 +101,7 @@ class RootGallerySelectField extends ListField
         }
 
         // Put "Select an option" on the top of the list.
-        array_unshift(
-            $options,
-            HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_J3X_MENU_GALLERIES_OVERVIEW')),
-        );
+		array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_J3X_MENU_GALLERIES_OVERVIEW')));
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);

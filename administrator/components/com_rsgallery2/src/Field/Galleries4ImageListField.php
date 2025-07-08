@@ -12,14 +12,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Database\DatabaseInterface;
-use RuntimeException;
-
-use function defined;
 
 /**
  * Collects available gallery ids and names and creates
@@ -87,7 +84,7 @@ class Galleries4ImageListField extends ListField
 
             // Get the options.
             $galleries = $db->setQuery($query)->loadObjectList();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
@@ -117,12 +114,12 @@ class Galleries4ImageListField extends ListField
 //				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
 //			}
             /**
-             * // Displays language code if not set to All
-             * if ($options[$i]->language !== '*')
-             * {
-             * $options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
-             * }
-             * /**/
+			// Displays language code if not set to All
+			if ($options[$i]->language !== '*')
+			{
+				$options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
+			}
+			/**/
         }
 
 //		foreach ($options as $i => $option)

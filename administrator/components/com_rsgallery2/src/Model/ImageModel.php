@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Access\Rules;
@@ -27,11 +27,6 @@ use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
-use RuntimeException;
-
-use function defined;
-
-//use Joomla\CMS\Plugin\PluginHelper;
 
 /**
  * RSGallery2 Component Image Model
@@ -107,10 +102,7 @@ class ImageModel extends AdminModel
             return false;
         }
 
-        return Factory::getApplication()->getIdentity()->authorise(
-            'core.delete',
-            $record->extension . '.category.' . (int)$record->id,
-        );
+		return Factory::getApplication()->getIdentity()->authorise('core.delete', $record->extension . '.category.' . (int) $record->id);
     }
 
     /**
@@ -212,14 +204,7 @@ class ImageModel extends AdminModel
             $item->associations = [];
 
             if ($item->id != null) {
-                $associations = Associations::getAssociations(
-                    'com_foos',
-                    '#__foos_details',
-                    'com_foos.item',
-                    $item->id,
-                    'id',
-                    null,
-                );
+				$associations = Associations::getAssociations('com_foos', '#__foos_details', 'com_foos.item', $item->id, 'id', null);
 
                 foreach ($associations as $tag => $association) {
                     $item->associations[$tag] = $association->id;
@@ -243,20 +228,20 @@ class ImageModel extends AdminModel
     public function getForm($data = [], $loadData = true)
     {
         /**
-         * $extension = $this->getState('category.extension');
-         * $input = Factory::getApplication()->input;
-         *
-         * // A workaround to get the extension into the model for save requests.
-         * if (empty($extension) && isset($data['extension']))
-         * {
-         * $extension = $data['extension'];
-         * $parts = explode('.', $extension);
-         *
-         * $this->setState('category.extension', $extension);
-         * $this->setState('category.component', $parts[0]);
-         * $this->setState('category.section', @$parts[1]);
-         * }
-         * /**/
+		$extension = $this->getState('category.extension');
+		$jinput = Factory::getApplication()->input;
+
+		// A workaround to get the extension into the model for save requests.
+		if (empty($extension) && isset($data['extension']))
+		{
+			$extension = $data['extension'];
+			$parts = explode('.', $extension);
+
+			$this->setState('category.extension', $extension);
+			$this->setState('category.component', $parts[0]);
+			$this->setState('category.section', @$parts[1]);
+		}
+		/**/
         // Get the form.
 //		$form = $this->loadForm('com_rsgallery2.category' . $extension, 'category', array('control' => 'jform', 'load_data' => $loadData));
         $form = $this->loadForm('com_rsgallery2.image', 'image', ['control' => 'jform', 'load_data' => $loadData]);
@@ -300,10 +285,7 @@ class ImageModel extends AdminModel
 //				$data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
                 $data->set(
                     'access',
-                    $app->input->getInt(
-                        'access',
-                        (!empty($filters['access']) ? $filters['access'] : $app->get('access')),
-                    ),
+					$app->input->getInt('access', (!empty($filters['access']) ? $filters['access'] : $app->get('access')))
                 );
             }
         }
@@ -333,8 +315,7 @@ class ImageModel extends AdminModel
             // Set ordering to the last item if not set
             if (empty($table->ordering)) {
                 $db    = $this->getDatabase();
-                $query = $db
-                    ->getQuery(true)
+	            $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
                     ->from($db->quoteName('#__rsg2_images'));
                 $db->setQuery($query);
@@ -389,14 +370,14 @@ class ImageModel extends AdminModel
      * @since __BUMP_VERSION__
      */
     /**
-     * protected function getReorderConditions($table)
-     * {
-     * $condition   = array();
-     * $condition[] = 'gallery_id = ' . (int) $table->gallery_id;
-     *
-     * return $condition;
-     * }
-     * /**/
+	protected function getReorderConditions($table)
+	{
+		$condition   = [];
+		$condition[] = 'gallery_id = ' . (int) $table->gallery_id;
+
+		return $condition;
+	}
+	/**/
 
     /**
      * Method to save the form data.
@@ -422,18 +403,19 @@ class ImageModel extends AdminModel
 //        Column 'checked_out_time' cannot be null
 
         /** -> table *
-         * // no default value
-         * if (empty($data['description']))
-         * {
-         * $data['description'] = '';
-         * }
-         *
-         * // no default value
-         * if (empty($data['params']))
-         * {
-         * $data['params'] = '';
-         * }
-         * /**/
+		// no default value
+		if (empty($data['description']))
+		{
+			$data['description'] = '';
+		}
+
+		// no default value
+		if (empty($data['params']))
+		{
+			$data['params'] = '';
+		}
+		/**/
+
 
         // Load the row if saving an existing category.
         if ($pk > 0) {
@@ -442,46 +424,48 @@ class ImageModel extends AdminModel
         }
 
         /**
-         * // Set the new parent id if parent id not matched OR while New/Save as Copy .
-         * if ($table->parent_id != $data['parent_id'] || $data['id'] == 0)
-         * {
-         * $table->setLocation($data['parent_id'], 'last-child');
-         * }
-         * /**/
+		// Set the new parent id if parent id not matched OR while New/Save as Copy .
+		if ($table->parent_id != $data['parent_id'] || $data['id'] == 0)
+		{
+			$table->setLocation($data['parent_id'], 'last-child');
+		}
+		/**/
+
 
         /* ToDo: use following */
         /**
-         * // Automatic handling of alias for empty fields
-         * if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
-         * {
-         * if ($data['alias'] == null)
-         * {
-         * if (Factory::getApplication()->get('unicodeslugs') == 1)
-         * {
-         * $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['title']);
-         * }
-         * else
-         * {
-         * $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
-         * }
-         *
-         * $table = Table::getInstance('Content', 'JTable');
-         *
-         * if ($table->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
-         * {
-         * $msg = Text::_('COM_CONTENT_SAVE_WARNING');
-         * }
-         *
-         * list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
-         * $data['alias'] = $alias;
-         *
-         * if (isset($msg))
-         * {
-         * Factory::getApplication()->enqueueMessage($msg, 'warning');
-         * }
-         * }
-         * }
-         * /**/
+        // Automatic handling of alias for empty fields
+        if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
+        {
+            if ($data['alias'] == null)
+            {
+                if (Factory::getApplication()->get('unicodeslugs') == 1)
+                {
+                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['title']);
+                }
+                else
+                {
+                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
+                }
+
+                $table = Table::getInstance('Content', 'JTable');
+
+                if ($table->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
+                {
+                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
+                }
+
+                list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
+                $data['alias'] = $alias;
+
+                if (isset($msg))
+                {
+                    Factory::getApplication()->enqueueMessage($msg, 'warning');
+                }
+            }
+        }
+        /**/
+
 
         // Bind the data.
         if (!$table->bind($data)) {
@@ -521,123 +505,123 @@ class ImageModel extends AdminModel
         }
 
         /**
-         * $assoc = $this->getAssoc();
-         *
-         * if ($assoc)
-         * {
-         * // Adding self to the association
-         * $associations = $data['associations'] ?? array();
-         *
-         * // Unset any invalid associations
-         * $associations = ArrayHelper::toInteger($associations);
-         *
-         * foreach ($associations as $tag => $id)
-         * {
-         * if (!$id)
-         * {
-         * unset($associations[$tag]);
-         * }
-         * }
-         *
-         * // Detecting all item menus
-         * $allLanguage = $table->language == '*';
-         *
-         * if ($allLanguage && !empty($associations))
-         * {
-         * Factory::getApplication()->enqueueMessage(Text::_('COM_RSGALLERY2_ERROR_ALL_LANGUAGE_ASSOCIATED'), 'notice');
-         * }
-         *
-         * // Get associationskey for edited item
-         * $db    = $this->getContainer()->get(DatabaseInterface::class);
-         * $query = $db->getQuery(true)
-         * ->select($db->quoteName('key'))
-         * ->from($db->quoteName('#__associations'))
-         * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
-         * ->where($db->quoteName('id') . ' = ' . (int) $table->id);
-         * $db->setQuery($query);
-         * $oldKey = $db->loadResult();
-         *
-         * // Deleting old associations for the associated items
-         * $query = $db->getQuery(true)
-         * ->delete($db->quoteName('#__associations'))
-         * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
-         *
-         * if ($associations)
-         * {
-         * $query->where('(' . $db->quoteName('id') . ' IN (' . implode(',', $associations) . ') OR '
-         * . $db->quoteName('key') . ' = ' . $db->quote($oldKey) . ')');
-         * }
-         * else
-         * {
-         * $query->where($db->quoteName('key') . ' = ' . $db->quote($oldKey));
-         * }
-         *
-         * $db->setQuery($query);
-         *
-         * try
-         * {
-         * $db->execute();
-         * }
-         * catch (\RuntimeException $e)
-         * {
-         * $this->setError($e->getMessage());
-         *
-         * return false;
-         * }
-         *
-         * // Adding self to the association
-         * if (!$allLanguage)
-         * {
-         * $associations[$table->language] = (int) $table->id;
-         * }
-         *
-         * if (count($associations) > 1)
-         * {
-         * // Adding new association for these items
-         * $key = md5(json_encode($associations));
-         * $query->clear()
-         * ->insert('#__associations');
-         *
-         * foreach ($associations as $id)
-         * {
-         * $query->values(((int) $id) . ',' . $db->quote($this->associationsContext) . ',' . $db->quote($key));
-         * }
-         *
-         * $db->setQuery($query);
-         *
-         * try
-         * {
-         * $db->execute();
-         * }
-         * catch (\RuntimeException $e)
-         * {
-         * $this->setError($e->getMessage());
-         *
-         * return false;
-         * }
-         * }
-         * }
-         * /**/
+		$assoc = $this->getAssoc();
+
+		if ($assoc)
+		{
+			// Adding self to the association
+			$associations = $data['associations'] ?? [];
+
+			// Unset any invalid associations
+			$associations = ArrayHelper::toInteger($associations);
+
+			foreach ($associations as $tag => $id)
+			{
+				if (!$id)
+				{
+					unset($associations[$tag]);
+				}
+			}
+
+			// Detecting all item menus
+			$allLanguage = $table->language == '*';
+
+			if ($allLanguage && !empty($associations))
+			{
+				Factory::getApplication()->enqueueMessage(Text::_('COM_RSGALLERY2_ERROR_ALL_LANGUAGE_ASSOCIATED'), 'notice');
+			}
+
+			// Get associationskey for edited item
+			$db    = $this->getContainer()->get(DatabaseInterface::class);
+			$query = $db->getQuery(true)
+				->select($db->quoteName('key'))
+				->from($db->quoteName('#__associations'))
+				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
+				->where($db->quoteName('id') . ' = ' . (int) $table->id);
+			$db->setQuery($query);
+			$oldKey = $db->loadResult();
+
+			// Deleting old associations for the associated items
+			$query = $db->getQuery(true)
+				->delete($db->quoteName('#__associations'))
+				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
+
+			if ($associations)
+			{
+				$query->where('(' . $db->quoteName('id') . ' IN (' . implode(',', $associations) . ') OR '
+					. $db->quoteName('key') . ' = ' . $db->quote($oldKey) . ')');
+			}
+			else
+			{
+				$query->where($db->quoteName('key') . ' = ' . $db->quote($oldKey));
+			}
+
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (\RuntimeException $e)
+			{
+				$this->setError($e->getMessage());
+
+				return false;
+			}
+
+			// Adding self to the association
+			if (!$allLanguage)
+			{
+				$associations[$table->language] = (int) $table->id;
+			}
+
+			if (count($associations) > 1)
+			{
+				// Adding new association for these items
+				$key = md5(json_encode($associations));
+				$query->clear()
+					->insert('#__associations');
+
+				foreach ($associations as $id)
+				{
+					$query->values(((int) $id) . ',' . $db->quote($this->associationsContext) . ',' . $db->quote($key));
+				}
+
+				$db->setQuery($query);
+
+				try
+				{
+					$db->execute();
+				}
+				catch (\RuntimeException $e)
+				{
+					$this->setError($e->getMessage());
+
+					return false;
+				}
+			}
+		}
+		/**/
 
         /**
-         * // Rebuild the path for the category:
-         * if (!$table->rebuildPath($table->id))
-         * {
-         * $this->setError($table->getError());
-         *
-         * return false;
-         * }
-         * /**/
+		// Rebuild the path for the category:
+		if (!$table->rebuildPath($table->id))
+		{
+			$this->setError($table->getError());
+
+			return false;
+		}
+        /**/
 
         /**
-         * // Rebuild the paths of the category's children:
-         * if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path))
-         * {
-         * $this->setError($table->getError());
-         *
-         * return false;
-         * }
-         * /**/
+		// Rebuild the paths of the category's children:
+		if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path))
+		{
+			$this->setError($table->getError());
+
+			return false;
+		}
+        /**/
 
         $this->setState($this->getName() . '.id', $table->id);
 
@@ -744,82 +728,82 @@ class ImageModel extends AdminModel
      *
      * @return bool true if successful
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     /**
-     * public function createImageDbBaseItem($imageName)
-     * {
-     * $IsImageDbCreated = false;
-     *
-     * //--- Create new item -------------------
-     *
-     * $item = $this->getTable();
-     * $item->load(0);
-     *
-     * //----------------------------------------------------
-     * // image properties
-     * //----------------------------------------------------
-     *
-     * //--- image name -------------------------------------
-     *
-     * $item->name = $imageName; // ToDo: check for unique or remove unique. It may already be there
-     *
-     * //--- unique image title and alias -------------------
-     * $path_parts = pathinfo($imageName);
-     * $fileName   = $path_parts['filename'];
-     *
-     * $item->title = $this->generateNewImageName($fileName, 0);
-     * $item->alias = $item->title;
-     * $this->alias = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($this->alias);
-     *
-     * // Create unique alias and title
-     * list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
-     * $item->title = $title;
-     * $item->title = $title;
-     * $item->alias = $alias;
-     *
-     * //--- date -------------------------------------------
-     *
-     * $date       = Factory::getDate();
-     * $item->date = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
-     *
-     * //--- user id -------------------------------------------
-     *
-     * $user         = Factory::getApplication()->getIdentity();
-     * $userId       = $user->id;
-     * $item->userid = $userId;
-     *
-     * //---  -------------------------------------------
-     *
-     * $item->approved = 0; // dont know why, all images end up with zero ....
-     *
-     * //----------------------------------------------------
-     * // save new object
-     * //----------------------------------------------------
-     *
-     * // Lets store it!
-     * $item->check();
-     *
-     * if (!$item->store())
-     * {
-     * // ToDo: collect erorrs and display over enque .... with errr type
-     * $UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-     * Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
-     *
-     * // $IsImageDbCreated = false;
-     *
-     * $this->setError($this->_db->getErrorMsg());
-     * }
-     * else
-     * {
-     *
-     * $IsImageDbCreated = true;
-     * }
-     *
-     * return $IsImageDbCreated;
-     * }
-     * /**/
+	public function createImageDbBaseItem($imageName)
+	{
+		$IsImageDbCreated = false;
+
+		//--- Create new item -------------------
+
+		$item = $this->getTable();
+		$item->load(0);
+
+		//----------------------------------------------------
+		// image properties
+		//----------------------------------------------------
+
+		//--- image name -------------------------------------
+
+		$item->name = $imageName; // ToDo: check for unique or remove unique. It may already be there
+
+		//--- unique image title and alias -------------------
+		$path_parts = pathinfo($imageName);
+		$fileName   = $path_parts['filename'];
+
+		$item->title = $this->generateNewImageName($fileName, 0);
+		$item->alias = $item->title;
+		$this->alias = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($this->alias);
+
+		// Create unique alias and title
+		list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
+		$item->title = $title;
+		$item->title = $title;
+		$item->alias = $alias;
+
+		//--- date -------------------------------------------
+
+		$date       = Factory::getDate();
+		$item->date = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
+
+		//--- user id -------------------------------------------
+
+		$user         = Factory::getApplication()->getIdentity();
+		$userId       = $user->id;
+		$item->userid = $userId;
+
+		//---  -------------------------------------------
+
+		$item->approved = 0; // dont know why, all images end up with zero ....
+
+		//----------------------------------------------------
+		// save new object
+		//----------------------------------------------------
+
+		// Lets store it!
+		$item->check();
+
+		if (!$item->store())
+		{
+			// ToDo: collect erorrs and display over enque .... with errr type
+			$UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
+			Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
+
+			// $IsImageDbCreated = false;
+
+			$this->setError($this->_db->getErrorMsg());
+		}
+		else
+		{
+
+			$IsImageDbCreated = true;
+		}
+
+		return $IsImageDbCreated;
+	}
+	/**/
 
     /**
      * Create a new item in database for image
@@ -991,7 +975,7 @@ class ImageModel extends AdminModel
             } else {
                 Factory::getApplication()->enqueueMessage(Text::_('*No valid gallery selected'), 'warning');
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing moveImagesTo: "' . $e->getMessage() . '"' . '<br>';
 
@@ -1022,14 +1006,13 @@ class ImageModel extends AdminModel
             //$db    = $this->getContainer()->get(DatabaseInterface::class);
             $db = $this->getDatabase();
 
-            $query = $db
-                ->getQuery(true)
+			$query = $db->getQuery(true)
                 ->select('MAX(ordering)')
                 ->from($db->quoteName('#__rsg2_files'))
                 ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($GalleryId));
             $db->setQuery($query);
             $max = $db->loadResult();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing nextOrdering for GalleryId: "' . $GalleryId . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1169,16 +1152,10 @@ class ImageModel extends AdminModel
                     }
 
                     if (!$IsOneNotCopied) {
-                        Factory::getApplication()->enqueueMessage(
-                            Text::_('Copy is successful. Please check order of images in destination gallery'),
-                            'notice',
-                        );
+						Factory::getApplication()->enqueueMessage(Text::_('Copy is successful. Please check order of images in destination gallery'), 'notice');
                     } else {
                         if ($IsOneCopied) {
-                            Factory::getApplication()->enqueueMessage(
-                                Text::_('Some images were copied. Please check order of images in destination gallery'),
-                                'notice',
-                            );
+							Factory::getApplication()->enqueueMessage(Text::_('Some images were copied. Please check order of images in destination gallery'), 'notice');
                         }
                     }
                 } else {
@@ -1187,7 +1164,7 @@ class ImageModel extends AdminModel
             } else {
                 Factory::getApplication()->enqueueMessage(Text::_('No valid gallery selected'), 'warning');
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing copyImagesTo: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1208,47 +1185,47 @@ class ImageModel extends AdminModel
      *
      * @return bool true if successful
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     /**
-     * public function assignGalleryId($imageId, $galleryId)
-     * {
-     * $IsGalleryAssigned = false;
-     *
-     * try
-     * {
-     * $item = $this->getTable();
-     * $item->load($imageId);
-     *
-     * $item->gallery_id = $galleryId;
-     *
-     * if ($item->store())
-     * {
-     * $IsGalleryAssigned = true;
-     * }
-     * else
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Error executing assignGalleryId: "' . $imageId . '<br>';
- *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Catched Error executing assignGalleryId: "' . $imageId . '<br>';
-            * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     *
-     * return $IsGalleryAssigned;
-     * }
-     * /**/
+	public function assignGalleryId($imageId, $galleryId)
+	{
+		$IsGalleryAssigned = false;
+
+		try
+		{
+			$item = $this->getTable();
+			$item->load($imageId);
+
+			$item->gallery_id = $galleryId;
+
+			if ($item->store())
+			{
+				$IsGalleryAssigned = true;
+			}
+			else
+			{
+				$OutTxt = '';
+				$OutTxt .= 'Error executing assignGalleryId: "' . $imageId . '<br>';
+
+				$app = Factory::getApplication();
+				$app->enqueueMessage($OutTxt, 'error');
+			}
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Catched Error executing assignGalleryId: "' . $imageId . '<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $IsGalleryAssigned;
+	}
+	/**/
 
     /**
      * Retrieve image id by image name
@@ -1257,38 +1234,38 @@ class ImageModel extends AdminModel
      *
      * @return int image id
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     /**
-     * public function ImageIdFromName($imageName)
-     * {
-     * $imageId = 0;
-     *
-     * try
-     * {
-     * $db    = $this->getContainer()->get(DatabaseInterface::class);
-     * $query = $db->getQuery(true)
-     * ->select('id')
-     * ->from($db->quoteName('#__rsgallery2_files'))
-     * ->where($db->quoteName('name') . ' = ' . $db->quote($imageName));
-     * $db->setQuery($query);
-     *
-     * $imageId = $db->loadResult();
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Error executing ImageIdFromName for image name: "' . $imageName . '"<br>';
-     * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     *
-     * return $imageId;
-     * }
-     * /**/
+	public function ImageIdFromName($imageName)
+	{
+		$imageId = 0;
+
+		try
+		{
+			$db    = $this->getContainer()->get(DatabaseInterface::class);
+			$query = $db->getQuery(true)
+				->select('id')
+				->from($db->quoteName('#__rsgallery2_files'))
+				->where($db->quoteName('name') . ' = ' . $db->quote($imageName));
+			$db->setQuery($query);
+
+			$imageId = $db->loadResult();
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing ImageIdFromName for image name: "' . $imageName . '"<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $imageId;
+	}
+	/**/
 
     /**
      * Delete database entry (item) for given image name
@@ -1297,38 +1274,39 @@ class ImageModel extends AdminModel
      *
      * @return bool true if successful
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     /**
-     * public function deleteImageDbItem($imageName)
-     * {
-     * $IsRowDeleted = false;
-     *
-     * try
-     * {
-     * $db = $this->getDatabase();
-     *
-     * $query = $db->getQuery(true)
-     * ->delete($db->quoteName('#__rsgallery2_files'))
-     * ->where($db->quoteName('name') . ' = ' . $db->quote($imageName));
-     *
-     * $db->setQuery($query);
-     * $IsRowDeleted = $db->execute();
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Error executing deleteImageDbItem for image name: "' . $imageName . '"<br>';
-     * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     *
-     * return $IsRowDeleted;
-     * }
-     * /**/
+	public function deleteImageDbItem($imageName)
+	{
+		$IsRowDeleted = false;
+
+		try
+		{
+			$db = $this->getDatabase();
+
+			$query = $db->getQuery(true)
+				->delete($db->quoteName('#__rsgallery2_files'))
+				->where($db->quoteName('name') . ' = ' . $db->quote($imageName));
+
+			$db->setQuery($query);
+			$IsRowDeleted = $db->execute();
+		}
+		catch (\RuntimeException $e)
+		{
+			$OutTxt = '';
+			$OutTxt .= 'Error executing deleteImageDbItem for image name: "' . $imageName . '"<br>';
+			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+			$app = Factory::getApplication();
+			$app->enqueueMessage($OutTxt, 'error');
+		}
+
+		return $IsRowDeleted;
+	}
+	/**/
+
 
     /**
      * Save user input from image parameter annotation in database
@@ -1337,7 +1315,7 @@ class ImageModel extends AdminModel
      *
      * @return bool True on save ok
      *
-     * @throws Exception
+     * @throws \Exception
      * @since __BUMP_VERSION__
      */
     public function save_imageProperties($imageProperties)
@@ -1378,7 +1356,7 @@ class ImageModel extends AdminModel
                     }
                 }
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Model image: Error executing save_imageProperties: for image id: "' . $id . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1426,11 +1404,7 @@ class ImageModel extends AdminModel
                     $use_j3x_location = $table->use_j3x_location;
 
                     // ToDo: tell if any are left and then do not delete in table
-                    [$deletedCount, $failedCount] = $imgFileModel->deleteImgItemImages(
-                        $fileName,
-                        $galleryId,
-                        $use_j3x_location,
-                    );
+                    [$deletedCount, $failedCount] = $imgFileModel->deleteImgItemImages($fileName, $galleryId, $use_j3x_location);
                     if ($deletedCount > 0) {
                         //if ($failedCount == 0) {
 
@@ -1474,7 +1448,7 @@ class ImageModel extends AdminModel
 
             // Clean the cache
             $this->cleanCache();
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing image.table.delete: "' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1488,35 +1462,36 @@ class ImageModel extends AdminModel
     /**/
 
     /**
-     * public function delete_single_in_table_copy($pk=null)
-     * {
-     * $IsDeleted = false;
-     *
-     * try
-     * {
-     * $imgFileModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('imageFile', 'RSGallery2Model');
-     *
-     * $filename          = $this->name;
-     * $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
-     * if ($IsFilesAreDeleted)
-     * {
-     * // Remove from database
-     * $IsDeleted = parent::delete($pk);
-     * }
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
-            * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     *
-     * return $IsDeleted;
-     * }
-     * /**/
+    public function delete_single_in_table_copy($pk=null)
+    {
+        $IsDeleted = false;
+
+        try
+        {
+            $imgFileModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('imageFile', 'RSGallery2Model');
+
+            $filename          = $this->name;
+            $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
+            if ($IsFilesAreDeleted)
+            {
+                // Remove from database
+                $IsDeleted = parent::delete($pk);
+            }
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $IsDeleted;
+    }
+    /**/
+
 
     /**/
     public function exifDataAllOfFiles($filenames)
@@ -1527,7 +1502,7 @@ class ImageModel extends AdminModel
             foreach ($filenames as $filename) {
                 $exifDataOfFiles [] = $this->exifDataOfFile($filename);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataAllOfFiles: "' . count($filenames) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1553,7 +1528,7 @@ class ImageModel extends AdminModel
             if (!empty ($exifData)) {
                 $exifDataOfFile = [$filename, $exifData];
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataOfFile: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1585,7 +1560,7 @@ class ImageModel extends AdminModel
             foreach ($filenames as $filename) {
                 $exifDataOfFiles [] = $this->exifDataUserSelected($filename, $userExifTags);
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataFilesUserSelected: "' . count($filenames) . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -1630,7 +1605,7 @@ class ImageModel extends AdminModel
             if (!empty ($exifTranslated)) {
                 $exifDataOfFile = [$filename, $exifTranslated];
             }
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing exifDataUserSelected: "' . $filename . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
