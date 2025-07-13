@@ -8,7 +8,7 @@
  * @license         GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Plugin\WebServices\Rsgallery\Extension;
+namespace Rsgallery2\Plugin\WebServices\Rsgallery2\Extension;
 
 use Joomla\CMS\Event\Application\BeforeApiRouteEvent;
 use Joomla\CMS\Plugin\CMSPlugin;
@@ -21,137 +21,137 @@ use Joomla\Router\Route;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * Web Services adapter for com_rsgallery.
+ * Web Services adapter for com_rsgallery2.
  *
  * @since  4.0.0
  */
 final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 {
-    /**
-     * Returns an array of events this subscriber will listen to.
-     *
-     * @return  array
-     *
-     * @since   5.1.0
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            'onBeforeApiRoute' => 'onBeforeApiRoute',
-        ];
-    }
+  /**
+   * Returns an array of events this subscriber will listen to.
+   *
+   * @return  array
+   *
+   * @since   5.1.0
+   */
+  public static function getSubscribedEvents(): array
+  {
+    return [
+      'onBeforeApiRoute' => 'onBeforeApiRoute',
+    ];
+  }
 
-    /**
-     * Registers com_rsgallery's API's routes in the application
-     *
-     * @param   BeforeApiRouteEvent  $event  The event object
-     *
-     * @return  void
-     *
-     * @since   4.0.0
-     */
-    public function onBeforeApiRoute(BeforeApiRouteEvent $event): void
-    {
-        $router = $event->getRouter();
+  /**
+   * Registers com_rsgallery's API's routes in the application
+   *
+   * @param   BeforeApiRouteEvent  $event  The event object
+   *
+   * @return  void
+   *
+   * @since   4.0.0
+   */
+  public function onBeforeApiRoute(BeforeApiRouteEvent $event): void
+  {
+    $router = $event->getRouter();
 
-	    $defaults    = ['component' => 'com_rsgallery'];
-	    // $getDefaults = array_merge(['public' => false], $defaults);
-	    $getDefaults = array_merge(['public' => false], $defaults); // ToDo: Remove when tests finished, enabless acces without token
+    $defaults = ['component' => 'com_rsgallery2'];
+    // $getDefaults = array_merge(['public' => false], $defaults);
+    $getDefaults = array_merge(['public' => false], $defaults); // ToDo: Remove when tests finished, enabless acces without token
 
 //		    new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
 //			    ['slug' => '(.*)'], ['option' => 'com_example']),
 
-	    $router->addRoutes([
-		    new Route(['GET'], 'v1/rsgallery', 'rsgallery.displayItem', [], $getDefaults),
-	    ]);
+    $router->addRoutes([
+      new Route(['GET'], 'v1/rsgallery2', 'rsgallery2.version', [], $getDefaults),
+    ]);
 
-        // $router->createCRUDRoutes(
-			// 'v1/rsgallery/project',
-			// 'project',
-			// ['component' => 'com_rsgallery'],
-	        // true // ToDo: Remove when tests finished
-		// );
-	
-        // $router->createCRUDRoutes(
-			// 'v1/rsgallery/projects',
-			// 'projects',
-			// ['component' => 'com_rsgallery'],
-	        // true // ToDo: Remove when tests finished
-		// );
-	
-        // $router->createCRUDRoutes(
-			// 'v1/rsgallery/subprojects',
-			// 'subprojects',
-			// ['component' => 'com_rsgallery'],
-	        // true // ToDo: Remove when tests finished
-		// );
-	
-        $this->createFieldsRoutes($router);
+    // $router->createCRUDRoutes(
+    // 'v1/rsgallery2/project',
+    // 'project',
+    // ['component' => 'com_rsgallery2'],
+    // true // ToDo: Remove when tests finished
+    // );
 
-        $this->createContentHistoryRoutes($router);
-	}
+    // $router->createCRUDRoutes(
+    // 'v1/rsgallery2/projects',
+    // 'projects',
+    // ['component' => 'com_rsgallery2'],
+    // true // ToDo: Remove when tests finished
+    // );
 
-    /**
-     * Create fields routes
-     *
-     * @param   ApiRouter  &$router  The API Routing object
-     *
-     * @return  void
-     *
-     * @since   4.0.0
-     */
-    private function createFieldsRoutes(&$router): void
-    {
-        $router->createCRUDRoutes(
-            'v1/fields/content/articles',
-            'fields',
-            ['component' => 'com_fields', 'context' => 'com_content.article']
-        );
+    // $router->createCRUDRoutes(
+    // 'v1/rsgallery2/subprojects',
+    // 'subprojects',
+    // ['component' => 'com_rsgallery2'],
+    // true // ToDo: Remove when tests finished
+    // );
 
-        $router->createCRUDRoutes(
-            'v1/fields/content/categories',
-            'fields',
-            ['component' => 'com_fields', 'context' => 'com_content.categories']
-        );
+    $this->createFieldsRoutes($router);
 
-        $router->createCRUDRoutes(
-            'v1/fields/groups/content/articles',
-            'groups',
-            ['component' => 'com_fields', 'context' => 'com_content.article']
-        );
+//    $this->createContentHistoryRoutes($router);
+  }
 
-        $router->createCRUDRoutes(
-            'v1/fields/groups/content/categories',
-            'groups',
-            ['component' => 'com_fields', 'context' => 'com_content.categories']
-        );
-    }
+  /**
+   * Create fields routes
+   *
+   * @param   ApiRouter  &$router  The API Routing object
+   *
+   * @return  void
+   *
+   * @since   4.0.0
+   */
+  private function createFieldsRoutes(&$router): void
+  {
+    $router->createCRUDRoutes(
+      'v1/fields/content/articles',
+      'fields',
+      ['component' => 'com_fields', 'context' => 'com_content.article']
+    );
 
-    /**
-     * Create contenthistory routes
-     *
-     * @param   ApiRouter  &$router  The API Routing object
-     *
-     * @return  void
-     *
-     * @since   4.0.0
-     */
-    private function createContentHistoryRoutes(&$router): void
-    {
-        $defaults    = [
-            'component'  => 'com_contenthistory',
-            'type_alias' => 'com_rsgallery.rsgallery',
-            'type_id'    => 1,
-        ];
-        $getDefaults = array_merge(['public' => false], $defaults);
+    $router->createCRUDRoutes(
+      'v1/fields/content/categories',
+      'fields',
+      ['component' => 'com_fields', 'context' => 'com_content.categories']
+    );
 
-        $routes = [
-            new Route(['GET'], 'v1/rsgallery/:id/contenthistory', 'history.displayList', ['id' => '(\d+)'], $getDefaults),
-            new Route(['PATCH'], 'v1/rsgallery/:id/contenthistory/keep', 'history.keep', ['id' => '(\d+)'], $defaults),
-            new Route(['DELETE'], 'v1/rsgallery/:id/contenthistory', 'history.delete', ['id' => '(\d+)'], $defaults),
-        ];
+    $router->createCRUDRoutes(
+      'v1/fields/groups/content/articles',
+      'groups',
+      ['component' => 'com_fields', 'context' => 'com_content.article']
+    );
 
-        $router->addRoutes($routes);
-    }
+    $router->createCRUDRoutes(
+      'v1/fields/groups/content/categories',
+      'groups',
+      ['component' => 'com_fields', 'context' => 'com_content.categories']
+    );
+  }
+
+  // /**
+   // * Create contenthistory routes
+   // *
+   // * @param   ApiRouter  &$router  The API Routing object
+   // *
+   // * @return  void
+   // *
+   // * @since   4.0.0
+   // */
+  // private function createContentHistoryRoutes(&$router): void
+  // {
+    // $defaults    = [
+      // 'component'  => 'com_contenthistory',
+      // 'type_alias' => 'com_rsgallery2.rsgallery2',
+      // 'type_id'    => 1,
+    // ];
+    // $getDefaults = array_merge(['public' => false], $defaults);
+
+    // $routes = [
+      // new Route(['GET'], 'v1/rsgallery2/:id/contenthistory', 'history.displayList', ['id' => '(\d+)'], $getDefaults),
+      // new Route(['PATCH'], 'v1/rsgallery2/:id/contenthistory/keep', 'history.keep', ['id' => '(\d+)'], $defaults),
+      // new Route(['DELETE'], 'v1/rsgallery2/:id/contenthistory', 'history.delete', ['id' => '(\d+)'], $defaults),
+    // ];
+
+    // $router->addRoutes($routes);
+  // }
 }
 

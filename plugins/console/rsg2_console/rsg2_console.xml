@@ -2,7 +2,7 @@
 <extension type="plugin" group="console" version="4.0" method="upgrade">
   <name>plg_console_rsg2_console</name>
   <author>RSGallery2 Team</author>
-  <creationDate>2025.06.29</creationDate>
+  <creationDate>2025.07.13</creationDate>
   <copyright>(c) 2025-2025 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>
@@ -15,8 +15,4 @@
     <folder>language</folder>
     <folder plugin="rsg2_console">src</folder>
   </files>
-  <!--    <languages>-->
-  <!--        <language tag="en-GB">language/en-GB/plg_console_rsg2_console.ini</language>-->
-  <!--        <language tag="en-GB">language/en-GB/plg_console_rsg2_console.sys.ini</language>-->
-  <!--    </languages>-->
 </extension>

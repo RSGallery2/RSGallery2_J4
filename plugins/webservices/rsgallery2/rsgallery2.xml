@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="webservices" version="4.0" method="upgrade">
-  <name>plg_console_rsg2_console</name>
+  <name>plg_webservices_rsgallery2</name>
   <author>RSGallery2 Team</author>
-  <creationDate>2025.06.29</creationDate>
+  <creationDate>2025.07.13</creationDate>
   <copyright>(c) 2025-2025 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>
   <authorUrl>https://www.rsgallery2.org</authorUrl>
-  <version>5.0.0.5</version>
-  <description>PLG_CONSOLE_RSG2_CONSOLE_XML_DESCRIPTION</description>
+  <version>5.0.0</version>
+  <description>PLG_WEBSERVICES_RSGALLERY2_XML_DESCRIPTION</description>
   <namespace path="src">Rsgallery2\Plugin\WebServices\Rsgallery2</namespace>
+  
   <files>
-		<folder plugin="rsgallery2">services</folder>
-		<folder>src</folder>
-		<folder>language</folder>
-		<folder>services</folder>
-		<file>rsgallery2.xml</file>
+    <folder plugin="rsgallery2">src</folder>
+    <folder>language</folder>
+    <folder>services</folder>
+    <folder>src</folder>
+    <file>rsgallery2.xml</file>
   </files>
 </extension>
