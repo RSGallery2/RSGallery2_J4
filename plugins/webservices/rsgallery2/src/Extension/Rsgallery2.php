@@ -62,29 +62,29 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 //			    ['slug' => '(.*)'], ['option' => 'com_example']),
 
     $router->addRoutes([
-      new Route(['GET'], 'v1/rsgallery2', 'rsgallery2.version', [], $getDefaults),
+      new Route(['GET'], 'v1/rsgallery2/version', 'rsgallery2.version', [], $getDefaults),
     ]);
 
-    // $router->createCRUDRoutes(
-    // 'v1/rsgallery2/project',
-    // 'project',
-    // ['component' => 'com_rsgallery2'],
-    // true // ToDo: Remove when tests finished
-    // );
+     $router->createCRUDRoutes(
+     'v1/rsgallery2/galleries',
+     'galleries',
+     ['component' => 'com_rsgallery2'],
+     true // ToDo: Remove when tests finished
+     );
 
-    // $router->createCRUDRoutes(
-    // 'v1/rsgallery2/projects',
-    // 'projects',
-    // ['component' => 'com_rsgallery2'],
-    // true // ToDo: Remove when tests finished
-    // );
+     $router->createCRUDRoutes(
+     'v1/rsgallery2/images',
+     'images',
+     ['component' => 'com_rsgallery2'],
+     true // ToDo: Remove when tests finished
+     );
 
-    // $router->createCRUDRoutes(
-    // 'v1/rsgallery2/subprojects',
-    // 'subprojects',
-    // ['component' => 'com_rsgallery2'],
-    // true // ToDo: Remove when tests finished
-    // );
+//     $router->createCRUDRoutes(
+//     'v1/rsgallery2/config',
+//     'config',
+//     ['component' => 'com_rsgallery2'],
+//     true // ToDo: Remove when tests finished
+//     );
 
     $this->createFieldsRoutes($router);
 

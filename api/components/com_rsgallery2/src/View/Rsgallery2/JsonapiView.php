@@ -7,10 +7,10 @@
  * @license        GNU General Public License version 2 or later
  */
  
-namespace Rsgallery\Component\Rsgallery\Api\View\Lang4dev;
+namespace Rsgallery\Component\Rsgallery\Api\View\Rsgallery2;
 
-use Rsgallery\Component\Rsgallery\Api\Helper\Lang4devHelper;
-use Rsgallery\Component\Rsgallery\Api\Serializer\Lang4devSerializer;
+use Rsgallery\Component\Rsgallery\Api\Helper\Rsgallery2Helper;
+use Rsgallery\Component\Rsgallery\Api\Serializer\Rsgallery2Serializer;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
@@ -28,7 +28,7 @@ use Joomla\Registry\Registry;
 
 
 /**
- * The projects view
+ * The rsgallery2 view
  *
  * @since  4.0.0
  */
@@ -45,11 +45,11 @@ class JsonapiView extends BaseApiView
 	 */
 	public function displayItem($tpl = null)
 	{
-		$testLang4devText = "testLang4devText";
+		$testRsgallery2Text = "testRsgallery2Text";
 
 		// Serializing the output
 		//$result = json_encode($this->_output);
-		$result = json_encode($testLang4devText);
+		$result = json_encode($testRsgallery2Text);
 
 		// Pushing output to the document
 		$this->getDocument()->setBuffer($result);
@@ -59,13 +59,13 @@ class JsonapiView extends BaseApiView
 
 	public function display($tpl = null)
 	{
-		$testLang4devText = "testLang4devText";
+		$testRsgallery2Text = "testRsgallery2Text";
 
 		// zzzz();
 
 		// Serializing the output
 		//$result = json_encode($this->_output);
-		$result = json_encode($testLang4devText);
+		$result = json_encode($testRsgallery2Text);
 
 		// Pushing output to the document
 		$this->getDocument()->setBuffer($result);

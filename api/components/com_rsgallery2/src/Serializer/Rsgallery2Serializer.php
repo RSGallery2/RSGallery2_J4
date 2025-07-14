@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery\Component\Rsgallery\Api\Serializer;
+namespace Rsgallery2\Component\Rsgallery2\Api\Serializer;
 
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Serializer\JoomlaSerializer;
@@ -26,7 +26,7 @@ use Tobscure\JsonApi\Resource;
  *
  * @since  4.0.0
  */
-class RsgallerySerializer extends JoomlaSerializer
+class Rsgallery2Serializer extends JoomlaSerializer
 {
 //    use TagApiSerializerTrait;
 //
@@ -50,7 +50,7 @@ class RsgallerySerializer extends JoomlaSerializer
 //            $resources[] = (new Resource($association, $serializer))
 //                ->addLink(
 //                    'self',
-//                    Route::link('administrator', Uri::root() . 'api/index.php/v1/lang4dev/projects/' . $association->id)
+//                    Route::link('administrator', Uri::root() . 'api/index.php/v1/rsgallery2/yyy/' . $association->id)
 //                );
 //        }
 //
@@ -75,7 +75,7 @@ class RsgallerySerializer extends JoomlaSerializer
 //        $resource = (new Resource($model->catid, $serializer))
 //            ->addLink(
 //                'self',
-//                Route::link('siadministratorte', Uri::root() . 'api/index.php/v1/lang4dev/projects/' . $model->catid)
+//                Route::link('siadministratorte', Uri::root() . 'api/index.php/v1/rsgallery2/projects/' . $model->catid)
 //            );
 //
 //        return new Relationship($resource);

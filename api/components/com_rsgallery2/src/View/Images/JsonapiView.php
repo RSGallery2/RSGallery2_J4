@@ -8,10 +8,10 @@
  * @license     
  */
 
-namespace Finnern\Component\Lang4dev\Api\View\Projects;
+namespace Rsgallery2\Component\Rsgallery2\Api\View\Images;
 
-use Finnern\Component\Lang4dev\Api\Helper\Lang4devHelper;
-use Finnern\Component\Lang4dev\Api\Serializer\Lang4devSerializer;
+use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Api\Serializer\RsgallerySerializer;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
@@ -26,7 +26,7 @@ use Joomla\Registry\Registry;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * The projects view
+ * The images view
  *
  * @since  4.0.0
  */
@@ -40,15 +40,25 @@ class JsonapiView extends BaseApiView
      */
     protected $fieldsToRenderItem = [
 	    'id',
-	    'title',
 	    'name',
-
 	    'alias',
-	    'notes',
-	    'root_path',
-	    'prjType',
+	    'description',
+	    'original_path',
 
+	    'gallery_id',
+	    'title',
+
+	    'note',
 	    'params',
+	    'published',
+
+	    'hits',
+      'rating',
+      'votes',
+      'comments',
+
+	    'publish_up',
+	    'publish_down',
 
 	    'checked_out',
 	    'checked_out_time',
@@ -58,15 +68,17 @@ class JsonapiView extends BaseApiView
 	    'modified',
 	    'modified_by',
 
-	    'twin_id',
+	    'ordering',
+
 
 	    'approved',
 	    'asset_id',
 	    'access',
 
-	    'version',
+	    'use_j3x_location',
+      'sizes',
 
-	    'ordering',
+	    'version',
     ];
 
     /**
@@ -76,34 +88,46 @@ class JsonapiView extends BaseApiView
      * @since  4.0.0
      */
     protected $fieldsToRenderList = [
-        'id',
-        'title',
-        'name',
+      'id',
+      'name',
+      'alias',
+      'description',
+      'original_path',
 
-        'alias',
-        'notes',
-        'root_path',
-        'prjType',
+      'gallery_id',
+      'title',
 
-	    'params',
+      'note',
+      'params',
+      'published',
 
-	    'checked_out',
-	    'checked_out_time',
-	    'created',
-	    'created_by',
-	    'created_by_alias',
-	    'modified',
-	    'modified_by',
+      'hits',
+      'rating',
+      'votes',
+      'comments',
 
-	    'twin_id',
+      'publish_up',
+      'publish_down',
 
-	    'approved',
-	    'asset_id',
-	    'access',
+      'checked_out',
+      'checked_out_time',
+      'created',
+      'created_by',
+      'created_by_alias',
+      'modified',
+      'modified_by',
 
-	    'version',
+      'ordering',
 
-	    'ordering',
+
+      'approved',
+      'asset_id',
+      'access',
+
+      'use_j3x_location',
+      'sizes',
+
+      'version',
     ];
 
 //    /**
@@ -129,7 +153,7 @@ class JsonapiView extends BaseApiView
     public function __construct($config = [])
     {
         if (\array_key_exists('contentType', $config)) {
-            $this->serializer = new Lang4devSerializer($config['contentType']);
+            $this->serializer = new RsgallerySerializer($config['contentType']);
         }
 
         parent::__construct($config);
@@ -146,7 +170,7 @@ class JsonapiView extends BaseApiView
      */
     public function displayList(?array $items = null)
     {
-        foreach (FieldsHelper::getFields('com_lang4dev.projects') as $field) {
+        foreach (FieldsHelper::getFields('com_rsgallery2.images') as $field) {
             $this->fieldsToRenderList[] = $field->name;
         }
 
@@ -166,7 +190,7 @@ class JsonapiView extends BaseApiView
     {
         $this->relationship[] = 'modified_by';
 
-        foreach (FieldsHelper::getFields('com_lang4dev.project') as $field) {
+        foreach (FieldsHelper::getFields('com_rsgallery2.subproject') as $field) {
             $this->fieldsToRenderItem[] = $field->name;
         }
 
@@ -195,11 +219,11 @@ class JsonapiView extends BaseApiView
 
         $item->text = $item->introtext . ' ' . $item->fulltext;
 
-        // Process the lang4dev plugins.
-        PluginHelper::importPlugin('lang4dev');
-        Factory::getApplication()->triggerEvent('onContentPrepare', ['com_lang4dev.project', &$item, &$item->params]);
+        // Process the rsgallery2 plugins.
+        PluginHelper::importPlugin('rsgallery2');
+        Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.subproject', &$item, &$item->params]);
 
-        foreach (FieldsHelper::getFields('com_lang4dev.project', $item, true) as $field) {
+        foreach (FieldsHelper::getFields('com_rsgallery2.subproject', $item, true) as $field) {
             $item->{$field->name} = $field->apivalue ?? $field->rawvalue;
         }
 
@@ -224,7 +248,7 @@ class JsonapiView extends BaseApiView
         } else {
             $item->tags = [];
             $tags       = new TagsHelper();
-            $tagsIds    = $tags->getTagIds($item->id, 'com_lang4dev.project');
+            $tagsIds    = $tags->getTagIds($item->id, 'com_rsgallery2.subproject');
 
             if (!empty($tagsIds)) {
                 $tagsIds    = explode(',', $tagsIds);
@@ -232,18 +256,18 @@ class JsonapiView extends BaseApiView
             }
         }
 
-        if (isset($item->images)) {
-            $registry     = new Registry($item->images);
-            $item->images = $registry->toArray();
-
-            if (!empty($item->images['image_intro'])) {
-                $item->images['image_intro'] = Lang4devHelper::resolve($item->images['image_intro']);
-            }
-
-            if (!empty($item->images['image_fulltext'])) {
-                $item->images['image_fulltext'] = Lang4devHelper::resolve($item->images['image_fulltext']);
-            }
-        }
+//        if (isset($item->images)) {
+//            $registry     = new Registry($item->images);
+//            $item->images = $registry->toArray();
+//
+//            if (!empty($item->images['image_intro'])) {
+//                $item->images['image_intro'] = Rsgallery2Helper::resolve($item->images['image_intro']);
+//            }
+//
+//            if (!empty($item->images['image_fulltext'])) {
+//                $item->images['image_fulltext'] = Rsgallery2Helper::resolve($item->images['image_fulltext']);
+//            }
+//        }
 
         return parent::prepareItem($item);
     }

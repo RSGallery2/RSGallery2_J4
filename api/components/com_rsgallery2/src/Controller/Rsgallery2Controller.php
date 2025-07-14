@@ -21,7 +21,7 @@ use Joomla\String\Inflector;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * The projects controller
+ * The rsgallery2 controller
  *
  * @since  4.0.0
  */
@@ -33,7 +33,6 @@ class RsgalleryController extends ApiController
      * @var    string
      * @since  4.0.0
      */
-//    protected $contentType = 'rsgallery.projects';
     protected $contentType = 'rsgallery';
 
     /**
@@ -44,6 +43,10 @@ class RsgalleryController extends ApiController
      */
     protected $default_view = 'rsgallery';
 
+  public function version($getDefaults)
+  {
+
+  }
 
 	public function displayItem($id = null)
 	{

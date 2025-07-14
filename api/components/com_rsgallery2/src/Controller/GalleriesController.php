@@ -1,5 +1,5 @@
 <?php
-namespace Finnern\Component\Lang4dev\Api\Controller;
+namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Helper\TagsHelper;
@@ -11,11 +11,11 @@ use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * The projects controller
+ * The galleries controller
  *
  * @since  4.0.0
  */
-class SubprojectsController extends ApiController
+class GalleriesController extends ApiController
 {
     /**
      * The content type of the item.
@@ -23,8 +23,7 @@ class SubprojectsController extends ApiController
      * @var    string
      * @since  4.0.0
      */
-//    protected $contentType = 'lang4dev.projects';
-    protected $contentType = 'subprojects';
+    protected $contentType = 'galleries';
 
     /**
      * The default view for the display method.
@@ -32,7 +31,7 @@ class SubprojectsController extends ApiController
      * @var    string
      * @since  3.0
      */
-    protected $default_view = 'subprojects';
+    protected $default_view = 'galleries';
 
 //    /**
 //     * Article list view amended to add filtering of data
