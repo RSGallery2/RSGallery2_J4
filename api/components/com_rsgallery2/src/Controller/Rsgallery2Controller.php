@@ -7,10 +7,11 @@
  * @license        GNU General Public License version 2 or later
  */
  
-namespace Rsgallery\Component\Rsgallery\Api\Controller;
+namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Helper\TagsHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\CMS\MVC\View\JsonApiView;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;

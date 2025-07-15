@@ -10,8 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\View\Images;
 
-use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
-use Rsgallery2\Component\Rsgallery2\Api\Serializer\RsgallerySerializer;
+//use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
@@ -153,7 +153,7 @@ class JsonapiView extends BaseApiView
     public function __construct($config = [])
     {
         if (\array_key_exists('contentType', $config)) {
-            $this->serializer = new RsgallerySerializer($config['contentType']);
+            $this->serializer = new Rsgallery2Serializer($config['contentType']);
         }
 
         parent::__construct($config);

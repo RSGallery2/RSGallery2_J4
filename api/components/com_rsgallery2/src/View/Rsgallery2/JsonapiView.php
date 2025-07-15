@@ -9,8 +9,8 @@
  
 namespace Rsgallery\Component\Rsgallery\Api\View\Rsgallery2;
 
-use Rsgallery\Component\Rsgallery\Api\Helper\Rsgallery2Helper;
-use Rsgallery\Component\Rsgallery\Api\Serializer\Rsgallery2Serializer;
+//use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
+use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
@@ -43,18 +43,18 @@ class JsonapiView extends BaseApiView
 	 *
 	 * @since   4.0.0
 	 */
-	public function displayItem($tpl = null)
+	public function displayItem($item = null)
 	{
-		$testRsgallery2Text = "testRsgallery2Text";
-
-		// Serializing the output
-		//$result = json_encode($this->_output);
-		$result = json_encode($testRsgallery2Text);
-
-		// Pushing output to the document
-		$this->getDocument()->setBuffer($result);
-
-		return $this->getDocument()->render();
+//		$testRsgallery2Text = "testRsgallery2Text";
+//
+//		// Serializing the output
+//		//$result = json_encode($this->_output);
+//		$result = json_encode($testRsgallery2Text);
+//
+//		// Pushing output to the document
+//		$this->getDocument()->setBuffer($result);
+//
+//		return $this->getDocument()->render();
 	}
 
 	public function display($tpl = null)

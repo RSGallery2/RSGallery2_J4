@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\View\Galleries;
 
-use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
+//use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Api\Serializer\RsgallerySerializer;
 
 use Joomla\CMS\Factory;
