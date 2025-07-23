@@ -34,7 +34,7 @@ class RsgalleryController extends ApiController
      * @var    string
      * @since  4.0.0
      */
-    protected $contentType = 'rsgallery';
+    protected $contentType = 'rsgallery2';
 
     /**
      * The default view for the display method.
@@ -42,7 +42,7 @@ class RsgalleryController extends ApiController
      * @var    string
      * @since  3.0
      */
-    protected $default_view = 'rsgallery';
+    protected $default_view = 'rsgallery2';
 
   public function version($getDefaults)
   {

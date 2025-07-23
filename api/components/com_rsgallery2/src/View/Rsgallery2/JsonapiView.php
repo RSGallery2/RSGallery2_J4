@@ -7,7 +7,7 @@
  * @license        GNU General Public License version 2 or later
  */
  
-namespace Rsgallery\Component\Rsgallery\Api\View\Rsgallery2;
+namespace Rsgallery2\Component\Rsgallery2\Api\View\Rsgallery2;
 
 //use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
