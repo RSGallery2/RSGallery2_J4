@@ -2,9 +2,7 @@
 /**
  * @package    RSGallery2
  * @subpackage com_rsgallery2
- *
- * @copyright  (c) 2005 - 2019 Astrid Günther, Inc. All rights reserved.
- * @license    GNU General Public License version 2 or later
+ * @copyright  (c)  2019-2025 RSGallery2 Team
  * @license    GNU General Public License version 2 or later
  */
 

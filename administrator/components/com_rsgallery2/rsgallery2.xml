@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" method="upgrade">
   <name>com_rsgallery2</name>
-  <creationDate>2025.07.23</creationDate>
+  <creationDate>2025.08.04</creationDate>
   <author>RSGallery2 Team</author>
   <authorEmail>team2@rsgallery2.org</authorEmail>
   <authorUrl>https://www.rsgallery2.org</authorUrl>
