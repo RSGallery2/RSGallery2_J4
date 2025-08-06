@@ -19,8 +19,6 @@ use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 
-
-
 /**
  * Collects available gallery ids and names and creates
  * contents of a dropdown box for gallery selection
@@ -66,12 +64,12 @@ class ExifListField extends ListField
                 //--- type, name and  translation text --------------------------------
 
                 [$type, $name] = ImageExif::tag2TypeAndName($enabledTag);
-                $translationId   = ImageExif::exifTranslationId($name);
+                $translationId = ImageExif::exifTranslationId($name);
                 $translationText = Text::_($translationId);
 
                 //--- create option element ----------------------------------------------
 
-                $option        = new \stdClass();
+                $option = new \stdClass();
                 $option->value = $enabledTag;
                 //$option->text  = $translationText;
                 $option->text = $type . ':' . $translationText;
