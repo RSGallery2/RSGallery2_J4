@@ -1,14 +1,16 @@
 /**
  * @package    RSGallery2
- *
- * supports maintenance user confirm messages
- *
  * @subpackage com_rsgallery2
  * @copyright  (c) 2024-2024 RSGallery2 Team
  * @license    GNU General Public License version 2 or later
  * @author      finnern
- * @since       5.0.21
  */
+
+/*
+ * bs_set2dark.ts
+ * supports maintenance user confirm messages
+ * @since       5.0.21
+*/
 
 //======================================================================================
 // On dark mode exchange class '...-light' with '...-dark'

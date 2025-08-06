@@ -1,8 +1,5 @@
 /**
  * @package    RSGallery2
- *
- * supports maintenance user confirm messages
- *
  * @subpackage com_rsgallery2
  * @copyright  (c) 2016-2024 RSGallery2 Team
  * @license    GNU General Public License version 2 or later
@@ -15,7 +12,12 @@
 /*----------------------------------------------------------------
    Joomla interface created by ericfernance on 27/11/2015
    (with rsg2 additions found in internet)
+ *
+ * supports maintenance user confirm messages
+ *
+   @since       5.0.0.4
 ----------------------------------------------------------------*/
+
 
 /**
  interface Joomla {
