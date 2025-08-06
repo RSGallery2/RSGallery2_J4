@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * @package    RSGallery2
  * @subpackage com_rsgallery2
  * @copyright  (c)  2023-2025 RSGallery2 Team
