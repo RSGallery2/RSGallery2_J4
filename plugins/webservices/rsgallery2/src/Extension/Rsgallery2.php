@@ -1,11 +1,10 @@
 <?php
 /**
- * @package         RSGallery2
- * @subpackage      webservice.rsgallery2
- *
- * @author          RSGallery2 Team <team2@rsgallery2.org>
- * @copyright  (c)  2025-2025 RSGallery2 Team
- * @license         GNU General Public License version 2 or later
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @author         RSGallery2 Team <team2@rsgallery2.org>
+ * @copyright  (c) 2025-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Plugin\WebServices\Rsgallery2\Extension;

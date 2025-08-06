@@ -1,10 +1,9 @@
 /**
- * @package    RSGallery2
- * @subpackage com_rsgallery2
- * @copyright  (c) 2016-2024 RSGallery2 Team
- * @license    GNU General Public License version 2 or later
- * @author      finnern
- * @since       5.0.0.4
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @author         RSGallery2 Team <team2@rsgallery2.org>
+ * @copyright  (c) 2016-2025 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
  */
 
 // ToDo: check https://stackoverflow.com/questions/21247278/about-d-ts-in-typescript

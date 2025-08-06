@@ -1,14 +1,10 @@
 <?php
 /**
- * Hall of Fame in the RSGallery2 project
- * Credits: Historical list of people participating in the project
- *
- * @version        $Id: installMessage.php  2012-07-09 18:52:20Z mirjam $
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
- * @copyright  (c)  2003-2025 RSGallery2 Team
+ * @author         RSGallery2 Team <team2@rsgallery2.org>
+ * @copyright  (c) 2003-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
- * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;

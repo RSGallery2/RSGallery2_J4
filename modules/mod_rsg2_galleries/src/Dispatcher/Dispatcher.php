@@ -1,11 +1,10 @@
 <?php
 /**
  * @package        RSGallery2
- * @subpackage     mod_rsg2_galleries
- * @copyright  (c)  2016-2025 RSGallery2 Team
+ * @subpackage     com_rsgallery2
+ * @author         RSGallery2 Team <team2@rsgallery2.org>
+ * @copyright  (c) 2016-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
- * @author         finnern
- * RSGallery is Free Software
  */
 
 namespace Rsgallery2\Module\Rsg2_galleries\Site\Dispatcher;
