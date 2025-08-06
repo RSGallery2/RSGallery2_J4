@@ -1,6 +1,5 @@
 <?php
 /**
- * /**
  * @package
  * @subpackage    plg_rsg2_image
  *

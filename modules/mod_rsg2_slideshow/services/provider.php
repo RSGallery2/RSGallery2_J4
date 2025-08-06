@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package         Joomla.Site
  * @subpackage      mod_articles_latest

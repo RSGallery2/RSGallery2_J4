@@ -386,7 +386,6 @@ Factory::getApplication()->getDocument()->addScriptDeclaration(implode("\n", $sc
 
 
 <?php
-
 function isOKIconHtml ($title) {
 
     $html = <<<EOT

@@ -1,7 +1,4 @@
 <?php
-
-namespace Rsgallery2\Plugin\Content\Rsg2_images\Extension;
-
 /**
  * @package         Joomla.Plugin
  * @subpackage      Content.contact
@@ -9,6 +6,8 @@ namespace Rsgallery2\Plugin\Content\Rsg2_images\Extension;
  * @copyright  (c)  2019-2025 RSGallery2 Team
  * @license         GNU General Public License version 2 or later; see LICENSE.txt
  */
+
+namespace Rsgallery2\Plugin\Content\Rsg2_images\Extension;
 
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\Event;
