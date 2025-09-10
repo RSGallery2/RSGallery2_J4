@@ -115,7 +115,7 @@
 				type="limitbox"
 				label="JGLOBAL_LIST_LIMIT"
 				default="25"
-				onchange="this.form.submit();"
+                class="js-select-submit-on-change"
 		/>
 	</fields>
 </form>
