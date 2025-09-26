@@ -1,10 +1,11 @@
 <?php
 /**
- * @package        RSGallery2
- * @subpackage     com_rsgallery2
- * @author         RSGallery2 Team <team2@rsgallery2.org>
- * @copyright  (c) 2025-2025 RSGallery2 Team
- * @license        GNU General Public License version 2 or later
+ * @package         RSGallery2
+ * @subpackage      webservice.rsgallery2
+ *
+ * @author          RSGallery2 Team <team2@rsgallery2.org>
+ * @copyright  (c)  2025-2025 RSGallery2 Team
+ * @license         GNU General Public License version 2 or later
  */
 
 namespace Rsgallery2\Plugin\WebServices\Rsgallery2\Extension;
@@ -55,77 +56,78 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 
     $defaults = ['component' => 'com_rsgallery2'];
     // $getDefaults = array_merge(['public' => false], $defaults);
-    $getDefaults = array_merge(['public' => false], $defaults); // ToDo: Remove when tests finished, enabless acces without token
+    $getDefaults = array_merge(['public' => false], $defaults); // ToDo: Remove when tests finished, enabless access without token
 
 //		    new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
 //			    ['slug' => '(.*)'], ['option' => 'com_example']),
 
     $router->addRoutes([
-      new Route(['GET'], 'v1/rsgallery2/version', 'rsgallery2.version', [], $getDefaults),
+//      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
+      new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
     ]);
 
      $router->createCRUDRoutes(
      'v1/rsgallery2/galleries',
      'galleries',
      ['component' => 'com_rsgallery2'],
-     true // ToDo: Remove when tests finished
+     false // ToDo: Remove when tests finished
      );
 
      $router->createCRUDRoutes(
      'v1/rsgallery2/images',
      'images',
      ['component' => 'com_rsgallery2'],
-     true // ToDo: Remove when tests finished
+	     false // ToDo: Remove when tests finished
      );
 
-//     $router->createCRUDRoutes(
-//     'v1/rsgallery2/config',
-//     'config',
-//     ['component' => 'com_rsgallery2'],
-//     true // ToDo: Remove when tests finished
-//     );
+      $router->addRoutes([
+          new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults),
+          new Route(['GET'], 'v1/rsgallery2/config/:variable_name', 'config.displayItem',
+              ['variable_name' => '([A-Za-z0-9_]+)'], $getDefaults),
+      ]);
 
-    $this->createFieldsRoutes($router);
+
+//    $this->createFieldsRoutes($router);
 
 //    $this->createContentHistoryRoutes($router);
   }
 
-  /**
-   * Create fields routes
-   *
-   * @param   ApiRouter  &$router  The API Routing object
-   *
-   * @return  void
-   *
-   * @since   4.0.0
-   */
-  private function createFieldsRoutes(&$router): void
-  {
-    $router->createCRUDRoutes(
-      'v1/fields/content/articles',
-      'fields',
-      ['component' => 'com_fields', 'context' => 'com_content.article']
-    );
-
-    $router->createCRUDRoutes(
-      'v1/fields/content/categories',
-      'fields',
-      ['component' => 'com_fields', 'context' => 'com_content.categories']
-    );
-
-    $router->createCRUDRoutes(
-      'v1/fields/groups/content/articles',
-      'groups',
-      ['component' => 'com_fields', 'context' => 'com_content.article']
-    );
-
-    $router->createCRUDRoutes(
-      'v1/fields/groups/content/categories',
-      'groups',
-      ['component' => 'com_fields', 'context' => 'com_content.categories']
-    );
-  }
-
+//  /**
+//   * Create fields routes
+//   *
+//   * @param   ApiRouter  &$router  The API Routing object
+//   *
+//   * @return  void
+//   *
+//   * @since   4.0.0
+//   */
+//  private function createFieldsRoutes(&$router): void
+//  {
+//    $router->createCRUDRoutes(
+//      'v1/fields/content/articles',
+//      'fields',
+//      ['component' => 'com_fields', 'context' => 'com_content.article']
+//    );
+//
+//    $router->createCRUDRoutes(
+//      'v1/fields/content/categories',
+//      'fields',
+//      ['component' => 'com_fields', 'context' => 'com_content.categories']
+//    );
+//
+//    $router->createCRUDRoutes(
+//      'v1/fields/groups/content/articles',
+//      'groups',
+//      ['component' => 'com_fields', 'context' => 'com_content.article']
+//    );
+//
+//    $router->createCRUDRoutes(
+//      'v1/fields/groups/content/categories',
+//      'groups',
+//      ['component' => 'com_fields', 'context' => 'com_content.categories']
+//    );
+//  }
+//
   // /**
    // * Create contenthistory routes
    // *

@@ -6,19 +6,17 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
- 
+
 namespace Rsgallery2\Component\Rsgallery2\Api\View\Images;
 
 //use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
-use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
-use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -38,46 +36,45 @@ class JsonapiView extends BaseApiView
      * @since  4.0.0
      */
     protected $fieldsToRenderItem = [
-	    'id',
-	    'name',
-	    'alias',
-	    'description',
-	    'original_path',
+        'id',
+        'name',
+        'alias',
+        'description',
+        'original_path',
 
-	    'gallery_id',
-	    'title',
+        'gallery_id',
+        'title',
 
-	    'note',
-	    'params',
-	    'published',
+        'note',
+        'params',
+        'published',
 
-	    'hits',
-      'rating',
-      'votes',
-      'comments',
+        'hits',
+        'rating',
+        'votes',
+        'comments',
 
-	    'publish_up',
-	    'publish_down',
+        'publish_up',
+        'publish_down',
 
-	    'checked_out',
-	    'checked_out_time',
-	    'created',
-	    'created_by',
-	    'created_by_alias',
-	    'modified',
-	    'modified_by',
+        'checked_out',
+        'checked_out_time',
+        'created',
+        'created_by',
+        'created_by_alias',
+        'modified',
+        'modified_by',
 
-	    'ordering',
+        'ordering',
 
+        'approved',
+        'asset_id',
+        'access',
 
-	    'approved',
-	    'asset_id',
-	    'access',
+        'use_j3x_location',
+        'sizes',
 
-	    'use_j3x_location',
-      'sizes',
-
-	    'version',
+        'version',
     ];
 
     /**
@@ -87,46 +84,46 @@ class JsonapiView extends BaseApiView
      * @since  4.0.0
      */
     protected $fieldsToRenderList = [
-      'id',
-      'name',
-      'alias',
-      'description',
-      'original_path',
+        'id',
+        'name',
+        'alias',
+        'description',
+        'original_path',
 
-      'gallery_id',
-      'title',
+        'gallery_id',
+        'title',
 
-      'note',
-      'params',
-      'published',
+        'note',
+        'params',
+        'published',
 
-      'hits',
-      'rating',
-      'votes',
-      'comments',
+        'hits',
+        'rating',
+        'votes',
+        'comments',
 
-      'publish_up',
-      'publish_down',
+        'publish_up',
+        'publish_down',
 
-      'checked_out',
-      'checked_out_time',
-      'created',
-      'created_by',
-      'created_by_alias',
-      'modified',
-      'modified_by',
+        'checked_out',
+        'checked_out_time',
+        'created',
+        'created_by',
+        'created_by_alias',
+        'modified',
+        'modified_by',
 
-      'ordering',
+        'ordering',
 
 
-      'approved',
-      'asset_id',
-      'access',
+        'approved',
+        'asset_id',
+        'access',
 
-      'use_j3x_location',
-      'sizes',
+        'use_j3x_location',
+        'sizes',
 
-      'version',
+        'version',
     ];
 
 //    /**
@@ -189,7 +186,7 @@ class JsonapiView extends BaseApiView
     {
         $this->relationship[] = 'modified_by';
 
-        foreach (FieldsHelper::getFields('com_rsgallery2.subproject') as $field) {
+        foreach (FieldsHelper::getFields('com_rsgallery2.images') as $field) {
             $this->fieldsToRenderItem[] = $field->name;
         }
 
@@ -220,9 +217,9 @@ class JsonapiView extends BaseApiView
 
         // Process the rsgallery2 plugins.
         PluginHelper::importPlugin('rsgallery2');
-        Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.subproject', &$item, &$item->params]);
+        Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.images', &$item, &$item->params]);
 
-        foreach (FieldsHelper::getFields('com_rsgallery2.subproject', $item, true) as $field) {
+        foreach (FieldsHelper::getFields('com_rsgallery2.images', $item, true) as $field) {
             $item->{$field->name} = $field->apivalue ?? $field->rawvalue;
         }
 
@@ -232,7 +229,7 @@ class JsonapiView extends BaseApiView
             foreach ($item->associations as $language => $association) {
                 $itemId = explode(':', $association)[0];
 
-                $associations[] = (object) [
+                $associations[] = (object)[
                     'id'       => $itemId,
                     'language' => $language,
                 ];
@@ -247,7 +244,7 @@ class JsonapiView extends BaseApiView
         } else {
             $item->tags = [];
             $tags       = new TagsHelper();
-            $tagsIds    = $tags->getTagIds($item->id, 'com_rsgallery2.subproject');
+            $tagsIds    = $tags->getTagIds($item->id, 'com_rsgallery2.images');
 
             if (!empty($tagsIds)) {
                 $tagsIds    = explode(',', $tagsIds);

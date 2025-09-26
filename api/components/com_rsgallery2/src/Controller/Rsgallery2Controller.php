@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\CMS\MVC\View\JsonApiView;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
+//use Joomla\Component\\Api\View\Requests\JsonapiView;
 use Joomla\String\Inflector;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -44,11 +45,6 @@ class RsgalleryController extends ApiController
      */
     protected $default_view = 'rsgallery2';
 
-  public function version($getDefaults)
-  {
-
-  }
-
 	public function displayItem($id = null)
 	{
 		$viewType   = $this->app->getDocument()->getType();
@@ -76,13 +72,14 @@ class RsgalleryController extends ApiController
 			throw new \RuntimeException(Text::_('JLIB_APPLICATION_ERROR_MODEL_CREATE'));
 		}
 
-		try {
-			$modelName = $model->getName();
-		} catch (\Exception $e) {
-			throw new \RuntimeException($e->getMessage());
-		}
+        // test if model is valid
+        try {
+            $modelName = $model->getName();
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage());
+        }
 
-		// Push the model into the view (as default)
+        // Push the model into the view (as default)
 		$view->setModel($model, true);
 
 		$view->setDocument($this->app->getDocument());

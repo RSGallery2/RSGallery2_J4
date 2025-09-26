@@ -164,7 +164,7 @@ class JsonapiView extends BaseApiView
     {
         $this->relationship[] = 'modified_by';
 
-        foreach (FieldsHelper::getFields('com_rsgallery2.project') as $field) {
+        foreach (FieldsHelper::getFields('com_rsgallery2.galleries') as $field) {
             $this->fieldsToRenderItem[] = $field->name;
         }
 
