@@ -222,7 +222,7 @@ class ConfigJ3xController extends AdminController // FormController
     /**
      * Save changes in raw edit view value by value
      *
-     * @since version 4.3
+     * @since 4.3
      *
 	public function reset2default()
 	{
@@ -267,7 +267,7 @@ class ConfigJ3xController extends AdminController // FormController
      * @param   null  $key
      * @param   null  $urlVar
      *
-     * @since version 4.3
+     * @since 4.3
      */
     function save($key = null, $urlVar = null)
     {

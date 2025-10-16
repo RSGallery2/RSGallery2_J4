@@ -161,7 +161,7 @@ class ImageController extends FormController
     /**
      * rotate_image_left directs the master image and all dependent images to be turned left against the clock
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_image_left()
     {
@@ -177,7 +177,7 @@ class ImageController extends FormController
      * rotate_image_right directs master image and all dependent images to be turned right with the clock
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_image_right()
     {
@@ -192,7 +192,7 @@ class ImageController extends FormController
     /**
      * rotate_image_180 directs the master image and all dependent images to be turned 180 degrees (upside down)
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_image_180()
     {
@@ -212,7 +212,7 @@ class ImageController extends FormController
      *
      *
      * @throws \Exception
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_image($direction = -90.000, $msg = '')
     {
@@ -289,7 +289,7 @@ class ImageController extends FormController
     /**
      * flip_image_horizontal directs the master image and all dependent images to be flipped horizontal (left <-> right)
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_image_horizontal()
     {
@@ -304,7 +304,7 @@ class ImageController extends FormController
     /**
      * flip_image_vertical directs the master image and all dependent images to be flipped horizontal (top <-> bottom)
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_image_vertical()
     {
@@ -320,7 +320,7 @@ class ImageController extends FormController
      * flip_image_both directs the master image and all dependent images to be flipped horizontal and vertical
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_image_both()
     {
@@ -340,7 +340,7 @@ class ImageController extends FormController
      * @param   string  $msg       start of message to be given to the user on setRedirect
      *
      * @throws \Exception
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_image($flipMode = 0, $msg = '')
     {

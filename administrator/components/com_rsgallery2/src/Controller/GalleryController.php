@@ -61,7 +61,7 @@ class GalleryController extends FormController
     /**
      * Save edited gallery parameters and goto upload form
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function save2upload()
     {

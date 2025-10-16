@@ -34,7 +34,7 @@ class ImageExif
      *
      * @param   bool  $watermarked
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function __construct(string $imagPathFileName = '')
     {

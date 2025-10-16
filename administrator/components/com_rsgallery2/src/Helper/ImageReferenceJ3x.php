@@ -38,7 +38,7 @@ class ImageReferenceJ3x extends ImageReference
 	/**
      * ImageReference constructor. init all variables
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function __construct()
     {
@@ -52,7 +52,7 @@ class ImageReferenceJ3x extends ImageReference
      *
      * @param   bool  $watermarked
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function __construct1($watermarked)
     {
@@ -263,7 +263,7 @@ class ImageReferenceJ3x extends ImageReference
      * @param   int   $careForWatermarked
      * @param   bool  $careForWatermarked
      * @return bool
-     * @since version 4.3
+     * @since 4.3
      */
     public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
     {
@@ -289,7 +289,7 @@ class ImageReferenceJ3x extends ImageReference
      * Main: Display, Original or Thumb images
      *
      * watermarked images are not missing as such. watermarked images will be created when displaying image
-     * @since version 4.3
+     * @since 4.3
      */
     public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
     {

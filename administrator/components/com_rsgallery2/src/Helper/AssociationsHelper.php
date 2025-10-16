@@ -15,8 +15,9 @@ use Joomla\CMS\Association\AssociationExtensionHelper;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
 use Rsgallery2\Component\Rsgallery2\Site\Helper\AssociationHelper;
-/**
- * Content associations helper.
+
+/**
+ * Content associations' helper.
  *
  * @since __BUMP_VERSION__
  */

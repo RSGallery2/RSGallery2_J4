@@ -93,7 +93,7 @@ class ImagesPropertiesController extends AdminController
     /**
      * Save user changes from imagesPropertiesView
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function save_imagesProperties()
     {
@@ -157,7 +157,7 @@ class ImagesPropertiesController extends AdminController
      * Apply changes from imagesPropertiesView
      * Is like save_imagesProperties but redirects to calling view
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function apply_imagesProperties()
     {
@@ -222,7 +222,7 @@ class ImagesPropertiesController extends AdminController
     /**
      * Exit without saving
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function cancel_imagesProperties()
     {
@@ -235,7 +235,7 @@ class ImagesPropertiesController extends AdminController
     /**
      * Delete selected images
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function delete_imagesProperties()
     {
@@ -297,7 +297,7 @@ class ImagesPropertiesController extends AdminController
      * rotate_images_left directs selected master images and all dependent images to be turned left against the clock
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_images_left()
     {
@@ -313,7 +313,7 @@ class ImagesPropertiesController extends AdminController
      * rotate_images_right directs selected master images and all dependent images to be turned right with the clock
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_images_right()
     {
@@ -329,7 +329,7 @@ class ImagesPropertiesController extends AdminController
      * rotate_images_180 directs selected master image and all dependent images to be turned 180 degrees (upside down)
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_images_180()
     {
@@ -349,7 +349,7 @@ class ImagesPropertiesController extends AdminController
      *
      *
      * @throws \Exception
-     * @since version 4.3
+     * @since 4.3
      */
     public function rotate_images($direction = -90.000, $msg)
     {
@@ -439,7 +439,7 @@ class ImagesPropertiesController extends AdminController
      * flip_images_horizontal directs selected master images and all dependent images to be flipped horizontal (left <-> right)
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_images_horizontal()
     {
@@ -455,7 +455,7 @@ class ImagesPropertiesController extends AdminController
      * flip_images_vertical directs selected master image and all dependent images to be flipped horizontal (top <-> bottom)
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_images_vertical()
     {
@@ -471,7 +471,7 @@ class ImagesPropertiesController extends AdminController
      * flip_images_both directs the master image and all dependent images to be flipped horizontal and vertical
      *
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_images_both()
     {
@@ -489,7 +489,7 @@ class ImagesPropertiesController extends AdminController
      *
      * @param   string  $msg  start of message to be given to the user on setRedirect
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function flip_images($flipMode, $msg)
     {

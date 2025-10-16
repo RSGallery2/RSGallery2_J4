@@ -119,7 +119,7 @@ class ImageReferences
      *
      * @return ImageReference[]
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function getImageReferenceList()
     {
@@ -138,7 +138,7 @@ class ImageReferences
      *
      * @return mixed (mostly bool)
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function __get($property)
     {
@@ -155,7 +155,7 @@ class ImageReferences
      *
      * @return string Message of creating the data if any
      *
-     * @since version 4.3
+     * @since 4.3
      */
     public function CollectImageReferences()
     {
@@ -421,7 +421,7 @@ class ImageReferences
      *
      * @return array of object (name and gallery_id)
      *
-     * @since version 4.3
+     * @since 4.3
      */
     private function getDbImagesList()
     {
