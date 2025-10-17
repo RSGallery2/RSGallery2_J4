@@ -38,24 +38,21 @@ class GalleryModel extends AdminModel
      * The prefix to use with controller messages.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $text_prefix = 'COM_RSGALLERY2';
 
     /**
      * The type alias for this content type. Used for content version history.
      *
      * @var      string
-     * @since __BUMP_VERSION__
-     */
+     * @since    5.1.0     */
     public $typeAlias = 'com_rsgallery2.gallery';
 
     /**
      * The context used for the associations table
      *
      * @var      string
-     * @since __BUMP_VERSION__
-     */
+     * @since    5.1.0     */
     protected $associationsContext = 'com_rsgallery2.gallery';
 
     /**
@@ -65,8 +62,7 @@ class GalleryModel extends AdminModel
      * @param   MVCFactoryInterface  $factory  The factory.
      *
      * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
-     * @since   __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
 	public function __construct($config = [], MVCFactoryInterface $factory = null)
 	{
 		$extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
@@ -86,8 +82,7 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function canDelete($record)
     {
         if (empty($record->id) || $record->published != -2) {
@@ -107,8 +102,7 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function canEditState($record)
     {
         $app  = Factory::getApplication();
@@ -137,8 +131,7 @@ class GalleryModel extends AdminModel
      *
      * @return  Table  A Table object
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getTable($type = 'Gallery', $prefix = 'Rsgallery2Table', $config = [])
     {
         return parent::getTable($type, $prefix, $config);
@@ -151,8 +144,7 @@ class GalleryModel extends AdminModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function populateState()
     {
         $app = Factory::getApplication();
@@ -186,8 +178,7 @@ class GalleryModel extends AdminModel
      *
      * @return  mixed  Object on success, false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getItem($pk = null)
     {
         $item = parent::getItem($pk);
@@ -217,8 +208,7 @@ class GalleryModel extends AdminModel
      *
      * @return  mixed    Category data object on success, false on failure.
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
 	public function getItem($pk = null)
 	{
 		if ($result = parent::getItem($pk))
@@ -294,8 +284,7 @@ class GalleryModel extends AdminModel
      *
      * @return  Form|boolean  A Form object on success, false on failure
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getForm($data = [], $loadData = true)
     {
         /**
@@ -355,8 +344,7 @@ class GalleryModel extends AdminModel
      *
      * @return  array  An array of conditions to add to ordering queries.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getReorderConditions($table)
     {
         return [
@@ -369,8 +357,7 @@ class GalleryModel extends AdminModel
      *
      * @return  mixed  The data for the form.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
@@ -546,16 +533,14 @@ class GalleryModel extends AdminModel
      *
      * @param   Table  $table
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     /**/
     /**
      * @param $table
      *
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     protected function prepareTable($table)
     {
         $date        = Factory::getDate()->toSql();
@@ -612,8 +597,7 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean  True on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function save($data)
     {
         $table = $this->getTable();
@@ -880,8 +864,7 @@ class GalleryModel extends AdminModel
      * @return bool
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public function createGallery($galleryName, $parentId = 1, $description = '')
     {
         $isCreated = false;
@@ -918,8 +901,7 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean  True on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function publish(&$pks, $value = 1)
     {
         if (parent::publish($pks, $value)) {
@@ -942,8 +924,7 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean  False on failure or error, true otherwise.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function rebuild()
     {
         // Get an instance of the table object.
@@ -971,8 +952,7 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean  False on failure or error, True otherwise
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function saveorder($idArray = null, $lft_array = null)
     {
         // Get an instance of the table object.
@@ -999,8 +979,7 @@ class GalleryModel extends AdminModel
      *
      * @return  mixed    An array of new IDs on success, boolean false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function batchFlipOrdering($value, $pks, $contexts)
     {
         $successful = [];
@@ -1052,8 +1031,7 @@ class GalleryModel extends AdminModel
      *
      * @return  mixed    An array of new IDs on success, boolean false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function batchCopy($value, $pks, $contexts)
     {
         $type       = new UCMType;
@@ -1244,8 +1222,7 @@ class GalleryModel extends AdminModel
      *
      * @return  boolean  True on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function batchMove($value, $pks, $contexts)
     {
         $parentId   = (int)$value;
@@ -1373,8 +1350,7 @@ class GalleryModel extends AdminModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
 	protected function cleanCache($group = null, $client_id = 0)
 	{
 		$extension = Factory::getApplication()->input->get('extension');
@@ -1406,8 +1382,7 @@ class GalleryModel extends AdminModel
      *
      * @return  array    Contains the modified title and alias.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     //? title -> ? name
     protected function generateNewTitle($parent_id, $alias, $title)
     {

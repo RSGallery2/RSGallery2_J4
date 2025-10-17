@@ -118,8 +118,7 @@ class MaintConsolidateDbController extends AdminController
      *
      * @return  boolean  False on failure or error, true on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function createMissingImages()
     {
         $isOk = false;
@@ -175,8 +174,7 @@ class MaintConsolidateDbController extends AdminController
      *
      * @return  boolean  False on failure or error, true on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function createWatermarkImages()
     {
         $isOk = false;
@@ -232,8 +230,7 @@ class MaintConsolidateDbController extends AdminController
      *
      * @return  boolean  False on failure or error, true on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function assignParentGallery()
     {
         $isOk = false;
@@ -289,8 +286,7 @@ class MaintConsolidateDbController extends AdminController
      *
      * @return  boolean  False on failure or error, true on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function deleteRowItems()
     {
         $isOk = false;

@@ -32,24 +32,21 @@ class GalleriesJ3xListField extends ListField
      * To allow creation of new galleries.
      *
      * @var    integer
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $allowAdd;
 
     /**
      * A flexible gallery list that respects access controls
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public $type = 'GalleriesJ3xList';
 
     /**
      * Name of the layout being used to render the field
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
 //	protected $layout = 'joomla.form.field.ParentList';
 
     /**
@@ -58,8 +55,7 @@ class GalleriesJ3xListField extends ListField
      *
      * @return  array  The field option objects.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getOptions()
     {
         $galleries = [];

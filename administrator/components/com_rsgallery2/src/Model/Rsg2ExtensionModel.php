@@ -34,8 +34,7 @@ class Rsg2ExtensionModel extends BaseModel
      * @return array|mixed
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     static function readRsg2ExtensionManifest()
     {
         $manifest = [];
@@ -212,8 +211,7 @@ class Rsg2ExtensionModel extends BaseModel
      * @return mixed
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public static function mergeDefaultAndActualParams($default, $actual)
     {
         $merged = [];

@@ -23,8 +23,7 @@ class PathHelper
      *
      * @return string
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public static function join(): string
     {
         $paths = implode(DIRECTORY_SEPARATOR, func_get_args());

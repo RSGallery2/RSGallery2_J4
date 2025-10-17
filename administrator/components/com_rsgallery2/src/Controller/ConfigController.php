@@ -45,8 +45,7 @@ class ConfigController extends AdminController // FormController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -62,8 +61,7 @@ class ConfigController extends AdminController // FormController
      *
      * @return mixed
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**
      * public function getModel($name = 'Config', $prefix = 'Administrator', $config = array('ignore_request' => true))
      * {
@@ -99,8 +97,7 @@ class ConfigController extends AdminController // FormController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function cancel_rawView($key = null)
     {
         $this->checkToken();
@@ -118,8 +115,7 @@ class ConfigController extends AdminController // FormController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function cancel_rawEdit($key = null)
     {
         $this->checkToken();
@@ -137,8 +133,7 @@ class ConfigController extends AdminController // FormController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function cancel($key = null)
     {
         $this->checkToken();
@@ -152,8 +147,7 @@ class ConfigController extends AdminController // FormController
     /**
      * Save changes in raw edit view value by value
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function apply_rawEdit()
     {
         $msg     = null;
@@ -189,8 +183,7 @@ class ConfigController extends AdminController // FormController
     /**
      * Save changes in raw edit view value by value
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function save_rawEdit()
     {
         $this->checkToken();
@@ -226,8 +219,7 @@ class ConfigController extends AdminController // FormController
      *
      * @throws \Exception
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function importConfigFile()
     {
         $msg     = "Maintenance.importConfigFile: ";
@@ -287,8 +279,7 @@ class ConfigController extends AdminController // FormController
     /**
      * removes all entries fromm old
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     /**
 	public function remove_OldConfigData()
 	{

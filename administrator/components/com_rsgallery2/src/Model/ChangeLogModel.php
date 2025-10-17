@@ -32,8 +32,7 @@ class ChangeLogModel
     // will be taken from manifest file
     /**
      * @var string
-     * @since version
-     */
+     * @since 5.1.0     */
     public $changeLogUrl = ""; //URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
     public $changeLogPath = "";
     private $isUseLocalDir = true;
@@ -44,8 +43,7 @@ class ChangeLogModel
      * @param   null  $changeLogUrl   path to changelog file different from standard
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function __construct(bool $isUseLocalDir=true, $changeLogUrl = "")
     {
         $this->isUseLocalDir = $isUseLocalDir;
@@ -80,8 +78,7 @@ class ChangeLogModel
      * @return mixed|string
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public function changeLogUrlFromExtension()
     {
         $changeLogUrl = URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
@@ -125,8 +122,7 @@ class ChangeLogModel
      *
      * @return array associative array of changelog items per release version
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function changeLogElements($previousVersion = '', $actualVersion = '')
     {
         $jsonChangeLogs = [];
@@ -209,8 +205,7 @@ class ChangeLogModel
      *
      * @return string [] array of html tables per release version
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function changeLogsData2Html($jsonChangeLogs)
     {
         $changeLogsHtml = [];
@@ -231,8 +226,7 @@ class ChangeLogModel
      *                rows containing the elements column title and text
      *                titles get badge css from type of item
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function changeLogData2Html($versionChangeLog)
     {
         $html = [];
@@ -291,8 +285,7 @@ class ChangeLogModel
      * @return string html of a bootstrap badge.
      *                If type is like version then an empty string will be returned
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function changeLogSectionTitle2Html($type)
     {
         /**
@@ -362,8 +355,7 @@ class ChangeLogModel
      *
      * @return string html: unsigned list of changelog texts
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function changeLogSectionData2Html($items)
     {
         $html = [];
@@ -401,8 +393,7 @@ class ChangeLogModel
      *
      * @return string html: collapsible element
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function collapseContent($changelogHtmlTables, $id, $isCollapsed = true)
     {
         $changelogCss = self::changelogCss();
@@ -451,8 +442,7 @@ class ChangeLogModel
      *
      * @return string html style element
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     private static function changelogCss()
     {
         $html = <<<EOT
@@ -505,8 +495,7 @@ EOT;
      * returns actual
      * @return string
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     private function changeLogPath()
     {
         $adminRSG2_Path = JPATH_ROOT . '/administrator/components/' . 'com_rsgallery2';

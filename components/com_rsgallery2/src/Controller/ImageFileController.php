@@ -32,8 +32,7 @@ class ImageFileController extends BaseController
      * The extension for which the galleries apply.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $extension;
 
     /**
@@ -44,8 +43,7 @@ class ImageFileController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since  __BUMP_VERSION__
-     * @see    \JControllerLegacy
+     * @since   5.1.0     * @see    \JControllerLegacy
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
@@ -61,8 +59,7 @@ class ImageFileController extends BaseController
      *
      * @return  boolean
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function downloadfile()
     {
         $isDownloaded = false;
@@ -128,8 +125,7 @@ class ImageFileController extends BaseController
      *
      * @return  BaseDatabaseModel  The model.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getModel($name = 'ImageFile', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);

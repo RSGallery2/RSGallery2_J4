@@ -637,8 +637,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
      * standard language folders. Keeping the old files would result in those
      * being loaded instead of the new ones.
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     protected function removeAllOldLangFiles(): void
     {
         try {
@@ -674,8 +673,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
      * @param $langPath
      *
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     protected function removeLangFilesInSubPaths(string $langPath): bool
     {
         $isOneFileDeleted = false;

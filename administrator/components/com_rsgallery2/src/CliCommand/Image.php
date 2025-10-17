@@ -182,8 +182,7 @@ class Image extends AbstractCommand
 	 *
 	 * @return array
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function assoc2DefinitionList(array $galleryAssoc, $max_len = 70)
 	{
 		$items = [];

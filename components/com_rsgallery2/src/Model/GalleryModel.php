@@ -646,8 +646,7 @@ class GalleryModel extends ListModel
      *
      * @return  QueryInterface object.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getListQuery()
     {
         $app   = Factory::getApplication();

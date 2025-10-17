@@ -68,8 +68,7 @@ class HtmlView extends BaseHtmlView
      * Is there a content type associated with this gallery aias
      *
      * @var    boolean
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $checkTags = false;
 
     protected $isDebugBackend;
@@ -144,8 +143,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function addToolbar($Layout = 'default')
     {
         // Get the toolbar object instance

@@ -36,8 +36,7 @@ class Rsgallery2Model extends BaseDatabaseModel
      *
      * @return  mixed Object or null
      *
-     * @since   __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getItem($pk = null)
     {
         $app = Factory::getApplication();
@@ -81,8 +80,7 @@ class Rsgallery2Model extends BaseDatabaseModel
      *
      * @return  void
      *
-     * @since   __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function populateState()
     {
         $app = Factory::getApplication();

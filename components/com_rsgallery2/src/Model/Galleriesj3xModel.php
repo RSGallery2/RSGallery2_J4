@@ -165,8 +165,7 @@ class Galleriesj3xModel extends ListModel
      *
      * @return mixed
      *
-     * @since version
-     *
+     * @since  5.1.0     *
      * private function getGalleryAndChilds(int $gid)
      * {
      * $galleries = [];
@@ -201,8 +200,7 @@ class Galleriesj3xModel extends ListModel
      * }
      *
      * /    /**
-     * @since version
-     */
+     * @since 5.1.0     */
     public function getChildGalleries(int $gid)
     {
         $parentGallery = null;
@@ -693,8 +691,7 @@ class Galleriesj3xModel extends ListModel
      *
      * @return
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getListQuery()
     {
         // Create a new query object.

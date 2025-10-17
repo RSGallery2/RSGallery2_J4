@@ -43,8 +43,7 @@ class DevelopController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -56,8 +55,7 @@ class DevelopController extends BaseController
      * The default view.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
 //	protected $default_view = 'rsgallery2';
 
     /**
@@ -69,8 +67,7 @@ class DevelopController extends BaseController
      *
      * @license    GNU General Public License version 2 or later
      *
-     * @since      __BUMP_VERSION__
-     */
+     * @since      5.1.0     */
     public function display($cachable = false, $urlparams = [])
     {
         // $model = $this->getModel('');
@@ -87,8 +84,7 @@ class DevelopController extends BaseController
      *
      * @return mixed
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since  5.1.0     *
 
     public function getModel($name = 'Develop', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
@@ -99,8 +95,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function createGalleries_001()
     {
         $msg     = "DevelopController.createGalleries_001: ";
@@ -148,8 +143,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function createGalleries_010()
     {
         $msg     = "DevelopController.createGalleries_010: ";
@@ -197,8 +191,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function createGalleries_100()
     {
         $msg     = "DevelopController.createGalleries_100: ";
@@ -246,8 +239,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function createGalleries_random()
     {
         $msg     = "DevelopController.createGalleries_random: ";
@@ -299,8 +291,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function createImages_001()
     {
         $msg     = "DevelopController.createImages_001: ";
@@ -351,8 +342,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function createImages_010()
     {
         $msg     = "DevelopController.createImages_010: ";
@@ -402,8 +392,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function createImages_100()
     {
         $msg     = "DevelopController.createImages_100: ";
@@ -454,8 +443,7 @@ class DevelopController extends BaseController
     /**
      * Copies all old configuration items to new configuration
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     private function createImages_random()
     {
         $msg     = "DevelopController.createImages_random: ";
@@ -645,8 +633,7 @@ class DevelopController extends BaseController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function cancel()
     {
         $this->checkToken();
@@ -661,8 +648,7 @@ class DevelopController extends BaseController
      * On cevelop check install message the version number may be
      * patched for the changelog display from / to version
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function useOldVersion()
     {
         $msg     = "DevelopController.useOldVersion: ";
@@ -713,8 +699,7 @@ class DevelopController extends BaseController
      * from / to version number. The RSG2 "extension" number in the db can be
      * set here (from maintenace -> Test Install/Update message (form)
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function assignVersion()
     {
         // ??? maintenance / manifest ....

@@ -29,14 +29,12 @@ class rsg2installtasksflat
     /**
      *  Read manifest data , insert config write back
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     // prepared, may not be used later
     /**
      *
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     static function initConfigFromXmlFile()
     {
         // Read extension manifest data,

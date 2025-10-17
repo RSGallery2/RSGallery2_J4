@@ -31,8 +31,7 @@ class ConfigRawModel extends BaseModel
      *
      * @return string
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function saveFromForm()
     {
         // $msg = "Rsgallery2ModelConfigRaw: ";
@@ -52,8 +51,7 @@ class ConfigRawModel extends BaseModel
      * @return bool
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function saveItems($configurationItems): bool
     {
         $isSaved = false;
@@ -96,8 +94,7 @@ class ConfigRawModel extends BaseModel
      *
      * @return array
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public function SecureConfigurationItems($configurationItems)
     {
         $securedItems = [];
@@ -163,8 +160,7 @@ class ConfigRawModel extends BaseModel
      *
      * @throws \Exception
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function ResetConfigToDefault()
     {
         $isSaved = false;
@@ -248,8 +244,7 @@ class ConfigRawModel extends BaseModel
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function writeConfigParam($param = '', $value = '')
     {
         // Load the current component params.

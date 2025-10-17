@@ -51,8 +51,7 @@ class MaintenanceJ3xController extends AdminController
 	 * @param   CMSApplication       $app      The JApplication for the dispatcher
 	 * @param   Input                $input    Input
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since   5.1.0	 */
 	public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
 	{
 		parent::__construct($config, $factory, $app, $input);
@@ -110,8 +109,7 @@ class MaintenanceJ3xController extends AdminController
 	 * Copies all old configuration items to new configuration
 	 * ...User: different return page
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function copyJ3xConfig2J4xOptionsUser()
 	{
 		$this->copyJ3xConfig2J4xOptions();
@@ -123,8 +121,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Copies all old configuration items to new configuration
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function copyJ3xConfig2J4xOptions()
 	{
 		$msg     = "MaintenanceJ3xController.copyJ3xConfig2J4xOptions: ";
@@ -182,8 +179,7 @@ class MaintenanceJ3xController extends AdminController
 	 * Copies all old J3x gallery items to J4 galleries in database
 	 * ...User: different return page
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function copyDbJ3xGalleries2J4xUser()
 	{
 		$this->copyDbJ3xGalleries2J4x();
@@ -195,8 +191,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Copies all old J3x gallery items to J4 galleries in database
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function copyDbJ3xGalleries2J4x()
 	{
 		$msg     = "MaintenanceJ3xController.copyDbJ3xGalleries2J4x: ";
@@ -255,8 +250,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Copies all old J3x gallery items to J4 galleries
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function copyDbSelectedJ3xGalleries2J4x()
 	{
 		$msg     = "MaintenanceJ3xController.copyDbSelectedJ3xGalleries2J4x: ";
@@ -328,8 +322,7 @@ class MaintenanceJ3xController extends AdminController
 	 *
 	 * @return bool
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	public function resetImagesTable()
 	{
 		$isOk = false;
@@ -433,8 +426,7 @@ class MaintenanceJ3xController extends AdminController
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbImagesOfSelectedGalleries()
 	{
 		$msg     = "MaintenanceJ3xController.copyDbImagesOfSelectedGalleries: ";
@@ -491,8 +483,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Copies all old Db image items to new configuration
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function copyDbJ3xImages2J4xUser()
 	{
 		$this->copyDbJ3xImages2J4x();
@@ -504,8 +495,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Copies all old J3x image items to J4 images
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function copyDbJ3xImages2J4x()
 	{
 		$msg     = "MaintenanceJ3xController.copyDbJ3xImages2J4x: ";
@@ -560,8 +550,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Copies all old J3x image items to J4 images
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function revertCopyDbJ3xImages2J4xUser()
 	{
 		$msg     = "MaintenanceJ3xController.revertCopyDbJ3xImages2J4xUser: ";
@@ -733,8 +722,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 * Copies all old J3x image to J4 images path
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function updateMovedJ3xImages2J4x()
 	{
 		$msg     = "MaintenanceJ3xController.updateMovedJ3xImages2J4x: ";
@@ -789,8 +777,7 @@ class MaintenanceJ3xController extends AdminController
 	 *
 	 * @throws \Exception
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	public function CheckImagePathsJ3x()
 	{
 		$isOk = false;
@@ -842,8 +829,7 @@ class MaintenanceJ3xController extends AdminController
 	 *
 	 * @throws \Exception
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	public function RepairImagePathsJ3x()
 	{
 		$isOk = false;
@@ -895,8 +881,7 @@ class MaintenanceJ3xController extends AdminController
 	 * Returns id and names of all found images
 	 *
 	 * @throws \Exception
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	function ajaxRequestImageIds()
 	{
 		global $rsgConfig, $Rsg2DebugActive;
@@ -1041,8 +1026,7 @@ class MaintenanceJ3xController extends AdminController
 	 *
 	 *
 	 * @throws \Exception
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	function ajaxMoveJ3xImage()
 	{
 		// Todo: Check Authorisation, Jupload , check mime type ...
@@ -1208,8 +1192,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function j3xUpgradeJ3xMenuLinksUser()
 	{
 		$this->j3xUpgradeJ3xMenuLinks();
@@ -1221,8 +1204,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function j3xUpgradeJ3xMenuLinks()
 	{
 		$msg     = "MaintenanceJ3xController.j3xUpgradeJ3xMenuLinks: ";
@@ -1280,8 +1262,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function j3xLowerJ4xMenuLinks()
 	{
 		$msg     = "MaintenanceJ3xController.j3xLowerJ4xMenuLinks: ";
@@ -1329,8 +1310,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function j3xUpperJ4xMenuLinks()
 	{
 		$msg     = "MaintenanceJ3xController.j3xUpgradeJ3xMenuLinks: ";
@@ -1378,8 +1358,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function j3xReplaceGid2IdMenuLinks()
 	{
 		$msg     = "MaintenanceJ3xController.j3xReplaceGid2IdMenuLinks: ";
@@ -1443,8 +1422,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function j3xReplaceId2GidMenuLinks()
 	{
 		$msg     = "MaintenanceJ3xController.j3xReplaceId2GidMenuLinks: ";
@@ -1503,8 +1481,7 @@ class MaintenanceJ3xController extends AdminController
 	/**
 	 *
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function j3xDegradeUpgradedJ3xMenuLinks()
 	{
 		$msg     = "MaintenanceJ3xController.j3xDegradeUpgradedJ3xMenuLinks: ";
@@ -1570,8 +1547,7 @@ class MaintenanceJ3xController extends AdminController
 	 *                   5: enqueueMessage types with thrown \Exception
 	 *
 	 * @throws \Exception
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	function issueError($errorType)
 	{
 		$app = Factory::getApplication();
@@ -1637,8 +1613,7 @@ class MaintenanceJ3xController extends AdminController
 	 * Copies all old configuration items to new configuration
 	 * ...User: different return page
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public
 	function resetUpgradeFlags()
 	{

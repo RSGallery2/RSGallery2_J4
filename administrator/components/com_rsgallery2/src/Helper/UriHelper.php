@@ -21,8 +21,7 @@ class UriHelper
      *
      * @return string
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public static function join(): string
     {
         $uri = implode('/', func_get_args());

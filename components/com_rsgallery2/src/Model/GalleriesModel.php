@@ -521,8 +521,7 @@ class GalleriesModel extends ListModel
      *
      * @return mixed
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public function getParentGallery()
     {
         $parentGallery = null;
@@ -668,8 +667,7 @@ class GalleriesModel extends ListModel
      *
      * @return  QueryInterface object.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getListQuery()
     {
         // Create a new query object.
@@ -891,8 +889,7 @@ class GalleriesModel extends ListModel
      *
      * @return mixed
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     private function getGalleryAndChilds(int $gid)
     {
         $galleries = [];

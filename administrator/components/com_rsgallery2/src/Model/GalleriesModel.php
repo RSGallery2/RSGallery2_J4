@@ -35,8 +35,7 @@ class GalleriesModel extends ListModel
      * @param   MVCFactoryInterface  $factory  The factory.
      *
      * @see     \JControllerLegacy
-     * @since   __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null)
     {
         //  which fields are needed for filter function
@@ -80,8 +79,7 @@ class GalleriesModel extends ListModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function populateState($ordering = 'a.lft', $direction = 'asc')
     {
         $app = Factory::getApplication();
@@ -132,8 +130,7 @@ class GalleriesModel extends ListModel
      *
      * @return  string  A store id.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getStoreId($id = '')
     {
         // Compile the store id.
@@ -153,8 +150,7 @@ class GalleriesModel extends ListModel
      *
 	 * @return  Queryinterface object.
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since   5.1.0     */
     protected function getListQuery()
     {
         // Create a new query object.
@@ -366,8 +362,7 @@ class GalleriesModel extends ListModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     protected function prepareTable($table)
     {
         $date = Factory::getDate();
@@ -406,8 +401,7 @@ class GalleriesModel extends ListModel
      *
      * @return  boolean  True if the association exists
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     public function getAssoc()
     {
         static $assoc = null;
@@ -450,8 +444,7 @@ class GalleriesModel extends ListModel
      *
      * @return  mixed  An array of data items on success, false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     public function getItems()
     {
         $items = parent::getItems();
@@ -475,8 +468,7 @@ class GalleriesModel extends ListModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     /**
 	public function countItems(&$items, $extension)
 	{
@@ -505,8 +497,7 @@ class GalleriesModel extends ListModel
      * @return array rows with image name, gallery name, date, and user name as rows
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+	 * @since     5.1.0     */
     public static function latestGalleries($limit)
     {
         $latest = [];
@@ -559,8 +550,7 @@ class GalleriesModel extends ListModel
      *
      * @return array rows with image name, gallery name, date, and user name as rows
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since     5.1.0     */
     public static function allGalleries()
     {
         $latest = [];

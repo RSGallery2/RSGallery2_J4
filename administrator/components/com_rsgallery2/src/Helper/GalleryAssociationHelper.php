@@ -28,8 +28,7 @@ abstract class GalleryAssociationHelper
      *
      * @return  array    Array of associations for the component galleries
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public static function getGalleryAssociations($id = 0, $extension = 'com_rsgallery2')
     {
         $return = [];

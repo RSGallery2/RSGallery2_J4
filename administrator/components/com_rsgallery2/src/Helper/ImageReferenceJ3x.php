@@ -68,8 +68,7 @@ class ImageReferenceJ3x extends ImageReference
      *
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public function assignDbItem($image)
     {
 //		parent::assignDbItem($image); -> bad: create paths
@@ -108,8 +107,7 @@ class ImageReferenceJ3x extends ImageReference
      * Check all epected pathes for image existance
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public function check4ImageIsNotExisting()
     {
         try {
@@ -156,8 +154,7 @@ class ImageReferenceJ3x extends ImageReference
      * @param $imageName
      *
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     public function initOrphanedItem($galleryId, $imageName)
     {
         try {
@@ -200,8 +197,7 @@ class ImageReferenceJ3x extends ImageReference
      * @param $imagePath
      *
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     public function assignOrphanedItem($dirType, $imagePath)
     {
         $isImageAssigned = false;

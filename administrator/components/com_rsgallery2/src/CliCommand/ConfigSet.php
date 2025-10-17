@@ -210,8 +210,7 @@ class ConfigSet extends AbstractCommand
 	 *
 	 * @return bool
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function isTrue(mixed $veryfyIn)
 	{
 		$isTrue = false;

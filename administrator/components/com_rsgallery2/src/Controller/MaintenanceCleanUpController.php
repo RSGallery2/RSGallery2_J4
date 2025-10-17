@@ -40,8 +40,7 @@ class MaintenanceCleanUpController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input                $input    Input
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
      * public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
      * {
      * parent::__construct($config, $factory, $app, $input);
@@ -54,8 +53,7 @@ class MaintenanceCleanUpController extends BaseController
     /**
      * remove data in  tables
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function purgeImagesAndData()
     {
         $msg     = "MaintenanceCleanUp.purgeImagesAndData: ";
@@ -115,8 +113,7 @@ class MaintenanceCleanUpController extends BaseController
      *
      * @throws \Exception
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function prepareRemoveTables()
     {
         $msg     = "MaintenanceCleanUp.prepareRemoveTables: ";
@@ -158,8 +155,7 @@ class MaintenanceCleanUpController extends BaseController
     /**
      * Change file uninstall.mysql.utf8.sql so it does not remove the RSG2 Tables
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function undoPrepareRemoveTables()
     {
         $msg     = "MaintenanceCleanUp.undoPrepareRemoveTables: ";
@@ -206,8 +202,7 @@ class MaintenanceCleanUpController extends BaseController
      * @return bool
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     private function activateDrop4RSG2Tables($DoDrop = true)
     {
         $isOk = false;
@@ -272,8 +267,7 @@ class MaintenanceCleanUpController extends BaseController
      *
      * @throws \Exception
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function ResetConfigToDefault()
     {
         $isOk = false;

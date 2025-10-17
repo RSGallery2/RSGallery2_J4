@@ -63,8 +63,7 @@ class UploadController extends FormController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -79,8 +78,7 @@ class UploadController extends FormController
      *
      * @return mixed
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function getModel($name = 'Upload', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
@@ -94,8 +92,7 @@ class UploadController extends FormController
      * Reason: The parallel uploaded images may appear unordered
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function uploadAjaxReserveDbImageId()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -293,8 +290,7 @@ out:
      * The image id was created before and is read from the
      * ajax parameters
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     function uploadAjaxSingleFile()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -487,8 +483,7 @@ out:
      * Reason: The parallel uploaded images may appear unordered
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function uploadAjaxZipExtractReserveDbImageId()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -768,8 +763,7 @@ out:
      * Reason: The parallel uploaded images may appear unordered
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function uploadAjaxFilesInFolderReserveDbImageId()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -987,8 +981,7 @@ interface IResponseTransfer {
      * display and thumb files created
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function uploadAjaxTransferFolderFile()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -1247,8 +1240,7 @@ interface IResponseTransfer {
      *                   5: enqueueMessage types with thrown \Exception
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     private function issueError($errorType)
     {
         $app = Factory::getApplication();

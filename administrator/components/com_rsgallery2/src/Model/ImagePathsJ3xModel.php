@@ -39,8 +39,7 @@ class ImagePathsJ3xModel {
 	// files gallery defined
     /**
      * @var string
-     * @since version
-     */
+     * @since 5.1.0     */
     public $originalBasePath;
     public $displayBasePath;
     public $thumbBasePath;
@@ -156,8 +155,7 @@ class ImagePathsJ3xModel {
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function createAllPaths() {
         $isCreated = false;
 
@@ -187,8 +185,7 @@ class ImagePathsJ3xModel {
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function isPathsExisting()
     {
         $isPathsExisting = false;

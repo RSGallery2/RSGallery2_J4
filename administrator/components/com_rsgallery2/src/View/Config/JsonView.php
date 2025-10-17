@@ -34,8 +34,7 @@ class JsonView extends AbstractView
      * @return  void
      *
      * @throws  \Exception
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
      */
     public function display($tpl = null): void
     {
@@ -60,8 +59,7 @@ class JsonView extends AbstractView
      *
      * @return  array
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getLayoutData()//:  array
     {
 //		/** @var SysinfoModel $model */

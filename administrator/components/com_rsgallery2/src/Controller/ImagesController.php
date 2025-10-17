@@ -39,8 +39,7 @@ class ImagesController extends AdminController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -55,8 +54,7 @@ class ImagesController extends AdminController
      *
      * @return  BaseDatabaseModel  The model.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getModel($name = 'Image', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
@@ -66,8 +64,7 @@ class ImagesController extends AdminController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function reinitImagesTable()
     {
         $isOk = false;

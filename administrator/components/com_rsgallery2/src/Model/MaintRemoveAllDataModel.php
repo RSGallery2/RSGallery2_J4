@@ -33,8 +33,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
      * @return array
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public function removeAllImageFiles()
     {
         global $rsgConfig;
@@ -78,8 +77,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
      *
      * @return string Success message of folder
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     private function removeImagesInFolder($fullPath = '')
     {
         $msg = 'Remove images in folder: "' . $fullPath . '"';
@@ -211,8 +209,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
      *
      * @return array
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     private function PurgeTable($tableId, $successMsg)
     {
         $isPurged = false;

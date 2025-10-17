@@ -29,8 +29,7 @@ class UploadModel extends BaseDatabaseModel
      *
      * @return true on galleries found
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function is1GalleryExisting()
     {
         $is1GalleryExisting = false;

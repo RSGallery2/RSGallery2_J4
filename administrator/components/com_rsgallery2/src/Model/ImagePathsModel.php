@@ -33,8 +33,7 @@ class ImagePathsModel
     // from config
     /**
      * @var mixed|\stdClass|string
-     * @since version
-     */
+     * @since 5.1.0     */
     public $rsgImagesBasePath;
     public $rsgImagesBaseUrl;
 	// ToDo: Single gallery name ? used for search path ?
@@ -126,8 +125,7 @@ class ImagePathsModel
      * @param   array  $imageSizes
      *
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function setPaths_URIs_byGalleryId(int $galleryId): void
     {
         /*--------------------------------------------------------------------
@@ -246,8 +244,7 @@ class ImagePathsModel
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function createAllPaths()
     {
         $isCreated = false;
@@ -282,8 +279,7 @@ class ImagePathsModel
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function isPathsExisting()
     {
         $isPathsExisting = false;

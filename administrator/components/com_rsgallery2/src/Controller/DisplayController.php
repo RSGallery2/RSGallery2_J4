@@ -26,8 +26,7 @@ class DisplayController extends BaseController
      * The default view.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $default_view = 'rsgallery2';
 
     /**
@@ -40,8 +39,7 @@ class DisplayController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -56,8 +54,7 @@ class DisplayController extends BaseController
      *
      * @license    GNU General Public License version 2 or later
      *
-     * @since      __BUMP_VERSION__
-     */
+     * @since      5.1.0     */
     public function display($cachable = false, $urlparams = [])
     {
         return parent::display();

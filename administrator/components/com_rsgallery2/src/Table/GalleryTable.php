@@ -37,8 +37,7 @@ class GalleryTable extends Nested
      *
      * @param   DatabaseDriver  $db  Database connector object
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct(DatabaseDriver $db)
     {
         $this->typeAlias = 'com_rsgallery.gallery';
@@ -58,8 +57,7 @@ class GalleryTable extends Nested
      * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
      *
      * @see     \Table::bind
-     * @since   __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function bind($array, $ignore = '')
     {
         if (isset($array['params']) && is_array($array['params'])) {
@@ -76,8 +74,7 @@ class GalleryTable extends Nested
      * @return  boolean  True on success.
      *
      * @throws  \UnexpectedValueException
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function check()
     {
         try {
@@ -193,8 +190,7 @@ class GalleryTable extends Nested
      *
      * @return  boolean  True on success, false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function store($updateNulls = false)
     {
         $date = Factory::getDate();
@@ -254,8 +250,7 @@ class GalleryTable extends Nested
      *
      * @return  boolean  True on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function delete($pk = null, $children = false)
     {
         $return = parent::delete($pk, $children);
@@ -279,8 +274,7 @@ class GalleryTable extends Nested
      * @return  integer  1 + value of root rgt on success, false on failure
      *
      * @throws  \RuntimeException on database error.
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function rebuild($parentId = null, $leftId = 0, $level = 0, $path = null)
     {
         // If no parent is provided, try to find it.

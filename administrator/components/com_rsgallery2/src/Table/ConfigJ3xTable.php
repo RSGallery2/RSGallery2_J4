@@ -29,8 +29,7 @@ class ConfigJ3xTable extends Table
      *
      * @param   DatabaseDriver  $db  Database connector object
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct(DatabaseDriver $db)
     {
         $this->typeAlias = 'com_rsgallery2.image';

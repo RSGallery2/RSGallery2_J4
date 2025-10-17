@@ -57,8 +57,7 @@ class HtmlView extends BaseHtmlView
      * The page parameters
      *
      * @var    Registry|null
-     * @since  __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $params = null;
 
     /**

@@ -78,8 +78,7 @@ class ImageReferences
 
 	/**
 	 * @var [string to []]
-	 * @since version
-	 */
+	 * @since 5.1.0	 */
 	public $OutsideFiles;
 
 
@@ -195,8 +194,7 @@ class ImageReferences
      *
      *
      * @throws \Exception
-     * @since version
-     */
+	 * @since     5.1.0     */
     private function imageReferencesByDb()
     {
         try {

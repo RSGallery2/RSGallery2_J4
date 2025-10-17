@@ -41,8 +41,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
     /**
      * Constructor.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function __construct()
     {
         global $rsgConfig, $Rsg2DebugActive;
@@ -71,8 +70,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * @return image|bool|null if successful returns resized image handler
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function createDisplayImageFile($targetFileName = '', $targetWidth = 0, $memImage = null)
     {
         global $rsgConfig;
@@ -178,8 +176,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * @return bool true if successful
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function createThumbImageFile($thumbPathFileName = '', $memImage = null)
     {
         global $rsgConfig;
@@ -412,8 +409,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * @return array
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
 
     /**/
     public function deleteImgItemImages($imageFileName, $galleryId, $use_j3x_location)
@@ -475,8 +471,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return bool True on success
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     private function DeleteImage($filename = '')
     {
         global $Rsg2DebugActive;
@@ -516,8 +511,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * @return array ($isMoved, $urlThumbFile, $msg) Tells about success, the URL to the thumb file and a message on error
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function MoveImageAndCreateRSG2Images(
         $srcTempPathFileName,
         $targetFileName,
@@ -714,8 +708,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * Delegates the creation of display, thumb and watermark images
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function CreateRSG2Images(ImagePathsModel $imagePaths, $srcFileName = '', $targetFileName = '') : bool
     {
         global $rsgConfig, $Rsg2DebugActive;
@@ -843,8 +836,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      * @return array ($isMoved, $msg) Tells about success, the URL to the thumb file and a message on error
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function CreateRSG2ImagesJ3x(
         ImagePathsJ3xModel $imagePaths,
         $srcFileName = '',
@@ -971,8 +963,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return array  List of valid image files and List of ignored files (directories do npt count)
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function SelectImagesFromFolder($extractDir)//: array
     {
         global $rsgConfig; //, $Rsg2DebugActive;
@@ -1060,8 +1051,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return bool success
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function rotate_image($ImageId, $fileName, $galleryId, $angle)
     {
         global $rsgConfig;
@@ -1138,8 +1128,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return bool success
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function flip_image($ImageId, $fileName, $galleryId, $flipMode)
     {
         global $rsgConfig;
@@ -1214,8 +1203,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**/
     private function use_j3x_location($ImageId)
     {
@@ -1250,8 +1238,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return array
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**/
     public function imageFileAttrib($ImageId)
     {

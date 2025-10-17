@@ -103,8 +103,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_galleries4DbImagesList()
 	{
 		$galleries = [];
@@ -159,8 +158,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return int
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private static function cmpJ4xGalleries($aGallery, $bGallery)
 	{
 		$a = $aGallery->ordering;
@@ -181,8 +179,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function MergedJ3xIdsDbImages($j3xItems, $j4xItems)
 	{
 		$mergedId = [];
@@ -218,8 +215,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function MergedJ3xImageIds($j3xItems, $j4xItems)
 	{
 		$mergedId = [];
@@ -261,8 +257,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function MergedJ3xIdsDbGalleries($j3xItems, $j4xItems)
 	{
 		$mergedId = [];
@@ -296,8 +291,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_galleriesListSorted()
 	{
 		$galleries = [];
@@ -326,8 +320,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_galleriesSortedByParent($dbGalleries, $parentId = 0, $level = 0)
 	{
 		$sortedGalleries = [];
@@ -390,8 +383,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j4x_galleriesSortedByParent($dbGalleries, $parentId = 0, $level = 0)
 	{
 		$sortedGalleries = [];
@@ -458,8 +450,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return int|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function setNestingNodes2J4xGalleries(&$sortedGalleries, $parentId = 0, $level = 0, $lastNodeIdx = 1)
 	{
 		// $changedGalleries = [];
@@ -500,8 +491,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j4x_galleriesList()
 	{
 		$galleries = [];
@@ -535,8 +525,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j4_GalleriesToJ3Form($j4x_galleries)
 	{
 		$j3x_galleries = [];
@@ -579,8 +568,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return string
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function GalleriesListAsHTML($galleries)
 	{
 		$html = '';
@@ -609,8 +597,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return string
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function GalleriesOfLevelHTML($galleries, $parentId, $level)
 	{
 		$html = [];
@@ -662,8 +649,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return string
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function GalleryHTML($gallery, $level)
 	{
 		$html = [];
@@ -708,8 +694,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function convertJ3xGalleriesToJ4x($J3xGalleryItemsSorted)
 	{
 		$J4Galleries = [];
@@ -735,8 +720,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function convertJ3xGallery($j3x_gallery)
 	{
 		$j4x_GalleryItem = [];
@@ -792,8 +776,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbAllJ3xGalleries2J4x()
 	{
 		$isOk = false;
@@ -816,8 +799,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_DbGalleryList_imagesTransferred_YN()
 	{
 		$j3xGalleriesItems = [];
@@ -849,8 +831,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return false
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function assignDbImagesTransferredFlag($j3xGalleriesItem)
 	{
 		$isOk = false;
@@ -962,8 +943,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_GalleryList_imagesTransferred_YN()
 	{
 		$j3xGalleriesItems = [];
@@ -994,8 +974,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return false
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function assignImagesTransferredFlag($j3xGalleriesItem)
 	{
 		$isOk = false;
@@ -1063,8 +1042,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbSelectedJ3xGalleries2J4x($selectedIds)
 	{
 		$isOk = false;
@@ -1089,8 +1067,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbJ3xGalleries2J4x($j3xGalleriesItems)
 	{
 		$isOk = false;
@@ -1137,8 +1114,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return int|true
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function writeGalleryList2Db($j4xGalleriesItems)
 	{
 		$isOk = true;
@@ -1165,8 +1141,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function writeGalleryItem2Db($j4x_GalleryItem)
 	{
 		$isOk = false;
@@ -1281,8 +1256,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_imagesList()
 	{
 		$images = [];
@@ -1315,8 +1289,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_imagesInfoList()
 	{
 		$images = [];
@@ -1349,8 +1322,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_imagesListOfIds($selectedIds)
 	{
 		$images = [];
@@ -1387,8 +1359,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_galleriesListOfIds($selectedIds)
 	{
 		$galleries = [];
@@ -1423,8 +1394,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j4x_imagesList()
 	{
 		$images = [];
@@ -1459,8 +1429,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_imagesMergeList()
 	{
 		$images = [];
@@ -1580,8 +1549,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbAllJ3xImages2J4x()
 	{
 		$isOk = false;
@@ -1610,8 +1578,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbImagesOfSelectedGalleries($selectedJ3xGalleryIds)
 	{
 		$isOk = false;
@@ -1659,8 +1626,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function revertCopyDbJ3xImages2J4xUser()
 	{
 		$isOk = false;
@@ -1689,8 +1655,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbSelectedJ3xImages2J4x($selectedIds)
 	{
 		$isOk = false;
@@ -1715,8 +1680,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function copyDbJ3xImages2J4x($j3xImageItems)
 	{
 		$isOk = false;
@@ -1750,8 +1714,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return false
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function convertSelectedJ3xImages2J4x($selectedIds)
 	{
 		$isOk = false;
@@ -1775,8 +1738,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function convertDbJ3xImagesToJ4x($J3xImagesItems)
 	{
 		$j4ImageItems = [];
@@ -1803,8 +1765,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return int|true
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function writeImageList2Db($j4ImageItems)
 	{
 		$isOk = true;
@@ -1831,8 +1792,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function writeImageItem2Db($j4ImageItem)
 	{
 		$isOk = false;
@@ -1940,8 +1900,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	private function convertDbJ3xImage($j3x_image)
 	{
 		$j4_imageItem = []; //new \stdClass();
@@ -2082,8 +2041,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	private function convertDbJ3xGallery2J4xId($j3xGalleriesItem) //$j3x_image->gallery_id
 	{
 		$gallery_id_j4x = -1;
@@ -2122,8 +2080,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	public static function resetImagesTable()
 	{
 		$isImagesReset = false;
@@ -2160,8 +2117,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function imageNamesById($cids)
 	{
 		$imageNamesById = [];
@@ -2210,8 +2166,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function updateMovedJ3xImages2J4x($j3xImageIds)
 	{
 		$isDbUpdated = false;
@@ -2259,8 +2214,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function CheckImagePaths()
 	{
 		$isPathsExisting = false;
@@ -2283,8 +2237,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function RepairImagePaths()
 	{
 		$isPathsRepaired = false;
@@ -2312,8 +2265,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return array
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_transformGalleryIdsTo_j4x($j3x_galleries)
 	{
 		$j4xGalleryIds = [];
@@ -2334,8 +2286,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3xGalleriesWithImgCount()
 	{
 		$j3xGalleriesWithImgCount = [];
@@ -2560,8 +2511,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function galleryIdsJ3x_ImagesNotMoved($j3xGalleriesItems)
 	{
 		$galleryIdsJ3x_NotMoved = []; // ToDo: [] ==> []
@@ -2596,8 +2546,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_imagesToBeMovedByGallery($j4xGalleryIds)
 	{
 		$imagesToBeMoved = []; // ToDo: [] ==> []
@@ -2756,8 +2705,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	protected function dbMarkImagesAsTransferred($movedIds, $isUse_j3x_location = false)
 	{
 		$isIdsMarked = false;
@@ -2796,8 +2744,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array[]
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function check4ExistingDisplayImage($imgObjects)
 	{
 		$idsExisting    = [];
@@ -2877,8 +2824,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return array
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3x_moveImage($id, $name, $galleryId)
 	{
 		global $rsgConfig, $isDebugBackend, $isDevelop;
@@ -2994,8 +2940,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return int
 	 *
-	 * @since __BUMP_VERSION__
-	 */
+	 * @since  5.1.0	 */
 	private function RenameJ3xImageFile(string $j3xFile, string $j4xFile)
 	{
 		$state = MaintenanceJ3xModel::J3X_IMG_NOT_FOUND;
@@ -3081,8 +3026,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3xUpgradeJ3xMenuLinks()
 	{
 		$successful = false;
@@ -3141,8 +3085,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3xDegradeUpgradedJ4xMenuLinks()
 	{
 		$successful = false;
@@ -3230,8 +3173,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3xLowerJ4xMenuLinks()
 	{
 		$successful = false;
@@ -3281,8 +3223,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3xUpperJ4xMenuLinks()
 	{
 		$successful = false;
@@ -3345,8 +3286,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3xReplaceGid2IdMenuLinks()
 	{
 		$successful = false;
@@ -3399,8 +3339,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function j3xReplaceId2GidMenuLinks()
 	{
 		$successful = false;
@@ -3454,8 +3393,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *    index.php?option=com_rsgallery2&view=gallery&id=2
 	 *    index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function linkAddToGalleryId(string $oldLink, int $delta)
 	{
 		$newLink = $oldLink;
@@ -3497,8 +3435,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return int|string
 	 *
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function menuParamsByJ3xType($oldLink, $oldParams)
 	{
 		// fall back use given
@@ -3751,8 +3688,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *     index.php?option=com_rsgallery2&view=gallery&id=2
 	 *     index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function linkUpgradeByJ3xType(string $newLink, $params)
 	{
 		try
@@ -3860,8 +3796,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
 	 *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function linkDegradeByJ4xType(string $newLink)
 	{
 		try
@@ -3933,8 +3868,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *      index.php?option=com_rsgallery2&view=gallery&id=2
 	 *      index.php?option=com_rsgallery2&view=slideshow&id=227
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function linkIncreaseGalleryId($link)
 	{
 		return $this->linkAddToGalleryId($link, +1);
@@ -3945,8 +3879,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return int|string
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function linkDecreaseGalleryId($oldLink)
 	{
 		return $this->linkAddToGalleryId($oldLink, -1);
@@ -3964,8 +3897,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
 	 *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function linkLowercaseJ4xType(string $newLink)
 	{
 		try
@@ -4039,8 +3971,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *     index.php?option=com_rsgallery2&view=galleryj3x&id=2       => ...2&view=gallery&id=2
 	 *     index.php?option=com_rsgallery2&view=slideshowj3x&id=227   => ...&view=slideshow&id=227
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function linkUppercaseJ4xType(string $newLink)
 	{
 		try
@@ -4111,8 +4042,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function updateMenuItem(string $id, $newLink, $newParams)
 	{
 		$successful = false;
@@ -4145,8 +4075,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return mixed
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function dbValidJ3xGidMenuItems()
 	{
 		$menuLinks = [];
@@ -4199,8 +4128,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return mixed
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function dbValidJ4xGidMenuItems()
 	{
 		$menuLinks = [];
@@ -4254,8 +4182,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return mixed
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function dbValidGid2IdMenuItems()
 	{
 		$menuLinks = [];
@@ -4317,8 +4244,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return mixed
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function dbValidId2GidMenuItems()
 	{
 		$menuLinks = [];
@@ -4380,8 +4306,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return mixed
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function dbUpperCaseJ4xGidMenuItems()
 	{
 		$menuLinks = [];
@@ -4483,8 +4408,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 * @return int|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	public function resetUpgradeFlags()
 	{
 		$isOk = true;

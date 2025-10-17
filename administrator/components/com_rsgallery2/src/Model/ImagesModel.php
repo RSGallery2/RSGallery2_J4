@@ -89,8 +89,7 @@ class ImagesModel extends ListModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function populateState($ordering = 'a.ordering', $direction = 'desc')
     {
         $app = Factory::getApplication();
@@ -144,8 +143,7 @@ class ImagesModel extends ListModel
      *
      * @return  string  A store id.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getStoreId($id = '')
     {
         // Compile the store id.
@@ -166,8 +164,7 @@ class ImagesModel extends ListModel
      *
 	 * @return  Queryinterface object.
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since   5.1.0     */
     protected function getListQuery()
     {
         // Create a new query object.
@@ -408,8 +405,7 @@ class ImagesModel extends ListModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     protected function prepareTable($table)
     {
         $date = Factory::getDate();
@@ -449,8 +445,7 @@ class ImagesModel extends ListModel
      *
      * @return  boolean  True if the association exists
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     public function getAssoc()
     {
         static $assoc = null;
@@ -493,8 +488,7 @@ class ImagesModel extends ListModel
      *
      * @return  mixed  An array of data items on success, false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     public function getItems()
     {
         $items = parent::getItems();
@@ -518,8 +512,7 @@ class ImagesModel extends ListModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     /**
 	public function countItems(&$items, $extension)
 	{
@@ -548,8 +541,7 @@ class ImagesModel extends ListModel
      * @return array rows with image name, gallery name, date, and user name as rows
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+	 * @since     5.1.0     */
     public static function latestImages($limit)
     {
         $latest = [];
@@ -598,8 +590,7 @@ class ImagesModel extends ListModel
      *
      * @return array rows with image name, gallery name, date, and user name as rows
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since     5.1.0     */
     static function allImages()
     {
         $latest = [];
@@ -656,8 +647,7 @@ class ImagesModel extends ListModel
      *
      * @return string
      *
-     * @since version
-     */
+	 * @since     5.1.0     */
     protected static function GalleryName($id)
     {
         // Create a new query object.
@@ -688,8 +678,7 @@ class ImagesModel extends ListModel
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since     5.1.0     */
     public static function reinitImagesTable($rgt = 1)
     {
         $isImagesReset = false;

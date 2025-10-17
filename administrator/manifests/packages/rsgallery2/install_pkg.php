@@ -19,8 +19,7 @@ class Pkg_FoosInstallerScript
 	/**
 	 * Extension script constructor.
 	 *
-	 * @since   __BUMP_VERSION__
-	 */
+	 * @since 5.1.0	 */
 	public function __construct()
 	{
 		$this->minimumJoomla = '4.0';

@@ -27,8 +27,7 @@ class rsgallery2Version
 //    var $PRODUCT = 'RSGallery2';
     /**
      * @var mixed|string
-     * @since version
-     */
+     * @since 5.1.0     */
     protected $name = 'RSGallery2';
     // Main Release Level: x.y.z
 //    var $RELEASE = '5.0.999';
@@ -41,8 +40,7 @@ class rsgallery2Version
 //    var $URL = '<strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>';
 
     /**
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     function __construct()
     {
         //--- collect data from manifest -----------------
@@ -98,8 +96,7 @@ class rsgallery2Version
 
     /**
      * @return string Long format version
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function getLongVersion()
     {
         return $this->name . ' '
@@ -110,8 +107,7 @@ class rsgallery2Version
 
     /**
      * @return string Short version format
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function getShortVersion()
     {
         return $this->name . ' '
@@ -121,8 +117,7 @@ class rsgallery2Version
 
     /**
      * @return string with footer added
-     * @since __BUMP_VERSION__
-     * /
+     * @since  5.1.0     * /
     //function getCopyrightVersion()
     function getFooterCopyrightVersion()
     {
@@ -134,8 +129,7 @@ class rsgallery2Version
      * Plain version
      *
      * @return string PHP standardized version format
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function getVersion()
     {
         return $this->version;
@@ -147,8 +141,7 @@ class rsgallery2Version
      * @param $version
      *
      * @return int -1 (lower), 0 (equal) or 1 (higher)
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     function checkVersion($version)
     {
         $check = version_compare($version, $this->version);

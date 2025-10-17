@@ -167,8 +167,7 @@ class Config extends AbstractCommand
 	 *
 	 * @return array
 	 *
-	 * @since version
-	 */
+	 * @since  5.1.0	 */
 	// ToDo: $configVars -> $rsgConfig is Registry
 	// ToDo: assoc2DefinitionList is declared multiple
 	private function assoc2DefinitionList($configVars, $max_len = 70)

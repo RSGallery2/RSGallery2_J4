@@ -32,8 +32,7 @@ class GalleryController extends FormController
      * The extension for which the galleries apply.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $extension;
 
     /**
@@ -44,8 +43,7 @@ class GalleryController extends FormController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since  __BUMP_VERSION__
-     * @see    \JControllerLegacy
+     * @since   5.1.0     * @see    \JControllerLegacy
      *
      * /**/
 

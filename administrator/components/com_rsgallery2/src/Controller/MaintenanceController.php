@@ -36,8 +36,7 @@ class MaintenanceController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -48,8 +47,7 @@ class MaintenanceController extends BaseController
      *
      * @throws \Exception
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function CheckImagePaths()
     {
         $isOk = false;
@@ -95,8 +93,7 @@ class MaintenanceController extends BaseController
      *
      * @throws \Exception
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function RepairImagePaths()
     {
         $isOk = false;
@@ -143,8 +140,7 @@ class MaintenanceController extends BaseController
      * The default view.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
 //	protected $default_view = 'rsgallery2';
 
     /**
@@ -156,8 +152,7 @@ class MaintenanceController extends BaseController
      *
      * @license    GNU General Public License version 2 or later
      *
-     * @since      __BUMP_VERSION__
-     *
+     * @since      5.1.0     *
 	public function display($cachable = false, $urlparams = [])
 	{
 
@@ -179,8 +174,7 @@ class MaintenanceController extends BaseController
      *
      * @return mixed
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**
     public function getModel($name = 'Maintenance', $prefix = 'Administrator', $config = array('ignore_request' => true))
     {
@@ -195,8 +189,7 @@ class MaintenanceController extends BaseController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function checkImageExifData()
     {
         $this->checkToken();
@@ -298,8 +291,7 @@ class MaintenanceController extends BaseController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function cancel()
     {
         $this->checkToken();
@@ -315,8 +307,7 @@ class MaintenanceController extends BaseController
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function cancel_rsg2()
     {
         $this->checkToken();

@@ -34,8 +34,7 @@ class ImageReference
 {
     /**
      * @var
-     * @since version
-     */
+     * @since 5.1.0     */
     public $allImagePaths;
     /**
      * @var string
@@ -103,23 +102,19 @@ class ImageReference
 
     /**
      * @var
-     * @since version
-     */
+     * @since 5.1.0     */
     public $originalFilePath;
     /**
      * @var
-     * @since version
-     */
+     * @since 5.1.0     */
     public $displayFilePath;
     /**
      * @var
-     * @since version
-     */
+     * @since 5.1.0     */
     public $thumbFilePath;
     /**
      * @var
-     * @since version
-     */
+     * @since 5.1.0     */
     public $sizeFilePaths; // 800x6000, ..., ? display:J3x
 
 	public bool $UseWatermarked;
@@ -178,8 +173,7 @@ class ImageReference
      *
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public function assignDbItem($image)
     {
         // ToDo: path to original file on outside folder
@@ -239,8 +233,7 @@ class ImageReference
      * Check all epected pathes for image existance
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     public function check4ImageIsNotExisting()
     {
         try {
@@ -304,8 +297,7 @@ class ImageReference
      * @param $imageName
      *
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     public function initOrphanedItem($galleryId, $imageName)
     {
         try {
@@ -358,8 +350,7 @@ class ImageReference
      * @param $imagePath
      *
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     public function assignOrphanedItem($sizeName, $imagePath)
     {
         $isImageAssigned = false;

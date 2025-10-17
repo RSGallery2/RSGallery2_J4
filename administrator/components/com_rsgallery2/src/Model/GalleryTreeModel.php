@@ -37,8 +37,7 @@ class GalleryTreeModel extends BaseModel
      *
      * @return true on galleries found
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     // ToDo: change to static ?
     public function isRootItemExisting()
     {
@@ -79,8 +78,7 @@ class GalleryTreeModel extends BaseModel
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function reinitNestedGalleryTable($rgt = 1)
     {
         $isGalleryTreeReset = false;

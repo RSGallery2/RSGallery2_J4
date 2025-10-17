@@ -50,8 +50,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an \Exception object.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function display($tpl = null)
     {
         global $rsgConfig;
@@ -105,8 +104,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function addToolbar($Layout)
     {
         // Get the toolbar object instance

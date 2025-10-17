@@ -21,8 +21,7 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      * @param $image
      *
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     public function assignPathData($image)
     {
         $image->OriginalFile = $this->getOriginalPath($image->name);
@@ -55,8 +54,7 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      *
      * @param $image
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     public function urlReplaceMissing_BySign($image)
     {
         // $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.png';
@@ -83,8 +81,7 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      *
      * @param $image
      *
-     * @since version
-     */
+     * @since 5.1.0     */
     public function urlReplaceMissingImages_ByChild ($image) {
 
         if (!$image->isThumbFileExist) {

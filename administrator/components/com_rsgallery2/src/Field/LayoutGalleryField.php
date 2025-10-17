@@ -34,8 +34,7 @@ class LayoutGalleryField extends ListField
      * Cached array of the category items.
      *
      * @var    array
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
 //	protected static $options = [];
 
     /**
@@ -43,8 +42,7 @@ class LayoutGalleryField extends ListField
      *
      * @var string
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     protected $type = 'LayoutGallery';
 
     /**
@@ -53,8 +51,7 @@ class LayoutGalleryField extends ListField
      *
      * @return  string  The field input markup.
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
 	protected function getInput()
 	{
 		return $this->getOptions() ? parent::getInput() : '';
@@ -66,8 +63,7 @@ class LayoutGalleryField extends ListField
      *
      * @return   array The field option objects.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since    5.1.0     */
     protected function getOptions()
     {
         $current_slideshows = [];
@@ -143,8 +139,7 @@ class LayoutGalleryField extends ListField
      *
      * @return array
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     private function subLayouts(string $layoutFolder)
     {
         $subLayouts = [];

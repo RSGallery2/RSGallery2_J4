@@ -31,8 +31,7 @@ class RatingController extends BaseController
      * The extension for which the galleries apply.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $extension;
 
     /**
@@ -43,8 +42,7 @@ class RatingController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input               $input    Input
      *
-     * @since  __BUMP_VERSION__
-     * @see    JControllerLegacy
+     * @since   5.1.0     * @see    JControllerLegacy
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {

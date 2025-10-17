@@ -32,8 +32,7 @@ class ImageController extends FormController
      * The extension for which the galleries apply.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $extension;
 
     /**
@@ -44,8 +43,7 @@ class ImageController extends FormController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since  __BUMP_VERSION__
-     * @see    \JControllerLegacy
+     * @since   5.1.0     * @see    \JControllerLegacy
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
@@ -417,8 +415,7 @@ class ImageController extends FormController
      *
      * @return  boolean
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
 	protected function allowAdd($data = [])
 	{
         $app  = Factory::getApplication();
@@ -436,8 +433,7 @@ class ImageController extends FormController
      *
      * @return  boolean
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
 	protected function allowEdit($data = [], $key = 'parent_id')
 	{
 		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
@@ -481,8 +477,7 @@ class ImageController extends FormController
      *
      * @return  boolean  True if successful, false otherwise and internal error is set.
      *
-     * @since __BUMP_VERSION__
-     *
+     * @since   5.1.0     *
 	public function batch($model = null)
 	{
 	$this->checkToken();
@@ -506,8 +501,7 @@ class ImageController extends FormController
      *
      * @return  string  The arguments to append to the redirect URL.
      *
-     * @since __BUMP_VERSION__
-     *
+	 * @since      5.1.0     *
 	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
 	{
 		$append = parent::getRedirectToItemAppend($recordId);
@@ -522,8 +516,7 @@ class ImageController extends FormController
      *
      * @return  string  The arguments to append to the redirect URL.
      *
-     * @since __BUMP_VERSION__
-     *
+	 * @since      5.1.0     *
 	protected function getRedirectToListAppend()
 	{
 		$append = parent::getRedirectToListAppend();
@@ -541,8 +534,7 @@ class ImageController extends FormController
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     *
+	 * @since      5.1.0     *
 	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
 	{
 		$item = $model->getItem();

@@ -31,8 +31,7 @@ class ConfigJ3xRawModel extends BaseModel
      *
      * @return string
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function saveFromForm()
     {
         // $msg = "Rsgallery2ModelConfigRaw: ";
@@ -52,8 +51,7 @@ class ConfigJ3xRawModel extends BaseModel
      * @return bool
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function saveItems($configurationItems): bool
     {
         $isSaved = false;
@@ -96,8 +94,7 @@ class ConfigJ3xRawModel extends BaseModel
      *
      * @return array
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public function SecureConfigurationItems($configurationItems)
     {
         $securedItems = [];
@@ -170,8 +167,7 @@ class ConfigJ3xRawModel extends BaseModel
      *
      * @return bool
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function writeConfigParam($param = '', $value = '')
     {
         // Load the current component params.

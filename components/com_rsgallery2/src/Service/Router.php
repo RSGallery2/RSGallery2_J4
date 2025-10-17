@@ -44,8 +44,7 @@ class Router extends RouterView
      *
      * @var DatabaseInterface
      *
-     * @since  __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     private $db;
 
     /**

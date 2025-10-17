@@ -26,8 +26,7 @@ class InstallMessage
 {
     /**
      * @var string
-     * @since version
-     */
+     * @since 5.1.0     */
     protected $linksHtml = '';
     public $newRelease = '-1.0.0.1';
     public $oldRelease = '';
@@ -38,8 +37,7 @@ class InstallMessage
      * @param   string  $newRelease
      * @param   string  $oldRelease
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($newRelease, $oldRelease = '')
     {
         $this->newRelease = $newRelease;
@@ -56,8 +54,7 @@ class InstallMessage
      *
      * @return string
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function installMessageText($updateId = '')
     {
         $instMessage = "";
@@ -79,8 +76,7 @@ class InstallMessage
      *
      * @return string html of loo and buttons
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public static function createLinksHtml($newRelease)
     {
         //--- prepare links and text in variables --------------------------------------------
@@ -141,8 +137,7 @@ class InstallMessage
      * @return string html card containing tables for each version
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     private function changeLogHtml()
     {
         $changeLogText = '';

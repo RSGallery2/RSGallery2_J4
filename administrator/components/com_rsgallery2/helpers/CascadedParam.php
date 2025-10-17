@@ -35,8 +35,7 @@ class CascadedParam
      *
      * @return mixed|stdClass last found 'valid' value
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public static function lastSet(...$paramValues) {
 		$paramValue = new \stdClass();
 

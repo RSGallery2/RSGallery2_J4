@@ -29,8 +29,7 @@ class GalleryField extends FormField
      * The form field type.
      *
      * @var     string
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected $type = 'Modal_Gallery';
 
     /**
@@ -38,8 +37,7 @@ class GalleryField extends FormField
      *
      * @return  string  The field input markup.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getInput()
     {
         if ($this->element['extension']) {
@@ -279,8 +277,7 @@ class GalleryField extends FormField
      *
      * @return  string  The field label markup.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getLabel()
     {
         return str_replace($this->id, $this->id . '_id', parent::getLabel());

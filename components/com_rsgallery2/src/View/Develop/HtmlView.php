@@ -31,24 +31,21 @@ class HtmlView extends BaseHtmlView
      * The page parameters
      *
      * @var    Registry|null
-     * @since  __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $params = null;
 
     /**
      * The item model state
      *
      * @var    Registry
-     * @since  __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
 //    protected $state;
 
     /**
      * The item object details
      *
      * @var    \stdClass
-     * @since  __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
 //    protected $item;
 
 	protected $routeTests = [];

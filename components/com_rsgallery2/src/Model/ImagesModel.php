@@ -111,8 +111,7 @@ class ImagesModel extends ListModel
      * @param   null  $imagesParameter
      *
      *
-     * @since version
-     */
+     * @since   5.1.0     */
 
     private function CascadedLayoutParameter() // For gallery images view
     {
@@ -446,8 +445,7 @@ class ImagesModel extends ListModel
      * @return array rows with image name, images name, date, and user name as rows
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function latestImages($limit)
     {
         $images = [];
@@ -493,8 +491,7 @@ class ImagesModel extends ListModel
      * @return array rows with image name, images name, date, and user name as rows
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function randomImages($limit)
     {
         $images = [];
@@ -691,8 +688,7 @@ class ImagesModel extends ListModel
      *
      * @return  QueryInterface object.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getListQuery()
     {
         // Create a new query object.

@@ -31,8 +31,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
      * @param   MVCFactoryInterface  $factory  The factory.
      *
      * @see     \JControllerLegacy
-     * @since   __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null)
     {
         /**
@@ -83,8 +82,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function populateState($ordering = 'a.id', $direction = 'desc')
     {
         /**
@@ -136,8 +134,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
      *
      * @return  string  A store id.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getStoreId($id = '')
     {
         // Compile the store id.
@@ -158,8 +155,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
      *
 	 * @return  Queryinterface object.
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since   5.1.0     */
     protected function getListQuery()
     {
         // Create a new query object.

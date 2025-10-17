@@ -50,8 +50,7 @@ class VersionController extends ApiController
      *
      * @return $this|\Joomgallery\Component\Joomgallery\Api\Controller\VersionController
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public function display($cachable = false, $urlparams = [])
     {
         $viewType   = $this->app->getDocument()->getType();

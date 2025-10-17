@@ -44,8 +44,7 @@ class ImageFileModel extends ListModel // BaseModel
     /**
      * Constructor.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     public function __construct()
     {
 //		global $rsgConfig, $Rsg2DebugActive;
@@ -73,8 +72,7 @@ class ImageFileModel extends ListModel // BaseModel
      *
      * @return array
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**/
     public function imageFileAttrib($ImageId)
     {

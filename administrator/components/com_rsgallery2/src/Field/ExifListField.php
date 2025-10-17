@@ -33,8 +33,7 @@ class ExifListField extends ListField
      *
      * @var string
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since 5.1.0     */
     protected $type = 'ExifList';
 
     /**
@@ -42,8 +41,7 @@ class ExifListField extends ListField
      *
      * @return  array  The field option objects.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getOptions()
     {
         $options = [];

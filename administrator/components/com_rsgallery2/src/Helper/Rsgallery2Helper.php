@@ -30,8 +30,7 @@ class Rsgallery2Helper extends ContentHelper
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public static function addSubmenu($vName)
     {
 

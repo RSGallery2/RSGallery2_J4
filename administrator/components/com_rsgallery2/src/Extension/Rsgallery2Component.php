@@ -44,8 +44,7 @@ class Rsgallery2Component extends MVCComponent implements BootableExtensionInter
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function boot(ContainerInterface $container)
     {
         $this->getRegistry()->register('rsgallery2administrator', new AdministratorService);

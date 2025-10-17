@@ -39,8 +39,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
      * It can not be added to populatian as it needs ...
      *
 	 * @throws \Exception
-     * @since version
-     */
+	 * @since  5.1.0     */
 
     public function setState2SingleItem(array $items)
     {
@@ -79,8 +78,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
      *
      * @return int
      *
-     * @since version
-     *
+	 * @since     5.1.0     *
      *  ToDo: move to model
      */
     public function imageIdxInList($imageId, $images)
@@ -110,8 +108,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
      *
      * @return array Return exif item list of 'translation Id' => value
      *
-     * @since version
-     */
+	 * @since     5.1.0     */
     public function exifDataUserSelected($filename, $userExifTags)
     {
         $exifDataOfFile = [$filename];
@@ -153,8 +150,7 @@ class SlidePageJ3XModel extends Imagesj3xModel
      *
      * @return  QueryInterface object.
      *
-     * @since __BUMP_VERSION__
-     */
+	 * @since      5.1.0     */
     protected function getListQuery()
     {
         $query = parent::getListQuery();

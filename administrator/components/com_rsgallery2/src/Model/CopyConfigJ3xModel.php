@@ -76,8 +76,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
      * @return array
      *
      * @throws \Exception
-     * @since version
-     */
+     * @since  5.1.0     */
     static function MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems)
     {
         // component parameters to array
@@ -232,8 +231,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
      * @return bool
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function collectAndCopyJ3xConfig2J4xOptions()
     {
         $isOk = false;
@@ -286,8 +284,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
      * @return bool
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function copyJ3xConfigItems2J4xOptions(
         $j4xConfigItems,
         $assistedJ3xItems,

@@ -38,8 +38,7 @@ return new class implements ServiceProviderInterface {
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function register(Container $container)
     {
 //		$container->set(AssociationExtensionInterface::class, new AssociationsHelper);

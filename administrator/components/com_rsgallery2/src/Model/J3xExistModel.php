@@ -31,8 +31,7 @@ class J3xExistModel extends BaseModel
      *
      * @return bool
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     static function J3xConfigTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_config');

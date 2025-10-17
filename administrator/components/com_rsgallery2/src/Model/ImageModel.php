@@ -45,24 +45,21 @@ class ImageModel extends AdminModel
      * The prefix to use with controller messages.
      *
      * @var    string
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $text_prefix = 'COM_RSGALLERY2';
 
     /**
      * The type alias for this content type. Used for content version history.
      *
      * @var      string
-     * @since __BUMP_VERSION__
-     */
+     * @since    5.1.0     */
     public $typeAlias = 'com_rsgallery2.image';
 
     /**
      * The context used for the associations table
      *
      * @var      string
-     * @since __BUMP_VERSION__
-     */
+     * @since    5.1.0     */
     protected $associationsContext = 'com_rsgallery2.image';
 
     /**
@@ -72,8 +69,7 @@ class ImageModel extends AdminModel
      * @param   MVCFactoryInterface  $factory  The factory.
      *
      * @see     \Joomla\CMS\MVC\Model\BaseDatabaseModel
-     * @since   __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null)
     {
 //		$extension = Factory::getApplication()->input->get('extension', 'com_rsgallery2');
@@ -93,8 +89,7 @@ class ImageModel extends AdminModel
      *
      * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function canDelete($record)
     {
         if (empty($record->id) || $record->published != -2) {
@@ -111,8 +106,7 @@ class ImageModel extends AdminModel
      *
      * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function canEditState($record)
     {
         $app  = Factory::getApplication();
@@ -141,8 +135,7 @@ class ImageModel extends AdminModel
      *
      * @return  Table  A Table object
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getTable($type = 'Image', $prefix = 'Rsgallery2Table', $config = [])
     {
         return parent::getTable($type, $prefix, $config);
@@ -155,8 +148,7 @@ class ImageModel extends AdminModel
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function populateState()
     {
         $app = Factory::getApplication();
@@ -190,8 +182,7 @@ class ImageModel extends AdminModel
      *
      * @return  mixed  Object on success, false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getItem($pk = null)
     {
         $item = parent::getItem($pk);
@@ -222,8 +213,7 @@ class ImageModel extends AdminModel
      *
      * @return  Form|boolean  A Form object on success, false on failure
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getForm($data = [], $loadData = true)
     {
         /**
@@ -257,8 +247,7 @@ class ImageModel extends AdminModel
      *
      * @return  mixed  The data for the form.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
@@ -301,8 +290,7 @@ class ImageModel extends AdminModel
      *
      * @param   Table  $table
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     /**/
     protected function prepareTable($table)
     {
@@ -366,8 +354,7 @@ class ImageModel extends AdminModel
      *
      * @return  array   An array of conditions to add to add to ordering queries.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     /**
 	protected function getReorderConditions($table)
 	{
@@ -385,8 +372,7 @@ class ImageModel extends AdminModel
      *
      * @return  boolean  True on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function save($data)
     {
         $table   = $this->getTable();
@@ -645,8 +631,7 @@ class ImageModel extends AdminModel
      *
      * @return  boolean  True on success.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function publish(&$pks, $value = 1)
     {
         if (parent::publish($pks, $value)) {
@@ -678,8 +663,7 @@ class ImageModel extends AdminModel
      *
      * @return    array  Contains the modified title and alias.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since     5.1.0     */
     /**/
     protected function generateNewTitle($dummy, $alias, $title)
     {
@@ -703,8 +687,7 @@ class ImageModel extends AdminModel
      *
      * @return string changed or not changed name
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function generateNewImageName($name, $galleryId = 0)
     {
         // Alter the title & alias
@@ -730,8 +713,7 @@ class ImageModel extends AdminModel
      * @return bool true if successful
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**
 	public function createImageDbBaseItem($imageName)
 	{
@@ -816,8 +798,7 @@ class ImageModel extends AdminModel
      *
      * @return bool true if successful
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**/
     public function createImageDbItem($imageName, $title = '', $galleryId = 0, $description = '')
     {
@@ -921,8 +902,7 @@ class ImageModel extends AdminModel
      *
      * @return bool true if successful
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**/
     public function moveImagesToGallery() // ToDo: Rename moveImagesToGallery (imageIds, galleryId)
     {
@@ -996,8 +976,7 @@ class ImageModel extends AdminModel
      *
      * @return int next ordering, 1 on error
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**/
     private function nextOrdering($GalleryId)
     {
@@ -1034,8 +1013,7 @@ class ImageModel extends AdminModel
      *
      * @return bool true if successful
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**/
     public function copyImagesTo() // ToDo: Rename copyImagesToToGallery (imageIds, galleryId)
     {
@@ -1187,8 +1165,7 @@ class ImageModel extends AdminModel
      * @return bool true if successful
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**
 	public function assignGalleryId($imageId, $galleryId)
 	{
@@ -1236,8 +1213,7 @@ class ImageModel extends AdminModel
      * @return int image id
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**
 	public function ImageIdFromName($imageName)
 	{
@@ -1276,8 +1252,7 @@ class ImageModel extends AdminModel
      * @return bool true if successful
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     /**
 	public function deleteImageDbItem($imageName)
 	{
@@ -1317,8 +1292,7 @@ class ImageModel extends AdminModel
      * @return bool True on save ok
      *
      * @throws \Exception
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function save_imageProperties($imageProperties)
     {
         $IsSaved = false;
@@ -1549,8 +1523,7 @@ class ImageModel extends AdminModel
      *
      * @return array Return exif item list of 'translation Id' => value for each file
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public function exifDataFilesUserSelected($filenames)
     {
         $exifDataOfFiles = [];
@@ -1579,8 +1552,7 @@ class ImageModel extends AdminModel
      *
      * @return array Exif item list of 'translation Id' => value
      *
-     * @since version
-     */
+     * @since  5.1.0     */
     public function exifDataUserSelected($filename, $userExifTags)
     {
         $exifDataOfFile = [$filename];

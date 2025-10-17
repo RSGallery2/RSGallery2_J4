@@ -28,8 +28,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @var     array $extension
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected $extension = 'com_rsgallery2';
 
     /**
@@ -37,8 +36,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @var     array $itemTypes
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected $itemTypes = ['rsgallery2', 'category'];
 
     /**
@@ -46,8 +44,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @var     boolean $associationsSupport
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected $associationsSupport = true;
 
     /**
@@ -58,8 +55,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @return  array   Array of associations for the item
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getAssociationsForItem($id = 0, $view = null)
     {
         return AssociationHelper::getAssociations($id, $view);
@@ -73,8 +69,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @return  array
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getAssociations($typeName, $id)
     {
         $type = $this->getType($typeName);
@@ -109,8 +104,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @return  Table|null
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getItem($typeName, $id)
     {
         if (empty($id)) {
@@ -148,8 +142,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @return  array  Array of item types
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function getType($typeName = '')
     {
         $fields  = $this->getFieldsTemplate();
@@ -211,8 +204,7 @@ class AssociationsHelper extends AssociationExtensionHelper
      *
      * @return  array
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function getFieldsTemplate()
     {
         return [

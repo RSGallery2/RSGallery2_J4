@@ -61,8 +61,7 @@ class HtmlView extends BaseHtmlView
      * The pagination object
      *
      * @var    Pagination
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $pagination;
     /**
      * Form object for search filters
@@ -96,8 +95,7 @@ class HtmlView extends BaseHtmlView
      * Is there a content type associated with this gallery alias
      *
      * @var    boolean
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     protected $checkTags = false;
 
     protected $isDebugBackend;
@@ -112,8 +110,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an Error object.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function display($tpl = null)
     {
         //--- get needed form data ------------------------------------------
@@ -221,8 +218,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     protected function addToolbar($Layout = 'default')
     {
         $canDo = \Joomla\Component\Content\Administrator\Helper\ContentHelper::getActions('com_content', 'category', $this->state->get('filter.category_id'));

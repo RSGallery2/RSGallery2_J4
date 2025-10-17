@@ -33,8 +33,7 @@ class ImageTable extends Table
      *
      * @param   DatabaseDriver  $db  Database connector object
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function __construct(DatabaseDriver $db)
     {
         $this->typeAlias = 'com_rsgallery2.image';
@@ -54,8 +53,7 @@ class ImageTable extends Table
      * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
      *
      * @see     \Table::bind
-     * @since   __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function bind($array, $ignore = '')
     {
         if (isset($array['params']) && is_array($array['params'])) {
@@ -72,8 +70,7 @@ class ImageTable extends Table
      * @return  boolean  True on success.
      *
      * @throws  \UnexpectedValueException
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function check()
     {
         try {
@@ -152,8 +149,7 @@ class ImageTable extends Table
      *
      * @return  boolean  True on success, false on failure.
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since   5.1.0     */
     public function store($updateNulls = false)
     {
         $date = Factory::getDate();
@@ -213,8 +209,7 @@ class ImageTable extends Table
      *
      * @return bool True if successful
      *
-     * @since __BUMP_VERSION__
-     */
+     * @since  5.1.0     */
     public function delete($pk = null)
     {
         /**
