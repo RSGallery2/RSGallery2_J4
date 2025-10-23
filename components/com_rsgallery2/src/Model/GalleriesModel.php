@@ -263,7 +263,7 @@ class GalleriesModel extends ListModel
             // Create a new query object.
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $limit = 1;
 
@@ -314,7 +314,7 @@ class GalleriesModel extends ListModel
             // Create a new query object.
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             // Select required fields
             $query
@@ -376,7 +376,7 @@ class GalleriesModel extends ListModel
             // Select parent and child galleries
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 ->select('id, name')
@@ -413,7 +413,7 @@ class GalleriesModel extends ListModel
         try {
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             // count gallery items
             $query
                 ->select('COUNT(*)')
@@ -532,7 +532,7 @@ class GalleriesModel extends ListModel
             // Select parent and child galleries
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 ->select('*')
@@ -673,7 +673,7 @@ class GalleriesModel extends ListModel
         // Create a new query object.
         $db = $this->getDatabase();
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
@@ -898,7 +898,7 @@ class GalleriesModel extends ListModel
             // Select parent and child galleries
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 ->select('*')

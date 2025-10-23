@@ -114,7 +114,7 @@ class Rsg2_imagesHelper
 
 		if (trim($ordering) === 'rand()')
 		{
-			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
+			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->createQuery()->rand());
 		}
 		else
 		{
@@ -277,7 +277,7 @@ class Rsg2_imagesHelper
 //
 //		if (trim($ordering) === 'rand()')
 //		{
-//			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
+//			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->createQuery()->rand());
 //		}
 //		else
 //		{

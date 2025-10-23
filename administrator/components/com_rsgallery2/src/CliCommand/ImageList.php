@@ -187,7 +187,7 @@ class ImageList extends AbstractCommand
 	private function getItemsFromDB(string $userId, string $gallery_id): array
 	{
 		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query
 			->select('*')
 			->from('#__rsg2_images');

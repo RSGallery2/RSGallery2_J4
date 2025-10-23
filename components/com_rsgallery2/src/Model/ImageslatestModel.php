@@ -104,7 +104,7 @@ class imageslatestModel extends ListModel
         if (!isset($this->_item[$gid])) {
             try {
                 $db    = $this->getDatabase();
-                $query = $db->getQuery(true);
+                $query = $db->createQuery();
 
                 $query
                     ->select('*')

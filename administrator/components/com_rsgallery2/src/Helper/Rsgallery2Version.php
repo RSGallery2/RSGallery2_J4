@@ -11,7 +11,8 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
-\defined('_JEXEC') or die;
+
+\defined('_JEXEC') or die;
 
 /**
  * Version information class. Lives from the manifest file which it loads
@@ -46,7 +47,7 @@ class rsgallery2Version
         //--- collect data from manifest -----------------
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-        $query = $db->getQuery(true)
+        $query = $db->createQuery()
             ->select($db->quoteName('manifest_cache'))
             ->from($db->quoteName('#__extensions'))
             ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));

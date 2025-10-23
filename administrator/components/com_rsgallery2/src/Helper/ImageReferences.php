@@ -424,7 +424,7 @@ class ImageReferences
     private function getDbImagesList()
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         // ToDo: add path to original file
         // ToDo: add image sizes

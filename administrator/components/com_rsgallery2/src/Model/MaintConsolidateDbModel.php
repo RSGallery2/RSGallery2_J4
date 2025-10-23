@@ -103,7 +103,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
 			try
 			{
 				$db    = $this->getDatabase();
-				$query = $db->getQuery(true)
+				$query = $db->createQuery()
 					->select($db->quoteName('value'))
 					->from($db->quoteName('#__rsgallery2_config'))
 					->where($db->quoteName('name') . " = " . $db->quote('watermark'));

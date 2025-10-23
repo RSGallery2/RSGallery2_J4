@@ -173,7 +173,7 @@ class Galleriesj3xModel extends ListModel
      * try {
      * // Select parent and child galleries
      * $db = $this->getDatabase();
-     * $query = $db->getQuery(true);
+     * $query = $db->createQuery();
      *
      * $query->select('*')
      * //->from($db->quoteName('#__rsg2_galleries', 'a'))
@@ -211,7 +211,7 @@ class Galleriesj3xModel extends ListModel
             // Select parent and child galleries
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 ->select('*')
@@ -332,7 +332,7 @@ class Galleriesj3xModel extends ListModel
             // Create a new query object.
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $limit = 1;
 
@@ -383,7 +383,7 @@ class Galleriesj3xModel extends ListModel
             // Create a new query object.
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             // Select required fields
             $query
@@ -445,7 +445,7 @@ class Galleriesj3xModel extends ListModel
             // Select parent and child galleries
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 ->select('id, name')
@@ -482,7 +482,7 @@ class Galleriesj3xModel extends ListModel
         try {
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
             // count gallery items
             $query
                 ->select('COUNT(*)')
@@ -697,7 +697,7 @@ class Galleriesj3xModel extends ListModel
         // Create a new query object.
         $db = $this->getDatabase();
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $app  = Factory::getApplication();
         $user = $app->getIdentity();

@@ -36,7 +36,7 @@ class UploadModel extends BaseDatabaseModel
 
         try {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             // count gallery items
             $query->select('COUNT(*)')
@@ -74,7 +74,7 @@ class UploadModel extends BaseDatabaseModel
 
         try {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $test = $db->quoteName('created') . ', ' . $db->quoteName('id') . ' DESC' . "";
 

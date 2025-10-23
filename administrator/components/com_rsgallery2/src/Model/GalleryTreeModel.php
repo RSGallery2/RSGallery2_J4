@@ -16,7 +16,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
 
-
+
+
 
 // required may be needed as classes may not be loaded on fresh install
 // !!! needed by install
@@ -45,7 +46,7 @@ class GalleryTreeModel extends BaseModel
 
         try {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             // count gallery items
             $query->select('COUNT(*)')
@@ -90,7 +91,7 @@ class GalleryTreeModel extends BaseModel
 
             //--- delete old rows -----------------------------------------------
 
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query->delete($db->quoteName($id_galleries));
             // all rows
@@ -107,7 +108,7 @@ class GalleryTreeModel extends BaseModel
             // -- ('galleries root','galleries-root-alias','startpoint of list', 0, 0, '', 0, 1);
 
             // insert root record
-//            $query = $db->getQuery(true)
+//            $query = $db->createQuery()
 //                ->insert('#__profiles')
 //                ->set('parent_id = 0')
 //                ->set('lft = 0')
@@ -167,7 +168,7 @@ class GalleryTreeModel extends BaseModel
             ];
 
             // Create root element
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->insert('#__rsg2_galleries')
                 ->columns($db->quoteName($columns))
                 ->values(implode(',', $db->quote($values)));

@@ -162,7 +162,7 @@ class Image extends AbstractCommand
 	private function getItemAssocFromDB(string $ImageId): array
 	{
 		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query
 			->select('*')
 			->from('#__rsg2_images')

@@ -284,7 +284,7 @@ class SlideshowJ3xModel extends Galleryj3xModel {}
 
             try {
                 $db = $this->getDatabase();
-                $query = $db->getQuery(true);
+                $query = $db->createQuery();
 
                 $query->select('*')
                     //->from($db->quoteName('#__rsg2_galleries', 'a'))

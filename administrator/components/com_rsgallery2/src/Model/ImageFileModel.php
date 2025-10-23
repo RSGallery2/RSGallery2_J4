@@ -1211,7 +1211,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
         try {
             $db    = $this->getDatabase();
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select($db->quoteName('use_j3x_location'))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
@@ -1249,7 +1249,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         try {
             $db = $this->getDatabase();
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select($db->quoteName(['name', 'gallery_id', 'use_j3x_location']))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));

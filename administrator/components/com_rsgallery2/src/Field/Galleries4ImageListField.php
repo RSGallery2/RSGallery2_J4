@@ -67,7 +67,7 @@ class Galleries4ImageListField extends ListField
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id AS value, name AS text, level')
                 ->from($db->quoteName('#__rsg2_galleries'))

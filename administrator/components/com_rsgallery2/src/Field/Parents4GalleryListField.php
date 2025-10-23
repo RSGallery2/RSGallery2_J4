@@ -66,7 +66,7 @@ class Parents4GalleryListField extends ListField
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		    $query = $db->getQuery(true)
+		    $query = $db->createQuery()
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id AS value, name AS text, level')
                 ->from($db->quoteName('#__rsg2_galleries'))

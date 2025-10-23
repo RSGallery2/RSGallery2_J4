@@ -17,7 +17,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\Database\DatabaseInterface;
 
-
+
+
 
 /**
  * Collects available j3x gallery table ids and names
@@ -68,7 +69,7 @@ class GalleriesJ3xListField extends ListField
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id AS value, name AS text')
                 ->from($db->quoteName('#__rsgallery2_galleries'))

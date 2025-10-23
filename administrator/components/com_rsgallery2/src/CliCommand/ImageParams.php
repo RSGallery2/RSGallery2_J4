@@ -151,7 +151,7 @@ class ImageParams extends AbstractCommand
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 			$query
 				->select('params')
 				->from('#__rsg2_galleries')

@@ -36,7 +36,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
         try {
             // Create a new query object.
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 //->select('*')
@@ -205,7 +205,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 
         try {
             $db    = $this->getDatabase();
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('*')
                 ->from('#__rsgallery2_galleries')

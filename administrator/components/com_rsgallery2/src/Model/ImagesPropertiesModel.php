@@ -161,7 +161,7 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
         // Create a new query object.
         // $db = $this->getContainer()->get(DatabaseInterface::class);
         $db    = $this->getDatabase();
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $app  = Factory::getApplication();
         $user = $app->getIdentity();

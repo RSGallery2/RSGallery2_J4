@@ -49,7 +49,7 @@ class Rsgallery2Model extends BaseDatabaseModel
         if (!isset($this->_item[$pk])) {
             try {
                 $db    = $this->getDatabase();
-                $query = $db->getQuery(true);
+                $query = $db->createQuery();
 
                 $query
                     ->select('*')

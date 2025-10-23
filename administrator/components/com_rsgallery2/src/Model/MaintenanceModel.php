@@ -85,7 +85,7 @@ class MaintenanceModel extends BaseDatabaseModel
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleryIds
             $db = $this->getDatabase();
 
-	        $query = $db->getQuery(true)
+	        $query = $db->createQuery()
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id')
                 ->from($db->quoteName('#__rsg2_galleries'))

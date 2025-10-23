@@ -163,7 +163,7 @@ class Gallery extends AbstractCommand
 	private function getItemAssocFromDB(string $galleryId): array
 	{
 		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 		$query
 			->select('*')
 			->from('#__rsg2_galleries')

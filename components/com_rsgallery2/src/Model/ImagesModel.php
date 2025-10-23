@@ -249,7 +249,7 @@ class ImagesModel extends ListModel
             $db = $this->getDatabase();
 
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select('params') // ToDo: select single items
                 ->from($db->quoteName('#__rsg2_galleries'))
                 ->where($db->quoteName('id') . '=' . $gid);
@@ -291,7 +291,7 @@ class ImagesModel extends ListModel
                 $images = parent::getItems(); // gid ...
 
                 $db    = $this->getDatabase();
-                $query = $db->getQuery(true);
+                $query = $db->createQuery();
 
                 $query
                     ->select('*')
@@ -454,7 +454,7 @@ class ImagesModel extends ListModel
             // Create a new query object.
             //$db    = Factory::getContainer()->get(DatabaseInterface::class);
             $db    = $this->getDatabase();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 ->select('*')
@@ -500,7 +500,7 @@ class ImagesModel extends ListModel
             // Create a new query object.
             // $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $db    = $this->getDatabase();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             $query
                 ->select('*')
@@ -540,7 +540,7 @@ class ImagesModel extends ListModel
             $db = $this->getDatabase();
 
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__rsg2_galleries'))
                 ->where($db->quoteName('id') . '=' . $gid);
@@ -694,7 +694,7 @@ class ImagesModel extends ListModel
         // Create a new query object.
         $db = $this->getDatabase();
 
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $app  = Factory::getApplication();
         $user = $app->getIdentity();

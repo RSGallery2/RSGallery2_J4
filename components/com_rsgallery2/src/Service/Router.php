@@ -175,7 +175,7 @@ class Router extends RouterView
 		    // parent gallery
         if ($gid > 0) {
 			    $db      = Factory::getContainer()->get(DatabaseInterface::class);
-			    $dbquery = $db->getQuery(true);
+			    $dbquery = $db->createQuery();
 
 			    $dbquery
 				    ->select($dbquery->qn('alias'))
@@ -204,7 +204,7 @@ class Router extends RouterView
 	    if ($this->noIDs)
 	    {
 		    // parent gallery
-		    $dbquery = $this->db->getQuery(true);
+		    $dbquery = $this->db->createQuery();
 
 		    $dbquery
 			    ->select($dbquery->qn('id'))
@@ -231,7 +231,7 @@ class Router extends RouterView
 		    if ($gid > 0)
 		    {
 			    $db      = Factory::getContainer()->get(DatabaseInterface::class);
-			    $dbquery = $db->getQuery(true);
+			    $dbquery = $db->createQuery();
 
 			    $dbquery
 				    ->select($dbquery->qn('alias'))
@@ -257,7 +257,7 @@ class Router extends RouterView
     {
 	    if ($this->noIDs)
 		{
-		    $dbquery = $this->db->getQuery(true);
+		    $dbquery = $this->db->createQuery();
 
 		    $dbquery
 			    ->select($this->db->quoteName('id'))
@@ -283,7 +283,7 @@ class Router extends RouterView
 		    if ($gid > 0)
 		    {
 			    $gid     = (int) $gid;
-			    $dbquery = $this->db->getQuery(true);
+			    $dbquery = $this->db->createQuery();
 			    $dbquery
 				    ->select($this->db->quoteName('alias'))
 				    ->from($this->db->quoteName('#__rsg2_galleries'))
@@ -308,7 +308,7 @@ class Router extends RouterView
     {
 	    if ($this->noIDs)
 		{
-		    $dbquery = $this->db->getQuery(true);
+		    $dbquery = $this->db->createQuery();
 
 		    $dbquery
 			    ->select($this->db->quoteName('id'))

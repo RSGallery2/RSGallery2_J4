@@ -94,7 +94,7 @@ class GalleriesHelper
             $assocId = $arrId[0];
             $db      = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
                 ->select($db->quoteName('published'))
                 ->from($db->quoteName('#__galleries'))
                 ->where('access IN (' . $groups . ')')

@@ -42,7 +42,7 @@ class Rsg2ExtensionModel extends BaseModel
         try {
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select('manifest_cache')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -73,7 +73,7 @@ class Rsg2ExtensionModel extends BaseModel
             // read the existing component value(s)
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
                 ->select('params')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -113,7 +113,7 @@ class Rsg2ExtensionModel extends BaseModel
         try {
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -263,7 +263,7 @@ class Rsg2ExtensionModel extends BaseModel
 
                 $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-				$query = $db->getQuery(true)
+				$query = $db->createQuery()
                     ->update($db->quoteName('#__extensions'))
                     ->set($db->quoteName('params') . ' = ' . $db->quote($paramsString))
                     ->where($db->quoteName('name') . ' = ' . $db->quote('com_rsgallery2'));

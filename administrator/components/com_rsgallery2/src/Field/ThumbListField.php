@@ -75,7 +75,7 @@ class ThumbListField extends ListField
 
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select($db->quoteName('id', 'value'))
                 ->select($db->quoteName('name', 'text'))
                 ->from('#__rsg2_images')

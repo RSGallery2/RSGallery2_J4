@@ -258,7 +258,7 @@ class ConfigSet extends AbstractCommand
 			$db = Factory::getContainer()->get(DatabaseInterface::class);
 
 			$query = $db
-				->getQuery(true)
+				->createQuery()
 				->select('params')
 				->from($db->quoteName('#__extensions'))
 				->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));

@@ -112,7 +112,7 @@ class GalleryTable extends Nested
         if ($this->parent_id > 0) {
             // Get the DatabaseQuery object
             $query = $this->_db
-                ->getQuery(true)
+                ->createQuery()
                 ->select('1')
                 ->from($this->_db->quoteName($this->_tbl))
                 ->where($this->_db->quoteName('id') . ' = ' . $this->parent_id);
@@ -287,7 +287,7 @@ class GalleryTable extends Nested
             }
         }
 
-        $query = $this->_db->getQuery(true);
+        $query = $this->_db->createQuery();
 
         // Build the structure of the recursive query.
         if (!isset($this->_cache['rebuild.sql'])) {

@@ -175,7 +175,7 @@ class XXRouter extends RouterView
         // parent gallery
         if ($gid > 0) {
             $db      = Factory::getContainer()->get(DatabaseInterface::class);
-            $dbquery = $db->getQuery(true);
+            $dbquery = $db->createQuery();
 
             $dbquery
                 ->select($dbquery->qn('alias'))
@@ -201,7 +201,7 @@ class XXRouter extends RouterView
         // parent gallery
         if (!empty ($segment)) {
             $db      = Factory::getContainer()->get(DatabaseInterface::class);
-            $dbquery = $db->getQuery(true);
+            $dbquery = $db->createQuery();
 
             $dbquery
                 ->select($dbquery->qn('id'))
@@ -235,7 +235,7 @@ class XXRouter extends RouterView
         // parent gallery
         if ($gid > 0) {
             $db      = Factory::getContainer()->get(DatabaseInterface::class);
-            $dbquery = $db->getQuery(true);
+            $dbquery = $db->createQuery();
 
             $dbquery
                 ->select($dbquery->qn('alias'))
@@ -255,7 +255,7 @@ class XXRouter extends RouterView
     public function getGalleriesJ3xId($segment, $query)
     {
 	    if ($this->noIDs) {
-		    $dbquery = $this->db->getQuery(true);
+		    $dbquery = $this->db->createQuery();
 		    $dbquery
 			    ->select($this->db->quoteName('id'))
                 ->from($dbquery->qn('#__rsg2_galleries'))
@@ -282,7 +282,7 @@ class XXRouter extends RouterView
     {
 	    if (!strpos($id, ':')) {
 		    $id      = (int) $id;
-		    $dbquery = $this->db->getQuery(true);
+		    $dbquery = $this->db->createQuery();
 		    $dbquery
 			    ->select($this->db->quoteName('alias'))
 			    ->from($this->db->quoteName('#__rsg2_galleries'))
@@ -305,7 +305,7 @@ class XXRouter extends RouterView
     public function getGalleryJ3xId($segment, $query)
     {
 	    if ($this->noIDs) {
-		    $dbquery = $this->db->getQuery(true);
+		    $dbquery = $this->db->createQuery();
 		    $dbquery
 			    ->select($this->db->quoteName('id'))
 			    ->from($dbquery->qn('#__rsg2_galleries'))

@@ -50,7 +50,7 @@ class Rsg2_imageHelper
         try {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));
@@ -142,7 +142,7 @@ class Rsg2_imageHelper
 
 		if (trim($ordering) === 'rand()')
 		{
-			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
+			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->createQuery()->rand());
 		}
 		else
 		{
@@ -305,7 +305,7 @@ class Rsg2_imageHelper
 //
 //		if (trim($ordering) === 'rand()')
 //		{
-//			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->getQuery(true)->rand());
+//			$model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->createQuery()->rand());
 //		}
 //		else
 //		{

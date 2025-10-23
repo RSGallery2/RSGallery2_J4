@@ -58,7 +58,7 @@ class ConfigModel extends BaseModel
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 //            $db = $this->database;
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select($db->quoteName('params'))
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote($componentName));

@@ -198,7 +198,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 ////        $model->setState('list.ordering', $ordering);
 ////
 ////        if (trim($ordering) === 'rand()') {
-////            $model->setState('list.ordering', $this->getDatabase()->getQuery(true)->rand());
+////            $model->setState('list.ordering', $this->getDatabase()->createQuery()->rand());
 ////        } else {
 ////            $direction = $params->get('direction', 1) ? 'DESC' : 'ASC';
 ////            $model->setState('list.direction', $direction);

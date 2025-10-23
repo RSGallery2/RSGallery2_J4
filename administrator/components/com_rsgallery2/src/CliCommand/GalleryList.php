@@ -192,7 +192,7 @@ class GalleryList extends AbstractCommand
   private function getItemsFromDB(string $userId, string $parent_id): array
   {
     $db    = $this->getDatabase();
-    $query = $db->getQuery(true);
+    $query = $db->createQuery();
     $query
       ->select('*')
       ->from('#__rsg2_galleries');
@@ -216,7 +216,7 @@ class GalleryList extends AbstractCommand
 	private function addImagesAssigneCount(array $galleries)
 	{
 		$db    = $this->getDatabase();
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		foreach ($galleries as $gallery)
 		{

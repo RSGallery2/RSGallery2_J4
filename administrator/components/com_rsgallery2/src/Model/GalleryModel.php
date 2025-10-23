@@ -552,7 +552,7 @@ class GalleryModel extends AdminModel
             if (empty($table->ordering))
             {
                 $db = $this->getDatabase();
-                $query = $db->getQuery(true)
+                $query = $db->createQuery()
                     ->select('MAX(ordering)')
                     ->from($db->quoteName('#__rsg2_images'));
                 $db->setQuery($query);
@@ -756,7 +756,7 @@ class GalleryModel extends AdminModel
              *
              * // Get associationskey for edited item
              * $db    = $this->getContainer()->get(DatabaseInterface::class);
-             * $query = $db->getQuery(true)
+             * $query = $db->createQuery()
              * ->select($db->quoteName('key'))
              * ->from($db->quoteName('#__associations'))
              * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
@@ -765,7 +765,7 @@ class GalleryModel extends AdminModel
              * $oldKey = $db->loadResult();
              *
              * // Deleting old associations for the associated items
-             * $query = $db->getQuery(true)
+             * $query = $db->createQuery()
              * ->delete($db->quoteName('#__associations'))
              * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
              *
@@ -986,7 +986,7 @@ class GalleryModel extends AdminModel
 
         try {
             $db    = $this->getDatabase();
-            $query = $db->getQuery(true);
+            $query = $db->createQuery();
 
             /**
              * For each category get the max ordering value
@@ -1093,7 +1093,7 @@ class GalleryModel extends AdminModel
         $parents = [];
 
         // Calculate the emergency stop count as a precaution against a runaway loop bug
-		$query = $db->getQuery(true)
+		$query = $db->createQuery()
             ->select('COUNT(id)')
             ->from($db->quoteName('#__rsg2_galleries'));
         $db->setQuery($query);
@@ -1230,7 +1230,7 @@ class GalleryModel extends AdminModel
         $this->type = $type->getTypeByAlias($this->typeAlias);
 
         $db        = $this->getDatabase();
-        $query     = $db->getQuery(true);
+        $query     = $db->createQuery();
         $extension = Factory::getApplication()->input->get('extension', '', 'word');
 
         // Check that the parent exists.

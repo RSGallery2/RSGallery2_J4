@@ -603,7 +603,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             // $db = $this->getDatabase();
             $db    = Factory::getDbo();
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select('manifest_cache')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -893,7 +893,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         Log::add(Text::_('      * j3x_tables_fix_datatime: ' . $tableName . '.' . $variableName), Log::INFO, 'rsg2');
 
         $query = $db
-            ->getQuery(true)
+            ->createQuery()
             ->update($db->quoteName($tableName))
             ->set($db->quoteName($variableName) . " = '1980-01-01 00:00:00'")
             ->where($db->quoteName($variableName) . " = '0000-00-00 00:00:00'");

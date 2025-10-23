@@ -87,7 +87,7 @@ class ChangeLogModel
             $db = Factory::getContainer()->get(DatabaseInterface::class);
             // $db = $this->getDatabase();
 
-	        $query = $db->getQuery(true)
+	        $query = $db->createQuery()
                 ->select('changelogurl')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));

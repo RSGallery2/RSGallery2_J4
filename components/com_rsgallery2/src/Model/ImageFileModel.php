@@ -84,7 +84,7 @@ class ImageFileModel extends ListModel // BaseModel
             $db = $this->getDatabase();
 
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select($db->quoteName(['name', 'gallery_id', 'use_j3x_location']))
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('id') . ' = ' . $db->quote($ImageId));

@@ -108,7 +108,7 @@ class GalleryField extends FormField
         if ($value) {
             $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select($db->quoteName('title'))
                 ->from($db->quoteName('#__galleries'))
                 ->where($db->quoteName('id') . ' = ' . (int)$value);

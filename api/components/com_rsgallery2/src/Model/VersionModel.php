@@ -58,7 +58,7 @@ class VersionModel extends BaseModel
             //$db = Factory::getDbo();
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db->getQuery(true)
+            $query = $db->createQuery()
                 ->select($db->quoteName('manifest_cache'))
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote($componentName));

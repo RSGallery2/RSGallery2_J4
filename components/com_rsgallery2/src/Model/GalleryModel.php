@@ -249,7 +249,7 @@ class GalleryModel extends ListModel
             $db = $this->getDatabase();
 
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select('params') // ToDo: select single items
                 ->from($db->quoteName('#__rsg2_galleries'))
                 ->where($db->quoteName('id') . '=' . $gid);
@@ -276,7 +276,7 @@ class GalleryModel extends ListModel
             $db = $this->getDatabase();
 
             $query = $db
-                ->getQuery(true)
+                ->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__rsg2_galleries'))
                 ->where($db->quoteName('id') . '=' . $gid);
@@ -673,7 +673,7 @@ class GalleryModel extends ListModel
         $db = $this->getDatabase();
 
         // Select the required fields from the table.
-        $query = $db->getQuery(true);
+        $query = $db->createQuery();
 
         $query
             ->select('*')

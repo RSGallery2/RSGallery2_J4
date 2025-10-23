@@ -302,7 +302,7 @@ class ImageModel extends AdminModel
             // Set ordering to the last item if not set
             if (empty($table->ordering)) {
                 $db    = $this->getDatabase();
-	            $query = $db->getQuery(true)
+	            $query = $db->createQuery()
                     ->select('MAX(ordering)')
                     ->from($db->quoteName('#__rsg2_images'));
                 $db->setQuery($query);
@@ -518,7 +518,7 @@ class ImageModel extends AdminModel
 
 			// Get associationskey for edited item
 			$db    = $this->getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->select($db->quoteName('key'))
 				->from($db->quoteName('#__associations'))
 				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
@@ -527,7 +527,7 @@ class ImageModel extends AdminModel
 			$oldKey = $db->loadResult();
 
 			// Deleting old associations for the associated items
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->delete($db->quoteName('#__associations'))
 				->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
 
@@ -986,7 +986,7 @@ class ImageModel extends AdminModel
             //$db    = $this->getContainer()->get(DatabaseInterface::class);
             $db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
                 ->select('MAX(ordering)')
                 ->from($db->quoteName('#__rsg2_files'))
                 ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($GalleryId));
@@ -1222,7 +1222,7 @@ class ImageModel extends AdminModel
 		try
 		{
 			$db    = $this->getContainer()->get(DatabaseInterface::class);
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->select('id')
 				->from($db->quoteName('#__rsgallery2_files'))
 				->where($db->quoteName('name') . ' = ' . $db->quote($imageName));
@@ -1262,7 +1262,7 @@ class ImageModel extends AdminModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->delete($db->quoteName('#__rsgallery2_files'))
 				->where($db->quoteName('name') . ' = ' . $db->quote($imageName));
 

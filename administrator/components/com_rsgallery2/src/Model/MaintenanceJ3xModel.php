@@ -112,7 +112,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db    = $this->getDatabase();
 			$query = $db
-				->getQuery(true)
+				->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select($db->quoteName(['j3x.id', 'j3x.alias', 'j3x.name', 'j3x.description']))
 				->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
@@ -500,7 +500,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db    = $this->getDatabase();
 			$query = $db
-				->getQuery(true)
+				->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
 				->select('*')
 				->from('#__rsg2_galleries')
@@ -842,7 +842,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsgallery2_files')
@@ -859,7 +859,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsg2_images')
@@ -873,7 +873,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //			// where image is not use_j3x_location
 //			$db = $this->getDatabase();
 //
-//			$query = $db->getQuery(true)
+//			$query = $db->createQuery()
 //				// ->select($db->quoteName(array('id')))
 //				->select('COUNT(*)')
 //				->from('#__rsg2_images')
@@ -985,7 +985,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsgallery2_files')
@@ -1003,7 +1003,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			// where image is not use_j3x_location
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				// ->select($db->quoteName(array('id')))
 				->select('COUNT(*)')
 				->from('#__rsg2_images')
@@ -1153,7 +1153,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$values  = [];
 
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 
 			$columns[] = 'id';
 			$values[]  = $db->quote(1 + (int) $j4x_GalleryItem['id']);
@@ -1265,7 +1265,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				->from('#__rsgallery2_files')
@@ -1298,7 +1298,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->select($db->quoteName(['id', 'name', 'alias', 'gallery_id', 'title']))
 				->from('#__rsgallery2_files')
 				->order('id ASC');
@@ -1331,7 +1331,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				// https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
@@ -1367,7 +1367,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				// https://joomla.stackexchange.com/questions/22631/how-to-use-in-clause-in-joomla-query
@@ -1402,7 +1402,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent_id', 'level'))) // 'path'
 				->select('*')
 				->from('#__rsg2_images')
@@ -1459,7 +1459,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->select($db->quoteName($select))
 				->from('#__rsgallery2_files')
 //                ->order('gallery_id ASC, ordering ASC');
@@ -1525,7 +1525,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //
 //        try {
 //            $db = $this->>getDatabase();
-//            $query = $db->getQuery(true)
+//            $query = $db->createQuery()
 //                ->select($db->quoteName($select))
 //                ->from('#__rsg2_images')
 //                ->order($db->quoteName('gallery_id') . ' ASC, '
@@ -1588,7 +1588,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //            $j3xGalleryItems = $this->j3x_galleriesListOfIds($selectedJ3xGalleryIds);
 
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 				->select('*')
 				->from('#__rsgallery2_files')
@@ -1634,7 +1634,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		try
 		{
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 
 			$query->delete($db->quoteName('#__rsg2_images'));
 
@@ -1804,7 +1804,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 			$values  = [];
 
 			$db    = $this->getDatabase();
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 
 			$columns[] = 'id';
 			$values[]  = $db->quote($j4ImageItem['id']);
@@ -1998,7 +1998,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 ////
 ////			$db = $this->geDatabse());
 ////
-////			$query = $db->getQuery(true)
+////			$query = $db->createQuery()
 ////				// ->select($db->quoteName(array('id')))
 ////                ->select($db->quoteName(array('id', 'name'))) // 'path'
 ////				->from('#__rsgallery2_galleries')
@@ -2052,7 +2052,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				// ->select($db->quoteName(array('id')))
 				->select('id')
 				->from('#__rsg2_galleries')
@@ -2093,7 +2093,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			//--- delete old rows -----------------------------------------------
 
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 
 			$query->delete($db->quoteName($imgTableName));
 			// all rows
@@ -2128,7 +2128,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->select($db->quoteName(['name', 'id', 'gallery_id']))
 				->where($db->quoteName('id') . ' IN (' . implode(',', ArrayHelper::toInteger($cids)) . ')')
 				->from('#__rsgallery2_files')
@@ -2296,12 +2296,12 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //		    $db = $this->getDatabase();
 //		    //$db      = $this->getDatabase();
 //
-//		    $j3x_subquery = $db->getQuery(true)
+//		    $j3x_subquery = $db->createQuery()
 //			    ->select("count(*)")
 //			    ->from("#__rsgallery2_files")
 //			    ->where("gallery_id = j3x.id");
 //
-//		    $query = $db->getQuery(true);
+//		    $query = $db->createQuery();
 //		    $query->select($db->quoteName('j3x.gallery_id'), '(' . $j3x_subquery . ')  AS count'  )
 //			    ->from($db->quoteName('#__rsgallery2_files', 'j3x'))
 //			    ->where ('j3x.gallery_id in ' . $galleryIdsJ3x_NotMoved);
@@ -2310,12 +2310,12 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //		    $db = $this->>getDatabase();
 //		    //$db      = $this->getDatabase();
 //
-//		    $j3x_subquery = $db->getQuery(true)
+//		    $j3x_subquery = $db->createQuery()
 //			    ->select("count(*)")
 //			    ->from("#__rsgallery2_files")
 //			    ->where("gallery_id = j3x.gallery_id");
 //
-//		    $query = $db->getQuery(true);
+//		    $query = $db->createQuery();
 //
 //
 //		    $query->select('DISTINCT  ' . $db->quoteName('j3x.gallery_id') . ' AS gallery_id', ', count (' . $j3x_subquery . ')  AS count'  )
@@ -2324,7 +2324,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->select($db->quoteName('j3x.id', 'gallery_id'))
 				->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
 				/* Count child images */
@@ -2367,7 +2367,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //	    .....
 //
 //
-//	    $query = $db->getQuery(true);
+//	    $query = $db->createQuery();
 //	    // count gallery items
 //	    $query->select('COUNT(*)')
 //		    ->from('#__rsg2_images')
@@ -2378,7 +2378,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //	    $db->setQuery($query, 0, 1);
 //	    $imgToBeMoved = $db->loadResult();
 //
-//	    $query = $db->getQuery(true);
+//	    $query = $db->createQuery();
 //	    // count gallery items
 //	    $query->select('COUNT(*)')
 //		    ->from('#__rsg2_images')
@@ -2400,7 +2400,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 ////
 ////            $db = $this->getDatabase();
 ///
-////            $query = $db->getQuery(true);
+////            $query = $db->createQuery();
 ////            // count gallery items
 ////            $query->select('COUNT(*)')
 ////                ->from('#__rsg2_images')
@@ -2411,7 +2411,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 ////            $db->setQuery($query, 0, 1);
 ////            $imgToBeMoved = $db->loadResult();
 ////
-////            $query = $db->getQuery(true);
+////            $query = $db->createQuery();
 ////            // count gallery items
 ////            $query->select('COUNT(*)')
 ////                ->from('#__rsg2_images')
@@ -2450,19 +2450,19 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 //
 //			$db = $this->getDatabase();
 //
-//			$j3x_subquery = $db->getQuery(true)
+//			$j3x_subquery = $db->createQuery()
 //				->select("count(*)")
 //				->from("#__rsgallery2_files")
 //				->where("gallery_id = j3x.id");
 //
-//			$j4x_subquery = $db->getQuery(true)
+//			$j4x_subquery = $db->createQuery()
 //				->select("count(*)")
 //				->from("#__rsg2_images")
 //				->where("gallery_id = j4x.id")
 //				->where($db->quoteName('use_j3x_location') . ' = 1');
 //
 //
-//			$query = $db->getQuery(true)
+//			$query = $db->createQuery()
 //				->select($db->quoteName('j3x.id'))
 //				->from($db->quoteName('#__rsgallery2_galleries', 'j3x'))
 //				->join('LEFT', '#__rsg2_galleries AS j4x ON j3x.id = (j4x.id-1)')
@@ -2479,7 +2479,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 ////            $fieldlist = $db->qn(array('gallery_id')); // add the field names to an array
 ////            $fieldlist[0] = 'distinct ' . $fieldlist[0]; //prepend the distinct keyword to the first field name
 ////
-////            $query = $db->getQuery(true)
+////            $query = $db->createQuery()
 //////                ->select($db->quoteName(a
 ///// rray('id', 'name', 'parent', 'ordering')))
 ////                ->select('distinct `gallery_id`')
@@ -2561,7 +2561,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true)
+			$query = $db->createQuery()
 				->select($db->qn(['id', 'name']))
 				->from('#__rsg2_images')
 				->where($db->quoteName('use_j3x_location') . ' = 1')
@@ -2714,7 +2714,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		{
 			$db = $this->getDatabase();
 
-			$query = $db->getQuery(true);
+			$query = $db->createQuery();
 
 			// $testImplode = implode(',', ArrayHelper::toInteger($movedIds));
 
@@ -4052,7 +4052,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		$jsonParameter = json_encode($newParams, true);
 
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		$query
 			->update($db->quoteName('#__menu'))
@@ -4083,7 +4083,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		//--- list from #__menu table in DB  -------------------------------------------
 
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// select all menus with com_rsgallery2 and a gid > 0 (leave out root galleries)
 
@@ -4136,7 +4136,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		//--- list from #__menu table in DB  -------------------------------------------
 
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// select all menus with com_rsgallery2 and a gid
 
@@ -4190,7 +4190,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		//--- list from #__menu table in DB  -------------------------------------------
 
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// select all menus with com_rsgallery2 and a gid > 0 (leave out root galleries)
 
@@ -4252,7 +4252,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		//--- list from #__menu table in DB  -------------------------------------------
 
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// select all menus with com_rsgallery2 and a gid
 
@@ -4314,7 +4314,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		//--- list from #__menu table in DB  -------------------------------------------
 
 		$db    = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
+		$query = $db->createQuery();
 
 		// select all menus with com_rsgallery2 and a gid
 

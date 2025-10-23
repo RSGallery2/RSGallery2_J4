@@ -12,7 +12,8 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-
+
+
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
@@ -43,7 +44,7 @@ class DevelopModel extends BaseDatabaseModel
 ////
 ////
 ////            $db = $this->getDatabase();
-////            $query = $db->getQuery(true)
+////            $query = $db->createQuery()
 //////                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
 ////                ->select('*')
 ////                ->from('#__rsgallery2_galleries')
