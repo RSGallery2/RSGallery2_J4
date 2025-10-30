@@ -92,6 +92,8 @@ class GalleryModel extends ListModel
     public function getlayoutParams()
     {
         if ($this->layoutParams == null) {
+
+	        // ToDo: CascadedLayoutParameter not defined as such
             $this->layoutParams = $this->CascadedLayoutParameter();
         }
 

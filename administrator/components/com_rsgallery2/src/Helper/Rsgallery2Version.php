@@ -20,7 +20,7 @@ use Joomla\Database\DatabaseInterface;
  *
  * @package RSGallery2
  */
-class rsgallery2Version
+class Rsgallery2Version
 {
     // ToDO: Create singleton
 

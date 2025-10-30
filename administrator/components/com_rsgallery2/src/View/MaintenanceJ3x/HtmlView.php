@@ -42,8 +42,79 @@ class HtmlView extends BaseHtmlView
 
 	protected $j3x_galleryIdsMerged = null;
 	protected $j3x_galleriesSorted = null;
+	protected $j4x_galleries = null;
+	/**
+	 * @var mixed|\stdClass
+	 * @since version
+	 */
+	protected mixed $isDevelop;
+	/**
+	 * @var
+	 * @since version
+	 */
+	protected $j3xConfigItems;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	protected array $j4xConfigItems;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	protected mixed $assistedJ3xItems;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	protected mixed $assistedJ4xItems;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	protected mixed $mergedItems;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	protected mixed $untouchedJ3xItems;
+	/**
+	 * @var mixed
+	 * @since version
+	 */
+	protected mixed $untouchedJ4xItems;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	protected array $j3x_transformGalleryIdsTo_j4x;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	protected array $galleryIdsJ3x_dbImagesNotMoved;
+	/**
+	 * @var array
+	 * @since version
+	 */
+	protected array $j3xNotMovedInfo;
+	/**
+	 * @var
+	 * @since version
+	 */
+	protected $galleryIdsJ3x_NotMoved;
+	/**
+	 * @var
+	 * @since version
+	 */
+	protected $galleryIdsJ3xAsJ4x;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	protected string $sidebar;
 
-    /**
+	/**
      * Method to display the view.
      *
      * @param   string  $tpl  A template file to load. [optional]

@@ -105,14 +105,4 @@ function renderFlags($form)
 	<?php
 
 }
-
 ?>
-
-
-
-
-
-
-
-
-

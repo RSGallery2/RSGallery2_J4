@@ -42,8 +42,13 @@ class HtmlView extends BaseHtmlView
 
     protected $isDebugBackend;
     protected $isDevelop;
+	/**
+	 * @var ImagePathsJ3xModel
+	 * @since version
+	 */
+	protected ImagePathsJ3xModel $ImagePathJ3x;
 
-    /**
+	/**
      * Method to display the view.
      *
      * @param   string  $tpl  A template file to load. [optional]

@@ -23,7 +23,8 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
-
+
+
 
 //use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 
@@ -40,6 +41,7 @@ class HtmlView extends BaseHtmlView
      * @var  Form
      */
     protected $form;
+    protected $imgUrl;
 
     /**
      * The active item

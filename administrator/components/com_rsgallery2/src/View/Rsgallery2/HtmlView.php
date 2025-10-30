@@ -154,7 +154,7 @@ class HtmlView extends BaseHtmlView
         }
         /**/
 
-        $oRsg2Version      = new rsgallery2Version();
+        $oRsg2Version      = new Rsgallery2Version();
         $this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 
         $ChangeLogModel = new ChangeLogModel ();

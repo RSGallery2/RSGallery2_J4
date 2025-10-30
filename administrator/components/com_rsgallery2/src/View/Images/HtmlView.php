@@ -28,8 +28,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
-
-
 /**
  * View class for a list of rsgallery2.
  *
@@ -102,8 +100,21 @@ class HtmlView extends BaseHtmlView
     protected $isDevelop;
 
     protected $HtmlPathThumb;
+    protected Form $form;
+	/**
+	 * @var ImagePathsModel
+	 * @since version
+	 */
+	protected ImagePathsModel $ImagePath;
+	/**
+	 * @var ImagePathsJ3xModel
+	 * @since version
+	 */
+	protected ImagePathsJ3xModel $ImagePathJ3x;
 
-    /**
+	protected $transitions;
+
+	/**
      * Display the view.
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
@@ -138,7 +149,10 @@ class HtmlView extends BaseHtmlView
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
-        //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
+	    // TODO: when is is set , used below
+	    $this->transitions = [];
+
+	    //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
         //$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id'));
         $this->canDo = ContentHelper::getActions('com_rsgallery2');

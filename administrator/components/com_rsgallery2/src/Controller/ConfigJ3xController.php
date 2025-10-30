@@ -31,7 +31,7 @@ if ($Rsg2DebugActive)
 }
 /**/
 
-class ConfigJ3xController extends AdminController // FormController
+class ConfigJ3xController extends FormController // FormController for function save
 {
     /**
      * Constructor.

@@ -29,6 +29,8 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 class HtmlView extends BaseHtmlView
 {
     protected $configVars;
+	protected bool $isDevelop;
+	protected $sidebar;
 
     /**
      * Method to display the view.

@@ -350,7 +350,7 @@ class ImagesPropertiesController extends AdminController
      * @throws \Exception
      * @since 4.3
      */
-    public function rotate_images($direction = -90.000, $msg)
+    public function rotate_images($direction = -90.000, $msg='')
     {
         $this->checkToken();
 

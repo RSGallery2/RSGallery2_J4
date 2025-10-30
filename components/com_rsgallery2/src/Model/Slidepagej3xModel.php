@@ -29,10 +29,8 @@ use RuntimeException;
  *
  * @since  __BUMP_VERSION__
  */
-class SlidePageJ3XModel extends Imagesj3xModel
+class SlidePageJ3XModel extends imagesj3xModel
 {
-
-
     /**
      * In slide page view a single item is shown.
      * Pagination parameters are changed to match it
@@ -40,7 +38,6 @@ class SlidePageJ3XModel extends Imagesj3xModel
      *
 	 * @throws \Exception
 	 * @since  5.1.0     */
-
     public function setState2SingleItem(array $items)
     {
         $app = Factory::getApplication();

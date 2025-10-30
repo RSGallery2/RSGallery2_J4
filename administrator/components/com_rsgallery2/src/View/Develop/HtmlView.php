@@ -28,7 +28,8 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
-
+
+
 
 /**
  * View class for a list of rsgallery2.
@@ -41,6 +42,8 @@ class HtmlView extends BaseHtmlView
      * The sidebar markup
      *
      * @var  string
+     *
+     *  @since 5.0
      */
     protected $sidebar;
     protected $form;
@@ -57,22 +60,53 @@ class HtmlView extends BaseHtmlView
     protected $defaultParams = [];
     protected $mergedParams = [];
 
-    /**
 	protected $isDangerActive;
 	protected $isRawDbActive;
 	protected $isUpgradeActive;
 	protected $isTestActive;
 	protected $isJ3xRsg2DataExisting;
-	protected $developActive;
+//	protected $developActive;
 
 	protected $intended;
-	/**/
+
     // ToDo: Use other rights instead of core.admin -> IsRoot ?
     // core.admin is the permission used to control access to
     // the global config
     protected $UserIsRoot;
+	/**
+	 * @var mixed|string
+	 * @since version
+	 */
+	protected mixed $lowerVersion;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	protected string $Rsg2Version;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	protected string $installMessage2;
+	/**
+	 * @var string
+	 * @since version
+	 */
+	protected string $installMessage;
 
-    /**
+	/**
+	 * @var array|mixed
+	 * @since version
+	 */
+	protected mixed $rsg2Configuration;
+
+	/**
+	 * @var array|mixed
+	 * @since version
+	 */
+	protected mixed $rsg2Configuration_j3x;
+
+	/**
      * Method to display the view.
      *
      * @param   string  $tpl  A template file to load. [optional]
@@ -94,7 +128,7 @@ class HtmlView extends BaseHtmlView
         $this->isUpgradeActive = true; // false / true;
         if ($this->isDevelop) {
             $this->isTestActive  = true; // false / true;
-            $this->developActive = true; // false / true;
+//            $this->developActive = true; // false / true;
         }
 
         //--- Check user rights ---------------------------------------------
@@ -150,7 +184,7 @@ class HtmlView extends BaseHtmlView
                 $this->lowerVersion = $lowerVersion;
 
                 // actual (new) version
-                $oRsg2Version      = new rsgallery2Version();
+                $oRsg2Version      = new Rsgallery2Version();
                 $this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
                 $this->Rsg2Version = $oRsg2Version->getVersion(); // getLongVersion, getVersion
 

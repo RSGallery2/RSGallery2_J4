@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -7,10 +8,11 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// ToDo: 2024.10: namespace helper
-// namespace \Rsgallery2\Component\Rsgallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
+// phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
 
@@ -18,12 +20,12 @@ use Joomla\CMS\Factory;
  * @package     ${yyy}
  * @subpackage
  *
+ *
  * @copyright   A copyright
  * @license     A "Slug" license name e.g. GPL2
  */
 class CascadedParam
 {
-
     /**
      * lastSet
      * The last defined parameter variable given is used if it is not set to 'global'
@@ -35,14 +37,16 @@ class CascadedParam
      *
      * @return mixed|stdClass last found 'valid' value
      *
-     * @since  5.1.0     */
-    public static function lastSet(...$paramValues) {
-		$paramValue = new \stdClass();
+     * @since  5.1.0
+     */
+    public static function lastSet(...$paramValues)
+    {
+        $paramValue = new \stdClass();
 
         try {
             //foreach ($vars as &$value)
             foreach ($paramValues as $value) {
-                if (isset ($value)) {
+                if (isset($value)) {
                     if ($value != 'global') {
                         $paramValue = $value;
                     }
@@ -54,5 +58,4 @@ class CascadedParam
 
         return $paramValue;
     }
-
 }

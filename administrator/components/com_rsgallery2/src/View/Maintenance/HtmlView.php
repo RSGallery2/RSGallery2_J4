@@ -52,7 +52,7 @@ class HtmlView extends BaseHtmlView
     protected $isUpgradeActive;
     protected $isTestActive;
     protected $isJ3xRsg2DataExisting;
-    protected $developActive;
+//    protected $developActive;
 
     protected $intended;
     protected $exifImageFiles;

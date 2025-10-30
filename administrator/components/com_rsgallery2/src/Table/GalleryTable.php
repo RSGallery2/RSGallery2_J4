@@ -231,7 +231,7 @@ class GalleryTable extends Nested
         }
 
         // Verify that the alias is unique
-        $table = new static($this->getDbo());
+        $table = $this->getDbo();
 
         if ($table->load(['alias' => $this->alias]) && ($table->id != $this->id || $this->id == 0)) {
             $this->setError(Text::_('COM_RSGALLERY2_ERROR_UNIQUE_ALIAS'));

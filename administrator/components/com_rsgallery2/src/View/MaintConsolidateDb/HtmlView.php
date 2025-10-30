@@ -57,8 +57,13 @@ class HtmlView extends BaseHtmlView
 	protected $isDevelop;
 	protected $hasJ3xFile;
 	protected $hasJ4xFile; // J4x ++
+	/**
+	 * @var bool
+	 * @since version
+	 */
+	protected bool $isJ3xRsg2DataExisting;
 
-    /**
+	/**
      * Method to display the view.
      *
      * @param   string  $tpl  A template file to load. [optional]
