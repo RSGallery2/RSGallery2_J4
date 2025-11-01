@@ -144,7 +144,6 @@ class GalleryModel extends ListModel
      *
      * @param $image
      *
-     *
      * @since 4.5.0.0
      */
     public function assignImageUrl($image)
@@ -323,7 +322,8 @@ class GalleryModel extends ListModel
     }
 
 	/**
-	 * 
+	 * Assign slideshow url to gallery data
+	 *
 	 * @param $gallery
 	 *
 	 *

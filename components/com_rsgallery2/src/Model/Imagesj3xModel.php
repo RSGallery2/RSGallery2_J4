@@ -32,6 +32,15 @@ use Joomla\Registry\Registry;
 class imagesj3xModel extends ImagesModel
 {
 
+	/**
+	 * Assign slideshow url to gallery data
+	 *
+	 * @param $gallery
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function assignSlideshowUrl($gallery)
     {
         try {

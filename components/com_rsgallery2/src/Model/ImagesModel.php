@@ -374,13 +374,14 @@ class ImagesModel extends ListModel
         return $images;
     }
 
-    /**
-     * @param $image
-     *
-     *
-     * @since 4.5.0.0
-     */
-    public function assignImageUrl($image)
+	/**
+	 * returns url by J3/j4 style path
+	 *
+	 * @param $image
+	 *
+	 * @since 4.5.0.0
+	 */
+	public function assignImageUrl($image)
     {
         try {
             // ToDo: watermarked file

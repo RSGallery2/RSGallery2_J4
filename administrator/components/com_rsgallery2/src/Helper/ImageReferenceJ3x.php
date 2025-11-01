@@ -229,7 +229,14 @@ class ImageReferenceJ3x extends ImageReference
         return $isImageAssigned;
     }
 
-    public function assignImageUrl ()
+	/**
+	 * returns url by J3/j4 style path
+	 *
+	 * @param $image
+	 *
+	 * @since 4.5.0.0
+	 */
+	public function assignImageUrl ()
     {
         $this->imageUrl = '';
 

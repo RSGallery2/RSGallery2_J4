@@ -239,6 +239,14 @@ class ConfigSet extends AbstractCommand
 		return $isTrue;
 	}
 
+	/**
+	 * Save RSG2 configuration to db
+	 * @param   Registry  $params
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
 	public function saveParams(Registry $params)
 	{
 		$db = Factory::getDbo();
@@ -250,6 +258,13 @@ class ConfigSet extends AbstractCommand
 		)->execute();
 	}
 
+	/**
+	 * read RSG2 configuration from DB
+	 *
+	 * @return array|mixed
+	 *
+	 * @since version
+	 */
 	public function readRsg2ExtensionParameterDb()
 	{
 		$params = [];

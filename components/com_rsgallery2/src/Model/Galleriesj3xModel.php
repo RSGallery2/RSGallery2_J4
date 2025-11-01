@@ -573,7 +573,7 @@ class Galleriesj3xModel extends ListModel
     }
 
 	/**
-	 * Assign slideshow url to gallery to gallery data
+	 * Assign slideshow url to gallery data
 	 *
 	 * @param $gallery
 	 *

@@ -502,7 +502,10 @@ class GalleriesModel extends ListModel
     }
 
 	/**
+	 * Assign slideshow url to gallery data
+	 *
 	 * @param $gallery
+	 *
 	 *
 	 * @throws \Exception
 	 * @since version

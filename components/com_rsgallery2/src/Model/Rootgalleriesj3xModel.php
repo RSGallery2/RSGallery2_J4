@@ -34,6 +34,15 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
      * protected $layoutParams = null; // col/row count
      * /**/
 
+	/**
+	 * Assign slideshow url to gallery data
+	 *
+	 * @param $gallery
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function assignSlideshowUrl($gallery)
     {
         try {

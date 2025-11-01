@@ -411,7 +411,14 @@ class ImageReference
         return $isImageAssigned;
     }
 
-    public function assignImageUrl ()
+	/**
+	 * returns url by J3/j4 style path
+	 *
+	 * @param $image
+	 *
+	 * @since 4.5.0.0
+	 */
+	public function assignImageUrl ()
     {
         // debug stop
         // if ($this->imageName == '2019-09-17_00305.jpg') {
