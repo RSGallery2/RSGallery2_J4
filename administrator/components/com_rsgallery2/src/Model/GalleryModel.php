@@ -31,7 +31,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Rsgallery2 Component Gallery Model
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleryModel extends AdminModel
 {

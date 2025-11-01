@@ -21,7 +21,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
- * @since       __BUMP_VERSION__
+     * @since   5.1.0
  */
 class InstallMessage
 {

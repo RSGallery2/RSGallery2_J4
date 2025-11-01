@@ -26,7 +26,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
  * Clean up and prepare for uninstall of RSG2
  * Example: Change file uninstall.mysql.utf8.sql so it does remove the RSG2 Tables
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class MaintenanceCleanUpController extends BaseController
 {

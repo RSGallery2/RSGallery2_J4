@@ -13,7 +13,7 @@
 /**
  * Installation class to perform additional changes during install/uninstall/update
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Pkg_FoosInstallerScript
 {

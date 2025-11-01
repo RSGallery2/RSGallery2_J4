@@ -20,7 +20,7 @@ use Joomla\Registry\Registry;
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {

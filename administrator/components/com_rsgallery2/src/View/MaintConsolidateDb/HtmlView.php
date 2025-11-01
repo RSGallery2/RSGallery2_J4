@@ -30,7 +30,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 /**
  * View class for a list of rsgallery2.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -60,7 +60,7 @@ class HtmlView extends BaseHtmlView
 	protected $hasJ4xFile; // J4x ++
 	/**
 	 * @var bool
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected bool $isJ3xRsg2DataExisting;
 

@@ -18,7 +18,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 /**
  * Tasks needed on new/update installation of RSG2
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  *
  */
 class rsg2installtasksflat

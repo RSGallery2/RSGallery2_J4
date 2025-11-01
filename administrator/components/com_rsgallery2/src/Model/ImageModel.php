@@ -31,14 +31,14 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 /**
  * RSGallery2 Component Image Model
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 //class ImageModel extends ListModel
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class ImageModel extends AdminModel
 {

@@ -18,7 +18,7 @@ use const SORT_NATURAL;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
- * @since       version
+     * @since   5.1.0
  */
 class ImageExif
 {
@@ -50,7 +50,7 @@ class ImageExif
 	 *
 	 * @return array|false
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function readExifDataAll(string $imagPathFileName = '')
     {
@@ -121,7 +121,7 @@ class ImageExif
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function readExifDataUserSelected($supportedTags = [])
     {
@@ -156,7 +156,7 @@ class ImageExif
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function supportedExifTags () {
 
@@ -255,7 +255,7 @@ class ImageExif
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function tag2TypeAndName ($ExifTag) {
 
@@ -285,7 +285,7 @@ class ImageExif
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function exifTranslationId($ExifName)
     {
@@ -298,7 +298,7 @@ class ImageExif
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function userExifTagsJ3x()
     {
@@ -317,7 +317,7 @@ class ImageExif
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function checkTagsNotSupported ($existingExifTags)    {
 
@@ -342,7 +342,7 @@ class ImageExif
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function checkNotUserSelected($existingExifTags)
     {
@@ -368,7 +368,7 @@ class ImageExif
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function neededTranslationIds()
     {

@@ -25,7 +25,7 @@ use Joomla\Registry\Registry;
 /**
  * The Controller
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ImageFileController extends BaseController
 {

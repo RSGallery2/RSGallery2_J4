@@ -28,7 +28,7 @@ use RuntimeException;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class SlidePageJ3XModel extends imagesj3xModel
 {

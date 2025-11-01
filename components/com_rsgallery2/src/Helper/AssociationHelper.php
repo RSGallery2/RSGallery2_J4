@@ -19,7 +19,7 @@ use Joomla\Component\Categories\Administrator\Helper\CategoryAssociationHelper;
 /**
  * Rsgallery2 Component Association Helper
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 abstract class AssociationHelper extends CategoryAssociationHelper
 {

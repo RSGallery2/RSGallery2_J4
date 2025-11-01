@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 /**
  * Rsgallery2 master display controller.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class DisplayController extends BaseController
 {

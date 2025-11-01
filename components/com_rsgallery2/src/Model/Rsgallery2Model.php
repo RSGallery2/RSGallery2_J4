@@ -21,7 +21,7 @@ use Joomla\Registry\Registry;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rsgallery2Model extends BaseDatabaseModel
 {

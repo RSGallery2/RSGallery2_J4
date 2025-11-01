@@ -26,7 +26,7 @@ use function defined;
 /**
  * Helper for mod_rsg2_image
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 // abstract ???
 class Rsg2_imageHelper
@@ -52,7 +52,7 @@ class Rsg2_imageHelper
 	 * @return false
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public static function getItem($ImageId)
     {

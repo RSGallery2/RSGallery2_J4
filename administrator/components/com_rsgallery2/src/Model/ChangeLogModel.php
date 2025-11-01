@@ -25,7 +25,7 @@ use function is_array;
  * The result can be converted to a array of html tables per version
  * these may be surrounded by a
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ChangeLogModel
 {

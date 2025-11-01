@@ -25,7 +25,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Service\HTML\AdministratorServ
 /**
  * Component class for com_rsgallery2
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rsgallery2Component extends MVCComponent implements BootableExtensionInterface, CategoryServiceInterface,
                                                           RouterServiceInterface

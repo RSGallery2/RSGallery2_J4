@@ -22,7 +22,7 @@ use Joomla\CMS\Filter\InputFilter;
 /**
  * Item Model for a Configuration items (options).
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ConfigRawModel extends BaseModel
 {

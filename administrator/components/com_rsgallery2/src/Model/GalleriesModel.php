@@ -25,7 +25,7 @@ use Joomla\Database\QueryInterface;
 /**
  * RSGallery2 Component Galleries Model
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleriesModel extends ListModel
 {

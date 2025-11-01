@@ -18,7 +18,7 @@ use \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
 /**
  * Galleries helper.
  *
- * @since       __BUMP_VERSION__
+     * @since      5.1.0
  * @deprecated  5.0 Use \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper instead
  */
 class Galleries extends GalleriesHelper

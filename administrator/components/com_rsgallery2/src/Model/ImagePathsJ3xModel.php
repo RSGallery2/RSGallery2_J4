@@ -27,7 +27,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
  *
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class ImagePathsJ3xModel {
     // from config
@@ -134,7 +134,7 @@ class ImagePathsJ3xModel {
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getOriginalPath ($fileName=''){
         return PathHelper::join($this->originalBasePath, $fileName);
@@ -146,7 +146,7 @@ class ImagePathsJ3xModel {
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getDisplayPath ($fileName=''){
         return PathHelper::join($this->displayBasePath, $fileName . '.jpg');
@@ -158,7 +158,7 @@ class ImagePathsJ3xModel {
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getThumbPath ($fileName=''){
         return PathHelper::join($this->thumbBasePath, $fileName . '.jpg');
@@ -174,7 +174,7 @@ class ImagePathsJ3xModel {
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getOriginalUrl ($fileName=''){
         return UriHelper::join($this->originalUrl, $fileName);
@@ -186,7 +186,7 @@ class ImagePathsJ3xModel {
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getDisplayUrl ($fileName=''){
         return UriHelper::join($this->displayUrl, $fileName . '.jpg');
@@ -198,7 +198,7 @@ class ImagePathsJ3xModel {
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getThumbUrl ($fileName=''){
         return UriHelper::join($this->thumbUrl, $fileName . '.jpg');

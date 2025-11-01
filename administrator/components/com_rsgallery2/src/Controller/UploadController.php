@@ -50,7 +50,7 @@ use function dirname;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Controller
  *
- * @since       version
+     * @since   5.1.0
  */
 class UploadController extends FormController
 {
@@ -1160,7 +1160,7 @@ interface IResponseTransfer {
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     private function Import2Db4FilesInFolder($ImagesFolder, $galleryId)
     {

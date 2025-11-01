@@ -23,7 +23,7 @@ use RuntimeException;
 /**
  * Helper for mod_rsg2_galleries
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rsg2_galleriesHelper implements DatabaseAwareInterface
 {
@@ -57,7 +57,7 @@ class Rsg2_galleriesHelper implements DatabaseAwareInterface
 	 *
 	 * @return mixed
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleryData(int $gid)
     {

@@ -43,7 +43,7 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 	 *
 	 * @return bool
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getRsg2_random_imagesDisplay(Event $event)
     {

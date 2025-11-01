@@ -24,7 +24,7 @@ use function defined;
 /**
  * Helper for mod_rsg2_images
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 // abstract ???
 class Rsg2_imagesHelper

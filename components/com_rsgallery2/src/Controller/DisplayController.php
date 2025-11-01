@@ -22,7 +22,7 @@ use Joomla\Input\Input;
 /**
  * Rsgallery2 Component Controller
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class DisplayController extends BaseController
 {

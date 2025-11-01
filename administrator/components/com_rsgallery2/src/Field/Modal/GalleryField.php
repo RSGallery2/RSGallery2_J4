@@ -22,7 +22,7 @@ use Joomla\Database\DatabaseInterface;
 /**
  * Supports a modal gallery picker.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleryField extends FormField
 {

@@ -25,7 +25,7 @@ use Joomla\Registry\Registry;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Galleriesj3xModel extends ListModel
 {
@@ -92,7 +92,7 @@ class Galleriesj3xModel extends ListModel
 	 * @return false|mixed|null
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getItems()
     {
@@ -452,7 +452,7 @@ class Galleriesj3xModel extends ListModel
 	 * @param $gallery
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function AssignSubGalleryList($gallery)
     {
@@ -500,7 +500,7 @@ class Galleriesj3xModel extends ListModel
 	 * @return int|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function imageCount($galleryId)
     {
@@ -579,7 +579,7 @@ class Galleriesj3xModel extends ListModel
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function assignSlideshowUrl($gallery)
     {

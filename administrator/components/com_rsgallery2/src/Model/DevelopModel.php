@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class DevelopModel extends BaseDatabaseModel
 {

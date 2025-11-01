@@ -31,7 +31,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
  * Handles files of images with actions like
  * Creating Thumb, watermarked and turning and flipping of images
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ImageFileModel extends BaseDatabaseModel // AdminModel
 {
@@ -1285,7 +1285,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 	 *
 	 * @return array paths to 'original' file and url
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location)
     {
@@ -1322,7 +1322,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
         $IsDownloaded = false;

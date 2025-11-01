@@ -26,7 +26,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * HTML View class for gallery edit
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {

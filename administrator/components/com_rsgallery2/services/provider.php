@@ -29,7 +29,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\AssociationsHelper;
  * The rsgallery2 service provider.
  * https://github.com/joomla/joomla-cms/pull/20217
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 return new class implements ServiceProviderInterface {
     /**

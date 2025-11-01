@@ -34,7 +34,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  * Handles files of images with actions like
  * Creating Thumb, watermarked and turning and flipping of images
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ImageFileModel extends ListModel // BaseModel
 {
@@ -121,7 +121,7 @@ class ImageFileModel extends ListModel // BaseModel
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location) {
         $OriginalPathFileName = "";
@@ -158,7 +158,7 @@ class ImageFileModel extends ListModel // BaseModel
 	 * @return false
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
         $IsDownloaded = false;

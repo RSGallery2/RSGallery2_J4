@@ -26,7 +26,7 @@ use RuntimeException;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rootgalleriesj3xModel extends Galleriesj3xModel
 {
@@ -41,7 +41,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function assignSlideshowUrl($gallery)
     {
@@ -105,7 +105,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function randomImages($random_count)
     {

@@ -15,7 +15,7 @@ defined('JPATH_BASE') or die;
 /**
  * Rsgallery2 HTML class.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class AdministratorService
 {

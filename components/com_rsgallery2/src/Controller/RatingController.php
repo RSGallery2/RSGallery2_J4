@@ -59,7 +59,7 @@ class RatingController extends BaseController
 	 *
 	 *
 	 * @throws Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function rateSingleImage()
     {

@@ -26,7 +26,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 /**
  * The Images List Controller
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ImagesController extends AdminController
 {

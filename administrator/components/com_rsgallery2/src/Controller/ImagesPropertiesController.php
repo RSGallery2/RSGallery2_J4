@@ -22,7 +22,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 /**
  * The image properties Controller
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ImagesPropertiesController extends AdminController
 {

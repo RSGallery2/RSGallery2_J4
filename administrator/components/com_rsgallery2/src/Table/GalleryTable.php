@@ -27,7 +27,7 @@ use UnexpectedValueException;
 /**
  * Gallery table
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleryTable extends Nested
 {

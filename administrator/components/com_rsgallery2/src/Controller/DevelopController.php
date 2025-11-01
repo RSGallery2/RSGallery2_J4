@@ -30,7 +30,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
 /**
  * Rsgallery2 master display controller.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class DevelopController extends BaseController
 {
@@ -500,7 +500,7 @@ class DevelopController extends BaseController
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function createGalleries($count, $parentId = 1)
     {
@@ -555,7 +555,7 @@ class DevelopController extends BaseController
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function createImages($count, $galleryId)
     {
@@ -643,7 +643,7 @@ class DevelopController extends BaseController
 	 * @return string
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     private function stdDateTime () {
         $now = '2020_error_stdDateTime';
@@ -785,7 +785,7 @@ class DevelopController extends BaseController
 	 * @return mixed
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function mergeParams()
     {

@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class MaintenanceModel extends BaseDatabaseModel
 {
@@ -62,7 +62,7 @@ class MaintenanceModel extends BaseDatabaseModel
 	 * @return bool|int
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function RepairImagePaths()
     {
@@ -91,7 +91,7 @@ class MaintenanceModel extends BaseDatabaseModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function j4x_galleryIds()
     {

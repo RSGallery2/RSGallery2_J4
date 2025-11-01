@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Rsgallery2 component helper.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rsgallery2Helper extends ContentHelper
 {

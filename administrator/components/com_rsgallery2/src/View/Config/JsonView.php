@@ -24,7 +24,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Version;
 /**
  * Sysinfo View class for the Admin component
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class JsonView extends AbstractView
 {

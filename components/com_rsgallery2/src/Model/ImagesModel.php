@@ -28,7 +28,7 @@ use Joomla\Registry\Registry;
 /**
  * RSGallery2 Component Images Model
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ImagesModel extends ListModel
 {
@@ -96,7 +96,7 @@ class ImagesModel extends ListModel
 	 * Return cascaded parameters
 	 * @return mixed
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getlayoutParams()
     {
@@ -278,7 +278,7 @@ class ImagesModel extends ListModel
 	 *
 	 * @return  mixed  An array of data items on success, false on failure.
 	 *
-	 * @since   version
+	 * @since   5.1.0
 	 */
     public function getItems()
     {
@@ -428,7 +428,7 @@ class ImagesModel extends ListModel
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function AssignUrlDownloadImage($image)
     {
@@ -560,7 +560,7 @@ class ImagesModel extends ListModel
 	 *
 	 * @return mixed|\stdClass
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function galleryData($gid = 0)
     {

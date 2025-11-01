@@ -26,7 +26,7 @@ use Joomla\Database\DatabaseInterface;
  * Includes "Galleries overview" as first entry
  * Sorted by ordering (newest first)
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class MenuGalleriesListField extends ListField
 {

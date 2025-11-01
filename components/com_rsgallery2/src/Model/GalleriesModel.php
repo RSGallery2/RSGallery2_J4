@@ -29,7 +29,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleriesModel extends ListModel
 {
@@ -97,7 +97,7 @@ class GalleriesModel extends ListModel
 	 * @return false|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getItems()
     {
@@ -382,7 +382,7 @@ class GalleriesModel extends ListModel
 	 * @param $gallery
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function AssignSubGalleryList($gallery)
     {
@@ -430,7 +430,7 @@ class GalleriesModel extends ListModel
 	 * @return int|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function imageCount($galleryId)
     {
@@ -508,7 +508,7 @@ class GalleriesModel extends ListModel
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function assignSlideshowUrl($gallery)
     {

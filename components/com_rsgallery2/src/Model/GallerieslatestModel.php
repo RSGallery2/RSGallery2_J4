@@ -23,7 +23,7 @@ use Joomla\Registry\Registry;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class gallerieslatestModel extends ListModel
 {
@@ -87,7 +87,7 @@ class gallerieslatestModel extends ListModel
 	 * @return false|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getItems()
     {

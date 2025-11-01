@@ -29,7 +29,7 @@ use RuntimeException;
 /**
  * Helper for mod_rsg2_slideshow
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rsg2_slideshowHelper implements DatabaseAwareInterface
 {
@@ -69,7 +69,7 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 	 *
 	 * @return mixed
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public static function getList($params, $model, $app)
     {
@@ -398,7 +398,7 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 	 *
 	 * @return mixed
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleryData(int $gid)
     {

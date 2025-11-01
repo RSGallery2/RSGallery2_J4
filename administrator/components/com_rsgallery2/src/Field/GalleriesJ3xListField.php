@@ -26,7 +26,7 @@ use Joomla\Database\DatabaseInterface;
  * and creates contents of a dropdown box for gallery selection
  * Sorted by ordering (newest first)
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleriesJ3xListField extends ListField
 {

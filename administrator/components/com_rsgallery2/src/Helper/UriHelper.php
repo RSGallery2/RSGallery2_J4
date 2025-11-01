@@ -13,7 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
- * @since       version
+     * @since   5.1.0
  */
 class UriHelper
 {

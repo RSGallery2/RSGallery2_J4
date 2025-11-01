@@ -27,7 +27,7 @@ use Joomla\Database\DatabaseInterface;
  * Handles basic functions for nested gallery tree
  * Nested gallery tree needs a root element in the database to start
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  *
  */
 class GalleryTreeModel extends BaseModel

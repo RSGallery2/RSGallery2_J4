@@ -26,7 +26,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 /**
  * View class for a list of rsgallery2.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -45,7 +45,7 @@ class HtmlView extends BaseHtmlView
     protected $isDevelop;
 	/**
 	 * @var ImagePathsJ3xModel
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected ImagePathsJ3xModel $ImagePathJ3x;
 

@@ -23,7 +23,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * View class for a list of rsgallery2.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {

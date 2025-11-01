@@ -15,7 +15,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 /**
  * Gallery Component Association Helper
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 abstract class GalleryAssociationHelper
 {

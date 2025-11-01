@@ -26,7 +26,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
  * Single image with pagination
  * HTML Rsgallery2 View class for the Rsgallery2 component
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -231,7 +231,7 @@ class HtmlView extends BaseHtmlView
 	 * Merge ... not ready .. cascade ...
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function mergeMenuOptions()
     {

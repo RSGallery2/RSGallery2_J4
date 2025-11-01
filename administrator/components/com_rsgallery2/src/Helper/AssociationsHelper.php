@@ -20,7 +20,7 @@ use Rsgallery2\Component\Rsgallery2\Site\Helper\AssociationHelper;
 /**
  * Content associations' helper.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class AssociationsHelper extends AssociationExtensionHelper
 {

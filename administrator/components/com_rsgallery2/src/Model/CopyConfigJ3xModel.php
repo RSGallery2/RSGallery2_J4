@@ -22,7 +22,7 @@ use Joomla\Database\DatabaseInterface;
 /**
  * Model to handle J3x config items for transfer to j4x config
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class CopyConfigJ3xModel extends BaseDatabaseModel
 {
@@ -206,7 +206,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 	 * @return array|mixed
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function j3x_galleriesList()
     {

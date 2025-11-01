@@ -20,7 +20,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReferences;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class MaintConsolidateDbModel extends BaseDatabaseModel
 {

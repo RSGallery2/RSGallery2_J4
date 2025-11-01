@@ -229,7 +229,7 @@ class GalleryList extends AbstractCommand
 	 * @param   array  $galleries
 	 *
 	 *
-	 * @since version
+	 * @since   5.1.0
 	 */
 	private function addImagesCount(array $galleries)
 	{

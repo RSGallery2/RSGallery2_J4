@@ -231,7 +231,7 @@ class ImageReferences
 	 * For images in reference list check all expected paths for image existence
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     private function checkList4NotExisting()
     {
@@ -255,7 +255,7 @@ class ImageReferences
 	 * search for files not in list
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     private function findOrphans_Add2List()
     {

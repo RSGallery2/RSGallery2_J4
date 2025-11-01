@@ -22,7 +22,7 @@ use Joomla\Filesystem\Path;
 /**
  * Galleries helper.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleriesHelper
 {

@@ -13,7 +13,7 @@
 /**
  * Content component helper.
  *
- * @since       __BUMP_VERSION__
+     * @since      5.1.0
  *
  * @deprecated  5.0 Use \Joomla\Component\Content\Administrator\Helper\ContentHelper instead
  */

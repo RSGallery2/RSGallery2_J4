@@ -35,7 +35,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
 /**
  * View class for a list of rsgallery2.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -76,34 +76,34 @@ class HtmlView extends BaseHtmlView
     protected $UserIsRoot;
 	/**
 	 * @var mixed|string
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $lowerVersion;
 	/**
 	 * @var string
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected string $Rsg2Version;
 	/**
 	 * @var string
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected string $installMessage2;
 	/**
 	 * @var string
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected string $installMessage;
 
 	/**
 	 * @var array|mixed
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $rsg2Configuration;
 
 	/**
 	 * @var array|mixed
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $rsg2Configuration_j3x;
 

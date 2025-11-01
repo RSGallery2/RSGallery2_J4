@@ -36,7 +36,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class MaintenanceJ3xModel extends CopyConfigJ3xModel
 {
@@ -2995,7 +2995,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return bool
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	private function isMovedState($state)
 	{
@@ -4370,7 +4370,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	private function linkReplaceGid2Id(string $oldLink)
 	{
@@ -4407,7 +4407,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	private function linkReplaceId2Gid(string $oldLink)
 	{

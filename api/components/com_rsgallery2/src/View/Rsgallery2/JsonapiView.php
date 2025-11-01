@@ -63,7 +63,7 @@ class JsonapiView extends BaseApiView
 	 *
 	 * @return string|void
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function display($tpl = null)
 	{

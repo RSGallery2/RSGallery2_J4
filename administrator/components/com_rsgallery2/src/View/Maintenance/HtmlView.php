@@ -32,7 +32,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 /**
  * View class for a list of rsgallery2.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -398,7 +398,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function presetExifFileList()
     {
@@ -434,7 +434,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     private function CheckExifMissingTranslationIds(array $neededIds)
     {
@@ -477,7 +477,7 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     private function lineExtractTransId(bool|string $line)
     {

@@ -19,7 +19,7 @@ use Joomla\Database\DatabaseDriver;
 /**
  * J3x config table
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ConfigJ3xTable extends Table
 {

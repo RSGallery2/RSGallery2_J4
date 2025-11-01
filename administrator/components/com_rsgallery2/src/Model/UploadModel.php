@@ -19,7 +19,7 @@ use Joomla\Database\DatabaseInterface;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class UploadModel extends BaseDatabaseModel
 {

@@ -59,7 +59,7 @@ class CommentController extends BaseController
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function addComment()
     {
@@ -176,7 +176,7 @@ class CommentController extends BaseController
 
 	/**
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function saveComment()
     {

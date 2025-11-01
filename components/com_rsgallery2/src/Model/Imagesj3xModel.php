@@ -27,7 +27,7 @@ use Joomla\Registry\Registry;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class imagesj3xModel extends ImagesModel
 {
@@ -39,7 +39,7 @@ class imagesj3xModel extends ImagesModel
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function assignSlideshowUrl($gallery)
     {

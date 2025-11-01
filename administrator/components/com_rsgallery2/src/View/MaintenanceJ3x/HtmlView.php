@@ -29,7 +29,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 /**
  * View class for a list of rsgallery2.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -46,72 +46,72 @@ class HtmlView extends BaseHtmlView
 	protected $j4x_galleries = null;
 	/**
 	 * @var mixed|\stdClass
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $isDevelop;
 	/**
 	 * @var
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected $j3xConfigItems;
 	/**
 	 * @var array
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected array $j4xConfigItems;
 	/**
 	 * @var mixed
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $assistedJ3xItems;
 	/**
 	 * @var mixed
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $assistedJ4xItems;
 	/**
 	 * @var mixed
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $mergedItems;
 	/**
 	 * @var mixed
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $untouchedJ3xItems;
 	/**
 	 * @var mixed
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected mixed $untouchedJ4xItems;
 	/**
 	 * @var array
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected array $j3x_transformGalleryIdsTo_j4x;
 	/**
 	 * @var array
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected array $galleryIdsJ3x_dbImagesNotMoved;
 	/**
 	 * @var array
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected array $j3xNotMovedInfo;
 	/**
 	 * @var
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected $galleryIdsJ3x_NotMoved;
 	/**
 	 * @var
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected $galleryIdsJ3xAsJ4x;
 	/**
 	 * @var string
-	 * @since version
+	 * @since 5.1.0
 	 */
 	protected string $sidebar;
 

@@ -32,7 +32,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 /**
  * HTML View class for image edit
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {

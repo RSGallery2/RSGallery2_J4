@@ -27,7 +27,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
  *
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Model
  *
- * @since       version
+     * @since   5.1.0
  */
 class ImagePathsModel
 {
@@ -185,7 +185,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getOriginalPath($fileName = '')
     {
@@ -197,7 +197,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getDisplayPath($fileName = '')
     {
@@ -209,7 +209,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getThumbPath($fileName = '')
     {
@@ -222,7 +222,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getSizePath($imageSize, $fileName = '')
     {
@@ -234,7 +234,7 @@ class ImagePathsModel
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getSizePaths($fileName = '')
     {
@@ -256,7 +256,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getOriginalUrl($fileName = '')
     {
@@ -268,7 +268,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getDisplayUrl($fileName = '')
     {
@@ -280,7 +280,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getThumbUrl($fileName = '')
     {
@@ -293,7 +293,7 @@ class ImagePathsModel
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getSizeUrl($imageSize, $fileName = '')
     {
@@ -305,7 +305,7 @@ class ImagePathsModel
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getSizeUrls($fileName = '')
     {

@@ -174,7 +174,7 @@ class Router extends RouterView
 	 *
 	 * @return array|string[]
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getRootgalleriesJ3xSegment($gid, $query)
     {
@@ -215,7 +215,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getRootgalleriesJ3xId($segment, $query)
     {
@@ -247,7 +247,7 @@ class Router extends RouterView
 	 *
 	 * @return array|string[]
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleriesJ3xSegment($gid, $query)
     {
@@ -285,7 +285,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleriesJ3xId($segment, $query)
     {
@@ -316,7 +316,7 @@ class Router extends RouterView
 	 *
 	 * @return array|string[]
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getGalleryJ3xSegment($gid, $query)
     {
@@ -352,7 +352,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleryJ3xId($segment, $query)
     {
@@ -383,7 +383,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getSlideshowJ3xSegment($gid, $query)
     {
@@ -396,7 +396,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getSlideshowJ3xId($segment, $query)
     {
@@ -411,7 +411,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getSlidepagej3xSegment($gid, $query)
     {
@@ -424,7 +424,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getSlidepagej3xId($segment, $query)
     {
@@ -437,7 +437,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getImg_idSegment($img_id, $query)
     {
@@ -450,7 +450,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getImg_idId($segment, $query)
     {
@@ -466,7 +466,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getYGalleriesJ3xSegment($gid, $query)
     {
@@ -479,7 +479,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getYGalleriesJ3xId($segment, $query)
     {
@@ -495,7 +495,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getAGalleriesJ3xSegment($gid, $query)
     {
@@ -508,7 +508,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getAGalleriesJ3xId($segment, $query)
     {
@@ -524,7 +524,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getGalleriesSegment($gid, $query)
     {
@@ -537,7 +537,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleriesId($segment, $query)
     {
@@ -553,7 +553,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getZBGalleriesJ3xSegment($gid, $query)
     {
@@ -566,7 +566,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getZBGalleriesJ3xId($segment, $query)
     {
@@ -582,7 +582,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGallerySegment($gid, $query)
     {
@@ -595,7 +595,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleryId($segment, $query)
     {
@@ -611,7 +611,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function getSlideshowSegment($gid, $query)
     {
@@ -624,7 +624,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getSlideshowId($segment, $query)
     {
@@ -640,7 +640,7 @@ class Router extends RouterView
 	 *
 	 * @return array
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getImagesSegment($gid, $query)
     {
@@ -653,7 +653,7 @@ class Router extends RouterView
 	 *
 	 * @return int
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getImagesId($segment, $query)
     {

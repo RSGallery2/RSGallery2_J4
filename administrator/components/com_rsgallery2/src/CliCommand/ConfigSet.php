@@ -245,7 +245,7 @@ class ConfigSet extends AbstractCommand
 	 *
 	 * @return bool
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function saveParams(Registry $params)
 	{
@@ -263,7 +263,7 @@ class ConfigSet extends AbstractCommand
 	 *
 	 * @return array|mixed
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
 	public function readRsg2ExtensionParameterDb()
 	{

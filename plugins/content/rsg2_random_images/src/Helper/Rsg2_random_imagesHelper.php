@@ -22,7 +22,7 @@ use Joomla\Registry\Registry;
 /**
  * Helper for mod_rsg2_galleries
  *
- * @since  __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rsg2_random_imagesHelper //implements DatabaseAwareInterface
 {
@@ -55,7 +55,7 @@ class Rsg2_random_imagesHelper //implements DatabaseAwareInterface
 	 *
 	 * @return mixed
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getGalleryData(int $gid)
     {
@@ -164,7 +164,7 @@ class Rsg2_random_imagesHelper //implements DatabaseAwareInterface
 	 *
 	 * @return string
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     public function getText()
     {

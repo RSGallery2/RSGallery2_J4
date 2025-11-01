@@ -33,7 +33,7 @@ ksort($configVars);
  * @param   string  $name   name of config variable
  * @param   string  $value  of config variable
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function configInputField($name = 'unknown', $value = '')
 {

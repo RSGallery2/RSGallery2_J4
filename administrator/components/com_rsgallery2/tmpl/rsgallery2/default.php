@@ -119,7 +119,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
 /**
  * Just displays the logo as svg
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 function DisplayRSG2Logo()
 {
@@ -169,7 +169,7 @@ function DisplayRSG2Logo()
 /**
  * Displays info and links to needed j3x action
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function DisplayRequestJ3xActions(
     $isDoCopyJ3xDbConfig = false,
@@ -302,7 +302,7 @@ function DisplayRequestJ3xActions(
  * @param $buttons
  *
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function DisplayRSG2ControlButtons($buttons)
 {
@@ -327,7 +327,7 @@ function DisplayRSG2ControlButtons($buttons)
  * @param $Rsg2Version
  *
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function DisplayAboutRsgallery2($Rsg2Version)
 {
@@ -561,7 +561,7 @@ function DisplayLastGalleriesAndImages($lastGalleries, $lastImages)
  * @param $changelogs
  *
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function DisplayChangeLog($changelogs)
 {
@@ -583,7 +583,7 @@ function DisplayChangeLog($changelogs)
  *
  * @return string
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function tableFromXml($changelogs)
 {
@@ -614,7 +614,7 @@ function tableFromXml($changelogs)
  * @param $credits
  *
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function DisplayCredits($credits)
 {
@@ -633,7 +633,7 @@ function DisplayCredits($credits)
  * @param $externalLicenses
  *
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function DisplayExternalLicenses($externalLicenses)
 {
@@ -652,7 +652,7 @@ function DisplayExternalLicenses($externalLicenses)
  * @param $id
  *
  *
- * @since __BUMP_VERSION__
+     * @since 5.1.0
  */
 function collapseContent($title, $content, $id)
 {

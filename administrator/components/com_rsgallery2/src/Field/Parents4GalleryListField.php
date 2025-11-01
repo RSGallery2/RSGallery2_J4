@@ -24,7 +24,7 @@ use Joomla\Database\DatabaseInterface;
  * Includes "No parent" as first entry
  * Sorted by ordering (newest first)
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Parents4GalleryListField extends ListField
 {

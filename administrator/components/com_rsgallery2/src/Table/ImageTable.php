@@ -23,7 +23,7 @@ use UnexpectedValueException;
 /**
  * Image table
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ImageTable extends Table
 {

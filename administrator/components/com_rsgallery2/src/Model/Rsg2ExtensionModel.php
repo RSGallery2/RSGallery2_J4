@@ -24,7 +24,7 @@ use Joomla\Database\DatabaseInterface;
 /**
  * Handles RSG2 manifest data
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  *
  */
 class Rsg2ExtensionModel extends BaseModel
@@ -72,7 +72,7 @@ class Rsg2ExtensionModel extends BaseModel
 	 * @return array|mixed RSG2 config parameter list
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     static function readRsg2ExtensionConfiguration()
     {
@@ -122,7 +122,7 @@ class Rsg2ExtensionModel extends BaseModel
 	 *
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     static function readRsg2ExtensionData()
     {

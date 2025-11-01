@@ -22,7 +22,7 @@ use Joomla\CMS\Table\Table;
 /**
  * Item Model for a Configuration items (options).
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class ConfigJ3xRawModel extends BaseModel
 {

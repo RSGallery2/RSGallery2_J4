@@ -20,7 +20,7 @@ use Joomla\Database\DatabaseInterface;
 /**
  * Item Model for a Configuration items (options).
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class J3xExistModel extends BaseModel
 {
@@ -42,7 +42,7 @@ class J3xExistModel extends BaseModel
 	 *
 	 * @return bool
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     static function J3xGalleriesTableExist()
     {
@@ -53,7 +53,7 @@ class J3xExistModel extends BaseModel
 	 *
 	 * @return bool
 	 *
-	 * @since version
+	 * @since  5.1.0
 	 */
     static function J3xImagesTableExist()
     {
@@ -66,7 +66,7 @@ class J3xExistModel extends BaseModel
 	 * @return bool
 	 *
 	 * @throws \Exception
-	 * @since version
+	 * @since  5.1.0
 	 */
     static function J3xTableExist($findTable)
     {

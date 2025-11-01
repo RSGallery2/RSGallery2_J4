@@ -27,7 +27,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel;
 /**
  * The Galleries List Controller
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class GalleriesController extends AdminController
 {

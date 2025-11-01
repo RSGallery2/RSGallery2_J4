@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Rsgallery2 component helper.
  *
- * @since __BUMP_VERSION__
+     * @since      5.1.0
  */
 class Rsgallery2Helper extends ContentHelper
 {
@@ -31,7 +31,7 @@ class Rsgallery2Helper extends ContentHelper
 	 *
 	 * @return  void
 	 *
-	 * @since __BUMP_VERSION__
+	 * @since   5.1.0
 	 */
 	public static function addSubmenu($vName)
 	{
