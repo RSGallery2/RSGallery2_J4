@@ -1491,7 +1491,14 @@ class ImageModel extends AdminModel
     }
     /**/
 
-    /**/
+    /**
+     * Extracts exif data from given file and returns
+     * [filename => exif datta array] construct
+     *
+     * @param $filename
+     *
+     * @return array
+     */
     public function exifDataOfFile($filename)
     {
         $exifDataOfFile = [$filename];
