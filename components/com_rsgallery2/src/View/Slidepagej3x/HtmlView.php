@@ -225,8 +225,15 @@ class HtmlView extends BaseHtmlView
     }
 
 
-//  ToDo: movoe to model
-    public function mergeMenuOptions()
+//  ToDo: move to model
+
+	/**
+	 * Merge ... not ready .. cascade ...
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function mergeMenuOptions()
     {
         /**
         $app = Factory::getApplication();

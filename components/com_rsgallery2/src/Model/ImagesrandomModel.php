@@ -83,6 +83,13 @@ class imagesrandomModel extends ListModel
     }
 
 
+    /**
+     * Method to get an array of data items.
+     *
+     * @return  mixed  An array of data items on success, false on failure.
+     *
+     * @since   version
+     */
     public function getItems()
     {
         $items  = parent::getItems();

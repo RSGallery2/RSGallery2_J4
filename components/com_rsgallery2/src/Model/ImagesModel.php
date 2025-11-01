@@ -554,6 +554,14 @@ class ImagesModel extends ListModel
         return $images;
     }
 
+	/**
+	 * Return DB gallery data as object
+	 * @param $gid
+	 *
+	 * @return mixed|\stdClass
+	 *
+	 * @since version
+	 */
     public function galleryData($gid = 0)
     {
         $gallery = new \stdClass();

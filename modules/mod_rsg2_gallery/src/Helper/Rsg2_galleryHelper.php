@@ -54,6 +54,13 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
             ->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
     }
 
+	/**
+	 * @param   int  $gid
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
     public function getGalleryData(int $gid)
     {
         return $this->galleryModel->galleryData($gid);
@@ -290,6 +297,12 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 //    }
 //
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
     public function HtmlImages(): string
     {
         $msg = "    --- HtmlImages from Rsg2_gallery plugin    ----- \nxxx\n";
@@ -297,12 +310,12 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         return $msg;
     }
 
-    public function getText()
-    {
-        $msg = "    --- Rsg2_gallery plugin ----- ";
-
-        return $msg;
-    }
+//    public function getText()
+//    {
+//        $msg = "    --- Rsg2_gallery plugin ----- ";
+//
+//        return $msg;
+//    }
 
 
 }

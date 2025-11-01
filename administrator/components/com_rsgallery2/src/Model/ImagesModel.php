@@ -489,7 +489,8 @@ class ImagesModel extends ListModel
      *
      * @return  mixed  An array of data items on success, false on failure.
      *
-	 * @since      5.1.0     */
+	 * @since      5.1.0
+     */
     public function getItems()
     {
         $items = parent::getItems();

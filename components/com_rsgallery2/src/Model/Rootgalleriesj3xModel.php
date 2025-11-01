@@ -98,6 +98,15 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
     }
     /**/
 
+	/**
+	 * returns list of random images data enriched with image paths and urls
+	 *
+	 * @param $random_count
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public function randomImages($random_count)
     {
         $randomImages = [];

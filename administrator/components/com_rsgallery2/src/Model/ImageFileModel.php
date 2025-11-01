@@ -1204,8 +1204,8 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return bool
      *
-     * @since  5.1.0     */
-    /**/
+     * @since  5.1.0
+    */
     private function use_j3x_location($ImageId)
     {
         $use_j3x = 0;
