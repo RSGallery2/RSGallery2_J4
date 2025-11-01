@@ -33,6 +33,9 @@ class Rsg2_galleries extends CMSPlugin implements SubscriberInterface
 //		parent::__construct($subject, $config);
 //	}
 
+    /**
+     * @return string[]
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -40,6 +43,11 @@ class Rsg2_galleries extends CMSPlugin implements SubscriberInterface
         ];
     }
 
+    /**
+     * @param   Event  $event
+     *
+     * @return bool
+     */
     public function getRsg2_galleriesDisplay(Event $event)
     {
         $context   = '';
@@ -130,6 +138,11 @@ class Rsg2_galleries extends CMSPlugin implements SubscriberInterface
         return true;
     }
 
+    /**
+     * @param   string  $usrString
+     *
+     * @return false|Registry
+     */
     private function extractUserParams(string $usrString)
     {
         $usrParams = new Registry();

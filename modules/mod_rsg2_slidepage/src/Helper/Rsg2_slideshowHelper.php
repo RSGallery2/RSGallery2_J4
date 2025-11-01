@@ -37,6 +37,9 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 
     protected $galleryModel; // ToDo: rename to slideshowModel
 
+    /**
+     * @param   array  $data
+     */
     public function __construct(array $data ){
 
         // boot component only once Model('Gallery', 'Site')
@@ -514,6 +517,9 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 //    }
 //
 
+    /**
+     * @return string
+     */
     public function getText()
     {
         $msg = "    --- Rsg2_slideshow module ----- ";

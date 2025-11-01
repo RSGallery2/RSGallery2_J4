@@ -162,6 +162,9 @@ class Rsg2_galleriesHelper implements DatabaseAwareInterface
 //        return $galleries;
 //    }
 
+    /**
+     * @return string
+     */
     public function getText()
     {
         $msg = "    --- Rsg2_gallery module ----- ";

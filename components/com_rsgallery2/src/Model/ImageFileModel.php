@@ -73,8 +73,8 @@ class ImageFileModel extends ListModel // BaseModel
      *
      * @return array
      *
-     * @since  5.1.0     */
-    /**/
+     * @since  5.1.0
+    */
     public function imageFileAttrib($ImageId)
     {
         $fileName         = "";
@@ -111,7 +111,6 @@ class ImageFileModel extends ListModel // BaseModel
 
         return [$fileName, $galleryId, $use_j3x_location];
     }
-
 
 	/**
 	 * returns file and url path by J3/j4 style

@@ -165,6 +165,12 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
         return $galleries;
     }
 
+    /**
+     * List of laterst images with layout data
+     * @param $latest_count
+     *
+     * @return array
+     */
     public function latestImages($latest_count)
     {
         $latestImages = [];
