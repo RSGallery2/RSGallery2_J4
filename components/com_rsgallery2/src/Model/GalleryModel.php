@@ -171,7 +171,7 @@ class GalleryModel extends ListModel
     }
 
     /**
-     * Add url for inline layout
+     * Add url for inline layout to image data
      *
      * @param $images
      *
@@ -211,10 +211,15 @@ class GalleryModel extends ListModel
     }
 
 
-    /**
-     * @var string item
-     */
-    /**/
+	/**
+	 * Add url for inline layout to image data
+	 *
+	 * @param $image
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function AssignUrlDownloadImage($image)
     {
         $image->Urldownload = ''; // fall back

@@ -114,6 +114,17 @@ class ImageFileModel extends ListModel // BaseModel
     /**/
 
 
+	/**
+	 * returns file and url path by J3/j4 style
+	 *
+	 * @param $imageFileName
+	 * @param $galleryId
+	 * @param $use_j3x_location
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location) {
         $OriginalPathFileName = "";
 

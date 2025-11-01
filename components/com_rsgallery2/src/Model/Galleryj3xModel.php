@@ -64,12 +64,16 @@ class Galleryj3xModel extends GalleryModel
         return $images;
     }
 
-    /**
-     * @param $images
-     *
-     *
-     * @since 4.5.0.0
-     */
+	/**
+	 * Add url for inline layout to image data
+	 *
+	 * @param $image
+	 * @param $idx
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function AssignUrlImageAsInline($image, $idx)
     {
         try {
