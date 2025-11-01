@@ -92,6 +92,13 @@ class GalleriesModel extends ListModel
     }
 
 
+	/**
+	 *
+	 * @return false|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function getItems()
     {
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
@@ -369,6 +376,14 @@ class GalleriesModel extends ListModel
         }
     }
 
+	/**
+	 * Add sub gallery data to $gallery data
+	 *
+	 * @param $gallery
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function AssignSubGalleryList($gallery)
     {
         try {
@@ -407,6 +422,16 @@ class GalleriesModel extends ListModel
         }
     }
 
+	/**
+	 * return count of image by gallery if ad parent
+	 *
+	 * @param $galleryId
+	 *
+	 * @return int|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function imageCount($galleryId)
     {
         $imageCount = 0;
@@ -436,8 +461,9 @@ class GalleriesModel extends ListModel
     }
 
     /**
-     * @param $gallery
+     * Assign url of gallery to gallery data
      *
+     * @param $gallery
      *
      * @since 4.5.0.0
      */
@@ -475,6 +501,12 @@ class GalleriesModel extends ListModel
         }
     }
 
+	/**
+	 * @param $gallery
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function assignSlideshowUrl($gallery)
     {
         try {

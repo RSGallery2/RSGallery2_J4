@@ -58,6 +58,13 @@ class JsonapiView extends BaseApiView
 //		return $this->getDocument()->render();
 	}
 
+	/**
+	 * @param $tpl
+	 *
+	 * @return string|void
+	 *
+	 * @since version
+	 */
 	public function display($tpl = null)
 	{
 		$testRsgallery2Text = "testRsgallery2Text";

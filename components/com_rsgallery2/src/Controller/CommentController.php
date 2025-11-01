@@ -55,6 +55,12 @@ class CommentController extends BaseController
     // saveComment Below / ToDO: delete comment
 
 
+	/**
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function addComment()
     {
         $msgType = 'notice';
@@ -167,6 +173,11 @@ class CommentController extends BaseController
 
 
     // After editing
+
+	/**
+	 * @throws \Exception
+	 * @since version
+	 */
     public function saveComment()
     {
         $msgType = 'notice';

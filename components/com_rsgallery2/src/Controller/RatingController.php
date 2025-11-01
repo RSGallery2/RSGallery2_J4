@@ -55,6 +55,12 @@ class RatingController extends BaseController
     }
 
 
+	/**
+	 *
+	 *
+	 * @throws Exception
+	 * @since version
+	 */
     public function rateSingleImage()
     {
         $msgType = 'notice';

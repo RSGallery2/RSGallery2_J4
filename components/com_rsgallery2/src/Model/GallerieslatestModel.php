@@ -82,8 +82,14 @@ class gallerieslatestModel extends ListModel
         parent::__construct($config, $factory);
     }
 
-
-    public function getItems()
+	/**
+	 *
+	 * @return false|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
+	public function getItems()
     {
         $items  = parent::getItems();
         $app    = Factory::getApplication();
@@ -140,6 +146,7 @@ class gallerieslatestModel extends ListModel
 
 
     /**
+     * return list start for  ....
      * @var string item
      */
     /**/
@@ -155,18 +162,6 @@ class gallerieslatestModel extends ListModel
         return $this->getState('list.start');
     }
     /**/
-
-    /**
-     * Method to get a list of images
-     *
-     * ??? Overridden to inject convert the attribs field into a Registry object.
-     *
-     * @param   integer  $gid  Id for the gallery
-     *
-     * @return  mixed  An array of objects on success, false on failure.
-     *
-     * @since   1.6
-     */
 
     // toDo: rights ...
     /**

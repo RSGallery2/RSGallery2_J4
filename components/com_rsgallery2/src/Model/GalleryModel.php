@@ -24,8 +24,6 @@ use Joomla\Database\ParameterType;
 use Joomla\Database\QueryInterface;
 use Joomla\Registry\Registry;
 
-
-
 /**
  * RSGallery2 Component gallery images Model
  *
@@ -90,6 +88,12 @@ class GalleryModel extends ListModel
         parent::__construct($config, $factory);
     }
 
+	/**
+	 * Return cascaded parameters
+	 * @return mixed
+	 *
+	 * @since version
+	 */
     public function getlayoutParams()
     {
         if ($this->layoutParams == null) {
@@ -102,6 +106,8 @@ class GalleryModel extends ListModel
     }
 
     /**
+     * Assign urls to image data
+     *
      * @param $images
      *
      *
@@ -134,6 +140,8 @@ class GalleryModel extends ListModel
     }
 
     /**
+     * returns url by J3/j4 style path
+     *
      * @param $image
      *
      *
@@ -164,6 +172,8 @@ class GalleryModel extends ListModel
     }
 
     /**
+     * Add url for inline layout
+     *
      * @param $images
      *
      *
@@ -241,6 +251,13 @@ class GalleryModel extends ListModel
         return $this->getState('list.start');
     }
 
+	/**
+	 * @param $gid
+	 *
+	 * @return Registry|\stdClass
+	 *
+	 * @since version
+	 */
     public function gallery_parameter($gid = 0)
     {
         $parameter = new \stdClass();
@@ -269,6 +286,15 @@ class GalleryModel extends ListModel
 
     //-----------------------------------------------------------------
 
+	/**
+	 * Retrieve gallery data from db byid
+	 *
+	 * @param $gid
+	 *
+	 * @return mixed|\stdClass
+	 *
+	 * @since version
+	 */
     public function galleryData($gid = 0)
     {
         $gallery = new \stdClass();
@@ -296,6 +322,14 @@ class GalleryModel extends ListModel
         return $gallery;
     }
 
+	/**
+	 * 
+	 * @param $gallery
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function assignSlideshowUrl($gallery)
     {
         try {

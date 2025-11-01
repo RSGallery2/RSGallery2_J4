@@ -87,6 +87,13 @@ class Galleriesj3xModel extends ListModel
     }
 
 
+	/**
+	 *
+	 * @return false|mixed|null
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function getItems()
     {
         $app    = Factory::getApplication();
@@ -142,6 +149,7 @@ class Galleriesj3xModel extends ListModel
 
 
     /**
+     * return actual gallery id or given in input
      * @var string item
      */
     /**/
@@ -438,6 +446,14 @@ class Galleriesj3xModel extends ListModel
         }
     }
 
+	/**
+	 * Assign subgallery list to gallery data
+	 *
+	 * @param $gallery
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function AssignSubGalleryList($gallery)
     {
         try {
@@ -476,6 +492,16 @@ class Galleriesj3xModel extends ListModel
         }
     }
 
+	/**
+	 * return image count with parent of given gallery
+	 *
+	 * @param $galleryId
+	 *
+	 * @return int|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function imageCount($galleryId)
     {
         $imageCount = 0;
@@ -505,6 +531,8 @@ class Galleriesj3xModel extends ListModel
     }
 
     /**
+     * Assign url to gallery to gallery data
+     *
      * @param $gallery
      *
      *
@@ -544,6 +572,15 @@ class Galleriesj3xModel extends ListModel
         }
     }
 
+	/**
+	 * Assign slideshow url to gallery to gallery data
+	 *
+	 * @param $gallery
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function assignSlideshowUrl($gallery)
     {
         try {

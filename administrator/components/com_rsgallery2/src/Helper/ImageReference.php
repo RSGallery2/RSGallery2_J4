@@ -231,7 +231,7 @@ class ImageReference
     }
 
     /**
-     * Check all epected pathes for image existance
+     * Check all expected pathes for image existence
      *
      * @throws \Exception
      * @since  5.1.0     */
