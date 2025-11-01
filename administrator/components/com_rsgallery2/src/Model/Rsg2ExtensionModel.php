@@ -66,6 +66,14 @@ class Rsg2ExtensionModel extends BaseModel
         return $manifest;
     }
 
+	/**
+	 * Direct read of RSG configuration values
+	 *
+	 * @return array|mixed RSG2 config parameter list
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     static function readRsg2ExtensionConfiguration()
     {
         $params = [];
@@ -107,6 +115,15 @@ class Rsg2ExtensionModel extends BaseModel
         return $params;
     }
 
+	/**
+	 * Direct read of RSG configuration values
+	 *
+	 * @return array|mixed RSG2 config parameter as assoc list
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     static function readRsg2ExtensionData()
     {
         $extensionData = [];
