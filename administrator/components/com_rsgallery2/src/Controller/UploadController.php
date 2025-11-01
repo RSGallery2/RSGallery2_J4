@@ -1151,6 +1151,17 @@ interface IResponseTransfer {
         $app->close();
     }
 
+	/**
+	 * Collects file names in given folder, creates a DB entry in images table
+	 * and return a files list with basic information including the new image ID
+	 * recursive
+	 * @param $ImagesFolder
+	 * @param $galleryId
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     private function Import2Db4FilesInFolder($ImagesFolder, $galleryId)
     {
         global $rsgConfig, $Rsg2DebugActive;
@@ -1167,6 +1178,7 @@ interface IResponseTransfer {
         $files   = [];
 
         foreach ($filesFound as $filePathName) {
+
             //--- Create Destination file name -----------------------
 
             $filePathName = realpath($filePathName);

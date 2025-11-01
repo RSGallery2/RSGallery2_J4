@@ -200,6 +200,14 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
         ];
     }
 
+	/**
+	 * Return list of J3x defined galleries with data
+	 *
+	 * @return array|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function j3x_galleriesList()
     {
         $galleries = [];

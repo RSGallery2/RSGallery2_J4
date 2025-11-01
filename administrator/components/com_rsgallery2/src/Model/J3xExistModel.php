@@ -16,7 +16,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
 
-
 
 /**
  * Item Model for a Configuration items (options).
@@ -32,22 +31,43 @@ class J3xExistModel extends BaseModel
      *
      * @return bool
      *
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     static function J3xConfigTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_config');
     }
 
+	/**
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
     static function J3xGalleriesTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_galleries');
     }
 
+	/**
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
     static function J3xImagesTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_files');
     }
 
+	/**
+	 * @param $findTable
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     static function J3xTableExist($findTable)
     {
         $tableExist = false;

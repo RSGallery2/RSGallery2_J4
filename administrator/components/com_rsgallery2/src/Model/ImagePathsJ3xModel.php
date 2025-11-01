@@ -58,8 +58,11 @@ class ImagePathsJ3xModel {
 
     // ToDo: watermarked path
 
-    // root of images, image sizes from configuration build the paths
-    // ToDo: watermarked path
+	/**
+	 * root of images, image sizes from configuration build the paths
+	 *
+	 * @throws \Exception
+	 */
 	public function __construct() {
         global $rsgConfig;
 
@@ -125,12 +128,38 @@ class ImagePathsJ3xModel {
     File paths
     --------------------------------------------------------------------*/
 
+	/**
+	 *
+	 * @param $fileName
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getOriginalPath ($fileName=''){
         return PathHelper::join($this->originalBasePath, $fileName);
     }
+
+	/**
+	 *
+	 * @param $fileName
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getDisplayPath ($fileName=''){
         return PathHelper::join($this->displayBasePath, $fileName . '.jpg');
     }
+
+	/**
+	 *
+	 * @param $fileName
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getThumbPath ($fileName=''){
         return PathHelper::join($this->thumbBasePath, $fileName . '.jpg');
     }
@@ -139,14 +168,38 @@ class ImagePathsJ3xModel {
     URIs
     --------------------------------------------------------------------*/
 
+	/**
+	 *
+	 * @param $fileName
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getOriginalUrl ($fileName=''){
         return UriHelper::join($this->originalUrl, $fileName);
 //		return $this->originalUrl . '/' . $fileName;
     }
+
+	/**
+	 * @param $fileName
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getDisplayUrl ($fileName=''){
         return UriHelper::join($this->displayUrl, $fileName . '.jpg');
 //		return $this->displayUrl . '/' . $fileName . '.jpg';
     }
+
+	/**
+	 * @param $fileName
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	public function getThumbUrl ($fileName=''){
         return UriHelper::join($this->thumbUrl, $fileName . '.jpg');
 //		return $this->thumbUrl . '/' . $fileName . '.jpg';

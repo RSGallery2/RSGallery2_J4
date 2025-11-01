@@ -227,6 +227,12 @@ class ImageReferences
         return;
     }
 
+	/**
+	 * For images in reference list check all expected paths for image existence
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     private function checkList4NotExisting()
     {
         try {
@@ -245,7 +251,12 @@ class ImageReferences
         return;
     }
 
-    // search for files not in list
+	/**
+	 * search for files not in list
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     private function findOrphans_Add2List()
     {
         try {

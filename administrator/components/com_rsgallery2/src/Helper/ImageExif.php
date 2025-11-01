@@ -45,6 +45,13 @@ class ImageExif
         }
     }
 
+	/**
+	 * @param   string  $imagPathFileName
+	 *
+	 * @return array|false
+	 *
+	 * @since version
+	 */
     public function readExifDataAll(string $imagPathFileName = '')
     {
         $items = [];
@@ -109,6 +116,13 @@ class ImageExif
         return $items;
     }
 
+	/**
+	 * @param $supportedTags
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public function readExifDataUserSelected($supportedTags = [])
     {
         $selected = [];
@@ -138,6 +152,12 @@ class ImageExif
         return $selected;
     }
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public static function supportedExifTags () {
 
         $supportedTags = [];
@@ -230,6 +250,13 @@ class ImageExif
         return $supportedTags;
     }
 
+	/**
+	 * @param $ExifTag
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public static function tag2TypeAndName ($ExifTag) {
 
         $type = '';
@@ -253,6 +280,13 @@ class ImageExif
         return [$type, $name];
     }
 
+	/**
+	 * @param $ExifName
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
     public static function exifTranslationId($ExifName)
     {
         $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifName);
@@ -260,6 +294,12 @@ class ImageExif
         return $translationId;
     }
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public static function userExifTagsJ3x()
     {
         $userExifTags = [];
@@ -272,6 +312,13 @@ class ImageExif
         return $userExifTags;
     }
 
+	/**
+	 * @param $existingExifTags
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public static function checkTagsNotSupported ($existingExifTags)    {
 
         $notSupportedTags = [];
@@ -290,6 +337,13 @@ class ImageExif
         return $notSupportedTags;
     }
 
+	/**
+	 * @param $existingExifTags
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public static function checkNotUserSelected($existingExifTags)
     {
         $notUserExifTags = [];
@@ -310,6 +364,12 @@ class ImageExif
         return $notUserExifTags;
     }
 
+	/**
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public static function neededTranslationIds()
     {
         $neededIds = [];

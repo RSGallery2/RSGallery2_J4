@@ -93,7 +93,7 @@ class LayoutSlideshowField extends ListField
              * Search in source folders
              */
 
-            // Format values for slideshow dropdownbox
+            // Format values for slideshow dropDownBox
             $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 
             $folders = Folder::folders($layoutFolder);
@@ -139,6 +139,16 @@ class LayoutSlideshowField extends ListField
         return $options;
     }
 
+	/**
+	 * Collects possible layouts by filter filenames in given folder
+	 * for valid names
+	 *
+	 * @param   string  $layoutFolder
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     private function subLayouts(string $layoutFolder)
     {
         $subLayouts = [];

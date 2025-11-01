@@ -1276,6 +1276,17 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
     }
 
 
+	/**
+	 * Depending on j3x/j4x type storage of image it retrieves path a nd url of file
+	 *
+	 * @param $imageFileName
+	 * @param $galleryId
+	 * @param $use_j3x_location
+	 *
+	 * @return array paths to 'original' file and url
+	 *
+	 * @since version
+	 */
     public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location)
     {
         $OriginalPathFileName = "";
@@ -1302,6 +1313,17 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         return [$OriginalPathFileName, $OriginalFileNameUri];
     }
 
+	/**
+	 * Download a file with copying from temp file to URL ?
+	 *
+	 * @param $OriginalFilePath
+	 * @param $OriginalFileUri
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
         $IsDownloaded = false;
 
@@ -1323,6 +1345,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
             //  tells if successful
             $IsDownloaded = true;
+
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';

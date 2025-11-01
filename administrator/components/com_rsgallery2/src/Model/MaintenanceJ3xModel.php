@@ -2989,6 +2989,14 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		return $state;
 	}
 
+	/**
+	 * indicate moved image when is deleted, actually moved or moved since longer timne
+	 * @param $state
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
 	private function isMovedState($state)
 	{
 		$isMoved = false;
@@ -4355,13 +4363,24 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		return $menuLinks;
 	}
 
+	/**
+	 * Remove 'g' from gid in url
+	 *
+	 * @param   string  $oldLink
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	private function linkReplaceGid2Id(string $oldLink)
 	{
 		$newLink = $oldLink;
 
 		//--- extract gallery id --------------------------
 
-		$gidIdx = strpos($oldLink, '&id=');
+		// Todo: !!! chack all similar if not "crashed" gid changed to id unintentionally !!!
+		// $gidIdx = strpos($oldLink, '&id=');
+		$gidIdx = strpos($oldLink, '&gid=');
 		$idIdx  = strpos($oldLink, '&id=');
 
 		// link contains '&id=' and new '&Id='
@@ -4381,6 +4400,15 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 		return $newLink;
 	}
 
+	/**
+	 * Add 'g' to id in url
+	 *
+	 * @param   string  $oldLink
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
 	private function linkReplaceId2Gid(string $oldLink)
 	{
 		$newLink = $oldLink;
