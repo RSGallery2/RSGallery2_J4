@@ -57,7 +57,18 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
     }
 
 
-    public static function getList($params, $model, $app)
+	/**
+	 * return items
+	 *
+	 * @param $params
+	 * @param $model
+	 * @param $app
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	public static function getList($params, $model, $app)
     {
         // Set application parameters in model
         $appParams = $app->getParams();
@@ -378,18 +389,18 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 //		return $items;
     }
 
+	/**
+	 *
+	 * @param   int  $gid
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
     public function getGalleryData(int $gid)
     {
         return $this->galleryModel->galleryData($gid);
     }
-
-
-
-
-
-
-
-
 
     /**
      * Get a list of the latest articles from the article model

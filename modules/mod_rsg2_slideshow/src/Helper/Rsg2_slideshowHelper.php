@@ -36,6 +36,9 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 
     protected $galleryModel; // ToDo: rename to slideshowModel
 
+	/**
+	 * @param   array  $data
+	 */
     public function __construct(array $data ){
 
         // boot component only once Model('Gallery', 'Site')
@@ -53,6 +56,15 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
     }
 
 
+	/**
+	 * @param $params
+	 * @param $model
+	 * @param $app
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
     public static function getList($params, $model, $app)
     {
         // Set application parameters in model
@@ -374,7 +386,14 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 //		return $items;
     }
 
-    public function getGalleryData(int $gid)
+	/**
+	 * @param   int  $gid
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	    public function getGalleryData(int $gid)
     {
         return $this->galleryModel->galleryData($gid);
     }
@@ -492,6 +511,12 @@ class Rsg2_slideshowHelper implements DatabaseAwareInterface
 //    }
 //
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
     public function getText()
     {
         $msg = "    --- Rsg2_slideshow module ----- ";

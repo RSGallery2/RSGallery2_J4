@@ -44,6 +44,16 @@ class Rsg2_imageHelper
         return 'Rsg2_imageHelper Test';
     }
 
+	/**
+	 * Get DB image data by image id
+	 *
+	 * @param $ImageId
+	 *
+	 * @return false
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public static function getItem($ImageId)
     {
         $dbImage = false;

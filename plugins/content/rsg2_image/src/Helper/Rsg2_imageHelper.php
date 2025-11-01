@@ -31,6 +31,9 @@ class Rsg2_imageHelper //implements DatabaseAwareInterface
     public $pagination;
     protected $galleriesModel;
 
+	/**
+	 * @param   array  $data
+	 */
     public function __construct(array $data)
     {
         // boot component only once Model('Gallery', 'Site')
@@ -47,8 +50,16 @@ class Rsg2_imageHelper //implements DatabaseAwareInterface
             ->createModel('Galleries', 'Site', ['ignore_request' => true]);
     }
 
+	/**
+	 * @param   int  $gid
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
     public function getGalleryData(int $gid)
     {
+
         return $this->galleriesModel->getParentGallery($gid);
     }
 
@@ -150,6 +161,12 @@ class Rsg2_imageHelper //implements DatabaseAwareInterface
 //        return $galleries;
 //    }
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
     public function getText()
     {
         $msg = "    --- Rsg2_image module ----- ";

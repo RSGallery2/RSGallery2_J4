@@ -48,6 +48,13 @@ class Rsg2_galleriesHelper //implements DatabaseAwareInterface
             ->createModel('Galleries', 'Site', ['ignore_request' => true]);
     }
 
+	/**
+	 * @param   int  $gid
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
     public function getGalleryData(int $gid)
     {
         return $this->galleriesModel->getParentGallery($gid);
@@ -151,6 +158,12 @@ class Rsg2_galleriesHelper //implements DatabaseAwareInterface
 //        return $galleries;
 //    }
 
+	/**
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
     public function getText()
     {
         $msg = "    --- Rsg2_galleries module ----- ";

@@ -38,6 +38,13 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
         ];
     }
 
+	/**
+	 * @param   Event  $event
+	 *
+	 * @return bool
+	 *
+	 * @since version
+	 */
     public function getRsg2_random_imagesDisplay(Event $event)
     {
         $context   = '';
@@ -128,6 +135,13 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
         return true;
     }
 
+	/**
+	 * @param   string  $usrString
+	 *
+	 * @return false|Registry
+	 *
+	 * @since version
+	 */
     private function extractUserParams(string $usrString)
     {
         $usrParams = new Registry();
