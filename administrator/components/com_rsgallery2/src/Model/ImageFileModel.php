@@ -1239,8 +1239,8 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @return array
      *
-     * @since  5.1.0     */
-    /**/
+     * @since  5.1.0
+     */
     public function imageFileAttrib($ImageId)
     {
         $fileName         = "";

@@ -227,6 +227,14 @@ class HtmlView extends BaseHtmlView
         }
     }
 
+	/**
+	 * Button data list
+	 * Prepare list with data for the shown buttons in control panel
+	 *
+	 * @return array[]
+	 *
+	 * @since version
+	 */
     private function getRsg2ControlButtons()
     {
         $buttons = [

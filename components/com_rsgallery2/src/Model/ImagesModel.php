@@ -92,6 +92,12 @@ class ImagesModel extends ListModel
         parent::__construct($config, $factory);
     }
 
+	/**
+	 * Return cascaded parameters
+	 * @return mixed
+	 *
+	 * @since version
+	 */
     public function getlayoutParams()
     {
         if ($this->layoutParams == null) {
@@ -267,6 +273,13 @@ class ImagesModel extends ListModel
     /**/
 
 
+	/**
+	 * Method to get an array of data items.
+	 *
+	 * @return  mixed  An array of data items on success, false on failure.
+	 *
+	 * @since   version
+	 */
     public function getItems()
     {
         $app  = Factory::getApplication();
@@ -408,6 +421,15 @@ class ImagesModel extends ListModel
 
     //-----------------------------------------------------------------
 
+	/**
+	 * Add url for inline layout to image data
+	 *
+	 * @param $image
+	 *
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function AssignUrlDownloadImage($image)
     {
         $image->UrlDownload = ''; // fall back
@@ -417,6 +439,7 @@ class ImagesModel extends ListModel
             $image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
                 . '&task=imagefile.downloadfile&id=' . $image->id
                 ,true,0,true);
+
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagesModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';

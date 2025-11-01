@@ -56,6 +56,14 @@ class MaintenanceModel extends BaseDatabaseModel
         return $isPathsExisting;
     }
 
+	/**
+	 * Recreates all paths for j4x images and tells if at least one was different (repaired))
+	 *
+	 * @return bool|int
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function RepairImagePaths()
     {
         $isPathsRepaired = false;
@@ -77,6 +85,14 @@ class MaintenanceModel extends BaseDatabaseModel
         return $isPathsRepaired;
     }
 
+	/**
+	 * Retrieve gallery ids from database (j4x) style
+	 *
+	 * @return array|mixed
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function j4x_galleryIds()
     {
         $galleryIds = [];

@@ -57,6 +57,14 @@ class zoneButtons
     public $classIcons;
     public $classButton;
 
+    /**
+     * @param $task
+     * @param $link
+     * @param $textTitle
+     * @param $textInfo
+     * @param $classIcons
+     * @param $classButton
+     */
     public function __construct(
 		$task = '?',
         $link = '?',

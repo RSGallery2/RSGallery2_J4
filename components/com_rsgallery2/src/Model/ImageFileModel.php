@@ -111,7 +111,6 @@ class ImageFileModel extends ListModel // BaseModel
 
         return [$fileName, $galleryId, $use_j3x_location];
     }
-    /**/
 
 
 	/**
@@ -151,6 +150,17 @@ class ImageFileModel extends ListModel // BaseModel
     }
 
 
+	/**
+	 * Use temp file to copy image file to 'original' destination
+	 *
+	 * @param $OriginalFilePath
+	 * @param $OriginalFileUri
+	 *
+	 * @return false
+	 *
+	 * @throws \Exception
+	 * @since version
+	 */
     public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
         $IsDownloaded = false;
 

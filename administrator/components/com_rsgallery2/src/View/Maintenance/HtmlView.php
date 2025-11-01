@@ -393,6 +393,13 @@ class HtmlView extends BaseHtmlView
         return $fileNames;
     }
 
+	/**
+	 * List of test files for debugging
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     public function presetExifFileList()
     {
         $exifImageFiles = [];
@@ -420,6 +427,15 @@ class HtmlView extends BaseHtmlView
         return $exifImageFiles;
     }
 
+	/**
+	 * Check if com_rsg2_exif.ini contains all needed translations
+	 * Returns missing list
+	 * @param   array  $neededIds
+	 *
+	 * @return array
+	 *
+	 * @since version
+	 */
     private function CheckExifMissingTranslationIds(array $neededIds)
     {
         $existingIds = [];
@@ -455,6 +471,14 @@ class HtmlView extends BaseHtmlView
         return $missingIds;
     }
 
+	/**
+	 * Return the translation ID "COM_RSGALLERY2_EXIF_TAG..." from actual line
+	 * @param   bool|string  $line
+	 *
+	 * @return string
+	 *
+	 * @since version
+	 */
     private function lineExtractTransId(bool|string $line)
     {
         $transId = '';
