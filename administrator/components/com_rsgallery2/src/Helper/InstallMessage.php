@@ -16,7 +16,9 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
 
+// phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper

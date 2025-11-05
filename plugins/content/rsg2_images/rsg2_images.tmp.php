@@ -19,7 +19,9 @@
 // $this->db: das Datenbankobjekt
 // $this->app: das Anwendungsobjekt
 
-defined('_JEXEC') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 //use Joomla\CMS\Event\Event;
 use Joomla\CMS\Application\CMSApplication;

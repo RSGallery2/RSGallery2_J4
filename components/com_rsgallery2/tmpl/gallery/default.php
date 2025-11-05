@@ -12,7 +12,9 @@
 //  J3x legacy view default => gallery images
 
 
+// phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;

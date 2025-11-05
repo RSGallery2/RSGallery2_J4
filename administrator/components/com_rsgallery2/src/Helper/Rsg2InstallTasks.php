@@ -10,7 +10,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
+// phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // required is used as classes may not be loaded on  fresh install
 // !!! needed by install

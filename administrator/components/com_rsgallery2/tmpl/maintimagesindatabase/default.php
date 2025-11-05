@@ -10,7 +10,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
+// phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Component\ComponentHelper;
 
