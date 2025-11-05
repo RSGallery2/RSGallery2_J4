@@ -24,7 +24,7 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel;
 
-
+
 
 /**
  * The Galleries List Controller

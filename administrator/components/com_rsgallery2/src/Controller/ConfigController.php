@@ -22,7 +22,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
-
+
 
 /**
  * global $Rsg2DebugActive;

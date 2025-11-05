@@ -21,7 +21,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
 
-
+
 
 /**
  * The Galleries List Controller
