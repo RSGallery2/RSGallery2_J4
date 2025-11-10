@@ -25,13 +25,12 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class MaintenanceModel extends BaseDatabaseModel
 {
-
     public function CheckImagePaths()
     {
         $isPathsExisting = false;
 
         try {
-            $j4xImagePath = new ImagePathsModel ();  // ToDo: J3x
+            $j4xImagePath = new ImagePathsModel();  // ToDo: J3x
             $galleryIds   = $this->j4x_galleryIds();
 
             $isPathsExisting = true;
@@ -58,20 +57,20 @@ class MaintenanceModel extends BaseDatabaseModel
         return $isPathsExisting;
     }
 
-	/**
-	 * Recreates all paths for j4x images and tells if at least one was different (repaired))
-	 *
-	 * @return bool|int
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Recreates all paths for j4x images and tells if at least one was different (repaired))
+     *
+     * @return bool|int
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function RepairImagePaths()
     {
         $isPathsRepaired = false;
 
         try {
-            $j4xImagePath = new ImagePathsModel ();  // ToDo: J3x
+            $j4xImagePath = new ImagePathsModel();  // ToDo: J3x
             $galleryIds   = $this->j4x_galleryIds();
 
             $isPathsRepaired = true;
@@ -87,14 +86,14 @@ class MaintenanceModel extends BaseDatabaseModel
         return $isPathsRepaired;
     }
 
-	/**
-	 * Retrieve gallery ids from database (j4x) style
-	 *
-	 * @return array|mixed
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Retrieve gallery ids from database (j4x) style
+     *
+     * @return array|mixed
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function j4x_galleryIds()
     {
         $galleryIds = [];
@@ -104,7 +103,7 @@ class MaintenanceModel extends BaseDatabaseModel
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleryIds
             $db = $this->getDatabase();
 
-	        $query = $db->createQuery()
+            $query = $db->createQuery()
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id')
                 ->from($db->quoteName('#__rsg2_galleries'))
@@ -123,6 +122,4 @@ class MaintenanceModel extends BaseDatabaseModel
 
         return $galleryIds;
     }
-
 }
-

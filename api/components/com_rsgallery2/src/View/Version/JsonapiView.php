@@ -24,7 +24,6 @@ use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
  */
 class JsonapiView extends BaseApiView
 {
-
     /**
      * The fields to render item in the documents
      *
@@ -52,5 +51,4 @@ class JsonapiView extends BaseApiView
 
         return $item;
     }
-
 }

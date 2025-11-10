@@ -10,7 +10,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Extension;
 
-defined('JPATH_PLATFORM') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Categories\CategoryServiceInterface;
 use Joomla\CMS\Categories\CategoryServiceTrait;
@@ -25,10 +27,12 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Service\HTML\AdministratorServ
 /**
  * Component class for com_rsgallery2
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
-class Rsgallery2Component extends MVCComponent implements BootableExtensionInterface, CategoryServiceInterface,
-                                                          RouterServiceInterface
+class Rsgallery2Component extends MVCComponent implements
+    BootableExtensionInterface,
+    CategoryServiceInterface,
+    RouterServiceInterface
 {
     use CategoryServiceTrait;
     use HTMLRegistryAwareTrait;
@@ -48,6 +52,6 @@ class Rsgallery2Component extends MVCComponent implements BootableExtensionInter
      * @since   5.1.0     */
     public function boot(ContainerInterface $container)
     {
-        $this->getRegistry()->register('rsgallery2administrator', new AdministratorService);
+        $this->getRegistry()->register('rsgallery2administrator', new AdministratorService());
     }
 }

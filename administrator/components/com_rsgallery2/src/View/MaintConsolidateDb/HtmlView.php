@@ -57,16 +57,16 @@ class HtmlView extends BaseHtmlView
     protected $IsAnyDbRefMissing; // header
 
     protected $isDebugBackend;
-	protected $isDevelop;
-	protected $hasJ3xFile;
-	protected $hasJ4xFile; // J4x ++
-	/**
-	 * @var bool
-	 * @since 5.1.0
-	 */
-	protected bool $isJ3xRsg2DataExisting;
+    protected $isDevelop;
+    protected $hasJ3xFile;
+    protected $hasJ4xFile; // J4x ++
+    /**
+     * @var bool
+     * @since 5.1.0
+     */
+    protected bool $isJ3xRsg2DataExisting;
 
-	/**
+    /**
      * Method to display the view.
      *
      * @param   string  $tpl  A template file to load. [optional]
@@ -83,25 +83,25 @@ class HtmlView extends BaseHtmlView
         $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
         $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-	    //------------------------------------------
-	    // image file data
-	    //------------------------------------------
+        //------------------------------------------
+        // image file data
+        //------------------------------------------
 
-		// use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
+        // use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
         $ConsolidateModel = $this->getModel();
 
         // contains lost and found items
         $this->oImgRefs = $ConsolidateModel->GetImageReferences();
 
-	    $this->hasJ3xFile = $this->oImgRefs->hasJ3xFile();
-	    $this->hasJ4xFile = $this->oImgRefs->hasJ4xFile();
+        $this->hasJ3xFile = $this->oImgRefs->hasJ3xFile();
+        $this->hasJ4xFile = $this->oImgRefs->hasJ4xFile();
 
-	    //--- form ------------------------------------------
+        //--- form ------------------------------------------
 
-	    // Factory::getContainer()->get(FormFactoryInterface::class)->createForm($name, $options);
-		$xmlFile    = JPATH_BASE . '/components/com_rsgallery2' . '/forms/maintConsolidateDB.xml';
+        // Factory::getContainer()->get(FormFactoryInterface::class)->createForm($name, $options);
+        $xmlFile    = JPATH_BASE . '/components/com_rsgallery2' . '/forms/maintConsolidateDB.xml';
 
-		$this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
+        $this->form = Form::getInstance('maintConsolidateDB', $xmlFile);
 
         $this->isJ3xRsg2DataExisting = J3xExistModel::J3xConfigTableExist();
 
@@ -141,7 +141,7 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance('toolbar');
 
         // on develop show open tasks if existing
-        if (!empty ($this->isDevelop)) {
+        if (!empty($this->isDevelop)) {
             echo '<span style="color:red">'
                 . 'Tasks: <br>'
                 . '* No Function for: createImageDbItems<br>'
@@ -150,15 +150,15 @@ class HtmlView extends BaseHtmlView
                 . '* No Function for: assignParentGallery<br>'
                 . '* No Function for: deleteRowItems<br>'
                 . '* No Function for: repairAllIssuesItems<br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                 . '</span><br><br>';
         }
 
-//		switch ($Layout)
-//		{
-//			case 'MaintConsolidateDb':
+//      switch ($Layout)
+//      {
+//          case 'MaintConsolidateDb':
 
         ToolBarHelper::title(
             Text::_('COM_RSGALLERY2_MAINT_CONSOLIDATE_IMAGE_DATABASE'),
@@ -174,15 +174,15 @@ class HtmlView extends BaseHtmlView
         ToolBarHelper::custom('MaintConsolidateDb.deleteRowItems', 'delete', '', 'COM_RSGALLERY2_DELETE_SUPERFLOUS_ITEMS', true);
         ToolBarHelper::custom('MaintConsolidateDb.repairAllIssuesItems', 'refresh', '', 'COM_RSGALLERY2_REPAIR_ALL_ISSUES', true);
 
-//				break;
+//              break;
 //
-//			default:
-//				// Set the title
-//				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
-//				ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
-//				// ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
-//				break;
-//		}
+//          default:
+//              // Set the title
+//              ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
+//              ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+//              // ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+//              break;
+//      }
 //
 
         // Options button.
@@ -192,11 +192,9 @@ class HtmlView extends BaseHtmlView
     }
 
     /**
-	public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
-	{
-		return parent::getModel($name, $prefix, $config);
-	}
-	/**/
-
+    public function getModel($name = '', $prefix = 'Administrator', $config = array('ignore_request' => true))
+    {
+        return parent::getModel($name, $prefix, $config);
+    }
+    /**/
 }
-

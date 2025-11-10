@@ -8,7 +8,6 @@
  * @license        GNU General Public License version 2 or later
  */
 
-
 namespace Rsgallery2\Module\Rsg2_slideshow\Site\Dispatcher;
 
 use Joomla\CMS\Dispatcher\AbstractModuleDispatcher;
@@ -49,7 +48,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         // $params_array = $rsg2Params->toArray();
 
         // merge
-        $mergedParams = new Registry ($rsg2Params);
+        $mergedParams = new Registry($rsg2Params);
         $mergedParams->merge($appParams, true);
 
         $data['params'] = $mergedParams;
@@ -98,5 +97,4 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 
         return $data;
     }
-
 }

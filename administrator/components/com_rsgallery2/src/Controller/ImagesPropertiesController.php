@@ -45,20 +45,20 @@ class ImagesPropertiesController extends AdminController
     }
 
 //    /**
-//	 * Proxy for getModel
-//	 *
-//	 * @param   string  $name    The model name. Optional.
-//	 * @param   string  $prefix  The class prefix. Optional.
-//	 * @param   array   $config  The array of possible config values. Optional.
-//	 *
-//	 * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel  The model.
-//	 *
-//	 * @since __BUMP_VERSION__
-//	 */
-//	public function getModel($name = 'Gallery', $prefix = 'Administrator', $config = array('ignore_request' => true))
-//	{
-//		return parent::getModel($name, $prefix, $config);
-//	}
+//   * Proxy for getModel
+//   *
+//   * @param   string  $name    The model name. Optional.
+//   * @param   string  $prefix  The class prefix. Optional.
+//   * @param   array   $config  The array of possible config values. Optional.
+//   *
+//   * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel  The model.
+//   *
+//   * @since __BUMP_VERSION__
+//   */
+//  public function getModel($name = 'Gallery', $prefix = 'Administrator', $config = array('ignore_request' => true))
+//  {
+//      return parent::getModel($name, $prefix, $config);
+//  }
 
     /**
      * Redirect to standard image properties tile view
@@ -86,7 +86,7 @@ class ImagesPropertiesController extends AdminController
             //127.0.0.1/Joomla3x/administrator/index.php?option=com_rsgallery2&view=imagesProperties&cid[]=1&cid[]=2&cid[]=3&cid[]=4
             $cids = $this->input->get('cid', 0, 'int');
             //$this->setRedirect('index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(array('cid' => $cids)));
-			$this->setRedirect('index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(array('cid' => $cids)));
+            $this->setRedirect('index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(array('cid' => $cids)));
 
             parent::display();
         }
@@ -216,8 +216,8 @@ class ImagesPropertiesController extends AdminController
         // &ID[]=2&ID[]=3&ID[]=4&ID[]=12
         $cids = $this->input->get('cid', 0, 'int');
         $link = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(
-                ['cid' => $cids],
-            );
+            ['cid' => $cids],
+        );
         $this->setRedirect($link, $msg, $msgType);
     }
 
@@ -289,8 +289,8 @@ class ImagesPropertiesController extends AdminController
 
         // $link = 'index.php?option=com_rsgallery2&view=imagesProperties' .....;
         $link = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(
-                ['cid' => $cids],
-            );
+            ['cid' => $cids],
+        );
 
         $this->setRedirect($link, $msg, $msgType);
     }
@@ -353,7 +353,7 @@ class ImagesPropertiesController extends AdminController
      * @throws \Exception
      * @since 4.3
      */
-    public function rotate_images($direction = -90.000, $msg='')
+    public function rotate_images($direction = -90.000, $msg = '')
     {
         $this->checkToken();
 
@@ -428,11 +428,11 @@ class ImagesPropertiesController extends AdminController
         // &ID[]=2&ID[]=3&ID[]=4&ID[]=12
         $cids = $this->input->get('cid', 0, 'int');
         $link = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(
-                ['cid' => $cids],
-            );
+            ['cid' => $cids],
+        );
         $link = 'index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(
-                ['cid' => $cids],
-            );
+            ['cid' => $cids],
+        );
         //$this->setRedirect($link, $msg, $msgType);
         $this->setRedirect($link);
     }
@@ -563,8 +563,8 @@ class ImagesPropertiesController extends AdminController
         // &ID[]=2&ID[]=3&ID[]=4&ID[]=12
         $cids = $this->input->get('cid', 0, 'int');
         $link = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(
-                ['cid' => $cids],
-            );
+            ['cid' => $cids],
+        );
         $this->setRedirect($link, $msg, $msgType);
     }
 
@@ -608,5 +608,4 @@ class ImagesPropertiesController extends AdminController
 
         return $ImagesProperties;
     }
-
 }

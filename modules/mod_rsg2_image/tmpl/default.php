@@ -17,4 +17,3 @@ use Joomla\CMS\Helper\ModuleHelper;
 
 // !!! Not used !!!
 // layout called directly
-

@@ -55,7 +55,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null) : void
+    public function display($tpl = null): void
     {
         $app   = Factory::getApplication();
         $input = Factory::getApplication()->input;
@@ -88,7 +88,7 @@ class HtmlView extends BaseHtmlView
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
         // ToDo: Why is this necessary ?
-//		$this->pagination->setTotal (count($this->items));
+//      $this->pagination->setTotal (count($this->items));
         $this->user = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
         $user = $app->getIdentity();
 
@@ -96,34 +96,34 @@ class HtmlView extends BaseHtmlView
         $this->isDevelopSite = $params->get('isDevelop');
 
 
-//		// Merge (overwrite) config parameter with menu parameter
-//		$menuParams = $this->get('Rsg2MenuParams');
-//		// wrong: $this->params = $menuParams->merge($this->params);
-//		$this->params->merge($menuParams);
+//      // Merge (overwrite) config parameter with menu parameter
+//      $menuParams = $this->get('Rsg2MenuParams');
+//      // wrong: $this->params = $menuParams->merge($this->params);
+//      $this->params->merge($menuParams);
 
         if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
 
-//		$temp = clone $params;
-//		$temp->merge($itemparams);
-//		$item->params = $temp;
+//      $temp = clone $params;
+//      $temp->merge($itemparams);
+//      $item->params = $temp;
 //
-//		Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
+//      Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
 //
-//		// Store the events for later
-//		$item->event = new \stdClass;
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayTitle = trim(implode("\n", $results));
+//      // Store the events for later
+//      $item->event = new \stdClass;
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
 
-//		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->beforeDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayContent = trim(implode("\n", $results));
 //
 
         parent::display($tpl);

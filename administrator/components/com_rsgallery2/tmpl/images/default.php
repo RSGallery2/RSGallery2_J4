@@ -74,7 +74,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                 <?php
                 echo $this->sidebar; ?>
             </div>
-        <?php
+            <?php
         endif; ?>
         <div class="flex-fill">
             <div>
@@ -95,9 +95,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                         </div>
                     </div>
 
-                <?php
+                    <?php
                 else : ?>
-
                     <table class="table" id="galleryList">
                         <caption id="captionTable" class="sr-only">
                             <?php
@@ -121,7 +120,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                     echo $this->escape("Remove when order is fixed"); ?>">
                                         <?php
                                         echo Text::_('COM_RSGALLERY2_ORDER'); ?>
-									</span>
+                                    </span>
                             </th>
 
                             <th scope="col" style="width:1%" class="text-center">
@@ -148,8 +147,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                             </th>
 
                             <!--th scope="col" style="width:10%" class="d-none d-md-table-cell">
-									<?php
-                            echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
+                                    <?php
+                                    echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
                                 </th-->
 
 
@@ -173,24 +172,24 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
 
 
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php
-                            echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_VOTES', 'a.votes', $listDirn, $listOrder); ?>
+                                    <?php
+                                    echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_VOTES', 'a.votes', $listDirn, $listOrder); ?>
                                 </th>
 
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php
-                            echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_RATING', 'a.rating', $listDirn, $listOrder); ?>
+                                    <?php
+                                    echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_RATING', 'a.rating', $listDirn, $listOrder); ?>
                                 </th>
 
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php
-                            echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_COMMENTS', 'a.comments', $listDirn, $listOrder); ?>
+                                    <?php
+                                    echo HTMLHelper::_('searchtools.sort', 'COM_RSGALLERY2_COMMENTS', 'a.comments', $listDirn, $listOrder); ?>
                                 </th>
 
 
                                 <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-									<?php
-                            echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+                                    <?php
+                                    echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                                 </th>
 
                                 -->
@@ -251,7 +250,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
 
                         <tbody
                                 <?php
-                                if ($saveOrder) : ?> class="js-draggable"
+                                if ($saveOrder) :
+                                    ?> class="js-draggable"
                                     data-url="<?php
                                     echo $saveOrderingUrl; ?>"
                                     data-direction="<?php
@@ -283,10 +283,10 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                             if (!$item->use_j3x_location) {
                                 $this->ImagePath->setPaths_URIs_byGalleryId($item->gallery_id);
                                 $src = $this->ImagePath->getDisplayUrl($item->name);
-//	                                $src = $this->ImagePath->getThumbUrl($item->name);
+//                                  $src = $this->ImagePath->getThumbUrl($item->name);
                             } else {
                                 $src = $this->ImagePathJ3x->getDisplayUrl($item->name);
-//	                                $src = $this->ImagePathJ3x->getThumbUrl($item->name);
+//                                  $src = $this->ImagePathJ3x->getThumbUrl($item->name);
                             }
                             ?>
 
@@ -312,13 +312,13 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                     ?>
                                     <span class="sortable-handler<?php
                                     echo $iconClass ?>">
-											<span class="fa fa-ellipsis-v" aria-hidden="true"></span>
-										</span>
+                                            <span class="fa fa-ellipsis-v" aria-hidden="true"></span>
+                                        </span>
                                     <?php
                                     if ($canChange && $saveOrder) : ?>
                                         <input type="text" style="display:none" name="order[]" size="5" value="<?php
                                         echo $item->ordering; ?>" class="width-20 text-area-order">
-                                    <?php
+                                        <?php
                                     endif; ?>
                                 </td>
                                 <td class="small d-none d-md-table-cell">
@@ -345,7 +345,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                     if ($item->checked_out) : ?>
                                         <?php
                                         echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'images.', $canCheckin); ?>
-                                    <?php
+                                        <?php
                                     endif; ?>
                                     <?php
                                     if ($canEdit || $canEditOwn) : ?>
@@ -354,32 +354,32 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                         <a class="hasTooltip" href="<?php
                                         echo $editLink; ?>"
                                            title="<?php
-                                           echo Text::_('JACTION_EDIT'); ?> <?php
+                                            echo Text::_('JACTION_EDIT'); ?> <?php
                                            echo $this->escape(addslashes($item->title)); ?>">
                                             <?php
                                             echo $editIcon; ?>&nbsp;
                                             <?php
                                             echo $this->escape($item->title); ?></a>
-                                    <?php
+                                        <?php
                                     else : ?>
                                         <?php
                                         echo $this->escape($item->title); ?>
-                                    <?php
+                                        <?php
                                     endif; ?>
 
                                     <span class="small" title="<?php
                                     echo $this->escape(""); ?>">
-											<?php
+                                            <?php
                                             if (empty($item->note)) : ?>
                                                 <?php
                                                 echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-                                            <?php
+                                                <?php
                                             else : ?>
                                                 <?php
                                                 echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
-                                            <?php
+                                                <?php
                                             endif; ?>
-										</span>
+                                        </span>
                                 </th>
 
                                 <td class="text-left btns d-none d-md-table-cell itemnumber">
@@ -389,15 +389,15 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                             <a class="hasTooltip" href="<?php
                                             echo $editLink; ?>"
                                                title="<?php
-                                               echo Text::_('JACTION_EDIT'); ?> <?php
+                                                echo Text::_('JACTION_EDIT'); ?> <?php
                                                echo $this->escape(addslashes($item->title)); ?>">
                                                 <?php
                                                 echo $this->escape($item->name); ?></a>
-                                        <?php
+                                            <?php
                                         else : ?>
                                             <?php
                                             echo $this->escape($item->name); ?>
-                                        <?php
+                                            <?php
                                         endif; ?>
                                     </div>
                                 </td>
@@ -409,28 +409,28 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                             <a class="hasTooltip" href="<?php
                                             echo $editGalleryLink; ?>"
                                                title="<?php
-                                               echo Text::_('JACTION_EDIT'); ?> <?php
+                                                echo Text::_('JACTION_EDIT'); ?> <?php
                                                echo $this->escape(addslashes($item->gallery_name)); ?>">
                                                 <?php
                                                 echo $this->escape($item->gallery_name); ?></a>
-                                        <?php
+                                            <?php
                                         else : ?>
                                             <?php
                                             echo $this->escape($item->gallery_name); ?>
-                                        <?php
+                                            <?php
                                         endif; ?>
                                         <span class="small" title="<?php
                                         echo $this->escape(""); ?>">
                                                 <?php
                                                 echo '(' . $item->gallery_id . ')'; ?>
-    										</span>
+                                            </span>
 
                                     </div>
                                 </td>
 
                                 <!--td class="small d-none d-md-table-cell">
-										<?php
-                                echo $item->access; ?>
+                                        <?php
+                                        echo $item->access; ?>
                                     </td-->
 
                                 <td class="small d-none d-md-table-cell">
@@ -482,23 +482,23 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                 <!-- only when user settings ...
 
                                     <td class="d-none d-md-table-cell">
-										<?php
-                                echo (int)$item->votes; ?>
+                                        <?php
+                                        echo (int)$item->votes; ?>
                                     </td>
 
                                     <td class="d-none d-md-table-cell">
-										<?php
-                                echo (int)$item->rating; ?>
+                                        <?php
+                                        echo (int)$item->rating; ?>
                                     </td>
 
                                     <td class="d-none d-md-table-cell">
-										<?php
-                                echo (int)$item->comments; ?>
+                                        <?php
+                                        echo (int)$item->comments; ?>
                                     </td>
 
                                     <td class="d-none d-md-table-cell">
-										<?php
-                                echo (int)$item->id; ?>
+                                        <?php
+                                        echo (int)$item->id; ?>
                                     </td>
                                     -->
 
@@ -535,7 +535,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                  */
                                 ?>
                             </tr>
-                        <?php
+                            <?php
                         endforeach; ?>
                         </tbody>
                     </table>
@@ -548,22 +548,24 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                     <?php
                     // Load the batch processing form. ?>
                     <?php
-                    if ($user->authorise('core.create', $extension)
+                    if (
+                        $user->authorise('core.create', $extension)
                             && $user->authorise('core.edit', $extension)
-                            && $user->authorise('core.edit.state', $extension)) : ?>
+                            && $user->authorise('core.edit.state', $extension)
+                    ) : ?>
                         <?php
                         echo HTMLHelper::_(
-                                'bootstrap.renderModal',
-                                'collapseModal',
-                                [
+                            'bootstrap.renderModal',
+                            'collapseModal',
+                            [
                                         'title'  => Text::_('COM_RSGALLERY2_IMAGES_BATCH_OPTIONS'),
                                         'footer' => $this->loadTemplate('batch_footer'),
                                 ],
-                                $this->loadTemplate('batch_body'),
+                            $this->loadTemplate('batch_body'),
                         ); ?>
-                    <?php
+                        <?php
                     endif; ?>
-                <?php
+                    <?php
                 endif; ?>
 
                 <input type="hidden" name="extension" value="<?php

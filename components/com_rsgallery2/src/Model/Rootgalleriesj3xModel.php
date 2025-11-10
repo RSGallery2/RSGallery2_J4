@@ -36,15 +36,15 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
      * protected $layoutParams = null; // col/row count
      * /**/
 
-	/**
-	 * Assign slideshow url to gallery data
-	 *
-	 * @param $gallery
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Assign slideshow url to gallery data
+     *
+     * @param $gallery
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function assignSlideshowUrl($gallery)
     {
         try {
@@ -63,7 +63,6 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 
             $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
                 . '&view=slideshowj3x&id=' . $gallery->id,);
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rootgalleriesj3xModel: assignSlideshowUrl ()' . '<br>';
@@ -100,15 +99,15 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
     }
     /**/
 
-	/**
-	 * returns list of random images data enriched with image paths and urls
-	 *
-	 * @param $random_count
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * returns list of random images data enriched with image paths and urls
+     *
+     * @param $random_count
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public function randomImages($random_count)
     {
         $randomImages = [];
@@ -219,14 +218,14 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 //        random_count
 //        /**/
 //
-//	    /* ToDo: whats wrong with */
-//		$app = Factory::getApplication();
-//		$menu = $app->getMenu()->getActive() ;
-//		$itemId = $menu->id;
-//		$menu_params = $menu->getParams($itemId);
-//		/**/
+//      /* ToDo: whats wrong with */
+//      $app = Factory::getApplication();
+//      $menu = $app->getMenu()->getActive() ;
+//      $itemId = $menu->id;
+//      $menu_params = $menu->getParams($itemId);
+//      /**/
 //
-//	    $menuParams = new Registry();
+//      $menuParams = new Registry();
 //
 //        try {
 //
@@ -267,5 +266,4 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
 //
 //        return $menuParams;
 //    }
-
 } // class

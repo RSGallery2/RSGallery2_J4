@@ -33,7 +33,6 @@ use Joomla\Registry\Registry;
  */
 class Galleryj3xModel extends GalleryModel
 {
-
     /**
      * Add "asInline" Url to each image
      *
@@ -66,29 +65,29 @@ class Galleryj3xModel extends GalleryModel
         return $images;
     }
 
-	/**
-	 * Add url for inline layout to image data
-	 *
-	 * @param $image
-	 * @param $idx
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Add url for inline layout to image data
+     *
+     * @param $image
+     * @param $idx
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function AssignUrlImageAsInline($image, $idx)
     {
         try {
             $image->UrlGallery_AsInline = ''; // fall back
 
-            if (!empty ($image->gallery_id)) {
+            if (!empty($image->gallery_id)) {
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
                     . '&id=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
                     . '&img_id=' . $image->id // test bad ordering                    . '&start=' . $idx
                 ;
             } else {
-				// Bad gallery id missing
+                // Bad gallery id missing
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
                     . '&img_id=' . $image->id // test bad ordering                    . '&start=' . $idx
@@ -109,24 +108,27 @@ class Galleryj3xModel extends GalleryModel
         }
     }
 
-	/**
-	 * Assign slideshow url to gallery data
-	 *
-	 * @param $gallery
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Assign slideshow url to gallery data
+     *
+     * @param $gallery
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function assignSlideshowUrl($gallery)
     {
         try {
             //$gallery->UrlSlideshow = ''; // fall back
 
-            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
+            $gallery->UrlSlideshow = Route::_(
+                'index.php?option=com_rsgallery2'
                 . '&view=slideshowj3x&id=' . $gallery->id,
-                true,0,true);
-
+                true,
+                0,
+                true
+            );
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
@@ -161,7 +163,7 @@ class Galleryj3xModel extends GalleryModel
 //
 //            $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
 //            $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-//	        $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
+//          $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
 //
 //        } catch (\RuntimeException $e) {
 //            $OutTxt = '';
@@ -174,6 +176,4 @@ class Galleryj3xModel extends GalleryModel
 //
 //        return $menuParams;
 //    }
-
 } // class
-

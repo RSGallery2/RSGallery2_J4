@@ -44,7 +44,7 @@ return new class implements ServiceProviderInterface {
      * @since   5.1.0     */
     public function register(Container $container)
     {
-//		$container->set(AssociationExtensionInterface::class, new AssociationsHelper);
+//      $container->set(AssociationExtensionInterface::class, new AssociationsHelper);
 
         $container->registerServiceProvider(new CategoryFactory('\\Rsgallery2\\Component\\Rsgallery2'));
         $container->registerServiceProvider(new MVCFactory('\\Rsgallery2\\Component\\Rsgallery2'));
@@ -58,12 +58,12 @@ return new class implements ServiceProviderInterface {
 
                 $component->setRegistry($container->get(Registry::class));
                 $component->setMVCFactory($container->get(MVCFactoryInterface::class));
-//				$component->setCategoryFactory($container->get(CategoryFactoryInterface::class));
-//				$component->setAssociationExtension($container->get(AssociationExtensionInterface::class));
+            //              $component->setCategoryFactory($container->get(CategoryFactoryInterface::class));
+            //              $component->setAssociationExtension($container->get(AssociationExtensionInterface::class));
                 $component->setRouterFactory($container->get(RouterFactoryInterface::class));
 
                 return $component;
-			}
+            }
         );
     }
 };

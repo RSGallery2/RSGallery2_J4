@@ -28,16 +28,16 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.site.images');
 
 
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite)) {
+if (!empty($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: galleries view<br>'
         . '* extract image and modal slider into layouts to be called<br>'
         . '* make rsgConfig global<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -65,12 +65,12 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>" method="post"
           class="form-validate form-horizontal well">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <?php echo '<h1> RSGallery2 "galleries" view </h1>'; ?>
             <h2>Thumbs of galleries</h2>
         <?php endif; ?>
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <hr>
         <?php endif; ?>
 

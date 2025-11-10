@@ -40,9 +40,8 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  */
 class ImageFileModel extends ListModel // BaseModel
 {
-
-    const THUMB_PORTRAIT = 0;
-    const THUMB_SQUARE = 1;
+    public const THUMB_PORTRAIT = 0;
+    public const THUMB_SQUARE = 1;
 
     /**
      * Constructor.
@@ -50,19 +49,19 @@ class ImageFileModel extends ListModel // BaseModel
      * @since 5.1.0     */
     public function __construct()
     {
-//		global $rsgConfig, $Rsg2DebugActive;
+//      global $rsgConfig, $Rsg2DebugActive;
 
-//		parent::__construct($config = array());
+//      parent::__construct($config = array());
 
-//		if ($Rsg2DebugActive)
-//		{
-//			Log::add('==>Start __construct ImageFile');
-//		}
+//      if ($Rsg2DebugActive)
+//      {
+//          Log::add('==>Start __construct ImageFile');
+//      }
 
         // JComponentHelper::getParams();
         // $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         //
-//		$rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+//      $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 
         parent::__construct([]);
     }
@@ -114,23 +113,24 @@ class ImageFileModel extends ListModel // BaseModel
         return [$fileName, $galleryId, $use_j3x_location];
     }
 
-	/**
-	 * returns file and url path by J3/j4 style
-	 *
-	 * @param $imageFileName
-	 * @param $galleryId
-	 * @param $use_j3x_location
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
-    public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location) {
+    /**
+     * returns file and url path by J3/j4 style
+     *
+     * @param $imageFileName
+     * @param $galleryId
+     * @param $use_j3x_location
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
+    public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location)
+    {
         $OriginalPathFileName = "";
 
         // J4x ?
         if (!$use_j3x_location) {
-            $imagePaths = new ImagePathsModel ($galleryId);
+            $imagePaths = new ImagePathsModel($galleryId);
 
             //---  -------------------------------------------------
 
@@ -139,7 +139,7 @@ class ImageFileModel extends ListModel // BaseModel
         } else {
             // J3x
 
-            $ImagePathJ3x = new ImagePathsJ3xModel ();
+            $ImagePathJ3x = new ImagePathsJ3xModel();
 
             //---  -------------------------------------------------
 
@@ -151,18 +151,19 @@ class ImageFileModel extends ListModel // BaseModel
     }
 
 
-	/**
-	 * Use temp file to copy image file to 'original' destination
-	 *
-	 * @param $OriginalFilePath
-	 * @param $OriginalFileUri
-	 *
-	 * @return false
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
-    public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
+    /**
+     * Use temp file to copy image file to 'original' destination
+     *
+     * @param $OriginalFilePath
+     * @param $OriginalFileUri
+     *
+     * @return false
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
+    public function downloadImageFile($OriginalFilePath, $OriginalFileUri)
+    {
         $IsDownloaded = false;
 
         try {
@@ -190,7 +191,6 @@ class ImageFileModel extends ListModel // BaseModel
 
             // Close the application gracefully.
             Factory::getApplication()->close();
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';
@@ -202,5 +202,4 @@ class ImageFileModel extends ListModel // BaseModel
 
         return $IsDownloaded;
     }
-
 }

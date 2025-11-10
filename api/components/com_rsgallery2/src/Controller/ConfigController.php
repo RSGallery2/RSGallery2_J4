@@ -7,7 +7,7 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
- 
+
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
 use Joomla\CMS\Filter\InputFilter;

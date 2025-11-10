@@ -8,14 +8,14 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helpers;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 // ToDo: 2024.10: namespace helper
-use \Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
 
 /**
  * Galleries helper.

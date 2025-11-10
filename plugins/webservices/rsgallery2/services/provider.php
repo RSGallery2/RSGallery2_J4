@@ -21,19 +21,18 @@ use Joomla\Event\DispatcherInterface;
 use Rsgallery2\Plugin\WebServices\Rsgallery2\Extension\Rsgallery2;
 
 return new class () implements ServiceProviderInterface {
-	
     public function register(Container $container): void
     {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
-				
-				$plugin     = PluginHelper::getPlugin('webservices', 'rsgallery2');
-				$dispatcher = $container->get(DispatcherInterface::class);
 
-				/** @var \Joomla\CMS\Plugin\CMSPlugin $plugin */
-				$plugin = new Rsgallery2($dispatcher, (array) $plugin);
-				$plugin->setApplication(Factory::getApplication());
+                $plugin     = PluginHelper::getPlugin('webservices', 'rsgallery2');
+                $dispatcher = $container->get(DispatcherInterface::class);
+
+                /** @var \Joomla\CMS\Plugin\CMSPlugin $plugin */
+                $plugin = new Rsgallery2($dispatcher, (array) $plugin);
+                $plugin->setApplication(Factory::getApplication());
 
                 return $plugin;
             }

@@ -22,24 +22,24 @@ use Joomla\CMS\Router\Route;
 ?>
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
+    <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
-		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
                 <?php echo '<h3>Config J3x default</h3>' . '<br>';
                 echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
                 ?>
 
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
 // HTMLHelper::_('stylesheet', 'com_rsgallery2/backend/images.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('script', 'com_rsgallery2/backend/images.js', ['version' => 'auto', 'relative' => true]);
@@ -47,21 +47,21 @@ use Joomla\CMS\Router\Route;
 ?>
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=configJ3x'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
-		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
-				<?php echo $this->sidebar; ?>
-			</div>
-		<?php endif; ?>
+    <div class="d-flex flex-row">
+        <?php if (!empty($this->sidebar)) : ?>
+            <div id="j-sidebar-container" class="">
+                <?php echo $this->sidebar; ?>
+            </div>
+        <?php endif; ?>
         <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
         <div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+            <div id="j-main-container" class="j-main-container">
 
-				<?php echo '<h3>Config J3x default</h3>' . '<br>';
-				echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
-			?>
+                <?php echo '<h3>Config J3x default</h3>' . '<br>';
+                echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+                ?>
 
-	<input type="hidden" name="task" value=""/>
+    <input type="hidden" name="task" value=""/>
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 

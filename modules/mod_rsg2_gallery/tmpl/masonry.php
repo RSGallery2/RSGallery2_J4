@@ -33,7 +33,7 @@
 
 echo '<br><br>--------------------------- mod_rsg2_gallery masonry start ------------------------------<br>';
 
-if (!empty ($msg)) {
+if (!empty($msg)) {
     echo $msg;
     // return;
 }

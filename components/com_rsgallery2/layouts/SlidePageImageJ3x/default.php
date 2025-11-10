@@ -25,11 +25,11 @@ extract($displayData);
 if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: layout SlidePageImageJ3x<br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -74,12 +74,12 @@ if (!empty($image->isHasNoImages)) {
 
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h3>RSGallery2 J3x slide image layout</h3>
     <hr>
 <?php endif; ?>
 
-<?php if (true || $params->galleries_show_slideshow): ?>
+<?php if (true || $params->galleries_show_slideshow) : ?>
     <div class="rsg2_slideshow_link">
         <a href="<?php echo $gallery->UrlSlideshow; ?>">
             <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
@@ -132,7 +132,7 @@ if (!empty($image->isHasNoImages)) {
 <?php echo $this->pagination->getListFooter(); ?>
 
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h3>RSGallery2 slide (?page) properties J3x layout</h3>
     <hr>
 <?php endif; ?>
@@ -167,7 +167,7 @@ if (!empty($image->isHasNoImages)) {
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
 
-	<h3>This may be a voting  </h3>
+    <h3>This may be a voting  </h3>
 
     <div class="rating-block row-fluid text-center">
         <h4>Average user rating</h4>
@@ -213,13 +213,13 @@ if (!empty($image->isHasNoImages)) {
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 
-	<h3>ToDo: This may be a comment</h3> <br>with more than one line .....
+    <h3>ToDo: This may be a comment</h3> <br>with more than one line .....
 
     <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
     <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExxifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 
-	<h3>ToDo: Display selected image exif info  </h3>
+    <h3>ToDo: Display selected image exif info  </h3>
 
     <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 

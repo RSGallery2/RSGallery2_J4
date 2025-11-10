@@ -16,6 +16,10 @@ use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Component\Media\Administrator\Model\ApiModel;
 use Joomla\Database\DatabaseInterface;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  *
  *
@@ -46,7 +50,8 @@ class VersionModel extends BaseModel
      * @since   4.1.0
      * @throws  ResourceNotFound
      */
-    public function getItem() {
+    public function getItem()
+    {
 
         $componentName = 'com_rsgallery2';
 
@@ -55,7 +60,6 @@ class VersionModel extends BaseModel
         $oVersion->creationDate = "2025.xx.xx";
 
         try {
-
             //$db = Factory::getDbo();
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
@@ -69,7 +73,6 @@ class VersionModel extends BaseModel
 
             $oVersion->version = $manifest['version'];
             $oVersion->creationDate = $manifest['creationDate'];
-
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }

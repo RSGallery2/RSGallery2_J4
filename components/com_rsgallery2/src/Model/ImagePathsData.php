@@ -25,7 +25,8 @@ class ImagePathsData extends ImagePathsModel
      *
      *
      * @since 5.1.0     */
-    public function assignPathData ($image) {
+    public function assignPathData($image)
+    {
 
         $image->OriginalFile = $this->getOriginalPath($image->name);
         $image->DisplayFile  = $this->getDisplayPath($image->name);
@@ -47,7 +48,6 @@ class ImagePathsData extends ImagePathsModel
         $image->isDisplayFileExist  = file_exists($image->DisplayFile);
         $image->isThumbFileExist    = file_exists($image->DisplayFile);
         //$image->isSizePaths = $this->getSizePaths ();
-
     }
 
     /**
@@ -58,7 +58,8 @@ class ImagePathsData extends ImagePathsModel
      * @param $image
      *
      * @since 5.1.0     */
-    public function urlReplaceMissing_BySign ($image) {
+    public function urlReplaceMissing_BySign($image)
+    {
 
         // $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.png';
         $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
@@ -85,7 +86,8 @@ class ImagePathsData extends ImagePathsModel
      * @param $image
      *
      * @since 5.1.0     */
-    public function urlReplaceMissingImages_ByChild ($image) {
+    public function urlReplaceMissingImages_ByChild($image)
+    {
         if (!$image->isThumbFileExist) {
             $missingUrl          = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
             $image->UrlThumbFile = $missingUrl;
@@ -99,6 +101,4 @@ class ImagePathsData extends ImagePathsModel
             $image->UrlOriginalFile = $image->UrlDisplayFile;
         }
     }
-
-
 }

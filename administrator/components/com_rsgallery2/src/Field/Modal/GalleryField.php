@@ -10,7 +10,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Field\Modal;
 
-defined('JPATH_BASE') or die;
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
@@ -18,6 +20,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\Database\DatabaseInterface;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Supports a modal gallery picker.
@@ -89,10 +95,10 @@ class GalleryField extends FormField
 
         // Setup variables for display.
         $linkGalleries = 'index.php?option=com_rsgallery2&amp;view=galleries&amp;layout=modal&amp;tmpl=component&amp;' . Session::getFormToken(
-            ) . '=1'
+        ) . '=1'
             . '&amp;extension=' . $extension;
         $linkGallery   = 'index.php?option=com_rsgallery2&amp;view=gallery&amp;layout=modal&amp;tmpl=component&amp;' . Session::getFormToken(
-            ) . '=1'
+        ) . '=1'
             . '&amp;extension=' . $extension;
         $modalTitle    = Text::_('COM_RSGALLERY2_CHANGE_GALLERY');
 
@@ -122,7 +128,7 @@ class GalleryField extends FormField
             }
         }
 
-		$title = empty($title) ? Text::_('COM_RSGALLERY2_SELECT_A_GALLERY') : htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+        $title = empty($title) ? Text::_('COM_RSGALLERY2_SELECT_A_GALLERY') : htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
 
         // The current gallery display field.
         $html = '';
@@ -268,7 +274,7 @@ class GalleryField extends FormField
         $class = $this->required ? ' class="required modal-value"' : '';
 
         $html .= '<input type="hidden" id="' . $this->id . '_id"' . $class . ' data-required="' . (int)$this->required . '" name="' . $this->name
-			. '" data-text="' . htmlspecialchars(Text::_('COM_RSGALLERY2_SELECT_A_GALLERY', true), ENT_COMPAT, 'UTF-8') . '" value="' . $value . '">';
+            . '" data-text="' . htmlspecialchars(Text::_('COM_RSGALLERY2_SELECT_A_GALLERY', true), ENT_COMPAT, 'UTF-8') . '" value="' . $value . '">';
 
         return $html;
     }

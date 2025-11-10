@@ -284,42 +284,40 @@ class ConfigController extends AdminController // FormController
      *
      * @since 5.1.0     */
     /**
-	public function remove_OldConfigData()
-	{
-		$this->checkToken();
+    public function remove_OldConfigData()
+    {
+        $this->checkToken();
 
 
-	$msg     = "remove_OldConfigData: " . '<br>';
-		$msgType = 'notice';
+    $msg     = "remove_OldConfigData: " . '<br>';
+        $msgType = 'notice';
 
-		// Access check
-		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
-		if (!$canAdmin) {
-			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-			$msgType = 'warning';
-			// replace newlines with html line breaks.
-			str_replace('\n', '<br>', $msg);
-		}
-		else
-		{
-			$model     = $this->getModel('ConfigRaw');
-			$isRemoved = $model->removeOldConfigData();
+        // Access check
+        $canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            str_replace('\n', '<br>', $msg);
+        }
+        else
+        {
+            $model     = $this->getModel('ConfigRaw');
+            $isRemoved = $model->removeOldConfigData();
 
-			if ($isRemoved)
-			{
-				$msg .= 'Successfully removed J2.5 configuration data';
-			}
-			else
-			{
-				$msg .= '!!! Failed at removing J2.5 configuration data !!! ';
-				$msgType = 'error';
-			}
-		}
+            if ($isRemoved)
+            {
+                $msg .= 'Successfully removed J2.5 configuration data';
+            }
+            else
+            {
+                $msg .= '!!! Failed at removing J2.5 configuration data !!! ';
+                $msgType = 'error';
+            }
+        }
 
-	    $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEditOld';
-		$this->setRedirect($link, $msg, $msgType);
-	}
-	/**/
-
+        $link = 'index.php?option=com_rsgallery2&view=config&layout=RawEditOld';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+    /**/
 }
-

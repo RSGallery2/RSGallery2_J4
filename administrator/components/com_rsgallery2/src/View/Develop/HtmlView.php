@@ -63,53 +63,53 @@ class HtmlView extends BaseHtmlView
     protected $defaultParams = [];
     protected $mergedParams = [];
 
-	protected $isDangerActive;
-	protected $isRawDbActive;
-	protected $isUpgradeActive;
-	protected $isTestActive;
-	protected $isJ3xRsg2DataExisting;
-//	protected $developActive;
+    protected $isDangerActive;
+    protected $isRawDbActive;
+    protected $isUpgradeActive;
+    protected $isTestActive;
+    protected $isJ3xRsg2DataExisting;
+//  protected $developActive;
 
-	protected $intended;
+    protected $intended;
 
     // ToDo: Use other rights instead of core.admin -> IsRoot ?
     // core.admin is the permission used to control access to
     // the global config
     protected $UserIsRoot;
-	/**
-	 * @var mixed|string
-	 * @since 5.1.0
-	 */
-	protected mixed $lowerVersion;
-	/**
-	 * @var string
-	 * @since 5.1.0
-	 */
-	protected string $Rsg2Version;
-	/**
-	 * @var string
-	 * @since 5.1.0
-	 */
-	protected string $installMessage2;
-	/**
-	 * @var string
-	 * @since 5.1.0
-	 */
-	protected string $installMessage;
+    /**
+     * @var mixed|string
+     * @since 5.1.0
+     */
+    protected mixed $lowerVersion;
+    /**
+     * @var string
+     * @since 5.1.0
+     */
+    protected string $Rsg2Version;
+    /**
+     * @var string
+     * @since 5.1.0
+     */
+    protected string $installMessage2;
+    /**
+     * @var string
+     * @since 5.1.0
+     */
+    protected string $installMessage;
 
-	/**
-	 * @var array|mixed
-	 * @since 5.1.0
-	 */
-	protected mixed $rsg2Configuration;
+    /**
+     * @var array|mixed
+     * @since 5.1.0
+     */
+    protected mixed $rsg2Configuration;
 
-	/**
-	 * @var array|mixed
-	 * @since 5.1.0
-	 */
-	protected mixed $rsg2Configuration_j3x;
+    /**
+     * @var array|mixed
+     * @since 5.1.0
+     */
+    protected mixed $rsg2Configuration_j3x;
 
-	/**
+    /**
      * Method to display the view.
      *
      * @param   string  $tpl  A template file to load. [optional]
@@ -139,8 +139,8 @@ class HtmlView extends BaseHtmlView
         // toDo: More detailed for rsgallery admin
         $app = Factory::getApplication();
 
-//		$user = $app->getIdentity();
-//		//$user     = Factory::getApplication()->getIdentity();
+//      $user = $app->getIdentity();
+//      //$user     = Factory::getApplication()->getIdentity();
         $user = $this->getCurrentUser();
 
         $canAdmin         = $user->authorise('core.admin');
@@ -153,16 +153,15 @@ class HtmlView extends BaseHtmlView
         // collect data dependent on layout
         switch ($Layout) {
             /**
-			case 'DebugGalleryOrder':
+            case 'DebugGalleryOrder':
 
-				$this->GalleriesOrderModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('GalleriesOrder', 'rsgallery2Model');
-				$this->OrderedGalleries = $this->GalleriesOrderModel->OrderedGalleries();
-				$this->LeftJoinGalleries = $this->GalleriesOrderModel->LeftJoinGalleries();
-				break;
+                $this->GalleriesOrderModel = use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('GalleriesOrder', 'rsgallery2Model');
+                $this->OrderedGalleries = $this->GalleriesOrderModel->OrderedGalleries();
+                $this->LeftJoinGalleries = $this->GalleriesOrderModel->LeftJoinGalleries();
+                break;
             /**/
 
             case 'ManifestInfo':
-
                 $rsg2Manifest       = Rsg2ExtensionModel::readRsg2ExtensionManifest();
                 $this->rsg2Manifest = $rsg2Manifest;
 
@@ -172,7 +171,6 @@ class HtmlView extends BaseHtmlView
                 break;
 
             case 'InstallMessage':
-
                 //--- Form --------------------------------------------------------------------
 
                 $xmlFile    = JPATH_COMPONENT_ADMINISTRATOR . '/forms/InstallMessage.xml';
@@ -180,7 +178,7 @@ class HtmlView extends BaseHtmlView
 
                 $input        = Factory::getApplication()->input;
                 $lowerVersion = $input->get('lowerVersion', '', 'STRING');
-                if (empty ($lowerVersion)) {
+                if (empty($lowerVersion)) {
                     $lowerVersion = '5.0.0.3';
                 }
 
@@ -192,18 +190,17 @@ class HtmlView extends BaseHtmlView
                 $this->Rsg2Version = $oRsg2Version->getVersion(); // getLongVersion, getVersion
 
                 // ausschnitt
-                $installMessage        = new InstallMessage ($this->Rsg2Version, $lowerVersion);
+                $installMessage        = new InstallMessage($this->Rsg2Version, $lowerVersion);
                 $this->installMessage2 = $installMessage->installMessageText('update');
 
                 // show all
-                $installMessage = new InstallMessage ('9999.9.9.9', '0.0.1.0');
+                $installMessage = new InstallMessage('9999.9.9.9', '0.0.1.0');
                 //$this->installMessage = InstallMessage::installMessageText;
                 $this->installMessage = $installMessage->installMessageText('update');
 
                 break;
 
             case 'Rsg2GeneralInfo':
-
                 $rsg2Manifest       = Rsg2ExtensionModel::readRsg2ExtensionManifest();
                 $this->rsg2Manifest = $rsg2Manifest;
 
@@ -219,7 +216,6 @@ class HtmlView extends BaseHtmlView
                 break;
 
             case 'createImages':
-
                 //--- Form --------------------------------------------------------------------
 
                 $xmlFile = JPATH_COMPONENT_ADMINISTRATOR . '/forms/createImages.xml';
@@ -251,7 +247,6 @@ class HtmlView extends BaseHtmlView
                 break;
 
             case 'defaultParams':
-
                 $this->actualParams  = Rsg2ExtensionModel::readRsg2ExtensionConfiguration();
                 $this->defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
                 $this->mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams(
@@ -262,11 +257,11 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::custom('develop.mergeParams', 'copy', '', 'Merge standard parameter ', false);
 
                 // ToDo: button with command on controller ;-)
-//				replaceRsg2ExtensionConfiguration($this->mergedParams);
+//              replaceRsg2ExtensionConfiguration($this->mergedParams);
                 break;
         }
 
-        //		Factory::getApplication()->input->set('hidemainmenu', true);
+        //      Factory::getApplication()->input->set('hidemainmenu', true);
 
         //---  --------------------------------------------------------------
 
@@ -293,50 +288,49 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'ManifestInfo':
-
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                         . '</span><br><br>';
                 }
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
-					. ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+                    . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
                 ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
                 break;
 
             case 'Rsg2GeneralInfo':
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* Button for copy to clipboard -> add typescript copy<br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                         . '</span><br><br>';
                 }
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
-					. ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+                    . ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
                 ToolBarHelper::cancel('config.cancel_rawView');
                 break;
 
             case 'InstallMessage':
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* button goto "create galleries"<br>'
                         . '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                         . '</span><br><br>';
                 }
 
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
-					. ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+                    . ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
                 // ToDo: write into manifest value; read first -> Rsg2ExtensionModel
                 // ToolBarHelper::custom ('develop.assignVersion','arrow-up-4','','Assign version to RSG2', false);
                 ToolBarHelper::custom('develop.useOldVersion', 'pencil-2', '', 'Use old version', false);
@@ -344,7 +338,7 @@ class HtmlView extends BaseHtmlView
                 break;
 
             case 'createGalleries':
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* Implement parent gallery selection<br>'
                         . '* button goto "create images"<br>'
@@ -367,7 +361,7 @@ class HtmlView extends BaseHtmlView
                 break;
 
             case 'createImages':
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* Implement parent gallery selection<br>'
                         . '* button goto "create images"<br>'
@@ -391,15 +385,15 @@ class HtmlView extends BaseHtmlView
 
             default:
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* <br>'
                         . '* ? COM_RSGALLERY2_DEBUG_GALLERY_ORDER <br>'
                         . '* ? COM_RSGALLERY2_UPDATE_COMMENTS_AND_VOTING <br>'
                         . '* ?  COM_RSGALLERY2_REMOVE_INSTALLATION_LEFT_OVERS <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -423,6 +417,4 @@ class HtmlView extends BaseHtmlView
      * return parent::getModel($name, $prefix, $config);
      * }
      * /**/
-
 }
-

@@ -45,13 +45,13 @@ class HtmlView extends BaseHtmlView
 
     protected $isDebugBackend;
     protected $isDevelop;
-	/**
-	 * @var ImagePathsJ3xModel
-	 * @since 5.1.0
-	 */
-	protected ImagePathsJ3xModel $ImagePathJ3x;
+    /**
+     * @var ImagePathsJ3xModel
+     * @since 5.1.0
+     */
+    protected ImagePathsJ3xModel $ImagePathJ3x;
 
-	/**
+    /**
      * Method to display the view.
      *
      * @param   string  $tpl  A template file to load. [optional]
@@ -65,7 +65,7 @@ class HtmlView extends BaseHtmlView
 
         //--- config --------------------------------------------------------------------
 
-        if (empty ($rsgConfig)) {
+        if (empty($rsgConfig)) {
             $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         }
         //$compo_params = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -75,8 +75,8 @@ class HtmlView extends BaseHtmlView
         $this->items = $this->get('Items');
 
         // paths to image (over galleryid or j3x style)
-        $this->ImagePath    = new ImagePathsModel ();
-        $this->ImagePathJ3x = new ImagePathsJ3xModel ();
+        $this->ImagePath    = new ImagePathsModel();
+        $this->ImagePathJ3x = new ImagePathsJ3xModel();
 
         // size of display image
         $ImageWidths           = $rsgConfig->get('image_size');
@@ -120,7 +120,6 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'yyyRawView':
-
                 break;
 
             case 'yyyRawEdit':
@@ -128,7 +127,7 @@ class HtmlView extends BaseHtmlView
 
             default:
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
                         . '* modal on image click <br>'
@@ -167,13 +166,13 @@ class HtmlView extends BaseHtmlView
                         // if ($user->authorise('core.admin'))
                         {
                             $childBar->save('imagesProperties.save_imagesProperties');
-//                            $childBar->save('imagesProperties.save');
+                    //                            $childBar->save('imagesProperties.save');
 
                             $childBar->apply('imagesProperties.apply_imagesProperties');
-//                            $childBar->apply('images.apply');
+                    //                            $childBar->apply('images.apply');
 
                             $childBar->archive('imagesProperties.archive_imagesProperties');
-//                            $childBar->archive('images.archive' );
+                    //                            $childBar->archive('images.archive' );
 
                             $childBar->trash('images.trash_imagesProperties');
 
@@ -189,7 +188,7 @@ class HtmlView extends BaseHtmlView
                 $dropdownButton = $toolbar
                     ->dropdownButton('rotate-group')
                     ->text('COM_RSGALLERY2_ROTATE')
-//					->toggleSplit(true)
+//                  ->toggleSplit(true)
                     ->toggleSplit(false)
                     ->icon('fa fa-sync')
                     ->listCheck(true)
@@ -197,12 +196,12 @@ class HtmlView extends BaseHtmlView
 
                 $dropdownButton->configure(
                     function (Toolbar $childBar) {
-                        $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT','imagesProperties.rotate_images_left')->icon('fa fa-undo');
-						$childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT','imagesProperties.rotate_images_right')->icon('fa fa-redo');
-						$childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180','imagesProperties.rotate_images_180')->icon('fa fa-sync fa-rotate-180');
-						$childBar->divider('      ');
-						$childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL','imagesProperties.flip_images_horizontal')->icon('fa fa-arrows-alt-h');
-						$childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL','imagesProperties.flip_images_vertical')->icon('fa fa-arrows-alt-v');
+                        $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT', 'imagesProperties.rotate_images_left')->icon('fa fa-undo');
+                        $childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT', 'imagesProperties.rotate_images_right')->icon('fa fa-redo');
+                        $childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180', 'imagesProperties.rotate_images_180')->icon('fa fa-sync fa-rotate-180');
+                        $childBar->divider('      ');
+                        $childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL', 'imagesProperties.flip_images_horizontal')->icon('fa fa-arrows-alt-h');
+                        $childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL', 'imagesProperties.flip_images_vertical')->icon('fa fa-arrows-alt-v');
                     },
                 );
 
@@ -218,6 +217,4 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_rsgallery2');
         }
     }
-
 }
-

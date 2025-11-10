@@ -68,7 +68,7 @@ class GalleriesHelper
                     // Loading language file from the administrator/language directory then
                     // loading language file from the administrator/components/*extension*/language directory
                     $lang->load($component, JPATH_BASE, null, false, true)
-					|| $lang->load($component, Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component), null, false, true);
+                    || $lang->load($component, Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component), null, false, true);
 
                     call_user_func([$cName, 'addSubmenu'], 'galleries' . (isset($section) ? '.' . $section : ''));
                 }
@@ -86,7 +86,7 @@ class GalleriesHelper
      */
     public static function getAssociations($pk, $extension = 'com_rsgallery2')
     {
-		$langAssociations = Associations::getAssociations($extension, '#__galleries', 'com_rsgallery2.item', $pk, 'id', 'alias', '');
+        $langAssociations = Associations::getAssociations($extension, '#__galleries', 'com_rsgallery2.item', $pk, 'id', 'alias', '');
         $associations     = [];
         $user             = Factory::getApplication()->getIdentity();
         $groups           = implode(',', $user->getAuthorisedViewLevels());
@@ -97,7 +97,7 @@ class GalleriesHelper
             $assocId = $arrId[0];
             $db      = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->createQuery()
+            $query = $db->createQuery()
                 ->select($db->quoteName('published'))
                 ->from($db->quoteName('#__galleries'))
                 ->where('access IN (' . $groups . ')')

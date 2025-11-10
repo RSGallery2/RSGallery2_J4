@@ -19,6 +19,3 @@ use Joomla\CMS\Component\ComponentHelper;
 // not ready
 
 echo 'default.php: ' . realpath(dirname(__FILE__));
-?>
-
-

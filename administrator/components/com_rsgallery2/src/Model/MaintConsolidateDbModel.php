@@ -26,7 +26,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReferences;
  */
 class MaintConsolidateDbModel extends BaseDatabaseModel
 {
-
     /**
      * Image artefacts as list
      * Each entry contains existing image objects (? where at least one is missing ?)
@@ -70,7 +69,7 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
         //$ImageReferences->UseWatermarked = $this->IsWatermarkActive();
         // $ImageReferences->UseWatermarked = true; // ToDO: remove
         //$ImageReferences       = new ImageReferences ($this->IsWatermarkActive());
-        $ImageReferences       = new ImageReferences (1);
+        $ImageReferences       = new ImageReferences(1);
         $this->ImageReferences = $ImageReferences;
 
         try {
@@ -97,42 +96,36 @@ class MaintConsolidateDbModel extends BaseDatabaseModel
      * @since 4.3.0
      */
     /** read config more direct global$rsgconfig ...
-	public function IsWatermarkActive()
-	{
-		if (empty($this->IsWatermarkActive))
-		{
-			$this->IsWatermarkActive = false;
+    public function IsWatermarkActive()
+    {
+        if (empty($this->IsWatermarkActive))
+        {
+            $this->IsWatermarkActive = false;
 
-			try
-			{
-				$db    = $this->getDatabase();
-				$query = $db->createQuery()
-					->select($db->quoteName('value'))
-					->from($db->quoteName('#__rsgallery2_config'))
-					->where($db->quoteName('name') . " = " . $db->quote('watermark'));
-				$db->setQuery($query);
+            try
+            {
+                $db    = $this->getDatabase();
+                $query = $db->createQuery()
+                    ->select($db->quoteName('value'))
+                    ->from($db->quoteName('#__rsgallery2_config'))
+                    ->where($db->quoteName('name') . " = " . $db->quote('watermark'));
+                $db->setQuery($query);
 
-				$this->IsWatermarkActive = $db->loadResult();
-			}
-			catch (\RuntimeException $e)
-			{
-				$OutTxt = '';
-				$OutTxt .= 'Error executing query: "' . $query . '"' . '<br>';
-				$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+                $this->IsWatermarkActive = $db->loadResult();
+            }
+            catch (\RuntimeException $e)
+            {
+                $OutTxt = '';
+                $OutTxt .= 'Error executing query: "' . $query . '"' . '<br>';
+                $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-				$app = Factory::getApplication();
-				$app->enqueueMessage($OutTxt, 'error');
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
 
-			}
-		}
+            }
+        }
 
-		return $this->IsWatermarkActive;
-	}
-	/**/
-
-
-
-
-
+        return $this->IsWatermarkActive;
+    }
+    /**/
 }
-

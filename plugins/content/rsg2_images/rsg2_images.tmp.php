@@ -46,7 +46,6 @@ use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
  */
 class PlgContentRsg2_images extends CMSPlugin
 {
-
     /** @var CMSApplication */
     /**
      * protected $app;
@@ -378,8 +377,6 @@ class PlgContentRsg2_images extends CMSPlugin
 
         return $isHandled;
     }
-
-
 }
 
 /**
@@ -439,5 +436,3 @@ class PlgContentRsg2_images extends CMSPlugin
  *
  * }
  * /**/
-
-

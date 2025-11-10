@@ -25,21 +25,21 @@ use Joomla\CMS\Router\Route;
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
-		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+    <div class="d-flex flex-row">
+        <?php if (!empty($this->sidebar)) : ?>
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
-		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ManifestInfoView']); ?>
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ManifestInfoView', Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW', true)); ?>
 
-				<p>
+                <p>
                     <?php
                     //--- version ----------------------------------------------
 
@@ -47,9 +47,9 @@ use Joomla\CMS\Router\Route;
                     echo '<p> RSG2 Version: <strong>' . $this->rsg2Manifest['version'] . '</strong></p>';
 
                     ?>
-				</p>
-				<p>
-				<h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
+                </p>
+                <p>
+                <h3><?php echo Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'); ?></h3></p>
 
                 <?php
 
@@ -167,14 +167,14 @@ use Joomla\CMS\Router\Route;
 
                 <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-				<!--input type="hidden" name="option" value="com_rsgallery2" />
+                <!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-				<input type="hidden" name="task" value=""/>
+                <input type="hidden" name="task" value=""/>
                 <?php echo HTMLHelper::_('form.token'); ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>

@@ -32,11 +32,11 @@ if (!empty($isDevelopSite)) {
         . '* what happens on empty galleries/ image lists<br>'
         . '* Size of replace images (missing/no images) <br>'
         . '* pagination<br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -46,7 +46,7 @@ if (!isset($image)) {
 
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h3>RSGallery2 image single layout</h3>
     <hr>
 <?php endif; ?>
@@ -55,8 +55,8 @@ if (!isset($image)) {
 
     <div class="rsg2_image__xxx" id="gallery" data-bs-toggle="modal" data-bs-target="#exampleModal">
 
-		<?php
-		//foreach ($images as $idx => $image) {
+        <?php
+        //foreach ($images as $idx => $image) {
         ?>
         <figure>
             <img src="<?php echo $image->UrlThumbFile ?>"
@@ -65,55 +65,55 @@ if (!isset($image)) {
             >
             <figcaption><?php echo $image->name; ?></figcaption>
         </figure>
-			<?php
-		//}
-        ?>
+            <?php
+        //}
+            ?>
     </div>
 
-    <!--	<!-- Modal markup: https://getbootstrap.com/docs/4.4/components/modal/ -->-->
-    <!--	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">-->
-    <!--		<div class="modal-dialog" role="document">-->
-    <!--			<div class="modal-content">-->
-    <!--				<div class="modal-header">-->
-    <!--					<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-    <!--						<span aria-hidden="true">×</span>-->
-    <!--					</button>-->
-    <!--				</div>-->
-    <!--				<div class="modal-body">-->
+    <!--    <!-- Modal markup: https://getbootstrap.com/docs/4.4/components/modal/ -->-->
+    <!--    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">-->
+    <!--        <div class="modal-dialog" role="document">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-header">-->
+    <!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+    <!--                        <span aria-hidden="true">×</span>-->
+    <!--                    </button>-->
+    <!--                </div>-->
+    <!--                <div class="modal-body">-->
     <!---->
-    <!--					<!-- Carousel markup goes here -->-->
+    <!--                    <!-- Carousel markup goes here -->-->
     <!---->
-    <!--					<div id="rsg2_carousel" class="carousel slide" data-ride="carousel">-->
+    <!--                    <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">-->
     <!---->
-    <!--						<div class="carousel-inner">-->
+    <!--                        <div class="carousel-inner">-->
     <!---->
-<!--							--><?php
-//							$isActive="active";
-    ////							foreach ($images as $image) {
-    //								?>
+<!--                            --><?php
+//                          $isActive="active";
+    ////                            foreach ($images as $image) {
+    //                              ?>
     <!---->
-    <!--								<div class="carousel-item --><?php //echo $isActive ?><!--" >-->
-    <!--									<div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">-->
-<!--										<!--                                        <img class="d-block " src="-->--><?php ////echo $image->UrlDisplayFiles[400] ?><!--<!--"-->-->
-    <!--										<img class="d-block " src="--><?php //echo $image->UrlOriginalFile ?><!--"-->
-    <!--										     alt="--><?php //echo $image->name ?><!--"-->
-    <!--										>-->
-    <!--									</div>-->
-    <!--								</div>-->
+    <!--                                <div class="carousel-item --><?php //echo $isActive ?><!--" >-->
+    <!--                                    <div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">-->
+<!--                                        <!--                                        <img class="d-block " src="-->--><?php ////echo $image->UrlDisplayFiles[400] ?><!--<!--"-->-->
+    <!--                                        <img class="d-block " src="--><?php //echo $image->UrlOriginalFile ?><!--"-->
+    <!--                                             alt="--><?php //echo $image->name ?><!--"-->
+    <!--                                        >-->
+    <!--                                    </div>-->
+    <!--                                </div>-->
     <!---->
-<!--								--><?php
-//								$isActive="";
-    ////							}
-    //							?>
+<!--                                --><?php
+//                              $isActive="";
+    ////                            }
+    //                          ?>
     <!---->
     <!---->
-    <!--						</div>-->
-    <!--					</div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
     <!---->
-    <!--				</div>-->
-    <!--			</div>-->
-    <!--		</div>-->
-    <!--	</div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 </div>
 
 

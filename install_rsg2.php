@@ -7,6 +7,7 @@
  * @copyright  (c) 2003-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -80,7 +81,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         // when component files are copied
         // $this->rsg2_basePath = JPATH_SITE . '/administrator/components/com_rsgallery2';
-
     }
 
     /*-------------------------------------------------------------------------
@@ -157,7 +157,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 $this->oldRelease = $this->getOldVersionFromManifestParam();
 
                 // old release not found but rsgallery2 data still kept in database -> error message
-                if (empty ($this->oldRelease)) {
+                if (empty($this->oldRelease)) {
                     $outTxt = 'Can not install RSG2: Old Rsgallery2 data found in db or RSG2 folders. Please try to deinstall previous version or remove folder artifacts';
                     Factory::getApplication()->enqueueMessage($outTxt, 'error');
                     Log::add('oldRelease:' . $outTxt, Log::WARNING, 'rsg2');
@@ -170,21 +170,18 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
                 Log::add('oldRelease:' . $this->oldRelease, Log::INFO, 'rsg2');
             } else { // $type == 'install'
-
                 Log::add('-> pre freshInstall', Log::DEBUG);
             }
 
 // !!! ToDo: remove !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//			$this->oldRelease = '4.5.3.0';
+//          $this->oldRelease = '4.5.3.0';
 // !!! ToDo: remove !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             Log::add(Text::_('newRelease:') . $this->newRelease, Log::INFO, 'rsg2');
 
             if ($type === 'update') {
-				
                 // Previous j3x version:
                 if (version_compare($this->oldRelease, '5.0.0', 'lt')) {
-					
                     //--- Remove lang files  ---------------------------------------------
 
                     // Remove old language files (RSG2 J3x) in joomla base lang folders
@@ -293,7 +290,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         switch ($type) {
             case 'install':
-
                 Log::add('post->install: init gallery tree', Log::INFO, 'rsg2');
 
                 // Nested gallery table needs a root item
@@ -314,7 +310,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 break;
 
             case 'update':
-
                 Log::add('post->update: init gallery tree', Log::INFO, 'rsg2');
 
                 // Nested gallery table needs a root item
@@ -330,17 +325,17 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 //--- Previous j3x version: ----------------------------------------------------
 
 // Can't be used as boot rsg2 would be needed and is yet ? partly active ?
-//				if (version_compare($this->oldRelease, '5.0.0', 'lt'))
-//				{
-//					//--- Old J3x config (not galleries, not images) -------------------------------
+//              if (version_compare($this->oldRelease, '5.0.0', 'lt'))
+//              {
+//                  //--- Old J3x config (not galleries, not images) -------------------------------
 //
-//					// Would like to update galleries and move images too, but it would be
-//					// time-consuming. So left out
+//                  // Would like to update galleries and move images too, but it would be
+//                  // time-consuming. So left out
 //
-//					// copy J3xConfigParameter config (includes transfer to new names
-//					$isCopiedConfig = $this->copyJ3xDbConfigParameter ();
+//                  // copy J3xConfigParameter config (includes transfer to new names
+//                  $isCopiedConfig = $this->copyJ3xDbConfigParameter ();
 //
-//				}
+//              }
 
                 //--- upgradeSql ----------------------------------------------------
 
@@ -365,7 +360,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 break;
 
             case 'uninstall':
-
                 $outText = 'Uninstall of RSG2 finished. <br>'
                     . 'Configuration was deleted. <br>'
                     . 'Galleries and images table may still exist';
@@ -385,7 +379,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 break;
 
             case 'discover_install':
-
                 Log::add('post->discover_install: updateDefaultParams', Log::INFO, 'rsg2');
 
                 $this->updateDefaultParams($parent);
@@ -406,7 +399,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 break;
 
             default:
-
                 break;
         }
 
@@ -474,11 +466,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('upd (10.3) '), Log::INFO, 'rsg2');
             JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
 
-//			Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
-//			include($GalleryTreeModelFileName);
+//          Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
+//          include($GalleryTreeModelFileName);
 
             Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
-            $galleryTreeModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel ();
+            $galleryTreeModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel();
 
             Log::add(Text::_('upd (10.5) '), Log::INFO, 'rsg2');
             Log::add('initGalleryTree: check for root item', Log::INFO, 'rsg2');
@@ -542,9 +534,9 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             $changeLogModelClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel';
             JLoader::register($changeLogModelClassName, $changeLogModelFileName);
 
-            $InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage
-            (
-                $this->newRelease, $this->oldRelease,
+            $InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage(
+                $this->newRelease,
+                $this->oldRelease,
             );
 
             Log::add('installMessage: create message', Log::INFO, 'rsg2');
@@ -578,7 +570,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         $oldRelease = '';
 
         $this->oldManifestData = $this->readRsg2ExtensionManifest();
-        if (!empty ($this->oldManifestData['version'])) {
+        if (!empty($this->oldManifestData['version'])) {
             $oldRelease = $this->oldManifestData['version'];
         }
 
@@ -614,7 +606,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $jsonStr = $db->loadResult();
 
-            if (!empty ($jsonStr)) {
+            if (!empty($jsonStr)) {
                 $manifest = json_decode($jsonStr, true);
             }
         } catch (RuntimeException $e) {
@@ -719,7 +711,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 $folders = array_diff(array_filter(glob($langPath . '/*'), 'is_dir'), ['.', '..']);
 
                 foreach ($folders as $folderName) {
-// 				echo ('folder name: ' . $folderName . '<br>');
+//              echo ('folder name: ' . $folderName . '<br>');
 
                     // $subFolder = $langPath . "/" . $folderName;
                     //$isOneFileDeleted = removeLangFilesInSubPaths($subFolder);
@@ -786,7 +778,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
                 Log::add(Text::_('upd (50.13) '), Log::INFO, 'rsg2');
             }
-
         } catch (RuntimeException $e) {
             Log::add(
                 Text::_('\n>> Exception: removeJ3xComponentFiles: ') . $e->getMessage(),
@@ -847,24 +838,23 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             $prefix = $db->getPrefix();
 
             if (in_array($prefix . 'rsgallery2_galleries', $tables)) {
-                // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
+                // #    UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_galleries', 'checked_out_time', $db);
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_galleries', 'date', $db);
 
                 // ALTER TABLE IF EXISTS `#__rsgallery2_galleries` MODIFY `checked_out_time` datetime NOT NULL;
                 // Not needed ? ALTER TABLE `#__rsgallery2_galleries` MODIFY `created` datetime NOT NULL;
                 // and below
-
             }
 
             if (in_array($prefix . 'rsgallery2_files', $tables)) {
-                // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
+                // #    UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_files', 'checked_out_time', $db);
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_files', 'date', $db);
             }
 
             if (in_array($prefix . 'rsgallery2_comments', $tables)) {
-                // #	UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
+                // #    UPDATE `#__rsgallery2_galleries` SET `checked_out_time` = '1980-01-01 00:00:00' WHERE `checked_out_time` = '0000-00-00 00:00:00';
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_comments', 'checked_out_time', $db);
                 $hasError |= $this->j3x_tables_fix_datatime('#__rsgallery2_comments', 'datetime', $db);
             }
@@ -985,5 +975,4 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         return;
     }
-
 } // class

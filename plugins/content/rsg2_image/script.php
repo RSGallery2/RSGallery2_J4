@@ -21,7 +21,6 @@ use Joomla\CMS\Log\Log;
  */
 class plg_rsg2_imageInstallerScript
 {
-
     /**
      * Extension script constructor.
      *

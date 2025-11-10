@@ -39,7 +39,7 @@ class ImagePathsModel
      * @since 5.1.0     */
     public $rsgImagesBasePath;
     public $rsgImagesBaseUrl;
-	// ToDo: Single gallery name ? used for search path ?
+    // ToDo: Single gallery name ? used for search path ?
     public $rsgImagesGalleriesBasePath; // ToDo: Single gallery name ? used for search path ?
 
     // includes galleryid
@@ -50,7 +50,7 @@ class ImagePathsModel
     public $displayBasePath;
     public $thumbBasePath;
     public $sizeBasePaths; // 800x6000, ..., ? display:J3x
-    //	ToDo: watermark ...
+    //  ToDo: watermark ...
 
     public $imageSizes;
     // Original folder may not be needed (see config)
@@ -70,12 +70,12 @@ class ImagePathsModel
 
     // toDo: image size to path when upload ...
 
-	/**
-	 * root of images, image sizes from configuration build the paths
-	 *
-	 * @throws \Exception
-	 */
-	public function __construct($galleryId = 0)
+    /**
+     * root of images, image sizes from configuration build the paths
+     *
+     * @throws \Exception
+     */
+    public function __construct($galleryId = 0)
     {
         global $rsgConfig;
 
@@ -89,7 +89,7 @@ class ImagePathsModel
 
             $this->rsgImagesBasePath = $rsgConfig->get('imgPath_root');
             // Fall back
-            if (empty ($this->rsgImagesBasePath)) {
+            if (empty($this->rsgImagesBasePath)) {
                 $this->rsgImagesBasePath = "images/rsgallery2";
             }
             $this->rsgImagesBasePath = Path::Clean($this->rsgImagesBasePath);
@@ -182,62 +182,62 @@ class ImagePathsModel
     File paths
     --------------------------------------------------------------------*/
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getOriginalPath($fileName = '')
     {
         return PathHelper::join($this->originalBasePath, $fileName);
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getDisplayPath($fileName = '')
     {
         return PathHelper::join($this->displayBasePath, $fileName);
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getThumbPath($fileName = '')
     {
         return PathHelper::join($this->thumbBasePath, $fileName);
     }
 
-	/**
-	 * @param $imageSize
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $imageSize
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getSizePath($imageSize, $fileName = '')
     {
         return PathHelper::join($this->sizeBasePaths [$imageSize], $fileName);
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public function getSizePaths($fileName = '')
     {
         $sizePaths = [];
@@ -253,62 +253,62 @@ class ImagePathsModel
     URIs
     --------------------------------------------------------------------*/
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getOriginalUrl($fileName = '')
     {
         return UriHelper::join($this->originalUrl, $fileName);
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getDisplayUrl($fileName = '')
     {
         return UriHelper::join($this->displayUrl, $fileName);
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getThumbUrl($fileName = '')
     {
         return UriHelper::join($this->thumbUrl, $fileName);
     }
 
-	/**
-	 * @param $imageSize
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $imageSize
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getSizeUrl($imageSize, $fileName = '')
     {
         return UriHelper::join($this->sizeUrls [$imageSize], $fileName);
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $fileName
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public function getSizeUrls($fileName = '')
     {
         $sizeUrls = [];
@@ -390,5 +390,4 @@ class ImagePathsModel
 
         return $isPathsExisting;
     }
-
 }

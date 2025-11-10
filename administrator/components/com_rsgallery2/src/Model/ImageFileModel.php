@@ -37,9 +37,8 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
  */
 class ImageFileModel extends BaseDatabaseModel // AdminModel
 {
-
-    const THUMB_PORTRAIT = 0;
-    const THUMB_SQUARE = 1;
+    public const THUMB_PORTRAIT = 0;
+    public const THUMB_SQUARE = 1;
 
     /**
      * Constructor.
@@ -144,9 +143,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 $memImage->destroy();
             }
             /**/
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing createDisplayImageFile for image name: "' . $targetFileName . '" size: ' . $targetWidth . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -278,9 +275,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 $memImage->destroy();
             }
             /**/
-        }
-        catch (\RuntimeException $e)
-        {
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing createThumbImageFile for image name: "' . $thumbPathFileName . '" size: ' . $thumbSize . '"<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -369,7 +364,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
         // J4x ?
         if (!$use_j3x_location) {
-            $imagePaths = new ImagePathsModel ($galleryId);
+            $imagePaths = new ImagePathsModel($galleryId);
 
             //--- expected images of gallery -------------------------------------------------
 
@@ -387,7 +382,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         } else {
             // J3x
 
-            $ImagePathJ3x = new ImagePathsJ3xModel ();
+            $ImagePathJ3x = new ImagePathsJ3xModel();
 
             //--- expected images of gallery -------------------------------------------------
 
@@ -541,13 +536,13 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             $isUsePath_Original = $rsgConfig->get('keepOriginalImage');
 
             if (!$use_j3x_location) {
-                $imagePaths = new ImagePathsModel ($galleryId);  // ToDo: J3x
+                $imagePaths = new ImagePathsModel($galleryId);  // ToDo: J3x
                 $imagePaths->createAllPaths();
 
                 $urlThumbFile     = $imagePaths->getThumbUrl($targetFileName);
                 $originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
             } else {
-                $imagePathJ3x = new ImagePathsJ3xModel ($galleryId);  // ToDo: J3x
+                $imagePathJ3x = new ImagePathsJ3xModel($galleryId);  // ToDo: J3x
                 $imagePathJ3x->createAllPaths();
 
                 $urlThumbFile     = $imagePathJ3x->getThumbUrl($targetFileName);
@@ -712,7 +707,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
      *
      * @throws \Exception
      * @since  5.1.0     */
-    public function CreateRSG2Images(ImagePathsModel $imagePaths, $srcFileName = '', $targetFileName = '') : bool
+    public function CreateRSG2Images(ImagePathsModel $imagePaths, $srcFileName = '', $targetFileName = ''): bool
     {
         global $rsgConfig, $Rsg2DebugActive;
 
@@ -731,7 +726,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             //--- Create thumb files ----------------------------------
 
             // Create memory image
-            $memImage = new image ($srcFileName);
+            $memImage = new image($srcFileName);
 
             $srcWidth  = $memImage->getWidth();
             $srcHeight = $memImage->getHeight();
@@ -750,7 +745,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 // toDo: ajax: update state thumb created
 
                 foreach ($imagePaths->imageSizes as $imageSize) {
-                    $memImage = new image ($srcFileName);
+                    $memImage = new image($srcFileName);
 
                     $isCreated = false;
                     try {
@@ -769,9 +764,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                             $memImage->destroy();
                         }
                         /**/
-                    }
-                    catch (\RuntimeException $e)
-                    {
+                    } catch (\RuntimeException $e) {
                         $memImage->destroy();
                         throw $e;
                     }
@@ -805,9 +798,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 }
             }
             /**/
-        }
-        else
-        {
+        } else {
             $OutTxt = ''; // ToDo: Raise (throw) errors instead
             $OutTxt .= 'CreateRSG2Images Error: Could not find original file: "' . $srcFileName . '"';
 
@@ -844,8 +835,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         ImagePathsJ3xModel $imagePaths,
         $srcFileName = '',
         $targetFileName = '',
-    ) : bool
-    {
+    ): bool {
         global $rsgConfig, $Rsg2DebugActive;
 
         $msg = ''; // ToDo: Raise (throw) errors instead
@@ -863,7 +853,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             //--- Create thumb files ----------------------------------
 
             // Create memory image
-            $memImage = new image ($srcFileName);
+            $memImage = new image($srcFileName);
 
             $srcWidth  = $memImage->getWidth();
             $srcHeight = $memImage->getHeight();
@@ -881,7 +871,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             if ($isCreated) {
                 // toDo: ajax: update state thumb created
 
-                $memImage = new image ($srcFileName);
+                $memImage = new image($srcFileName);
 
                 $isCreated = false;
                 try {
@@ -905,9 +895,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                         $memImage->destroy();
                     }
                     /**/
-                }
-                catch (\RuntimeException $e)
-                {
+                } catch (\RuntimeException $e) {
                     $memImage->destroy();
                     throw $e;
                 }
@@ -936,9 +924,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 }
             }
             /**/
-        }
-        else
-        {
+        } else {
             $OutTxt = ''; // ToDo: Raise (throw) errors instead
             $OutTxt .= 'CreateRSG2ImagesJ3x Error: Could not find original file: "' . $srcFileName . '"';
 
@@ -1013,7 +999,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                     $img_info = @getimagesize($file);
 
                     // check if file is definitely not an image
-                    if (empty ($img_info)) {
+                    if (empty($img_info)) {
                         $ignored[] = $file;
                     } else {
                         //--- file may be an image -----------------------------
@@ -1074,7 +1060,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 $displayDPath = $imagePaths->getDisplayPath($fileName);
             } else {
                 // J3x
-                $imagePathJ3x = new ImagePathsJ3xModel ();
+                $imagePathJ3x = new ImagePathsJ3xModel();
                 $originalPath = $imagePathJ3x->getOriginalPath($fileName);
                 $displayDPath = $imagePathJ3x->getDisplayPath($fileName);
             }
@@ -1090,10 +1076,10 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             $memImage = null;
 
             if (file_exists($imgSrcPath)) {
-                $memImage = new image ($imgSrcPath);
+                $memImage = new image($imgSrcPath);
             }
 
-            if (!empty ($memImage)) {
+            if (!empty($memImage)) {
                 $type = IMAGETYPE_JPEG;
 
                 //--- rotate and save ------------------
@@ -1146,12 +1132,12 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
             // J4x ?
             if (!$use_j3x_location) {
-                $imagePaths   = new ImagePathsModel ($galleryId);
+                $imagePaths   = new ImagePathsModel($galleryId);
                 $originalPath = $imagePaths->getOriginalPath($fileName);
                 $displayPath  = $imagePaths->getDisplayPath($fileName);
             } else {
                 // J3x
-                $imagePathJ3x = new ImagePathsJ3xModel ();
+                $imagePathJ3x = new ImagePathsJ3xModel();
                 $originalPath = $imagePathJ3x->getOriginalPath($fileName);
                 $displayPath  = $imagePathJ3x->getDisplayPath($fileName);
             }
@@ -1167,10 +1153,10 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             $memImage = null;
 
             if (file_exists($imgSrcPath)) {
-                $memImage = new image ($imgSrcPath);
+                $memImage = new image($imgSrcPath);
             }
 
-            if (!empty ($memImage)) {
+            if (!empty($memImage)) {
                 $type = IMAGETYPE_JPEG;
 
                 //--- flip and save ------------------
@@ -1278,24 +1264,24 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
     }
 
 
-	/**
-	 * Depending on j3x/j4x type storage of image it retrieves path a nd url of file
-	 *
-	 * @param $imageFileName
-	 * @param $galleryId
-	 * @param $use_j3x_location
-	 *
-	 * @return array paths to 'original' file and url
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Depending on j3x/j4x type storage of image it retrieves path a nd url of file
+     *
+     * @param $imageFileName
+     * @param $galleryId
+     * @param $use_j3x_location
+     *
+     * @return array paths to 'original' file and url
+     *
+     * @since  5.1.0
+     */
     public function getOriginalPaths($imageFileName, $galleryId, $use_j3x_location)
     {
         $OriginalPathFileName = "";
 
         // J4x ?
         if (!$use_j3x_location) {
-            $imagePaths = new ImagePathsModel ($galleryId);
+            $imagePaths = new ImagePathsModel($galleryId);
 
             //---  -------------------------------------------------
 
@@ -1304,7 +1290,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         } else {
             // J3x
 
-            $ImagePathJ3x = new ImagePathsJ3xModel ();
+            $ImagePathJ3x = new ImagePathsJ3xModel();
 
             //---  -------------------------------------------------
 
@@ -1315,18 +1301,19 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         return [$OriginalPathFileName, $OriginalFileNameUri];
     }
 
-	/**
-	 * Download a file with copying from temp file to URL ?
-	 *
-	 * @param $OriginalFilePath
-	 * @param $OriginalFileUri
-	 *
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
-    public function downloadImageFile($OriginalFilePath, $OriginalFileUri) {
+    /**
+     * Download a file with copying from temp file to URL ?
+     *
+     * @param $OriginalFilePath
+     * @param $OriginalFileUri
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
+    public function downloadImageFile($OriginalFilePath, $OriginalFileUri)
+    {
         $IsDownloaded = false;
 
         try {
@@ -1347,7 +1334,6 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
             //  tells if successful
             $IsDownloaded = true;
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing rebuild: "' . '<br>';
@@ -1359,5 +1345,4 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
         return $IsDownloaded;
     }
-
 }

@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
-use \Joomla\CMS\User\User;
+use Joomla\CMS\User\User;
 
 //use Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel;
 
@@ -88,7 +88,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null) : void
+    public function display($tpl = null): void
     {
         //--- root galleries (j3x standard --------------------------------------------------
 
@@ -109,13 +109,13 @@ class HtmlView extends BaseHtmlView
         $params =
         $this->params = $this->state->get('params');
 
-//	    // ToDo: may not be necessary but display
+//      // ToDo: may not be necessary but display
 //        $menuParams =
 //        $this->menuParams = $this->get('Rsg2MenuParams');
 //
-//	    // Merge (overwrite) config parameter with menu parameter
-//	    // wrong: $this->params = $menuParams->merge($this->params);
-//	    $params = $this->params->merge($menuParams);
+//      // Merge (overwrite) config parameter with menu parameter
+//      // wrong: $this->params = $menuParams->merge($this->params);
+//      $params = $this->params->merge($menuParams);
 
         //$this->isDebugSite   = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
         $this->isDebugSite   = $this->params->get('isDebugSite') || $input->getBool('isDebugSite');
@@ -158,7 +158,7 @@ class HtmlView extends BaseHtmlView
 //        /**/
 
 // on develop show open tasks if existing
-        if (!empty ($this->isDevelopSite)) {
+        if (!empty($this->isDevelopSite)) {
             echo '<span style="color:red">'
                 . 'Tasks: rootgalleriesJ3x view<br>'
                 . '* !!! Menu intro text -> Save gets following lines double !!!<br>'
@@ -169,40 +169,14 @@ class HtmlView extends BaseHtmlView
                 . '* Format of date is already in database -> improve ... <br>'
                 . '* Events in general<br>'
                 . '* User count of galleries displayed not working: 0, 1,2,3<br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
                 . '</span><br><br>';
         }
 
         parent::display($tpl);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

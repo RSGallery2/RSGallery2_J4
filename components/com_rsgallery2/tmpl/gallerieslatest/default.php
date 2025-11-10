@@ -15,11 +15,11 @@
 use Joomla\CMS\Language\Text;
 
 //if ($this->item->params->get('show_name')) {
-//	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-//	} else {
-//		echo $this->item->name;
-//	}
+//  if ($this->Params->get('show_rsgallery2_name_label')) {
+//      echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
+//  } else {
+//      echo $this->item->name;
+//  }
 //}
 //
 //echo $this->item->event->afterDisplayTitle;
@@ -35,10 +35,3 @@ foreach ($this->items as $gallery) {
 //
 //
 //echo $this->item->event->afterDisplayContent;
-
-?>
-
-
-
-
-

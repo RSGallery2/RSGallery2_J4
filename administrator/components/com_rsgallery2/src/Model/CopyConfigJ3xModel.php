@@ -122,7 +122,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 
             // ??? images_column_arrangement_j3x ???
             //$assistedJ3xItems ['display_thumbs_maxPerPage'] = array('images_column_arrangement_j3x',
-            //	$j3xConfigItems['display_thumbs_maxPerPage']);
+            //  $j3xConfigItems['display_thumbs_maxPerPage']);
 
             // displaySlideshow -> galleries_show_slideshow
             $assistedJ3xItems ['displaySlideshow'] = [
@@ -202,21 +202,21 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
         ];
     }
 
-	/**
-	 * Return list of J3x defined galleries with data
-	 *
-	 * @return array|mixed
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Return list of J3x defined galleries with data
+     *
+     * @return array|mixed
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function j3x_galleriesList()
     {
         $galleries = [];
 
         try {
             $db    = $this->getDatabase();
-			$query = $db->createQuery()
+            $query = $db->createQuery()
 //                ->select($db->quoteName(array('id', 'name', 'parent', 'ordering')))
                 ->select('*')
                 ->from('#__rsgallery2_galleries')
@@ -322,7 +322,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             }
 
             // Save parameter
-            $configModel = new ConfigRawModel ();
+            $configModel = new ConfigRawModel();
             $isSaved     = $configModel->saveItems($j4xConfigItems);
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -335,5 +335,4 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
 
         return $isSaved;
     }
-
 }

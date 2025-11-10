@@ -105,30 +105,28 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
 //    }
 
     // j4x ++ has sizes
-	if ($hasJ4xFile)
-	{
-		// j4x sizes
-		$html[] = '<th class="center sizes_column" >';
-		//$html[] = '7';
-		$html[] = Text::_('COM_RSGALLERY2_SIZES_BR_FOLDERS');
-		$html[] = '</th>';
-	} else 	{
-		// $hasJxxFile
-		$html[] = '<th class="center">';
-		//$html[] = '5';
-		$html[] = Text::_('COM_RSGALLERY2_DISPLAY_BR_FOLDER');
-		$html[] = '</th>';
-	}
-
-    if ($hasJ3xFile)
-    {
-	    // filename
-	    $html[] = '<th class="align-left ">';
-	    // $html[] =  '3';
-	    $html[] = Text::_('J3x');
-	    $html[] = '</th>';
+    if ($hasJ4xFile) {
+        // j4x sizes
+        $html[] = '<th class="center sizes_column" >';
+        //$html[] = '7';
+        $html[] = Text::_('COM_RSGALLERY2_SIZES_BR_FOLDERS');
+        $html[] = '</th>';
+    } else {
+        // $hasJxxFile
+        $html[] = '<th class="center">';
+        //$html[] = '5';
+        $html[] = Text::_('COM_RSGALLERY2_DISPLAY_BR_FOLDER');
+        $html[] = '</th>';
     }
-	// action
+
+    if ($hasJ3xFile) {
+        // filename
+        $html[] = '<th class="align-left ">';
+        // $html[] =  '3';
+        $html[] = Text::_('J3x');
+        $html[] = '</th>';
+    }
+    // action
     $html[] = '<th class="center" width="20%">';
     //$html[] =  '9';
     $html[] = Text::_('COM_RSGALLERY2_ACTION');
@@ -282,34 +280,28 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
         $html[] = '<td class="center">';
 
         // J4x -> sizes
-	    if ( ! $ImageReference->use_j3x_location)
-	    {
-		    if (!empty ($ImageReference->sizeFilePaths))
-		    {
-			    foreach ($ImageReference->sizeFilePaths as $size => $sizePath)
-			    {
-				    $isSizeFound = $ImageReference->IsSizes_ImageFound [$size];
+        if (! $ImageReference->use_j3x_location) {
+            if (!empty($ImageReference->sizeFilePaths)) {
+                foreach ($ImageReference->sizeFilePaths as $size => $sizePath) {
+                    $isSizeFound = $ImageReference->IsSizes_ImageFound [$size];
 
-				    $html[] = '<div class="img_sizes">';
-				    //$html[] = '<span>' . $size . ': </span>';
-				    $html[] = $size . ': ';
+                    $html[] = '<div class="img_sizes">';
+                    //$html[] = '<span>' . $size . ': </span>';
+                    $html[] = $size . ': ';
 
-				    if ($isSizeFound)
-				    {
-					    $html[] = '    <i class="icon-ok hasTooltip" data-original-title="size image found" ';
-					    $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_FOUND') . '" ';
-					    $html[] = '    ></i>';
-				    }
-				    else
-				    {
-					    $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="size image not found" ';
-					    $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_NOT_FOUND') . '" ';
-					    $html[] = '    ></i>';
-				    }
-				    $html[] = '</div>';
-			    }
-		    }
-	    } else {
+                    if ($isSizeFound) {
+                        $html[] = '    <i class="icon-ok hasTooltip" data-original-title="size image found" ';
+                        $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_FOUND') . '" ';
+                        $html[] = '    ></i>';
+                    } else {
+                        $html[] = '    <i class="icon-cancel hasTooltip" data-original-title="size image not found" ';
+                        $html[] = '      title="' . HtmlHelper::tooltipText('COM_RSGALLERY2_SIZE_IMAGE_NOT_FOUND') . '" ';
+                        $html[] = '    ></i>';
+                    }
+                    $html[] = '</div>';
+                }
+            }
+        } else {
             // J3x -> display folder
 
             // display entry found
@@ -328,21 +320,19 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
 
         $html[] = '</td>';
 
-	    if ($hasJ3xFile)
-	    {
-		    if ($ImageReference->use_j3x_location) {
-			    $html[] = '<td class="center">';
-			    //$html[] = '6';
-			    $html[] = '<span class="icon-cancel">';
-			    $html[] = '</td>';
-		    } else {
-			    // database
-			    $html[] = '<td class="center">';
-			    //$html[] = '6';
-			    $html[] = '</td>';
-		    }
-
-	    }
+        if ($hasJ3xFile) {
+            if ($ImageReference->use_j3x_location) {
+                $html[] = '<td class="center">';
+                //$html[] = '6';
+                $html[] = '<span class="icon-cancel">';
+                $html[] = '</td>';
+            } else {
+                // database
+                $html[] = '<td class="center">';
+                //$html[] = '6';
+                $html[] = '</td>';
+            }
+        }
 
         // action
         $html[] = '<td class="center">';
@@ -403,8 +393,8 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
         // google (1) joomla formfield array
         // google (2) joomla display array of form fields
 
-//		$field = $form->getFieldset('maintConsolidateDB');
-//	    if ($ImageReference->ParentGalleryId > -1) {
+//      $field = $form->getFieldset('maintConsolidateDB');
+//      if ($ImageReference->ParentGalleryId > -1) {
         if ($ImageReference->parentGalleryId) {
             //$html[] = '' . $ImageReference->ParentGalleryId . ' ';
             $html[] = '' . $ImageReference->parentGalleryId . ' ';
@@ -452,61 +442,57 @@ function DisplayImageDataTable($ImageLostAndFoundList, $hasJ3xFile, $hasJ4xFile)
 
     //=== outside files =====================================================
 
-    if ($ImageReference->IsOutsideFilesExist)
-    {
-	    $html[] = '<hr>';
-	    $html[] = '<h3>Attention! Outside Files exists</h3>';
+    if ($ImageReference->IsOutsideFilesExist) {
+        $html[] = '<hr>';
+        $html[] = '<h3>Attention! Outside Files exists</h3>';
 
-        if ( ! empty($ImageReference->OutsideFiles ['j4x'])) {
-
-	        $html[] = '<h4>Outside Files J4x</h4>';
+        if (! empty($ImageReference->OutsideFiles ['j4x'])) {
+            $html[] = '<h4>Outside Files J4x</h4>';
 
             $OutsideFiles = $ImageReference->OutsideFiles ['j4x'];
 
             $Line = '';
             foreach ($OutsideFiles as $OutsideFile) {
-	            $Line .= $OutsideFile . ', ';
+                $Line .= $OutsideFile . ', ';
             }
 
-	        $html[] = $Line; // 0. -1
+            $html[] = $Line; // 0. -1
         }
 
-        if ( ! empty($ImageReference->OutsideFiles ['j3x'])) {
-
-	        $html[] = '<h4>Outside Files J3x</h4>';
+        if (! empty($ImageReference->OutsideFiles ['j3x'])) {
+            $html[] = '<h4>Outside Files J3x</h4>';
 
             $OutsideFiles = $ImageReference->OutsideFiles ['j3x'];
 
             $Line = '';
             foreach ($OutsideFiles as $OutsideFile) {
-	            $Line .= $OutsideFile . ', ';
+                $Line .= $OutsideFile . ', ';
             }
 
-	        $html[] = $Line; // 0. -1
+            $html[] = $Line; // 0. -1
         }
-
     }
 
     return implode(' ', $html);
 }
 
 $LostAndFoundHtml = '';
-if (!empty ($ImageLostAndFoundList)) {
+if (!empty($ImageLostAndFoundList)) {
     $LostAndFoundHtml = DisplayImageDataTable($ImageLostAndFoundList, $this->hasJ3xFile, $this->hasJ4xFile);
 }
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintConsolidateDb'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
+    <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
 
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
                 <?php //                echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'MaintConsolidateDb']); ?>
 
@@ -517,74 +503,73 @@ if (!empty ($ImageLostAndFoundList)) {
 //                    Text::_('COM_RSGALLERY2_IMAGES_LOST_AND_FOUND_TITLE', true),
 //                ); ?>
 
-				<div style="max-width: 400px;">
-					<strong><?php echo Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'); ?></strong>
+                <div style="max-width: 400px;">
+                    <strong><?php echo Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_TXT'); ?></strong>
                     <BR><BR>
-				</div>
+                </div>
 
                 <?php
                 // if (count($ImageLostAndFoundList) == 0) :
                 if (empty($ImageLostAndFoundList)) :
                     ?>
-					<div class="alert alert-no-items">
+                    <div class="alert alert-no-items">
                         <?php
                         // echo Text::_('COM_RSGALLERY2_MAINT_CONSOLDB_NO_MISSING_ITEMS_TXT');
                         echo Text::_('COM_RSGALLERY2_NO_INCONSISTENCIES_IN_DATABASE');
                         ?>
-					</div>
+                    </div>
                 <?php else : ?>
-
-					<div class="pull-right ParentGalleryId">
+                    <div class="pull-right ParentGalleryId">
                         <?php
 
                         // Specify parent gallery selection
                         echo $this->form->renderFieldset('maintConsolidateDB');
                         ?>
-					</div>
+                    </div>
 
-					<div class="span12">
-						<div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
                             <?php
                             // Info about lost and found images
                             // DisplayImageDataTable();
                             echo $LostAndFoundHtml;
 
                             ?>
-						</div>
-					</div>
+                        </div>
+                    </div>
 
                 <?php endif; ?>
 
-				<div class="form-actions">
-					<br>
-				</div>
+                <div class="form-actions">
+                    <br>
+                </div>
 
-				<fieldset class="refresh">
-					<!--legend><?php echo Text::_('COM_RSGALLERY2_REFRESH_TEXT'); ?>XXXXX</legend-->
-					<div class="form-actions">
-						<a class="btn btn-primary jgrid "
-						   title="<?php echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING_INCONSITENCIES_DESC'); ?>"
-						   href="index.php?option=com_rsgallery2&amp;view=maintConsolidateDB">
+                <fieldset class="refresh">
+                    <!--legend><?php echo Text::_('COM_RSGALLERY2_REFRESH_TEXT'); ?>XXXXX</legend-->
+                    <div class="form-actions">
+                        <a class="btn btn-primary jgrid "
+                           title="<?php echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING_INCONSITENCIES_DESC'); ?>"
+                           href="index.php?option=com_rsgallery2&amp;view=maintConsolidateDB">
                             <?php echo Text::_('COM_RSGALLERY2_REPEAT_CHECKING'); ?>
-						</a>
-						<a class="btn btn-primary jgrid"
-						   href="index.php?option=com_rsgallery2&amp;view=maintenance">
+                        </a>
+                        <a class="btn btn-primary jgrid"
+                           href="index.php?option=com_rsgallery2&amp;view=maintenance">
                             <?php echo Text::_('COM_RSGALLERY2_CANCEL'); ?>
-						</a>
-					</div>
-				</fieldset>
+                        </a>
+                    </div>
+                </fieldset>
 
 
                 <?php //                echo HTMLHelper::_('bootstrap.endTab'); ?>
 
                 <?php //                echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-				<!--input type="hidden" name="option" value="com_rsgallery2" />
+                <!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-				<input type="hidden" name="task" value=""/>
-				<input type="hidden" name="boxchecked" value="0"/>
-				<input type="hidden" name="ImageReferenceList" value="<?php
+                <input type="hidden" name="task" value=""/>
+                <input type="hidden" name="boxchecked" value="0"/>
+                <input type="hidden" name="ImageReferenceList" value="<?php
                 // $ImageReferenceList = $this->ImageReferences->ImageReferenceList;
                 // $JsonEncoded        = json_encode($ImageReferenceList);
                 // //$JsonEncoded = json_encode($ImageReferenceList, JSON_HEX_QUOT);
@@ -594,9 +579,9 @@ if (!empty ($ImageLostAndFoundList)) {
                 ?>"/>
 
                 <?php echo HTMLHelper::_('form.token'); ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>

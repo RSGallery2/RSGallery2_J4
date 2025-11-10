@@ -18,18 +18,19 @@ use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 {
     // only for lang strings shown on execution of plugin
     protected $autoloadLanguage = true;
 
-//	public function __construct(&$subject, $config = array())
-//	{
-//		$this->autoloadLanguage = true;
+//  public function __construct(&$subject, $config = array())
+//  {
+//      $this->autoloadLanguage = true;
 //
-//		parent::__construct($subject, $config);
-//	}
+//      parent::__construct($subject, $config);
+//  }
 
     public static function getSubscribedEvents(): array
     {
@@ -38,18 +39,18 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
         ];
     }
 
-	/**
-	 * @param   Event  $event
-	 *
-	 * @return bool
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param   Event  $event
+     *
+     * @return bool
+     *
+     * @since  5.1.0
+     */
     public function getRsg2_random_imagesDisplay(Event $event)
     {
         $context   = '';
         $article   = '';
-        $usrParams = new Registry ();
+        $usrParams = new Registry();
 
         try {
             // support J4 (and J5)
@@ -61,7 +62,8 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
                 $params  = $event->getArgument('params'); // spelling ?
             }
 
-            if ((strpos($context, 'com_content.article') === false)
+            if (
+                (strpos($context, 'com_content.article') === false)
                 && (strpos($context, 'com_content.category') === false)
             ) {
                 return false;
@@ -79,11 +81,11 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
 
                 preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
 
-//				// debug: there should be matches as text is searched
-//				if(empty ($matches)) {
-//					echo "<br><br>!!! article has no rsg2_random_images !!!<br>";
-//					return null;
-//				}
+//              // debug: there should be matches as text is searched
+//              if(empty ($matches)) {
+//                  echo "<br><br>!!! article has no rsg2_random_images !!!<br>";
+//                  return null;
+//              }
 
                 // Replace all matches
                 if ($matches) {
@@ -122,9 +124,8 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
             }
             // only needed when exchange the complete article ?
             // $event->stopPropagation();
-
         } catch (Exception $e) {
-			$msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES') . ' getRsg2_random_imagesDisplay: '. ' Error (01): ' . $e->getMessage();
+            $msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES') . ' getRsg2_random_imagesDisplay: ' . ' Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
 
@@ -135,13 +136,13 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
         return true;
     }
 
-	/**
-	 * @param   string  $usrString
-	 *
-	 * @return false|Registry
-	 *
-	 * @since version
-	 */
+    /**
+     * @param   string  $usrString
+     *
+     * @return false|Registry
+     *
+     * @since version
+     */
     private function extractUserParams(string $usrString)
     {
         $usrParams = new Registry();
@@ -168,10 +169,9 @@ class Rsg2_random_images extends CMSPlugin implements SubscriberInterface
                 {
                     $usrParams->set($name, $value);
                 }
-
             }
         } catch (Exception $e) {
-			$msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
+            $msg = Text::_('PLG_CONTENT_RSG2_RANDOM_IMAGES' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
 

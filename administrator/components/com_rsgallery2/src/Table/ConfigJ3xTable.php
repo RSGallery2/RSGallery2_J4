@@ -25,7 +25,7 @@ use Joomla\Database\DatabaseDriver;
  */
 class ConfigJ3xTable extends Table
 {
-	public $access = null;
+    public $access = null;
 
     /**
      * Constructor
@@ -45,5 +45,4 @@ class ConfigJ3xTable extends Table
     // check ? auto
 
     // store ? auto
-
 }

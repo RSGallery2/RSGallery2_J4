@@ -19,13 +19,13 @@
  */
 class Pkg_FoosInstallerScript
 {
-	/**
-	 * Extension script constructor.
-	 *
-	 * @since 5.1.0	 */
-	public function __construct()
-	{
-		$this->minimumJoomla = '4.0';
-		$this->minimumPhp    = JOOMLA_MINIMUM_PHP;
-	}
+    /**
+     * Extension script constructor.
+     *
+     * @since 5.1.0  */
+    public function __construct()
+    {
+        $this->minimumJoomla = '4.0';
+        $this->minimumPhp    = JOOMLA_MINIMUM_PHP;
+    }
 }

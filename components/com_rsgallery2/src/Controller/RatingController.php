@@ -57,12 +57,12 @@ class RatingController extends BaseController
     }
 
 
-	/**
-	 *
-	 *
-	 * @throws Exception
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     *
+     * @throws Exception
+     * @since  5.1.0
+     */
     public function rateSingleImage()
     {
         $msgType = 'notice';
@@ -92,8 +92,8 @@ class RatingController extends BaseController
                 echo "<br><br><br>*RateSingleImage<br><br><br>";
 
                 //if ($vote->alreadyVoted((int) $id))
-				//{
-				//}
+                //{
+                //}
 
                 $galleryId  = $input->get('id', 0, 'INT');
                 $userRating = $input->get('rating', 0, 'INT');
@@ -110,13 +110,13 @@ class RatingController extends BaseController
                     $ratingModel->SetUserHasRated($imageId, $userRating);
                 }
 
-                //	limitstart=3 ....
+                //  limitstart=3 ....
                 // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&id=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
                 // $link = 'index.php?option=com_rsgallery2&view=gallery&id=' . $galleryId . '&id=' . $imageId
-                //	. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
+                //  . '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
                 // $link = 'index.php?option=com_rsgallery2&page=inline'; // &id=' . $imageId) .'" id="rsgVoteForm">';
                 $link = $link . '&id=' . $imageId;
-                //	. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
+                //  . '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'Error executing rateSingleImage: "' . '<br>';
@@ -129,6 +129,4 @@ class RatingController extends BaseController
 
         $this->setRedirect($link, $msg, $msgType);
     }
-
-
 }

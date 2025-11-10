@@ -28,7 +28,6 @@ use Joomla\CMS\Table\Table;
  */
 class ConfigJ3xRawModel extends BaseModel
 {
-
     /**
      * save raw to parameters ...
      *
@@ -79,13 +78,13 @@ class ConfigJ3xRawModel extends BaseModel
 
         // check for error
         if (!$table->check()) {
-			Factory::getApplication()->enqueueMessage(Text::_('ConfigJ3xRaw: Check for save failed ') . $table->getError(), 'error');
+            Factory::getApplication()->enqueueMessage(Text::_('ConfigJ3xRaw: Check for save failed ') . $table->getError(), 'error');
         } else {
             // Save to database
             if ($table->store()) {
                 $isSaved = true;
             } else {
-				Factory::getApplication()->enqueueMessage(Text::_('ConfigJ3xRaw: Store for save failed ') . $table->getError(), 'error');
+                Factory::getApplication()->enqueueMessage(Text::_('ConfigJ3xRaw: Store for save failed ') . $table->getError(), 'error');
             }
         }
 
@@ -124,7 +123,6 @@ class ConfigJ3xRawModel extends BaseModel
                 case 'jpegQuality':
                 case 'keepOriginalImage':
                 case 'useJ3xOldPaths':
-
                     $secured = $filter->clean($value, 'int');
                     break;
 
@@ -133,7 +131,6 @@ class ConfigJ3xRawModel extends BaseModel
                 case 'imgPath_original': //'\/images\/rsgallery\/original',
                 case 'imgPath_display': //'\/images\/rsgallery\/display',
                 case 'imgPath_thumb': //'\/images\/rsgallery\/thumb',
-
                     $secured = $filter->clean($value, 'STRING');
                     break;
 
@@ -147,7 +144,6 @@ class ConfigJ3xRawModel extends BaseModel
 
                 case 'allowedFileTypes':// 'jpg,jpeg,gif,png',
                 default:
-
                     $secured = $filter->clean($value, 'STRING');
                     break;
             }
@@ -195,5 +191,4 @@ class ConfigJ3xRawModel extends BaseModel
 
         return true;
     }
-
 }

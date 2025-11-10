@@ -30,7 +30,9 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
      * @since      5.1.0
  */
-class SlideshowModel extends GalleryModel {}
+class SlideshowModel extends GalleryModel
+{
+}
 
 //
 // we don't know which parts below may be needed
@@ -182,7 +184,7 @@ $this->setState('list.direction', $listOrder);
 $params = $app->getParams();
 $this->setState('params', $params);
 // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
+        $user = $app->getIdentity();
 
 if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
 // Filter on published for those who do not have edit or edit.state rights.
@@ -269,7 +271,7 @@ public function getItems()
 {
 $items = parent::getItems();
 // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
+        $user = $app->getIdentity();
 $userId = $user->get('id');
 $guest = $user->get('guest');
 $groups = $user->getAuthorisedViewLevels();

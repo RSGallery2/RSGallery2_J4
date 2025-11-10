@@ -34,7 +34,6 @@ use Joomla\Database\DatabaseInterface;
  */
 class GalleryTreeModel extends BaseModel
 {
-
     /**
      * Check if at least one gallery exists
      * Regards the nested structure (ID=1 is only root of tree and no gallery)
@@ -61,7 +60,7 @@ class GalleryTreeModel extends BaseModel
             $IdGallery = $db->loadResult();
 
             // > 0 galleries exist
-            $is1GalleryExisting = !empty ($IdGallery);
+            $is1GalleryExisting = !empty($IdGallery);
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GalleryTreeModel::is1GalleryRootItemExisting: Error count in "__rsg2_galleries" table' . '<br>';
@@ -190,5 +189,4 @@ class GalleryTreeModel extends BaseModel
 
         return $isGalleryTreeReset;
     }
-
 } // class

@@ -23,7 +23,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
-use \Joomla\CMS\User\User;
+use Joomla\CMS\User\User;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -99,8 +99,8 @@ class HtmlView extends BaseHtmlView
         $isDisplayRootGalleries = $this->galleryId === 0;
         if ($isDisplayRootGalleries) {
             // Tell to use ... instead
-			$msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "' 
-					. Text::_('COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE') . '"';
+            $msg = Text::_('COM_RSGALLERY2_USE_ROOT_GALLERY_MENU') . ' "'
+                    . Text::_('COM_RSGALLERY2_MENU_J3X_ROOTGALLERY_J3X_LEGACY_VIEW_TITLE') . '"';
             $app->enqueueMessage($msg, 'Notice');
             // ToDo: ? redirect ?
         }
@@ -116,11 +116,11 @@ class HtmlView extends BaseHtmlView
         $params =
         $this->params = $state->get('params');
 
-//		// ToDo: may not be necessary
-//		// Merge (overwrite) config parameter with menu parameter
-//		$menuParams = $this->get('Rsg2MenuParams');
-//		// wrong: $this->params = $menuParams->merge($this->params);
-//		$params = $this->params->merge($menuParams);
+//      // ToDo: may not be necessary
+//      // Merge (overwrite) config parameter with menu parameter
+//      $menuParams = $this->get('Rsg2MenuParams');
+//      // wrong: $this->params = $menuParams->merge($this->params);
+//      $params = $this->params->merge($menuParams);
 
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
@@ -143,20 +143,20 @@ class HtmlView extends BaseHtmlView
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-//   		$state = $this-sState = $this->get('State');
-//		$params = $this->params = $state->get('params');
-//		$itemparams = new Registry(json_decode($item->params));
+//          $state = $this-sState = $this->get('State');
+//      $params = $this->params = $state->get('params');
+//      $itemparams = new Registry(json_decode($item->params));
 //
-//		$temp = clone $params;
-//		$temp->merge($itemparams);
-//		$item->params = $temp;
+//      $temp = clone $params;
+//      $temp->merge($itemparams);
+//      $item->params = $temp;
 //
-//		Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
+//      Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
 //
-//		// Store the events for later
-//		$item->event = new \stdClass;
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayTitle = trim(implode("\n", $results));
+//      // Store the events for later
+//      $item->event = new \stdClass;
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
         // Check for layout override
@@ -167,25 +167,25 @@ class HtmlView extends BaseHtmlView
         }
 
 
-//		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->beforeDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayContent = trim(implode("\n", $results));
 //
 
         echo '';
 // on develop show open tasks if existing
-        if (!empty ($this->isDevelopSite)) {
+        if (!empty($this->isDevelopSite)) {
             echo '<span style="color:red">'
                 . 'Tasks: gallery view<br>'
                 . '* <br>'
                 . '* make rsgConfig global<br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
                 . '</span><br><br>';
         }
 

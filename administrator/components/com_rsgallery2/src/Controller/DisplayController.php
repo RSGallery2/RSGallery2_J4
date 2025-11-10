@@ -18,7 +18,8 @@ use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-/**
+
+/**
  * Rsgallery2 master display controller.
  *
      * @since      5.1.0

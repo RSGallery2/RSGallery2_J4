@@ -21,7 +21,7 @@ use Joomla\CMS\Language\Text;
 // responsible for moveJ3xImages, dbtransferj3xgalleries, dbtransferj3ximages, dbcopyj3xconfig
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.dbTransferJ3xImages');
 
-function isOKIconHtml ($title) {
+function isOKIconHtml($title) {
 
     $html = <<<EOT
         <div class="btn-group">
@@ -35,7 +35,7 @@ function isOKIconHtml ($title) {
     return $html;
 }
 
-function isNotOkIconHtml ($title) {
+function isNotOkIconHtml($title) {
 
     $html = <<<EOT
         <div class="btn-group">
@@ -52,7 +52,7 @@ function isNotOkIconHtml ($title) {
 /*--------------------------------------------------------------------------------
 	J3x galleries
 --------------------------------------------------------------------------------*/
-function j3x_galleryListHtml ($dbtransferj3ximages) {
+function j3x_galleryListHtml($dbtransferj3ximages) {
 
 //	$html = <<<EOT
     ?>
@@ -171,7 +171,7 @@ function j3x_galleryListHtml ($dbtransferj3ximages) {
 /*--------------------------------------------------------------------------------
 	J3x images
 --------------------------------------------------------------------------------*/
-function j3x_imageInfoListHtml ($dbtransferj3ximages) {
+function j3x_imageInfoListHtml($dbtransferj3ximages) {
     $toBeMovedCount = 0;
 
     ?>
@@ -282,7 +282,7 @@ function j3x_imageInfoListHtml ($dbtransferj3ximages) {
 /*--------------------------------------------------------------------------------
 	Move buttons
 --------------------------------------------------------------------------------*/
-function j3xdTransferButtonsHtml ($movej3ximages) {
+function j3xdTransferButtonsHtml($movej3ximages) {
 
 //	$html = <<<EOT
 

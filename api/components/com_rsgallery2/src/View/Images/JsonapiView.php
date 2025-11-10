@@ -270,6 +270,4 @@ class JsonapiView extends BaseApiView
     }
 
 // ToDo: Later The hidden gem of the API view is another string array property, $relationship. In that view you list all the field names returned by your model which refer to related data.
-
-
 }

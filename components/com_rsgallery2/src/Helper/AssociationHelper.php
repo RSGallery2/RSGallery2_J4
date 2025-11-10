@@ -40,11 +40,9 @@ abstract class AssociationHelper extends CategoryAssociationHelper
         $view   = $view ?? $jinput->get('view');
         $id     = empty($id) ? $jinput->getInt('id') : $id;
 
-		if ($view === 'rsgallery2')
-		{
-			if ($id)
-			{
-				$associations = Associations::getAssociations('com_rsgallery2', '#__rsgallery2_details', 'com_rsgallery2.item', $id);
+        if ($view === 'rsgallery2') {
+            if ($id) {
+                $associations = Associations::getAssociations('com_rsgallery2', '#__rsgallery2_details', 'com_rsgallery2.item', $id);
 
                 $return = [];
 

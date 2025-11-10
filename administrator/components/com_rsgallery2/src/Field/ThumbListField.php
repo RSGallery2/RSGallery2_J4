@@ -38,7 +38,7 @@ class ThumbListField extends ListField
      *
      * @var    array
      * @since  5.1.0     */
-//	protected static $options = [];
+//  protected static $options = [];
 
     /**
      * The field type.
@@ -55,11 +55,11 @@ class ThumbListField extends ListField
      * @return  string  The field input markup.
      *
      * @since   5.1.0     *
-	protected function getInput()
-	{
-		return $this->getOptions() ? parent::getInput() : '';
-	}
-	/**/
+    protected function getInput()
+    {
+        return $this->getOptions() ? parent::getInput() : '';
+    }
+    /**/
 
     /**
      * Method to get a list of options for a list input.
@@ -83,7 +83,7 @@ class ThumbListField extends ListField
                 ->select($db->quoteName('name', 'text'))
                 ->from('#__rsg2_images')
                 ->where($db->quoteName('gallery_id') . '=' . (int)$galleryId)
-//				->where($db->quoteName('published') . ' = 1')
+//              ->where($db->quoteName('published') . ' = 1')
                 ->order('id');
 
             // Get the options.
@@ -135,4 +135,3 @@ class ThumbListField extends ListField
 //        return $renderer->render($data);
 //    }
 }
-

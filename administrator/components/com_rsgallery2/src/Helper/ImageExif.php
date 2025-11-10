@@ -15,6 +15,10 @@ use Joomla\CMS\Component\ComponentHelper;
 use const SORT_FLAG_CASE;
 use const SORT_NATURAL;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
@@ -39,19 +43,19 @@ class ImageExif
      */
     public function __construct(string $imagPathFileName = '')
     {
-        if (!empty ($imagPathFileName)) {
+        if (!empty($imagPathFileName)) {
             // $this->readExifData ($imagPathFileName);
             $this->imagPathFileName = $imagPathFileName;
         }
     }
 
-	/**
-	 * @param   string  $imagPathFileName
-	 *
-	 * @return array|false
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param   string  $imagPathFileName
+     *
+     * @return array|false
+     *
+     * @since  5.1.0
+     */
     public function readExifDataAll(string $imagPathFileName = '')
     {
         $items = [];
@@ -116,13 +120,13 @@ class ImageExif
         return $items;
     }
 
-	/**
-	 * @param $supportedTags
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $supportedTags
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public function readExifDataUserSelected($supportedTags = [])
     {
         $selected = [];
@@ -141,7 +145,7 @@ class ImageExif
 //        }
 
         // user has selected tags
-        if (!empty ($supportedTags)) {
+        if (!empty($supportedTags)) {
             foreach ($exifItems as $name => $value) {
                 if (in_array(strtolower($name), $supportedTags)) {
                     $selected [$name] = $value;
@@ -152,13 +156,14 @@ class ImageExif
         return $selected;
     }
 
-	/**
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
-    public static function supportedExifTags () {
+    /**
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
+    public static function supportedExifTags()
+    {
 
         $supportedTags = [];
 
@@ -250,14 +255,15 @@ class ImageExif
         return $supportedTags;
     }
 
-	/**
-	 * @param $ExifTag
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
-    public static function tag2TypeAndName ($ExifTag) {
+    /**
+     * @param $ExifTag
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
+    public static function tag2TypeAndName($ExifTag)
+    {
 
         $type = '';
         $name = '';
@@ -265,13 +271,13 @@ class ImageExif
         if (!empty($ExifTag)) {
             $exifParts = explode(".", $ExifTag);
 
-            if (!empty ($exifParts[0])) {
+            if (!empty($exifParts[0])) {
                 // use second part of name as identifier
                 $type = $exifParts [0];
             }
 
             // use second part as name
-            if (!empty ($exifParts[1])) {
+            if (!empty($exifParts[1])) {
                 // Tag names are not case senitive, so use it with lower cas as often it is possible
                 $name = strtolower($exifParts [1]);
             }
@@ -280,13 +286,13 @@ class ImageExif
         return [$type, $name];
     }
 
-	/**
-	 * @param $ExifName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $ExifName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public static function exifTranslationId($ExifName)
     {
         $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifName);
@@ -294,12 +300,12 @@ class ImageExif
         return $translationId;
     }
 
-	/**
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public static function userExifTagsJ3x()
     {
         $userExifTags = [];
@@ -312,14 +318,15 @@ class ImageExif
         return $userExifTags;
     }
 
-	/**
-	 * @param $existingExifTags
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
-    public static function checkTagsNotSupported ($existingExifTags)    {
+    /**
+     * @param $existingExifTags
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
+    public static function checkTagsNotSupported($existingExifTags)
+    {
 
         $notSupportedTags = [];
 
@@ -337,13 +344,13 @@ class ImageExif
         return $notSupportedTags;
     }
 
-	/**
-	 * @param $existingExifTags
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $existingExifTags
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public static function checkNotUserSelected($existingExifTags)
     {
         $notUserExifTags = [];
@@ -364,12 +371,12 @@ class ImageExif
         return $notUserExifTags;
     }
 
-	/**
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public static function neededTranslationIds()
     {
         $neededIds = [];
@@ -383,5 +390,4 @@ class ImageExif
 
         return $neededIds;
     }
-
 }

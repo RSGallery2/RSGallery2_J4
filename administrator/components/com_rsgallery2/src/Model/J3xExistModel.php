@@ -26,7 +26,6 @@ use Joomla\Database\DatabaseInterface;
  */
 class J3xExistModel extends BaseModel
 {
-
     // ToDo: attention a double of this function exist. Remove either of them
 
     /**
@@ -40,36 +39,36 @@ class J3xExistModel extends BaseModel
         return self::J3xTableExist('#__rsgallery2_config');
     }
 
-	/**
-	 *
-	 * @return bool
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     * @return bool
+     *
+     * @since  5.1.0
+     */
     static function J3xGalleriesTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_galleries');
     }
 
-	/**
-	 *
-	 * @return bool
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     * @return bool
+     *
+     * @since  5.1.0
+     */
     static function J3xImagesTableExist()
     {
         return self::J3xTableExist('#__rsgallery2_files');
     }
 
-	/**
-	 * @param $findTable
-	 *
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $findTable
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     static function J3xTableExist($findTable)
     {
         $tableExist = false;
@@ -93,6 +92,4 @@ class J3xExistModel extends BaseModel
 
         return $tableExist;
     }
-
 }
-

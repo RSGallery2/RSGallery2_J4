@@ -34,12 +34,12 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
    *
    * @since   5.1.0
    */
-  public static function getSubscribedEvents(): array
-  {
-    return [
-      'onBeforeApiRoute' => 'onBeforeApiRoute',
-    ];
-  }
+    public static function getSubscribedEvents(): array
+    {
+        return [
+        'onBeforeApiRoute' => 'onBeforeApiRoute',
+        ];
+    }
 
   /**
    * Registers com_rsgallery's API's routes in the application
@@ -50,47 +50,52 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
    *
    * @since   4.0.0
    */
-  public function onBeforeApiRoute(BeforeApiRouteEvent $event): void
-  {
-    $router = $event->getRouter();
+    public function onBeforeApiRoute(BeforeApiRouteEvent $event): void
+    {
+        $router = $event->getRouter();
 
-    $defaults = ['component' => 'com_rsgallery2'];
-    // $getDefaults = array_merge(['public' => false], $defaults);
-    $getDefaults = array_merge(['public' => false], $defaults); // ToDo: Remove when tests finished, enabless access without token
+        $defaults = ['component' => 'com_rsgallery2'];
+      // $getDefaults = array_merge(['public' => false], $defaults);
+        $getDefaults = array_merge(['public' => false], $defaults); // ToDo: Remove when tests finished, enabless access without token
 
-//		    new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
-//			    ['slug' => '(.*)'], ['option' => 'com_example']),
+  //          new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
+  //              ['slug' => '(.*)'], ['option' => 'com_example']),
 
-    $router->addRoutes([
-//      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
-      new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
-    ]);
+        $router->addRoutes([
+  //      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
+        new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
+        ]);
 
-     $router->createCRUDRoutes(
-     'v1/rsgallery2/galleries',
-     'galleries',
-     ['component' => 'com_rsgallery2'],
-     false // ToDo: Remove when tests finished
-     );
+        $router->createCRUDRoutes(
+            'v1/rsgallery2/galleries',
+            'galleries',
+            ['component' => 'com_rsgallery2'],
+            false // ToDo: Remove when tests finished
+        );
 
-     $router->createCRUDRoutes(
-     'v1/rsgallery2/images',
-     'images',
-     ['component' => 'com_rsgallery2'],
-	     false // ToDo: Remove when tests finished
-     );
+        $router->createCRUDRoutes(
+            'v1/rsgallery2/images',
+            'images',
+            ['component' => 'com_rsgallery2'],
+            false // ToDo: Remove when tests finished
+        );
 
-      $router->addRoutes([
+        $router->addRoutes([
           new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults),
-          new Route(['GET'], 'v1/rsgallery2/config/:variable_name', 'config.displayItem',
-              ['variable_name' => '([A-Za-z0-9_]+)'], $getDefaults),
-      ]);
+          new Route(
+              ['GET'],
+              'v1/rsgallery2/config/:variable_name',
+              'config.displayItem',
+              ['variable_name' => '([A-Za-z0-9_]+)'],
+              $getDefaults
+          ),
+        ]);
 
 
-//    $this->createFieldsRoutes($router);
+  //    $this->createFieldsRoutes($router);
 
-//    $this->createContentHistoryRoutes($router);
-  }
+  //    $this->createContentHistoryRoutes($router);
+    }
 
 //  /**
 //   * Create fields routes
@@ -155,4 +160,3 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     // $router->addRoutes($routes);
   // }
 }
-

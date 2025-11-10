@@ -36,19 +36,19 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
  */
 class ImageReferenceJ3x extends ImageReference
 {
-	public bool $UseWatermarked;
+    public bool $UseWatermarked;
 
-	/**
+    /**
      * ImageReference constructor. init all variables
      *
      * @since 4.3
      */
     public function __construct()
     {
-	    parent::__construct();
+        parent::__construct();
 
-		$this->use_j3x_location = true;
-	}
+        $this->use_j3x_location = true;
+    }
 
     /**
      * Second ImageReference constructor. Tells if watermarked images shall be checked too
@@ -59,7 +59,7 @@ class ImageReferenceJ3x extends ImageReference
      */
     public function __construct1($watermarked)
     {
-	    parent::__construct($watermarked);
+        parent::__construct($watermarked);
 
         $this->UseWatermarked = $watermarked;
     }
@@ -74,7 +74,7 @@ class ImageReferenceJ3x extends ImageReference
      * @since  5.1.0     */
     public function assignDbItem($image)
     {
-//		parent::assignDbItem($image); -> bad: create paths
+//      parent::assignDbItem($image); -> bad: create paths
 
         try {
             $this->IsImageInDatabase = true;
@@ -84,7 +84,7 @@ class ImageReferenceJ3x extends ImageReference
             $this->use_j3x_location = $image->use_j3x_location;
 
             // J3x path
-            $imagePathJ3x = new ImagePathsJ3xData ();
+            $imagePathJ3x = new ImagePathsJ3xData();
             $imagePathJ3x->assignPathData($image);
 
             $this->originalFilePath = $image->OriginalFile;
@@ -93,7 +93,6 @@ class ImageReferenceJ3x extends ImageReference
 
             // Helper list for faster detection of images lost and found
             $this->allImagePaths = [];
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignDbItem: "' . '<br>';
@@ -137,7 +136,6 @@ class ImageReferenceJ3x extends ImageReference
                 $this->IsDisplayImageFound = false;
                 $this->IsAllSizesImagesFound = false;
             }
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing check4ImageIsNotExisting: "' . '<br>';
@@ -167,12 +165,12 @@ class ImageReferenceJ3x extends ImageReference
             $this->imageName         = $imageName;
             $this->parentGalleryId   = $galleryId;
 
-            $imagePaths = new ImagePathsJ3xModel ($this->parentGalleryId);
+            $imagePaths = new ImagePathsJ3xModel($this->parentGalleryId);
             // $imagePaths->createAllPaths();
 
             $this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);
             $this->displayFilePath  = $imagePaths->getDisplayPath($this->imageName);
-	        $this->thumbFilePath    = $imagePaths->getThumbPath($this->imageName);
+            $this->thumbFilePath    = $imagePaths->getThumbPath($this->imageName);
 
             //--- set images to not found  -----------------------------------
 
@@ -182,7 +180,6 @@ class ImageReferenceJ3x extends ImageReference
             $this->IsAllSizesImagesFound = false;
 
             $this->allImagePaths = [];
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing initOrphanedItem: "' . '<br>';
@@ -218,7 +215,6 @@ class ImageReferenceJ3x extends ImageReference
                 $this->IsThumbImageFound = true;
                 $isImageAssigned         = true;
             }
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignOrphanedItem: "' . '<br>';
@@ -231,19 +227,19 @@ class ImageReferenceJ3x extends ImageReference
         return $isImageAssigned;
     }
 
-	/**
-	 * returns url by J3/j4 style path
-	 *
-	 * @param $image
-	 *
-	 * @since 4.5.0.0
-	 */
-	public function assignImageUrl ()
+    /**
+     * returns url by J3/j4 style path
+     *
+     * @param $image
+     *
+     * @since 4.5.0.0
+     */
+    public function assignImageUrl()
     {
         $this->imageUrl = '';
 
         // J3x path
-        $imagePathJ3x = new ImagePathsJ3xData ();
+        $imagePathJ3x = new ImagePathsJ3xData();
 
         if ($this->IsDisplayImageFound) {
             // display
@@ -261,7 +257,6 @@ class ImageReferenceJ3x extends ImageReference
 //                }
             }
         }
-
     }
 
     /**
@@ -315,6 +310,4 @@ class ImageReferenceJ3x extends ImageReference
         return $IsImageMissing;
     }
     /**/
-
 }
-

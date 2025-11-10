@@ -33,7 +33,8 @@ Text::script('', true);
 //$script = 'var Token = \'' . Session::getFormToken() . '\';';
 //Factory::getApplication()->getDocument()->addScriptDeclaration(implode("\n", $script));
 
-class zoneContainer {
+class zoneContainer
+{
     public $textTitle;
     public $textInfo;
     public $classContainer;
@@ -46,7 +47,6 @@ class zoneContainer {
         $this->classContainer = $classContainer;
         $this->classTitle     = $classTitle;
     }
-
 }
 
 class zoneButtons
@@ -68,14 +68,14 @@ class zoneButtons
      * @param $classButton
      */
     public function __construct(
-		$task = '?',
+        $task = '?',
         $link = '?',
         $textTitle = '?',
         $textInfo = '?',
         $classIcons = ['?', '?'],
         $classButton = '?',
     ) {
-        $this->isTask      = strlen ($task) > 0;
+        $this->isTask      = strlen($task) > 0;
         $this->task        = $task;
         $this->link        = $link;
         $this->textTitle   = $textTitle;
@@ -83,7 +83,6 @@ class zoneButtons
         $this->classIcons  = $classIcons;
         $this->classButton = $classButton;
     }
-
 }
 
 ////--- rsg2 zone -----------------------------
@@ -256,10 +255,10 @@ $repair_ZoneButtons[] = new zoneButtons(
 //    'config.config',
     'config.importConfigFile',
     '',
-//    Route::_('index.php?option=com_rsgallery2&view=config'),
-//    'javascript:alert(\'Hello\');',
-//    '#',
-    '?' .Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE') . '?',
+    //    Route::_('index.php?option=com_rsgallery2&view=config'),
+    //    'javascript:alert(\'Hello\');',
+    //    '#',
+    '?' . Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE') . '?',
     Text::_('COM_RSGALLERY2_CONFIG_READ_FROM_FILE_DESC'),
     ['icon-equalizer', 'icon-file', 'icon-upload'],
     'ConfigRawReadFromFile',
@@ -341,23 +340,23 @@ $repair_ZoneButtons[] = new zoneButtons(
 
 
 $repair_ZoneButtons[] = new zoneButtons( // resetUpgradeFlags
-	'',
-	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=resetupgradeflags'),
-	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS'),
-	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS_DESC'),
-	['icon-flag', 'icon-images', 'icon-equalizer'],
-	'viewResetUpgradeFlags',
+    '',
+    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=resetupgradeflags'),
+    Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS'),
+    Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS_DESC'),
+    ['icon-flag', 'icon-images', 'icon-equalizer'],
+    'viewResetUpgradeFlags',
 );
 /**/
 
 
 $repair_ZoneButtons[] = new zoneButtons(
-	'',
-	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks'),
-	Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'),
-	Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC'),
-	['icon-flag', 'icon-images', 'icon-equalizer'],
-	'viewChangeGidMenuLinks',
+    '',
+    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks'),
+    Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'),
+    Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC'),
+    ['icon-flag', 'icon-images', 'icon-equalizer'],
+    'viewChangeGidMenuLinks',
 );
 /**/
 
@@ -418,7 +417,7 @@ $danger_ZoneButtons[] = new zoneButtons(
     '',
     Text::_('COM_RSGALLERY2_UNDO_PREPARE_REMOVE_RSGALLERY2'),
     Text::_('COM_RSGALLERY2_UNDO_PREPARE_REMOVE_RSGALLERY2_DESC'),
-//    array('icon-database', 'icon-delete', 'icon-arrow-left'),
+    //    array('icon-database', 'icon-delete', 'icon-arrow-left'),
     ['icon-database', 'icon-delete', 'icon-undo'],
     'uninstallDataTables',
 );
@@ -709,12 +708,12 @@ $developer4Test_ZoneButtons = [];
 
 // $repair_ZoneButtons[] = new zoneButtons(
 $developer4Test_ZoneButtons[] = new zoneButtons(
-	'',
-	Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=resetupgradeflags'),
-	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS'),
-	Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS_DESC'),
-	['icon-flag', 'icon-images', 'icon-equalizer'],
-	'viewResetUpgradeFlags',
+    '',
+    Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=resetupgradeflags'),
+    Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS'),
+    Text::_('COM_RSGALLERY2_RESET_UPDATE_FLAGS_DESC'),
+    ['icon-flag', 'icon-images', 'icon-equalizer'],
+    'viewResetUpgradeFlags',
 );
 /**/
 
@@ -821,24 +820,24 @@ $developer4Test_ZoneButtons[] = new zoneButtons(
 
 function DisplayButton($button)
 {
-	if ($button->isTask) {
+    if ($button->isTask) {
 
         /** button */
 
         //                                               onclick="Joomla.submitbutton('Maintenance.CheckImagePaths'); return false;"
-		// <button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('contact.batch');return false;">
+        // <button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('contact.batch');return false;">
         // <button type="submit" class="btn btn-success" onclick="Joomla.submitbutton('banner.batch');return false;">
         //    <?php echo Text::_('JGLOBAL_BATCH_PROCESS');
         //</button>
 
-		$submitTask = "'" . $button->task . "'";
-		$onclick = "Joomla.submitbutton(" . $submitTask . "); return false;";
+        $submitTask = "'" . $button->task . "'";
+        $onclick = "Joomla.submitbutton(" . $submitTask . "); return false;";
 
         echo '<div class="rsg2-icon-button-container">';
         echo '<button type="submit"
 			class="rsg2-icon-button-button"
 			onclick="' . $onclick . '"'
-			. '>';
+            . '>';
 
         echo '    <figure class="rsg2-icon">';
         echo '        <div class="rsg2-icon-icon">';
@@ -855,9 +854,7 @@ function DisplayButton($button)
 
         echo '</div>'; // rsg2-icon-button-container
         /**/
-
     } else {
-
         /* call link */
 
         echo '<div class="rsg2-icon-button-container">';
@@ -879,7 +876,6 @@ function DisplayButton($button)
         echo '</div>'; // rsg2-icon-button-container
         /**/
     }
-
 }
 
 //---  -----------------------------
@@ -931,22 +927,22 @@ function zoneInfo($info = 'Unknown zone info')
 
 ?>
 
-	<form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
-	      method="post" name="adminForm" id="adminForm" class="form-validate"
-	      enctype="multipart/form-data"
-	>
-		<div class="d-flex flex-row">
+    <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=maintenance'); ?>"
+          method="post" name="adminForm" id="adminForm" class="form-validate"
+          enctype="multipart/form-data"
+    >
+        <div class="d-flex flex-row">
             <?php
             if (!empty($this->sidebar)) : ?>
-				<div id="j-sidebar-container" class="">
+                <div id="j-sidebar-container" class="">
                     <?php echo $this->sidebar; ?>
-				</div>
+                </div>
             <?php endif; ?>
-			<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-			<div class="flex-fill">
-				<div id="j-main-container" class="j-main-container">
+            <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+            <div class="flex-fill">
+                <div id="j-main-container" class="j-main-container">
 
-					<div class="flex-main-row">
+                    <div class="flex-main-row">
 
                         <?php
 
@@ -984,41 +980,41 @@ function zoneInfo($info = 'Unknown zone info')
                         /**/
 
                         ?>
-					</div>
-				</div>
-			</div>
-		</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<!--        <div id="hidden-input-buttons" style="display: none;">-->
-		<!--            <div class="control-group">-->
-		<!--                <label for="config_file" class="control-label">--><?php
+        <!--        <div id="hidden-input-buttons" style="display: none;">-->
+        <!--            <div class="control-group">-->
+        <!--                <label for="config_file" class="control-label">--><?php
         //echo Text::_('RSG2 import configuration from file'); ?><!--</label>-->
-		<!--                <div class="controls">-->
-		<!--                    <input class="form-control-file" id="config_file" name="config_file" type="file" >-->
-		<!--                </div>-->
-		<!--            </div>-->
-		<!--        </div>-->
+        <!--                <div class="controls">-->
+        <!--                    <input class="form-control-file" id="config_file" name="config_file" type="file" >-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
-<!--		<div class="rsg2-icon-button-container">-->
-<!--			<a href="/Joomla4x/administrator/index.php?option=com_rsgallery2&amp;task=Maintenance.CheckImagePaths&--><?php //echo Session::getFormToken().'=1'; ?><!--"-->
-<!--					class="viewImagePaths">-->
-<!--				<figure class="rsg2-icon">-->
-<!--					<span class="icon-search icoMoon icoMoon00" style="font-size:30px;"></span>-->
-<!--					<span class="icon-folder icoMoon icoMoon01" style="font-size:30px;"></span>-->
-<!--					<span class="icon-image icoMoon icoMoon02" style="font-size:30px;"></span>-->
-<!--					<figcaption class="rsg2-text">-->
-<!--						<div class="maint-title">Check image paths</div>-->
-<!--						<div class="maint-text">Checks image paths for existence (by gallery ids and sizes in config)</div>-->
-<!--					</figcaption>-->
-<!--				</figure>-->
-<!--			</a>-->
-<!--		</div>-->
+<!--        <div class="rsg2-icon-button-container">-->
+<!--            <a href="/Joomla4x/administrator/index.php?option=com_rsgallery2&amp;task=Maintenance.CheckImagePaths&--><?php //echo Session::getFormToken().'=1'; ?><!--"-->
+<!--                    class="viewImagePaths">-->
+<!--                <figure class="rsg2-icon">-->
+<!--                    <span class="icon-search icoMoon icoMoon00" style="font-size:30px;"></span>-->
+<!--                    <span class="icon-folder icoMoon icoMoon01" style="font-size:30px;"></span>-->
+<!--                    <span class="icon-image icoMoon icoMoon02" style="font-size:30px;"></span>-->
+<!--                    <figcaption class="rsg2-text">-->
+<!--                        <div class="maint-title">Check image paths</div>-->
+<!--                        <div class="maint-text">Checks image paths for existence (by gallery ids and sizes in config)</div>-->
+<!--                    </figcaption>-->
+<!--                </figure>-->
+<!--            </a>-->
+<!--        </div>-->
 
 
-		<input type="hidden" name="task" value=""/>
-		<!--input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" /-->';
-		<?php echo HTMLHelper::_('form.token'); ?>
-	</form>
+        <input type="hidden" name="task" value=""/>
+        <!--input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" /-->';
+        <?php echo HTMLHelper::_('form.token'); ?>
+    </form>
 
 <?php
 

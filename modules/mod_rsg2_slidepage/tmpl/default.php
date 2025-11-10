@@ -20,14 +20,14 @@ use Joomla\CMS\Layout\FileLayout;
 //// on develop show open tasks if existing
 //if (!empty ($this->isDevelopSite))
 //{
-//	echo '<span style="color:red">'
-//		. 'Tasks: slideshowJ3x view<br>'
-//		//	. '* <br>'
-//		//	. '* <br>'
-//		//	. '* <br>'
-//		//	. '* <br>'
-//		//	. '* <br>'
-//		. '</span><br><br>';
+//  echo '<span style="color:red">'
+//      . 'Tasks: slideshowJ3x view<br>'
+//      //  . '* <br>'
+//      //  . '* <br>'
+//      //  . '* <br>'
+//      //  . '* <br>'
+//      //  . '* <br>'
+//      . '</span><br><br>';
 //}
 
 if (!empty($isDebugSite)) {
@@ -35,7 +35,7 @@ if (!empty($isDebugSite)) {
 }
 
 // message on empty data or other
-if (!empty ($msg)) {
+if (!empty($msg)) {
     echo $msg;
 
     if (!empty($isDebugSite)) {
@@ -53,10 +53,10 @@ $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 // default is 'ImagesAreaJ3x.default'
 //if($layoutName == 'default') {
 //
-//	$layoutName = 'SlideshowJ3x.default';
+//  $layoutName = 'SlideshowJ3x.default';
 //} else {
 //
-//yyy	$layoutName = $layoutName;
+//yyy   $layoutName = $layoutName;
 //}
 
 $layout = new FileLayout($layoutName, $layoutFolder);
@@ -72,7 +72,7 @@ $displayData['isDevelopSite'] = $isDevelopSite;
 
 <div class="rsg2_x_form rsg2__slide_area">
 
-        <?php if (!empty($isDebugSite)): ?>
+        <?php if (!empty($isDebugSite)) : ?>
             <h1> Module RSGallery2 "slideshow" J3x view </h1>
             <hr>
         <?php endif; ?>

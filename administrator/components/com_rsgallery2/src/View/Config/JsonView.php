@@ -66,17 +66,17 @@ class JsonView extends AbstractView
      * @since   5.1.0     */
     protected function getLayoutData()//:  array
     {
-//		/** @var SysinfoModel $model */
-//		$model = $this->getModel();
+//      /** @var SysinfoModel $model */
+//      $model = $this->getModel();
 //
-//		return [
-//			'info'        => $model->getSafeData('info'),
-//			'phpSettings' => $model->getSafeData('phpSettings'),
-//			'config'      => $model->getSafeData('config'),
-//			'directories' => $model->getSafeData('directory', true),
-//			'phpInfo'     => $model->getSafeData('phpInfoArray'),
-//			'extensions'  => $model->getSafeData('extensions')
-//		];
+//      return [
+//          'info'        => $model->getSafeData('info'),
+//          'phpSettings' => $model->getSafeData('phpSettings'),
+//          'config'      => $model->getSafeData('config'),
+//          'directories' => $model->getSafeData('directory', true),
+//          'phpInfo'     => $model->getSafeData('phpInfoArray'),
+//          'extensions'  => $model->getSafeData('extensions')
+//      ];
 
         // ToDO: RSG2 version !!!
         $oRsg2Version = new Rsgallery2Version();

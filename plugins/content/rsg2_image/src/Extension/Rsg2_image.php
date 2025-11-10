@@ -18,18 +18,19 @@ use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 class Rsg2_image extends CMSPlugin implements SubscriberInterface
 {
     // only for lang strings shown on execution of plugin
     protected $autoloadLanguage = true;
 
-//	public function __construct(&$subject, $config = array())
-//	{
-//		$this->autoloadLanguage = true;
+//  public function __construct(&$subject, $config = array())
+//  {
+//      $this->autoloadLanguage = true;
 //
-//		parent::__construct($subject, $config);
-//	}
+//      parent::__construct($subject, $config);
+//  }
 
     /**
      * @return string[]
@@ -50,7 +51,7 @@ class Rsg2_image extends CMSPlugin implements SubscriberInterface
     {
         $context   = '';
         $article   = '';
-        $usrParams = new Registry ();
+        $usrParams = new Registry();
 
         try {
             // support J4 (and J5)
@@ -62,7 +63,8 @@ class Rsg2_image extends CMSPlugin implements SubscriberInterface
                 $params  = $event->getArgument('params'); // spelling ?
             }
 
-            if ((strpos($context, 'com_content.article') === false)
+            if (
+                (strpos($context, 'com_content.article') === false)
                 && (strpos($context, 'com_content.category') === false)
             ) {
                 return false;
@@ -80,11 +82,11 @@ class Rsg2_image extends CMSPlugin implements SubscriberInterface
 
                 preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
 
-//				// debug: there should be matches as text is searched
-//				if(empty ($matches)) {
-//					echo "<br><br>!!! article has no rsg2_image !!!<br>";
-//					return null;
-//				}
+//              // debug: there should be matches as text is searched
+//              if(empty ($matches)) {
+//                  echo "<br><br>!!! article has no rsg2_image !!!<br>";
+//                  return null;
+//              }
 
                 // Replace all matches
                 if ($matches) {
@@ -128,7 +130,6 @@ class Rsg2_image extends CMSPlugin implements SubscriberInterface
             }
             // only needed when exchange the complete article ?
             // $event->stopPropagation();
-
         } catch (Exception $e) {
             $msg = Text::_('PLG_CONTENT_RSG2_IMAGE') . ' getRsg2_imageDisplay: ' . ' Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
@@ -156,7 +157,7 @@ class Rsg2_image extends CMSPlugin implements SubscriberInterface
             $paramSets = explode(',', $usrString);
 
             foreach ($paramSets as $paramSet) {
-                if (!empty ($paramSet)) {
+                if (!empty($paramSet)) {
                     [$name, $value] = explode(':', $paramSet, 2);
 
                     $name  = trim($name);
@@ -176,7 +177,7 @@ class Rsg2_image extends CMSPlugin implements SubscriberInterface
                 }
             }
         } catch (Exception $e) {
-			$msg = Text::_('PLG_CONTENT_RSG2_IMAGE' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
+            $msg = Text::_('PLG_CONTENT_RSG2_IMAGE' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
 

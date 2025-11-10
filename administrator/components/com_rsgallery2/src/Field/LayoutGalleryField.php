@@ -38,7 +38,7 @@ class LayoutGalleryField extends ListField
      *
      * @var    array
      * @since  5.1.0     */
-//	protected static $options = [];
+//  protected static $options = [];
 
     /**
      * The field type.
@@ -55,11 +55,11 @@ class LayoutGalleryField extends ListField
      * @return  string  The field input markup.
      *
      * @since   5.1.0     *
-	protected function getInput()
-	{
-		return $this->getOptions() ? parent::getInput() : '';
-	}
-	/**/
+    protected function getInput()
+    {
+        return $this->getOptions() ? parent::getInput() : '';
+    }
+    /**/
 
     /**
      * Method to get a list of options for a list input.
@@ -72,19 +72,19 @@ class LayoutGalleryField extends ListField
         $current_slideshows = [];
 
         try {
-//			// $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
-//			$db    = Factory::getContainer()->get(DatabaseInterface::class);
+//          // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
+//          $db    = Factory::getContainer()->get(DatabaseInterface::class);
 //
-//			$query = $db->createQuery()
+//          $query = $db->createQuery()
 //                ->select('id AS value, name AS text, level')
 //                ->from($db->quoteName('#__rsg2_galleries'))
-//				->where($db->quoteName('id') . ' != 1' )
-////				->where($db->quoteName('published') . ' = 1')
-//				// ToDo: Use option in XML to select ASC/DESC
-//				->order('lft ASC');
+//              ->where($db->quoteName('id') . ' != 1' )
+////                ->where($db->quoteName('published') . ' = 1')
+//              // ToDo: Use option in XML to select ASC/DESC
+//              ->order('lft ASC');
 //
-//			// Get the options.
-//			$galleries = $db->setQuery($query)->loadObjectList();
+//          // Get the options.
+//          $galleries = $db->setQuery($query)->loadObjectList();
 
             /**
              * Detect available slideshows
@@ -127,7 +127,7 @@ class LayoutGalleryField extends ListField
 //        }
 
 //        // Put "Select an option" on the top of the list.
-//		array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_SELECT_LAYOUT')));
+//      array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_SELECT_LAYOUT')));
         // Put "default" option" on the top of the list.
         array_unshift($options, HTMLHelper::_('select.option', 'default', Text::_('JDEFAULT')));
 
@@ -178,4 +178,3 @@ class LayoutGalleryField extends ListField
         return $subLayouts;
     }
 }
-

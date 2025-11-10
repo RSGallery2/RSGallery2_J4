@@ -85,7 +85,7 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance('toolbar');
 
         // on develop show open tasks if existing
-        if (!empty ($this->isDevelop)) {
+        if (!empty($this->isDevelop)) {
             echo '<span style="color:red">'
                 . 'Tasks: <br>'
                 . '* !!! Read j3x config NOT ready !!! needs configj3x model using table ConfigJ3x .... !!!"<br>'
@@ -95,30 +95,30 @@ class HtmlView extends BaseHtmlView
                 . '* copy to clipboard <br>'
                 . '* RawView: dt dl dd definition on small width will interleap <br>'
                 . '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                 . '</span><br><br>';
         } else {
             echo '<span style="color:red">'
                 . '* !!! NOT ready !!! needs configj3x model using table ConfigJ3x .... !!!"<br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                 . '</span><br><br>';
         }
 
         switch ($Layout) {
             case 'RawView':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_VIEW'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                    . ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_VIEW'), 'screwdriver');
                 ToolBarHelper::cancel('configJ3x.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 break;
 
             case 'RawEdit':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                    . ': ' . Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT'), 'screwdriver');
                 ToolBarHelper::apply('configJ3x.apply_rawEdit');
                 ToolBarHelper::save('configJ3x.save_rawEdit');
                 ToolBarHelper::cancel('configJ3x.cancel_rawEdit', 'JTOOLBAR_CLOSE');
@@ -133,6 +133,4 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_rsgallery2');
         }
     }
-
 }
-

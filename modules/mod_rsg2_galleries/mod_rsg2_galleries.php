@@ -16,7 +16,7 @@ use Joomla\CMS\Helper\ModuleHelper;
 use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_galleriesHelper;
 
 
-// ToDo: all see images module 
+// ToDo: all see images module
 
 
 // $app = Factory::getApplication();
@@ -79,7 +79,7 @@ $images = [];
     <hr>
 
     <?php
-    //	echo $layoutImages->render($displayData);
+    //  echo $layoutImages->render($displayData);
     ?>
 
 </div>

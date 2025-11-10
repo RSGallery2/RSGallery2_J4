@@ -17,7 +17,7 @@ use Joomla\CMS\Uri\Uri;
 use Rsgallery2\Module\Rsgallery2\Site\Helper\Rsg2_galleryHelper;
 
 
-// ToDo: all see gallery module 
+// ToDo: all see gallery module
 
 
 // $app = Factory::getApplication();
@@ -34,7 +34,6 @@ $images = [];
 // Use gallery images (?org/display/thumb ?)
 if ($selectGallery > 0) {
     // ToDo: retrieve path to thumbs ? ....
-
 } else {
     // Use local folder images ?
     if ($localFolder) {
@@ -72,7 +71,7 @@ require ModuleHelper::getLayoutPath('mod_rsg2_gallery', $params->get('layout', '
     <hr>
 
     <?php
-    //	echo $layoutImages->render($displayData);
+    //  echo $layoutImages->render($displayData);
     ?>
 
 </div>

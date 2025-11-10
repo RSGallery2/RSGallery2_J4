@@ -31,7 +31,6 @@ use Joomla\Database\DatabaseInterface;
  */
 class Rsg2ExtensionModel extends BaseModel
 {
-
     /**
      *
      * @return array|mixed
@@ -53,7 +52,7 @@ class Rsg2ExtensionModel extends BaseModel
 
             $jsonStr = $db->loadResult();
 
-            if (!empty ($jsonStr)) {
+            if (!empty($jsonStr)) {
                 $manifest = json_decode($jsonStr, true);
             }
         } catch (\RuntimeException $e) {
@@ -68,14 +67,14 @@ class Rsg2ExtensionModel extends BaseModel
         return $manifest;
     }
 
-	/**
-	 * Direct read of RSG configuration values
-	 *
-	 * @return array|mixed RSG2 config parameter list
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Direct read of RSG configuration values
+     *
+     * @return array|mixed RSG2 config parameter list
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     static function readRsg2ExtensionConfiguration()
     {
         $params = [];
@@ -84,7 +83,7 @@ class Rsg2ExtensionModel extends BaseModel
             // read the existing component value(s)
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->createQuery()
+            $query = $db->createQuery()
                 ->select('params')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -100,7 +99,7 @@ class Rsg2ExtensionModel extends BaseModel
             /**/
 
             $jsonStr = $db->loadResult();
-            if (!empty ($jsonStr)) {
+            if (!empty($jsonStr)) {
                 $params = json_decode($jsonStr, true);
             }
         } catch (\RuntimeException $e) {
@@ -117,15 +116,15 @@ class Rsg2ExtensionModel extends BaseModel
         return $params;
     }
 
-	/**
-	 * Direct read of RSG configuration values
-	 *
-	 * @return array|mixed RSG2 config parameter as assoc list
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Direct read of RSG configuration values
+     *
+     * @return array|mixed RSG2 config parameter as assoc list
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     static function readRsg2ExtensionData()
     {
         $extensionData = [];
@@ -133,7 +132,7 @@ class Rsg2ExtensionModel extends BaseModel
         try {
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->createQuery()
+            $query = $db->createQuery()
                 ->select('*')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -205,7 +204,6 @@ class Rsg2ExtensionModel extends BaseModel
                     $params[$name] = $default;
                 }
             } // elements
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Rsg2ExtensionModel: readRsg2ExtensionDefaultConfiguration: <br>';
@@ -242,13 +240,13 @@ class Rsg2ExtensionModel extends BaseModel
             foreach ($default as $name => $value) {
                 if ($name == 'isDebugBackend') {
                     $test = true;
-                    if (!empty ($merged [$name])) {
+                    if (!empty($merged [$name])) {
                         $test2 = $merged [$name];
                     }
                 }
 
                 // overwrite on existing parameter
-                if (!empty ($actual [$name])) {
+                if (!empty($actual [$name])) {
                     $merged [$name] = $actual [$name];
                 }
             }
@@ -271,19 +269,19 @@ class Rsg2ExtensionModel extends BaseModel
      *
      * @param $params
      */
-	public static function replaceRsg2ExtensionConfiguration($params)
+    public static function replaceRsg2ExtensionConfiguration($params)
     {
         $isWritten = false;
 
         try {
             // parameter exist
-            if ((!empty ($params)) && count($params) > 0) {
+            if ((!empty($params)) && count($params) > 0) {
                 // store the combined new and existing values back as a JSON string
                 $paramsString = json_encode($params);
 
                 $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-				$query = $db->createQuery()
+                $query = $db->createQuery()
                     ->update($db->quoteName('#__extensions'))
                     ->set($db->quoteName('params') . ' = ' . $db->quote($paramsString))
                     ->where($db->quoteName('name') . ' = ' . $db->quote('com_rsgallery2'));
@@ -322,7 +320,4 @@ class Rsg2ExtensionModel extends BaseModel
 //
 //        return $version;
 //    }
-
 } // class
-
-

@@ -7,6 +7,7 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -24,14 +25,14 @@ $user = Factory::getApplication()->getIdentity();
 ?>
 
 <div class="container">
-	<div class="row">
-		<div class="form-group col-md-12">
-			<div class="controls">
+    <div class="row">
+        <div class="form-group col-md-12">
+            <div class="controls">
                 <?php echo $this->form->renderField('gallery_id');
                 ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

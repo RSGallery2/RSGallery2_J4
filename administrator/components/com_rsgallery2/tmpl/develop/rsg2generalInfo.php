@@ -23,30 +23,30 @@ use Joomla\CMS\Router\Route;
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=Rsg2GeneralInfo'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
-		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+    <div class="d-flex flex-row">
+        <?php if (!empty($this->sidebar)) : ?>
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
-		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'Rsg2GeneralInfoView']); ?>
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'Rsg2GeneralInfoView', Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW', true)); ?>
 
-				<p>
-					<button id="copy_to_clipboard" type="button" class="btn btn-info btn-rsg2 btn-file w-25"
-					        title="<?php echo Text::_('COM_RSGALLERY2_COPY_TO_CLIPBOARD_DESC'); ?>"
-					        disabled
-					>
-						<span class="icon-attachment" aria-hidden="true"></span>
+                <p>
+                    <button id="copy_to_clipboard" type="button" class="btn btn-info btn-rsg2 btn-file w-25"
+                            title="<?php echo Text::_('COM_RSGALLERY2_COPY_TO_CLIPBOARD_DESC'); ?>"
+                            disabled
+                    >
+                        <span class="icon-attachment" aria-hidden="true"></span>
                         <?php echo Text::_('COM_RSGALLERY2_COPY_TO_CLIPBOARD'); ?>
-					</button>
-				</p>
-				<p></p>
+                    </button>
+                </p>
+                <p></p>
                 <?php
 
                 try {
@@ -110,14 +110,14 @@ use Joomla\CMS\Router\Route;
 
                 <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-				<!--input type="hidden" name="option" value="com_rsgallery2" />
+                <!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-				<input type="hidden" name="task" value=""/>
+                <input type="hidden" name="task" value=""/>
                 <?php echo HTMLHelper::_('form.token'); ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>

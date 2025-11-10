@@ -120,18 +120,18 @@ class ImageReference
      * @since 5.1.0     */
     public $sizeFilePaths; // 800x6000, ..., ? display:J3x
 
-	public bool $UseWatermarked;
+    public bool $UseWatermarked;
 
     //--- constants -----------------------------------------
 
     /**
      * @var int
      */
-    const dontCareForWatermarked = 0;
+    public const dontCareForWatermarked = 0;
     /**
      * @var int
      */
-    const careForWatermarked = 0;
+    public const careForWatermarked = 0;
 
     /**
      * ImageReference constructor. init all variables
@@ -191,7 +191,7 @@ class ImageReference
             $this->use_j3x_location = $image->use_j3x_location;
 
             // J4x path
-            $imagePaths = new ImagePathsData ($this->parentGalleryId);
+            $imagePaths = new ImagePathsData($this->parentGalleryId);
 
             $imagePaths->assignPathData($image);
 
@@ -209,7 +209,7 @@ class ImageReference
             $this->allImagePaths [] = $this->thumbFilePath;
 
             // J4x path
-            if (!empty ($this->sizeFilePaths)) {
+            if (!empty($this->sizeFilePaths)) {
                 foreach ($this->sizeFilePaths as $sizePath) {
                     $this->allImagePaths [] = $sizePath;
                 }
@@ -219,7 +219,6 @@ class ImageReference
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'notice');
             }
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignDbItem: "' . '<br>';
@@ -240,7 +239,6 @@ class ImageReference
     public function check4ImageIsNotExisting()
     {
         try {
-
 //            // debug stop
 //            if ($this->imageName == '2019-09-17_00305.jpg') {
 //              $this->IsDisplayImageFound  = $this->IsDisplayImageFound;
@@ -265,7 +263,7 @@ class ImageReference
             }
 
             // J4x path
-            if (!empty ($this->sizeFilePaths)) {
+            if (!empty($this->sizeFilePaths)) {
                 foreach ($this->sizeFilePaths as $size => $sizePath) {
                     if (!file_exists($sizePath)) {
                         $this->IsSizes_ImageFound [$size] = false;
@@ -280,7 +278,6 @@ class ImageReference
                 $app = Factory::getApplication();
                 $app->enqueueMessage($OutTxt, 'notice');
             }
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing check4ImageIsNotExisting: "' . '<br>';
@@ -310,7 +307,7 @@ class ImageReference
             $this->imageName         = $imageName;
             $this->parentGalleryId   = $galleryId;
 
-            $imagePaths = new ImagePathsModel ($this->parentGalleryId); // ToDo: J3x
+            $imagePaths = new ImagePathsModel($this->parentGalleryId); // ToDo: J3x
             $imagePaths->createAllPaths();
 
             $this->originalFilePath = $imagePaths->getOriginalPath($this->imageName);
@@ -326,16 +323,13 @@ class ImageReference
             $this->IsThumbImageFound     = false;
             $this->IsAllSizesImagesFound = false;
 
-	        if (!empty ($this->sizeFilePaths))
-	        {
-		        foreach ($this->sizeFilePaths as $size => $sizePath)
-		        {
-			        $this->IsSizes_ImageFound [$size] = false; // $sizePath;
-		        }
-	        }
+            if (!empty($this->sizeFilePaths)) {
+                foreach ($this->sizeFilePaths as $size => $sizePath) {
+                    $this->IsSizes_ImageFound [$size] = false; // $sizePath;
+                }
+            }
 
             $this->allImagePaths = [];
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing initOrphanedItem: "' . '<br>';
@@ -374,25 +368,21 @@ class ImageReference
             }
 
             // size assignment
-            if (!$isImageAssigned)
-            {
-	            if (!empty ($this->sizeFilePaths))
-	            {
+            if (!$isImageAssigned) {
+                if (!empty($this->sizeFilePaths)) {
                     // debug stop
                     // if ($this->imageName == '2019-09-17_00305.jpg') {
                     if ($this->imageName == 'DSC_5520.JPG') {
                         $this->IsDisplayImageFound  = $this->IsDisplayImageFound;
                     }
 
-                    foreach ($this->sizeFilePaths as $size => $sizePath)
-		            {
-			            if ($imagePath === $sizePath)
-			            {
-				            $this->IsSizes_ImageFound [$size] = true;
-				            $isImageAssigned                  = true;
-			            }
-		            }
-	            }
+                    foreach ($this->sizeFilePaths as $size => $sizePath) {
+                        if ($imagePath === $sizePath) {
+                            $this->IsSizes_ImageFound [$size] = true;
+                            $isImageAssigned                  = true;
+                        }
+                    }
+                }
             }
 
             // size  assignment ? -> may differ from expected
@@ -400,7 +390,6 @@ class ImageReference
                 $this->IsSizes_ImageFound [$sizeName] = true;
                 $isImageAssigned                      = true;
             }
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error executing assignOrphanedItem: "' . '<br>';
@@ -413,14 +402,14 @@ class ImageReference
         return $isImageAssigned;
     }
 
-	/**
-	 * returns url by J3/j4 style path
-	 *
-	 * @param $image
-	 *
-	 * @since 4.5.0.0
-	 */
-	public function assignImageUrl ()
+    /**
+     * returns url by J3/j4 style path
+     *
+     * @param $image
+     *
+     * @since 4.5.0.0
+     */
+    public function assignImageUrl()
     {
         // debug stop
         // if ($this->imageName == '2019-09-17_00305.jpg') {
@@ -431,7 +420,7 @@ class ImageReference
         $this->imageUrl = '';
 
         // J3x path
-        $imagePath = new ImagePathsModel ($this->parentGalleryId);
+        $imagePath = new ImagePathsModel($this->parentGalleryId);
 
         if ($this->IsThumbImageFound) {
             // display
@@ -441,21 +430,15 @@ class ImageReference
                 // display
                 $this->imageUrl = $imagePath->getDisplayUrl($this->imageName);
             } else {
-
-                if (!empty ($this->sizeFilePaths))
-                {
-                    foreach ($this->sizeFilePaths as $size => $sizePath)
-                    {
-                        if ($this->IsSizes_ImageFound [$size]) // $sizePath;
-                        {
+                if (!empty($this->sizeFilePaths)) {
+                    foreach ($this->sizeFilePaths as $size => $sizePath) {
+                        if ($this->IsSizes_ImageFound [$size]) { // $sizePath;
                             $this->imageUrl = $imagePath->getSizeUrl($size, $this->imageName);
                         }
                     }
                 }
-
             }
         }
-
     }
 
     /**
@@ -465,27 +448,27 @@ class ImageReference
      * @return bool
      * @since 4.3
      */
-     public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
-     {
+    public function IsAnyImageExisting($careForWatermarked = ImageReference::dontCareForWatermarked)
+    {
 //         // debug stop
 //         if ($this->imageName == 'DSC_5520.JPG') {
 //             $this->IsDisplayImageFound  = $this->IsDisplayImageFound;
 //         }
 //
-         $IsImageExisting = false
-             // || $this->IsDisplayImageFound // Not used in j4x
-             || $this->IsOriginalImageFound
-             || $this->IsThumbImageFound
-             || $this->IsAllSizesImagesFound;
+        $IsImageExisting = false
+            // || $this->IsDisplayImageFound // Not used in j4x
+            || $this->IsOriginalImageFound
+            || $this->IsThumbImageFound
+            || $this->IsAllSizesImagesFound;
 
-         if (!empty ($this->IsSizes_ImageFound)) {
-             foreach ($this->IsSizes_ImageFound as $size => $isFound) {
-                 if ($isFound) {
+        if (!empty($this->IsSizes_ImageFound)) {
+            foreach ($this->IsSizes_ImageFound as $size => $isFound) {
+                if ($isFound) {
                     $IsImageExisting  = true;
                     break;
-                 }
-             }
-         }
+                }
+            }
+        }
 
 //         // Image of watermarked is only counting when no other
 //         // image is missing.
@@ -495,8 +478,8 @@ class ImageReference
 //             }
 //         }
 
-         return $IsImageExisting;
-     }
+        return $IsImageExisting;
+    }
 
      /**
      * Tells from the data collected if any of the main images is missing
@@ -505,13 +488,13 @@ class ImageReference
      * watermarked images are not missing as such. watermarked images will be created when displaying image
      * @since 4.3
      */
-     public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
-     {
-         $IsImageMissing =  false
-             // || !$this->IsDisplayImageFound // Not used in j4x
-             || !$this->IsOriginalImageFound
-             || !$this->IsThumbImageFound
-             || !$this->IsAllSizesImagesFound;
+    public function IsMainImageMissing($careForWatermarked = ImageReference::dontCareForWatermarked)
+    {
+        $IsImageMissing =  false
+            // || !$this->IsDisplayImageFound // Not used in j4x
+            || !$this->IsOriginalImageFound
+            || !$this->IsThumbImageFound
+            || !$this->IsAllSizesImagesFound;
 
 //         // Image of watermarked is only counting when no other
 //         // image is missing.
@@ -521,9 +504,7 @@ class ImageReference
 //             }
 //         }
 
-         return $IsImageMissing;
-     }
+        return $IsImageMissing;
+    }
      /**/
-
 }
-

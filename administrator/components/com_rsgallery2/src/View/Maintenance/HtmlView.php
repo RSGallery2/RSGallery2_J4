@@ -116,7 +116,7 @@ class HtmlView extends BaseHtmlView
 
         //--- begin to display ----------------------------------------------
 
-//		Factory::getApplication()->input->set('hidemainmenu', true);
+//      Factory::getApplication()->input->set('hidemainmenu', true);
 
         //---  --------------------------------------------------------------
 
@@ -128,7 +128,6 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'checkimageexif':
-
                 // ToDo: Save last used image in session
                 $input = $app->input;
 
@@ -145,7 +144,7 @@ class HtmlView extends BaseHtmlView
                 //--- self call by user -------------------------------------------------
                 // (self call with user input )
 
-                if (!empty ($inFileNames)) {
+                if (!empty($inFileNames)) {
                     $test1 = json_encode($inFileNames);
 
                     //--- reuse files ---------------------------------------------------
@@ -168,10 +167,10 @@ class HtmlView extends BaseHtmlView
                         // select chosen files
                         $exifFileNames = $this->selectedFileNames($cids, $pathFileNames);
 
-                        if (!empty ($exifFileNames)) {
+                        if (!empty($exifFileNames)) {
                             //--- extract exif data -----------------------------
 
-                            $imgModel                 = new ImageModel (
+                            $imgModel                 = new ImageModel(
                             );
                             $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
 
@@ -180,7 +179,7 @@ class HtmlView extends BaseHtmlView
                             // ToDo: rename name to tags
                             $exifTags = [];
                             foreach ($this->exifDataRawOfFiles as $exifDataOfFile) {
-                                if (!empty ($exifDataOfFile[1])) {
+                                if (!empty($exifDataOfFile[1])) {
                                     // $fileName = $exifDataOfFile[0];
                                     $exifData = $exifDataOfFile[1];
 
@@ -198,7 +197,6 @@ class HtmlView extends BaseHtmlView
 //                                    if (!in_array($exifTags, $exifName[1])) {
 //                                        $exifTags [] = $exifDataFullName;
 //                                    }
-
                                     }
                                 }
                             }
@@ -222,7 +220,7 @@ class HtmlView extends BaseHtmlView
                 $this->exifTagsSupported = imageExif::supportedExifTags();
 
                 $this->exifTagsTranslationIds = [];
-                if (!empty ($this->exifTagsSupported)) {
+                if (!empty($this->exifTagsSupported)) {
                     foreach ($this->exifTagsSupported as $exifTag) {
                         [$type, $name] = ImageExif::tag2TypeAndName($exifTag);
                         $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($name);
@@ -237,7 +235,7 @@ class HtmlView extends BaseHtmlView
 
                 //--- prepare empty input for files -------------------------------------
 
-	            $this->exifImageFiles = [];
+                $this->exifImageFiles = [];
                 for ($idx = count($this->exifImageFiles); $idx < 10; $idx++) {
                     $this->exifImageFiles [] = ['', ''];
                 }
@@ -265,12 +263,11 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'prepared':
-
                 ToolBarHelper::title(
                     Text::_('COM_RSGALLERY2_MAINTENANCE')
-                    . ': ' . '<strong>' . $this->intended . '<strong>'
-//					. ': ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY')
-                    ,
+                    . ': ' . '<strong>' . $this->intended . '<strong>',
+                    //                  . ': ' . Text::_('COM_RSGALLERY2_MAINT_PREPARED_NOT_READY')
+
                     'screwdriver',
                 );
                 ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
@@ -278,7 +275,7 @@ class HtmlView extends BaseHtmlView
 
             case 'checkimageexif':
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '*  Gallery number / image name <br>'
                         . '*  collect only selected gallery id, and filenames<br>'
@@ -296,8 +293,13 @@ class HtmlView extends BaseHtmlView
                 ); // 'maintenance');
                 ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-                ToolBarHelper::custom('maintenance.checkImageExifData', 'none fas fa-camera-retro',
-                    'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+                ToolBarHelper::custom(
+                    'maintenance.checkImageExifData',
+                    'none fas fa-camera-retro',
+                    'image',
+                    'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',
+                    false
+                );
                 ToolBarHelper::link(
                     'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif',
                     'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',
@@ -308,7 +310,7 @@ class HtmlView extends BaseHtmlView
 
             default:
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . '* ! Db J3x gallery transfer: enable single transfers <br>'
                         . '* <br>'
@@ -362,7 +364,7 @@ class HtmlView extends BaseHtmlView
 
         foreach ($ImageOrFileNames as $idx => $imageOrFileName) {
             // no gallery specified => filename given
-            if (empty ($galleryIds[$idx])) {
+            if (empty($galleryIds[$idx])) {
                 $fileNames [] = $imageOrFileName;
             } else {
                 // ToDo:
@@ -395,13 +397,13 @@ class HtmlView extends BaseHtmlView
         return $fileNames;
     }
 
-	/**
-	 * List of test files for debugging
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * List of test files for debugging
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     public function presetExifFileList()
     {
         $exifImageFiles = [];
@@ -429,15 +431,15 @@ class HtmlView extends BaseHtmlView
         return $exifImageFiles;
     }
 
-	/**
-	 * Check if com_rsg2_exif.ini contains all needed translations
-	 * Returns missing list
-	 * @param   array  $neededIds
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Check if com_rsg2_exif.ini contains all needed translations
+     * Returns missing list
+     * @param   array  $neededIds
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     private function CheckExifMissingTranslationIds(array $neededIds)
     {
         $existingIds = [];
@@ -454,7 +456,7 @@ class HtmlView extends BaseHtmlView
             while (($line = fgets($handle)) !== false) {
                 $existingId = $this->lineExtractTransId($line);
 
-                if (!empty ($existingId)) {
+                if (!empty($existingId)) {
                     $existingIds [] = $existingId;
                 }
             }
@@ -473,14 +475,14 @@ class HtmlView extends BaseHtmlView
         return $missingIds;
     }
 
-	/**
-	 * Return the translation ID "COM_RSGALLERY2_EXIF_TAG..." from actual line
-	 * @param   bool|string  $line
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Return the translation ID "COM_RSGALLERY2_EXIF_TAG..." from actual line
+     * @param   bool|string  $line
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     private function lineExtractTransId(bool|string $line)
     {
         $transId = '';
@@ -497,6 +499,4 @@ class HtmlView extends BaseHtmlView
 
         return $transId;
     }
-
 }
-

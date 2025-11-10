@@ -16,6 +16,11 @@ use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Component\Media\Administrator\Model\ApiModel;
 use Joomla\Database\DatabaseInterface;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
+
 /**
  *
  *
@@ -46,7 +51,8 @@ class ConfigModel extends BaseModel
      * @since   4.1.0
      * @throws  ResourceNotFound
      */
-    public function getItem() {
+    public function getItem()
+    {
 
         $componentName = 'com_rsgallery2';
 
@@ -55,7 +61,6 @@ class ConfigModel extends BaseModel
 //        $oConfig->keepOriginalImage = "2025.xx.xx";
 
         try {
-
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 //            $db = $this->database;
 
@@ -66,20 +71,17 @@ class ConfigModel extends BaseModel
             $db->setQuery($query);
 
             $jsonStr = $db->loadResult();
-            if (!empty ($jsonStr)) {
+            if (!empty($jsonStr)) {
                 $params = json_decode($jsonStr, true);
             }
 
             $oConfig = (object) $params;
 //            $test01 = $oConfig->image_size;
 //            $test02 = $oConfig->keepOriginalImage;
-
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }
 
         return $oConfig;
     }
-
-
 }

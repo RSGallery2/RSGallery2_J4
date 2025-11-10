@@ -13,6 +13,6 @@
 // phpcs:enable PSR1.Files.SideEffects
 ?>
 <div class="container-popup">
-	<?php $this->setLayout('edit'); ?>
-	<?php echo $this->loadTemplate(); ?>
+    <?php $this->setLayout('edit'); ?>
+    <?php echo $this->loadTemplate(); ?>
 </div>

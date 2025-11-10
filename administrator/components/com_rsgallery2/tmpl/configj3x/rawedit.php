@@ -58,16 +58,16 @@ function configInputField($name = 'unknown', $value = '')
 
         ?>
 
-		<div class="control-group">
-			<div class="control-label">
-				<label id="jform_<?php echo $name ?>-lbl" class="jform_control-label"
-				       for="jform_<?php echo $name ?>"><?php echo $name ?>:</label>
-			</div>
-			<div class="controls">
-				<input id="jform_<?php echo $name ?>" class="input-xxlarge input_box" type="text"
-				       value="<?php echo $value ?>" size="70" name="jform[<?php echo $name ?>] aria-invalid=" false">
-			</div>
-		</div>
+        <div class="control-group">
+            <div class="control-label">
+                <label id="jform_<?php echo $name ?>-lbl" class="jform_control-label"
+                       for="jform_<?php echo $name ?>"><?php echo $name ?>:</label>
+            </div>
+            <div class="controls">
+                <input id="jform_<?php echo $name ?>" class="input-xxlarge input_box" type="text"
+                       value="<?php echo $value ?>" size="70" name="jform[<?php echo $name ?>] aria-invalid=" false">
+            </div>
+        </div>
 
         <?php
         /*
@@ -98,23 +98,23 @@ function configInputField($name = 'unknown', $value = '')
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawEdit'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
+    <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
-		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT', true)); ?>
 
-				<div class="card">
-					<div class="card-body">
-						<legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT_DESC'); ?></legend>
+                <div class="card">
+                    <div class="card-body">
+                        <legend><?php echo Text::_('COM_RSGALLERY2_CONFIG_J3X_RAW_EDIT_DESC'); ?></legend>
 
                         <?php
 
@@ -134,22 +134,22 @@ function configInputField($name = 'unknown', $value = '')
 
                         ?>
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
                 <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-				<!--input type="hidden" name="option" value="com_rsgallery2" />
+                <!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<input type="hidden" name="task" value=""/>
+        <input type="hidden" name="task" value=""/>
         <?php echo HTMLHelper::_('form.token'); ?>
-	</div>
+    </div>
 
 </form>
 

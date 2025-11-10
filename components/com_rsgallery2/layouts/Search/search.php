@@ -36,10 +36,10 @@ if (!empty($isDevelopSite)) {
         . '* link from extern ??<br>'
         . '* separate searches for gallery / images -> separate answers<br>'
         . '* Height of button -> BS 5<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -141,11 +141,11 @@ $this->activeFilters = $this->get('ActiveFilters');
         <!--            </div>-->
         <!--            </div>-->
 
-        <!--	            <hr>-->
+        <!--                <hr>-->
 
     </div>
 </form>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <hr>
 <?php endif; ?>

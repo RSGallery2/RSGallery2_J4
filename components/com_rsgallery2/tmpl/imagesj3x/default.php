@@ -30,16 +30,16 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.imageJ3x')
 
 echo '';
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite)) {
+if (!empty($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: imagesJ3x view<br>'
         . '* <br>'
         . '* make rsgConfig global<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -73,11 +73,11 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=imagesj3x'); ?>" method="post"
           class="form-validate form-horizontal well">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <h1> RSGallery2 "images list" view </h1>
         <?php endif; ?>
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <hr>
         <?php endif; ?>
 

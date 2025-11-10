@@ -38,7 +38,7 @@ if (!empty($isDebugSite)) {
 }
 
 // message on empty data or other
-if (!empty ($msg)) {
+if (!empty($msg)) {
     echo $msg;
 
     if (!empty($isDebugSite)) {
@@ -59,10 +59,10 @@ $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 // default is 'ImagesAreaJ3x.default'
 //if($layoutName == 'default') {
 //
-//	$layoutName = 'ImagesAreaJ3x.default';
+//  $layoutName = 'ImagesAreaJ3x.default';
 //} else {
 //
-//yyy	$layoutName = $layoutName;
+//yyy   $layoutName = $layoutName;
 //}
 
 $layout = new FileLayout($layoutName, $layoutFolder);
@@ -98,22 +98,22 @@ if ($displaySearch) {
 
 <div class="rsg2_x_form rsg2__images_area">
 
-	<?php if (!empty($isDebugSite)): ?>
+    <?php if (!empty($isDebugSite)) : ?>
         <h1><?php echo text::_('Module RSGallery2 "gallery j3x legacy" J3x view'); ?> view </h1>
         <hr>
-	<?php endif; ?>
+    <?php endif; ?>
 
-	<?php //--- display search ---------- ?>
+    <?php //--- display search ---------- ?>
 
-	<?php if ($displaySearch): ?>
-		<?php echo $searchLayout->render(); ?>
-	<?php endif; ?>
+    <?php if ($displaySearch) : ?>
+        <?php echo $searchLayout->render(); ?>
+    <?php endif; ?>
 
     <?php //--- display images in J3x slideshow ---------- ?>
 
-	<?php echo $layout->render($displayData); ?>
+    <?php echo $layout->render($displayData); ?>
 
-	<?php //--- display pagination ---------- ?>
+    <?php //--- display pagination ---------- ?>
 
     <?php echo $pagination->getListFooter(); ?>
 

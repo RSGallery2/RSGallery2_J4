@@ -135,21 +135,20 @@ class ImageFileController extends BaseController
     }
     /**/
 
-//	/**
-//	 *
-//	 *
-//	 * @param   array  $data  An array of input data.
-//	 *
-//	 * @return  boolean
-//	 *
-//	 * @since __BUMP_VERSION__
-//	 */
-//	protected function yyyy($data = array())
-//	{
+//  /**
+//   *
+//   *
+//   * @param   array  $data  An array of input data.
+//   *
+//   * @return  boolean
+//   *
+//   * @since __BUMP_VERSION__
+//   */
+//  protected function yyyy($data = array())
+//  {
 //        $app  = Factory::getApplication();
 //        $user = $app->getIdentity();
 //
-//		return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
-//	}
-
+//      return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
+//  }
 }

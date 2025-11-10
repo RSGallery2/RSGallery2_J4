@@ -62,7 +62,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                 <?php
                 echo $this->sidebar; ?>
             </div>
-        <?php
+            <?php
         endif; ?>
         <!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
@@ -85,9 +85,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                         </div>
                     </div>
 
-                <?php
+                    <?php
                 else : ?>
-
                     <table class="table" id="galleryList">
                         <caption id="captionTable" class="sr-only">
                             <?php
@@ -194,11 +193,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                         </thead>
                         <tbody
                         <?php
-                        if ($saveOrder) : ?> class="js-draggable"
+                        if ($saveOrder) :
+                            ?> class="js-draggable"
                                              data-url="<?php
-                                             echo $saveOrderingUrl; ?>"
+                                                echo $saveOrderingUrl; ?>"
                                              data-direction="<?php
-                                             echo strtolower($listDirn); ?>"
+                                                echo strtolower($listDirn); ?>"
                                              data-nested="true"<?php
                         endif; ?> // ToDo: check for false/true
                         >
@@ -271,13 +271,13 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     ?>
                                     <span class="sortable-handler<?php
                                     echo $iconClass ?>">
-											<span class="fas fa-ellipsis-v"></span>
-										</span>
+                                            <span class="fas fa-ellipsis-v"></span>
+                                        </span>
                                     <?php
                                     if ($canChange && $saveOrder) : ?>
                                         <input type="text" style="display:none" name="order[]" size="5" value="<?php
                                         echo $item->lft; ?>">
-                                    <?php
+                                        <?php
                                     endif; ?>
                                 </td>
                                 <td class="text-center">
@@ -293,7 +293,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     if ($item->checked_out) : ?>
                                         <?php
                                         echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'galleries.', $canCheckin); ?>
-                                    <?php
+                                        <?php
                                     endif; ?>
                                     <?php
                                     if ($canEdit || $canEditOwn) : ?>
@@ -306,26 +306,26 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                             <?php
                                             echo $editIcon; ?>&nbsp;<?php
                                             echo $this->escape($item->name); ?></a>
-                                    <?php
+                                        <?php
                                     else : ?>
                                         <?php
                                         echo $this->escape($item->name); ?>
-                                    <?php
+                                        <?php
                                     endif; ?>
 
                                     <span class="small" title="<?php
                                     echo $this->escape($item->path); ?>">
-											<?php
+                                            <?php
                                             if (empty($item->note)) : ?>
                                                 <?php
                                                 echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-                                            <?php
+                                                <?php
                                             else : ?>
                                                 <?php
                                                 echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
-                                            <?php
+                                                <?php
                                             endif; ?>
-										</span>
+                                        </span>
                                 </td>
                                 <?php
                                 /**
@@ -460,7 +460,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                  */
                                 ?>
                             </tr>
-                        <?php
+                            <?php
                         endforeach; ?>
                         </tbody>
                     </table>
@@ -473,22 +473,24 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                     <?php
                     // Load the batch processing form. ?>
                     <?php
-                    if ($user->authorise('core.create', $extension)
+                    if (
+                        $user->authorise('core.create', $extension)
                             && $user->authorise('core.edit', $extension)
-                            && $user->authorise('core.edit.state', $extension)) : ?>
+                            && $user->authorise('core.edit.state', $extension)
+                    ) : ?>
                         <?php
                         echo HTMLHelper::_(
-                                'bootstrap.renderModal',
-                                'collapseModal',
-                                [
+                            'bootstrap.renderModal',
+                            'collapseModal',
+                            [
                                         'title'  => Text::_('COM_RSGALLERY2_GALLERY_BATCH_OPTIONS'),
                                         'footer' => $this->loadTemplate('batch_footer'),
                                 ],
-                                $this->loadTemplate('batch_body'),
+                            $this->loadTemplate('batch_body'),
                         ); ?>
-                    <?php
+                        <?php
                     endif; ?>
-                <?php
+                    <?php
                 endif; ?>
 
                 <input type="hidden" name="extension" value="<?php

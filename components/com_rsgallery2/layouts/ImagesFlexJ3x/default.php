@@ -25,10 +25,10 @@ if (!empty($isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: layout Images flex <br>'
         . '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -79,7 +79,7 @@ if ($cols < 2) {
 
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h5>RSGallery2 j3x images area J3x layout II</h5>
     <hr>
 <?php endif; ?>
@@ -87,19 +87,19 @@ if ($cols < 2) {
 <div id="rsg2_gallery" class="rsg2">
 
     <?php if (!empty($gallery)) : ?>
-        <?php if ($params->gallery_show_title): ?>
+        <?php if ($params->gallery_show_title) : ?>
             <h2>
                 <span class="rsg_gallery_title"><?php echo $gallery->name ?></span>
             </h2>
         <?php endif; ?>
 
-        <?php if ($params->gallery_show_description): ?>
+        <?php if ($params->gallery_show_description) : ?>
             <div class="intro_text"><p><?php echo $gallery->description ?></p></div>
         <?php endif; ?>
 
         <div class="rsg2-clr"></div>
 
-        <?php if ($params->gallery_show_slideshow): ?>
+        <?php if ($params->gallery_show_slideshow) : ?>
             <div class="rsg2_slideshow_link">
                 <a href="<?php echo $gallery->UrlSlideshow; ?>">
                     <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
@@ -108,10 +108,10 @@ if ($cols < 2) {
         <?php endif; ?>
 
     <?php else : ?>
-		<h2><?php
-			//echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
+        <h2><?php
+            //echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
             echo Text::_('Gallery (name) not defined in this situation');
-            ?> </h2>
+        ?> </h2>
     <?php endif; ?>
 
 
@@ -143,7 +143,7 @@ if ($cols < 2) {
                     </div>
                 </div>
 
-            <?php
+                <?php
             }
             ?>
 
@@ -151,15 +151,14 @@ if ($cols < 2) {
     </div>
 
     <div class="pagination">
-		<?php
-		if(isset ($pagination))
-		{
+        <?php
+        if (isset($pagination)) {
             echo $pagination->getListFooter();
         }
         ?>
     </div>
 
-    <?php 
+    <?php
 /**
      * <?php if (!empty($isDebugSite)): ?>
      * <h3>RSGallery2 j3x images area J3x layout III</h3>
@@ -236,7 +235,7 @@ if ($cols < 2) {
      * </div>
      * </div>
      * </div>
-     * 
-     */ 
-?>
+     *
+     */
+    ?>
 </div>

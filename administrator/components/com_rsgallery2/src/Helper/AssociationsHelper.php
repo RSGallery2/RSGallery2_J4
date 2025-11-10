@@ -93,7 +93,7 @@ class AssociationsHelper extends AssociationExtensionHelper
             $id,
             'id',
             'alias',
-			$catidField
+            $catidField
         );
 
         return $associations;
@@ -221,4 +221,3 @@ class AssociationsHelper extends AssociationExtensionHelper
         ];
     }
 }
-

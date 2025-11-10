@@ -419,14 +419,14 @@ class ImageController extends FormController
      * @return  boolean
      *
      * @since   5.1.0     *
-	protected function allowAdd($data = [])
-	{
+    protected function allowAdd($data = [])
+    {
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
-		return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
-	}
-	/**/
+        return ($user->authorise('core.create', $this->extension) || count($user->getAuthorisedGalleries($this->extension, 'core.create')));
+    }
+    /**/
 
     /**
      * Method to check if you can edit a record.
@@ -437,41 +437,41 @@ class ImageController extends FormController
      * @return  boolean
      *
      * @since   5.1.0     *
-	protected function allowEdit($data = [], $key = 'parent_id')
-	{
-		$recordId = (int) isset($data[$key]) ? $data[$key] : 0;
+    protected function allowEdit($data = [], $key = 'parent_id')
+    {
+        $recordId = (int) isset($data[$key]) ? $data[$key] : 0;
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
-		// Check "edit" permission on record asset (explicit or inherited)
-		if ($user->authorise('core.edit', $this->extension . '.gallery.' . $recordId))
-		{
-			return true;
-		}
+        // Check "edit" permission on record asset (explicit or inherited)
+        if ($user->authorise('core.edit', $this->extension . '.gallery.' . $recordId))
+        {
+            return true;
+        }
 
-		// Check "edit own" permission on record asset (explicit or inherited)
-		if ($user->authorise('core.edit.own', $this->extension . '.gallery.' . $recordId))
-		{
-			// Need to do a lookup from the model to get the owner
-			$record = $this->getModel()->getItem($recordId);
+        // Check "edit own" permission on record asset (explicit or inherited)
+        if ($user->authorise('core.edit.own', $this->extension . '.gallery.' . $recordId))
+        {
+            // Need to do a lookup from the model to get the owner
+            $record = $this->getModel()->getItem($recordId);
 
-			if (empty($record))
-			{
-				return false;
-			}
+            if (empty($record))
+            {
+                return false;
+            }
 
-			$ownerId = $record->created_user_id;
+            $ownerId = $record->created_user_id;
 
-			// If the owner matches 'me' then do the test.
-			if ($ownerId == $user->id)
-			{
-				return true;
-			}
-		}
+            // If the owner matches 'me' then do the test.
+            if ($ownerId == $user->id)
+            {
+                return true;
+            }
+        }
 
-		return false;
-	}
-	/**/
+        return false;
+    }
+    /**/
 
     /**
      * Method to run batch operations.
@@ -481,20 +481,20 @@ class ImageController extends FormController
      * @return  boolean  True if successful, false otherwise and internal error is set.
      *
      * @since   5.1.0     *
-	public function batch($model = null)
-	{
-	$this->checkToken();
+    public function batch($model = null)
+    {
+    $this->checkToken();
 
-		// Set the model
-		/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-		$model = $this->getModel('Gallery');
+        // Set the model
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+        $model = $this->getModel('Gallery');
 
-		// Preset the redirect
-		$this->setRedirect('index.php?option=com_rsgallery2&view=galleries&extension=' . $this->extension);
+        // Preset the redirect
+        $this->setRedirect('index.php?option=com_rsgallery2&view=galleries&extension=' . $this->extension);
 
-		return parent::batch($model);
-	}
-	/**/
+        return parent::batch($model);
+    }
+    /**/
 
     /**
      * Gets the URL arguments to append to an item redirect.
@@ -504,30 +504,30 @@ class ImageController extends FormController
      *
      * @return  string  The arguments to append to the redirect URL.
      *
-	 * @since      5.1.0     *
-	protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
-	{
-		$append = parent::getRedirectToItemAppend($recordId);
-		$append .= '&extension=' . $this->extension;
+     * @since      5.1.0     *
+    protected function getRedirectToItemAppend($recordId = null, $urlVar = 'id')
+    {
+        $append = parent::getRedirectToItemAppend($recordId);
+        $append .= '&extension=' . $this->extension;
 
-		return $append;
-	}
-	/**/
+        return $append;
+    }
+    /**/
 
     /**
      * Gets the URL arguments to append to a list redirect.
      *
      * @return  string  The arguments to append to the redirect URL.
      *
-	 * @since      5.1.0     *
-	protected function getRedirectToListAppend()
-	{
-		$append = parent::getRedirectToListAppend();
-		$append .= '&extension=' . $this->extension;
+     * @since      5.1.0     *
+    protected function getRedirectToListAppend()
+    {
+        $append = parent::getRedirectToListAppend();
+        $append .= '&extension=' . $this->extension;
 
-		return $append;
-	}
-	/**/
+        return $append;
+    }
+    /**/
 
     /**
      * Function that allows child controller access to model data after the data has been saved.
@@ -537,22 +537,22 @@ class ImageController extends FormController
      *
      * @return  void
      *
-	 * @since      5.1.0     *
-	protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
-	{
-		$item = $model->getItem();
+     * @since      5.1.0     *
+    protected function postSaveHook(BaseDatabaseModel $model, $validData = [])
+    {
+        $item = $model->getItem();
 
-		if (isset($item->params) && is_array($item->params))
-		{
-			$registry = new Registry($item->params);
-			$item->params = (string) $registry;
-		}
+        if (isset($item->params) && is_array($item->params))
+        {
+            $registry = new Registry($item->params);
+            $item->params = (string) $registry;
+        }
 
-		if (isset($item->metadata) && is_array($item->metadata))
-		{
-			$registry = new Registry($item->metadata);
-			$item->metadata = (string) $registry;
-		}
-	}
-	/**/
+        if (isset($item->metadata) && is_array($item->metadata))
+        {
+            $registry = new Registry($item->metadata);
+            $item->metadata = (string) $registry;
+        }
+    }
+    /**/
 }

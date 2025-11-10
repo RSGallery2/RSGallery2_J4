@@ -294,6 +294,4 @@ class imagesrandomModel extends ListModel
 
         return parent::getStoreId($id);
     }
-
-
 }

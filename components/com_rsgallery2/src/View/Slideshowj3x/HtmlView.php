@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
-use \Joomla\CMS\User\User;
+use Joomla\CMS\User\User;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null) : void
+    public function display($tpl = null): void
     {
         $app             = Factory::getApplication();
         $input           = Factory::getApplication()->input;
@@ -121,15 +121,15 @@ class HtmlView extends BaseHtmlView
         $model         = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
 
-	    $slides_layout = $params->get('slides_layout');
-		// Fall back
-	    if ($slides_layout == 'default') {
-		    $slides_layout = 'SlideshowJ3x.default';
-	    }
-	    $this->slides_layout = $slides_layout;
+        $slides_layout = $params->get('slides_layout');
+        // Fall back
+        if ($slides_layout == 'default') {
+            $slides_layout = 'SlideshowJ3x.default';
+        }
+        $this->slides_layout = $slides_layout;
 
        //$this->slides_layout = "SlideshowJ3x";
-        // Fix wrong / others: 			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+        // Fix wrong / others:          $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
         //$this->slides_layout = ??? $input->getText('slides_layout', $this->slides_layout);
 
         // Standard Joomla behaviour : Layout use file parallel to default.php layout
@@ -160,23 +160,21 @@ class HtmlView extends BaseHtmlView
 
 // ToDo: more trigger
 
-//		Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
+//      Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
 //
-//		// Store the events for later
-//		$item->event = new \stdClass;
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayTitle = trim(implode("\n", $results));
+//      // Store the events for later
+//      $item->event = new \stdClass;
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
 
-//		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->beforeDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayContent = trim(implode("\n", $results));
 //
         parent::display($tpl);
     }
-
 }
-

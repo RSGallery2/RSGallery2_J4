@@ -31,32 +31,32 @@ ksort($configVars);
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=config&layout=RawView'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
+    <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
 
-		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'ConfigRawView']); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ConfigRawView', Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW', true)); ?>
 
-				<p>
-					<h3><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW'); ?></h3>
-				</p>
-				<legend><strong><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'); ?></strong></legend>
+                <p>
+                    <h3><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_VIEW'); ?></h3>
+                </p>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_CONFIG_MINUS_RAW_EDIT_TXT'); ?></strong></legend>
 
                 <?php
                 /**
-				echo '<pre>';
-				// Old RSG2 config vars echo json_encode(get_object_vars($configVars), JSON_PRETTY_PRINT);
-				echo json_encode($configVars, JSON_PRETTY_PRINT);
-				echo '</pre>';
+                echo '<pre>';
+                // Old RSG2 config vars echo json_encode(get_object_vars($configVars), JSON_PRETTY_PRINT);
+                echo json_encode($configVars, JSON_PRETTY_PRINT);
+                echo '</pre>';
                 echo '<HR>';
                 /**/
                 // echo '<pre>';
@@ -111,10 +111,10 @@ ksort($configVars);
                 // <input type="hidden" name="task" value="" /> ?>
                 <?php echo HTMLHelper::_('form.token'); ?>
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
-	<input type="hidden" name="task" value=""/>
+    <input type="hidden" name="task" value=""/>
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>

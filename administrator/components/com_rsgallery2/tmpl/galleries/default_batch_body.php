@@ -7,6 +7,7 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -27,38 +28,38 @@ $user = Factory::getApplication()->getIdentity();
 ?>
 
 <div class="container">
-	<div class="row">
-		<div class="form-group col-md-6">
-			<div class="controls">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <div class="controls">
                 <?php echo LayoutHelper::render('joomla.html.batch.language', []); ?>
-			</div>
-		</div>
-		<div class="form-group col-md-6">
-			<div class="controls">
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="controls">
                 <?php echo LayoutHelper::render('joomla.html.batch.access', []); ?>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<?php if ($published >= 0) : ?>
-			<div class="form-group col-md-6">
-				<div class="controls">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <?php if ($published >= 0) : ?>
+            <div class="form-group col-md-6">
+                <div class="controls">
                     <?php echo LayoutHelper::render('joomla.html.batch.item', ['extension' => 'com_content']); ?>
-				</div>
-			</div>
-		<?php endif; ?>
-		<div class="form-group col-md-6">
-			<div class="controls">
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="form-group col-md-6">
+            <div class="controls">
                 <?php echo LayoutHelper::render('joomla.html.batch.tag', []); ?>
-			</div>
-		</div>
-		<?php if ($user->authorise('core.admin', 'com_content') && $params->get('workflow_enabled')) : ?>
-			<div class="form-group col-md-6">
-				<div class="controls">
+            </div>
+        </div>
+        <?php if ($user->authorise('core.admin', 'com_content') && $params->get('workflow_enabled')) : ?>
+            <div class="form-group col-md-6">
+                <div class="controls">
                     <?php echo LayoutHelper::render('joomla.html.batch.workflowstage', ['extension' => 'com_content']); ?>
-				</div>
-			</div>
-		<?php endif; ?>
-	</div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 

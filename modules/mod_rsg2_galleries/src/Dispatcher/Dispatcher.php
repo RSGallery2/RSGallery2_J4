@@ -50,7 +50,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         // $params_array = $rsg2Params->toArray();
 
         // merge
-        $mergedParams = new Registry ($rsg2Params);
+        $mergedParams = new Registry($rsg2Params);
         $mergedParams->merge($appParams, true);
 
         $data['params'] = $mergedParams;
@@ -91,5 +91,4 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
 
         return $data;
     }
-
 }

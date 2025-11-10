@@ -29,166 +29,159 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Config extends AbstractCommand
 {
-	use DatabaseAwareTrait;
+    use DatabaseAwareTrait;
 
-	/**
-	 * The default command name
-	 *
-	 * @var    string
-	 */
-	protected static $defaultName = 'rsgallery2:config';
+    /**
+     * The default command name
+     *
+     * @var    string
+     */
+    protected static $defaultName = 'rsgallery2:config';
 
-	/**
-	 * @var   SymfonyStyle
-	 */
-	private $ioStyle;
+    /**
+     * @var   SymfonyStyle
+     */
+    private $ioStyle;
 
-	/**
-	 * @var   InputInterface
-	 */
-	private $cliInput;
+    /**
+     * @var   InputInterface
+     */
+    private $cliInput;
 
-	/**
-	 * Instantiate the command.
-	 *
-	 * @param   DatabaseInterface  $db  Database connector
-	 *
-	 * @since  4.0.X
-	 */
-	public function __construct()
-	{
-		parent::__construct();
+    /**
+     * Instantiate the command.
+     *
+     * @param   DatabaseInterface  $db  Database connector
+     *
+     * @since  4.0.X
+     */
+    public function __construct()
+    {
+        parent::__construct();
 
-		// $db = $this->getDatabase();
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$this->setDatabase($db);
-	}
+        // $db = $this->getDatabase();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $this->setDatabase($db);
+    }
 
-	/**
-	 * Configure the IO.
-	 *
-	 * @param   InputInterface   $input   The input to inject into the command.
-	 * @param   OutputInterface  $output  The output to inject into the command.
-	 *
-	 * @return  void
-	 */
-	private function configureIO(InputInterface $input, OutputInterface $output)
-	{
-		$this->cliInput = $input;
-		$this->ioStyle  = new SymfonyStyle($input, $output);
-	}
+    /**
+     * Configure the IO.
+     *
+     * @param   InputInterface   $input   The input to inject into the command.
+     * @param   OutputInterface  $output  The output to inject into the command.
+     *
+     * @return  void
+     */
+    private function configureIO(InputInterface $input, OutputInterface $output)
+    {
+        $this->cliInput = $input;
+        $this->ioStyle  = new SymfonyStyle($input, $output);
+    }
 
-	/**
-	 * Initialise the command.
-	 *
-	 * @return  void
-	 *
-	 * @since  4.0.X
-	 */
-	protected function configure(): void
-	{
-		$this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim lenght of variable for item keeps in one line');
+    /**
+     * Initialise the command.
+     *
+     * @return  void
+     *
+     * @since  4.0.X
+     */
+    protected function configure(): void
+    {
+        $this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim lenght of variable for item keeps in one line');
 
-		$help = "<info>%command.name%</info> list variables of RSG2 configuration
+        $help = "<info>%command.name%</info> list variables of RSG2 configuration
   Usage: <info>php %command.full_name%</info>
     * You may restrict the value string length using the <info>--max_line_length</info> option. A result line that is too long will confuse the output lines
 ";
-		$this->setDescription(Text::_('List all configuration variables'));
-		$this->setHelp($help);
-	}
+        $this->setDescription(Text::_('List all configuration variables'));
+        $this->setHelp($help);
+    }
 
 
-	/**
-	 * Internal function to execute the command.
-	 *
-	 * @param   InputInterface   $input   The input to inject into the command.
-	 * @param   OutputInterface  $output  The output to inject into the command.
-	 *
-	 * @return  integer  The command exit code
-	 *
-	 * @since   4.0.0
-	 */
-	protected function doExecute(InputInterface $input, OutputInterface $output): int
-	{
-		// Configure the Symfony output helper
-		$this->configureIO($input, $output);
-		$this->ioStyle->title('RSGallery2 Configuration');
+    /**
+     * Internal function to execute the command.
+     *
+     * @param   InputInterface   $input   The input to inject into the command.
+     * @param   OutputInterface  $output  The output to inject into the command.
+     *
+     * @return  integer  The command exit code
+     *
+     * @since   4.0.0
+     */
+    protected function doExecute(InputInterface $input, OutputInterface $output): int
+    {
+        // Configure the Symfony output helper
+        $this->configureIO($input, $output);
+        $this->ioStyle->title('RSGallery2 Configuration');
 
-		$max_line_length = $input->getOption('max_line_length') ?? null;
+        $max_line_length = $input->getOption('max_line_length') ?? null;
 
-		$rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
-		$configurationAssoc = $rsgConfig; // $this->getItemAssocFromDB($rsgConfig);
+        $configurationAssoc = $rsgConfig; // $this->getItemAssocFromDB($rsgConfig);
 
-		if (empty ($configurationAssoc))
-		{
-			$this->ioStyle->error("The joomla RSG2 configuration could not be read");
+        if (empty($configurationAssoc)) {
+            $this->ioStyle->error("The joomla RSG2 configuration could not be read");
 
-			return Command::FAILURE;
-		}
+            return Command::FAILURE;
+        }
 
-		// ToDo: $rsgConfig is Registry
-		$strConfigurationAssoc = $this->assoc2DefinitionList($rsgConfig, $max_line_length);
+        // ToDo: $rsgConfig is Registry
+        $strConfigurationAssoc = $this->assoc2DefinitionList($rsgConfig, $max_line_length);
 
-		// ToDo: Use horizontal table again ;-)
-		foreach ($strConfigurationAssoc as $value)
-		{
-			if (!\is_array($value))
-			{
-				throw new \InvalidArgumentException('Value should be an array, string, or an instance of TableSeparator.');
-			}
+        // ToDo: Use horizontal table again ;-)
+        foreach ($strConfigurationAssoc as $value) {
+            if (!\is_array($value)) {
+                throw new \InvalidArgumentException('Value should be an array, string, or an instance of TableSeparator.');
+            }
 
-			$headers[] = key($value);
-			$row[]     = current($value);
-		}
+            $headers[] = key($value);
+            $row[]     = current($value);
+        }
 
-		$this->ioStyle->horizontalTable($headers, [$row]);
+        $this->ioStyle->horizontalTable($headers, [$row]);
 
 
 // ToDo: check out following (original joomla config)
 
-//		$options = [];
+//      $options = [];
 //
-//		array_walk(
-//			$configs,
-//			function ($value, $key) use (&$options) {
-//				$options[] = [$key, $this->formatConfigValue($value)];
-//			}
-//		);
+//      array_walk(
+//          $configs,
+//          function ($value, $key) use (&$options) {
+//              $options[] = [$key, $this->formatConfigValue($value)];
+//          }
+//      );
 //
-//		$this->ioStyle->title("Current options in Configuration");
-//		$this->ioStyle->table(['Option', 'Value'], $options);
+//      $this->ioStyle->title("Current options in Configuration");
+//      $this->ioStyle->table(['Option', 'Value'], $options);
 
-		return Command::SUCCESS;
-	}
+        return Command::SUCCESS;
+    }
 
-	/**
-	 * trim length of each value in array $configVars to max_len
-	 *
-	 * @param   Registry  $configVars
-	 * @param          $max_len
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0	 */
-	// ToDo: $configVars -> $rsgConfig is Registry
-	// ToDo: assoc2DefinitionList is declared multiple
-	private function assoc2DefinitionList($configVars, $max_len = 70)
-	{
-		$items = [];
+    /**
+     * trim length of each value in array $configVars to max_len
+     *
+     * @param   Registry  $configVars
+     * @param          $max_len
+     *
+     * @return array
+     *
+     * @since  5.1.0     */
+    // ToDo: $configVars -> $rsgConfig is Registry
+    // ToDo: assoc2DefinitionList is declared multiple
+    private function assoc2DefinitionList($configVars, $max_len = 70)
+    {
+        $items = [];
 
-		if (empty($max_len))
-		{
-			$max_len = 70;
-		}
+        if (empty($max_len)) {
+            $max_len = 70;
+        }
 
-		foreach ($configVars as $name => $value)
-		{
-			$items[] = [$name => mb_strimwidth((string) $value, 0, $max_len, '...')];
-		}
+        foreach ($configVars as $name => $value) {
+            $items[] = [$name => mb_strimwidth((string) $value, 0, $max_len, '...')];
+        }
 
-		return $items;
-	}
-
-
+        return $items;
+    }
 }

@@ -57,51 +57,51 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
 
     <?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
 
-	<div>
+    <div>
         <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'general']); ?>
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'general', Text::_('COM_RSGALLERY2_GENERAL')); ?>
-		<div class="row">
-			<div class="col-lg-9">
-				<div>
-					<div class="card-body">
-						<fieldset class="adminform">
+        <div class="row">
+            <div class="col-lg-9">
+                <div>
+                    <div class="card-body">
+                        <fieldset class="adminform">
                             <?php echo $this->form->getLabel('description'); ?>
                             <?php echo $this->form->getInput('description'); ?>
-						</fieldset>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="bg-light px-3">
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="bg-light px-3">
                     <?php echo $this->getForm()->renderField('thumb_id') ?>
                     <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
         <?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
 
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('COM_RSGALLERY2_FIELDSET_PUBLISHING')); ?>
-		<div class="row">
-			<div class="col-12 col-lg-6">
-				<fieldset id="fieldset-publishingdata" class="options-form">
-					<legend><?php echo Text::_('JGLOBAL_FIELDSET_PUBLISHING'); ?></legend>
-					<div>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <fieldset id="fieldset-publishingdata" class="options-form">
+                    <legend><?php echo Text::_('JGLOBAL_FIELDSET_PUBLISHING'); ?></legend>
+                    <div>
                         <?php echo LayoutHelper::render('joomla.edit.publishingdata', $this); ?>
-					</div>
-				</fieldset>
-			</div>
-			<div class="col-12 col-lg-6">
-				<fieldset id="fieldset-metadata" class="options-form">
-					<legend><?php echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
-					<div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-12 col-lg-6">
+                <fieldset id="fieldset-metadata" class="options-form">
+                    <legend><?php echo Text::_('JGLOBAL_FIELDSET_METADATA_OPTIONS'); ?></legend>
+                    <div>
                         <?php echo LayoutHelper::render('joomla.edit.metadata', $this); ?>
-					</div>
-				</fieldset>
-			</div>
-		</div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
         <?php if (!$isModal && $assoc && $extensionassoc) : ?>
@@ -109,11 +109,10 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
             <?php echo $this->loadTemplate('associations'); ?>
             <?php echo HTMLHelper::_('uitab.endTab'); ?>
         <?php elseif ($isModal && $assoc && $extensionassoc) : ?>
-			<div class="hidden"><?php echo $this->loadTemplate('associations'); ?></div>
+            <div class="hidden"><?php echo $this->loadTemplate('associations'); ?></div>
         <?php endif; ?>
 
         <?php if ($this->canDo->get('core.admin')) : ?>
-
             <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'rules', Text::_('JGLOBAL_ACTION_PERMISSIONS_LABEL')); ?>
             <?php echo $this->form->getInput('rules'); ?>
             <?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -122,8 +121,8 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 
         <?php echo $this->form->getInput('extension'); ?>
-		<input type="hidden" name="task" value="">
-		<input type="hidden" name="forcedLanguage" value="<?php echo $input->get('forcedLanguage', '', 'cmd'); ?>">
+        <input type="hidden" name="task" value="">
+        <input type="hidden" name="forcedLanguage" value="<?php echo $input->get('forcedLanguage', '', 'cmd'); ?>">
         <?php echo HTMLHelper::_('form.token'); ?>
-	</div>
+    </div>
 </form>

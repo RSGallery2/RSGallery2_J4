@@ -126,14 +126,14 @@ class HtmlView extends BaseHtmlView
         }
 
         // Preprocess the list of items to find ordering divisions.
-	    $this->ordering = [];
+        $this->ordering = [];
         foreach ($this->items as &$item) {
-			// ToDo:
+            // ToDo:
             $this->ordering[$item->parent_id][] = $item->id;
         }
 
-		// TODO: when is is set , used below
-		$this->transitions = [];
+        // TODO: when is is set , used below
+        $this->transitions = [];
 
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
@@ -151,17 +151,17 @@ class HtmlView extends BaseHtmlView
         //// Check if we have a content type for this alias
         //if (!empty(TagsHelper::getTypes('objectList', array($this->state->get('gallery.extension') . '.gallery'), true)))
         //{
-        //	$this->checkTags = true;
+        //  $this->checkTags = true;
         //}
 
         /**
-		// Prepare a mapping from parent id to the ids of its children
-		$this->ordering = [];
-		foreach ($this->items as $item)
-		{
-			$this->ordering[$item->parent_id][] = $item->id;
-		}
-		/**/
+        // Prepare a mapping from parent id to the ids of its children
+        $this->ordering = [];
+        foreach ($this->items as $item)
+        {
+            $this->ordering[$item->parent_id][] = $item->id;
+        }
+        /**/
 
         $Layout = $this->getLayout();
 
@@ -179,7 +179,6 @@ class HtmlView extends BaseHtmlView
                 break;
 
             default:
-
                 break;
         }
 
@@ -194,20 +193,20 @@ class HtmlView extends BaseHtmlView
             $this->addToolbar($Layout);
         } else {
             /**
-			// If we are forcing a language in modal (used for associations).
-			if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
-			{
-				// Set the language field to the forcedLanguage and disable changing it.
-				$this->form->setValue('language', null, $forcedLanguage);
-				$this->form->setFieldAttribute('language', 'readonly', 'true');
+            // If we are forcing a language in modal (used for associations).
+            if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
+            {
+                // Set the language field to the forcedLanguage and disable changing it.
+                $this->form->setValue('language', null, $forcedLanguage);
+                $this->form->setFieldAttribute('language', 'readonly', 'true');
 
-				// Only allow to select galleries with All language or with the forced language.
-				$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
+                // Only allow to select galleries with All language or with the forced language.
+                $this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
 
-				// Only allow to select tags with All language or with the forced language.
-				$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
-			}
-			/**/
+                // Only allow to select tags with All language or with the forced language.
+                $this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
+            }
+            /**/
         }
 
         //--- display --------------------------------------------------------------------
@@ -234,17 +233,17 @@ class HtmlView extends BaseHtmlView
         switch ($Layout) {
             case 'galleries_raw':
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
                         . '* Raw edit form<br>'
                         . '* Can do ...<br>'
                         . '* Add pagination<br>'
                         . '* mark element width id 1 <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -252,30 +251,30 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::editList('gallery.raw_edit');
                 ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH');
-	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
-	            break;
+                break;
 
             case 'galleries_tree':
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
                         . '* Improve tree design<br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
                         . '</span><br><br>';
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'), 'images');
-	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
 
             default:
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
                         . '* Ordering: Mouse move not working<br>'
@@ -290,10 +289,10 @@ class HtmlView extends BaseHtmlView
                         . '* Badges array like in categories for images: Published, unpublished, trashed, archieved ... <br>'
                         . '* On develop show order left right level<br>'
                         . '* Link to images should restrict to gallery in link<br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -323,16 +322,17 @@ class HtmlView extends BaseHtmlView
 
                         $childBar->trash('galleries.trash')->listCheck(true);
 
-                        //				$toolbar->standardButton('refresh')
-                        //					->text('JTOOLBAR_REBUILD')
-                        //					->task('gallery.rebuild');
-
+                        //              $toolbar->standardButton('refresh')
+                        //                  ->text('JTOOLBAR_REBUILD')
+                        //                  ->task('gallery.rebuild');
                     }
 
                     // Add a batch button
-                    if ($user->authorise('core.create', 'com_content')
+                    if (
+                        $user->authorise('core.create', 'com_content')
                         && $user->authorise('core.edit', 'com_content')
-                        && $user->authorise('core.execute.transition', 'com_content')) {
+                        && $user->authorise('core.execute.transition', 'com_content')
+                    ) {
                         $childBar
                             ->popupButton('batch')
                             ->text('JTOOLBAR_BATCH')
@@ -340,8 +340,10 @@ class HtmlView extends BaseHtmlView
                             ->listCheck(true);
                     }
 
-                    if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED
-                        && $canDo->get('core.delete')) {
+                    if (
+                        $this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED
+                        && $canDo->get('core.delete')
+                    ) {
                         $toolbar
                             ->delete('galleries.delete')
                             ->text('JTOOLBAR_EMPTY_TRASH')
@@ -351,7 +353,7 @@ class HtmlView extends BaseHtmlView
                     // ToolBarHelper::editList('gallery.edit');
                 }
 
-	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
         }
@@ -361,149 +363,149 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_rsgallery2');
         }
         /** ? joomla media .... ?
-		$extension = Factory::getApplication()->input->get('extension');
-		$user = Factory::getApplication()->getIdentity();
-		$userId = $user->id;
+        $extension = Factory::getApplication()->input->get('extension');
+        $user = Factory::getApplication()->getIdentity();
+        $userId = $user->id;
 
-		$isNew = ($this->item->id == 0);
-		$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
+        $isNew = ($this->item->id == 0);
+        $checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
 
-		// Avoid nonsense situation.
-		if ($extension == 'com_rsgallery2')
-		{
-			return;
-		}
+        // Avoid nonsense situation.
+        if ($extension == 'com_rsgallery2')
+        {
+            return;
+        }
 
-		// The extension can be in the form com_foo.section
-		$parts = explode('.', $extension);
-		$component = $parts[0];
-		$section = (count($parts) > 1) ? $parts[1] : null;
-		$componentParams = ComponentHelper::getParams($component);
+        // The extension can be in the form com_foo.section
+        $parts = explode('.', $extension);
+        $component = $parts[0];
+        $section = (count($parts) > 1) ? $parts[1] : null;
+        $componentParams = ComponentHelper::getParams($component);
 
-		// Need to load the menu language file as mod_menu hasn't been loaded yet.
-		$lang = Factory::getApplication()->getLanguage();
-		$lang->load($component, JPATH_BASE, null, false, true)
-		|| $lang->load($component, JPATH_ADMINISTRATOR . '/components/' . $component, null, false, true);
+        // Need to load the menu language file as mod_menu hasn't been loaded yet.
+        $lang = Factory::getApplication()->getLanguage();
+        $lang->load($component, JPATH_BASE, null, false, true)
+        || $lang->load($component, JPATH_ADMINISTRATOR . '/components/' . $component, null, false, true);
 
-		// Get the results for each action.
-		$canDo = $this->canDo;
+        // Get the results for each action.
+        $canDo = $this->canDo;
 
-		// If a component galleries title string is present, let's use it.
-		if ($lang->hasKey($component_title_key = $component . ($section ? "_$section" : '') . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE'))
-		{
-			$title = Text::_($component_title_key);
-		}
-		// Else if the component section string exits, let's use it
-		elseif ($lang->hasKey($component_section_key = $component . ($section ? "_$section" : '')))
-		{
-			$title = Text::sprintf('COM_RSGALLERY2_GALLERY_' . ($isNew ? 'ADD' : 'EDIT')
-					. '_TITLE', $this->escape(Text::_($component_section_key))
-					);
-		}
-		// Else use the base title
-		else
-		{
-			$title = Text::_('COM_RSGALLERY2_GALLERY_BASE_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE');
-		}
+        // If a component galleries title string is present, let's use it.
+        if ($lang->hasKey($component_title_key = $component . ($section ? "_$section" : '') . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE'))
+        {
+            $title = Text::_($component_title_key);
+        }
+        // Else if the component section string exits, let's use it
+        elseif ($lang->hasKey($component_section_key = $component . ($section ? "_$section" : '')))
+        {
+            $title = Text::sprintf('COM_RSGALLERY2_GALLERY_' . ($isNew ? 'ADD' : 'EDIT')
+                    . '_TITLE', $this->escape(Text::_($component_section_key))
+                    );
+        }
+        // Else use the base title
+        else
+        {
+            $title = Text::_('COM_RSGALLERY2_GALLERY_BASE_' . ($isNew ? 'ADD' : 'EDIT') . '_TITLE');
+        }
 
-		// Load specific css component
-		// HTMLHelper::_('stylesheet', $component . '/administrator/ ??? galleries.css', array('version' => 'auto', 'relative' => true));
+        // Load specific css component
+        // HTMLHelper::_('stylesheet', $component . '/administrator/ ??? galleries.css', array('version' => 'auto', 'relative' => true));
         $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.images');
 
-		// Prepare the toolbar.
-		ToolbarHelper::title(
-			$title,
-			'folder gallery-' . ($isNew ? 'add' : 'edit')
-				. ' ' . substr($component, 4) . ($section ? "-$section" : '') . '-gallery-' . ($isNew ? 'add' : 'edit')
-		);
+        // Prepare the toolbar.
+        ToolbarHelper::title(
+            $title,
+            'folder gallery-' . ($isNew ? 'add' : 'edit')
+                . ' ' . substr($component, 4) . ($section ? "-$section" : '') . '-gallery-' . ($isNew ? 'add' : 'edit')
+        );
 
-		// For new records, check the create permission.
-		if ($isNew && (count($user->getAuthorisedCategories($component, 'core.create')) > 0))
-		{
-			ToolbarHelper::saveGroup(
-				[
-					['apply', 'gallery.apply'],
-					['save', 'gallery.save'],
-					['save2new', 'gallery.save2new']
-				],
-				'btn-success'
-			);
+        // For new records, check the create permission.
+        if ($isNew && (count($user->getAuthorisedCategories($component, 'core.create')) > 0))
+        {
+            ToolbarHelper::saveGroup(
+                [
+                    ['apply', 'gallery.apply'],
+                    ['save', 'gallery.save'],
+                    ['save2new', 'gallery.save2new']
+                ],
+                'btn-success'
+            );
 
-			ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
-		}
+            ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+        }
 
-		// If not checked out, can save the item.
-		else
-		{
-			// Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
-			$itemEditable = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId);
+        // If not checked out, can save the item.
+        else
+        {
+            // Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
+            $itemEditable = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_user_id == $userId);
 
-			$toolbarButtons = [];
+            $toolbarButtons = [];
 
-			// Can't save the record if it's checked out and editable
-			if (!$checkedOut && $itemEditable)
-			{
-				$toolbarButtons[] = ['apply', 'gallery.apply'];
-				$toolbarButtons[] = ['save', 'gallery.save'];
+            // Can't save the record if it's checked out and editable
+            if (!$checkedOut && $itemEditable)
+            {
+                $toolbarButtons[] = ['apply', 'gallery.apply'];
+                $toolbarButtons[] = ['save', 'gallery.save'];
 
-				if ($canDo->get('core.create'))
-				{
-					$toolbarButtons[] = ['save2new', 'gallery.save2new'];
-				}
-			}
+                if ($canDo->get('core.create'))
+                {
+                    $toolbarButtons[] = ['save2new', 'gallery.save2new'];
+                }
+            }
 
-			// If an existing item, can save to a copy.
-			if ($canDo->get('core.create'))
-			{
-				$toolbarButtons[] = ['save2copy', 'gallery.save2copy'];
-			}
+            // If an existing item, can save to a copy.
+            if ($canDo->get('core.create'))
+            {
+                $toolbarButtons[] = ['save2copy', 'gallery.save2copy'];
+            }
 
-			ToolbarHelper::saveGroup(
-				$toolbarButtons,
-				'btn-success'
-			);
+            ToolbarHelper::saveGroup(
+                $toolbarButtons,
+                'btn-success'
+            );
 
-			if (ComponentHelper::isEnabled('com_history') && $componentParams->get('save_history', 0) && $itemEditable)
-			{
-				$typeAlias = $extension . '.gallery';
-				ToolbarHelper::versions($typeAlias, $this->item->id);
-			}
+            if (ComponentHelper::isEnabled('com_history') && $componentParams->get('save_history', 0) && $itemEditable)
+            {
+                $typeAlias = $extension . '.gallery';
+                ToolbarHelper::versions($typeAlias, $this->item->id);
+            }
 
-			ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
-		}
+            ToolbarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+        }
 
-		ToolbarHelper::divider();
+        ToolbarHelper::divider();
 
-		// Compute the ref_key
-		$ref_key = strtoupper($component . ($section ? "_$section" : '')) . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_HELP_KEY';
+        // Compute the ref_key
+        $ref_key = strtoupper($component . ($section ? "_$section" : '')) . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT') . '_HELP_KEY';
 
-		// Check if thr computed ref_key does exist in the component
-		if (!$lang->hasKey($ref_key))
-		{
-			$ref_key = 'JHELP_COMPONENTS_'
-						. strtoupper(substr($component, 4) . ($section ? "_$section" : ''))
-						. '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT');
-		}
+        // Check if thr computed ref_key does exist in the component
+        if (!$lang->hasKey($ref_key))
+        {
+            $ref_key = 'JHELP_COMPONENTS_'
+                        . strtoupper(substr($component, 4) . ($section ? "_$section" : ''))
+                        . '_GALLERY_' . ($isNew ? 'ADD' : 'EDIT');
+        }
 
-		/*
+        /*
          * Get help for the gallery/section view for the component by
          * -remotely searching in a language defined dedicated URL: *component*_HELP_URL
          * -locally  searching in a component help file if helpURL param exists in the component and is set to ''
          * -remotely searching in a component URL if helpURL param exists in the component and is NOT set to ''
          *
-		if ($lang->hasKey($lang_help_url = strtoupper($component) . '_HELP_URL'))
-		{
-			$debug = $lang->setDebug(false);
-			$url = Text::_($lang_help_url);
-			$lang->setDebug($debug);
-		}
-		else
-		{
-			$url = null;
-		}
+        if ($lang->hasKey($lang_help_url = strtoupper($component) . '_HELP_URL'))
+        {
+            $debug = $lang->setDebug(false);
+            $url = Text::_($lang_help_url);
+            $lang->setDebug($debug);
+        }
+        else
+        {
+            $url = null;
+        }
 
-		ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
-		/**/
+        ToolbarHelper::help($ref_key, $componentParams->exists('helpURL'), $url, $component);
+        /**/
     }
 
     /**
@@ -524,5 +526,4 @@ class HtmlView extends BaseHtmlView
             'a.id'           => Text::_('JGRID_HEADING_ID'),
         );
     }
-
 }

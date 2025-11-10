@@ -49,7 +49,7 @@ class Parents4GalleryListField extends ListField
      *
      * @var    string
      * @since  5.1.0     */
-//	protected $layout = 'joomla.form.field.ParentList';
+//  protected $layout = 'joomla.form.field.ParentList';
 
     /**
      * Method to get a list of galleries (?that respects access controls and can be used for
@@ -69,7 +69,7 @@ class Parents4GalleryListField extends ListField
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		    $query = $db->createQuery()
+            $query = $db->createQuery()
                 //->select('id AS value, name AS text, level, published, lft, language')
                 ->select('id AS value, name AS text, level')
                 ->from($db->quoteName('#__rsg2_galleries'))
@@ -89,52 +89,51 @@ class Parents4GalleryListField extends ListField
 
         // Pad the option text with spaces using depth level as a multiplier.
         for ($i = 0, $n = count($options); $i < $n; $i++) {
-//			// Translate ROOT
-//			if ($this->element['parent'] == true)
-//			{
-//				if ($options[$i]->level == 0)
-//				{
-//				    // -- No Root parent --
-//					$options[$i]->text = Text::_('JGLOBAL_ROOT_PARENT');
-//				}
-//			}
+//          // Translate ROOT
+//          if ($this->element['parent'] == true)
+//          {
+//              if ($options[$i]->level == 0)
+//              {
+//                  // -- No Root parent --
+//                  $options[$i]->text = Text::_('JGLOBAL_ROOT_PARENT');
+//              }
+//          }
 
-//			if ($options[$i]->published == 1)
-//			{
+//          if ($options[$i]->published == 1)
+//          {
             $options[$i]->text = str_repeat(
-                    '- ',
-                    !$options[$i]->level ? 0 : $options[$i]->level - 1,
-                ) . $options[$i]->text;
-//			}
-//			else
-//			{
-//				$options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
-//			}
+                '- ',
+                !$options[$i]->level ? 0 : $options[$i]->level - 1,
+            ) . $options[$i]->text;
+//          }
+//          else
+//          {
+//              $options[$i]->text = str_repeat('- ', !$options[$i]->level ? 0 : $options[$i]->level - 1) . '[' . $options[$i]->text . ']';
+//          }
             /**
-			// Displays language code if not set to All
-			if ($options[$i]->language !== '*')
-			{
-				$options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
-			}
-			/**/
+            // Displays language code if not set to All
+            if ($options[$i]->language !== '*')
+            {
+                $options[$i]->text = $options[$i]->text . ' (' . $options[$i]->language . ')';
+            }
+            /**/
         }
 
-//		foreach ($options as $i => $option)
-//		{
-//			/*
-//			 * To take save or create in a gallery you need to have create rights for that gallery unless the item is already in that gallery.
-//			 * Unset the option if the user isn't authorised for it. In this field assets are always galleries.
-//			 */
-//			if ($option->level != 0 && !$user->authorise('core.create', 'com_rsgallery2' . '.gallery.' . $option->value))
-//			{
-//				unset($options[$i]);
-//			}
-//		}
+//      foreach ($options as $i => $option)
+//      {
+//          /*
+//           * To take save or create in a gallery you need to have create rights for that gallery unless the item is already in that gallery.
+//           * Unset the option if the user isn't authorised for it. In this field assets are always galleries.
+//           */
+//          if ($option->level != 0 && !$user->authorise('core.create', 'com_rsgallery2' . '.gallery.' . $option->value))
+//          {
+//              unset($options[$i]);
+//          }
+//      }
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
 
         return $options;
     }
-
 }

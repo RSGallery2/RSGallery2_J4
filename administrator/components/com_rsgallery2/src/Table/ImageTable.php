@@ -29,9 +29,9 @@ use UnexpectedValueException;
  */
 class ImageTable extends Table
 {
-	public $access = null;
+    public $access = null;
 
-	/**
+    /**
      * Constructor
      *
      * @param   DatabaseDriver  $db  Database connector object
@@ -216,35 +216,35 @@ class ImageTable extends Table
     public function delete($pk = null)
     {
         /**
-		$IsDeleted = false;
+        $IsDeleted = false;
 
-		try
-		{
+        try
+        {
 
-		    // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
+            // ToDo: handle deleting of files like in menu (m-controller -> m-model -> m-table)
 
             $filename          = $this->name;
 
-			//$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
-			$imgFileModel = $this->getModel ('imageFile');
+            //$imgFileModel = JModelLegacy::getInstance('imageFile', 'RSGallery2Model');
+            $imgFileModel = $this->getModel ('imageFile');
 
-			$IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
-			if (! $IsFilesAreDeleted)
-			{
-				// Remove from database
-			}
+            $IsFilesAreDeleted = $imgFileModel->deleteImgItemImages($filename);
+            if (! $IsFilesAreDeleted)
+            {
+                // Remove from database
+            }
 
             $IsDeleted = parent::delete($pk);
-		}
-		catch (\RuntimeException $e)
-		{
-			$OutTxt = '';
-			$OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
-			$OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+        }
+        catch (\RuntimeException $e)
+        {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing image.table.delete: "' . $pk . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-			$app = Factory::getApplication();
-			$app->enqueueMessage($OutTxt, 'error');
-		}
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
 
         return $IsDeleted;
         /**/

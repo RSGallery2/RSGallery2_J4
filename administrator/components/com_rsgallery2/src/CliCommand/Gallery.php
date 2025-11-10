@@ -30,24 +30,24 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Gallery extends AbstractCommand
 {
-  use DatabaseAwareTrait;
+    use DatabaseAwareTrait;
 
   /**
    * The default command name
    *
    * @var    string
    */
-  protected static $defaultName = 'rsgallery2:gallery';
+    protected static $defaultName = 'rsgallery2:gallery';
 
   /**
    * @var   SymfonyStyle
    */
-  private $ioStyle;
+    private $ioStyle;
 
   /**
    * @var   InputInterface
    */
-  private $cliInput;
+    private $cliInput;
 
   /**
    * Instantiate the command.
@@ -56,14 +56,14 @@ class Gallery extends AbstractCommand
    *
    * @since  4.0.X
    */
-  public function __construct()
-  {
-    parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
-    // $db = $this->getDatabase();
-    $db = Factory::getContainer()->get(DatabaseInterface::class);
-    $this->setDatabase($db);
-  }
+      // $db = $this->getDatabase();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $this->setDatabase($db);
+    }
 
   /**
    * Configure the IO.
@@ -73,11 +73,11 @@ class Gallery extends AbstractCommand
    *
    * @return  void
    */
-  private function configureIO(InputInterface $input, OutputInterface $output)
-  {
-    $this->cliInput = $input;
-    $this->ioStyle  = new SymfonyStyle($input, $output);
-  }
+    private function configureIO(InputInterface $input, OutputInterface $output)
+    {
+        $this->cliInput = $input;
+        $this->ioStyle  = new SymfonyStyle($input, $output);
+    }
 
   /**
    * Initialise the command.
@@ -86,19 +86,19 @@ class Gallery extends AbstractCommand
    *
    * @since  4.0.X
    */
-  protected function configure(): void
-  {
-	  $this->addOption('id', null, InputOption::VALUE_REQUIRED, 'gallery ID');
-	  $this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim lenght of variable for item keeps in one line');
+    protected function configure(): void
+    {
+        $this->addOption('id', null, InputOption::VALUE_REQUIRED, 'gallery ID');
+        $this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim lenght of variable for item keeps in one line');
 
-    $help = "<info>%command.name%</info> list variables of one rsgallery gallery
+        $help = "<info>%command.name%</info> list variables of one rsgallery gallery
   Usage: <info>php %command.full_name%</info>
     * You must specify an ID of the gallery with the <info>--id<info> option. Otherwise, it will be requested
     * You may restrict the value string length using the <info>--max_line_length</info> option. A result line that is too long will confuse the output lines
   ";
-    $this->setDescription(Text::_('List all variables of selected gallery'));
-    $this->setHelp($help);
-  }
+        $this->setDescription(Text::_('List all variables of selected gallery'));
+        $this->setHelp($help);
+    }
 
 
   /**
@@ -111,97 +111,90 @@ class Gallery extends AbstractCommand
    *
    * @since   4.0.0
    */
-  protected function doExecute(InputInterface $input, OutputInterface $output): int
-  {
-    // Configure the Symfony output helper
-    $this->configureIO($input, $output);
-    $this->ioStyle->title('RSGallery2 Gallery');
+    protected function doExecute(InputInterface $input, OutputInterface $output): int
+    {
+      // Configure the Symfony output helper
+        $this->configureIO($input, $output);
+        $this->ioStyle->title('RSGallery2 Gallery');
 
-	  $galleryId      = $input->getOption('id') ?? '';
-	  $max_line_length = $input->getOption('max_line_length') ?? null;
+        $galleryId      = $input->getOption('id') ?? '';
+        $max_line_length = $input->getOption('max_line_length') ?? null;
 
-	  if (empty ($galleryId))
-	  {
-		  $this->ioStyle->error("The gallery id '" . $galleryId . "' is invalid (empty) !");
+        if (empty($galleryId)) {
+            $this->ioStyle->error("The gallery id '" . $galleryId . "' is invalid (empty) !");
 
-		  return Command::FAILURE;
-	  }
+            return Command::FAILURE;
+        }
 
-	  $galleryAssoc = $this->getItemAssocFromDB($galleryId);
+        $galleryAssoc = $this->getItemAssocFromDB($galleryId);
 
-	  // If no categories are found show a warning and set the exit code to 1.
-	  if (empty($galleryAssoc))
-	  {
-		  $this->ioStyle->error("The gallery id '" . $galleryId . "' is invalid, No gallery found matching your criteria!");
+        // If no categories are found show a warning and set the exit code to 1.
+        if (empty($galleryAssoc)) {
+            $this->ioStyle->error("The gallery id '" . $galleryId . "' is invalid, No gallery found matching your criteria!");
 
-		  return Command::FAILURE;
-	  }
+            return Command::FAILURE;
+        }
 
-	  $strGalleryAssoc = $this->assoc2DefinitionList($galleryAssoc, $max_line_length);
+        $strGalleryAssoc = $this->assoc2DefinitionList($galleryAssoc, $max_line_length);
 
-	  // ToDo: Use horizontal table again ;-)
-	  foreach ($strGalleryAssoc as $value)
-	  {
-		  if (!\is_array($value))
-		  {
-			  throw new \InvalidArgumentException('Value should be an array, string, or an instance of TableSeparator.');
-		  }
+        // ToDo: Use horizontal table again ;-)
+        foreach ($strGalleryAssoc as $value) {
+            if (!\is_array($value)) {
+                throw new \InvalidArgumentException('Value should be an array, string, or an instance of TableSeparator.');
+            }
 
-		  $headers[] = key($value);
-		  $row[]     = current($value);
-	  }
+            $headers[] = key($value);
+            $row[]     = current($value);
+        }
 
-	  $this->ioStyle->horizontalTable($headers, [$row]);
+        $this->ioStyle->horizontalTable($headers, [$row]);
 
-	  return Command::SUCCESS;
-  }
+        return Command::SUCCESS;
+    }
 
-	/**
-	 * Retrieves extension list from DB
-	 *
-	 * @return array
-	 *
-	 * @since  4.0.X
-	 */
-	private function getItemAssocFromDB(string $galleryId): array
-	{
-		$db    = $this->getDatabase();
-		$query = $db->createQuery();
-		$query
-			->select('*')
-			->from('#__rsg2_galleries')
-			->where($db->quoteName('id') . ' = ' . (int) $galleryId);
+    /**
+     * Retrieves extension list from DB
+     *
+     * @return array
+     *
+     * @since  4.0.X
+     */
+    private function getItemAssocFromDB(string $galleryId): array
+    {
+        $db    = $this->getDatabase();
+        $query = $db->createQuery();
+        $query
+            ->select('*')
+            ->from('#__rsg2_galleries')
+            ->where($db->quoteName('id') . ' = ' . (int) $galleryId);
 
-		$db->setQuery($query);
-		$galleryAssoc = $db->loadAssoc();
+        $db->setQuery($query);
+        $galleryAssoc = $db->loadAssoc();
 
-		return $galleryAssoc;
-	}
+        return $galleryAssoc;
+    }
 
-	/**
-	 * Trim length of each value in array $galleryAssoc to max_len
-	 *
-	 * @param   array  $galleryAssoc  in data as association key => val
-	 * @param          $max_len
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0	 */
-	private function assoc2DefinitionList(array $galleryAssoc, $max_len = 70)
-	{
-		$items = [];
+    /**
+     * Trim length of each value in array $galleryAssoc to max_len
+     *
+     * @param   array  $galleryAssoc  in data as association key => val
+     * @param          $max_len
+     *
+     * @return array
+     *
+     * @since  5.1.0     */
+    private function assoc2DefinitionList(array $galleryAssoc, $max_len = 70)
+    {
+        $items = [];
 
-		if (empty($max_len))
-		{
-			$max_len = 70;
-		}
+        if (empty($max_len)) {
+            $max_len = 70;
+        }
 
-		foreach ($galleryAssoc as $key => $value)
-		{
-			$items[] = [$key => mb_strimwidth((string) $value, 0, $max_len, '...')];
-		}
+        foreach ($galleryAssoc as $key => $value) {
+            $items[] = [$key => mb_strimwidth((string) $value, 0, $max_len, '...')];
+        }
 
-		return $items;
-	}
-
+        return $items;
+    }
 }

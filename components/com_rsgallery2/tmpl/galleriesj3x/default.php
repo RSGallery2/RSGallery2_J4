@@ -30,11 +30,11 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x
 
 //if ($this->item->params->get('show_name')) {
 //
-//	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-//	} else {
-//		echo $this->item->name;
-//	}
+//  if ($this->Params->get('show_rsgallery2_name_label')) {
+//      echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
+//  } else {
+//      echo $this->item->name;
+//  }
 //}
 //
 //echo $this->item->event->afterDisplayTitle;
@@ -47,16 +47,16 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x
 
 echo '';
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite)) {
+if (!empty($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: galleriesJ3x view<br>'
         . '* <br>'
         . '* ??? global<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -102,16 +102,16 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=galleriesj3x'); ?>" method="post"
           class="form-validate form-horizontal well">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <h1>RSGallery2 "galleries j3x legacy" view </h1>
         <?php endif; ?>
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <hr>
         <?php endif; ?>
 
-	    <?php
-	    echo $layout->render($displayData);
+        <?php
+        echo $layout->render($displayData);
         ?>
 
     </form>

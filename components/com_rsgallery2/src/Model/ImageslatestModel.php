@@ -295,6 +295,4 @@ class imageslatestModel extends ListModel
 
         return parent::getStoreId($id);
     }
-
-
 }

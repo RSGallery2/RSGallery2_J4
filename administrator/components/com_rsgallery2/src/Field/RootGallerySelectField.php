@@ -37,7 +37,7 @@ class RootGallerySelectField extends ListField
      *
      * @var    array
      * @since  5.1.0     */
-//	protected static $options = [];
+//  protected static $options = [];
 
     /**
      * The field type.
@@ -54,11 +54,11 @@ class RootGallerySelectField extends ListField
      * @return  string  The field input markup.
      *
      * @since   5.1.0     *
-	protected function getInput()
-	{
-		return $this->getOptions() ? parent::getInput() : '';
-	}
-	/**/
+    protected function getInput()
+    {
+        return $this->getOptions() ? parent::getInput() : '';
+    }
+    /**/
 
     /**
      * Method to get a list of options for a list input.
@@ -74,11 +74,11 @@ class RootGallerySelectField extends ListField
             // $user = Factory::getApplication()->getIdentity(); // Todo: Restrict to accessible galleries
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->createQuery()
+            $query = $db->createQuery()
                 ->select('id AS value, name AS text, level')
                 ->from($db->quoteName('#__rsg2_galleries'))
                 ->where($db->quoteName('id') . ' != 1')
-//				->where($db->quoteName('published') . ' = 1')
+//              ->where($db->quoteName('published') . ' = 1')
                 // ToDo: Use option in XML to select ASC/DESC
                 ->order('lft ASC');
 
@@ -93,13 +93,13 @@ class RootGallerySelectField extends ListField
         // Pad the option text with spaces using depth level as a multiplier.
         for ($i = 0, $n = count($options); $i < $n; $i++) {
             $options[$i]->text = str_repeat(
-                    '- ',
-                    !$options[$i]->level ? 0 : $options[$i]->level - 1,
-                ) . $options[$i]->text;
+                '- ',
+                !$options[$i]->level ? 0 : $options[$i]->level - 1,
+            ) . $options[$i]->text;
         }
 
         // Put "Select an option" on the top of the list.
-		array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_J3X_MENU_GALLERIES_OVERVIEW')));
+        array_unshift($options, HTMLHelper::_('select.option', '0', Text::_('COM_RSGALLERY2_J3X_MENU_GALLERIES_OVERVIEW')));
 
         // Merge any additional options in the XML definition.
         $options = array_merge(parent::getOptions(), $options);
@@ -107,4 +107,3 @@ class RootGallerySelectField extends ListField
         return $options;
     }
 }
-

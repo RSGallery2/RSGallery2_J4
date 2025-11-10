@@ -32,7 +32,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
  */
 class MaintenanceCleanUpController extends BaseController
 {
-
     /**
      * Constructor.
      *
@@ -222,7 +221,7 @@ class MaintenanceCleanUpController extends BaseController
                 $lines = file($sqlUninstallFile);
 
                 // content found
-                if (!empty ($lines)) {
+                if (!empty($lines)) {
                     /*-------------------------------------------------------------------
                     Write back all (changed) lines
                     -------------------------------------------------------------------*/
@@ -311,5 +310,4 @@ class MaintenanceCleanUpController extends BaseController
         $link = 'index.php?option=com_rsgallery2&view=Maintenance';
         $this->setRedirect($link, $msg, $msgType);
     }
-
 } // class

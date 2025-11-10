@@ -8,13 +8,15 @@
  * @license        GNU General Public License version 2 or later
  */
 
-defined('JPATH_BASE') or die;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 extract($displayData);
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // ToDo: $value is string/array ??? -> $values ?
 
@@ -93,16 +95,16 @@ if ($readonly) {
         }
 
         foreach ($value as $val) {
-			$html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($val, ENT_COMPAT, 'UTF-8') . '">';
+            $html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($val, ENT_COMPAT, 'UTF-8') . '">';
         }
     } else {
-		$html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '">';
+        $html[] = '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '">';
     }
 } else {
     // Create a regular list.
     if (count($options) === 0) {
         // All Galleries have been deleted, so we need a new gallery (This will create one on save if selected).
-		$options[0]            = new \stdClass;
+        $options[0]            = new \stdClass();
         $options[0]->value     = '0';
         $options[0]->text      = Text::_('JGLOBAL_ROOT_PARENT');  // COM_RSGALLERY2_NO_PARENT
         $options[0]->level     = '1';

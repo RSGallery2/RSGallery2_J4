@@ -88,7 +88,7 @@ class HtmlView extends BaseHtmlView
         //--- Limits --------------------------------------------------------------------
 
         // Instantiate the media helper
-        $mediaHelper = new MediaHelper;
+        $mediaHelper = new MediaHelper();
 
         // Maximum allowed size in MB
         $this->UploadLimit = round($mediaHelper->toBytes(ini_get('upload_max_filesize')) / (1024 * 1024));
@@ -109,7 +109,7 @@ class HtmlView extends BaseHtmlView
         // Retrieve path from config
         $FtpUploadPath = $rsgConfig->get('ftp_path');
         // On empty use last successful
-        if (empty ($FtpUploadPath)) {
+        if (empty($FtpUploadPath)) {
             $FtpUploadPath = $rsgConfig->get('last_used_ftp_path');
         }
         $this->FtpUploadPath = $FtpUploadPath;
@@ -123,18 +123,18 @@ class HtmlView extends BaseHtmlView
         // register 'upload_drag_and_drop', 'upload_zip_pc', 'upload_folder_server'
         //$this->ActiveSelection = $rsgConfig->getLastUpdateType();
         $this->ActiveSelection = $rsgConfig->get('last_update_type');
-        if (empty ($this->ActiveSelection)) {
+        if (empty($this->ActiveSelection)) {
             $this->ActiveSelection = 'upload_drag_and_drop';
         }
 
-//		// 0: default, 1: enable, 2: disable
-//		$isUseOneGalleryNameForAllImages = $rsgConfig->get('isUseOneGalleryNameForAllImages');
-//		if (empty ($isUseOneGalleryNameForAllImages)) {
-//			$isUseOneGalleryNameForAllImages = '1';
-//		}
-//		if ($isUseOneGalleryNameForAllImages == '2') {
-//			$isUseOneGalleryNameForAllImages = '0';
-//		}
+//      // 0: default, 1: enable, 2: disable
+//      $isUseOneGalleryNameForAllImages = $rsgConfig->get('isUseOneGalleryNameForAllImages');
+//      if (empty ($isUseOneGalleryNameForAllImages)) {
+//          $isUseOneGalleryNameForAllImages = '1';
+//      }
+//      if ($isUseOneGalleryNameForAllImages == '2') {
+//          $isUseOneGalleryNameForAllImages = '0';
+//      }
 
         //--- Pre select latest gallery ?  ------------------------
 
@@ -144,7 +144,7 @@ class HtmlView extends BaseHtmlView
 
         // coming from gallery edit -> new id
         $Id = $input->get('id', 0, 'INT');
-        if (!empty ($Id)) {
+        if (!empty($Id)) {
             $IdGallerySelect = $Id;
         }
 
@@ -165,12 +165,12 @@ class HtmlView extends BaseHtmlView
         $this->form = $form;
 
         /**
-		// Check for errors.
-		if (count($errors = $this->get('Errors')))
-		{
-			throw new \RuntimeException(implode('<br />', $errors), 500);
-		}
-		/**/
+        // Check for errors.
+        if (count($errors = $this->get('Errors')))
+        {
+            throw new \RuntimeException(implode('<br />', $errors), 500);
+        }
+        /**/
 
         // Assign the Data
         // $this->form = $form;
@@ -198,7 +198,7 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar()
     {
         // on develop show open tasks if existing
-        if (!empty ($this->isDevelop)) {
+        if (!empty($this->isDevelop)) {
             echo '<span style="color:red">'
                 . 'Tasks: <br>'
                 . '* upload big batch (50) last is uploaded first<br>'
@@ -206,37 +206,35 @@ class HtmlView extends BaseHtmlView
                 . '* Check b5 on card  on messages (error, ...)<br>'
                 . '* !!! ---- more --------------<br>'
 //                . '* <br>'
-//				. '* check mime type<br>'
-//				. '* Mime type: zip			     <br>'
-//				. '* Mime type: images			 <br>'
-//				. '* Mime type: zip -> images	<br>'
-//				. '* Mime type: folder -> images<br>'
-//				. '* Redesign upload list: flex<br>'
-//				. '* typescript: redesign uplod list filling -> use php html prepared blocks and clone them<br>'
-//				. '* status bar -> bootstrap ? + aria ...<br>'
-//				. '* check image db for not set items <br>'
-//				. '* touch ?<br>'
-//				. '* use makeSafeUrlNameRSG2 see b_Release_4_5_1\admin\models\image.php<br>'
-//				. '* GallerySelectField: a) Trashed deleted ?  b) ? published  <br>'
-//				. '* Make /Maximum/ Element with title in hover<br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* check mime type<br>'
+//              . '* Mime type: zip              <br>'
+//              . '* Mime type: images           <br>'
+//              . '* Mime type: zip -> images   <br>'
+//              . '* Mime type: folder -> images<br>'
+//              . '* Redesign upload list: flex<br>'
+//              . '* typescript: redesign uplod list filling -> use php html prepared blocks and clone them<br>'
+//              . '* status bar -> bootstrap ? + aria ...<br>'
+//              . '* check image db for not set items <br>'
+//              . '* touch ?<br>'
+//              . '* use makeSafeUrlNameRSG2 see b_Release_4_5_1\admin\models\image.php<br>'
+//              . '* GallerySelectField: a) Trashed deleted ?  b) ? published  <br>'
+//              . '* Make /Maximum/ Element with title in hover<br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                 . '</span><br>';
         }
 
         // Set the title
         ToolBarHelper::title(Text::_('COM_RSGALLERY2_DO_UPLOAD'), 'upload');
 
-//		// Get the toolbar object instance
-//		$toolbar = Toolbar::getInstance('toolbar');
+//      // Get the toolbar object instance
+//      $toolbar = Toolbar::getInstance('toolbar');
 
-//		// Options button.
-//		if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
-//		{
-//	    	$toolbar->preferences('com_rsgallery2');
-//		}
+//      // Options button.
+//      if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2'))
+//      {
+//          $toolbar->preferences('com_rsgallery2');
+//      }
     }
-
 }
-

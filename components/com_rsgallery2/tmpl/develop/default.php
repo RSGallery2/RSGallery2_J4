@@ -15,11 +15,11 @@
 use Joomla\CMS\Language\Text;
 
 //if ($this->item->params->get('show_name')) {
-//	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-//	} else {
-//		echo $this->item->name;
-//	}
+//  if ($this->Params->get('show_rsgallery2_name_label')) {
+//      echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
+//  } else {
+//      echo $this->item->name;
+//  }
 //}
 //
 //echo $this->item->event->afterDisplayTitle;
@@ -31,27 +31,25 @@ echo '<h1> RSGallery2 "develop" view </h1>';
 //echo '<dl class="xrowx">';
 //foreach ($this->routeResults as $route => $routeResult) {
 //
-//	echo '<dt class="xcol-xsm-3x>' . $route . '</dt>';
-//	echo '<dd class="xcol-xsm-9">' . $routeResult . '</dd>';
+//  echo '<dt class="xcol-xsm-3x>' . $route . '</dt>';
+//  echo '<dd class="xcol-xsm-9">' . $routeResult . '</dd>';
 //
 //
 //}
 //
 echo '<dl>';
 foreach ($this->routeResults as $routePure => $routeResult) {
-
-	echo '<dt>' . 'Route:     '. $routePure . '</dt>';
-	echo '<dd>' . 'Route sef: '. $routeResult . '</dd>';
+    echo '<dt>' . 'Route:     ' . $routePure . '</dt>';
+    echo '<dd>' . 'Route sef: ' . $routeResult . '</dd>';
 }
 
 echo '</dl>';
 echo '<hr>';
 
 foreach ($this->routeResults as $routePure => $routeResult) {
-
-	echo 'Route org&nbsp;: ' . '<a href="' . $routePure . '">' . $routePure . '</a>';
-	echo '<br>';
-	echo 'Route sef:&nbsp;' . '<a href="' . $routeResult . '">' . $routeResult . '</a>';
+    echo 'Route org&nbsp;: ' . '<a href="' . $routePure . '">' . $routePure . '</a>';
+    echo '<br>';
+    echo 'Route sef:&nbsp;' . '<a href="' . $routeResult . '">' . $routeResult . '</a>';
 }
 
 echo '<hr>';
@@ -68,5 +66,3 @@ echo 'Route sim:&nbsp;' . '<a href="' . $routeResult . '">' . $routeResult . '</
 // <dl class="row">
 //  <dt class="col-sm-3">Description lists</dt>
 //  <dd class="col-http://127.0.0.1/Joomla5x/index.php/rsg2-develop.html?view=galleryj3x&id=4sm-9">A description list is perfect for defining terms.</dd>
-
-

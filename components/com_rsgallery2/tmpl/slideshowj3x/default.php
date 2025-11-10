@@ -30,11 +30,11 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.slideshowJ
 
 //if ($this->item->params->get('show_name')) {
 //
-//	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-//	} else {
-//		echo $this->item->name;
-//	}
+//  if ($this->Params->get('show_rsgallery2_name_label')) {
+//      echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
+//  } else {
+//      echo $this->item->name;
+//  }
 //}
 //
 //echo $this->item->event->afterDisplayTitle;
@@ -46,14 +46,14 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.slideshowJ
 //echo $this->item->event->afterDisplayContent;
 
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite)) {
+if (!empty($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: slideshowJ3x view<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -77,7 +77,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
     <div class="rsg2_x_form rsg2__slide_area">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <h1> Menu RSGallery2 "slideshow" J3x view </h1>
             <hr>
         <?php endif; ?>

@@ -32,8 +32,8 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 class HtmlView extends BaseHtmlView
 {
     protected $configVars;
-	protected bool $isDevelop;
-	protected $sidebar;
+    protected bool $isDevelop;
+    protected $sidebar;
 
     /**
      * Method to display the view.
@@ -80,30 +80,30 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance('toolbar');
 
         // on develop show open tasks if existing
-        if (!empty ($this->isDevelop)) {
+        if (!empty($this->isDevelop)) {
             echo '<span style="color:red">'
                 . 'Tasks: <br>'
                 . '* Secure user input <br>'
                 . '* copy to file <br>'
                 . '* copy to clipboard <br>'
                 . '* RawView: dt dl dd definition on small width will overlap<br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                 . '</span><br><br>';
         }
 
         switch ($Layout) {
             case 'RawView':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_VIEW'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                    . ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_VIEW'), 'screwdriver');
                 ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 break;
 
             case 'RawEdit':
-				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
-					. ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'), 'screwdriver');
+                ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE')
+                    . ': ' . Text::_('COM_RSGALLERY2_CONFIGURATION_RAW_EDIT'), 'screwdriver');
                 ToolBarHelper::apply('config.apply_rawEdit');
                 ToolBarHelper::save('config.save_rawEdit');
                 ToolBarHelper::cancel('config.cancel_rawEdit', 'JTOOLBAR_CLOSE');
@@ -118,6 +118,4 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_rsgallery2');
         }
     }
-
 }
-

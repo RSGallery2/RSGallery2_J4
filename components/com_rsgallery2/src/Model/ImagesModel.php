@@ -94,12 +94,12 @@ class ImagesModel extends ListModel
         parent::__construct($config, $factory);
     }
 
-	/**
-	 * Return cascaded parameters
-	 * @return mixed
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Return cascaded parameters
+     * @return mixed
+     *
+     * @since  5.1.0
+     */
     public function getlayoutParams()
     {
         if ($this->layoutParams == null) {
@@ -275,13 +275,13 @@ class ImagesModel extends ListModel
     /**/
 
 
-	/**
-	 * Method to get an array of data items.
-	 *
-	 * @return  mixed  An array of data items on success, false on failure.
-	 *
-	 * @since   5.1.0
-	 */
+    /**
+     * Method to get an array of data items.
+     *
+     * @return  mixed  An array of data items on success, false on failure.
+     *
+     * @since   5.1.0
+     */
     public function getItems()
     {
         $app  = Factory::getApplication();
@@ -389,25 +389,25 @@ class ImagesModel extends ListModel
         return $images;
     }
 
-	/**
-	 * returns url by J3/j4 style path
-	 *
-	 * @param $image
-	 *
-	 * @since 4.5.0.0
-	 */
-	public function assignImageUrl($image)
+    /**
+     * returns url by J3/j4 style path
+     *
+     * @param $image
+     *
+     * @since 4.5.0.0
+     */
+    public function assignImageUrl($image)
     {
         try {
             // ToDo: watermarked file
 
             // J4x ?
             if (!$image->use_j3x_location) {
-                $imagePaths = new ImagePathsData ($image->gallery_id);
+                $imagePaths = new ImagePathsData($image->gallery_id);
                 $imagePaths->assignPathData($image);
             } else {
                 // J3x
-                $imagePathJ3x = new ImagePathsJ3xData ();
+                $imagePathJ3x = new ImagePathsJ3xData();
                 $imagePathJ3x->assignPathData($image);
             }
         } catch (\RuntimeException $e) {
@@ -423,25 +423,28 @@ class ImagesModel extends ListModel
 
     //-----------------------------------------------------------------
 
-	/**
-	 * Add url for inline layout to image data
-	 *
-	 * @param $image
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Add url for inline layout to image data
+     *
+     * @param $image
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function AssignUrlDownloadImage($image)
     {
         $image->UrlDownload = ''; // fall back
 
         // ToDo: use one function instead of two
         try {
-            $image->UrlDownload = Route::_('index.php?option=com_rsgallery2'
-                . '&task=imagefile.downloadfile&id=' . $image->id
-                ,true,0,true);
-
+            $image->UrlDownload = Route::_(
+                'index.php?option=com_rsgallery2'
+                . '&task=imagefile.downloadfile&id=' . $image->id,
+                true,
+                0,
+                true
+            );
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'ImagesModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
@@ -556,14 +559,14 @@ class ImagesModel extends ListModel
         return $images;
     }
 
-	/**
-	 * Return DB gallery data as object
-	 * @param $gid
-	 *
-	 * @return mixed|\stdClass
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Return DB gallery data as object
+     * @param $gid
+     *
+     * @return mixed|\stdClass
+     *
+     * @since  5.1.0
+     */
     public function galleryData($gid = 0)
     {
         $gallery = new \stdClass();
@@ -777,12 +780,11 @@ class ImagesModel extends ListModel
 
         /* parent gallery name */
         $query->select('gal.name as gallery_name')
-            ->join('LEFT', '#__rsg2_galleries AS gal ON gal.id = a.gallery_id'
-            );
+            ->join('LEFT', '#__rsg2_galleries AS gal ON gal.id = a.gallery_id');
 
         //// Join over the language
         //$query->select('l.title AS language_title, l.image AS language_image')
-        //	->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
+        //  ->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
 
         // Join over the users for the checked out user.
         $query
@@ -927,8 +929,8 @@ class ImagesModel extends ListModel
             . 'a.note, '
             . 'a.params, '
             . 'a.published, '
-//            . 'a.published_up, '
-//            . 'a.published_down, '
+            //            . 'a.published_up, '
+            //            . 'a.published_down, '
 
             . 'a.hits, '
             . 'a.rating, '
@@ -948,10 +950,9 @@ class ImagesModel extends ListModel
             . 'a.asset_id, '
             . 'a.access, '
             . 'a.use_j3x_location ',
-        /**/
+            /**/
         );
 
         return $query;
     }
-
 }

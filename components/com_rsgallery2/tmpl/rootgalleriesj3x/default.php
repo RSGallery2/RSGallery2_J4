@@ -70,13 +70,13 @@ $displayRandom = $this->params->get('displayRandom');
 
     <div class="rsg2__form rsg2__galleries_area">
 
-        <?php if (!empty($isDebugSite)): ?>
+        <?php if (!empty($isDebugSite)) : ?>
             <h5>RSGallery2 "j3x legacy" root gallery and latest galleries overview </h5>
         <?php endif; ?>
 
         <?php //--- display search ---------- ?>
 
-        <?php if ($displaySearch): ?>
+        <?php if ($displaySearch) : ?>
             <?php echo $searchLayout->render(); ?>
         <?php endif; ?>
 
@@ -85,7 +85,7 @@ $displayRandom = $this->params->get('displayRandom');
 
         <?php echo $layout->render($displayData); ?>
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <hr>
         <?php endif; ?>
 
@@ -94,13 +94,13 @@ $displayRandom = $this->params->get('displayRandom');
 
         <?php //--- display latest images ---------- ?>
 
-        <?php if ($displayLatest): ?>
+        <?php if ($displayLatest) : ?>
             <?php echo $this->loadTemplate('latest_images'); ?>
         <?php endif; ?>
 
         <?php //--- display random images ---------- ?>
 
-        <?php if ($displayRandom): ?>
+        <?php if ($displayRandom) : ?>
             <?php echo $this->loadTemplate('random_images'); ?>
         <?php endif; ?>
 

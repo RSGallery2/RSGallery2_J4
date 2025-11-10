@@ -18,21 +18,21 @@ use Joomla\CMS\Language\Text;
 
 function displayRsgMenuLinks($Rsg2MenuLinks)
 {
-    if (empty ($Rsg2MenuLinks)) {
+    if (empty($Rsg2MenuLinks)) {
         echo "<br> % No items found<br>";
     } else {
         ?>
 
-		<table class="table">
-			<thead>
-			<tr>
-				<th scope="col">Idx</th>
-				<th scope="col">Menu Id</th>
-				<th scope="col">Link</th>
-				<!--th scope="col">Params</th-->
-			</tr>
-			</thead>
-			<tbody>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Idx</th>
+                <th scope="col">Menu Id</th>
+                <th scope="col">Link</th>
+                <!--th scope="col">Params</th-->
+            </tr>
+            </thead>
+            <tbody>
 
             <?php
             $row_id = 0;
@@ -42,100 +42,100 @@ function displayRsgMenuLinks($Rsg2MenuLinks)
 
                 ?>
 
-				<tr>
-					<th scope="row"><?php echo $row_id; ?></th>
-					<td><?php echo $idx; ?></td>
-					<td><?php echo $link; ?></td>
-					<!--td><?php echo "%"; // $params;
+                <tr>
+                    <th scope="row"><?php echo $row_id; ?></th>
+                    <td><?php echo $idx; ?></td>
+                    <td><?php echo $link; ?></td>
+                    <!--td><?php echo "%"; // $params;
                     ?></td-->
-				</tr>
+                </tr>
 
                 <?php
             }
             ?>
-			</tbody>
-		</table>
+            </tbody>
+        </table>
 
         <?php
     }
 }
 
 /*--------------------------------------------------------------------------------
-	change menu links (example: j3x: '...&gallery&Gid...' => j4x: '...&galleryj3x&Gid...'
+    change menu links (example: j3x: '...&gallery&Gid...' => j4x: '...&galleryj3x&Gid...'
 --------------------------------------------------------------------------------*/
 
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks'); ?>"
       method="post" name="adminForm" id="adminForm">
-	<div class="d-flex flex-row">
+    <div class="d-flex flex-row">
         <?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
-		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
-				<div class="card text-center">
-					<div class="card-body">
-						<h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?></h3>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?></h3>
 
-						<p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
+                        <p class="card-text"><?php echo Text::_('COM_RSGALLERY2_USE_BELOW_BUTTON'); ?></p>
 
-						<button class="btn btn-success" type="submit"
-						        onclick="Joomla.submitbutton('MaintenanceJ3x.j3xReplaceGid2IdMenuLinks');return false;">
+                        <button class="btn btn-success" type="submit"
+                                onclick="Joomla.submitbutton('MaintenanceJ3x.j3xReplaceGid2IdMenuLinks');return false;">
                             <?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID'); ?>
-						</button>
+                        </button>
 
-                        <?php // 				// ToDo: remove  ?>
-						<button class="btn btn-info" type="submit"
-						        onclick="Joomla.submitbutton('MaintenanceJ3x.j3xReplaceId2GidMenuLinks');return false;">
+                        <?php //                // ToDo: remove  ?>
+                        <button class="btn btn-info" type="submit"
+                                onclick="Joomla.submitbutton('MaintenanceJ3x.j3xReplaceId2GidMenuLinks');return false;">
                             <?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_ID2GID'); ?>
-						</button>
+                        </button>
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
-				<div class="card text-center">
-					<div class="card-body">
-						<p class="card-text">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <p class="card-text">
                             <?php echo Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC'); ?>
-						</p>
+                        </p>
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
-				<div class="card text-center">
-					<div class="card-body">
-						<h3 class="card-title"><?php echo Text::_('Links which will be upgraded', true); ?></h3>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo Text::_('Links which will be upgraded', true); ?></h3>
 
-						<p class="card-text">
+                        <p class="card-text">
                             <?php displayRsgMenuLinks($this->j3xRsg2MenuLinks); ?>
-						</p>
+                        </p>
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
-				<div class="card text-center">
-					<div class="card-body">
-						<h3 class="card-title"><?php echo Text::_('Links which have been upgraded', true); ?></h3>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo Text::_('Links which have been upgraded', true); ?></h3>
 
-						<p class="card-text">
+                        <p class="card-text">
                             <?php displayRsgMenuLinks($this->j4xRsg2MenuLinks); ?>
-						</p>
+                        </p>
 
-					</div>
-				</div>
+                    </div>
+                </div>
 
 
-				<input type="hidden" name="boxchecked" value="0"/>
-				<input type="hidden" name="task" value=""/>
+                <input type="hidden" name="boxchecked" value="0"/>
+                <input type="hidden" name="task" value=""/>
                 <?php echo HTMLHelper::_('form.token'); ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>

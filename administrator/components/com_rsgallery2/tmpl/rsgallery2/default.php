@@ -25,11 +25,11 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2'); ?>"
-	      method="post" name="adminForm" id="adminForm" class="form-validate">
-		<div class="d-flex flex-row">
+          method="post" name="adminForm" id="adminForm" class="form-validate">
+        <div class="d-flex flex-row">
 
-			<div class="flex-fill">
-				<div id="j-main-container" class="j-main-container">
+            <div class="flex-fill">
+                <div id="j-main-container" class="j-main-container">
 
                     <?php
 
@@ -44,16 +44,22 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
                         //--- load additional language file --------------------------------
 
                         $lang = Factory::getApplication()->getLanguage();
-						$lang->load('com_rsg2_j3x',
-							Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+                        $lang->load(
+                            'com_rsg2_j3x',
+                            Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
+                            null,
+                            false,
+                            true
+                        );
 
-                        if ($this->isDoCopyJ3xDbConfig
+                        if (
+                            $this->isDoCopyJ3xDbConfig
                             || $this->isDoCopyJ3xDbGalleries
                             || $this->isDoCopyJ3xDbImages
                             || $this->isDoChangeJ3xMenuLinks
                             || $this->isDoChangeGidMenuLinks
-                            || $this->isDoCopyJ3xImages)
-                        {
+                            || $this->isDoCopyJ3xImages
+                        ) {
                             echo DisplayRequestJ3xActions(
                                 $this->isDoCopyJ3xDbConfig,
                                 $this->isDoCopyJ3xDbGalleries,
@@ -106,13 +112,13 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
                     // echo '<hr>';
 
                     ?>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
 
-		<input type="hidden" name="task" value=""/>
+        <input type="hidden" name="task" value=""/>
         <?php echo HTMLHelper::_('form.token'); ?>
-	</form>
+    </form>
 
 <?php
 
@@ -126,11 +132,11 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.control
 function DisplayRSG2Logo()
 {
     echo '    <div class="rsg2logo">';
-//	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
-	echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+//               echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+    echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
     echo '     </div>';
-//	echo '<p class="test">';
-//	echo '</p>
+//  echo '<p class="test">';
+//  echo '</p>
 
     echo '<div class="clearfix"></div>';
 }
@@ -148,7 +154,7 @@ function DisplayRSG2Logo()
 //
 //
 //    echo '    <div class="rsg2requestSaveConfig">';
-////	             echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
+////                 echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logo.big.png', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
 ////    echo HTMLHelper::_('image', 'com_rsgallery2/RSG2_logoText.svg', Text::_('COM_RSGALLERY2_MAIN_LOGO_ALT_TEXT'), null, true);
 //
 ////    echo '        <button type="button" class="btn btn-primary"';
@@ -160,8 +166,8 @@ function DisplayRSG2Logo()
 //    echo '    </div>';
 //    echo '    <br>';
 //
-////	echo '<p class="test">';
-////	echo '</p>
+////    echo '<p class="test">';
+////    echo '</p>
 //
 //    echo '<div class="clearfix"></div>';
 //}
@@ -201,9 +207,9 @@ function DisplayRequestJ3xActions(
         'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=movej3ximagesuser',
     );
     // gid -> id
-	$rsg2j3xUpgradeGidMenuLinksLink = Route::_(
-		'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks',
-	);
+    $rsg2j3xUpgradeGidMenuLinksLink = Route::_(
+        'index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=changeGidMenuLinks',
+    );
 
     $CopyDbConfig     = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG');
     $CopyDbConfigDesc = Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG_DESC');
@@ -220,10 +226,10 @@ function DisplayRequestJ3xActions(
     $CopyImages     = '<del>' . Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES') . '</del>';
     $CopyImagesDesc = Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES_DESC');
 
-	$changeGidMenuLinks     = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID');
-	$changeGidMenuLinksDesc = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC');
+    $changeGidMenuLinks     = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID');
+    $changeGidMenuLinksDesc = Text::_('COM_RSGALLERY2_EXCHANGE_MENU_GID2ID_DESC');
 
-	$header     = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
+    $header     = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED');
     $headerDesc = Text::_('COM_RSGALLERY2_J3X_ACTIONS_NEEDED_DESC');
 
     $link1 = '';
@@ -589,11 +595,10 @@ function DisplayChangeLog($changelogs)
  */
 function tableFromXml($changelogs)
 {
-	$html = "";
+    $html = "";
 
-	if (!empty($changelogs)) {
-
-		if (is_array($changelogs)) {
+    if (!empty($changelogs)) {
+        if (is_array($changelogs)) {
             $logElements = [];
             foreach ($changelogs as $htmlElements) {
                 $logElements[] = '            ' . $htmlElements;
@@ -601,8 +606,8 @@ function tableFromXml($changelogs)
 
             $html = implode('</br>', $logElements);
         } else {
-			$html = $changelogs;
-		}
+            $html = $changelogs;
+        }
     }
 
     return $html;

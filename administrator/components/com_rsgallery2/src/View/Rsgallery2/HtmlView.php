@@ -74,8 +74,8 @@ class HtmlView extends BaseHtmlView
     protected $isDoCopyJ3xDbGalleries;
     protected $isDoCopyJ3xDbImages;
 
-	protected $isDoChangeJ3xMenuLinks;
-	protected $isDoChangeGidMenuLinks;
+    protected $isDoChangeJ3xMenuLinks;
+    protected $isDoChangeGidMenuLinks;
     protected $isDoCopyJ3xImages;
 
     /**
@@ -102,9 +102,9 @@ class HtmlView extends BaseHtmlView
         //--- auto save config after install ------------------------------
 
         // Is configuration not initialized ?
-        if (empty ($rsgConfig->get('image_size'))) {
+        if (empty($rsgConfig->get('image_size'))) {
             // configuration must be saved once to be initialized
-            $configRawModel = new ConfigRawModel ();
+            $configRawModel = new ConfigRawModel();
             $isSaved        = $configRawModel->ResetConfigToDefault();
 
             // attention: configuration is not updated for this run
@@ -116,23 +116,21 @@ class HtmlView extends BaseHtmlView
         $this->isJ3xDataExisting = J3xExistModel::J3xConfigTableExist();
 
         // activate flags for debug
-	    // $this->isJ3xDataExisting = true;
+        // $this->isJ3xDataExisting = true;
 
         if ($this->isJ3xDataExisting) {
+            // ToDo: use form data see $form->setValue('dbcopyj3xconfiguser', null, $rsgConfig->get('j3x_db_config_copied'));
 
-			// ToDo: use form data see $form->setValue('dbcopyj3xconfiguser', null, $rsgConfig->get('j3x_db_config_copied'));
-
-			// which transfer actions are needed ?
+            // which transfer actions are needed ?
             $this->isDoCopyJ3xDbConfig    = !$rsgConfig->get('j3x_db_config_copied');
             $this->isDoCopyJ3xDbGalleries = !$rsgConfig->get('j3x_db_galleries_copied');
             $this->isDoCopyJ3xDbImages    = !$rsgConfig->get('j3x_db_images_copied');
             $this->isDoChangeJ3xMenuLinks = !$rsgConfig->get('j3x_menu_gid_increased');
             $this->isDoCopyJ3xImages      = !$rsgConfig->get('j3x_images_copied');
-
         }
 
-	    // ToDo: use form data see $form->setValue('dbcopyj3xconfiguser', null, $rsgConfig->get('j3x_db_config_copied'));
-	    $this->isDoChangeGidMenuLinks = !$rsgConfig->get('j3x_menu_gid_moved_to_id');
+        // ToDo: use form data see $form->setValue('dbcopyj3xconfiguser', null, $rsgConfig->get('j3x_db_config_copied'));
+        $this->isDoChangeGidMenuLinks = !$rsgConfig->get('j3x_menu_gid_moved_to_id');
 
         /*-------------------------------------------------------------------------------
         Standard
@@ -160,12 +158,12 @@ class HtmlView extends BaseHtmlView
         $oRsg2Version      = new Rsgallery2Version();
         $this->Rsg2Version = $oRsg2Version->getShortVersion(); // getLongVersion, getVersion
 
-        $ChangeLogModel = new ChangeLogModel ();
+        $ChangeLogModel = new ChangeLogModel();
         // ToDo: add previous version
         $jsonChangelogs = $ChangeLogModel->changeLogElements();
 
         // echo "\$jsonChangelogs: " . json_encode($jsonChangelogs);
-        
+
         // Array: Html table each log item
         $this->changelogs = $ChangeLogModel->changeLogsData2Html($jsonChangelogs);
 
@@ -195,7 +193,7 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance('toolbar');
 
         // on develop show open tasks if existing
-        if (!empty ($this->isDevelop)) {
+        if (!empty($this->isDevelop)) {
             echo '<span style="color:red">'
                 . '* Install: documentation<br>'
                 . '* Use _CFG_ in ?variable? names<br>'
@@ -204,19 +202,19 @@ class HtmlView extends BaseHtmlView
                 . '* Save CFG on deinstall / remove (? Query complete delete) ? maintenace save restore ?<br>'
                 . '* Install: Fix autosave standard config <br>'
                 . '* Table header width -> use class(es) <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-//				. '* <br>'
-// May have to be checked again ?:	. '*  deprecated Factory::getApplication()->getIdentity() ==> $app->getIdentity()<br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+//              . '* <br>'
+// May have to be checked again ?:  . '*  deprecated Factory::getApplication()->getIdentity() ==> $app->getIdentity()<br>'
 //        Factory::getApplication()->getIdentity()
-//	      $app  = Factory::getApplication();
+//        $app  = Factory::getApplication();
 //        $user = $app->getIdentity();
-//		$user  = $this->getCurrentUser();
+//      $user  = $this->getCurrentUser();
 
-//				. '* <br>'
-//				. '* <br>'
+//              . '* <br>'
+//              . '* <br>'
                 . '</span><br><br>';
         }
 
@@ -229,14 +227,14 @@ class HtmlView extends BaseHtmlView
         }
     }
 
-	/**
-	 * Button data list
-	 * Prepare list with data for the shown buttons in control panel
-	 *
-	 * @return array[]
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Button data list
+     * Prepare list with data for the shown buttons in control panel
+     *
+     * @return array[]
+     *
+     * @since  5.1.0
+     */
     private function getRsg2ControlButtons()
     {
         $buttons = [
@@ -281,5 +279,4 @@ class HtmlView extends BaseHtmlView
 
         return $buttons;
     }
-
 }

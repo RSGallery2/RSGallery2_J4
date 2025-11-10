@@ -26,11 +26,11 @@ global $Rsg2DebugActive;
 
 if ($Rsg2DebugActive)
 {
-	// Include the JLog class.
-//	jimport('joomla.log.log');
+    // Include the JLog class.
+//  jimport('joomla.log.log');
 
-	// identify active file
-	JLog::add('==> ctrl.config.php ');
+    // identify active file
+    JLog::add('==> ctrl.config.php ');
 }
 /**/
 
@@ -68,7 +68,7 @@ class ConfigJ3xController extends FormController // FormController for function 
     {
         return parent::getModel($name, $prefix, $config);
     }
-	/**/
+    /**/
 
     /*
         $params = ComponentHelper::getParams('com_rsgallery2');
@@ -85,7 +85,7 @@ class ConfigJ3xController extends FormController // FormController for function 
         {
             Log::add('Starting the indexer', Log::INFO);
         }
-		catch (\RuntimeException $exception)
+        catch (\RuntimeException $exception)
         {
             // Informational log only
         }
@@ -220,42 +220,42 @@ class ConfigJ3xController extends FormController // FormController for function 
      *
      * @since 4.3
      *
-	public function reset2default()
-	{
-	$this->checkToken();
+    public function reset2default()
+    {
+    $this->checkToken();
 
-		$msg     = "reset2default: " . '<br>';
-		$msgType = 'notice';
+        $msg     = "reset2default: " . '<br>';
+        $msgType = 'notice';
 
-	$this->checkToken();
+    $this->checkToken();
 
-		// Access check
-		$canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
-		if (!$canAdmin) {
-			$msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
-			$msgType = 'warning';
-			// replace newlines with html line breaks.
-			$msg = nl2br ($msg);
-		} else {
-			$model = $this->getModel('ConfigRaw');
+        // Access check
+        $canAdmin = Factory::getUser()->authorise('core.edit', 'com_rsgallery2');
+        if (!$canAdmin) {
+            $msg = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+            $msgType = 'warning';
+            // replace newlines with html line breaks.
+            $msg = nl2br ($msg);
+        } else {
+            $model = $this->getModel('ConfigRaw');
 
-			$isSaved = $model->reset2default();
+            $isSaved = $model->reset2default();
 
-			$msg  = "Reset configuration to default values ";
-			if ($isSaved)
-			{
-				$msg .= "successful";
-			}
-			else
-			{
-				$msg .= "failed !!!";
-			}
-		}
+            $msg  = "Reset configuration to default values ";
+            if ($isSaved)
+            {
+                $msg .= "successful";
+            }
+            else
+            {
+                $msg .= "failed !!!";
+            }
+        }
 
-		$link = 'index.php?option=com_rsgallery2&view=maintenance';
-		$this->setRedirect($link, $msg, $msgType);
-	}
-	/**/
+        $link = 'index.php?option=com_rsgallery2&view=maintenance';
+        $this->setRedirect($link, $msg, $msgType);
+    }
+    /**/
 
     /**
      * Standard save of configuration
@@ -276,6 +276,4 @@ class ConfigJ3xController extends FormController // FormController for function 
             $this->setredirect('index.php?option=com_rsgallery2');
         }
     }
-
 }
-

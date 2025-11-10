@@ -28,7 +28,6 @@ use Joomla\CMS\Filter\InputFilter;
  */
 class ConfigRawModel extends BaseModel
 {
-
     /**
      * save raw to parameters ...
      *
@@ -79,13 +78,13 @@ class ConfigRawModel extends BaseModel
 
         // check for error
         if (!$table->check()) {
-			Factory::getApplication()->enqueueMessage(Text::_('ConfigRaw: Check for save failed ') . $table->getError(), 'error');
+            Factory::getApplication()->enqueueMessage(Text::_('ConfigRaw: Check for save failed ') . $table->getError(), 'error');
         } else {
             // Save to database
             if ($table->store()) {
                 $isSaved = true;
             } else {
-				Factory::getApplication()->enqueueMessage(Text::_('ConfigRaw: Store for save failed ') . $table->getError(), 'error');
+                Factory::getApplication()->enqueueMessage(Text::_('ConfigRaw: Store for save failed ') . $table->getError(), 'error');
             }
         }
 
@@ -121,7 +120,6 @@ class ConfigRawModel extends BaseModel
                 case 'jpegQuality':
                 case 'keepOriginalImage':
                 case 'useJ3xOldPaths':
-
                     $secured = $filter->clean($value, 'int');
                     break;
 
@@ -130,7 +128,6 @@ class ConfigRawModel extends BaseModel
                 case 'imgPath_original': //'\/images\/rsgallery\/original',
                 case 'imgPath_display': //'\/images\/rsgallery\/display',
                 case 'imgPath_thumb': //'\/images\/rsgallery\/thumb',
-
                     $secured = $filter->clean($value, 'STRING');
                     break;
 
@@ -144,7 +141,6 @@ class ConfigRawModel extends BaseModel
 
                 case 'allowedFileTypes':// 'jpg,jpeg,gif,png',
                 default:
-
                     $secured = $filter->clean($value, 'STRING');
                     break;
             }
@@ -212,7 +208,7 @@ class ConfigRawModel extends BaseModel
                         if ($type != 'spacer' && $type != 'note') {
                             $name = $fieldAttributes ['name'];
                             // default existing ?
-                            if (isset ($fieldAttributes ['default'])) {
+                            if (isset($fieldAttributes ['default'])) {
                                 $value = $fieldAttributes ['default'];
                             } else {
                                 $value = "";
@@ -272,6 +268,4 @@ class ConfigRawModel extends BaseModel
 
         return true;
     }
-
 }
-

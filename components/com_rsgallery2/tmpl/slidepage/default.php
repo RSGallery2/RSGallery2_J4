@@ -31,11 +31,11 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.slidepageJ
 
 //if ($this->item->params->get('show_name')) {
 //
-//	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-//	} else {
-//		echo $this->item->name;
-//	}
+//  if ($this->Params->get('show_rsgallery2_name_label')) {
+//      echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
+//  } else {
+//      echo $this->item->name;
+//  }
 //}
 //
 //echo $this->item->event->afterDisplayTitle;R
@@ -47,7 +47,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.slidepageJ
 //echo $this->item->event->afterDisplayContent;
 
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite)) {
+if (!empty($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: slidePageJ3x view<br>'
         . '* html aria-label ... <br>'
@@ -60,10 +60,10 @@ if (!empty ($this->isDevelopSite)) {
         . '* handle comments<br>'
         . '* center EXIF<br>'
         . '* j3x.css: clean up (shade by CSS (Scss ...) <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -102,29 +102,27 @@ if (!empty ($this->isDevelopSite)) {
  */
 function _showDescription()
 {
-//	global $rsgConfig;
-//	// $item = rsgInstance::getItem(); deprecated
-//	$gallery = rsgGalleryManager::get();
-//	$item    = $gallery->getItem();
+//  global $rsgConfig;
+//  // $item = rsgInstance::getItem(); deprecated
+//  $gallery = rsgGalleryManager::get();
+//  $item    = $gallery->getItem();
 //
-//	if ($rsgConfig->get('displayHits')){
-//		?>
-    <!--		<p class="rsg2_hits">--><?php //echo Text::_('COM_RSGALLERY2_HITS'); ?><!-- <span>--><?php //echo $item->hits; ?><!--</span></p>-->
-    <!--	--><?php
-//	}
+//  if ($rsgConfig->get('displayHits')){
+//      ?>
+    <!--        <p class="rsg2_hits">--><?php //echo Text::_('COM_RSGALLERY2_HITS'); ?><!-- <span>--><?php //echo $item->hits; ?><!--</span></p>-->
+    <!--    --><?php
+//  }
 //
-//	if ($item->descr) {
-//		?>
-    <!--		<p class="rsg2_description">--><?php //echo stripslashes($item->descr); ?><!--</p>-->
-    <!--		--><?php
-//	}
+//  if ($item->descr) {
+//      ?>
+    <!--        <p class="rsg2_description">--><?php //echo stripslashes($item->descr); ?><!--</p>-->
+    <!--        --><?php
+//  }
 
-	?>
+    ?>
     <p class="rsg2_hits"><?php echo Text::_('COM_RSGALLERY2_HITS'); ?> <span><?php echo '?????'; ?></span></p>
     <p class="rsg2_description"><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?> <span><?php echo '?????'; ?></span></p>
-	<?php
-
-
+    <?php
 }
 
 // voting
@@ -144,9 +142,9 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
     //$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&id=' . $gid) .'&startShowSingleImage=1" id="rsgVoteForm">';
     //                                                                                         index.php/single-gallery/item/1/asInline
     //                                                                                         index.php?option=com_rsgallery2&page=inline&id=" . $item->id
-//		$html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&&page=inline&id="&id=' . $imageId) .'" id="rsgVoteForm">';
+//      $html[] = '                <form name="rsgvoteform" method="post" action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&&page=inline&id="&id=' . $imageId) .'" id="rsgVoteForm">';
     $html[] = '                <form name="rsgvoteform" method="post" action="'
-		. Route::_('index.php?option=com_rsgallery2&page=inline&id=' . $imageId) .'" id="rsgVoteForm">';
+        . Route::_('index.php?option=com_rsgallery2&page=inline&id=' . $imageId) . '" id="rsgVoteForm">';
 
     $html[] = '                <div class="rating-block row-fluid text-center" >';
 
@@ -157,16 +155,15 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
         $html[] = '                    ' . htmlStars($idx, $ratingData->average, $ratingData->lastRating);
     }
 
-	if ($isVotingEnabled)
-	{
-		$html[] = '                <label id="DoVote" title="' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE_DESC') . '">' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE') . '&nbsp;&nbsp;</label>';
+    if ($isVotingEnabled) {
+        $html[] = '                <label id="DoVote" title="' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE_DESC') . '">' . Text::_('COM_RSGALLERY2_AVERAGE_RATE_IMAGE') . '&nbsp;&nbsp;</label>';
 
-//		$templateName = $rsgConfig->get('template');
-//		$templateUri = JURI_SITE . "/components/com_rsgallery2/templates/" . $templateName;
+//      $templateName = $rsgConfig->get('template');
+//      $templateUri = JURI_SITE . "/components/com_rsgallery2/templates/" . $templateName;
 //
-//		$doc = Factory::getApplication->getDocument();
-//		$vote_js = $templateUri . "/js/OneImageVote.js";
-//		$doc->addScript($vote_js);
+//      $doc = Factory::getApplication->getDocument();
+//      $vote_js = $templateUri . "/js/OneImageVote.js";
+//      $doc->addScript($vote_js);
     }
 
     $html[] = '                </div>'; //
@@ -175,7 +172,7 @@ function htmlRatingData($ratingData, $isVotingEnabled, $gid, $imageId)
     $html[] = '                <input type="hidden" name="rating" value="" />';
     $html[] = '                <input type="hidden" name="paginationImgIdx" value="" />';
     $html[] = '                <input type="hidden" name="id" value="' . $imageId . '" />';
-	$html[] = '                <input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" />';
+    $html[] = '                <input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" />';
 
     $html[] = '                </form>';
 
@@ -201,8 +198,8 @@ function htmlExifData($exifTags)
 
                     <dl class="dl-horizontal text-center">
 
-		            <?php // user requested EXIF tags ?>
-                        <?php foreach ($exifTags as $exifKey => $exifValue): ?>
+                    <?php // user requested EXIF tags ?>
+                        <?php foreach ($exifTags as $exifKey => $exifValue) : ?>
                             <dt class="text-end col-sm-x3"><?php echo Text::_($exifKey); ?></dt>
                             <dd class="text-start col-sm-9"><?php echo $exifValue; ?></dd>
                         <?php endforeach; ?>
@@ -213,171 +210,171 @@ function htmlExifData($exifTags)
         </div>
     </div>
 
-<?php
+    <?php
 }
 
-//	// toDo improve ....
-//	// https://bootsnipp.com/snippets/Vp4P
-//	// https://bootsnipp.com/snippets/featured/comment-posts-layout
-//	// https://bootsnipp.com/snippets/featured/blog-post-footer
-//	// sophisticated
-//	// https://bootsnipp.com/snippets/featured/collapsible-tree-menu-with-accordion
-//	// https://bootsnipp.com/snippets/a35Pl
+//  // toDo improve ....
+//  // https://bootsnipp.com/snippets/Vp4P
+//  // https://bootsnipp.com/snippets/featured/comment-posts-layout
+//  // https://bootsnipp.com/snippets/featured/blog-post-footer
+//  // sophisticated
+//  // https://bootsnipp.com/snippets/featured/collapsible-tree-menu-with-accordion
+//  // https://bootsnipp.com/snippets/a35Pl
 //
-//	$formFields = $comments->formFields;
-//	$imgComments = $comments->comments;
+//  $formFields = $comments->formFields;
+//  $imgComments = $comments->comments;
 //
-//	$html = [];
+//  $html = [];
 //
-//	$html[] = '<div class="container span12">';
+//  $html[] = '<div class="container span12">';
 //
-//	$html[] =  '        <div class="rsg2_comments_container">';
+//  $html[] =  '        <div class="rsg2_comments_container">';
 //
-//	if (empty($imgComments))
-//	{
-//		$html[] = '<div id="comment">';
-//		$html[] = '    <table width="100%" class="comment_table">';
-//		$html[] = '        <tr>';
-//		$html[] = '            <td class="title">';
-//		$html[] = '                <span class="posttitle">' . Text::_('COM_RSGALLERY2_NO_COMMENTS_YET') . ' <br></span>';
-//		$html[] = '                 ';
-//		$html[] = '                 <br>';
-//		$html[] = '            </td>';
-//		$html[] = '        </tr>';
-//		$html[] = '    </table>';
-//		$html[] = '</div>';
-//	}
-//	else
-//	{
-//		// Comments existing
+//  if (empty($imgComments))
+//  {
+//      $html[] = '<div id="comment">';
+//      $html[] = '    <table width="100%" class="comment_table">';
+//      $html[] = '        <tr>';
+//      $html[] = '            <td class="title">';
+//      $html[] = '                <span class="posttitle">' . Text::_('COM_RSGALLERY2_NO_COMMENTS_YET') . ' <br></span>';
+//      $html[] = '                 ';
+//      $html[] = '                 <br>';
+//      $html[] = '            </td>';
+//      $html[] = '        </tr>';
+//      $html[] = '    </table>';
+//      $html[] = '</div>';
+//  }
+//  else
+//  {
+//      // Comments existing
 //
-//		//--- add comment link bar -------------------------------------------------
+//      //--- add comment link bar -------------------------------------------------
 //
-//		$html[] = '<div id="comment" class="title pull-right">';
+//      $html[] = '<div id="comment" class="title pull-right">';
 //
-//		$html[] = '    <button class="btn btn-success" type="button">';
-//		$html[] = '        <i class="icon-comment"></i>';
-//		$html[] = '	       <a class="special" href="#lblAddComment">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
-//		//$html[] = '	       <a class="special" href="#bottom">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
-//		//$html[] = '	       <a class="special" href="#commentUserName">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
-//		$html[] = '    </button>';
-//		$html[] = '';
+//      $html[] = '    <button class="btn btn-success" type="button">';
+//      $html[] = '        <i class="icon-comment"></i>';
+//      $html[] = '        <a class="special" href="#lblAddComment">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//      //$html[] = '          <a class="special" href="#bottom">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//      //$html[] = '          <a class="special" href="#commentUserName">' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '</a>';
+//      $html[] = '    </button>';
+//      $html[] = '';
 //
-//		$html[] = '</div>';
+//      $html[] = '</div>';
 //
-//		// $html[] = '<div class="clearfix" />';
+//      // $html[] = '<div class="clearfix" />';
 //
-//		//--- existing comments -----------------------------------------------------
+//      //--- existing comments -----------------------------------------------------
 //
-//		/**/
-//		// each comment
-//		foreach ($imgComments as $comment)
-//		{
+//      /**/
+//      // each comment
+//      foreach ($imgComments as $comment)
+//      {
 //
-//			// $html[] = '<div class="row">';
+//          // $html[] = '<div class="row">';
 //
-//			$html[] = '<div class="media">';
+//          $html[] = '<div class="media">';
 //
-//			$html[] = '    <a class="pull-left span2" href="#">';
-//			//$html[] = '<div class="thumbnail">';
+//          $html[] = '    <a class="pull-left span2" href="#">';
+//          //$html[] = '<div class="thumbnail">';
 //
-//			// $html[] = '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
-//			$html[] = '        <div>';
-//			//$html[] = '            <i class="icon-user large-icon" style="font-size:24px;"></i>';
-//			$html[] = '            <i class="icon-user large-icon"></i>';
-//			$html[] = '            <strong>' . $comment->user_name . '</strong>';
-//			//$html[] = '            <br> <span class="text-muted">commented 5 days ago</span>';
-//			$html[] = '        </div>';
+//          // $html[] = '<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+//          $html[] = '        <div>';
+//          //$html[] = '            <i class="icon-user large-icon" style="font-size:24px;"></i>';
+//          $html[] = '            <i class="icon-user large-icon"></i>';
+//          $html[] = '            <strong>' . $comment->user_name . '</strong>';
+//          //$html[] = '            <br> <span class="text-muted">commented 5 days ago</span>';
+//          $html[] = '        </div>';
 //
-//			//$html[] = '</div>'; //<!-- /thumbnail -->
-//			$html[] = '    </a>';
-//
-//
-//			$html[] = '<div class="clearfix" >';
+//          //$html[] = '</div>'; //<!-- /thumbnail -->
+//          $html[] = '    </a>';
 //
 //
-//			$html[] = '    <div class="media-body  span10">';
-//			//$html[] = '        <i class="icon-comment large-icon" style="font-size:24px;"></i>';
-//			$html[] = '        <i class="icon-comment large-icon"></i>';
-//			$html[] = '        <strong class="media-heading title">' . $comment->subject . '</strong>';
-//			//$html[] = '        <strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>';
-//
-//			$html[] = '        <p><div>' . $comment->comment . '</div></p>';
-//
-//			$html[] = '    </div>';
-//			$html[] = '';
-//
-//			$html[] = '</div>';
-//
-//			$html[] = '</div>'; // class="media">';
-//
-//			$html[] = '<hr>';
-//		}
-//
-//		/**/
-//	}
-//
-//	//--- add comment -----------------------------------------------------
+//          $html[] = '<div class="clearfix" >';
 //
 //
-//	// Manipulate form fieldset "name" depending on user
-//	$user = Factory::getContainer()->get(UserFactoryInterface::class);
-//	// User is logged in
-//	if ( ! empty($user->id))
-//	{
-//		$user4Form ['commentUserName'] = $user->name;
-//		//$this->bind ($user4Form);
-//		//JForm::bind($user4Form);
-//		// $this->params_form = $params_form; see alsi where comments are collected
-//		/**
-//		$params = YireoHelper::toRegistry($this->item->params)->toArray();
-//		$params_form = JForm::getInstance('params', $file);
-//		$params_form->bind(array('params' => $params));
-//		$this->params_form = $params_form;
-//		/**/
-//	}
+//          $html[] = '    <div class="media-body  span10">';
+//          //$html[] = '        <i class="icon-comment large-icon" style="font-size:24px;"></i>';
+//          $html[] = '        <i class="icon-comment large-icon"></i>';
+//          $html[] = '        <strong class="media-heading title">' . $comment->subject . '</strong>';
+//          //$html[] = '        <strong>myusername</strong> <span class="text-muted">commented 5 days ago</span>';
 //
-//	$html[] = '';
+//          $html[] = '        <p><div>' . $comment->comment . '</div></p>';
 //
-//	//$html[] = '<a name="lblAddComment"></a>';
-//	$html[] = '<a id="lblAddComment"></a>';
+//          $html[] = '    </div>';
+//          $html[] = '';
 //
-//	/**/
-//	//$html[] = '<hr>';
-//	$html[] = '';
-//	$html[] = '<div class="clearfix" >';
+//          $html[] = '</div>';
 //
-//	$html[] = '                <form name="rsgCommentForm" class="form-horizontal" method="post"';
-//	$html[] = '                    action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&id=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
+//          $html[] = '</div>'; // class="media">';
 //
-//	$html[] = '                    <div class ="well">';
-//	$html[] = '                        <h4>'. Text::_('COM_RSGALLERY2_CREATE_COMMENT') . '</h4>';
+//          $html[] = '<hr>';
+//      }
 //
-//	// ToDo: text-align="center
-//	$html[] = '                        <button id="commitSend" class="btn btn-primary pull-right" ';
-//	$html[] = '                            type="submit" ';
-////    $html[] = '						       onclick="Joomla.submitbutton(\'comment.saveComment\')"';
-//	$html[] = '						       onclick="Joomla.submitbutton(this.form);return false" ';
-//	$html[] = '							   title="' . Text::_('COM_RSGALLERY2_SEND_COMMENT_DESC') . '">';
-//	$html[] = '						       <i class="icon-save"></i> ' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '';
-//	$html[] = '						   </button>';
+//      /**/
+//  }
 //
-//	$html[] = '                        ' . $formFields->renderFieldset ('comment');
+//  //--- add comment -----------------------------------------------------
 //
-//	$html[] = '                    	   <input type="hidden" name="task" value="comment.addComment" />';
-//	$html[] = '                    	   <input type="hidden" name="rating" value="" />';
-//	$html[] = '                    	   <input type="hidden" name="paginationImgIdx" value="" />';
-//	$html[] = '                    	   <input type="hidden" name="id" value="' . $imageId . '" />';
-//	$html[] = '                    	   <input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" />';
 //
-//	$html[] = '                    </div>';
-//	$html[] = '                </form>';
-//	/**/
-//	$html[] = '</div>';
+//  // Manipulate form fieldset "name" depending on user
+//  $user = Factory::getContainer()->get(UserFactoryInterface::class);
+//  // User is logged in
+//  if ( ! empty($user->id))
+//  {
+//      $user4Form ['commentUserName'] = $user->name;
+//      //$this->bind ($user4Form);
+//      //JForm::bind($user4Form);
+//      // $this->params_form = $params_form; see alsi where comments are collected
+//      /**
+//      $params = YireoHelper::toRegistry($this->item->params)->toArray();
+//      $params_form = JForm::getInstance('params', $file);
+//      $params_form->bind(array('params' => $params));
+//      $this->params_form = $params_form;
+//      /**/
+//  }
 //
-//	$html[] = '            </div>'; // container
+//  $html[] = '';
 //
-//	$html[] = '</div>'; // class="container">';
+//  //$html[] = '<a name="lblAddComment"></a>';
+//  $html[] = '<a id="lblAddComment"></a>';
+//
+//  /**/
+//  //$html[] = '<hr>';
+//  $html[] = '';
+//  $html[] = '<div class="clearfix" >';
+//
+//  $html[] = '                <form name="rsgCommentForm" class="form-horizontal" method="post"';
+//  $html[] = '                    action="' . \Joomla\CMS\Router\Route::_('index.php?option=com_rsgallery2&view=gallery&id=' . $gid) .'&startShowSingleImage=1" id="rsgCommentForm">';
+//
+//  $html[] = '                    <div class ="well">';
+//  $html[] = '                        <h4>'. Text::_('COM_RSGALLERY2_CREATE_COMMENT') . '</h4>';
+//
+//  // ToDo: text-align="center
+//  $html[] = '                        <button id="commitSend" class="btn btn-primary pull-right" ';
+//  $html[] = '                            type="submit" ';
+////    $html[] = '                            onclick="Joomla.submitbutton(\'comment.saveComment\')"';
+//  $html[] = '                            onclick="Joomla.submitbutton(this.form);return false" ';
+//  $html[] = '                            title="' . Text::_('COM_RSGALLERY2_SEND_COMMENT_DESC') . '">';
+//  $html[] = '                            <i class="icon-save"></i> ' . Text::_('COM_RSGALLERY2_ADD_COMMENT') . '';
+//  $html[] = '                        </button>';
+//
+//  $html[] = '                        ' . $formFields->renderFieldset ('comment');
+//
+//  $html[] = '                        <input type="hidden" name="task" value="comment.addComment" />';
+//  $html[] = '                        <input type="hidden" name="rating" value="" />';
+//  $html[] = '                        <input type="hidden" name="paginationImgIdx" value="" />';
+//  $html[] = '                        <input type="hidden" name="id" value="' . $imageId . '" />';
+//  $html[] = '                        <input id="token" type="hidden" name="' . Session::getFormToken() . '" value="1" />';
+//
+//  $html[] = '                    </div>';
+//  $html[] = '                </form>';
+//  /**/
+//  $html[] = '</div>';
+//
+//  $html[] = '            </div>'; // container
+//
+//  $html[] = '</div>'; // class="container">';
 function htmlComments($comments, $gallery_id, $image_id)
 {
     ?>
@@ -391,8 +388,7 @@ function htmlComments($comments, $gallery_id, $image_id)
 
                 <div class="card-text">
 
-                    <?php if (!empty ($comments)) : ?>
-
+                    <?php if (!empty($comments)) : ?>
                     <?php else : ?>
                         <h5>Script for comments not activated</h5>
                     <?php endif; ?>
@@ -402,7 +398,7 @@ function htmlComments($comments, $gallery_id, $image_id)
         </div>
     </div>
 
-<?php
+    <?php
 }
 
 
@@ -450,11 +446,11 @@ function htmlStars($idx, $average, $lastRating)
 }
 
 
-//	$images = $this->items;
+//  $images = $this->items;
 $image_idx = $this->imageIdx;
 $gallery   = $this->gallery;
 $params    = $this->params;
-//	$menuParams = $this->menuParams;
+//  $menuParams = $this->menuParams;
 
 $image = $this->image;
 
@@ -464,7 +460,7 @@ $image = $this->image;
 
     <div class="rsg2__form rsg2__slide_page">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <h1> Menu RSGallery2 "slide page J3x" view </h1>
             <hr>
         <?php endif; ?>
@@ -474,17 +470,17 @@ $image = $this->image;
         <!-- removed 2022.11.12       <div class="rsg2">-->
         <!---->
         <!--            --><?php //if (!empty($layoutSlidePage)): ?>
-        <!--            --><?php ////	            echo $layoutImage->render($displayData);
-        ////	            echo $layoutProperties->render($displayData);
+        <!--            --><?php ////               echo $layoutImage->render($displayData);
+        ////                echo $layoutProperties->render($displayData);
         //
-        //	            echo $layoutSlidePage->render($displayData);
+        //              echo $layoutSlidePage->render($displayData);
         //
         //                ?>
         <!--            --><?php //endif; ?>
         <!---->
         <!--        </div>-->
 
-        <?php if (true || $params->galleries_show_slideshow): ?>
+        <?php if (true || $params->galleries_show_slideshow) : ?>
             <div class="rsg2_slideshow_link">
                 <a href="<?php echo $gallery->UrlSlideshow ?>">
                     Slideshow
@@ -527,52 +523,51 @@ $image = $this->image;
                                 <i class="fas fa-download"></i>
                             </a>
                         </div>
-                        <!--						    <div class="rsg2-clr">&nbsp;</div>-->
+                        <!--                            <div class="rsg2-clr">&nbsp;</div>-->
                     </td>
                 </tr>
 
                 <tr>
                     <td>
                         <?php if ($this->isShowPagination) : ?>
-                        <!--						    <p>-->
+                        <!--                            <p>-->
                         <div class="rsg2-j3x-pagination">
 
 
                             <div class="rsg2-j3x-pagination--buttons">
 
-                                <!-- must be before 			    </p>-->
+                                <!-- must be before                 </p>-->
                                 <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-                                <!--				    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
-                                <!--									    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
+                                <!--                    <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
+                                <!--                                        <p class="com-contact-category__counter counter float-end pt-3 pe-2">-->
                                 <div class="com-contact-category__counter counter float-end pt-3 pe-2">
                                     <div class="rsg2-j3x-pagination--counter">
-                                        <!--				    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
+                                        <!--                    <p class="com-contact-category__counter counter text-center pt-3 pe-2">-->
                                         <?php echo $this->pagination->getPagesCounter(); ?>
                                     </div>
                                     <div>
-                                        <!--									    </p>-->
-                                        <?php endif; ?>
+                                        <!--                                        </p>-->
+                                <?php endif; ?>
 
                                         <?php echo $this->pagination->getPagesLinks(); ?>
                                     </div>
 
                                 </div>
-                                <!--						    </p>-->
-                                <?php endif; ?>
+                                <!--                            </p>-->
+                        <?php endif; ?>
                                 <td>
                 </tr>
 
                 <tr>
                     <td>
                         <?php if ($this->isShowDescription) : ?>
-
-                            <!--					    <p><h3>Todo description if or not if </h3></p>-->
-                            <!--					    <div class="page_inline_tabs_description">-->
+                            <!--                        <p><h3>Todo description if or not if </h3></p>-->
+                            <!--                        <div class="page_inline_tabs_description">-->
                             <div class="card bg-light ">
                                 <div class="card-body">
                                     <div class="container page_inline_hits">
                                         <i class="fas fa-flag"></i>
-										    <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
+                                            <strong><?php echo ' ' . Text::_('COM_RSGALLERY2_HITS', true) . ' ' . $image->hits; ?></strong>
                                     </div>
                                 </div>
                             </div>
@@ -591,7 +586,6 @@ $image = $this->image;
                 <tr>
                     <td>
                         <?php if ($this->isShowVoting) : ?>
-
                             <div class="rating-block row-fluid text-center">
                                 <h4><?php echo Text::_('COM_RSGALLERY2_AVERAGE_USER_RATING'); ?></h4>
                                 <h2 class="bold padding-bottom-7">0&nbsp;<small>/&nbsp;0</small>
@@ -638,7 +632,6 @@ $image = $this->image;
                 <tr>
                     <td>
                         <?php if ($this->isShowExif) : ?>
-
                             <?php htmlExifData($image->exifTags); ?>
 
                         <?php endif; ?>
@@ -648,7 +641,6 @@ $image = $this->image;
                 <tr>
                     <td>
                         <?php if ($this->isShowComments) : ?>
-
                             <?php htmlComments($image->comments, $image->gallery_id, $image->id); ?>
                         <?php endif; ?>
                     </td>
@@ -659,7 +651,7 @@ $image = $this->image;
         </div>
 
 
-        <?php if (!empty($isDebugSite)): ?>
+        <?php if (!empty($isDebugSite)) : ?>
             <h5>RSGallery2 slide (?page) properties J3x layout</h5>
             <hr>
         <?php endif; ?>
@@ -695,7 +687,7 @@ $image = $this->image;
 
             <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'VotingTab', Text::_('COM_RSGALLERY2_VOTING', true)); ?>
 
-		    <h3>Todo script for voting</h3>
+            <h3>Todo script for voting</h3>
 
             <div class="rating-block row-fluid text-center">
                 <h4>Average user rating</h4>
@@ -741,13 +733,13 @@ $image = $this->image;
 
 <!--            --><?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'CommentsTab', Text::_('COM_RSGALLERY2_COMMENTS', true)); ?>
 <!---->
-<!--		    <p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>-->
+<!--            <p><h3>ToDo: This may be a comment</h3> <br>with more than one line .....</p>-->
 <!---->
 <!--            --><?php //echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 <!--            --><?php //echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'ExifInfoTab', Text::_('COM_RSGALLERY2_EXIF', true)); ?>
 <!---->
-<!--		    <h3>ToDo: Display selected image exif info  </h3>-->
+<!--            <h3>ToDo: Display selected image exif info  </h3>-->
 <!---->
 <!--            --><?php //echo HTMLHelper::_('bootstrap.endTab'); ?>
 

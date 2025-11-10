@@ -161,5 +161,4 @@ class GalleriesController extends AdminController
     }
 
     /** @var GalleryTreeModel $model */
-
 }

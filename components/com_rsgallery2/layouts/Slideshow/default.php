@@ -85,7 +85,7 @@ if (!empty($images)) {
 
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h3>RSGallery2 images slideshow layout</h3>
     <div class="p-3 mb-2 bg-success bg-gradient text-white">Test with indicators</div>
     <hr>
@@ -165,7 +165,7 @@ if (!empty($images)) {
 
         <div class="carousel-inner">
             <?php
-            $isActive="active";
+            $isActive = "active";
 
             foreach ($images as $image) {
                 ?>
@@ -180,7 +180,7 @@ if (!empty($images)) {
                 </div>
 
                 <?php
-                $isActive="";
+                $isActive = "";
             }
             ?>
 
@@ -201,8 +201,8 @@ if (!empty($images)) {
     <?php /**/ ?>
 
 
-    <?php 
-     /** 
+    <?php
+     /**
      * <div class="rsg2__slideshow" >
      *
      * <?php if (!empty($isDebugSite)): ?>

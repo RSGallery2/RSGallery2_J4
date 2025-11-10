@@ -8,7 +8,6 @@
  * @license        GNU General Public License version 2 or later
  */
 
-
 //  J3x legacy view default => gallery images
 
 
@@ -85,7 +84,7 @@ if ($displaySearch) {
 
     <div class="rsg2__form rsg2__images_area">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <h3><?php echo text::_('RSGallery2 "gallery j3x legacy standard (default)"'); ?> view </h3>
             <div><?php echo ' Gallery ID: ' . $this->galleryId; ?>
             </div>
@@ -94,7 +93,7 @@ if ($displaySearch) {
 
         <?php //--- display search ---------- ?>
 
-        <?php if ($displaySearch): ?>
+        <?php if ($displaySearch) : ?>
             <?php echo $searchLayout->render(); ?>
         <?php endif; ?>
 

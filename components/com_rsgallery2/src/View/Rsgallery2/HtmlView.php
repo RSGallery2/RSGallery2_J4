@@ -53,7 +53,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null) : void
+    public function display($tpl = null): void
     {
         $item   =
         $this->item = $this->get('Item');
@@ -71,7 +71,7 @@ class HtmlView extends BaseHtmlView
         // ToDO: use registry merge $itemparams ??? on oter displays ...
 
         // ToDo: remove
-        $item = new \stdClass;
+        $item = new \stdClass();
 
 
         $temp = clone $params;
@@ -81,14 +81,14 @@ class HtmlView extends BaseHtmlView
         Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.rsgallery2', &$item]);
 
         // Store the events for later
-		$item->event = new \stdClass;
-		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+        $item->event = new \stdClass();
+        $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
         $item->event->afterDisplayTitle = trim(implode("\n", $results));
 
-		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+        $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
         $item->event->beforeDisplayContent = trim(implode("\n", $results));
 
-		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+        $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
         $item->event->afterDisplayContent = trim(implode("\n", $results));
 
         parent::display($tpl);

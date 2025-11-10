@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
 use Rsgallery2\Component\Rsgallery2\Api\View\Version\JsonapiView;
+
 //use Joomla\CMS\MVC\View\JsonApiView;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -94,5 +95,4 @@ class VersionController extends ApiController
 
         return $this;
     }
-
 }

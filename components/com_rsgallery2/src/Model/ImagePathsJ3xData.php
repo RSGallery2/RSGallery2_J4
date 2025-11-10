@@ -47,7 +47,6 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
         $image->isDisplayFileExist  = file_exists($image->DisplayFile);
         $image->isThumbFileExist    = file_exists($image->DisplayFile);
         //$image->isSizePaths = $this->getSizePaths ();
-
     }
 
     /**
@@ -85,7 +84,8 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
      * @param $image
      *
      * @since 5.1.0     */
-    public function urlReplaceMissingImages_ByChild ($image) {
+    public function urlReplaceMissingImages_ByChild($image)
+    {
 
         if (!$image->isThumbFileExist) {
             $missingUrl          = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.png';
@@ -100,6 +100,4 @@ class ImagePathsJ3xData extends ImagePathsJ3xModel
             $image->UrlOriginalFile = $image->UrlDisplayFile;
         }
     }
-
-
 }

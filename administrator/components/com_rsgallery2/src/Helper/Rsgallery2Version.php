@@ -57,44 +57,44 @@ class Rsgallery2Version
         $db->setQuery($query);
 
         // manifest Array (
-        //	[name] => com_rsg2
-        //	[type] => component
-        //	[creationDate] => July 2014
-        //	[author] => RSGallery2 Team
-        //	[copyright] => (c) 2014 RSGallery2 Team
-        //	[authorEmail] => team2@rsgallery2.org
-        //	[authorUrl] => http://www.rsgallery2.org
-        //	[version] => 1.0.2
-        //	[description] => COM_RSGALLERY2_XML_DESCRIPTION
-        //	[group] =>
-        //	[filename] => rsg2
+        //  [name] => com_rsg2
+        //  [type] => component
+        //  [creationDate] => July 2014
+        //  [author] => RSGallery2 Team
+        //  [copyright] => (c) 2014 RSGallery2 Team
+        //  [authorEmail] => team2@rsgallery2.org
+        //  [authorUrl] => http://www.rsgallery2.org
+        //  [version] => 1.0.2
+        //  [description] => COM_RSGALLERY2_XML_DESCRIPTION
+        //  [group] =>
+        //  [filename] => rsg2
         //)
 
         $manifest = json_decode($db->loadResult(), true);
 
         //--- assign data from manifest -----------------
 
-        //	[name] => com_rsg2
-        //	* $this->PRODUCT = $manifest['name'];
+        //  [name] => com_rsg2
+        //  * $this->PRODUCT = $manifest['name'];
         $this->name = $manifest['name'];
-        //	[creationDate] => July 2014
-        //	* $this->RELDATE = $manifest['creationDate'];
+        //  [creationDate] => July 2014
+        //  * $this->RELDATE = $manifest['creationDate'];
         $this->creationDate = $manifest['creationDate'];
-        //	[author] => RSGallery2 Team
-        //	* $this->AUTHOR = $manifest['author'];
-        //	[copyright] => (c) 2014 RSGallery2 Team
-        //	* $this->COPYRIGHT = $manifest['copyright'];
+        //  [author] => RSGallery2 Team
+        //  * $this->AUTHOR = $manifest['author'];
+        //  [copyright] => (c) 2014 RSGallery2 Team
+        //  * $this->COPYRIGHT = $manifest['copyright'];
         $this->copyright = $manifest['copyright'];
-        //	[authorEmail] => team@rsgallery2.org
-        //	* $this->EMAIL = $manifest['authorEmail'];
-        //	[authorUrl] => http://www.rsgallery2.org
+        //  [authorEmail] => team@rsgallery2.org
+        //  * $this->EMAIL = $manifest['authorEmail'];
+        //  [authorUrl] => http://www.rsgallery2.org
         // Old: = '<strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>';
-        //	* $this->URL = $manifest['authorUrl'];
-        //	[version] => 1.0.2
-        //	* $this->RELEASE = $manifest['version'];
+        //  * $this->URL = $manifest['authorUrl'];
+        //  [version] => 1.0.2
+        //  * $this->RELEASE = $manifest['version'];
         $this->version = $manifest['version'];
         //    [description] => COM_RSGALLERY2_XML_DESCRIPTION
-        //	* $this->DESCRIPTION = $manifest['description'];
+        //  * $this->DESCRIPTION = $manifest['description'];
         /**/
     }
 
@@ -128,7 +128,7 @@ class Rsgallery2Version
         return $this->name . ' ' . $this->version . '<br />'
             . $this->COPYRIGHT . ' <strong><a class="rsg2-footer" href="http://www.rsgallery2.org">RSGallery2</a></strong>. All rights reserved.';
     }
-	/**/
+    /**/
     /**
      * Plain version
      *
@@ -152,7 +152,4 @@ class Rsgallery2Version
 
         return $check;
     }
-
 }
-
-

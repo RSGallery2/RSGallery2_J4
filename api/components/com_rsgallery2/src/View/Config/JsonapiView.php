@@ -121,7 +121,8 @@ class JsonapiView extends BaseApiView
      * @since   4.1.0
      * @throws  ResourceNotFound
      */
-    public function getConfigParameterNames() {
+    public function getConfigParameterNames()
+    {
 
         $componentName = 'com_rsgallery2';
 
@@ -130,7 +131,6 @@ class JsonapiView extends BaseApiView
         $params[] = "set";
 
         try {
-
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 //            $db = $this->database;
 
@@ -141,19 +141,17 @@ class JsonapiView extends BaseApiView
             $db->setQuery($query);
 
             $jsonStr = $db->loadResult();
-            if (!empty ($jsonStr)) {
+            if (!empty($jsonStr)) {
                 $params = json_decode($jsonStr, true);
             }
 
-            foreach($params as $name=>$value) {
+            foreach ($params as $name => $value) {
                 $params[] = $name;
             }
-
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }
 
         return $params;
     }
-
 }

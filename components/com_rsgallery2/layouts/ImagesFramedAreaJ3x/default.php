@@ -31,9 +31,9 @@ if (!empty($isDevelopSite)) {
         . '* html aria-label ... <br>'
         . '* HTML 5 layout, bootstrap * <br>'
         . '* modal image (->slider)<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -80,7 +80,7 @@ $imgCount = count($images);
 
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h3>RSGallery2 Images framed J3x area layout (<?php echo $title; ?>)I</h3>
     <hr>
 <?php endif; ?>
@@ -98,8 +98,7 @@ $imgCount = count($images);
             </tr>
             <tr>
 
-                <?php foreach ($images as $idx => $image): ?>
-
+                <?php foreach ($images as $idx => $image) : ?>
                     <td align="center">
                         <div class="shadow-box">
                             <div class="img-shadow">

@@ -33,28 +33,28 @@ use Joomla\Registry\Registry;
  */
 class imagesj3xModel extends ImagesModel
 {
-
-	/**
-	 * Assign slideshow url to gallery data
-	 *
-	 * @param $gallery
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Assign slideshow url to gallery data
+     *
+     * @param $gallery
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function assignSlideshowUrl($gallery)
     {
         try {
             // $gallery->UrlSlideshow = ''; // fall back
 
-            $gallery->UrlSlideshow = Route::_('index.php?option=com_rsgallery2'
-                . '&view=slideshowj3x&id=' . $gallery->id
-                ,true,0,true);
-
-        }
-        catch (\RuntimeException $e)
-        {
+            $gallery->UrlSlideshow = Route::_(
+                'index.php?option=com_rsgallery2'
+                . '&view=slideshowj3x&id=' . $gallery->id,
+                true,
+                0,
+                true
+            );
+        } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'GallerysModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
@@ -63,6 +63,4 @@ class imagesj3xModel extends ImagesModel
             $app->enqueueMessage($OutTxt, 'error');
         }
     }
-
-
 }

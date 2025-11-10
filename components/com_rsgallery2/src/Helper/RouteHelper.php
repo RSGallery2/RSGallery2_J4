@@ -104,34 +104,34 @@ abstract class RouteHelper
      * @since   __DEPLOY_VERSION__
      */
     /**
-	public static function getCategoryRoute($catid, $language = 0)
-	{
-		if ($catid instanceof CategoryNode)
-		{
-			$id = $catid->id;
-		}
-		else
-		{
-			$id = (int) $catid;
-		}
+    public static function getCategoryRoute($catid, $language = 0)
+    {
+        if ($catid instanceof CategoryNode)
+        {
+            $id = $catid->id;
+        }
+        else
+        {
+            $id = (int) $catid;
+        }
 
-		if ($id < 1)
-		{
-			$link = '';
-		}
-		else
-		{
-			// Create the link
-			$link = 'index.php?option=com_rsgallery2&view=category&id=' . $id;
+        if ($id < 1)
+        {
+            $link = '';
+        }
+        else
+        {
+            // Create the link
+            $link = 'index.php?option=com_rsgallery2&view=category&id=' . $id;
 
-			if ($language && $language !== '*' && Multilanguage::isEnabled())
-			{
-				$link .= '&lang=' . $language;
-			}
-		}
+            if ($language && $language !== '*' && Multilanguage::isEnabled())
+            {
+                $link .= '&lang=' . $language;
+            }
+        }
 
-		return $link;
-	}
+        return $link;
+    }
     /**/
 
 
@@ -151,5 +151,4 @@ abstract class RouteHelper
         return 'index.php?option=com_content&task=article.edit&a_id=' . (int) $id;
     }
     /**/
-
 }

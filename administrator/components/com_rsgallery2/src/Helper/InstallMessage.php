@@ -10,7 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -90,8 +89,8 @@ class InstallMessage
         $controlPanelText     = Text::_('COM_RSGALLERY2_MENU_CONTROL_PANEL');
         $controlPanelTitle    = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONTROL_PANEL_TITLE');
 
-        $rsg2ConfigurationLink = URI::root() 
-			. '/administrator/index.php?option=com_config&view=component&component=com_rsgallery2';
+        $rsg2ConfigurationLink = URI::root()
+            . '/administrator/index.php?option=com_config&view=component&component=com_rsgallery2';
         $configurationText     = Text::_('COM_RSGALLERY2_MENU_CONFIG');
         $configurationTitle    = Text::_('COM_RSGALLERY2_INSTALL_GOTO_CONFIGURATION_TITLE');
 
@@ -149,7 +148,7 @@ class InstallMessage
             // ToDo: Save old when not same and use in new class ...
 
             // fallback: Since J!4
-            if (empty ($this->oldRelease)) {
+            if (empty($this->oldRelease)) {
                 $this->oldRelease = '5.0.0.1';
             }
 
@@ -161,7 +160,7 @@ class InstallMessage
 
             //--- fetch changelog and create html tables each -----------------------------
 
-            $ChangeLogModel = new ChangeLogModel ();
+            $ChangeLogModel = new ChangeLogModel();
             $jsonChangelogs = $ChangeLogModel->changeLogElements($this->oldRelease, $this->newRelease);
             // Array: Html table each log item
             $changelogTables = $ChangeLogModel->changeLogsData2Html($jsonChangelogs);
@@ -184,5 +183,4 @@ class InstallMessage
 
         return $changeLogText;
     }
-
 } // class

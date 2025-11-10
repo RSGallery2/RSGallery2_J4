@@ -30,7 +30,9 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  *
      * @since      5.1.0
  */
-class SlideshowJ3xModel extends Galleryj3xModel {}
+class SlideshowJ3xModel extends Galleryj3xModel
+{
+}
 
 //
 // we don't know which parts below may be needed
@@ -181,7 +183,7 @@ class SlideshowJ3xModel extends Galleryj3xModel {}
         $params = $app->getParams();
         $this->setState('params', $params);
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-	    $user = $app->getIdentity();
+        $user = $app->getIdentity();
 
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
             // Filter on published for those who do not have edit or edit.state rights.

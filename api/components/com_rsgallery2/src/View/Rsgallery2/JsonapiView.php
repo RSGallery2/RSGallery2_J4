@@ -7,12 +7,11 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
- 
+
 namespace Rsgallery2\Component\Rsgallery2\Api\View\Rsgallery2;
 
 //use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Language\Multilanguage;
@@ -35,53 +34,51 @@ use Joomla\Registry\Registry;
  */
 class JsonapiView extends BaseApiView
 {
-	/**
-	 * Execute and display a template script.
-	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
-	 * @return  void
-	 *
-	 * @since   4.0.0
-	 */
-	public function displayItem($item = null)
-	{
-//		$testRsgallery2Text = "testRsgallery2Text";
+    /**
+     * Execute and display a template script.
+     *
+     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     *
+     * @return  void
+     *
+     * @since   4.0.0
+     */
+    public function displayItem($item = null)
+    {
+//      $testRsgallery2Text = "testRsgallery2Text";
 //
-//		// Serializing the output
-//		//$result = json_encode($this->_output);
-//		$result = json_encode($testRsgallery2Text);
+//      // Serializing the output
+//      //$result = json_encode($this->_output);
+//      $result = json_encode($testRsgallery2Text);
 //
-//		// Pushing output to the document
-//		$this->getDocument()->setBuffer($result);
+//      // Pushing output to the document
+//      $this->getDocument()->setBuffer($result);
 //
-//		return $this->getDocument()->render();
-	}
+//      return $this->getDocument()->render();
+    }
 
-	/**
-	 * @param $tpl
-	 *
-	 * @return string|void
-	 *
-	 * @since  5.1.0
-	 */
-	public function display($tpl = null)
-	{
-		$testRsgallery2Text = "testRsgallery2Text";
+    /**
+     * @param $tpl
+     *
+     * @return string|void
+     *
+     * @since  5.1.0
+     */
+    public function display($tpl = null)
+    {
+        $testRsgallery2Text = "testRsgallery2Text";
 
-		// zzzz();
+        // zzzz();
 
-		// Serializing the output
-		//$result = json_encode($this->_output);
-		$result = json_encode($testRsgallery2Text);
+        // Serializing the output
+        //$result = json_encode($this->_output);
+        $result = json_encode($testRsgallery2Text);
 
-		// Pushing output to the document
-		$this->getDocument()->setBuffer($result);
+        // Pushing output to the document
+        $this->getDocument()->setBuffer($result);
 
-		return $this->getDocument()->render();
-	}
+        return $this->getDocument()->render();
+    }
 
 // ToDo: Later The hidden gem of the API view is another string array property, $relationship. In that view you list all the field names returned by your model which refer to related data.
-
-
 }

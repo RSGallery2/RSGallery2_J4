@@ -33,7 +33,7 @@ use UnexpectedValueException;
  */
 class GalleryTable extends Nested
 {
-	public $access = null;
+    public $access = null;
 
     /**
      * Constructor
@@ -122,7 +122,7 @@ class GalleryTable extends Nested
 
             $query->setLimit(1);
 
-            if (empty ($this->_db->setQuery($query)->loadResult())) {
+            if (empty($this->_db->setQuery($query)->loadResult())) {
                 $this->setError(Text::_('JLIB_DATABASE_ERROR_INVALID_PARENT_ID'));
 
                 return false;

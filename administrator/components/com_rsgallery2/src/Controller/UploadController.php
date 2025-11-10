@@ -129,7 +129,7 @@ class UploadController extends FormController
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-	        $this->issueError($errorType);
+            $this->issueError($errorType);
         }
 
         try {
@@ -145,8 +145,8 @@ class UploadController extends FormController
             $TargetFileName = $input->get('upload_file_name', '', 'string');
             $fileName       = File::makeSafe($TargetFileName);
 
-// ==>			joomla replace spaces in filenames
-// ==>			'file_name' => str_replace(" ", "", $file_name);
+// ==>          joomla replace spaces in filenames
+// ==>          'file_name' => str_replace(" ", "", $file_name);
             $baseName = basename($fileName);
 
             if ($Rsg2DebugActive) {
@@ -267,22 +267,22 @@ class UploadController extends FormController
 in:
 interface IDroppedFile
 {
-	file: File;
-	galleryId: string;
-	...
+    file: File;
+    galleryId: string;
+    ...
 }
 interface ITransferFile extends IDroppedFile {
-	imageId: string;
-	fileName: string;
-	dstFileName: string;
+    imageId: string;
+    fileName: string;
+    dstFileName: string;
 }
 
 out:
-	interface IResponseTransfer {
-	fileName: string;
-	imageId: string; //number
-	fileUrl: string;
-	safeFileName: string;
+    interface IResponseTransfer {
+    fileName: string;
+    imageId: string; //number
+    fileUrl: string;
+    safeFileName: string;
 }
 
 /**/
@@ -327,7 +327,7 @@ out:
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-	        $this->issueError($errorType);
+            $this->issueError($errorType);
         }
 
         try {
@@ -416,7 +416,12 @@ out:
 
                 $modelFile = $this->getModel('imageFile');
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
-                    $srcTempPathFileName, $targetFileName, $galleryId, $origin, $use_j3x_location);
+                    $srcTempPathFileName,
+                    $targetFileName,
+                    $galleryId,
+                    $origin,
+                    $use_j3x_location
+                );
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
                 $OutTxt .= 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
@@ -433,7 +438,7 @@ out:
             if (!$isCreated) {
                 // ToDo: remove $imageId fom image database
                 if ($Rsg2DebugActive) {
-					Log::add('MoveImageAndCreateRSG2Images failed: ' . $srcTempPathFileName . '" -> "' . $targetFileName);
+                    Log::add('MoveImageAndCreateRSG2Images failed: ' . $srcTempPathFileName . '" -> "' . $targetFileName);
                 }
 
                 echo new JsonResponse($ajaxImgObject, $msg, true);
@@ -471,7 +476,6 @@ out:
 
             echo new JsonResponse($msg, $errMsg, $hasError);
             //echo new JsonResponse($e);
-
         }
 
         $app->close();
@@ -519,7 +523,7 @@ out:
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-	        $this->issueError($errorType);
+            $this->issueError($errorType);
         }
 
         try {
@@ -572,8 +576,8 @@ out:
             $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
             $thumbSize = $rsgConfig->get('thumb_size');
 
-//			// Path to the archive
-//			$archiveName = $srcTempPathFileName;
+//          // Path to the archive
+//          $archiveName = $srcTempPathFileName;
 
             // Temporary folder to extract the archive into
             $tmpdir = uniqid('rsg2_zip_');
@@ -648,8 +652,11 @@ out:
 //                            check out MoveImageAndCreateRSG2Images
 
                             // toDo check origin and config for copy / or move file call below
-                            [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images( 
-                                $fileName, $targetFileName, $galleryId, $origin,
+                            [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
+                                $fileName,
+                                $targetFileName,
+                                $galleryId,
+                                $origin,
                             );
 
                             if ($isCreated) {
@@ -657,7 +664,6 @@ out:
                                 $files [$fileIdx]['thumbSize'] = $thumbSize;
                             } else {
                                 // ToDo: ??? Keep for end result ???
-
                             }
                             /**/
                         } catch (\RuntimeException $e) {
@@ -723,8 +729,8 @@ out:
 
                 $app->enqueueMessage(Text::_('COM_RSGALLERY2_ZIP_FILE_NO_IMAGE_EXIST') . '<br>'
                     . 'Zip Name: ' . $oFile['name'] . '<br>'
-                    . 'Used Path: ' . $srcTempPathFileName, // . '<br>'
-                );
+                    . 'Used Path: ' . $srcTempPathFileName,); // . '<br>'
+
                 if ($Rsg2DebugActive) {
                     Log::add($msg);
                 }
@@ -799,7 +805,7 @@ out:
         // for debug ajax response errors / notice
         $errorType = 0; //  1: error, 2: notice, 3: enqueueMessage types error, 4: enqueue. warning 5: \Exception
         if ($errorType) {
-	        $this->issueError($errorType);
+            $this->issueError($errorType);
         }
 
         try {
@@ -863,8 +869,8 @@ out:
 
                 $app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_DIR_NOT_EXIST') . '<br>'
                     . '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
-                    . '$Ftp path server root based: ' . $ftpPathServer, // . '<br>'
-                );
+                    . '$Ftp path server root based: ' . $ftpPathServer,); // . '<br>'
+
                 if ($Rsg2DebugActive) {
                     Log::add($msg);
                 }
@@ -890,8 +896,8 @@ out:
 
                 $app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_FILES_DO_NOT_EXIST') . '<br>'
                     . '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
-                    . '$Ftp path server root based: ' . $ftpPathServer, // . '<br>'
-                );
+                    . '$Ftp path server root based: ' . $ftpPathServer,); // . '<br>'
+
                 if ($Rsg2DebugActive) {
                     Log::add($msg);
                 }
@@ -956,25 +962,25 @@ out:
     /**
 in:
 interface IRequestTransferFolderFile {
-	fileName: string;
-	imageId: string; //number
-	baseName: string;
-	dstFileName: string;
-	size: number;
+    fileName: string;
+    imageId: string; //number
+    baseName: string;
+    dstFileName: string;
+    size: number;
 
-	galleryId: string;
-	origin: string; // ftp/server
+    galleryId: string;
+    origin: string; // ftp/server
 
-	statusBar: createStatusBar | null;
-	errorZone: HTMLElement | null;
+    statusBar: createStatusBar | null;
+    errorZone: HTMLElement | null;
 }
 
 out:
 interface IResponseTransfer {
-	fileName: string;
-	imageId: string; //number
-	fileUrl: string;
-	safeFileName: string;
+    fileName: string;
+    imageId: string; //number
+    fileUrl: string;
+    safeFileName: string;
 }
 
 /**/
@@ -1035,18 +1041,17 @@ interface IResponseTransfer {
             // toDo: rename dstFileName to safe file name ... so it matches function uploadAjaxSingleFile()
             $targetFileName = $input->get('dstFileName', '', 'string');
             /**
-			fileName: string;
-			imageId: string; //number
-			baseName: string;
-			dstFileName: string;
-			size: number;
+            fileName: string;
+            imageId: string; //number
+            baseName: string;
+            dstFileName: string;
+            size: number;
 
-			galleryId: string;
-			origin: string; // ftp/server
+            galleryId: string;
+            origin: string; // ftp/server
 /**/
 
-			if ($Rsg2DebugActive)
-			{
+            if ($Rsg2DebugActive) {
                 // identify active file
                 Log::add('$fileName: "' . $fileName . '"');
                 Log::add('$targetFileName: "' . $targetFileName . '"');
@@ -1091,7 +1096,10 @@ interface IResponseTransfer {
                 $modelFile = $this->getModel('imageFile');
                 // toDo check origin and config for copy / or move file call below
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
-                    $fileName, $targetFileName, $galleryId, $origin,
+                    $fileName,
+                    $targetFileName,
+                    $galleryId,
+                    $origin,
                 );
                 /**/
             } catch (\RuntimeException $e) {
@@ -1153,17 +1161,17 @@ interface IResponseTransfer {
         $app->close();
     }
 
-	/**
-	 * Collects file names in given folder, creates a DB entry in images table
-	 * and return a files list with basic information including the new image ID
-	 * recursive
-	 * @param $ImagesFolder
-	 * @param $galleryId
-	 *
-	 * @return array
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Collects file names in given folder, creates a DB entry in images table
+     * and return a files list with basic information including the new image ID
+     * recursive
+     * @param $ImagesFolder
+     * @param $galleryId
+     *
+     * @return array
+     *
+     * @since  5.1.0
+     */
     private function Import2Db4FilesInFolder($ImagesFolder, $galleryId)
     {
         global $rsgConfig, $Rsg2DebugActive;
@@ -1180,7 +1188,6 @@ interface IResponseTransfer {
         $files   = [];
 
         foreach ($filesFound as $filePathName) {
-
             //--- Create Destination file name -----------------------
 
             $filePathName = realpath($filePathName);
@@ -1315,6 +1322,4 @@ interface IResponseTransfer {
         }
         /**/
     }
-
 } // class
-

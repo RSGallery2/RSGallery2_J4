@@ -50,13 +50,13 @@ class Rsg2_galleriesHelper //implements DatabaseAwareInterface
             ->createModel('Galleries', 'Site', ['ignore_request' => true]);
     }
 
-	/**
-	 * @param   int  $gid
-	 *
-	 * @return mixed
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param   int  $gid
+     *
+     * @return mixed
+     *
+     * @since  5.1.0
+     */
     public function getGalleryData(int $gid)
     {
         return $this->galleriesModel->getParentGallery($gid);
@@ -110,8 +110,7 @@ class Rsg2_galleriesHelper //implements DatabaseAwareInterface
                 // Add image paths, image params ...
                 $data = $this->galleriesModel->AddLayoutData($galleries);
             }
-
-		} catch (\RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             // ToDo: Message more explicit
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
@@ -119,7 +118,7 @@ class Rsg2_galleriesHelper //implements DatabaseAwareInterface
         return $galleries;
     }
 
-//	public static function getImageNamesOfUrl ($folderUrl)
+//  public static function getImageNamesOfUrl ($folderUrl)
 //    {
 //        $galleries = [];
 //
@@ -160,18 +159,16 @@ class Rsg2_galleriesHelper //implements DatabaseAwareInterface
 //        return $galleries;
 //    }
 
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function getText()
     {
         $msg = "    --- Rsg2_galleries module ----- ";
 
         return $msg;
     }
-
 }
-

@@ -50,24 +50,20 @@ class rsg2installtasksflat
 
         // insert configuration standard values
         /**
-		//$configModel = $this->getModel('ConfigRaw');
-		$configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
-		$isSaved = $configModel->ResetConfigToDefault();
+        //$configModel = $this->getModel('ConfigRaw');
+        $configModel = $this->getModel('ConfigRaw', 'Rsgallery2Model', array('ignore_request' => true))
+        $isSaved = $configModel->ResetConfigToDefault();
 
-		if ($isSaved) {
-		// config saved message
-		$msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
-		}
-		else
-		{
-		$msg .= "Error at resetting configuration to default'";
-		$msgType = 'warning';
-		}
-		echo $msg;
-		/**/
-
+        if ($isSaved) {
+        // config saved message
+        $msg .= '<br><br>' . Text::_('Configuration parameters resetted to default', true);
+        }
+        else
+        {
+        $msg .= "Error at resetting configuration to default'";
+        $msgType = 'warning';
+        }
+        echo $msg;
+        /**/
     }
-
 } // class
-
-

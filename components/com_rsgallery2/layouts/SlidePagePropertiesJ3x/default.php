@@ -33,11 +33,11 @@ if (!empty($isDevelopSite)) {
         . '* modal image (->slider)<br>'
         . '* length of filenames<br>'
         . '* what happens on empty galleries/ image lists<br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
-//	. '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
+//  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -56,7 +56,7 @@ $voteLink = Route::_('index.php?option=com_rsgallery2&task=voteJ3x&id=2&iid=' . 
 
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h3>RSGallery2 slide (?page) properties J3x layout</h3>
     <hr>
 <?php endif; ?>

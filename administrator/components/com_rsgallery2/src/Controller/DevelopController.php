@@ -59,7 +59,7 @@ class DevelopController extends BaseController
      *
      * @var    string
      * @since  5.1.0     */
-	//	protected $default_view = 'rsgallery2';
+    //  protected $default_view = 'rsgallery2';
 
     /**
      * Method to display a view.
@@ -492,18 +492,18 @@ class DevelopController extends BaseController
         $this->setRedirect($link, $msg, $msgType);
     }
 
-	/**
-	 * Create count galleries in DB
-	 * The title will contain the actual date and seconds
-	 *
-	 * @param $count
-	 * @param $parentId
-	 *
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Create count galleries in DB
+     * The title will contain the actual date and seconds
+     *
+     * @param $count
+     * @param $parentId
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function createGalleries($count, $parentId = 1)
     {
         $isCreated = false;
@@ -547,18 +547,18 @@ class DevelopController extends BaseController
         return $isCreated;
     }
 
-	/**
-	 * Create count galleries in DB
-	 * The title will contain the actual date and seconds
-	 *
-	 * @param $count
-	 * @param $galleryId
-	 *
-	 * @return bool
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Create count galleries in DB
+     * The title will contain the actual date and seconds
+     *
+     * @param $count
+     * @param $galleryId
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function createImages($count, $galleryId)
     {
         $isCreated = false;
@@ -639,15 +639,16 @@ class DevelopController extends BaseController
 
     // ToDo: Move to own helper class
 
-	/**
-	 * Standard date for auto generate galleries and images
-	 *
-	 * @return string
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
-    private function stdDateTime () {
+    /**
+     * Standard date for auto generate galleries and images
+     *
+     * @return string
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
+    private function stdDateTime()
+    {
         $now = '2020_error_stdDateTime';
 
         try {
@@ -702,7 +703,7 @@ class DevelopController extends BaseController
             try {
                 $input        = Factory::getApplication()->input;
                 $lowerVersion = $input->get('PreviousVersion', '', 'STRING');
-                if (empty ($lowerVersion)) {
+                if (empty($lowerVersion)) {
                     $lowerVersion = '5.0.0.1';
                 }
 
@@ -752,7 +753,7 @@ class DevelopController extends BaseController
             try {
                 $input        = Factory::getApplication()->input;
                 $lowerVersion = $input->get('PreviousVersion', '', 'STRING');
-                if (empty ($lowerVersion)) {
+                if (empty($lowerVersion)) {
                     $lowerVersion = '5.0.0.1';
                 }
 
@@ -782,22 +783,21 @@ class DevelopController extends BaseController
         $this->setRedirect($link);
     }
 
-	/**
-	 * Merge actual config with standard values and .....
-	 * @return mixed
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Merge actual config with standard values and .....
+     * @return mixed
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function mergeParams()
     {
         $actualParams  = Rsg2ExtensionModel::readRsg2ExtensionConfiguration();
         $defaultParams = Rsg2ExtensionModel::readRsg2ExtensionDefaultConfiguration();
-	    //$mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($this->defaultParams, $this->actualParams);
-	    $mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($defaultParams, $actualParams);
-	    $isWritten     = Rsg2ExtensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
+        //$mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($this->defaultParams, $this->actualParams);
+        $mergedParams  = Rsg2ExtensionModel::mergeDefaultAndActualParams($defaultParams, $actualParams);
+        $isWritten     = Rsg2ExtensionModel::replaceRsg2ExtensionConfiguration($mergedParams);
 
-		return $mergedParams;
+        return $mergedParams;
     }
-
 }

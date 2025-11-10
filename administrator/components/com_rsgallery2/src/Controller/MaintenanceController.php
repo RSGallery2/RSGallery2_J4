@@ -144,7 +144,7 @@ class MaintenanceController extends BaseController
      *
      * @var    string
      * @since  5.1.0     */
-//	protected $default_view = 'rsgallery2';
+//  protected $default_view = 'rsgallery2';
 
     /**
      * Method to display a view.
@@ -156,16 +156,16 @@ class MaintenanceController extends BaseController
      * @license    GNU General Public License version 2 or later
      *
      * @since      5.1.0     *
-	public function display($cachable = false, $urlparams = [])
-	{
+    public function display($cachable = false, $urlparams = [])
+    {
 
-		// $model = $this->getModel('');
-
-
+        // $model = $this->getModel('');
 
 
-		return parent::display();
-	}
+
+
+        return parent::display();
+    }
     /**/
 
     /**
@@ -183,7 +183,7 @@ class MaintenanceController extends BaseController
     {
         return parent::getModel($name, $prefix, $config);
     }
-	/**/
+    /**/
 
 
 
@@ -337,5 +337,4 @@ class MaintenanceController extends BaseController
 //        return parent::getModel($name, $prefix, $config);
 //    }
 //
-
 }

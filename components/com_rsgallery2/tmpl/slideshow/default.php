@@ -8,7 +8,6 @@
  * @license        GNU General Public License version 2 or later
  */
 
-
 //  J3x legacy view => slideshow
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -30,16 +29,16 @@ HTMLHelper::_('stylesheet', 'com_rsgallery2/site/slideshow.css', ['version' => '
 
 echo '';
 // on develop show open tasks if existing
-if (!empty ($this->isDevelopSite)) {
+if (!empty($this->isDevelopSite)) {
     echo '<span style="color:red">'
         . 'Tasks: slideshow view<br>'
         . '* user: order of images ?<br>'
         . '* make rsgConfig global<br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
-        //	. '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
         . '</span><br><br>';
 }
 
@@ -67,7 +66,7 @@ $displayData['isDevelopSite'] = $this->isDevelopSite;
 
     <div class="rsg2__form rsg2__slide_area">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <h1> Menu RSGallery2 "slideshow" view </h1>
             <hr>
         <?php endif; ?>

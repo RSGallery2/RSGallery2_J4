@@ -92,7 +92,7 @@ class PlgContentRsg2_gallery extends CMSPlugin
             preg_match_all($regex, $article->text, $matches, PREG_SET_ORDER);
 
             // there should be matches as text is searched
-            if (empty ($matches)) {
+            if (empty($matches)) {
                 echo "<br><br>!!! article has no text !!!<br>";
 
                 return null;
@@ -119,8 +119,6 @@ class PlgContentRsg2_gallery extends CMSPlugin
                 $article->text,
             );
 //            echo "<br>----------------------------------<br>";
-
-
         } catch (Exception $e) {
             $msg = Text::_('PLG_CONTENT_RSG2_GALLERY') . ' Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
@@ -394,8 +392,6 @@ class PlgContentRsg2_gallery extends CMSPlugin
 
         return $isHandled;
     }
-
-
 }
 
 /**
@@ -455,5 +451,3 @@ class PlgContentRsg2_gallery extends CMSPlugin
  *
  * }
  * /**/
-
-

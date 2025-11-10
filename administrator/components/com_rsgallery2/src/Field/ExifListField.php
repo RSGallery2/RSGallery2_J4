@@ -53,8 +53,13 @@ class ExifListField extends ListField
             //--- load additional language file --------------------------------
 
             $lang = Factory::getApplication()->getLanguage();
-            $lang->load('com_rsg2_exif',
-                Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+            $lang->load(
+                'com_rsg2_exif',
+                Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
+                null,
+                false,
+                true
+            );
 
             //--- exif tags ---------------------------------------------------------
 
@@ -85,6 +90,4 @@ class ExifListField extends ListField
 
         return $options;
     }
-
 }
-

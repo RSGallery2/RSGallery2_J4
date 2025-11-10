@@ -7,7 +7,7 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
- 
+
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
 use Joomla\CMS\Filter\InputFilter;
@@ -88,13 +88,13 @@ class ImagesController extends ApiController
 //            $this->modelState->set('filter.root_path', $filter->clean($apiFilterInfo['root_path'], 'STRING'));
 //        }
 //
-//	    $apiListInfo = $this->input->get('list', [], 'array');
+//      $apiListInfo = $this->input->get('list', [], 'array');
 //
-//	    if (\array_key_exists('prjType', $apiFilterInfo)) {
+//      if (\array_key_exists('prjType', $apiFilterInfo)) {
 //            $this->modelState->set('list.prjType', $filter->clean($apiListInfo['prjType'], 'INT'));
 //        }
 //
-//	    if (\array_key_exists('direction', $apiListInfo)) {
+//      if (\array_key_exists('direction', $apiListInfo)) {
 //            $this->modelState->set('list.direction', $filter->clean($apiListInfo['direction'], 'STRING'));
 //        }
 //

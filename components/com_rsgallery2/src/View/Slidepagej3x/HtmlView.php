@@ -21,7 +21,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
-use \Joomla\CMS\User\User;
+use Joomla\CMS\User\User;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
 
 /**
@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null) : void
+    public function display($tpl = null): void
     {
         $app             = Factory::getApplication();
         $input           = Factory::getApplication()->input;
@@ -135,7 +135,7 @@ class HtmlView extends BaseHtmlView
         $limitstart = $this->state->get('list.start');
         $total      = $this->state->get('list.total');
 
-        $this->pagination = new Pagination ($total, $limitstart, 1);
+        $this->pagination = new Pagination($total, $limitstart, 1);
 
         // Flag indicates to not add limitstart=0 to URL
         // commented to show also for IDX 0
@@ -157,7 +157,7 @@ class HtmlView extends BaseHtmlView
         $this->gallery = $model->galleryData($this->galleryId);
 
         // add slideshow url
-        if (!empty ($gallery)) {
+        if (!empty($gallery)) {
             $model->assignSlideshowUrl($gallery);
         }
 
@@ -168,15 +168,20 @@ class HtmlView extends BaseHtmlView
 
         //--- exif data --------------------------------------------------------
 
-        if (!empty ($this->image)) {
+        if (!empty($this->image)) {
             if ($this->isShowExif) {
                 // image to display exits
-                if (!empty ($this->image)) {
+                if (!empty($this->image)) {
                     //--- load additional language file --------------------------------
 
                     $lang = Factory::getApplication()->getLanguage();
-                    $lang->load('com_rsg2_exif',
-                        Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'), null, false, true);
+                    $lang->load(
+                        'com_rsg2_exif',
+                        Path::clean(JPATH_ADMINISTRATOR . '/components/' . 'com_rsgallery2'),
+                        null,
+                        false,
+                        true
+                    );
 
                     //--- selected tags from original file --------------------------------
 
@@ -187,7 +192,7 @@ class HtmlView extends BaseHtmlView
 
                     // tags in second item of array
                     $ImageExifTags = [];
-                    if (!empty ($ImageExifFileTags[1])) {
+                    if (!empty($ImageExifFileTags[1])) {
                         $ImageExifTags = $ImageExifFileTags[1];
                     }
 
@@ -200,28 +205,28 @@ class HtmlView extends BaseHtmlView
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
-//   		$state = $this->state = $this->get('State');
-//		$params = $this->params = $state->get('params');
-//		$itemparams = new Registry(json_decode($item->params));
+//          $state = $this->state = $this->get('State');
+//      $params = $this->params = $state->get('params');
+//      $itemparams = new Registry(json_decode($item->params));
 //
-//		$temp = clone $params;
-//		$temp->merge($itemparams);
-//		$item->params = $temp;
+//      $temp = clone $params;
+//      $temp->merge($itemparams);
+//      $item->params = $temp;
 //
-//		Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
+//      Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
 //
-//		// Store the events for later
-//		$item->event = new \stdClass;
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayTitle = trim(implode("\n", $results));
+//      // Store the events for later
+//      $item->event = new \stdClass;
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
 
-//		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->beforeDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayContent = trim(implode("\n", $results));
 //
         parent::display($tpl);
     }
@@ -229,13 +234,13 @@ class HtmlView extends BaseHtmlView
 
 //  ToDo: move to model
 
-	/**
-	 * Merge ... not ready .. cascade ...
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
-	public function mergeMenuOptions()
+    /**
+     * Merge ... not ready .. cascade ...
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
+    public function mergeMenuOptions()
     {
         /**
         $app = Factory::getApplication();
@@ -274,8 +279,5 @@ class HtmlView extends BaseHtmlView
 //
 //        $this->menuParams->images_show_title = $input->getBool('images_show_title', true);
 //        $this->menuParams->images_show_description = $input->getBool('images_show_description', true);
-
     }
-
-
 }

@@ -58,8 +58,12 @@ class XXRouter extends RouterView
      * @param   CategoryFactoryInterface  $categoryFactory  The category object
      * @param   DatabaseInterface         $db               The database object
      */
-    public function __construct(SiteApplication $app, AbstractMenu $menu, CategoryFactoryInterface $categoryFactory,
-        DatabaseInterface $db) {
+    public function __construct(
+        SiteApplication $app,
+        AbstractMenu $menu,
+        CategoryFactoryInterface $categoryFactory,
+        DatabaseInterface $db
+    ) {
         /**
          * $this->categoryFactory = $categoryFactory;
          * $this->db              = $db;
@@ -90,7 +94,7 @@ class XXRouter extends RouterView
 
         $params      = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool)$params->get('sef_ids');
-	    $this->db              = $db;
+        $this->db              = $db;
 
 
         //--- rules for J3x rsg2_legacy links ----------------------------------------
@@ -197,12 +201,12 @@ class XXRouter extends RouterView
 
     public function getRootgalleriesJ3xId($segment, $query)
     {
-//		return (int) $segment;
+//      return (int) $segment;
 
         $gid = 0; // root gallery
 
         // parent gallery
-        if (!empty ($segment)) {
+        if (!empty($segment)) {
             $db      = Factory::getContainer()->get(DatabaseInterface::class);
             $dbquery = $db->createQuery();
 
@@ -229,7 +233,7 @@ class XXRouter extends RouterView
 // http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x$id=0&images_show_title=2&images_show_description=0&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=4&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=20&Itemid=160
     public function getGalleriesJ3xSegment($gid, $query)
     {
-//		return array((int) $gid => $gid);
+//      return array((int) $gid => $gid);
 
         // fall back
         $void    = '0';
@@ -257,25 +261,25 @@ class XXRouter extends RouterView
 
     public function getGalleriesJ3xId($segment, $query)
     {
-	    if ($this->noIDs) {
-		    $dbquery = $this->db->createQuery();
-		    $dbquery
-			    ->select($this->db->quoteName('id'))
+        if ($this->noIDs) {
+            $dbquery = $this->db->createQuery();
+            $dbquery
+                ->select($this->db->quoteName('id'))
                 ->from($dbquery->qn('#__rsg2_galleries'))
-			    ->where($this->db->quoteName('alias') . ' = :segment')
-			    ->bind(':segment', $segment);
+                ->where($this->db->quoteName('alias') . ' = :segment')
+                ->bind(':segment', $segment);
 
-		    $this->db->setQuery($dbquery);
+            $this->db->setQuery($dbquery);
 
-		    $id = (int) $this->db->loadResult();
+            $id = (int) $this->db->loadResult();
 
-		    // Do we have a URL with ID?
-		    if ($id) {
-			    return $id;
-		    }
+            // Do we have a URL with ID?
+            if ($id) {
+                return $id;
+            }
         }
 
-	    return (int) $segment;
+        return (int) $segment;
     }
 
 
@@ -283,49 +287,49 @@ class XXRouter extends RouterView
 // http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryj3x$id=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
     public function getGalleryJ3xSegment($id, $query)
     {
-	    if (!strpos($id, ':')) {
-		    $id      = (int) $id;
-		    $dbquery = $this->db->createQuery();
-		    $dbquery
-			    ->select($this->db->quoteName('alias'))
-			    ->from($this->db->quoteName('#__rsg2_galleries'))
-			    ->where($this->db->quoteName('id') . ' = :id')
-			    ->bind(':id', $id, ParameterType::INTEGER);
-		    $this->db->setQuery($dbquery);
+        if (!strpos($id, ':')) {
+            $id      = (int) $id;
+            $dbquery = $this->db->createQuery();
+            $dbquery
+                ->select($this->db->quoteName('alias'))
+                ->from($this->db->quoteName('#__rsg2_galleries'))
+                ->where($this->db->quoteName('id') . ' = :id')
+                ->bind(':id', $id, ParameterType::INTEGER);
+            $this->db->setQuery($dbquery);
 
-		    $id .= ':' . $this->db->loadResult();
-	    }
+            $id .= ':' . $this->db->loadResult();
+        }
 
-	    if ($this->noIDs) {
-		    list($void, $segment) = explode(':', $id, 2);
+        if ($this->noIDs) {
+            list($void, $segment) = explode(':', $id, 2);
 
-		    return [$void => $segment];
-	    }
+            return [$void => $segment];
+        }
 
-	    return [(int) $id => $id];
+        return [(int) $id => $id];
     }
 
     public function getGalleryJ3xId($segment, $query)
     {
-	    if ($this->noIDs) {
-		    $dbquery = $this->db->createQuery();
-		    $dbquery
-			    ->select($this->db->quoteName('id'))
-			    ->from($dbquery->qn('#__rsg2_galleries'))
-			    ->where($this->db->quoteName('alias') . ' = :segment')
-			    ->bind(':segment', $segment);
+        if ($this->noIDs) {
+            $dbquery = $this->db->createQuery();
+            $dbquery
+                ->select($this->db->quoteName('id'))
+                ->from($dbquery->qn('#__rsg2_galleries'))
+                ->where($this->db->quoteName('alias') . ' = :segment')
+                ->bind(':segment', $segment);
 
-		    $this->db->setQuery($dbquery);
+            $this->db->setQuery($dbquery);
 
-		    $id = (int) $this->db->loadResult();
+            $id = (int) $this->db->loadResult();
 
-		    // Do we have a URL with ID?
-		    if ($id) {
-			    return $id;
-		    }
-	    }
+            // Do we have a URL with ID?
+            if ($id) {
+                return $id;
+            }
+        }
 
-	    return (int) $segment;
+        return (int) $segment;
     }
 
 
@@ -482,7 +486,4 @@ class XXRouter extends RouterView
 //            }
 //        }
 //    }
-
-
 }
-

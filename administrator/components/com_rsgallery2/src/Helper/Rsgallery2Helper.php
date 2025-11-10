@@ -72,15 +72,15 @@ class Rsgallery2Helper extends ContentHelper
             $vName == 'images' || $vName == 'images_raw',
         );
 
-	    //--- config ------------------------------------
+        //--- config ------------------------------------
 
-	    $link = 'index.php?option=com_config&view=component&component=com_rsgallery2"';
-	    Sidebar::addEntry(
-		    '<span class="icon-equalizer" ></span>',
-		    // 'index.php?option=com_rsgallery2&rsgOption=images',
-		    $link,
-		    $vName == 'config' || $vName == 'config_raw',
-	    );
+        $link = 'index.php?option=com_config&view=component&component=com_rsgallery2"';
+        Sidebar::addEntry(
+            '<span class="icon-equalizer" ></span>',
+            // 'index.php?option=com_rsgallery2&rsgOption=images',
+            $link,
+            $vName == 'config' || $vName == 'config_raw',
+        );
 
         //--- Add maintenance view link ------------------------------------
 
@@ -106,6 +106,5 @@ class Rsgallery2Helper extends ContentHelper
                 $vName == 'develop',
             );
         }
-
     }
 }

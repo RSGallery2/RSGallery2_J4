@@ -12,6 +12,10 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\Filesystem\Path;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
@@ -33,23 +37,22 @@ class PathHelper
     }
 
 
-//	public static function join(): string
-//	{
-//		$paths = func_get_args();
-//		$paths = array_map(fn($path) => str_replace(["\\", "/"], DIRECTORY_SEPARATOR, $path), $paths);
-//		$paths = array_map(fn($path) => self::trimPath($path), $paths);
+//  public static function join(): string
+//  {
+//      $paths = func_get_args();
+//      $paths = array_map(fn($path) => str_replace(["\\", "/"], DIRECTORY_SEPARATOR, $path), $paths);
+//      $paths = array_map(fn($path) => self::trimPath($path), $paths);
 //
-//		return implode(DIRECTORY_SEPARATOR, $paths);
-//	}
+//      return implode(DIRECTORY_SEPARATOR, $paths);
+//  }
 //
-//	// use
-//	private static function trimPath(string $path): string
-//	{
-//		$path  = trim($path);
-//		$start = $path[0] === DIRECTORY_SEPARATOR ? 1 : 0;
-//		$end   = $path[strlen($path) - 1] === DIRECTORY_SEPARATOR ? -1 : strlen($path);
+//  // use
+//  private static function trimPath(string $path): string
+//  {
+//      $path  = trim($path);
+//      $start = $path[0] === DIRECTORY_SEPARATOR ? 1 : 0;
+//      $end   = $path[strlen($path) - 1] === DIRECTORY_SEPARATOR ? -1 : strlen($path);
 //
-//		return substr($path, $start, $end);
-//	}
+//      return substr($path, $start, $end);
+//  }
 }
-

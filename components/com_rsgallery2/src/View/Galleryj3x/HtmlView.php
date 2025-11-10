@@ -22,7 +22,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
-use \Joomla\CMS\User\User;
+use Joomla\CMS\User\User;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
@@ -85,7 +85,7 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed   A string if successful, otherwise an Error object.
      */
-    public function display($tpl = null) : void
+    public function display($tpl = null): void
     {
         //--- gallery (j4x++ try) --------------------------------------------------
 
@@ -96,7 +96,7 @@ class HtmlView extends BaseHtmlView
 
         /* wrong call but why ? gallery should be a number > 0 */
         if ($this->galleryId < 2) {
-	        Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why does it happen ?", 'error');
+            Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why does it happen ?", 'error');
         }
 
         // Get some data from the models
@@ -118,10 +118,10 @@ class HtmlView extends BaseHtmlView
 
         // ToDo: Status of images
 
-//		// Merge (overwrite) config parameter with menu parameter
-//		$menuParams = $this->get('Rsg2MenuParams');
-//		// wrong: $this->params = $menuParams->merge($this->params);
-//		$this->params->merge($menuParams);
+//      // Merge (overwrite) config parameter with menu parameter
+//      $menuParams = $this->get('Rsg2MenuParams');
+//      // wrong: $this->params = $menuParams->merge($this->params);
+//      $this->params->merge($menuParams);
 
         if (!empty($this->items)) {
             // Add image paths, image params ...
@@ -135,20 +135,20 @@ class HtmlView extends BaseHtmlView
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
 
-//   		$state = $this-sState = $this->get('State');
-//		$params = $this->params = $state->get('params');
-//		$itemparams = new Registry(json_decode($item->params));
+//          $state = $this-sState = $this->get('State');
+//      $params = $this->params = $state->get('params');
+//      $itemparams = new Registry(json_decode($item->params));
 //
-//		$temp = clone $params;
-//		$temp->merge($itemparams);
-//		$item->params = $temp;
+//      $temp = clone $params;
+//      $temp->merge($itemparams);
+//      $item->params = $temp;
 //
-//		Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
+//      Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
 //
-//		// Store the events for later
-//		$item->event = new \stdClass;
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayTitle = trim(implode("\n", $results));
+//      // Store the events for later
+//      $item->event = new \stdClass;
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayTitle = trim(implode("\n", $results));
 //
 
         // Check for layout override
@@ -159,26 +159,25 @@ class HtmlView extends BaseHtmlView
         }
 
 
-//		$results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->beforeDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->beforeDisplayContent = trim(implode("\n", $results));
 //
-//		$results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//		$item->event->afterDisplayContent = trim(implode("\n", $results));
+//      $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+//      $item->event->afterDisplayContent = trim(implode("\n", $results));
 //
 
         // on develop show open tasks if existing
-        if (!empty ($this->isDevelopSite)) {
+        if (!empty($this->isDevelopSite)) {
             echo '<span style="color:red">'
                 . 'Tasks: galleryJ3x view<br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
-                //	. '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
                 . '</span><br><br>';
         }
 
         parent::display($tpl);
     }
-
 }

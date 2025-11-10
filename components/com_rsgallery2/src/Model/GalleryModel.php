@@ -90,17 +90,16 @@ class GalleryModel extends ListModel
         parent::__construct($config, $factory);
     }
 
-	/**
-	 * Return cascaded parameters
-	 * @return mixed
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Return cascaded parameters
+     * @return mixed
+     *
+     * @since  5.1.0
+     */
     public function getlayoutParams()
     {
         if ($this->layoutParams == null) {
-
-	        // ToDo: CascadedLayoutParameter not defined as such
+            // ToDo: CascadedLayoutParameter not defined as such
             $this->layoutParams = $this->CascadedLayoutParameter();
         }
 
@@ -155,11 +154,11 @@ class GalleryModel extends ListModel
 
             // J4x ?
             if (!$image->use_j3x_location) {
-                $imagePaths = new ImagePathsData ($image->gallery_id);
+                $imagePaths = new ImagePathsData($image->gallery_id);
                 $imagePaths->assignPathData($image);
             } else {
                 // J3x
-                $imagePathJ3x = new ImagePathsJ3xData ();
+                $imagePathJ3x = new ImagePathsJ3xData();
                 $imagePathJ3x->assignPathData($image);
             }
         } catch (\RuntimeException $e) {
@@ -185,7 +184,7 @@ class GalleryModel extends ListModel
         try {
             $image->UrlGallery_AsInline = ''; // fall back
 
-            if (!empty ($image->gallery_id)) {
+            if (!empty($image->gallery_id)) {
                 $route = 'index.php?option=com_rsgallery2'
                     . '&view=slidepagej3x'
                     . '&id=' . $image->gallery_id // Todo: use instead: . '&gal_id=' . $image->gallery_id;
@@ -213,15 +212,15 @@ class GalleryModel extends ListModel
     }
 
 
-	/**
-	 * Add url for inline layout to image data
-	 *
-	 * @param $image
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Add url for inline layout to image data
+     *
+     * @param $image
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function AssignUrlDownloadImage($image)
     {
         $image->Urldownload = ''; // fall back
@@ -233,7 +232,8 @@ class GalleryModel extends ListModel
                 . '&task=imagefile.downloadfile&id=' . $image->id,
                 true,
                 0,
-                true);
+                true
+            );
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleryj3xModel: AssignUrlDownloadImage: Error executing query: "' . "" . '"' . '<br>';
@@ -257,13 +257,13 @@ class GalleryModel extends ListModel
         return $this->getState('list.start');
     }
 
-	/**
-	 * @param $gid
-	 *
-	 * @return Registry|\stdClass
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param $gid
+     *
+     * @return Registry|\stdClass
+     *
+     * @since  5.1.0
+     */
     public function gallery_parameter($gid = 0)
     {
         $parameter = new \stdClass();
@@ -292,15 +292,15 @@ class GalleryModel extends ListModel
 
     //-----------------------------------------------------------------
 
-	/**
-	 * Retrieve gallery data from db byid
-	 *
-	 * @param $gid
-	 *
-	 * @return mixed|\stdClass
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * Retrieve gallery data from db byid
+     *
+     * @param $gid
+     *
+     * @return mixed|\stdClass
+     *
+     * @since  5.1.0
+     */
     public function galleryData($gid = 0)
     {
         $gallery = new \stdClass();
@@ -320,7 +320,7 @@ class GalleryModel extends ListModel
             $gallery = $db->loadObject();
 
             // add slidshow url
-            if (!empty ($gallery)) {
+            if (!empty($gallery)) {
                 $this->assignSlideshowUrl($gallery);
             }
         }
@@ -328,15 +328,15 @@ class GalleryModel extends ListModel
         return $gallery;
     }
 
-	/**
-	 * Assign slideshow url to gallery data
-	 *
-	 * @param $gallery
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * Assign slideshow url to gallery data
+     *
+     * @param $gallery
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function assignSlideshowUrl($gallery)
     {
         try {
@@ -357,8 +357,7 @@ class GalleryModel extends ListModel
 
             $gallery->UrlSlideshow = Route::_(
                 'index.php?option=com_rsgallery2'
-                . '&view=slideshow&id=' . $gallery->id
-                ,
+                . '&view=slideshow&id=' . $gallery->id,
                 true,
                 0,
                 true,
@@ -412,7 +411,7 @@ class GalleryModel extends ListModel
 //            // $menuitem   = $app->getMenu()->getItem($theid); // or get item by ID
 //            $params = $menuitem->params; // get the params
 //            print_r($params); // print all params as overview
-//			/**/
+//          /**/
 //
 //            //--- RSG2 config  parameter -------------------------------------------------
 //
@@ -423,11 +422,11 @@ class GalleryModel extends ListModel
 //            $images_row_arrangement = $rsgConfig->get('images_row_arrangement');
 //            $max_rows_in_images_view = $rsgConfig->get('max_rows_in_images_view');
 //            $max_thumbs_in_images_view = $rsgConfig->get('max_thumbs_in_images_view');
-//			$dummy = 0; // remove
+//          $dummy = 0; // remove
 //
 //            //--- menu parameter -------------------------------------------------
 //
-//	        /*
+//          /*
 //            $app = Factory::getApplication();
 //            $input = $app->input;
 //
@@ -462,7 +461,7 @@ class GalleryModel extends ListModel
 //            // gallery parameter
 //            $gid = $input->get('id', '', 'INT');
 //
-//			// ToDo: check gid == 0 => error or selection control
+//          // ToDo: check gid == 0 => error or selection control
 //
 //            $gallery_param = $this->gallery_parameter($gid);
 //
@@ -490,7 +489,7 @@ class GalleryModel extends ListModel
 //                    }
 //                }
 //            }
-//			/**/
+//          /**/
 //
 //            $layoutParameter->images_column_arrangement  = $images_column_arrangement;
 //            $layoutParameter->max_columns_in_images_view = $max_columns_in_images_view;
@@ -524,8 +523,8 @@ class GalleryModel extends ListModel
 //
 //            }
 //
-//			// ToDo: remove
-//			$limit = 5;
+//          // ToDo: remove
+//          $limit = 5;
 //
 //
 //            $layoutParameter->limit = $limit;
@@ -581,12 +580,12 @@ class GalleryModel extends ListModel
         $params                        = $app->getParams();
         $max_thumbs_in_images_view_j3x = $params->get('max_thumbs_in_images_view_j3x');
 
-//	    $images_column_arrangement_j3x  = $params->get('images_column_arrangement_j3x');
-//	    $max_columns_in_images_view_j3x = $params->get('max_columns_in_images_view_j3x');
-//	    $max_thumbs_in_images_view_j3x  = $params->get('max_thumbs_in_images_view_j3x');
+//      $images_column_arrangement_j3x  = $params->get('images_column_arrangement_j3x');
+//      $max_columns_in_images_view_j3x = $params->get('max_columns_in_images_view_j3x');
+//      $max_thumbs_in_images_view_j3x  = $params->get('max_thumbs_in_images_view_j3x');
 
 
-//		// internal parameter
+//      // internal parameter
 //        $layoutParams = $this->getlayoutParams ();
 
         // List state information
@@ -702,15 +701,15 @@ class GalleryModel extends ListModel
         $userId = $user->get('id');
         $guest  = $user->get('guest');
 
-	    $listOrdering = $this->getState('list.ordering', 'a.ordering');
+        $listOrdering = $this->getState('list.ordering', 'a.ordering');
 
-	    $orderby        = $this->state->params->get('all_tags_orderby', $listOrdering);
-	    $listDirn       = $this->getState('list.direction', 'ASC');
+        $orderby        = $this->state->params->get('all_tags_orderby', $listOrdering);
+        $listDirn       = $this->getState('list.direction', 'ASC');
         $orderDirection = $this->state->params->get('all_tags_orderby_direction', $listDirn);
 
-	    $published      = (int)$this->state->params->get('published', 1);
+        $published      = (int)$this->state->params->get('published', 1);
 
-	    // 2024.04.21: $gid = $input->getInt ('gid', 0);
+        // 2024.04.21: $gid = $input->getInt ('gid', 0);
         $gid = (int)$this->getState('gallery.id', 0);
 
         // Create a new query object.
@@ -761,60 +760,60 @@ class GalleryModel extends ListModel
 //    public function getRsg2MenuParams()
 //    {
 //
-//	    // retrieved from default.xml ToDo Better way to merge ?
+//      // retrieved from default.xml ToDo Better way to merge ?
 //
-//	    /*
-//		'gallery_show_title'
-//		'gallery_show_description'
-//		'gallery_show_slideshow'
-//		'gallery_layout'
-//		'images_show_title'
-//		'images_show_title'
-//		'images_show_description'
-//		'images_show_description'
-//		'images_show_search'
-//		'images_column_arrangement'
-//		'max_columns_in_images_view'
-//		'images_row_arrangement'
-//		'max_rows_in_images_view'
-//		'max_thumbs_in_images_view'
-//		'displaySearch'
-//		*/
+//      /*
+//      'gallery_show_title'
+//      'gallery_show_description'
+//      'gallery_show_slideshow'
+//      'gallery_layout'
+//      'images_show_title'
+//      'images_show_title'
+//      'images_show_description'
+//      'images_show_description'
+//      'images_show_search'
+//      'images_column_arrangement'
+//      'max_columns_in_images_view'
+//      'images_row_arrangement'
+//      'max_rows_in_images_view'
+//      'max_thumbs_in_images_view'
+//      'displaySearch'
+//      */
 //
-//		/* ToDo: whats wrong with
-//	    $app = Factory::getApplication();
-//	    $menu = $app->getMenu()->getActive() ;
-//	    $itemId = $menu->id;
-//	    $menu_params = $menu->getParams($itemId);
-//		/**/
+//      /* ToDo: whats wrong with
+//      $app = Factory::getApplication();
+//      $menu = $app->getMenu()->getActive() ;
+//      $itemId = $menu->id;
+//      $menu_params = $menu->getParams($itemId);
+//      /**/
 //
 //
 //
-//	    $menuParams = new Registry();
+//      $menuParams = new Registry();
 //
 //        try {
 //
 //            $input = Factory::getApplication()->input;
 //
-//			$menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
-//			$menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
-//			$menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
-//			$menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
-//			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
-//			$menuParams->set('images_show_title', $input->getBool('images_show_title', true));
-//			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-//			$menuParams->set('images_show_description', $input->getBool('images_show_description', true));
-//			$menuParams->set('images_show_search', $input->getBool('images_show_search', true));
-//			$menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', true));
-//			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
-//			$menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', true));
-//	        $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
-//			$menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
-//			$menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', true));
-//			$menuParams->set('displaySearch', $input->getBool('displaySearch', true));
+//          $menuParams->set('gallery_show_title', $input->getBool('gallery_show_title', true));
+//          $menuParams->set('gallery_show_description', $input->getBool('gallery_show_description', true));
+//          $menuParams->set('gallery_show_slideshow', $input->getBool('gallery_show_slideshow', true));
+//          $menuParams->set('gallery_layout', $input->getBool('gallery_layout', true));
+//          $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+//          $menuParams->set('images_show_title', $input->getBool('images_show_title', true));
+//          $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+//          $menuParams->set('images_show_description', $input->getBool('images_show_description', true));
+//          $menuParams->set('images_show_search', $input->getBool('images_show_search', true));
+//          $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', true));
+//          $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
+//          $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', true));
+//          $menuParams->set('max_rows_in_images_view', $input->getInt('max_rows_in_images_view', ''));
+//          $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', true));
+//          $menuParams->set('max_thumbs_in_images_view', $input->getInt('max_thumbs_in_images_view', true));
+//          $menuParams->set('displaySearch', $input->getBool('displaySearch', true));
 //
 //
-//			/*
+//          /*
 //            $menuParams->set('images_column_arrangement', $input->getInt('images_column_arrangement', ''));
 //            $menuParams->set('max_columns_in_images_view', $input->getInt('max_columns_in_images_view', ''));
 //            $menuParams->set('images_row_arrangement', $input->getInt('images_row_arrangement', ''));
@@ -836,25 +835,24 @@ class GalleryModel extends ListModel
 //        return $menuParams;
 //    }
 
-//	public function max_thumbs_J3x ($params)
-//	{
-//		$max_thumbs = 0;
+//  public function max_thumbs_J3x ($params)
+//  {
+//      $max_thumbs = 0;
 //
-//		$images_column_arrangement_j3x  = $params->get('images_column_arrangement_j3x');
-//		$max_columns_in_images_view_j3x = $params->get('max_columns_in_images_view_j3x');
-//		$max_thumbs_in_images_view_j3x  = $params->get('max_thumbs_in_images_view_j3x');
+//      $images_column_arrangement_j3x  = $params->get('images_column_arrangement_j3x');
+//      $max_columns_in_images_view_j3x = $params->get('max_columns_in_images_view_j3x');
+//      $max_thumbs_in_images_view_j3x  = $params->get('max_thumbs_in_images_view_j3x');
 //
-//		if ($images_column_arrangement_j3x == '1') {
+//      if ($images_column_arrangement_j3x == '1') {
 //
-//			$max_thumbs = $max_thumbs_in_images_view_j3x;
+//          $max_thumbs = $max_thumbs_in_images_view_j3x;
 //
-//		} else {
+//      } else {
 //
-//			$max_thumbs = $max_thumbs_in_images_view_j3x;
-//		}
+//          $max_thumbs = $max_thumbs_in_images_view_j3x;
+//      }
 //
 //
-//		return $max_thumbs;
-//	}
-
+//      return $max_thumbs;
+//  }
 } // class

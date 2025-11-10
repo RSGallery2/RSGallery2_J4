@@ -205,5 +205,4 @@ class ImagesController extends AdminController
 
         $this->setRedirect('index.php?option=com_rsgallery2&view=images', $msg, $msgType);
     }
-
 }

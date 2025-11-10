@@ -33,7 +33,7 @@ use Joomla\Registry\Registry;
  */
 class CommentController extends BaseController
 {
-	protected $extension;
+    protected $extension;
 
     /**
      * Constructor.
@@ -57,12 +57,12 @@ class CommentController extends BaseController
     // saveComment Below / ToDO: delete comment
 
 
-	/**
-	 *
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function addComment()
     {
         $msgType = 'notice';
@@ -82,7 +82,7 @@ class CommentController extends BaseController
         // Access check
         $galleryId = $input->get('id', 0, 'INT');
         //$canComment = $this->app->getIdentity()->authorise('core.admin', 'com_rsgallery2');
-		$canComment = $this->app->getIdentity()->authorise('rsgallery2.comment', 'com_rsgallery2.gallery.' . $galleryId);
+        $canComment = $this->app->getIdentity()->authorise('rsgallery2.comment', 'com_rsgallery2.gallery.' . $galleryId);
         // ToDO: remove
         //$canComment = true;
 
@@ -96,10 +96,10 @@ class CommentController extends BaseController
             $user    = $this->app->getIdentity();
             $user_id = (int)$user->id;
 
-//			??? if not / if needed ??
+//          ??? if not / if needed ??
             if (empty($user_id)) {
                 // ToDo: Message Login to comment
-				$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR') . " " . Text::_('COM_RSGALLERY2_YOU_MUST_LOGIN_TO_COMMENT' . ' (B)');
+                $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR') . " " . Text::_('COM_RSGALLERY2_YOU_MUST_LOGIN_TO_COMMENT' . ' (B)');
                 $msgType = 'Warning: ';
                 // replace newlines with html line breaks.
                 $msg = nl2br($msg);
@@ -127,7 +127,7 @@ class CommentController extends BaseController
                     $dateTime = date('Y-m-d H:i:s');
 
 
-					$comment = new \stdClass;
+                    $comment = new \stdClass();
 
                     $comment->user_id   = $user_id;
                     $comment->user_name = $commentUserName;
@@ -158,7 +158,7 @@ class CommentController extends BaseController
                     // limitstart=3 ....
                     // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&id=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
                     //$link = 'index.php?option=com_rsgallery2&view=gallery&id=' . $galleryId . '&id=' . $imageId
-                    //	. '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
+                    //  . '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
                 } catch (\RuntimeException $e) {
                     $OutTxt = '';
                     $OutTxt .= 'Error executing addComment: "' . '<br>';
@@ -176,10 +176,10 @@ class CommentController extends BaseController
 
     // After editing
 
-	/**
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
+    /**
+     * @throws \Exception
+     * @since  5.1.0
+     */
     public function saveComment()
     {
         $msgType = 'notice';
@@ -219,10 +219,10 @@ class CommentController extends BaseController
                 $imageId   = $input->get('id', 0, 'INT');
 
                 /**
-				$userRating = $input->get('rating', 0, 'INT');
-				// Show same image -> pagination limitstart
-				$limitStart = $input->get('paginationImgIdx', 0, 'INT');
-				/**/
+                $userRating = $input->get('rating', 0, 'INT');
+                // Show same image -> pagination limitstart
+                $limitStart = $input->get('paginationImgIdx', 0, 'INT');
+                /**/
 
                 $comment = '';
 
@@ -235,7 +235,7 @@ class CommentController extends BaseController
                     $commentModel->SetUserHasCommented($imageId);
                 }
 
-//				limitstart=3 ....
+//              limitstart=3 ....
 // http://127.0.0.1/joomla3x/index.php?option=com_rsgallery2&view=gallery&id=2&advancedSef=1&startShowSingleImage=1&Itemid=145&XDEBUG_SESSION_START=12302&limitstart=3
                 $link = 'index.php?option=com_rsgallery2&view=gallery&id=' . $galleryId . '&id=' . $imageId
                     . '&startShowSingleImage=1' . '&rating=' . $userRating . '&limitstart=' . $limitStart;
@@ -251,6 +251,4 @@ class CommentController extends BaseController
 
         $this->setRedirect($link, $msg, $msgType);
     }
-
-
 }

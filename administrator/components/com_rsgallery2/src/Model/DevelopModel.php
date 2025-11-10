@@ -25,7 +25,6 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class DevelopModel extends BaseDatabaseModel
 {
-
 //    public function createGalleries($count) // , $parentGalleryId=0
 //    {
 //        $isCreated = false;
@@ -139,6 +138,4 @@ class DevelopModel extends BaseDatabaseModel
 //
 //        return $now;
 //    }
-
 }
-

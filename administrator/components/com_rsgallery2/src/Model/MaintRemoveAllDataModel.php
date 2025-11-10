@@ -30,7 +30,6 @@ use Joomla\CMS\MVC\Model\BaseDatabaseModel;
  */
 class MaintRemoveAllDataModel extends BaseDatabaseModel
 {
-
     /**
      *
      * @return array
@@ -51,15 +50,14 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             }
 
             // define path
-            $imagePaths = new ImagePathsModel (0);  // ToDo: J3x
+            $imagePaths = new ImagePathsModel(0);  // ToDo: J3x
             $removePath = $imagePaths->rsgImagesBasePath;
 
             $OutTxt = 'MaintRemoveAllDataModel: Executing removeAllImageFiles: <br> Remove Path: "' . $removePath . '"';
             $app    = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'notice');
             $isRemoved = true;
-//			$this->removeImagesInFolder($removePath);
-
+//          $this->removeImagesInFolder($removePath);
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'MaintRemoveAllDataModel: Error executing removeAllImageFiles: <br>';
@@ -69,7 +67,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-//		return array($isRemoved, $msg); // list($isRemoved, $msg)
+//      return array($isRemoved, $msg); // list($isRemoved, $msg)
         return [$isRemoved, $msg]; // [$isRemoved, $msg] = ...
     }
 
@@ -87,7 +85,7 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
 
         //--- valid path ? ----------------------------------
 
-        if (empty ($fullPath)) {
+        if (empty($fullPath)) {
             $errMsg = Text::_('COM_RSGALLERY2_FOLDER_DOES_NOT_EXIST');
             $msg    .= "\n" . $errMsg;
 
@@ -232,5 +230,3 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
         return [$isPurged, $msg]; // [$isRemoved, $msg] = ...
     }
 }
-
-

@@ -8,7 +8,6 @@
  * @license        GNU General Public License version 2 or later
  */
 
-
 //  J3x legacy view => gallery images improved
 
 
@@ -34,11 +33,11 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x
 
 //if ($this->item->params->get('show_name')) {
 //
-//	if ($this->Params->get('show_rsgallery2_name_label')) {
-//		echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
-//	} else {
-//		echo $this->item->name;
-//	}
+//  if ($this->Params->get('show_rsgallery2_name_label')) {
+//      echo Text::_('COM_RSGALLERY2_NAME') . $this->item->name;
+//  } else {
+//      echo $this->item->name;
+//  }
 //}
 //
 //echo $this->item->event->afterDisplayTitle;
@@ -83,14 +82,14 @@ if ($displaySearch) {
 
     <div class="rsg2__form rsg2__images_area">
 
-        <?php if (!empty($this->isDebugSite)): ?>
+        <?php if (!empty($this->isDebugSite)) : ?>
             <h1><?php echo text::_('RSGallery2 "gallery j3x legacy"'); ?> view </h1>
             <hr>
         <?php endif; ?>
 
         <?php //--- display search ---------- ?>
 
-        <?php if ($displaySearch): ?>
+        <?php if ($displaySearch) : ?>
             <?php echo $searchLayout->render(); ?>
         <?php endif; ?>
 

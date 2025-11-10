@@ -104,20 +104,20 @@ class HtmlView extends BaseHtmlView
 
     protected $HtmlPathThumb;
     protected Form $form;
-	/**
-	 * @var ImagePathsModel
-	 * @since 5.1.0
-	 */
-	protected ImagePathsModel $ImagePath;
-	/**
-	 * @var ImagePathsJ3xModel
-	 * @since 5.1.0
-	 */
-	protected ImagePathsJ3xModel $ImagePathJ3x;
+    /**
+     * @var ImagePathsModel
+     * @since 5.1.0
+     */
+    protected ImagePathsModel $ImagePath;
+    /**
+     * @var ImagePathsJ3xModel
+     * @since 5.1.0
+     */
+    protected ImagePathsJ3xModel $ImagePathJ3x;
 
-	protected $transitions;
+    protected $transitions;
 
-	/**
+    /**
      * Display the view.
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
@@ -130,7 +130,7 @@ class HtmlView extends BaseHtmlView
         //--- get needed form data ------------------------------------------
 
         // Check rights of user
-//		$this->UserIsRoot = $this->CheckUserIsRoot();
+//      $this->UserIsRoot = $this->CheckUserIsRoot();
 
         $this->items         = $this->get('Items');
         $errors              = $this->get('Errors');
@@ -152,10 +152,10 @@ class HtmlView extends BaseHtmlView
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
-	    // TODO: when is is set , used below
-	    $this->transitions = [];
+        // TODO: when is is set , used below
+        $this->transitions = [];
 
-	    //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
+        //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
         //$this->canDo = ContentHelper::getActions('com_rsgallery2', 'category', $this->state->get('filter.category_id'));
         $this->canDo = ContentHelper::getActions('com_rsgallery2');
@@ -170,17 +170,17 @@ class HtmlView extends BaseHtmlView
 
         // ToDo: Use function AddLayoutData / assignImageUrl
         // paths to image (over galleryid or j3x style)
-        $this->ImagePath    = new ImagePathsModel ();
-        $this->ImagePathJ3x = new ImagePathsJ3xModel ();
+        $this->ImagePath    = new ImagePathsModel();
+        $this->ImagePathJ3x = new ImagePathsJ3xModel();
 
-//		//--- thumb --------------------------------------------------------------------
+//      //--- thumb --------------------------------------------------------------------
 //
-//		// ToDo: HtmlPathThumb path must be taken from model (? file model ?)
-//		$this->HtmlPathThumb = URI::base() . $rsgConfig->get('???imgPath_thumb') . '/';
-//		////echo 'ThumbPath: ' . JPATH_THUMB . '<br>';
-//		////echo 'ImagePathThumb: ' . $rsgConfig->imgPath_thumb . '<br>';
-//		////echo 'ImagePathThumb: ' . URI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
-//		//echo $this->HtmlPathThumb . '<br>';
+//      // ToDo: HtmlPathThumb path must be taken from model (? file model ?)
+//      $this->HtmlPathThumb = URI::base() . $rsgConfig->get('???imgPath_thumb') . '/';
+//      ////echo 'ThumbPath: ' . JPATH_THUMB . '<br>';
+//      ////echo 'ImagePathThumb: ' . $rsgConfig->imgPath_thumb . '<br>';
+//      ////echo 'ImagePathThumb: ' . URI_SITE . $rsgConfig->get('imgPath_thumb') . '<br>';
+//      //echo $this->HtmlPathThumb . '<br>';
 
         //--- sidebar --------------------------------------------------------------------
 
@@ -194,7 +194,6 @@ class HtmlView extends BaseHtmlView
                 break;
 
             default:
-
                 break;
         }
 
@@ -207,20 +206,20 @@ class HtmlView extends BaseHtmlView
             $this->addToolbar($Layout);
         } else {
             /**
-			// If we are forcing a language in modal (used for associations).
-			if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
-			{
-				// Set the language field to the forcedLanguage and disable changing it.
-				$this->form->setValue('language', null, $forcedLanguage);
-				$this->form->setFieldAttribute('language', 'readonly', 'true');
+            // If we are forcing a language in modal (used for associations).
+            if ($this->getLayout() === 'modal' && $forcedLanguage = Factory::getApplication()->input->get('forcedLanguage', '', 'cmd'))
+            {
+                // Set the language field to the forcedLanguage and disable changing it.
+                $this->form->setValue('language', null, $forcedLanguage);
+                $this->form->setFieldAttribute('language', 'readonly', 'true');
 
-				// Only allow to select galleries with All language or with the forced language.
-				$this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
+                // Only allow to select galleries with All language or with the forced language.
+                $this->form->setFieldAttribute('parent_id', 'language', '*,' . $forcedLanguage);
 
-				// Only allow to select tags with All language or with the forced language.
-				$this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
-			}
-			/**/
+                // Only allow to select tags with All language or with the forced language.
+                $this->form->setFieldAttribute('tags', 'language', '*,' . $forcedLanguage);
+            }
+            /**/
         }
 
         //--- display --------------------------------------------------------------------
@@ -248,7 +247,7 @@ class HtmlView extends BaseHtmlView
         switch ($Layout) {
             case 'images_raw':
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
                         . '* Raw edit form<br>'
@@ -256,9 +255,9 @@ class HtmlView extends BaseHtmlView
                         . '* Add pagination<br>'
                         . '* Test: archived, trashed, (delete)<br>'
                         . '* Add delete function<br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -267,13 +266,13 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::editList('image.raw_edit');
                 ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
 
-	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
-	            break;
+                break;
 
             default:
                 // on develop show open tasks if existing
-                if (!empty ($this->isDevelop)) {
+                if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
                         . '* Batch: improve like menu ... process ...<br>'
@@ -293,11 +292,11 @@ class HtmlView extends BaseHtmlView
                         . '* Vote and others only when user enabled<br>'
                         . '* Put gallery name beside alias. Only when sorting by galleris is otherwise possible<br>'
                         . '* On develop show order<br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
-                        //	. '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
+                        //  . '* <br>'
                         . '</span><br><br>';
                 }
 
@@ -328,15 +327,16 @@ class HtmlView extends BaseHtmlView
                         $childBar->trash('images.trash')->listCheck(true);
 
                         // $toolbar->standardButton('refresh')
-                        // 	->text('JTOOLBAR_REBUILD')
-                        // 	->task('image.rebuild');
-
+                        //  ->text('JTOOLBAR_REBUILD')
+                        //  ->task('image.rebuild');
                     }
 
                     // Add a batch button
-                    if ($user->authorise('core.create', 'com_content')
+                    if (
+                        $user->authorise('core.create', 'com_content')
                         && $user->authorise('core.edit', 'com_content')
-                        && $user->authorise('core.execute.transition', 'com_content')) {
+                        && $user->authorise('core.execute.transition', 'com_content')
+                    ) {
                         $childBar
                             ->popupButton('batch')
                             ->text('JTOOLBAR_BATCH')
@@ -344,8 +344,10 @@ class HtmlView extends BaseHtmlView
                             ->listCheck(true);
                     }
 
-                    if ($this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED
-                        && $canDo->get('core.delete')) {
+                    if (
+                        $this->state->get('filter.published') == ContentComponent::CONDITION_TRASHED
+                        && $canDo->get('core.delete')
+                    ) {
                         $toolbar
                             ->delete('images.delete')
                             ->text('JTOOLBAR_EMPTY_TRASH')
@@ -353,14 +355,19 @@ class HtmlView extends BaseHtmlView
                             ->listCheck(true);
                     }
 
-	                ToolBarHelper::custom('imagesProperties.PropertiesView', 'next', 'next',
-                        'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES', true);
+                    ToolBarHelper::custom(
+                        'imagesProperties.PropertiesView',
+                        'next',
+                        'next',
+                        'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES',
+                        true
+                    );
                     // ToolBarHelper::editList('image.edit');
                 }
 
-	            ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
-	            break;
+                break;
         }
 
         // Options button.
@@ -369,6 +376,4 @@ class HtmlView extends BaseHtmlView
         }
         // $toolbar->help('JHELP_CONTENT_ARTICLE_MANAGER');
     }
-
 }
-

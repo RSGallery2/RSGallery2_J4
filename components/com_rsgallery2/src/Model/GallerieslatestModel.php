@@ -84,14 +84,14 @@ class gallerieslatestModel extends ListModel
         parent::__construct($config, $factory);
     }
 
-	/**
-	 *
-	 * @return false|mixed
-	 *
-	 * @throws \Exception
-	 * @since  5.1.0
-	 */
-	public function getItems()
+    /**
+     *
+     * @return false|mixed
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
+    public function getItems()
     {
         $items  = parent::getItems();
         $app    = Factory::getApplication();
@@ -277,6 +277,4 @@ class gallerieslatestModel extends ListModel
 
         return parent::getStoreId($id);
     }
-
-
 }

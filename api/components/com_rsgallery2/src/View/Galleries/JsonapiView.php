@@ -7,12 +7,11 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
- 
+
 namespace Rsgallery2\Component\Rsgallery2\Api\View\Galleries;
 
 //use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Language\Multilanguage;
@@ -84,25 +83,25 @@ class JsonapiView extends BaseApiView
         'root_path',
         'prjType',
 
-	    'params',
+        'params',
 
-	    'checked_out',
-	    'checked_out_time',
-	    'created',
-	    'created_by',
-	    'created_by_alias',
-	    'modified',
-	    'modified_by',
+        'checked_out',
+        'checked_out_time',
+        'created',
+        'created_by',
+        'created_by_alias',
+        'modified',
+        'modified_by',
 
-	    'twin_id',
+        'twin_id',
 
-	    'approved',
-	    'asset_id',
-	    'access',
+        'approved',
+        'asset_id',
+        'access',
 
-	    'version',
+        'version',
 
-	    'ordering',
+        'ordering',
     ];
 
 //    /**
@@ -248,6 +247,4 @@ class JsonapiView extends BaseApiView
     }
 
 // ToDo: Later The hidden gem of the API view is another string array property, $relationship. In that view you list all the field names returned by your model which refer to related data.
-
-
 }

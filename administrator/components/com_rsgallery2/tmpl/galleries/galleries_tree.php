@@ -28,7 +28,7 @@ function GalleriesListAsHTML($galleries)
     $html = '';
 
     try {
-        if (!empty ($galleries)) {
+        if (!empty($galleries)) {
             // all root galleries and nested ones
             $html = GalleriesOfLevelHTML($galleries, 0, 0);
         }
@@ -52,14 +52,14 @@ function GalleriesOfLevelHTML($galleries, $parentId, $indent)
                 $galleryHTML [] = GalleryHTML($gallery, $indent);
 
                 $subHtml = GalleriesOfLevelHTML($galleries, $gallery->id, $indent + 1);
-                if (!empty ($subHtml)) {
+                if (!empty($subHtml)) {
                     $galleryHTML [] = $subHtml;
                 }
             }
         }
 
         // surround with <ul>
-        if (!empty ($galleryHTML)) {
+        if (!empty($galleryHTML)) {
             $lineStart = str_repeat(" ", 3 * ($parentId));
 
             array_unshift($galleryHTML, $lineStart . '<ul class="list-group">');
@@ -116,21 +116,21 @@ function GalleryHTML($gallery, $indent)
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=MaintenanceJ3x&layout=dbtransferj3xgalleries'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
-	<div class="d-flex flex-row">
-		<?php if (!empty($this->sidebar)) : ?>
-			<div id="j-sidebar-container" class="">
+    <div class="d-flex flex-row">
+        <?php if (!empty($this->sidebar)) : ?>
+            <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
-			</div>
+            </div>
         <?php endif; ?>
-		<!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
-		<div class="flex-fill">
-			<div id="j-main-container" class="j-main-container">
+        <!--div class="<?php echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
+        <div class="flex-fill">
+            <div id="j-main-container" class="j-main-container">
 
                 <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'dbtransferj3xgalleries']); ?>
 
-				<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'dbtransferj3xgalleries', Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE', true)); ?>
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'dbtransferj3xgalleries', Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE', true)); ?>
 
-				<legend><strong><?php echo Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'); ?></strong></legend>
+                <legend><strong><?php echo Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE_DESC'); ?></strong></legend>
 
                 <?php
 
@@ -153,7 +153,8 @@ function GalleryHTML($gallery, $indent)
 //                            echo  '<br><h3></h3><a  class="badge badge-pill badge-notice" href="' . $link . '" target="_blank" '
 //                                . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >' . $keyTranslation . '</a></h3>';;
                         echo '<br><h3></h3><a  class="badge badge-pill bg-notice" href="' . $link . '" " '
-                                . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >' . $keyTranslation . '</a></h3>';;
+                                . ' title="' . Text::_('COM_RSGALLERY2_JUMP_TO_FORUM') . '" >' . $keyTranslation . '</a></h3>';
+                        ;
                     }
 
 //
@@ -176,14 +177,14 @@ function GalleryHTML($gallery, $indent)
 
                 <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
-				<!--input type="hidden" name="option" value="com_rsgallery2" />
+                <!--input type="hidden" name="option" value="com_rsgallery2" />
                 <input type="hidden" name="rsgOption" value="maintenance" /-->
 
-				<input type="hidden" name="task" value=""/>
+                <input type="hidden" name="task" value=""/>
                 <?php echo HTMLHelper::_('form.token'); ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>

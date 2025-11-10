@@ -47,13 +47,13 @@ class ChangeLogModel
      *
      * @throws \Exception
      * @since  5.1.0     */
-    public function __construct(bool $isUseLocalDir=true, $changeLogUrl = "")
+    public function __construct(bool $isUseLocalDir = true, $changeLogUrl = "")
     {
         $this->isUseLocalDir = $isUseLocalDir;
 
-        if ( ! $isUseLocalDir) {
+        if (! $isUseLocalDir) {
             // standard from manifest
-            if (empty ($changeLogUrl)) {
+            if (empty($changeLogUrl)) {
                 $this->changeLogUrl = $this->changeLogUrlFromExtension();
                 // echo "__construct (empty): " . json_encode($this->changeLogUrl);
             } else {
@@ -61,9 +61,7 @@ class ChangeLogModel
                 $this->changeLogUrl = $changeLogUrl;
                 // echo "__construct (given): " . json_encode($this->changeLogUrl);
             }
-        }
-        else
-        {
+        } else {
             $this->changeLogPath = $this->changeLogPath();
             // echo "__construct (empty): " . json_encode($this->changeLogPath);
         }
@@ -90,7 +88,7 @@ class ChangeLogModel
             $db = Factory::getContainer()->get(DatabaseInterface::class);
             // $db = $this->getDatabase();
 
-	        $query = $db->createQuery()
+            $query = $db->createQuery()
                 ->select('changelogurl')
                 ->from($db->quoteName('#__extensions'))
                 ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
@@ -132,9 +130,8 @@ class ChangeLogModel
 
         //--- load contents of file -------------------------------------------------------
 
-        if ( $this->isUseLocalDir) {
+        if ($this->isUseLocalDir) {
             if (file_exists($this->changeLogPath)) {
-
                 // local file in root directory
                 $changelogs = simplexml_load_file($this->changeLogPath);
             } else {
@@ -159,7 +156,7 @@ class ChangeLogModel
             }
         }
 
-        if (!empty ($changelogs)) {
+        if (!empty($changelogs)) {
             //Encode the SimpleXMLElement object into a JSON string.
             $jsonString = json_encode($changelogs);
             //Convert it back into an associative array
@@ -173,7 +170,7 @@ class ChangeLogModel
 
                 foreach ($testLogs as $changeLog) {
                     // all versions
-                    if (empty ($previousVersion)) {
+                    if (empty($previousVersion)) {
                         $jsonChangeLogs [] = $changeLog;
                     } else {
                         $logVersion = $changeLog ['version'];
@@ -181,7 +178,7 @@ class ChangeLogModel
                         // above old version
                         if (version_compare($logVersion, $previousVersion, '>')) {
                             // all above lower are valid when actual is not given
-                            if (empty ($actualVersion)) {
+                            if (empty($actualVersion)) {
                                 $jsonChangeLogs [] = $changeLog;
                             } else {
                                 // below and including actual version
@@ -193,7 +190,7 @@ class ChangeLogModel
                     }
                 }
             }
-        }  else {
+        } else {
             // Invalid xml file found
             $OutTxt = 'changeLogFile: Invalid xml file found ' . $this->changeLogUrl . '"';
             Factory::getApplication()->enqueueMessage($OutTxt, 'error');
@@ -247,7 +244,7 @@ class ChangeLogModel
             $sectionTitle = self::changeLogSectionTitle2Html($key);
 
             // valid item
-            if (!empty ($sectionTitle)) {
+            if (!empty($sectionTitle)) {
                 $items = $value['item'];
 
                 // item texts
@@ -257,7 +254,7 @@ class ChangeLogModel
             //--- create row ----------------------------------------------
 
             // valid item
-            if (!empty ($sectionTitle)) {
+            if (!empty($sectionTitle)) {
                 $html[] = '<tr>';
 
                 // key
@@ -342,8 +339,8 @@ class ChangeLogModel
         }
         /**/
 
-        //	<span class="badge badge-pill bg-primary">Primary</span>
-        if (!empty ($keyTranslation)) {
+        //  <span class="badge badge-pill bg-primary">Primary</span>
+        if (!empty($keyTranslation)) {
             $html .= '    <div class="badge badge-pill ' . $class . '">' . $keyTranslation . '</div>';
         }
 
@@ -373,7 +370,7 @@ class ChangeLogModel
         $html [] = '<ul>';
 
         foreach ($items as $item) {
-            if (!empty ($item)) {
+            if (!empty($item)) {
                 $html [] = '    <li>';
                 $html [] = '        <div class="changelog_value">' . $item . '</div>';
                 $html [] = '    </li>';
@@ -506,6 +503,4 @@ EOT;
 
         return $changeLogPath;
     }
-
 } // class
-

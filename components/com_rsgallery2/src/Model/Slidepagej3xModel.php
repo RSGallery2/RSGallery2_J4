@@ -39,8 +39,8 @@ class SlidePageJ3XModel extends imagesj3xModel
      * Pagination parameters are changed to match it
      * It can not be added to populatian as it needs ...
      *
-	 * @throws \Exception
-	 * @since  5.1.0     */
+     * @throws \Exception
+     * @since  5.1.0     */
     public function setState2SingleItem(array $items)
     {
         $app = Factory::getApplication();
@@ -78,7 +78,7 @@ class SlidePageJ3XModel extends imagesj3xModel
      *
      * @return int
      *
-	 * @since     5.1.0     *
+     * @since     5.1.0     *
      *  ToDo: move to model
      */
     public function imageIdxInList($imageId, $images)
@@ -86,7 +86,7 @@ class SlidePageJ3XModel extends imagesj3xModel
         /**/
         $imageIdx = -1;
 
-        if (!empty ($images)) {
+        if (!empty($images)) {
             // Not given use first
             $imageIdx = 0;
 
@@ -108,7 +108,7 @@ class SlidePageJ3XModel extends imagesj3xModel
      *
      * @return array Return exif item list of 'translation Id' => value
      *
-	 * @since     5.1.0     */
+     * @since     5.1.0     */
     public function exifDataUserSelected($filename, $userExifTags)
     {
         $exifDataOfFile = [$filename];
@@ -116,7 +116,7 @@ class SlidePageJ3XModel extends imagesj3xModel
         try {
             //--- collect by exif names --------------------------------------
 
-            $oImageExif = new ImageExif ($filename);
+            $oImageExif = new ImageExif($filename);
 
             $exifItems = $oImageExif->readExifDataUserSelected($userExifTags);
 
@@ -130,7 +130,7 @@ class SlidePageJ3XModel extends imagesj3xModel
             }
             //---  -----------------------------------------------------------
 
-            if (!empty ($exifTranslated)) {
+            if (!empty($exifTranslated)) {
                 $exifDataOfFile = [$filename, $exifTranslated];
             }
         } catch (\RuntimeException $e) {
@@ -150,7 +150,7 @@ class SlidePageJ3XModel extends imagesj3xModel
      *
      * @return  QueryInterface object.
      *
-	 * @since      5.1.0     */
+     * @since      5.1.0     */
     protected function getListQuery()
     {
         $query = parent::getListQuery();
@@ -165,6 +165,4 @@ class SlidePageJ3XModel extends imagesj3xModel
 
         return $query;
     }
-
 }
-

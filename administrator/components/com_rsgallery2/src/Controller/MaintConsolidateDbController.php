@@ -83,20 +83,20 @@ class MaintConsolidateDbController extends AdminController
             $msg = nl2br($msg);
         } else {
             try {
-				/**
-				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-				$model = $this->getModel();
+                /**
+                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+                $model = $this->getModel();
 
-				$isOk = $model->rebuild();
-				if ($isOk) {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-				} else {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-				}
-				/**/
+                $isOk = $model->rebuild();
+                if ($isOk) {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+                } else {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+                }
+                /**/
 
-//				$msg .= ' started';
-//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//              $msg .= ' started';
+//              Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
@@ -139,20 +139,20 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-				/**
-				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-				$model = $this->getModel();
+                /**
+                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+                $model = $this->getModel();
 
-				$isOk = $model->rebuild();
-				if ($isOk) {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-				} else {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-				}
-				/**/
+                $isOk = $model->rebuild();
+                if ($isOk) {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+                } else {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+                }
+                /**/
 
-//				$msg .= ' started';
-//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//              $msg .= ' started';
+//              Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
@@ -195,20 +195,20 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-				/**
-				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-				$model = $this->getModel();
+                /**
+                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+                $model = $this->getModel();
 
-				$isOk = $model->rebuild();
-				if ($isOk) {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-				} else {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-				}
-				/**/
+                $isOk = $model->rebuild();
+                if ($isOk) {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+                } else {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+                }
+                /**/
 
-//				$msg .= ' started';
-//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//              $msg .= ' started';
+//              Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
@@ -251,20 +251,20 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-				/**
-				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-				$model = $this->getModel();
+                /**
+                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+                $model = $this->getModel();
 
-				$isOk = $model->rebuild();
-				if ($isOk) {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-				} else {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-				}
-				/**/
+                $isOk = $model->rebuild();
+                if ($isOk) {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+                } else {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+                }
+                /**/
 
-//				$msg .= ' started';
-//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//              $msg .= ' started';
+//              Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
@@ -307,20 +307,20 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-				/**
-				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-				$model = $this->getModel();
+                /**
+                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+                $model = $this->getModel();
 
-				$isOk = $model->rebuild();
-				if ($isOk) {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-				} else {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-				}
-				/**/
+                $isOk = $model->rebuild();
+                if ($isOk) {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+                } else {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+                }
+                /**/
 
-//				$msg .= ' started';
-//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//              $msg .= ' started';
+//              Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
@@ -362,20 +362,20 @@ class MaintConsolidateDbController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-				/**
-				/** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
-				$model = $this->getModel();
+                /**
+                /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model *
+                $model = $this->getModel();
 
-				$isOk = $model->rebuild();
-				if ($isOk) {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
-				} else {
-				$msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
-				}
-				/**/
+                $isOk = $model->rebuild();
+                if ($isOk) {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_SUCCESS');
+                } else {
+                $msg .= Text::_('COM_RSGALLERY2_GALLERIES_REBUILD_FAILURE') . ': ' . $model->getError();
+                }
+                /**/
 
-//				$msg .= ' started';
-//				Factory::getApplication()->enqueueMessage($msg, 'notice');
+//              $msg .= ' started';
+//              Factory::getApplication()->enqueueMessage($msg, 'notice');
 
                 $msg .= ' no code, not done';
                 Factory::getApplication()->enqueueMessage($msg, 'error');
@@ -394,5 +394,4 @@ class MaintConsolidateDbController extends AdminController
 
         return $isOk;
     }
-
 }

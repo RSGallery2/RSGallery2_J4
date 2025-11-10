@@ -56,13 +56,13 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
             ->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
     }
 
-	/**
-	 * @param   int  $gid
-	 *
-	 * @return mixed
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     * @param   int  $gid
+     *
+     * @return mixed
+     *
+     * @since  5.1.0
+     */
     public function getGalleryData(int $gid)
     {
         return $this->galleryModel->galleryData($gid);
@@ -136,13 +136,13 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
 
 //    /**
-//	 * Get a list of the gallery images from the gallery model.     *
+//   * Get a list of the gallery images from the gallery model.     *
 //     *
-//	 * @param   Registry        $params  The module parameters
-//	 * @param   CMSApplication  $app     The application
-//	 *
-//	 * @return  array
-//	 */
+//   * @param   Registry        $params  The module parameters
+//   * @param   CMSApplication  $app     The application
+//   *
+//   * @return  array
+//   */
 //    public function getImagesOfGallery(Registry $params, SiteApplication $app, int $gid)
 //    {
 //        $images = [];
@@ -299,12 +299,12 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 //    }
 //
 
-	/**
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
+    /**
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
     public function HtmlImages(): string
     {
         $msg = "    --- HtmlImages from Rsg2_gallery plugin    ----- \nxxx\n";
@@ -318,7 +318,4 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 //
 //        return $msg;
 //    }
-
-
 }
-

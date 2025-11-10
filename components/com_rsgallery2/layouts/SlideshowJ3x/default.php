@@ -92,7 +92,7 @@ if (!empty($images)) {
 // allow:
 ?>
 
-<?php if (!empty($isDebugSite)): ?>
+<?php if (!empty($isDebugSite)) : ?>
     <h3>RSGallery2 J3x images slideshow layout</h3>
     <hr>
 <?php endif; ?>
@@ -108,15 +108,15 @@ if (!empty($images)) {
     }
 
     /**
-	.carousel-inner  {
-		margin: 0 auto;
-		border: 5px solid lightgreen;
+    .carousel-inner  {
+        margin: 0 auto;
+        border: 5px solid lightgreen;
 
-		width: 400px;
-		height: 300px;
+        width: 400px;
+        height: 300px;
 
-	}
-	/**/
+    }
+    /**/
 
     /**/
     .carousel-inner {
@@ -167,24 +167,27 @@ if (!empty($images)) {
 <div class="rsg2_slideshow_box">
     <div class="rsg2_x__slideshowJ3x">
 
-        <?php if (!empty($isDebugSite)): ?>
+        <?php if (!empty($isDebugSite)) : ?>
             rsg2_x__slideshowJ3x<br>
         <?php endif; ?>
 
         <?php
-        $uniqueId = substr(md5(uniqid()), 0, 12);;
+        $uniqueId = substr(md5(uniqid()), 0, 12);
+        ;
         ?>
 
         <div id="rsg2_carousel_<?php echo $uniqueId; ?>"
-             class="carousel slide <?php if ($darkMode): ?>carousel-dark<?php endif; ?>"
-            <?php if ($auto_start): ?>
+             class="carousel slide <?php if ($darkMode) :
+                    ?>carousel-dark<?php
+                                   endif; ?>"
+            <?php if ($auto_start) : ?>
                 data-bs-ride="carousel"
             <?php endif; ?>
         >
 
             <div class="carousel-indicators">
                 <?php
-                $isActive='aria-current="true" class="active"';
+                $isActive = 'aria-current="true" class="active"';
                 foreach ($images as $idx => $image) {
                     ?>
 
@@ -196,7 +199,7 @@ if (!empty($images)) {
                     </button>
 
                     <?php
-                    $isActive="";
+                    $isActive = "";
                 }
                 ?>
 
@@ -206,14 +209,14 @@ if (!empty($images)) {
             <div class="carousel-inner">
 
                 <?php
-                $isActive="active";
+                $isActive = "active";
                 foreach ($images as $idx => $image) {
                     ?>
 
                     <div class="carousel-item <?php echo $isActive; ?>"
-                        <?php if ($auto_start): ?>
+                        <?php if ($auto_start) : ?>
                             data-bs-interval="<?php echo $interval; ?>"
-                        <?php else: ?>
+                        <?php else : ?>
                             data-bs-interval="false"
                         <?php endif; ?>
                     >
@@ -228,22 +231,22 @@ if (!empty($images)) {
                     </div>
 
                     <?php
-                    $isActive="";
+                    $isActive = "";
                 }
                 ?>
 
                 <button class="carousel-control-prev" type="button" data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>" data-bs-slide="prev">
-                    <?php if ($showArrows): ?>
+                    <?php if ($showArrows) : ?>
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <?php else: ?>
+                    <?php else : ?>
                         <span class="carousel-control-prev-icon" aria-hidden="true" hidden></span>
                     <?php endif; ?>
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#rsg2_carousel_<?php echo $uniqueId; ?>" data-bs-slide="next">
-                    <?php if ($showArrows): ?>
+                    <?php if ($showArrows) : ?>
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <?php else: ?>
+                    <?php else : ?>
                         <span class="carousel-control-next-icon" aria-hidden="true" hidden></span>
                     <?php endif; ?>
                     <span class="visually-hidden">Next</span>

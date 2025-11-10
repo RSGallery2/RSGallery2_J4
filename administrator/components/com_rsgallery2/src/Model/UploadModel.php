@@ -25,7 +25,6 @@ use Joomla\Database\DatabaseInterface;
  */
 class UploadModel extends BaseDatabaseModel
 {
-
     /**
      * Check if at least one gallery exists
      * Regards the nested structure (ID=1 is only root of tree and no gallery)
@@ -51,7 +50,7 @@ class UploadModel extends BaseDatabaseModel
             $IdGallery = $db->loadResult();
 
             // > 0 galleries exist
-            $is1GalleryExisting = !empty ($IdGallery);
+            $is1GalleryExisting = !empty($IdGallery);
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Error count for galleries in "__rsg2_galleries" table' . '<br>';
@@ -85,8 +84,8 @@ class UploadModel extends BaseDatabaseModel
                 ->from('#__rsg2_galleries')
                 ->where($db->quoteName('id') . ' != 1')
                 ->setLimit(1)
-//			->order($db->quoteName('created') . ' DESC');
-//			->order( $db->quoteName('id') . ' DESC')
+//          ->order($db->quoteName('created') . ' DESC');
+//          ->order( $db->quoteName('id') . ' DESC')
                 ->order($db->quoteName('created') . ' DESC' . ', ' . $db->quoteName('id') . ' DESC');
 
             $db->setQuery($query, 0, 1);
@@ -102,6 +101,4 @@ class UploadModel extends BaseDatabaseModel
 
         return $IdLatestGallery;
     }
-
 }
-

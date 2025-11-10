@@ -31,22 +31,23 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\UriHelper;
  *
      * @since   5.1.0
  */
-class ImagePathsJ3xModel {
+class ImagePathsJ3xModel
+{
     // from config
 
-	public $rsgImagesBasePath;
-	public $rsgImagesBaseUrl;
-	// ToDo: Single gallery name ? used for search path ?
-	public $rsgImagesGalleriesBasePath;
+    public $rsgImagesBasePath;
+    public $rsgImagesBaseUrl;
+    // ToDo: Single gallery name ? used for search path ?
+    public $rsgImagesGalleriesBasePath;
 
-	// files gallery defined
+    // files gallery defined
     /**
      * @var string
      * @since 5.1.0     */
     public $originalBasePath;
     public $displayBasePath;
     public $thumbBasePath;
-    //	ToDo: watermark ...
+    //  ToDo: watermark ...
 
     // Original folder may not be needed (see config)
     public $isUsePath_Original;
@@ -60,12 +61,13 @@ class ImagePathsJ3xModel {
 
     // ToDo: watermarked path
 
-	/**
-	 * root of images, image sizes from configuration build the paths
-	 *
-	 * @throws \Exception
-	 */
-	public function __construct() {
+    /**
+     * root of images, image sizes from configuration build the paths
+     *
+     * @throws \Exception
+     */
+    public function __construct()
+    {
         global $rsgConfig;
 
         try {
@@ -74,27 +76,27 @@ class ImagePathsJ3xModel {
                 $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
             }
 
-	        //--- config root path --------------------------------------------
+            //--- config root path --------------------------------------------
 
-	        // Attention: imgPath_original may not lead to "images/rsgallery"
-	        $this->rsgImagesBasePath = dirname ($rsgConfig->get('imgPath_original'));
+            // Attention: imgPath_original may not lead to "images/rsgallery"
+            $this->rsgImagesBasePath = dirname($rsgConfig->get('imgPath_original'));
 
-	        // Fall back
-	        if (empty ($this->rsgImagesBasePath)) {
-		        $this->rsgImagesBasePath = "images/rsgallery";
-	        }
-	        $this->rsgImagesBasePath = Path::Clean($this->rsgImagesBasePath);
+            // Fall back
+            if (empty($this->rsgImagesBasePath)) {
+                $this->rsgImagesBasePath = "images/rsgallery";
+            }
+            $this->rsgImagesBasePath = Path::Clean($this->rsgImagesBasePath);
 
-	        $this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
+            $this->rsgImagesGalleriesBasePath = PathHelper::join(JPATH_ROOT, $this->rsgImagesBasePath);
 
-	        // remove starting slash or backslash for URL
-	        if ($this->rsgImagesBasePath[0] == '\\' || $this->rsgImagesBasePath[0] == '/') {
-		        $this->rsgImagesBaseUrl = substr($this->rsgImagesBasePath, 1);
-	        } else {
-		        $this->rsgImagesBaseUrl = $this->rsgImagesBasePath;
-	        }
+            // remove starting slash or backslash for URL
+            if ($this->rsgImagesBasePath[0] == '\\' || $this->rsgImagesBasePath[0] == '/') {
+                $this->rsgImagesBaseUrl = substr($this->rsgImagesBasePath, 1);
+            } else {
+                $this->rsgImagesBaseUrl = $this->rsgImagesBasePath;
+            }
 
-	        //--- user may keep original image --------------------------------------------
+            //--- user may keep original image --------------------------------------------
 
             $this->isUsePath_Original = $rsgConfig->get('keepOriginalImage');
 
@@ -130,39 +132,42 @@ class ImagePathsJ3xModel {
     File paths
     --------------------------------------------------------------------*/
 
-	/**
-	 *
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
-	public function getOriginalPath ($fileName=''){
+    /**
+     *
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
+    public function getOriginalPath($fileName = '')
+    {
         return PathHelper::join($this->originalBasePath, $fileName);
     }
 
-	/**
-	 *
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
-	public function getDisplayPath ($fileName=''){
+    /**
+     *
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
+    public function getDisplayPath($fileName = '')
+    {
         return PathHelper::join($this->displayBasePath, $fileName . '.jpg');
     }
 
-	/**
-	 *
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
-	public function getThumbPath ($fileName=''){
+    /**
+     *
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
+    public function getThumbPath($fileName = '')
+    {
         return PathHelper::join($this->thumbBasePath, $fileName . '.jpg');
     }
 
@@ -170,41 +175,44 @@ class ImagePathsJ3xModel {
     URIs
     --------------------------------------------------------------------*/
 
-	/**
-	 *
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
-	public function getOriginalUrl ($fileName=''){
+    /**
+     *
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
+    public function getOriginalUrl($fileName = '')
+    {
         return UriHelper::join($this->originalUrl, $fileName);
-//		return $this->originalUrl . '/' . $fileName;
+//      return $this->originalUrl . '/' . $fileName;
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
-	public function getDisplayUrl ($fileName=''){
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
+    public function getDisplayUrl($fileName = '')
+    {
         return UriHelper::join($this->displayUrl, $fileName . '.jpg');
-//		return $this->displayUrl . '/' . $fileName . '.jpg';
+//      return $this->displayUrl . '/' . $fileName . '.jpg';
     }
 
-	/**
-	 * @param $fileName
-	 *
-	 * @return string
-	 *
-	 * @since  5.1.0
-	 */
-	public function getThumbUrl ($fileName=''){
+    /**
+     * @param $fileName
+     *
+     * @return string
+     *
+     * @since  5.1.0
+     */
+    public function getThumbUrl($fileName = '')
+    {
         return UriHelper::join($this->thumbUrl, $fileName . '.jpg');
-//		return $this->thumbUrl . '/' . $fileName . '.jpg';
+//      return $this->thumbUrl . '/' . $fileName . '.jpg';
     }
 
     /**
@@ -212,7 +220,8 @@ class ImagePathsJ3xModel {
      * @return bool
      *
      * @since  5.1.0     */
-    public function createAllPaths() {
+    public function createAllPaths()
+    {
         $isCreated = false;
 
         try {
@@ -267,6 +276,4 @@ class ImagePathsJ3xModel {
 
         return $isPathsExisting;
     }
-
 }
-
