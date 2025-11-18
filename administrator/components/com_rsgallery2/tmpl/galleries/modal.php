@@ -107,10 +107,10 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             // ToDo: getGalleryRoute not defined as such
                             ?>
                             <?php echo LayoutHelper::render('joomla.html.treeprefix', ['level' => $item->level]); ?>
-                            <a href="javascript:void(0)" 
-                                onclick="if (window.parent) window.parent.<?php echo $this->escape($function); ?>('<?php echo $item->id; ?>', 
-                            '<?php echo $this->escape(addslashes($item->title)); ?>', null, 
-                            '<?php echo $this->escape(RouteHelper::getGalleryRoute($item->id, $item->language),  ?>', '<?php echo $this->escape($lang); ?>', null);">
+                            <a href="javascript:void(0)"
+                                onclick="if (window.parent) window.parent.<?php echo $this->escape($function); ?>('<?php echo $item->id; ?>',
+                            '<?php echo $this->escape(addslashes($item->title)); ?>', null,
+                            '<?php echo $this->escape(RouteHelper::getGalleryRoute($item->id, $item->language));  ?>', '<?php echo $this->escape($lang); ?>', null);">
                                 <?php echo $this->escape($item->title); ?></a>
                             <span class="small" title="<?php echo $this->escape($item->path); ?>">
                                     <?php if (empty($item->note)) : ?>

@@ -7,12 +7,11 @@
 		<date>2025-07-16</date>
 		<fix>
 			<item>Slideshow did not show images</item>
-			<item>Slidepage had wrong pagination links</item>
+			<item>Slide page had wrong pagination links</item>
 		</fix>
 		<change>
 			<item>Removed text on sidebar, so more space for the page itself as only icons are showing</item>
 			<item>The URL part 'gid=' has been replaced by 'id=' to comply with Joomla SEF rules</item>
-			<item></item>
 		</change>
 	</changelog>
 	<changelog>
@@ -23,7 +22,6 @@
 		<change>
 			<item>Improved transfer of J3x RSG2 Version data to actual version</item>
 			<item>Checked options for using same names from configuration to menu </item>
-			<item></item>
 		</change>
 		<fix>
 			<item>Can not find view in menu path: Upper case in template and module files</item>
@@ -36,7 +34,7 @@
 		<version>5.0.12</version>
 		<date>2024-04-01</date>
 		<addition>
-			<item>J3x Menu structure will be automatically adjusted (J3x Menues definitions shall work seamless)</item>
+			<item>J3x Menu structure will be automatically adjusted (J3x Menus definitions shall work seamless)</item>
 			<item>Basic Slideshow works</item>
 			<item>Introduce slide pages for single images view</item>
 			<item>Maintenance J3x column</item>

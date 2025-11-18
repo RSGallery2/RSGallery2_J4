@@ -14,7 +14,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-public class CreditsExternal
+class CreditsExternal
 {
     /** use for external libraries
     <h4>extension name </h4>
@@ -27,7 +27,7 @@ public class CreditsExternal
     public const CreditsExternalText = <<<EOT
               <h3>Used external components</h3>
               <p>Actually for RSG2 (J!4x 2019/2020) there is no external component used besides libraries provided by joomla! itself. It is expected that with the implementation of slide shows and similar functions libraries will appear here </p>
-              
+
               <h3>Honorable mentions go to jetbrains phpstorm</h3>
               <dl>
               	<dt>phpstorm</dt>

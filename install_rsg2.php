@@ -19,9 +19,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Filesystem\Folder;
 
-//use Joomla\CMS\File;
-//use Joomla\CMS\Folder;
-
 /**
  * Script (install file of Rsgallery2 Component)
  *
