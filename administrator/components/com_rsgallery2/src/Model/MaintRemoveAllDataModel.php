@@ -18,6 +18,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Class MaintRemoveAllDataModel
@@ -217,7 +218,8 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
         $msg      = 'Purge table: ' . $tableId;
 
         try {
-            $db = Factory::getDbo();
+            // $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db = $this->getDatabase();
 
             $db->truncateTable($tableId);
             $db->execute();

@@ -52,16 +52,13 @@ class ConfigSet extends AbstractCommand
     /**
      * Instantiate the command.
      *
-     * @param   DatabaseInterface  $db  Database connector
-     *
      * @since  4.0.X
      */
     public function __construct()
     {
         parent::__construct();
 
-        // $db = $this->getDatabase();
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = $this->getDatabase();
         $this->setDatabase($db);
     }
 
@@ -92,7 +89,7 @@ class ConfigSet extends AbstractCommand
         $this->addArgument('value', null, 'Value of the option');
         $this->addOption('verify', null, InputOption::VALUE_OPTIONAL, 'configuration ID', false);
 
-        $help = "<info>%command.name%</info> set a parameter value in the RSG2 configuration 
+        $help = "<info>%command.name%</info> set a parameter value in the RSG2 configuration
   Usage: <info>php %command.full_name%</info>  <option> <value>
     * You may verify the written value with <info>--veryfy=true<info> option. This compares the given option with the resulting table value
 		";
@@ -236,7 +233,7 @@ class ConfigSet extends AbstractCommand
      */
     public function saveParams(Registry $params)
     {
-        $db = Factory::getDbo();
+        $db = $this->getDatabase();
 
         return $db->setQuery(
             'UPDATE #__extensions'
@@ -258,7 +255,7 @@ class ConfigSet extends AbstractCommand
 
         try {
             // read the existing component value(s)
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+            $db = $this->getDatabase();
 
             $query = $db
                 ->createQuery()

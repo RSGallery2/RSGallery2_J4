@@ -51,16 +51,13 @@ class ConfigGet extends AbstractCommand
     /**
      * Instantiate the command.
      *
-     * @param   DatabaseInterface  $db  Database connector
-     *
      * @since  4.0.X
      */
     public function __construct()
     {
         parent::__construct();
 
-        // $db = $this->getDatabase();
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = $this->getDatabase();
         $this->setDatabase($db);
     }
 
@@ -89,7 +86,7 @@ class ConfigGet extends AbstractCommand
     {
         $this->addArgument('option', InputArgument::REQUIRED, 'Name of the option');
 
-        $help = "<info>%command.name%</info> display a value of the RSG2 configuration   
+        $help = "<info>%command.name%</info> display a value of the RSG2 configuration
   Usage: <info>php %command.full_name%</info> <option>
     * You may restrict the value string length using the <info>--max_line_length</info> option. A result line that is too long will confuse the output lines
      ";

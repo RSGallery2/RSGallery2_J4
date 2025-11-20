@@ -49,16 +49,13 @@ class GalleryParams extends AbstractCommand
     /**
      * Instantiate the command.
      *
-     * @param   DatabaseInterface  $db  Database connector
-     *
      * @since  4.0.X
      */
     public function __construct()
     {
         parent::__construct();
 
-        // $db = $this->getDatabase();
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = $this->getDatabase();
         $this->setDatabase($db);
     }
 
@@ -152,6 +149,7 @@ class GalleryParams extends AbstractCommand
         $sParams = '';
         try {
             $db    = $this->getDatabase();
+
             $query = $db->createQuery();
             $query
                 ->select('params')

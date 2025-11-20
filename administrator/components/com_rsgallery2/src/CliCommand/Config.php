@@ -51,7 +51,6 @@ class Config extends AbstractCommand
     /**
      * Instantiate the command.
      *
-     * @param   DatabaseInterface  $db  Database connector
      *
      * @since  4.0.X
      */
@@ -59,8 +58,7 @@ class Config extends AbstractCommand
     {
         parent::__construct();
 
-        // $db = $this->getDatabase();
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $db = $this->getDatabase();
         $this->setDatabase($db);
     }
 

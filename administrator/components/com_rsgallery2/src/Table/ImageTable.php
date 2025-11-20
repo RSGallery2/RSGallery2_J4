@@ -193,7 +193,7 @@ class ImageTable extends Table
         }
 
         // Verify that the alias is unique
-        $table = $this->getDbo();
+        $table = new static($this->getDatabase());
 
         if ($table->load(['alias' => $this->alias]) && ($table->id != $this->id || $this->id == 0)) {
             $this->setError(Text::_('COM_RSGALLERY2_ERROR_UNIQUE_ALIAS'));
