@@ -60,7 +60,6 @@ class VersionModel extends BaseModel
         $oVersion->creationDate = "2025.xx.xx";
 
         try {
-            //$db = Factory::getDbo();
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->createQuery()

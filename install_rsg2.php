@@ -589,11 +589,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         $manifest = [];
 
         try {
-            // ToDo: !!! $db = Factory::getContainer()->get('DatabaseDriver'); !!!
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
 
-            // $db    = Factory::getContainer()->get(DatabaseInterface::class);
-            // $db = $this->getDatabase();
-            $db    = Factory::getDbo();
             $query = $db
                 ->createQuery()
                 ->select('manifest_cache')
@@ -826,11 +823,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         $hasError = false;
 
         try {
-            // ToDo: !!! // When used in the component's Model
-            //           $db = $this->getDatabase(); !!!
+            $db     = Factory::getContainer()->get(DatabaseInterface::class);
 
-            // $db = Factory::getDbo();
-            $db     = Factory::getContainer()->get('DatabaseDriver');
             $tables = $db->getTableList();
             $prefix = $db->getPrefix();
 
