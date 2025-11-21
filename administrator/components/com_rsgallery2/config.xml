@@ -12,7 +12,7 @@
 				type="editor"
 				label="COM_RSGALLERY2_INTRODUCTION_TEXT"
 				description="COM_RSGALLERY2_INTRODUCTION_DESC"
-				filter="JComponentHelper::filterText"
+				filter="ComponentHelper::filterText"
 				buttons="false"
 		/-->
 

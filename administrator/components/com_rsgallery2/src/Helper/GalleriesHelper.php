@@ -14,7 +14,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-use JLoader;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Table\Table;
@@ -36,45 +35,10 @@ class GalleriesHelper
      * @return  void
      *
      * @since   5.1.0     */
-    public static function addSubmenu($extension)
-    {
-        // Avoid nonsense situation.
-        if ($extension == 'com_rsgallery2') {
-            return;
-        }
-
-        $parts     = explode('.', $extension);
-        $component = $parts[0];
-
-        if (count($parts) > 1) {
-            $section = $parts[1];
-        }
-
-        // Try to find the component helper.
-        $eName = str_replace('com_', '', $component);
-        // ? JPATH_COMPONENT_ADMINISTRATOR
-        $file = Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component . '/helpers/' . $eName . '.php');
-
-        if (file_exists($file)) {
-            $prefix = ucfirst(str_replace('com_', '', $component));
-            $cName  = $prefix . 'Helper';
-
-            JLoader::register($cName, $file);
-
-            if (class_exists($cName)) {
-                if (is_callable([$cName, 'addSubmenu'])) {
-                    $lang = Factory::getApplication()->getLanguage();
-
-                    // Loading language file from the administrator/language directory then
-                    // loading language file from the administrator/components/*extension*/language directory
-                    $lang->load($component, JPATH_BASE, null, false, true)
-                    || $lang->load($component, Path::clean(JPATH_ADMINISTRATOR . '/components/' . $component), null, false, true);
-
-                    call_user_func([$cName, 'addSubmenu'], 'galleries' . (isset($section) ? '.' . $section : ''));
-                }
-            }
-        }
-    }
+//    public static function addSubmenu($extension)
+//    {
+//        // is this used ?
+//    }
 
     /**
      * Gets a list of associations for a given item.

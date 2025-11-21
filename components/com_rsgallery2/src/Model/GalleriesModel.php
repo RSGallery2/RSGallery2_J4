@@ -62,7 +62,7 @@ class GalleriesModel extends ListModel
      * @param   MVCFactoryInterface|null  $factory
      *
      * @throws \Exception
-     * @see     \JController
+     *
      * @since   1.6
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null)

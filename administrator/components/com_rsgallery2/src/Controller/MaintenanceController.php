@@ -214,7 +214,7 @@ class MaintenanceController extends BaseController
 //
 //                // ToDo: collect selected gallery id, and filenames
 ////                $id = $this->input->get('id', 0, 'int');
-//                $imageNames = $this->input->get('jform', [], 'array');
+//                $imageNames = $this->input->get('j form', [], 'array');
 //
 //                $cids = $this->input->get('cid', [], 'ARRAY');
 //                ArrayHelper::toInteger($cids);

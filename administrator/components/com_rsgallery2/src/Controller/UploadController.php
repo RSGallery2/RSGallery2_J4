@@ -41,7 +41,6 @@ use function dirname;
  * if ($Rsg2DebugActive)
  * {
  * // Include the Log class.
- * //    jimport('joomla.log.log');
  *
  * // identify active file
  * Log::add('==> ctrl.config.php ');

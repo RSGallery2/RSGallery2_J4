@@ -54,7 +54,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             Log::add('==>Start __construct ImageFile');
         }
 
-        // JComponentHelper::getParams();
+        // ComponentHelper::getParams();
         // $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         //
         $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
@@ -328,7 +328,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 // int fileowner ( string $filename )
                 //$user = get_current_user();
                 //chown($dstFileName, $user);
-                JPath::setPermissions($dstFileName, '0644');
+                Path::setPermissions($dstFileName, '0644');
             }
         }
         catch (\RuntimeException $e)

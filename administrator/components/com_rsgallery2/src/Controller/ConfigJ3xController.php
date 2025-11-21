@@ -26,11 +26,10 @@ global $Rsg2DebugActive;
 
 if ($Rsg2DebugActive)
 {
-    // Include the JLog class.
-//  jimport('joomla.log.log');
+    // Include the Jog class.
 
     // identify active file
-    JLog::add('==> ctrl.config.php ');
+    Log::add('==> ctrl.config.php ');
 }
 /**/
 

@@ -415,117 +415,8 @@ class GalleryModel extends AdminModel
      *
      * @throws  \Exception if there is an error in the form event.
      *
-    protected function preprocessForm(\JForm $form, $data, $group = 'content')
+    protected function preprocessForm(\Form $form, $data, $group = 'content')
     {
-        $lang = Factory::getApplication()->getLanguage();
-        $component = $this->getState('category.component');
-        $section = $this->getState('category.section');
-        $extension = Factory::getApplication()->input->get('extension', null);
-
-        // Get the component form if it exists
-        $name = 'category' . ($section ? ('.' . $section) : '');
-
-        // Looking first in the component forms folder
-        $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/forms/$name.xml");
-
-        // Looking in the component models/forms folder (J! 3)
-        if (!file_exists($path))
-        {
-            $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/models/forms/$name.xml");
-        }
-
-        // Old way: looking in the component folder
-        if (!file_exists($path))
-        {
-            $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/$name.xml");
-        }
-
-        if (file_exists($path))
-        {
-            $lang->load($component, JPATH_BASE, null, false, true);
-            $lang->load($component, JPATH_BASE . '/components/' . $component, null, false, true);
-
-            if (!$form->loadFile($path, false))
-            {
-                throw new \Exception(Text::_('JERROR_LOADFILE_FAILED'));
-            }
-        }
-
-        $componentInterface = Factory::getApplication()->bootComponent($component);
-
-        if ($componentInterface instanceof CategoryServiceInterface)
-        {
-            $componentInterface->prepareForm($form, $data);
-        }
-        else
-        {
-            // Try to find the component helper.
-            $eName = str_replace('com_', '', $component);
-            $path = Path::clean(JPATH_ADMINISTRATOR . "/components/$component/helpers/category.php");
-
-            if (file_exists($path))
-            {
-                $cName = ucfirst($eName) . ucfirst($section) . 'HelperCategory';
-
-                \JLoader::register($cName, $path);
-
-                if (class_exists($cName) && is_callable(array($cName, 'onPrepareForm')))
-                {
-                    $lang->load($component, JPATH_BASE, null, false, false)
-                        || $lang->load($component, JPATH_BASE . '/components/' . $component, null, false, false)
-                        || $lang->load($component, JPATH_BASE, $lang->getDefault(), false, false)
-                        || $lang->load($component, JPATH_BASE . '/components/' . $component, $lang->getDefault(), false, false);
-                    call_user_func_array(array($cName, 'onPrepareForm'), array(&$form));
-
-                    // Check for an error.
-                    if ($form instanceof \Exception)
-                    {
-                        $this->setError($form->getMessage());
-
-                        return false;
-                    }
-                }
-            }
-        }
-
-        // Set the access control rules field component value.
-        $form->setFieldAttribute('rules', 'component', $component);
-        $form->setFieldAttribute('rules', 'section', $name);
-
-        // Association category items
-        if ($this->getAssoc())
-        {
-            $languages = LanguageHelper::getContentLanguages(false, true, null, 'ordering', 'asc');
-
-            if (count($languages) > 1)
-            {
-                $addform = new \SimpleXMLElement('<form />');
-                $fields = $addform->addChild('fields');
-                $fields->addAttribute('name', 'associations');
-                $fieldset = $fields->addChild('fieldset');
-                $fieldset->addAttribute('name', 'item_associations');
-
-                foreach ($languages as $language)
-                {
-                    $field = $fieldset->addChild('field');
-                    $field->addAttribute('name', $language->lang_code);
-                    $field->addAttribute('type', 'modal_category');
-                    $field->addAttribute('language', $language->lang_code);
-                    $field->addAttribute('label', $language->title);
-                    $field->addAttribute('translate_label', 'false');
-                    $field->addAttribute('extension', $extension);
-                    $field->addAttribute('select', 'true');
-                    $field->addAttribute('new', 'true');
-                    $field->addAttribute('edit', 'true');
-                    $field->addAttribute('clear', 'true');
-                }
-
-                $form->load($addform, false);
-            }
-        }
-
-        // Trigger the default form events.
-        parent::preprocessForm($form, $data, $group);
     }
     /**/
 
@@ -1409,42 +1300,7 @@ class GalleryModel extends AdminModel
      *
     public function getAssoc()
     {
-        static $assoc = null;
-
-        if (!is_null($assoc))
-        {
-            return $assoc;
-        }
-
-        $extension = $this->getState('category.extension');
-
-        $assoc = Associations::isEnabled();
-        $extension = explode('.', $extension);
-        $component = array_shift($extension);
-        $cname = str_replace('com_', '', $component);
-
-        if (!$assoc || !$component || !$cname)
-        {
-            $assoc = false;
-
-            return $assoc;
-        }
-
-        $componentObject = $this->bootComponent($component);
-
-        if ($componentObject instanceof AssociationServiceInterface && $componentObject instanceof CategoryServiceInterface)
-        {
-            $assoc = true;
-
-            return $assoc;
-        }
-
-        $hname = $cname . 'HelperAssociation';
-        \JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
-
-        $assoc = class_exists($hname) && !empty($hname::$category_association);
-
-        return $assoc;
+       // ? needed
     }
     /**/
 }

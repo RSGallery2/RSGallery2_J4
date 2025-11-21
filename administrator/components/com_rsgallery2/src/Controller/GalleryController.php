@@ -43,7 +43,7 @@ class GalleryController extends FormController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since   5.1.0     * @see    \JControllerLegacy
+     * @since   5.1.0
      *
      * /**/
 

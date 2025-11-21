@@ -29,11 +29,10 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
  *
  * if ($Rsg2DebugActive)
  * {
- * // Include the JLog class.
- * //    jimport('joomla.log.log');
+ * // Include the Log class.
  *
  * // identify active file
- * JLog::add('==> ctrl.config.php ');
+ * Log::add('==> ctrl.config.php ');
  * }
  * /**/
 class ConfigController extends AdminController // FormController

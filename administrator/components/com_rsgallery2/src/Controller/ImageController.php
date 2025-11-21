@@ -46,7 +46,7 @@ class ImageController extends FormController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input              $input    Input
      *
-     * @since   5.1.0     * @see    \JControllerLegacy
+     * @since   5.1.0
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
@@ -244,7 +244,7 @@ class ImageController extends FormController
 
                 // Needed filename and gallery id
                 //$imgFileDatas = $modelImages->ids2FileData($sids);
-                //$formData = new Input($this->input->get('jform', '', 'array'));
+                //$formData = new Input($this->input->get('j form', '', 'array'));
 
                 $modelFile = $this->getModel('imageFile');
 
@@ -368,7 +368,7 @@ class ImageController extends FormController
 
                 // Needed filename and gallery id
                 //$imgFileDatas = $modelImages->ids2FileData($sids);
-                // $formData = new Input($this->input->get('jform', '', 'array'));
+                // $formData = new Input($this->input->get('j form', '', 'array'));
 
                 $modelFile = $this->getModel('imageFile');
 

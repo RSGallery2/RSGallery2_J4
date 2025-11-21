@@ -58,7 +58,6 @@ class GalleryModel extends ListModel
      * @param   array                     $config  An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory
      * @throws \Exception
-     * @see     \JController
      * @since   1.6
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null)

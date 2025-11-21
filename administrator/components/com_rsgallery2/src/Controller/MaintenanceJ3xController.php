@@ -34,11 +34,10 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
  *
  * if ($Rsg2DebugActive)
  * {
- * // Include the JLog class.
- * //    jimport('joomla.log.log');
+ * // Include the Log class.
  *
  * // identify active file
- * JLog::add('==> ctrl.config.php ');
+ * Log::add('==> ctrl.config.php ');
  * }
  * /**/
 class MaintenanceJ3xController extends AdminController

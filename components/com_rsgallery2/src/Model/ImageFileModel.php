@@ -58,7 +58,7 @@ class ImageFileModel extends ListModel // BaseModel
 //          Log::add('==>Start __construct ImageFile');
 //      }
 
-        // JComponentHelper::getParams();
+        // ComponentHelper::getParams();
         // $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
         //
 //      $rsgConfig = ComponentHelper::getParams('com_rsgallery2');

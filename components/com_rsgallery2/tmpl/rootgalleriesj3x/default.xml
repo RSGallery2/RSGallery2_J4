@@ -70,7 +70,7 @@
                     type="editor"
                     label="COM_RSGALLERY2_J3X_INTRODUCTION"
                     description="COM_RSGALLERY2_J3X_INTRODUCTION_DESC"
-                    filter="JComponentHelper::filterText"
+                    filter="ComponentHelper::filterText"
                     buttons="false"
             />
 

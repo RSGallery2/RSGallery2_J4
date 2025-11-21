@@ -43,7 +43,7 @@ class ImagesModel extends ListModel
      * @param   MVCFactoryInterface|null  $factory
      *
      * @throws \Exception
-     * @see     \JController
+     *
      * @since   5.0
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null)
@@ -478,11 +478,11 @@ class ImagesModel extends ListModel
             return $assoc;
         }
 
-        $hname = $cname . 'HelperAssociation';
-        \JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
-
-        $assoc = class_exists($hname) && !empty($hname::$category_association);
-
+//        $hname = $cname . 'HelperAssociation';
+//        \ J Loader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
+//
+//        $assoc = class_exists($hname) && !empty($hname::$category_association);
+//
         return $assoc;
     }
 

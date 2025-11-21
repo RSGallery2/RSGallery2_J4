@@ -37,8 +37,8 @@ class GalleriesModel extends ListModel
      * @param   array                $config   An optional associative array of configuration settings.
      * @param   MVCFactoryInterface  $factory  The factory.
      *
-     * @see     \JControllerLegacy
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     public function __construct($config = [], MVCFactoryInterface $factory = null)
     {
         //  which fields are needed for filter function
@@ -433,10 +433,10 @@ class GalleriesModel extends ListModel
             return $assoc;
         }
 
-        $hname = $cname . 'HelperAssociation';
-        \JLoader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
-
-        $assoc = class_exists($hname) && !empty($hname::$category_association);
+//        $hname = $cname . 'HelperAssociation';
+//        Loader::register($hname, JPATH_SITE . '/components/' . $component . '/helpers/association.php');
+//
+//        $assoc = class_exists($hname) && !empty($hname::$category_association);
 
         return $assoc;
     }

@@ -27,10 +27,6 @@ if ($app->isClient('site')) {
     $this->checkToken();
 }
 
-// 2024.10.06
-JLoader::register('ContentHelperRoute', JPATH_ROOT . '/components/com_rsgallery2/helpers/route.php');
-// JLoader::registerAlias('ContentHelperRoute', JPATH_ROOT . '/components/com_rsgallery2/helpers/route.php');
-
 HTMLHelper::_('behavior.core');
 HTMLHelper::_('bootstrap.popover', '.hasPopover', ['placement' => 'bottom']);
 
@@ -103,7 +99,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                             <span class="<?php echo $iconStates[$this->escape($item->published)]; ?>" aria-hidden="true"></span>
                         </td>
                         <th scope="row">
-                            <?php // ContentHelperRoute::getGalleryRoute($item->id, $item->language),
+                            <?php
                             // ToDo: getGalleryRoute not defined as such
                             ?>
                             <?php echo LayoutHelper::render('joomla.html.treeprefix', ['level' => $item->level]); ?>

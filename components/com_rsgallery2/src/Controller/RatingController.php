@@ -45,7 +45,7 @@ class RatingController extends BaseController
      * @param   CMSApplication       $app      The JApplication for the dispatcher
      * @param   Input               $input    Input
      *
-     * @since   5.1.0     * @see    JControllerLegacy
+     * @since   5.1.0
      */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {

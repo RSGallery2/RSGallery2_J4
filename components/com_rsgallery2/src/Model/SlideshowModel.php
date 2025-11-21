@@ -84,7 +84,6 @@ protected $_extension = 'com_rsgallery2';
  * @param array $config An optional associative array of configuration settings.
  * @param MVCFactoryInterface|null $factory
  * @throws \Exception
- * @see     \JController
  * @since   1.6
  *
 public function __construct($config = array(), MVCFactoryInterface $factory = null)

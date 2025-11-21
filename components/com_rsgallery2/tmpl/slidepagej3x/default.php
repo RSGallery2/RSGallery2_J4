@@ -12,6 +12,7 @@
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -323,11 +324,11 @@ function htmlExifData($exifTags)
 //  {
 //      $user4Form ['commentUserName'] = $user->name;
 //      //$this->bind ($user4Form);
-//      //JForm::bind($user4Form);
+//      //Form::bind($user4Form);
 //      // $this->params_form = $params_form; see alsi where comments are collected
 //      /**
 //      $params = YireoHelper::toRegistry($this->item->params)->toArray();
-//      $params_form = JForm::getInstance('params', $file);
+//      $params_form = Form::getInstance('params', $file);
 //      $params_form->bind(array('params' => $params));
 //      $this->params_form = $params_form;
 //      /**/

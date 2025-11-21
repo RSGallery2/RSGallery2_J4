@@ -21,11 +21,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
 
-
-
-
-// Include the JLog class.
-//jimport('joomla.log.log');
+// Include the Log class.
 
 /**
  * Collection of all data found about one image

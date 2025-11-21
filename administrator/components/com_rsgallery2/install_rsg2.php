@@ -17,6 +17,7 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
 
 /**
@@ -461,6 +462,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('upd (10.2) '), Log::INFO, 'rsg2');
             $GalleryTreeClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel';
             Log::add(Text::_('upd (10.3) '), Log::INFO, 'rsg2');
+
+            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
 
 //          Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
@@ -525,10 +528,12 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $installMsgHelperFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
             $installMsgHelperClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage';
+            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
 
             $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ChangeLogModel.php';
             $changeLogModelClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel';
+            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($changeLogModelClassName, $changeLogModelFileName);
 
             $InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage(
@@ -589,7 +594,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         $manifest = [];
 
         try {
-            $db     = Factory::getContainer()->get(DatabaseInterface::class);
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db
                 ->createQuery()
@@ -925,6 +930,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('upd (20.2) '), Log::INFO, 'rsg2');
             $Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
             Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');
+            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
 
             Log::add(Text::_('upd (20.4) '), Log::INFO, 'rsg2');

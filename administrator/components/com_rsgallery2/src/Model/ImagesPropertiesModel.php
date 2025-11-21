@@ -33,7 +33,6 @@ class ImagesPropertiesModel extends ListModel // ToDo: ? extends BaseDatabaseMod
      * @param   array                $config   An optional associative array of configuration settings.
      * @param   MVCFactoryInterface  $factory  The factory.
      *
-     * @see     \JControllerLegacy
      * @since   5.1.0     */
     public function __construct($config = [], MVCFactoryInterface $factory = null)
     {
