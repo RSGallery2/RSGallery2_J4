@@ -143,6 +143,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                 echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
                             </th>
 
+                            <?php if ($this->isDevelop) : ?>
+                                <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+                                    lft
+                                </th>
+                            <?php endif; ?>
+
 
                             <?php
                             /**
@@ -459,6 +465,13 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                  * </td>
                                  */
                                 ?>
+
+                                <?php if ($this->isDevelop) : ?>
+                                    <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+                                        <?php echo $item->lft; ?>
+                                    </th>
+                                <?php endif; ?>
+
                             </tr>
                             <?php
                         endforeach; ?>

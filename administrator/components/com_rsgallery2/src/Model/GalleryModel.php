@@ -201,83 +201,11 @@ class GalleryModel extends AdminModel
             }
         }
 
+        $item->galleryOrdering = $item->id;
+
         return $item;
     }
 
-    /**
-     * Method to get a category.
-     *
-     * @param   integer  $pk  An optional id of the object to get, otherwise the id from the model state is used.
-     *
-     * @return  mixed    Category data object on success, false on failure.
-     *
-     * @since   5.1.0     *
-    public function getItem($pk = null)
-    {
-        if ($result = parent::getItem($pk))
-        {
-            // Prime required properties.
-            if (empty($result->id))
-            {
-                $result->parent_id = $this->getState('category.parent_id');
-                $result->extension = $this->getState('category.extension');
-            }
-
-            // Convert the metadata field to an array.
-            $registry = new Registry($result->metadata);
-            $result->metadata = $registry->toArray();
-
-            // Convert the created and modified dates to local user time for display in the form.
-            $tz = new \DateTimeZone(Factory::getApplication()->get('offset'));
-
-            if ((int) $result->created_time)
-            {
-                $date = new Date($result->created_time);
-                $date->setTimezone($tz);
-                $result->created_time = $date->toSql(true);
-            }
-            else
-            {
-                $result->created_time = null;
-            }
-
-            if ((int) $result->modified_time)
-            {
-                $date = new Date($result->modified_time);
-                $date->setTimezone($tz);
-                $result->modified_time = $date->toSql(true);
-            }
-            else
-            {
-                $result->modified_time = null;
-            }
-
-            if (!empty($result->id))
-            {
-//              $result->tags = new TagsHelper;
-//              $result->tags->getTagIds($result->id, $result->extension . '.category');
-            }
-        }
-
-        /**
-        $assoc = $this->getAssoc();
-
-        if ($assoc)
-        {
-            if ($result->id != null)
-            {
-                $result->associations = ArrayHelper::toInteger(GalleriesHelper::getAssociations($result->id, $result->extension));
-            }
-            else
-            {
-                $result->associations = [];
-            }
-        }
-        /**
-
-        return $result;
-    }
-    /**/
 
     /**
      * Method to get the row form.
@@ -495,28 +423,14 @@ class GalleryModel extends AdminModel
     public function save($data)
     {
         $table = $this->getTable();
-        $pk    = (!empty($data['id'])) ? $data['id'] : (int)$this->getState($this->getName() . '.id');
-        //$isNew      = true;
-        $context = $this->option . '.' . $this->name;
         $input   = Factory::getApplication()->input;
+        $pk    = (!empty($data['id'])) ? $data['id'] : (int)$this->getState($this->getName() . '.id');
+        $isNew      = true;
+        $context = $this->option . '.' . $this->name;
 
         if (!empty($data['tags']) && $data['tags'][0] != '') {
             $table->newTags = $data['tags'];
         }
-
-        /** -> table *
-        // no default value
-        if (empty($data['description']))
-        {
-            $data['description'] = '';
-        }
-
-        // no default value
-        if (empty($data['params']))
-        {
-            $data['params'] = '';
-        }
-        /**/
 
         // Include the plugins for the save events.
         PluginHelper::importPlugin($this->events_map['save']);
@@ -527,10 +441,82 @@ class GalleryModel extends AdminModel
             $isNew = false;
         }
 
-        // Set the new parent id if parent id not matched OR while New/Save as Copy .
-        if ($table->parent_id != $data['parent_id'] || $data['id'] == 0) {
+        //--- gallery ordering --------------------------------------
+
+        // !!! see menu item model
+
+        if (!$isNew) {
+
+            if ($table->parent_id == $data['parent_id']) {
+                // If first is chosen make the item the first child of the selected parent.
+                if ($data['galleryOrdering'] == -1) {
+                    $table->setLocation($data['parent_id'], 'first-child');
+                } elseif ($data['galleryOrdering'] == -2) {
+                    // If last is chosen make it the last child of the selected parent.
+                    $table->setLocation($data['parent_id'], 'last-child');
+                } elseif ($data['galleryOrdering'] && $table->id != $data['galleryOrdering'] || empty($data['id'])) {
+                    // Don't try to put an item after itself. All other ones put after the selected item.
+                    // $data['id'] is empty means it's a save as copy
+                    $table->setLocation($data['galleryOrdering'], 'after');
+                } elseif ($data['galleryOrdering'] && $table->id == $data['galleryOrdering']) {
+                    // \Just leave it where it is if no change is made.
+                    unset($data['galleryOrdering']);
+                }
+            } else {
+                // Set the new parent id if parent id not matched and put in last position
+                $table->setLocation($data['parent_id'], 'last-child');
+            }
+
+//            // Check if we are moving to a different gallery ???
+//            if ($data['menutype'] != $table->menutype) {
+//                // Add the child node ids to the children array.
+//                $query->clear()
+//                    ->select($db->quoteName('id'))
+//                    ->from($db->quoteName('#__menu'))
+//                    ->where($db->quoteName('lft') . ' BETWEEN ' . (int) $table->lft . ' AND ' . (int) $table->rgt);
+//                $db->setQuery($query);
+//                $children = (array) $db->loadColumn();
+//            }
+//
+        } else {
+            // We have a new item, so it is not a change.
+
+            // $menuType = $this->getMenuType($data['menutype']);
+
+            // $data['client_id'] = $menuType->client_id;
+
+
             $table->setLocation($data['parent_id'], 'last-child');
         }
+
+//        // Automatic handling of alias for empty fields
+//        if (
+//            in_array(
+//                $input->get('task'),
+//                ['apply', 'save', 'save2new'],
+//            ) && (!isset($data['id']) || (int)$data['id'] == 0)
+//        ) {
+//            if ($data['alias'] == null) {
+//                if (Factory::getApplication()->get('unicodeslugs') == 1) {
+//                    $data['alias'] = OutputFilter::stringURLUnicodeSlug($data['title']);
+//                } else {
+//                    $data['alias'] = OutputFilter::stringURLSafe($data['title']);
+//                }
+//
+//                $content = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
+//
+//                if ($content->load(['alias' => $data['alias'], 'catid' => $data['catid']])) {
+//                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
+//                }
+//
+//                [$title, $alias] = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
+//                $data['alias'] = $alias;
+//
+//                if (isset($msg)) {
+//                    Factory::getApplication()->enqueueMessage($msg, 'warning');
+//                }
+//            }
+//        }
 
         // ToDo: use name instead of title ?
         // Alter the title for save as copy
@@ -551,203 +537,87 @@ class GalleryModel extends AdminModel
             $data['published'] = 0;
         }
 
-        // Automatic handling of alias for empty fields
-        if (
-            in_array(
-                $input->get('task'),
-                ['apply', 'save', 'save2new'],
-            ) && (!isset($data['id']) || (int)$data['id'] == 0)
-        ) {
-            if ($data['alias'] == null) {
-                if (Factory::getApplication()->get('unicodeslugs') == 1) {
-                    $data['alias'] = OutputFilter::stringURLUnicodeSlug($data['title']);
-                } else {
-                    $data['alias'] = OutputFilter::stringURLSafe($data['title']);
-                }
+        // Bind the data.
+        if (!$table->bind($data)) {
+            $this->setError($table->getError());
 
-                $table = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
-
-                if ($table->load(['alias' => $data['alias'], 'catid' => $data['catid']])) {
-                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
-                }
-
-                [$title, $alias] = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
-                $data['alias'] = $alias;
-
-                if (isset($msg)) {
-                    Factory::getApplication()->enqueueMessage($msg, 'warning');
-                }
-            }
-        }
-
-//        // Bind the data.
-//      if (!$table->bind($data))
-//      {
-//          $this->setError($table->getError());
-//
-//          return false;
-//      }
-//
-//      // Bind the rules.
-//      if (isset($data['rules']))
-//      {
-//          $rules = new Rules($data['rules']);
-//          $table->setRules($rules);
-//      }
-//
-//      // Check the data.
-//      if (!$table->check())
-//      {
-//          $this->setError($table->getError());
-//
-//          return false;
-//      }
-
-        // Trigger the before save event.
-//      $result = Factory::getApplication()->triggerEvent($this->event_before_save, array($context, &$table, $isNew, $data));
-//
-//      if (in_array(false, $result, true))
-//      {
-//          $this->setError($table->getError());
-//
-//          return false;
-//      }
-
-        // Store the data.
-//      if (!$table->store())
-//      {
-//
-//          $this->setError($table->getError());
-//
-//          return false;
-//      }
-
-        if (parent::save($data)) {
-            /**
-             * $assoc = $this->getAssoc();
-             *
-             * if ($assoc)
-             * {
-             * // Adding self to the association
-             * $associations = $data['associations'] ?? [];
-             *
-             * // Unset any invalid associations
-             * $associations = ArrayHelper::toInteger($associations);
-             *
-             * foreach ($associations as $tag => $id)
-             * {
-             * if (!$id)
-             * {
-             * unset($associations[$tag]);
-             * }
-             * }
-             *
-             * // Detecting all item menus
-             * $allLanguage = $table->language == '*';
-             *
-             * if ($allLanguage && !empty($associations))
-             * {
-             * Factory::getApplication()->enqueueMessage(Text::_('COM_RSGALLERY2_ERROR_ALL_LANGUAGE_ASSOCIATED'), 'notice');
-             * }
-             *
-             * // Get associationskey for edited item
-             * $db    = $this->getContainer()->get(DatabaseInterface::class);
-             * $query = $db->createQuery()
-             * ->select($db->quoteName('key'))
-             * ->from($db->quoteName('#__associations'))
-             * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext))
-             * ->where($db->quoteName('id') . ' = ' . (int) $table->id);
-             * $db->setQuery($query);
-             * $oldKey = $db->loadResult();
-             *
-             * // Deleting old associations for the associated items
-             * $query = $db->createQuery()
-             * ->delete($db->quoteName('#__associations'))
-             * ->where($db->quoteName('context') . ' = ' . $db->quote($this->associationsContext));
-             *
-             * if ($associations)
-             * {
-             * $query->where('(' . $db->quoteName('id') . ' IN (' . implode(',', $associations) . ') OR '
-             * . $db->quoteName('key') . ' = ' . $db->quote($oldKey) . ')');
-             * }
-             * else
-             * {
-             * $query->where($db->quoteName('key') . ' = ' . $db->quote($oldKey));
-             * }
-             *
-             * $db->setQuery($query);
-             *
-             * try
-             * {
-             * $db->execute();
-             * }
-             * catch (\RuntimeException $e)
-             * {
-             * $this->setError($e->getMessage());
-             *
-             * return false;
-             * }
-             *
-             * // Adding self to the association
-             * if (!$allLanguage)
-             * {
-             * $associations[$table->language] = (int) $table->id;
-             * }
-             *
-             * if (count($associations) > 1)
-             * {
-             * // Adding new association for these items
-             * $key = md5(json_encode($associations));
-             * $query->clear()
-             * ->insert('#__associations');
-             *
-             * foreach ($associations as $id)
-             * {
-             * $query->values(((int) $id) . ',' . $db->quote($this->associationsContext) . ',' . $db->quote($key));
-             * }
-             *
-             * $db->setQuery($query);
-             *
-             * try
-             * {
-             * $db->execute();
-             * }
-             * catch (\RuntimeException $e)
-             * {
-             * $this->setError($e->getMessage());
-             *
-             * return false;
-             * }
-             * }
-             * }
-             * /**/
-
-//            // Trigger the after save event.
-//            Factory::getApplication()->triggerEvent($this->event_after_save, array($context, &$table, $isNew, $data));
-//
-//            // Rebuild the path for the category:
-//            if (!$table->rebuildPath($table->id)) {
-//                $this->setError($table->getError());
-//
-//                return false;
-//            }
-//
-//            // Rebuild the paths of the category's children:
-//            if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path)) {
-//                $this->setError($table->getError());
-//
-//                return false;
-//            }
-//
-//            $this->setState($this->getName() . '.id', $table->id);
-//
-//            // Clear the cache
-//            $this->cleanCache();
-
-            return true;
-        } else {
             return false;
         }
+
+        // Check the data.
+        if (!$table->check()) {
+            $this->setError($table->getError());
+
+            return false;
+        }
+
+        // Trigger the before save event.
+        $result = Factory::getApplication()->triggerEvent($this->event_before_save, [$context, &$table, $isNew, $data]);
+
+        if (\in_array(false, $result, true)) {
+            $this->setError($table->getError());
+
+            return false;
+        }
+
+        // ToDo: getassoc / tag-> id
+
+        // Store the data.
+        if (!$table->store()) {
+            $this->setError($table->getError());
+
+            return false;
+        }
+
+        // Trigger the after save event.
+        Factory::getApplication()->triggerEvent($this->event_after_save, [$context, &$table, $isNew]);
+
+        // Rebuild the tree path.
+        if (!$table->rebuildPath($table->id)) {
+            $this->setError($table->getError());
+
+            return false;
+        }
+
+        // Rebuild the paths of the menu item's children:
+        if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path)) {
+            $this->setError($table->getError());
+
+            return false;
+        }
+
+//        // ToDO:
+//        // Process the child rows
+//        if (!empty($children)) {
+//            // Remove any duplicates and sanitize ids.
+//            $children = array_unique($children);
+//            $children = ArrayHelper::toInteger($children);
+//
+//            // Update the menutype field in all nodes where necessary.
+//            $query = $db->getQuery(true)
+//                ->update($db->quoteName('#__menu'))
+//                ->set($db->quoteName('menutype') . ' = :menutype')
+//                ->whereIn($db->quoteName('id'), $children)
+//                ->bind(':menutype', $data['menutype']);
+//
+//            try {
+//                $db->setQuery($query);
+//                $db->execute();
+//            } catch (\RuntimeException $e) {
+//                $this->setError($e->getMessage());
+//
+//                return false;
+//            }
+//        }
+
+        $this->setState($this->getName() . '.id', $table->id);
+
+        // ToDo: Load associated (not menu) items, for now not supported for admin menu… may be later
+
+        // Clean the cache
+        $this->cleanCache();
+
+        return true;
     }
 
     // expected name/alias  is unique

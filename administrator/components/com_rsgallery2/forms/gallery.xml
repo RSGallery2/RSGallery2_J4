@@ -47,11 +47,23 @@
 			<option value="0">COM_RSGALLERY2_MINUS_RANDOM_THUMBNAIL_MINUS</option>
 		</field>
 
+<!--		<field-->
+<!--				name="lft"-->
+<!--				type="hidden"-->
+<!--				filter="unset"-->
+<!--		/>-->
 
 		<field
 				name="lft"
-				type="hidden"
 				filter="unset"
+		/>
+
+		<field
+			name="galleryOrdering"
+			type="GalleryOrderLft"
+			label="COM_RSGALLERY2_GALLERY_FIELD_ORDERING_LABEL"
+			description="COM_RSGALLERY2_GALLERY_FIELD_ORDERING_DESC"
+			default="0"
 		/>
 
 		<field

@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries`
 	`modified_by`      int unsigned                                           NOT NULL DEFAULT 0,
 
 	`parent_id`        int                                                    NOT NULL DEFAULT 0,
-	`level`            int                                                             DEFAULT 0 NOT NULL,
+	`level`            int                                                    NOT NULL DEFAULT 0,
 	`path`             varchar(400)                                           NOT NULL DEFAULT '',
-	`lft`              int                                                             DEFAULT 0 NOT NULL,
-	`rgt`              int                                                             DEFAULT 0 NOT NULL,
+	`lft`              int                                                    NOT NULL DEFAULT 0,
+	`rgt`              int                                                    NOT NULL DEFAULT 0,
 
 	`approved`         tinyint unsigned                                       NOT NULL DEFAULT '1',
 	`asset_id`         int                                                    NOT NULL DEFAULT 0,
@@ -44,10 +44,10 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_galleries`
 
 --  `metakey` text NOT NULL,
 --  `metadesc` text NOT NULL,
---  `metadata` text NOT NULL, 
+--  `metadata` text NOT NULL,
 
 --  `publish_up` datetime,
---  `publish_down` datetime, 
+--  `publish_down` datetime,
 
 --  KEY `idx_catid` (`catid`),
 --  KEY `idx_language` (`language`),
@@ -127,15 +127,15 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_images`
 -- state of RSG data
 --    (
 --       __rsg2_data_version (One for all tables)
---       
+--
 --       j3x_config_upgrade:  config state: 0:not upgraded, 1:upgraded,  -1:upgraded and deleted
 --       j3x_gallery_upgrade: states see config
 --       j3x_image_upgrade:
 --       ??? j3x_comments_upgrade ???
 --       ??? j3x_ACL_upgrade ???
 --       ??? j3x_merged_cfg_version ???
---       
---       
+--
+--
 --    )
 --
 
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `#__rsg2_state`
 #
 ##Media type ‘aural’, ‘braille’, ‘handheld’, ‘print’, ‘projection’, ‘screen’, ‘tty’, ‘tv’
 #
-## breakpopints: width, 
+## breakpopints: width,
 ##	Viewport-Breite (z.B.: Der zur Verfügung stehende Platz innerhalb des Browserfensters)
 ## Beispiel: @media handheld and (min-width: 20em) { ... }heightViewport-Höhe (z.B.: Der zur Verfügung stehende Platz innerhalb des Browserfensters)
 ## Beispiel: @media screen and (max-height: 700px) { … } device-widthBreite des Mediums (Smartphone-Bildschirm, Monitorgröße etc. )

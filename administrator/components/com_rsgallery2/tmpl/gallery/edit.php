@@ -75,6 +75,8 @@ $tmpl    = $isModal || $input->get('tmpl', '', 'cmd') === 'component' ? '&tmpl=c
                 <div class="bg-light px-3">
                     <?php echo $this->getForm()->renderField('thumb_id') ?>
                     <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
+                    <?php echo $this->getForm()->renderField('lft') ?>
+                    <?php echo $this->getForm()->renderField('galleryOrdering') ?>
                 </div>
             </div>
         </div>

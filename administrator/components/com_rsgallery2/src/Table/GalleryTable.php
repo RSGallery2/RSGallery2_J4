@@ -51,27 +51,6 @@ class GalleryTable extends Nested
     }
 
     /**
-     * Overloaded bind function
-     *
-     * @param   array  $array   Named array
-     * @param   mixed  $ignore  An optional array or space separated list of properties
-     *                          to ignore while binding.
-     *
-     * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
-     *
-     * @see     \Table::bind
-     * @since   5.1.0     */
-    public function bind($array, $ignore = '')
-    {
-        if (isset($array['params']) && is_array($array['params'])) {
-            $registry        = new Registry($array['params']);
-            $array['params'] = (string)$registry;
-        }
-
-        return parent::bind($array, $ignore);
-    }
-
-    /**
      * Overloaded check method to ensure data integrity.
      *
      * @return  boolean  True on success.
@@ -184,6 +163,29 @@ class GalleryTable extends Nested
         return true;
     }
 
+    /**
+     * Overloaded bind function
+     *
+     * @param   array  $array   Named array
+     * @param   mixed  $ignore  An optional array or space separated list of properties
+     *                          to ignore while binding.
+     *
+     * @return  mixed  Null if operation was satisfactory, otherwise returns an error string
+     *
+     * @see     \Table::bind
+     * @since   5.1.0     */
+    public function bind($array, $ignore = '')
+    {
+        if (isset($array['params']) && is_array($array['params'])) {
+            $registry        = new Registry($array['params']);
+            $array['params'] = (string)$registry;
+        }
+
+        return parent::bind($array, $ignore);
+    }
+
+
+
 // ??? toDo: publish / unpublish parent with childs ?
 
     /**
@@ -200,16 +202,16 @@ class GalleryTable extends Nested
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
+        // Set created date if not set.
+        if (!(int) $this->created) {
+            $this->created = $date;
+        }
+
         if ($this->id) {
             // Existing item
             $this->modified    = $date->toSql();
             $this->modified_by = $user->get('id');
         } else {
-            // New tag. A tag created and created_by field can be set by the user,
-            // so we don't touch either of these if they are set.
-            if (!(int)$this->created) {
-                $this->created = $date->toSql();
-            }
 
             if (empty($this->created_by)) {
                 $this->created_by = $user->get('id');
@@ -236,8 +238,18 @@ class GalleryTable extends Nested
         // Verify that the alias is unique
         $table = new static($this->getDatabase());
 
-        if ($table->load(['alias' => $this->alias]) && ($table->id != $this->id || $this->id == 0)) {
+//        if ($table->load(['alias' => $this->alias])
+//            && ($table->id != $this->id || $this->id == 0)) {
+        if (
+            $table->load(['alias' => $this->alias, 'parent_id' => (int) $this->parent_id])
+//                          'extension' => $this->extension])
+            && ($table->id != $this->id || $this->id == 0)
+        ) {
             $this->setError(Text::_('COM_RSGALLERY2_ERROR_UNIQUE_ALIAS'));
+
+            if ($table->published === -2) {
+                $this->setError(Text::_('JLIB_DATABASE_ERROR_CATEGORY_UNIQUE_ALIAS_TRASHED'));
+            }
 
             return false;
         }
@@ -245,26 +257,26 @@ class GalleryTable extends Nested
         return parent::store($updateNulls);
     }
 
-    /**
-     * Method to delete a node and, optionally, its child nodes from the table.
-     *
-     * @param   integer  $pk        The primary key of the node to delete.
-     * @param   boolean  $children  True to delete child nodes, false to move them up a level.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since   5.1.0     */
-    public function delete($pk = null, $children = false)
-    {
-        $return = parent::delete($pk, $children);
-
-        if ($return) {
-//            $helper = new TagsHelper;
-//            $helper->tagDeleteInstances($pk);
-        }
-
-        return $return;
-    }
+//    /**
+//     * Method to delete a node and, optionally, its child nodes from the table.
+//     *
+//     * @param   integer  $pk        The primary key of the node to delete.
+//     * @param   boolean  $children  True to delete child nodes, false to move them up a level.
+//     *
+//     * @return  boolean  True on success.
+//     *
+//     * @since   5.1.0     */
+//    public function delete($pk = null, $children = false)
+//    {
+//        $return = parent::delete($pk, $children);
+//
+//        if ($return) {
+////            $helper = new TagsHelper;
+////            $helper->tagDeleteInstances($pk);
+//        }
+//
+//        return $return;
+//    }
 
     /**
      * Method to recursively rebuild the whole nested set tree.
