@@ -431,11 +431,16 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
     {
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL'), Log::INFO, 'rsg2');
 
-        // ToDo: enquire .. message to user
-        Factory::getApplication()->enqueueMessage(
-            Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp),
-            'error',
-        );
+        // Check for the minimum PHP version before continuing
+        if (version_compare(PHP_VERSION, $this->minimumPhp, '<')) {
+            Log::add(Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp), Log::WARNING, 'jerror');
+            Factory::getApplication()->enqueueMessage(
+                Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp),
+                'error',
+            );
+
+            return false;
+        }
 
         Log::add(Text::_('exit uninstall'), Log::INFO, 'rsg2');
 
