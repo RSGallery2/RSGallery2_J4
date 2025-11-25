@@ -185,7 +185,6 @@ class GalleryTable extends Nested
     }
 
 
-
 // ??? toDo: publish / unpublish parent with childs ?
 
     /**
@@ -198,7 +197,7 @@ class GalleryTable extends Nested
      * @since   5.1.0     */
     public function store($updateNulls = false)
     {
-        $date = Factory::getDate();
+        $date = Factory::getDate()->toSql();
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
@@ -207,9 +206,14 @@ class GalleryTable extends Nested
             $this->created = $date;
         }
 
+        // Set parent_id to gallery root node id
+        if (!(int) $this->parent_id) {
+            $this->parent_id = 1;
+        }
+
         if ($this->id) {
             // Existing item
-            $this->modified    = $date->toSql();
+            $this->modified    = $date;
             $this->modified_by = $user->get('id');
         } else {
 
@@ -256,6 +260,7 @@ class GalleryTable extends Nested
 
         return parent::store($updateNulls);
     }
+
 
 //    /**
 //     * Method to delete a node and, optionally, its child nodes from the table.

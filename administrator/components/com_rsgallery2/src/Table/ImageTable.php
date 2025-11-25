@@ -155,19 +155,19 @@ class ImageTable extends Table
      * @since   5.1.0     */
     public function store($updateNulls = false)
     {
-        $date = Factory::getDate();
+        $date = Factory::getDate()->toSql();
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
         if ($this->id) {
             // Existing item
-            $this->modified    = $date->toSql();
+            $this->modified    = $date;
             $this->modified_by = $user->get('id');
         } else {
             // New tag. A tag created and created_by field can be set by the user,
             // so we don't touch either of these if they are set.
             if (!(int)$this->created) {
-                $this->created = $date->toSql();
+                $this->created = $date;
             }
 
             if (empty($this->created_by)) {

@@ -127,7 +127,7 @@ class GalleryTreeModel extends BaseModel
             $name  = 'galleries root';
             $alias = 'groot';
 
-            $date = Factory::getDate();
+            $date = Factory::getDate()->toSql();
             $user = Factory::getApplication()->getIdentity();
 
             // insert root record

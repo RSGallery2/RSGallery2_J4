@@ -411,13 +411,13 @@ class ImagesModel extends ListModel
      * @since      5.1.0     */
     protected function prepareTable($table)
     {
-        $date = Factory::getDate();
+        $date = Factory::getDate()->toSql();
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
         if (empty($table->id)) {
             // Set the values
-            $table->created    = $date->toSql();
+            $table->created    = $date;
             $table->created_by = $user->id;
 
             // Set ordering to the last item if not set
@@ -435,7 +435,7 @@ class ImagesModel extends ListModel
             }
         } else {
             // Set the values
-            $table->modified    = $date->toSql();
+            $table->modified    =
             $table->modified_by = $user->id;
         }
 

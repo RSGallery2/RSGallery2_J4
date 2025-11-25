@@ -843,7 +843,7 @@ class ImageModel extends AdminModel
 
         //--- date -------------------------------------------
 
-        $date = Factory::getDate();
+        $date = Factory::getDate()->toSql();
         //$item->date = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
         $table->created = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
 

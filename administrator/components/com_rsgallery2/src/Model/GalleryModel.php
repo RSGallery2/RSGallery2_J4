@@ -441,6 +441,11 @@ class GalleryModel extends AdminModel
             $isNew = false;
         }
 
+        // Set the new parent id if parent id not matched OR while New/Save as Copy .
+        if ($table->parent_id != $data['parent_id'] || $data['id'] == 0) {
+            $table->setLocation($data['parent_id'], 'last-child');
+        }
+
         //--- gallery ordering --------------------------------------
 
         // !!! see menu item model
@@ -485,8 +490,7 @@ class GalleryModel extends AdminModel
 
             // $data['client_id'] = $menuType->client_id;
 
-
-            $table->setLocation($data['parent_id'], 'last-child');
+//            $table->setLocation($data['parent_id'], 'last-child');
         }
 
 //        // Automatic handling of alias for empty fields
