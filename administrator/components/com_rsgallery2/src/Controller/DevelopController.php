@@ -602,7 +602,8 @@ class DevelopController extends BaseController
                 $text_color = imagecolorallocate($im, 233, 14, 91);
                 imagestring($im, 1, 5, 5, "Ein Test-String", $text_color);
                 imagepng($im);
-                imagedestroy($im);
+// PHP 8.5 deprecated, needs PHP 8.0
+//                imagedestroy($im);
                 /**/
                 /**
                 // Erzeut ein leeres Bild und fügt ein wenig Text hinzu
@@ -624,7 +625,8 @@ class DevelopController extends BaseController
                 imagefill($im, 0, 0, $red);
 
                 // Den Speicher freigeben
-                imagedestroy($im);
+// PHP 8.5 deprecated, needs PHP 8.0
+//                imagedestroy($im);
 
                 /**/
             }

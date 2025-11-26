@@ -201,7 +201,17 @@ class GalleryModel extends AdminModel
             }
         }
 
-        $item->galleryOrdering = $item->id;
+        // New gallery ordering: set as last or first item
+        if (empty($item->id)) {
+            // Ordering by config for new galleries
+            $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+
+            $galleryStartOrdering = $rsgConfig['galleryStartOrdering'];
+            $item->galleryOrdering = $galleryStartOrdering;
+        } else {
+            // Order as given
+            $item->galleryOrdering = $item->id;
+        }
 
         return $item;
     }
@@ -428,6 +438,10 @@ class GalleryModel extends AdminModel
         $isNew      = true;
         $context = $this->option . '.' . $this->name;
 
+        // ToDo: config first gallery ordering: first / last
+        // $firstGalleryOrdering = -1; // first
+        $firstGalleryOrdering = -2; // last
+
         if (!empty($data['tags']) && $data['tags'][0] != '') {
             $table->newTags = $data['tags'];
         }
@@ -441,35 +455,44 @@ class GalleryModel extends AdminModel
             $isNew = false;
         }
 
-        // Set the new parent id if parent id not matched OR while New/Save as Copy .
-        if ($table->parent_id != $data['parent_id'] || $data['id'] == 0) {
-            $table->setLocation($data['parent_id'], 'last-child');
-        }
+        // on first run
+
+//        // Set the new parent id if parent id not matched OR while New/Save as Copy .
+//        if ($table->parent_id != $data['parent_id'] || $data['id'] == 0) {
+//            // ToDo: create flag in config if last/first
+//            // on root level set to first otherwise to last
+//            if ($table->parent_id < 2) {
+//                $table->setLocation($data['parent_id'], 'first-child');
+//            } else {
+//                $table->setLocation($data['parent_id'], 'last-child');
+//            }
+//        }
 
         //--- gallery ordering --------------------------------------
 
         // !!! see menu item model
 
+        // existing gallery => changed gallery ordering ?
         if (!$isNew) {
-
+            // same parent gallery
             if ($table->parent_id == $data['parent_id']) {
-                // If first is chosen make the item the first child of the selected parent.
-                if ($data['galleryOrdering'] == -1) {
-                    $table->setLocation($data['parent_id'], 'first-child');
-                } elseif ($data['galleryOrdering'] == -2) {
-                    // If last is chosen make it the last child of the selected parent.
-                    $table->setLocation($data['parent_id'], 'last-child');
-                } elseif ($data['galleryOrdering'] && $table->id != $data['galleryOrdering'] || empty($data['id'])) {
-                    // Don't try to put an item after itself. All other ones put after the selected item.
-                    // $data['id'] is empty means it's a save as copy
-                    $table->setLocation($data['galleryOrdering'], 'after');
-                } elseif ($data['galleryOrdering'] && $table->id == $data['galleryOrdering']) {
-                    // \Just leave it where it is if no change is made.
-                    unset($data['galleryOrdering']);
-                }
+
+                $this->setGalleryLocation($data['galleryOrdering'], $data['parent_id'], $data['id'], $table);
+
             } else {
-                // Set the new parent id if parent id not matched and put in last position
-                $table->setLocation($data['parent_id'], 'last-child');
+                // moved to different gallery
+
+                // ??? on parent id existing will there be a separate binary tree ?
+
+//                // Set the new parent id if parent id not matched and put in last position
+//                $table->setLocation($data['parent_id'], 'last-child');
+//
+////                $galleryStartOrdering = -1; // 'first'
+////                $galleryStartOrdering = -2; // 'last'
+////                $this->setGalleryLocation($galleryStartOrdering, $data['parent_id'], $data['id'], $table);
+
+                // now align to given id ?
+                $this->setGalleryLocation($data['galleryOrdering'], $data['parent_id'], $data['id'], $table);
             }
 
 //            // Check if we are moving to a different gallery ???
@@ -484,14 +507,12 @@ class GalleryModel extends AdminModel
 //            }
 //
         } else {
-            // We have a new item, so it is not a change.
-
-            // $menuType = $this->getMenuType($data['menutype']);
-
-            // $data['client_id'] = $menuType->client_id;
-
-//            $table->setLocation($data['parent_id'], 'last-child');
+            // new gallery => user changed gallery ordering ?
+            $this->setGalleryLocation($data['galleryOrdering'], $data['parent_id'], $data['id'], $table);
         }
+        // Not needed any more
+        unset($data['galleryOrdering']);
+
 
 //        // Automatic handling of alias for empty fields
 //        if (
@@ -1177,4 +1198,33 @@ class GalleryModel extends AdminModel
        // ? needed
     }
     /**/
+
+
+    /**
+     * @param   array  $data
+     * @param   Table  $table
+     *
+     * @return array
+     *
+     * @since version
+     */
+    public function setGalleryLocation($galleryOrdering, $parent_id, $gallery_id, Table $table)
+    {
+        // If first is chosen make the item the first child of the selected parent.
+        if ($galleryOrdering == -1) {
+            $table->setLocation($parent_id, 'first-child');
+        } elseif ($galleryOrdering == -2) {
+            // If last is chosen make it the last child of the selected parent.
+            $table->setLocation($parent_id, 'last-child');
+        } elseif ($galleryOrdering && $table->id != $galleryOrdering || empty($gallery_id)) {
+            // Don't try to put an item after itself. All other ones put after the selected item.
+            // $data['id'] is empty means it's a save as copy
+            $table->setLocation($galleryOrdering, 'after');
+        } elseif ($galleryOrdering && $table->id == $galleryOrdering) {
+            // Just leave it where it is if no change is made.
+            // $galleryOrdering = $galleryOrdering;
+        }
+
+    }
+
 }

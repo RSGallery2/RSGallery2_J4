@@ -2,72 +2,142 @@
 <config>
 	<!-- ... Tab General ................................. -->
 
+<!--	<fieldset-->
+<!--			name="rsgallery2"-->
+<!--			label="COM_RSGALLERY2_CONFIG_TAB_GENERAL"-->
+<!--			description="COM_RSGALLERY2_CONFIG_TAB_GENERAL_DESC"-->
+<!--	>-->
+<!--		&lt;!&ndash; needed when more entries are general ...-->
+<!--				field name="intro_text"-->
+<!--				type="editor"-->
+<!--				label="COM_RSGALLERY2_INTRODUCTION_TEXT"-->
+<!--				description="COM_RSGALLERY2_INTRODUCTION_DESC"-->
+<!--				filter="ComponentHelper::filterText"-->
+<!--				buttons="false"-->
+<!--		/&ndash;&gt;-->
+
+<!--		<field-->
+<!--				name="ToDo_list_general"-->
+<!--				type="list"-->
+<!--				default="0"-->
+<!--				label="!!! ToDo !!!: In config - general"-->
+<!--				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("-->
+<!--				class="text text-danger"-->
+<!--				showon="isDevelop:1"-->
+<!--		>-->
+<!--			<option value="0">* add _NOTE_ part to lang of note elements</option>-->
+<!--			<option value="1">* use display instead of show for const and menu ...</option>-->
+<!--			<option value="2">*</option>-->
+<!--			<option value="3">*</option>-->
+<!--		</field>-->
+
+<!--		<field-->
+<!--				type="spacer"-->
+<!--				name="spacer_admin"-->
+<!--				hr="true"-->
+<!--		/>-->
+
+<!--	</fieldset>-->
+
+
+	<!-- ... Tab galleries ................................. -->
+
 	<fieldset
-			name="rsgallery2"
-			label="COM_RSGALLERY2_CONFIG_TAB_GENERAL"
-			description="COM_RSGALLERY2_CONFIG_TAB_GENERAL_DESC"
+		name="galleries"
+		label="COM_RSGALLERY2_CONFIG_TAB_GALLERIES"
+		description="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_DESC"
 	>
-		<!-- needed when more entries are general ...
-				field name="intro_text"
-				type="editor"
-				label="COM_RSGALLERY2_INTRODUCTION_TEXT"
-				description="COM_RSGALLERY2_INTRODUCTION_DESC"
-				filter="ComponentHelper::filterText"
-				buttons="false"
-		/-->
+	<!--field
+			type="spacer"
+			name="spacer_galleries_01"
+			hr="true"
+	/-->
 
-		<field
-				name="ToDo_list_general"
-				type="list"
-				default="0"
-				label="!!! ToDo !!!: In config - general"
-				description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
-				class="text text-danger"
-				showon="isDevelop:1"
-		>
-			<option value="0">* add _NOTE_ part to lang of note elements</option>
-			<option value="1">* use display instead of show for const and menu ...</option>
-			<option value="2">*</option>
-			<option value="3">*</option>
-			<option value="4">*</option>
-		</field>
+	<field
+		name="ToDo_list_galleries"
+		type="list"
+		default="0"
+		label="!!! ToDo !!!: In config - galleries"
+		description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+		class="text text-danger"
+		showon="isDevelop:1"
+	>
+		<option value="0">*</option>
+		<option value="1">*</option>
+		<option value="2">*</option>
+		<option value="3">*</option>
+		<option value="4">*</option>
+	</field>
 
 
-		<field
-				name="sef_ids"
-				type="radio"
-				layout="joomla.form.field.radio.switcher"
-				default="0"
-				label="JGLOBAL_SEF_NOIDS_LABEL"
-				filter="integer"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
+	<!-- ... block galleries xxx  ... -->
+
+	<field name="note_galleries"
+		   type="note"
+		   class="alert alert-primary"
+		   close="true"
+		   label="COM_RSGALLERY2_CONFIG_BLOCK_GALLERIES_GENERAL"
+		   description="COM_RSGALLERY2_CONFIG_BLOCK_GALLERIES_GENERAL_DESC"
+	/>
+
+	<field
+		name="galleryStartOrdering"
+		type="list"
+		default="-1"
+		label="COM_RSGALLERY2_CONFIG_GALLERY_START_ORDERING"
+		description="COM_RSGALLERY2_CONFIG_GALLERY_START_ORDERING_DESC"
+	>
+		<option value="-1">COM_RSGALLERY2_ORDERING_AS_FIRST</option>
+		<option value="-2">COM_RSGALLERY2_ORDERING_AS_LAST</option>
+	</field>
+	</fieldset>
+
+	<!-- ... Tab images ................................. -->
+
+	<fieldset
+		name="images"
+		label="COM_RSGALLERY2_CONFIG_TAB_IMAGES"
+		description="COM_RSGALLERY2_CONFIG_TAB_IMAGES_DESC"
+	>
+	<!--field
+			type="spacer"
+			name="spacer_upload_01"
+			hr="true"
+	/-->
+
+	<field
+		name="ToDo_list_images"
+		type="list"
+		default="0"
+		label="!!! ToDo !!!: In config - upload"
+		description="Developers ToDo list may still contain elements when RSG2 is ready to ship :-("
+		class="text text-danger"
+		showon="isDevelop:1"
+	>
+		<option value="0">*</option>
+		<option value="1">*</option>
+		<option value="2">*</option>
+		<option value="3">*</option>
+		<option value="4">*</option>
+	</field>
 
 
-		<!--field
-				id="advancedSef"
-				name="advancedSef"
-				type="radio"
-				default="0"
-				label="COM_RSGALLERY2_ADVANCED_SEF"
-				description="COM_RSGALLERY2_ADVANCED_SEF_DESC"
-				layout="joomla.form.field.radio.switcher"
-				filter="integer"
-				validate="options"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field-->
+	<!-- ... block galleries xxx  ... -->
 
-		<field
-				type="spacer"
-				name="spacer_admin"
-				hr="true"
-		/>
+	<field name="note_images"
+		   type="note"
+		   class="alert alert-primary"
+		   close="true"
+		   label="COM_RSGALLERY2_CONFIG_BLOCK_IMAGES_GENERAL"
+		   description="COM_RSGALLERY2_CONFIG_BLOCK_IMAGES_GENERAL_DESC"
+	/>
+
+
+
+
 
 	</fieldset>
+
 
 	<!-- ... Tab Upload ................................. -->
 
@@ -91,7 +161,7 @@
 				class="text text-danger"
 				showon="isDevelop:1"
 		>
-			<option value="0">*</option>
+			<option value="0">* Image Manipulation block / section may be called upload actions or other</option>
 			<option value="1">*</option>
 			<option value="2">*</option>
 			<option value="3">*</option>
@@ -105,8 +175,8 @@
 		       type="note"
 		       class="alert alert-primary"
 		       close="true"
-		       label="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION"
-		       description="COM_RSGALLERY2_CFG_IMAGE_MANIPULATION_DESC"
+		       label="COM_RSGALLERY2_CONFIG_IMAGE_SIZES_BLOCK"
+		       description="COM_RSGALLERY2_CONFIG_IMAGE_SIZES_BLOCK_DESC"
 		/>
 
 		<field
@@ -168,21 +238,6 @@
 			<option value="1">JYES</option>
 		</field>
 
-		<field
-				id="isPreSelectLatestGallery"
-				name="isPreSelectLatestGallery"
-				type="radio"
-				default="1"
-				label="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_LABEL"
-				description="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_DESC"
-				layout="joomla.form.field.radio.switcher"
-				filter="integer"
-				validate="options"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-
 		<!-- ... block general section ... -->
 
 		<field
@@ -199,6 +254,21 @@
 				label="COM_RSGALLERY2_CFG_UPLOAD_GENERAL"
 				description="COM_RSGALLERY2_CFG_UPLOAD_GENERAL_DESC"
 		/>
+
+		<field
+			id="isPreSelectLatestGallery"
+			name="isPreSelectLatestGallery"
+			type="radio"
+			default="1"
+			label="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_LABEL"
+			description="COM_RSGALLERY2_PRESELECT_LATEST_GALLERY_DESC"
+			layout="joomla.form.field.radio.switcher"
+			filter="integer"
+			validate="options"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 
 		<field
 				name="ftp_path"
@@ -302,8 +372,8 @@
 
 	<fieldset
 			name="GalleriesView"
-			label="COM_RSGALLERY2_CONFIG_TAB_GALLERIES"
-			description="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_DESC"
+			label="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_VIEW"
+			description="COM_RSGALLERY2_CONFIG_TAB_GALLERIES_VIEW_DESC"
 	>
 
 		<field
@@ -433,24 +503,23 @@
 			<option value="4">*Left beside thumb</option>
 		</field>
 
-
 		<!-- ... block  ... -->
 
-		<field name="note_galleries_view_YYYY"
-		       type="note"
-		       class="alert alert-primary"
-		       close="true"
-		       label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"
-		       description="Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... "
-		/>
+<!--		<field name="note_galleries_view_YYYY"-->
+<!--		       type="note"-->
+<!--		       class="alert alert-primary"-->
+<!--		       close="true"-->
+<!--		       label="*??COM_RSGALLERY2_CFG_GALLERIES_VIEW_LABEL"-->
+<!--		       description="Layouts like masonry, Bootstrap, pinterest, polaroid, grid , flexbox .... "-->
+<!--		/>-->
 	</fieldset>
 
-	<!-- ... Tab Images ................................. -->
+	<!-- ... Tab Images view ................................. -->
 
 	<fieldset
-			name="Images"
-			label="COM_RSGALLERY2_CONFIG_TAB_IMAGES"
-			description="COM_RSGALLERY2_CONFIG_TAB_IMAGES_DESC"
+			name="ImagesView"
+			label="COM_RSGALLERY2_CONFIG_TAB_IMAGES_VIEW"
+			description="COM_RSGALLERY2_CONFIG_TAB_IMAGES_VIEW_DESC"
 	>
 		<field
 				type="spacer"
@@ -469,7 +538,7 @@
 		>
 			<option value="0">* thumbs array arrangement: change to auto, cols + max, cols + rows</option>
 			<option value="1">* order of images: auto, time, name , ...</option>
-			<option value="2">*</option>
+			<option value="2">* introduce/finish block/section Layout and style of image views</option>
 			<option value="3">*</option>
 			<option value="4">*</option>
 		</field>
@@ -583,7 +652,8 @@
 				label="COM_RSGALLERY2_MENU_GALLERY_ORDER_IMG_FROM_RIGHT"
 				description="COM_RSGALLERY2_MENU_GALLERY_ORDER_IMG_FROM_RIGHT_DESC"
 				default="0"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+		>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -593,7 +663,8 @@
 				label="*Sort images by "
 				description="*"
 				default="0"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
 			<option value="0">*Date/time ASC</option>
 			<option value="1">*Date/time ASC</option>
 			<option value="2">*Name Asc</option>
@@ -744,7 +815,8 @@
 				default="0"
 				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -755,7 +827,8 @@
 				default="0"
 				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_OWNER_DESC"
-				class="btn-group btn-group-yesno"
+				layout="joomla.form.field.radio.switcher"
+
 		>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -767,7 +840,8 @@
 				default="0"
 				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_SIZE_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
 			>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -779,7 +853,8 @@
 				default="0"
 				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_DATE_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
 			>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
@@ -862,7 +937,8 @@
 				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
 				default="0"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -873,7 +949,8 @@
 				default="0"
 				label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_DESCRIPTION_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
@@ -884,7 +961,8 @@
 				default="1"
 				label="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW"
 				description="COM_RSGALLERY2_MENU_J3X_GALLERY_DISPLAY_SLIDESHOW_DESC"
-				class="btn-group btn-group-yesno">
+				layout="joomla.form.field.radio.switcher"
+				>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
