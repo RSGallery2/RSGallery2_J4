@@ -548,7 +548,7 @@ class DevelopController extends BaseController
     }
 
     /**
-     * Create count galleries in DB
+     * Create count images with given parent gallery in DB
      * The title will contain the actual date and seconds
      *
      * @param $count
@@ -594,7 +594,7 @@ class DevelopController extends BaseController
                     Factory::getApplication()->enqueueMessage($msg, 'error');
                 }
 
-                /* ???? moddel
+                /* ???? model
                 header("Content-type: image/png");
                 $im = @imagecreate(50, 100)
                 or die("Kann keinen neuen GD-Bild-Stream erzeugen");
