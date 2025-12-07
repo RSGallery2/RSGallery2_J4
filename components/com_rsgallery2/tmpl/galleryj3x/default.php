@@ -10,6 +10,7 @@
 
 //  J3x legacy view => gallery images improved
 
+namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Galleryj3x;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;

@@ -8,7 +8,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\site\Controller;
+namespace Rsgallery2\Component\Rsgallery2\Site\Controller;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;

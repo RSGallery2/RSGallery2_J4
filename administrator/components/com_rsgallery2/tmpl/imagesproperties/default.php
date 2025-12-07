@@ -7,6 +7,8 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
+ 
+ namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Imagesproperties;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;

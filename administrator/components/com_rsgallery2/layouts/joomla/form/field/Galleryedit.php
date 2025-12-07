@@ -8,15 +8,17 @@
  * @license        GNU General Public License version 2 or later
  */
 
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Layouts\Joomla\Form\Field;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 extract($displayData);
-
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
 
 // ToDo: $value is string/array ??? -> $values ?
 

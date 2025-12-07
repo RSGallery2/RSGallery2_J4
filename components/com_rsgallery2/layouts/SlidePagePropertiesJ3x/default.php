@@ -8,13 +8,15 @@
  * @license        GNU General Public License version 2 or later
  */
 
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
+namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\SlidePagePropertiesJ3x;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
+
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 /*---------------------------------------------------
 ? does what ? one image ?

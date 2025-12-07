@@ -8,6 +8,8 @@
  * @license        GNU General Public License version 2 or later
  */
 
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Images;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects

@@ -8,12 +8,14 @@
  * @license        GNU General Public License version 2 or later
  */
 
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
+namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\Slideshow;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
+
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 /*---------------------------------------------------
 ? does what ? slideshow

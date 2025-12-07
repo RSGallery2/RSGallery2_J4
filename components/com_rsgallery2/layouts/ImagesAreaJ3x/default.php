@@ -8,12 +8,14 @@
  * @license        GNU General Public License version 2 or later
  */
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
+namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\ImagesAreaJ3x;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
+
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /*---------------------------------------------------
 image display by cols col like in J3x

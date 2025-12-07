@@ -8,12 +8,14 @@
  * @license        GNU General Public License version 2 or later
  */
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
+namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\ImagesFramedAreaJ3x;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
+
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 /*---------------------------------------------------
 gallery thumbs display by rows like in J3x

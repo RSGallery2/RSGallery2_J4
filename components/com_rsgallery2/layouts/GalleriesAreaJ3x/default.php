@@ -7,15 +7,17 @@
  * @copyright  (c) 2021-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
+ 
+namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\GalleriesAreaJ3x;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
-
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
 
 /*---------------------------------------------------
 galleries area ? one per line with properties ?
