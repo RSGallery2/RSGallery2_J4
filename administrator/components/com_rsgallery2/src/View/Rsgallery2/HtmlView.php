@@ -239,40 +239,39 @@ class HtmlView extends BaseHtmlView
     {
         $buttons = [
             [
-
                 //'link'   => Route::_('index.php?option=com_rsgallery2&view=config'),
                 'link'   => Route::_('index.php?option=com_config&view=component&component=com_rsgallery2'),
                 'image'  => 'fa fa-cog',
                 'text'   => Text::_('COM_RSGALLERY2_MAIN_CONFIGURATION'),
-                'access' => ['core.manage', 'com_rsgallery2', 'core.create', 'com_rsgallery2'],
+                'access' => ['core.admin', 'core.create'],
                 'group'  => '',
             ],
             [
                 'link'   => Route::_('index.php?option=com_rsgallery2&view=galleries'),
                 'image'  => 'fa fa-th', // fa fa-th
                 'text'   => Text::_('COM_RSGALLERY2_MAIN_MANAGE_GALLERIES'),
-                'access' => ['core.manage', 'com_media'],
+                'access' => ['core.manage', 'core.create'],
                 'group'  => '',
             ],
             [
                 'link'   => Route::_('index.php?option=com_rsgallery2&view=upload'),
                 'image'  => 'fa fa-upload',
                 'text'   => Text::_('COM_RSGALLERY2_MAIN_UPLOAD'),
-                'access' => ['core.manage', 'com_config', 'core.admin', 'com_config'],
+                'access' => ['core.manage', 'core.create'],
                 'group'  => '',
             ],
             [
                 'link'   => Route::_('index.php?option=com_rsgallery2&view=images'),
                 'image'  => 'fa fa-image',
                 'text'   => Text::_('COM_RSGALLERY2_MAIN_MANAGE_IMAGES'),
-                'access' => ['core.manage', 'com_config', 'core.admin', 'com_config'],
+                'access' => ['core.manage', 'core.create'],
                 'group'  => '',
             ],
             [
                 'link'   => Route::_('index.php?option=com_rsgallery2&view=maintenance'),
                 'image'  => 'fa fa-cogs', // gears
                 'text'   => Text::_('COM_RSGALLERY2_MAIN_MAINTENANCE'),
-                'access' => ['core.manage', 'com_modules'],
+                'access' => ['core.manage', 'core.create'],
                 'group'  => '',
             ],
         ];
