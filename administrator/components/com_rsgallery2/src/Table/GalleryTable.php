@@ -90,8 +90,8 @@ class GalleryTable extends Nested
 
         $this->parent_id = (int)$this->parent_id;
 
-        // Nested does not allow parent_id = 0, override this.
-        if ($this->parent_id > 0) {
+        // Find existing parent when defined (>1)
+        if ($this->parent_id > 1) {
             // Get the DatabaseQuery object
             $query = $this->_db
                 ->createQuery()
@@ -207,8 +207,9 @@ class GalleryTable extends Nested
         }
 
         // Set parent_id to gallery root node id
-        if (!(int) $this->parent_id) {
-            $this->parent_id = 1;
+        if (empty ($this->parent_id)) {
+            // $this->parent_id = 1;
+            $this->parent_id = 0;
         }
 
         if ($this->id) {
