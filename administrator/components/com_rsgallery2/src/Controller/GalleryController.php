@@ -57,7 +57,7 @@ class GalleryController extends FormController
     }
 
     /**
-     * Save edited gallery parameters and goto upload form
+     * Save edited gallery parameters and open upload form
      *
      * @since 4.3
      */

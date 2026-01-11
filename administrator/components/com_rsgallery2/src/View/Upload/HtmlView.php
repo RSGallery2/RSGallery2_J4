@@ -228,6 +228,8 @@ class HtmlView extends BaseHtmlView
         // Set the title
         ToolBarHelper::title(Text::_('COM_RSGALLERY2_DO_UPLOAD'), 'upload');
 
+        ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+
 //      // Get the toolbar object instance
 //      $toolbar = Toolbar::getInstance('toolbar');
 
