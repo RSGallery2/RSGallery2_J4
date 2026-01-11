@@ -8,7 +8,8 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Administrator;
+// wrong or not needed 
+// namespace Rsgallery2\Component\Rsgallery2;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -433,16 +434,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
     {
         Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL'), Log::INFO, 'rsg2');
 
-        // Check for the minimum PHP version before continuing
-        if (version_compare(PHP_VERSION, $this->minimumPhp, '<')) {
-            Log::add(Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp), Log::WARNING, 'jerror');
-            Factory::getApplication()->enqueueMessage(
-                Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp),
-                'error',
-            );
-
-            return false;
-        }
+        // ToDo: enquire .. message to user
+        Factory::getApplication()->enqueueMessage(
+            Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp),
+            'error',
+        );
 
         Log::add(Text::_('exit uninstall'), Log::INFO, 'rsg2');
 
@@ -469,8 +465,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('upd (10.2) '), Log::INFO, 'rsg2');
             $GalleryTreeClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel';
             Log::add(Text::_('upd (10.3) '), Log::INFO, 'rsg2');
-
-            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
 
 //          Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
@@ -535,12 +529,10 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $installMsgHelperFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
             $installMsgHelperClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage';
-            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
 
             $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ChangeLogModel.php';
             $changeLogModelClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel';
-            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($changeLogModelClassName, $changeLogModelFileName);
 
             $InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage(
@@ -937,7 +929,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add(Text::_('upd (20.2) '), Log::INFO, 'rsg2');
             $Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
             Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');
-            // ToDo: Use JLoader::registerPrefix() or JLoader::registerNamespace()
             JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
 
             Log::add(Text::_('upd (20.4) '), Log::INFO, 'rsg2');
