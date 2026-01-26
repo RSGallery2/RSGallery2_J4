@@ -87,7 +87,7 @@ class GalleriesController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                /** @var GalleryModel $model */
+                /** @var GalleriesModel $model */
                 $model = $this->getModel();
 
                 $isOk = $model->rebuild();
@@ -135,6 +135,7 @@ class GalleriesController extends AdminController
         } else {
             try {
                 // Get the model.
+                // @var GalleryTreeModel $model
                 $model = $this->getModel('GalleryTree');
 
                 // Remove the items.

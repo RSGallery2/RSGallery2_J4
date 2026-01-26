@@ -76,6 +76,7 @@ class MaintenanceCleanUpController extends BaseController
 
                 //--- Delete images references in database --------------
 
+                // @var MaintRemoveAllDataModel $imageModel
                 $imageModel = $this->getModel('MaintRemoveAllData');
                 [$isRemoved, $msgTmp] = $imageModel->removeDataInTables();
                 $msg .= $msgTmp;
@@ -287,6 +288,7 @@ class MaintenanceCleanUpController extends BaseController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
+                // @var ConfigRawModel $configModel
                 $configModel = $this->getModel('ConfigRaw');
                 $isSaved     = $configModel->ResetConfigToDefault();
 

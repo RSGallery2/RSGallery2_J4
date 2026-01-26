@@ -1367,6 +1367,7 @@ class ImageModel extends AdminModel
         $table = $this->getTable();
 
         try {
+            // @var ImageFileModel $imgFileModel
             $imgFileModel = $this->getInstance('imageFile', 'RSGallery2Model');
             //$imgFileModel = $this->getModel('imageFile');
 
@@ -1383,29 +1384,22 @@ class ImageModel extends AdminModel
 
                     // ToDo: tell if any are left and then do not delete in table
                     [$deletedCount, $failedCount] = $imgFileModel->deleteImgItemImages($fileName, $galleryId, $use_j3x_location);
-                    if ($deletedCount > 0) {
+                    if ($deletedCount > 0 || $failedCount > 0) {
                         //if ($failedCount == 0) {
 
                         // Remove from database
                         $IsDeleted       = $table->delete($itemId);
                         $imgDeletedCount += 1;
-                    } else {
-                        $OutTxt = '';
-                        $OutTxt .= 'ImageModel: Error could not delete any files for: ' . $fileName . '<br>';
-//                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-                        $app = Factory::getApplication();
-                        $app->enqueueMessage($OutTxt, 'error');
                     }
 
-                    //
+                    // Image was not existing or failed on trying
                     if ($failedCount > 0) {
                         $OutTxt = '';
                         $OutTxt .= 'ImageModel: Error could not delete all files for: ' . $fileName . '<br>';
-//                    $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+                        $OutTxt .= 'Deleting failed for ' . $failedCount . ' probaly not existing files <br>';
 
                         $app = Factory::getApplication();
-                        $app->enqueueMessage($OutTxt, 'error');
+                        $app->enqueueMessage($OutTxt, 'warning');
                     }
 
 //                    if (in_array(false, $eventResults, true) || !$IsDeleted) {

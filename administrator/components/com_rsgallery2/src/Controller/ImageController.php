@@ -240,12 +240,14 @@ class ImageController extends FormController
                 $id = $input->get('id', 0, 'int');
 
                 // toDo: create imageDb model
+                // @var ImagesModel $modelImages
                 $modelImages = $this->getModel('images');
 
                 // Needed filename and gallery id
                 //$imgFileDatas = $modelImages->ids2FileData($sids);
                 //$formData = new Input($this->input->get('j form', '', 'array'));
 
+                // @var ImageFileModel $modelFile
                 $modelFile = $this->getModel('imageFile');
 
                 $fileName  = $input->get('name', '???', 'string');
@@ -364,12 +366,14 @@ class ImageController extends FormController
                 $id = $this->input->get('id', 0, 'int');
 
                 // toDo: create imageDb model
+                // @var ImagesModel $modelImages
                 $modelImages = $this->getModel('images');
 
                 // Needed filename and gallery id
                 //$imgFileDatas = $modelImages->ids2FileData($sids);
                 // $formData = new Input($this->input->get('j form', '', 'array'));
 
+                // @var ImageFileModel $modelFile
                 $modelFile = $this->getModel('imageFile');
 
                 $fileName  = $this->input->get('name', '???', 'string');

@@ -87,6 +87,7 @@ class HtmlView extends BaseHtmlView
         // image file data
         //------------------------------------------
 
+        // @var MaintConsolidateDBModel $ConsolidateModel
         // use Joomla\CMS\MVC\Model\BaseDatabaseModel::getInstance('MaintConsolidateDB', 'rsgallery2Model');
         $ConsolidateModel = $this->getModel();
 

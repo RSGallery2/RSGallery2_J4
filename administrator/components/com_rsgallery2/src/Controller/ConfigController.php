@@ -168,6 +168,7 @@ class ConfigController extends AdminController // FormController
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
+            // @var ConfigRawModel $model
             $model = $this->getModel('ConfigRaw');
 
             $isSaved = $model->saveFromForm();
@@ -202,6 +203,7 @@ class ConfigController extends AdminController // FormController
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
+            // @var ConfigRawModel $model
             $model = $this->getModel('ConfigRaw');
 
             $isSaved = $model->saveFromForm();
@@ -253,6 +255,7 @@ class ConfigController extends AdminController // FormController
 
                 $configData = $configJson ['RSG2_configuration']; // ToDo: check use
 
+                // @var ConfigRawModel $model
                 $model   = $this->getModel('ConfigRaw');
                 $isSaved = $model->saveItems($configData);
 

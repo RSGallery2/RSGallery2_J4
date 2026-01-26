@@ -520,6 +520,7 @@ class DevelopController extends BaseController
                 // Factory::getApplication()->enqueueMessage($useFileName, 'notice');
 
                 // gallery db handle
+                // @var GalleryModel $modelDB
                 $modelDb = $this->getModel('Gallery');
 
                 //$j4xImagePath = new ImagePathsModel (); ? J3x
@@ -576,6 +577,7 @@ class DevelopController extends BaseController
                 // Factory::getApplication()->enqueueMessage($useFileName, 'notice');
 
                 // image db handle
+                // @var ImageModel $modelDB
                 $modelDb = $this->getModel('Image');
 
                 // $j4xImagePath = new ImagePathsModel (); ? j3x

@@ -118,6 +118,7 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
+        // @var Slideshowj3xModel $model
         $model         = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
 

@@ -103,6 +103,7 @@ class RatingController extends BaseController
                 $limitStart = $input->get('paginationImgIdx', 0, 'INT');
 
 
+                // @var ratingModel $ratingModel
                 $ratingModel = $this->getModel('rating');
                 $isRated     = $ratingModel->doRating($imageId, $userRating);
                 // $limitStart = 4;

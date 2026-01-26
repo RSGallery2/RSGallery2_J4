@@ -151,6 +151,7 @@ class HtmlView extends BaseHtmlView
 
         //---  --------------------------------------------------------------
 
+        // @var MaintenanceJ3xModel $j3xModel
         $j3xModel = $this->getModel();
 
         $Layout = Factory::getApplication()->input->get('layout');

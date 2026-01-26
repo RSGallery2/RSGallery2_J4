@@ -68,6 +68,7 @@ class MaintenanceController extends BaseController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
+                // @var MaintenanceModel $MaintModel
                 $MaintModel      = $this->getModel('Maintenance');
                 $isPathsExisting = $MaintModel->CheckImagePaths();
                 if ($isPathsExisting) {
@@ -114,6 +115,7 @@ class MaintenanceController extends BaseController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
+                // @var MaintenanceModel $MaintModel
                 $MaintModel = $this->getModel('Maintenance');
                 $isSaved    = $MaintModel->RepairImagePaths();
 

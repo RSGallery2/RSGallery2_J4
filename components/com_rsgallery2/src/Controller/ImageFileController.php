@@ -79,7 +79,7 @@ class ImageFileController extends BaseController
         $imageId = $input->get('id', 0, 'INT');
 
         try {
-            /** @yyyvar \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageFileModel $model */
+            // @var ImageFileModel $model
             $model = $this->getModel();
 
             // query database for needed attributes

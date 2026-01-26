@@ -127,6 +127,7 @@ class HtmlView extends BaseHtmlView
 
         $this->items = $this->get('Items');
 
+        // @var GalleryModel $model
         $model         = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
 
