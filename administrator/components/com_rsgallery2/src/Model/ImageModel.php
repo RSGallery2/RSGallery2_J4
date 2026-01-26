@@ -1396,7 +1396,7 @@ class ImageModel extends AdminModel
                     if ($failedCount > 0) {
                         $OutTxt = '';
                         $OutTxt .= 'ImageModel: Error could not delete all files for: ' . $fileName . '<br>';
-                        $OutTxt .= 'Deleting failed for ' . $failedCount . ' probaly not existing files <br>';
+                        $OutTxt .= 'Deleting failed for ' . $failedCount . ' probably not existing files <br>';
 
                         $app = Factory::getApplication();
                         $app->enqueueMessage($OutTxt, 'warning');

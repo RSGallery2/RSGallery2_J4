@@ -431,7 +431,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
             // $sizeFileName
         }
 
-        return $imagePathFileNames;
+        return array_unique($imagePathFileNames);
     }
 
     /**
