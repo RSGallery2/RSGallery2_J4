@@ -29,7 +29,6 @@
 			<option value="">JOPTION_SELECT_ACCESS</option>
 		</field>
 
-
 		<field
 				name="created"
 				type="author"
@@ -42,16 +41,16 @@
 		>
 		</field>
 
-		<field
-				name="tag"
-				type="tag"
-				label="JOPTION_SELECT_TAG"
-				mode="nested"
-				custom="false"
-				onchange="this.form.submit();"
-		>
-			<option value="">JOPTION_SELECT_TAG</option>
-		</field>
+<!--		<field-->
+<!--				name="tag"-->
+<!--				type="tag"-->
+<!--				label="JOPTION_SELECT_TAG"-->
+<!--				mode="nested"-->
+<!--				custom="false"-->
+<!--				onchange="this.form.submit();"-->
+<!--		>-->
+<!--			<option value="">JOPTION_SELECT_TAG</option>-->
+<!--		</field>-->
 
 		<field
 				name="level"

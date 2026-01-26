@@ -137,7 +137,7 @@ class GalleriesModel extends ListModel
     protected function getStoreId($id = '')
     {
         // Compile the store id.
-//      $id .= ':' . $this->getState('filter.extension');
+        $id .= ':' . $this->getState('filter.extension');
         $id .= ':' . $this->getState('filter.search');
         $id .= ':' . $this->getState('filter.published');
         $id .= ':' . $this->getState('filter.access');

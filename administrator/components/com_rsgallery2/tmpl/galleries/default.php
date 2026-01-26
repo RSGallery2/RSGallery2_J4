@@ -7,11 +7,12 @@
  * @copyright  (c) 2005-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
- 
- namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Galleries;
+
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Galleries;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
@@ -37,18 +38,21 @@ $component = $parts[0];
 $section   = null;
 
 /**/
-if (count($parts) > 1) {
+if (count($parts) > 1)
+{
     $section = $parts[1];
 
     $inflector = Inflector::getInstance();
 
-    if (!$inflector->isPlural($section)) {
+    if (!$inflector->isPlural($section))
+    {
         $section = $inflector->toPlural($section);
     }
 }
 /**/
 
-if ($saveOrder && !empty($this->items)) {
+if ($saveOrder && !empty($this->items))
+{
     $saveOrderingUrl = 'index.php?option=com_rsgallery2&task=galleries.saveOrderAjax&tmpl=component&' . Session::getFormToken() . '=1';
     HTMLHelper::_('draggablelist.draggable');
 }
@@ -64,7 +68,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                 <?php
                 echo $this->sidebar; ?>
             </div>
-            <?php
+        <?php
         endif; ?>
         <!--div class="<?php
         echo (!empty($this->sidebar)) ? 'col-md-10' : 'col-md-12'; ?>"-->
@@ -87,7 +91,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                         </div>
                     </div>
 
-                    <?php
+                <?php
                 else : ?>
                     <table class="table" id="galleryList">
                         <caption id="captionTable" class="sr-only">
@@ -202,12 +206,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                         <tbody
                         <?php
                         if ($saveOrder) :
-                            ?> class="js-draggable"
-                                             data-url="<?php
-                                                echo $saveOrderingUrl; ?>"
-                                             data-direction="<?php
-                                                echo strtolower($listDirn); ?>"
-                                             data-nested="true"<?php
+                        ?> class="js-draggable"
+                           data-url="<?php
+                           echo $saveOrderingUrl; ?>"
+                           data-direction="<?php
+                           echo strtolower($listDirn); ?>"
+                           data-nested="true"<?php
                         endif; ?> // ToDo: check for false/true
                         >
 
@@ -216,7 +220,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                             <?php
 
                             // ignore the root element of the nested table
-                            if ($item->id == 1) {
+                            if ($item->id == 1)
+                            {
                                 continue;
                             }
 
@@ -227,28 +232,35 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                             $canChange  = $user->authorise('core.edit.state', $extension . '.gallery.' . $item->id) && $canCheckin;
 
                             // Get the parents of item for sorting
-                            if ($item->level > 1) {
+                            if ($item->level > 1)
+                            {
                                 $parentsStr       = '';
                                 $_currentParentId = $item->parent_id;
                                 $parentsStr       = ' ' . $_currentParentId;
-                                for ($i2 = 0; $i2 < $item->level; $i2++) {
-                                    foreach ($this->ordering as $k => $v) {
+                                for ($i2 = 0; $i2 < $item->level; $i2++)
+                                {
+                                    foreach ($this->ordering as $k => $v)
+                                    {
                                         $v = implode('-', $v);
                                         $v = '-' . $v . '-';
-                                        if (strpos($v, '-' . $_currentParentId . '-') !== false) {
+                                        if (strpos($v, '-' . $_currentParentId . '-') !== false)
+                                        {
                                             $parentsStr       .= ' ' . $k;
                                             $_currentParentId = $k;
                                             break;
                                         }
                                     }
                                 }
-                            } else {
+                            }
+                            else
+                            {
                                 $parentsStr = '';
                             }
 
                             $created_by  = Factory::getUser($item->created_by);
                             $modified_by = Factory::getUser($item->modified_by);
-                            if (empty($modified_by->name)) {
+                            if (empty($modified_by->name))
+                            {
                                 $modified_by = $created_by;
                             }
 
@@ -271,9 +283,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                 <td class="order text-center d-none d-md-table-cell">
                                     <?php
                                     $iconClass = '';
-                                    if (!$canChange) {
+                                    if (!$canChange)
+                                    {
                                         $iconClass = ' inactive';
-                                    } elseif (!$saveOrder) {
+                                    }
+                                    elseif (!$saveOrder)
+                                    {
                                         $iconClass = ' inactive tip-top hasTooltip" title="' . HTMLHelper::_('tooltipText', 'JORDERINGDISABLED');
                                     }
                                     ?>
@@ -285,7 +300,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     if ($canChange && $saveOrder) : ?>
                                         <input type="text" style="display:none" name="order[]" size="5" value="<?php
                                         echo $item->lft; ?>">
-                                        <?php
+                                    <?php
                                     endif; ?>
                                 </td>
                                 <td class="text-center">
@@ -294,47 +309,41 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                         echo HTMLHelper::_('jgrid.published', $item->published, $i, 'galleries.', $canChange); ?>
                                     </div>
                                 </td>
-                                <td scope="row">
+                                <th scope="row">
                                     <?php
                                     echo LayoutHelper::render('joomla.html.treeprefix', ['level' => $item->level]); ?>
                                     <?php
                                     if ($item->checked_out) : ?>
                                         <?php
                                         echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'galleries.', $canCheckin); ?>
-                                        <?php
+                                    <?php
                                     endif; ?>
                                     <?php
                                     if ($canEdit || $canEditOwn) : ?>
-                                        <?php
-                                        $editIcon = $item->checked_out ? '' : '<span class="fa fa-pencil-square mr-2" aria-hidden="true"></span>'; ?>
                                         <a class="hasTooltip" href="<?php
-                                        echo Route::_('index.php?option=com_rsgallery2&task=gallery.edit&id=' . $item->id . '&extension=' . $extension); ?>" title="<?php
-                                        echo Text::_('JACTION_EDIT'); ?> <?php
-                                        echo $this->escape(addslashes($item->name)); ?>">
-                                            <?php
-                                            echo $editIcon; ?>&nbsp;<?php
-                                            echo $this->escape($item->name); ?></a>
-                                        <?php
-                                    else : ?>
-                                        <?php
-                                        echo $this->escape($item->name); ?>
-                                        <?php
-                                    endif; ?>
+                                        echo Route::_('index.php?option=com_rsgallery2&task=gallery.edit&id=' . $item->id . '&extension=' . $extension); ?>"
+                                           title="<?php
+                                           echo Text::_('JACTION_EDIT'); ?> <?php
+                                           echo $this->escape(addslashes($item->name)); ?>">
+                                            <?php echo $this->escape($item->name); ?></a>
+                                    <?php else : ?>
+                                        <?php echo $this->escape($item->name); ?>
+                                    <?php endif; ?>
 
-                                    <span class="small" title="<?php
-                                    echo $this->escape($item->path); ?>">
+                                    <span class="small"
+                                          title="<?php echo $this->escape($item->path); ?>">
                                             <?php
                                             if (empty($item->note)) : ?>
                                                 <?php
                                                 echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-                                                <?php
+                                            <?php
                                             else : ?>
                                                 <?php
                                                 echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
-                                                <?php
+                                            <?php
                                             endif; ?>
-                                        </span>
-                                </td>
+                                    </span>
+                                </th>
                                 <?php
                                 /**
                                  * Images published, unpublished, archived, trashed
@@ -372,7 +381,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     $link = Route::_("index.php?option=com_rsgallery2&view=Images&filter_gallery_id=" . $item->id);
                                     //$count = random_int (0, 2) ;
                                     $imageCount = 0;
-                                    if (!empty($item->image_count)) {
+                                    if (!empty($item->image_count))
+                                    {
                                         $imageCount = $item->image_count;
                                     }
 
@@ -380,8 +390,9 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     ?>
                                     <a class="btn <?php
                                     echo ($imageCount > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php
-                                    echo Text::_('COM_RSGALLERY2_IMAGES_IN_GALLERY_COUNT_CLICK_TO_VIEW_THEM'); ?>" href="<?php
-                                    echo $link; ?>">
+                                    echo Text::_('COM_RSGALLERY2_IMAGES_IN_GALLERY_COUNT_CLICK_TO_VIEW_THEM'); ?>"
+                                       href="<?php
+                                       echo $link; ?>">
                                         <?php
                                         echo $imageCount; ?></a>
                                 </td>
@@ -412,7 +423,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     <?php
                                     echo $this->escape($created_by->name);
 
-                                    if ($modified_by->name != $created_by->name) {
+                                    if ($modified_by->name != $created_by->name)
+                                    {
                                         echo '<br>(' . $modified_by->name . ')';
                                     }
                                     ?>
@@ -424,7 +436,8 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     $date = $item->created;
                                     echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
 
-                                    if ($item->modified != $item->created) {
+                                    if ($item->modified != $item->created)
+                                    {
                                         echo '<br>(';
                                         $date = $item->modified;
                                         echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
@@ -436,14 +449,14 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                 <td class="d-none d-lg-table-cell text-center">
                                         <span class="badge badge-info">
                                             <?php
-                                            echo (int)$item->hits; ?>
+                                            echo (int) $item->hits; ?>
                                         </span>
                                 </td>
 
 
                                 <td class="d-none d-md-table-cell">
                                     <?php
-                                    echo (int)$item->id; ?>
+                                    echo (int) $item->id; ?>
                                 </td>
 
 
@@ -475,7 +488,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                 <?php endif; ?>
 
                             </tr>
-                            <?php
+                        <?php
                         endforeach; ?>
                         </tbody>
                     </table>
@@ -488,24 +501,12 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                     <?php
                     // Load the batch processing form. ?>
                     <?php
-                    if (
-                        $user->authorise('core.create', $extension)
-                            && $user->authorise('core.edit', $extension)
-                            && $user->authorise('core.edit.state', $extension)
-                    ) : ?>
+                    if ($user->authorise('core.create', $extension) && $user->authorise('core.edit', $extension) && $user->authorise('core.edit.state', $extension)) : ?>
                         <?php
-                        echo HTMLHelper::_(
-                            'bootstrap.renderModal',
-                            'collapseModal',
-                            [
-                                        'title'  => Text::_('COM_RSGALLERY2_GALLERY_BATCH_OPTIONS'),
-                                        'footer' => $this->loadTemplate('batch_footer'),
-                                ],
-                            $this->loadTemplate('batch_body'),
-                        ); ?>
-                        <?php
-                    endif; ?>
+                        echo HTMLHelper::_('bootstrap.renderModal', 'collapseModal', ['title' => Text::_('COM_RSGALLERY2_GALLERY_BATCH_OPTIONS'), 'footer' => $this->loadTemplate('batch_footer'),], $this->loadTemplate('batch_body')); ?>
                     <?php
+                    endif; ?>
+                <?php
                 endif; ?>
 
                 <input type="hidden" name="extension" value="<?php
