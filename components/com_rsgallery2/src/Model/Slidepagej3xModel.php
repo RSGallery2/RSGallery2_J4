@@ -32,7 +32,7 @@ use RuntimeException;
  *
      * @since      5.1.0
  */
-class SlidePageJ3XModel extends imagesj3xModel
+class SlidePageJ3XModel extends Imagesj3xModel
 {
     /**
      * In slide page view a single item is shown.

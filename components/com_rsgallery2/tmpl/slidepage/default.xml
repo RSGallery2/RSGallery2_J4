@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
     <!-- J4x view => single image slidepage (new) -->
-    <layout title="COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_TITLE">
+    <layout title="COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_TITLE">
         <message>
-            <![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_J3X_DESC]]>
+            <![CDATA[COM_RSGALLERY2_MENU_VIEW_SLIDE_PAGE_DESC]]>
         </message>
     </layout>
     <!-- Add fields to the request variables for the layout. -->

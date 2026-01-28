@@ -27,7 +27,7 @@ use Joomla\Registry\Registry;
  *
      * @since      5.1.0
  */
-class imagesrandomModel extends ListModel
+class ImagesrandomModel extends ListModel
 {
     /**
      * Model context string.

@@ -27,7 +27,7 @@ use Joomla\Registry\Registry;
  *
      * @since      5.1.0
  */
-class gallerieslatestModel extends ListModel
+class GallerieslatestModel extends ListModel
 {
     /**
      * Model context string.

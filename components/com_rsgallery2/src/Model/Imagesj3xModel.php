@@ -31,7 +31,7 @@ use Joomla\Registry\Registry;
  *
      * @since      5.1.0
  */
-class imagesj3xModel extends ImagesModel
+class Imagesj3xModel extends ImagesModel
 {
     /**
      * Assign slideshow url to gallery data

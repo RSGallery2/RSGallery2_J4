@@ -8,8 +8,6 @@
  * @license        GNU General Public License version 2 or later
  */
 
-Rsgallery2\Component\Rsgallery2\Site\Tmpl\Rootgalleriesj3x;
-
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Rootgalleriesj3x;
 
 // phpcs:disable PSR1.Files.SideEffects
