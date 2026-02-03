@@ -65,6 +65,16 @@ $displayRandom = $this->params->get('displayRandom');
 $displayRandom = $this->params->get('displayRandom');
 
 ?>
+
+<style>
+    .rsg2-galleryList-thumb {
+        max-height: 120px;
+        max-width: 120px;
+    }
+
+</style>
+
+
 <!-- ToDo: is form here needed ? check core ...  -->
 <!-- ToDo: form link ...  -->
 <form id="rsg2_root_galleryJ3x__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=rootgalleriesj3x'); ?>"

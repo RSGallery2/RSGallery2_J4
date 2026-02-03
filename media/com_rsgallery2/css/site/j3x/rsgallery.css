@@ -102,6 +102,11 @@ ul#rsg2-galleryList {
     /*margin: 0 5px 5px 0;*/
 }
 
+.rsg2-galleryList-text {
+  /* margin: 5px 5px 100px 100px; /**/
+  margin-left: 10px;
+  float: left;
+}
 /* sub gallery list */
 
 .rsg2-subGalleryList-container {
