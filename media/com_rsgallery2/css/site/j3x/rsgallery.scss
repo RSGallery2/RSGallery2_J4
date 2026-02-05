@@ -1,3 +1,7 @@
+
+#rsg2-galleryTitle {
+}
+
 /* Status icons */
 img.status {
   text-decoration: none;
@@ -82,13 +86,35 @@ ul#rsg2-galleryList {
 
 .rsg2-galleryList-item {
   clear: both;
+
   padding: 5px;
   margin: 5px 0 5px 0;
+
   list-style: none;
   background-image: none;
+
   border: 1px solid #ccc;
 }
 
+//.rsg2-galleryList-thumb-box {
+//
+//  //  display: flex;
+//  display: block;
+//  float: left;
+//  // margin: 0 5px 5px 0
+//
+//  .rsg2-galleryList-thumb {
+//    // justify-content: center; /* Horizontal zentrieren */
+//    // display: block;
+//    // margin: 0 auto;
+//    // margin: 0 5px 5px 0;
+//    // margin-left: 10px;
+//    float: left;
+//  }
+//
+//
+//}
+//
 .rsg2-galleryList-text {
   /* margin: 5px 5px 100px 100px; /**/
   margin-left: 10px;
@@ -106,13 +132,16 @@ ul#rsg2-galleryList {
 
 .rsg2-subGalleryList-list {
   float: left;
+
   margin: 0 0 0 5px;
   padding: 0px;
+
   list-style: none;
   background-image: none;
 }
 
 /* thumbnail list */
+
 ul#rsg2-thumbsList {
   margin: auto;
 }
@@ -122,7 +151,9 @@ ul#rsg2-thumbsList li {
   float: left;
   overflow: hidden;
   padding: 5px 5px;
+
   text-align: center;
+
   /*     get rid of other possible list styles */
   list-style: none;
   background-image: none;
@@ -135,6 +166,7 @@ table#rsg2-thumbsList {
 table#rsg2-thumbsList td {
   overflow: hidden;
   padding: 5px 5px;
+
   text-align: center;
 }
 
@@ -274,5 +306,3 @@ table.adminform td.editor {
   padding-bottom: 0.5em;
   margin-bottom: 0.5em;
 }
-
-/*# sourceMappingURL=rsgallery.css.map */

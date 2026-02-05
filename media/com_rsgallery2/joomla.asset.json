@@ -11,8 +11,6 @@
       "type": "style",
       "uri": "com_rsgallery2/backend/controlPanel.css"
     },
-	
-	
     {
       "name": "com_rsgallery2.backend.controlPanel",
       "description": "JavaScript for the backend control panel",
@@ -25,7 +23,6 @@
         "core"
       ]
     },
-	
     {
       "name": "com_rsgallery2.lib.bs_set2dark",
       "description": "JavaScript: On dark mode exchange class '...-light' with '...-dark'",
@@ -38,7 +35,6 @@
         "core"
       ]
     },
-	
     {
       "name": "com_rsgallery2.backend.controlPanel",
       "type": "preset",
@@ -48,7 +44,6 @@
         "com_rsgallery2.lib.bs_set2dark#script"
       ]
     },
-
     {
       "name": "com_rsgallery2.backend.image",
       "type": "preset",
@@ -63,7 +58,6 @@
         "com_rsgallery2.lib.bs_set2dark#script"
       ]
     },
-
     {
       "name": "com_rsgallery2.backend.images",
       "description": "Backend styling.",
@@ -246,6 +240,12 @@
       "uri": "com_rsgallery2/site/j3x/j3x.css"
     },
     {
+      "name": "com_rsgallery2.site.rsg2_imgWall",
+      "description": "Site styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/site/rsg2_imgWall.css"
+    },
+    {
       "name": "com_rsgallery2.site.slideshowJ3x",
       "description": "Site styling.",
       "type": "style",
@@ -273,6 +273,15 @@
         "com_rsgallery2.site.images#style",
         "com_rsgallery2.site.J3x#style",
         "com_rsgallery2.site.rsgallery2J3x#style"
+      ]
+    },
+    {
+      "name": "com_rsgallery2.site.imageWallJ3x",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.site.images#style",
+        "com_rsgallery2.site.J3x#style",
+        "com_rsgallery2.site.rsg2_imgWall#style"
       ]
     },
     {

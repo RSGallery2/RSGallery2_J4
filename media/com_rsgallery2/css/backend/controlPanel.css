@@ -57,6 +57,14 @@ li.quickicon-single {
   /**/
   border-radius: 2px;
   background: white;
+}
+@media (prefers-color-scheme: dark) {
+  li.quickicon-single {
+    background: rgba(255, 255, 255, 0.1019607843);
+    border: thick solid darkgray; /**/
+  }
+}
+li.quickicon-single {
   /**
   padding-left: auto;
   padding-right: auto;
@@ -64,12 +72,6 @@ li.quickicon-single {
   margin: 0 8px 0 0; /**/
   /*	flex-basis: 0; /**/
   flex: 1;
-}
-@media (prefers-color-scheme: dark) {
-  li.quickicon-single {
-    background: rgba(255, 255, 255, 0.1019607843);
-    border: thick solid darkgray; /**/
-  }
 }
 
 li.quickicon-single:hover {

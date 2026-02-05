@@ -1,0 +1,45 @@
+@charset "UTF-8";
+/*
+  Html defines a table where images blend into each other
+  This leads to shared border by blend type using both images
+
+  Each following image is moved a bit to the left and above
+  to create the mixed border. The top row and the left column
+  images do not need to be moved
+
+  ?? width of moved cell
+  ?? display images or thumbs ?
+ */
+/* Schwarzer Hintergrund verstärkt den additiven Effekt */
+.imgWall {
+  background: #000;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 180px); /* Spaltenbreite */
+  gap: 0; /* Keine Lücke, Überlappung erfolgt via Margin */
+  padding: 50px;
+}
+
+.overlapping-img {
+  width: 230px; /* Größer als die Spalte für Überlappung */
+  height: 180px;
+  object-fit: cover;
+  /* Negative Margins für die Überlappung */
+  margin-right: -10px;
+  margin-bottom: -10px;
+  /* Farbmischung */
+  mix-blend-mode: screen; /* Additive Mischung: Farben werden heller */
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+/* Hover-Effekt zum Hervorheben */
+.overlapping-img:hover {
+  transform: scale(1.15);
+  mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+  z-index: 20;
+}
+
+/*# sourceMappingURL=rsg2_imgWall.css.map */

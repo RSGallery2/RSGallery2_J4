@@ -91,10 +91,10 @@
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #005db7;
+  border: 3px solid rgb(0, 92.72, 183);
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #005db7;
+  background-color: rgb(0, 92.72, 183);
 }
 @media (prefers-color-scheme: dark) {
   .icons-panel .repairZone {
@@ -105,10 +105,10 @@
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #9d1a1a;
+  border: 3px solid rgb(156.9733333333, 26.0266666667, 26.0266666667);
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #9d1a1a;
+  background-color: rgb(156.9733333333, 26.0266666667, 26.0266666667);
 }
 @media (prefers-color-scheme: dark) {
   .icons-panel .dangerZone {
@@ -133,10 +133,10 @@
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #0025c9;
+  border: 3px solid rgb(0, 36.8985507246, 201);
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #0025c9;
+  background-color: rgb(0, 36.8985507246, 201);
 }
 @media (prefers-color-scheme: dark) {
   .icons-panel .developerZone {
@@ -147,10 +147,10 @@
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #47500b;
+  border: 3px solid rgb(70.725388601, 79.6839378238, 11.3160621762);
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #47500b;
+  background-color: rgb(70.725388601, 79.6839378238, 11.3160621762);
 }
 @media (prefers-color-scheme: dark) {
   .icons-panel .devTestZone {
@@ -161,10 +161,10 @@
   padding: 5px;
   font-size: large;
   font-weight: bold;
-  border: 3px solid #816213;
+  border: 3px solid rgb(129.056, 97.68, 18.944);
   border-radius: 2px 2px 0 0;
   color: white;
-  background-color: #816213;
+  background-color: rgb(129.056, 97.68, 18.944);
 }
 @media (prefers-color-scheme: dark) {
   .icons-panel .outdatedZone {
@@ -195,25 +195,25 @@
 }
 .icons-panel.repair {
   border: 3px solid;
-  border-color: #005db7;
+  border-color: rgb(0, 92.72, 183);
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.repair span.icoMoon {
-  color: #005db7;
+  color: rgb(0, 92.72, 183);
 }
 .icons-panel.repair .rsg2-icon-bar a:hover {
-  border-color: #005db7;
+  border-color: rgb(0, 92.72, 183);
 }
 .icons-panel.danger {
   border: 3px solid;
-  border-color: #9d1a1a;
+  border-color: rgb(156.9733333333, 26.0266666667, 26.0266666667);
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.danger span.icoMoon {
-  color: #9d1a1a;
+  color: rgb(156.9733333333, 26.0266666667, 26.0266666667);
 }
 .icons-panel.danger .rsg2-icon-bar a:hover {
-  border-color: #9d1a1a;
+  border-color: rgb(156.9733333333, 26.0266666667, 26.0266666667);
 }
 .icons-panel.upgrade {
   border: 3px solid;
@@ -228,36 +228,36 @@
 }
 .icons-panel.developer {
   border: 3px solid;
-  border-color: #0025c9;
+  border-color: rgb(0, 36.8985507246, 201);
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.developer span.icoMoon {
-  color: #0025c9;
+  color: rgb(0, 36.8985507246, 201);
 }
 .icons-panel.developer .rsg2-icon-bar a:hover {
-  border-color: #0025c9;
+  border-color: rgb(0, 36.8985507246, 201);
 }
 .icons-panel.devTest {
   border: 3px solid;
-  border-color: #47500b;
+  border-color: rgb(70.725388601, 79.6839378238, 11.3160621762);
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.devTest span.icoMoon {
-  color: #47500b;
+  color: rgb(70.725388601, 79.6839378238, 11.3160621762);
 }
 .icons-panel.devTest .rsg2-icon-bar a:hover {
-  border-color: #47500b;
+  border-color: rgb(70.725388601, 79.6839378238, 11.3160621762);
 }
 .icons-panel.outdated {
   border: 3px solid;
-  border-color: #816213;
+  border-color: rgb(129.056, 97.68, 18.944);
   border-radius: 2px 2px 0 0;
 }
 .icons-panel.outdated span.icoMoon {
-  color: #816213;
+  color: rgb(129.056, 97.68, 18.944);
 }
 .icons-panel.outdated .rsg2-icon-bar a:hover {
-  border-color: #816213;
+  border-color: rgb(129.056, 97.68, 18.944);
 }
 
 .rsg2-icon-bar {
@@ -268,17 +268,19 @@
 .rsg2-icon-bar a {
   background-color: white;
   border: 5px solid lightgrey;
-  margin: 5px;
-  padding: 25px 25px 0px 25px;
-  display: inline-block;
-  border-radius: 2px;
-  box-shadow: 2px 2px 1px #888888;
 }
 @media (prefers-color-scheme: dark) {
   .rsg2-icon-bar a {
     background-color: grey;
     border: 5px solid darkgrey;
   }
+}
+.rsg2-icon-bar a {
+  margin: 5px;
+  padding: 25px 25px 0px 25px;
+  display: inline-block;
+  border-radius: 2px;
+  box-shadow: 2px 2px 1px #888888;
 }
 .rsg2-icon-bar a:hover {
   text-decoration: none;
@@ -303,17 +305,19 @@
 .rsg2-icon-bar button {
   background-color: white;
   border: 5px solid lightgrey;
-  margin: 5px;
-  padding: 25px 25px 0px 25px;
-  display: inline-block;
-  border-radius: 2px;
-  box-shadow: 2px 2px 1px #888888;
 }
 @media (prefers-color-scheme: dark) {
   .rsg2-icon-bar button {
     background-color: grey;
     border: 5px solid darkgrey;
   }
+}
+.rsg2-icon-bar button {
+  margin: 5px;
+  padding: 25px 25px 0px 25px;
+  display: inline-block;
+  border-radius: 2px;
+  box-shadow: 2px 2px 1px #888888;
 }
 .rsg2-icon-bar button:hover {
   text-decoration: none;

@@ -91,7 +91,6 @@ div.rsg2-mygalleries {
 .rsg2-galleryList-text_box {
     position: relative;
     float: right;
-  margin: 0 5px 5px 0;
 }
 
 .rsg2-galleryList-description_box {
@@ -235,12 +234,12 @@ ul#rsg2-galleryList {
 }
 
 .rsg2-galleryList-thumb {
-    float: left;
-    margin: 0 5px 5px 0;
+    /* float: left; /**/
+    margin: 0 5px 5px 0; /**/
+  margin: 0 auto;
 }
 
 .rsg2-galleryList-text {
-  margin: 0 5px 5px 0;
 }
 
 .rsg2-galleryList-thumb_double {
@@ -258,7 +257,6 @@ ul#rsg2-galleryList {
     position: relative;
     width: 60%;
     padding: 0;
-  margin: 0 5px 5px 0;
 }
 
 /* sub gallery list */

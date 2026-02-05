@@ -33,16 +33,18 @@
   background-color: #fafbfc;
   /* border: 1px dashed #999; /**/
   border: 5px dotted darkgreen; /**/
-  /* border: 5px dotted lightgreen; /**/
-  box-sizing: border-box;
-  padding: 10px 0;
-  transition: all 0.2s ease 0s;
-  width: 100%;
 }
 @media (prefers-color-scheme: dark) {
   #dragarea {
     background: rgba(255, 255, 255, 0.1019607843);
   }
+}
+#dragarea {
+  /* border: 5px dotted lightgreen; /**/
+  box-sizing: border-box;
+  padding: 10px 0;
+  transition: all 0.2s ease 0s;
+  width: 100%;
 }
 #dragarea:hover {
   border-color: #666;

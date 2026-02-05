@@ -12,11 +12,11 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Service;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Categories\CategoryFactoryInterface;
-use Joomla\CMS\Categories\CategoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\RouterViewConfiguration;
@@ -47,7 +47,8 @@ class Router extends RouterView
      *
      * @var DatabaseInterface
      *
-     * @since 5.1.0     */
+     * @since 5.1.0
+     */
     private $db;
 
     /**
@@ -64,29 +65,6 @@ class Router extends RouterView
         CategoryFactoryInterface $categoryFactory,
         DatabaseInterface $db
     ) {
-        /**
-        $this->categoryFactory = $categoryFactory;
-        $this->db              = $db;
-        $params = ComponentHelper::getParams('com_foos');
-        $this->noIDs = (bool) $params->get('sef_ids');
-        $categories = new RouterViewConfiguration('categories');
-        $categories->setKey('id');
-        $this->registerView($categories);
-        $category = new RouterViewConfiguration('category');
-        $category->setKey('id')->setParent($categories, 'catid')->setNestable();
-        $this->registerView($category);
-        $foo = new RouterViewConfiguration('foo');
-        $foo->setKey('id')->setParent($category, 'catid');
-        $this->registerView($foo);
-        $this->registerView(new RouterViewConfiguration('featured'));
-        $form = new RouterViewConfiguration('form');
-        $form->setKey('id');
-        $this->registerView($form);
-        parent::__construct($app, $menu);
-        $this->attachRule(new MenuRules($this));
-        $this->attachRule(new StandardRules($this));
-        $this->attachRule(new NomenuRules($this));
-        /**/
 
         $params      = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool)$params->get('sef_ids');
@@ -113,6 +91,11 @@ class Router extends RouterView
         $galleryJ3x = new RouterViewConfiguration('galleryj3x');
         $galleryJ3x->setKey('id');
         $this->registerView($galleryJ3x);
+
+        // rules for imagewallj3x,
+        $imagewallj3x = new RouterViewConfiguration('imagewallj3x');
+        $imagewallj3x->setKey('id');
+        $this->registerView($imagewallj3x);
 
         // rules for slideshowJ3x
         $slideshowJ3x = new RouterViewConfiguration('slideshowj3x');
@@ -210,7 +193,7 @@ class Router extends RouterView
             return [$void => $segment];
         }
 
-        return [(int) $gid => $gid];
+        return [(int)$gid => $gid];
     }
 
     /**
@@ -234,10 +217,10 @@ class Router extends RouterView
 
             $this->db->setQuery($dbquery);
 
-            return (int) $this->db->loadResult();
+            return (int)$this->db->loadResult();
         }
 
-        return (int) $segment;
+        return (int)$segment;
     }
 
     /* use parent instead */
@@ -277,7 +260,7 @@ class Router extends RouterView
             return [$void => $segment];
         }
 
-        return [(int) $gid => $gid];
+        return [(int)$gid => $gid];
     }
 
     /**
@@ -301,16 +284,15 @@ class Router extends RouterView
 
             $this->db->setQuery($dbquery);
 
-            return (int) $this->db->loadResult();
+            return (int)$this->db->loadResult();
         }
 
-        return (int) $segment;
+        return (int)$segment;
     }
 
 
-// J3x - Single Gallery
-// http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryj3x$id=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
     /**
+     * J3x - Single Gallery
      * @param $gid
      * @param $query
      *
@@ -322,7 +304,7 @@ class Router extends RouterView
     {
         if (!strpos($gid, ':')) {
             if ($gid > 0) {
-                $gid     = (int) $gid;
+                $gid     = (int)$gid;
                 $dbquery = $this->db->createQuery();
                 $dbquery
                     ->select($this->db->quoteName('alias'))
@@ -341,7 +323,7 @@ class Router extends RouterView
             return [$void => $segment];
         }
 
-        return [(int) $gid => $gid];
+        return [(int)$gid => $gid];
     }
 
     /**
@@ -365,10 +347,73 @@ class Router extends RouterView
 
             $this->db->setQuery($dbquery);
 
-            return (int) $this->db->loadResult();
+            return (int)$this->db->loadResult();
         }
 
-        return (int) $segment;
+        return (int)$segment;
+    }
+
+    /**
+     * J3x - Single Gallery image wall
+     * @param $gid
+     * @param $query
+     *
+     * @return array|string[]
+     *
+     * @since  5.1.0
+     */
+    public function getImagewallj3xSegment($gid, $query)
+    {
+        if (!strpos($gid, ':')) {
+            if ($gid > 0) {
+                $gid     = (int)$gid;
+                $dbquery = $this->db->createQuery();
+                $dbquery
+                    ->select($this->db->quoteName('alias'))
+                    ->from($this->db->quoteName('#__rsg2_galleries'))
+                    ->where($this->db->quoteName('id') . ' = :id')
+                    ->bind(':id', $gid, ParameterType::INTEGER);
+                $this->db->setQuery($dbquery);
+
+                $gid .= ':' . $this->db->loadResult();
+            }
+        }
+
+        if ($this->noIDs) {
+            [$void, $segment] = explode(':', $gid, 2);
+
+            return [$void => $segment];
+        }
+
+        return [(int)$gid => $gid];
+    }
+
+    /**
+     *
+     * @param $segment
+     * @param $query
+     *
+     * @return int
+     *
+     * @since  5.1.0
+     */
+    public function getImagewallj3xId($segment, $query)
+    {
+        if ($this->noIDs) {
+            $dbquery = $this->db->createQuery();
+
+            $dbquery
+                ->select($this->db->quoteName('id'))
+                ->from($dbquery->qn('#__rsg2_galleries'))
+                ->where($this->db->quoteName('alias') . ' = :segment')
+                ->bind(':segment', $segment);
+
+            $this->db->setQuery($dbquery);
+
+            return (int)$this->db->loadResult();
+        }
+
+        return (int)$segment;
     }
 
 

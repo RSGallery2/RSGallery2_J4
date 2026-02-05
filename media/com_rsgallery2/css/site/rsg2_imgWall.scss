@@ -1,0 +1,193 @@
+// blend info
+// https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/blend-mode
+
+
+// ToDo: variables also for border width ?
+
+//--- image wall --------------------------------------
+
+/*
+  Html defines a table where images blend into each other
+  This leads to shared border by blend type using both images
+
+  Each following image is moved a bit to the left and above
+  to create the mixed border. The top row and the left column
+  images do not need to be moved
+
+  ?? width of moved cell
+  ?? display images or thumbs ?
+ */
+
+$blend-border-width: -50px;
+
+// .rsg2_root_image_wall__form
+
+//--- 01 ------------------------------------------
+
+//.imgWall {
+//  background: black;
+//
+//  // Make area smaller
+//  //margin-right: $blend-border-width; // ToDo: variable
+//  //margin-bottom: $blend-border-width;
+//
+//  @media (prefers-color-scheme: dark) {
+//    // Text ?
+//    background: black;
+//    color: white;
+//  }
+//
+//  // First define inner cell with bit left and up (margin minus on top and left).
+//  // Then remove negative margin for top row and left column
+//
+//  .inner-cell {
+//    // border: none;
+//    //margin-left: $blend-border-width; // ToDo: variables also for border width ?
+//    //margin-top: $blend-border-width;
+//    margin-left: -50px;
+//    margin-top: -50px;
+//
+//    object-fit: cover;
+//    visibility: hidden;
+//  }
+//
+//  .top-row {
+//    // border: none;
+//    //margin-left: -50px;
+//    //margin-right: 50px;
+//    margin-top: -50;
+//    margin-bottom: 0;
+//    //margin-bottom: -50;
+//    margin-left: -50px;
+//    margin-right: -50px;
+//
+//    object-fit: cover;
+//    visibility: visible;
+//  }
+//
+//  .left-col {
+//    // border: none;
+//    //margin-left: 0;
+//    //margin-top: -50px;
+//    margin-right: 0;
+//
+//    object-fit: cover;
+////    visibility: hidden;
+//    visibility: visible;
+//  }
+//
+//  // edge left top
+//  .left-col.top-row {
+//    margin-top: 0;
+//    margin-left: 0;
+//    margin-bottom: 0;
+//    margin-right: 0;
+//
+//    object-fit: cover;
+//    visibility: visible;
+//  }
+//
+//  .table-imgWall td {
+//
+//    padding: 0;
+//
+//  }
+//}
+
+//--- 02 ------------------------------------------
+
+/* Schwarzer Hintergrund verstärkt den additiven Effekt */
+.imgWall {
+  background: #000;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 180px); /* Spaltenbreite */
+  gap: 0; /* Keine Lücke, Überlappung erfolgt via Margin */
+  padding: 50px;
+}
+
+.overlapping-img {
+  width: 230px; /* Größer als die Spalte für Überlappung */
+  height: 180px;
+  object-fit: cover;
+
+  /* Negative Margins für die Überlappung */
+  margin-right: -10px;
+  margin-bottom: -10px;
+
+  /* Farbmischung */
+  mix-blend-mode: screen; /* Additive Mischung: Farben werden heller */
+
+  position: relative;
+  transition: transform 0.3s ease;
+
+  //justify-items: flex-end;
+  //background: #000;
+}
+
+//.overlapping-img::before {
+//  background-color: black;
+//}
+
+/* Hover-Effekt zum Hervorheben */
+.overlapping-img:hover {
+  transform: scale(1.15);
+  mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+  z-index: 20;
+}
+
+
+//--- 0x ------------------------------------------
+
+//.imgWall { background: #000; } /* Schwarzer Hintergrund verstärkt den additiven Effekt */
+
+///* Schwarzer Hintergrund lässt "screen" Blend-Mode leuchten */
+// body { background-color: #000; padding: 50px; }
+//
+//.blend-table {
+//  border-collapse: collapse;
+//  /* Verhindert, dass die Tabelle durch negative Margins springt */
+//  // margin-left: -25px;
+//  // margin-left: -25px;
+//  // margin-right: -25px;
+//  // margin-bottom: -10px;
+//  // margin-top: -10px;
+//
+//  border: 5px solid lightgrey;
+//}
+//
+//.blend-table td {
+//  padding: 0;
+//  /* Erzeugt den Überlappungs-Raum */
+//  //width: 150px;
+//  //height: 120px;
+//}
+//
+//.overlapping-img {
+//  //width: 200px;
+//  //height: 170px;
+//  object-fit: cover;
+//  display: block;
+//
+//  /* Überlappung: Bild ragt über die Zellgrenzen hinaus */
+//  //margin-right: -20px;
+//  margin-left: -20px;
+////  margin-bottom: -10px;
+//
+//  /* Additive Farbmischung */
+//  mix-blend-mode: exclusion; // screen difference
+//
+//  position: relative;
+//  transition: transform 0.3s ease;
+//
+//  border: 1px solid black;
+//}
+//
+///* Effekt: Beim Drüberfahren wird das Bild klar und kommt nach vorne */
+//.overlapping-img:hover {
+//  mix-blend-mode: normal;
+//  transform: scale(1.4);
+//  z-index: 100;
+//}

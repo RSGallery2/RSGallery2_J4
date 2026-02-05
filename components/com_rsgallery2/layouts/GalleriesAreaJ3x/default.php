@@ -7,7 +7,7 @@
  * @copyright  (c) 2021-2025 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
- 
+
 namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\GalleriesAreaJ3x;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -143,15 +143,14 @@ $galStatus = '';
 
         <div class="rsg_galleryblock system-unpublished">
             <div class="rsg2-galleryList-status"><?php echo $galStatus ?></div>
-            <div class="rsg2-galleryList-thumb">
-                <!---div class="shadow-box"-->
-                <div class="img-shadow">
+            <div class="rsg2-galleryList-thumb-box">
+                <span class="img-shadow">
                     <a href="<?php echo $gallery->UrlGallery?>">
                         <img class="rsg2-galleryList-thumb"
                              src="<?php echo $gallery->UrlThumbFile ?>"
                             alt="<?php echo $gallery->name ?>">
                     </a>
-                </div>
+                </span>
             </div>
 
             <div class="rsg2-galleryList-text">
