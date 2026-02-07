@@ -12,9 +12,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
 use Joomla\CMS\Component\ComponentHelper;
 
-use const SORT_FLAG_CASE;
-use const SORT_NATURAL;
-
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -22,7 +19,7 @@ use const SORT_NATURAL;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
-     * @since   5.1.0
+ * @since       5.1.0
  */
 class ImageExif
 {
@@ -164,7 +161,6 @@ class ImageExif
      */
     public static function supportedExifTags()
     {
-
         $supportedTags = [];
 
         $supportedTags [] = 'EXIF.aperture';
@@ -264,7 +260,6 @@ class ImageExif
      */
     public static function tag2TypeAndName($ExifTag)
     {
-
         $type = '';
         $name = '';
 
@@ -313,7 +308,10 @@ class ImageExif
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
 
         // lower case array
-        $userExifTags = array_map('strtolower', $rsgConfig->get('exifTagsJ3x'));
+        $exifTags = $rsgConfig->get('exifTagsJ3x');
+        if (!empty ($exifTags)) {
+            $userExifTags = array_map('strtolower', $exifTags);
+        }
 
         return $userExifTags;
     }
@@ -327,7 +325,6 @@ class ImageExif
      */
     public static function checkTagsNotSupported($existingExifTags)
     {
-
         $notSupportedTags = [];
 
         // lower case array
