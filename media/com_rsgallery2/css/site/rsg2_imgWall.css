@@ -11,18 +11,16 @@
   ?? display images or thumbs ?
  */
 /* Schwarzer Hintergrund verstärkt den additiven Effekt */
-.imgWall {
+.image-wall-overlapping-black {
   background: #000;
 }
-
-.grid-container {
+.image-wall-overlapping-black .grid-container {
   display: grid;
   grid-template-columns: repeat(4, 180px); /* Spaltenbreite */
   gap: 0; /* Keine Lücke, Überlappung erfolgt via Margin */
   padding: 50px;
 }
-
-.overlapping-img {
+.image-wall-overlapping-black .overlapping-img {
   width: 230px; /* Größer als die Spalte für Überlappung */
   height: 180px;
   object-fit: cover;
@@ -34,12 +32,82 @@
   position: relative;
   transition: transform 0.3s ease;
 }
-
-/* Hover-Effekt zum Hervorheben */
-.overlapping-img:hover {
+.image-wall-overlapping-black {
+  /* Hover-Effekt zum Hervorheben */
+}
+.image-wall-overlapping-black .overlapping-img:hover {
   transform: scale(1.15);
   mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
   z-index: 20;
+}
+
+.image-wall-overlapping-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.image-wall-overlapping-flex img {
+  width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
+  height: auto;
+  object-fit: cover;
+  margin-right: -10px;
+  margin-bottom: -10px;
+  /* Farbmischung */
+  mix-blend-mode: difference; /* Additive Mischung: Farben werden heller */
+}
+.image-wall-overlapping-flex {
+  /* Responsives Verhalten */
+}
+@media (max-width: 1000px) {
+  .image-wall-overlapping-flex img {
+    width: calc(33% - 10px);
+  }
+}
+.image-wall-overlapping-flex {
+  /* Responsives Verhalten */
+}
+@media (max-width: 800px) {
+  .image-wall-overlapping-flex img {
+    width: calc(50% - 10px);
+  }
+}
+.image-wall-overlapping-flex img:hover {
+  transform: scale(1.5);
+  mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+  z-index: 20;
+  box-shadow: 2px 2px 1px black;
+}
+
+.image-wall-rectangle-plain {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.image-wall-rectangle-plain img {
+  width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
+  height: auto;
+  object-fit: cover;
+}
+.image-wall-rectangle-plain {
+  /* Responsives Verhalten */
+}
+@media (max-width: 1000px) {
+  .image-wall-rectangle-plain img {
+    width: calc(33% - 10px);
+  }
+}
+.image-wall-rectangle-plain {
+  /* Responsives Verhalten */
+}
+@media (max-width: 800px) {
+  .image-wall-rectangle-plain img {
+    width: calc(50% - 10px);
+  }
+}
+.image-wall-rectangle-plain img:hover {
+  transform: scale(1.5);
+  mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+  z-index: 20;
+  box-shadow: 2px 2px 1px black;
 }
 
 /*# sourceMappingURL=rsg2_imgWall.css.map */
