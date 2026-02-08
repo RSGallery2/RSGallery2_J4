@@ -100,7 +100,6 @@ $blend-border-width: -50px;
 .image-wall-overlapping-black {
   background: #000;
 
-
   .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 180px); /* Spaltenbreite */
@@ -109,8 +108,10 @@ $blend-border-width: -50px;
   }
 
   .overlapping-img {
-    width: 230px; /* Größer als die Spalte für Überlappung */
-    height: 180px;
+    //width: 230px; /* Größer als die Spalte für Überlappung */
+    //height: 180px;
+    width: calc(25% + 5px); /* 4 Bilder pro Reihe, abzüglich Gap */
+    height: auto;
     object-fit: cover;
 
     /* Negative Margins für die Überlappung */
@@ -136,7 +137,39 @@ $blend-border-width: -50px;
     transform: scale(1.15);
     mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
     z-index: 20;
+
+    //box-shadow: 2px 2px 1px #888888;
+    // box-shadow: 3px 2px 1px #888888;
+    // box-shadow: 3px 2px 1px white;
+    // border: 1px solid lightgrey;
+    // border: 2px solid lightgrey;
+    border: 3px solid lightgrey;
+    // box-shadow: 1px 2px 1px #888888;
+    // box-shadow: 2px 2px 1px black;
+    // box-shadow: 2px 2px 1px black;
+    // box-shadow: 1px 1px 1px darkgrey;
+    // box-shadow: 1px 2px 1px darkgrey;
   }
+
+  // 320 640 960 1280
+
+  /* Responsives Verhalten */
+  @media (max-width: 960px) {
+    .overlapping-img {
+      width: calc(33% + 10px);
+    }
+  }
+
+  /* Responsives Verhalten */
+  @media (max-width: 640px) {
+    .overlapping-img {
+      width: calc(50% + 3px);
+    }
+  }
+
+
+
+
 }
 
 //--- 04 ------------------------------------------
@@ -150,7 +183,8 @@ $blend-border-width: -50px;
   //  background-color: #000;
 
   img {
-    width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
+    //width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
+    width: calc(25% + 7px); /* 4 Bilder pro Reihe, abzüglich Gap */
     height: auto;
     object-fit: cover;
 
@@ -166,19 +200,19 @@ $blend-border-width: -50px;
     // mix-blend-mode: exclusion; // screen difference
   }
 
-  // 320 640 1280
+  // 320 640 960 1280
 
   /* Responsives Verhalten */
-  @media (max-width: 1000px) {
+  @media (max-width: 960px) {
     img {
-      width: calc(33% - 10px);
+      width: calc(33% + 10px);
     }
   }
 
   /* Responsives Verhalten */
-  @media (max-width: 800px) {
+  @media (max-width: 640px) {
     img {
-      width: calc(50% - 10px);
+      width: calc(50% + 4px);
     }
   }
 
@@ -188,10 +222,15 @@ $blend-border-width: -50px;
     mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
     z-index: 20;
 
-    // box-shadow: 2px 2px 1px #888888;
+    //box-shadow: 2px 2px 1px #888888;
+    // box-shadow: 3px 2px 1px #888888;
+    // box-shadow: 3px 2px 1px white;
+    // border: 1px solid lightgrey;
+    // border: 2px solid lightgrey;
+    border: 3px solid lightgrey;
     // box-shadow: 1px 2px 1px #888888;
     // box-shadow: 2px 2px 1px black;
-    box-shadow: 2px 2px 1px black;
+    // box-shadow: 2px 2px 1px black;
     // box-shadow: 1px 1px 1px darkgrey;
     // box-shadow: 1px 2px 1px darkgrey;
   }
@@ -209,22 +248,25 @@ $blend-border-width: -50px;
 
 
   img {
-    width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
+    // 4 images per row, abzüglich Gap */
+    width: calc(25% - 8px);
     height: auto;
     object-fit: cover;
+
+    box-shadow: 2px 2px 1px #888888;
   }
 
   /* Responsives Verhalten */
-  @media (max-width: 1000px) {
+  @media (max-width: 960px) {
     img {
-      width: calc(33% - 10px);
+      width: calc(33% - 4px);
     }
   }
 
   /* Responsives Verhalten */
-  @media (max-width: 800px) {
+  @media (max-width: 640px) {
     img {
-      width: calc(50% - 10px);
+      width: calc(50% - 7px);
     }
   }
 
@@ -234,10 +276,15 @@ $blend-border-width: -50px;
     mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
     z-index: 20;
 
-    // box-shadow: 2px 2px 1px #888888;
+    //box-shadow: 2px 2px 1px #888888;
+    // box-shadow: 3px 2px 1px #888888;
+    // box-shadow: 3px 2px 1px white;
+    // border: 1px solid lightgrey;
+    // border: 2px solid lightgrey;
+    border: 3px solid lightgrey;
     // box-shadow: 1px 2px 1px #888888;
     // box-shadow: 2px 2px 1px black;
-    box-shadow: 2px 2px 1px black;
+    // box-shadow: 2px 2px 1px black;
     // box-shadow: 1px 1px 1px darkgrey;
     // box-shadow: 1px 2px 1px darkgrey;
   }

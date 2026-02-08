@@ -21,8 +21,8 @@
   padding: 50px;
 }
 .image-wall-overlapping-black .overlapping-img {
-  width: 230px; /* Größer als die Spalte für Überlappung */
-  height: 180px;
+  width: calc(25% + 5px); /* 4 Bilder pro Reihe, abzüglich Gap */
+  height: auto;
   object-fit: cover;
   /* Negative Margins für die Überlappung */
   margin-right: -10px;
@@ -39,6 +39,23 @@
   transform: scale(1.15);
   mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
   z-index: 20;
+  border: 3px solid lightgrey;
+}
+.image-wall-overlapping-black {
+  /* Responsives Verhalten */
+}
+@media (max-width: 960px) {
+  .image-wall-overlapping-black .overlapping-img {
+    width: calc(33% + 10px);
+  }
+}
+.image-wall-overlapping-black {
+  /* Responsives Verhalten */
+}
+@media (max-width: 640px) {
+  .image-wall-overlapping-black .overlapping-img {
+    width: calc(50% + 3px);
+  }
 }
 
 .image-wall-overlapping-flex {
@@ -46,7 +63,7 @@
   flex-wrap: wrap;
 }
 .image-wall-overlapping-flex img {
-  width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
+  width: calc(25% + 7px); /* 4 Bilder pro Reihe, abzüglich Gap */
   height: auto;
   object-fit: cover;
   margin-right: -10px;
@@ -57,24 +74,24 @@
 .image-wall-overlapping-flex {
   /* Responsives Verhalten */
 }
-@media (max-width: 1000px) {
+@media (max-width: 960px) {
   .image-wall-overlapping-flex img {
-    width: calc(33% - 10px);
+    width: calc(33% + 10px);
   }
 }
 .image-wall-overlapping-flex {
   /* Responsives Verhalten */
 }
-@media (max-width: 800px) {
+@media (max-width: 640px) {
   .image-wall-overlapping-flex img {
-    width: calc(50% - 10px);
+    width: calc(50% + 4px);
   }
 }
 .image-wall-overlapping-flex img:hover {
   transform: scale(1.5);
   mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
   z-index: 20;
-  box-shadow: 2px 2px 1px black;
+  border: 3px solid lightgrey;
 }
 
 .image-wall-rectangle-plain {
@@ -83,31 +100,32 @@
   gap: 10px;
 }
 .image-wall-rectangle-plain img {
-  width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
+  width: calc(25% - 8px);
   height: auto;
   object-fit: cover;
+  box-shadow: 2px 2px 1px #888888;
 }
 .image-wall-rectangle-plain {
   /* Responsives Verhalten */
 }
-@media (max-width: 1000px) {
+@media (max-width: 960px) {
   .image-wall-rectangle-plain img {
-    width: calc(33% - 10px);
+    width: calc(33% - 4px);
   }
 }
 .image-wall-rectangle-plain {
   /* Responsives Verhalten */
 }
-@media (max-width: 800px) {
+@media (max-width: 640px) {
   .image-wall-rectangle-plain img {
-    width: calc(50% - 10px);
+    width: calc(50% - 7px);
   }
 }
 .image-wall-rectangle-plain img:hover {
   transform: scale(1.5);
   mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
   z-index: 20;
-  box-shadow: 2px 2px 1px black;
+  border: 3px solid lightgrey;
 }
 
 /*# sourceMappingURL=rsg2_imgWall.css.map */

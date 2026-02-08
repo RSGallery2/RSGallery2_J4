@@ -24,6 +24,16 @@
                     clear="true"
             />
 
+            <field
+                    name="layout"
+                    type="componentlayout"
+                    label="JFIELD_ALT_LAYOUT_LABEL"
+                    class="custom-select"
+                    extension="com_rsgallery2"
+                    view="galleryj3x"
+                    useglobal="true"
+            />
+
             <!--field
                     name="displaySearch"
                     type="radio"
