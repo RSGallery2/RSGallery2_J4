@@ -2,7 +2,7 @@
 <extension type="plugin" group="webservices" version="4.0" method="upgrade">
   <name>plg_webservices_rsgallery2</name>
   <author>RSGallery2 Team</author>
-  <creationDate>2025.07.23</creationDate>
+  <creationDate>2026.02.09</creationDate>
   <copyright>(c) 2025-2025 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>

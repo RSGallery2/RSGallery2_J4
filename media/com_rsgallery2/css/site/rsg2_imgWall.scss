@@ -1,244 +1,143 @@
+//--- image wall --------------------------------------
+
 // blend info
 // https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/blend-mode
 
-
-// ToDo: variables also for border width ?
-
-//--- image wall --------------------------------------
-
 /*
-  Html defines a table where images blend into each other
+  Html defines a table where images blend into each other on a small border
   This leads to shared border by blend type using both images
 
   Each following image is moved a bit to the left and above
   to create the mixed border. The top row and the left column
   images do not need to be moved
-
-  ?? width of moved cell
-  ?? display images or thumbs ?
  */
 
+
+// ToDo: Prevent actual white images added to avoid black/grey areas,
+//       ? In between area with black background ?
+
+// ToDo: Define border width a) in SCSS b) from PHP
 $blend-border-width: -50px;
 
-// .rsg2_root_image_wall__form
+//--- 02 overlapping black ------------------------------------------
 
-//--- 01 ------------------------------------------
+// Black background is needed for the blending by additive colors
+// Disadvantage: On missing images in the area these parts are show as black
 
-//.imgWall {
-//  background: black;
-//
-//  // Make area smaller
-//  //margin-right: $blend-border-width; // ToDo: variable
-//  //margin-bottom: $blend-border-width;
-//
-//  @media (prefers-color-scheme: dark) {
-//    // Text ?
-//    background: black;
-//    color: white;
-//  }
-//
-//  // First define inner cell with bit left and up (margin minus on top and left).
-//  // Then remove negative margin for top row and left column
-//
-//  .inner-cell {
-//    // border: none;
-//    //margin-left: $blend-border-width; // ToDo: variables also for border width ?
-//    //margin-top: $blend-border-width;
-//    margin-left: -50px;
-//    margin-top: -50px;
-//
-//    object-fit: cover;
-//    visibility: hidden;
-//  }
-//
-//  .top-row {
-//    // border: none;
-//    //margin-left: -50px;
-//    //margin-right: 50px;
-//    margin-top: -50;
-//    margin-bottom: 0;
-//    //margin-bottom: -50;
-//    margin-left: -50px;
-//    margin-right: -50px;
-//
-//    object-fit: cover;
-//    visibility: visible;
-//  }
-//
-//  .left-col {
-//    // border: none;
-//    //margin-left: 0;
-//    //margin-top: -50px;
-//    margin-right: 0;
-//
-//    object-fit: cover;
-////    visibility: hidden;
-//    visibility: visible;
-//  }
-//
-//  // edge left top
-//  .left-col.top-row {
-//    margin-top: 0;
-//    margin-left: 0;
-//    margin-bottom: 0;
-//    margin-right: 0;
-//
-//    object-fit: cover;
-//    visibility: visible;
-//  }
-//
-//  .table-imgWall td {
-//
-//    padding: 0;
-//
-//  }
-//}
-
-//--- 02 ------------------------------------------
-
-/* Schwarzer Hintergrund verstärkt den additiven Effekt */
 .image-wall-overlapping-black {
-  background: #000;
+
+  background-color: black;
 
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(4, 180px); /* Spaltenbreite */
-    gap: 0; /* Keine Lücke, Überlappung erfolgt via Margin */
+    // column width ?
+    grid-template-columns: repeat(4, 180px);
+    // No gap, overlapping by margin
+    gap: 0;
     padding: 50px;
   }
 
   .overlapping-img {
-    //width: 230px; /* Größer als die Spalte für Überlappung */
-    //height: 180px;
-    width: calc(25% + 5px); /* 4 Bilder pro Reihe, abzüglich Gap */
+    // 4 images per row
+    width: calc(25% + 5px);
     height: auto;
     object-fit: cover;
 
-    /* Negative Margins für die Überlappung */
+    // Negative margin for overlapping
     margin-right: -10px;
     margin-bottom: -10px;
 
-    /* Farbmischung */
-    mix-blend-mode: screen; /* Additive Mischung: Farben werden heller */
+    // screen: additive mixture: The colors become more brighter. Needs black background
+    mix-blend-mode: screen;
 
     position: relative;
     transition: transform 0.3s ease;
-
-    //justify-items: flex-end;
-    //background: #000;
-  }
-
-  //.overlapping-img::before {
-  //  background-color: black;
-  //}
-
-  /* Hover-Effekt zum Hervorheben */
-  .overlapping-img:hover {
-    transform: scale(1.15);
-    mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
-    z-index: 20;
-
-    //box-shadow: 2px 2px 1px #888888;
-    // box-shadow: 3px 2px 1px #888888;
-    // box-shadow: 3px 2px 1px white;
-    // border: 1px solid lightgrey;
-    // border: 2px solid lightgrey;
-    border: 3px solid lightgrey;
-    // box-shadow: 1px 2px 1px #888888;
-    // box-shadow: 2px 2px 1px black;
-    // box-shadow: 2px 2px 1px black;
-    // box-shadow: 1px 1px 1px darkgrey;
-    // box-shadow: 1px 2px 1px darkgrey;
   }
 
   // 320 640 960 1280
 
-  /* Responsives Verhalten */
+  // Smaller width: show three images per row
   @media (max-width: 960px) {
     .overlapping-img {
       width: calc(33% + 10px);
     }
   }
 
-  /* Responsives Verhalten */
+  // Smaller width: show two images per row
   @media (max-width: 640px) {
     .overlapping-img {
       width: calc(50% + 3px);
     }
   }
 
+  // On hover show image bigger and with border
+  .overlapping-img:hover {
+    transform: scale(1.15);
+    // original colors
+    mix-blend-mode: normal;
+    z-index: 20;
 
-
+    border: 3px solid lightgrey;
+  }
 
 }
 
-//--- 04 ------------------------------------------
+//--- 04 overlapping flex ------------------------------------------
 
-.image-wall-overlapping-flex {
+// Image arrangement like in grid but with flex
+// blend mode hard-light on grey background
+
+.image-wall-overlapping-grey {
   display: flex;
   flex-wrap: wrap;
-  //  gap: 10px;
-  //  gap: -10px;back
 
-  //  background-color: #000;
+  background-color: grey;
 
   img {
-    //width: calc(25% - 10px); /* 4 Bilder pro Reihe, abzüglich Gap */
-    width: calc(25% + 7px); /* 4 Bilder pro Reihe, abzüglich Gap */
+    // 4 images per row
+    width: calc(25% + 7px);
     height: auto;
     object-fit: cover;
 
-    //  background-color: black;
-
-    ///* Negative Margins für die Überlappung */
+    // Negative margin for overlapping
     margin-right: -10px;
     margin-bottom: -10px;
 
-    /* Farbmischung */
-    mix-blend-mode: difference; /* Additive Mischung: Farben werden heller */
-    // mix-blend-mode: screen; /* Additive Mischung: Farben werden heller */
-    // mix-blend-mode: exclusion; // screen difference
+    // hard-light (needs grey background)
+    mix-blend-mode: hard-light;
+    // mix-blend-mode: screen; // needs black background
   }
 
-  // 320 640 960 1280
-
-  /* Responsives Verhalten */
+  // Smaller width: show three images per row
   @media (max-width: 960px) {
     img {
       width: calc(33% + 10px);
     }
   }
 
-  /* Responsives Verhalten */
+  // Smaller width: show two images per row
   @media (max-width: 640px) {
     img {
       width: calc(50% + 4px);
     }
   }
 
-  //
+  // On hover show image bigger and with border
   img:hover {
     transform: scale(1.5);
-    mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+    // original colors
+    mix-blend-mode: normal;
     z-index: 20;
 
-    //box-shadow: 2px 2px 1px #888888;
-    // box-shadow: 3px 2px 1px #888888;
-    // box-shadow: 3px 2px 1px white;
-    // border: 1px solid lightgrey;
-    // border: 2px solid lightgrey;
     border: 3px solid lightgrey;
-    // box-shadow: 1px 2px 1px #888888;
-    // box-shadow: 2px 2px 1px black;
-    // box-shadow: 2px 2px 1px black;
-    // box-shadow: 1px 1px 1px darkgrey;
-    // box-shadow: 1px 2px 1px darkgrey;
   }
 
 }
 
+//--- 03 Standard image grid ------------------------------------------
 
-//--- 03 ------------------------------------------
+// Image arrangement like with flex
+// Gap instead of overlapping
 
 .image-wall-rectangle-plain {
   display: flex;
@@ -248,7 +147,7 @@ $blend-border-width: -50px;
 
 
   img {
-    // 4 images per row, abzüglich Gap */
+    // 4 images per row
     width: calc(25% - 8px);
     height: auto;
     object-fit: cover;
@@ -256,90 +155,29 @@ $blend-border-width: -50px;
     box-shadow: 2px 2px 1px #888888;
   }
 
-  /* Responsives Verhalten */
+  // Smaller width: show three images per row
   @media (max-width: 960px) {
     img {
       width: calc(33% - 4px);
     }
   }
 
-  /* Responsives Verhalten */
+  // Smaller width: show two images per row
   @media (max-width: 640px) {
     img {
       width: calc(50% - 7px);
     }
   }
 
-  //
+  // On hover show image bigger and with border
   img:hover {
     transform: scale(1.5);
-    mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+    // original colors
+    mix-blend-mode: normal;
     z-index: 20;
 
-    //box-shadow: 2px 2px 1px #888888;
-    // box-shadow: 3px 2px 1px #888888;
-    // box-shadow: 3px 2px 1px white;
-    // border: 1px solid lightgrey;
-    // border: 2px solid lightgrey;
     border: 3px solid lightgrey;
-    // box-shadow: 1px 2px 1px #888888;
-    // box-shadow: 2px 2px 1px black;
-    // box-shadow: 2px 2px 1px black;
-    // box-shadow: 1px 1px 1px darkgrey;
-    // box-shadow: 1px 2px 1px darkgrey;
   }
 
 }
 
-//--- 0x ------------------------------------------
-
-//.imgWall { background-color: #000; } /* Schwarzer Hintergrund verstärkt den additiven Effekt */
-
-///* Schwarzer Hintergrund lässt "screen" Blend-Mode leuchten */
-// body { background-color: #000; padding: 50px; }
-//
-//.blend-table {
-//  border-collapse: collapse;
-//  /* Verhindert, dass die Tabelle durch negative Margins springt */
-//  // margin-left: -25px;
-//  // margin-left: -25px;
-//  // margin-right: -25px;
-//  // margin-bottom: -10px;
-//  // margin-top: -10px;
-//
-//  border: 5px solid lightgrey;
-//}
-//
-//.blend-table td {
-//  padding: 0;
-//  /* Erzeugt den Überlappungs-Raum */
-//  //width: 150px;
-//  //height: 120px;
-//}
-//
-//.overlapping-img {
-//  //width: 200px;
-//  //height: 170px;
-//  object-fit: cover;
-//  display: block;
-//
-//  /* Überlappung: Bild ragt über die Zellgrenzen hinaus */
-//  //margin-right: -20px;
-//  margin-left: -20px;
-////  margin-bottom: -10px;
-//
-//  /* Additive Farbmischung */
-//  mix-blend-mode: exclusion; // screen difference
-//
-//  position: relative;
-//  transition: transform 0.3s ease;
-//
-//  border: 1px solid black;
-//}
-//
-///* Effekt: Beim Drüberfahren wird das Bild klar und kommt nach vorne */
-//.overlapping-img:hover {
-//  mix-blend-mode: normal;
-//  transform: scale(1.4);
-//  z-index: 100;
-//}

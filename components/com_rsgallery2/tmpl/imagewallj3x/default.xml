@@ -87,8 +87,8 @@
 				description="COM_RSGALLERY2_LAYOUT_IMG_WALL_DESC"
 			>
 				<option value="rectangle_borders">COM_RSGALLERY2_LAYOUT_RECTANGLE_BORDER</option>
-				<option value="overlapping_flex">COM_RSGALLERY2_LAYOUT_OVERLAPPING_FLEX</option>
 				<option value="overlapping_black">COM_RSGALLERY2_LAYOUT_OVERLAPPING_BLACK</option>
+				<option value="overlapping_grey">COM_RSGALLERY2_LAYOUT_OVERLAPPING_GREY</option>
 			</field>
 
 			<field

@@ -1,95 +1,73 @@
-@charset "UTF-8";
 /*
-  Html defines a table where images blend into each other
+  Html defines a table where images blend into each other on a small border
   This leads to shared border by blend type using both images
 
   Each following image is moved a bit to the left and above
   to create the mixed border. The top row and the left column
   images do not need to be moved
-
-  ?? width of moved cell
-  ?? display images or thumbs ?
  */
-/* Schwarzer Hintergrund verstärkt den additiven Effekt */
 .image-wall-overlapping-black {
-  background: #000;
+  background-color: black;
 }
 .image-wall-overlapping-black .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 180px); /* Spaltenbreite */
-  gap: 0; /* Keine Lücke, Überlappung erfolgt via Margin */
+  grid-template-columns: repeat(4, 180px);
+  gap: 0;
   padding: 50px;
 }
 .image-wall-overlapping-black .overlapping-img {
-  width: calc(25% + 5px); /* 4 Bilder pro Reihe, abzüglich Gap */
+  width: calc(25% + 5px);
   height: auto;
   object-fit: cover;
-  /* Negative Margins für die Überlappung */
   margin-right: -10px;
   margin-bottom: -10px;
-  /* Farbmischung */
-  mix-blend-mode: screen; /* Additive Mischung: Farben werden heller */
+  mix-blend-mode: screen;
   position: relative;
   transition: transform 0.3s ease;
-}
-.image-wall-overlapping-black {
-  /* Hover-Effekt zum Hervorheben */
-}
-.image-wall-overlapping-black .overlapping-img:hover {
-  transform: scale(1.15);
-  mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
-  z-index: 20;
-  border: 3px solid lightgrey;
-}
-.image-wall-overlapping-black {
-  /* Responsives Verhalten */
 }
 @media (max-width: 960px) {
   .image-wall-overlapping-black .overlapping-img {
     width: calc(33% + 10px);
   }
-}
-.image-wall-overlapping-black {
-  /* Responsives Verhalten */
 }
 @media (max-width: 640px) {
   .image-wall-overlapping-black .overlapping-img {
     width: calc(50% + 3px);
   }
 }
+.image-wall-overlapping-black .overlapping-img:hover {
+  transform: scale(1.15);
+  mix-blend-mode: normal;
+  z-index: 20;
+  border: 3px solid lightgrey;
+}
 
-.image-wall-overlapping-flex {
+.image-wall-overlapping-grey {
   display: flex;
   flex-wrap: wrap;
+  background-color: grey;
 }
-.image-wall-overlapping-flex img {
-  width: calc(25% + 7px); /* 4 Bilder pro Reihe, abzüglich Gap */
+.image-wall-overlapping-grey img {
+  width: calc(25% + 7px);
   height: auto;
   object-fit: cover;
   margin-right: -10px;
   margin-bottom: -10px;
-  /* Farbmischung */
-  mix-blend-mode: difference; /* Additive Mischung: Farben werden heller */
-}
-.image-wall-overlapping-flex {
-  /* Responsives Verhalten */
+  mix-blend-mode: hard-light;
 }
 @media (max-width: 960px) {
-  .image-wall-overlapping-flex img {
+  .image-wall-overlapping-grey img {
     width: calc(33% + 10px);
   }
 }
-.image-wall-overlapping-flex {
-  /* Responsives Verhalten */
-}
 @media (max-width: 640px) {
-  .image-wall-overlapping-flex img {
+  .image-wall-overlapping-grey img {
     width: calc(50% + 4px);
   }
 }
-.image-wall-overlapping-flex img:hover {
+.image-wall-overlapping-grey img:hover {
   transform: scale(1.5);
-  mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+  mix-blend-mode: normal;
   z-index: 20;
   border: 3px solid lightgrey;
 }
@@ -105,16 +83,10 @@
   object-fit: cover;
   box-shadow: 2px 2px 1px #888888;
 }
-.image-wall-rectangle-plain {
-  /* Responsives Verhalten */
-}
 @media (max-width: 960px) {
   .image-wall-rectangle-plain img {
     width: calc(33% - 4px);
   }
-}
-.image-wall-rectangle-plain {
-  /* Responsives Verhalten */
 }
 @media (max-width: 640px) {
   .image-wall-rectangle-plain img {
@@ -123,7 +95,7 @@
 }
 .image-wall-rectangle-plain img:hover {
   transform: scale(1.5);
-  mix-blend-mode: normal; /* Zeigt Originalfarben bei Hover */
+  mix-blend-mode: normal;
   z-index: 20;
   border: 3px solid lightgrey;
 }
