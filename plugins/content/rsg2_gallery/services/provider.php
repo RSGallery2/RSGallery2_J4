@@ -10,12 +10,12 @@
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
-use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Event\DispatcherInterface;
@@ -37,16 +37,15 @@ return new class () implements ServiceProviderInterface {
         $container->set(
             PluginInterface::class,
             function (Container $container) {
-                $plgHelper  = (array)PluginHelper::getPlugin('content', 'rsg2_gallery');
-                $dispatcher = $container->get(DispatcherInterface::class);
-
-                $plugin = new Rsg2_gallery($dispatcher, $plgHelper);
+                $plugin = new Rsg2_gallery(
+                    $container->get(DispatcherInterface::class),
+                    (array)PluginHelper::getPlugin('content', 'rsg2_gallery'));
                 $plugin->setApplication(Factory::getApplication());
                 //$plugin->setDatabase($container->get(DatabaseInterface::class));
                 //$plugin->setMyCustomService($container->get(MyCustomService::class));
 
                 return $plugin;
-            }
+            },
         );
     }
 };

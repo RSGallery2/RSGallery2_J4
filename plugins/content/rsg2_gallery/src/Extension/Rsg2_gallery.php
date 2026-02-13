@@ -10,20 +10,25 @@
 
 namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Extension;
 
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\Event\Event;
-use Joomla\Event\EventInterface;
 use Joomla\Event\SubscriberInterface;
 use Joomla\Registry\Registry;
+use Rsgallery2\Plugin\Content\Rsg2_gallery\Helper\Rsg2_galleryHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 {
     // only for lang strings shown on execution of plugin
-    protected $autoloadLanguage = true;
+    // protected $autoloadLanguage = true;  You should always load them manually
+
+    protected const MARKER = 'rsg2_gallery:';
 
 //  public function __construct(&$subject, $config = array())
 //  {
@@ -46,46 +51,76 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
     }
 
     /**
-     * @param   Event  $event
+     * This function processes the text of an article being presented on the site.
+     *  ToDo: More description
+     *
+     * @param   ContentPrepareEvent  $event
      *
      * @return bool
      *
      * @since  5.1.0
      */
-    public function getRsg2_galleryDisplay(Event $event)
+    public function getRsg2_galleryDisplay(ContentPrepareEvent $event)
     {
+        /* This function processes the text of an article being presented on the site.
+        * It replaces any text of the form "{rsg2_gallery: ...}" ....
+        */
         $context   = '';
         $article   = '';
         $usrParams = new Registry();
 
         try {
-            // support J4 (and J5)
-            if (version_compare(JVERSION, '4.999999.999999', 'lt')) {
-                [$context, $article, $params] = $event->getArguments();
-            } else {
-                $context = $event->getArgument('context');
-                $article = $event->getArgument('article');
-                $params  = $event->getArgument('params'); // spelling ?
+            // The line below restricts the functionality to the site (ie not on api)
+            // You may not want this, so you need to consider this in your own plugins
+            if (!$this->getApplication()->isClient('site')) {
+                return;
             }
 
-            if (
-                (strpos($context, 'com_content.article') === false)
-                && (strpos($context, 'com_content.category') === false)
+            // ToDo: Remove: temp test (article not found otherwiase)
+            // [$context, $article, $params, $page] = array_values($event->getArguments());
+
+            // support J4 (and J5)
+            if (version_compare(JVERSION, '4.999999.999999', 'lt')) {
+                [$context, $article, $params, $page] = array_values($event->getArguments());
+            } else {
+                // $context = $event->getContext();
+                $context = $event->getArgument('context');
+                // $article = $event->getArgument('article');
+                $article = $event->getItem();
+                // $params  = $event->getArgument('params'); // spelling ?
+                $params = $event->getParams();
+                $page   = $event->getPage();
+            }
+
+            // use this format to get the arguments for both Joomla 4 and Joomla 5
+            // In Joomla 4 a generic Event is passed
+            // In Joomla 5 a concrete ContentPrepareEvent is passed
+            // [$context, $article, $params, $page] = array_values($event->getArguments());
+
+            // check for allowed content type
+            if ($context !== "com_content.article"
+                && $context !== "com_content.featured"
+                && $context !== "com_content.category"
             ) {
-                return false;
+                return;
+            }
+
+            // Nothing to change
+            if (empty($article) || empty($article->text)) {
+                return;
             }
 
             //--- replacement may exist --------------------------------------------------
 
-            if (str_contains($article->text, '{rsg2_gallery')) {
-                $lastUserTestIdx = 0;
+            $lastUserTestIdx = 0;
 
-                //--- collect all appearances ---------------------------------------
+            //--- collect all appearances ---------------------------------------
 
-                // Expression to search for.
-                $pattern = "/{rsg2_gallery:(.*?)}/i";
+            // Expression to search for.
+            // $pattern = "/{" . self::MARKER . "(.*?)}/i";
+            $pattern = "/{" . self::MARKER . "(.+)}/i";
 
-                preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
+            preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
 
 //              // debug: there should be matches as text is searched
 //              if(empty ($matches)) {
@@ -93,49 +128,58 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 //                  return null;
 //              }
 
-                // Replace all matches
-                if ($matches) {
-                    //--- Load plugin language file -------------------------------
+            // Replace all matches
+            if ($matches) {
+                $plgPara = Factory::getApplication()->getConfig()->toArray();  // config params as an array
 
-                    $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
+                //--- Load component language file -------------------------------
 
-                    foreach ($matches as $usrDefinition) {
-                        $insertHtml = '';
+                // $this->loadLanguage(); // load plugin language strings ? Not needed ?
+                $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
 
-                        $replaceText  = $usrDefinition[0]; // develop check
-                        $replaceLen   = strlen($usrDefinition[0]);
-                        $replaceStart = strpos($article->text, $usrDefinition[0]);
+                foreach ($matches as $usrDefinition) {
+                    $insertHtml = '';
 
-                        //$test = $usrDefinition[1];
-                        $usrParams = $this->extractUserParams($usrDefinition[1]);
+                    $replaceText  = $usrDefinition[0]; // develop check
+                    $replaceLen   = strlen($usrDefinition[0]);
+                    $replaceStart = strpos($article->text, $usrDefinition[0]);
 
-                        // ToDo: check if gid is missing
-                        $gid = $usrParams->get('gid', -1);
-                        if ($gid < 1) {
-                            $insertHtml = 'Plg RSG2 gallery: Gid missing "gid:xx,.." ';
-                        }
+                    //$test = $usrDefinition[1];
+                    $usrParams = $this->extractUserParams($usrDefinition[1]);
 
-                        // $insertHtml = Rsg2_galleryHelper::galleryImagesHtml();
-                        $insertHtml = '<h4>--- Rsg2_gallery replacement ---</h4>' . $insertHtml;
+                    // check if gid is missing or wrong (no real check of DB)
+                    $gid = $usrParams->get('gid', -1);
+                    if ($gid < 1) {
+                        $insertHtml = 'Plg RSG2 gallery: Gid missing "gid:xx,.." ';
+                    }
 
-                        // previous occurrences are replaced so the search will
-                        // find the actual occurrence
+                    // debugOnlyTitle: only tell about replacement
+                    $debugOnlyTitle = $usrParams->get('debugOnlyTitle', 0);
+                    if (!empty($debugOnlyTitle)) {
+                        $insertHtml .= '<h4>--- Rsg2_gallery replacement ---</h4>';
+                    } else {
+                        //======================================================
+                        // replacement
+                        //======================================================
 
-                        $start =
-                            //--- Perform the replacement ------------------------------
-
-                        $article->text = substr_replace(
-                            $article->text,
-                            $insertHtml,
-                            $replaceStart,
-                            $replaceLen,
-                        );
+                        $helper = new Rsg2_galleryHelper();
+                        $insertHtml .= $helper->galleryImagesHtml();
                     }
                 }
+
+                //--- Perform the replacement ------------------------------
+
+                $article->text = substr_replace(
+                    $article->text,
+                    $insertHtml,
+                    $replaceStart,
+                    $replaceLen,
+                );
             }
+
             // only needed when exchange the complete article ?
             // $event->stopPropagation();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $msg = Text::_('PLG_CONTENT_RSG2_GALLERY') . ' getRsg2_galleryDisplay: ' . ' Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
@@ -154,8 +198,10 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
      *
      * @since version
      */
-    private function extractUserParams(string $usrString)
-    {
+    private
+    function extractUserParams(
+        string $usrString,
+    ) {
         $usrParams = new Registry();
 
         try {
@@ -165,25 +211,18 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
             foreach ($paramSets as $paramSet) {
                 if (!empty($paramSet)) {
-                    [$name, $value] = explode(':', $paramSet, 2);
-
-                    $name  = trim($name);
-                    $value = trim($value);
-
-                    // ToDo: prepare indexed values template/layout ...
-                    // Handle plugin specific variables or J3x to j4x transformations
-                    // $isHandled = $this->handleSpecificParams ($params, $name, $value);
-
-                    // ?? bool
-
-                    // standard assignment
-                    //if (! $isHandled)
-                    {
-                        $usrParams->set($name, $value);
+                    if (str_contains($paramSet, ':')) {
+                        [$name, $value] = explode(':', $paramSet, 2);
+                    } else {
+                        $name  = $paramSet;
+                        $value = '';
                     }
+
+                    $usrParams->set(trim($name), trim($value));
+                    // ToDo: prepare indexed values template/layout ...
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $msg = Text::_('PLG_CONTENT_RSG2_GALLERY' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');

@@ -10,16 +10,9 @@
 
 namespace Rsgallery2\Module\Rsg2_gallery\Site\Helper;
 
-use Joomla\CMS\Access\Access;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Application\SiteApplication;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Pagination\Pagination;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
@@ -75,6 +68,8 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
      * @param   CMSApplication  $app     The application
      *
      * @return  array
+     *
+     * @since  5.1.0
      */
     public function getImagesOfGallery(int $gid, Registry $params, SiteApplication $app)
     {
@@ -104,6 +99,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
             //--- state gid -------------------------------------------------
 
             $model->setState('gallery.id', $gid);
+            // ToDo: remove ?
             $model->setState('gid', $gid);
 
             //--- images -----------------------------------------------------------------------
@@ -124,14 +120,14 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
             // Flag indicates to not add limitstart=0 to URL
             $this->pagination->hideEmptyLimitstart = true;
-        } catch (RuntimeException $e) {
+
+        } catch (\RuntimeException $e) {
             // ToDO: Message more explicit
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $images;
     }
-
 
 
 
