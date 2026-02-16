@@ -10,6 +10,7 @@
 
 namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Extension;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -76,6 +77,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                 return;
             }
 
+            // ToDo: check manual.joomla.org  -> plugins and change accordingly
             // ToDo: Remove: temp test (article not found otherwiase)
             // [$context, $article, $params, $page] = array_values($event->getArguments());
 
@@ -128,14 +130,45 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 //                  return null;
 //              }
 
+            //==========================================================================
             // Replace all matches
+            //==========================================================================
+
             if ($matches) {
-                $plgPara = Factory::getApplication()->getConfig()->toArray();  // config params as an array
+
+                $app = Factory::getApplication();
+
+                //--- prepare extension data -------------------------------
+
+                $rsgComponent = $app->bootComponent('com_rsgallery2')->getMVCFactory();
+
+                // $rsgConfig = $rsgComponent->g();  // config params as an array
+                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
+
+                //--- prepare plugin data -------------------------------
+
+//                $plgParams = $app->getConfig()->toArray();  // config params as an array
+                $plgParams = $app->getConfig();  // config params as an array
+                // ToDo: check params ? same ?
+
+                $externalParams = $rsgConfig->merge($plgParams);
 
                 //--- Load component language file -------------------------------
 
                 // $this->loadLanguage(); // load plugin language strings ? Not needed ?
                 $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
+
+                //--- load css/js -----------------------------------------------
+
+//                $app->getDocument()->getWebAssetManager()
+//                    ->getRegistry()->addExtensionRegistryFile('com_rsgallery2')
+//                    ->usePreset('com_rsgallery2.site.galleryJ3x');
+                $wa = $app->getDocument()->getWebAssetManager();
+                $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
+                $wa->usePreset('com_rsgallery2.site.galleryJ3x');
+
+                $helper     = new Rsg2_galleryHelper();
+
 
                 foreach ($matches as $usrDefinition) {
                     $insertHtml = '';
@@ -146,8 +179,10 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
                     //$test = $usrDefinition[1];
                     $usrParams = $this->extractUserParams($usrDefinition[1]);
+                    $params = $externalParams->merge($usrParams);
 
                     // check if gid is missing or wrong (no real check of DB)
+                    // ToDo: use merged parameter and move to helper
                     $gid = $usrParams->get('gid', -1);
                     if ($gid < 1) {
                         $insertHtml = 'Plg RSG2 gallery: Gid missing "gid:xx,.." ';
@@ -162,8 +197,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                         // replacement
                         //======================================================
 
-                        $helper = new Rsg2_galleryHelper();
-                        $insertHtml .= $helper->galleryImagesHtml();
+                        $insertHtml .= $helper->galleryImagesHtml($rsgComponent, $params);
                     }
                 }
 
