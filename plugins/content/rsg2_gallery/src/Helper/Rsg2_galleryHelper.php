@@ -11,13 +11,14 @@
 namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Helper;
 
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Factory\MVCFactory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
-use Joomla\Component\Config\Administrator\Controller\RequestController;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
+
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -26,35 +27,40 @@ use Joomla\Registry\Registry;
 /**
  * Helper for mod_rsg2_galleries
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
 class Rsg2_galleryHelper implements DatabaseAwareInterface
 {
     use DatabaseAwareTrait;
 
+    // @var Pagination
     public $pagination;
-    protected $galleriesModel;
+    // @var MVCFactory
     protected $rsgComponent;
+    // @var Galleryj3xModel
     protected $galleryModel;
 
+    // @var SiteApplication
     protected $app;
+
     public function __construct()
     {
         // boot component only once Model('Gallery', 'Site')
-        $this->app = Factory::getApplication();
+        $this->app          = Factory::getApplication();
         $this->rsgComponent = $this->app->bootComponent('com_rsgallery2')->getMVCFactory();
         $this->galleryModel = $this->rsgComponent->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
     }
 
-    public function galleryImagesHtml($rsgComponent, registry $params) : string
+    public function galleryImagesHtml($rsgComponent, registry $params): string
     {
         $this->rsgComponent = $rsgComponent;
 
         //--- collect images -----------------------------------------------
 
-        $gid = $params->get('gid');
+        $gid    = $params->get('gid');
         $images = $this->getImagesOfGallery($gid, $params);
 
+        $gallery = $this->getGalleryData($gid);
 
 //        $app = $this->app;
 //        $rsgView = $this->rsgComponent->createView('galleryj3x', 'Site', 'html', );
@@ -75,30 +81,55 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
         $layoutName = 'ImagesAreaJ3x.default';
 
-        $layout = new FileLayout($layoutName);
+        $layout = new FileLayout($layoutName, JPATH_ROOT .'/components/com_rsgallery2/layouts');
 
         $displayData['isDebugSite']   = $params->get('isDebugSite');
-        $displayData['isDevelopSite'] = $this->isDevelopSite;
+        $displayData['isDevelopSite'] = $params->get('$this->isDevelopSite');
 
-        $displayData['images'] = $this->items;
+        $displayData['images'] = $images;
 //        $displayData['params'] = $this->params->toObject();
         $displayData['params'] = $params->toObject();
         //$displayData['menuParams'] = $this->menuParams;
         $displayData['pagination'] = $this->pagination;
 
-        $displayData['gallery']   = $this->gallery;
-        $displayData['galleryId'] = $this->galleryId;
+        $displayData['gallery']   = $gallery;
+        $displayData['galleryId'] = $gid;
 
         //$displaySearch = $this->params->get('displaySearch', false);
         $displaySearch = $params->get('displaySearch', false);
         if ($displaySearch) {
-            $searchLayout = new FileLayout('Search.search');
+            $searchLayout = new FileLayout('Search.search', JPATH_ROOT .'/components/com_rsgallery2/layouts');
             // $searchData['options'] = $searchOptions ...; // gallery
         }
 
+        $html[] = '    <div class="rsg2__form rsg2__images_area">';
+        $html[] = '';
 
+        // if (!empty($this->isDebugSite))
+        {
+            $html[] = '            <h1>' . text::_('RSGallery2 "gallery j3x legacy"') . ' view </h1>';
+            $html[] = '            <hr>';
+        }
+        $html[] = '';
 
-        return '<h4>--- Replaced: However, it still needs to be coded. ---</h4>';
+        //--- display search ----------
+        $html[] = '';
+        if ($displaySearch) {
+            $html[] = '            ' . $searchLayout->render();
+        }
+        $html[] = '';
+
+        //--- display gallery images ----------
+        $html[] = '';
+        $html[] = '        ' . $layout->render($displayData);
+        $html[] = '';
+
+        $html[] = '    </div>';
+
+        $content_output = implode($html);
+
+        return $content_output;
+        // return '<h4>--- Replaced: However, it still needs to be coded. ---</h4>';
 
     }
 
@@ -162,13 +193,24 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
             // Flag indicates to not add limitstart=0 to URL
             $this->pagination->hideEmptyLimitstart = true;
-
         } catch (\RuntimeException $e) {
             // ToDO: Message more explicit
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
         return $images;
+    }
+
+    /**
+     * @param   int  $gid
+     *
+     * @return mixed
+     *
+     * @since  5.1.0
+     */
+    public function getGalleryData(int $gid)
+    {
+        return $this->galleryModel->galleryData($gid);
     }
 
 
