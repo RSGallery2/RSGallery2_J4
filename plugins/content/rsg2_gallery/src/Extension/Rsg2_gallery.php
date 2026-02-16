@@ -158,15 +158,6 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                 // $this->loadLanguage(); // load plugin language strings ? Not needed ?
                 $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
 
-                //--- load css/js -----------------------------------------------
-
-//                $app->getDocument()->getWebAssetManager()
-//                    ->getRegistry()->addExtensionRegistryFile('com_rsgallery2')
-//                    ->usePreset('com_rsgallery2.site.galleryJ3x');
-                $wa = $app->getDocument()->getWebAssetManager();
-                $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
-                $wa->usePreset('com_rsgallery2.site.galleryJ3x');
-
                 $helper     = new Rsg2_galleryHelper();
 
 

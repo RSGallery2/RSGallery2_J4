@@ -12,12 +12,14 @@ namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Helper;
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Factory\MVCFactory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\MVC\Factory\MVCFactory;
+use Joomla\CMS\Pagination\Pagination;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
+use RSGallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel;
 
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -33,14 +35,16 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 {
     use DatabaseAwareTrait;
 
-    // @var Pagination
+    /* @var Pagination */
     public $pagination;
-    // @var MVCFactory
+
+    /* @var MVCFactory */
     protected $rsgComponent;
-    // @var Galleryj3xModel
+
+    /* @var Galleryj3xModel */
     protected $galleryModel;
 
-    // @var SiteApplication
+    /* @var SiteApplication */
     protected $app;
 
     public function __construct()
@@ -55,6 +59,13 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     {
         $this->rsgComponent = $rsgComponent;
 
+        //--- load css/js -----------------------------------------------
+
+        $wa = $this->app->getDocument()->getWebAssetManager();
+        $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
+        $wa->usePreset('com_rsgallery2.site.galleryJ3x');
+
+
         //--- collect images -----------------------------------------------
 
         $gid    = $params->get('gid');
@@ -62,52 +73,44 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
         $gallery = $this->getGalleryData($gid);
 
-//        $app = $this->app;
-//        $rsgView = $this->rsgComponent->createView('galleryj3x', 'Site', 'html', );
-//        $rsgView->setModel($this->rsgComponent->createModel('Gallery', 'Site', ['ignore_request' => true]));
-        // $rsgView->setLanguage($app->getLanguage());
+        //--- selected layout -----------------------------------------------
 
-        // $rsgView->document = $this->getDocument();
+        $layoutName = $params->get('images_layout');
+        if ($layoutName == 'default') {
+            $layoutName = 'ImagesAreaJ3x.default';
+        }
+        $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 
-//        $text = $rsgView->display();
+        $layout = new FileLayout($layoutName, $layoutFolder);
 
-//
-//        // Execute backend controller
-//        $serviceData = json_decode($json, true);
-//
-//        // Access backend com_config
-//        $requestController = new RequestController();
-//
-
-        $layoutName = 'ImagesAreaJ3x.default';
-
-        $layout = new FileLayout($layoutName, JPATH_ROOT .'/components/com_rsgallery2/layouts');
-
-        $displayData['isDebugSite']   = $params->get('isDebugSite');
-        $displayData['isDevelopSite'] = $params->get('$this->isDevelopSite');
+        //--- layout data -----------------------------------------------
 
         $displayData['images'] = $images;
-//        $displayData['params'] = $this->params->toObject();
+        $test = $params->toObject();
         $displayData['params'] = $params->toObject();
-        //$displayData['menuParams'] = $this->menuParams;
-        $displayData['pagination'] = $this->pagination;
+//        $displayData['params'] = $params;
+
+        $displayData['isDebugSite']   = $params->get('isDebugSite');
+        $displayData['isDevelopSite'] = $params->get('isDevelopSite');
 
         $displayData['gallery']   = $gallery;
         $displayData['galleryId'] = $gid;
 
-        //$displaySearch = $this->params->get('displaySearch', false);
+        //--- search -----------------------------------------------
+
         $displaySearch = $params->get('displaySearch', false);
         if ($displaySearch) {
-            $searchLayout = new FileLayout('Search.search', JPATH_ROOT .'/components/com_rsgallery2/layouts');
+            $searchLayout = new FileLayout('Search.search', JPATH_ROOT . '/components/com_rsgallery2/layouts');
             // $searchData['options'] = $searchOptions ...; // gallery
         }
+
+        //--- create html data -----------------------------------------------
 
         $html[] = '    <div class="rsg2__form rsg2__images_area">';
         $html[] = '';
 
-        // if (!empty($this->isDebugSite))
-        {
-            $html[] = '            <h1>' . text::_('RSGallery2 "gallery j3x legacy"') . ' view </h1>';
+        if (!empty($params->get('isDebugSite'))) {
+            $html[] = '            <h2>' . Text::_('RSGallery2 "gallery j3x legacy"') . ' view </h2>';
             $html[] = '            <hr>';
         }
         $html[] = '';
@@ -123,6 +126,10 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         $html[] = '';
         $html[] = '        ' . $layout->render($displayData);
         $html[] = '';
+
+        //--- display pagination ----------
+
+        $html[] = '        ' . $this->pagination->getListFooter();
 
         $html[] = '    </div>';
 

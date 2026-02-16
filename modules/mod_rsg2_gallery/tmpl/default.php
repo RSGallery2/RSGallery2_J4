@@ -8,6 +8,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -48,24 +49,22 @@ if (!empty($msg)) {
     return;
 }
 
+//--- Js/css -------------------------------------------
+
 $wa = $app->getDocument()->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
-
 $wa->usePreset('com_rsgallery2.site.galleryJ3x');
 
+
 $layoutName   = $params->get('images_layout');
+if ($layoutName == 'default') {
+    $layoutName = 'ImagesAreaJ3x.default';
+}
 $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
 
-// default is 'ImagesAreaJ3x.default'
-//if($layoutName == 'default') {
-//
-//  $layoutName = 'ImagesAreaJ3x.default';
-//} else {
-//
-//yyy   $layoutName = $layoutName;
-//}
-
 $layout = new FileLayout($layoutName, $layoutFolder);
+
+//--- layout data -----------------------------------------------
 
 $displayData['images'] = $images;
 $displayData['params'] = $params->toObject();
@@ -83,23 +82,15 @@ if ($displaySearch) {
     // $searchData['options'] = $searchOptions ...; // gallery
 }
 
-?>
 
-<!--<div class="grid-container">-->
-<!--        --><?php //foreach ($images as $image) : ?>
-<!---->
-<!--            <figure class=”gallery__item gallery__item--1">-->
-<!--                <img src="--><?php //echo $image; ?><!--" class="gallery__img" alt="Image 1">-->
-<!--            </figure>-->
-<!---->
-<!--        --><?php //endforeach; ?>
-<!--    </div>-->
-<!--</div>-->
+//--- create html data -----------------------------------------------
+
+?>
 
 <div class="rsg2_x_form rsg2__images_area">
 
     <?php if (!empty($isDebugSite)) : ?>
-        <h1><?php echo text::_('Module RSGallery2 "gallery j3x legacy" J3x view'); ?> view </h1>
+        <h1><?php echo Text::_('Module RSGallery2 "gallery j3x legacy" J3x view'); ?> view </h1>
         <hr>
     <?php endif; ?>
 
