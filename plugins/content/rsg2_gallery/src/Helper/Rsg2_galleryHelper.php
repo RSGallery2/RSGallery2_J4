@@ -65,10 +65,14 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
         $wa->usePreset('com_rsgallery2.site.galleryJ3x');
 
-
         //--- collect images -----------------------------------------------
 
-        $gid    = $params->get('gid');
+        $gid = $params->get('gid', '-1');
+        // check if gid is missing or wrong (no real check of DB)
+        if ($gid < 2) {
+            $html[] = '{Plg RSG2 gallery: Gid missing "gid:xx,.." (' . $gid . ')}';
+        }
+
         $images = $this->getImagesOfGallery($gid, $params);
 
         $gallery = $this->getGalleryData($gid);
@@ -86,7 +90,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         //--- layout data -----------------------------------------------
 
         $displayData['images'] = $images;
-        $test = $params->toObject();
+        $test                  = $params->toObject();
         $displayData['params'] = $params->toObject();
 //        $displayData['params'] = $params;
 

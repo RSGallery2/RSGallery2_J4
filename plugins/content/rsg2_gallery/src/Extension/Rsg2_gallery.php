@@ -79,7 +79,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
             // ToDo: check manual.joomla.org  -> plugins and change accordingly
             // ToDo: Remove: temp test (article not found otherwiase)
-            // [$context, $article, $params, $page] = array_values($event->getArguments());
+            //[$context, $article, $params, $page] = array_values($event->getArguments());
 
             // support J4 (and J5)
             if (version_compare(JVERSION, '4.999999.999999', 'lt')) {
@@ -120,7 +120,8 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
             // Expression to search for.
             // $pattern = "/{" . self::MARKER . "(.*?)}/i";
-            $pattern = "/{" . self::MARKER . "(.+)}/i";
+            $pattern = "/{" . self::MARKER . "(.*)}/i";
+            // $pattern = "/{" . self::MARKER . "(.+)}/i";
 
             preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
 
@@ -135,7 +136,6 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
             //==========================================================================
 
             if ($matches) {
-
                 $app = Factory::getApplication();
 
                 //--- prepare extension data -------------------------------
@@ -147,37 +147,29 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
                 //--- prepare plugin data -------------------------------
 
-//                $plgParams = $app->getConfig()->toArray();  // config params as an array
-                $plgParams = $app->getConfig();  // config params as an array
+                // $plgParams = $app->getConfig()->toArray();  // config params as an array
                 // ToDo: check params ? same ?
-
-                $externalParams = $rsgConfig->merge($plgParams);
+                $appParams = $app->getConfig();  //
+                $evtParams = $params;  // event params
+                $plgParams = $this->params;  // config params as an array
 
                 //--- Load component language file -------------------------------
 
                 // $this->loadLanguage(); // load plugin language strings ? Not needed ?
                 $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
 
-                $helper     = new Rsg2_galleryHelper();
-
+                $helper = new Rsg2_galleryHelper();
 
                 foreach ($matches as $usrDefinition) {
                     $insertHtml = '';
 
                     $replaceText  = $usrDefinition[0]; // develop check
-                    $replaceLen   = strlen($usrDefinition[0]);
+                    $replaceLen   = strlen($replaceText);
                     $replaceStart = strpos($article->text, $usrDefinition[0]);
 
-                    //$test = $usrDefinition[1];
-                    $usrParams = $this->extractUserParams($usrDefinition[1]);
-                    $params = $externalParams->merge($usrParams);
-
-                    // check if gid is missing or wrong (no real check of DB)
-                    // ToDo: use merged parameter and move to helper
-                    $gid = $usrParams->get('gid', -1);
-                    if ($gid < 1) {
-                        $insertHtml = 'Plg RSG2 gallery: Gid missing "gid:xx,.." ';
-                    }
+                    $usrParams      = $this->extractUserParams($usrDefinition[1]);
+                    $externalParams = $rsgConfig->merge($plgParams);
+                    $useParams      = $externalParams->merge($usrParams);
 
                     // debugOnlyTitle: only tell about replacement
                     $debugOnlyTitle = $usrParams->get('debugOnlyTitle', 0);
@@ -188,18 +180,19 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                         // replacement
                         //======================================================
 
-                        $insertHtml .= $helper->galleryImagesHtml($rsgComponent, $params);
+                        $insertHtml .= $helper->galleryImagesHtml($rsgComponent, $useParams);
                     }
+
+                    //--- Perform the replacement ------------------------------
+
+                    $article->text = substr_replace(
+                        $article->text,
+                        $insertHtml,
+                        $replaceStart,
+                        $replaceLen,
+                    );
                 }
 
-                //--- Perform the replacement ------------------------------
-
-                $article->text = substr_replace(
-                    $article->text,
-                    $insertHtml,
-                    $replaceStart,
-                    $replaceLen,
-                );
             }
 
             // only needed when exchange the complete article ?
