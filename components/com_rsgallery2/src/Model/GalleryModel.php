@@ -12,15 +12,15 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\Database\ParameterType;
 use Joomla\Database\QueryInterface;
@@ -29,7 +29,7 @@ use Joomla\Registry\Registry;
 /**
  * RSGallery2 Component gallery images Model
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
 class GalleryModel extends ListModel
 {
@@ -57,6 +57,7 @@ class GalleryModel extends ListModel
      *
      * @param   array                     $config  An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory
+     *
      * @throws \Exception
      * @since   1.6
      */
@@ -64,22 +65,38 @@ class GalleryModel extends ListModel
     {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id', 'a.id',
-                'title', 'a.title',
-                'alias', 'a.alias',
-                'checked_out', 'a.checked_out',
-                'checked_out_time', 'a.checked_out_time',
-                'catid', 'a.catid', 'category_title',
-                'state', 'a.state',
-                'access', 'a.access', 'access_level',
-                'created', 'a.created',
-                'created_by', 'a.created_by',
-                'ordering', 'a.ordering',
+                'id',
+                'a.id',
+                'title',
+                'a.title',
+                'alias',
+                'a.alias',
+                'checked_out',
+                'a.checked_out',
+                'checked_out_time',
+                'a.checked_out_time',
+                'catid',
+                'a.catid',
+                'category_title',
+                'state',
+                'a.state',
+                'access',
+                'a.access',
+                'access_level',
+                'created',
+                'a.created',
+                'created_by',
+                'a.created_by',
+                'ordering',
+                'a.ordering',
 //                'featured', 'a.featured',
 //                'language', 'a.language',
-                'hits', 'a.hits',
-                'publish_up', 'a.publish_up',
-                'publish_down', 'a.publish_down',
+                'hits',
+                'a.hits',
+                'publish_up',
+                'a.publish_up',
+                'publish_down',
+                'a.publish_down',
 //                'images', 'a.images',
 //                'urls', 'a.urls',
                 'filter_tag',
@@ -91,6 +108,7 @@ class GalleryModel extends ListModel
 
     /**
      * Return cascaded parameters
+     *
      * @return mixed
      *
      * @since  5.1.0
@@ -231,7 +249,7 @@ class GalleryModel extends ListModel
                 . '&task=imagefile.downloadfile&id=' . $image->id,
                 true,
                 0,
-                true
+                true,
             );
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -560,16 +578,17 @@ class GalleryModel extends ListModel
      */
     protected function populateState($ordering = 'ordering', $direction = 'ASC')
     {
-        global $rsgConfig;
+//        global $rsgConfig;
 
         parent::populateState($ordering, $direction);
 
-        $app = Factory::getApplication();
+        $app   = Factory::getApplication();
+        $input = $app->getInput();
 
-        $this->setState('gallery.id', $app->input->getInt('id'));
+        $this->setState('gallery.id', $input->getInt('id'));
         $this->setState('params', $app->getParams());
 
-        // Adjust the context to support modal layouts.
+        // Adjust the context to support modal layouts. ToDo: Move to where ???
         // ToDo: what about more then one gallery displayed at one page ..
         if ($layout = $app->input->get('layout')) {
             $this->context .= '.' . $layout;
@@ -591,15 +610,11 @@ class GalleryModel extends ListModel
         // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
         // $this->setState('list.limit', $value);
         $this->setState('list.limit', $max_thumbs_in_images_view_j3x);
-        // $this->setState('list.limit', 5);
 
         //$value = $app->input->get('limitstart', 0, 'uint');
         //$this->setState('list.start', $value);
         $offset = $app->input->get('limitstart', 0, 'uint');
         $this->setState('list.offset', $offset);
-
-        $value = $app->input->get('filter_tag', 0, 'uint');
-        $this->setState('filter.tag', $value);
 
         $orderCol = $app->input->get('filter_order', 'a.ordering');
 
@@ -617,18 +632,21 @@ class GalleryModel extends ListModel
 
         $this->setState('list.direction', $listOrder);
 
-        $params = $app->getParams();
         $this->setState('params', $params);
 
+        $value = $app->input->get('filter_tag', 0, 'uint');
+        $this->setState('filter.tag', $value);
+
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-        $user = $app->getIdentity();
+        // $user = $app->getIdentity();
+        $user = $this->getCurrentUser();
 
         if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
             // Filter on published for those who do not have edit or edit.state rights.
             $this->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
         }
 
-//        $this->setState('filter.language', Multilanguage::isEnabled());
+        $this->setState('filter.language', Multilanguage::isEnabled());
 
         // toDo: ??? when is it needed
         // Process show_noauth parameter
@@ -639,11 +657,6 @@ class GalleryModel extends ListModel
         }
 
         $this->setState('layout', $app->input->getString('layout'));
-
-        //--- RSG2 ---------------------------------
-
-        //$this->setState('rsgallery2.id', $app->input->getInt('id'));
-        $this->setState('image.id', $app->input->getInt('id'));
     }
 
     /**
@@ -661,23 +674,15 @@ class GalleryModel extends ListModel
      */
     protected function getStoreId($id = '')
     {
-        // Compile the store id.
-        $id .= ':' . serialize($this->getState('filter.condition'));
-        $id .= ':' . $this->getState('filter.access');
-//        $id .= ':' . $this->getState('filter.featured');
-        $id .= ':' . serialize($this->getState('filter.article_id'));
-        $id .= ':' . $this->getState('filter.article_id.include');
-        $id .= ':' . serialize($this->getState('filter.category_id'));
-        $id .= ':' . $this->getState('filter.category_id.include');
-        $id .= ':' . serialize($this->getState('filter.author_id'));
-        $id .= ':' . $this->getState('filter.author_id.include');
-        $id .= ':' . serialize($this->getState('filter.author_alias'));
-        $id .= ':' . $this->getState('filter.author_alias.include');
-        $id .= ':' . $this->getState('filter.date_filtering');
-        $id .= ':' . $this->getState('filter.date_field');
-        $id .= ':' . $this->getState('filter.start_date_range');
-        $id .= ':' . $this->getState('filter.end_date_range');
-        $id .= ':' . $this->getState('filter.relative_date');
+        // Compile the store id. ToDo: add filter from site display list
+
+        $id .= ':' . $this->getState('gallery.id');
+        $id .= ':' . $this->getState('list.limit');
+        $id .= ':' . $this->getState('list.offset');
+        $id .= ':' . $this->getState('list.ordering');
+        $id .= ':' . $this->getState('list.direction');
+        $id .= ':' . $this->getState('filter.condition');
+        $id .= ':' . $this->getState('layout');
         $id .= ':' . serialize($this->getState('filter.tag'));
 
         return parent::getStoreId($id);
@@ -688,28 +693,32 @@ class GalleryModel extends ListModel
      *
      * @return  QueryInterface object.
      *
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     protected function getListQuery()
     {
-        $app   = Factory::getApplication();
-        $input = Factory::getApplication()->input;
+        $app = Factory::getApplication();
+
+        $user   = $this->getCurrentUser();
+        $params = $this->getState('params');
 
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-        $user   = $app->getIdentity();
         $groups = $user->getAuthorisedViewLevels();
         $userId = $user->get('id');
         $guest  = $user->get('guest');
 
         $listOrdering = $this->getState('list.ordering', 'a.ordering');
 
-        $orderby        = $this->state->params->get('all_tags_orderby', $listOrdering);
+        $orderby        = $params->get('all_tags_orderby', $listOrdering);
         $listDirn       = $this->getState('list.direction', 'ASC');
-        $orderDirection = $this->state->params->get('all_tags_orderby_direction', $listDirn);
+        $orderDirection = $params->get('all_tags_orderby_direction', $listDirn);
 
-        $published      = (int)$this->state->params->get('published', 1);
+        $published = (int)$params->get('published', 1);
 
         // 2024.04.21: $gid = $input->getInt ('gid', 0);
         $gid = (int)$this->getState('gallery.id', 0);
+
+        //--- db query -------------------------------------------
 
         // Create a new query object.
         $db = $this->getDatabase();
@@ -722,31 +731,8 @@ class GalleryModel extends ListModel
             //->from($db->quoteName('#__rsg2_galleries', 'a'))
             ->from($db->quoteName('#__rsg2_images', 'a'))
             ->where('a.published = 1')
-            //->where('a.id = ' . (int) $gid);
-            ->where('a.gallery_id = ' . (int)$gid);
-        // ToDo: limit ....
+            ->where('a.gallery_id = ' . (int)$gid) // ToDo: ->bind ...
 
-
-        // limit
-
-        /**
-         * if ($this->state->params->get('show_pagination_limit'))
-         * {
-         * $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'uint');
-         * }
-         * else
-         * {
-         * $limit = $this->state->params->get('maximum', 20);
-         * }
-         *
-         * $this->setState('list.limit', $limit);
-         * /**/
-
-        $offset = $app->input->get('limitstart', 0, 'uint');
-        $this->setState('list.start', $offset);
-
-
-        $query
             ->where($db->quoteName('a.published') . ' = :published')
             ->bind(':published', $published, ParameterType::INTEGER);
 
