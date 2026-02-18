@@ -406,6 +406,7 @@
 				name="images_layout"
 				type="LayoutGallery"
 				label="JFIELD_ALT_LAYOUT_LABEL"
+				default="default"
 				class="custom-select"
 				extension="com_rsgallery2"
 		/>

@@ -2,12 +2,12 @@
 <extension type="plugin" group="content" version="4.0" method="upgrade">
   <name>plg_content_rsg2_gallery</name>
   <author>RSGallery2 Team</author>
-  <creationDate>2026.02.13</creationDate>
+  <creationDate>2026.02.18</creationDate>
   <copyright>(c) 2021-2024 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>
   <authorUrl>https://www.rsgallery2.org</authorUrl>
-  <version>5.0.0.5</version>
+  <version>5.0.0.6</version>
   <description>PLG_CONTENT_RSG2_GALLERY_XML_DESCRIPTION</description>
   <namespace path="src">Rsgallery2\Plugin\Content\Rsg2_gallery</namespace>
   <files>
@@ -33,7 +33,8 @@
         </field>
       </fieldset>
       <fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS" addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
-        <field name="images_layout" type="LayoutGallery" label="JFIELD_ALT_LAYOUT_LABEL" class="custom-select" extension="com_rsgallery2" required="true" useglobal="true"/>
+        <!--		grid, masonry smashingmagazine ...	 -->
+        <field name="images_layout" type="LayoutGallery" label="JFIELD_ALT_LAYOUT_LABEL" class="custom-select" extension="com_rsgallery2" default="default" useglobal="true"/>
         <field name="images_show_search" type="list" default="0" label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH" description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH_DESC">
           <option value="1">JYES</option>
           <option value="0">JNO</option>
@@ -45,31 +46,31 @@
         </field>
         <!-- ...   ... -->
         <field name="max_columns_in_images_view_j3x" type="number" label="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS" description="COM_RSGALLERY2_J3X_NUMBER_OF_THUMB_COLS_DESC" showon="images_column_arrangement_j3x:[OR]images_column_arrangement_j3x:1" useglobal="true" class="">
-                </field>
+				</field>
         <!--field
-                        name="images_row_arrangement"
-                        type="list"
-                        default="2"
-                        label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
-                        description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
-                        showon="images_column_arrangement:1"
-                >
-                    <option value="">JGLOBAL_USE_GLOBAL</option>
-                    <option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
-                    <option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
-                    <option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
-                </field-->
+								name="images_row_arrangement"
+								type="list"
+								default="2"
+								label="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE"
+								description="COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_DESC"
+								showon="images_column_arrangement:1"
+						>
+							<option value="">JGLOBAL_USE_GLOBAL</option>
+							<option value="0">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_AUTO</option>
+							<option value="1">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_ROW_COUNT</option>
+							<option value="2">COM_RSGALLERY2_CONFIG_IMAGES_ROW_TYPE_MAX_COUNT</option>
+						</field-->
         <!--field
-                        name="max_rows_in_images_view"
-                        type="number"
-                        default="5"
-                        label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
-                        description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
-                        showon="images_row_arrangement:1[AND]images_column_arrangement:1"
-                >
-                </field-->
+								name="max_rows_in_images_view"
+								type="number"
+								default="5"
+								label="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS"
+								description="COM_RSGALLERY2_CONFIG_IMAGES_MAX_ROWS_DESC"
+								showon="images_row_arrangement:1[AND]images_column_arrangement:1"
+						>
+						</field-->
         <field name="max_thumbs_in_images_view_j3x" type="number" label="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_VIEW" description="COM_RSGALLERY2_J3X_NUMBER_OF_IMAGES_ON_GALLERY_DESC" showon="images_row_arrangement:2[AND]images_column_arrangement:1[OR]images_column_arrangement:0" useglobal="true" class="">
-                </field>
+				</field>
         <!--			<field name="image_order_right_to_left"-->
         <!--				   type="radio"-->
         <!--				   label="COM_RSGALLERY2_MENU_GALLERY_ORDER_IMG_FROM_RIGHT"-->
@@ -113,13 +114,10 @@
         <!--					<option value="4">COM_RSGALLERY2_CONFIG_DESC_POS__BESIDE_THUMB</option>-->
         <!--				</field>-->
         <field name="images_show_description" type="radio" default="0" label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC" description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_DESC_DESC" useglobal="true" class="btn-group btn-group-yesno">
-                    &gt;
-                    <option value="1">JYES</option>
-                    <option value="0">JNO</option>
-                </field>
-      </fieldset>
-      <fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS">
-        <!--		grid, masonry smashingmagazine ...	 -->
+					&gt;
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
       </fieldset>
     </fields>
   </config>
