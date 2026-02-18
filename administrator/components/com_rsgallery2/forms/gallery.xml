@@ -128,7 +128,7 @@
 				name="description"
 				type="editor"
 				label="JGLOBAL_DESCRIPTION"
-				filter="ComponentHelper::filterText"
+				filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 				buttons="true"
 				hide="readmore,pagebreak"
 		/>

@@ -55,7 +55,7 @@
       </fieldset>
       <fieldset name="layout_thumbs" label="COM_RSGALLERY2_VIEW_IMAGES_LAYOUT_THUMBS" addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field">
         <!-- ToDo:		grid, masonry smashingmagazine ...	 -->
-        <field name="images_layout" type="LayoutGallery" label="JFIELD_ALT_LAYOUT_LABEL" class="custom-select" extension="com_rsgallery2" required="true" useglobal="true"/>
+        <field name="images_layout" type="LayoutGallery" label="JFIELD_ALT_LAYOUT_LABEL" class="custom-select" extension="com_rsgallery2" default="default" useglobal="true"/>
         <field name="images_show_search" type="list" default="0" label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH" description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_SEARCH_DESC">
           <option value="1">JYES</option>
           <option value="0">JNO</option>
