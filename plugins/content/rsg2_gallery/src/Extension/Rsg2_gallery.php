@@ -10,7 +10,6 @@
 
 namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Extension;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -31,13 +30,6 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
     protected const string MARKER = 'rsg2_gallery:';
 
-//  public function __construct(&$subject, $config = array())
-//  {
-//      $this->autoloadLanguage = true;
-//
-//      parent::__construct($subject, $config);
-//  }
-
     /**
      *
      * @return string[]
@@ -52,8 +44,20 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
     }
 
     /**
-     * This function processes the text of an article being presented on the site.
-     *  ToDo: More description
+     * Display gallery thumbs in (J3x) style in an article. The function
+     * scans given article text and replaces a marker definition with
+     * gallery thumbs HTML. The marker has the form
+     * {MARKER parameter:value, parameter:value, ...}
+     * where MARKER is defined above in PHP code
+     * No parameters are required, as the basic parameters are handled by
+     * the plugin. In most cases the gallery id definition is used "gid:8"
+     * Example: {rsg2_gallery: gid:8}
+     * Extreme example with parameters see plugin:
+     * {rsg2_gallery: gid:8, images_layout:ImagesAreaJ3x.default, max_columns_in_images_view_j3x:3 }
+     * Additional useful parameter
+     * - debugOnlyTitle:1,
+     * - isDebugSite:1
+     * - max_thumbs_in_images_view_j3x:12
      *
      * @param   ContentPrepareEvent  $event
      *
@@ -61,25 +65,18 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
      *
      * @since  5.1.0
      */
-    public function getRsg2_galleryDisplay(ContentPrepareEvent $event)
+    public function getRsg2_galleryDisplay(ContentPrepareEvent $event): bool
     {
-        /* This function processes the text of an article being presented on the site.
-        * It replaces any text of the form "{rsg2_gallery: ...}" ....
-        */
-        $context   = '';
-        $article   = '';
-        $usrParams = new Registry();
-
         try {
             // The line below restricts the functionality to the site (ie not on api)
-            // You may not want this, so you need to consider this in your own plugins
             if (!$this->getApplication()->isClient('site')) {
                 return false;
             }
 
-            // ToDo: check manual.joomla.org  -> plugins and change accordingly
-            // ToDo: Remove: temp test (article not found otherwiase)
-            //[$context, $article, $params, $page] = array_values($event->getArguments());
+            // use this format to get the arguments for both Joomla 4 and Joomla 5
+            // In Joomla 4 a generic Event is passed
+            // In Joomla 5 a concrete ContentPrepareEvent is passed
+            // [$context, $article, $params, $page] = array_values($event->getArguments());
 
             // support J4 (and J5)
             if (version_compare(JVERSION, '4.999999.999999', 'lt')) {
@@ -94,11 +91,6 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                 $page   = $event->getPage();
             }
 
-            // use this format to get the arguments for both Joomla 4 and Joomla 5
-            // In Joomla 4 a generic Event is passed
-            // In Joomla 5 a concrete ContentPrepareEvent is passed
-            // [$context, $article, $params, $page] = array_values($event->getArguments());
-
             // check for allowed content type
             if ($context !== "com_content.article"
                 && $context !== "com_content.featured"
@@ -112,24 +104,12 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                 return false;
             }
 
-            //--- replacement may exist --------------------------------------------------
-
-            $lastUserTestIdx = 0;
-
             //--- collect all appearances ---------------------------------------
 
             // Expression to search for.
-            // $pattern = "/{" . self::MARKER . "(.*?)}/i";
             $pattern = "/{" . self::MARKER . "(.*)}/i";
-            // $pattern = "/{" . self::MARKER . "(.+)}/i";
 
             preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
-
-//              // debug: there should be matches as text is searched
-//              if(empty ($matches)) {
-//                  echo "<br><br>!!! article has no rsg2_gallery !!!<br>";
-//                  return null;
-//              }
 
             //==========================================================================
             // Replace all matches
@@ -138,27 +118,16 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
             if ($matches) {
                 $app = Factory::getApplication();
 
-                //--- prepare extension data -------------------------------
-
-                $rsgComponent = $app->bootComponent('com_rsgallery2')->getMVCFactory();
-
-                // $rsgConfig = $rsgComponent->g();  // config params as an array
-                $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
-
-                //--- prepare plugin data -------------------------------
-
-                // $plgParams = $app->getConfig()->toArray();  // config params as an array
-                // ToDo: check params ? same ?
-                $appParams = $app->getConfig();  //
-                $evtParams = $params;  // event params
-                $plgParams = $this->params;  // config params as an array
-
                 //--- Load component language file -------------------------------
 
                 // $this->loadLanguage(); // load plugin language strings ? Not needed ?
                 $this->loadLanguage('com_rsgallery2', JPATH_SITE . '/components/com_rsgallery2');
 
+                //--- prepare rsg2 data -------------------------------
+
                 $helper = new Rsg2_galleryHelper();
+
+                //--- all matches --------------------------------------
 
                 foreach ($matches as $usrDefinition) {
                     $insertHtml = '';
@@ -167,21 +136,14 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                     $replaceLen   = strlen($replaceText);
                     $replaceStart = strpos($article->text, $usrDefinition[0]);
 
-                    $usrParams      = $this->extractUserParams($usrDefinition[1]);
-                    $externalParams = $rsgConfig->merge($plgParams);
-                    $useParams      = $externalParams->merge($usrParams);
+                    $usrParams = $this->extractUserParams($usrDefinition[1]);
+                    $plgParams = $this->params;
 
-                    // debugOnlyTitle: only tell about replacement
-                    $debugOnlyTitle = $usrParams->get('debugOnlyTitle', 0);
-                    if (!empty($debugOnlyTitle)) {
-                        $insertHtml .= '<h4>--- Rsg2_gallery replacement ---</h4>';
-                    } else {
-                        //======================================================
-                        // replacement
-                        //======================================================
+                    //======================================================
+                    // replacement
+                    //======================================================
 
-                        $insertHtml .= $helper->galleryImagesHtml($rsgComponent, $useParams);
-                    }
+                    $insertHtml .= $helper->galleryImagesHtml($usrParams, $plgParams);
 
                     //--- Perform the replacement ------------------------------
 
@@ -192,7 +154,6 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                         $replaceLen,
                     );
                 }
-
             }
 
             // only needed when exchange the complete article ?
@@ -209,17 +170,25 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
         return true;
     }
 
+
     /**
+     * Extract parameter given in marker area. The definition of a parameter
+     * is "name:value[, name:value][ ...]"
+     * Example:
+     * "gid:8, images_layout:ImagesAreaJ3x.default, max_columns_in_images_view_j3x:3"
+     * It returns the extracted parameters in the form of joomla registry.
+     * It may return an empty registry though
+     *
      * @param   string  $usrString
      *
-     * @return false|Registry
+     * @return Registry
      *
-     * @since version
+     * @throws \Exception
+     *
+     * @since 5.0.0
      */
-    private
-    function extractUserParams(
-        string $usrString,
-    ) {
+    private function extractUserParams(string $usrString): Registry
+    {
         $usrParams = new Registry();
 
         try {
@@ -244,10 +213,9 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
             $msg = Text::_('PLG_CONTENT_RSG2_GALLERY' . 'extractUserParams: "') . $usrString . '" Error (01): ' . $e->getMessage();
             $app = Factory::getApplication();
             $app->enqueueMessage($msg, 'error');
-
-            return false;
         }
 
         return $usrParams;
     }
+
 }

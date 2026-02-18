@@ -7,7 +7,7 @@
   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>
   <authorUrl>https://www.rsgallery2.org</authorUrl>
-  <version>5.0.0.6</version>
+  <version>5.0.0.7</version>
   <description>PLG_CONTENT_RSG2_GALLERY_XML_DESCRIPTION</description>
   <namespace path="src">Rsgallery2\Plugin\Content\Rsg2_gallery</namespace>
   <files>
