@@ -29,7 +29,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
     // only for lang strings shown on execution of plugin
     // protected $autoloadLanguage = true;  You should always load them manually
 
-    protected const MARKER = 'rsg2_gallery:';
+    protected const string MARKER = 'rsg2_gallery:';
 
 //  public function __construct(&$subject, $config = array())
 //  {
@@ -74,7 +74,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
             // The line below restricts the functionality to the site (ie not on api)
             // You may not want this, so you need to consider this in your own plugins
             if (!$this->getApplication()->isClient('site')) {
-                return;
+                return false;
             }
 
             // ToDo: check manual.joomla.org  -> plugins and change accordingly
@@ -104,12 +104,12 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
                 && $context !== "com_content.featured"
                 && $context !== "com_content.category"
             ) {
-                return;
+                return false;
             }
 
             // Nothing to change
             if (empty($article) || empty($article->text)) {
-                return;
+                return false;
             }
 
             //--- replacement may exist --------------------------------------------------

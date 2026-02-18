@@ -10,6 +10,7 @@
 
 namespace Rsgallery2\Plugin\Content\Rsg2_gallery\Helper;
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
