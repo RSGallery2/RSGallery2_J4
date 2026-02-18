@@ -17,6 +17,7 @@ use Joomla\CMS\Pagination\Pagination;
 use Joomla\Database\DatabaseAwareInterface;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
+
 use Rsgallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -81,7 +82,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         $images = [];
 
         try {
-            /* @var RSGallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel $model */
+            /* @var Galleryj3xModel $model */
             $model = $this->galleryModel;
 
             //--- state -------------------------------------------------
