@@ -138,9 +138,12 @@ if ($cols < 2) {
                             </div>
                         </div>
                         <div class="d-flex justify-content-center ">
-                            <span class="rsg2_thumb_name">
+                            <?php if ($params->images_show_title) : ?>
                                 <?php echo $image->title ?>
-                            </span>
+                            <?php endif ?>
+                            <?php if ($params->images_show_description) : ?>
+                                <div class="image_description"><?php echo $image->description ?></div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

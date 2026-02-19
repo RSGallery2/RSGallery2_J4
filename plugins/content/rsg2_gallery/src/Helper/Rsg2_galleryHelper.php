@@ -178,7 +178,10 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
             //--- display pagination ----------
 
+            //$testHtml = $this->pagination->getListFooter();
             $html[] = '        ' . $this->pagination->getListFooter();
+            //$testHtml2 = $this->pagination->getPagesLinks();
+            //$html[] = '        ' . $this->pagination->getPagesLinks();
 
             $html[] = '    </div>';
 

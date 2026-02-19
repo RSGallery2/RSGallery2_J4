@@ -12,6 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\ImagesAreaJ3x;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Language\Text;
@@ -59,7 +60,7 @@ if (!empty($images)) {
         if (!empty($image->isHasNoImages)) {
             $image->UrlOriginalFile = $noImageUrl;
             $image->UrlDisplayFiles = $noImageUrl;
-            $image->UrlThumbFile = $noImageUrl;
+            $image->UrlThumbFile    = $noImageUrl;
         }
 
 //    else {
@@ -121,44 +122,49 @@ if ($cols < 2) {
         <h2><?php
             //echo Text::_('Gallery (ID ' . $galleryId . ') not defined');
             echo Text::_("Gallery name not defined in this situation");
-        ?> </h2>
+            ?> </h2>
     <?php endif; ?>
     <table id="rsg2-thumbsList">
         <tbody>
 
-        <?php
-        foreach ($images as $idx => $image) {
-            $row = $idx % $cols;
+            <?php
+            foreach ($images as $idx => $image) {
+
+                $row = $idx % $cols;
             ?>
 
-            <?php if ($row == 0) : ?>
-        <tr>
-            <?php endif ?>
+                <?php if ($row == 0) : ?>
+                    <tr>
+                <?php endif ?>
 
-            <td>
+                        <td>
+                           <div class="shadow-box">
+                                <div class="img-shadow">
+                                    <a href="<?php echo $image->UrlImageAsInline ?>">
+                                        <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
+                                    </a>
+                                </div>
+                            </div>
 
-                <div class="shadow-box">
-                    <div class="img-shadow">
-                        <a href="<?php echo $image->UrlImageAsInline ?>">
-                            <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
-                        </a>
-                    </div>
-                </div>
+                            <div class="rsg2-clr"></div>
 
-                <div class="rsg2-clr"></div>
-                <span class="rsg2_thumb_name">
-                        <?php echo $image->title ?>
-                    </span>
+                            <span class="rsg2_thumb_name">
+                                <?php if ($params->images_show_title) : ?>
+                                    <?php echo $image->title ?>
+                                <?php endif ?>
+                                <?php if ($params->images_show_description) : ?>
+                                    <div class="image_description"><?php echo $image->description ?></div>
+                                <?php endif; ?>
+                            </span>
+                        </td>
 
-            </td>
-
-            <?php if ($row == $cols - 1) : ?>
-        <tr>
-            <?php endif ?>
+                <?php if ($row == $cols - 1) : ?>
+                    <tr>
+                <?php endif ?>
 
             <?php
-        }
-        ?>
+            }
+            ?>
 
         </tbody>
     </table>
@@ -172,84 +178,84 @@ if ($cols < 2) {
     </div>
 
     <?php /**
-    <?php if (!empty($isDebugSite)): ?>
-        <h3>RSGallery2 j3x images area J3x layout III</h3>
-        <hr>
-    <?php endif; ?>
-
-    <div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-
-        <?php
-        foreach ($images as $idx => $image) {
-            ?>
-            <figure>
-                <img src="<?php echo $image->UrlThumbFile ?>"
-                     alt="<?php echo $image->name; ?>"
-                     class="img-thumbnail rsg2_gallery__images_image"
-                     data-target="#rsg2_carousel"
-                     data-slide-to="<?php echo $idx ?>"bs-
-                >
-                <figcaption><?php echo $image->title; ?></figcaption>
-            </figure>
-            <?php
-        }
-        ?>
-    </div>
-
-    <!-- Modal markup: https://getbootstrap.com/docs/4.4/components/modal/ -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <!-- Carousel markup goes here -->
-
-                    <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
-
-                        <div class="carousel-inner">
-
-                            <?php
-                            $isActive="active";
-                            foreach ($images as $image) {
-                                ?>
-
-                                <div class="carousel-item <?php echo $isActive; ?>" >
-                                    <div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">
-                                        <!--                                        <img class="d-block " src="--><?php //echo $image->UrlDisplayFiles[400] ?><!--"-->
-                                        <img class="d-block " src="<?php echo $image->UrlOriginalFile ?>"
-                                             alt="<?php echo $image->nam; ?>"
-                                        >
-                                    </div>
-                                </div>
-
-                                <?php
-                                $isActive="";
-                            }
-                            ?>
-
-
-                            <a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    /**/ ?>
+     * <?php if (!empty($isDebugSite)): ?>
+     * <h3>RSGallery2 j3x images area J3x layout III</h3>
+     * <hr>
+     * <?php endif; ?>
+     *
+     * <div class="rsg2_gallery__images" id="gallery"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+     *
+     * <?php
+     * foreach ($images as $idx => $image) {
+     * ?>
+     * <figure>
+     * <img src="<?php echo $image->UrlThumbFile ?>"
+     * alt="<?php echo $image->name; ?>"
+     * class="img-thumbnail rsg2_gallery__images_image"
+     * data-target="#rsg2_carousel"
+     * data-slide-to="<?php echo $idx ?>"bs-
+     * >
+     * <figcaption><?php echo $image->title; ?></figcaption>
+     * </figure>
+     * <?php
+     * }
+     * ?>
+     * </div>
+     *
+     * <!-- Modal markup: https://getbootstrap.com/docs/4.4/components/modal/ -->
+     * <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+     * <div class="modal-dialog" role="document">
+     * <div class="modal-content">
+     * <div class="modal-header">
+     * <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+     * <span aria-hidden="true">×</span>
+     * </button>
+     * </div>
+     * <div class="modal-body">
+     *
+     * <!-- Carousel markup goes here -->
+     *
+     * <div id="rsg2_carousel" class="carousel slide" data-ride="carousel">
+     *
+     * <div class="carousel-inner">
+     *
+     * <?php
+     * $isActive="active";
+     * foreach ($images as $image) {
+     * ?>
+     *
+     * <div class="carousel-item <?php echo $isActive; ?>" >
+     * <div class="d-flex align-items-center justify-content-center min-vw-100  min-vh-100">
+     * <!--                                        <img class="d-block " src="--><?php //echo $image->UrlDisplayFiles[400] ?><!--"-->
+     * <img class="d-block " src="<?php echo $image->UrlOriginalFile ?>"
+     * alt="<?php echo $image->nam; ?>"
+     * >
+     * </div>
+     * </div>
+     *
+     * <?php
+     * $isActive="";
+     * }
+     * ?>
+     *
+     *
+     * <a class="carousel-control-prev" href="#rsg2_carousel" role="button" data-slide="prev">
+     * <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+     * <span class="sr-only">Previous</span>
+     * </a>
+     * <a class="carousel-control-next" href="#rsg2_carousel" role="button" data-slide="next">
+     * <span class="carousel-control-next-icon" aria-hidden="true"></span>
+     * <span class="sr-only">Next</span>
+     * </a>
+     * </div>
+     * </div>
+     *
+     * <div class="modal-footer">
+     * <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+     * </div>
+     * </div>
+     * </div>
+     * </div>
+     * </div>
+     * /**/ ?>
 </div>
