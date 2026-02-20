@@ -44,7 +44,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     protected $rsgComponent;
 
     /* @var Galleryj3xModel */
-    protected $galleryModel;
+    protected $galleryJ3xModel;
 
     /* @var SiteApplication */
     protected $app;
@@ -66,7 +66,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
         //--- rsg2 site gallery model  -----------------
 
-        $this->galleryModel = $this->rsgComponent->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
+        $this->galleryJ3xModel = $this->rsgComponent->createModel('GalleryJ3x', 'Site', ['ignore_request' => true]);
 
         //--- rsg2 component config -----------------
 
@@ -119,7 +119,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
             //--- collect images and gallery data-----------------------------------------------
 
             $images  = $this->getImagesOfGallery($gid, $params);
-            $gallery = $this->galleryModel->galleryData($gid);
+            $gallery = $this->galleryJ3xModel->galleryData($gid);
 
             //--- selected layout -----------------------------------------------
 
@@ -178,10 +178,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
             //--- display pagination ----------
 
-            //$testHtml = $this->pagination->getListFooter();
             $html[] = '        ' . $this->pagination->getListFooter();
-            //$testHtml2 = $this->pagination->getPagesLinks();
-            //$html[] = '        ' . $this->pagination->getPagesLinks();
 
             $html[] = '    </div>';
 
@@ -207,44 +204,45 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
         $images = [];
 
         try {
-            $model = $this->galleryModel;
+            $galleryJ3xModel = $this->galleryJ3xModel;
 
             //--- state -------------------------------------------------
 
-            $state = $model->getState();
-
-            // Set application parameters in model
+            // Set application parameters in galleryj3xModel
             // $appParams = $app->getParams();
 
-            $model->setState('params', $params);
+            $galleryJ3xModel->setState('params', $params);
 
-            $model->setState('list.start', 0);
-            $model->setState('filter.published', 1);
+            $galleryJ3xModel->setState('list.start', 0);
+            $galleryJ3xModel->setState('filter.published', 1);
 
             $limit = $params->get('max_thumbs_in_images_view_j3x');
-            $model->setState('list.limit', $limit);
+            $galleryJ3xModel->setState('list.limit', $limit);
 
             // This module does not use tags data
-            $model->setState('load_tags', false);
+            $galleryJ3xModel->setState('load_tags', false);
 
             //--- state gid -------------------------------------------------
 
-            $model->setState('gallery.id', $gid);
+            $galleryJ3xModel->setState('gallery.id', $gid);
             // ToDo: remove ?
-            $model->setState('gid', $gid);
+            $galleryJ3xModel->setState('gid', $gid);
 
             //--- images -----------------------------------------------------------------------
 
-            $images = $this->galleryModel->getItems();
+            $images = $this->galleryJ3xModel->getItems();
 
             if (!empty($images)) {
                 // Add image paths, image params ...
-                $data = $this->galleryModel->AddLayoutData($images);
+                $data = $this->galleryJ3xModel->AddLayoutData($images);
             }
 
             //--- pagination -------------------------------------------------
 
-            $this->pagination = $model->getPagination();
+            $this->pagination = $galleryJ3xModel->getPagination();
+
+            // patch URL of pagination for gallery elements
+            $this->patchPagination($gid);
 
             // Flag indicates to not add limitstart=0 to URL
             $this->pagination->hideEmptyLimitstart = true;
@@ -257,16 +255,40 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     }
 
 
-    /**
-     *
-     * @return string
-     *
-     * @since  5.1.0
-     */
-    public function getText()
-    {
-        $msg = "    --- Rsg2_gallery module ----- ";
+//    /**
+//     *
+//     * @return string
+//     *
+//     * @since  5.1.0
+//     */
+//    public function getText()
+//    {
+//        $msg = "    --- Rsg2_gallery module ----- ";
+//
+//        return $msg;
+//    }
 
-        return $msg;
+    /**
+     * Exchange pagination parameter for galleryj3x view
+     *
+     * @since 5.0.1.0
+     */
+    private function patchPagination(int $gid) {
+
+
+        $this->pagination->setAdditionalUrlParam ('option', 'com_rsgallery2'); // option=com_rsgallery2&view=galleryj3x&id=8&Itemid=241
+        $this->pagination->setAdditionalUrlParam ('view', 'galleryj3x');        // option=com_rsgallery2&view=galleryj3&layout=blog&id=8&Itemid=101&limitstart=7
+        $this->pagination->setAdditionalUrlParam ('id', strval($gid));         // option=com_rsgallery2&view=galleryj3&id=8&Itemid=101&limitstart=7
+        $this->pagination->setAdditionalUrlParam ('layout', null); // layoutName = 'ImagesAreaJ3x.default';
+        // $this->pagination->setAdditionalUrlParam ('layout', 'ImagesAreaJ3x'); // layoutName = 'ImagesAreaJ3x.default';
+        // $this->pagination->setAdditionalUrlParam ('layout', 'ImagesAreaJ3x.default'); // layoutName = 'ImagesAreaJ3x.default';
+        // $this->pagination->setAdditionalUrlParam ('contenttype', 'gallery');
+
+// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=8
+// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=8&Itemid=241
+// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3&id=8&Itemid=101&limitstart=7
+// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=21&Itemid=241&limitstart=12
+
+
     }
 }

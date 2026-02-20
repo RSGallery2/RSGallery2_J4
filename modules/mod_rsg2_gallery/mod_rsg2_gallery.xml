@@ -2,12 +2,12 @@
 <extension type="module" client="site" method="upgrade" version="4.0">
   <name>MOD_RSG2_GALLERY</name>
   <author>RSGallery2 Team</author>
-  <creationDate>2026.02.18</creationDate>
+  <creationDate>2026.02.20</creationDate>
   <copyright>(c) 2020-2024 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later;</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>
   <authorUrl>https://www.rsgallery2.org</authorUrl>
-  <version>5.0.0.5</version>
+  <version>5.0.0.6</version>
   <description>MOD_RSG2_GALLERY_XML_DESCRIPTION</description>
   <namespace path="src">Rsgallery2\Module\Rsg2_gallery</namespace>
   <scriptfile>install_mod.php</scriptfile>
