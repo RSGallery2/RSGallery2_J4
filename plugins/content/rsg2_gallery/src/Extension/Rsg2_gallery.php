@@ -28,7 +28,8 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
     // only for lang strings shown on execution of plugin
     // protected $autoloadLanguage = true;  You should always load them manually
 
-    protected const string MARKER = 'rsg2_gallery:';
+//    protected const string MARKER = 'rsg2_gallery:';
+    protected const MARKER = 'rsg2_gallery:';
 
     /**
      *
