@@ -74,7 +74,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     }
 
     /**
-     * create HTML for image thumbs of gallery
+     * Create HTML for image thumbs of gallery
      * use rsg2 config, plg parameter and user parameter from article text
      *
      * @param   Registry  $usrParams
@@ -255,19 +255,6 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
     }
 
 
-//    /**
-//     *
-//     * @return string
-//     *
-//     * @since  5.1.0
-//     */
-//    public function getText()
-//    {
-//        $msg = "    --- Rsg2_gallery module ----- ";
-//
-//        return $msg;
-//    }
-
     /**
      * Exchange pagination parameter for galleryj3x view
      *
@@ -275,20 +262,9 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
      */
     private function patchPagination(int $gid) {
 
-
         $this->pagination->setAdditionalUrlParam ('option', 'com_rsgallery2'); // option=com_rsgallery2&view=galleryj3x&id=8&Itemid=241
         $this->pagination->setAdditionalUrlParam ('view', 'galleryj3x');        // option=com_rsgallery2&view=galleryj3&layout=blog&id=8&Itemid=101&limitstart=7
         $this->pagination->setAdditionalUrlParam ('id', strval($gid));         // option=com_rsgallery2&view=galleryj3&id=8&Itemid=101&limitstart=7
         $this->pagination->setAdditionalUrlParam ('layout', null); // layoutName = 'ImagesAreaJ3x.default';
-        // $this->pagination->setAdditionalUrlParam ('layout', 'ImagesAreaJ3x'); // layoutName = 'ImagesAreaJ3x.default';
-        // $this->pagination->setAdditionalUrlParam ('layout', 'ImagesAreaJ3x.default'); // layoutName = 'ImagesAreaJ3x.default';
-        // $this->pagination->setAdditionalUrlParam ('contenttype', 'gallery');
-
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=8
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=8&Itemid=241
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3&id=8&Itemid=101&limitstart=7
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=21&Itemid=241&limitstart=12
-
-
     }
 }
