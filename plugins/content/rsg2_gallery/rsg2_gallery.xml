@@ -2,12 +2,12 @@
 <extension type="plugin" group="content" version="4.0" method="upgrade">
   <name>plg_content_rsg2_gallery</name>
   <author>RSGallery2 Team</author>
-  <creationDate>2026.02.21</creationDate>
+  <creationDate>2026.02.22</creationDate>
   <copyright>(c) 2021-2024 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>
   <authorUrl>https://www.rsgallery2.org</authorUrl>
-  <version>5.0.0.9</version>
+  <version>5.0.0.10</version>
   <description>PLG_CONTENT_RSG2_GALLERY_XML_DESCRIPTION</description>
   <namespace path="src">Rsgallery2\Plugin\Content\Rsg2_gallery</namespace>
   <files>

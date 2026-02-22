@@ -611,10 +611,8 @@ class GalleryModel extends ListModel
         // $this->setState('list.limit', $value);
         $this->setState('list.limit', $max_thumbs_in_images_view_j3x);
 
-        //$value = $app->input->get('limitstart', 0, 'uint');
-        //$this->setState('list.start', $value);
         $offset = $app->input->get('limitstart', 0, 'uint');
-        $this->setState('list.offset', $offset);
+        $this->setState('list.start', $offset);
 
         $orderCol = $app->input->get('filter_order', 'a.ordering');
 
@@ -678,7 +676,7 @@ class GalleryModel extends ListModel
 
         $id .= ':' . $this->getState('gallery.id');
         $id .= ':' . $this->getState('list.limit');
-        $id .= ':' . $this->getState('list.offset');
+        $id .= ':' . $this->getState('list.start');
         $id .= ':' . $this->getState('list.ordering');
         $id .= ':' . $this->getState('list.direction');
         $id .= ':' . $this->getState('filter.condition');
