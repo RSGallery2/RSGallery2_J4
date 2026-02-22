@@ -94,8 +94,10 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
             $model->setState('params', $params);
 
-            $model->setState('list.start', 0);
             $model->setState('filter.published', 1);
+
+            $offset = $app->input->get('limitstart', 0, 'uint');
+            $model->setState('list.start', $offset);
 
             $limit = $params->get('max_thumbs_in_images_view_j3x');
             $model->setState('list.limit', $limit);
@@ -127,7 +129,6 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
             // Flag indicates to not add limitstart=0 to URL
             $this->pagination->hideEmptyLimitstart = true;
-
         } catch (\RuntimeException $e) {
             // ToDO: Message more explicit
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
@@ -315,35 +316,68 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 //        return $msg;
 //    }
 
-//    public function getText()
-//    {
-//        $msg = "    --- Rsg2_gallery plugin ----- ";
-//
-//        return $msg;
-//    }
-
     /**
      * Exchange pagination parameter for galleryj3x view
      *
      * @since 5.0.1.0
      */
-    private function patchPagination(int $gid) {
-
-
-        $this->pagination->setAdditionalUrlParam ('option', 'com_rsgallery2'); // option=com_rsgallery2&view=galleryj3x&id=8&Itemid=241
-        $this->pagination->setAdditionalUrlParam ('view', 'galleryj3x');        // option=com_rsgallery2&view=galleryj3&layout=blog&id=8&Itemid=101&limitstart=7
-        $this->pagination->setAdditionalUrlParam ('id', strval($gid));         // option=com_rsgallery2&view=galleryj3&id=8&Itemid=101&limitstart=7
-        $this->pagination->setAdditionalUrlParam ('layout', null); // layoutName = 'ImagesAreaJ3x.default';
-        // $this->pagination->setAdditionalUrlParam ('layout', 'ImagesAreaJ3x'); // layoutName = 'ImagesAreaJ3x.default';
-        // $this->pagination->setAdditionalUrlParam ('layout', 'ImagesAreaJ3x.default'); // layoutName = 'ImagesAreaJ3x.default';
-        // $this->pagination->setAdditionalUrlParam ('contenttype', 'gallery');
-
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=8
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=8&Itemid=241
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3&id=8&Itemid=101&limitstart=7
-// http://127.0.0.1/Joomla5x/index.php?option=com_rsgallery2&view=galleryj3x&id=21&Itemid=241&limitstart=12
-
-
+    private function patchPagination(int $gid)
+    {
+        $this->pagination->setAdditionalUrlParam('option', 'com_rsgallery2'); // option=com_rsgallery2&view=galleryj3x&id=8&Itemid=241
+        $this->pagination->setAdditionalUrlParam('view', 'galleryj3x');        // option=com_rsgallery2&view=galleryj3&layout=blog&id=8&Itemid=101&limitstart=7
+        $this->pagination->setAdditionalUrlParam('id', strval($gid));         // option=com_rsgallery2&view=galleryj3&id=8&Itemid=101&limitstart=7
+        $this->pagination->setAdditionalUrlParam('layout', null); // layoutName = 'ImagesAreaJ3x.default';
     }
-
 }
+
+// by KI
+//    public static function getItemsAjax() {
+//        $app = Factory::getApplication();
+//        $limitstart = $app->input->get('limitstart', 0, 'uint');
+//        $limit = 5; // Oder aus $params laden
+//
+//        // Datenbank-Abfrage mit Limit
+//        $db = Factory::getDbo();
+//        $query = $db->getQuery(true)->select('*')->from('#__content');
+//        $items = $db->setQuery($query, $limitstart, $limit)->loadObjectList();
+//
+//        // HTML-Output generieren (oder JSON zurückgeben)
+//        $html = '';
+//        foreach ($items as $item) {
+//            $html .= '<li>' . $item->title . '</li>';
+//        }
+//
+//        return $html;
+//    }
+// javascript
+//// In deiner tmpl/default.php oder einer separaten JS-Datei
+//async function loadPage(start) {
+//    const url = `index.php?option=com_ajax&module=meinmodul&method=items&format=json&limitstart=${start}`;
+//
+//    try {
+//        const response = await fetch(url);
+//        const result = await response.json();
+//
+//        if (result.success) {
+//            // Container mit neuem HTML füllen
+//            document.getElementById('module-content-container').innerHTML = result.data;
+//        }
+//    } catch (error) {
+//        console.error('Fehler beim Laden:', error);
+//    }
+//}
+//tmpl/default.php
+// <div id="mein-modul-wrapper">
+//    <ul id="module-content-container">
+//        <!-- Initiale Items hier laden -->
+//        <?php echo MeinModulHelper::getItemsAjax(); ?>
+//    </ul>
+//
+//    <div class="ajax-pagination">
+//        <button onclick="loadPage(0)">1</button>
+//        <button onclick="loadPage(5)">2</button>
+//        <button onclick="loadPage(10)">3</button>
+//    </div>
+//</div>
+//
+
