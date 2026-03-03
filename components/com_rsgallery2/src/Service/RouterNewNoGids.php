@@ -23,10 +23,8 @@ use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Joomla\CMS\Component\Router\Rules\MenuRules;
 use Joomla\CMS\Component\Router\Rules\NomenuRules;
 use Joomla\CMS\Component\Router\Rules\StandardRules;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Database\ParameterType;
 
 /**
  * Routing class of com_rsgallery2
@@ -63,7 +61,7 @@ class Router extends RouterView
         SiteApplication $app,
         AbstractMenu $menu,
         CategoryFactoryInterface $categoryFactory,
-        DatabaseInterface $db
+        DatabaseInterface $db,
     ) {
         $params      = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool)$params->get('sef_ids');
@@ -118,7 +116,7 @@ class Router extends RouterView
 
         // rules for galleries,
         $gallery = new RouterViewConfiguration('gallery');
-        // $gallery->setKey('id');
+        $gallery->setKey('id');
         $this->registerView($gallery);
 
         // rules for images
@@ -128,7 +126,7 @@ class Router extends RouterView
 
         // rules for slideshow
         $slideshow = new RouterViewConfiguration('slideshow');
-        // $slideshow->setKey('id');
+        $slideshow->setKey('id');
         $this->registerView($slideshow);
 
         // rules for develop
@@ -160,36 +158,45 @@ class Router extends RouterView
      *
      * @since  5.1.0
      */
-    public function getRootgalleriesJ3xSegment($gid, $query)
+    public function getRootgalleriesJ3xSegment($id, $query)
     {
-        if (!strpos($gid, ':')) {
-            // root has no gallery ID
-            // ToDo: $path[0] = '1:root'; if ($this->noIDs) { and below
-            // parent gallery
-            if ($gid > 0) {
-                $db      = Factory::getContainer()->get(DatabaseInterface::class);
-                $dbquery = $db->createQuery();
+//// before 2026.02.19
+//        if (!strpos($gid, ':')) {
+//            // root has no gallery ID
+//            // ToDo: $path[0] = '1:root'; if ($this->noIDs) { and below
+//            // parent gallery
+//            if ($gid > 0) {
+//                $db      = Factory::getContainer()->get(DatabaseInterface::class);
+//                $dbquery = $db->createQuery();
+//
+//                $dbquery
+//                    ->select($dbquery->qn('alias'))
+//                    ->from($db->qn('__rsg2_galleries'))
+//                    ->where('id = ' . $db->q($gid));
+//
+//                $db->setQuery($dbquery);
+//
+//                $gid .= ':' . $db->loadResult();
+//
+//                [$void, $segment] = explode(':', $gid, 2);
+//            }
+//        }
+//
+//        if ($this->noIDs) {
+//            [$void, $segment] = explode(':', $gid, 2);
+//
+//            return [$void => $segment];
+//        }
+//
+//        return [(int)$gid => $gid];
 
-                $dbquery
-                    ->select($dbquery->qn('alias'))
-                    ->from($db->qn('__rsg2_galleries'))
-                    ->where('id = ' . $db->q($gid));
-
-                $db->setQuery($dbquery);
-
-                $gid .= ':' . $db->loadResult();
-
-                [$void, $segment] = explode(':', $gid, 2);
-            }
-        }
-
-        if ($this->noIDs && strpos($gid, ':')) {
-            [$void, $segment] = explode(':', $gid, 2);
+        if ($this->noIDs && strpos($id, ':')) {
+            [$void, $segment] = explode(':', $id, 2);
 
             return [$void => $segment];
         }
 
-        return [(int)$gid => $gid];
+        return [(int)$id => $id];
     }
 
     /**
@@ -231,32 +238,41 @@ class Router extends RouterView
      *
      * @since  5.1.0
      */
-    public function getGalleriesJ3xSegment($gid, $query)
+    public function getGalleriesJ3xSegment($id, $query)
     {
-        if (!strpos($gid, ':')) {
-            // parent gallery
-            if ($gid > 0) {
-                $db      = Factory::getContainer()->get(DatabaseInterface::class);
-                $dbquery = $db->createQuery();
+//// before 2026.02.19
+//        if (!strpos($gid, ':')) {
+//            // parent gallery
+//            if ($gid > 0) {
+//                $db      = Factory::getContainer()->get(DatabaseInterface::class);
+//                $dbquery = $db->createQuery();
+//
+//                $dbquery
+//                    ->select($dbquery->qn('alias'))
+//                    ->from($db->qn('#__rsg2_galleries'))
+//                    ->where('id = ' . $db->q($gid));
+//
+//                $db->setQuery($dbquery);
+//
+//                $gid .= ':' . $db->loadResult();
+//            }
+//        }
+//
+//        if ($this->noIDs) {
+//            [$void, $segment] = explode(':', $gid, 2);
+//
+//            return [$void => $segment];
+//        }
+//
+//        return [(int)$gid => $gid];
 
-                $dbquery
-                    ->select($dbquery->qn('alias'))
-                    ->from($db->qn('#__rsg2_galleries'))
-                    ->where('id = ' . $db->q($gid));
-
-                $db->setQuery($dbquery);
-
-                $gid .= ':' . $db->loadResult();
-            }
-        }
-
-        if ($this->noIDs) {
-            [$void, $segment] = explode(':', $gid, 2);
+        if ($this->noIDs && strpos($id, ':')) {
+            [$void, $segment] = explode(':', $id, 2);
 
             return [$void => $segment];
         }
 
-        return [(int)$gid => $gid];
+        return [(int)$id => $id];
     }
 
     /**
@@ -297,30 +313,39 @@ class Router extends RouterView
      *
      * @since  5.1.0
      */
-    public function getGalleryJ3xSegment($gid, $query)
+    public function getGalleryJ3xSegment($id, $query)
     {
-        if (!strpos($gid, ':')) {
-            if ($gid > 0) {
-                $gid     = (int)$gid;
-                $dbquery = $this->db->createQuery();
-                $dbquery
-                    ->select($this->db->quoteName('alias'))
-                    ->from($this->db->quoteName('#__rsg2_galleries'))
-                    ->where($this->db->quoteName('id') . ' = :id')
-                    ->bind(':id', $gid, ParameterType::INTEGER);
-                $this->db->setQuery($dbquery);
+//// before 2026.02.19
+//        if (!strpos($gid, ':')) {
+//            if ($gid > 0) {
+//                $gid     = (int)$gid;
+//                $dbquery = $this->db->createQuery();
+//                $dbquery
+//                    ->select($this->db->quoteName('alias'))
+//                    ->from($this->db->quoteName('#__rsg2_galleries'))
+//                    ->where($this->db->quoteName('id') . ' = :id')
+//                    ->bind(':id', $gid, ParameterType::INTEGER);
+//                $this->db->setQuery($dbquery);
+//
+//                $gid .= ':' . $this->db->loadResult();
+//            }
+//        }
+//
+//        if ($this->noIDs) {
+//            [$void, $segment] = explode(':', $gid, 2);
+//
+//            return [$void => $segment];
+//        }
+//
+//        return [(int)$gid => $gid];
 
-                $gid .= ':' . $this->db->loadResult();
-            }
-        }
-
-        if ($this->noIDs && strpos($gid, ':')) {
-            [$void, $segment] = explode(':', $gid, 2);
+        if ($this->noIDs && strpos($id, ':')) {
+            [$void, $segment] = explode(':', $id, 2);
 
             return [$void => $segment];
         }
 
-        return [(int)$gid => $gid];
+        return [(int)$id => $id];
     }
 
     /**
@@ -360,30 +385,39 @@ class Router extends RouterView
      *
      * @since  5.1.0
      */
-    public function getImagewallj3xSegment($gid, $query)
+    public function getImagewallj3xSegment($id, $query)
     {
-        if (!strpos($gid, ':')) {
-            if ($gid > 0) {
-                $gid     = (int)$gid;
-                $dbquery = $this->db->createQuery();
-                $dbquery
-                    ->select($this->db->quoteName('alias'))
-                    ->from($this->db->quoteName('#__rsg2_galleries'))
-                    ->where($this->db->quoteName('id') . ' = :id')
-                    ->bind(':id', $gid, ParameterType::INTEGER);
-                $this->db->setQuery($dbquery);
+//// before 2026.02.19
+//        if (!strpos($gid, ':')) {
+//            if ($gid > 0) {
+//                $gid     = (int)$gid;
+//                $dbquery = $this->db->createQuery();
+//                $dbquery
+//                    ->select($this->db->quoteName('alias'))
+//                    ->from($this->db->quoteName('#__rsg2_galleries'))
+//                    ->where($this->db->quoteName('id') . ' = :id')
+//                    ->bind(':id', $gid, ParameterType::INTEGER);
+//                $this->db->setQuery($dbquery);
+//
+//                $gid .= ':' . $this->db->loadResult();
+//            }
+//        }
+//
+//        if ($this->noIDs) {
+//            [$void, $segment] = explode(':', $gid, 2);
+//
+//            return [$void => $segment];
+//        }
+//
+//        return [(int)$gid => $gid];
 
-                $gid .= ':' . $this->db->loadResult();
-            }
-        }
-
-        if ($this->noIDs && strpos($gid, ':')) {
-            [$void, $segment] = explode(':', $gid, 2);
+        if ($this->noIDs && strpos($id, ':')) {
+            [$void, $segment] = explode(':', $id, 2);
 
             return [$void => $segment];
         }
 
-        return [(int)$gid => $gid];
+        return [(int)$id => $id];
     }
 
     /**
@@ -425,18 +459,18 @@ class Router extends RouterView
      *
      * @since  5.1.0
      */
-    public function getSlideshowJ3xSegment($gid, $query)
+    public function getSlideshowJ3xSegment($id, $query)
     {
 //// before 2026.02.19
 //        return [(int)$gid => $gid];
 
-        if ($this->noIDs && strpos($gid, ':')) {
-            [$void, $segment] = explode(':', $gid, 2);
+        if ($this->noIDs && strpos($id, ':')) {
+            [$void, $segment] = explode(':', $id, 2);
 
             return [$void => $segment];
         }
 
-        return [(int)$gid => $gid];
+        return [(int)$id => $id];
     }
 
     /**
@@ -464,6 +498,7 @@ class Router extends RouterView
      */
     public function getSlidepagej3xSegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
@@ -490,6 +525,7 @@ class Router extends RouterView
      */
     public function getImg_idSegment($img_id, $query)
     {
+//// before 2026.02.19
         return [(int)$img_id => $img_id];
     }
 
@@ -519,6 +555,7 @@ class Router extends RouterView
      */
     public function getYGalleriesJ3xSegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
@@ -548,6 +585,7 @@ class Router extends RouterView
      */
     public function getAGalleriesJ3xSegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
@@ -577,6 +615,7 @@ class Router extends RouterView
      */
     public function getGalleriesSegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
@@ -606,6 +645,7 @@ class Router extends RouterView
      */
     public function getZBGalleriesJ3xSegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
@@ -635,6 +675,7 @@ class Router extends RouterView
      */
     public function getGallerySegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
@@ -664,6 +705,7 @@ class Router extends RouterView
      */
     public function getSlideshowSegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
@@ -693,6 +735,7 @@ class Router extends RouterView
      */
     public function getImagesSegment($gid, $query)
     {
+//// before 2026.02.19
         return [(int)$gid => $gid];
     }
 
