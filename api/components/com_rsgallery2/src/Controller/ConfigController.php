@@ -10,10 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
-use Joomla\CMS\Filter\InputFilter;
-use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\MVC\Controller\ApiController;
-use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\String\Inflector;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -51,11 +48,12 @@ class ConfigController extends ApiController
      *
      * @return $this|\Joomgallery\Component\Joomgallery\Api\Controller\VersionController
      *
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     public function displayList($cachable = false, $urlparams = [])
     {
-        $viewType   = $this->app->getDocument()->getType();
-        $viewName   = $this->input->get('view', $this->default_view);
+        $viewType = $this->app->getDocument()->getType();
+        $viewName = $this->input->get('view', $this->default_view);
         $viewLayout = $this->input->get('layout', 'default', 'string');
 
         try {
@@ -64,7 +62,7 @@ class ConfigController extends ApiController
                 $viewName,
                 $viewType,
                 '',
-                ['base_path' => $this->basePath, 'layout' => $viewLayout, 'contentType' => $this->contentType]
+                ['base_path' => $this->basePath, 'layout' => $viewLayout, 'contentType' => $this->contentType],
             );
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());

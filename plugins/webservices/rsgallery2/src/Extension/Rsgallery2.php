@@ -27,136 +27,131 @@ use Joomla\Router\Route;
  */
 final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 {
-  /**
-   * Returns an array of events this subscriber will listen to.
-   *
-   * @return  array
-   *
-   * @since   5.1.0
-   */
+    /**
+     * Returns an array of events this subscriber will listen to.
+     *
+     * @return  array
+     *
+     * @since   5.1.0
+     */
     public static function getSubscribedEvents(): array
     {
         return [
-        'onBeforeApiRoute' => 'onBeforeApiRoute',
+            'onBeforeApiRoute' => 'onBeforeApiRoute',
         ];
     }
 
-  /**
-   * Registers com_rsgallery's API's routes in the application
-   *
-   * @param   BeforeApiRouteEvent  $event  The event object
-   *
-   * @return  void
-   *
-   * @since   4.0.0
-   */
+    /**
+     * Registers com_rsgallery's API's routes in the application
+     *
+     * @param   BeforeApiRouteEvent  $event  The event object
+     *
+     * @return  void
+     *
+     * @since   4.0.0
+     */
     public function onBeforeApiRoute(BeforeApiRouteEvent $event): void
     {
         $router = $event->getRouter();
 
         $defaults = ['component' => 'com_rsgallery2'];
-      // $getDefaults = array_merge(['public' => false], $defaults);
-        $getDefaults = array_merge(['public' => false], $defaults); // ToDo: Remove when tests finished, enabless access without token
+        // $getDefaults = array_merge(['public' => false], $defaults);
+        $getDefaults = array_merge(['public' => false], $defaults);
 
-  //          new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
-  //              ['slug' => '(.*)'], ['option' => 'com_example']),
+        //          new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
+        //              ['slug' => '(.*)'], ['option' => 'com_example']),
 
-        $router->addRoutes([
-  //      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
-        new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
-        ]);
+        $this->DBGalleriesImages($router, $getDefaults);
 
+        $this->DBConfigAndVersion($router, $getDefaults);
+
+        $this->UploadImages($router, $getDefaults);
+
+        //    $this->($router);
+
+        //    $this->createContentHistoryRoutes($router);
+    }
+
+    /**
+     * @param   ApiRouter  $router
+     *
+     *
+     * @since version
+     */
+    public function DBGalleriesImages(ApiRouter $router, array $getDefaults): void
+    {
+// DB galleries
         $router->createCRUDRoutes(
             'v1/rsgallery2/galleries',
             'galleries',
             ['component' => 'com_rsgallery2'],
-            false // ToDo: Remove when tests finished
+            $getDefaults,
         );
 
+        // DB images
         $router->createCRUDRoutes(
             'v1/rsgallery2/images',
             'images',
             ['component' => 'com_rsgallery2'],
-            false // ToDo: Remove when tests finished
+            $getDefaults,
         );
-
-        $router->addRoutes([
-          new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults),
-          new Route(
-              ['GET'],
-              'v1/rsgallery2/config/:variable_name',
-              'config.displayItem',
-              ['variable_name' => '([A-Za-z0-9_]+)'],
-              $getDefaults
-          ),
-        ]);
-
-
-  //    $this->createFieldsRoutes($router);
-
-  //    $this->createContentHistoryRoutes($router);
     }
 
-//  /**
-//   * Create fields routes
-//   *
-//   * @param   ApiRouter  &$router  The API Routing object
-//   *
-//   * @return  void
-//   *
-//   * @since   4.0.0
-//   */
-//  private function createFieldsRoutes(&$router): void
-//  {
-//    $router->createCRUDRoutes(
-//      'v1/fields/content/articles',
-//      'fields',
-//      ['component' => 'com_fields', 'context' => 'com_content.article']
-//    );
-//
-//    $router->createCRUDRoutes(
-//      'v1/fields/content/categories',
-//      'fields',
-//      ['component' => 'com_fields', 'context' => 'com_content.categories']
-//    );
-//
-//    $router->createCRUDRoutes(
-//      'v1/fields/groups/content/articles',
-//      'groups',
-//      ['component' => 'com_fields', 'context' => 'com_content.article']
-//    );
-//
-//    $router->createCRUDRoutes(
-//      'v1/fields/groups/content/categories',
-//      'groups',
-//      ['component' => 'com_fields', 'context' => 'com_content.categories']
-//    );
-//  }
-//
-  // /**
-   // * Create contenthistory routes
-   // *
-   // * @param   ApiRouter  &$router  The API Routing object
-   // *
-   // * @return  void
-   // *
-   // * @since   4.0.0
-   // */
-  // private function createContentHistoryRoutes(&$router): void
-  // {
-    // $defaults    = [
-      // 'component'  => 'com_contenthistory',
-      // 'type_alias' => 'com_rsgallery2.rsgallery2',
-      // 'type_id'    => 1,
-    // ];
-    // $getDefaults = array_merge(['public' => false], $defaults);
+    /**
+     * @param   ApiRouter  $router
+     * @param   array      $getDefaults
+     *
+     *
+     * @since version
+     */
+    public function DBConfigAndVersion(ApiRouter $router, array $getDefaults): void
+    {
+// DB config
+        $router->addRoutes([
+            new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults),
+            new Route(
+                ['GET'],
+                'v1/rsgallery2/config/:variable_name',
+                'config.displayItem',
+                ['variable_name' => '([A-Za-z0-9_]+)'],
+                $getDefaults,
+            ),
+        ]);
 
-    // $routes = [
-      // new Route(['GET'], 'v1/rsgallery2/:id/contenthistory', 'history.displayList', ['id' => '(\d+)'], $getDefaults),
-      // new Route(['PATCH'], 'v1/rsgallery2/:id/contenthistory/keep', 'history.keep', ['id' => '(\d+)'], $defaults),
-      // new Route(['DELETE'], 'v1/rsgallery2/:id/contenthistory', 'history.delete', ['id' => '(\d+)'], $defaults),
-    // ];
+        // RSG2 version
+        $router->addRoutes([
+            //      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
+            new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
+        ]);
+    }
 
-    // $router->addRoutes($routes);
-  // }
+    /**
+     * @param   ApiRouter  $router
+     * @param   array      $getDefaults
+     *
+     *
+     * @since version
+     */
+    private function UploadImages(ApiRouter $router, array $getDefaults)
+    {
+        // Gid or name
+        $router->addRoutes([
+            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
+                'UploadApi.upload_img',
+                ['id' => '(\d+)'],
+                $getDefaults),
+            new Route(['GET'], 'v1/rsgallery2/upload/:gallery_name',
+                'UploadApi.upload_img',
+                ['gallery_name' => '(.*)'],
+                $getDefaults),
+        ]);
+
+//        // image files
+//        $router->createCRUDRoutes(
+//            'v1/rsgallery2/image_files',
+//            'UploadApi',
+//            ['component' => 'com_rsgallery2'],
+//            $getDefaults,
+//        );
+    }
 }

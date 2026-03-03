@@ -15,8 +15,6 @@ use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
 use Rsgallery2\Component\Rsgallery2\Api\View\Version\JsonapiView;
 
-//use Joomla\CMS\MVC\View\JsonApiView;
-
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -50,7 +48,7 @@ class VersionController extends ApiController
      * @param $cachable
      * @param $urlparams
      *
-     * @return $this|\Joomgallery\Component\Joomgallery\Api\Controller\VersionController
+     * @return ApiController
      *
      * @since  5.1.0     */
     public function display($cachable = false, $urlparams = [])

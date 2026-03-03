@@ -8,21 +8,18 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
+namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
+
+use Joomla\CMS\MVC\Controller\ApiController;
+
+use function dirname;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 
-
-
-
-use function dirname;
-
-
-
-class UploadApiController extends BaseController
+class UploadController extends ApiController
 {
 
 
