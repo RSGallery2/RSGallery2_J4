@@ -8,9 +8,10 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Api\View\Version;
+namespace Rsgallery2\Component\Rsgallery2\Api\View\Upload;
 
 use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
+use Joomla\Component\Media\Administrator\Provider\ProviderManagerHelperTrait;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -23,6 +24,8 @@ use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
  */
 class JsonapiView extends BaseApiView
 {
+    use ProviderManagerHelperTrait;
+
     /**
      * The fields to render item in the documents
      *

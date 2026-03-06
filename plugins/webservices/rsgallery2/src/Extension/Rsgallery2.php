@@ -135,14 +135,17 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     private function UploadImages(ApiRouter $router, array $getDefaults)
     {
         // Gid or name
-        $router->addRoutes([
-            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
-                'UploadApi.upload_img',
-                ['id' => '(\d+)'],
-                $getDefaults),
-            new Route(['GET'], 'v1/rsgallery2/upload/:gallery_name',
-                'UploadApi.upload_img',
-                ['gallery_name' => '(.*)'],
+        $router->addRoutes([//            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
+//                'UploadApi.upload_img',
+//                ['id' => '(\d+)'],
+//                $getDefaults),
+
+//            new Route(['POST'], 'v1/rsgallery2/upload/:gallery_name',
+            new Route(['POST'], 'v1/rsgallery2/upload',
+                // 'UploadApi.upload_img',
+                 'upload.upload',
+                //['gallery_name' => '(.*)'],
+                [],
                 $getDefaults),
         ]);
 
@@ -153,5 +156,6 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 //            ['component' => 'com_rsgallery2'],
 //            $getDefaults,
 //        );
+
     }
 }
