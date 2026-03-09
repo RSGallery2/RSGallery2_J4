@@ -10,6 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
 
@@ -68,6 +69,8 @@ class ConfigController extends ApiController
             throw new \RuntimeException($e->getMessage());
         }
 
+        //--- create model -------------------------------------
+
         $modelName = $this->input->get('model', Inflector::singularize($this->contentType));
 
         // Create the model, ignoring request data so we can safely set the state in the request from the controller
@@ -86,6 +89,18 @@ class ConfigController extends ApiController
 
         // Push the model into the view (as default)
         $view->setModel($model, true);
+
+        //--- filter -------------------------------------
+
+        $apiFilterInfo = $this->input->get('filter', [], 'array');
+        $filter        = InputFilter::getInstance();
+
+        if (\array_key_exists('search', $apiFilterInfo)) {
+            $model->setState('filter.search', $filter->clean($apiFilterInfo['search'], 'STRING'));
+            //$this->modelState->set('filter.search', $filter->clean($apiFilterInfo['search'], 'STRING'));
+        }
+
+        //--- display result -------------------------------------
 
         $view->setDocument($this->app->getDocument());
         $view->displayItem();

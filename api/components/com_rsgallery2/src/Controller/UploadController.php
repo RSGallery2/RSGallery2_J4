@@ -151,6 +151,31 @@ class UploadController extends ApiController
     }
 
 
+    public function recreate_sizes() {
 
+        // $image_name = $this->input->json->get('image_name', '', 'PATH');
+        $image_name = $this->input->json->get('image_name', '', 'STRING');
+        $gallery_id = $this->input->json->get('gallery_id', '', 'INTEGER');
+
+        $missingParameters = [];
+
+        if (empty($image_name)) {
+            $missingParameters[] = 'image_name';
+        }
+
+        if (empty($gallery_id)) {
+            $missingParameters[] = 'gallery_id';
+        }
+
+        if (\count($missingParameters)) {
+            throw new InvalidParameterException(
+                Text::sprintf('WEBSERVICE_COM_MEDIA_MISSING_REQUIRED_PARAMETERS', implode(' & ', $missingParameters)),
+            );
+        }
+
+
+
+        return;
+    }
 
 }

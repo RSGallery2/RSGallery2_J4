@@ -55,7 +55,8 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
         $router = $event->getRouter();
 
         $defaults = ['component' => 'com_rsgallery2'];
-        // $getDefaults = array_merge(['public' => false], $defaults);
+        // ToDo: Remove when tests finished, enables access without token
+        // $getDefaults = array_merge(['public' => true], $defaults);
         $getDefaults = array_merge(['public' => false], $defaults);
 
         //          new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
@@ -73,6 +74,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     }
 
     /**
+     * DB galleries
      * @param   ApiRouter  $router
      *
      *
@@ -80,7 +82,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
      */
     public function DBGalleriesImages(ApiRouter $router, array $getDefaults): void
     {
-// DB galleries
+
         $router->createCRUDRoutes(
             'v1/rsgallery2/galleries',
             'galleries',
@@ -98,6 +100,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     }
 
     /**
+     * Config and version
      * @param   ApiRouter  $router
      * @param   array      $getDefaults
      *
@@ -147,7 +150,13 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
                 //['gallery_name' => '(.*)'],
                 [],
                 $getDefaults),
-        ]);
+
+            new Route(['PATCH'], 'v1/rsgallery2/recreate_sizes',
+                // 'UploadApi.upload_img',
+                 'upload.recreate_sizes',
+                //['gallery_name' => '(.*)'],
+                [],
+                $getDefaults),
 
 //        // image files
 //        $router->createCRUDRoutes(
@@ -156,6 +165,8 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 //            ['component' => 'com_rsgallery2'],
 //            $getDefaults,
 //        );
+
+        ]);
 
     }
 }
