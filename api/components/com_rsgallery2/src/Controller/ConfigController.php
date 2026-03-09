@@ -11,6 +11,7 @@
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
 use Joomla\CMS\Filter\InputFilter;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
 
