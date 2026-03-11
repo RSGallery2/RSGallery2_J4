@@ -23,6 +23,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\Menus\Administrator\Model\MenuModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageFileModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
 
 /**
  * The Image Controller

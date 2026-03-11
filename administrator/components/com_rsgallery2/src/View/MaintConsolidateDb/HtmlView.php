@@ -27,6 +27,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageReferences;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintConsolidateDbModel;
 
 
 /**

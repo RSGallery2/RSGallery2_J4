@@ -27,6 +27,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel;
 
 /**
  * View class for a list of rsgallery2.

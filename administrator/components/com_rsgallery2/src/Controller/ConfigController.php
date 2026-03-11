@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
-
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 
 /**

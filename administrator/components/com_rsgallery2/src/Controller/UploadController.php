@@ -12,26 +12,27 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 
-use Joomla\CMS\Input\Input;
 use Joomla\Archive\Archive;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
-use Joomla\Filesystem\Folder;
+use Joomla\CMS\Input\Input;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Session\Session;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
-
-
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageFileModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 
 use function dirname;
 
@@ -51,7 +52,7 @@ use function dirname;
 /**
  * @package     Rsgallery2\Component\Rsgallery2\Administrator\Controller
  *
-     * @since   5.1.0
+ * @since       5.1.0
  */
 class UploadController extends FormController
 {
@@ -63,9 +64,10 @@ class UploadController extends FormController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   Input              $input    Input
+     * @param   Input                $input    Input
      *
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     public function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
     {
         parent::__construct($config, $factory, $app, $input);
@@ -80,7 +82,8 @@ class UploadController extends FormController
      *
      * @return mixed
      *
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     public function getModel($name = 'Upload', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
@@ -94,7 +97,8 @@ class UploadController extends FormController
      * Reason: The parallel uploaded images may appear unordered
      *
      * @throws \Exception
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     function uploadAjaxReserveDbImageId()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -264,28 +268,28 @@ class UploadController extends FormController
     }
 
     /**
-in:
-interface IDroppedFile
-{
-    file: File;
-    galleryId: string;
-    ...
-}
-interface ITransferFile extends IDroppedFile {
-    imageId: string;
-    fileName: string;
-    dstFileName: string;
-}
-
-out:
-    interface IResponseTransfer {
-    fileName: string;
-    imageId: string; //number
-    fileUrl: string;
-    safeFileName: string;
-}
-
-/**/
+     * in:
+     * interface IDroppedFile
+     * {
+     * file: File;
+     * galleryId: string;
+     * ...
+     * }
+     * interface ITransferFile extends IDroppedFile {
+     * imageId: string;
+     * fileName: string;
+     * dstFileName: string;
+     * }
+     *
+     * out:
+     * interface IResponseTransfer {
+     * fileName: string;
+     * imageId: string; //number
+     * fileUrl: string;
+     * safeFileName: string;
+     * }
+     *
+     * /**/
 
     /**
      * The dropped file will be uploaded. The dependent files
@@ -293,7 +297,8 @@ out:
      * The image id was created before and is read from the
      * ajax parameters
      *
-     * @since 5.1.0     */
+     * @since 5.1.0
+     */
     function uploadAjaxSingleFile()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -421,7 +426,7 @@ out:
                     $targetFileName,
                     $galleryId,
                     $origin,
-                    $use_j3x_location
+                    $use_j3x_location,
                 );
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
@@ -491,7 +496,8 @@ out:
      * Reason: The parallel uploaded images may appear unordered
      *
      * @throws \Exception
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     function uploadAjaxZipExtractReserveDbImageId()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -526,6 +532,10 @@ out:
         if ($errorType) {
             $this->issueError($errorType);
         }
+
+        $rsgConfig        = ComponentHelper::getParams('com_rsgallery2');
+        $thumbSize        = $rsgConfig->get('thumb_size');
+        $use_j3x_location = $rsgConfig->get('useJ3xOldPaths');
 
         try {
             if ($Rsg2DebugActive) {
@@ -659,6 +669,7 @@ out:
                                 $targetFileName,
                                 $galleryId,
                                 $origin,
+                                $use_j3x_location,
                             );
 
                             if ($isCreated) {
@@ -729,9 +740,11 @@ out:
             if (!$files) {
                 $ajaxImgObject = [];
 
-                $app->enqueueMessage(Text::_('COM_RSGALLERY2_ZIP_FILE_NO_IMAGE_EXIST') . '<br>'
+                $app->enqueueMessage(
+                    Text::_('COM_RSGALLERY2_ZIP_FILE_NO_IMAGE_EXIST') . '<br>'
                     . 'Zip Name: ' . $oFile['name'] . '<br>'
-                    . 'Used Path: ' . $srcTempPathFileName,); // . '<br>'
+                    . 'Used Path: ' . $srcTempPathFileName,
+                ); // . '<br>'
 
                 if ($Rsg2DebugActive) {
                     Log::add($msg);
@@ -774,7 +787,8 @@ out:
      * Reason: The parallel uploaded images may appear unordered
      *
      * @throws \Exception
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     function uploadAjaxFilesInFolderReserveDbImageId()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -869,9 +883,11 @@ out:
             if (!is_dir($ftpPath)) {
                 $ajaxImgObject = [];
 
-                $app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_DIR_NOT_EXIST') . '<br>'
+                $app->enqueueMessage(
+                    Text::_('COM_RSGALLERY2_SERVER_DIR_NOT_EXIST') . '<br>'
                     . '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
-                    . '$Ftp path server root based: ' . $ftpPathServer,); // . '<br>'
+                    . '$Ftp path server root based: ' . $ftpPathServer,
+                ); // . '<br>'
 
                 if ($Rsg2DebugActive) {
                     Log::add($msg);
@@ -896,9 +912,11 @@ out:
             if (!$files) {
                 $ajaxImgObject = [];
 
-                $app->enqueueMessage(Text::_('COM_RSGALLERY2_SERVER_FILES_DO_NOT_EXIST') . '<br>'
+                $app->enqueueMessage(
+                    Text::_('COM_RSGALLERY2_SERVER_FILES_DO_NOT_EXIST') . '<br>'
                     . '$Ftp path Joomla! root based: ' . $ftpPathRoot . '<br>'
-                    . '$Ftp path server root based: ' . $ftpPathServer,); // . '<br>'
+                    . '$Ftp path server root based: ' . $ftpPathServer,
+                ); // . '<br>'
 
                 if ($Rsg2DebugActive) {
                     Log::add($msg);
@@ -962,37 +980,38 @@ out:
 
 
     /**
-in:
-interface IRequestTransferFolderFile {
-    fileName: string;
-    imageId: string; //number
-    baseName: string;
-    dstFileName: string;
-    size: number;
-
-    galleryId: string;
-    origin: string; // ftp/server
-
-    statusBar: createStatusBar | null;
-    errorZone: HTMLElement | null;
-}
-
-out:
-interface IResponseTransfer {
-    fileName: string;
-    imageId: string; //number
-    fileUrl: string;
-    safeFileName: string;
-}
-
-/**/
+     * in:
+     * interface IRequestTransferFolderFile {
+     * fileName: string;
+     * imageId: string; //number
+     * baseName: string;
+     * dstFileName: string;
+     * size: number;
+     *
+     * galleryId: string;
+     * origin: string; // ftp/server
+     *
+     * statusBar: createStatusBar | null;
+     * errorZone: HTMLElement | null;
+     * }
+     *
+     * out:
+     * interface IResponseTransfer {
+     * fileName: string;
+     * imageId: string; //number
+     * fileUrl: string;
+     * safeFileName: string;
+     * }
+     *
+     * /**/
 
     /**
      * The already uploaded file will be copied,
      * display and thumb files created
      *
      * @throws \Exception
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     function uploadAjaxTransferFolderFile()
     {
         // Todo: Check Authorisation, Jupload , check mime type ...
@@ -1028,6 +1047,10 @@ interface IResponseTransfer {
             $this->issueError($errorType);
         }
 
+        $rsgConfig        = ComponentHelper::getParams('com_rsgallery2');
+        $thumbSize        = $rsgConfig->get('thumb_size');
+        $use_j3x_location = $rsgConfig->get('useJ3xOldPaths');
+
         try {
             if ($Rsg2DebugActive) {
                 // identify active file
@@ -1043,15 +1066,15 @@ interface IResponseTransfer {
             // toDo: rename dstFileName to safe file name ... so it matches function uploadAjaxSingleFile()
             $targetFileName = $input->get('dstFileName', '', 'string');
             /**
-            fileName: string;
-            imageId: string; //number
-            baseName: string;
-            dstFileName: string;
-            size: number;
-
-            galleryId: string;
-            origin: string; // ftp/server
-/**/
+             * fileName: string;
+             * imageId: string; //number
+             * baseName: string;
+             * dstFileName: string;
+             * size: number;
+             *
+             * galleryId: string;
+             * origin: string; // ftp/server
+             * /**/
 
             if ($Rsg2DebugActive) {
                 // identify active file
@@ -1096,12 +1119,14 @@ interface IResponseTransfer {
             try {
                 /* @var ImageFileModel $modelFile */
                 $modelFile = $this->getModel('imageFile');
+                // $use_j3x_location
                 // toDo check origin and config for copy / or move file call below
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
                     $fileName,
                     $targetFileName,
                     $galleryId,
                     $origin,
+                    $use_j3x_location,
                 );
                 /**/
             } catch (\RuntimeException $e) {
@@ -1167,6 +1192,7 @@ interface IResponseTransfer {
      * Collects file names in given folder, creates a DB entry in images table
      * and return a files list with basic information including the new image ID
      * recursive
+     *
      * @param $ImagesFolder
      * @param $galleryId
      *
@@ -1266,7 +1292,8 @@ interface IResponseTransfer {
      *                   5: enqueueMessage types with thrown \Exception
      *
      * @throws \Exception
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     private function issueError($errorType)
     {
         $app = Factory::getApplication();
@@ -1318,8 +1345,8 @@ interface IResponseTransfer {
 
                     throw new \Exception('Attention: raised \Exception ');
 
-                    //echo new JsonResponse($result, 'Response message with !!! no !!! error set');
-                    //break;
+                //echo new JsonResponse($result, 'Response message with !!! no !!! error set');
+                //break;
             }
 
             $app->close();

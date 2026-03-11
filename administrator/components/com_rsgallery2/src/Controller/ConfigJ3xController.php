@@ -20,6 +20,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigJ3xRawModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ConfigRawModel;
 
 /**
 global $Rsg2DebugActive;
@@ -166,7 +168,7 @@ class ConfigJ3xController extends FormController // FormController for function 
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-            /* @var ConfigRawJ3xModel $model */
+            /* @var ConfigJ3xRawModel $model */
             $model = $this->getModel('ConfigJ3xRaw');
 
             $isSaved = $model->saveFromForm();
