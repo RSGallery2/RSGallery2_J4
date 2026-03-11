@@ -380,6 +380,7 @@ class ImageModel extends AdminModel
     {
         $table   = $this->getTable();
         $input   = Factory::getApplication()->input;
+
         $pk      = (!empty($data['id'])) ? $data['id'] : (int)$this->getState($this->getName() . '.id');
         $isNew   = true;
         $context = $this->option . '.' . $this->name;
@@ -419,12 +420,9 @@ class ImageModel extends AdminModel
         }
         /**/
 
-
-        /* ToDo: use following */
-        /**
         // Automatic handling of alias for empty fields
-        if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
-        {
+        // if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
+        //{
             if ($data['alias'] == null)
             {
                 if (Factory::getApplication()->get('unicodeslugs') == 1)
@@ -436,12 +434,12 @@ class ImageModel extends AdminModel
                     $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
                 }
 
-                $table = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
-
-                if ($table->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
-                {
-                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
-                }
+//                $table_test = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
+//
+//                if ($table_test->load(array('alias' => $data['alias'], 'title' => $data['title'])))
+//                {
+//                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
+//                }
 
                 list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
                 $data['alias'] = $alias;
@@ -451,9 +449,7 @@ class ImageModel extends AdminModel
                     Factory::getApplication()->enqueueMessage($msg, 'warning');
                 }
             }
-        }
-        /**/
-
+        //}
 
         // Bind the data.
         if (!$table->bind($data)) {
@@ -683,7 +679,7 @@ class ImageModel extends AdminModel
     /**/
 
     /**
-     * Method to retrive unused image name from database
+     * Method to retrieve unused image name from database
      *
      * @param   string  $name  image name.
      * @param   int     $galleryId

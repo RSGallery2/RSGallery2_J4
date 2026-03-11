@@ -543,7 +543,6 @@ class GalleryModel extends AdminModel
 //            }
 //        }
 
-        // ToDo: use name instead of title ?
         // Alter the title for save as copy
         if ($input->get('task') == 'save2copy') {
             $origTable = clone $this->getTable();
@@ -561,6 +560,38 @@ class GalleryModel extends AdminModel
 
             $data['published'] = 0;
         }
+
+        // Automatic handling of alias for empty fields
+        // if (in_array($input->get('task'), array('apply', 'save', 'save2new')) && (!isset($data['id']) || (int) $data['id'] == 0))
+        //{
+        if ($data['alias'] == null)
+        {
+            if (Factory::getApplication()->get('unicodeslugs') == 1)
+            {
+                $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['name']);
+            }
+            else
+            {
+                $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['name']);
+            }
+
+//            $table_test = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
+//
+//            if ($table_test->load(array('alias' => $data['alias'], 'catid' => $data['catid'])))
+//            {
+//                $msg = Text::_('COM_CONTENT_SAVE_WARNING');
+//            }
+
+            list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['name']);
+            $data['alias'] = $alias;
+
+            if (isset($msg))
+            {
+                Factory::getApplication()->enqueueMessage($msg, 'warning');
+            }
+        }
+        //}
+
 
         // Bind the data.
         if (!$table->bind($data)) {
@@ -1180,7 +1211,7 @@ class GalleryModel extends AdminModel
         // Alter the title & alias
         $table = $this->getTable();
 
-        while ($table->load(['alias' => $alias, 'parent_id' => $parent_id])) {
+        while ($table->load(['alias' => $alias])) {
             $title = StringHelper::increment($title);
             $alias = StringHelper::increment($alias, 'dash');
         }
