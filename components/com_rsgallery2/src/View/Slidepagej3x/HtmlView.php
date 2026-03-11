@@ -127,7 +127,7 @@ class HtmlView extends BaseHtmlView
 
         // In slide page view a single item is shown.
         // Pagination parameters are changed to match it
-        // @var SlidepageModel $model
+        /* @var SlidepageModel $model */
         $model = $this->getModel();
         $model->setState2SingleItem($this->items);
 

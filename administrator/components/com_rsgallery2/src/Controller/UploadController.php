@@ -188,7 +188,7 @@ class UploadController extends FormController
             //----------------------------------------------------
 
             /** start create ... */
-            // @var ImageModel $modelDb
+            /* @var ImageModel $modelDb */
             $modelDb = $this->getModel('Image');
 
             //--- Create Destination file name -----------------------
@@ -414,7 +414,7 @@ out:
                 // $origin = $input->get('origin', '', 'string'); // zip/server
                 $origin = 'uploadFile';
 
-                // @var ImageFileModel $modelFile
+                /* @var ImageFileModel $modelFile */
                 $modelFile = $this->getModel('imageFile');
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
                     $srcTempPathFileName,
@@ -637,7 +637,7 @@ out:
                     $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
                     $thumbSize = $rsgConfig->get('thumb_size');
 
-                    // @var ImageFileModel $modelFile
+                    /* @var ImageFileModel $modelFile */
                     $modelFile = $this->getModel('imageFile');
 
                     // all images in all folders
@@ -1094,7 +1094,7 @@ interface IResponseTransfer {
             //----------------------------------------------------
 
             try {
-                // @var ImageFileModel $modelFile
+                /* @var ImageFileModel $modelFile */
                 $modelFile = $this->getModel('imageFile');
                 // toDo check origin and config for copy / or move file call below
                 [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images(
@@ -1178,7 +1178,7 @@ interface IResponseTransfer {
     {
         global $rsgConfig, $Rsg2DebugActive;
 
-        // @var ImageFileModel $modelFile
+        /* @var ImageFileModel $modelFile */
         $modelFile = $this->getModel('imageFile');
         [$filesFound, $ignored] = $modelFile->SelectImagesFromFolder($ImagesFolder);
 
@@ -1187,7 +1187,7 @@ interface IResponseTransfer {
             Log::add('Ignored Images:' . count($ignored));
         }
 
-        // @var ImageModel $modelDb
+        /* @var ImageModel $modelDb */
         $modelDb = $this->getModel('image');
         $files   = [];
 

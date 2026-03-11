@@ -1367,7 +1367,7 @@ class ImageModel extends AdminModel
         $table = $this->getTable();
 
         try {
-            // @var ImageFileModel $imgFileModel
+            /* @var ImageFileModel $imgFileModel */
             $imgFileModel = $this->getInstance('imageFile', 'RSGallery2Model');
             //$imgFileModel = $this->getModel('imageFile');
 

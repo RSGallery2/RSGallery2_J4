@@ -87,7 +87,7 @@ class ImagesController extends AdminController
         } else {
             try {
                 // Get the model.
-                // @var ImagesModel $model
+                /* @var ImagesModel $model */
                 $model = $this->getModel('images');
 
                 // Remove the items.
@@ -138,7 +138,7 @@ class ImagesController extends AdminController
         } else {
             try {
                 // Model tells if successful
-                // @var ImageModel $model
+                /* @var ImageModel $model */
                 $model = $this->getModel('image');
 
                 $IsMoved = $model->moveImagesToGallery();
@@ -186,7 +186,7 @@ class ImagesController extends AdminController
         } else {
             try {
                 // Model tells if successful
-                // @var ImageModel $model
+                /* @var ImageModel $model */
                 $model = $this->getModel('image');
 
                 $IsCopied = $model->copyImagesToGallery();

@@ -188,7 +188,7 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'images_raw':
-                // @var ImageModel $imageModel
+                /* @var ImageModel $imageModel */
                 $imageModel  = $this->getModel();
                 $this->items = $imageModel->allImages();
 

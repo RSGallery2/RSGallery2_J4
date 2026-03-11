@@ -167,14 +167,14 @@ class HtmlView extends BaseHtmlView
 
         switch ($Layout) {
             case 'galleries_raw':
-                // @var GalleriesModel $galleriesModel
+                /* @var GalleriesModel $galleriesModel */
                 $galleriesModel = $this->getModel();
                 $this->items    = $galleriesModel->allGalleries();
 
                 break;
 
             case 'galleries_tree':
-                // @var GalleriesModel $galleriesModel
+                /* @var GalleriesModel $galleriesModel */
                 $galleriesModel = $this->getModel();
                 $this->items    = $galleriesModel->allGalleries();
 

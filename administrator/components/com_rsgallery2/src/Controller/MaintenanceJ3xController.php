@@ -139,7 +139,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->collectAndCopyJ3xConfig2J4xOptions();
@@ -205,7 +205,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->copyDbAllJ3xGalleries2J4x();
@@ -265,7 +265,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
                     $msgType = 'warning';
                 } else {
-                    // @var MaintenanceJ3xModel $j3xModel
+                    /* @var MaintenanceJ3xModel $j3xModel */
                     $j3xModel = $this->getModel('MaintenanceJ3x');
 
                     $isOk = $j3xModel->copyDbSelectedJ3xGalleries2J4x($cids);
@@ -324,7 +324,7 @@ class MaintenanceJ3xController extends AdminController
         } else {
             try {
                 // Get the model.
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 // Remove the items.
@@ -431,7 +431,7 @@ class MaintenanceJ3xController extends AdminController
                     $msg     .= Text::_($this->text_prefix . '_NO_ITEM_SELECTED');
                     $msgType = 'warning';
                 } else {
-                    // @var MaintenanceJ3xModel $j3xModel
+                    /* @var MaintenanceJ3xModel $j3xModel */
                     $j3xModel = $this->getModel('MaintenanceJ3x');
 
                     //$isOk = $j3xModel->copyDbSelectedJ3xImages2J4x($cids);
@@ -490,7 +490,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->copyDbAllJ3xImages2J4x();
@@ -543,7 +543,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->revertCopyDbJ3xImages2J4xUser();
@@ -713,7 +713,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 // Collect image Ids (ToDo: collect ids by db query in $j3xModel)
@@ -768,7 +768,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $MaintModel
+                /* @var MaintenanceJ3xModel $MaintModel */
                 $MaintModel = $this->getModel('MaintenanceJ3x');
 
                 $isPathsExisting = $MaintModel->CheckImagePaths();
@@ -816,7 +816,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $MaintModel
+                /* @var MaintenanceJ3xModel $MaintModel */
                 $MaintModel = $this->getModel('MaintenanceJ3x');
                 $isSaved    = $MaintModel->RepairImagePaths();
 
@@ -921,7 +921,7 @@ class MaintenanceJ3xController extends AdminController
             //----------------------------------------------------
 
             // Get the model.
-            // @var MaintenanceJ3xModel $j3xModel
+            /* @var MaintenanceJ3xModel $j3xModel */
             $j3xModel = $this->getModel('MaintenanceJ3x');
 
             // Collect image Ids
@@ -1074,7 +1074,7 @@ class MaintenanceJ3xController extends AdminController
             $isMovedDb = false;
 
             // Get the model.
-            // @var MaintenanceJ3xModel $j3xModel
+            /* @var MaintenanceJ3xModel $j3xModel */
             $j3xModel = $this->getModel('MaintenanceJ3x');
 
             //  = self::J3X_IMG_NOT_FOUND;
@@ -1167,7 +1167,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->j3xUpgradeJ3xMenuLinks();
@@ -1220,7 +1220,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->j3xLowerJ4xMenuLinks();
@@ -1265,7 +1265,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->j3xUpperJ4xMenuLinks();
@@ -1310,7 +1310,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->j3xReplaceGid2IdMenuLinks();
@@ -1363,7 +1363,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->j3xReplaceId2GidMenuLinks();
@@ -1413,7 +1413,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->j3xDegradeUpgradedJ4xMenuLinks();
@@ -1540,7 +1540,7 @@ class MaintenanceJ3xController extends AdminController
             str_replace('\n', '<br>', $msg);
         } else {
             try {
-                // @var MaintenanceJ3xModel $j3xModel
+                /* @var MaintenanceJ3xModel $j3xModel */
                 $j3xModel = $this->getModel('MaintenanceJ3x');
 
                 $isOk = $j3xModel->resetUpgradeFlags();

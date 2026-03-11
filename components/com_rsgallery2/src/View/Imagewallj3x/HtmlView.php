@@ -101,7 +101,7 @@ class HtmlView extends BaseHtmlView
         }
 
         // Get some data from the models
-        // @var Imagewallj3xModel $model
+        /* @var Imagewallj3xModel $model */
         $model = $this->getModel();
 
         $state            =

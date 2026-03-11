@@ -135,7 +135,7 @@ class GalleriesController extends AdminController
         } else {
             try {
                 // Get the model.
-                // @var GalleryTreeModel $model
+                /* @var GalleryTreeModel $model */
                 $model = $this->getModel('GalleryTree');
 
                 // Remove the items.

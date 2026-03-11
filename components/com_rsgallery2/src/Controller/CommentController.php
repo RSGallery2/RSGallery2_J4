@@ -147,7 +147,7 @@ class CommentController extends BaseController
 
 // check cookie comment once
 
-                    // @var commentsModel $commentModel
+                    /* @var commentsModel $commentModel */
                     $commentModel = $this->getModel('comments');
                     $isSaved      = $commentModel->addComment($imageId, $comment);
 
@@ -227,7 +227,7 @@ class CommentController extends BaseController
 
                 $comment = '';
 
-                // @var commentsModel $commentModel
+                /* @var commentsModel $commentModel */
                 $commentModel = $this->getModel('comments');
                 $isSaved      = $commentModel->saveComment($imageId, $comment);
                 // $limitStart = 4;

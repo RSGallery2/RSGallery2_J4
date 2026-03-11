@@ -166,7 +166,7 @@ class ConfigJ3xController extends FormController // FormController for function 
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-            // @var ConfigRawJ3xModel $model
+            /* @var ConfigRawJ3xModel $model */
             $model = $this->getModel('ConfigJ3xRaw');
 
             $isSaved = $model->saveFromForm();
@@ -201,7 +201,7 @@ class ConfigJ3xController extends FormController // FormController for function 
             // replace newlines with html line breaks.
             str_replace('\n', '<br>', $msg);
         } else {
-            // @var ConfigRawModel $model
+            /* @var ConfigRawModel $model */
             $model = $this->getModel('ConfigRaw');
 
             $isSaved = $model->saveFromForm();

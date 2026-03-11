@@ -120,7 +120,7 @@ class ImagesPropertiesController extends AdminController
             } else {
                 $ImagesProperties = $this->ImagesPropertiesFromInput();
 
-                // @var ImageModel $imgModel
+                /* @var ImageModel $imgModel */
                 $imgModel = $this->getModel('image');
 
                 foreach ($ImagesProperties as $ImagesProperty) {
@@ -182,7 +182,7 @@ class ImagesPropertiesController extends AdminController
             } else {
                 $ImagesProperties = $this->ImagesPropertiesFromInput();
 
-                // @var ImageModel $imgModel
+                /* @var ImageModel $imgModel */
                 $imgModel = $this->getModel('image');
 
                 foreach ($ImagesProperties as $ImagesProperty) {
@@ -266,7 +266,7 @@ class ImagesPropertiesController extends AdminController
                 $msg = nl2br($msg);
             } else {
                 // delete them all
-                // @var ImageModel $model
+                /* @var ImageModel $model */
                 $model = $this->getModel('image');
                 $model->delete($sids);
 
@@ -379,14 +379,14 @@ class ImagesPropertiesController extends AdminController
                 $sids = $this->input->get('sid', 0, 'int');
 
                 // toDo: create imageDb model
-                // @var ImagesModel $modelImages
+                /* @var ImagesModel $modelImages */
                 $modelImages = $this->getModel('images');
 
                 // Needed filename and gallery id
                 //$fileNames = $modelImages->fileNamesFromIds($sids);
                 $imgFileDatas = $modelImages->ids2FileData($sids);
 
-                // @var ImageFileModel $modelFile
+                /* @var ImageFileModel $modelFile */
                 $modelFile = $this->getModel('imageFile');
 
                 foreach ($imgFileDatas as $imgFileData) {
@@ -517,13 +517,13 @@ class ImagesPropertiesController extends AdminController
                 $sids = $this->input->get('sid', 0, 'int');
 
                 // toDo: create imageDb model
-                // @var ImagesModel $modelImages
+                /* @var ImagesModel $modelImages */
                 $modelImages = $this->getModel('images');
                 // Needed filename and gallery id
                 //$fileNames = $modelImages->fileNamesFromIds($sids);
                 $imgFileDatas = $modelImages->ids2FileData($sids);
 
-                // @var ImageFileModel $modelFile
+                /* @var ImageFileModel $modelFile */
                 $modelFile = $this->getModel('imageFile');
 
                 foreach ($imgFileDatas as $imgFileData) {

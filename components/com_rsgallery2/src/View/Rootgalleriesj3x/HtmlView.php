@@ -137,7 +137,7 @@ class HtmlView extends BaseHtmlView
         $this->pagination->hideEmptyLimitstart = true;
 
 
-        // @var Rootgalleriesj3xModel $model
+        /* @var Rootgalleriesj3xModel $model */
         $model = $this->getModel();
 
         //--- random images --------------------------------------------------
