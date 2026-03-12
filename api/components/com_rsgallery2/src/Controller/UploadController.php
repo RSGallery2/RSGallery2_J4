@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\Component\Media\Administrator\Provider\ProviderManagerHelperTrait;
 use Joomla\Component\Media\Api\Model\MediumModel;
+use Joomla\Filesystem\File;
 use Joomla\String\Inflector;
 use Tobscure\JsonApi\Exception\InvalidParameterException;
 
@@ -79,11 +80,10 @@ class UploadController extends ApiController
 
         //--- secure path and image name ----------------------------
 
-        // ToDo: secure path and image name
-        // see input above ?
-        // if (!\file_exists($path)) {}
+        // secure image name
+        $safeFileName = File::makeSafe($image_name);
 
-        $this->modelState->set('image_name', $image_name);
+        $this->modelState->set('image_name', $safeFileName);
         $this->modelState->set('gallery_id', $gallery_id);
 
         // Check if an existing file may be overwritten. Defaults to false.

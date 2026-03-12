@@ -351,8 +351,8 @@ class UploadController extends FormController
 
             // Changed name of existing file name
             $safeFileName = File::makeSafe($oFile['name']);
-            // ToDo: check why is target name not used with makesafe ?
-            $targetFileName = $input->get('dstFileName', '', 'string');
+            $dstFileName = $input->get('dstFileName', '', 'string');
+            $targetFileName = File::makeSafe($dstFileName);
 
             if ($Rsg2DebugActive) {
                 // identify active file
@@ -1273,7 +1273,7 @@ class UploadController extends FormController
             // Collect file info and Reserve Db ImageId
             $subfiles = $this->Import2Db4FilesInFolder($subFolder, $galleryId);
             if (count($subfiles)) {
-                array_merge($files, $subfiles);
+                $files = array_merge($files, $subfiles);
             }
         }
 
