@@ -8,7 +8,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// wrong or not needed 
+// wrong or not needed
 // namespace Rsgallery2\Component\Rsgallery2;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -36,16 +36,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
     protected $oldManifestData;
 
-    /**
-     * @var string
-     * @since 5.0.0
-     */
-    protected $minimumJoomla;
-    /**
-     * @var string
-     * @since 5.0.0
-     */
-    protected $minimumPhp;
+    protected $minimumPhp = JOOMLA_MINIMUM_PHP; // '8.1.0'
+    protected $minimumJoomla = '5.0.0';
 
     protected $actualParams;
     protected $defaultParams;
@@ -59,9 +51,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
      */
     public function __construct()
     {
-        $this->minimumJoomla = '4.0.0';
-        $this->minimumPhp    = JOOMLA_MINIMUM_PHP;   // (7.2.5)
-
         // Check if the default log directory can be written to, add a logger for errors to use it
         if (is_writable(JPATH_ADMINISTRATOR . '/logs')) {
             // Get the date for log file name
@@ -174,15 +163,13 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 Log::add('-> pre freshInstall', Log::DEBUG);
             }
 
-// !!! ToDo: remove !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//          $this->oldRelease = '4.5.3.0';
-// !!! ToDo: remove !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-            Log::add(Text::_('newRelease:') . $this->newRelease, Log::INFO, 'rsg2');
+            Log::add(Text::_('new release:') . $this->newRelease, Log::INFO, 'rsg2');
 
             if ($type === 'update') {
-                // Previous j3x version:
+
+                // Is previous j3x version or similar
                 if (version_compare($this->oldRelease, '5.0.0', 'lt')) {
+
                     //--- Remove lang files  ---------------------------------------------
 
                     // Remove old language files (RSG2 J3x) in joomla base lang folders
@@ -347,9 +334,6 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                         Text::_('RSG2 upgrade sql fails on install_rsg2. More see log file'),
                     );
                 }
-
-                // Merge existing with default parameter
-                $this->updateDefaultParams($parent);
 
                 //--- install message  ----------------------------------------------------
 
@@ -630,7 +614,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
      * standard language folders. Keeping the old files would result in those
      * being loaded instead of the new ones.
      *
-     * @since 5.1.0     */
+     * @since 5.1.0
+     */
     protected function removeAllOldLangFiles(): void
     {
         try {
@@ -666,7 +651,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
      * @param $langPath
      *
      *
-     * @since 5.1.0     */
+     * @since 5.1.0
+     */
     protected function removeLangFilesInSubPaths(string $langPath): bool
     {
         $isOneFileDeleted = false;
