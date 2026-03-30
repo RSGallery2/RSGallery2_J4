@@ -138,15 +138,26 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     private function UploadImages(ApiRouter $router, array $getDefaults)
     {
         // Gid or name
-        $router->addRoutes([//            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
+        $router->addRoutes([
+          // ToDo: use upload_file as command
+//            new Route(['POST'], 'v1/rsgallery2/upload/:gallery_name',
+          new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id',
+            // 'UploadApi.upload_img',
+            'upload.api_db_reserve_image_id',
+            //['gallery_name' => '(.*)'],
+            [],
+            $getDefaults),
+
+//            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
 //                'UploadApi.upload_img',
 //                ['id' => '(\d+)'],
 //                $getDefaults),
 
-//            new Route(['POST'], 'v1/rsgallery2/upload/:gallery_name',
-            new Route(['POST'], 'v1/rsgallery2/upload',
+            // ToDo: use upload_file as command
+//            new Route(['POST'], 'v1/rsgallery2/upload_image_file/:gallery_name',
+            new Route(['POST'], 'v1/rsgallery2/upload_image_file',
                 // 'UploadApi.upload_img',
-                 'upload.upload',
+                 'upload.upload_image_file',
                 //['gallery_name' => '(.*)'],
                 [],
                 $getDefaults),

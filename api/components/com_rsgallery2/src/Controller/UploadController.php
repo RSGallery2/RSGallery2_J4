@@ -25,15 +25,12 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Tobscure\JsonApi\Exception\InvalidParameterException;
 
-// use function dirname;
-
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-
 // phpcs:enable PSR1.Files.SideEffects
 
 
-class UploadController extends ApiController
+class UploadFileController extends ApiController
 {
     use ProviderManagerHelperTrait;
 
@@ -53,10 +50,10 @@ class UploadController extends ApiController
      *
      * @since  4.1.0
      */
-    protected $default_view = 'upload';
+    protected $default_view = 'upload_image_file';
 
 
-    public function upload(): void
+    public function upload_image_file(): void
     {
         // $image_name = $this->input->json->get('image_name', '', 'PATH');
         $image_name = $this->input->json->get('image_name', '', 'STRING');
@@ -73,7 +70,7 @@ class UploadController extends ApiController
             $missingParameters[] = 'gallery_id';
         }
 
-        // Content is only required when it is a file
+      // Content is required as we expect a file
         if (empty($content)) {
             $missingParameters[] = 'content';
         }
@@ -92,11 +89,10 @@ class UploadController extends ApiController
         $this->modelState->set('image_name', $safeFileName);
         $this->modelState->set('gallery_id', $gallery_id);
 
-
-
         // Check if an existing file may be overwritten. Defaults to false.
         $this->modelState->set('override', $this->input->json->get('override', false));
 
+        // calls $this->save
         parent::add();
     }
 
