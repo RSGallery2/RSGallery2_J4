@@ -8,7 +8,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// wrong or not needed
+// wrong or not needed 
 // namespace Rsgallery2\Component\Rsgallery2;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -334,6 +334,9 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                         Text::_('RSG2 upgrade sql fails on install_rsg2. More see log file'),
                     );
                 }
+
+                // Merge existing with default parameter
+                $this->updateDefaultParams($parent);
 
                 //--- install message  ----------------------------------------------------
 

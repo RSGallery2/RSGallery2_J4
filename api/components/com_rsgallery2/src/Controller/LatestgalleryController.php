@@ -24,7 +24,7 @@ use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
  *
  * @since  4.0.0
  */
-class GalleriesController extends ApiController
+class LatestgalleryController extends ApiController
 {
     /**
      * The content type of the item.
@@ -40,8 +40,11 @@ class GalleriesController extends ApiController
      * @var    string
      * @since  3.0
      */
-    protected $default_view = 'galleries';
+    protected $default_view = 'latestgallery';
 
-
+    public function displayList($cachable = false, $urlparams = [])
+    {
+        parent::displayList();
+    }
     // Implement other methods like read, update, delete as needed
 }
