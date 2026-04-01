@@ -145,13 +145,8 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
                 [],
                 $getDefaults),
 
-
-            // ToDo: use upload_file as command
-//            new Route(['POST'], 'v1/rsgallery2/upload/:gallery_name',
           new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id',
-            // 'UploadApi.upload_img',
-            'upload.api_db_reserve_image_id',
-            //['gallery_name' => '(.*)'],
+            'images.add',
             [],
             $getDefaults),
 

@@ -20,7 +20,7 @@ use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * The galleries controller
+ * The latest galleries controller
  *
  * @since  4.0.0
  */
