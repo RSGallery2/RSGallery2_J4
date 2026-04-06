@@ -29,7 +29,7 @@ use Joomla\Component\Media\Administrator\Provider\ProviderManagerHelperTrait;
  *
  * @since  4.2.0
  */
-class UploadModel extends BaseModel
+class UploadimgfileModel extends BaseModel
 {
     use ProviderManagerHelperTrait;
 
@@ -48,23 +48,23 @@ class UploadModel extends BaseModel
         $this->uploadApiModel = new ApiModel();
     }
 
-    /**
-     * Method to get a single files or folder.
-     *
-     * @return  \stdClass  A file or folder object.
-     *
-     * @throws  ResourceNotFound
-     * @since   4.1.0
-     */
-    public function getItem()
-    {
-        // ToDo; fill out later
-        $componentName = 'com_rsgallery2';
-
-        $oVersion = new \stdClass();
-
-        return $oVersion;
-    }
+//    /**
+//     * Method to get a single files or folder.
+//     *
+//     * @return  \stdClass  A file or folder object.
+//     *
+//     * @throws  ResourceNotFound
+//     * @since   4.1.0
+//     */
+//    public function getItem()
+//    {
+//        // ToDo; fill out later
+//        $componentName = 'com_rsgallery2';
+//
+//        $oVersion = new \stdClass();
+//
+//        return $oVersion;
+//    }
 
 
     /**

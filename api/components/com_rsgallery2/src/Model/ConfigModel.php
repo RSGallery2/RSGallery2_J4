@@ -20,7 +20,6 @@ use Joomla\Database\DatabaseInterface;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-
 /**
  *
  *

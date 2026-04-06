@@ -36,9 +36,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return [
-            'onBeforeApiRoute' => 'onBeforeApiRoute',
-        ];
+        return ['onBeforeApiRoute' => 'onBeforeApiRoute',];
     }
 
     /**
@@ -75,6 +73,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 
     /**
      * DB galleries
+     *
      * @param   ApiRouter  $router
      *
      *
@@ -83,24 +82,15 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     public function DBGalleriesImages(ApiRouter $router, array $getDefaults): void
     {
 
-        $router->createCRUDRoutes(
-            'v1/rsgallery2/galleries',
-            'galleries',
-            ['component' => 'com_rsgallery2'],
-            $getDefaults,
-        );
+        $router->createCRUDRoutes('v1/rsgallery2/galleries', 'galleries', ['component' => 'com_rsgallery2'], $getDefaults);
 
         // DB images
-        $router->createCRUDRoutes(
-            'v1/rsgallery2/images',
-            'images',
-            ['component' => 'com_rsgallery2'],
-            $getDefaults,
-        );
+        $router->createCRUDRoutes('v1/rsgallery2/images', 'images', ['component' => 'com_rsgallery2'], $getDefaults);
     }
 
     /**
      * Config and version
+     *
      * @param   ApiRouter  $router
      * @param   array      $getDefaults
      *
@@ -110,22 +100,11 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     public function DBConfigAndVersion(ApiRouter $router, array $getDefaults): void
     {
 // DB config
-        $router->addRoutes([
-            new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults),
-            new Route(
-                ['GET'],
-                'v1/rsgallery2/config/:variable_name',
-                'config.displayItem',
-                ['variable_name' => '([A-Za-z0-9_]+)'],
-                $getDefaults,
-            ),
-        ]);
+        $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults), new Route(['GET'], 'v1/rsgallery2/config/:variable_name', 'config.displayItem', ['variable_name' => '([A-Za-z0-9_]+)'], $getDefaults,),]);
 
         // RSG2 version
-        $router->addRoutes([
-            //      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
-            new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
-        ]);
+        $router->addRoutes([//      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
+            new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),]);
     }
 
     /**
@@ -140,36 +119,13 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
         // latest gallery: get
         $router->addRoutes([
 
-            new Route(['GET'], 'v1/rsgallery2/latestgallery',
-                'latestgallery.displayList',
-                [],
-                $getDefaults),
+            new Route(['GET'], 'v1/rsgallery2/latestgallery', 'latestgallery.displayList', [], $getDefaults),
 
-          new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id',
-            'images.add',
-            [],
-            $getDefaults),
+            new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id', 'images.add', [], $getDefaults),
 
-//            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
-//                'UploadApi.upload_img',
-//                ['id' => '(\d+)'],
-//                $getDefaults),
+            new Route(['POST'], 'v1/rsgallery2/upload_image_file', 'uploadimgfile.upload_image_file', [], $getDefaults),
 
-            // ToDo: use upload_file as command
-//            new Route(['POST'], 'v1/rsgallery2/upload_image_file/:gallery_name',
-            new Route(['POST'], 'v1/rsgallery2/upload_image_file',
-                // 'UploadApi.upload_img',
-                 'upload.upload_image_file',
-                //['gallery_name' => '(.*)'],
-                [],
-                $getDefaults),
-
-            new Route(['PATCH'], 'v1/rsgallery2/recreate_sizes',
-                // 'UploadApi.upload_img',
-                 'upload.recreate_sizes',
-                //['gallery_name' => '(.*)'],
-                [],
-                $getDefaults),
+            new Route(['PATCH'], 'v1/rsgallery2/recreate_sizes', 'recreateSizes.recreate_sizes', [], $getDefaults),
 
 //        // image files
 //        $router->createCRUDRoutes(
