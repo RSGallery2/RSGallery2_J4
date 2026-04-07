@@ -15,9 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\Component\Media\Administrator\Provider\ProviderManagerHelperTrait;
-use Joomla\Component\Media\Api\Model\MediumModel;
 use Joomla\Filesystem\File;
-use Joomla\String\Inflector;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\PathHelper;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageFileModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
@@ -30,7 +28,7 @@ use Tobscure\JsonApi\Exception\InvalidParameterException;
 // phpcs:enable PSR1.Files.SideEffects
 
 
-class RecreateSizesController extends ApiController
+class RecreatesizesController extends ApiController
 {
     use ProviderManagerHelperTrait;
 
@@ -54,6 +52,7 @@ class RecreateSizesController extends ApiController
 
     public function recreate_sizes()
     {
+        global $rsgConfig;
 
         // $image_name = $this->input->json->get('image_name', '', 'PATH');
         $image_name = $this->input->json->get('image_name', '', 'STRING');

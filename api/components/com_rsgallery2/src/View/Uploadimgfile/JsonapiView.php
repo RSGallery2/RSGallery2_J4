@@ -8,7 +8,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Api\View\Upload;
+namespace Rsgallery2\Component\Rsgallery2\Api\View\Uploadimgfile;
 
 use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
 use Joomla\Component\Media\Administrator\Provider\ProviderManagerHelperTrait;
