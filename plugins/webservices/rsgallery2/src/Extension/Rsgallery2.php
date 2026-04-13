@@ -123,8 +123,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 
         // RSG2 version
         $router->addRoutes([
-            //      new Route(['GET'], 'v1/rsgallery2/version', 'version', [], $getDefaults),
-            new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
+            new Route(['GET'], 'v1/rsgallery2/version', 'version.displayItem', [], $getDefaults),
         ]);
     }
 
