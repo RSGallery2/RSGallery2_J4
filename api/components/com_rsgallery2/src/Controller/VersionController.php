@@ -13,6 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
+use Rsgallery2\Component\Rsgallery2\Api\Model\VersionModel;
 use Rsgallery2\Component\Rsgallery2\Api\View\Version\JsonapiView;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -43,15 +44,11 @@ class VersionController extends ApiController
     protected $default_view = 'version';
 
     /**
-     * Call version model
+     * Generic method to prepare the view
      *
-     * @param $cachable
-     * @param $urlparams
-     *
-     * @return ApiController
-     *
-     * @since  5.1.0     */
-    public function display($cachable = false, $urlparams = [])
+     * @return JsonapiView  The prepared view
+     */
+    protected function prepareView()
     {
         $viewType   = $this->app->getDocument()->getType();
         $viewName   = $this->input->get('view', $this->default_view);
@@ -72,6 +69,7 @@ class VersionController extends ApiController
         $modelName = $this->input->get('model', Inflector::singularize($this->contentType));
 
         // Create the model, ignoring request data so we can safely set the state in the request from the controller
+        /** @var VersionModel $model */
         $model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
 
         if (!$model) {
@@ -79,10 +77,13 @@ class VersionController extends ApiController
         }
 
         // test if model is valid
-        try {
-            $modelName = $model->getName();
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage());
+//        try {
+//            $modelName = $model->getName();
+//        } catch (\Exception $e) {
+//            throw new \RuntimeException($e->getMessage());
+//        }
+        if (!$model) {
+            throw new \RuntimeException(Text::_('JLIB_APPLICATION_ERROR_MODEL_CREATE'));
         }
 
         // Push the model into the view (as default)
