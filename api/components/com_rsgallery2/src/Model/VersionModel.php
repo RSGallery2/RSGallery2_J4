@@ -12,7 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Api\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
-use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\Media\Administrator\Model\ApiModel;
 use Joomla\Database\DatabaseInterface;
 
@@ -21,11 +21,9 @@ use Joomla\Database\DatabaseInterface;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- *
- *
- * @since  4.2.0
+ * @since 5.0.10
  */
-class VersionModel extends BaseModel
+class VersionModel extends BaseDatabaseModel
 {
     /**
      * Instance of com_media's ApiModel

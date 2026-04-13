@@ -23,7 +23,7 @@ use Rsgallery2\Component\Rsgallery2\Api\View\Version\JsonapiView;
 /**
  * The version controller
  *
- * @since  4.0.0
+ * @since  5.0.10
  */
 class VersionController extends ApiController
 {
@@ -31,7 +31,7 @@ class VersionController extends ApiController
      * The content type of the item.
      *
      * @var    string
-     * @since  4.0.0
+     * @since  5.0.10
      */
     protected $contentType = 'version';
 
@@ -39,14 +39,16 @@ class VersionController extends ApiController
      * The default view for the display method.
      *
      * @var    string
-     * @since  3.0
+     * @since  5.0.10
      */
     protected $default_view = 'version';
 
     /**
      * Generic method to prepare the view
      *
-     * @return JsonapiView  The prepared view
+     * @return JsonApiView  The prepared view
+     *
+     * @since  5.0.10
      */
     protected function prepareView()
     {
@@ -55,7 +57,7 @@ class VersionController extends ApiController
         $viewLayout = $this->input->get('layout', 'default', 'string');
 
         try {
-            /** @var \Joomla\CMS\MVC\View\JsonApiView $view */
+            /** @var JsonApiView $view */
             $view = $this->getView(
                 $viewName,
                 $viewType,
@@ -71,10 +73,6 @@ class VersionController extends ApiController
         // Create the model, ignoring request data so we can safely set the state in the request from the controller
         /** @var VersionModel $model */
         $model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
-
-        if (!$model) {
-            throw new \RuntimeException(Text::_('JLIB_APPLICATION_ERROR_MODEL_CREATE'));
-        }
 
         // test if model is valid
 //        try {
@@ -92,6 +90,6 @@ class VersionController extends ApiController
         $view->setDocument($this->app->getDocument());
         $view->displayItem();
 
-        return $this;
+        return $view;
     }
 }
