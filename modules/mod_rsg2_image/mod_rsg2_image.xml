@@ -3,7 +3,7 @@
            client="site"
            method="upgrade"
            version="4.0">
-    <name>MOD_RSG2_IMAGE</name>
+    <name>mod_rsg2_image</name>
     <creationDate>01. Dec. 2021</creationDate>
     <author>RSGallery2 Team</author>
     <authorEmail>team2@rsgallery2.org</authorEmail>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" client="site" method="upgrade" version="4.0">
-  <name>MOD_RSG2_SLIDESHOW</name>
+  <name>mod_rsg2_slideshow</name>
   <author>RSGallery2 Team</author>
-  <creationDate>2026.03.18</creationDate>
+  <creationDate>2026.04.13</creationDate>
   <copyright>(c) 2020-2026 RSGallery2 Team</copyright>
   <license>GNU General Public License version 2 or later;</license>
   <authorEmail>team2@rsgallery2.org</authorEmail>
