@@ -117,7 +117,14 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     {
         // Gid or name
         $router->addRoutes([// ToDo: use upload_file as command
-            new Route(['GET'], 'v1/rsgallery2/latestgallery', 'latestgallery.displayList', [], $getDefaults),
+
+            // ToDo: Upload in one go
+            //            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
+            //                'uploadimgatonce.upload_imgage_at_once',
+            //                ['id' => '(\d+)'],
+            //                $getDefaults),
+
+            new Route(['GET'], 'v1/rsgallery2/latestgallery', 'latestgallery.displayItem', [], $getDefaults),
 
             //new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id', 'images.add', [], $getDefaults),
             new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id', 'reserveimgid.db_reserve_image_id', [], $getDefaults),

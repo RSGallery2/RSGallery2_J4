@@ -12,7 +12,7 @@ namespace Rsgallery2\Component\Rsgallery2\Api\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
-use Joomla\CMS\MVC\Model\BaseModel;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Component\Media\Administrator\Model\ApiModel;
 use Joomla\Database\DatabaseInterface;
 
@@ -21,19 +21,17 @@ use Joomla\Database\DatabaseInterface;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- *
- *
- * @since  4.2.0
+ * @since 5.0.10
  */
-class ConfigModel extends BaseModel
+class LatestGalleryModel extends BaseDatabaseModel
 {
-    public function __construct($config = [])
-    {
-        parent::__construct($config);
-    }
+//    public function __construct($config = [])
+//    {
+//        parent::__construct($config);
+//    }
 
     /**
-     * Method to get all configuration parameters
+     * Method to get latest gallery data
      *
      * @return  \stdClass  A file or folder object.
      *
@@ -42,34 +40,27 @@ class ConfigModel extends BaseModel
      */
     public function getItem()
     {
-
-        $componentName = 'com_rsgallery2';
-
-        $oConfig = new \stdClass();
-//        $oConfig->image_size = "xx.xx.xx";
-//        $oConfig->keepOriginalImage = "2025.xx.xx";
+        $oGallery = new \stdClass();
 
         try {
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
+            $limit = 1;
+
             $query = $db->createQuery()
-                ->select($db->quoteName('params'))
-                ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('element') . ' = ' . $db->quote($componentName));
+                ->select('*')
+                ->from('#__rsg2_galleries')
+                ->order($db->quoteName('id') . ' DESC')
+                ->setLimit($limit);
             $db->setQuery($query);
 
-            $jsonStr = $db->loadResult();
-            if (!empty($jsonStr)) {
-                $params = json_decode($jsonStr, true);
-            }
+            $oGallery = $db->loadObject();
 
-            $oConfig = (object) $params;
-//            $test01 = $oConfig->image_size;
-//            $test02 = $oConfig->keepOriginalImage;
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }
 
-        return $oConfig;
+        return $oGallery;
     }
+
 }

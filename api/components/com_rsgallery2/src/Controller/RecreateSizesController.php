@@ -24,7 +24,6 @@ use Tobscure\JsonApi\Exception\InvalidParameterException;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-
 // phpcs:enable PSR1.Files.SideEffects
 
 
@@ -72,7 +71,7 @@ class RecreatesizesController extends ApiController
 
         if (\count($missingParameters))
         {
-//      throw new InvalidParameterException(Text::sprintf('WEBSERVICE_COM_MEDIA_MISSING_REQUIRED_PARAMETERS', implode(' & ', $missingParameters)));
+//          throw new InvalidParameterException(Text::sprintf('WEBSERVICE_COM_MEDIA_MISSING_REQUIRED_PARAMETERS', implode(' & ', $missingParameters)));
             throw new InvalidParameterException(Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters)));
         }
 
@@ -125,14 +124,14 @@ class RecreatesizesController extends ApiController
 //            }
         }
 
-        if (!$isCreated)
-        {
-            // ToDo: remove $imageId fom image database
-
-            //...
-
-
-        }
+//        if (!$isCreated)
+//        {
+//            // ToDo: remove $imageId from image database
+//
+//            //...
+//
+//
+//        }
 
         return;
     }

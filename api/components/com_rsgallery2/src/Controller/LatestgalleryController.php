@@ -10,10 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
-use Joomla\CMS\Filter\InputFilter;
-use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\MVC\Controller\ApiController;
-use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -32,7 +29,7 @@ class LatestgalleryController extends ApiController
      * @var    string
      * @since  4.0.0
      */
-    protected $contentType = 'galleries';
+    protected $contentType = 'latestgallery';
 
     /**
      * The default view for the display method.
@@ -42,9 +39,18 @@ class LatestgalleryController extends ApiController
      */
     protected $default_view = 'latestgallery';
 
-    public function displayList($cachable = false, $urlparams = [])
+    /**
+     * @param   null  $id
+     */
+    /* <br /> error: use following to create an error with prepend error message
+    public function displayItem(int|null $id = null)
+    /**/
+    public function displayItem($id = null)
     {
-        parent::displayList();
+        // Set the id as the parent sets it as int
+        $this->modelState->set('id', $this->input->get('id', '', 'string'));
+
+        return parent::displayItem();
     }
-    // Implement other methods like read, update, delete as needed
+
 }

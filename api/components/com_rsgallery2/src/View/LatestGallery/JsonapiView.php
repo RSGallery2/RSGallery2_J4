@@ -122,16 +122,16 @@ class JsonapiView extends BaseApiView
             $this->fieldsToRenderList[] = $field->name;
         }
 
-        //--- simulate populate state before model getItems() -------------------------
-
-        /** @var GalleriesModel $model */
-        $model = $this->getModel();
-
-        // sort and restrict to one item
-        $model->setState('list.limit', 1);
-        $model->setState('list.ordering', 'a.created');
-        $model->setState('list.direction', 'DESC');
-
+//        //--- simulate populate state before model getItems() -------------------------
+//
+//        /** @var GalleriesModel $model */
+//        $model = $this->getModel();
+//
+//        // sort and restrict to one item
+//        $model->setState('list.limit', 1);
+//        $model->setState('list.ordering', 'a.created');
+//        $model->setState('list.direction', 'DESC');
+//
         return parent::displayList();
     }
 
