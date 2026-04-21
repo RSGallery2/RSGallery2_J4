@@ -59,6 +59,8 @@ class ConfigModel extends BaseModel
             $db->setQuery($query);
 
             $jsonStr = $db->loadResult();
+
+            $params = new \stdClass();
             if (!empty($jsonStr)) {
                 $params = json_decode($jsonStr, true);
             }

@@ -143,10 +143,10 @@ class UploadimgfileController extends ApiController
     {
         $params       = ComponentHelper::getParams('com_media');
         $helper       = new \Joomla\CMS\Helper\MediaHelper();
-        $serverlength = $this->input->server->getInt('CONTENT_LENGTH');
+        $serverLength = $this->input->server->getInt('CONTENT_LENGTH');
 
         // Check if the size of the request body does not exceed various server imposed limits.
-        if (($params->get('upload_maxsize', 0) > 0 && $serverlength > ($params->get('upload_maxsize', 0) * 1024 * 1024)) || $serverlength > $helper->toBytes(\ini_get('upload_max_filesize')) || $serverlength > $helper->toBytes(\ini_get('post_max_size')) || $serverlength > $helper->toBytes(\ini_get('memory_limit')))
+        if (($params->get('upload_maxsize', 0) > 0 && $serverLength > ($params->get('upload_maxsize', 0) * 1024 * 1024)) || $serverLength > $helper->toBytes(\ini_get('upload_max_filesize')) || $serverLength > $helper->toBytes(\ini_get('post_max_size')) || $serverLength > $helper->toBytes(\ini_get('memory_limit')))
         {
             throw new \RuntimeException(Text::_('COM_MEDIA_ERROR_WARNFILETOOLARGE'), 400);
         }

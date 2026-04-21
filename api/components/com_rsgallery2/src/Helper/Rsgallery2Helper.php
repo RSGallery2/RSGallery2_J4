@@ -29,6 +29,8 @@ class Rsgallery2Helper
      * @param   string  $uri      The uri to resolve
      *
      * @return  string
+     *
+     * @since  4.0.0
      */
     public static function resolve(string $uri): string
     {

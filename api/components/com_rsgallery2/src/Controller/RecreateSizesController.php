@@ -78,7 +78,7 @@ class RecreatesizesController extends ApiController
         $targetFileName = File::makeSafe($image_name);
 
         $rsgConfig        = ComponentHelper::getParams('com_rsgallery2');
-        $thumbSize        = $rsgConfig->get('thumb_size');
+        // $thumbSize        = $rsgConfig->get('thumb_size');
         $use_j3x_location = $rsgConfig->get('useJ3xOldPaths');
 
         $srcTempPathFileName = '';
@@ -124,14 +124,14 @@ class RecreatesizesController extends ApiController
 //            }
         }
 
-//        if (!$isCreated)
-//        {
+        if (!$isCreated)
+        {
 //            // ToDo: remove $imageId from image database
 //
 //            //...
 //
 //
-//        }
+        }
 
         return;
     }

@@ -24,7 +24,7 @@ use Joomla\Registry\Registry;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-// , $fieldsToRenderItem and $fieldsToRenderList. to set  the fields returned by your Model's getItem and getItems methods, r
+// $fieldsToRenderItem and $fieldsToRenderList. to set  the fields returned by your Model's getItem and getItems methods, r
 
 
 /**
@@ -37,7 +37,7 @@ class JsonapiView extends BaseApiView
     /**
      * Execute and display a template script.
      *
-     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+     * @param   null  $item
      *
      * @return  void
      *

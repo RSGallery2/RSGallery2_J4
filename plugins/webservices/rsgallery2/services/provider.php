@@ -14,6 +14,7 @@
 
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -30,7 +31,7 @@ return new class () implements ServiceProviderInterface {
                 $plugin     = PluginHelper::getPlugin('webservices', 'rsgallery2');
                 $dispatcher = $container->get(DispatcherInterface::class);
 
-                /** @var \Joomla\CMS\Plugin\CMSPlugin $plugin */
+                /** @var CMSPlugin $plugin */
                 $plugin = new Rsgallery2($dispatcher, (array) $plugin);
                 $plugin->setApplication(Factory::getApplication());
 

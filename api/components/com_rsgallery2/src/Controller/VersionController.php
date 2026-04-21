@@ -46,11 +46,14 @@ class VersionController extends ApiController
     /**
      * Generic method to prepare the view
      *
+     * @param $cachable
+     * @param $urlParams
+     *
      * @return VersionController The prepared view
      *
      * @since  5.0.10
      */
-    public function display($cachable = false, $urlparams = [])
+    public function display($cachable = false, $urlParams = [])
     {
         $viewType   = $this->app->getDocument()->getType();
         $viewName   = $this->input->get('view', $this->default_view);
@@ -75,11 +78,6 @@ class VersionController extends ApiController
         $model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
 
         // test if model is valid
-//        try {
-//            $modelName = $model->getName();
-//        } catch (\Exception $e) {
-//            throw new \RuntimeException($e->getMessage());
-//        }
         if (!$model) {
             throw new \RuntimeException(Text::_('JLIB_APPLICATION_ERROR_MODEL_CREATE'));
         }

@@ -40,7 +40,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     }
 
     /**
-     * Registers com_rsgallery's API's routes in the application
+     * Registers com_rsgallery API's routes in the application
      *
      * @param   BeforeApiRouteEvent  $event  The event object
      *
@@ -74,10 +74,10 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     /**
      * DB galleries
      *
-     * @param   ApiRouter  $router
+     * @param ApiRouter  $router
+     * @param array $getDefaults
      *
-     *
-     * @since version
+     * @since 5.0.0.10
      */
     public function DBGalleriesImages(ApiRouter $router, array $getDefaults): void
     {
@@ -113,7 +113,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
      *
      * @since version
      */
-    private function UploadImages(ApiRouter $router, array $getDefaults)
+    private function UploadImages(ApiRouter $router, array $getDefaults): void
     {
         // Gid or name
         $router->addRoutes([// ToDo: use upload_file as command

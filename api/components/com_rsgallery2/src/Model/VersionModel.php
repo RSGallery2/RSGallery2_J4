@@ -33,6 +33,11 @@ class VersionModel extends BaseDatabaseModel
      */
 //    private $versionApiModel;
 
+    /**
+     * @param $config
+     *
+     * @throws \Exception
+     */
     public function __construct($config = [])
     {
         parent::__construct($config);
