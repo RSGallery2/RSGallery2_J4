@@ -46,11 +46,11 @@ class VersionController extends ApiController
     /**
      * Generic method to prepare the view
      *
-     * @return JsonApiView  The prepared view
+     * @return VersionController The prepared view
      *
      * @since  5.0.10
      */
-    protected function prepareView()
+    public function display($cachable = false, $urlparams = [])
     {
         $viewType   = $this->app->getDocument()->getType();
         $viewName   = $this->input->get('view', $this->default_view);
@@ -90,6 +90,6 @@ class VersionController extends ApiController
         $view->setDocument($this->app->getDocument());
         $view->displayItem();
 
-        return $view;
+        return $this;
     }
 }

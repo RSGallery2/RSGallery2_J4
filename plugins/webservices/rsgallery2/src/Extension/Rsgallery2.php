@@ -103,7 +103,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
         $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults), new Route(['GET'], 'v1/rsgallery2/config/:variable_name', 'config.displayItem', ['variable_name' => '([A-Za-z0-9_]+)'], $getDefaults,),]);
 
         // RSG2 version
-        $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/version', 'version.displayItem', [], $getDefaults),]);
+        $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),]);
     }
 
     /**
@@ -119,10 +119,10 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
         $router->addRoutes([// ToDo: use upload_file as command
 
             // ToDo: Upload in one go
-            //            new Route(['GET'], 'v1/rsgallery2/upload/:gid',
-            //                'uploadimgatonce.upload_imgage_at_once',
-            //                ['id' => '(\d+)'],
-            //                $getDefaults),
+            //  new Route(['GET'], 'v1/rsgallery2/upload/:gid',
+            //      'uploadimgatonce.upload_imgage_at_once',
+            //      ['id' => '(\d+)'],
+            //      $getDefaults),
 
             new Route(['GET'], 'v1/rsgallery2/latestgallery', 'latestgallery.displayItem', [], $getDefaults),
 

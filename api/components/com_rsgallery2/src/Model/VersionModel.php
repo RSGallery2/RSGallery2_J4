@@ -70,6 +70,7 @@ class VersionModel extends BaseDatabaseModel
 
             $oVersion->version = $manifest['version'];
             $oVersion->creationDate = $manifest['creationDate'];
+
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }

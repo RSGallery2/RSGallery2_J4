@@ -493,8 +493,10 @@ class ImagesModel extends ListModel
             // Create a new query object.
             $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $query = $db->createQuery();
-            $query->select('*')->from($db->quoteName('#__rsg2_images'))->order($db->quoteName('id') . ' DESC');
+            $query = $db->createQuery()
+                ->select('*')
+                ->from($db->quoteName('#__rsg2_images'))
+                ->order($db->quoteName('id') . ' DESC');
 
             $db->setQuery($query, 0, $limit);
             $rows = $db->loadObjectList();
