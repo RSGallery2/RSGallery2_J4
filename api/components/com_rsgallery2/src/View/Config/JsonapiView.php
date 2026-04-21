@@ -65,6 +65,7 @@ class JsonapiView extends BaseApiView
         }
 
         $this->fieldsToRenderItem = $this->getConfigParameterNames();
+//        $this->fieldsToRenderList = $this->getConfigParameterNames();
 
         parent::__construct($config);
     }
@@ -111,7 +112,9 @@ class JsonapiView extends BaseApiView
         return $item;
     }
 
-// ToDo: Later The hidden gem of the API view is another string array property, $relationship. In that view you list all the field names returned by your model which refer to related data.
+
+	// ToDo: Move to model ?
+    // ToDo: Later The hidden gem of the API view is another string array property, $relationship. In that view you list all the field names returned by your model which refer to related data.
 
     /**
      * Method to get all configuration names
@@ -127,8 +130,8 @@ class JsonapiView extends BaseApiView
         $componentName = 'com_rsgallery2';
 
         $params = [];
-        $params[] = "img size";
-        $params[] = "set";
+//        $params[] = "img size";
+//        $params[] = "set";
 
         try {
             $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -141,12 +144,10 @@ class JsonapiView extends BaseApiView
 
             $jsonStr = $db->loadResult();
             if (!empty($jsonStr)) {
-                $params = json_decode($jsonStr, true);
+                $dbParams = json_decode($jsonStr, true);
             }
 
-            foreach ($params as $name => $value) {
-                $params[] = $name;
-            }
+	        $params = array_keys($dbParams);
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }

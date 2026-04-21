@@ -99,10 +99,25 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
      */
     public function DBConfigAndVersion(ApiRouter $router, array $getDefaults): void
     {
-// DB config
-        $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults), new Route(['GET'], 'v1/rsgallery2/config/:variable_name', 'config.displayItem', ['variable_name' => '([A-Za-z0-9_]+)'], $getDefaults,),]);
+		//--- RSG2 J standard config -------------------------------------------
 
-        // RSG2 version
+        // previous: $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults), new Route(['GET'], 'v1/rsgallery2/config/:variable_name', 'config.displayItem', ['variable_name' => '([A-Za-z0-9_]+)'], $getDefaults,),]);
+
+	    $baseName = 'v1/rsgallery2/config';
+	    $controller = 'config';
+	    $defaults = ['component' => 'com_rsgallery2'];
+
+	    $routes = [
+		    new Route(['GET'], $baseName, $controller . '.displayList', [], $getDefaults),
+            new Route(['GET'], $baseName . '/:id', $controller . '.displayItem', ['id' => '(\d+)'], $getDefaults),
+            new Route(['POST'], $baseName, $controller . '.add', [], $defaults),
+            new Route(['PATCH'], $baseName . '/:id', $controller . '.edit', ['id' => '(\d+)'], $defaults),
+            new Route(['DELETE'], $baseName . '/:id', $controller . '.delete', ['id' => '(\d+)'], $defaults),
+        ];
+	    $router->addRoutes($routes);
+
+        //--- RSG2 version -----------------------------
+
         $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),]);
     }
 

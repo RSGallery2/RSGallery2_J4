@@ -48,6 +48,7 @@ class ConfigModel extends BaseModel
         $oConfig = new \stdClass();
 //        $oConfig->image_size = "xx.xx.xx";
 //        $oConfig->keepOriginalImage = "2025.xx.xx";
+	    $jsonStr = '';
 
         try {
             $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -60,17 +61,21 @@ class ConfigModel extends BaseModel
 
             $jsonStr = $db->loadResult();
 
-            $params = new \stdClass();
-            if (!empty($jsonStr)) {
+	        if (!empty($jsonStr)) {
                 $params = json_decode($jsonStr, true);
-            }
-
-            $oConfig = (object) $params;
+		        $oConfig = (object) $params;
 //            $test01 = $oConfig->image_size;
 //            $test02 = $oConfig->keepOriginalImage;
+            }
+
         } catch (\Exception $e) {
             throw new \RuntimeException($e->getMessage());
         }
+
+	    if (empty($params)) {
+
+		    throw new \RuntimeException("Error: The RSG2 configuration may not have been saved yet. Please save the configuration first.");
+	    }
 
         return $oConfig;
     }
