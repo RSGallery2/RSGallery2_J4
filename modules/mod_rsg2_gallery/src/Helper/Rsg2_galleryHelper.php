@@ -21,7 +21,7 @@ use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel;
 
 // phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
+\defined('_JEXEC') || die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**

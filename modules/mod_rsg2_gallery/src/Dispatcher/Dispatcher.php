@@ -21,18 +21,28 @@ use Joomla\Registry\Registry;
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
+/**
+ * Dispatcher class for mod_rsg2_gallery
+ *
+ * @since  4.4.0
+ */
 class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareInterface
 {
     use HelperFactoryAwareTrait;
 
+    /**
+     * Returns the layout data.
+     *
+     * @return  array
+     *
+     * @since   0.7.0
+     */
     protected function getLayoutData(): array
     {
         // module(self) params, input , app, ? module? , ,
         $data = parent::getLayoutData();
 
-        $helper = $this
-            ->getHelperFactory()
-            ->getHelper('Rsg2_galleryHelper', $data);
+        $helper = $this->getHelperFactory()->getHelper('Rsg2_galleryHelper', $data);
 
         // ToDo flag that tells to identify ...
 //        $msg = $helper->getText();
