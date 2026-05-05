@@ -13,7 +13,6 @@ namespace Rsgallery2\Component\Rsgallery2\Api\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseModel;
-use Joomla\Component\Media\Administrator\Model\ApiModel;
 use Joomla\Database\DatabaseInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -27,56 +26,73 @@ use Joomla\Database\DatabaseInterface;
  */
 class ConfigModel extends BaseModel
 {
-    public function __construct($config = [])
-    {
-        parent::__construct($config);
-    }
+	public function __construct($config = [])
+	{
+		parent::__construct($config);
+	}
 
-    /**
-     * Method to get all configuration parameters
-     *
-     * @return  \stdClass  A file or folder object.
-     *
-     * @since   4.1.0
-     * @throws  ResourceNotFound
-     */
-    public function getItem()
-    {
+	/**
+	 * Method to get all configuration parameters
+	 *
+	 * @return  \stdClass  A file or folder object.
+	 *
+	 * @throws  ResourceNotFound
+	 * @since   4.1.0
+	 */
+	public function getItem()
+	{
 
-        $componentName = 'com_rsgallery2';
+		$componentName = 'com_rsgallery2';
 
-        $oConfig = new \stdClass();
-//        $oConfig->image_size = "xx.xx.xx";
-//        $oConfig->keepOriginalImage = "2025.xx.xx";
-	    $jsonStr = '';
+		$oConfig = new \stdClass();
 
-        try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+		try
+		{
 
-            $query = $db->createQuery()
-                ->select($db->quoteName('params'))
-                ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('element') . ' = ' . $db->quote($componentName));
-            $db->setQuery($query);
+			$db = Factory::getContainer()->get(DatabaseInterface::class);
 
-            $jsonStr = $db->loadResult();
+			$query = $db->createQuery()->select($db->quoteName('params'))->from($db->quoteName('#__extensions'))->where($db->quoteName('element') . ' = ' . $db->quote($componentName));
 
-	        if (!empty($jsonStr)) {
-                $params = json_decode($jsonStr, true);
-		        $oConfig = (object) $params;
-//            $test01 = $oConfig->image_size;
-//            $test02 = $oConfig->keepOriginalImage;
-            }
+			$db->setQuery($query);
 
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage());
-        }
+			$jsonStr = $db->loadResult();
 
-	    if (empty($params)) {
+			if (!empty($jsonStr))
+			{
+				$params  = json_decode($jsonStr, true);
 
-		    throw new \RuntimeException("Error: The RSG2 configuration may not have been saved yet. Please save the configuration first.");
-	    }
+				//--- just one parameter ---------------------------------------------
 
-        return $oConfig;
-    }
+				$singlePara = $this->state->get('param');
+				if (!empty ($singlePara))
+				{
+					$value                = $params[$singlePara];
+					$params               = [];
+					$params [$singlePara] = $value;
+				}
+
+				$oConfig = (object) $params;
+			}
+
+		}
+		catch (\Exception $e)
+		{
+			throw new \RuntimeException($e->getMessage());
+		}
+
+		if (empty($params))
+		{
+			if (!empty ($singlePara))
+			{
+				throw new \RuntimeException("Error: The RSG2 configuration may not have been saved yet. Please save the configuration first.");
+			}
+		}
+
+		return $oConfig;
+	}
+
+	// ToDo: edit delete -> check how it is done in Media
+
+
+
 }

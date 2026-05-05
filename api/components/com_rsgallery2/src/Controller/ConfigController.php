@@ -104,5 +104,31 @@ class ConfigController extends ApiController
     }
 
 
-    // Implement other methods like read, update, delete as needed
+//	public function displayItem($param = '')
+	public function displayItem($param = '')
+	{
+//		// Set list specific request parameters in model state.
+//		$this->setModelState(self::$itemQueryModelStateMap);
+
+		// Test debug
+		$controller = $this->input->get('controller', 'test');
+		// $para = $this->input->get('para', 'test');
+		$param = $this->input->get('para', '', 'string');
+		$this->modelState->set('param', $param);
+//		$this->modelState->set('para', $this->input->get('para', '', 'string'));
+
+//		// Display files in specific path.
+//		$this->modelState->set('path', $path ?: $this->input->get('path', '', 'STRING'));
+//
+//		// Return files (not folders) as urls.
+//		if ($this->input->exists('url')) {
+//			$this->modelState->set('url', $this->input->get('url', true, 'BOOLEAN'));
+//		}
+
+		return parent::displayItem(0);
+	}
+
+
+
+	// Implement other methods like read, update, delete as needed
 }

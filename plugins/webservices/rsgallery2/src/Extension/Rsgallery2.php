@@ -57,9 +57,6 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
         // $getDefaults = array_merge(['public' => true], $defaults);
         $getDefaults = array_merge(['public' => false], $defaults);
 
-        //          new Route(['GET'], 'v1/example/items/:slug', 'item.displayItem',
-        //              ['slug' => '(.*)'], ['option' => 'com_example']),
-
         $this->DBGalleriesImages($router, $getDefaults);
 
         $this->DBConfigAndVersion($router, $getDefaults);
@@ -109,10 +106,11 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 
 	    $routes = [
 		    new Route(['GET'], $baseName, $controller . '.displayList', [], $getDefaults),
-            new Route(['GET'], $baseName . '/:id', $controller . '.displayItem', ['id' => '(\d+)'], $getDefaults),
-            new Route(['POST'], $baseName, $controller . '.add', [], $defaults),
-            new Route(['PATCH'], $baseName . '/:id', $controller . '.edit', ['id' => '(\d+)'], $defaults),
-            new Route(['DELETE'], $baseName . '/:id', $controller . '.delete', ['id' => '(\d+)'], $defaults),
+//		    new Route(['GET'], $baseName . '/:para', $controller . '.displayItem', ['para'], $getDefaults),
+		    new Route(['GET'], $baseName . '/:para', $controller . '.displayItem', ['para' => '(.*)'], $getDefaults),
+//            new Route(['POST'], $baseName, $controller . '.add', [], $defaults),
+            new Route(['PATCH'], $baseName . '/:para', $controller . '.edit', ['para' => '.*'], $defaults),
+            new Route(['DELETE'], $baseName . '/:para', $controller . '.delete', ['para' => '(\d+)'], $defaults),
         ];
 	    $router->addRoutes($routes);
 
@@ -124,7 +122,6 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     /**
      * @param   ApiRouter  $router
      * @param   array      $getDefaults
-     *
      *
      * @since version
      */
@@ -142,6 +139,8 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
             new Route(['GET'], 'v1/rsgallery2/latestgallery', 'latestgallery.displayItem', [], $getDefaults),
 
             //new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id', 'images.add', [], $getDefaults),
+            new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id/:gallery_id', 'reserveimgid.db_reserve_image_id', ['gallery_id' => '(\d+)'], $getDefaults),
+            new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id/:gallery_name', 'reserveimgid.db_reserve_image_id', ['gallery_name' => '(\d+)'], $getDefaults),
             new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id', 'reserveimgid.db_reserve_image_id', [], $getDefaults),
 
             new Route(['POST'], 'v1/rsgallery2/upload_image_file', 'uploadimagefile.upload_image_file', [], $getDefaults),

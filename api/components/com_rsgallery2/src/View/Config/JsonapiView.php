@@ -64,8 +64,9 @@ class JsonapiView extends BaseApiView
             $this->serializer = new Rsgallery2Serializer($config['contentType']);
         }
 
-        $this->fieldsToRenderItem = $this->getConfigParameterNames();
-//        $this->fieldsToRenderList = $this->getConfigParameterNames();
+		$configParaNames = $this->getConfigParameterNames();
+        $this->fieldsToRenderItem = $configParaNames;
+        $this->fieldsToRenderList = $configParaNames;
 
         parent::__construct($config);
     }

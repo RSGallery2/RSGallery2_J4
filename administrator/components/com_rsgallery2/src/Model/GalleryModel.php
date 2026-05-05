@@ -311,28 +311,21 @@ class GalleryModel extends AdminModel
             // Pre-select some filters (Status, Language, Access) in edit form if those have been selected in Category Manager
             if (!$data->id) {
                 // Check for which extension the Category Manager is used and get selected fields
-                $extUserState = $app->getUserState('com_rsgallery2.galleries.filter.extension');
-                $extension = "";
-                if (! empty($extUserState)) {
-                    $extension = substr($extUserState, 4);
-                }
-                $filters   = (array)$app->getUserState('com_rsgallery2.galleries.' . $extension . '.filter');
+//                $extUserState = $app->getUserState('com_rsgallery2.galleries.filter.extension');
+//                $extension = "";
+//                if (! empty($extUserState)) {
+//                    $extension = substr($extUserState, 4);
+//                }
+//                $filters   = (array)$app->getUserState('com_rsgallery2.galleries.' . $extension . '.filter');
 
-                $data->set(
-                    'published',
-                    $app->input->getInt(
+	            $extension = substr($app->getUserState('com_categories.categories.filter.extension', ''), 4);
+	            $filters   = (array) $app->getUserState('com_categories.categories.' . $extension . '.filter');
+
+                $data->published = $app->input->getInt(
                         'published',
-                        ((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null),
-                    ),
-                );
-//              $data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
-                $data->set(
-                    'access',
-                    $app->input->getInt(
-                        'access',
-                        (!empty($filters['access']) ? $filters['access'] : $app->get('access')),
-                    ),
-                );
+                        ((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null));
+	            $data->language = $app->getInput()->getString('language', (!empty($filters['language']) ? $filters['language'] : null));
+	            $data->access   = $app->getInput()->getInt('access', (!empty($filters['access']) ? $filters['access'] : $app->get('access')));
             }
         }
 
