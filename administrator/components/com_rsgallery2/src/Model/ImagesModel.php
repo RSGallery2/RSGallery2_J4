@@ -175,16 +175,13 @@ class ImagesModel extends ListModel
 
         // Select the required fields from the table.
         $query->select($this->getState(/**/ 'list.select', 'a.id, ' . 'a.name, ' . 'a.alias, ' . 'a.description, ' . 'a.note, ' . 'a.gallery_id, ' . 'a.title, '
-
             . 'a.params, ' . 'a.published, '
-
             . 'a.hits, ' . 'a.rating, ' . 'a.votes, ' . 'a.comments, '
 
             //               . 'a.publish_up,'
             //               . 'a.publish_down,'
 
             . 'a.checked_out, ' . 'a.checked_out_time, ' . 'a.created, ' . 'a.created_by, ' . 'a.created_by_alias, ' . 'a.modified, ' . 'a.modified_by, '
-
             . 'a.ordering, ' . 'a.approved, ' . 'a.asset_id, ' . 'a.access, ' . 'a.use_j3x_location '));
         $query->from('#__rsg2_images as a');
 

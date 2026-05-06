@@ -10,10 +10,17 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
+use Doctrine\Inflector\InflectorFactory;
+use Joomla\CMS\Access\Exception\NotAllowed;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\Media\Api\Model\MediumModel;
+use Joomla\Input\Json;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
+use Rsgallery2\Component\Rsgallery2\Api\Model\ConfigModel;
+use Tobscure\JsonApi\Exception\InvalidParameterException;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -104,18 +111,17 @@ class ConfigController extends ApiController
     }
 
 
-//	public function displayItem($param = '')
+	/**
+	 * @param $param
+	 *
+	 * @return ConfigController
+	 *
+	 * @since version
+	 */
 	public function displayItem($param = '')
 	{
-//		// Set list specific request parameters in model state.
-//		$this->setModelState(self::$itemQueryModelStateMap);
-
-		// Test debug
-		$controller = $this->input->get('controller', 'test');
-		// $para = $this->input->get('para', 'test');
 		$param = $this->input->get('para', '', 'string');
 		$this->modelState->set('param', $param);
-//		$this->modelState->set('para', $this->input->get('para', '', 'string'));
 
 //		// Display files in specific path.
 //		$this->modelState->set('path', $path ?: $this->input->get('path', '', 'STRING'));
@@ -128,7 +134,89 @@ class ConfigController extends ApiController
 		return parent::displayItem(0);
 	}
 
+	public function edit()
+	{
+		// Access check.
+		if (!$this->allowEdit()) {
+			throw new NotAllowed('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED', 403);
+		}
 
+		// all variables
+		$data = $this->input->json->getArray();
+
+		if (empty($data))
+		{
+			throw new InvalidParameterException(Text::sprintf('No parameter given for patch config'));		//	Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters))
+		}
+
+		// ToDo: Handle array
+		// $param = key($data[0]);
+		$param = min(array_keys($data));
+		$value = $data[$param];
+
+//		// attention param used for get single item ToDo: revisit for handlinge get single different
+//		$this->modelState->set('parameter', $param);
+//		$this->modelState->set('value', $value);
+
+		//--- Create the model -----------------------------------------------------------------
+
+		/** @var ConfigModel $model */
+		$model = $this->getModel('Config', '', ['ignore_request' => true, 'state' => $this->modelState]);
+
+		$is = $model->save($data);
+		$this->modelState->set('parameter', $param);
+//		throw new \Exception(Text::_('edit ...'));
+
+		return parent::displayItem('test');
+	}
+
+//	/**
+//	 * Method to create or modify a file or folder.
+//	 *
+//	 * @param   integer  $recordKey  The primary key of the item (if exists)
+//	 *
+//	 * @return  string   The path
+//	 *
+//	 * @since   4.1.0
+//	 */
+//	protected function save($recordKey = null)
+//	{
+//		// Explicitly get the single item model name.
+//		$inflector = InflectorFactory::create()->build();
+//		$modelName = $this->input->get('model', $inflector->singularize($this->contentType));
+//
+//		/** @var MediumModel $model */
+//		$model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
+//
+////		$json = $this->input->json;
+////
+////		// Decode content, if any
+////		if ($content = base64_decode($json->get('content', '', 'raw'))) {
+////			$this->checkContent();
+////		}
+////
+////		// If there is no content, com_media assumes the path refers to a folder.
+////		$this->modelState->set('content', $content);
+//
+//		return $model->save();
+//	}
+
+	/**
+	 * Method to check if it's allowed to modify an existing file or folder.
+	 *
+	 * @param   array  $data  An array of input data.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   4.1.0
+	 */
+	protected function allowEdit($data = [], $key = 'id'): bool
+	{
+		$user = $this->app->getIdentity();
+
+		// com_media's access rules contains no specific update rule.
+		return $user->authorise('core.edit', 'com_media');
+	}
 
 	// Implement other methods like read, update, delete as needed
 }

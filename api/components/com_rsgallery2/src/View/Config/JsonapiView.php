@@ -120,7 +120,7 @@ class JsonapiView extends BaseApiView
     /**
      * Method to get all configuration names
      *
-     * @return  \stdClass  A file or folder object.
+     * @return  string[]  A file or folder object.
      *
      * @since   4.1.0
      * @throws  ResourceNotFound

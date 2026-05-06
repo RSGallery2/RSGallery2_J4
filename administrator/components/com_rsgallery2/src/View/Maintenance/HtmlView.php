@@ -289,7 +289,7 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(
                     Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF'),
-                    'fas fa-camera-retro',
+                    'none fas fa-camera-retro',
                 ); // 'maintenance');
                 ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 

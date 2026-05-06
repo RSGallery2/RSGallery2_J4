@@ -11,6 +11,7 @@
 namespace Rsgallery2\Component\Rsgallery2\Api\Model;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
@@ -41,7 +42,6 @@ class ConfigModel extends BaseModel
 	 */
 	public function getItem()
 	{
-
 		$componentName = 'com_rsgallery2';
 
 		$oConfig = new \stdClass();
@@ -59,7 +59,7 @@ class ConfigModel extends BaseModel
 
 			if (!empty($jsonStr))
 			{
-				$params  = json_decode($jsonStr, true);
+				$params = json_decode($jsonStr, true);
 
 				//--- just one parameter ---------------------------------------------
 
@@ -93,6 +93,78 @@ class ConfigModel extends BaseModel
 
 	// ToDo: edit delete -> check how it is done in Media
 
+	/**
+	 *
+	 * @param   mixed  $data
+	 *
+	 *
+	 * @since version
+	 */
+	public function save(mixed $data = [])
+	{
+		$isSaved = false;
 
+		// may be used when accepting multiple parameter
+		if (!empty ($data))
+		{
+
+			// All items
+			$oConfig = $this->getItem();
+
+			$isChanged = false;
+			foreach ($data as $param => $value)
+			{
+
+				if ($value != $oConfig->$param)
+				{
+					$oConfig->$param = $value;
+					$isChanged       = true;
+				}
+				else
+				{
+
+					// ToDo: Tell not found element -> test
+					// enqueue
+					Factory::getApplication()->enqueueMessage(Text::sprintf('Parameter %s does not exist in component parameter. ', $param), 'warning');
+					// Factory::getApplication()->enqueueMessage(Text::sprintf('Parameter %s does not exist in component parameter. ', $param), 'notice');
+				}
+			}
+
+			if ($isChanged)
+			{
+				$isSaved = $this->saveParams($oConfig);
+			}
+
+		}
+		return $isSaved;
+	}
+
+	public static function saveParams($params)
+	{
+		$componentName = 'com_rsgallery2';
+
+		$paramsString = json_encode($params);
+
+		// Save params in DB
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
+
+		$query = $db->createQuery()->update($db->quoteName('#__extensions'))->set($db->quoteName('params') . ' = :params')->where($db->quoteName('element') . ' = :element')->bind(':params', $paramsString)->bind(':element', $componentName);;
+		$db->setQuery($query);
+
+		$result = $db->execute();
+
+		try
+		{
+			$db->execute();
+		}
+		catch (\ExecutionFailureException  $exception)
+		{
+			Factory::getApplication()->enqueueMessage(Text::_($exception->errorMessage()), 'warning');
+
+			return false;
+		};
+
+		return true;
+	}
 
 }
