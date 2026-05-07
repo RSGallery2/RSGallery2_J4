@@ -108,20 +108,19 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
 			// List
 		    new Route(['GET'], $baseName, $controller . '.displayList', [], $getDefaults),
 		    // Single tem
-//		    new Route(['GET'], $baseName . '/:para', $controller . '.displayItem', ['para'], $getDefaults),
 		    new Route(['GET'], $baseName . '/:para', $controller . '.displayItem', ['para' => '([A-Za-z0-9_]+)'], $getDefaults),
-//		    new Route(['GET'], $baseName . '/:para', $controller . '.displayItem', ['para' => '(.*)'], $getDefaults),
 
-	        // Create single item
-//            new Route(['POST'], $baseName, $controller . '.add', [], $defaults),
+	        // Create item(s)
+            new Route(['POST'], $baseName, $controller . '.add', [], $defaults),
 
-		    // Change single item
+		    // Change item(s)
 //            new Route(['PATCH'], $baseName . '/:para' . '/:value', $controller . '.edit', ['para' => '(.*)', 'value' => '(.*)'], $defaults),
 // ok when id in route  new Route(['PATCH'], $baseName . '/:para', $controller . '.edit', ['para' => '(.*)'], $defaults),
             new Route(['PATCH'], $baseName, $controller . '.edit', [], $defaults),
 
 		    // Delete single item
-//            new Route(['DELETE'], $baseName . '/:para', $controller . '.delete', ['para' => '(\d+)'], $defaults),
+            new Route(['DELETE'], $baseName, $controller . '.delete', [], $defaults),
+		    new Route(['DELETE'], $baseName . '/:para', $controller . '.delete', ['para' => '([A-Za-z0-9_]+)'], $getDefaults),
         ];
 	    $router->addRoutes($routes);
 

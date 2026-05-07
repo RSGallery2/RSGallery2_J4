@@ -33,82 +33,84 @@ use Tobscure\JsonApi\Exception\InvalidParameterException;
  */
 class ConfigController extends ApiController
 {
-    /**
-     * The content type of the item.
-     *
-     * @var    string
-     * @since  4.0.0
-     */
-    protected $contentType = 'config';
+	/**
+	 * The content type of the item.
+	 *
+	 * @var    string
+	 * @since  4.0.0
+	 */
+	protected $contentType = 'config';
 
-    /**
-     * The default view for the display method.
-     *
-     * @var    string
-     * @since  3.0
-     */
-    protected $default_view = 'config';
+	/**
+	 * The default view for the display method.
+	 *
+	 * @var    string
+	 * @since  3.0
+	 */
+	protected $default_view = 'config';
 
-    /**
-     * Call version model
-     *
-     * @param $cachable
-     * @param $urlparams
-     *
-     * @return $this|\Joomgallery\Component\Joomgallery\Api\Controller\VersionController
-     *
-     * @since  5.1.0
-     */
-    public function displayList($cachable = false, $urlparams = [])
-    {
-        $viewType = $this->app->getDocument()->getType();
-        $viewName = $this->input->get('view', $this->default_view);
-        $viewLayout = $this->input->get('layout', 'default', 'string');
+	/**
+	 * Call version model
+	 *
+	 * @param $cachable
+	 * @param $urlparams
+	 *
+	 * @return $this|\Joomgallery\Component\Joomgallery\Api\Controller\VersionController
+	 *
+	 * @since  5.1.0
+	 */
+	public function displayList($cachable = false, $urlparams = [])
+	{
+		$viewType   = $this->app->getDocument()->getType();
+		$viewName   = $this->input->get('view', $this->default_view);
+		$viewLayout = $this->input->get('layout', 'default', 'string');
 
-        try {
-            /** @var \Joomla\CMS\MVC\View\JsonApiView $view */
-            $view = $this->getView(
-                $viewName,
-                $viewType,
-                '',
-                ['base_path' => $this->basePath, 'layout' => $viewLayout, 'contentType' => $this->contentType],
-            );
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage());
-        }
+		try
+		{
+			/** @var \Joomla\CMS\MVC\View\JsonApiView $view */
+			$view = $this->getView($viewName, $viewType, '', ['base_path' => $this->basePath, 'layout' => $viewLayout, 'contentType' => $this->contentType],);
+		}
+		catch (\Exception $e)
+		{
+			throw new \RuntimeException($e->getMessage());
+		}
 
-        //--- create model -------------------------------------
+		//--- create model -------------------------------------
 
-        $modelName = $this->input->get('model', Inflector::singularize($this->contentType));
+		$modelName = $this->input->get('model', Inflector::singularize($this->contentType));
 
-        // Create the model, ignoring request data so we can safely set the state in the request from the controller
-        $model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
+		// Create the model, ignoring request data so we can safely set the state in the request from the controller
+		$model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
 
-        // test if model is valid
-        if (!$model) {
-            throw new \RuntimeException(Text::_('JLIB_APPLICATION_ERROR_MODEL_CREATE'));
-        }
+		// test if model is valid
+		if (!$model)
+		{
+			throw new \RuntimeException(Text::_('JLIB_APPLICATION_ERROR_MODEL_CREATE'));
+		}
 
-        // Push the model into the view (as default)
-        $view->setModel($model, true);
+		// Push the model into the view (as default)
+		$view->setModel($model, true);
 
-        //--- filter -------------------------------------
+		//--- filter -------------------------------------
 
-        $apiFilterInfo = $this->input->get('filter', [], 'array');
-        $filter        = InputFilter::getInstance();
+		$apiFilterInfo = $this->input->get('filter', [], 'array');
+		$filter        = InputFilter::getInstance();
 
-        if (\array_key_exists('search', $apiFilterInfo)) {
-            $model->setState('filter.search', $filter->clean($apiFilterInfo['search'], 'STRING'));
-            //$this->modelState->set('filter.search', $filter->clean($apiFilterInfo['search'], 'STRING'));
-        }
+		if (\array_key_exists('search', $apiFilterInfo))
+		{
+			$model->setState('filter.search', $filter->clean($apiFilterInfo['search'], 'STRING'));
+			//$this->modelState->set('filter.search', $filter->clean($apiFilterInfo['search'], 'STRING'));
+		}
 
-        //--- display result -------------------------------------
+		//--- display result -------------------------------------
 
-        $view->setDocument($this->app->getDocument());
-        $view->displayItem();
+		$view->setDocument($this->app->getDocument());
+		$view->displayItem();
 
-        return $this;
-    }
+		// $view->displayList();
+
+		return $this;
+	}
 
 
 	/**
@@ -123,6 +125,13 @@ class ConfigController extends ApiController
 		$param = $this->input->get('para', '', 'string');
 		$this->modelState->set('param', $param);
 
+		// all variables
+		$data = $this->input->json->getArray();
+		if (!empty($data))
+		{
+			$this->modelState->set('data', $data);
+		}
+
 //		// Display files in specific path.
 //		$this->modelState->set('path', $path ?: $this->input->get('path', '', 'STRING'));
 //
@@ -134,10 +143,18 @@ class ConfigController extends ApiController
 		return parent::displayItem(0);
 	}
 
+	/**
+	 *
+	 * @return ConfigController
+	 *
+	 * @throws InvalidParameterException
+	 * @since version
+	 */
 	public function edit()
 	{
 		// Access check.
-		if (!$this->allowEdit()) {
+		if (!$this->allowEdit())
+		{
 			throw new NotAllowed('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED', 403);
 		}
 
@@ -146,60 +163,18 @@ class ConfigController extends ApiController
 
 		if (empty($data))
 		{
-			throw new InvalidParameterException(Text::sprintf('No parameter given for patch config'));		//	Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters))
+			throw new InvalidParameterException(Text::_('No parameter given for patch config'), 403);        //	Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters))
 		}
-
-		// ToDo: Handle array
-		// $param = key($data[0]);
-		$param = min(array_keys($data));
-		$value = $data[$param];
-
-//		// attention param used for get single item ToDo: revisit for handlinge get single different
-//		$this->modelState->set('parameter', $param);
-//		$this->modelState->set('value', $value);
 
 		//--- Create the model -----------------------------------------------------------------
 
 		/** @var ConfigModel $model */
 		$model = $this->getModel('Config', '', ['ignore_request' => true, 'state' => $this->modelState]);
 
-		$is = $model->save($data);
-		$this->modelState->set('parameter', $param);
-//		throw new \Exception(Text::_('edit ...'));
+		$isSaved = $model->save($data);
 
-		return parent::displayItem('test');
+		return parent::displayItem('0');
 	}
-
-//	/**
-//	 * Method to create or modify a file or folder.
-//	 *
-//	 * @param   integer  $recordKey  The primary key of the item (if exists)
-//	 *
-//	 * @return  string   The path
-//	 *
-//	 * @since   4.1.0
-//	 */
-//	protected function save($recordKey = null)
-//	{
-//		// Explicitly get the single item model name.
-//		$inflector = InflectorFactory::create()->build();
-//		$modelName = $this->input->get('model', $inflector->singularize($this->contentType));
-//
-//		/** @var MediumModel $model */
-//		$model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
-//
-////		$json = $this->input->json;
-////
-////		// Decode content, if any
-////		if ($content = base64_decode($json->get('content', '', 'raw'))) {
-////			$this->checkContent();
-////		}
-////
-////		// If there is no content, com_media assumes the path refers to a folder.
-////		$this->modelState->set('content', $content);
-//
-//		return $model->save();
-//	}
 
 	/**
 	 * Method to check if it's allowed to modify an existing file or folder.
@@ -218,5 +193,107 @@ class ConfigController extends ApiController
 		return $user->authorise('core.edit', 'com_media');
 	}
 
-	// Implement other methods like read, update, delete as needed
+	public function add(): void
+	{
+		// Access check.
+		if (!$this->allowEdit())
+		{
+			throw new NotAllowed('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED', 403);
+		}
+
+		parent::add();
+	}
+
+	/**
+	 * Method to check if it's allowed to add a new file or folder
+	 *
+	 * @param   array  $data  An array of input data.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   4.1.0
+	 */
+	protected function allowAdd($data = []): bool
+	{
+		$user = $this->app->getIdentity();
+
+		return $user->authorise('core.create', 'com_media');
+	}
+
+	protected function save($recordKey = null)
+	{
+		// Explicitly get the single item model name.
+		//$inflector = InflectorFactory::create()->build();
+		// $modelName = $this->input->get('model', $inflector->singularize($this->contentType));
+
+		// all variables
+		$data = $this->input->json->getArray();
+
+		if (empty($data))
+		{
+			throw new InvalidParameterException(Text::_('No parameter given for post config'), 403);        //	Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters))
+		}
+
+		//--- Create the model -----------------------------------------------------------------
+
+		/** @var ConfigModel $model */
+		$model = $this->getModel('Config', '', ['ignore_request' => true, 'state' => $this->modelState]);
+
+		return $model->save($data, true);
+	}
+
+	public function delete($id = null): void
+	{
+		if (!$this->allowDelete()) {
+			throw new NotAllowed('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED', 403);
+		}
+
+		$param = $this->input->get('para', '', 'string');
+		$this->modelState->set('param', $param);
+
+		// all variables  => not working as json not given (when not in editor)
+		$json = $this->input->json;
+//		$raw = $this->input->json->getRaw();
+		$data = $this->input->json->getArray();
+
+		$param = $this->input->get('para', '', 'string');
+		if (!empty($param)) {
+//			$key = key((array)$param);
+//			$data->$key = $param;
+			$data[$param] = 0;
+		}
+
+		if (empty($data))
+		{
+			$errText = Text::sprintf('No parameter given for delete config ==> json: "%s"', $this->input->json->getRaw());
+			throw new InvalidParameterException($errText, 403);        //	Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters))
+		}
+
+		//--- Create the model -----------------------------------------------------------------
+
+		/** @var ConfigModel $model */
+		$model = $this->getModel('Config', '', ['ignore_request' => true, 'state' => $this->modelState]);
+
+		$model->delete($data);
+
+//		$this->app->setHeader('status', 204);
+		parent::displayItem('0');
+	}
+
+	/**
+	 * Method to check if it's allowed to delete an existing file or folder.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   4.1.0
+	 */
+	protected function allowDelete(): bool
+	{
+		$user = $this->app->getIdentity();
+
+		return $user->authorise('core.delete', 'com_media');
+	}
+
+
+
 }

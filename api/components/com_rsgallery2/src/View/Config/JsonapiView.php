@@ -107,7 +107,7 @@ class JsonapiView extends BaseApiView
      */
     protected function prepareItem($item)
     {
-        // Media resources have no id.
+        // Config resources have no id.
         $item->id = '0';
 
         return $item;
@@ -127,7 +127,6 @@ class JsonapiView extends BaseApiView
      */
     public function getConfigParameterNames()
     {
-
         $componentName = 'com_rsgallery2';
 
         $params = [];

@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
+use Tobscure\JsonApi\Exception\InvalidParameterException;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -40,7 +41,7 @@ class ConfigModel extends BaseModel
 	 * @throws  ResourceNotFound
 	 * @since   4.1.0
 	 */
-	public function getItem()
+	public function getItems()
 	{
 		$componentName = 'com_rsgallery2';
 
@@ -56,22 +57,16 @@ class ConfigModel extends BaseModel
 			$db->setQuery($query);
 
 			$jsonStr = $db->loadResult();
+			//$jsonStr = $db->loadObject();
 
 			if (!empty($jsonStr))
 			{
 				$params = json_decode($jsonStr, true);
 
-				//--- just one parameter ---------------------------------------------
-
-				$singlePara = $this->state->get('param');
-				if (!empty ($singlePara))
+				foreach ($params as $key => $value)
 				{
-					$value                = $params[$singlePara];
-					$params               = [];
-					$params [$singlePara] = $value;
+					$oConfig->$key = $value;
 				}
-
-				$oConfig = (object) $params;
 			}
 
 		}
@@ -82,13 +77,49 @@ class ConfigModel extends BaseModel
 
 		if (empty($params))
 		{
-			if (!empty ($singlePara))
-			{
-				throw new \RuntimeException("Error: The RSG2 configuration may not have been saved yet. Please save the configuration first.");
-			}
+			throw new \RuntimeException("Error: The RSG2 configuration may not have been saved yet. Please save the configuration first.");
 		}
 
 		return $oConfig;
+	}
+
+	/**
+	 * Depending on task (displayItems,displayItem) a set or subset
+	 * from all config parameters is returned
+	 *
+	 * @return \stdClass
+	 *
+	 * @since version
+	 */
+	public function getItem()
+	{
+		//--- prepare complete list ------------------------------------------
+
+		$oItemSet = $oConfig = $this->getItems();
+
+		//--- on single parameter ---------------------------------------------
+
+		$task = $this->state->get('task');
+		if ($task == 'displayItem')
+		{
+			//--- given in route -------------------------------
+
+			$param = $this->state->get('param');
+
+			$oItemSet         = new \stdClass();
+			$oItemSet->$param = $oConfig->$param;
+
+			//--- given as json parameter -------------------------------
+
+			$data = $this->state->get('data');
+			if (!empty($data)) {
+				foreach($data as $param => $value){
+					$oItemSet->$param = $oConfig->$param;
+				}
+			}
+		}
+
+		return $oItemSet;
 	}
 
 	// ToDo: edit delete -> check how it is done in Media
@@ -100,9 +131,9 @@ class ConfigModel extends BaseModel
 	 *
 	 * @since version
 	 */
-	public function save(mixed $data = [])
+	public function save(mixed $data = [], $isForce = false)
 	{
-		$isSaved = false;
+		$isSaved = true;
 
 		// may be used when accepting multiple parameter
 		if (!empty ($data))
@@ -114,19 +145,30 @@ class ConfigModel extends BaseModel
 			$isChanged = false;
 			foreach ($data as $param => $value)
 			{
-
-				if ($value != $oConfig->$param)
+				// parameter exists or must be set
+				if (isset($oConfig->$param) || $isForce)
 				{
-					$oConfig->$param = $value;
-					$isChanged       = true;
+					if ($isForce)
+					{
+						$oConfig->$param = $value;
+						$isChanged       = true;
+					}
+					else
+					{
+						if ($value != $oConfig->$param)
+						{
+							$oConfig->$param = $value;
+							$isChanged       = true;
+						}
+					}
 				}
 				else
 				{
+					// Send the error response
+					$error = Text::sprintf('Parameter "%s" does not exist in component configuration. ', $param);
+					throw new InvalidParameterException($error, 403, null, $param);
 
-					// ToDo: Tell not found element -> test
-					// enqueue
-					Factory::getApplication()->enqueueMessage(Text::sprintf('Parameter %s does not exist in component parameter. ', $param), 'warning');
-					// Factory::getApplication()->enqueueMessage(Text::sprintf('Parameter %s does not exist in component parameter. ', $param), 'notice');
+					// $isSaved = false;
 				}
 			}
 
@@ -134,9 +176,55 @@ class ConfigModel extends BaseModel
 			{
 				$isSaved = $this->saveParams($oConfig);
 			}
-
 		}
+
 		return $isSaved;
+	}
+
+	/**
+	 *
+	 * @param   mixed  $data
+	 *
+	 *
+	 * @since version
+	 */
+	public function delete(mixed $data = [])
+	{
+		$isDeleted = true;
+
+		// may be used when accepting multiple parameter
+		if (!empty ($data))
+		{
+
+			// All items
+			$oConfig = $this->getItems();
+
+			$isChanged = false;
+			foreach ($data as $param => $value)
+			{
+				// parameter exists or must be set
+				if (isset($oConfig->$param))
+				{
+					unset($oConfig->$param);
+					$isChanged = true;
+				}
+				else
+				{
+//					// Send the error response
+//					$error = Text::sprintf('Delete: Parameter "%s" does not exist in component configuration. ', $param);
+//					throw new InvalidParameterException($error, 403, null, $param);
+
+					 $isDeleted = false;
+				}
+			}
+
+			if ($isChanged)
+			{
+				$isDeleted = $this->saveParams($oConfig);
+			}
+		}
+
+		return $isDeleted;
 	}
 
 	public static function saveParams($params)
@@ -151,13 +239,11 @@ class ConfigModel extends BaseModel
 		$query = $db->createQuery()->update($db->quoteName('#__extensions'))->set($db->quoteName('params') . ' = :params')->where($db->quoteName('element') . ' = :element')->bind(':params', $paramsString)->bind(':element', $componentName);;
 		$db->setQuery($query);
 
-		$result = $db->execute();
-
 		try
 		{
-			$db->execute();
+			$result = $db->execute();
 		}
-		catch (\ExecutionFailureException  $exception)
+		catch (\Exception  $exception)
 		{
 			Factory::getApplication()->enqueueMessage(Text::_($exception->errorMessage()), 'warning');
 
