@@ -75,11 +75,16 @@ class ConfigController extends ApiController
 			throw new \RuntimeException($e->getMessage());
 		}
 
+		//--- set state from given parameter  ---------------------------------------------
+
+		// 		$this->modelState->set('param', $param);
+
 		//--- create model -------------------------------------
 
 		$modelName = $this->input->get('model', Inflector::singularize($this->contentType));
 
 		// Create the model, ignoring request data so we can safely set the state in the request from the controller
+		/** @var ConfigModel $model */
 		$model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
 
 		// test if model is valid
@@ -122,6 +127,8 @@ class ConfigController extends ApiController
 	 */
 	public function displayItem($param = '')
 	{
+		//--- set state from given parameter  -------------------------------------
+
 		$param = $this->input->get('para', '', 'string');
 		$this->modelState->set('param', $param);
 
@@ -132,13 +139,7 @@ class ConfigController extends ApiController
 			$this->modelState->set('data', $data);
 		}
 
-//		// Display files in specific path.
-//		$this->modelState->set('path', $path ?: $this->input->get('path', '', 'STRING'));
-//
-//		// Return files (not folders) as urls.
-//		if ($this->input->exists('url')) {
-//			$this->modelState->set('url', $this->input->get('url', true, 'BOOLEAN'));
-//		}
+		//--- display parameters --------------------------------------------------
 
 		return parent::displayItem(0);
 	}
