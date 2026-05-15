@@ -8,11 +8,11 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Api\Helper;
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
+//namespace Rsgallery2\Component\Rsgallery2\Api\Helper;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 
 // phpcs:disable PSR1.Files.SideEffects

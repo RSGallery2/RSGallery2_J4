@@ -169,7 +169,7 @@ class UploadController extends FormController
 
             $galleryId = $input->get('gallery_id', 0, 'INT');
             // wrong id ? ToDo: test is number ...
-            if ($galleryId < 1) {
+            if ($galleryId < 2) {
                 $msg .= ': Invalid gallery ID at drag and drop upload';
 
                 if ($Rsg2DebugActive) {

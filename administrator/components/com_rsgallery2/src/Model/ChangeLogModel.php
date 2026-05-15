@@ -105,7 +105,7 @@ class ChangeLogModel
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'ChangeLogModel: changeLogUrl_manifest: Error executing query: "' . $query . '"' . '<br>';
+            $OutTxt .= 'ChangeLogModel: changeLogUrlFromExtension: Error executing query: "' . $query . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

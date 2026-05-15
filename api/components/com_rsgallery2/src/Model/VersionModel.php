@@ -14,7 +14,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\Database\DatabaseInterface;
-use Rsgallery2\Component\Rsgallery2\Api\Helper\ManifestHelper;
+//use Rsgallery2\Component\Rsgallery2\Api\Helper\ManifestHelper;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ManifestHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
