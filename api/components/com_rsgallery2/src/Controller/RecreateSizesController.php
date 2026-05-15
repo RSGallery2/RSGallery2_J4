@@ -107,7 +107,7 @@ class RecreatesizesController extends ApiController
             $origin = 'server'; // Do not move original file
 
             /* @var ImageFileModel $modelFile */
-            $modelFile = $this->getModel('imageFile');
+            $modelFile = $this->getModel('imageFile', 'administrator');
             [$isCreated, $urlThumbFile, $msg] = $modelFile->MoveImageAndCreateRSG2Images($originalFileName, $targetFileName, $gallery_id, $origin, $use_j3x_location);
         }
         catch (\RuntimeException $e)

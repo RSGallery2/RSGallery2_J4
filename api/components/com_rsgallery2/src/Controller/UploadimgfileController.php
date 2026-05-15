@@ -110,11 +110,14 @@ class UploadimgfileController extends ApiController
      */
     protected function save($recordKey = null)
     {
-        // Explicitly get the single item model name.
-        $modelName = $this->input->get('model', Inflector::singularize($this->contentType));
+//        // Explicitly get the single item model name.
+//        $modelName = $this->input->get('model', Inflector::singularize($this->contentType));
+//
+//        /** @var MediumModel $model */
+//        $model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
 
         /** @var MediumModel $model */
-        $model = $this->getModel($modelName, '', ['ignore_request' => true, 'state' => $this->modelState]);
+        $model = $this->getModel('medium', '', ['ignore_request' => true, 'state' => $this->modelState]);
 
         $json = $this->input->json;
 
