@@ -96,7 +96,7 @@ class VersionController extends ApiController
 
 	/**
 	 *
-	 * @return ConfigController
+	 * @return VersionController
 	 *
 	 * @throws InvalidParameterException
 	 * @since version
@@ -119,17 +119,12 @@ class VersionController extends ApiController
 
 		//--- Create the model -----------------------------------------------------------------
 
-		/** @var ConfigModel $model */
+		/** @var VersionModel $model */
 		$model = $this->getModel('Version', '', ['ignore_request' => true, 'state' => $this->modelState]);
 
 		$isSaved = $model->save($data);
 
 		return parent::displayItem('0');
 	}
-
-
-
-
-
 
 }

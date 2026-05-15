@@ -132,44 +132,6 @@ class VersionModel extends BaseDatabaseModel
 			{
 				throw new \RuntimeException($e->getMessage());
 			}
-
-
-//			// All items
-//			$oConfig = $this->getItem();
-//
-//			foreach ($data as $param => $value)
-//			{
-//				// parameter exists or must be set
-//				if (isset($oConfig->$param) || $isForce)
-//				{
-//					if ($isForce)
-//					{
-//						$oConfig->$param = $value;
-//						$isChanged       = true;
-//					}
-//					else
-//					{
-//						if ($value != $oConfig->$param)
-//						{
-//							$oConfig->$param = $value;
-//							$isChanged       = true;
-//						}
-//					}
-//				}
-//				else
-//				{
-//					// Send the error response
-//					$error = Text::sprintf('Parameter "%s" does not exist in component configuration. ', $param);
-//					throw new InvalidParameterException($error, 403, null, $param);
-//
-//					// $isSaved = false;
-//				}
-//			}
-//
-//			if ($isChanged)
-//			{
-//				$isSaved = $this->saveParams($oConfig);
-//			}
 		}
 
 		return $isSaved;
