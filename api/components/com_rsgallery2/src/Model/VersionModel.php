@@ -13,8 +13,8 @@ namespace Rsgallery2\Component\Rsgallery2\Api\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\Exception\ResourceNotFound;
 use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\Component\Media\Administrator\Model\ApiModel;
 use Joomla\Database\DatabaseInterface;
+use Rsgallery2\Component\Rsgallery2\Api\Helper\ManifestHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -25,61 +25,154 @@ use Joomla\Database\DatabaseInterface;
  */
 class VersionModel extends BaseDatabaseModel
 {
-    /**
-     * Instance of com_media's ApiModel
-     *
-     * @var ApiModel
-     * @since  4.1.0
-     */
-//    private $versionApiModel;
+	protected string $componentName = 'com_rsgallery2';
 
-    /**
-     * @param $config
-     *
-     * @throws \Exception
-     */
-    public function __construct($config = [])
-    {
-        parent::__construct($config);
+	/**
+	 * @param $config
+	 *
+	 * @throws \Exception
+	 */
+	public function __construct($config = [])
+	{
+		parent::__construct($config);
 
 //        $this->versionApiModel = new ApiModel();
-    }
+	}
 
-    /**
-     * Method to get a single files or folder.
-     *
-     * @return  \stdClass  A file or folder object.
-     *
-     * @since   4.1.0
-     * @throws  ResourceNotFound
-     */
-    public function getItem()
-    {
+	/**
+	 * Method to get a single files or folder.
+	 *
+	 * @return  \stdClass  A file or folder object.
+	 *
+	 * @throws  ResourceNotFound
+	 * @since   4.1.0
+	 */
+	public function getItem()
+	{
+		// Dummy default
+		$oVersion               = new \stdClass();
+		$oVersion->version      = "xx.xx.xx";
+		$oVersion->creationDate = "2025.xx.xx";
 
-        $componentName = 'com_rsgallery2';
+		try
+		{
+			$oManifest = ManifestHelper::getDbManifest($this->componentName);
 
-        $oVersion = new \stdClass();
-        $oVersion->version = "xx.xx.xx";
-        $oVersion->creationDate = "2025.xx.xx";
+			if (!empty($oManifest))
+			{
+				$oVersion->version      = $oManifest['version'];
+				$oVersion->creationDate = $oManifest['creationDate'];
 
-        try {
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
+			}
+		}
+		catch (\Exception $e)
+		{
+			throw new \RuntimeException($e->getMessage());
+		}
 
-            $query = $db->createQuery()
-                ->select($db->quoteName('manifest_cache'))
-                ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('element') . ' = ' . $db->quote($componentName));
-            $db->setQuery($query);
+		return $oVersion;
+	}
 
-            $manifest = json_decode($db->loadResult(), true);
+	/**
+	 *
+	 * @param   mixed  $data
+	 *
+	 *
+	 * @since version
+	 */
+	public function save(mixed $data = [], $isForce = false)
+	{
+		$isSaved = true;
 
-            $oVersion->version = $manifest['version'];
-            $oVersion->creationDate = $manifest['creationDate'];
+		// may be used when accepting multiple parameter
+		if (!empty ($data))
+		{
+			$isChanged = false;
+			$isSaved = false;
 
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e->getMessage());
-        }
+			try
+			{
+				$oManifest = ManifestHelper::getDbManifest($this->componentName);
 
-        return $oVersion;
-    }
+				if (!empty($oManifest))
+				{
+					//--- version ------------------------------------
+
+					if (!empty ($data['version']))
+					{
+						$version = $data['version'];
+						if ($oManifest['version'] != $version)
+						{
+							$oManifest['version'] = $data['version'];
+							$isChanged = true;
+						}
+					}
+
+					//--- creation date ------------------------------------
+
+					if (!empty ($data['creationDate']))
+					{
+						$creationDate = $data['creationDate'];
+						if ($oManifest['creationDate'] != $creationDate)
+						{
+							$oManifest['creationDate'] = $creationDate;
+							$isChanged = true;
+						}
+					}
+
+					//--- save changers ----------------------------------------
+
+					if ($isChanged) {
+						$isSaved = ManifestHelper::saveDbManifest($oManifest, $this->componentName);
+					}
+				}
+
+			}
+			catch (\Exception $e)
+			{
+				throw new \RuntimeException($e->getMessage());
+			}
+
+
+//			// All items
+//			$oConfig = $this->getItem();
+//
+//			foreach ($data as $param => $value)
+//			{
+//				// parameter exists or must be set
+//				if (isset($oConfig->$param) || $isForce)
+//				{
+//					if ($isForce)
+//					{
+//						$oConfig->$param = $value;
+//						$isChanged       = true;
+//					}
+//					else
+//					{
+//						if ($value != $oConfig->$param)
+//						{
+//							$oConfig->$param = $value;
+//							$isChanged       = true;
+//						}
+//					}
+//				}
+//				else
+//				{
+//					// Send the error response
+//					$error = Text::sprintf('Parameter "%s" does not exist in component configuration. ', $param);
+//					throw new InvalidParameterException($error, 403, null, $param);
+//
+//					// $isSaved = false;
+//				}
+//			}
+//
+//			if ($isChanged)
+//			{
+//				$isSaved = $this->saveParams($oConfig);
+//			}
+		}
+
+		return $isSaved;
+	}
+
 }

@@ -52,7 +52,10 @@ class ConfigModel extends BaseModel
 
 			$db = Factory::getContainer()->get(DatabaseInterface::class);
 
-			$query = $db->createQuery()->select($db->quoteName('params'))->from($db->quoteName('#__extensions'))->where($db->quoteName('element') . ' = ' . $db->quote($componentName));
+			$query = $db->createQuery()
+				->select($db->quoteName('params'))
+				->from($db->quoteName('#__extensions'))
+				->where($db->quoteName('element') . ' = ' . $db->quote($componentName));
 
 			$db->setQuery($query);
 
@@ -236,7 +239,11 @@ class ConfigModel extends BaseModel
 		// Save params in DB
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
 
-		$query = $db->createQuery()->update($db->quoteName('#__extensions'))->set($db->quoteName('params') . ' = :params')->where($db->quoteName('element') . ' = :element')->bind(':params', $paramsString)->bind(':element', $componentName);;
+		$query = $db->createQuery()
+			->update($db->quoteName('#__extensions'))
+			->set($db->quoteName('params') . ' = :params')
+			->where($db->quoteName('element') . ' = :element')
+			->bind(':params', $paramsString)->bind(':element', $componentName);
 		$db->setQuery($query);
 
 		try

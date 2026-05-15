@@ -10,11 +10,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
+use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
+use Rsgallery2\Component\Rsgallery2\Api\Model\ConfigModel;
 use Rsgallery2\Component\Rsgallery2\Api\Model\VersionModel;
 use Rsgallery2\Component\Rsgallery2\Api\View\Version\JsonapiView;
+use Tobscure\JsonApi\Exception\InvalidParameterException;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -90,4 +93,43 @@ class VersionController extends ApiController
 
         return $this;
     }
+
+	/**
+	 *
+	 * @return ConfigController
+	 *
+	 * @throws InvalidParameterException
+	 * @since version
+	 */
+	public function edit()
+	{
+		// Access check.
+		if (!$this->allowEdit())
+		{
+			throw new NotAllowed('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED', 403);
+		}
+
+		// all variables
+		$data = $this->input->json->getArray();
+
+		if (empty($data))
+		{
+			throw new InvalidParameterException(Text::_('No parameter given for patch config'), 403);        //	Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters))
+		}
+
+		//--- Create the model -----------------------------------------------------------------
+
+		/** @var ConfigModel $model */
+		$model = $this->getModel('Version', '', ['ignore_request' => true, 'state' => $this->modelState]);
+
+		$isSaved = $model->save($data);
+
+		return parent::displayItem('0');
+	}
+
+
+
+
+
+
 }
