@@ -98,8 +98,6 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
     {
 		//--- RSG2 J standard config -------------------------------------------
 
-        // previous: $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/config', 'config.displayList', [], $getDefaults), new Route(['GET'], 'v1/rsgallery2/config/:variable_name', 'config.displayItem', ['variable_name' => '([A-Za-z0-9_]+)'], $getDefaults,),]);
-
 	    $baseName = 'v1/rsgallery2/config';
 	    $controller = 'config';
 	    $defaults = ['component' => 'com_rsgallery2'];
@@ -124,9 +122,14 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
         ];
 	    $router->addRoutes($routes);
 
-        //--- RSG2 version -----------------------------
+        //--- RSG2 version in db manifest -----------------------------
 
-        $router->addRoutes([new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),]);
+        $router->addRoutes(
+		[
+			// version, creationDate
+			new Route(['GET'], 'v1/rsgallery2/version', 'version.display', [], $getDefaults),
+			new Route(['PATCH'], 'v1/rsgallery2/version', 'version.edit', [], $defaults),
+		]);
     }
 
     /**
