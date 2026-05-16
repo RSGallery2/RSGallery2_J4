@@ -184,6 +184,16 @@ $rawDatabase_ZoneButtons[] = new zoneButtons(
     'viewGalleriesRaw',
 );
 
+$rawDatabase_ZoneButtons[] = new zoneButtons(
+        '',
+        Route::_('index.php?option=com_rsgallery2&view=config&layout=dbManifest'),
+        Text::_('COM_RSGALLERY2_DB_MAINIFEST'),
+        Text::_('COM_RSGALLERY2_DB_MAINIFEST_DESC'),
+        ['icon-equalizer', 'icon-eye', 'icon-database'],
+        'viewImagesRaw',
+);
+
+
 //--- Repair zone -----------------------------
 
 $repair_Zone = new zoneContainer(
@@ -267,33 +277,6 @@ $repair_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
-$repair_ZoneButtons[] = new zoneButtons(
-    'Galleries.reinitNestedGalleryTable',
-    '',
-    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET'),
-    Text::_('COM_RSGALLERY2_GALLERIES_TABLE_RESET_DESC'),
-    ['icon-images', 'icon-database', 'icon-undo'],
-    'viewGalleriesRaw',
-);
-
-$repair_ZoneButtons[] = new zoneButtons(
-    'Galleries.rebuild',
-    '',
-    Text::_('COM_RSGALLERY2_REBUILD_GALLERY_ORDER'),
-    Text::_('COM_RSGALLERY2_REBUILD_GALLERY_ORDER_DESC'),
-    ['icon-images', 'icon-database', 'icon-tree'],
-    'viewGalleriesRaw',
-);
-
-$repair_ZoneButtons[] = new zoneButtons(
-    'Images.reinitImagesTable',
-    '',
-    Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET'),
-    Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_DESC'),
-    ['icon-image', 'icon-database', 'icon-undo'],
-    'viewImagesRaw',
-);
-
 /**/
 $repair_ZoneButtons[] = new zoneButtons(
     'Maintenance.CheckImagePaths',
@@ -329,16 +312,14 @@ $repair_ZoneButtons[] = new zoneButtons(
 );
 /**/
 
-// ToDo: As  view ? timeout (old: regenerateThumbs)
 $repair_ZoneButtons[] = new zoneButtons(
-    'Maintenance.optimizeDB',
-    '', // -> view
-    '?' . Text::_('COM_RSGALLERY2_OPTIMIZE_DB') . '?',
-    Text::_('COM_RSGALLERY2_OPTIMIZE_DB_DESC'),
-    ['icon-redo', 'icon-database'],
-    'optimizeDB',
+        'Galleries.rebuild',
+        '',
+        Text::_('COM_RSGALLERY2_REBUILD_GALLERY_ORDER'),
+        Text::_('COM_RSGALLERY2_REBUILD_GALLERY_ORDER_DESC'),
+        ['icon-images', 'icon-database', 'icon-tree'],
+        'viewGalleriesRaw',
 );
-/**/
 
 
 $repair_ZoneButtons[] = new zoneButtons( // resetUpgradeFlags
@@ -424,6 +405,15 @@ $danger_ZoneButtons[] = new zoneButtons(
     'uninstallDataTables',
 );
 /**/
+
+$danger_ZoneButtons[] = new zoneButtons(
+        'Images.reinitImagesTable',
+        '',
+        Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET'),
+        Text::_('COM_RSGALLERY2_IMAGES_TABLE_RESET_DESC'),
+        ['icon-image', 'icon-database', 'icon-undo'],
+        'viewImagesRaw',
+);
 
 //--- J3x upgrade zone -----------------------------
 
@@ -645,10 +635,11 @@ $developer_ZoneButtons[] = new zoneButtons(
 /**/
 $developer_ZoneButtons[] = new zoneButtons(
     '',
-    Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'),
-    Text::_('COM_RSGALLERY2_MANIFEST_INFO'),
-    Text::_('COM_RSGALLERY2_MANIFEST_INFO_DESC'),
-    ['icon-eye-open', 'icon-briefcase'],
+//    Route::_('index.php?option=com_rsgallery2&view=develop&layout=ManifestInfo'),
+    Route::_('index.php?option=com_rsgallery2&view=config&layout=dbManifestEdit'),
+    Text::_('COM_RSGALLERY2_MANIFEST_RAW_EDIT'),
+    Text::_('COM_RSGALLERY2_MANIFEST_RAW_EDIT_DESC'),
+    ['icon-equalizer', 'icon-edit', 'icon-list-2'],
     'view___',
 );
 /**/

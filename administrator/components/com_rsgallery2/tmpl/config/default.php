@@ -46,5 +46,3 @@ use Joomla\CMS\Router\Route;
     <input type="hidden" name="task" value=""/>
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
-
-

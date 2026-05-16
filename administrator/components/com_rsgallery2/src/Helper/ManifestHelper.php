@@ -137,10 +137,20 @@ class ManifestHelper
 
 		try
 		{
-			$manifestJson = json_encode($oManifest); // flags
-
 			if (!empty($oManifest))
 			{
+				$manifestJson = json_encode($oManifest); // flags
+
+//				// ToDo: Secure input $db->escape
+//				$db = Factory::getContainer()->get(DatabaseInterface::class);
+//				$secureManifestJson = $db->escape($manifestJson);
+//
+//				$isSaved = self::saveDbManifestJson($secureManifestJson, $extension);
+
+				// ToDo: Secure input $db->escape
+//				$db = Factory::getContainer()->get(DatabaseInterface::class);
+//				$secureManifestJson = $db->escape($manifestJson);
+
 				$isSaved = self::saveDbManifestJson($manifestJson, $extension);
 			}
 			else

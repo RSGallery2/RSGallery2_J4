@@ -279,8 +279,79 @@ class ConfigController extends AdminController // FormController
         $this->setRedirect($link, $msg, $msgType);
     }
 
+	/**
+	 * Save changes in raw edit view value by value
+	 *
+	 * @since 5.1.0     */
+	public function apply_rawMaintenanceEdit()
+	{
+		$msg     = null;
+		$msgType = 'notice';
 
-    /*-------------------------------------------------------------------------------------*/
+		$this->checkToken();
+
+		$msg = "apply_rawMaintenanceEdit: " . '<br>';
+
+		// Access check
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
+
+		if (!$canAdmin) {
+			$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+			/* @var ConfigRawModel $model */
+			$model = $this->getModel('DbManifestRaw');
+
+			$isSaved = $model->saveFromForm();
+			if ($isSaved) {
+				$msg .= Text::_('Saved manifest parameters successfully');
+			} else {
+				$msg .= Text::_('Error on saving manifest parameters: ');
+			}
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=config&layout=dbManifestEdit';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/**
+	 * Save changes in raw edit view value by value
+	 *
+	 * @since 5.1.0     */
+	public function save_rawMaintenanceEdit()
+	{
+		$this->checkToken();
+
+		$msg     = "save_rawMaintenanceEdit: " . '<br>';
+		$msgType = 'notice';
+
+		// Access check
+		$canAdmin = Factory::getApplication()->getIdentity()->authorise('core.edit', 'com_rsgallery2');
+
+		if (!$canAdmin) {
+			$msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
+			$msgType = 'warning';
+			// replace newlines with html line breaks.
+			str_replace('\n', '<br>', $msg);
+		} else {
+			/* @var ConfigRawModel $model */
+			$model = $this->getModel('DbManifestRaw');
+
+			$isSaved = $model->saveFromForm();
+			if ($isSaved) {
+				$msg .= Text::_('Saved manifest parameters successfully');
+			} else {
+				$msg .= Text::_('Error on saving manifest parameters: ');
+			}
+		}
+
+		$link = 'index.php?option=com_rsgallery2&view=maintenance';
+		$this->setRedirect($link, $msg, $msgType);
+	}
+
+	/*-------------------------------------------------------------------------------------*/
     /**
      * removes all entries fromm old
      *

@@ -268,7 +268,7 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::editList('image.raw_edit');
                 ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
 
-                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
 

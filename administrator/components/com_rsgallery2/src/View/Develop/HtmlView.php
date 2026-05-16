@@ -161,14 +161,15 @@ class HtmlView extends BaseHtmlView
                 break;
             /**/
 
-            case 'ManifestInfo':
-                $rsg2Manifest       = Rsg2ExtensionModel::readRsg2ExtensionManifest();
-                $this->rsg2Manifest = $rsg2Manifest;
-
-                $readRsg2ExtensionData       = Rsg2ExtensionModel::readRsg2ExtensionData();
-                $this->readRsg2ExtensionData = $readRsg2ExtensionData;
-
-                break;
+// removed
+//            case 'ManifestInfo':
+//                $rsg2Manifest       = Rsg2ExtensionModel::readRsg2ExtensionManifest();
+//                $this->rsg2Manifest = $rsg2Manifest;
+//
+//                $readRsg2ExtensionData       = Rsg2ExtensionModel::readRsg2ExtensionData();
+//                $this->readRsg2ExtensionData = $readRsg2ExtensionData;
+//
+//                break;
 
             case 'InstallMessage':
                 //--- Form --------------------------------------------------------------------
@@ -287,20 +288,21 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance('toolbar');
 
         switch ($Layout) {
-            case 'ManifestInfo':
-                // on develop show open tasks if existing
-                if (!empty($this->isDevelop)) {
-                    echo '<span style="color:red">'
-//              . '* <br>'
-//              . '* <br>'
-//              . '* <br>'
-                        . '</span><br><br>';
-                }
-
-                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
-                    . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
-                break;
+// removed
+//            case 'ManifestInfo':
+//                // on develop show open tasks if existing
+//                if (!empty($this->isDevelop)) {
+//                    echo '<span style="color:red">'
+////              . '* <br>'
+////              . '* <br>'
+////              . '* <br>'
+//                        . '</span><br><br>';
+//                }
+//
+//                ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
+//                    . ': ' . Text::_('COM_RSGALLERY2_MANIFEST_INFO_VIEW'), 'screwdriver');
+//                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+//                break;
 
             case 'Rsg2GeneralInfo':
                 // on develop show open tasks if existing
