@@ -121,7 +121,7 @@ class VersionModel extends BaseDatabaseModel
 						}
 					}
 
-					//--- save changers ----------------------------------------
+					//--- save changes ----------------------------------------
 
 					if ($isChanged) {
 						$isSaved = ManifestHelper::saveDbManifest($oManifest, $this->componentName);
