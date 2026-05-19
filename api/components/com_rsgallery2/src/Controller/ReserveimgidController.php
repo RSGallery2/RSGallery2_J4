@@ -14,10 +14,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\ApiController;
+use Joomla\CMS\Response\JsonResponse;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 use Tobscure\JsonApi\Exception\InvalidParameterException;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -56,8 +59,10 @@ class ReserveimgidController extends ImagesController // ApiController
     public function db_reserve_image_id (){
 
 	    $title  = $this->input->json->getString('title');
+	    $description  = $this->input->json->getString('description', '');
+        // Image filename
 	    $name  = $this->input->json->getString('name');
-	    $gallery_id  = $this->input->json->getString('gallery_id', '');
+	    $gallery_id  = $this->input->json->getInt('gallery_id', 0);
 
 	    $missingParameters = [];
 
@@ -71,6 +76,11 @@ class ReserveimgidController extends ImagesController // ApiController
 		    $missingParameters[] = 'name';
 	    }
 
+	    if(empty($gallery_id))
+	    {
+		    $missingParameters[] = 'gallery_id';
+	    }
+
 	    if(\count($missingParameters))
 	    {
 		    // throw new InvalidParameterException(Text::sprintf('WEBSERVICE_COM_MEDIA_MISSING_REQUIRED_PARAMETERS', implode(' & ', $missingParameters)));
@@ -79,9 +89,9 @@ class ReserveimgidController extends ImagesController // ApiController
 
 		//--- gallery_id ------------------------------------------------
 
-	    if ((int)$gallery_id == 1) {
+	    if ((int)$gallery_id < 2) {
 		    // throw new InvalidParameterException(Text::sprintf('WEBSERVICE_COM_MEDIA_MISSING_REQUIRED_PARAMETERS', implode(' & ', $missingParameters)));
-		    throw new InvalidParameterException(Text::_('Invalid parameter value "1" for gallery_id. Id 1 is reserved for the internal empty root item' ));
+		    throw new InvalidParameterException(Text::_('Invalid parameter value "1" for gallery_id. Id "1" is reserved for the internal empty root tree item' ));
 	    }
 
 	    $isGalleryExisting = $this->isGalleryExisting($gallery_id);
@@ -94,17 +104,56 @@ class ReserveimgidController extends ImagesController // ApiController
 
 		//--- prevent double names ------------------------------------------------------
 
-		// ToDo: ? rsg2 model -> ....
+		// ToDo: ? done in RSG2 Admin model ?
 	    // May need save on original rsg2 model
 	    // Write to $title  = $this->input->json->getString('title'); setString not supported
 
 		//--- prevent double titles ------------------------------------------------------
 
-	    // ToDo: ? rsg2 model -> ....
+        // ToDo: ? done in RSG2 Admin model ?
 	    // May need save on original rsg2 model
 	    // Write to $name  = $this->input->json->setString('name', ); setString not supported
 
-	    parent::add();
+	    try
+        {
+            //--- create model ----------------------------------------------
+
+            /* @var ImageModel $modelDb */
+            $modelDb = $this->getModel('image', 'administrator');
+
+            //--- Create Destination file name -----------------------
+
+            // see original administrator\components\com_rsgallery2\src\Controller\UploadController.php
+            // ToDo: use sub folder for each gallery and check within gallery
+            // Each filename is only allowed once so create a new one if file already exist
+            $useFileName                    = $modelDb->generateNewImageName($name, $gallery_id);
+            $ajaxImgDbObject['dstFileName'] = $useFileName;
+
+            $imageId = $modelDb->createImageDbItem($useFileName, '', $gallery_id, $description);
+            if (empty($imageId)) {
+                // actual give an error
+                //$msg     .= Text::_('JERROR_ALERTNOAUTHOR');
+                $msg = 'db_reserve_image_id: Create DB item for "' . $name . '"->"' . $useFileName
+                    . '" failed. Use maintenance -> Consolidate image database to check it ';
+                echo new JsonResponse($ajaxImgDbObject, $msg, true);
+
+                return;
+            }
+
+        }
+        catch (\RuntimeException $e)
+        {
+            $errorTxt = '';
+//            $errorTxt = 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
+            $errorTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            throw new \RuntimeException($errorTxt);
+        }
+
+        return parent::displayItem($imageId);
+
+
+//		    parent::add();
     }
 
     // Implement other methods like read, update, delete as needed
