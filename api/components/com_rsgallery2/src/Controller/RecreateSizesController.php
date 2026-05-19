@@ -52,6 +52,7 @@ class RecreatesizesController extends ApiController
     public function recreate_sizes()
     {
         global $rsgConfig;
+	    $isCreated = false;
 
         // $image_name = $this->input->json->get('image_name', '', 'PATH');
         $image_name = $this->input->json->get('image_name', '', 'STRING');
@@ -112,16 +113,10 @@ class RecreatesizesController extends ApiController
         }
         catch (\RuntimeException $e)
         {
-            $OutTxt = '';
-            $OutTxt .= 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+            $errorTxt = 'moveFile2OrignalDir: "' . $srcTempPathFileName . '" -> "' . $targetFileName . '"<br>';
+            $errorTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-
-//            if ($Rsg2DebugActive) {
-//                Log::add($OutTxt);
-//            }
+            throw new \RuntimeException($errorTxt);
         }
 
         if (!$isCreated)
@@ -132,6 +127,8 @@ class RecreatesizesController extends ApiController
 //
 //
         }
+
+        // Todo: display
 
         return;
     }
