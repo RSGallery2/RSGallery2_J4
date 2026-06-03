@@ -156,7 +156,7 @@ final class Rsgallery2 extends CMSPlugin implements SubscriberInterface
             new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id/:gallery_name', 'reserveimgid.db_reserve_image_id', ['gallery_name' => '(\d+)'], $getDefaults),
             new Route(['POST'], 'v1/rsgallery2/db_reserve_image_id', 'reserveimgid.db_reserve_image_id', [], $getDefaults),
 
-            new Route(['POST'], 'v1/rsgallery2/upload_image_file', 'uploadimagefile.upload_image_file', [], $getDefaults),
+            new Route(['POST'], 'v1/rsgallery2/upload_image_file', 'uploadimgfile.upload_image_file', [], $getDefaults),
 
             new Route(['PATCH'], 'v1/rsgallery2/recreate_sizes', 'recreatesizes.recreate_sizes', [], $getDefaults),
 
