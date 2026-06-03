@@ -10,7 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Services;
 
-
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -32,7 +31,6 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Helper\AssociationsHelper;
 
 /**
  * The rsgallery2 service provider.
- * https://github.com/joomla/joomla-cms/pull/20217
  *
      * @since      5.1.0
  */
@@ -44,10 +42,11 @@ return new class implements ServiceProviderInterface {
      *
      * @return  void
      *
-     * @since   5.1.0     */
+     * @since   5.1.0     
+     */
     public function register(Container $container)
     {
-//      $container->set(AssociationExtensionInterface::class, new AssociationsHelper);
+//      $container->set(AssociationExtensionInterface::class, new AssociationsHelper());
 
         $container->registerServiceProvider(new CategoryFactory('\\Rsgallery2\\Component\\Rsgallery2'));
         $container->registerServiceProvider(new MVCFactory('\\Rsgallery2\\Component\\Rsgallery2'));

@@ -4,7 +4,7 @@
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
  * @author         RSGallery2 Team <team2@rsgallery2.org>
- * @copyright  (c) 2005-2026 RSGallery2 Team
+ * @copyright  (c) 2026-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
 
@@ -46,7 +46,8 @@ class ReserveimgidController extends ImagesController // ApiController
      * The default view for the display method.
      *
      * @var    string
-     * @since  3.0
+     *
+     * @since  5.0
      */
     protected $default_view = 'images';
 
@@ -54,7 +55,7 @@ class ReserveimgidController extends ImagesController // ApiController
      * Adds some parameters for file name
      * then uses parent:add to save
      *
-     * @since version
+     * @since  5.0
      */
     public function db_reserve_image_id (){
 
@@ -116,6 +117,8 @@ class ReserveimgidController extends ImagesController // ApiController
 
 	    try
         {
+            // ToDo: try parent::add() like in JoomGallery
+
             //--- create model ----------------------------------------------
 
             /* @var ImageModel $modelDb */
@@ -152,7 +155,6 @@ class ReserveimgidController extends ImagesController // ApiController
 
         return parent::displayItem($imageId);
 
-
 //		    parent::add();
     }
 
@@ -187,8 +189,5 @@ class ReserveimgidController extends ImagesController // ApiController
 		}
 
 		return ! empty ($imgCount);
-
-
-
 	}
 }

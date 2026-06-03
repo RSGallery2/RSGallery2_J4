@@ -278,7 +278,7 @@ class ConfigController extends ApiController
 		$model->delete($data);
 
 //		$this->app->setHeader('status', 204);
-		parent::displayItem('0');
+		return parent::displayItem('0');
 	}
 
 	/**

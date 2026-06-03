@@ -4,7 +4,7 @@
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
  * @author         RSGallery2 Team <team2@rsgallery2.org>
- * @copyright  (c) 2016-2026 RSGallery2 Team
+ * @copyright  (c) 2026-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
 
@@ -26,7 +26,6 @@ use Tobscure\JsonApi\Exception\InvalidParameterException;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-
 // phpcs:enable PSR1.Files.SideEffects
 
 
@@ -48,11 +47,17 @@ class UploadimgfileController extends ApiController
      *
      * @var    string
      *
-     * @since  4.1.0
+     * @since  5.0
      */
     protected $default_view = 'uploadimgfile';
 
 
+    /**
+     * 
+     * 
+     *
+     * @since  5.0
+     */
     public function upload_image_file(): void
     {
         // $image_name = $this->input->json->get('image_name', '', 'PATH');
