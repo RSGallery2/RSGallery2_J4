@@ -243,7 +243,7 @@ class ConfigController extends ApiController
 		return $model->save($data, true);
 	}
 
-	public function delete($id = null): void
+	public function delete($id = null)
 	{
 		if (!$this->allowDelete()) {
 			throw new NotAllowed('JLIB_APPLICATION_ERROR_DELETE_NOT_PERMITTED', 403);
