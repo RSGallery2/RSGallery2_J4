@@ -41,7 +41,7 @@ class VersionModel extends BaseDatabaseModel
 	}
 
 	/**
-	 * Method to get a single files or folder.
+	 * Method to get a single result
 	 *
 	 * @return  \stdClass  A file or folder object.
 	 *
