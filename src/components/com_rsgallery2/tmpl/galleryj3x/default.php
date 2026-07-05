@@ -7,9 +7,8 @@
  * @copyright  (c) 2005-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
-
+/** @var \Rsgallery2\Component\Rsgallery2\Site\View\Galleryj3x\HtmlView $this */
 //  J3x legacy view => gallery images improved
-
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Galleryj3x;
 
 // phpcs:disable PSR1.Files.SideEffects

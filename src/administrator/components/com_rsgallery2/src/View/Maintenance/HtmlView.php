@@ -129,7 +129,7 @@ class HtmlView extends BaseHtmlView
         switch ($Layout) {
             case 'checkimageexif':
                 // ToDo: Save last used image in session
-                $input = $app->input;
+                $input = $app->getInput();
 
                 // fall back
                 $this->exifDataRawOfFiles = [];
@@ -270,7 +270,7 @@ class HtmlView extends BaseHtmlView
 
                     'screwdriver',
                 );
-                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
                 break;
 
             case 'checkimageexif':
@@ -291,20 +291,10 @@ class HtmlView extends BaseHtmlView
                     Text::_('COM_RSGALLERY2_CHECK_IMAGE_EXIF'),
                     'none fas fa-camera-retro',
                 ); // 'maintenance');
-                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-                ToolBarHelper::custom(
-                    'maintenance.checkImageExifData',
-                    'none fas fa-camera-retro',
-                    'image',
-                    'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',
-                    false
-                );
-                ToolBarHelper::link(
-                    'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif',
-                    'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED',
-                    'none fas fa-camera-retro',
-                );
+                $toolbar->custom('maintenance.checkImageExifData', 'none fas fa-camera-retro', 'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+                $toolbar->link('index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED');
 
                 break;
 
@@ -328,7 +318,7 @@ class HtmlView extends BaseHtmlView
 
                 // Set the title
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_MAINTENANCE'), 'cogs'); // 'maintenance');
-                ToolBarHelper::cancel('maintenance.cancel_rsg2', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('maintenance.cancel_rsg2', 'JTOOLBAR_CLOSE');
                 // ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 //                ToolBarHelper::custom(

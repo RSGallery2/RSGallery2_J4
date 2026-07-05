@@ -55,10 +55,12 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Rsgallery2Model $model */
+        $model = $this->getModel();
         $item   =
-        $this->item = $this->get('Item');
+        $this->item = $model->getItem();
         $state  =
-        $this->state = $this->get('State');
+        $this->state = $model->getState();
         $params =
         $this->params = $state->get('params');
 

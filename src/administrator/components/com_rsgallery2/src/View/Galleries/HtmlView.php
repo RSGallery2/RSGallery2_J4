@@ -114,14 +114,16 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
-        $this->items         = $this->get('Items');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->activeFilters = $this->get('ActiveFilters');
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleriesModel $model */
+        $model = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->filterForm    = $model->getFilterForm();
+        $this->pagination    = $model->getPagination();
+        $this->state         = $model->getState();
+        $this->activeFilters = $model->getActiveFilters();
 
         // Check for errors.
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -251,9 +253,9 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_VIEW_RAW_DATA'), 'images');
 
-                ToolBarHelper::editList('gallery.raw_edit');
-                ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH');
-                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->editList('gallery.raw_edit');
+                $toolbar->deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH');
+                $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -270,7 +272,7 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_AS_TREE'), 'images');
-                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -300,7 +302,7 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_MANAGE_GALLERIES'), 'images');
 
-                ToolBarHelper::addNew('gallery.add');
+                $toolbar->addNew('gallery.add');
 
                 if ($canDo->get('core.edit.state') || count($this->transitions)) {
                     $dropdown = $toolbar
@@ -355,7 +357,7 @@ class HtmlView extends BaseHtmlView
                     // ToolBarHelper::editList('gallery.edit');
                 }
 
-                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
         }

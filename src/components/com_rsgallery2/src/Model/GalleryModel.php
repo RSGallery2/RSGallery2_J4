@@ -590,7 +590,7 @@ class GalleryModel extends ListModel
 
         // Adjust the context to support modal layouts. ToDo: Move to where ???
         // ToDo: what about more then one gallery displayed at one page ..
-        if ($layout = $app->input->get('layout')) {
+        if ($layout = $app->getInput()->get('layout')) {
             $this->context .= '.' . $layout;
         }
 
@@ -611,10 +611,10 @@ class GalleryModel extends ListModel
         // $this->setState('list.limit', $value);
         $this->setState('list.limit', $max_thumbs_in_images_view_j3x);
 
-        $offset = $app->input->get('limitstart', 0, 'uint');
+        $offset = $app->getInput()->get('limitstart', 0, 'uint');
         $this->setState('list.start', $offset);
 
-        $orderCol = $app->input->get('filter_order', 'a.ordering');
+        $orderCol = $app->getInput()->get('filter_order', 'a.ordering');
 
         if (!in_array($orderCol, $this->filter_fields)) {
             $orderCol = 'a.ordering';
@@ -622,7 +622,7 @@ class GalleryModel extends ListModel
 
         $this->setState('list.ordering', $orderCol);
 
-        $listOrder = $app->input->get('filter_order_Dir', 'ASC');
+        $listOrder = $app->getInput()->get('filter_order_Dir', 'ASC');
 
         if (!in_array(strtoupper((string) $listOrder), ['ASC', 'DESC', ''])) {
             $listOrder = 'ASC';
@@ -632,7 +632,7 @@ class GalleryModel extends ListModel
 
         $this->setState('params', $params);
 
-        $value = $app->input->get('filter_tag', 0, 'uint');
+        $value = $app->getInput()->get('filter_tag', 0, 'uint');
         $this->setState('filter.tag', $value);
 
         // $user = Factory::getContainer()->get(UserFactoryInterface::class);
@@ -654,7 +654,7 @@ class GalleryModel extends ListModel
             $this->setState('filter.access', false);
         }
 
-        $this->setState('layout', $app->input->getString('layout'));
+        $this->setState('layout', $app->getInput()->getString('layout'));
     }
 
     /**

@@ -7,7 +7,7 @@
  * @copyright  (c) 2005-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
-
+/** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Galleries\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Galleries;
 
 // phpcs:disable PSR1.Files.SideEffects

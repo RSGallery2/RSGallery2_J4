@@ -91,19 +91,22 @@ class HtmlView extends BaseHtmlView
 
         $app = Factory::getApplication();
 
-        $input           = $app->input;
+        $input           = $app->getInput();
         $this->galleryId = $input->get('id', 0, 'INT');
 
         /* wrong call but why ? gallery should be a number > 0 */
         if ($this->galleryId < 2) {
             Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why does it happen ?", 'error');
         }
+        /* @var Galleryj3xModel $model */
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel $model */
+        $model         = $this->getModel();
 
         // Get some data from the models
         $state            =
-        $this->state = $this->get('State');
-        $this->items      = $this->get('Items');
-        $this->pagination = $this->get('Pagination');
+        $this->state = $model->getState();
+        $this->items      = $model->getItems();
+        $this->pagination = $model->getPagination();
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
         $user = $app->getIdentity();
 
@@ -112,9 +115,6 @@ class HtmlView extends BaseHtmlView
 
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
-
-        /* @var Galleryj3xModel $model */
-        $model         = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
 
         // ToDo: Status of images
@@ -129,7 +129,7 @@ class HtmlView extends BaseHtmlView
             $data = $model->AddLayoutData($this->items);
         }
 
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 

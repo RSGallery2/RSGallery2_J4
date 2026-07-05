@@ -43,7 +43,7 @@ class Rsgallery2Model extends BaseDatabaseModel
     public function getItem($pk = null)
     {
         $app = Factory::getApplication();
-        $pk  = $app->input->getInt('id');
+        $pk  = $app->getInput()->getInt('id');
 
         if ($this->_item === null) {
             $this->_item = [];

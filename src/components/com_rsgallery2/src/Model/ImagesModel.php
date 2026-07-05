@@ -144,7 +144,7 @@ class ImagesModel extends ListModel
             //--- menu parameter -------------------------------------------------
 
             $app   = Factory::getApplication();
-            $input = $app->input;
+            $input = $app->getInput();
 
             // overwrite config if chosen
             $images_column_arrangement_menu = $input->get('images_column_arrangement', $images_column_arrangement, 'STRING');
@@ -612,35 +612,35 @@ class ImagesModel extends ListModel
         // ToDo: ? move to view html and model (plugin?)
 
         // gallery id
-        $galleryId = $app->input->get('id', '', 'INT');
+        $galleryId = $app->getInput()->get('id', '', 'INT');
         $this->setState('images.galleryId', $galleryId);
 
         // image id
         // why item ?
-        $imageId = $app->input->get('item', '', 'INT');
+        $imageId = $app->getInput()->get('item', '', 'INT');
         $this->setState('images.imageId', $imageId);
 
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.
-        if ($layout = $app->input->get('layout')) {
+        if ($layout = $app->getInput()->get('layout')) {
             $this->context .= '.' . $layout;
         }
 
         // List state information
-        $value = $app->input->get('limit', $app->get('list_limit'), 'uint');
+        $value = $app->getInput()->get('limit', $app->get('list_limit'), 'uint');
         $this->setState('list.limit', $value);
         //$this->setState('list.limit', $layoutParams->limit);
 
-        $value = $app->input->get('limitstart', 0, 'uint');
+        $value = $app->getInput()->get('limitstart', 0, 'uint');
         // ToDo: check $this->setState('list.start', $value);
         $this->setState('list.start', $value);
 
-        $value = $app->input->get('filter_tag', 0, 'uint');
+        $value = $app->getInput()->get('filter_tag', 0, 'uint');
         $this->setState('filter.tag', $value);
 
         // $orderCol = $app->input->get('filter_order', 'a.ordering');
-        $orderCol = $app->input->get('filter_order', 'ordering');
+        $orderCol = $app->getInput()->get('filter_order', 'ordering');
 
         if (!in_array($orderCol, $this->filter_fields)) {
             $orderCol = 'a.ordering';
@@ -648,7 +648,7 @@ class ImagesModel extends ListModel
 
         $this->setState('list.ordering', $orderCol);
 
-        $listOrder = $app->input->get('filter_order_Dir', 'ASC');
+        $listOrder = $app->getInput()->get('filter_order_Dir', 'ASC');
 
         if (!in_array(strtoupper((string) $listOrder), ['ASC', 'DESC', ''])) {
             $listOrder = 'ASC';
@@ -676,11 +676,11 @@ class ImagesModel extends ListModel
             $this->setState('filter.access', false);
         }
 
-        $this->setState('layout', $app->input->getString('layout'));
+        $this->setState('layout', $app->getInput()->getString('layout'));
 
         //--- RSG2 ---------------------------------
 
-        $this->setState('rsgallery2.id', $app->input->getInt('id'));
+        $this->setState('rsgallery2.id', $app->getInput()->getInt('id'));
     }
 
     /**

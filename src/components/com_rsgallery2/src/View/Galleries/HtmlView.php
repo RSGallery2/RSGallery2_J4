@@ -56,14 +56,16 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\GalleriesModel $model */
+        $model = $this->getModel();
         $app = Factory::getApplication();
 
-        $state       = $this->state = $this->get('State');
-        $this->items = $this->get('Items');
+        $state       = $this->state = $model->getState();
+        $this->items = $model->getItems();
         $params      =
         $this->params = $state->get('params');
 
-        $this->pagination = $this->get('Pagination');
+        $this->pagination = $model->getPagination();
         $this->user       =
         $user = $app->getIdentity();
 

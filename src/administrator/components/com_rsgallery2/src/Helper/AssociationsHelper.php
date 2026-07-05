@@ -125,7 +125,8 @@ class AssociationsHelper extends AssociationExtensionHelper
                 break;
 
             case 'category':
-                $table = Table::getInstance('Category');
+                $db = \Joomla\CMS\Factory::getDbo();
+                $table = new \Joomla\CMS\Table\Category($db);
                 break;
         }
 

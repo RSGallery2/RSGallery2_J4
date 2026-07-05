@@ -94,14 +94,17 @@ class HtmlView extends BaseHtmlView
 
         $app = Factory::getApplication();
 
-        $input = $app->input;
+        $input = $app->getInput();
 
         $this->galleryId = $input->get('id', 0, 'INT');
+        /* @var Rootgalleriesj3xModel $model */
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel $model */
+        $model = $this->getModel();
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
         $state            =
-        $this->state = $this->get('State');
-        $this->pagination = $this->get('Pagination');
+        $this->state = $model->getState();
+        $this->pagination = $model->getPagination();
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
         $user = $app->getIdentity();
 
@@ -127,18 +130,14 @@ class HtmlView extends BaseHtmlView
         $state->set('list.limit', $limit);
 
         // Galleries with parent ID = 0 / ? gallery id ?
-        $this->items = $this->get('Items');
+        $this->items = $model->getItems();
 
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
-
-
-        /* @var Rootgalleriesj3xModel $model */
-        $model = $this->getModel();
 
         //--- random images --------------------------------------------------
 

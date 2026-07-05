@@ -653,11 +653,11 @@ class Galleriesj3xModel extends ListModel
 
         $app = Factory::getApplication();
 
-        $this->setState('gallery.id', $app->input->getInt('id'));
+        $this->setState('gallery.id', $app->getInput()->getInt('id'));
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.
-        if ($layout = $app->input->get('layout')) {
+        if ($layout = $app->getInput()->get('layout')) {
             $this->context .= '.' . $layout;
         }
 
@@ -682,18 +682,18 @@ class Galleriesj3xModel extends ListModel
         // List state information
 
         // J3x ToDo: use galcountNrs
-        $configLimit = $app->input->get('galcountNrs', $app->get('list_limit'), 'uint');
+        $configLimit = $app->getInput()->get('galcountNrs', $app->get('list_limit'), 'uint');
 
         // J4x: use cols * Rows
         // ToDo: needs a function as config allows several sources
         // max_columns_in_galleries_view, max_rows_in_galleries_view
 
-        $userLimit = $app->input->get('[galleries_count', $configLimit, 'uint');
+        $userLimit = $app->getInput()->get('[galleries_count', $configLimit, 'uint');
         //$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'uint');
         $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $configLimit, 'uint');
         $this->setState('list.limit', $limit);
 
-        $limitstart = $app->input->get('limitstart', 0, 'uint');
+        $limitstart = $app->getInput()->get('limitstart', 0, 'uint');
         $this->setState('list.start', $limitstart);
 
 

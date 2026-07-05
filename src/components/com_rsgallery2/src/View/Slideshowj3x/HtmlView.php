@@ -102,14 +102,17 @@ class HtmlView extends BaseHtmlView
         if ($this->galleryId < 2) {
             Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
+        /* @var Slideshowj3xModel $model */
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Slideshowj3xModel $model */
+        $model         = $this->getModel();
 
 
         // Get some data from the models
-        $this->state = $this->get('State');
+        $this->state = $model->getState();
         $this->state->set('list.limit', 999);
 
-        $this->items      = $this->get('Items');
-        $this->pagination = $this->get('Pagination');
+        $this->items      = $model->getItems();
+        $this->pagination = $model->getPagination();
         $params           =
         $this->params = $this->state->get('params');
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
@@ -117,9 +120,6 @@ class HtmlView extends BaseHtmlView
 
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
-
-        /* @var Slideshowj3xModel $model */
-        $model         = $this->getModel();
         $this->gallery = $model->galleryData($this->galleryId);
 
         $slides_layout = $params->get('slides_layout');
@@ -151,7 +151,7 @@ class HtmlView extends BaseHtmlView
             $data = $model->AddLayoutData($this->items);
         }
 
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 

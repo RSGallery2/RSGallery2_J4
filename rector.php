@@ -53,67 +53,67 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::EARLY_RETURN,
     ]);
 
-    /**
-     * Refactoring rules to optimize code to Joomla 3.10
-     */
-    $rectorConfig->rule(ViewAssignRefToPropertyRector::class);
-
-    // Convert to J4 classes directly
-    $rectorConfig->sets([
-        // Replace legacy class names with the namespaced ones
-        __DIR__ . '/vendor/joomla-projects/typehints/rector/joomla_4_0.php',
-    ]);
-
-    // MVC refactoring rules
-    // Disable parallel processing so RenamedClassHandlerService and FileRenameCollectorService
-    // are only instantiated once and their __destruct() writes are not overwritten by other workers.
-    $rectorConfig->disableParallel();
-
-    // Services required by the Joomla 3 MVC migration rules.
-    $rectorConfig->singleton(RenamedClassHandlerService::class, static function () {
-        return new RenamedClassHandlerService(__DIR__);
-    });
-
-    $rectorConfig->singleton(FileRenameCollectorService::class);
-
-    // Namespace mapping — adjust the prefix and target namespace to your component.
-    // Add one entry per distinct casing of the legacy prefix (Joomla 3 is case-insensitive).
-    $joomlaNamespaceMaps = [
-        new JoomlaLegacyPrefixToNamespace('Helloworld', 'Acme\HelloWorld', []),
-    ];
-
-    $rectorConfig->ruleWithConfiguration(HelpersToJ4Rector::class, $joomlaNamespaceMaps);
-    $rectorConfig->ruleWithConfiguration(HtmlHelpersRector::class, $joomlaNamespaceMaps);
-    $rectorConfig->ruleWithConfiguration(FormFieldsRector::class, $joomlaNamespaceMaps);
-    $rectorConfig->ruleWithConfiguration(FormRulesRector::class, $joomlaNamespaceMaps);
-    $rectorConfig->ruleWithConfiguration(LegacyMVCToJ4Rector::class, $joomlaNamespaceMaps);
-    $rectorConfig->rule(ViewsTmplMoveRector::class);
-    $rectorConfig->rule(HtmlViewToBaseHtmlViewRector::class);
+//    /**
+//     * Refactoring rules to optimize code to Joomla 3.10
+//     */
+//    $rectorConfig->rule(ViewAssignRefToPropertyRector::class);
+//
+//    // Convert to J4 classes directly
+//    $rectorConfig->sets([
+//        // Replace legacy class names with the namespaced ones
+//        __DIR__ . '/vendor/joomla-projects/typehints/rector/joomla_4_0.php',
+//    ]);
+//
+//    // MVC refactoring rules
+//    // Disable parallel processing so RenamedClassHandlerService and FileRenameCollectorService
+//    // are only instantiated once and their __destruct() writes are not overwritten by other workers.
+//    $rectorConfig->disableParallel();
+//
+//    // Services required by the Joomla 3 MVC migration rules.
+//    $rectorConfig->singleton(RenamedClassHandlerService::class, static function () {
+//        return new RenamedClassHandlerService(__DIR__);
+//    });
+//
+//    $rectorConfig->singleton(FileRenameCollectorService::class);
+//
+//    // Namespace mapping — adjust the prefix and target namespace to your component.
+//    // Add one entry per distinct casing of the legacy prefix (Joomla 3 is case-insensitive).
+//    $joomlaNamespaceMaps = [
+//        new JoomlaLegacyPrefixToNamespace('Helloworld', 'Acme\HelloWorld', []),
+//    ];
+//
+//    $rectorConfig->ruleWithConfiguration(HelpersToJ4Rector::class, $joomlaNamespaceMaps);
+//    $rectorConfig->ruleWithConfiguration(HtmlHelpersRector::class, $joomlaNamespaceMaps);
+//    $rectorConfig->ruleWithConfiguration(FormFieldsRector::class, $joomlaNamespaceMaps);
+//    $rectorConfig->ruleWithConfiguration(FormRulesRector::class, $joomlaNamespaceMaps);
+//    $rectorConfig->ruleWithConfiguration(LegacyMVCToJ4Rector::class, $joomlaNamespaceMaps);
+//    $rectorConfig->rule(ViewsTmplMoveRector::class);
+//    $rectorConfig->rule(HtmlViewToBaseHtmlViewRector::class);
 
 //    /**
 //     * Refactoring rules for Joomla 4
 //     */
 //    $rectorConfig->rule(JimportRector::class);
-//
-//    /**
-//     * Refactoring rules for Joomla 5
-//     */
-//    $rectorConfig->sets([
-//        // Replace classes replaced in Joomla 6.0
-//        __DIR__ . '/vendor/joomla-projects/typehints/rector/joomla_5_0.php',
-//    ]);
-//
-//    $rectorConfig->rule(ApplicationInputPropertyRector::class);
-//    $rectorConfig->rule(CurrentUserInterfaceGetUserRector::class);
-//    $rectorConfig->rule(GetDboToGetDatabaseRector::class);
-//    $rectorConfig->rule(HtmlViewGetToModelGetRector::class);
-//    $rectorConfig->rule(LegacyPropertyManagementGetSetRector::class);
-//    $rectorConfig->rule(PluginPropertyToGetterRector::class);
-//    $rectorConfig->rule(PluginSubscriberInterfaceRector::class);
-//    $rectorConfig->rule(TableGetInstanceRector::class);
-//    $rectorConfig->rule(ToolbarHelperToDocumentToolbarRector::class);
-//    $rectorConfig->rule(ViewThisTypehintRector::class);
-//
+
+    /**
+     * Refactoring rules for Joomla 5
+     */
+    $rectorConfig->sets([
+        // Replace classes replaced in Joomla 6.0
+        __DIR__ . '/vendor/joomla-projects/typehints/rector/joomla_5_0.php',
+    ]);
+
+    $rectorConfig->rule(ApplicationInputPropertyRector::class);
+    $rectorConfig->rule(CurrentUserInterfaceGetUserRector::class);
+    $rectorConfig->rule(GetDboToGetDatabaseRector::class);
+    $rectorConfig->rule(HtmlViewGetToModelGetRector::class);
+    $rectorConfig->rule(LegacyPropertyManagementGetSetRector::class);
+    $rectorConfig->rule(PluginPropertyToGetterRector::class);
+    $rectorConfig->rule(PluginSubscriberInterfaceRector::class);
+    $rectorConfig->rule(TableGetInstanceRector::class);
+    $rectorConfig->rule(ToolbarHelperToDocumentToolbarRector::class);
+    $rectorConfig->rule(ViewThisTypehintRector::class);
+
 //    /**
 //     * Refactoring rules for Joomla 6
 //     */

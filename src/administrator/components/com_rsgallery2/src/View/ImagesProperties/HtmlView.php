@@ -61,6 +61,8 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesPropertiesModel $model */
+        $model = $this->getModel();
         global $rsgConfig;
 
         //--- config --------------------------------------------------------------------
@@ -72,7 +74,7 @@ class HtmlView extends BaseHtmlView
         $this->isDebugBackend = $rsgConfig->get('isDebugBackend');
         $this->isDevelop      = $rsgConfig->get('isDevelop');
 
-        $this->items = $this->get('Items');
+        $this->items = $model->getItems();
 
         // paths to image (over galleryid or j3x style)
         $this->ImagePath    = new ImagePathsModel();
@@ -94,8 +96,8 @@ class HtmlView extends BaseHtmlView
             'clear_entities' => '0',
         ];
 
-        $this->pagination = $this->get('Pagination');
-        $this->state      = $this->get('State');
+        $this->pagination = $model->getPagination();
+        $this->state      = $model->getState();
 
         $Layout = $this->getLayout();
 
@@ -144,7 +146,7 @@ class HtmlView extends BaseHtmlView
 
                 //--- back  -----------------------------------
 
-                ToolbarHelper::back();
+                $toolbar->back();
 
                 // https://blog.astrid-guenther.de/joomla-aktionen-in-der-werkzeugleiste/
 
@@ -207,7 +209,7 @@ class HtmlView extends BaseHtmlView
 
                 //--- cancel  -----------------------------------
 
-                ToolBarHelper::cancel('ImagesProperties.cancel_imagesProperties', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('ImagesProperties.cancel_imagesProperties', 'JTOOLBAR_CLOSE');
 
                 break;
         }

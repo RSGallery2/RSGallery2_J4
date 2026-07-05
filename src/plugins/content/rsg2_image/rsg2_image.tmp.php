@@ -44,7 +44,7 @@ use Rsgallery2\Module\Rsg2_image\Site\Helper\Rsg2_imageHelper;
  *
  * @since   4.0
  */
-class PlgContentRsg2_image extends CMSPlugin
+class PlgContentRsg2_image extends CMSPlugin implements \Joomla\Event\SubscriberInterface
 {
     /** @var CMSApplication */
     /**
@@ -376,6 +376,10 @@ class PlgContentRsg2_image extends CMSPlugin
 
 
         return $isHandled;
+    }
+    public static function getSubscribedEvents(): array
+    {
+        return ['onContentPrepare' => 'onContentPrepare', 'extractParams' => 'extractParams', 'clean_string' => 'clean_string', 'handleSpecificParams' => 'handleSpecificParams'];
     }
 }
 
