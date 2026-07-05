@@ -69,15 +69,15 @@ class Rsg2_images extends CMSPlugin implements SubscriberInterface
             }
 
             if (
-                (strpos($context, 'com_content.article') === false)
-                && (strpos($context, 'com_content.category') === false)
+                (!str_contains((string) $context, 'com_content.article'))
+                && (!str_contains((string) $context, 'com_content.category'))
             ) {
                 return false;
             }
 
             //--- replacement may exist --------------------------------------------------
 
-            if (str_contains($article->text, '{rsg2_images')) {
+            if (str_contains((string) $article->text, '{rsg2_images')) {
                 $lastUserTestIdx = 0;
 
                 //--- collect all appearances ---------------------------------------
@@ -85,7 +85,7 @@ class Rsg2_images extends CMSPlugin implements SubscriberInterface
                 // Expression to search for.
                 $pattern = "/{rsg2_images:(.*?)}/i";
 
-                preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
+                preg_match_all($pattern, (string) $article->text, $matches, PREG_SET_ORDER);
 
 //              // debug: there should be matches as text is searched
 //              if(empty ($matches)) {
@@ -104,7 +104,7 @@ class Rsg2_images extends CMSPlugin implements SubscriberInterface
 
                         $replaceText  = $usrDefinition[0]; // develop check
                         $replaceLen   = strlen($usrDefinition[0]);
-                        $replaceStart = strpos($article->text, $usrDefinition[0]);
+                        $replaceStart = strpos((string) $article->text, $usrDefinition[0]);
 
                         //$test = $usrDefinition[1];
                         $usrParams = $this->extractUserParams($usrDefinition[1]);

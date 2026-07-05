@@ -136,32 +136,30 @@ class GalleryList extends AbstractCommand
 
         // Reshape the galleries into something humans can read.
         $galleries = array_map(
-            function (object $item): array {
-                return [
-                    $item->id,
-                    $item->name,
-                    $item->alias,
+            fn(object $item): array => [
+                $item->id,
+                $item->name,
+                $item->alias,
 
-                    $item->published,
-            //          $item->publish_up,
-            //          $item->publish_down,
+                $item->published,
+        //          $item->publish_up,
+        //          $item->publish_down,
 
-                    $item->created_by,
-                    $item->created,
-                    $item->modified_by,
-                    $item->modified,
+                $item->created_by,
+                $item->created,
+                $item->modified_by,
+                $item->modified,
 
-                    $item->parent_id,
-                    $item->imgCount,
+                $item->parent_id,
+                $item->imgCount,
 
-                    $item->level,
-                    $item->path,
-                    $item->lft,
-                    $item->rgt,
+                $item->level,
+                $item->path,
+                $item->lft,
+                $item->rgt,
 
-                    // $item->,
-                ];
-            },
+                // $item->,
+            ],
             $galleries,
         );
 

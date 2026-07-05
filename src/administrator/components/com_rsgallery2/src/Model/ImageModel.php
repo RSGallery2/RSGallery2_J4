@@ -165,7 +165,7 @@ class ImageModel extends AdminModel
 
         $extension = $app->input->get('extension', 'com_rsgallery2');
         $this->setState('category.extension', $extension);
-        $parts = explode('.', $extension);
+        $parts = explode('.', (string) $extension);
 
         // Extract the component name
         $this->setState('category.component', $parts[0]);
@@ -263,7 +263,7 @@ class ImageModel extends AdminModel
             // Pre-select some filters (Status, Language, Access) in edit form if those have been selected in Category Manager
             if (!$data->id) {
                 // Check for which extension the Category Manager is used and get selected fields
-                $extension = substr($app->getUserState('com_rsgallery2.galleries.filter.extension'), 4);
+                $extension = substr((string) $app->getUserState('com_rsgallery2.galleries.filter.extension'), 4);
                 $filters   = (array)$app->getUserState('com_rsgallery2.galleries.' . $extension . '.filter');
 
                 $data->set(
@@ -298,7 +298,7 @@ class ImageModel extends AdminModel
     protected function prepareTable($table)
     {
         $date        = Factory::getDate()->toSql();
-        $table->name = htmlspecialchars_decode($table->name, ENT_QUOTES);
+        $table->name = htmlspecialchars_decode((string) $table->name, ENT_QUOTES);
 
         if (empty($table->id)) {
             /**/
@@ -441,7 +441,7 @@ class ImageModel extends AdminModel
 //                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
 //                }
 
-                list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
+                [$title, $alias] = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
                 $data['alias'] = $alias;
 
                 if (isset($msg))

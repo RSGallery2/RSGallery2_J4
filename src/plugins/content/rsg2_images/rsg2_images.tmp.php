@@ -71,7 +71,7 @@ class PlgContentRsg2_images extends CMSPlugin
         }
 
         // Simple high performance check to determine whether bot should process further.
-        if (stripos($article->text, '{rsg2_images') === false) {
+        if (stripos((string) $article->text, '{rsg2_images') === false) {
             return;
         }
 
@@ -90,8 +90,8 @@ class PlgContentRsg2_images extends CMSPlugin
 
             $article->text = preg_replace_callback(
                 $regex,
-                [&$this, '_replacer'],
-                $article->text,
+                $this->_replacer(...),
+                (string) $article->text,
             );
 
             // toDO: J3x form
@@ -100,7 +100,7 @@ class PlgContentRsg2_images extends CMSPlugin
 
             $article->text = preg_replace_callback(
                 $regex,
-                [&$this, '_replacer'],
+                $this->_replacer(...),
                 $article->text,
             );
         } catch (Exception $e) {
@@ -142,7 +142,7 @@ class PlgContentRsg2_images extends CMSPlugin
             // by reference).
             // $original_rsgConfig = clone $rsgConfig;
 
-            $rsgConfig = JComponentHelper::getParams('com_rsgallery2');
+            $rsgConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_rsgallery2');
 
             // toDo: debug site !!!
             $DebugActive = $rsgConfig->get('isDebugSite');
@@ -179,11 +179,11 @@ class PlgContentRsg2_images extends CMSPlugin
             //----------------------------------------------------------------
 
 
-            $attribs = explode(',', $matches[1]);
+            $attribs = explode(',', (string) $matches[1]);
             if (!is_array($attribs)) {
                 $errText = '??? ' . $matches[1] . '->No attributes ???';
                 if ($DebugActive) {
-                    JLog::add($errText, JLog::DEBUG);
+                    \Joomla\CMS\Log\Log::add($errText, \Joomla\CMS\Log\Log::DEBUG);
                 }
 
                 return $errText;
@@ -230,7 +230,7 @@ class PlgContentRsg2_images extends CMSPlugin
             // implode(' ', $html);
             // implode('< /br>', $html);
 
-            $content_output = implode($html);
+            $content_output = implode('', $html);
 
             /**
              * // Go over attribs to get template, gid and possible parameters
@@ -307,7 +307,7 @@ class PlgContentRsg2_images extends CMSPlugin
 
         try {
             foreach ($attributes as $attribute) {
-                $items = explode('=', $attribute);
+                $items = explode('=', (string) $attribute);
 
                 if (count($items) > 0) {
                     $name  = $this->clean_string($items[0]);

@@ -46,11 +46,13 @@ class CascadedParam
         try {
             //foreach ($vars as &$value)
             foreach ($paramValues as $value) {
-                if (isset($value)) {
-                    if ($value != 'global') {
-                        $paramValue = $value;
-                    }
+                if (!isset($value)) {
+                    continue;
                 }
+                if ($value == 'global') {
+                    continue;
+                }
+                $paramValue = $value;
             }
         } catch (\RuntimeException $e) {
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');

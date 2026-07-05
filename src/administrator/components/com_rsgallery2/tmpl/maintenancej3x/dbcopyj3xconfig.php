@@ -129,8 +129,8 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3
                                 $valNew = $this->j4xConfigItems[$mergedName];
                                 /**/
                                 // Make empty string visible
-                                $valOld = strlen($valOld) > 0 ? trim($valOld) : '""';
-                                $valNew = strlen($valNew) > 0 ? $valNew : '""';
+                                $valOld = strlen((string) $valOld) > 0 ? trim((string) $valOld) : '""';
+                                $valNew = strlen((string) $valNew) > 0 ? $valNew : '""';
                                 /**/
 
                                 ?>
@@ -173,7 +173,7 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3
                                 $valNew = '%';
 
                                 // Make empty string visible
-                                $valOld = strlen($valOld) > 0 ? $valOld : '""';
+                                $valOld = strlen((string) $valOld) > 0 ? $valOld : '""';
                                 $valNew = strlen($valNew) > 0 ? $valNew : '""';
 
                                 ?>
@@ -217,7 +217,7 @@ $this->document->getWebAssetManager()->useStyle('com_rsgallery2.backend.dbCopyJ3
 
                                 // Make empty string visible
                                 $valOld = strlen($valOld) > 0 ? $valOld : '""';
-                                $valNew = strlen($valNew) > 0 ? $valNew : '""';
+                                $valNew = strlen((string) $valNew) > 0 ? $valNew : '""';
 
                                 ?>
                                 <!-- tr class="row<?php echo $idx % 2; ?>" > -->

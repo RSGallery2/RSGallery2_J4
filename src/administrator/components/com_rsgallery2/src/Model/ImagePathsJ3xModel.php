@@ -79,7 +79,7 @@ class ImagePathsJ3xModel
             //--- config root path --------------------------------------------
 
             // Attention: imgPath_original may not lead to "images/rsgallery"
-            $this->rsgImagesBasePath = dirname($rsgConfig->get('imgPath_original'));
+            $this->rsgImagesBasePath = dirname((string) $rsgConfig->get('imgPath_original'));
 
             // Fall back
             if (empty($this->rsgImagesBasePath)) {

@@ -57,7 +57,7 @@ class GalleriesHelper
 
         foreach ($langAssociations as $langAssociation) {
             // Include only published galleries with user access
-            $arrId   = explode(':', $langAssociation->id);
+            $arrId   = explode(':', (string) $langAssociation->id);
             $assocId = $arrId[0];
             $db      = Factory::getContainer()->get(DatabaseInterface::class);
 

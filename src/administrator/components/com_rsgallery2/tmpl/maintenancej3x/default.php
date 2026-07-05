@@ -34,7 +34,7 @@ HTMLHelper::_('bootstrap.framework');
             <div id="j-main-container" class="j-main-container">
 
                 <?php echo '<h3> MaintenanceJ3x default</h3>' . '<br>';
-                echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+                echo 'default.php: ' . realpath(__DIR__) . '<br>';
                 ?>
 
 

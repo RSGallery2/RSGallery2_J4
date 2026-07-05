@@ -37,7 +37,7 @@ class HtmlView extends BaseHtmlView
 	protected bool $isDevelop;
 	protected $sidebar;
 
-	protected array|null $manifest;
+	protected array|null $manifest = null;
 
 	/**
 	 * Method to display the view.

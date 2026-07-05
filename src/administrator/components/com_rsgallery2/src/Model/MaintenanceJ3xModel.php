@@ -162,12 +162,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
     {
         $a = $aGallery->ordering;
         $b = $bGallery->ordering;
-
-        if ($a == $b) {
-            return 0;
-        }
-
-        return ($a < $b) ? -1 : 1;
+        return $a <=> $b;
     }
 
     /**
@@ -219,13 +214,15 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
                 foreach ($j4xItems as $j4xItem) {
                     // Same name / title
                     //if ($j3xItem->title == $j4xItem->title)
-                    if ($j3xItem->name == $j4xItem->name) {
-                        // Still old place
-                        if (!$j4xItem->use_j3x_location) {
-                            $mergedId [] = $j3xItem->id;
-                            break;
-                        }
+                    if ($j3xItem->name != $j4xItem->name) {
+                        continue;
                     }
+                    // Still old place
+                    if ($j4xItem->use_j3x_location) {
+                        continue;
+                    }
+                    $mergedId [] = $j3xItem->id;
+                    break;
                 }
             }
         } catch (\RuntimeException $e) {
@@ -321,7 +318,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
             // Sort galleries of level
             if (count($galleries) > 1) {
-                usort($galleries, [$this, 'cmpJ4xGalleries']);
+                usort($galleries, $this->cmpJ4xGalleries(...));
             }
 
             // Collect sorted list with childs
@@ -376,7 +373,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
             // Sort galleries of level (Needs additional ordering from j3x gallery data
             if (count($galleries) > 1) {
-                usort($galleries, [$this, 'cmpJ4xGalleries']);
+                usort($galleries, $this->cmpJ4xGalleries(...));
             }
 
             // Collect sorted list with childs
@@ -574,7 +571,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
             Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
         }
 
-        return implode($html);
+        return implode('', $html);
     }
 
     // ToDo use styling for nested from https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap
@@ -1421,7 +1418,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         $isOk = false;
 
         try {
-            $isOk = $this->resetImagesTable();
+            $isOk = static::resetImagesTable();
 
             $j3xImageItems = $this->j3x_imagesList();
 
@@ -2766,18 +2763,16 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
      */
     private function isMovedState($state)
     {
-        $isMoved = false;
-
         //
         if (
             $state == MaintenanceJ3xModel::J3X_IMG_MOVED
             || $state == MaintenanceJ3xModel::J3X_IMG_ALREADY_MOVED
             || $state == MaintenanceJ3xModel::J3X_IMG_J3X_DELETED
         ) {
-            $isMoved = true;
+            return true;
         }
 
-        return $isMoved;
+        return false;
     }
 
     /**
@@ -3172,14 +3167,14 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         try {
             //--- extract gallery id --------------------------
 
-            $gidIdx    = strpos($oldLink, '&id=') + 5;
-            $gidEndIdx = strpos($oldLink, '&', $gidIdx);
+            $gidIdx    = strpos((string) $oldLink, '&id=') + 5;
+            $gidEndIdx = strpos((string) $oldLink, '&', $gidIdx);
             // no further characters
             if ($gidEndIdx == false) {
-                $gidEndIdx = strlen($oldLink);
+                $gidEndIdx = strlen((string) $oldLink);
             }
 
-            $galleryId = substr($oldLink, $gidIdx, $gidEndIdx - $gidIdx);
+            $galleryId = substr((string) $oldLink, $gidIdx, $gidEndIdx - $gidIdx);
 
             if (intval($galleryId) == 0) {
                 // debug stop for root gallery
@@ -3221,7 +3216,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
                 *
              /**/
 
-            if (str_contains($oldLink, '&view=gallery&')) {
+            if (str_contains((string) $oldLink, '&view=gallery&')) {
                 // root gallery
                 if (intval($galleryId) == 0) {
                     /**
@@ -3351,7 +3346,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
                 }
             } else {
                 // slideshow
-                if (str_contains($oldLink, '&view=slideshow&')) {
+                if (str_contains((string) $oldLink, '&view=slideshow&')) {
                     /* needed in galleryj3x view
                     $paraPart = ""
                         . "&displaySearch=" . $params['displaySearch'] . '"'
@@ -3770,12 +3765,12 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
             foreach ($menuItemsDB as $id => $menuItemDb) {
                 // [$idDummy, $link, $params] = $menuItemDb;
                 $link   = $menuItemDb ['link'];
-                $params = json_decode($menuItemDb ['params'], true);
+                $params = json_decode((string) $menuItemDb ['params'], true);
 
                 // add matching link
                 if (
-                    str_contains($link, '&view=gallery&')
-                    || str_contains($link, '&view=slideshow&')
+                    str_contains((string) $link, '&view=gallery&')
+                    || str_contains((string) $link, '&view=slideshow&')
                 ) {
                     $menuLinks[$id] = [$link, $params];
                 }
@@ -3822,13 +3817,13 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
             foreach ($menuItemsDB as $id => $menuItemDb) {
                 // [$idDummy, $link, $params] = $menuItemDb;
                 $link   = $menuItemDb ['link'];
-                $params = json_decode($menuItemDb ['params'], true);
+                $params = json_decode((string) $menuItemDb ['params'], true);
 
                 // add matching link
                 if (
-                    str_contains($link, '&view=galleryj3x&')
-                    || str_contains($link, '&view=rootgalleriesj3x&')
-                    || str_contains($link, '&view=slideshowj3x&')
+                    str_contains((string) $link, '&view=galleryj3x&')
+                    || str_contains((string) $link, '&view=rootgalleriesj3x&')
+                    || str_contains((string) $link, '&view=slideshowj3x&')
                 ) {
                     $menuLinks[$id] = [$link, $params];
                 }
@@ -3875,20 +3870,20 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
             foreach ($menuItemsDB as $id => $menuItemDb) {
                 // [$idDummy, $link, $params] = $menuItemDb;
                 $link   = $menuItemDb ['link'];
-                $params = json_decode($menuItemDb ['params'], true);
+                $params = json_decode((string) $menuItemDb ['params'], true);
 
                 // add matching link
                 if (
-                    str_contains($link, '&view=galleries&')
-                    || str_contains($link, '&view=gallery&')
-                    || str_contains($link, '&view=slidepage&')
-                    || str_contains($link, '&view=slideshow&')
+                    str_contains((string) $link, '&view=galleries&')
+                    || str_contains((string) $link, '&view=gallery&')
+                    || str_contains((string) $link, '&view=slidepage&')
+                    || str_contains((string) $link, '&view=slideshow&')
 
-                    || str_contains($link, '&view=galleriesj3x&')
-                    || str_contains($link, '&view=galleryj3x&')
-                    || str_contains($link, '&view=rootgalleriesj3x&')
-                    || str_contains($link, '&view=slidepagej3x&')
-                    || str_contains($link, '&view=slideshowj3x&')
+                    || str_contains((string) $link, '&view=galleriesj3x&')
+                    || str_contains((string) $link, '&view=galleryj3x&')
+                    || str_contains((string) $link, '&view=rootgalleriesj3x&')
+                    || str_contains((string) $link, '&view=slidepagej3x&')
+                    || str_contains((string) $link, '&view=slideshowj3x&')
                 ) {
                     $menuLinks[$id] = [$link, $params];
                 }
@@ -3935,20 +3930,20 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
             foreach ($menuItemsDB as $id => $menuItemDb) {
                 // [$idDummy, $link, $params] = $menuItemDb;
                 $link   = $menuItemDb ['link'];
-                $params = json_decode($menuItemDb ['params'], true);
+                $params = json_decode((string) $menuItemDb ['params'], true);
 
                 // add matching link
                 if (
-                    str_contains($link, '&view=galleries&')
-                    || str_contains($link, '&view=gallery&')
-                    || str_contains($link, '&view=slidepage&')
-                    || str_contains($link, '&view=slideshow&')
+                    str_contains((string) $link, '&view=galleries&')
+                    || str_contains((string) $link, '&view=gallery&')
+                    || str_contains((string) $link, '&view=slidepage&')
+                    || str_contains((string) $link, '&view=slideshow&')
 
-                    || str_contains($link, '&view=galleriesj3x&')
-                    || str_contains($link, '&view=galleryj3x&')
-                    || str_contains($link, '&view=rootgalleriesj3x&')
-                    || str_contains($link, '&view=slidepagej3x&')
-                    || str_contains($link, '&view=slideshowj3x&')
+                    || str_contains((string) $link, '&view=galleriesj3x&')
+                    || str_contains((string) $link, '&view=galleryj3x&')
+                    || str_contains((string) $link, '&view=rootgalleriesj3x&')
+                    || str_contains((string) $link, '&view=slidepagej3x&')
+                    || str_contains((string) $link, '&view=slideshowj3x&')
                 ) {
                     $menuLinks[$id] = [$link, $params];
                 }
@@ -3995,13 +3990,13 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
             foreach ($menuItemsDB as $id => $menuItemDb) {
                 // [$idDummy, $link, $params] = $menuItemDb;
                 $link   = $menuItemDb ['link'];
-                $params = json_decode($menuItemDb ['params'], true);
+                $params = json_decode((string) $menuItemDb ['params'], true);
 
                 // add matching link
                 if (
-                    str_contains($link, '&view=galleryJ3x&')
-                    || str_contains($link, '&view=rootgalleriesJ3x&')
-                    || str_contains($link, '&view=slideshowJ3x&')
+                    str_contains((string) $link, '&view=galleryJ3x&')
+                    || str_contains((string) $link, '&view=rootgalleriesJ3x&')
+                    || str_contains((string) $link, '&view=slideshowJ3x&')
                 ) {
                     $menuLinks[$id] = [$link, $params];
                 }
@@ -4037,8 +4032,8 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
             $endIdx  = strpos($oldLink, '&', $gidIdx + 1);
             $newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $endIdx);
         } else {
-            // index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0
-            $gidIdx++;
+        // index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0
+        $gidIdx++;
             $newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $gidIdx + 1);
         }
 

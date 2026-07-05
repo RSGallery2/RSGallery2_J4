@@ -43,14 +43,6 @@ class XXRouter extends RouterView
     protected $noIDs = false;
 
     /**
-     * The db
-     *
-     * @var DatabaseInterface
-     *
-     * @since 5.1.0     */
-    private $db;
-
-    /**
      * Content Component router constructor
      *
      * @param   SiteApplication           $app              The application object
@@ -62,7 +54,12 @@ class XXRouter extends RouterView
         SiteApplication $app,
         AbstractMenu $menu,
         CategoryFactoryInterface $categoryFactory,
-        DatabaseInterface $db
+        /**
+         * The db
+         *
+         *
+         * @since 5.1.0     */
+        private readonly DatabaseInterface $db
     ) {
         /**
          * $this->categoryFactory = $categoryFactory;
@@ -94,7 +91,6 @@ class XXRouter extends RouterView
 
         $params      = ComponentHelper::getParams('com_rsgallery2');
         $this->noIDs = (bool)$params->get('sef_ids');
-        $this->db              = $db;
 
 
         //--- rules for J3x rsg2_legacy links ----------------------------------------
@@ -287,7 +283,7 @@ class XXRouter extends RouterView
 // http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleryj3x$id=2&images_show_title=1&images_show_description=1&images_show_search=0&images_column_arrangement=1&max_columns_in_images_view=0&images_row_arrangement=2&max_rows_in_images_view=5&max_thumbs_in_images_view=15&displaySearch=0&gallery_show_title=1&gallery_show_description=0&gallery_show_slideshow=1&Itemid=149
     public function getGalleryJ3xSegment($id, $query)
     {
-        if (!strpos($id, ':')) {
+        if (!strpos((string) $id, ':')) {
             $id      = (int) $id;
             $dbquery = $this->db->createQuery();
             $dbquery
@@ -301,7 +297,7 @@ class XXRouter extends RouterView
         }
 
         if ($this->noIDs) {
-            list($void, $segment) = explode(':', $id, 2);
+            [$void, $segment] = explode(':', (string) $id, 2);
 
             return [$void => $segment];
         }

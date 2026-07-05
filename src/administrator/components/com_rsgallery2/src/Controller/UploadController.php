@@ -594,7 +594,7 @@ class UploadController extends FormController
             $tmpdir = uniqid('rsg2_zip_');
 
             // Clean the paths to use for archive extraction
-            $extractDir  = Path::clean(dirname($srcTempPathFileName) . '/' . $tmpdir);
+            $extractDir  = Path::clean(dirname((string) $srcTempPathFileName) . '/' . $tmpdir);
             $archiveName = Path::clean($archiveName);
 
             //--- gallery ID --------------------------------------------

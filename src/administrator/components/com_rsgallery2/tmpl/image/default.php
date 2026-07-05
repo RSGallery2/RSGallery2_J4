@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 
 // $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
-echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+echo 'default.php: ' . realpath(__DIR__) . '<br>';
 ?>
 
 

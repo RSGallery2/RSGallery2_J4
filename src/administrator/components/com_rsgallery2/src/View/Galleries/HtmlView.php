@@ -518,7 +518,7 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     protected function getSortFields()
     {
-        return array(
+        return [
             'a.ordering'     => Text::_('JGRID_HEADING_ORDERING'),
             'a.published'    => Text::_('JSTATUS'),
             'a.name'         => Text::_('JGLOBAL_TITLE'),
@@ -526,6 +526,6 @@ class HtmlView extends BaseHtmlView
             'a.access'       => Text::_('JGRID_HEADING_ACCESS'),
             'a.language'     => Text::_('JGRID_HEADING_LANGUAGE'),
             'a.id'           => Text::_('JGRID_HEADING_ID'),
-        );
+        ];
     }
 }

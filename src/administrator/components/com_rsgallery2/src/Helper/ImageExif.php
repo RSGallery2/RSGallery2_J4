@@ -144,7 +144,7 @@ class ImageExif
         // user has selected tags
         if (!empty($supportedTags)) {
             foreach ($exifItems as $name => $value) {
-                if (in_array(strtolower($name), $supportedTags)) {
+                if (in_array(strtolower((string) $name), $supportedTags)) {
                     $selected [$name] = $value;
                 }
             }
@@ -264,7 +264,7 @@ class ImageExif
         $name = '';
 
         if (!empty($ExifTag)) {
-            $exifParts = explode(".", $ExifTag);
+            $exifParts = explode(".", (string) $ExifTag);
 
             if (!empty($exifParts[0])) {
                 // use second part of name as identifier
@@ -290,7 +290,7 @@ class ImageExif
      */
     public static function exifTranslationId($ExifName)
     {
-        $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper($ExifName);
+        $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper((string) $ExifName);
 
         return $translationId;
     }
@@ -310,7 +310,7 @@ class ImageExif
         // lower case array
         $exifTags = $rsgConfig->get('exifTagsJ3x');
         if (!empty ($exifTags)) {
-            $userExifTags = array_map('strtolower', $exifTags);
+            return array_map(strtolower(...), $exifTags);
         }
 
         return $userExifTags;
@@ -328,10 +328,10 @@ class ImageExif
         $notSupportedTags = [];
 
         // lower case array
-        $supportedTags = array_map('strtolower', self::supportedExifTags());
+        $supportedTags = array_map(strtolower(...), self::supportedExifTags());
 
         foreach ($existingExifTags as $existingExifTag) {
-            if (!in_array(strtolower($existingExifTag), $supportedTags)) {
+            if (!in_array(strtolower((string) $existingExifTag), $supportedTags)) {
                 $notSupportedTags [] = $existingExifTag;
             }
         }

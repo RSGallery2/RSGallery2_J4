@@ -73,7 +73,7 @@ function GalleriesOfLevelHTML($galleries, $parentId, $indent)
         Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
     }
 
-    return implode($html);
+    return implode('', $html);
 }
 
 // ToDo use styling for nested from https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap

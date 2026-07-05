@@ -72,10 +72,6 @@ class ImageReferences
      * @var bool
      */
     protected $IsAnyOneImageMissing;
-    /**
-     * @var bool
-     */
-    public $UseWatermarked;
 
     public bool $IsOutsideFilesExist;
 
@@ -88,11 +84,11 @@ class ImageReferences
     /**
      * ImageReferences constructor. init all variables
      *
-     * @param   bool  $watermarked
+     * @param bool $UseWatermarked
      *
      * @since 4.3.0
      */
-    public function __construct($watermarked = false)
+    public function __construct(public $UseWatermarked = false)
     {
         $this->ImageReferenceList = [];
 
@@ -103,14 +99,6 @@ class ImageReferences
         $this->IsAnyImageMissingInSizes       = false;
         $this->IsAnyImageMissingInWatermarked = false;
         $this->IsAnyOneImageMissing           = false;
-
-        /**
-        if ($watermarked)
-        {
-            require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
-        }
-        /**/
-        $this->UseWatermarked = $watermarked;
 
 
         $this->IsOutsideFilesExist = false;
@@ -308,7 +296,7 @@ class ImageReferences
     {
         try {
             // gallery ID
-            $galleryId = basename($galleryIdDir);
+            $galleryId = basename((string) $galleryIdDir);
 
             if (!is_numeric($galleryId)) {
                 return;
@@ -337,10 +325,10 @@ class ImageReferences
     {
         try {
             // gallery ID
-            $sizeName = basename($sizeDir);
+            $sizeName = basename((string) $sizeDir);
 
             // all found gallery ids in folder
-            $imageFiles = array_filter(glob($sizeDir . '/*'), 'is_file');
+            $imageFiles = array_filter(glob($sizeDir . '/*'), is_file(...));
             foreach ($imageFiles as $imageFilePath) {
                 $imageFilePath = Path::clean($imageFilePath);
                 $imageName     = basename($imageFilePath);
@@ -394,19 +382,21 @@ class ImageReferences
         try {
             foreach ($this->ImageReferenceList as $TestImageReference) {
                 // gallery and image name must match
-                if ($TestImageReference->parentGalleryId == $galleryId) {
-                    // Any image already defined
-                    if ($TestImageReference->imageName == $imageName) {
-                        $isImgReferenceExist = true;
-                        $ImageReference = $TestImageReference;
+                if ($TestImageReference->parentGalleryId != $galleryId) {
+                    continue;
+                }
+                // Any image already defined
+                if ($TestImageReference->imageName != $imageName) {
+                    continue;
+                }
+                $isImgReferenceExist = true;
+                $ImageReference = $TestImageReference;
 
-                        foreach ($TestImageReference->allImagePaths as $TestImagePath) {
-                            // Reference Item exists already
-                            if ($ImageFilePath === $TestImagePath) {
-                                $isImgFound = true;
-                                break;
-                            }
-                        }
+                foreach ($TestImageReference->allImagePaths as $TestImagePath) {
+                    // Reference Item exists already
+                    if ($ImageFilePath === $TestImagePath) {
+                        $isImgFound = true;
+                        break;
                     }
                 }
             }
@@ -492,7 +482,7 @@ class ImageReferences
     private function testJ3xDir4Orphans(string $galleryIdDir, string $dirType)
     {
         try {
-            $imageFiles = array_filter(glob($galleryIdDir . '/*'), 'is_file');
+            $imageFiles = array_filter(glob($galleryIdDir . '/*'), is_file(...));
 
             // each file
             foreach ($imageFiles as $imageFilePath) {
@@ -584,16 +574,11 @@ class ImageReferences
 
     private function isFileAnImage(string $imageFilePath)
     {
-        // For PHP >= 5.3 use finfo_open() or mime_content_type()
-
-        // ToDo: What about webp or svg ...
-
-        $isImage = false;
         if (@is_array(getimagesize($imageFilePath))) {
-            $isImage = true;
+            return true;
         }
 
-        return $isImage;
+        return false;
     }
 
     private function findImageJ3xInList(string $imageName, string $imageFilePath)
@@ -604,15 +589,16 @@ class ImageReferences
         try {
             foreach ($this->ImageReferenceList as $TestImageReference) {
                 // checking j3x images
-                if ($TestImageReference->use_j3x_location) {
-                    // Reference Item exists already
-                    if ($TestImageReference->imageName == $imageName) {
-                        $ImageReference = $TestImageReference;
-
-                        $isInList = true;
-                        break;
-                    }
+                if (!$TestImageReference->use_j3x_location) {
+                    continue;
                 }
+                // Reference Item exists already
+                if ($TestImageReference->imageName != $imageName) {
+                    continue;
+                }
+                $ImageReference = $TestImageReference;
+                $isInList = true;
+                break;
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -673,7 +659,7 @@ class ImageReferences
         $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
         // all files found in root folder
-        $outsideJ4x = array_filter(glob($rsgImagesGalleriesPath . "/*"), 'is_file');
+        $outsideJ4x = array_filter(glob($rsgImagesGalleriesPath . "/*"), is_file(...));
 
         if (! empty($outsideJ4x)) {
             $this->OutsideFiles ['j4x'] = $outsideJ4x;
@@ -687,7 +673,7 @@ class ImageReferences
         $rsgImagesGalleriesPath = $imagePaths->rsgImagesGalleriesBasePath;
 
         // all files found in root folder
-        $outsideJ3x = array_filter(glob($rsgImagesGalleriesPath . "/*"), 'is_file');
+        $outsideJ3x = array_filter(glob($rsgImagesGalleriesPath . "/*"), is_file(...));
 
         if (! empty($outsideJ3x)) {
             $this->OutsideFiles ['j3x'] = $outsideJ3x;

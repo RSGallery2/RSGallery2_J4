@@ -65,9 +65,9 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
-        $test = json_decode($item->params);
+        $test = json_decode((string) $item->params);
 
-        $itemparams = new Registry(json_decode($item->params));
+        $itemparams = new Registry(json_decode((string) $item->params));
         // ToDO: use registry merge $itemparams ??? on oter displays ...
 
         // ToDo: remove
@@ -82,13 +82,13 @@ class HtmlView extends BaseHtmlView
 
         // Store the events for later
         $item->event = new \stdClass();
-        $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+        $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', ['com_rsgallery2.rsgallery2', &$item, &$item->params]);
         $item->event->afterDisplayTitle = trim(implode("\n", $results));
 
-        $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+        $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', ['com_rsgallery2.rsgallery2', &$item, &$item->params]);
         $item->event->beforeDisplayContent = trim(implode("\n", $results));
 
-        $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
+        $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', ['com_rsgallery2.rsgallery2', &$item, &$item->params]);
         $item->event->afterDisplayContent = trim(implode("\n", $results));
 
         parent::display($tpl);

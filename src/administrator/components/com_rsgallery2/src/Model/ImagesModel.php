@@ -104,7 +104,7 @@ class ImagesModel extends ListModel
 
         $extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', 'com_rsgallery2', 'cmd');
         $this->setState('filter.extension', $extension);
-        $parts = explode('.', $extension);
+        $parts = explode('.', (string) $extension);
 
         // Extract the component name
         $this->setState('filter.component', $parts[0]);
@@ -390,7 +390,7 @@ class ImagesModel extends ListModel
         $extension = $this->getState('filter.extension');
 
         $assoc     = Associations::isEnabled();
-        $extension = explode('.', $extension);
+        $extension = explode('.', (string) $extension);
         $component = array_shift($extension);
         $cname     = str_replace('com_', '', $component);
 
@@ -605,7 +605,7 @@ class ImagesModel extends ListModel
 
         // http://docs.joomla.org/Selecting_data_using_JDatabase
         $name = $db->loadResult();
-        $name = $name ? $name : Text::_('COM_RSGALLERY2_GALLERY_ID_ERROR');
+        $name = $name ?: Text::_('COM_RSGALLERY2_GALLERY_ID_ERROR');
 
         return $name;
     }

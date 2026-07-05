@@ -89,7 +89,7 @@ class ImagesPropertiesController extends AdminController
             //127.0.0.1/Joomla3x/administrator/index.php?option=com_rsgallery2&view=imagesProperties&cid[]=1&cid[]=2&cid[]=3&cid[]=4
             $cids = $this->input->get('cid', 0, 'int');
             //$this->setRedirect('index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(array('cid' => $cids)));
-            $this->setRedirect('index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(array('cid' => $cids)));
+            $this->setRedirect('index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(['cid' => $cids]));
 
             parent::display();
         }

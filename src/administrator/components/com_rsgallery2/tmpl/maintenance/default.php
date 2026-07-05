@@ -37,29 +37,15 @@ Text::script('', true);
 
 class zoneContainer
 {
-    public $textTitle;
-    public $textInfo;
-    public $classContainer;
-    public $classTitle;
-
-    public function __construct($textTitle = '?', $textInfo = '?', $classContainer = '?', $classTitle = '?')
+    public function __construct(public $textTitle = '?', public $textInfo = '?', public $classContainer = '?', public $classTitle = '?')
     {
-        $this->textTitle      = $textTitle;
-        $this->textInfo       = $textInfo;
-        $this->classContainer = $classContainer;
-        $this->classTitle     = $classTitle;
     }
 }
 
 class zoneButtons
 {
-    public $isTask; // not a link
-    public $link;
+    public $isTask;
     public $task;
-    public $textTitle;
-    public $textInfo;
-    public $classIcons;
-    public $classButton;
 
     /**
      * @param $task
@@ -71,19 +57,14 @@ class zoneButtons
      */
     public function __construct(
         $task = '?',
-        $link = '?',
-        $textTitle = '?',
-        $textInfo = '?',
-        $classIcons = ['?', '?'],
-        $classButton = '?',
+        public $link = '?',
+        public $textTitle = '?',
+        public $textInfo = '?',
+        public $classIcons = ['?', '?'],
+        public $classButton = '?',
     ) {
-        $this->isTask      = strlen($task) > 0;
+        $this->isTask      = strlen((string) $task) > 0;
         $this->task        = $task;
-        $this->link        = $link;
-        $this->textTitle   = $textTitle;
-        $this->textInfo    = $textInfo;
-        $this->classIcons  = $classIcons;
-        $this->classButton = $classButton;
     }
 }
 
@@ -902,7 +883,7 @@ function zoneTitle($title = 'Unknown title', $zoneClass = '')
     // implode($html);
     // implode(' ', $html);
     // implode('< /br>', $html);
-    return implode($html);
+    return implode('', $html);
 }
 
 //---  -----------------------------
@@ -915,7 +896,7 @@ function zoneInfo($info = 'Unknown zone info')
     // implode($html);
     // implode(' ', $html);
     // implode('< /br>', $html);
-    return implode($html);
+    return implode('', $html);
 }
 
 ?>

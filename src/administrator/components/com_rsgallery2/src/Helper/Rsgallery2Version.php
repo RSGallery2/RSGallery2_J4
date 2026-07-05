@@ -70,7 +70,7 @@ class Rsgallery2Version
         //  [filename] => rsg2
         //)
 
-        $manifest = json_decode($db->loadResult(), true);
+        $manifest = json_decode((string) $db->loadResult(), true);
 
         //--- assign data from manifest -----------------
 

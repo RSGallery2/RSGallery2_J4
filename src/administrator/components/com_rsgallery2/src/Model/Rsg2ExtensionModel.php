@@ -53,7 +53,7 @@ class Rsg2ExtensionModel extends BaseModel
             $jsonStr = $db->loadResult();
 
             if (!empty($jsonStr)) {
-                $manifest = json_decode($jsonStr, true);
+                $manifest = json_decode((string) $jsonStr, true);
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -100,7 +100,7 @@ class Rsg2ExtensionModel extends BaseModel
 
             $jsonStr = $db->loadResult();
             if (!empty($jsonStr)) {
-                $params = json_decode($jsonStr, true);
+                $params = json_decode((string) $jsonStr, true);
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';

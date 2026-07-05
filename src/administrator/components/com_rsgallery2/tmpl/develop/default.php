@@ -94,7 +94,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 
                 <?php
                 echo '<h3> Developer default</h3>' . '<br>';
-                echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+                echo 'default.php: ' . realpath(__DIR__) . '<br>';
                 ?>
 
 

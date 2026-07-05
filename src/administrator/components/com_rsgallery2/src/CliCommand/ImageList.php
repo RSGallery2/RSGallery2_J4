@@ -133,30 +133,28 @@ class ImageList extends AbstractCommand
 
         // Reshape the images into something humans can read.
         $images = array_map(
-            function (object $item): array {
-                return [
-                    $item->id,
-                    $item->name,
-                    $item->alias,
+            fn(object $item): array => [
+                $item->id,
+                $item->name,
+                $item->alias,
 
-                    $item->published,
-                    $item->gallery_id,
+                $item->published,
+                $item->gallery_id,
 
-                    $item->original_path,
+                $item->original_path,
 
-                    $item->ordering,
+                $item->ordering,
 
-                    $item->created_by,
-                    $item->created,
-                    $item->modified_by,
-                    $item->modified,
+                $item->created_by,
+                $item->created,
+                $item->modified_by,
+                $item->modified,
 
-                    // $item->,
-                    // $item->,
-                    // $item->,
-                    // $item->,
-                ];
-            },
+                // $item->,
+                // $item->,
+                // $item->,
+                // $item->,
+            ],
             $images
         );
 
