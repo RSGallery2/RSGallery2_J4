@@ -178,7 +178,7 @@ class InstallMessage
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
-        } catch (\Exception $e) {
+        } catch (\Exception) {
         }
 
         return $changeLogText;

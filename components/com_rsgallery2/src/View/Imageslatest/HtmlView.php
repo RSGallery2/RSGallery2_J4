@@ -64,7 +64,7 @@ class HtmlView extends BaseHtmlView
         $this->state = $this->get('state');
         $params     =
         $this->params = $state->get('params');
-        $itemparams = new registry(json_decode($item->params));
+        $itemparams = new registry(json_decode((string) $item->params));
 
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');

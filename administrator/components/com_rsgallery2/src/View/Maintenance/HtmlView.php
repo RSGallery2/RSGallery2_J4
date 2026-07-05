@@ -387,11 +387,13 @@ class HtmlView extends BaseHtmlView
         $fileNames = [];
 
         foreach ($inFileNames as $idx => $fileName) {
-            if (in_array($idx, $cids)) {
-                if ($fileName != '') {
-                    $fileNames [] = $fileName;
-                }
+            if (!in_array($idx, $cids)) {
+                continue;
             }
+            if ($fileName == '') {
+                continue;
+            }
+            $fileNames [] = $fileName;
         }
 
         return $fileNames;

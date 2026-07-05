@@ -110,7 +110,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
             // Expression to search for.
             $pattern = "/{" . self::MARKER . "(.*)}/i";
 
-            preg_match_all($pattern, $article->text, $matches, PREG_SET_ORDER);
+            preg_match_all($pattern, (string) $article->text, $matches, PREG_SET_ORDER);
 
             //==========================================================================
             // Replace all matches
@@ -135,7 +135,7 @@ class Rsg2_gallery extends CMSPlugin implements SubscriberInterface
 
                     $replaceText  = $usrDefinition[0]; // develop check
                     $replaceLen   = strlen($replaceText);
-                    $replaceStart = strpos($article->text, $usrDefinition[0]);
+                    $replaceStart = strpos((string) $article->text, $usrDefinition[0]);
 
                     $usrParams = $this->extractUserParams($usrDefinition[1]);
                     $plgParams = $this->params;

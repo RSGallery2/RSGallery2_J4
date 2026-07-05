@@ -178,17 +178,12 @@ class ConfigSet extends AbstractCommand
      */
     private function sanitizeValue($value)
     {
-        switch (strtolower($value)) {
-            case $value === 'false':
-                $value = false;
-                break;
-            case $value === 'true':
-                $value = true;
-                break;
-            case $value === 'null':
-                $value = null;
-                break;
-        }
+        $value = match (true) {
+            $value === 'false' => false,
+            $value === 'true' => true,
+            $value === 'null' => null,
+            default => $value,
+        };
 
         return $value;
     }
@@ -206,11 +201,11 @@ class ConfigSet extends AbstractCommand
         $isTrue = false;
 
         if (!empty($veryfyIn)) {
-            if (strtolower($veryfyIn) == 'true') {
+            if (strtolower((string) $veryfyIn) == 'true') {
                 $isTrue = true;
             }
 
-            if (strtolower($veryfyIn) == 'on') {
+            if (strtolower((string) $veryfyIn) == 'on') {
                 $isTrue = true;
             }
 
@@ -275,7 +270,7 @@ class ConfigSet extends AbstractCommand
 
             $jsonStr = $db->loadResult();
             if (!empty($jsonStr)) {
-                $params = json_decode($jsonStr, true);
+                $params = json_decode((string) $jsonStr, true);
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';

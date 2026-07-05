@@ -240,7 +240,7 @@ class MaintenanceCleanUpController extends BaseController
                             // do not drop tables on uninstall RSG2
 
                             // ? is not already set
-                            if (strpos($line, $doNotDropText) === false) {
+                            if (!str_contains($line, $doNotDropText)) {
                                 $changedLine = str_replace($dropText, $doNotDropText, $line);
                             }
                         }

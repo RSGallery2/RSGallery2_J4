@@ -326,7 +326,7 @@ function DisplayRSG2ControlButtons($buttons)
     $html[] = '';
     $html[] = '</div>';
 
-    echo implode($html);
+    echo implode('', $html);
 
     echo '<div class="clearfix"></div>';
 }
@@ -402,7 +402,7 @@ function rsg2InfoHtml($Rsg2Version)
     $html[] = '    </tbody>';
     $html[] = '</table>';
 
-    return implode($html);
+    return implode('', $html);
 }
 
 //--- Latest galleries images ------------------

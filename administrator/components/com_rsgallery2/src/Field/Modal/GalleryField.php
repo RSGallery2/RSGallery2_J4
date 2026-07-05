@@ -128,7 +128,7 @@ class GalleryField extends FormField
             }
         }
 
-        $title = empty($title) ? Text::_('COM_RSGALLERY2_SELECT_A_GALLERY') : htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+        $title = empty($title) ? Text::_('COM_RSGALLERY2_SELECT_A_GALLERY') : htmlspecialchars((string) $title, ENT_QUOTES, 'UTF-8');
 
         // The current gallery display field.
         $html = '';

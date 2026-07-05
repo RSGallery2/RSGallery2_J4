@@ -96,7 +96,7 @@ class LayoutGalleryField extends ListField
 
             $folders = Folder::folders($layoutFolder);
             foreach ($folders as $folder) {
-                if (str_starts_with(strtolower($folder), "images")) {
+                if (str_starts_with(strtolower((string) $folder), "images")) {
                     $subLayouts = $this->subLayouts($layoutFolder . '/' . $folder);
 
                     $subCount = count($subLayouts);
@@ -151,14 +151,14 @@ class LayoutGalleryField extends ListField
         foreach ($files as $file) {
             $validFile = true;
 
-            $parts     = explode('.', $file);
+            $parts     = explode('.', (string) $file);
             $extension = array_pop($parts);
 
             if ($extension != 'php') {
                 $validFile = false;
             }
 
-            if (str_contains($file, '.tmp')) {
+            if (str_contains((string) $file, '.tmp')) {
                 $validFile = false;
             }
 
@@ -170,7 +170,7 @@ class LayoutGalleryField extends ListField
             }
 
             if ($validFile) {
-                $basename      = implode($parts);
+                $basename      = implode('', $parts);
                 $subLayouts [] = File::stripExt($basename);
             }
         }

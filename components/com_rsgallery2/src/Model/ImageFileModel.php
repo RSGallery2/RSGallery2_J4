@@ -169,7 +169,7 @@ class ImageFileModel extends ListModel // BaseModel
         try {
             $size     = filesize($OriginalFilePath);
             $mimeType = mime_content_type($OriginalFilePath);
-            $fileName = basename($OriginalFilePath);
+            $fileName = basename((string) $OriginalFilePath);
 
             //--- header ------------------------------------------------
 

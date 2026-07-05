@@ -115,7 +115,7 @@ class Rsg2_imagesHelper
         $ordering = $params->get('ordering', 'a.publish_up');
         $model->setState('list.ordering', $ordering);
 
-        if (trim($ordering) === 'rand()') {
+        if (trim((string) $ordering) === 'rand()') {
             $model->setState('list.ordering', Factory::getContainer()->get(DatabaseInterface::class)->createQuery()->rand());
         } else {
             $direction = $params->get('direction', 1) ? 'DESC' : 'ASC';

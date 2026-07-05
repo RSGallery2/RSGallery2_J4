@@ -1074,42 +1074,35 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 {
                     continue;
                 }
+                //--- File information ----------------------
+                // ToDo: Mime type check
+                // ToDo: getimagesize() sollte nicht verwendet werden, um zu überprüfen,
+                // ToDo: ob eine gegebene Datei ein Bild enthält. Statt dessen sollte
+                // ToDo: eine für diesen Zweck entwickelte Lösung wie die
+                // ToDo: Fileinfo-Extension(finfo_file) verwendet werden
+                $img_info = @getimagesize($file);
+                // check if file is definitely not an image
+                if (empty($img_info))
+                {
+                    $ignored[] = $file;
+                }
                 else
                 {
-                    //--- File information ----------------------
+                    //--- file may be an image -----------------------------
 
-                    // ToDo: Mime type check
+                    // $mime   = $img_info['mime']; // mime-type as string for ex. "image/jpeg" etc.
 
-                    // ToDo: getimagesize() sollte nicht verwendet werden, um zu überprüfen,
-                    // ToDo: ob eine gegebene Datei ein Bild enthält. Statt dessen sollte
-                    // ToDo: eine für diesen Zweck entwickelte Lösung wie die
-                    // ToDo: Fileinfo-Extension(finfo_file) verwendet werden
-
-                    $img_info = @getimagesize($file);
-
-                    // check if file is definitely not an image
-                    if (empty($img_info))
+                    // ToDo: Check for allowed file types from config
+                    //if (!in_array(fileHandler::getImageType($ftpPath . $file), $allowedTypes))
+                    $valid_types = [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP];
+                    if (in_array($img_info[2], $valid_types))
                     {
-                        $ignored[] = $file;
+                        //Add filename to list
+                        $files[] = $file;
                     }
                     else
                     {
-                        //--- file may be an image -----------------------------
-
-                        // $mime   = $img_info['mime']; // mime-type as string for ex. "image/jpeg" etc.
-
-                        // ToDo: Check for allowed file types from config
-                        //if (!in_array(fileHandler::getImageType($ftpPath . $file), $allowedTypes))
-                        $valid_types = [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP];
-                        if (in_array($img_info[2], $valid_types))
-                        {
-                            //Add filename to list
-                            $files[] = $file;
-                        }
-                        else
-                        {
-                            $ignored[] = $file;
-                        }
+                        $ignored[] = $file;
                     }
                 }
             }
@@ -1446,7 +1439,7 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         {
             //--- header ------------------------------------------------
 
-            header("Content-Disposition: attachment; filename=" . basename($OriginalFilePath));
+            header("Content-Disposition: attachment; filename=" . basename((string) $OriginalFilePath));
             header("Content-type: " . mime_content_type($OriginalFilePath));
 
             //--- read file to client ---------------------------------------------

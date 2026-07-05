@@ -100,92 +100,67 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 
         $debugOnlyTitle = $usrParams->get('debugOnlyTitle', 0);
         if (!empty($debugOnlyTitle)) {
-            $content_output = '<h4>"--- Rsg2_gallery replacement ---"</h4>';
-        } else {
-            //--- load css/js -----------------------------------------------
-
-            $wa = $this->app->getDocument()->getWebAssetManager();
-            $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
-            $wa->usePreset('com_rsgallery2.site.galleryJ3x');
-
-            //--- collect images -----------------------------------------------
-
-            $gid = $params->get('gid', '-1');
-            // check if gid is missing or wrong (no real check of DB)
-            if ($gid < 2) {
-                $html[] = '{Plg RSG2 gallery: Gid is missing in marker "gid:xx,.." (' . $gid . ')}';
-            }
-
-            //--- collect images and gallery data-----------------------------------------------
-
-            $images  = $this->getImagesOfGallery($gid, $params);
-            $gallery = $this->galleryJ3xModel->galleryData($gid);
-
-            //--- selected layout -----------------------------------------------
-
-            $layoutName = $params->get('images_layout');
-            if ($layoutName == 'default') {
-                $layoutName = 'ImagesAreaJ3x.default';
-            }
-            $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
-
-            $layout = new FileLayout($layoutName, $layoutFolder);
-
-            //--- layout data -----------------------------------------------
-
-            $displayData['images'] = $images;
-            $test                  = $params->toObject();
-            $displayData['params'] = $params->toObject();
-
-            $displayData['isDebugSite']   = $params->get('isDebugSite');
-            $displayData['isDevelopSite'] = $params->get('isDevelopSite');
-
-            $displayData['gallery']   = $gallery;
-            $displayData['galleryId'] = $gid;
-
-            //--- search -----------------------------------------------
-
-            $displaySearch = $params->get('displaySearch', false);
-            if ($displaySearch) {
-                $searchLayout = new FileLayout('Search.search', JPATH_ROOT . '/components/com_rsgallery2/layouts');
-                // $searchData['options'] = $searchOptions ...; // gallery
-            }
-
-            //-------------------------------------------------------------------
-            // create html data
-            //-------------------------------------------------------------------
-
-            $html[] = '    <div class="rsg2__form rsg2__images_area">';
-            $html[] = '';
-
-            if (!empty($params->get('isDebugSite'))) {
-                $html[] = '            <h2>' . Text::_('RSGallery2 "gallery j3x legacy"') . ' view </h2>';
-                $html[] = '            <hr>';
-            }
-            $html[] = '';
-
-            //--- display search ----------
-            $html[] = '';
-            if ($displaySearch) {
-                $html[] = '            ' . $searchLayout->render();
-            }
-            $html[] = '';
-
-            //--- display gallery images ----------
-            $html[] = '';
-            $html[] = '        ' . $layout->render($displayData);
-            $html[] = '';
-
-            //--- display pagination ----------
-
-            $html[] = '        ' . $this->pagination->getListFooter();
-
-            $html[] = '    </div>';
-
-            $content_output = implode($html);
+            return '<h4>"--- Rsg2_gallery replacement ---"</h4>';
         }
+        //--- load css/js -----------------------------------------------
+        $wa = $this->app->getDocument()->getWebAssetManager();
+        $wa->getRegistry()->addExtensionRegistryFile('com_rsgallery2');
+        $wa->usePreset('com_rsgallery2.site.galleryJ3x');
+        //--- collect images -----------------------------------------------
+        $gid = $params->get('gid', '-1');
+        // check if gid is missing or wrong (no real check of DB)
+        if ($gid < 2) {
+            $html[] = '{Plg RSG2 gallery: Gid is missing in marker "gid:xx,.." (' . $gid . ')}';
+        }
+        //--- collect images and gallery data-----------------------------------------------
+        $images  = $this->getImagesOfGallery($gid, $params);
+        $gallery = $this->galleryJ3xModel->galleryData($gid);
+        //--- selected layout -----------------------------------------------
+        $layoutName = $params->get('images_layout');
+        if ($layoutName == 'default') {
+            $layoutName = 'ImagesAreaJ3x.default';
+        }
+        $layoutFolder = JPATH_SITE . '/components/com_rsgallery2/layouts';
+        $layout = new FileLayout($layoutName, $layoutFolder);
+        //--- layout data -----------------------------------------------
+        $displayData['images'] = $images;
+        $test                  = $params->toObject();
+        $displayData['params'] = $params->toObject();
+        $displayData['isDebugSite']   = $params->get('isDebugSite');
+        $displayData['isDevelopSite'] = $params->get('isDevelopSite');
+        $displayData['gallery']   = $gallery;
+        $displayData['galleryId'] = $gid;
+        //--- search -----------------------------------------------
+        $displaySearch = $params->get('displaySearch', false);
+        if ($displaySearch) {
+            $searchLayout = new FileLayout('Search.search', JPATH_ROOT . '/components/com_rsgallery2/layouts');
+            // $searchData['options'] = $searchOptions ...; // gallery
+        }
+        //-------------------------------------------------------------------
+        // create html data
+        //-------------------------------------------------------------------
+        $html[] = '    <div class="rsg2__form rsg2__images_area">';
+        $html[] = '';
+        if (!empty($params->get('isDebugSite'))) {
+            $html[] = '            <h2>' . Text::_('RSGallery2 "gallery j3x legacy"') . ' view </h2>';
+            $html[] = '            <hr>';
+        }
+        $html[] = '';
+        //--- display search ----------
+        $html[] = '';
+        if ($displaySearch) {
+            $html[] = '            ' . $searchLayout->render();
+        }
+        $html[] = '';
+        //--- display gallery images ----------
+        $html[] = '';
+        $html[] = '        ' . $layout->render($displayData);
+        $html[] = '';
+        //--- display pagination ----------
+        $html[] = '        ' . $this->pagination->getListFooter();
+        $html[] = '    </div>';
 
-        return $content_output;
+        return implode('', $html);
     }
 
 

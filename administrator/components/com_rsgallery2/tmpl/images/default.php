@@ -35,15 +35,15 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 
 $saveOrder = $listOrder == 'a.ordering';
 
-if (strpos($listOrder, 'publish_up') !== false)
+if (str_contains((string) $listOrder, 'publish_up'))
 {
     $orderingColumn = 'publish_up';
 }
-elseif (strpos($listOrder, 'publish_down') !== false)
+elseif (str_contains((string) $listOrder, 'publish_down'))
 {
     $orderingColumn = 'publish_down';
 }
-elseif (strpos($listOrder, 'modified') !== false)
+elseif (str_contains((string) $listOrder, 'modified'))
 {
     $orderingColumn = 'modified';
 }
@@ -52,7 +52,7 @@ else
     $orderingColumn = 'created';
 }
 
-$parts     = explode('.', $extension, 2);
+$parts     = explode('.', (string) $extension, 2);
 $component = $parts[0];
 $section   = null;
 
@@ -268,7 +268,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                 data-url="<?php
                                 echo $saveOrderingUrl; ?>"
                                 data-direction="<?php
-                                echo strtolower($listDirn); ?>"
+                                echo strtolower((string) $listDirn); ?>"
                                 data-nested="false"<?php
                             endif; ?>>
 
@@ -373,7 +373,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                         echo $editLink; ?>"
                                            title="<?php
                                            echo Text::_('JACTION_EDIT'); ?> <?php
-                                           echo $this->escape(addslashes($item->title)); ?>">
+                                           echo $this->escape(addslashes((string) $item->title)); ?>">
                                             <?php echo $this->escape($item->title); ?></a>
                                     <?php else : ?>
                                         <?php echo $this->escape($item->title); ?>
@@ -402,7 +402,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                             echo $editLink; ?>"
                                                title="<?php
                                                echo Text::_('JACTION_EDIT'); ?> <?php
-                                               echo $this->escape(addslashes($item->title)); ?>">
+                                               echo $this->escape(addslashes((string) $item->title)); ?>">
                                                 <?php
                                                 echo $this->escape($item->name); ?></a>
                                         <?php
@@ -422,7 +422,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                             echo $editGalleryLink; ?>"
                                                title="<?php
                                                echo Text::_('JACTION_EDIT'); ?> <?php
-                                               echo $this->escape(addslashes($item->gallery_name)); ?>">
+                                               echo $this->escape(addslashes((string) $item->gallery_name)); ?>">
                                                 <?php
                                                 echo $this->escape($item->gallery_name); ?></a>
                                         <?php

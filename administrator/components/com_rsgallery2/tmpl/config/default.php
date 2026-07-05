@@ -35,7 +35,7 @@ use Joomla\CMS\Router\Route;
             <div id="j-main-container" class="j-main-container">
 
                 <?php echo '<h3>Config default</h3>' . '<br>';
-                echo 'default.php: ' . realpath(dirname(__FILE__)) . '<br>';
+                echo 'default.php: ' . realpath(__DIR__) . '<br>';
                 ?>
 
 

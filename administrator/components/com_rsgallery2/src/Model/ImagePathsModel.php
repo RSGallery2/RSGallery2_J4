@@ -106,7 +106,7 @@ class ImagePathsModel
             //--- config image sizes --------------------------------------------
 
             $imageSizesText   = $rsgConfig->get('image_size');
-            $imageSizes       = explode(',', $imageSizesText);
+            $imageSizes       = explode(',', (string) $imageSizesText);
             $this->imageSizes = $imageSizes;
 
             //--- user may keep original image --------------------------------------------

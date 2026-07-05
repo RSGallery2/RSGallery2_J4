@@ -35,7 +35,7 @@ function jsonArray2Lines($lines)
         $html[] = $identHtml . json_encode($line, JSON_PRETTY_PRINT) . '<br>';
     }
 
-    return implode($html);
+    return implode('', $html);
 }
 
 function isOKIconHtml($title)

@@ -143,7 +143,7 @@ class ChangeLogModel
             // url file in github or url to local
 
             // $context = stream_context_create(['http' => ['header' => 'Accept: application/xml']]);
-            $context = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
+            $context = stream_context_create(['http' => ['header' => 'Accept: application/xml']]);
             $xml     = file_get_contents($this->changeLogUrl, false, $context);
 
             if ($xml !== false) {

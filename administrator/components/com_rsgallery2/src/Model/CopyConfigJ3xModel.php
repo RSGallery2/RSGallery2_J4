@@ -172,11 +172,13 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
             // untouched J4x item ?
             foreach ($j4xConfigItems as $name => $value) {
                 // Not handled manually
-                if (!array_key_exists($name, $assistedJ4xItems)) {
-                    if (!array_key_exists($name, $mergedItems)) {
-                        $untouchedJ4xItems [$name] = $value;
-                    }
+                if (array_key_exists($name, $assistedJ4xItems)) {
+                    continue;
                 }
+                if (array_key_exists($name, $mergedItems)) {
+                    continue;
+                }
+                $untouchedJ4xItems [$name] = $value;
             }
 
             ksort($assistedJ3xItems);
@@ -248,7 +250,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
         $isOk = false;
 
         try {
-            $j3xConfigItems = $this->j3xConfigItems();
+            $j3xConfigItems = static::j3xConfigItems();
             $rsgConfig      = ComponentHelper::getComponent('com_rsgallery2')->getParams();
             $j4xConfigItems = $rsgConfig->toArray();
 
@@ -259,7 +261,7 @@ class CopyConfigJ3xModel extends BaseDatabaseModel
                 $mergedItems,
                 $untouchedJ3xItems,
                 $untouchedJ4xItems,
-            ] = $this->MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems);
+            ] = static::MergeJ3xConfigTestLists($j3xConfigItems, $j4xConfigItems);
 
             if (count($mergedItems)) {
                 // ToDo: write later

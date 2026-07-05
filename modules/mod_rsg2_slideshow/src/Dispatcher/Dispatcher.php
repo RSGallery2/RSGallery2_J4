@@ -44,7 +44,7 @@ class Dispatcher extends AbstractModuleDispatcher implements HelperFactoryAwareI
         //--- merge com_rsg2 parameters -------------------------------------------------
 
         // Load the parameters.
-        $rsg2Params = Factory::getApplication('com_rsgallery2')->getParams();
+        $rsg2Params = Factory::getApplication()->getParams();
         // $params_array = $rsg2Params->toArray();
 
         // merge

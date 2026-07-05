@@ -161,7 +161,7 @@ class GalleryModel extends AdminModel
 
         $extension = $app->input->get('extension', 'com_rsgallery2');
         $this->setState('category.extension', $extension);
-        $parts = explode('.', $extension);
+        $parts = explode('.', (string) $extension);
 
         // Extract the component name
         $this->setState('category.component', $parts[0]);
@@ -318,7 +318,7 @@ class GalleryModel extends AdminModel
 //                }
 //                $filters   = (array)$app->getUserState('com_rsgallery2.galleries.' . $extension . '.filter');
 
-	            $extension = substr($app->getUserState('com_categories.categories.filter.extension', ''), 4);
+	            $extension = substr((string) $app->getUserState('com_categories.categories.filter.extension', ''), 4);
 	            $filters   = (array) $app->getUserState('com_categories.categories.' . $extension . '.filter');
 
                 $data->published = $app->input->getInt(
@@ -369,7 +369,7 @@ class GalleryModel extends AdminModel
     protected function prepareTable($table)
     {
         $date        = Factory::getDate()->toSql();
-        $table->name = htmlspecialchars_decode($table->name, ENT_QUOTES);
+        $table->name = htmlspecialchars_decode((string) $table->name, ENT_QUOTES);
 
         if (empty($table->id)) {
             /**
@@ -575,7 +575,7 @@ class GalleryModel extends AdminModel
 //                $msg = Text::_('COM_CONTENT_SAVE_WARNING');
 //            }
 
-            list($title, $alias) = $this->generateNewTitle($data['catid'], $data['alias'], $data['name']);
+            [$title, $alias] = $this->generateNewTitle($data['catid'], $data['alias'], $data['name']);
             $data['alias'] = $alias;
 
             if (isset($msg))
@@ -868,11 +868,10 @@ class GalleryModel extends AdminModel
                     $this->setError($error);
 
                     return false;
-                } else {
-                    // Non-fatal error
-                    $this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
-                    $parentId = 0;
                 }
+                // Non-fatal error
+                $this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
+                $parentId = 0;
             }
 
             // Check that user has create permission for parent category
@@ -894,12 +893,11 @@ class GalleryModel extends AdminModel
         if (empty($parentId)) {
             if (!$parentId = $this->table->getRootId()) {
                 $this->setError($this->table->getError());
-
                 return false;
-            } // Make sure we can create in root
-            elseif (!$this->user->authorise('core.create', $extension)) {
+            }
+            // Make sure we can create in root
+            if (!$this->user->authorise('core.create', $extension)) {
                 $this->setError(Text::_('COM_RSGALLERY2_BATCH_CANNOT_CREATE'));
-
                 return false;
             }
         }
@@ -935,11 +933,10 @@ class GalleryModel extends AdminModel
                     $this->setError($error);
 
                     return false;
-                } else {
-                    // Not fatal error
-                    $this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
-                    continue;
                 }
+                // Not fatal error
+                $this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+                continue;
             }
 
             // Copy is a bit tricky, because we also need to copy the children
@@ -1056,11 +1053,10 @@ class GalleryModel extends AdminModel
                     $this->setError($error);
 
                     return false;
-                } else {
-                    // Non-fatal error.
-                    $this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
-                    $parentId = 0;
                 }
+                // Non-fatal error.
+                $this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
+                $parentId = 0;
             }
 
             // Check that user has create permission for parent category.
@@ -1101,11 +1097,10 @@ class GalleryModel extends AdminModel
                     $this->setError($error);
 
                     return false;
-                } else {
-                    // Not fatal error
-                    $this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
-                    continue;
                 }
+                // Not fatal error
+                $this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+                continue;
             }
 
             // Set the new location in the tree for the node.

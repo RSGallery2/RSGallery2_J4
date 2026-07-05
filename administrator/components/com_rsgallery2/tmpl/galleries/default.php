@@ -32,8 +32,8 @@ $userId    = $user->get('id');
 $extension = $this->escape($this->state->get('filter.extension'));
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-$saveOrder = ($listOrder == 'a.lft' && strtolower($listDirn) == 'asc');
-$parts     = explode('.', $extension, 2);
+$saveOrder = ($listOrder == 'a.lft' && strtolower((string) $listDirn) == 'asc');
+$parts     = explode('.', (string) $extension, 2);
 $component = $parts[0];
 $section   = null;
 
@@ -210,7 +210,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                            data-url="<?php
                            echo $saveOrderingUrl; ?>"
                            data-direction="<?php
-                           echo strtolower($listDirn); ?>"
+                           echo strtolower((string) $listDirn); ?>"
                            data-nested="true"<?php
                         endif; ?> // ToDo: check for false/true
                         >
@@ -243,7 +243,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                     {
                                         $v = implode('-', $v);
                                         $v = '-' . $v . '-';
-                                        if (strpos($v, '-' . $_currentParentId . '-') !== false)
+                                        if (str_contains($v, '-' . $_currentParentId . '-'))
                                         {
                                             $parentsStr       .= ' ' . $k;
                                             $_currentParentId = $k;
@@ -324,7 +324,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                         echo Route::_('index.php?option=com_rsgallery2&task=gallery.edit&id=' . $item->id . '&extension=' . $extension); ?>"
                                            title="<?php
                                            echo Text::_('JACTION_EDIT'); ?> <?php
-                                           echo $this->escape(addslashes($item->name)); ?>">
+                                           echo $this->escape(addslashes((string) $item->name)); ?>">
                                             <?php echo $this->escape($item->name); ?></a>
                                     <?php else : ?>
                                         <?php echo $this->escape($item->name); ?>

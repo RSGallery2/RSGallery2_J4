@@ -72,7 +72,7 @@ ksort($configVars);
                 echo '<dl class="row">';
                 foreach ($configVars as $key => $value) {
                     // Handle empty string
-                    if (strlen($value) == 0) {
+                    if (strlen((string) $value) == 0) {
                         // $value = "''";
                         $value = '""';
                     }

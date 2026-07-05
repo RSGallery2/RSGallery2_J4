@@ -68,7 +68,7 @@ class GalleryTable extends Nested
         }
 
         // Check for valid name.
-        if (trim($this->name) == '') {
+        if (trim((string) $this->name) == '') {
             throw new \UnexpectedValueException(sprintf('The name is empty'));
         }
 
