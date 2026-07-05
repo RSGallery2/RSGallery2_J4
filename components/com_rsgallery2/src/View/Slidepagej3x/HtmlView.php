@@ -104,11 +104,16 @@ class HtmlView extends BaseHtmlView
         }
 
         $this->mergeMenuOptions();
+        // In slide page view a single item is shown.
+        // Pagination parameters are changed to match it
+        /* @var SlidepageModel $model */
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Slidepagej3xModel $model */
+        $model = $this->getModel();
 
-        $this->state = $this->get('State');
+        $this->state = $model->getState();
 
         // Need state defined here. Items will be fetched already there
-        $this->items = $this->get('Items');
+        $this->items = $model->getItems();
 
         $params     =
         $this->params = $this->state->get('params');
@@ -124,11 +129,6 @@ class HtmlView extends BaseHtmlView
 
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
-
-        // In slide page view a single item is shown.
-        // Pagination parameters are changed to match it
-        /* @var SlidepageModel $model */
-        $model = $this->getModel();
         $model->setState2SingleItem($this->items);
 
         //--- create pagination -------------------------------------------
@@ -200,7 +200,7 @@ class HtmlView extends BaseHtmlView
             }
         }
 
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 

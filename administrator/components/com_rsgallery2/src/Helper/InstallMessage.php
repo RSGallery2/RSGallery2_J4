@@ -30,8 +30,6 @@ class InstallMessage
      * @var string
      * @since 5.1.0     */
     protected $linksHtml = '';
-    public $newRelease = '-1.0.0.1';
-    public $oldRelease = '';
 
     /**
      * InstallMessage constructor.
@@ -40,12 +38,9 @@ class InstallMessage
      * @param   string  $oldRelease
      *
      * @since   5.1.0     */
-    public function __construct($newRelease, $oldRelease = '')
+    public function __construct(public $newRelease, public $oldRelease = '')
     {
-        $this->newRelease = $newRelease;
-        $this->oldRelease = $oldRelease;
-
-        $this->linksHtml = $this->createLinksHtml($this->newRelease);
+        $this->linksHtml = static::createLinksHtml($this->newRelease);
     }
 
     /**

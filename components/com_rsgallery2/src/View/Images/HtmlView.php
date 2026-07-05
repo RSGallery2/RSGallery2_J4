@@ -86,16 +86,18 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\ImagesModel $model */
+        $model = $this->getModel();
         $app = Factory::getApplication();
 
         // toDo: use image list from user not from gallery
-        $input           = $app->input;
+        $input           = $app->getInput();
         $this->galleryId = $input->get('id', 0, 'INT');
 
         // Get some data from the models
-        $this->state      = $this->get('State');
-        $this->items      = $this->get('Items');
-        $this->pagination = $this->get('Pagination');
+        $this->state      = $model->getState();
+        $this->items      = $model->getItems();
+        $this->pagination = $model->getPagination();
         $params           =
         $this->params = $this->state->get('params');
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);

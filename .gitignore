@@ -14,5 +14,9 @@
 # org and temp files
 **/*.org.*
 **/*.tmp
+**/*.log
 
+# J-rector files
+
+joomla\
 

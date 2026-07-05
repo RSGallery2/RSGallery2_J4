@@ -58,10 +58,12 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\ImageslatestModel $model */
+        $model = $this->getModel();
         $item       =
-        $this->item = $this->get('Item');
+        $this->item = $model->getItem();
         $state      =
-        $this->state = $this->get('state');
+        $this->state = $model->getState();
         $params     =
         $this->params = $state->get('params');
         $itemparams = new registry(json_decode((string) $item->params));

@@ -46,13 +46,13 @@ class SlidePageJ3XModel extends Imagesj3xModel
         $app = Factory::getApplication();
 
         //$limitstart = $app->input->get('start', -1, 'INT');
-        $limitstart = $app->input->get('limitstart', -1, 'INT');
+        $limitstart = $app->getInput()->get('limitstart', -1, 'INT');
 
         //--- pagination ------------------------------------
 
         // Entry by click on gallery image ?
         if ($limitstart < 0) {
-            $imageId = $app->input->get('img_id', 0, 'INT');
+            $imageId = $app->getInput()->get('img_id', 0, 'INT');
 
             // May create list
             //$items = $this->getItems();

@@ -152,14 +152,14 @@ class GalleryModel extends AdminModel
     {
         $app = Factory::getApplication();
 
-        $parentId = $app->input->getInt('parent_id');
+        $parentId = $app->getInput()->getInt('parent_id');
         $this->setState('category.parent_id', $parentId);
 
         // Load the User state.
-        $pk = $app->input->getInt('id');
+        $pk = $app->getInput()->getInt('id');
         $this->setState($this->getName() . '.id', $pk);
 
-        $extension = $app->input->get('extension', 'com_rsgallery2');
+        $extension = $app->getInput()->get('extension', 'com_rsgallery2');
         $this->setState('category.extension', $extension);
         $parts = explode('.', (string) $extension);
 
@@ -321,7 +321,7 @@ class GalleryModel extends AdminModel
 	            $extension = substr((string) $app->getUserState('com_categories.categories.filter.extension', ''), 4);
 	            $filters   = (array) $app->getUserState('com_categories.categories.' . $extension . '.filter');
 
-                $data->published = $app->input->getInt(
+                $data->published = $app->getInput()->getInt(
                         'published',
                         ((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null));
 	            $data->language = $app->getInput()->getString('language', (!empty($filters['language']) ? $filters['language'] : null));
@@ -698,7 +698,7 @@ class GalleryModel extends AdminModel
             // $isCreated = true;
 
             // Check for errors.
-            if (count($errors = $this->get('_errors'))) {
+            if (count($errors = $this->_errors ?? null)) {
                 throw new GenericDataException(implode("\n", $errors), 500);
             }
         } catch (\RuntimeException $e) {

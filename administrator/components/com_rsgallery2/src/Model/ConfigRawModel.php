@@ -64,7 +64,8 @@ class ConfigRawModel extends BaseModel
 
         //$row = $this->getTable();
         $Rsg2Id = ComponentHelper::getComponent('com_rsgallery2')->id;
-        $table  = Table::getInstance('extension');
+        $db = \Joomla\CMS\Factory::getDbo();
+        $table = new \Joomla\CMS\Table\extension($db);
         // Load the previous Data
         if (!$table->load($Rsg2Id)) {
             throw new \RuntimeException($table->getError());
@@ -253,7 +254,8 @@ class ConfigRawModel extends BaseModel
 
         // Save the parameters
         $componentid = ComponentHelper::getComponent('com_rsgallery2')->id;
-        $table       = Table::getInstance('extension');
+        $db = \Joomla\CMS\Factory::getDbo();
+        $table = new \Joomla\CMS\Table\extension($db);
         $table->load($componentid);
         $table->bind(['params' => $params->toString()]);
 

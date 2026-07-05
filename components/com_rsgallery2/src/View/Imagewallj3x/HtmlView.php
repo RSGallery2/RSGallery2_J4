@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
 
         $app = Factory::getApplication();
 
-        $input           = $app->input;
+        $input           = $app->getInput();
         $this->galleryId = $input->get('id', 0, 'INT');
 
         /* wrong call but why ? gallery should be a number > 0 */

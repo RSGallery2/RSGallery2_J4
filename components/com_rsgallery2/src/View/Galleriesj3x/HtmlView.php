@@ -57,16 +57,18 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Galleriesj3xModel $model */
+        $model = $this->getModel();
         $app   = Factory::getApplication();
         $input = Factory::getApplication()->input;
 
         $state =
-        $this->state = $this->get('State');
+        $this->state = $model->getState();
         // Sub galleries
-        $this->items = $this->get('Items');
+        $this->items = $model->getItems();
 
         // parent gallery
-        $this->parentGallery = $this->get('ParentGallery');
+        $this->parentGallery = $model->getParentGallery();
 
         //http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x
         //$id=63
@@ -84,7 +86,7 @@ class HtmlView extends BaseHtmlView
         $params =
         $this->params = $state->get('params');
 
-        $this->pagination = $this->get('Pagination');
+        $this->pagination = $model->getPagination();
         // Flag indicates to not add limitstart=0 to URL
         $this->pagination->hideEmptyLimitstart = true;
         // ToDo: Why is this necessary ?
@@ -101,7 +103,7 @@ class HtmlView extends BaseHtmlView
 //      // wrong: $this->params = $menuParams->merge($this->params);
 //      $this->params->merge($menuParams);
 
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 

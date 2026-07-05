@@ -128,6 +128,8 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel $model */
+        $model = $this->getModel();
         $Layout = Factory::getApplication()->input->get('layout');
         //echo '$Layout: ' . $Layout . '<br>';
 
@@ -278,7 +280,7 @@ class HtmlView extends BaseHtmlView
                     $form    = Form::getInstance('movej3ximages', $xmlFile);
 
                     // Check for errors. Form must beloaded before
-                    if ($errors = $this->get('Errors')) {
+                    if ($errors = $model->getErrors()) {
                         if (count($errors)) {
                             throw new GenericDataException(implode("\n", $errors), 500);
                         }
@@ -388,7 +390,7 @@ class HtmlView extends BaseHtmlView
 
                     // Check for errors.
                     /* Must load form before */
-                    if ($errors = $this->get('Errors')) {
+                    if ($errors = $model->getErrors()) {
                         if (count($errors)) {
                             throw new GenericDataException(implode("\n", $errors), 500);
                         }
@@ -414,7 +416,7 @@ class HtmlView extends BaseHtmlView
                     $form    = Form::getInstance('movej3ximages', $xmlFile);
 
                     // Check for errors. Form must beloaded before
-                    if ($errors = $this->get('Errors')) {
+                    if ($errors = $model->getErrors()) {
                         if (count($errors)) {
                             throw new GenericDataException(implode("\n", $errors), 500);
                         }
@@ -484,8 +486,8 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.copyJ3xConfig2J4xOptions', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->custom('MaintenanceJ3x.copyJ3xConfig2J4xOptions', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
                 break;
 
             case 'dbcopyj3xconfiguser':
@@ -502,8 +504,8 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_COPY_J3X_CONFIG'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.copyJ3xConfig2J4xOptionsUser', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->custom('MaintenanceJ3x.copyJ3xConfig2J4xOptionsUser', 'copy', '', 'COM_RSGALLERY2_COPY_COMPLETE_J3X_CONFIGURATION', false);
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
                 break;
 
             case 'dbtransferj3xgalleries':
@@ -525,8 +527,8 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES', false);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES', false);
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 // actual on copy the table is cleared first. So it is not possible to do it with single entries
                 // ToolBarHelper::custom ('MaintenanceJ3x.COM_RSGALLERY2_DB_TRANSFER_SELECTED_J3X_GALLERIES','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
@@ -546,9 +548,9 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4xUser', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES', false);
-                ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_SINGLE', false);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->custom('MaintenanceJ3x.copyDbJ3xGalleries2J4xUser', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_ALL_J3X_GALLERIES', false);
+                $toolbar->custom('MaintenanceJ3x.copyDbJ3xGalleries2J4x', 'copy', '', 'COM_RSGALLERY2_DB_TRANSFER_J3X_GALLERIES_SINGLE', false);
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 // actual on copy the table is cleared first. So it is not possible to do it with single entries
                 // ToolBarHelper::custom ('MaintenanceJ3x.COM_RSGALLERY2_DB_TRANSFER_SELECTED_J3X_GALLERIES','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_GALLERIES', true);
@@ -572,11 +574,11 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
-                ToolBarHelper::custom('MaintenanceJ3x.revertCopyDbJ3xImages2J4xUser', 'delete', '', 'COM_RSGALLERY2_DB_REVERT_COPY_ALL_J3X_IMAGES', false);
+                $toolbar->custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
+                $toolbar->custom('MaintenanceJ3x.revertCopyDbJ3xImages2J4xUser', 'delete', '', 'COM_RSGALLERY2_DB_REVERT_COPY_ALL_J3X_IMAGES', false);
                 //ToolBarHelper::custom ('MaintenanceJ3x.copyDbSelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_DB_COPY_SELECTED_J3X_IMAGES', true);
-                ToolBarHelper::custom('MaintenanceJ3x.copyDbImagesOfSelectedGalleries', 'undo', '', 'COM_RSGALLERY2_DB_COPY_IMAGES_BY_J3X_GALLERY', true);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->custom('MaintenanceJ3x.copyDbImagesOfSelectedGalleries', 'undo', '', 'COM_RSGALLERY2_DB_COPY_IMAGES_BY_J3X_GALLERY', true);
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -594,9 +596,9 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
-                ToolBarHelper::custom('MaintenanceJ3x.dbtransferj3ximages', 'undo', '', 'COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_SINGLE', false);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->custom('MaintenanceJ3x.copyDbJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_DB_COPY_ALL_J3X_IMAGES', false);
+                $toolbar->custom('MaintenanceJ3x.dbtransferj3ximages', 'undo', '', 'COM_RSGALLERY2_DB_TRANSFER_J3X_IMAGES_SINGLE', false);
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -614,10 +616,10 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_INCREASE_MENU_GID'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
+                $toolbar->custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'add', '', 'COM_RSGALLERY2_INCREASE_MENU_GID', false);
                 // ToDo: remove
-                ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -635,10 +637,10 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_LOWER_MENU_LINKS'), 'screwdriver');
 
-                ToolBarHelper::custom('MaintenanceJ3x.j3xLowerJ4xMenuLinks', 'arrow-down-4', '', 'COM_RSGALLERY2_LOWER_MENU_LINKS', false);
+                $toolbar->custom('MaintenanceJ3x.j3xLowerJ4xMenuLinks', 'arrow-down-4', '', 'COM_RSGALLERY2_LOWER_MENU_LINKS', false);
                 // ToDo: remove
                 //ToolBarHelper::custom('MaintenanceJ3x.j3xUpgradeJ3xMenuLinks', 'minus', '', 'COM_RSGALLERY2_DECREASE_MENU_GID', false);
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -659,16 +661,16 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_MOVE_J3X_IMAGES'), 'screwdriver');
-                ToolBarHelper::cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('config.cancel_rawView', 'JTOOLBAR_CLOSE');
 
 //              ToolBarHelper::custom('MaintenanceJ3x.moveSelectedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_SELECTED_J3X_IMAGES', false);
                 //ToolBarHelper::custom('MaintenanceJ3x.moveJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_MOVE_ALL_J3X_IMAGES', false);
-                ToolBarHelper::custom('MaintenanceJ3x.updateMovedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_CHECK_MOVED_J3X_IMAGES', false);
+                $toolbar->custom('MaintenanceJ3x.updateMovedJ3xImages2J4x', 'copy', '', 'COM_RSGALLERY2_CHECK_MOVED_J3X_IMAGES', false);
                 //ToolBarHelper::custom ('MaintenanceJ3x.copySelectedJ3xImages2J4x','undo','','COM_RSGALLERY2_COPY_SELECTED_J3X_IMAGES', false);
                 break;
 
             default:
-                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('config.cancel', 'JTOOLBAR_CLOSE');
                 break;
         }
 

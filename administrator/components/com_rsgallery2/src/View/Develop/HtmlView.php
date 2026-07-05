@@ -119,6 +119,8 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\DevelopModel $model */
+        $model = $this->getModel();
         //--- config --------------------------------------------------------------------
 
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -149,6 +151,7 @@ class HtmlView extends BaseHtmlView
         //--- begin to display ----------------------------------------------
 
         $Layout = Factory::getApplication()->input->get('layout');
+        $toolbar = $this->getDocument()->getToolbar();
 
         // collect data dependent on layout
         switch ($Layout) {
@@ -224,7 +227,7 @@ class HtmlView extends BaseHtmlView
 
                 // Check for errors.
                 /* Must load form before */
-                if ($errors = $this->get('Errors')) {
+                if ($errors = $model->getErrors()) {
                     if (count($errors)) {
                         throw new GenericDataException(implode("\n", $errors), 500);
                     }
@@ -255,7 +258,7 @@ class HtmlView extends BaseHtmlView
                     $this->actualParams,
                 );
 
-                ToolBarHelper::custom('develop.mergeParams', 'copy', '', 'Merge standard parameter ', false);
+                $toolbar->custom('develop.mergeParams', 'copy', '', 'Merge standard parameter ', false);
 
                 // ToDo: button with command on controller ;-)
 //              replaceRsg2ExtensionConfiguration($this->mergedParams);
@@ -317,7 +320,7 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP')
                     . ': ' . Text::_('COM_RSGALLERY2_GENERAL_INFO_VIEW'), 'screwdriver');
-                ToolBarHelper::cancel('config.cancel_rawView');
+                $toolbar->cancel('config.cancel_rawView');
                 break;
 
             case 'InstallMessage':
@@ -335,8 +338,8 @@ class HtmlView extends BaseHtmlView
                     . ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
                 // ToDo: write into manifest value; read first -> Rsg2ExtensionModel
                 // ToolBarHelper::custom ('develop.assignVersion','arrow-up-4','','Assign version to RSG2', false);
-                ToolBarHelper::custom('develop.useOldVersion', 'pencil-2', '', 'Use old version', false);
-                ToolBarHelper::cancel('config.cancel_rawView');
+                $toolbar->custom('develop.useOldVersion', 'pencil-2', '', 'Use old version', false);
+                $toolbar->cancel('config.cancel_rawView');
                 break;
 
             case 'createGalleries':
@@ -354,12 +357,12 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create galleries');
 
-                ToolBarHelper::custom('develop.createGalleries_001', 'upload', '', 'Create 1 ', false);
-                ToolBarHelper::custom('develop.createGalleries_010', 'upload', '', 'Create 10 ', false);
-                ToolBarHelper::custom('develop.createGalleries_100', 'upload', '', 'Create 100 ', false);
-                ToolBarHelper::custom('develop.createGalleries_random', 'upload', '', 'Create random (>10) ', false);
+                $toolbar->custom('develop.createGalleries_001', 'upload', '', 'Create 1 ', false);
+                $toolbar->custom('develop.createGalleries_010', 'upload', '', 'Create 10 ', false);
+                $toolbar->custom('develop.createGalleries_100', 'upload', '', 'Create 100 ', false);
+                $toolbar->custom('develop.createGalleries_random', 'upload', '', 'Create random (>10) ', false);
 
-                ToolBarHelper::cancel('config.cancel_rawView');
+                $toolbar->cancel('config.cancel_rawView');
                 break;
 
             case 'createImages':
@@ -377,12 +380,12 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create images');
-                ToolBarHelper::custom('develop.createImages_001', 'upload', '', 'Create 1 ', false);
-                ToolBarHelper::custom('develop.createImages_010', 'upload', '', 'Create 10 ', false);
-                ToolBarHelper::custom('develop.createImages_100', 'upload', '', 'Create 100 ', false);
-                ToolBarHelper::custom('develop.createImages_random', 'upload', '', 'Create random (>10) ', false);
+                $toolbar->custom('develop.createImages_001', 'upload', '', 'Create 1 ', false);
+                $toolbar->custom('develop.createImages_010', 'upload', '', 'Create 10 ', false);
+                $toolbar->custom('develop.createImages_100', 'upload', '', 'Create 100 ', false);
+                $toolbar->custom('develop.createImages_random', 'upload', '', 'Create random (>10) ', false);
 
-                ToolBarHelper::cancel('config.cancel_rawView');
+                $toolbar->cancel('config.cancel_rawView');
                 break;
 
             default:
@@ -403,7 +406,7 @@ class HtmlView extends BaseHtmlView
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP_VIEW'), 'cube'); // 'maintenance');
                 //ToolBarHelper::cancel('config.cancel_rawEdit');
                 //ToolBarHelper::cancel('maintenance.cancel');
-                ToolBarHelper::cancel('develop.cancel');
+                $toolbar->cancel('develop.cancel');
                 break;
         }
 

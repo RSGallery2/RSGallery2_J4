@@ -156,14 +156,14 @@ class ImageModel extends AdminModel
     {
         $app = Factory::getApplication();
 
-        $parentId = $app->input->getInt('parent_id');
+        $parentId = $app->getInput()->getInt('parent_id');
         $this->setState('category.parent_id', $parentId);
 
         // Load the User state.
-        $pk = $app->input->getInt('id');
+        $pk = $app->getInput()->getInt('id');
         $this->setState($this->getName() . '.id', $pk);
 
-        $extension = $app->input->get('extension', 'com_rsgallery2');
+        $extension = $app->getInput()->get('extension', 'com_rsgallery2');
         $this->setState('category.extension', $extension);
         $parts = explode('.', (string) $extension);
 
@@ -268,7 +268,7 @@ class ImageModel extends AdminModel
 
                 $data->set(
                     'published',
-                    $app->input->getInt(
+                    $app->getInput()->getInt(
                         'published',
                         ((isset($filters['published']) && $filters['published'] !== '') ? $filters['published'] : null),
                     ),
@@ -276,7 +276,7 @@ class ImageModel extends AdminModel
 //              $data->set('language', $app->input->getString('language', (!empty($filters['language']) ? $filters['language'] : null)));
                 $data->set(
                     'access',
-                    $app->input->getInt('access', (!empty($filters['access']) ? $filters['access'] : $app->get('access')))
+                    $app->getInput()->getInt('access', (!empty($filters['access']) ? $filters['access'] : $app->get('access')))
                 );
             }
         }

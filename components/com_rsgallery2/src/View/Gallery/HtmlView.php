@@ -92,7 +92,7 @@ class HtmlView extends BaseHtmlView
 
         $app = Factory::getApplication();
 
-        $input           = $app->input;
+        $input           = $app->getInput();
         $this->galleryId = $input->get('id', 0, 'INT');
 
         // gid = 0 ==> root view
@@ -104,11 +104,14 @@ class HtmlView extends BaseHtmlView
             $app->enqueueMessage($msg, 'Notice');
             // ToDo: ? redirect ?
         }
+        /* @var GalleryModel $model */
+        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\GalleryModel $model */
+        $model         = $this->getModel();
 
         // Get some data from the models
         $state            =
-        $this->state = $this->get('State');
-        $this->pagination = $this->get('Pagination');
+        $this->state = $model->getState();
+        $this->pagination = $model->getPagination();
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
         $user = $app->getIdentity();
 
@@ -125,10 +128,7 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
 
-        $this->items = $this->get('Items');
-
-        /* @var GalleryModel $model */
-        $model         = $this->getModel();
+        $this->items = $model->getItems();
         $this->gallery = $model->galleryData($this->galleryId);
 
 
@@ -137,7 +137,7 @@ class HtmlView extends BaseHtmlView
             $data = $model->AddLayoutData($this->items);
         }
 
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 

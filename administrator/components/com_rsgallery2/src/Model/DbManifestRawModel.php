@@ -268,7 +268,8 @@ class DbManifestRawModel extends BaseModel
 
         // Save the parameters
         $componentid = ComponentHelper::getComponent('com_rsgallery2')->id;
-        $table       = Table::getInstance('extension');
+        $db = \Joomla\CMS\Factory::getDbo();
+        $table = new \Joomla\CMS\Table\extension($db);
         $table->load($componentid);
         $table->bind(['params' => $params->toString()]);
 

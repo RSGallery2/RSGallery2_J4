@@ -38,7 +38,6 @@ class ChangeLogModel
      * @since 5.1.0     */
     public $changeLogUrl = ""; //URI::root() . '/administrator/components/com_rsgallery2/changelog.xml'; // local url as fallback
     public $changeLogPath = "";
-    private $isUseLocalDir = true;
     /**
      * ChangeLogModel constructor.
      *
@@ -47,11 +46,9 @@ class ChangeLogModel
      *
      * @throws \Exception
      * @since  5.1.0     */
-    public function __construct(bool $isUseLocalDir = true, $changeLogUrl = "")
+    public function __construct(private readonly bool $isUseLocalDir = true, $changeLogUrl = "")
     {
-        $this->isUseLocalDir = $isUseLocalDir;
-
-        if (! $isUseLocalDir) {
+        if (! $this->isUseLocalDir) {
             // standard from manifest
             if (empty($changeLogUrl)) {
                 $this->changeLogUrl = $this->changeLogUrlFromExtension();

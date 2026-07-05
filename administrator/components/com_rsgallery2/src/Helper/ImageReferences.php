@@ -586,16 +586,11 @@ class ImageReferences
 
     private function isFileAnImage(string $imageFilePath)
     {
-        // For PHP >= 5.3 use finfo_open() or mime_content_type()
-
-        // ToDo: What about webp or svg ...
-
-        $isImage = false;
         if (@is_array(getimagesize($imageFilePath))) {
-            $isImage = true;
+            return true;
         }
 
-        return $isImage;
+        return false;
     }
 
     private function findImageJ3xInList(string $imageName, string $imageFilePath)
@@ -614,7 +609,6 @@ class ImageReferences
                     continue;
                 }
                 $ImageReference = $TestImageReference;
-
                 $isInList = true;
                 break;
             }

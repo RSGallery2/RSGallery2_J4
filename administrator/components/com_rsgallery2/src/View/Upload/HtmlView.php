@@ -64,6 +64,8 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\UploadModel $model */
+        $model = $this->getModel();
         //--- config --------------------------------------------------------------------
 
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -78,7 +80,7 @@ class HtmlView extends BaseHtmlView
 
         // Check for errors.
         /* Must load form before */
-        if ($errors = $this->get('Errors')) {
+        if ($errors = $model->getErrors()) {
             if (count($errors)) {
                 throw new GenericDataException(implode("\n", $errors), 500);
             }
@@ -227,8 +229,9 @@ class HtmlView extends BaseHtmlView
 
         // Set the title
         ToolBarHelper::title(Text::_('COM_RSGALLERY2_DO_UPLOAD'), 'upload');
+        $toolbar = $this->getDocument()->getToolbar();
 
-        ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+        $toolbar->cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
 //      // Get the toolbar object instance
 //      $toolbar = Toolbar::getInstance('toolbar');

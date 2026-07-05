@@ -3722,7 +3722,7 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
 
         $db->setQuery($query);
         if ($db->execute()) {
-            $successful = true;
+            return true;
         }
 
         return $successful;
@@ -4030,14 +4030,12 @@ class MaintenanceJ3xModel extends CopyConfigJ3xModel
         // index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0&id=0
         if ($idIdx !== false) {
             $endIdx  = strpos($oldLink, '&', $gidIdx + 1);
-            $newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $endIdx);
-        } else {
+            return substr($oldLink, 0, $gidIdx) . substr($oldLink, $endIdx);
+        }
         // index.php?option=com_rsgallery2&view=rootgalleriesj3x&id=0
         $gidIdx++;
-            $newLink = substr($oldLink, 0, $gidIdx) . substr($oldLink, $gidIdx + 1);
-        }
 
-        return $newLink;
+        return substr($oldLink, 0, $gidIdx) . substr($oldLink, $gidIdx + 1);
     }
 
     /**

@@ -93,6 +93,8 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel $model */
+        $model = $this->getModel();
         //--- config --------------------------------------------------------------------
 
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -102,9 +104,9 @@ class HtmlView extends BaseHtmlView
 
         //--- Form --------------------------------------------------------------------
 
-        $this->form  = $this->get('Form');
-        $this->item  = $this->get('Item');
-        $this->state = $this->get('State');
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
 
         if (!$this->item->use_j3x_location) {
             $ImagePath = new ImagePathsModel();
@@ -118,10 +120,10 @@ class HtmlView extends BaseHtmlView
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
         $this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
-        $this->assoc = $this->get('Assoc');
+        $this->assoc = $model->getAssoc();
 
         // Check for errors.
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -201,8 +203,8 @@ class HtmlView extends BaseHtmlView
 
                 //--- apply, save and close ... -----------------------------------
 
-                ToolBarHelper::apply('image.apply');
-                ToolBarHelper::save('image.save');
+                $toolbar->apply('image.apply');
+                $toolbar->save('image.save');
 
                 $toolbar = Toolbar::getInstance('toolbar');
 
@@ -232,9 +234,9 @@ class HtmlView extends BaseHtmlView
 
                 //ToolBarHelper::save2new('image.save2new');
                 if (empty($this->item->id)) {
-                    ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
+                    $toolbar->cancel('image.cancel', 'JTOOLBAR_CLOSE');
                 } else {
-                    ToolBarHelper::cancel('image.cancel', 'JTOOLBAR_CLOSE');
+                    $toolbar->cancel('image.cancel', 'JTOOLBAR_CLOSE');
                 }
 
 //              ToolBarHelper::custom ('gallery.save2upload','upload','','COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);

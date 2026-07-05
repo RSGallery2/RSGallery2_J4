@@ -128,20 +128,22 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel $model */
+        $model = $this->getModel();
         //--- get needed form data ------------------------------------------
 
         // Check rights of user
 //      $this->UserIsRoot = $this->CheckUserIsRoot();
 
-        $this->items         = $this->get('Items');
-        $errors              = $this->get('Errors');
-        $this->filterForm    = $this->get('FilterForm');
-        $errors              = $this->get('Errors');
-        $this->pagination    = $this->get('Pagination');
-        $errors              = $this->get('Errors');
-        $this->state         = $this->get('State');
-        $errors              = $this->get('Errors');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $this->items         = $model->getItems();
+        $errors              = $model->getErrors();
+        $this->filterForm    = $model->getFilterForm();
+        $errors              = $model->getErrors();
+        $this->pagination    = $model->getPagination();
+        $errors              = $model->getErrors();
+        $this->state         = $model->getState();
+        $errors              = $model->getErrors();
+        $this->activeFilters = $model->getActiveFilters();
 
         // for batch ToDo: remove
 
@@ -149,7 +151,7 @@ class HtmlView extends BaseHtmlView
         $this->form = Form::getInstance('images', $xmlFile);
 
         // Check for errors.
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -265,10 +267,10 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'image');
 
-                ToolBarHelper::editList('image.raw_edit');
-                ToolbarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
+                $toolbar->editList('image.raw_edit');
+                $toolbar->deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
 
-                ToolBarHelper::cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
 
@@ -357,17 +359,11 @@ class HtmlView extends BaseHtmlView
                             ->listCheck(true);
                     }
 
-                    ToolBarHelper::custom(
-                        'imagesProperties.PropertiesView',
-                        'next',
-                        'next',
-                        'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES',
-                        true
-                    );
+                    $toolbar->custom('imagesProperties.PropertiesView', 'next', 'next', 'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES', true);
                     // ToolBarHelper::editList('image.edit');
                 }
 
-                ToolBarHelper::cancel('config.cancel', 'JTOOLBAR_CLOSE');
+                $toolbar->cancel('config.cancel', 'JTOOLBAR_CLOSE');
 
                 break;
         }

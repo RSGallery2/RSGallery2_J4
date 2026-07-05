@@ -86,6 +86,8 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
+        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+        $model = $this->getModel();
         //--- config --------------------------------------------------------------------
 
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
@@ -95,16 +97,16 @@ class HtmlView extends BaseHtmlView
 
         //--- Form --------------------------------------------------------------------
 
-        $this->form  = $this->get('Form');
-        $this->item  = $this->get('Item');
-        $this->state = $this->get('State');
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
         $this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
-        $this->assoc = $this->get('Assoc');
+        $this->assoc = $model->getAssoc();
 
         // Check for errors.
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors())) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
@@ -187,19 +189,19 @@ class HtmlView extends BaseHtmlView
             default:
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_EDIT_GALLERY', 'images'));
 
-                ToolBarHelper::apply('gallery.apply');
-                ToolBarHelper::save('gallery.save');
-                ToolBarHelper::save2new('gallery.save2new');
-                ToolBarHelper::save2copy('gallery.save2copy');
+                $toolbar->apply('gallery.apply');
+                $toolbar->save('gallery.save');
+                $toolbar->save2new('gallery.save2new');
+                $toolbar->save2copy('gallery.save2copy');
 
                 if (empty($this->item->id)) {
-                    ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+                    $toolbar->cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
                 } else {
-                    ToolBarHelper::cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
+                    $toolbar->cancel('gallery.cancel', 'JTOOLBAR_CLOSE');
                 }
 
                 // Goto upload with selected gallery id
-                ToolBarHelper::custom('gallery.save2upload', 'upload', '', 'COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
+                $toolbar->custom('gallery.save2upload', 'upload', '', 'COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', false);
 
 //                $link = 'index.php?option=com_rsgallery2&view=upload' . '&id=' . $this->item->id;
 //                $toolbar->appendButton( 'Link', 'upload', 'COM_RSGALLERY2_SAVE_AND_GOTO_UPLOAD', $link);
