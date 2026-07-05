@@ -101,7 +101,7 @@ class PlgContentRsg2_image extends CMSPlugin
             $article->text = preg_replace_callback(
                 $regex,
                 $this->_replacer(...),
-                $article->text,
+                (string) $article->text,
             );
         } catch (Exception $e) {
             $msg = Text::_('PLG_CONTENT_RSG2_IMAGE') . ' Error (01): ' . $e->getMessage();

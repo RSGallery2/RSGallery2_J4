@@ -189,7 +189,7 @@ class ImagesModel extends ListModel
                     $max_columns_in_images_view = $gallery_param->get('max_columns_in_images_view');
 
                     $images_row_arrangement_gallery = (int)$gallery_param->get('images_row_arrangement', $images_row_arrangement);
-                    if ($images_row_arrangement_gallery != 'global') {
+                    if ($images_row_arrangement_gallery != 0) {
                         $images_row_arrangement = (int)$images_row_arrangement_gallery;
 
                         // toDo: switch when more selections .. (0 auto)
