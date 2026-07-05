@@ -15,4 +15,7 @@
 **/*.org.*
 **/*.tmp
 
+# J-rector files
+
+joomla\
 

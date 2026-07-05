@@ -1,0 +1,30 @@
+{
+  "name": "joomla-projects/typehints",
+  "description": "Manage typehints for deprecated, non-namespaced Joomla! core API classes",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Nicholas K. Dionysopoulos",
+      "email": "nicholas+dontspammeplease@dionysopoulos.me",
+      "homepage": "https://www.dionysopoulos.me"
+    },
+    {
+      "name": "Hannes Papenberg",
+      "email": "hannes.papenberg@community.joomla.org",
+      "homepage": "https://www.joomlager.de"
+    }
+  ],
+  "require-dev": {
+    "php": "^7.4 | ^8.0",
+    "guzzlehttp/guzzle": "^7.11.1",
+    "nikic/php-parser": "^v5.7.0",
+    "mnapoli/silly": "^1.10.0",
+    "rector/rector": "^2.5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Joomla\\JTypeHints\\": "JTypeHints"
+    }
+  }
+}
