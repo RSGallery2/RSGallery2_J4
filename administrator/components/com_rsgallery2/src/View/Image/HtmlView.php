@@ -120,7 +120,7 @@ class HtmlView extends BaseHtmlView
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
         $this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
-        $this->assoc = $model->getAssoc();
+        $this->assoc = $this->get('Assoc');
 
         // Check for errors.
         if (count($errors = $model->getErrors())) {

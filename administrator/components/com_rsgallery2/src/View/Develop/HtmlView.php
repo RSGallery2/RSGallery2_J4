@@ -258,7 +258,7 @@ class HtmlView extends BaseHtmlView
                     $this->actualParams,
                 );
 
-                $toolbar->custom('develop.mergeParams', 'copy', '', 'Merge standard parameter ', false);
+                ToolBarHelper::custom('develop.mergeParams', 'copy', '', 'Merge standard parameter ', false);
 
                 // ToDo: button with command on controller ;-)
 //              replaceRsg2ExtensionConfiguration($this->mergedParams);
@@ -338,7 +338,7 @@ class HtmlView extends BaseHtmlView
                     . ': ' . Text::_('COM_RSGALLERY2_DEV_INSTALL_MSG_TEXT'), 'screwdriver');
                 // ToDo: write into manifest value; read first -> Rsg2ExtensionModel
                 // ToolBarHelper::custom ('develop.assignVersion','arrow-up-4','','Assign version to RSG2', false);
-                $toolbar->custom('develop.useOldVersion', 'pencil-2', '', 'Use old version', false);
+                ToolBarHelper::custom('develop.useOldVersion', 'pencil-2', '', 'Use old version', false);
                 $toolbar->cancel('config.cancel_rawView');
                 break;
 
@@ -357,10 +357,10 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create galleries');
 
-                $toolbar->custom('develop.createGalleries_001', 'upload', '', 'Create 1 ', false);
-                $toolbar->custom('develop.createGalleries_010', 'upload', '', 'Create 10 ', false);
-                $toolbar->custom('develop.createGalleries_100', 'upload', '', 'Create 100 ', false);
-                $toolbar->custom('develop.createGalleries_random', 'upload', '', 'Create random (>10) ', false);
+                ToolBarHelper::custom('develop.createGalleries_001', 'upload', '', 'Create 1 ', false);
+                ToolBarHelper::custom('develop.createGalleries_010', 'upload', '', 'Create 10 ', false);
+                ToolBarHelper::custom('develop.createGalleries_100', 'upload', '', 'Create 100 ', false);
+                ToolBarHelper::custom('develop.createGalleries_random', 'upload', '', 'Create random (>10) ', false);
 
                 $toolbar->cancel('config.cancel_rawView');
                 break;
@@ -380,10 +380,10 @@ class HtmlView extends BaseHtmlView
                 }
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_DEVELOP') . ' create images');
-                $toolbar->custom('develop.createImages_001', 'upload', '', 'Create 1 ', false);
-                $toolbar->custom('develop.createImages_010', 'upload', '', 'Create 10 ', false);
-                $toolbar->custom('develop.createImages_100', 'upload', '', 'Create 100 ', false);
-                $toolbar->custom('develop.createImages_random', 'upload', '', 'Create random (>10) ', false);
+                ToolBarHelper::custom('develop.createImages_001', 'upload', '', 'Create 1 ', false);
+                ToolBarHelper::custom('develop.createImages_010', 'upload', '', 'Create 10 ', false);
+                ToolBarHelper::custom('develop.createImages_100', 'upload', '', 'Create 100 ', false);
+                ToolBarHelper::custom('develop.createImages_random', 'upload', '', 'Create random (>10) ', false);
 
                 $toolbar->cancel('config.cancel_rawView');
                 break;

@@ -253,8 +253,8 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_GALLERIES_VIEW_RAW_DATA'), 'images');
 
-                $toolbar->editList('gallery.raw_edit');
-                $toolbar->deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH');
+                ToolBarHelper::editList('gallery.raw_edit');
+                ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'gallery.delete', 'JTOOLBAR_EMPTY_TRASH');
                 $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
                 break;

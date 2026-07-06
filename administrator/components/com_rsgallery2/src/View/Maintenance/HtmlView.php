@@ -293,7 +293,7 @@ class HtmlView extends BaseHtmlView
                 ); // 'maintenance');
                 $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-                $toolbar->custom('maintenance.checkImageExifData', 'none fas fa-camera-retro', 'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+                ToolBarHelper::custom('maintenance.checkImageExifData', 'none fas fa-camera-retro', 'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
                 $toolbar->link('index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED');
 
                 break;

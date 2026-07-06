@@ -267,8 +267,8 @@ class HtmlView extends BaseHtmlView
 
                 ToolBarHelper::title(Text::_('COM_RSGALLERY2_IMAGES_VIEW_RAW_DATA'), 'image');
 
-                $toolbar->editList('image.raw_edit');
-                $toolbar->deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
+                ToolBarHelper::editList('image.raw_edit');
+                ToolBarHelper::deleteList('JGLOBAL_CONFIRM_DELETE', 'image.delete', 'JTOOLBAR_EMPTY_TRASH');
 
                 $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
@@ -359,8 +359,7 @@ class HtmlView extends BaseHtmlView
                             ->listCheck(true);
                     }
 
-                    $toolbar->custom('imagesProperties.PropertiesView', 'next', 'next', 'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES', true);
-                    // ToolBarHelper::editList('image.edit');
+                    ToolBarHelper::custom('imagesProperties.PropertiesView', 'next', 'next', 'COM_RSGALLERY2_ADD_IMAGE_PROPERTIES', true);
                 }
 
                 $toolbar->cancel('config.cancel', 'JTOOLBAR_CLOSE');

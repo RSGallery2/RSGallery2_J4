@@ -72,10 +72,6 @@ class ImageReferences
      * @var bool
      */
     protected $IsAnyOneImageMissing;
-    /**
-     * @var bool
-     */
-    public $UseWatermarked;
 
     public bool $IsOutsideFilesExist;
 
@@ -88,11 +84,11 @@ class ImageReferences
     /**
      * ImageReferences constructor. init all variables
      *
-     * @param   bool  $watermarked
+     * @param bool $UseWatermarked
      *
      * @since 4.3.0
      */
-    public function __construct($watermarked = false)
+    public function __construct(public $UseWatermarked = false)
     {
         $this->ImageReferenceList = [];
 
@@ -103,14 +99,6 @@ class ImageReferences
         $this->IsAnyImageMissingInSizes       = false;
         $this->IsAnyImageMissingInWatermarked = false;
         $this->IsAnyOneImageMissing           = false;
-
-        /**
-        if ($watermarked)
-        {
-            require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
-        }
-        /**/
-        $this->UseWatermarked = $watermarked;
 
 
         $this->IsOutsideFilesExist = false;
@@ -397,7 +385,7 @@ class ImageReferences
                 if ($TestImageReference->parentGalleryId != $galleryId) {
                     continue;
                 }
-                    // Any image already defined
+                // Any image already defined
                 if ($TestImageReference->imageName != $imageName) {
                     continue;
                 }
@@ -604,7 +592,7 @@ class ImageReferences
                 if (!$TestImageReference->use_j3x_location) {
                     continue;
                 }
-                    // Reference Item exists already
+                // Reference Item exists already
                 if ($TestImageReference->imageName != $imageName) {
                     continue;
                 }
