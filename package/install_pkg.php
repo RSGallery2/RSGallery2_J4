@@ -59,7 +59,7 @@ class Pkg_Rsgallery2Script implements DatabaseAwareInterface
 
             try {
                 Log::add(Text::_('\n>>RSG2 Installer construct'), Log::INFO, 'rsg2');
-            } catch (RuntimeException $e) {
+            } catch (RuntimeException) {
                 // Informational log only
             }
         }
