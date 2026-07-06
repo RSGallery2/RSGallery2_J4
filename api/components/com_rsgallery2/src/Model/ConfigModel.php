@@ -64,7 +64,7 @@ class ConfigModel extends BaseModel
 
 			if (!empty($jsonStr))
 			{
-				$params = json_decode($jsonStr, true);
+				$params = json_decode((string) $jsonStr, true);
 
 				foreach ($params as $key => $value)
 				{
@@ -177,7 +177,7 @@ class ConfigModel extends BaseModel
 
 			if ($isChanged)
 			{
-				$isSaved = $this->saveParams($oConfig);
+				$isSaved = static::saveParams($oConfig);
 			}
 		}
 
@@ -223,7 +223,7 @@ class ConfigModel extends BaseModel
 
 			if ($isChanged)
 			{
-				$isDeleted = $this->saveParams($oConfig);
+				$isDeleted = static::saveParams($oConfig);
 			}
 		}
 
