@@ -64,7 +64,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             try {
                 Log::add(Text::_('\n>>RSG2 Installer construct'), Log::INFO, 'rsg2');
-            } catch (RuntimeException $e) {
+            } catch (RuntimeException) {
                 // Informational log only
             }
         }
@@ -450,7 +450,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/GalleryTreeModel.php';
             Log::add(Text::_('upd (10.2) '), Log::INFO, 'rsg2');
-            $GalleryTreeClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel';
+            $GalleryTreeClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel::class;
             Log::add(Text::_('upd (10.3) '), Log::INFO, 'rsg2');
             JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
 
@@ -515,11 +515,11 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add('installMessage: include Helper/InstallMessage', Log::INFO, 'rsg2');
 
             $installMsgHelperFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
-            $installMsgHelperClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage';
+            $installMsgHelperClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage::class;
             JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
 
             $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ChangeLogModel.php';
-            $changeLogModelClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel';
+            $changeLogModelClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel::class;
             JLoader::register($changeLogModelClassName, $changeLogModelFileName);
 
             $InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage(
@@ -559,7 +559,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         $this->oldManifestData = $this->readRsg2ExtensionManifest();
         if (!empty($this->oldManifestData['version'])) {
-            $oldRelease = $this->oldManifestData['version'];
+            return $this->oldManifestData['version'];
         }
 
         return $oldRelease;
@@ -592,7 +592,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             $jsonStr = $db->loadResult();
 
             if (!empty($jsonStr)) {
-                $manifest = json_decode($jsonStr, true);
+                $manifest = json_decode((string) $jsonStr, true);
             }
         } catch (RuntimeException $e) {
             Log::add(
@@ -665,19 +665,20 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             //--- All matching files in actual folder -------------------
 
-            $files = array_diff(array_filter(glob($langPath . '/*'), 'is_file'), ['.', '..']);
+            $files = array_diff(array_filter(glob($langPath . '/*'), is_file(...)), ['.', '..']);
 
             foreach ($files as $fileName) {
                 // A matching lang name ...
-                if (str_contains($fileName, 'com_rsgallery2')) {
-                    // ... will be deleted
-                    if (file_exists($fileName)) {
-                        Log::add(Text::_('unlink: ') . $fileName, Log::INFO, 'rsg2');
-
-                        unlink($fileName);
-                        $isOneFileDeleted = true;
-                    }
+                if (!str_contains($fileName, 'com_rsgallery2')) {
+                    continue;
                 }
+                // ... will be deleted
+                if (!file_exists($fileName)) {
+                    continue;
+                }
+                Log::add(Text::_('unlink: ') . $fileName, Log::INFO, 'rsg2');
+                unlink($fileName);
+                $isOneFileDeleted = true;
             }
         } catch (RuntimeException $e) {
             Log::add(
@@ -695,7 +696,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             if (!$isOneFileDeleted) {
                 // base folder may contain lang ID folders en-GB, de-DE
 
-                $folders = array_diff(array_filter(glob($langPath . '/*'), 'is_dir'), ['.', '..']);
+                $folders = array_diff(array_filter(glob($langPath . '/*'), is_dir(...)), ['.', '..']);
 
                 foreach ($folders as $folderName) {
 //              echo ('folder name: ' . $folderName . '<br>');
@@ -916,7 +917,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $Rsg2ExtensionModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/Rsg2ExtensionModel.php';
             Log::add(Text::_('upd (20.2) '), Log::INFO, 'rsg2');
-            $Rsg2ExtensionClassName = 'Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel';
+            $Rsg2ExtensionClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel::class;
             Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');
             JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
 

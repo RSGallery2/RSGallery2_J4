@@ -8,7 +8,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Api\View\Galleries;
+namespace Rsgallery2\Component\Rsgallery2\Api\View\LatestGallery;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
@@ -17,6 +17,7 @@ use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleriesModel;
 use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
 
@@ -115,11 +116,22 @@ class JsonapiView extends BaseApiView
      */
     public function displayList(?array $items = null)
     {
+        // Fields from gallery table
         foreach (FieldsHelper::getFields('com_rsgallery2.galleries') as $field)
         {
             $this->fieldsToRenderList[] = $field->name;
         }
 
+//        //--- simulate populate state before model getItems() -------------------------
+//
+//        /** @var GalleriesModel $model */
+//        $model = $this->getModel();
+//
+//        // sort and restrict to one item
+//        $model->setState('list.limit', 1);
+//        $model->setState('list.ordering', 'a.created');
+//        $model->setState('list.direction', 'DESC');
+//
         return parent::displayList();
     }
 
@@ -183,7 +195,7 @@ class JsonapiView extends BaseApiView
 
             foreach ($item->associations as $language => $association)
             {
-                $itemId = explode(':', $association)[0];
+                $itemId = explode(':', (string) $association)[0];
 
                 $associations[] = (object) ['id' => $itemId, 'language' => $language,];
             }
@@ -193,7 +205,7 @@ class JsonapiView extends BaseApiView
 
         if (!empty($item->tags->tags))
         {
-            $tagsIds    = explode(',', $item->tags->tags);
+            $tagsIds    = explode(',', (string) $item->tags->tags);
             $item->tags = $item->tagsHelper->getTags($tagsIds);
         }
         else

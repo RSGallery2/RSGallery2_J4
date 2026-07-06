@@ -144,7 +144,7 @@ class JsonapiView extends BaseApiView
 
             $jsonStr = $db->loadResult();
             if (!empty($jsonStr)) {
-                $dbParams = json_decode($jsonStr, true);
+                $dbParams = json_decode((string) $jsonStr, true);
             }
 
 	        $params = array_keys($dbParams);

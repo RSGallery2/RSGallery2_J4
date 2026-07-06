@@ -8,17 +8,15 @@
  * @license        GNU General Public License version 2 or later
  */
 
-namespace Rsgallery2\Component\Rsgallery2\Api\View\LatestGallery;
+namespace Rsgallery2\Component\Rsgallery2\Api\View\Images;
 
+//use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\TagsHelper;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
-use Joomla\Registry\Registry;
-use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleriesModel;
-use Rsgallery2\Component\Rsgallery2\Api\Helper\Rsgallery2Helper;
 use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -26,7 +24,7 @@ use Rsgallery2\Component\Rsgallery2\Api\Serializer\Rsgallery2Serializer;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * The galleries view
+ * The images view
  *
  * @since  4.0.0
  */
@@ -38,20 +36,47 @@ class JsonapiView extends BaseApiView
      * @var  array
      * @since  4.0.0
      */
-    protected $fieldsToRenderItem = ['id', 'name', 'alias', 'description', 'thumb_id', 'base_path',
+    protected $fieldsToRenderItem = [
+        'id',
+        'name',
+        'alias',
+        'description',
+        'original_path',
 
-        'note', 'params', 'published', 'publish_up', 'publish_down',
+        'gallery_id',
+        'title',
+
+        'note',
+        'params',
+        'published',
 
         'hits',
+        'rating',
+        'votes',
+        'comments',
 
-        'parent_id', //      'level',
-//      'path',
-//      'lft',
-//      'rgt',
+        'publish_up',
+        'publish_down',
 
-        'approved', 'asset_id', 'access',
+        'checked_out',
+        'checked_out_time',
+        'created',
+        'created_by',
+        'created_by_alias',
+        'modified',
+        'modified_by',
 
-        'version', 'sizes',];
+        'ordering',
+
+        'approved',
+        'asset_id',
+        'access',
+
+        'use_j3x_location',
+        'sizes',
+
+        'version',
+    ];
 
     /**
      * The fields to render items in the documents
@@ -59,21 +84,48 @@ class JsonapiView extends BaseApiView
      * @var  array
      * @since  4.0.0
      */
-    protected $fieldsToRenderList = ['id', 'title', 'name',
+    protected $fieldsToRenderList = [
+        'id',
+        'name',
+        'alias',
+        'description',
+        'original_path',
 
-        'alias', 'notes', 'root_path', 'prjType',
+        'gallery_id',
+        'title',
 
+        'note',
         'params',
+        'published',
 
-        'checked_out', 'checked_out_time', 'created', 'created_by', 'created_by_alias', 'modified', 'modified_by',
+        'hits',
+        'rating',
+        'votes',
+        'comments',
 
-        'twin_id',
+        'publish_up',
+        'publish_down',
 
-        'approved', 'asset_id', 'access',
+        'checked_out',
+        'checked_out_time',
+        'created',
+        'created_by',
+        'created_by_alias',
+        'modified',
+        'modified_by',
+
+        'ordering',
+
+
+        'approved',
+        'asset_id',
+        'access',
+
+        'use_j3x_location',
+        'sizes',
 
         'version',
-
-        'ordering',];
+    ];
 
 //    /**
 //     * The relationships the item has
@@ -97,8 +149,7 @@ class JsonapiView extends BaseApiView
      */
     public function __construct($config = [])
     {
-        if (\array_key_exists('contentType', $config))
-        {
+        if (\array_key_exists('contentType', $config)) {
             $this->serializer = new Rsgallery2Serializer($config['contentType']);
         }
 
@@ -116,22 +167,10 @@ class JsonapiView extends BaseApiView
      */
     public function displayList(?array $items = null)
     {
-        // Fields from gallery table
-        foreach (FieldsHelper::getFields('com_rsgallery2.galleries') as $field)
-        {
+        foreach (FieldsHelper::getFields('com_rsgallery2.images') as $field) {
             $this->fieldsToRenderList[] = $field->name;
         }
 
-//        //--- simulate populate state before model getItems() -------------------------
-//
-//        /** @var GalleriesModel $model */
-//        $model = $this->getModel();
-//
-//        // sort and restrict to one item
-//        $model->setState('list.limit', 1);
-//        $model->setState('list.ordering', 'a.created');
-//        $model->setState('list.direction', 'DESC');
-//
         return parent::displayList();
     }
 
@@ -148,13 +187,11 @@ class JsonapiView extends BaseApiView
     {
         $this->relationship[] = 'modified_by';
 
-        foreach (FieldsHelper::getFields('com_rsgallery2.galleries') as $field)
-        {
+        foreach (FieldsHelper::getFields('com_rsgallery2.images') as $field) {
             $this->fieldsToRenderItem[] = $field->name;
         }
 
-        if (Multilanguage::isEnabled())
-        {
+        if (Multilanguage::isEnabled()) {
             $this->fieldsToRenderItem[] = 'languageAssociations';
             $this->relationship[]       = 'languageAssociations';
         }
@@ -173,8 +210,7 @@ class JsonapiView extends BaseApiView
      */
     protected function prepareItem($item)
     {
-        if (!$item)
-        {
+        if (!$item) {
             return $item;
         }
 
@@ -182,60 +218,53 @@ class JsonapiView extends BaseApiView
 
         // Process the rsgallery2 plugins.
         PluginHelper::importPlugin('rsgallery2');
-        Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.project', &$item, &$item->params]);
+        Factory::getApplication()->triggerEvent('onContentPrepare', ['com_rsgallery2.images', &$item, &$item->params]);
 
-        foreach (FieldsHelper::getFields('com_rsgallery2.project', $item, true) as $field)
-        {
+        foreach (FieldsHelper::getFields('com_rsgallery2.images', $item, true) as $field) {
             $item->{$field->name} = $field->apivalue ?? $field->rawvalue;
         }
 
-        if (Multilanguage::isEnabled() && !empty($item->associations))
-        {
+        if (Multilanguage::isEnabled() && !empty($item->associations)) {
             $associations = [];
 
-            foreach ($item->associations as $language => $association)
-            {
-                $itemId = explode(':', $association)[0];
+            foreach ($item->associations as $language => $association) {
+                $itemId = explode(':', (string) $association)[0];
 
-                $associations[] = (object) ['id' => $itemId, 'language' => $language,];
+                $associations[] = (object)[
+                    'id'       => $itemId,
+                    'language' => $language,
+                ];
             }
 
             $item->associations = $associations;
         }
 
-        if (!empty($item->tags->tags))
-        {
-            $tagsIds    = explode(',', $item->tags->tags);
+        if (!empty($item->tags->tags)) {
+            $tagsIds    = explode(',', (string) $item->tags->tags);
             $item->tags = $item->tagsHelper->getTags($tagsIds);
-        }
-        else
-        {
+        } else {
             $item->tags = [];
             $tags       = new TagsHelper();
-            $tagsIds    = $tags->getTagIds($item->id, 'com_rsgallery2.project');
+            $tagsIds    = $tags->getTagIds($item->id, 'com_rsgallery2.images');
 
-            if (!empty($tagsIds))
-            {
+            if (!empty($tagsIds)) {
                 $tagsIds    = explode(',', $tagsIds);
                 $item->tags = $tags->getTags($tagsIds);
             }
         }
 
-        if (isset($item->images))
-        {
-            $registry     = new Registry($item->images);
-            $item->images = $registry->toArray();
-
-            if (!empty($item->images['image_intro']))
-            {
-                $item->images['image_intro'] = Rsgallery2Helper::resolve($item->images['image_intro']);
-            }
-
-            if (!empty($item->images['image_fulltext']))
-            {
-                $item->images['image_fulltext'] = Rsgallery2Helper::resolve($item->images['image_fulltext']);
-            }
-        }
+//        if (isset($item->images)) {
+//            $registry     = new Registry($item->images);
+//            $item->images = $registry->toArray();
+//
+//            if (!empty($item->images['image_intro'])) {
+//                $item->images['image_intro'] = Rsgallery2Helper::resolve($item->images['image_intro']);
+//            }
+//
+//            if (!empty($item->images['image_fulltext'])) {
+//                $item->images['image_fulltext'] = Rsgallery2Helper::resolve($item->images['image_fulltext']);
+//            }
+//        }
 
         return parent::prepareItem($item);
     }

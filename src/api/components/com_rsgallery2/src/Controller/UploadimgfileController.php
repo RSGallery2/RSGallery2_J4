@@ -127,7 +127,7 @@ class UploadimgfileController extends ApiController
         $json = $this->input->json;
 
         // Decode content, if any
-        if ($content = base64_decode($json->get('content', '', 'raw')))
+        if ($content = base64_decode((string) $json->get('content', '', 'raw')))
         {
             $this->checkContent();
         }
