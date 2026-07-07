@@ -27,7 +27,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GalleryList extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
     /**
      * The default command name
@@ -54,9 +54,6 @@ class GalleryList extends AbstractCommand
     public function __construct()
     {
         parent::__construct();
-
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
     /**
@@ -196,10 +193,11 @@ class GalleryList extends AbstractCommand
      */
     private function getItemsFromDB(string $userId, string $parent_id): array
     {
-        $db    = $this->getDatabase();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->createQuery();
         $query
             ->select('*')
+            ->where($db->quoteName('id') . ' > 1')
             ->from('#__rsg2_galleries');
 
         if (!empty($userId)) {
@@ -226,7 +224,7 @@ class GalleryList extends AbstractCommand
      */
     private function addImagesCount(array $galleries)
     {
-        $db    = $this->getDatabase();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->createQuery();
 
         foreach ($galleries as $gallery) {

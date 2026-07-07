@@ -27,7 +27,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GalleryParams extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
     /**
      * The default command name
@@ -55,8 +55,6 @@ class GalleryParams extends AbstractCommand
     {
         parent::__construct();
 
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
     /**
@@ -120,7 +118,6 @@ class GalleryParams extends AbstractCommand
 
         $galleryParams = $this->getParamsAsJsonFromDB($galleryId);
 
-
         // If no categories are found show a warning and set the exit code to 1.
         if (empty($galleryParams)) {
             $this->ioStyle->error("The gallery id '" . $galleryId . "' is invalid, No gallery found matching your criteria!");
@@ -148,7 +145,7 @@ class GalleryParams extends AbstractCommand
     {
         $sParams = '';
         try {
-            $db    = $this->getDatabase();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db->createQuery();
             $query

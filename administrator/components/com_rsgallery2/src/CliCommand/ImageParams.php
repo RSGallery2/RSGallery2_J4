@@ -27,7 +27,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ImageParams extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
     /**
      * The default command name
@@ -55,8 +55,6 @@ class ImageParams extends AbstractCommand
     {
         parent::__construct();
 
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
     /**
@@ -147,11 +145,11 @@ class ImageParams extends AbstractCommand
     {
         $sParams = '';
         try {
-            $db    = $this->getDatabase();
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
             $query = $db->createQuery();
             $query
                 ->select('params')
-                ->from('#__rsg2_galleries')
+                ->from('#__rsg2_images')
                 ->where($db->quoteName('id') . ' = ' . (int) $galleryId);
 
             $db->setQuery($query);

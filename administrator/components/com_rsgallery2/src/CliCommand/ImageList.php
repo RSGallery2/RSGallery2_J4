@@ -27,7 +27,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ImageList extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
     /**
      * The default command name
@@ -55,8 +55,6 @@ class ImageList extends AbstractCommand
     {
         parent::__construct();
 
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
     /**
@@ -182,7 +180,7 @@ class ImageList extends AbstractCommand
      */
     private function getItemsFromDB(string $userId, string $gallery_id): array
     {
-        $db    = $this->getDatabase();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->createQuery();
         $query
             ->select('*')

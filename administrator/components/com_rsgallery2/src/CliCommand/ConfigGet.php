@@ -29,7 +29,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConfigGet extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
     /**
      * The default command name
@@ -56,9 +56,6 @@ class ConfigGet extends AbstractCommand
     public function __construct()
     {
         parent::__construct();
-
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
     /**
@@ -121,7 +118,7 @@ class ConfigGet extends AbstractCommand
         }
 
         $valueBare = $rsgConfig->get($option, null);
-        if ($valueBare == null) {
+        if ($valueBare === null) {
             $this->ioStyle->error("Can't find option '{$option}' in configuration list");
 
             return Command::FAILURE;

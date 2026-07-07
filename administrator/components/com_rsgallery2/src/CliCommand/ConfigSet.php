@@ -18,7 +18,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Console\Command\AbstractCommand;
-use Joomla\Database\DatabaseAwareTrait;
+//use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Symfony\Component\Console\Command\Command;
@@ -30,7 +30,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ConfigSet extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
     /**
      * The default command name
@@ -58,8 +58,6 @@ class ConfigSet extends AbstractCommand
     {
         parent::__construct();
 
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
     /**
@@ -130,7 +128,7 @@ class ConfigSet extends AbstractCommand
 
         // It is allowed to create new values
         $valueBare = $rsgConfig->get($option, null);
-        if ($valueBare == null) {
+        if ($valueBare === null) {
             $this->ioStyle->note("Option '{$option}' was  not used before");
         }
 
@@ -157,12 +155,16 @@ class ConfigSet extends AbstractCommand
             }
 
             if ($verifiedValue != $value) {
-                $this->ioStyle->error("Configuration set for "
-                    . "option: '" . $option . "' in value: '" . $value . "'" . " results in table value: '" . $verifiedValue . "'");
+                $this->ioStyle->error(
+                    "Configuration set for "
+                    . "option: '" . $option . "' in value: '" . $value . "'" . " results in table value: '" . $verifiedValue . "'",
+                );
             } else {
                 $this->ioStyle->note('Written value confirmed');
             }
         }
+
+        $this->ioStyle->success('Configuration set');
 
         return Command::SUCCESS;
     }
@@ -172,6 +174,7 @@ class ConfigSet extends AbstractCommand
      *
      * @param   array  $option  Options array
      *
+     *dat
      * @return array
      *
      * @since  4.0.X
@@ -195,17 +198,18 @@ class ConfigSet extends AbstractCommand
      *
      * @return bool
      *
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     private function isTrue(mixed $veryfyIn)
     {
         $isTrue = false;
 
         if (!empty($veryfyIn)) {
-            if (strtolower((string) $veryfyIn) == 'true') {
+            if (strtolower((string)$veryfyIn) == 'true') {
                 $isTrue = true;
             }
 
-            if (strtolower((string) $veryfyIn) == 'on') {
+            if (strtolower((string)$veryfyIn) == 'on') {
                 $isTrue = true;
             }
 
@@ -219,7 +223,8 @@ class ConfigSet extends AbstractCommand
     }
 
     /**
-     * Save RSG2 configuration to db
+     * Save RSG2 configuration to extensiondb  params
+     *
      * @param   Registry  $params
      *
      * @return bool
@@ -228,12 +233,12 @@ class ConfigSet extends AbstractCommand
      */
     public function saveParams(Registry $params)
     {
-        $db = $this->getDatabase();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
 
         return $db->setQuery(
             'UPDATE #__extensions'
-            . ' SET params = ' . $db->quote((string) $params)
-            . ' WHERE element = ' . $db->quote('com_rsgallery2')
+            . ' SET params = ' . $db->quote((string)$params)
+            . ' WHERE element = ' . $db->quote('com_rsgallery2'),
         )->execute();
     }
 
@@ -250,7 +255,7 @@ class ConfigSet extends AbstractCommand
 
         try {
             // read the existing component value(s)
-            $db = $this->getDatabase();
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
 
             $query = $db
                 ->createQuery()
@@ -270,7 +275,7 @@ class ConfigSet extends AbstractCommand
 
             $jsonStr = $db->loadResult();
             if (!empty($jsonStr)) {
-                $params = json_decode((string) $jsonStr, true);
+                $params = json_decode((string)$jsonStr, true);
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';

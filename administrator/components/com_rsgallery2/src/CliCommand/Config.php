@@ -29,7 +29,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Config extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
     /**
      * The default command name
@@ -57,9 +57,6 @@ class Config extends AbstractCommand
     public function __construct()
     {
         parent::__construct();
-
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
     /**
@@ -77,7 +74,7 @@ class Config extends AbstractCommand
     }
 
     /**
-     * Initialise the command.
+     * Initialize the command.
      *
      * @return  void
      *

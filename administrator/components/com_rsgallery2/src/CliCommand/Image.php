@@ -29,7 +29,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class Image extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+//    use DatabaseAwareTrait;
 
   /**
    * The default command name
@@ -57,8 +57,6 @@ class Image extends AbstractCommand
     {
         parent::__construct();
 
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
   /**
@@ -157,7 +155,7 @@ class Image extends AbstractCommand
      */
     private function getItemAssocFromDB(string $ImageId): array
     {
-        $db    = $this->getDatabase();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->createQuery();
         $query
             ->select('*')

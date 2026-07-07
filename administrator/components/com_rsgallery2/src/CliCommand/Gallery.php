@@ -26,11 +26,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 
-// ToDo: check jsonify out put JsonResponse echo new JsonResponse($output);
+// ToDo: check jsonify output JsonResponse echo new JsonResponse($output);
 
 class Gallery extends AbstractCommand
 {
-    use DatabaseAwareTrait;
+////    use DatabaseAwareTrait;
 
   /**
    * The default command name
@@ -58,8 +58,6 @@ class Gallery extends AbstractCommand
     {
         parent::__construct();
 
-        $db = $this->getDatabase();
-        $this->setDatabase($db);
     }
 
   /**
@@ -158,7 +156,7 @@ class Gallery extends AbstractCommand
      */
     private function getItemAssocFromDB(string $galleryId): array
     {
-        $db    = $this->getDatabase();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->createQuery();
         $query
             ->select('*')
