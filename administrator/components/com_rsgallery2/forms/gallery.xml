@@ -376,11 +376,11 @@
 
 			<fieldset name="layout2" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
 				<field
-						name="Layout of images (thumbs)"
+						name="layoutOfImageThumbs"
 						type="list"
 						default="layout02"
-						label="Thumbs layout"
-						description="Select layout of thumbs in this gallery"
+						label="?humbs layout"
+						description="?Select layout of thumbs in this gallery"
 				>
 					<option value="global">JGLOBAL_USE_GLOBAL</option>
 					<option value="layout01">layout 1</option>

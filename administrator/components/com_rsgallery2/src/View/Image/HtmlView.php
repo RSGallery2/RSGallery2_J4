@@ -95,6 +95,7 @@ class HtmlView extends BaseHtmlView
     {
         /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel $model */
         $model = $this->getModel();
+
         //--- config --------------------------------------------------------------------
 
         $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
