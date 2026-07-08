@@ -109,14 +109,8 @@ class HtmlView extends BaseHtmlView
         $this->item  = $model->getItem();
         $this->state = $model->getState();
 
-        if (!$this->item->use_j3x_location) {
-            $ImagePath = new ImagePathsModel();
-            $ImagePath->setPaths_URIs_byGalleryId($this->item->gallery_id);
-            $this->imgUrl = $ImagePath->getDisplayUrl($this->item->name);
-        } else {
-            $ImagePathJ3x = new ImagePathsJ3xModel();
-            $this->imgUrl = $ImagePathJ3x->getDisplayUrl($this->item->name);
-        }
+        // J3x or J4x url
+        $this->imgUrl = $this->getDisplayUrl();
 
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
@@ -214,8 +208,8 @@ class HtmlView extends BaseHtmlView
                 $dropdownButton = $toolbar
                     ->dropdownButton('rotate-group')
                     ->text('COM_RSGALLERY2_ROTATE')
-////                    ->toggleSplit(true)
-//                    ->toggleSplit(false)
+//                    ->toggleSplit(true)
+                    ->toggleSplit(false)
                     ->icon('fa fa-sync')
 //                    ->listCheck(false)
                     ->buttonClass('btn btn-action');
@@ -223,8 +217,8 @@ class HtmlView extends BaseHtmlView
                 $dropdownButton->configure(
                     function (Toolbar $childBar) {
                         $childBar->standardButton('undo-2', 'COM_RSGALLERY2_ROTATE_LEFT', 'image.rotate_image_left')->icon('fa fa-undo');
-                        $childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT', 'images.rotate_image_right')->icon('fa fa-redo');
-                        $childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180', 'images.rotate_image_180')->icon('fa fa-sync fa-rotate-180');
+                        $childBar->standardButton('redo-2', 'COM_RSGALLERY2_ROTATE_RIGHT', 'image.rotate_image_right')->icon('fa fa-redo');
+                        $childBar->standardButton('backward-2', 'COM_RSGALLERY2_ROTATE_180', 'image.rotate_image_180')->icon('fa fa-sync fa-rotate-180');
                         $childBar->divider('      ');
                         $childBar->standardButton('fa-arrows', 'COM_RSGALLERY2_FLIP_HORIZONTAL', 'image.flip_image_horizontal')->icon('fa fa-arrows-alt-h');
                         $childBar->standardButton('arrow-down-4', 'COM_RSGALLERY2_FLIP_VERTICAL', 'image.flip_image_vertical')->icon('fa fa-arrows-alt-v');
@@ -249,5 +243,37 @@ class HtmlView extends BaseHtmlView
         if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {
             $toolbar->preferences('com_rsgallery2');
         }
+    }
+
+    public function getDisplayUrl(): string
+    {
+        $imgUrl = '';
+
+        if (!$this->item->use_j3x_location) {
+            $ImagePath = new ImagePathsModel();
+            $ImagePath->setPaths_URIs_byGalleryId($this->item->gallery_id);
+
+            //--- time stamp for cache  ---------------------------------------
+
+            // create timestamp
+            $filePath      = $ImagePath->getDisplayPath($this->item->name);
+            $cacheFileTime = is_file($filePath) ? filemtime($filePath) : time();
+
+            // Url with time stamp
+            $imgUrl = $ImagePath->getDisplayUrl($this->item->name) . '?t=' . $cacheFileTime;
+        } else {
+            $ImagePathJ3x = new ImagePathsJ3xModel();
+
+            //--- time stamp for cache  ---------------------------------------
+
+            // create timestamp
+            $filePath      = $ImagePathJ3x->getDisplayPath($this->item->name);
+            $cacheFileTime = is_file($filePath) ? filemtime($filePath) : time();
+
+            // Url with time stamp
+            $imgUrl = $ImagePathJ3x->getDisplayUrl($this->item->name) . '?t=' . $cacheFileTime;
+        }
+
+        return $imgUrl;
     }
 }

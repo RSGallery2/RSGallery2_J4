@@ -1195,6 +1195,16 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
                 {
                     $isRotated = $this->CreateRSG2ImagesJ3x($imagePathJ3x, $imgSrcPath, $fileName);
                 }
+
+
+            } else {
+
+                $OutTxt = '';
+                $OutTxt .= 'Error: image ($memImage) could not be created for filename: "' . $fileName . '"';
+                $OutTxt .= ' and path: "' . $imgSrcPath . '"' . '<br>';
+
+                $app = Factory::getApplication();
+                $app->enqueueMessage($OutTxt, 'error');
             }
         }
         catch (\RuntimeException $e)

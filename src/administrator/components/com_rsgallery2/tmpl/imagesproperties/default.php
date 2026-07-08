@@ -27,7 +27,7 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
-// 2025.01.10 ToDo: followin is not working do we need  'extension' ?
+// 2025.01.10 ToDo: following is not working do we need  'extension' ?
 // $extension = $this->escape($this->state->get('filter.extension'));
 
 ?>
@@ -64,30 +64,19 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
                     <ul class="imagesPropArea">
                         <?php
-                        $Idx = 0;
+                        $idx = 0;
 
-                        foreach ($this->items as $Idx => $item) {
-                            //-- path to display image ------------------------------------
-
-                            // toDo: Move to "htmlview-> create list in model
-                            // galleryJ4x path is depending on gallery id
-
-                            if (!$item->use_j3x_location) {
-                                $this->ImagePath->setPaths_URIs_byGalleryId($item->gallery_id);
-                                $src = $this->ImagePath->getDisplayUrl($item->name);
-                            } else {
-                                $src = $this->ImagePathJ3x->getDisplayUrl($item->name);
-                            }
+                        foreach ($this->items as $idx => $item) {
 
                             ?>
                             <li class="imagePropItem">
                                 <div class=" imgProperty">
                                     <div class='imgContainer'>
-                                        <img src="<?php echo $src; ?>" class="img-rounded modalActive" alt="<?php echo $this->escape($item->name); ?>">
+                                        <img src="<?php echo $this->imgUrls[$idx]; ?>" class="img-rounded modalActive" alt="<?php echo $this->escape($item->name); ?>">
                                     </div>
 
                                     <div class="caption">
-                                        <?php echo HTMLHelper::_('grid.id', $Idx, $item->id, false, 'sid'); ?>
+                                        <?php echo HTMLHelper::_('grid.id', $idx, $item->id, false, 'sid'); ?>
                                         <small>&nbsp;<?php echo $this->escape($item->name); ?>&nbsp;(ID: <?php echo $this->escape($item->id); ?>)</small><br>
                                     </div>
 
@@ -132,7 +121,7 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
                                                     '20',
                                                     '20',
                                                     false,
-                                                    'description_' . $Idx,
+                                                    'description_' . $idx,
                                                     null,
                                                     null,
                                                     $this->editorParams

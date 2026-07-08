@@ -36,7 +36,6 @@ class HtmlView extends BaseHtmlView
     protected $pagination;
     protected $state;
 
-    protected $ImagePath;
     protected $DisplayImgWidth;
 
     protected $form;
@@ -45,11 +44,8 @@ class HtmlView extends BaseHtmlView
 
     protected $isDebugBackend;
     protected $isDevelop;
-    /**
-     * @var ImagePathsJ3xModel
-     * @since 5.1.0
-     */
-    protected ImagePathsJ3xModel $ImagePathJ3x;
+
+    protected $imgUrls = [];
 
     /**
      * Method to display the view.
@@ -76,9 +72,8 @@ class HtmlView extends BaseHtmlView
 
         $this->items = $model->getItems();
 
-        // paths to image (over galleryid or j3x style)
-        $this->ImagePath    = new ImagePathsModel();
-        $this->ImagePathJ3x = new ImagePathsJ3xModel();
+        // J3x or J4x url
+        $this->imgUrls = $this->getDisplayUrls($this->items);
 
         // size of display image
         $ImageWidths           = $rsgConfig->get('image_size');
@@ -218,5 +213,44 @@ class HtmlView extends BaseHtmlView
         if (Factory::getApplication()->getIdentity()->authorise('core.admin', 'com_rsgallery2')) {
             $toolbar->preferences('com_rsgallery2');
         }
+    }
+
+    private function getDisplayUrls(mixed $items) {
+
+        $imgUrls = [];
+
+        $ImagePath    = new ImagePathsModel();
+        $ImagePathJ3x = new ImagePathsJ3xModel();
+
+        //-- path to display image ------------------------------------
+
+        foreach ($this->items as $idx => $item) {
+            // galleryJ4x path is depending on gallery id
+
+            if (!$item->use_j3x_location) {
+                $ImagePath->setPaths_URIs_byGalleryId($item->gallery_id);
+
+                //--- time stamp for cache  ---------------------------------------
+
+                // create timestamp
+                $filePath      = $ImagePath->getDisplayPath($item->name);
+                $cacheFileTime = is_file($filePath) ? filemtime($filePath) : time();
+
+                // Url with time stamp
+                $imgUrls [] = $ImagePath->getDisplayUrl($item->name . '?t=' . $cacheFileTime);
+            } else {
+                //--- time stamp for cache  ---------------------------------------
+
+                // create timestamp
+                $filePath      = $ImagePathJ3x->getDisplayPath($item->name);
+                $cacheFileTime = is_file($filePath) ? filemtime($filePath) : time();
+
+                // Url with time stamp
+                $imgUrls [] = $ImagePathJ3x->getDisplayUrl($item->name) . '?t=' . $cacheFileTime;
+            }
+
+        }
+
+        return $imgUrls;
     }
 }

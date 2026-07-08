@@ -241,19 +241,13 @@ class ImageController extends FormController
 
                 $id = $input->get('id', 0, 'int');
 
-                // toDo: create imageDb model
-                /* @var ImagesModel $modelImages */
-                $modelImages = $this->getModel('images');
-
-                // Needed filename and gallery id
-                //$imgFileDatas = $modelImages->ids2FileData($sids);
-                //$formData = new Input($this->input->get('j form', '', 'array'));
+                // Needs filename and gallery id from form data
+                $formData = $this->input->get('jform', [], 'array');
+                $fileName  = (string) $formData['name'];
+                $galleryId = (int) $formData['gallery_id'];
 
                 /* @var ImageFileModel $modelFile */
                 $modelFile = $this->getModel('imageFile');
-
-                $fileName  = $input->get('name', '???', 'string');
-                $galleryId = $input->get('gallery_id', -1, 'int');
 
                 $IsSaved = $modelFile->rotate_image($id, $fileName, $galleryId, $direction);
 
