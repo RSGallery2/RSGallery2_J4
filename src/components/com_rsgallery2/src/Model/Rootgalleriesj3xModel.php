@@ -79,11 +79,11 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
      *
      * @since 4.5.0.0
      *
-    public function AssignGalleryUrl($gallery)
+    public function assignGalleryUrl($gallery)
     {
         try {
 
-            parent::AssignGalleryUrl($gallery);
+            parent::assignGalleryUrl($gallery);
 
         }
         catch (\RuntimeException $e)
@@ -145,7 +145,7 @@ class Rootgalleriesj3xModel extends Galleriesj3xModel
          * foreach ($galleries as $gallery)
          * {
          *
-         * $this->AssignGalleryUrl($gallery);
+         * $this->assignGalleryUrl($gallery);
          * // Maybe already done
          * //                $this->AssignUrl_AsInline($gallery);
          *

@@ -506,44 +506,17 @@ class GalleryModel extends AdminModel
         // Not needed any more
         unset($data['galleryOrdering']);
 
-
-//        // Automatic handling of alias for empty fields
-//        if (
-//            in_array(
-//                $input->get('task'),
-//                ['apply', 'save', 'save2new'],
-//            ) && (!isset($data['id']) || (int)$data['id'] == 0)
-//        ) {
-//            if ($data['alias'] == null) {
-//                if (Factory::getApplication()->get('unicodeslugs') == 1) {
-//                    $data['alias'] = OutputFilter::stringURLUnicodeSlug($data['title']);
-//                } else {
-//                    $data['alias'] = OutputFilter::stringURLSafe($data['title']);
-//                }
-//
-//                $content = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
-//
-//                if ($content->load(['alias' => $data['alias'], 'catid' => $data['catid']])) {
-//                    $msg = Text::_('COM_CONTENT_SAVE_WARNING');
-//                }
-//
-//                [$title, $alias] = $this->generateNewTitle($data['catid'], $data['alias'], $data['title']);
-//                $data['alias'] = $alias;
-//
-//                if (isset($msg)) {
-//                    Factory::getApplication()->enqueueMessage($msg, 'warning');
-//                }
-//            }
-//        }
-
-        // Alter the title for save as copy
+        // Alter the name for save as copy
         if ($input->get('task') == 'save2copy') {
             $origTable = clone $this->getTable();
             $origTable->load($input->getInt('id'));
 
-            if ($data['title'] == $origTable->title) {
-                [$title, $alias] = $this->generateNewTitle($data['parent_id'], $data['alias'], $data['title']);
-                $data['title'] = $title;
+            if ($data['name'] == $origTable->name) {
+                [$name, $alias] = $this->generateNewTitle(
+                    $data['parent_id'],
+                    $data['alias'],
+                    $data['name']);
+                $data['name'] = $name;
                 $data['alias'] = $alias;
             } else {
                 if ($data['alias'] == $origTable->alias) {
@@ -575,7 +548,10 @@ class GalleryModel extends AdminModel
 //                $msg = Text::_('COM_CONTENT_SAVE_WARNING');
 //            }
 
-            [$title, $alias] = $this->generateNewTitle($data['catid'], $data['alias'], $data['name']);
+            [$name, $alias] = $this->generateNewTitle(
+                $data['parent_id'],
+                $data['alias'],
+                $data['name']);
             $data['alias'] = $alias;
 
             if (isset($msg))
@@ -977,14 +953,14 @@ class GalleryModel extends AdminModel
             $this->table->lft      = null;
             $this->table->rgt      = null;
 
-            //? title -> ? name
-            // Alter the title & alias
-            [$title, $alias] = $this->generateNewTitle(
+            //? name -> ? name
+            // Alter the name & alias
+            [$name, $alias] = $this->generateNewTitle(
                 $this->table->parent_id,
                 $this->table->alias,
-                $this->table->title,
+                $this->table->name,
             );
-            $this->table->title = $title;
+            $this->table->name = $name;
             $this->table->alias = $alias;
 
             // Unpublish because we are making a copy
@@ -1184,27 +1160,27 @@ class GalleryModel extends AdminModel
     /**/
 
     /**
-     * Method to change the title & alias.
+     * Method to change the gallery name and alias.
      *
      * @param   integer  $parent_id  The id of the parent.
      * @param   string   $alias      The alias.
-     * @param   string   $title      The title.
+     * @param   string   $name      The name.
      *
-     * @return  array    Contains the modified title and alias.
+     * @return  array    Contains the modified name and alias.
      *
      * @since   5.1.0     */
-    //? title -> ? name
-    protected function generateNewTitle($parent_id, $alias, $title)
+    //? name -> ? name
+    protected function generateNewTitle($parent_id, $alias, $name)
     {
-        // Alter the title & alias
+        // Alter the name & alias
         $table = $this->getTable();
 
         while ($table->load(['alias' => $alias])) {
-            $title = StringHelper::increment($title);
+            $name = StringHelper::increment($name);
             $alias = StringHelper::increment($alias, 'dash');
         }
 
-        return [$title, $alias];
+        return [$name, $alias];
     }
 
     /**

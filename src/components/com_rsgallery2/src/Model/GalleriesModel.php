@@ -207,7 +207,7 @@ class GalleriesModel extends ListModel
                         $image->gallery_id    = $gallery->id;
                         $image->isHasNoImages = false;
 
-                        $this->AssignImagePaths($image);
+                        $this->assignImagePaths($image);
 
                         $gallery->UrlThumbFile = $image->UrlThumbFile;
                     }
@@ -221,10 +221,10 @@ class GalleriesModel extends ListModel
                 }
 
                 // Info about sub galleries
-                $this->AssignSubGalleryList($gallery);
+                $this->assignSubGalleryList($gallery);
 
                 // view single gallery on click
-                $this->AssignGalleryUrl($gallery);
+                $this->assignGalleryUrl($gallery);
 
                 // view single gallery as slideshow on click
                 $this->assignSlideshowUrl($gallery);
@@ -353,7 +353,7 @@ class GalleriesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignImagePaths($image)
+    public function assignImagePaths($image)
     {
         try {
             // ToDo: watermarked file
@@ -385,7 +385,7 @@ class GalleriesModel extends ListModel
      * @throws \Exception
      * @since  5.1.0
      */
-    public function AssignSubGalleryList($gallery)
+    public function assignSubGalleryList($gallery)
     {
         try {
             $gallery->subGalleryList = []; // fall back
@@ -415,7 +415,7 @@ class GalleriesModel extends ListModel
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: assignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -468,7 +468,7 @@ class GalleriesModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignGalleryUrl($gallery)
+    public function assignGalleryUrl($gallery)
     {
         try {
             $gallery->UrlGallery = ''; // fall back
@@ -495,7 +495,7 @@ class GalleriesModel extends ListModel
             // ToDo: watermarked file
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'GalleriesModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: assignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

@@ -275,6 +275,8 @@ class Galleriesj3xModel extends ListModel
             foreach ($galleries as $gallery) {
                 // $ImagePaths = new ImagePathsData ($gallery->id);
 
+                //--- thumb image -----------------------------------
+
                 // Random image
                 if ($gallery->thumb_id == 0) {
                     $gallery->thumb_id = $this->RandomImageId($gallery->id);
@@ -289,7 +291,7 @@ class Galleriesj3xModel extends ListModel
                         $image->gallery_id    = $gallery->id;
                         $image->isHasNoImages = false;
 
-                        $this->AssignImagePaths($image);
+                        $this->assignImagePaths($image);
 
                         $gallery->UrlThumbFile = $image->UrlThumbFile;
                     }
@@ -302,14 +304,18 @@ class Galleriesj3xModel extends ListModel
                     $gallery->UrlThumbFile = ''; //not existent: $image->UrlThumbFile;
                 }
 
-                // Info about sub galleries
-                $this->AssignSubGalleryList($gallery);
+                //--- gallery url -----------------------------------
 
-                // view single gallery on click
-                $this->AssignGalleryUrl($gallery);
+                $this->assignGalleryUrl($gallery);
 
-                // view single gallery on click
+                //--- slideshow url -----------------------------------
+
                 $this->assignSlideshowUrl($gallery);
+
+                //--- sub galleries -----------------------------------
+
+                $this->assignSubGalleryList($gallery);
+
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -422,7 +428,7 @@ class Galleriesj3xModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignImagePaths($image)
+    public function assignImagePaths($image)
     {
         try {
             // ToDo: watermarked file
@@ -454,10 +460,12 @@ class Galleriesj3xModel extends ListModel
      * @throws \Exception
      * @since  5.1.0
      */
-    public function AssignSubGalleryList($gallery)
+    public function assignSubGalleryList($gallery)
     {
         try {
             $gallery->subGalleryList = []; // fall back
+
+            //--- get lsit from DB --------------------------------------
 
             // Select parent and child galleries
             $db = $this->getDatabase();
@@ -465,29 +473,71 @@ class Galleriesj3xModel extends ListModel
             $query = $db->createQuery();
 
             $query
-                ->select('id, name')
-                ->from($db->quoteName('#__rsg2_galleries'))
-                ->where('parent_id = ' . (int)$gallery->id);
+                ->select('a.id as id, a.name as name, a.created as created, a.thumb_id as thumb_id')
+                ->from($db->quoteName('#__rsg2_galleries', 'a'))
+                ->where('a.parent_id = ' . (int)$gallery->id)
+                ->select('ua.name AS author_name')
+                ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
+            $query->where('a.published = 1');
 
             $db->setQuery($query);
-            $subGalleries = $db->loadObjectList();
+            $dbSubGalleries = $db->loadObjectList();
 
-            foreach ($subGalleries as $subGallery) {
-                $subData = (object)[];
+            //--- assign data --------------------------------------
 
-                $subData->id   = $subGallery->id;
-                $subData->name = $subGallery->name;
+            foreach ($dbSubGalleries as $subGallery) {
 
-                $subData->imgCount = $this->imageCount($subGallery->id);
+                $subGallery->image_count = $this->imageCount($subGallery->id);
 
-                // view single sub gallery on click
-                $this->AssignGalleryUrl($subData);
+                //--- sub thumb image -----------------------------------
 
-                $gallery->subGalleryList[] = $subData;
+                // Random image
+                if ($subGallery->thumb_id == 0) {
+                    $subGallery->thumb_id = $this->RandomImageId($subGallery->id);
+                }
+
+                // gallery has image
+                if ($subGallery->thumb_id > 0) {
+                    //$image = new \stdClass();
+                    $image = $this->ImageById($subGallery->thumb_id);
+
+                    if (!empty($image)) {
+                        $image->gallery_id    = $subGallery->id;
+                        $image->isHasNoImages = false;
+
+                        $this->assignImagePaths($image);
+
+                        $subGallery->UrlThumbFile = $image->UrlThumbFile;
+                    }
+                    // Replace image name with gallery name
+                } else {
+                    // gallery has NO image -> Create dummy data
+                    // toDo: there is an example for dummy link
+                    $subGallery->isHasNoImages = true;
+
+                    $subGallery->UrlThumbFile = ''; //not existent: $image->UrlThumbFile;
+                }
+
+                //--- sub gallery url -----------------------------------
+
+                $this->assignGalleryUrl($subGallery);
+
+                //--- slideshow url -----------------------------------
+
+                $this->assignSlideshowUrl($subGallery);
+
+                //--- sub sub .. galleries -----------------------------------
+
+                $this->assignSubGalleryList($subGallery);
+
+
+                // Add to array
+                $gallery->subGalleryList[] = $subGallery;
             }
+
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'Galleriesj3xModel: AssignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: assignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -541,7 +591,7 @@ class Galleriesj3xModel extends ListModel
      *
      * @since 4.5.0.0
      */
-    public function AssignGalleryUrl($gallery)
+    public function assignGalleryUrl($gallery)
     {
         try {
             $gallery->UrlGallery = ''; // fall back
@@ -571,7 +621,7 @@ class Galleriesj3xModel extends ListModel
             // ToDo: watermarked file
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'Galleriesj3xModel: AssignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: assignGalleryUrl: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();

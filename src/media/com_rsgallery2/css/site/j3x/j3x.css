@@ -611,3 +611,44 @@ div.rsg_sem_inl_Nav div div.pagination ul li {
     margin: 0px auto;
 
 }
+
+/*--- new 2026.07.10 -------------------------------------*/
+
+.rsg_subgalleries_area {
+//  margin-left: 3px;
+  padding-left: 5px;
+
+  display: flex;
+  flex-direction: column;
+
+//  background-color: yellow; // #f9f9f9;
+  //border: 1px green solid;
+  gap: 1ch;
+
+  opacity: 1;
+}
+
+.rsg_subgalleries {
+
+  border: 1px #999999 solid;
+  padding: 4px;
+  margin: 0px;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1ch;
+
+//  background-color: green; // #f9f9f9;
+}
+
+.rsg_subgalleries_title {
+  text-align: left;
+
+//  background-color: red; // #f9f9f9;
+}
+
+
+
