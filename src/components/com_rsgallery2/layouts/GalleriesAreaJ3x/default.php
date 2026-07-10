@@ -164,7 +164,7 @@ $galStatus = '';
 
                     <div class="rsg2_details">
 
-                        <?php if ($params->galleries_show_slideshow) : ?>
+                        <?php if ($params->galleries_show_slideshow && $gallery->image_count > 0) : ?>
                             <div class="rsg2_slideshow_link">
                                 <a href="<?php echo $gallery->UrlSlideshow; ?>">
                                     <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
@@ -201,8 +201,11 @@ $galStatus = '';
                         <?php if ($subIdx > 0) : ?>
                             ,&nbsp;
                         <?php endif; ?>
-                        <?php echo $subGallery->name . ' (' . $subGallery->imgCount . ')'; ?>
-
+                        <span class="rsg2_details">
+                            <a href="<?php echo $subGallery->UrlGallery; ?>">
+                                <?php echo $subGallery->name . ' (' . $subGallery->imgCount . ')'; ?>
+                            </a>
+                        </span>
                     <?php endforeach; ?>
                 <?php endif; ?>
 
