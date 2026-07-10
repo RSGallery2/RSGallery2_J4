@@ -1,0 +1,258 @@
+//--- image wall --------------------------------------
+
+// blend info
+// https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/blend-mode
+
+/*
+  Html defines a table where images blend into each other on a small border
+  This leads to shared border by blend type using both images
+
+  Each following image is moved a bit to the left and above
+  to create the mixed border. The top row and the left column
+  images do not need to be moved
+ */
+
+
+// ToDo: Prevent actual white images added to avoid black/grey areas,
+//       ? In between area with black background ?
+
+// ToDo: Define border width a) in SCSS b) from PHP
+$blend-border-width: -50px;
+
+//--- 02 overlapping black ------------------------------------------
+
+// Black background is needed for the blending by additive colors
+// Disadvantage: On missing images in the area these parts are show as black
+
+.image-wall-overlapping-black {
+
+  background-color: black;
+
+  .grid-container {
+    display: grid;
+    // column width ?
+    grid-template-columns: repeat(4, 180px);
+    //grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+    //grid-template-columns: repeat(auto-fit, minmax(8em, 100%));
+    //grid-template-columns: repeat(4, minmax(8em, 100%));
+    //grid-auto-rows: max-content;
+    // justify-content: center;
+
+    //grid-auto-flow: row;
+
+    // No gap, overlapping by margin
+    gap: 0;
+    padding: 50px;
+  }
+
+  .overlapping-img {
+    // 4 images per row
+    width: calc(25% + 5px);
+    height: auto;
+    //height: 100%;
+    //height: 335px;
+    //height: 255px;
+    //height: 155px;
+    //height: calc-size(min-content, size);
+
+    //max-height: 255px;
+    //max-height: 220px;
+    //max-height: 180px;
+    //max-height: 185px;
+
+    object-fit: cover;
+    //object-fit: scale-down;
+    //object-fit: contain;
+    //object-fit: fill;
+    //object-fit: none;
+
+    //display: block;
+    //width: 100%;
+    //height: 6.5em;
+    box-shadow: 0 0 0 1px #000;
+    //object-fit: cover;
+
+    // Negative margin for overlapping
+    margin-right: -10px;
+    margin-bottom: -10px;
+
+    // screen: additive mixture: The colors become more brighter. Needs black background
+    mix-blend-mode: screen;
+
+    position: relative;
+    transition: transform 0.3s ease;
+
+    //background-color: white;
+
+  }
+
+  //.overlapping-img.overlapping-img-white {
+  //  //object-fit: fill;
+  //  object-fit: contain;
+  //}
+  //
+  // 320 640 960 1280
+
+  // Smaller width: show three images per row
+  @media (max-width: 960px) {
+    .overlapping-img {
+      width: calc(33% + 9px);
+    }
+  }
+
+  // Smaller width: show two images per row
+  @media (max-width: 640px) {
+    .overlapping-img {
+      width: calc(50% + 3px);
+    }
+  }
+
+  //// On hover show image bigger and with border
+  //.overlapping-img:hover {
+  //  transform: scale(1.15);
+  //  // original colors
+  //  mix-blend-mode: normal;
+  //  z-index: 20;
+  //
+  //  border: 3px solid lightgrey;
+  //}
+
+}
+
+//--- 04 overlapping flex ------------------------------------------
+
+// Image arrangement like in grid but with flex
+// blend mode hard-light on grey background
+
+.image-wall-overlapping-grey {
+  display: flex;
+  flex-wrap: wrap;
+
+  background-color: grey;
+
+  img {
+    // 4 images per row
+    width: calc(25% + 7px);
+    height: auto;
+    object-fit: cover;
+
+    // Negative margin for overlapping
+    margin-right: -10px;
+    margin-bottom: -10px;
+
+    // hard-light (needs grey background)
+    mix-blend-mode: hard-light;
+    // mix-blend-mode: screen; // needs black background
+  }
+
+  // Smaller width: show three images per row
+  @media (max-width: 960px) {
+    img {
+      width: calc(33% + 10px);
+    }
+  }
+
+  // Smaller width: show two images per row
+  @media (max-width: 640px) {
+    img {
+      width: calc(50% + 4px);
+    }
+  }
+
+  // On hover show image bigger and with border
+  img:hover {
+    transform: scale(1.5);
+    // original colors
+    mix-blend-mode: normal;
+    z-index: 20;
+
+    border: 3px solid lightgrey;
+  }
+
+}
+
+//--- 03 Standard image grid ------------------------------------------
+
+// Image arrangement like with flex
+// Gap instead of overlapping
+
+.image-wall-rectangle-plain {
+  display: flex;
+  flex-wrap: wrap;
+  //  gap: 10px;
+  gap: 10px;
+
+
+  img {
+    // 4 images per row
+    width: calc(25% - 8px);
+    height: auto;
+    object-fit: cover;
+
+    box-shadow: 2px 2px 1px #888888;
+  }
+
+  // Smaller width: show three images per row
+  @media (max-width: 960px) {
+    img {
+      width: calc(33% - 4px);
+    }
+  }
+
+  // Smaller width: show two images per row
+  @media (max-width: 640px) {
+    img {
+      width: calc(50% - 7px);
+    }
+  }
+
+  // On hover show image bigger and with border
+  img:hover {
+    transform: scale(1.5);
+    // original colors
+    mix-blend-mode: normal;
+    z-index: 20;
+
+    border: 3px solid lightgrey;
+  }
+
+}
+
+/*
+
+masonry example
+
+.grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-rows: masonry;
+}
+
+//<div class="grid">
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//</div>
+*/
+
+/* Names of image layouts for galleries
+Thumbnails
+Masonry
+Mosaic
+Slideshow
+Image Browser
+Blog Style
+Carousel
+
+https://help.10web.io/hc/en-us/articles/360016081431-Choosing-Layouts-for-Galleries
+*/
+
+

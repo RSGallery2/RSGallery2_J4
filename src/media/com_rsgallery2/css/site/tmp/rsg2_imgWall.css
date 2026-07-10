@@ -1,0 +1,134 @@
+/*
+  Html defines a table where images blend into each other on a small border
+  This leads to shared border by blend type using both images
+
+  Each following image is moved a bit to the left and above
+  to create the mixed border. The top row and the left column
+  images do not need to be moved
+ */
+.image-wall-overlapping-black {
+  background-color: black;
+}
+.image-wall-overlapping-black .grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 180px);
+  gap: 0;
+  padding: 50px;
+}
+.image-wall-overlapping-black .overlapping-img {
+  width: calc(25% + 5px);
+  height: auto;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px #000;
+  margin-right: -10px;
+  margin-bottom: -10px;
+  mix-blend-mode: screen;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+@media (max-width: 960px) {
+  .image-wall-overlapping-black .overlapping-img {
+    width: calc(33% + 9px);
+  }
+}
+@media (max-width: 640px) {
+  .image-wall-overlapping-black .overlapping-img {
+    width: calc(50% + 3px);
+  }
+}
+
+.image-wall-overlapping-grey {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: grey;
+}
+.image-wall-overlapping-grey img {
+  width: calc(25% + 7px);
+  height: auto;
+  object-fit: cover;
+  margin-right: -10px;
+  margin-bottom: -10px;
+  mix-blend-mode: hard-light;
+}
+@media (max-width: 960px) {
+  .image-wall-overlapping-grey img {
+    width: calc(33% + 10px);
+  }
+}
+@media (max-width: 640px) {
+  .image-wall-overlapping-grey img {
+    width: calc(50% + 4px);
+  }
+}
+.image-wall-overlapping-grey img:hover {
+  transform: scale(1.5);
+  mix-blend-mode: normal;
+  z-index: 20;
+  border: 3px solid lightgrey;
+}
+
+.image-wall-rectangle-plain {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.image-wall-rectangle-plain img {
+  width: calc(25% - 8px);
+  height: auto;
+  object-fit: cover;
+  box-shadow: 2px 2px 1px #888888;
+}
+@media (max-width: 960px) {
+  .image-wall-rectangle-plain img {
+    width: calc(33% - 4px);
+  }
+}
+@media (max-width: 640px) {
+  .image-wall-rectangle-plain img {
+    width: calc(50% - 7px);
+  }
+}
+.image-wall-rectangle-plain img:hover {
+  transform: scale(1.5);
+  mix-blend-mode: normal;
+  z-index: 20;
+  border: 3px solid lightgrey;
+}
+
+/*
+
+masonry example
+
+.grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-rows: masonry;
+}
+
+//<div class="grid">
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//<div class="item"></div>
+//</div>
+*/
+/* Names of image layouts for galleries
+Thumbnails
+Masonry
+Mosaic
+Slideshow
+Image Browser
+Blog Style
+Carousel
+
+https://help.10web.io/hc/en-us/articles/360016081431-Choosing-Layouts-for-Galleries
+*/
+
+/*# sourceMappingURL=rsg2_imgWall.css.map */
