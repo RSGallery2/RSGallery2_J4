@@ -480,6 +480,9 @@ class Galleriesj3xModel extends ListModel
 
                 $subData->imgCount = $this->imageCount($subGallery->id);
 
+                // view single sub gallery on click
+                $this->AssignGalleryUrl($subData);
+
                 $gallery->subGalleryList[] = $subData;
             }
         } catch (\RuntimeException $e) {

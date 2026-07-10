@@ -110,7 +110,7 @@ if ($cols < 2) {
 
         <div class="rsg2-clr"></div>
 
-        <?php if ($params->gallery_show_slideshow) : ?>
+        <?php if ($params->gallery_show_slideshow && count ($images) > 0) : ?>
             <div class="rsg2_slideshow_link">
                 <a href="<?php echo $gallery->UrlSlideshow; ?>">
                     <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
@@ -124,6 +124,7 @@ if ($cols < 2) {
             echo Text::_("Gallery name not defined in this situation");
             ?> </h2>
     <?php endif; ?>
+
     <table id="rsg2-thumbsList">
         <tbody>
 

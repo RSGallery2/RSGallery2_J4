@@ -101,7 +101,7 @@ if ($cols < 2) {
 
         <div class="rsg2-clr"></div>
 
-        <?php if ($params->gallery_show_slideshow) : ?>
+        <?php if ($params->gallery_show_slideshow && count ($images) > 0) : ?>
             <div class="rsg2_slideshow_link">
                 <a href="<?php echo $gallery->UrlSlideshow; ?>">
                     <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>

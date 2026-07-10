@@ -81,7 +81,7 @@ if (!empty($image->isHasNoImages)) {
     <hr>
 <?php endif; ?>
 
-<?php if (true || $params->galleries_show_slideshow) : ?>
+<?php if (true || $params->galleries_show_slideshow && !empty($image)) : ?>
     <div class="rsg2_slideshow_link">
         <a href="<?php echo $gallery->UrlSlideshow; ?>">
             <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
