@@ -134,16 +134,16 @@ $galStatus = '';
     <?php endif; ?>
 
     <?php foreach ($galleries as $idx => $gallery) : ?>
-    <?php
-    //          if ($idx > $this->params->Nr of items ) {
-    //              break;
-    //          }
-    ?>
+        <?php
+        //          if ($idx > $this->params->Nr of items ) {
+        //              break;
+        //          }
+        ?>
 
-    <div class="rsg_galleryblock system-unpublished">
-        <div class="rsg_galleryblock_first_gallery ">
-            <!--            <div class="rsg2-galleryList-status">--><?php //echo $galStatus ?><!--</div>-->
-            <div class="rsg2-galleryList-thumb-box">
+        <div class="rsg_galleryblock system-unpublished">
+            <div class="rsg_galleryblock_first_gallery ">
+                <!--            <div class="rsg2-galleryList-status">--><?php //echo $galStatus ?><!--</div>-->
+                <div class="rsg2-galleryList-thumb-box">
                 <span class="img-shadow">
                     <a href="<?php echo $gallery->UrlGallery ?>">
                         <img class="rsg2-galleryList-thumb"
@@ -151,57 +151,58 @@ $galStatus = '';
                              alt="<?php echo $gallery->name ?>">
                     </a>
                 </span>
-            </div>
-
-            <div class="rsg2-galleryList-text">
-                <div>
-                    <?php if ($params->galleries_show_title) : ?>
-                        <span><?php echo $gallery->name ?></span>
-                        <span class="rsg2-galleryList-newImages"></span>
-                    <?php endif; ?>
                 </div>
 
-                <div class="rsg_gallery_details">
-                    <div class="rsg2_details">
-
-                        <?php if ($params->galleries_show_slideshow && $gallery->image_count > 0) : ?>
-                            <div class="rsg2_slideshow_link">
-                                <a href="<?php echo $gallery->UrlSlideshow; ?>">
-                                    <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
-                                </a>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($params->galleries_show_owner && !empty($gallery->author_name)) : ?>
-                            <div>
-                                <?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $gallery->author_name ?>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($params->galleries_show_size) : ?>
-                            <div><?php echo Text::_('COM_RSGALLERY2_SIZE') . ': ' . $gallery->image_count ?></div>
-                        <?php endif; ?>
-                        <?php if ($params->galleries_show_date) : ?>
-                            <div><?php echo Text::_('COM_RSGALLERY2_CREATED') . ': ' . $gallery->created; ?></div>
+                <div class="rsg2-galleryList-text">
+                    <div>
+                        <?php if ($params->galleries_show_title) : ?>
+                            <span><?php echo $gallery->name ?></span>
+                            <span class="rsg2-galleryList-newImages"></span>
                         <?php endif; ?>
                     </div>
-                    <?php if ($params->galleries_show_description) : ?>
-                        <?php if (!empty($gallery->description)) : ?>
-                            <div class="rsg2-galleryList-description">
-                                <div><?php echo $gallery->description ?></div>
-                            </div>
+
+                    <div class="rsg_gallery_details">
+                        <div class="rsg2_details">
+
+                            <?php if ($params->galleries_show_slideshow && $gallery->image_count > 0) : ?>
+                                <div class="rsg2_slideshow_link">
+                                    <a href="<?php echo $gallery->UrlSlideshow; ?>">
+                                        <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($params->galleries_show_owner && !empty($gallery->author_name)) : ?>
+                                <div>
+                                    <?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $gallery->author_name ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($params->galleries_show_size) : ?>
+                                <div><?php echo Text::_('COM_RSGALLERY2_SIZE') . ': ' . $gallery->image_count ?></div>
+                            <?php endif; ?>
+                            <?php if ($params->galleries_show_date) : ?>
+                                <div><?php echo Text::_('COM_RSGALLERY2_CREATED') . ': ' . $gallery->created; ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php if ($params->galleries_show_description) : ?>
+                            <?php if (!empty($gallery->description)) : ?>
+                                <div class="rsg2-galleryList-description">
+                                    <div><?php echo $gallery->description ?></div>
+                                </div>
+                            <?php endif; ?>
                         <?php endif; ?>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
+
+            <?php //--- sub galleries ------------------------------------------------ ?>
+
+            <?php if (count($gallery->subGalleryList) > 0) {
+                display_subGalleries($gallery->subGalleryList, $params);
+            }
+            ?>
         </div>
 
-        <?php //--- sub galleries ------------------------------------------------ ?>
-
-        <?php if (count($gallery->subGalleryList) > 0)
-            display_subGalleries ($gallery->subGalleryList, $params);
-         ?>
-    </div>
-
-    <div class="rsg2-clr"></div>
+        <div class="rsg2-clr"></div>
     <?php endforeach; ?>
 
     <div class="pagination">
@@ -217,78 +218,83 @@ $galStatus = '';
 
 
 <?php
-function display_subGalleries ($subGalleryList, $params)
+function display_subGalleries($subGalleryList, $params)
 {
     ?>
+    <div class="rsg_subgalleries_area">
 
-    <span class="rsg_subgalleries_title">
+        <span class="rsg_subgalleries_title">
             <?php echo Text::_('COM_RSGALLERY2_SUBGALLERIES') . ': ' ?><br \>
         </span>
 
-    <div class="rsg_subgalleries">
-        <?php foreach ($subGalleryList as $subIdx => $subGallery) : ?>
+        <div class="rsg_subgalleries">
 
-            <!--            <div class="rsg2-galleryList-status">--><?php //echo $galStatus ?><!--</div>-->
-            <div class="rsg2-galleryList-thumb-box">
-                <div>
-                    <?php if ($params->galleries_show_title) : ?>
-                        <span><?php echo $subGallery->name ?></span>
-                        <span class="rsg2-galleryList-newImages"></span>
-                    <?php endif; ?>
-                </div>
-                <span class="img-shadow">
-                    <a href="<?php echo $subGallery->UrlGallery ?>">
-                        <img class="rsg2-galleryList-thumb"
-                             src="<?php echo $subGallery->UrlThumbFile ?>"
-                             alt="<?php echo $subGallery->name ?>">
-                    </a>
-                </span>
-            </div>
+            <?php foreach ($subGalleryList as $subIdx => $subGallery) : ?>
 
-            <div class="rsg2-galleryList-text">
-                <div class="rsg_gallery_details">
-
-                    <div class="rsg2_details">
-
-                        <?php if ($params->galleries_show_slideshow && $subGallery->image_count > 0) : ?>
-                            <div class="rsg2_slideshow_link">
-                                <a href="<?php echo $subGallery->UrlSlideshow; ?>">
-                                    <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
-                                </a>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($params->galleries_show_owner && !empty($subGallery->author_name)) : ?>
-                            <div>
-                                <?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $subGallery->author_name ?>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($params->galleries_show_size) : ?>
-                            <div><?php echo Text::_('COM_RSGALLERY2_SIZE') . ': ' . $subGallery->image_count ?></div>
-                        <?php endif; ?>
-                        <?php if ($params->galleries_show_date) : ?>
-                            <div><?php echo Text::_('COM_RSGALLERY2_CREATED') . ': ' . $subGallery->created; ?></div>
+                <!--            <div class="rsg2-galleryList-status">--><?php //echo $galStatus ?><!--</div>-->
+                <div class="rsg2-galleryList-thumb-box">
+                    <div>
+                        <?php if ($params->galleries_show_title) : ?>
+                            <span><?php echo $subGallery->name ?></span>
+                            <span class="rsg2-galleryList-newImages"></span>
                         <?php endif; ?>
                     </div>
-                    <?php if ($params->galleries_show_description) : ?>
-                        <?php if (!empty($subGallery->description)) : ?>
-                            <div class="rsg2-galleryList-description">
-                                <div><?php echo $subGallery->description ?></div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endif; ?>
+                    <span class="img-shadow">
+                        <a href="<?php echo $subGallery->UrlGallery ?>">
+                            <img class="rsg2-galleryList-thumb"
+                                 src="<?php echo $subGallery->UrlThumbFile ?>"
+                                 alt="<?php echo $subGallery->name ?>">
+                        </a>
+                    </span>
                 </div>
-            </div>
 
-            <?php //--- sub galleries ------------------------------------------------ ?>
+                <div class="rsg2-galleryList-text">
+                    <div class="rsg_gallery_details">
 
-            <?php if (count($subGallery->subGalleryList) > 0)
-                display_subGalleries ($subGallery->subGalleryList, $params);
-            ?>
+                        <div class="rsg2_details">
 
-        <?php endforeach; ?>
+                            <?php if ($params->galleries_show_slideshow && $subGallery->image_count > 0) : ?>
+                                <div class="rsg2_slideshow_link">
+                                    <a href="<?php echo $subGallery->UrlSlideshow; ?>">
+                                        <?php echo ' ' . Text::_('COM_RSGALLERY2_SLIDESHOW'); ?>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($params->galleries_show_owner && !empty($subGallery->author_name)) : ?>
+                                <div>
+                                    <?php echo Text::_('COM_RSGALLERY2_OWNER') . ': ' . $subGallery->author_name ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($params->galleries_show_size) : ?>
+                                <div><?php echo Text::_('COM_RSGALLERY2_SIZE') . ': ' . $subGallery->image_count ?></div>
+                            <?php endif; ?>
+                            <?php if ($params->galleries_show_date) : ?>
+                                <div><?php echo Text::_('COM_RSGALLERY2_CREATED') . ': ' . $subGallery->created; ?></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php if ($params->galleries_show_description) : ?>
+                            <?php if (!empty($subGallery->description)) : ?>
+                                <div class="rsg2-galleryList-description">
+                                    <div><?php echo $subGallery->description ?></div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
 
+                <?php //--- sub galleries ------------------------------------------------ ?>
+
+                <?php if (count($subGallery->subGalleryList) > 0) {
+                    display_subGalleries($subGallery->subGalleryList, $params);
+                }
+                ?>
+
+            <?php endforeach; ?>
+
+        </div>
     </div>
 
-<?php
+    <?php
 }
+
 ?>

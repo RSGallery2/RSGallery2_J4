@@ -49,7 +49,7 @@ if (!isset($images)) {
 
 $noImageUrl     = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl     = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
-$plane_whiteUrl = URI::root() . '/media/com_rsgallery2/images/pure_white.jpg';
+$plane_whiteUrl = URI::root() . '/media/com_rsgallery2/images/pure_white.jpg'; // ToDo: pure_black.jpg ?
 
 if (!empty($images)) {
     //--- assign dummy white images  -----------------------------------
