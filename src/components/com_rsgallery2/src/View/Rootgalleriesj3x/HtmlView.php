@@ -104,6 +104,11 @@ class HtmlView extends BaseHtmlView
         // ToDo: use for limit  $this->menuParams->galleries_count in
         $state            =
         $this->state = $model->getState();
+
+        // J3x old parameter for limit
+        $limit = $input->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
+        $state->set('list.limit', $limit);
+
         $this->pagination = $model->getPagination();
         $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
         $user = $app->getIdentity();
@@ -124,10 +129,6 @@ class HtmlView extends BaseHtmlView
         $this->isDebugSite   = $this->params->get('isDebugSite') || $input->getBool('isDebugSite');
         //$this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
         $this->isDevelopSite = $this->params->get('isDevelop') || $input->getBool('isDevelop');
-
-        // J3x old parameter for limit
-        $limit = $input->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
-        $state->set('list.limit', $limit);
 
         // Galleries with parent ID = 0 / ? gallery id ?
         $this->items = $model->getItems();
