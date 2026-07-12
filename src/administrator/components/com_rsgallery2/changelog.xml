@@ -3,6 +3,30 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
+		<version>5.3.0</version>
+		<date>2026-07-13</date>
+		<fix>
+			<item>[J3x] Root galleryíes view: Pagination regards config setting</item>
+			<item>[J3x] Root galleryíes view: Show slideshow link only on galleries when images exists</item>
+			<item>Commands "rotate degrees, flip" in 'edit image' or 'Add image properties' views are not ignored any more</item>
+			<item></item>
+		</fix>
+		<change>
+			<item>used jrector to apply j!5 code requirements</item>
+			<item></item>
+		</change>
+		<addition>
+			<item>[J3x] Root galleryíes view: Sub galleries will be shown in same row as parent on the right side</item>
+			<item>API (webservices) for upload, images, galleries and more</item>
+			<item></item>
+		</addition>
+		<note>
+			<item>Minimum Joomla version is now J!5x</item>
+		</note>
+	</changelog>
+	<changelog>
+		<element>com_rsgallery2</element>
+		<type>component</type>
 		<version>5.1.0</version>
 		<date>2025-07-16</date>
 		<fix>

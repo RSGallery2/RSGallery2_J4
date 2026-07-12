@@ -1,3 +1,4 @@
 
-*.php        eol=lf
-*.css         eol=lf
+*.php eol=lf
+*.css eol=lf
+*.ini eol=lf
