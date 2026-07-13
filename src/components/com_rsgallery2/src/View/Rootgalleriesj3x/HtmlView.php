@@ -12,22 +12,23 @@ namespace Rsgallery2\Component\Rsgallery2\Site\View\Rootgalleriesj3x;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
-use Joomla\Registry\Registry;
 use Joomla\CMS\User\User;
+use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel;
 
 //use Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel;
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -59,7 +60,8 @@ class HtmlView extends BaseHtmlView
      * The page parameters
      *
      * @var    Registry|null
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     protected $params = null;
 
     /**
@@ -97,37 +99,28 @@ class HtmlView extends BaseHtmlView
         $input = $app->getInput();
 
         $this->galleryId = $input->get('id', 0, 'INT');
-        /* @var Rootgalleriesj3xModel $model */
-        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel $model */
+
+        /** @var Rootgalleriesj3xModel $model */
         $model = $this->getModel();
 
         // ToDo: use for limit  $this->menuParams->galleries_count in
-        $state            =
+        $state =
         $this->state = $model->getState();
 
-        // J3x old parameter for limit
-        $limit = $input->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
-        $state->set('list.limit', $limit);
-
-        $this->pagination = $model->getPagination();
-        $this->user       = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-        $user = $app->getIdentity();
-
-        $test   = $app->getParams();
         $params =
         $this->params = $this->state->get('params');
 
-//      // ToDo: may not be necessary but display
-//        $menuParams =
-//        $this->menuParams = $this->get('Rsg2MenuParams');
-//
-//      // Merge (overwrite) config parameter with menu parameter
-//      // wrong: $this->params = $menuParams->merge($this->params);
-//      $params = $this->params->merge($menuParams);
+        // Limit number of galleries shown by menu parameter
+        $limit = $params->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
+        $state->set('list.limit', $limit);
 
-        //$this->isDebugSite   = boolval($this->params->get('isDebugSite', $input->getBool('isDebugSite')));
+        $this->pagination = $model->getPagination();
+
+        $user =
+        $this->user = $app->getIdentity();
+
+        // Activate isDebugSite/isDevelopSite manual by URL
         $this->isDebugSite   = $this->params->get('isDebugSite') || $input->getBool('isDebugSite');
-        //$this->isDevelopSite = boolval($this->params->get('isDevelop', $input->getBool('isDevelop')));
         $this->isDevelopSite = $this->params->get('isDevelop') || $input->getBool('isDevelop');
 
         // Galleries with parent ID = 0 / ? gallery id ?

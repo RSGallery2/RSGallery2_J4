@@ -137,7 +137,7 @@ class HtmlView extends BaseHtmlView
         $layoutName = $this->getLayout();
 
         // Standard Joomla behaviour : Layout use file parallel to default.php layout
-        $layout = $input->getWord('layout', 'default');
+        $layout = $params->get('layout', 'default');
         if ($layout == 'default') {
             $this->setLayout($this->slides_layout);
         } else {
