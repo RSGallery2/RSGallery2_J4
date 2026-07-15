@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Image;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -93,7 +95,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel $model */
+        /** @var ImageModel $model */
         $model = $this->getModel();
 
         //--- config --------------------------------------------------------------------
@@ -115,7 +117,7 @@ class HtmlView extends BaseHtmlView
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
         $this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
-        $this->assoc = $this->get('Assoc');
+        $this->assoc = $model->getAssoc();
 
         // Check for errors.
         if (count($errors = $model->getErrors())) {
@@ -260,20 +262,15 @@ class HtmlView extends BaseHtmlView
             $cacheFileTime = is_file($filePath) ? filemtime($filePath) : time();
 
             // Url with time stamp
-            $imgUrl = $ImagePath->getDisplayUrl($this->item->name) . '?t=' . $cacheFileTime;
-        } else {
-            $ImagePathJ3x = new ImagePathsJ3xModel();
-
-            //--- time stamp for cache  ---------------------------------------
-
-            // create timestamp
-            $filePath      = $ImagePathJ3x->getDisplayPath($this->item->name);
-            $cacheFileTime = is_file($filePath) ? filemtime($filePath) : time();
-
-            // Url with time stamp
-            $imgUrl = $ImagePathJ3x->getDisplayUrl($this->item->name) . '?t=' . $cacheFileTime;
+            return $ImagePath->getDisplayUrl($this->item->name) . '?t=' . $cacheFileTime;
         }
+        $ImagePathJ3x = new ImagePathsJ3xModel();
+        //--- time stamp for cache  ---------------------------------------
+        // create timestamp
+        $filePath      = $ImagePathJ3x->getDisplayPath($this->item->name);
+        $cacheFileTime = is_file($filePath) ? filemtime($filePath) : time();
 
-        return $imgUrl;
+        // Url with time stamp
+        return $ImagePathJ3x->getDisplayUrl($this->item->name) . '?t=' . $cacheFileTime;
     }
 }

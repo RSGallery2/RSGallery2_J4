@@ -534,11 +534,11 @@ class GalleryModel extends AdminModel
         {
             if (Factory::getApplication()->get('unicodeslugs') == 1)
             {
-                $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['name']);
+                $data['alias'] = OutputFilter::stringURLUnicodeSlug($data['name']);
             }
             else
             {
-                $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['name']);
+                $data['alias'] = OutputFilter::stringURLSafe($data['name']);
             }
 
 //            $table_test = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
@@ -564,34 +564,26 @@ class GalleryModel extends AdminModel
 
         // Bind the data.
         if (!$table->bind($data)) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Check the data.
         if (!$table->check()) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Trigger the before save event.
         $result = Factory::getApplication()->triggerEvent($this->event_before_save, [$context, &$table, $isNew, $data]);
 
         if (\in_array(false, $result, true)) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // ToDo: getassoc / tag-> id
 
         // Store the data.
         if (!$table->store()) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Trigger the after save event.
@@ -599,16 +591,12 @@ class GalleryModel extends AdminModel
 
         // Rebuild the tree path.
         if (!$table->rebuildPath($table->id)) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Rebuild the paths of the menu item's children:
         if (!$table->rebuild($table->id, $table->lft, $table->level, $table->path)) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
 //        // ToDO:
@@ -722,9 +710,7 @@ class GalleryModel extends AdminModel
         $table = $this->getTable();
 
         if (!$table->rebuild()) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Clear the cache
@@ -750,9 +736,7 @@ class GalleryModel extends AdminModel
         $table = $this->getTable();
 
         if (!$table->saveorder($idArray, $lft_array)) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Clear the cache
@@ -840,10 +824,7 @@ class GalleryModel extends AdminModel
         if ($parentId) {
             if (!$this->table->load($parentId)) {
                 if ($error = $this->table->getError()) {
-                    // Fatal error
-                    $this->setError($error);
-
-                    return false;
+                    throw new \Exception($error);
                 }
                 // Non-fatal error
                 $this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
@@ -858,23 +839,18 @@ class GalleryModel extends AdminModel
             }
 
             if (!$canCreate) {
-                // Error since user cannot create in parent category
-                $this->setError(Text::_('COM_RSGALLERY2_BATCH_CANNOT_CREATE'));
-
-                return false;
+                throw new \Exception(Text::_('COM_RSGALLERY2_BATCH_CANNOT_CREATE'));
             }
         }
 
         // If the parent is 0, set it to the ID of the root item in the tree
         if (empty($parentId)) {
             if (!$parentId = $this->table->getRootId()) {
-                $this->setError($this->table->getError());
-                return false;
+                throw new \Exception($this->table->getError());
             }
             // Make sure we can create in root
             if (!$this->user->authorise('core.create', $extension)) {
-                $this->setError(Text::_('COM_RSGALLERY2_BATCH_CANNOT_CREATE'));
-                return false;
+                throw new \Exception(Text::_('COM_RSGALLERY2_BATCH_CANNOT_CREATE'));
             }
         }
 
@@ -890,9 +866,7 @@ class GalleryModel extends AdminModel
         try {
             $count = $db->loadResult();
         } catch (\RuntimeException $e) {
-            $this->setError($e->getMessage());
-
-            return false;
+            throw new \Exception($e->getMessage());
         }
 
         // Parent exists so let's proceed
@@ -905,10 +879,7 @@ class GalleryModel extends AdminModel
             // Check that the row actually exists
             if (!$this->table->load($pk)) {
                 if ($error = $this->table->getError()) {
-                    // Fatal error
-                    $this->setError($error);
-
-                    return false;
+                    throw new \Exception($error);
                 }
                 // Not fatal error
                 $this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
@@ -968,9 +939,7 @@ class GalleryModel extends AdminModel
 
             // Store the row.
             if (!$this->table->store()) {
-                $this->setError($this->table->getError());
-
-                return false;
+                throw new \Exception($this->table->getError());
             }
 
             // Get the new item ID
@@ -986,16 +955,12 @@ class GalleryModel extends AdminModel
 
         // Rebuild the hierarchy.
         if (!$this->table->rebuild()) {
-            $this->setError($this->table->getError());
-
-            return false;
+            throw new \Exception($this->table->getError());
         }
 
         // Rebuild the tree path.
         if (!$this->table->rebuildPath($this->table->id)) {
-            $this->setError($this->table->getError());
-
-            return false;
+            throw new \Exception($this->table->getError());
         }
 
         return $newIds;
@@ -1025,10 +990,7 @@ class GalleryModel extends AdminModel
         if ($parentId) {
             if (!$this->table->load($parentId)) {
                 if ($error = $this->table->getError()) {
-                    // Fatal error.
-                    $this->setError($error);
-
-                    return false;
+                    throw new \Exception($error);
                 }
                 // Non-fatal error.
                 $this->setError(Text::_('JGLOBAL_BATCH_MOVE_PARENT_NOT_FOUND'));
@@ -1043,20 +1005,14 @@ class GalleryModel extends AdminModel
             }
 
             if (!$canCreate) {
-                // Error since user cannot create in parent category
-                $this->setError(Text::_('COM_RSGALLERY2_BATCH_CANNOT_CREATE'));
-
-                return false;
+                throw new \Exception(Text::_('COM_RSGALLERY2_BATCH_CANNOT_CREATE'));
             }
 
             // Check that user has edit permission for every category being moved
             // Note that the entire batch operation fails if any category lacks edit permission
             foreach ($pks as $pk) {
                 if (!$this->user->authorise('core.edit', $extension . '.category.' . $pk)) {
-                    // Error since user cannot edit this category
-                    $this->setError(Text::_('COM_RSGALLERY2_BATCH_CANNOT_EDIT'));
-
-                    return false;
+                    throw new \Exception(Text::_('COM_RSGALLERY2_BATCH_CANNOT_EDIT'));
                 }
             }
         }
@@ -1069,10 +1025,7 @@ class GalleryModel extends AdminModel
             // Check that the row actually exists
             if (!$this->table->load($pk)) {
                 if ($error = $this->table->getError()) {
-                    // Fatal error
-                    $this->setError($error);
-
-                    return false;
+                    throw new \Exception($error);
                 }
                 // Not fatal error
                 $this->setError(Text::sprintf('JGLOBAL_BATCH_MOVE_ROW_NOT_FOUND', $pk));
@@ -1097,24 +1050,18 @@ class GalleryModel extends AdminModel
                 try {
                     $children = array_merge($children, (array)$db->loadColumn());
                 } catch (\RuntimeException $e) {
-                    $this->setError($e->getMessage());
-
-                    return false;
+                    throw new \Exception($e->getMessage());
                 }
             }
 
             // Store the row.
             if (!$this->table->store()) {
-                $this->setError($this->table->getError());
-
-                return false;
+                throw new \Exception($this->table->getError());
             }
 
             // Rebuild the tree path.
             if (!$this->table->rebuildPath()) {
-                $this->setError($this->table->getError());
-
-                return false;
+                throw new \Exception($this->table->getError());
             }
         }
 

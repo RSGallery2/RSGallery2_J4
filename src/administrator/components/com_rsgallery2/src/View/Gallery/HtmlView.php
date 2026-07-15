@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Gallery;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -86,7 +88,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel $model */
+        /** @var GalleryModel $model */
         $model = $this->getModel();
         //--- config --------------------------------------------------------------------
 
@@ -103,7 +105,7 @@ class HtmlView extends BaseHtmlView
         //$section = $this->state->get('gallery.section') ? $this->state->get('gallery.section') . '.' : '';
         //$this->canDo = ContentHelper::getActions($this->state->get('gallery.component'), $section . 'gallery', $this->item->id);
         $this->canDo = ContentHelper::getActions('com_rsgallery2', 'gallery', $this->item->id);
-        $this->assoc = $this->get('Assoc');
+        $this->assoc = $model->getAssoc();
 
         // Check for errors.
         if (count($errors = $model->getErrors())) {

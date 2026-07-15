@@ -427,11 +427,11 @@ class ImageModel extends AdminModel
             {
                 if (Factory::getApplication()->get('unicodeslugs') == 1)
                 {
-                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLUnicodeSlug($data['title']);
+                    $data['alias'] = OutputFilter::stringURLUnicodeSlug($data['title']);
                 }
                 else
                 {
-                    $data['alias'] = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($data['title']);
+                    $data['alias'] = OutputFilter::stringURLSafe($data['title']);
                 }
 
 //                $table_test = Table::getInstance('Content', '\\Joomla\\CMS\\Table\\');
@@ -453,9 +453,7 @@ class ImageModel extends AdminModel
 
         // Bind the data.
         if (!$table->bind($data)) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Bind the rules.
@@ -466,9 +464,7 @@ class ImageModel extends AdminModel
 
         // Check the data.
         if (!$table->check()) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         // Trigger the before save event.
@@ -483,9 +479,7 @@ class ImageModel extends AdminModel
 
         // Store the data.
         if (!$table->store()) {
-            $this->setError($table->getError());
-
-            return false;
+            throw new \Exception($table->getError());
         }
 
         /**
@@ -934,11 +928,7 @@ class ImageModel extends AdminModel
                         $item->ordering   = $this->nextOrdering($NewGalleryId);
 
                         if (!$item->store()) {
-                            // ToDo: collect errors and display over enqueue .... with err type
-
-                            $this->setError($this->_db->getErrorMsg());
-
-                            return false;
+                            throw new \Exception($this->_db->getErrorMsg());
                         }
                     }
 

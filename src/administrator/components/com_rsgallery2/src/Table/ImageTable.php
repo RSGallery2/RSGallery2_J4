@@ -79,9 +79,7 @@ class ImageTable extends Table
         try {
             parent::check();
         } catch (\Exception $e) {
-            $this->setError($e->getMessage());
-
-            return false;
+            throw new \Exception($e->getMessage());
         }
 
         // Check for valid name.
@@ -196,9 +194,7 @@ class ImageTable extends Table
         $table = new static($this->getDatabase());
 
         if ($table->load(['alias' => $this->alias]) && ($table->id != $this->id || $this->id == 0)) {
-            $this->setError(Text::_('COM_RSGALLERY2_ERROR_UNIQUE_ALIAS'));
-
-            return false;
+            throw new \Exception(Text::_('COM_RSGALLERY2_ERROR_UNIQUE_ALIAS'));
         }
 
         return parent::store($updateNulls);

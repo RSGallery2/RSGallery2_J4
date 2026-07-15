@@ -702,8 +702,6 @@ class Galleriesj3xModel extends ListModel
      */
     protected function populateState($ordering = 'a.lft', $direction = 'ASC')
     {
-        parent::populateState($ordering, $direction);
-
         $app = Factory::getApplication();
 
         $this->setState('gallery.id', $app->getInput()->getInt('id'));
@@ -749,6 +747,7 @@ class Galleriesj3xModel extends ListModel
         $limitstart = $app->getInput()->get('limitstart', 0, 'uint');
         $this->setState('list.start', $limitstart);
 
+        parent::populateState($ordering, $direction);
 
         //// Force a language.
         //if (!empty($forcedLanguage))

@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Slideshowj3x;
 
+use Rsgallery2\Component\Rsgallery2\Site\Model\Slideshowj3xModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -103,7 +105,7 @@ class HtmlView extends BaseHtmlView
             Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
         /* @var Slideshowj3xModel $model */
-        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Slideshowj3xModel $model */
+        /** @var Slideshowj3xModel $model */
         $model         = $this->getModel();
 
 

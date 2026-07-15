@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
+use Joomla\Input\Input;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 
@@ -20,7 +22,6 @@ use Joomla\Archive\Archive;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Input\Input;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Controller\FormController;
@@ -64,7 +65,7 @@ class UploadController extends FormController
      *                                         'view_path' (this list is not meant to be comprehensive).
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   Input                $input    Input
+     * @param Input $input Input
      *
      * @since   5.1.0
      */

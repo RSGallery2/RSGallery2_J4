@@ -114,7 +114,7 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleriesModel $model */
+        /** @var GalleriesModel $model */
         $model = $this->getModel();
         $this->items         = $model->getItems();
         $this->filterForm    = $model->getFilterForm();

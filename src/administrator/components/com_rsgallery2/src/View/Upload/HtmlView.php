@@ -64,7 +64,7 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\UploadModel $model */
+        /** @var UploadModel $model */
         $model = $this->getModel();
         //--- config --------------------------------------------------------------------
 

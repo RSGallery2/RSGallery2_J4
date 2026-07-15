@@ -10,6 +10,9 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Category;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -125,8 +128,8 @@ class AssociationsHelper extends AssociationExtensionHelper
                 break;
 
             case 'category':
-                $db = \Joomla\CMS\Factory::getDbo();
-                $table = new \Joomla\CMS\Table\Category($db);
+                $db = Factory::getDbo();
+                $table = new Category($db);
                 break;
         }
 

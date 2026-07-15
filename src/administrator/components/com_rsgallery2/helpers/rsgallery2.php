@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helpers;
 
+use Joomla\Component\Content\Administrator\Helper\ContentHelper;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -21,6 +23,6 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Helpers;
  *
  * @deprecated  5.0 Use \Joomla\Component\Content\Administrator\Helper\ContentHelper instead
  */
-class Rsgallery2Helper extends \Joomla\Component\Content\Administrator\Helper\ContentHelper
+class Rsgallery2Helper extends ContentHelper
 {
 }

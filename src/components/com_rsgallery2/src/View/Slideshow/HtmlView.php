@@ -12,6 +12,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Slideshow;
 
+use Rsgallery2\Component\Rsgallery2\Site\Model\SlideshowModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -35,7 +37,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The model state
      *
-     * @var    CMSObject
+     * @var    stdClass
      * @since  3.1
      */
     protected $state;
@@ -98,8 +100,9 @@ class HtmlView extends BaseHtmlView
             Factory::getApplication()->enqueueMessage("gallery id is zero or not allowed -> why", 'error');
         }
         /* @var SlideshowModel $model */
-        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\SlideshowModel $model */
+        /** @var SlideshowModel $model */
         $model         = $this->getModel();
+        $model->setUseException(true);
 
         // Get some data from the models
         $this->state = $model->getState();
@@ -162,10 +165,6 @@ class HtmlView extends BaseHtmlView
         if (!empty($this->items)) {
             // Add image paths, image params ...
             $data = $model->AddLayoutData($this->items);
-        }
-
-        if (count($errors = $model->getErrors())) {
-            throw new GenericDataException(implode("\n", $errors), 500);
         }
 
         // Flag indicates to not add limitstart=0 to URL

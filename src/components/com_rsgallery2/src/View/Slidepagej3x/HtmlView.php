@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Slidepagej3x;
 
+use Rsgallery2\Component\Rsgallery2\Site\Model\Slidepagej3xModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -107,7 +109,7 @@ class HtmlView extends BaseHtmlView
         // In slide page view a single item is shown.
         // Pagination parameters are changed to match it
         /* @var SlidepageModel $model */
-        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Slidepagej3xModel $model */
+        /** @var Slidepagej3xModel $model */
         $model = $this->getModel();
 
         $this->state = $model->getState();

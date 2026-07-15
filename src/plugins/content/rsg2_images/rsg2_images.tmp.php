@@ -1,5 +1,9 @@
 <?php
 
+use Joomla\Event\SubscriberInterface;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Log\Log;
+
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -44,7 +48,7 @@ use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
  *
  * @since   4.0
  */
-class PlgContentRsg2_images extends CMSPlugin implements \Joomla\Event\SubscriberInterface
+class PlgContentRsg2_images extends CMSPlugin implements SubscriberInterface
 {
     /** @var CMSApplication */
     /**
@@ -142,7 +146,7 @@ class PlgContentRsg2_images extends CMSPlugin implements \Joomla\Event\Subscribe
             // by reference).
             // $original_rsgConfig = clone $rsgConfig;
 
-            $rsgConfig = \Joomla\CMS\Component\ComponentHelper::getParams('com_rsgallery2');
+            $rsgConfig = ComponentHelper::getParams('com_rsgallery2');
 
             // toDo: debug site !!!
             $DebugActive = $rsgConfig->get('isDebugSite');
@@ -183,7 +187,7 @@ class PlgContentRsg2_images extends CMSPlugin implements \Joomla\Event\Subscribe
             if (!is_array($attribs)) {
                 $errText = '??? ' . $matches[1] . '->No attributes ???';
                 if ($DebugActive) {
-                    \Joomla\CMS\Log\Log::add($errText, \Joomla\CMS\Log\Log::DEBUG);
+                    Log::add($errText, Log::DEBUG);
                 }
 
                 return $errText;
@@ -376,6 +380,10 @@ class PlgContentRsg2_images extends CMSPlugin implements \Joomla\Event\Subscribe
 
 
         return $isHandled;
+    }
+    public static function getSubscribedEvents(): array
+    {
+        return ['onContentPrepare' => 'onContentPrepare', 'extractParams' => 'extractParams', 'clean_string' => 'clean_string', 'handleSpecificParams' => 'handleSpecificParams'];
     }
     public static function getSubscribedEvents(): array
     {

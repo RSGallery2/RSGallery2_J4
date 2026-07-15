@@ -7,7 +7,7 @@
  * @copyright  (c) 2003-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
-
+/** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Develop\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Develop;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -68,7 +68,7 @@ use Joomla\CMS\Router\Route;
                     echo '<dl class="row">';
                     foreach ($this->rsg2Manifest as $key => $value) {
                         // Handle empty string
-                        if (strlen($value) == 0) {
+                        if (strlen((string) $value) == 0) {
                             // $value = "''";
                             $value = '""';
                         }
@@ -127,7 +127,7 @@ use Joomla\CMS\Router\Route;
                     echo '<dl class="row">';
                     foreach ($this->readRsg2ExtensionData as $key => $value) {
                         // Handle empty string
-                        if (strlen($value) == 0) {
+                        if (strlen((string) $value) == 0) {
                             // $value = "''";
                             $value = '""';
                         }

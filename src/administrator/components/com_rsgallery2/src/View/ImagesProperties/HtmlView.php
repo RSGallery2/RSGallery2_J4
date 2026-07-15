@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\ImagesProperties;
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesPropertiesModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -57,7 +59,7 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesPropertiesModel $model */
+        /** @var ImagesPropertiesModel $model */
         $model = $this->getModel();
         global $rsgConfig;
 

@@ -1,5 +1,10 @@
 <?php
 
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel;
+use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
+
 /**
  * @package        RSGallery2
  * @subpackage     com_rsgallery2
@@ -450,7 +455,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $GalleryTreeModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/GalleryTreeModel.php';
             Log::add(Text::_('upd (10.2) '), Log::INFO, 'rsg2');
-            $GalleryTreeClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel::class;
+            $GalleryTreeClassName = GalleryTreeModel::class;
             Log::add(Text::_('upd (10.3) '), Log::INFO, 'rsg2');
             JLoader::register($GalleryTreeClassName, $GalleryTreeModelFileName);
 
@@ -458,7 +463,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 //          include($GalleryTreeModelFileName);
 
             Log::add(Text::_('upd (10.4) '), Log::INFO, 'rsg2');
-            $galleryTreeModel = new Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryTreeModel();
+            $galleryTreeModel = new GalleryTreeModel();
 
             Log::add(Text::_('upd (10.5) '), Log::INFO, 'rsg2');
             Log::add('initGalleryTree: check for root item', Log::INFO, 'rsg2');
@@ -515,14 +520,14 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
             Log::add('installMessage: include Helper/InstallMessage', Log::INFO, 'rsg2');
 
             $installMsgHelperFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/InstallMessage.php';
-            $installMsgHelperClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage::class;
+            $installMsgHelperClassName = InstallMessage::class;
             JLoader::register($installMsgHelperClassName, $installMsgHelperFileName);
 
             $changeLogModelFileName  = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/ChangeLogModel.php';
-            $changeLogModelClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Model\ChangeLogModel::class;
+            $changeLogModelClassName = ChangeLogModel::class;
             JLoader::register($changeLogModelClassName, $changeLogModelFileName);
 
-            $InstallMessageHelper = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\InstallMessage(
+            $InstallMessageHelper = new InstallMessage(
                 $this->newRelease,
                 $this->oldRelease,
             );
@@ -917,12 +922,12 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
             $Rsg2ExtensionModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/Rsg2ExtensionModel.php';
             Log::add(Text::_('upd (20.2) '), Log::INFO, 'rsg2');
-            $Rsg2ExtensionClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel::class;
+            $Rsg2ExtensionClassName = Rsg2ExtensionModel::class;
             Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');
             JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
 
             Log::add(Text::_('upd (20.4) '), Log::INFO, 'rsg2');
-            $Rsg2ExtensionClass = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel();
+            $Rsg2ExtensionClass = new Rsg2ExtensionModel();
 
             //--- read actual config data ------------------------------------------------
 

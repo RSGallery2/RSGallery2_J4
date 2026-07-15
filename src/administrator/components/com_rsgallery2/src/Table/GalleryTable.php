@@ -62,9 +62,7 @@ class GalleryTable extends Nested
         try {
             parent::check();
         } catch (\Exception $e) {
-            $this->setError($e->getMessage());
-
-            return false;
+            throw new \Exception($e->getMessage());
         }
 
         // Check for valid name.
@@ -102,9 +100,7 @@ class GalleryTable extends Nested
             $query->setLimit(1);
 
             if (empty($this->_db->setQuery($query)->loadResult())) {
-                $this->setError(Text::_('JLIB_DATABASE_ERROR_INVALID_PARENT_ID'));
-
-                return false;
+                throw new \Exception(Text::_('JLIB_DATABASE_ERROR_INVALID_PARENT_ID'));
             }
         }
 

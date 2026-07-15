@@ -10,6 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Api\Controller;
 
+use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -150,7 +151,7 @@ class UploadimgfileController extends ApiController
     private function checkContent(): void
     {
         $params       = ComponentHelper::getParams('com_media');
-        $helper       = new \Joomla\CMS\Helper\MediaHelper();
+        $helper       = new MediaHelper();
         $serverLength = $this->input->server->getInt('CONTENT_LENGTH');
 
         // Check if the size of the request body does not exceed various server imposed limits.

@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Rsgallery2;
 
+use Rsgallery2\Component\Rsgallery2\Site\Model\Rsgallery2Model;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -55,7 +57,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Rsgallery2Model $model */
+        /** @var Rsgallery2Model $model */
         $model = $this->getModel();
         $item   =
         $this->item = $model->getItem();

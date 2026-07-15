@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
+use Joomla\CMS\Table\extension;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -64,8 +66,8 @@ class ConfigRawModel extends BaseModel
 
         //$row = $this->getTable();
         $Rsg2Id = ComponentHelper::getComponent('com_rsgallery2')->id;
-        $db = \Joomla\CMS\Factory::getDbo();
-        $table = new \Joomla\CMS\Table\extension($db);
+        $db = Factory::getDbo();
+        $table = new extension($db);
         // Load the previous Data
         if (!$table->load($Rsg2Id)) {
             throw new \RuntimeException($table->getError());
@@ -111,40 +113,16 @@ class ConfigRawModel extends BaseModel
             $secured = ''; // preset
 
             // Test types in different way
-            switch ($key) {
-                case 'advancedSef':
-                case 'isDebugBackend':
-                case 'isDebugSite':
-                case 'isDevelop':
-                case 'thumb_size':
-                case 'thumb_style':
-                case 'jpegQuality':
-                case 'keepOriginalImage':
-                case 'useJ3xOldPaths':
-                    $secured = $filter->clean($value, 'int');
-                    break;
-
-                case 'ftp_path': // '\'images\/rsgallery2\',',
-                case 'imgPath_root': //'images\/rsgallery2',
-                case 'imgPath_original': //'\/images\/rsgallery\/original',
-                case 'imgPath_display': //'\/images\/rsgallery\/display',
-                case 'imgPath_thumb': //'\/images\/rsgallery\/thumb',
-                    $secured = $filter->clean($value, 'STRING');
-                    break;
-
-                case 'intro_text': // ''
-                    $secured = $filter->clean($value, 'html');
-                    break;
-
-                case 'image_size': // '800,600,400',
-                    $secured = $filter->clean($value, 'STRING');
-                    break;
-
-                case 'allowedFileTypes':// 'jpg,jpeg,gif,png',
-                default:
-                    $secured = $filter->clean($value, 'STRING');
-                    break;
-            }
+            $secured = match ($key) {
+                'advancedSef', 'isDebugBackend', 'isDebugSite', 'isDevelop', 'thumb_size', 'thumb_style', 'jpegQuality', 'keepOriginalImage', 'useJ3xOldPaths' => $filter->clean($value, 'int'),
+                //'\/images\/rsgallery\/thumb',
+                'ftp_path', 'imgPath_root', 'imgPath_original', 'imgPath_display', 'imgPath_thumb' => $filter->clean($value, 'STRING'),
+                // ''
+                'intro_text' => $filter->clean($value, 'html'),
+                // '800,600,400',
+                'image_size' => $filter->clean($value, 'STRING'),
+                default => $filter->clean($value, 'STRING'),
+            };
 
             $inType = gettype($value);
             $outype = gettype($secured);
@@ -254,8 +232,8 @@ class ConfigRawModel extends BaseModel
 
         // Save the parameters
         $componentid = ComponentHelper::getComponent('com_rsgallery2')->id;
-        $db = \Joomla\CMS\Factory::getDbo();
-        $table = new \Joomla\CMS\Table\extension($db);
+        $db = Factory::getDbo();
+        $table = new extension($db);
         $table->load($componentid);
         $table->bind(['params' => $params->toString()]);
 

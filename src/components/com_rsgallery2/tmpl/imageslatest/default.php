@@ -7,8 +7,10 @@
  * @copyright  (c) 2005-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
-/** @var \Rsgallery2\Component\Rsgallery2\Site\View\Imageslatest\HtmlView $this */
+/** @var HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Imageslatest;
+
+use Rsgallery2\Component\Rsgallery2\Site\View\Imageslatest\HtmlView;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;

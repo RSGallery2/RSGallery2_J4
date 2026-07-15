@@ -463,7 +463,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
                                     ?>
                                     <?php
                                     // User not found
-                                    if (strlen($created_by->name) > 0)
+                                    if (strlen((string) $created_by->name) > 0)
                                     {
                                         echo $this->escape($created_by->name);
                                     }

@@ -10,6 +10,8 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Imagesrandom;
 
+use Rsgallery2\Component\Rsgallery2\Site\Model\ImagesrandomModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
@@ -56,7 +58,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\ImagesrandomModel $model */
+        /** @var ImagesrandomModel $model */
         $model = $this->getModel();
         $item   =
         $this->item = $model->getItem();

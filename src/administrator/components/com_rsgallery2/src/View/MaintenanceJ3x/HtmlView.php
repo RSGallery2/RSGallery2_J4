@@ -128,7 +128,7 @@ class HtmlView extends BaseHtmlView
      * @since   5.1.0     */
     public function display($tpl = null)
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Administrator\Model\MaintenanceJ3xModel $model */
+        /** @var MaintenanceJ3xModel $model */
         $model = $this->getModel();
         $Layout = Factory::getApplication()->input->get('layout');
         //echo '$Layout: ' . $Layout . '<br>';
