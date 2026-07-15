@@ -25,7 +25,6 @@
             <field
                     name="max_thumbs_in_root_galleries_view_j3x"
                     type="number"
-                    default="5"
                     label="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW"
                     description="COM_RSGALLERY2_J3X_NUMBER_OF_GALLERIES_ON_ROOT_VIEW_DESC"
                     useglobal="true"

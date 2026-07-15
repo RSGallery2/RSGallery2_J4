@@ -27,7 +27,6 @@
             <!--field
                     name="displaySearch"
                     type="radio"
-                    default="0"
                     label="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH"
                     description="COM_RSGALLERY2_MENU_GALLERY_SHOW_SEARCH_DESC"
                     useglobal="true"
@@ -51,7 +50,6 @@
                     label="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE"
                     description="COM_RSGALLERY2_MENU_J3X_GALLERY_SHOW_TITLE_DESC"
                     useglobal="true"
-                    default="1"
                     class="btn-group btn-group-yesno">
                 <option value="1">JYES</option>
                 <option value="0">JNO</option>

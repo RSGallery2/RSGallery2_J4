@@ -93,7 +93,6 @@
             <field
 				name="images_show_title"
                    type="radio"
-                   default="1"
                    label="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE"
                    description="COM_RSGALLERY2_CONFIG_IMAGES_SHOW_TITLE_DESC"
                    useglobal="true"
