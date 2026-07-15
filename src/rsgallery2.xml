@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" method="upgrade">
 	<name>com_rsgallery2</name>
-	<creationDate>2026.07.12</creationDate>
+	<creationDate>2026.07.15</creationDate>
 	<author>RSGallery2 Team</author>
 	<authorEmail>team2@rsgallery2.org</authorEmail>
 	<authorUrl>https://www.rsgallery2.org</authorUrl>
@@ -46,7 +46,8 @@
 				<params>
 					<menu-quicktask-title>COM_RSGALLERY2_MENU_CONFIG</menu-quicktask-title>
 					<menu-quicktask-icon>fas fa-cog</menu-quicktask-icon>
-					<menu-quicktask>index.php?option=com_config&amp;view=component&amp;component=com_rsgallery2</menu-quicktask>
+					<menu-quicktask>index.php?option=com_config&amp;view=component&amp;component=com_rsgallery2
+					</menu-quicktask>
 				</params>
 			</menu>
 			<menu view="maintenance" img="class:equalizer">COM_RSGALLERY2_MENU_MAINTENANCE</menu>
@@ -91,8 +92,12 @@
 		<folder>images</folder>
 		<folder>js</folder>
 	</media>
-	<changelogurl>https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml</changelogurl>
+	<changelogurl>
+		https://raw.githubusercontent.com/RSGallery2/RSGallery2_J4/master/administrator/components/com_rsgallery2/changelog.xml
+	</changelogurl>
 	<updateservers>
-		<server type="extension" name="RSG2 for J4 Update server">https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml</server>
+		<server type="extension" name="RSG2 for J4 Update server">
+			https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/master/UpdateServer/RSG2_component_update.xml
+		</server>
 	</updateservers>
 </extension>
