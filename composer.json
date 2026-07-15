@@ -1,0 +1,7 @@
+{
+    "require-dev": {
+        "rector/rector": "^2.5",
+        "joomla-projects/jrector": "^0.1.0",
+        "joomla-projects/typehints": "^0.1.0"
+    }
+}
