@@ -705,6 +705,7 @@ class Galleriesj3xModel extends ListModel
         $app = Factory::getApplication();
 
         $this->setState('gallery.id', $app->getInput()->getInt('id'));
+        $params = $app->getParams();
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.
