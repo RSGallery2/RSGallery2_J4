@@ -646,9 +646,6 @@ class GalleriesModel extends ListModel
         $search = $this->getUserStateFromRequest($this->context . '.search', 'filter_search');
         $this->setState('filter.search', $search);
 
-        // List state information.
-        parent::populateState($ordering, $direction);
-
         // List state information
 
         // J3x ToDo: use galcountNrs
@@ -666,6 +663,8 @@ class GalleriesModel extends ListModel
         $limitstart = $app->getInput()->get('limitstart', 0, 'uint');
         $this->setState('list.start', $limitstart);
 
+        // List state information.
+        parent::populateState($ordering, $direction);
 
         //// Force a language.
         //if (!empty($forcedLanguage))
