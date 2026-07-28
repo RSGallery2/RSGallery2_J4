@@ -15,6 +15,7 @@ use Joomla\Application\Event\ApplicationEvent;
 use Joomla\CMS\MVC\Factory\MVCFactoryAwareTrait;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
+
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\Config;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigGet;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigSet;
@@ -51,7 +52,7 @@ class Rsg2_console extends CMSPlugin implements SubscriberInterface
 
     // Todo: image:check / state ?? -> image: is existing, pathes ...
     // Todo: galleries by ordering gallery:list:ordering
-    // ToDo: layout json for image/gallery /
+    // ToDo: layout JSON for image/gallery /
     // ToDo: check jsonify out put JsonResponse echo new JsonResponse($output);
     // ToDo: ResetConfigToDefault
     // ToDo: ImageMetadata::class, // ? exif

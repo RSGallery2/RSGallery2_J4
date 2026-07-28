@@ -21,6 +21,7 @@ use Joomla\Console\Command\AbstractCommand;
 //use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsg2ConfigPara;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -89,7 +90,7 @@ class ConfigSet extends AbstractCommand
 
         $help = "<info>%command.name%</info> set a parameter value in the RSG2 configuration
   Usage: <info>php %command.full_name%</info>  <option> <value>
-    * You may verify the written value with <info>--veryfy=true<info> option. This compares the given option with the resulting table value
+    * You may verify the written value with <info>--verify=true<info> option. This compares the given option with the resulting table value
 		";
         $this->setDescription(Text::_('Sets the value of selected parameter name in configuration'));
         $this->setHelp($help);
@@ -114,42 +115,54 @@ class ConfigSet extends AbstractCommand
 
         $option   = $this->cliInput->getArgument('option');
         $value    = $this->cliInput->getArgument('value');
-        $veryfyIn = $input->getOption('verify') ?? 'false';
+        $verifyIn = $input->getOption('verify') ?? 'false';
 
         // $isDoVerify = true/false, 0/1;
-        $isDoVerify = $this->isTrue($veryfyIn);
+        $isDoVerify = $this->isTrue($verifyIn);
 
-        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-        if (empty($rsgConfig)) {
-            $this->ioStyle->error("The joomla RSG2 configuration could not be read");
+        //--- merge config xml and db parameter ---------------------------------
 
+        try
+        {
+            $rsgallery2Config = new rsg2ConfigPara(JPATH_ADMINISTRATOR . '/components/com_rsgallery2/config.xml');
+            $rsgallery2Config->extractConfigParam ();
+
+        } catch (\Exception $e) {
+            $this->ioStyle->error('ConfigSet.doExecute ' . $e->getMessage());
             return Command::FAILURE;
         }
 
-        // It is allowed to create new values
-        $valueBare = $rsgConfig->get($option, null);
-        if ($valueBare === null) {
-            $this->ioStyle->note("Option '{$option}' was  not used before");
+        // No DB parameter ?
+        if ($rsgallery2Config->getDbParameter ()->count() == 0) {
+            $this->ioStyle->warning("RSGallery2 component parameter are not initialized yet. Please save it once<br>"
+                . "In following list the config.xml default parameter are shown");
         }
+
+        //--- Assign value ---------------------------------------------------
 
         // ToDo: Make it sql save ....
         $sanitizeValue = $this->sanitizeValue($value);
 
-        $rsgConfigClone = new Registry($rsgConfig);
-        $rsgConfigClone->set($option, $sanitizeValue);
-        // ComponentHelper::getComponent('com_rsgallery2')->setParams($rsgConfig);
-        $isSuccess = $this->saveParams($rsgConfigClone);
+        $newValue = new Registry([$option => $sanitizeValue]);
+        $actPara = $rsgallery2Config->getConfigParameter();
+
+        // Accepts only known values
+        $merged = $actPara->merge($newValue);
+
+        //--- save value ---------------------------------------------------------
+
+        $isSuccess = $rsgallery2Config->saveDbParams($merged);
 
         if (empty($isSuccess)) {
-            $this->ioStyle->error("Could not save RSG2 configuration parameters");
+            $this->ioStyle->error("Could not save RSGallery2 configuration parameters");
 
             return Command::FAILURE;
         }
 
         if ($isDoVerify) {
-            $rsgConfigVerify = $this->readRsg2ExtensionParameterDb();
+            $pt_ConfigVerify = $rsgallery2Config->readDbExtensionParaDirect();
 
-            $verifiedValue = $rsgConfigVerify [$option];
+            $verifiedValue = $pt_ConfigVerify [$option];
             if ($verifiedValue == null) {
                 $this->ioStyle->error("Option '{$option}' was  not set or is null");
             }
@@ -194,97 +207,31 @@ class ConfigSet extends AbstractCommand
     /**
      * Check string input for true (1)
      *
-     * @param   mixed  $veryfyIn
+     * @param   mixed  $verifyIn
      *
      * @return bool
      *
      * @since  5.1.0
      */
-    private function isTrue(mixed $veryfyIn)
+    private function isTrue(mixed $verifyIn)
     {
         $isTrue = false;
 
-        if (!empty($veryfyIn)) {
-            if (strtolower((string)$veryfyIn) == 'true') {
+        if (!empty($verifyIn)) {
+            if (strtolower((string)$verifyIn) == 'true') {
                 $isTrue = true;
             }
 
-            if (strtolower((string)$veryfyIn) == 'on') {
+            if (strtolower((string)$verifyIn) == 'on') {
                 $isTrue = true;
             }
 
             // ToDo: positive ?
-            if ($veryfyIn == '1') {
+            if ($verifyIn == '1') {
                 $isTrue = true;
             }
         }
 
         return $isTrue;
-    }
-
-    /**
-     * Save RSG2 configuration to extensiondb  params
-     *
-     * @param   Registry  $params
-     *
-     * @return bool
-     *
-     * @since  5.1.0
-     */
-    public function saveParams(Registry $params)
-    {
-        $db = Factory::getContainer()->get(DatabaseInterface::class);
-
-        return $db->setQuery(
-            'UPDATE #__extensions'
-            . ' SET params = ' . $db->quote((string)$params)
-            . ' WHERE element = ' . $db->quote('com_rsgallery2'),
-        )->execute();
-    }
-
-    /**
-     * read RSG2 configuration from DB
-     *
-     * @return array|mixed
-     *
-     * @since  5.1.0
-     */
-    public function readRsg2ExtensionParameterDb()
-    {
-        $params = [];
-
-        try {
-            // read the existing component value(s)
-            $db = Factory::getContainer()->get(DatabaseInterface::class);
-
-            $query = $db
-                ->createQuery()
-                ->select('params')
-                ->from($db->quoteName('#__extensions'))
-                ->where($db->quoteName('element') . ' = ' . $db->quote('com_rsgallery2'));
-            $db->setQuery($query);
-
-            /* found in install but why reassign parameters ? registry ?
-            $param_array = json_decode($db->loadResult(), true);
-
-            // add the new variable(s) to the existing one(s)
-            foreach ($param_array as $name => $value) {
-                $params[(string)$name] = (string)$value;
-            }
-            /**/
-
-            $jsonStr = $db->loadResult();
-            if (!empty($jsonStr)) {
-                $params = json_decode((string)$jsonStr, true);
-            }
-        } catch (\RuntimeException $e) {
-            $OutTxt = '';
-            $OutTxt .= 'ConfigSet: readRsg2ExtensionParameterDb: Error executing query: "' . $query . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $this->ioStyle->error($OutTxt);
-        }
-
-        return $params;
     }
 }

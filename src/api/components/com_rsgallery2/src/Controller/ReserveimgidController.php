@@ -57,8 +57,8 @@ class ReserveimgidController extends ImagesController // ApiController
      *
      * @since  5.0
      */
-    public function db_reserve_image_id (){
-
+    public function db_reserve_image_id()
+    {
 	    $title  = $this->input->json->getString('title');
 	    $description  = $this->input->json->getString('description', '');
         // Image filename

@@ -20,6 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\Console\Command\AbstractCommand;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseInterface;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsg2ConfigPara;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -110,14 +111,28 @@ class ConfigGet extends AbstractCommand
 
         $option   = $this->cliInput->getArgument('option');
 
-        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-        if (empty($rsgConfig)) {
-            $this->ioStyle->error("The joomla RSG2 configuration could not be read");
+        //--- merge config xml and db parameter ---------------------------------
 
+        try
+        {
+            $rsgallery2Config = new rsg2ConfigPara(JPATH_ADMINISTRATOR . '/components/com_rsgallery2/config.xml');
+            $rsgallery2Config->extractConfigParam ();
+
+        } catch (\Exception $e) {
+            $this->ioStyle->error('ConfigSet.doExecute ' . $e->getMessage());
             return Command::FAILURE;
         }
 
-        $valueBare = $rsgConfig->get($option, null);
+        // No DB parameter ?
+        if ($rsgallery2Config->getDbParameter ()->count() == 0) {
+            $this->ioStyle->warning("RSGallery2 component parameter are not initialized yet. Please save it once<br>"
+                . "In following list the config.xml default parameter are shown");
+        }
+
+
+        $actPara = $rsgallery2Config->getConfigParameter();
+
+        $valueBare = $actPara->get($option, null);
         if ($valueBare === null) {
             $this->ioStyle->error("Can't find option '{$option}' in configuration list");
 
