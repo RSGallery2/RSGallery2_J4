@@ -21,6 +21,7 @@ use Joomla\Console\Command\AbstractCommand;
 use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsg2ConfigPara;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -82,7 +83,7 @@ class Config extends AbstractCommand
      */
     protected function configure(): void
     {
-        $this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim lenght of variable for item keeps in one line');
+        $this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim length of variable for item keeps in one line');
 
         $help = "<info>%command.name%</info> list variables of RSG2 configuration
   Usage: <info>php %command.full_name%</info>
@@ -91,7 +92,6 @@ class Config extends AbstractCommand
         $this->setDescription(Text::_('List all configuration variables'));
         $this->setHelp($help);
     }
-
 
     /**
      * Internal function to execute the command.
@@ -111,45 +111,28 @@ class Config extends AbstractCommand
 
         $max_line_length = $input->getOption('max_line_length') ?? null;
 
-        $rsgConfig = ComponentHelper::getComponent('com_rsgallery2')->getParams();
+        //--- merge config xml and db parameter ---------------------------------
 
-        $configurationAssoc = $rsgConfig; // $this->getItemAssocFromDB($rsgConfig);
+        try
+        {
+            $rsgallery2Config = new rsg2ConfigPara(JPATH_ADMINISTRATOR . '/components/com_rsgallery2/config.xml');
+            $rsgallery2Config->extractConfigParam ();
 
-        if (empty($configurationAssoc)) {
-            $this->ioStyle->error("The joomla RSG2 configuration could not be read");
-
+        } catch (\Exception $e) {
+            $this->ioStyle->error('Config.doExecute ' . $e->getMessage());
             return Command::FAILURE;
         }
 
-        // ToDo: $rsgConfig is Registry
-        $strConfigurationAssoc = $this->assoc2DefinitionList($rsgConfig, $max_line_length);
-
-        // ToDo: Use horizontal table again ;-)
-        foreach ($strConfigurationAssoc as $value) {
-            if (!\is_array($value)) {
-                throw new \InvalidArgumentException('Value should be an array, string, or an instance of TableSeparator.');
-            }
-
-            $headers[] = key($value);
-            $row[]     = current($value);
+        // No DB parameter ?
+        if ($rsgallery2Config->getDbParameter ()->count() == 0) {
+            $this->ioStyle->warning("RSGallery2 component parameter are not initialized yet. Please save it once<br>"
+                . "In following list the config.xml default parameter are shown");
         }
 
+        $headers = $rsgallery2Config->getConfigNames();
+        $row = $rsgallery2Config->getConfigValues();
+
         $this->ioStyle->horizontalTable($headers, [$row]);
-
-
-// ToDo: check out following (original joomla config)
-
-//      $options = [];
-//
-//      array_walk(
-//          $configs,
-//          function ($value, $key) use (&$options) {
-//              $options[] = [$key, $this->formatConfigValue($value)];
-//          }
-//      );
-//
-//      $this->ioStyle->title("Current options in Configuration");
-//      $this->ioStyle->table(['Option', 'Value'], $options);
 
         return Command::SUCCESS;
     }
