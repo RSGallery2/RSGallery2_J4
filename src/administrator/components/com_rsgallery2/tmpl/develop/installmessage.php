@@ -21,6 +21,9 @@ use Joomla\CMS\Router\Route;
 //$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
 ?>
+<!--<i class="fa fa-circle-plus" style="font-size:48px;"></i>-->
+<!--<i class="fa fa-infinity" style="font-size:48px;"></i>-->
+<!--<span style="font-size:64px;">ω</span>-->
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop&layout=InstallMessage'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate form-horizontal">
@@ -37,7 +40,36 @@ use Joomla\CMS\Router\Route;
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
 
-                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'InstallMessage']); ?>
+                <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'UnInstallMessage']); ?>
+
+                <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'UnInstallMessage',
+                    Text::_('uninstall', true)); ?>
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-lg-5">
+                            <div class="card text-white bg-success my-2 pt-4 text-center">
+
+                                <i class="fa fa-heart-broken" style="font-size:48px";></i>
+
+                                <!--div class="card-header"-->
+                                <!--/div-->
+
+                                <h3 class="card-title text-white p-4 ">Sorry to see you go !<br>
+                                        The RSGallery2 team</h3>
+                                <p class="card-text">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span style="font-size:32px;">⊕∞ω</span>
+
+                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+
+                <?php //===================================================================== ?>
+
 
                 <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'InstallMessage', Text::_('COM_RSGALLERY2_DEVELOP_INSTALL_MSG_TEST', true)); ?>
 
@@ -45,7 +77,7 @@ use Joomla\CMS\Router\Route;
                     echo '<br />';
                     echo $this->form->renderFieldset('install_message_var');
 
-                    ?>
+                ?>
 
                 <!--                    <button id="AssignUploadedFiles" type="button"-->
                 <!--                            class="btn btn-primary mx-auto mt-2"-->
@@ -73,8 +105,6 @@ use Joomla\CMS\Router\Route;
                 ?>
 
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-
-                <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
 
 
                 <input type="hidden" value="" name="task">

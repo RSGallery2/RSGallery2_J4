@@ -96,34 +96,34 @@ class InstallMessage
         //--- html output --------------------------------------------
 
         $html = <<<EOT
-                        <div class="alert alert-success" style="text-align:center;">
-                            <strong>RSGallery2 $newRelease was installed successfully</strong>
-                        </div>
-                    <div class="hero-unit">
-            <div class="text-center">
-                         <img src="$logoLink" alt="RSGallery2 Logo" height="150px" />
-                     </div>
-                        <p></p>
-            <div class="text-center">
-            	<div class="Xbtn-group">
-            		<a title="$controlPanelTitle" class="btn btn-warning" href="$rsg2ControlPanelLink">
-            			<div class="fa fa-home fa-fw" aria-hidden="true"></div>
-            			$controlPanelText
-            		</a>
-            		<a title="$configurationTitle" class="btn btn-info" href="$rsg2ConfigurationLink">
-            			<div class="fa fa-cog fa-fw" aria-hidden="true"></div>
-            			$configurationText
-            		</a>
-            		<a title="$galleriesTitle" class="btn btn-success" href="$rsg2GalleriesLink">
-            			<div class="fa fa-th fa-fw" aria-hidden="true"></div>
-            			$galleriesText
-            		</a>
-            	</div>
-                        </div>
+            <div class="alert alert-success" style="text-align:center;">
+                <strong>RSGallery2 $newRelease was installed successfully</strong>
+            </div>
+            <div class="hero-unit">
+                <div class="text-center">
+                    <img src="$logoLink" alt="RSGallery2 Logo" height="150px" />
+                </div>
+                <p></p>
+                <div class="text-center">
+            	    <div class="Xbtn-group">
+                        <a title="$controlPanelTitle" class="btn btn-warning" href="$rsg2ControlPanelLink">
+                            <div class="fa fa-home fa-fw" aria-hidden="true"></div>
+                            $controlPanelText
+                        </a>
+                        <a title="$configurationTitle" class="btn btn-info" href="$rsg2ConfigurationLink">
+                            <div class="fa fa-cog fa-fw" aria-hidden="true"></div>
+                            $configurationText
+                        </a>
+                        <a title="$galleriesTitle" class="btn btn-success" href="$rsg2GalleriesLink">
+                            <div class="fa fa-th fa-fw" aria-hidden="true"></div>
+                            $galleriesText
+                        </a>
                     </div>
-                    <br />
-                    <br />
-            EOT;
+                </div>
+            </div>
+            <br />
+            <br />
+        EOT;
 
         return $html;
     }

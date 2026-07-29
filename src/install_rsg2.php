@@ -8,7 +8,7 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// wrong or not needed 
+// wrong or not needed
 // namespace Rsgallery2\Component\Rsgallery2;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -364,6 +364,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
                 Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
 
+                echo $this->sadlyGoodByeHtml();
+                
                 break;
 
             case 'discover_install':
@@ -392,45 +394,45 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
 
         echo $installMsg;
 
-        // wonderworld 'good bye' icons finnern
+        // wonderworld 'good bye' icons finnern ⊕∞ω
         echo '<br><h4>&oplus;&infin;&omega;</h4><br>';
         Log::add(Text::_('--- exit postflight ------------'), Log::INFO, 'rsg2');
 
         return true;
     }
 
-    /*-------------------------------------------------------------------------
-    uninstall
-    ---------------------------------------------------------------------------
-    The uninstall method is executed before any Joomla uninstall action,
-    such as file removal or database changes. Uninstall cannot cause an
-    abort of the Joomla uninstall action, so returning false would be a
-    waste of time
-    -------------------------------------------------------------------------*/
-    /**
-     * Method to uninstall the extension
-     *
-     * @param   InstallerAdapter  $parent  The class calling this method
-     *
-     * @return  boolean  True on success
-     *
-     * @since 5.0.0
-     *
-     */
-    public function uninstall($parent)
-    {
-        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL'), Log::INFO, 'rsg2');
-
-        // ToDo: enquire .. message to user
-        Factory::getApplication()->enqueueMessage(
-            Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp),
-            'error',
-        );
-
-        Log::add(Text::_('exit uninstall'), Log::INFO, 'rsg2');
-
-        return true;
-    }
+//    /*-------------------------------------------------------------------------
+//    uninstall
+//    ---------------------------------------------------------------------------
+//    The uninstall method is executed before any Joomla uninstall action,
+//    such as file removal or database changes. Uninstall cannot cause an
+//    abort of the Joomla uninstall action, so returning false would be a
+//    waste of time
+//    -------------------------------------------------------------------------*/
+//    /**
+//     * Method to uninstall the extension
+//     *
+//     * @param   InstallerAdapter  $parent  The class calling this method
+//     *
+//     * @return  boolean  True on success
+//     *
+//     * @since 5.0.0
+//     *
+//     */
+//    public function uninstall($parent)
+//    {
+//        Log::add(Text::_('COM_RSGALLERY2_INSTALLERSCRIPT_UNINSTALL'), Log::INFO, 'rsg2');
+//
+//        // ToDo: enquire .. message to user
+//        Factory::getApplication()->enqueueMessage(
+//            Text::sprintf('JLIB_INSTALLER_MINIMUM_PHP', $this->minimumPhp),
+//            'error',
+//        );
+//
+//        Log::add(Text::_('exit uninstall'), Log::INFO, 'rsg2');
+//
+//        return true;
+//    }
 
     /**
      * InitGalleryTree
@@ -959,5 +961,33 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         Log::add(Text::_('Exit updateDefaultParams'), Log::INFO, 'rsg2');
 
         return;
+    }
+
+    protected function sadlyGoodByeHtml()
+    {
+        //--- html output --------------------------------------------
+
+        $html = <<<EOT
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5">
+                        <div class="card text-white bg-success my-2 pt-4 text-center">
+
+                            <i class="fa fa-heart-broken" style="font-size:48px";></i>
+
+                            <!--div class="card-header"-->
+                            <!--/div-->
+
+                            <h3 class="card-title text-white p-4 ">Sorry to see you go !<br>
+                                    The RSGallery2 team</h3>
+                            <p class="card-text">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        EOT;
+
+        return $html;
     }
 } // class
