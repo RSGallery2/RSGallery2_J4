@@ -47,6 +47,7 @@
                     extension="com_rsgallery2"
                     required="true"
                     useglobal="true"
+                    default="Slideshow"
             />
 
             <field

@@ -49,6 +49,7 @@
                     extension="com_rsgallery2"
                     useglobal="true"
                     required="true"
+                    default="SlideshowJ3x"
             />
 
             <field

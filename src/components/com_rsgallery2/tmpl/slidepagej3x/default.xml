@@ -32,6 +32,7 @@
                     extension="com_rsgallery2"
                     view="slidepagej3x"
                     useglobal="true"
+                    defalt="SlidepageJ3x"
             />
         </fieldset>
     </fields>
