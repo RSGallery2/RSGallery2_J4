@@ -14,18 +14,32 @@ use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 
+
+/** following situations are supported
+ *
+ * - get config list reads parameter from Db extension table
+ * - params after installation: DB extension table is empty ?
+ * - write parameter should check config.xml for valid item names
+ * - Write of single should add not used items in config.xml -> merge
+ * - Reset DB extension table to XML
+ *
+ * On construction the different sources are read into separate registry variables
+ */
+
 class rsg2ConfigPara
 {
+    private string $componentName = 'com_rsgallery2';
 
     private string $configXmlFilePath;
     private Registry $configXmlParams;
+
+    // From Db extension table
     private Registry $configDbParams;
 
+    // Merged XML with DB parameter needed for writing only valid names
     private Registry $mergedConfigParam;
 
-    private array $configXmlNames = [];
-
-    private string $componentName = 'com_rsgallery2';
+//    private array $configXmlNames = [];
 
     public function __construct(string $configXmlFilePath) {
         $this->configXmlFilePath = $configXmlFilePath;
@@ -42,7 +56,7 @@ class rsg2ConfigPara
     public function extractConfigParam ()
     {
         $this->configXmlParams = $this->read_default_xml_configParam ();
-        $this->configXmlNames = $this->configXmlNames($this->configXmlParams);
+//        $this->configXmlNames = $this->configXmlNames($this->configXmlParams);
 
         $this->configDbParams = $this->read_db_configParam();
 
@@ -53,7 +67,7 @@ class rsg2ConfigPara
     }
 
     /**
-     *
+     * config.xml
      *
      * @since version
      */
@@ -84,7 +98,7 @@ class rsg2ConfigPara
     }
 
     /**
-     *
+     * db extension parameter table
      *
      * @since version
      */
@@ -108,53 +122,101 @@ class rsg2ConfigPara
         return $config;
     }
 
-    private function configXmlNames(Registry $configXmlParams)
+    /**
+     * Extract names/values as separate arrays from given registry
+     *
+     * @param   Registry  $configParams
+     *
+     * @return array
+     */
+    public static function namesValuesArrays(Registry $configParams)
     {
-        $this->configXmlNames = [];
+        $names = [];
+        $values = [];
 
-        foreach ($configXmlParams->toArray() as $configName => $configValue) {
-            $this->configXmlNames[] = $configName;
-
+        foreach ($configParams->toArray() as $configName => $configValue) {
+            $names[] = $configName;
+            $values[] = $configValue;
         }
 
-        return $this->configXmlNames;
+        return [$names, $values];
     }
 
+//    /**
+//     * Extract names from given registry
+//     *
+//     * @param   Registry  $configParams
+//     *
+//     * @return array
+//     */
+//    private function configNames(Registry $configParams)
+//    {
+//        $configNames = [];
+//
+//        foreach ($configParams->toArray() as $configName => $configValue) {
+//            $configNames[] = $configName;
+//        }
+//
+//        return $configNames;
+//    }
+//
+//    /**
+//     * Extract values from given registry
+//     *
+//     * @param   Registry  $configParams
+//     *
+//     * @return array
+//     *
+//     * @since version
+//     */
+//    public function getConfigValues (Registry $configParams) {
+//        $configValues = [];
+//
+//        foreach ($configParams->toArray() as $configName => $configValue) {
+//            $configValues[] = $configValue;
+//        }
+//
+//        return $configValues;
+//    }
+
     /**
-     * array of names
-     * @return array
+     * Complete list of configuration parameters from config.xml file
+     * @return Registry
      *
      * @since version
      */
-    public function getConfigNames () {
-        return $this->configXmlNames;
+    public function getConfigXmlParameter () {
+        return $this->configXmlParams;
     }
 
     /**
-     * array of values
-     * @return array
+     * Complete list of configuration parameters from config.xml file
+     * @return Registry
      *
      * @since version
      */
-    public function getConfigValues () {
-        $configValues = [];
-
-        $cfg =$this->mergedConfigParam;
-        foreach ($this->configXmlNames as $configName) {
-            $configValues[] = $cfg[$configName];
-        }
-
-        return $configValues;
+    public function getConfigDbParameter () {
+        return $this->configDbParams;
     }
 
     /**
-     * Complete list of extracted configuration parameters
+     * Merged XML with DB parameter needed for writing only valid names
+     * @return Registry
+     *
+     * @since version
+     */
+    public function getConfigMergedParameter () {
+        return $this->mergedConfigParam;
+    }
+
+    /**
+     * Actual parameter k nown to the extension
      * @return Registry
      *
      * @since version
      */
     public function getConfigParameter () {
-        return $this->mergedConfigParam;
+        return $this->getConfigDbParameter ();
     }
 
     /**
