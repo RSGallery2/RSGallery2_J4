@@ -85,6 +85,8 @@ class GalleryList extends AbstractCommand
 
         // ToDo: option to limit by user (owner), ?parent ...
 
+        $this->setDescription(Text::_('List all galleries'));
+
         $help = "<info>%command.name%</info> list all existing rsgallery2 galleries
   Usage: <info>php %command.full_name%</info>
     * You may filter on the user id of gallery using the <info>--owner</info> option.
@@ -92,7 +94,6 @@ class GalleryList extends AbstractCommand
     * You may filter on the parent id of gallery using the <info>--parent_id</info> option.
     Example: <info>php %command.full_name% --created_by=291</info>
     ";
-        $this->setDescription(Text::_('List all galleries'));
         $this->setHelp($help);
     }
 
