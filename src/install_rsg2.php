@@ -395,7 +395,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         echo $installMsg;
 
         // wonderworld 'good bye' icons finnern ⊕∞ω
-        echo '<br><h4>&oplus;&infin;&omega;</h4><br>';
+        // echo '<br><span style="font-size:32px;">⊕∞ω</span><br>';
+        echo '<span style="font-size:32px;">⊕∞ω</span>';
         Log::add(Text::_('--- exit postflight ------------'), Log::INFO, 'rsg2');
 
         return true;

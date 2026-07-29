@@ -9,11 +9,12 @@
 			<item>[J3x] Root galleryíes view: Pagination regards config setting</item>
 			<item>[J3x] Root galleryíes view: Show slideshow link only on galleries when images exists</item>
 			<item>Commands "rotate degrees, flip" in 'edit image' or 'Add image properties' views are not ignored any more</item>
+			<item>Fixed: Error on menu display for slidepage, slidepagej3x, slideshow, slideshowj3x when layout was not selected in menu creation</item>
 			<item></item>
 		</fix>
 		<change>
-			<item>used jrector to apply j!5 code requirements</item>
-			<item></item>
+			<item>Used jrector to apply j!5 code requirements</item>
+			<item>New uninstall design</item>
 		</change>
 		<addition>
 			<item>[J3x] Root galleryíes view: Sub galleries will be shown in same row as parent on the right side</item>
