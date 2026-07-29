@@ -23,6 +23,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsg2ConfigPara;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -83,13 +84,19 @@ class Config extends AbstractCommand
      */
     protected function configure(): void
     {
-        $this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim length of variable for item keeps in one line');
+        $this->addArgument('option', InputOption::VALUE_OPTIONAL, 'Name of the option');
+        // $this->addOption('max_line_length', null, InputOption::VALUE_OPTIONAL, 'trim length of variable for item keeps in one line');
 
-        $help = "<info>%command.name%</info> list variables of RSG2 configuration
+        $this->setDescription(Text::_('List all configuration parameter'));
+
+        $help = "<info>%command.name%</info> list parameters of RSG2 configuration
   Usage: <info>php %command.full_name%</info>
-    * You may restrict the value string length using the <info>--max_line_length</info> option. A result line that is too long will confuse the output lines
-";
-        $this->setDescription(Text::_('List all configuration variables'));
+    * On use of the option string 'xml' the parameters in the config.xml will be shown
+    * On use of the option string 'merged' the parameters in the config.xml will be
+      merged with the db parameter which will show the next save of config without changes";
+//        * You may restrict the value string length using the <info>--max_line_length</info> option.
+//    An excessively long result line disrupts the output lines.
+
         $this->setHelp($help);
     }
 
@@ -109,7 +116,13 @@ class Config extends AbstractCommand
         $this->configureIO($input, $output);
         $this->ioStyle->title('RSGallery2 Configuration');
 
-        $max_line_length = $input->getOption('max_line_length') ?? null;
+        $options   = $this->cliInput->getArgument('option');
+        if (!empty($options)) {
+            $option = $options[0];
+            $this->ioStyle->note("Option found: '$option'");
+        }
+
+        // $max_line_length = $input->getOption('max_line_length') ?? null;
 
         //--- merge config xml and db parameter ---------------------------------
 
@@ -123,14 +136,32 @@ class Config extends AbstractCommand
             return Command::FAILURE;
         }
 
-        // No DB parameter ?
-        if ($rsgallery2Config->getDbParameter ()->count() == 0) {
-            $this->ioStyle->warning("RSGallery2 component parameter are not initialized yet. Please save it once<br>"
-                . "In following list the config.xml default parameter are shown");
+        // db extension table may be empty
+        $actParams = $rsgallery2Config->getConfigDbParameter();
+
+        if (!empty($option)) {
+            if ($option == 'merged') {
+                $actParams = $rsgallery2Config->getConfigMergedParameter();
+
+                $this->ioStyle->note("Displayed parameter are merged from config.xml and DB table");
+
+            } elseif ($option == 'xml') {
+                $actParams = $rsgallery2Config->getConfigXmlParameter();
+
+                $this->ioStyle->note("Displayed parameter are direct from config.xml");
+            }
         }
 
-        $headers = $rsgallery2Config->getConfigNames();
-        $row = $rsgallery2Config->getConfigValues();
+        [$headers, $row] = $rsgallery2Config::namesValuesArrays($actParams);
+
+        if (count($headers) == 0) {
+            $this->ioStyle->warning("RSGallery2 component parameter are not initialized yet. Please save it once.\n"
+                . "    No parameter to show.\n"
+                . "    Please try option 'xml' or 'merged'");
+        }
+
+//        $headers = $rsgallery2Config->getConfigNames();
+//        $rows = $rsgallery2Config->getConfigValues();
 
         $this->ioStyle->horizontalTable($headers, [$row]);
 

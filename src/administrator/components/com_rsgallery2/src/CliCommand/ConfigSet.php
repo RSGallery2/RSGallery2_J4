@@ -88,11 +88,13 @@ class ConfigSet extends AbstractCommand
         $this->addArgument('value', null, 'Value of the option');
         $this->addOption('verify', null, InputOption::VALUE_OPTIONAL, 'configuration ID', false);
 
+        $this->setDescription(Text::_('Sets the value of selected parameter name in configuration'));
+
         $help = "<info>%command.name%</info> set a parameter value in the RSG2 configuration
   Usage: <info>php %command.full_name%</info>  <option> <value>
-    * You may verify the written value with <info>--verify=true<info> option. This compares the given option with the resulting table value
+    * You may verify the written value with <info>--verify=true<info> option.
+      This compares the given option with the resulting table value
 		";
-        $this->setDescription(Text::_('Sets the value of selected parameter name in configuration'));
         $this->setHelp($help);
     }
 
@@ -134,8 +136,8 @@ class ConfigSet extends AbstractCommand
 
         // No DB parameter ?
         if ($rsgallery2Config->getDbParameter ()->count() == 0) {
-            $this->ioStyle->warning("RSGallery2 component parameter are not initialized yet. Please save it once<br>"
-                . "In following list the config.xml default parameter are shown");
+            $this->ioStyle->warning("RSGallery2 component parameter were not initialized yet\n"
+                . "File config.xml value were saved with the new parameter/value");
         }
 
         //--- Assign value ---------------------------------------------------
@@ -144,9 +146,9 @@ class ConfigSet extends AbstractCommand
         $sanitizeValue = $this->sanitizeValue($value);
 
         $newValue = new Registry([$option => $sanitizeValue]);
-        $actPara = $rsgallery2Config->getConfigParameter();
+        $actPara = $rsgallery2Config->getConfigMergedParameter();
 
-        // Accepts only known values
+        // New values into actual. Accepts only known values
         $merged = $actPara->merge($newValue);
 
         //--- save value ---------------------------------------------------------

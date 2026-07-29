@@ -18,8 +18,9 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Console\Command\AbstractCommand;
-use Joomla\Database\DatabaseAwareTrait;
+//use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsg2ConfigPara;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,7 +29,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ConfigGet extends AbstractCommand
+class ConfigReset extends AbstractCommand
 {
 //    use DatabaseAwareTrait;
 
@@ -37,7 +38,7 @@ class ConfigGet extends AbstractCommand
      *
      * @var    string
      */
-    protected static $defaultName = 'rsgallery2:config:get';
+    protected static $defaultName = 'rsgallery2:config:reset';
 
     /**
      * @var   SymfonyStyle
@@ -57,6 +58,7 @@ class ConfigGet extends AbstractCommand
     public function __construct()
     {
         parent::__construct();
+
     }
 
     /**
@@ -82,18 +84,18 @@ class ConfigGet extends AbstractCommand
      */
     protected function configure(): void
     {
-        $this->addArgument('name', InputArgument::REQUIRED, 'Name of the option');
-        $this->addArgument('option', InputOption::VALUE_OPTIONAL, 'Name of the option');
+        $this->addArgument('option', InputOption::VALUE_OPTIONAL, '');
 
-        $this->setDescription(Text::_('Display value of selected parameter in configuration'));
+        $this->setDescription(Text::_('Reset the RSG2 parameters to config.xml values or do clear'));
 
-        $help = "<info>%command.name%</info> display a value of the RSG2 configuration
-  Usage: <info>php %command.full_name%</info> <name>
-    * On use of the option string 'xml' the parameters in the config.xml will be used directly
-    * You may restrict the value string length using the <info>--max_line_length</info> option.
-      An excessively long result line disrupts the output lines.";
+        $help = "<info>%command.name%</info> Reset the RSG2 configuration parameters to values defined in config.xml or to an empty set
+  Usage: <info>php %command.full_name%</info> <option>
+    * On use of the option string 'emptyDb' The parameters in the extension
+      table will be removed and leave an empty table";
+
         $this->setHelp($help);
     }
+
 
     /**
      * Internal function to execute the command.
@@ -109,9 +111,7 @@ class ConfigGet extends AbstractCommand
     {
         // Configure the Symfony output helper
         $this->configureIO($input, $output);
-        $this->ioStyle->title('RSGallery2 Configuration Value');
-
-        $name = $this->cliInput->getArgument('name');
+        $this->ioStyle->title('RSGallery2 Set Configuration Value');
 
         $options = $this->cliInput->getArgument('option');
         if (!empty($options)) {
@@ -127,71 +127,38 @@ class ConfigGet extends AbstractCommand
             $rsgallery2Config->extractConfigParam ();
 
         } catch (\Exception $e) {
-            $this->ioStyle->error('ConfigSet.doExecute ' . $e->getMessage());
+            $this->ioStyle->error('ConfigReset.doExecute ' . $e->getMessage());
             return Command::FAILURE;
         }
 
-        // No DB parameter ?
-        if ($rsgallery2Config->getDbParameter ()->count() == 0) {
-            $this->ioStyle->warning("RSGallery2 component parameter are not initialized yet. Please save it once.");
+        //--- prepare params for writing ---------------------------------------
+
+        // standard from config.xml
+        $xmlParams = $rsgallery2Config->getConfigXmlParameter();
+
+        // do empty extension table parameters
+        if (!empty($option) && $option == 'emptyDb') {
+
+            $xmlParams = new Registry();
+
+            $this->ioStyle->warning("RSGallery2 component (DB) parameter are deleted and not initialized now. Please save it once.");
+        } else {
+            $this->ioStyle->note("RSGallery2 component (DB) parameter are now initialized from file config.xml.");
         }
 
-        // db extension table may be empty
-        $actParams = $rsgallery2Config->getConfigDbParameter();
+        //--- save xml values ---------------------------------------------------------
 
-        if (!empty($option)) {
-            if ($option == 'xml') {
-                $actParams = $rsgallery2Config->getConfigXmlParameter();
+        $isSuccess = $rsgallery2Config->saveDbParams($xmlParams);
 
-                $this->ioStyle->note("Parameter is read directly from config.xml");
-            }
-        }
-
-        $valueBare = $actParams->get($name, null);
-        if ($valueBare === null) {
-            $this->ioStyle->error("Can't find option '{$name}' in configuration list");
+        if (empty($isSuccess)) {
+            $this->ioStyle->error("Could not save RSGallery2 configuration parameters");
 
             return Command::FAILURE;
         }
 
-        $value = $this->formatConfigValue($valueBare);
-
-        $this->ioStyle->table(['Option', 'Value'], [[$name, $value]]);
+        $this->ioStyle->success('Configuration set');
 
         return Command::SUCCESS;
     }
 
-    /**
-     * Formats the Configuration value
-     *
-     * @param   mixed  $value  Value to be formatted
-     *
-     * @return string
-     *
-     * @since  4.0.X
-     */
-    protected function formatConfigValue($value): string
-    {
-        if ($value === false) {
-            return 'false';
-        }
-
-        if ($value === true) {
-            return 'true';
-        }
-
-        if ($value === null) {
-            return 'Not Set';
-        }
-
-        if (\is_array($value)) {
-            return json_encode($value);
-        }
-
-        if (\is_object($value)) {
-            return json_encode(get_object_vars($value));
-        }
-
-        return $value;
-    }
 }
