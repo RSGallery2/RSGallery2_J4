@@ -10,6 +10,7 @@
 			<item>[J3x] Root galleryíes view: Show slideshow link only on galleries when images exists</item>
 			<item>Commands "rotate degrees, flip" in 'edit image' or 'Add image properties' views are not ignored any more</item>
 			<item>Fixed: Error on menu display for slidepage, slidepagej3x, slideshow, slideshowj3x when layout was not selected in menu creation</item>
+			<item>Fixed: Install does write the config.xml file parameter on install again</item>
 			<item></item>
 		</fix>
 		<change>

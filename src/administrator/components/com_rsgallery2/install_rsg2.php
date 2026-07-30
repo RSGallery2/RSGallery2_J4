@@ -365,7 +365,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                 Log::add('post->uninstall: finished', Log::INFO, 'rsg2');
 
                 echo $this->sadlyGoodByeHtml();
-                
+
                 break;
 
             case 'discover_install':
@@ -395,7 +395,8 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
         echo $installMsg;
 
         // wonderworld 'good bye' icons finnern ⊕∞ω
-        echo '<br><h4>&oplus;&infin;&omega;</h4><br>';
+        // echo '<br><span style="font-size:32px;">⊕∞ω</span><br>';
+        echo '<span style="font-size:32px;">⊕∞ω</span>';
         Log::add(Text::_('--- exit postflight ------------'), Log::INFO, 'rsg2');
 
         return true;
@@ -899,8 +900,9 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
     }
 
     /**
+     * First init or update new items from config.xml file
+     * Existing items will be kept and not overwritten
      * @param   InstallerAdapter  $parent  The class calling this method
-     *
      *
      * @since version
      */
@@ -908,48 +910,36 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
     {
         try {
             Log::add(
-                Text::_('upd (20) Rsg2ExtensionModel (update default parameter) -----------------------'),
+                Text::_('upd (20) rsg2ConfigPara (update default parameter) -----------------------'),
                 Log::INFO,
                 'rsg2',
             );
 
             Log::add(Text::_('upd (20.1) '), Log::INFO, 'rsg2');
 
-            // load model -----------------------------------------------------
+            // load Helper class -----------------------------------------------------
 
-            $Rsg2ExtensionModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Model/Rsg2ExtensionModel.php';
+            $rsg2ConfigParaFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/src/Helper/rsg2ConfigPara.php';
             Log::add(Text::_('upd (20.2) '), Log::INFO, 'rsg2');
-            $Rsg2ExtensionClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel::class;
+            $Rsg2ExtensionClassName = \Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsg2ConfigPara::class;
             Log::add(Text::_('upd (20.3) '), Log::INFO, 'rsg2');
-            JLoader::register($Rsg2ExtensionClassName, $Rsg2ExtensionModelFileName);
+            JLoader::register($Rsg2ExtensionClassName, $rsg2ConfigParaFileName);
 
             Log::add(Text::_('upd (20.4) '), Log::INFO, 'rsg2');
-            $Rsg2ExtensionClass = new Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel();
+            $rsg2ConfigParaClass = new Rsgallery2\Component\Rsgallery2\Administrator\Helper\rsg2ConfigPara(JPATH_ADMINISTRATOR . '/components/com_rsgallery2/config.xml');
 
-            //--- read actual config data ------------------------------------------------
+            //--- read config data config.xml merged with Db (component) -----------------------------------
 
             Log::add(Text::_('upd (20.5) '), Log::INFO, 'rsg2');
-            $this->actualParams = $Rsg2ExtensionClass->readRsg2ExtensionConfiguration();
-
-            //--- read default config data ------------------------------------------------
-
-            Log::add(Text::_('upd (20.6) '), Log::INFO, 'rsg2');
-            $this->defaultParams = $Rsg2ExtensionClass->readRsg2ExtensionDefaultConfiguration();
-
-            //--- merge default and actual config data ------------------------------------------------
-
-            Log::add(Text::_('upd (20.7) '), Log::INFO, 'rsg2');
-            $this->mergedParams = $Rsg2ExtensionClass->mergeDefaultAndActualParams(
-                $this->defaultParams,
-                $this->actualParams,
-            );
+            $this->mergedParams = $rsg2ConfigParaClass->mergeXmlWithCompParam();
 
             //--- write as actual config data ------------------------------------------------
 
             Log::add(Text::_('upd (20.8) '), Log::INFO, 'rsg2');
-            $Rsg2ExtensionClass->replaceRsg2ExtensionConfiguration($this->mergedParams);
+            $rsg2ConfigParaClass->saveDbParams($this->mergedParams);
 
             Log::add(Text::_('upd (20.9) '), Log::INFO, 'rsg2');
+
         } catch (RuntimeException $e) {
             Log::add(
                 Text::_('Exception: upgradeSql: ') . $e->getMessage(),
@@ -973,7 +963,7 @@ class Com_Rsgallery2InstallerScript extends InstallerScript
                     <div class="col-md-6 col-lg-5">
                         <div class="card text-white bg-success my-2 pt-4 text-center">
 
-                            <i class="fa fa-heart-broken" style="font-size:48px";></i>
+                            <i class="fa fa-heart-broken" style="font-size:48px;"></i>
 
                             <!--div class="card-header"-->
                             <!--/div-->

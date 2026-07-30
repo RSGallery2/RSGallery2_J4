@@ -493,9 +493,9 @@
 		<field
 				name="galleries_show_description"
 				type="list"
-				default="layout01"
+				default="0"
 				label="*Show gallery description"
-				description="*Select display location of gellery description"
+				description="*Select display location of gallery description"
 		>
 			<option value="0">JNO</option>
 			<option value="1">*Above thumb</option>
@@ -611,7 +611,7 @@
 		<field
 				name="layout_images_thumbs"
 				type="list"
-				default="Layout of images thumbs"
+				default="layout01"
 				label="*Thumbs layout"
 				description="Select layout of thumbs in this gallery"
 		>
@@ -636,7 +636,7 @@
 		<field
 				name="images_show_description"
 				type="list"
-				default="layout01"
+				default="0"
 				label="*Show gallery description"
 				description="Select display location of gellery description"
 		>
@@ -1194,6 +1194,7 @@
 				label="JFIELD_ALT_LAYOUT_LABEL"
 				class="custom-select"
 				extension="com_rsgallery2"
+                default="SlideshowJ3x"
 		/>
 
 		<field

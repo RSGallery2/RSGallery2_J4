@@ -33,6 +33,9 @@ class rsg2ConfigPara
     private string $configXmlFilePath;
     private Registry $configXmlParams;
 
+    // from joomla component request
+    private Registry $configCompParams;
+
     // From Db extension table
     private Registry $configDbParams;
 
@@ -58,13 +61,38 @@ class rsg2ConfigPara
         $this->configXmlParams = $this->read_default_xml_configParam ();
 //        $this->configXmlNames = $this->configXmlNames($this->configXmlParams);
 
-        $this->configDbParams = $this->read_db_configParam();
+        $this->configCompParams = $this->read_ComponentParam();
+        $this->configDbParams   = $this->readDbExtensionParaDirect();
 
-        $configParam =
-        $this->mergedConfigParam =  $this->configXmlParams->merge($this->configDbParams);
+        $configParam = $this->mergeXmlWithCompParam ();
 
         return $configParam;
     }
+
+    /**
+     * Merge joomla component parameter into xml parameter
+     * May be called instead of extractConfigParam when the merged shall be saved later
+     *
+     * @since version
+     */
+    public function mergeXmlWithCompParam () {
+
+        // on first call
+        if (empty($this->configXmlParams))
+        {
+            $this->configXmlParams = $this->read_default_xml_configParam();
+        }
+        // on first call
+        if (empty($this->configCompParams))
+        {
+            $this->configCompParams = $this->read_ComponentParam();
+        }
+
+        $this->mergedConfigParam =  $this->configXmlParams->merge($this->configCompParams);
+
+        return $this->mergedConfigParam;
+    }
+
 
     /**
      * config.xml
@@ -78,11 +106,17 @@ class rsg2ConfigPara
         if (file_exists($this->configXmlFilePath)) {
             $xml = simplexml_load_file($this->configXmlFilePath);
 
-            $fieldElements = $xml->xpath('.//field');
+//            $fields = $xml->xpath('descendant-or-self::field');
+            $fields = $xml->xpath('.//field');
 
-            if (!empty($fieldElements)) {
+            if (!empty($fields)) {
 
-                foreach ($fieldElements as $field) {
+                foreach ($fields as $field) {
+
+                    // only default values are needed
+                    if (!isset($field['default'])) {
+                        continue;
+                    }
 
                     $attributes = $field->attributes();
 
@@ -102,7 +136,7 @@ class rsg2ConfigPara
      *
      * @since version
      */
-    private function read_db_configParam ()
+    private function read_ComponentParam ()
     {
         $component = ComponentHelper::getComponent($this->componentName);
         if (empty($component)) {
@@ -142,43 +176,6 @@ class rsg2ConfigPara
         return [$names, $values];
     }
 
-//    /**
-//     * Extract names from given registry
-//     *
-//     * @param   Registry  $configParams
-//     *
-//     * @return array
-//     */
-//    private function configNames(Registry $configParams)
-//    {
-//        $configNames = [];
-//
-//        foreach ($configParams->toArray() as $configName => $configValue) {
-//            $configNames[] = $configName;
-//        }
-//
-//        return $configNames;
-//    }
-//
-//    /**
-//     * Extract values from given registry
-//     *
-//     * @param   Registry  $configParams
-//     *
-//     * @return array
-//     *
-//     * @since version
-//     */
-//    public function getConfigValues (Registry $configParams) {
-//        $configValues = [];
-//
-//        foreach ($configParams->toArray() as $configName => $configValue) {
-//            $configValues[] = $configValue;
-//        }
-//
-//        return $configValues;
-//    }
-
     /**
      * Complete list of configuration parameters from config.xml file
      * @return Registry
@@ -187,6 +184,16 @@ class rsg2ConfigPara
      */
     public function getConfigXmlParameter () {
         return $this->configXmlParams;
+    }
+
+    /**
+     * Complete list of configuration parameters from config.xml file
+     * @return Registry
+     *
+     * @since version
+     */
+    public function getConfigCompParameter () {
+        return $this->configCompParams;
     }
 
     /**
@@ -216,7 +223,7 @@ class rsg2ConfigPara
      * @since version
      */
     public function getConfigParameter () {
-        return $this->getConfigDbParameter ();
+        return $this->getConfigCompParameter ();
     }
 
     /**
@@ -226,7 +233,7 @@ class rsg2ConfigPara
      * @since version
      */
     public function getDbParameter () {
-        return $this->configDbParams;
+        return $this->configCompParams;
     }
 
     /**
@@ -237,8 +244,10 @@ class rsg2ConfigPara
      *
      * @since  5.1.0
      */
-    public function readDbExtensionParaDirect()
+    public function readDbExtensionParaDirect(): Registry
     {
+        $dbXmlParams = new Registry();
+
         $params = [];
 
         try {
@@ -255,6 +264,7 @@ class rsg2ConfigPara
             $jsonStr = $db->loadResult();
             if (!empty($jsonStr)) {
                 $params = json_decode((string)$jsonStr, true);
+                $dbXmlParams = new Registry($params);
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -263,7 +273,7 @@ class rsg2ConfigPara
             throw new \Exception($OutTxt);
         }
 
-        return $params;
+        return $dbXmlParams;
     }
 
     /**
