@@ -92,6 +92,7 @@ class Config extends AbstractCommand
         $help = "<info>%command.name%</info> list parameters of RSG2 configuration
   Usage: <info>php %command.full_name%</info>
     * On use of the option string 'xml' the parameters in the config.xml will be shown
+    * On use of the option string 'db' the parameters extracted fom the extension manifest directly will be shown
     * On use of the option string 'merged' the parameters in the config.xml will be
       merged with the db parameter which will show the next save of config without changes";
 //        * You may restrict the value string length using the <info>--max_line_length</info> option.
@@ -136,19 +137,25 @@ class Config extends AbstractCommand
             return Command::FAILURE;
         }
 
-        // db extension table may be empty
-        $actParams = $rsgallery2Config->getConfigDbParameter();
+        // Joomla component query (maybe empty)
+        $actParams = $rsgallery2Config->getConfigCompParameter();
 
         if (!empty($option)) {
             if ($option == 'merged') {
                 $actParams = $rsgallery2Config->getConfigMergedParameter();
 
-                $this->ioStyle->note("Displayed parameter are merged from config.xml and DB table");
+                $this->ioStyle->note("Displayed parameter are merged from config.xml and DB extension table");
 
             } elseif ($option == 'xml') {
                 $actParams = $rsgallery2Config->getConfigXmlParameter();
 
-                $this->ioStyle->note("Displayed parameter are direct from config.xml");
+                $this->ioStyle->note("Displayed parameter are extracted direct from config.xml");
+
+            } elseif ($option == 'db') {
+                // db extension table
+                $actParams = $rsgallery2Config->getConfigDbParameter();
+
+                $this->ioStyle->note("Displayed parameter are extracted direct from db extension table");
             }
         }
 

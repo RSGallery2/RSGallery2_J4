@@ -137,7 +137,7 @@ class ConfigGet extends AbstractCommand
         }
 
         // db extension table may be empty
-        $actParams = $rsgallery2Config->getConfigDbParameter();
+        $actParams = $rsgallery2Config->getConfigCompParameter();
 
         if (!empty($option)) {
             if ($option == 'xml') {

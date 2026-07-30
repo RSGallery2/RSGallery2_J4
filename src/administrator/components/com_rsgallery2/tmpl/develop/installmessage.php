@@ -50,7 +50,7 @@ use Joomla\CMS\Router\Route;
                         <div class="col-md-6 col-lg-5">
                             <div class="card text-white bg-success my-2 pt-4 text-center">
 
-                                <i class="fa fa-heart-broken" style="font-size:48px";></i>
+                                <i class="fa fa-heart-broken" style="font-size:48px;"></i>
 
                                 <!--div class="card-header"-->
                                 <!--/div-->

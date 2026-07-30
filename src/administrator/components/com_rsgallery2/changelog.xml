@@ -16,6 +16,7 @@
 		<change>
 			<item>Used jrector to apply j!5 code requirements</item>
 			<item>New uninstall design</item>
+			<item>Redesign of CLI RSG2 config: list, get, set: Optional direct access of congig.xml or extension DB parameters on read</item>
 		</change>
 		<addition>
 			<item>[J3x] Root galleryíes view: Sub galleries will be shown in same row as parent on the right side</item>
