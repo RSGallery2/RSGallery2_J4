@@ -15,9 +15,10 @@ use Joomla\Application\Event\ApplicationEvent;
 use Joomla\CMS\MVC\Factory\MVCFactoryAwareTrait;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
-
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\Config;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigGet;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigRaw;
+use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigReset;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\ConfigSet;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\Gallery;
 use Rsgallery2\Component\Rsgallery2\Administrator\CliCommand\GalleryList;
@@ -62,9 +63,12 @@ class Rsg2_console extends CMSPlugin implements SubscriberInterface
 //        GalleryAdd::class,
         GalleryList::class,
         GalleryParams::class,
+
         Config::class,
         ConfigGet::class,
         ConfigSet::class,
+        ConfigReset::class,
+
         Image::class,
         ImageList::class,
         ImageParams::class,
