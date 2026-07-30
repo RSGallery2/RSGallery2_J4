@@ -121,6 +121,7 @@ class HtmlView extends BaseHtmlView
 				break;
 
 			case 'dbManifest':
+				ToolBarHelper::title(Text::_('COM_RSGALLERY2_MAINTENANCE') . ': ' . Text::_('COM_RSGALLERY2_DB_MAINIFEST'), 'screwdriver');
 				$toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 				break;
 

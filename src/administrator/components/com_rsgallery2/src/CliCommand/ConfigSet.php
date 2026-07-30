@@ -194,7 +194,7 @@ class ConfigSet extends AbstractCommand
      *
      * @since  4.0.X
      */
-    private function sanitizeValue($value)
+    private function sanitizeValue($value): mixed
     {
         $value = match (true) {
             $value === 'false' => false,
