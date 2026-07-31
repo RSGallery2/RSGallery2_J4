@@ -4,7 +4,7 @@
 		<element>com_rsgallery2</element>
 		<type>component</type>
 		<version>5.3.0</version>
-		<date>2026-07-13</date>
+		<date>2026-07-31</date>
 		<fix>
 			<item>[J3x] Root galleryíes view: Pagination regards config setting</item>
 			<item>[J3x] Root galleryíes view: Show slideshow link only on galleries when images exists</item>
