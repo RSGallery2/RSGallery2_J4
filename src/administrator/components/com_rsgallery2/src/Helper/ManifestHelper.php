@@ -182,7 +182,7 @@ class ManifestHelper
 //		$db = self::getDatabase();
 //
 //		return $db->setQuery(
-//			'UPDATE #__extensions'
+//			'UPDATE #__extensions' -> use modern style if needed
 //			. ' SET params = ' . $db->quote((string) $params)
 //			. ' WHERE element = ' . $db->quote('com_rsgallery2')
 //		)->execute();
