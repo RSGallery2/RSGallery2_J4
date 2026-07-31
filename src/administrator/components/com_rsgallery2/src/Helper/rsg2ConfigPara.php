@@ -14,7 +14,6 @@ use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 
-
 /** following situations are supported
  *
  * - get config list reads parameter from Db extension table
@@ -281,19 +280,24 @@ class rsg2ConfigPara
      *
      * @since version
      */
-    public function saveDbParams (Registry $params)
+    public function saveDbParams (Registry $params): bool
     {
-        $test = (string) $params;
+        $isWritten = false;
+        // $test = (string) $params;
 
         $db = Factory::getContainer()->get(DatabaseInterface::class);
 
-        return $db->setQuery(
-            'UPDATE #__extensions'
-            . ' SET params = ' . $db->quote((string)$params)
-            . ' WHERE element = ' . $db->quote($this->componentName),
-        )->execute();
+        $query = $db->createQuery()
+            ->update($db->quoteName('#__extensions'))
+            ->set($db->quoteName('params') . ' = ' . $db->quote((string)$params))
+            ->where($db->quoteName('name') . ' = ' . $db->quote((string)$this->componentName));
+        $db->setQuery($query);
 
+        if ($db->execute()) {
+            $isWritten = true;
+        }
 
+        return $isWritten;
     }
 
 }

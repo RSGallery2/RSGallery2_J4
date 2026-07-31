@@ -283,7 +283,7 @@ class Rsg2ExtensionModel extends BaseModel
 
                 $query = $db->createQuery()
                     ->update($db->quoteName('#__extensions'))
-                    ->set($db->quoteName('params') . ' = ' . $db->quote($paramsString))
+                    ->set($db->quoteName('params') . ' = ' . $db->quote((string)$paramsString))
                     ->where($db->quoteName('name') . ' = ' . $db->quote('com_rsgallery2'));
                 $db->setQuery($query);
 

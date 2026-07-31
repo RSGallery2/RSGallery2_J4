@@ -54,7 +54,7 @@ class HtmlView extends BaseHtmlView
 		//echo '$layout: ' . $layout . '<br>';
 
 		$rsgConfig        = ComponentHelper::getComponent('com_rsgallery2')->getParams();
-		$this->isDevelop  = $rsgConfig->get('isDevelop');
+		$this->isDevelop  = $rsgConfig->get('isDevelop', false);
 		$this->configVars = $rsgConfig;
 
 		if ($layout == 'dbManifest' || $layout == 'dbManifestEdit')
