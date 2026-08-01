@@ -58,7 +58,6 @@ class ConfigSet extends AbstractCommand
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**
@@ -93,8 +92,8 @@ class ConfigSet extends AbstractCommand
         $help = "<info>%command.name%</info> set a parameter value in the RSG2 configuration
   Usage: <info>php %command.full_name%</info>  <option> <value>
     * You may verify the written value with <info>--verify=true<info> option.
-      This compares the given option with the resulting table value
-		";
+      This compares the given option with the resulting table value";
+
         $this->setHelp($help);
     }
 
@@ -148,7 +147,7 @@ class ConfigSet extends AbstractCommand
         $newValue = new Registry([$option => $sanitizeValue]);
         $actPara = $rsgallery2Config->getConfigMergedParameter();
 
-        // New values into actual. Accepts only known values
+        // Merge ew values into actual. Accepts only known values
         $merged = $actPara->merge($newValue);
 
         //--- save value ---------------------------------------------------------
@@ -190,7 +189,7 @@ class ConfigSet extends AbstractCommand
      * @param   array  $option  Options array
      *
      *dat
-     * @return array
+     * @return mixed
      *
      * @since  4.0.X
      */

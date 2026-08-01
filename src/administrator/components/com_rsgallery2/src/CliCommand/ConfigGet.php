@@ -92,6 +92,7 @@ class ConfigGet extends AbstractCommand
     * On use of the option string 'xml' the parameters in the config.xml will be used directly
     * You may restrict the value string length using the <info>--max_line_length</info> option.
       An excessively long result line disrupts the output lines.";
+
         $this->setHelp($help);
     }
 
@@ -127,7 +128,7 @@ class ConfigGet extends AbstractCommand
             $rsgallery2Config->extractConfigParam ();
 
         } catch (\Exception $e) {
-            $this->ioStyle->error('ConfigSet.doExecute ' . $e->getMessage());
+            $this->ioStyle->error('ConfigGet.doExecute ' . $e->getMessage());
             return Command::FAILURE;
         }
 

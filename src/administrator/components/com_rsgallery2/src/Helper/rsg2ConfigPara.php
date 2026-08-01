@@ -87,7 +87,8 @@ class rsg2ConfigPara
             $this->configCompParams = $this->read_ComponentParam();
         }
 
-        $this->mergedConfigParam =  $this->configXmlParams->merge($this->configCompParams);
+        $cloned = new Registry ($this->configXmlParams);
+        $this->mergedConfigParam =  $cloned->merge($this->configCompParams);
 
         return $this->mergedConfigParam;
     }

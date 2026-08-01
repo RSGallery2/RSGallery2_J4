@@ -58,7 +58,6 @@ class ConfigReset extends AbstractCommand
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**
