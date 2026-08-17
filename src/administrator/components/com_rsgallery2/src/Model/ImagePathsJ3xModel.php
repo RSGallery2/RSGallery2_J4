@@ -112,9 +112,6 @@ class ImagePathsJ3xModel
             URIs
             --------------------------------------------------------------------*/
 
-//            $this->originalUrl = PathHelper::join(Uri::root(), $this->originalBasePath);
-//            $this->displayUrl = PathHelper::join(Uri::root(), $this->displayBasePath);
-//            $this->thumbUrl = PathHelper::join(Uri::root(), $this->thumbBasePath);
             $this->originalUrl = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_original'));
             $this->displayUrl  = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_display'));
             $this->thumbUrl    = UriHelper::join(Uri::root(), $rsgConfig->get('imgPath_thumb'));

@@ -27,9 +27,6 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
 
 Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
 
-// 2025.01.10 ToDo: following is not working do we need  'extension' ?
-// $extension = $this->escape($this->state->get('filter.extension'));
-
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=imagesproperties'); ?>"
@@ -101,13 +98,6 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
                                     </div>
 
                                     <div class=" control-group">
-                                                <!-- label class="control-label" for="description2[]" ><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
-                                        <div class="controls">
-                                            <textarea cols="15" rows="" name="description[]"
-                                                  placeholder="Text input"
-                                                  style="width:95%;"><?php echo $this->escape($item->descr);?></textarea>
-                                         </div-->
-
                                         <label class="control-label" for="description[]"><?php echo Text::_('COM_RSGALLERY2_DESCRIPTION'); ?></label>
                                         <div class="controls">
                                             <?php
@@ -131,7 +121,7 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
                                         </div>
                                     </div>
 
-                                            <input type="hidden" name="cid[]" value="<?php echo $item->id;?>">
+                                    <input type="hidden" name="cid[]" value="<?php echo $item->id;?>">
                                 </div>
                             </li>
 
@@ -144,15 +134,10 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
                         <div id="popupCaption"></div>
                     </div>
 
-
                 <?php endif; ?>
 
             </div>
 
-            <!--
-            // 2025.01.10 ToDo: following is not working do we need  'extension' ?
-            input type="hidden" name="extension" value="<?php // echo $extension; ?>" /
-            -->
             <input type="hidden" name="task" value="" />
             <input type="hidden" name="boxchecked" value="0" />
             <?php echo HTMLHelper::_('form.token'); ?>

@@ -47,22 +47,6 @@ class ImagesPropertiesController extends AdminController
         parent::__construct($config, $factory, $app, $input);
     }
 
-//    /**
-//   * Proxy for getModel
-//   *
-//   * @param   string  $name    The model name. Optional.
-//   * @param   string  $prefix  The class prefix. Optional.
-//   * @param   array   $config  The array of possible config values. Optional.
-//   *
-//   * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel  The model.
-//   *
-//   * @since __BUMP_VERSION__
-//   */
-//  public function getModel($name = 'Gallery', $prefix = 'Administrator', $config = array('ignore_request' => true))
-//  {
-//      return parent::getModel($name, $prefix, $config);
-//  }
-
     /**
      * Redirect to standard image properties tile view
      * Called from upload
@@ -121,15 +105,16 @@ class ImagesPropertiesController extends AdminController
                 // replace newlines with html line breaks.
                 $msg = nl2br($msg);
             } else {
+                // Just id, title and description
                 $ImagesProperties = $this->ImagesPropertiesFromInput();
 
                 /* @var ImageModel $imgModel */
                 $imgModel = $this->getModel('image');
 
                 foreach ($ImagesProperties as $ImagesProperty) {
-                    $IsSaved = $imgModel->save_imageProperties($ImagesProperty);
+                    $isSaved = $imgModel->save_imageProperties($ImagesProperty);
 
-                    if ($IsSaved) {
+                    if ($isSaved) {
                         $ImgCount++;
                     } else {
                         $ImgFailed++;
@@ -183,15 +168,16 @@ class ImagesPropertiesController extends AdminController
                 // replace newlines with html line breaks.
                 $msg = nl2br($msg);
             } else {
+                // Just id, title and description
                 $ImagesProperties = $this->ImagesPropertiesFromInput();
 
                 /* @var ImageModel $imgModel */
                 $imgModel = $this->getModel('image');
 
                 foreach ($ImagesProperties as $ImagesProperty) {
-                    $IsSaved = $imgModel->save_imageProperties($ImagesProperty);
+                    $isSaved = $imgModel->save_imageProperties($ImagesProperty);
 
-                    if ($IsSaved) {
+                    if ($isSaved) {
                         $ImgCount++;
                     } else {
                         $ImgFailed++;
@@ -381,46 +367,51 @@ class ImagesPropertiesController extends AdminController
                 // selected ids
                 $sids = $this->input->get('sid', 0, 'int');
 
-                // toDo: create imageDb model
                 /* @var ImagesModel $modelImages */
                 $modelImages = $this->getModel('images');
 
-                // Needed filename and gallery id
-                //$fileNames = $modelImages->fileNamesFromIds($sids);
+                // Retrieve needed filename and gallery id from DB
                 $imgFileDatas = $modelImages->ids2FileData($sids);
 
-                /* @var ImageFileModel $modelFile */
-                $modelFile = $this->getModel('imageFile');
+                if (empty($imgFileDatas)) {
+                    $OutTxt = '';
+                    $OutTxt .= 'Error executing flip_image: "' . $direction . '"<br>';
+                    $OutTxt .= 'Error: no matching id in : "' . join(',', $sids) . '"' . '<br>';
 
-                foreach ($imgFileDatas as $imgFileData) {
-                    //$fileName = $imgFileData ['name'];
-                    //$galleryId =  $imgFileData ['gallery_id'];
-                    $fileName  = $imgFileData->name;
-                    $galleryId = $imgFileData->gallery_id;
-                    $id        = $imgFileData->id;
+                    $app = Factory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'error');
+                } else {
+                    /* @var ImageFileModel $modelFile */
+                    $modelFile = $this->getModel('imageFile');
 
-                    $IsSaved = $modelFile->rotate_image($id, $fileName, $galleryId, $direction);
+                    foreach ($imgFileDatas as $imgFileData) {
+                        $fileName  = $imgFileData->name;
+                        $galleryId = $imgFileData->gallery_id;
+                        $id        = $imgFileData->id;
 
-                    if ($IsSaved) {
-                        $ImgCount++;
-                    } else {
-                        $ImgFailed++;
+                        $isSaved = $modelFile->rotate_image($id, $fileName, $galleryId, $direction);
+
+                        if ($isSaved) {
+                            $ImgCount++;
+                        } else {
+                            $ImgFailed++;
+                        }
                     }
-                }
 
-                // $msg '... successful assigned .... images ...
-                if ($ImgCount) {
-                    $msg_ok = ' Successful rotated ' . $ImgCount . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
-                }
-                if ($ImgFailed) {
-                    $msg_bad = ' Failed on rotation of ' . $ImgFailed . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_bad, 'error');
-                }
+                    // $msg '... successful assigned .... images ...
+                    if ($ImgCount) {
+                        $msg_ok = ' Successful rotated ' . $ImgCount . ' image properties';
+                        Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
+                    }
+                    if ($ImgFailed) {
+                        $msg_bad = ' Failed on rotation of ' . $ImgFailed . ' image properties';
+                        Factory::getApplication()->enqueueMessage($msg_bad, 'error');
+                    }
 
-                // not all images were rotated
-                if ($ImgCount < count($imgFileDatas)) {
-                    $msgType = 'warning';
+                    // not all images were rotated
+                    if ($ImgCount < count($imgFileDatas)) {
+                        $msgType = 'warning';
+                    }
                 }
             }
         } catch (\RuntimeException $e) {
@@ -435,9 +426,6 @@ class ImagesPropertiesController extends AdminController
         // Create list of CIDS and append to link URL like in PropertiesView above
         // &ID[]=2&ID[]=3&ID[]=4&ID[]=12
         $cids = $this->input->get('cid', 0, 'int');
-        $link = 'index.php?option=' . $this->option . '&view=' . $this->view_list . '&' . http_build_query(
-            ['cid' => $cids],
-        );
         $link = 'index.php?option=' . $this->option . '&view=imagesProperties' . '&' . http_build_query(
             ['cid' => $cids],
         );
@@ -453,7 +441,7 @@ class ImagesPropertiesController extends AdminController
      */
     public function flip_images_horizontal()
     {
-        $this->checkToken();
+        // Done later: $this->checkToken();
 
         $msg = "flip_images_horizontal: " . '<br>';
 
@@ -519,45 +507,52 @@ class ImagesPropertiesController extends AdminController
                 // selected ids
                 $sids = $this->input->get('sid', 0, 'int');
 
-                // toDo: create imageDb model
                 /* @var ImagesModel $modelImages */
                 $modelImages = $this->getModel('images');
-                // Needed filename and gallery id
-                //$fileNames = $modelImages->fileNamesFromIds($sids);
+
+                // Retrieve needed filename and gallery id from DB
                 $imgFileDatas = $modelImages->ids2FileData($sids);
 
-                /* @var ImageFileModel $modelFile */
-                $modelFile = $this->getModel('imageFile');
+                if (empty($imgFileDatas)) {
+                    $OutTxt = '';
+                    $OutTxt .= 'Error executing flip_image: "' . $flipMode . '"<br>';
+                    $OutTxt .= 'Error: no matching id in : "' . join(',', $sids) . '"' . '<br>';
 
-                foreach ($imgFileDatas as $imgFileData) {
-                    //$fileName = $imgFileData ['name'];
-                    //$galleryId =  $imgFileData ['gallery_id'];
-                    $fileName  = $imgFileData->name;
-                    $galleryId = $imgFileData->gallery_id;
-                    $id        = $imgFileData->id;
+                    $app = Factory::getApplication();
+                    $app->enqueueMessage($OutTxt, 'error');
+                } else {
+                    /* @var ImageFileModel $modelFile */
+                    $modelFile = $this->getModel('imageFile');
 
-                    $IsSaved = $modelFile->flip_image($id, $fileName, $galleryId, $flipMode);
+                    foreach ($imgFileDatas as $imgFileData)
+                    {
+                        $fileName  = $imgFileData->name;
+                        $galleryId = $imgFileData->gallery_id;
+                        $id        = $imgFileData->id;
 
-                    if ($IsSaved) {
-                        $ImgCount++;
-                    } else {
-                        $ImgFailed++;
+                        $isSaved = $modelFile->flip_image($id, $fileName, $galleryId, $flipMode);
+
+                        if ($isSaved) {
+                            $ImgCount++;
+                        } else {
+                            $ImgFailed++;
+                        }
                     }
-                }
 
-                // $msg '... successful assigned .... images ...
-                if ($ImgCount) {
-                    $msg_ok = ' Successful flipped ' . $ImgCount . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
-                }
-                if ($ImgFailed) {
-                    $msg_bad = ' Failed on flipping of ' . $ImgFailed . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_bad, 'error');
-                }
+                    // $msg '... successful assigned .... images ...
+                    if ($ImgCount) {
+                        $msg_ok = ' Successful flipped ' . $ImgCount . ' image properties';
+                        Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
+                    }
+                    if ($ImgFailed) {
+                        $msg_bad = ' Failed on flipping of ' . $ImgFailed . ' image properties';
+                        Factory::getApplication()->enqueueMessage($msg_bad, 'error');
+                    }
 
-                // not all images were rotated
-                if ($ImgCount < count($imgFileDatas)) {
-                    $msgType = 'warning';
+                    // not all images were rotated
+                    if ($ImgCount < count($imgFileDatas)) {
+                        $msgType = 'warning';
+                    }
                 }
             }
         } catch (\RuntimeException $e) {

@@ -454,7 +454,6 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         $deletedCount = 0;
         $failedCount  = 0;
 
-        // $originalFileName = PathHelper::join($imagePaths->originalBasePath, $targetFileName);
         try
         {
             $IsImagesDeleted = false;

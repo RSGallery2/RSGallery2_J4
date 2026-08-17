@@ -14,12 +14,20 @@
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 
 // HTMLHelper::_('bootstrap.framework');
 
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
+
+$session = Factory::getApplication()->getSession();
+//$sessionId = Factory::getApplication()->getSession()->getId();
+$sessionId = $session->getId();
+//$sessionFormToken = Session::getFormToken()
+$sessionFormToken = $session->getFormToken()
 
 ?>
 
@@ -97,12 +105,31 @@ $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesP
                 echo 'default.php: ' . realpath(__DIR__) . '<br>';
                 ?>
 
-
             </div>
+
         </div>
     </div>
 
     <hr>
+
+    <h4>SessionId</h4>
+    <label id="" title="">
+        <?php echo $sessionId; ?>
+    </label>
+    <br /><br />
+
+    <h4>Formtoken</h4>
+    <label id="" title="">
+        <?php echo $sessionFormToken; ?>
+    </label>
+    <br />
+
+<!--    <h4></h4>-->
+<!--    <label id="" title="">-->
+<!--        &nbsp;&nbsp;-->
+<!--    </label>-->
+<!--    <br />-->
+
     <hr>
 
 

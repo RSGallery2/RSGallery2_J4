@@ -127,8 +127,7 @@ class HtmlView extends BaseHtmlView
                 if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
-                        . '* modal on image click <br>'
-                        . '* rotating does not rotate the original<br>'
+                        . '* modal popup on image click (see <div id="popupModal" class="Xmodal"> )<br>'
                         . '* <br>'
                         //. '* <br>'
                         //. '* <br>'

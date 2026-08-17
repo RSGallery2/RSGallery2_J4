@@ -17,14 +17,14 @@ use Joomla\Filesystem\Path;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * @package     Rsgallery2\Component\Rsgallery2\Administrator\Helper
+ * @package Rsgallery2\Component\Rsgallery2\Administrator\Helper
  *
-     * @since   5.1.0
+ * @since   5.1.0
  */
 class PathHelper
 {
     /**
-     * Does create a path with join of rgiven arguments and cleans the path afterwards
+     * Does create a path with join of given arguments and cleans the path afterward
      *
      * @return string
      *
@@ -33,26 +33,8 @@ class PathHelper
     {
         $paths = implode(DIRECTORY_SEPARATOR, func_get_args());
 
-        return Path::clean($paths);
+        // path inside actual joomla
+        return Path::check($paths, JPATH_ROOT);
     }
 
-
-//  public static function join(): string
-//  {
-//      $paths = func_get_args();
-//      $paths = array_map(fn($path) => str_replace(["\\", "/"], DIRECTORY_SEPARATOR, $path), $paths);
-//      $paths = array_map(fn($path) => self::trimPath($path), $paths);
-//
-//      return implode(DIRECTORY_SEPARATOR, $paths);
-//  }
-//
-//  // use
-//  private static function trimPath(string $path): string
-//  {
-//      $path  = trim($path);
-//      $start = $path[0] === DIRECTORY_SEPARATOR ? 1 : 0;
-//      $end   = $path[strlen($path) - 1] === DIRECTORY_SEPARATOR ? -1 : strlen($path);
-//
-//      return substr($path, $start, $end);
-//  }
 }

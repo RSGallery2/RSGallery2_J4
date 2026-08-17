@@ -686,7 +686,7 @@ class ImagesModel extends ListModel
      *
      * @param $ImageIds array List of image ids from database
      *
-     * @return string [] file names
+     * @return array [] as id', 'name', 'gallery_id variables
      *
      * @throws \Exception
      * @since 4.3.2
@@ -698,7 +698,10 @@ class ImagesModel extends ListModel
         try
         {
             $db    = $this->getDatabase();
-            $query = $db->createQuery()->select($db->quoteName(['id', 'name', 'gallery_id']))->from($db->quoteName('#__rsg2_images'))->where($db->quoteName('id') . ' IN ' . ' (' . implode(',', $ImageIds) . ')');
+            $query = $db->createQuery()
+                ->select($db->quoteName(['id', 'name', 'gallery_id']))
+                ->from($db->quoteName('#__rsg2_images'))
+                ->where($db->quoteName('id') . ' IN ' . ' (' . implode(',', $ImageIds) . ')');
             $db->setQuery($query);
 
             $fileNames = $db->loadObjectList(); // wrong $db->loadObjectList();

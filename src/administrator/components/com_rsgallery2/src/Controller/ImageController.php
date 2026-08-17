@@ -29,7 +29,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagesModel;
 /**
  * The Image Controller
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
 class ImageController extends FormController
 {
@@ -46,7 +46,7 @@ class ImageController extends FormController
      * @param   array                $config   An optional associative array of configuration settings.
      * @param   MVCFactoryInterface  $factory  The factory.
      * @param   CMSApplication       $app      The JApplication for the dispatcher
-     * @param   Input              $input    Input
+     * @param   Input                $input    Input
      *
      * @since   5.1.0
      */
@@ -226,8 +226,6 @@ class ImageController extends FormController
         $ImgFailed = 0;
 
         try {
-            $this->checkToken();
-
             // Access check
             $canAdmin = $this->app->getIdentity()->authorise('core.edit', 'com_rsgallery2');
             if (!$canAdmin) {
@@ -236,40 +234,56 @@ class ImageController extends FormController
                 // replace newlines with html line breaks.
                 $msg = nl2br($msg);
             } else {
-                // standard input
-                $input = Factory::getApplication()->input;
+                // id is the origin for further data
+                $id = $this->input->get('id', 0, 'int');
 
-                $id = $input->get('id', 0, 'int');
+                if (!empty($id)) {
+                    /* @var ImagesModel $modelImages */
+                    $modelImages = $this->getModel('images');
 
-                // Needs filename and gallery id from form data
-                $formData = $this->input->get('jform', [], 'array');
-                $fileName  = (string) $formData['name'];
-                $galleryId = (int) $formData['gallery_id'];
+                    // Retrieve needed filename and gallery id from DB
+                    $imgFileDatas = $modelImages->ids2FileData([$id]);
 
-                /* @var ImageFileModel $modelFile */
-                $modelFile = $this->getModel('imageFile');
+                    if (empty($imgFileDatas)) {
+                        $OutTxt = '';
+                        $OutTxt .= 'Error executing rotate_image: "' . $direction . '"<br>';
+                        $OutTxt .= 'Error: Unknown id: "' . $id . '"' . '<br>';
 
-                $IsSaved = $modelFile->rotate_image($id, $fileName, $galleryId, $direction);
+                        $app = Factory::getApplication();
+                        $app->enqueueMessage($OutTxt, 'error');
+                    } else {
+                        // single from array
+                        $imgFileData = $imgFileDatas[0];
 
-                if ($IsSaved) {
-                    $ImgCount++;
-                } else {
-                    $ImgFailed++;
-                }
+                        $fileName  = $imgFileData->name;
+                        $galleryId = $imgFileData->gallery_id;
 
-                // $msg '... successful assigned .... images ...
-                if ($ImgCount) {
-                    $msg_ok = ' Successful rotated ' . $ImgCount . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
-                }
-                if ($ImgFailed) {
-                    $msg_bad = ' Failed on rotation of ' . $ImgFailed . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_bad, 'error');
-                }
+                        /* @var ImageFileModel $modelFile */
+                        $modelFile = $this->getModel('imageFile');
 
-                // not all images were rotated
-                if ($ImgCount < 1) {
-                    $msgType = 'warning';
+                        $IsSaved = $modelFile->rotate_image($id, $fileName, $galleryId, $direction);
+
+                        if ($IsSaved) {
+                            $ImgCount++;
+                        } else {
+                            $ImgFailed++;
+                        }
+
+                        // $msg '... successful assigned .... images ...
+                        if ($ImgCount) {
+                            $msg_ok = ' Successful rotated ' . $ImgCount . ' image properties';
+                            Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
+                        }
+                        if ($ImgFailed) {
+                            $msg_bad = ' Failed on rotation of ' . $ImgFailed . ' image properties';
+                            Factory::getApplication()->enqueueMessage($msg_bad, 'error');
+                        }
+
+                        // not all images were rotated
+                        if ($ImgCount < 1) {
+                            $msgType = 'warning';
+                        }
+                    }
                 }
             }
         } catch (\RuntimeException $e) {
@@ -281,7 +295,19 @@ class ImageController extends FormController
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        $link = 'index.php?option=com_rsgallery2&view=image&task=image.edit&id=' . $id;
+        if (!empty($id)) {
+            $link = 'index.php?option=com_rsgallery2&view=image&task=image.edit&id=' . $id;
+        } else {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing rotate_image: "' . $direction . '"<br>';
+            $OutTxt .= 'Error: Wrong id: "' . $id . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+
+            $link = 'index.php?option=com_rsgallery2&view=images';
+        }
+
         $this->setRedirect($link, $msg, $msgType);
     }
 
@@ -292,7 +318,7 @@ class ImageController extends FormController
      */
     public function flip_image_horizontal()
     {
-        $this->checkToken();
+        // Done later: $this->checkToken();
 
         $msg = "flip_image_horizontal: " . '<br>';
 
@@ -358,44 +384,56 @@ class ImageController extends FormController
                 // replace newlines with html line breaks.
                 $msg = nl2br($msg);
             } else {
-                // standard input
+                // id is the origin for further data
                 $id = $this->input->get('id', 0, 'int');
 
-                // toDo: create imageDb model
-                /* @var ImagesModel $modelImages */
-                $modelImages = $this->getModel('images');
+                if (!empty($id)) {
+                    /* @var ImagesModel $modelImages */
+                    $modelImages = $this->getModel('images');
 
-                // Needed filename and gallery id
-                //$imgFileDatas = $modelImages->ids2FileData($sids);
-                // $formData = new Input($this->input->get('j form', '', 'array'));
+                    // Retrieve needed filename and gallery id from DB
+                    $imgFileDatas = $modelImages->ids2FileData([$id]);
 
-                /* @var ImageFileModel $modelFile */
-                $modelFile = $this->getModel('imageFile');
+                    if (empty($imgFileDatas)) {
+                        $OutTxt = '';
+                        $OutTxt .= 'Error executing flip_image: "' . $flipMode . '"<br>';
+                        $OutTxt .= 'Error: Unknown id: "' . $id . '"' . '<br>';
 
-                $fileName  = $this->input->get('name', '???', 'string');
-                $galleryId = $this->input->get('gallery_id', -1, 'int');
+                        $app = Factory::getApplication();
+                        $app->enqueueMessage($OutTxt, 'error');
+                    } else {
+                        // single from array
+                        $imgFileData = $imgFileDatas[0];
 
-                $IsSaved = $modelFile->flip_image($id, $fileName, $galleryId, $flipMode);
+                        $fileName  = $imgFileData->name;
+                        $galleryId = $imgFileData->gallery_id;
 
-                if ($IsSaved) {
-                    $ImgCount++;
-                } else {
-                    $ImgFailed++;
-                }
+                        /* @var ImageFileModel $modelFile */
+                        $modelFile = $this->getModel('imageFile');
 
-                // $msg '... successful assigned .... images ...
-                if ($ImgCount) {
-                    $msg_ok = ' Successful flipped ' . $ImgCount . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
-                }
-                if ($ImgFailed) {
-                    $msg_bad = ' Failed on flipping of ' . $ImgFailed . ' image properties';
-                    Factory::getApplication()->enqueueMessage($msg_bad, 'error');
-                }
+                        $IsSaved = $modelFile->flip_image($id, $fileName, $galleryId, $flipMode);
 
-                // not all images were rotated
-                if ($ImgCount < 1) {
-                    $msgType = 'warning';
+                        if ($IsSaved) {
+                            $ImgCount++;
+                        } else {
+                            $ImgFailed++;
+                        }
+
+                        // $msg '... successful assigned .... images ...
+                        if ($ImgCount) {
+                            $msg_ok = ' Successful flipped ' . $ImgCount . ' image properties';
+                            Factory::getApplication()->enqueueMessage($msg_ok, 'notice');
+                        }
+                        if ($ImgFailed) {
+                            $msg_bad = ' Failed on flipping of ' . $ImgFailed . ' image properties';
+                            Factory::getApplication()->enqueueMessage($msg_bad, 'error');
+                        }
+
+                        // not all images were rotated
+                        if ($ImgCount < 1) {
+                            $msgType = 'warning';
+                        }
+                    }
                 }
             }
         } catch (\RuntimeException $e) {
@@ -407,8 +445,21 @@ class ImageController extends FormController
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        $link = 'index.php?option=com_rsgallery2&view=image&task=image.edit&id=' . $id;
+        if (!empty($id)) {
+            $link = 'index.php?option=com_rsgallery2&view=image&task=image.edit&id=' . $id;
+        } else {
+            $OutTxt = '';
+            $OutTxt .= 'Error executing flip_image: "' . $flipMode . '"<br>';
+            $OutTxt .= 'Error: Wrong id: "' . $id . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+
+            $link = 'index.php?option=com_rsgallery2&view=images';
+        }
+
         $this->setRedirect($link, $msg, $msgType);
+
     }
 
     /**
