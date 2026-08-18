@@ -8,7 +8,7 @@
 		<security>
 			<item>The operation rotate/flip could be used on a different image when session id and form token is known</item>
 			<item>Resolved Path Traversal vulnerability in image operations. Special thanks to Said Garazade for reporting</item>
-		</fix>
+		</security>
 		<note>
 			<item>Minimum Joomla version is now J!5x</item>
 		</note>
