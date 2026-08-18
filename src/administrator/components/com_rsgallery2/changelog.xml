@@ -10,7 +10,7 @@
 			<item>Resolved Path Traversal vulnerability in image operations. Special thanks to Said Garazade for reporting</item>
 		</security>
 		<fix>
-			<item>Fixed: Install does write the config.xml file parameter on install again</item>
+			<item>Fixed: Config parameters were not merged with menu parameters. So menu parameters were not active</item>
 		</fix>
 		<note>
 			<item>Minimum Joomla version is now J!5x</item>
