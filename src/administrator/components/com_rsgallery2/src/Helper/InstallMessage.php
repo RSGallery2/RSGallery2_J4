@@ -110,11 +110,11 @@ class InstallMessage
                             <div class="fa fa-home fa-fw" aria-hidden="true"></div>
                             $controlPanelText
                         </a>
-                        <a title="$configurationTitle" class="btn btn-info" href="$rsg2ConfigurationLink">
+                        <a title="$configurationTitle" class="btn btn-info text-light" href="$rsg2ConfigurationLink">
                             <div class="fa fa-cog fa-fw" aria-hidden="true"></div>
                             $configurationText
                         </a>
-                        <a title="$galleriesTitle" class="btn btn-success" href="$rsg2GalleriesLink">
+                        <a title="$galleriesTitle" class="btn btn-success text-light" href="$rsg2GalleriesLink">
                             <div class="fa fa-th fa-fw" aria-hidden="true"></div>
                             $galleriesText
                         </a>
