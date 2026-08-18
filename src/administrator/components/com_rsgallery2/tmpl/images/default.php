@@ -92,7 +92,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=images'); ?>"
         <div class="flex-fill">
             <div>
                 <?php
-                // Search tools bar
+                // Search tool bar
                 echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
                 ?>
                 <?php

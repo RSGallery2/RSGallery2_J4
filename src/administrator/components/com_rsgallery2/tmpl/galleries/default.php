@@ -7,6 +7,7 @@
  * @copyright  (c) 2005-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
+
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Galleries\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Galleries;
 
@@ -75,7 +76,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
         <div class="flex-fill">
             <div id="j-main-container" class="j-main-container">
                 <?php
-                // Search tools bar
+                // Search tool bar
                 echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
                 ?>
                 <?php
@@ -204,292 +205,291 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                         </tr>
                         </thead>
                         <tbody
-                        <?php
-                        if ($saveOrder) :
-                        ?> class="js-draggable"
-                           data-url="<?php
-                           echo $saveOrderingUrl; ?>"
-                           data-direction="<?php
-                           echo strtolower((string) $listDirn); ?>"
-                           data-nested="true"<?php
-                        endif; ?> // ToDo: check for false/true
-                        >
-
-                        <?php
-                        foreach ($this->items as $i => $item) : ?>
                             <?php
+                            if ($saveOrder) :
+                            ?> class="js-draggable"
+                               data-url="<?php
+                               echo $saveOrderingUrl; ?>"
+                               data-direction="<?php
+                               echo strtolower((string) $listDirn); ?>"
+                               data-nested="true"
+                        <?php endif; ?> // ToDo: check for false/true
+                            >
 
-                            // ignore the root element of the nested table
-                            if ($item->id == 1)
-                            {
-                                continue;
-                            }
+                            <?php
+                            foreach ($this->items as $i => $item) : ?>
+                                <?php
 
-                            // access rights of this gallery
-                            $canEdit    = $user->authorise('core.edit', $extension . '.gallery.' . $item->id);
-                            $canCheckin = $user->authorise('core.admin', 'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
-                            $canEditOwn = $user->authorise('core.edit.own', $extension . '.gallery.' . $item->id) && $item->created_by == $userId;
-                            $canChange  = $user->authorise('core.edit.state', $extension . '.gallery.' . $item->id) && $canCheckin;
-
-                            // Get the parents of item for sorting
-                            if ($item->level > 1)
-                            {
-                                $parentsStr       = '';
-                                $_currentParentId = $item->parent_id;
-                                $parentsStr       = ' ' . $_currentParentId;
-                                for ($i2 = 0; $i2 < $item->level; $i2++)
+                                // ignore the root element of the nested table
+                                if ($item->id == 1)
                                 {
-                                    foreach ($this->ordering as $k => $v)
+                                    continue;
+                                }
+
+                                // access rights of this gallery
+                                $canEdit    = $user->authorise('core.edit', $extension . '.gallery.' . $item->id);
+                                $canCheckin = $user->authorise('core.admin', 'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+                                $canEditOwn = $user->authorise('core.edit.own', $extension . '.gallery.' . $item->id) && $item->created_by == $userId;
+                                $canChange  = $user->authorise('core.edit.state', $extension . '.gallery.' . $item->id) && $canCheckin;
+
+                                // Get the parents of item for sorting
+                                if ($item->level > 1)
+                                {
+                                    $parentsStr       = '';
+                                    $_currentParentId = $item->parent_id;
+                                    $parentsStr       = ' ' . $_currentParentId;
+                                    for ($i2 = 0; $i2 < $item->level; $i2++)
                                     {
-                                        $v = implode('-', $v);
-                                        $v = '-' . $v . '-';
-                                        if (str_contains($v, '-' . $_currentParentId . '-'))
+                                        foreach ($this->ordering as $k => $v)
                                         {
-                                            $parentsStr       .= ' ' . $k;
-                                            $_currentParentId = $k;
-                                            break;
+                                            $v = implode('-', $v);
+                                            $v = '-' . $v . '-';
+                                            if (str_contains($v, '-' . $_currentParentId . '-'))
+                                            {
+                                                $parentsStr       .= ' ' . $k;
+                                                $_currentParentId = $k;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else
-                            {
-                                $parentsStr = '';
-                            }
+                                else
+                                {
+                                    $parentsStr = '';
+                                }
 
-                            $created_by  = Factory::getUser($item->created_by);
-                            $modified_by = Factory::getUser($item->modified_by);
-                            if (empty($modified_by->name))
-                            {
-                                $modified_by = $created_by;
-                            }
+                                $created_by  = Factory::getUser($item->created_by);
+                                $modified_by = Factory::getUser($item->modified_by);
+                                if (empty($modified_by->name))
+                                {
+                                    $modified_by = $created_by;
+                                }
 
-                            ?>
-                            <tr class="row<?php
-                            echo $i % 2; ?>"
-                                data-draggable-group="<?php
-                                echo $item->parent_id; ?>"
-                                data-item-id="<?php
-                                echo $item->id ?>"
-                                data-parents="<?php
-                                echo $parentsStr ?>"
-                                data-level="<?php
-                                echo $item->level ?>"
-                            >
-                                <td class="text-center">
-                                    <?php
-                                    echo HTMLHelper::_('grid.id', $i, $item->id); ?>
-                                </td>
-                                <td class="order text-center d-none d-md-table-cell">
-                                    <?php
-                                    $iconClass = '';
-                                    if (!$canChange)
-                                    {
-                                        $iconClass = ' inactive';
-                                    }
-                                    elseif (!$saveOrder)
-                                    {
-                                        $iconClass = ' inactive tip-top hasTooltip" title="' . HTMLHelper::_('tooltipText', 'JORDERINGDISABLED');
-                                    }
-                                    ?>
-                                    <span class="sortable-handler<?php
-                                    echo $iconClass ?>">
-                                            <span class="fas fa-ellipsis-v"></span>
-                                        </span>
-                                    <?php
-                                    if ($canChange && $saveOrder) : ?>
-                                        <input type="text" style="display:none" name="order[]" size="5" value="<?php
-                                        echo $item->lft; ?>">
-                                    <?php
-                                    endif; ?>
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <?php
-                                        echo HTMLHelper::_('jgrid.published', $item->published, $i, 'galleries.', $canChange); ?>
-                                    </div>
-                                </td>
-                                <th scope="row">
-                                    <?php
-                                    echo LayoutHelper::render('joomla.html.treeprefix', ['level' => $item->level]); ?>
-                                    <?php
-                                    if ($item->checked_out) : ?>
-                                        <?php
-                                        echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'galleries.', $canCheckin); ?>
-                                    <?php
-                                    endif; ?>
-                                    <?php
-                                    if ($canEdit || $canEditOwn) : ?>
-                                        <a class="hasTooltip" href="<?php
-                                        echo Route::_('index.php?option=com_rsgallery2&task=gallery.edit&id=' . $item->id . '&extension=' . $extension); ?>"
-                                           title="<?php
-                                           echo Text::_('JACTION_EDIT'); ?> <?php
-                                           echo $this->escape(addslashes((string) $item->name)); ?>">
-                                            <?php echo $this->escape($item->name); ?></a>
-                                    <?php else : ?>
-                                        <?php echo $this->escape($item->name); ?>
-                                    <?php endif; ?>
-
-                                    <span class="small"
-                                          title="<?php echo $this->escape($item->path); ?>">
-                                            <?php
-                                            if (empty($item->note)) : ?>
-                                                <?php
-                                                echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
-                                            <?php
-                                            else : ?>
-                                                <?php
-                                                echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
-                                            <?php
-                                            endif; ?>
-                                    </span>
-                                </th>
-                                <?php
-                                /**
-                                 * Images published, unpublished, archived, trashed
-                                 * <?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_published')) : ?>
-                                 * <td class="text-center btns d-none d-md-table-cell">
-                                 * <a class="badge <?php echo ($item->count_published > 0) ? 'bg-success' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=1' . '&filter[level]=1'); ?>">
-                                 * <?php echo $item->count_published; ?></a>
-                                 * </td>
-                                 * <?php endif; ?>
-                                 * <?php if (isset($this->items[0]) && property_exists($this->items[0], '                                        <?php
-                                 * /**
-                                 * ')) : ?>
-                                 * <td class="text-center btns d-none d-md-table-cell">
-                                 * <a class="badge <?php echo ($item->count_unpublished > 0) ? 'badge-danger' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_UNPUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=0' . '&filter[level]=1'); ?>">
-                                 * <?php echo $item->count_unpublished; ?></a>
-                                 * </td>
-                                 * <?php endif; ?>
-                                 * <?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_archived')) : ?>
-                                 * <td class="text-center btns d-none d-md-table-cell">
-                                 * <a class="badge <?php echo ($item->count_archived > 0) ? 'badge-info' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_ARCHIVED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=2' . '&filter[level]=1'); ?>">
-                                 * <?php echo $item->count_archived; ?></a>
-                                 * </td>
-                                 * <?php endif; ?>
-                                 * <?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_trashed')) : ?>
-                                 * <td class="text-center btns d-none d-md-table-cell">
-                                 * <a class="badge <?php echo ($item->count_trashed > 0) ? 'badge-inverse' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_TRASHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=-2' . '&filter[level]=1'); ?>">
-                                 * <?php echo $item->count_trashed; ?></a>
-                                 * </td>
-                                 * <?php endif; ?>
-                                 **/
                                 ?>
-
-                                <td class="text-center btns d-none d-md-table-cell itemnumber">
-                                    <?php
-                                    $link = Route::_("index.php?option=com_rsgallery2&view=Images&filter_gallery_id=" . $item->id);
-                                    //$count = random_int (0, 2) ;
-                                    $imageCount = 0;
-                                    if (!empty($item->image_count))
-                                    {
-                                        $imageCount = $item->image_count;
-                                    }
-
-
-                                    ?>
-                                    <a class="btn <?php
-                                    echo ($imageCount > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php
-                                    echo Text::_('COM_RSGALLERY2_IMAGES_IN_GALLERY_COUNT_CLICK_TO_VIEW_THEM'); ?>"
-                                       href="<?php
-                                       echo $link; ?>">
+                                <tr class="row<?php
+                                echo $i % 2; ?>"
+                                    data-draggable-group="<?php
+                                    echo $item->parent_id; ?>"
+                                    data-item-id="<?php
+                                    echo $item->id ?>"
+                                    data-parents="<?php
+                                    echo $parentsStr ?>"
+                                    data-level="<?php
+                                    echo $item->level ?>"
+                                >
+                                    <td class="text-center">
                                         <?php
-                                        echo $imageCount; ?></a>
-                                </td>
+                                        echo HTMLHelper::_('grid.id', $i, $item->id); ?>
+                                    </td>
+                                    <td class="order text-center d-none d-md-table-cell">
+                                        <?php
+                                        $iconClass = '';
+                                        if (!$canChange)
+                                        {
+                                            $iconClass = ' inactive';
+                                        }
+                                        elseif (!$saveOrder)
+                                        {
+                                            $iconClass = ' inactive tip-top hasTooltip" title="' . HTMLHelper::_('tooltipText', 'JORDERINGDISABLED');
+                                        }
+                                        ?>
+                                        <span class="sortable-handler<?php
+                                        echo $iconClass ?>">
+                                                <span class="fas fa-ellipsis-v"></span>
+                                            </span>
+                                        <?php
+                                        if ($canChange && $saveOrder) : ?>
+                                            <input type="text" style="display:none" name="order[]" size="5" value="<?php
+                                            echo $item->lft; ?>">
+                                        <?php
+                                        endif; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group">
+                                            <?php
+                                            echo HTMLHelper::_('jgrid.published', $item->published, $i, 'galleries.', $canChange); ?>
+                                        </div>
+                                    </td>
+                                    <th scope="row">
+                                        <?php
+                                        echo LayoutHelper::render('joomla.html.treeprefix', ['level' => $item->level]); ?>
+                                        <?php
+                                        if ($item->checked_out) : ?>
+                                            <?php
+                                            echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'galleries.', $canCheckin); ?>
+                                        <?php
+                                        endif; ?>
+                                        <?php
+                                        if ($canEdit || $canEditOwn) : ?>
+                                            <a class="hasTooltip" href="<?php
+                                            echo Route::_('index.php?option=com_rsgallery2&task=gallery.edit&id=' . $item->id . '&extension=' . $extension); ?>"
+                                               title="<?php
+                                               echo Text::_('JACTION_EDIT'); ?> <?php
+                                               echo $this->escape(addslashes((string) $item->name)); ?>">
+                                                <?php echo $this->escape($item->name); ?></a>
+                                        <?php else : ?>
+                                            <?php echo $this->escape($item->name); ?>
+                                        <?php endif; ?>
 
-                                <td class="small d-none d-md-table-cell">
-                                    <?php
-                                    // echo $this->escape($item->access); ?>
-                                    <?php
-                                    echo $this->escape($item->access_level); ?>
-                                </td>
-
-                                <td class="small d-none d-md-table-cell">
+                                        <span class="small"
+                                              title="<?php echo $this->escape($item->path); ?>">
+                                                <?php
+                                                if (empty($item->note)) : ?>
+                                                    <?php
+                                                    echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
+                                                <?php
+                                                else : ?>
+                                                    <?php
+                                                    echo Text::sprintf('JGLOBAL_LIST_ALIAS_NOTE', $this->escape($item->alias), $this->escape($item->note)); ?>
+                                                <?php
+                                                endif; ?>
+                                        </span>
+                                    </th>
                                     <?php
                                     /**
-                                     * ?>
-                                     * <?php if ((int) $item->created_by != 0) : ?>
-                                     * <a href="<?php echo Route::_('index.php?option=com_users&task=user.edit&id=' . (int) $item->created_by); ?>">
-                                     * <?php echo $this->escape($item->author_name); ?>
-                                     * </a>
-                                     * <?php else : ?>
-                                     * <?php echo Text::_('JNONE'); ?>
+                                     * Images published, unpublished, archived, trashed
+                                     * <?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_published')) : ?>
+                                     * <td class="text-center btns d-none d-md-table-cell">
+                                     * <a class="badge <?php echo ($item->count_published > 0) ? 'bg-success' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_PUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=1' . '&filter[level]=1'); ?>">
+                                     * <?php echo $item->count_published; ?></a>
+                                     * </td>
                                      * <?php endif; ?>
-                                     * <?php if ($item->created_by_alias) : ?>
-                                     * <div class="smallsub"><?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->created_by_alias)); ?></div>
+                                     * <?php if (isset($this->items[0]) && property_exists($this->items[0], '                                        <?php
+                                     * /**
+                                     * ')) : ?>
+                                     * <td class="text-center btns d-none d-md-table-cell">
+                                     * <a class="badge <?php echo ($item->count_unpublished > 0) ? 'badge-danger' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_UNPUBLISHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=0' . '&filter[level]=1'); ?>">
+                                     * <?php echo $item->count_unpublished; ?></a>
+                                     * </td>
                                      * <?php endif; ?>
-                                     * /**/
+                                     * <?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_archived')) : ?>
+                                     * <td class="text-center btns d-none d-md-table-cell">
+                                     * <a class="badge <?php echo ($item->count_archived > 0) ? 'badge-info' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_ARCHIVED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=2' . '&filter[level]=1'); ?>">
+                                     * <?php echo $item->count_archived; ?></a>
+                                     * </td>
+                                     * <?php endif; ?>
+                                     * <?php if (isset($this->items[0]) && property_exists($this->items[0], 'count_trashed')) : ?>
+                                     * <td class="text-center btns d-none d-md-table-cell">
+                                     * <a class="badge <?php echo ($item->count_trashed > 0) ? 'badge-inverse' : 'badge-secondary'; ?>" title="<?php echo Text::_('COM_RSGALLERY2_COUNT_TRASHED_ITEMS'); ?>" href="<?php echo Route::_('index.php?option=' . $component . ($section ? '&view=' . $section : '') . '&filter[gallery_id]=' . (int) $item->id . '&filter[published]=-2' . '&filter[level]=1'); ?>">
+                                     * <?php echo $item->count_trashed; ?></a>
+                                     * </td>
+                                     * <?php endif; ?>
+                                     **/
                                     ?>
-                                    <?php
-                                    echo $this->escape($created_by->name);
 
-                                    if ($modified_by->name != $created_by->name)
-                                    {
-                                        echo '<br>(' . $modified_by->name . ')';
-                                    }
-                                    ?>
+                                    <td class="text-center btns d-none d-md-table-cell itemnumber">
+                                        <?php
+                                        $link = Route::_("index.php?option=com_rsgallery2&view=Images&filter_gallery_id=" . $item->id);
+                                        //$count = random_int (0, 2) ;
+                                        $imageCount = 0;
+                                        if (!empty($item->image_count))
+                                        {
+                                            $imageCount = $item->image_count;
+                                        }
 
-                                </td>
 
-                                <td class="small d-none d-md-table-cell text-center">
-                                    <?php
-                                    $date = $item->created;
-                                    echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
-
-                                    if ($item->modified != $item->created)
-                                    {
-                                        echo '<br>(';
-                                        $date = $item->modified;
-                                        echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
-                                        echo ')';
-                                    }
-                                    ?>
-                                </td>
-
-                                <td class="d-none d-lg-table-cell text-center">
-                                        <span class="badge badge-info">
+                                        ?>
+                                        <a class="btn <?php
+                                        echo ($imageCount > 0) ? 'btn-success' : 'btn-secondary'; ?>" title="<?php
+                                        echo Text::_('COM_RSGALLERY2_IMAGES_IN_GALLERY_COUNT_CLICK_TO_VIEW_THEM'); ?>"
+                                           href="<?php
+                                           echo $link; ?>">
                                             <?php
-                                            echo (int) $item->hits; ?>
-                                        </span>
-                                </td>
+                                            echo $imageCount; ?></a>
+                                    </td>
+
+                                    <td class="small d-none d-md-table-cell">
+                                        <?php
+                                        // echo $this->escape($item->access); ?>
+                                        <?php
+                                        echo $this->escape($item->access_level); ?>
+                                    </td>
+
+                                    <td class="small d-none d-md-table-cell">
+                                        <?php
+                                        /**
+                                         * ?>
+                                         * <?php if ((int) $item->created_by != 0) : ?>
+                                         * <a href="<?php echo Route::_('index.php?option=com_users&task=user.edit&id=' . (int) $item->created_by); ?>">
+                                         * <?php echo $this->escape($item->author_name); ?>
+                                         * </a>
+                                         * <?php else : ?>
+                                         * <?php echo Text::_('JNONE'); ?>
+                                         * <?php endif; ?>
+                                         * <?php if ($item->created_by_alias) : ?>
+                                         * <div class="smallsub"><?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->created_by_alias)); ?></div>
+                                         * <?php endif; ?>
+                                         * /**/
+                                        ?>
+                                        <?php
+                                        echo $this->escape($created_by->name);
+
+                                        if ($modified_by->name != $created_by->name)
+                                        {
+                                            echo '<br>(' . $modified_by->name . ')';
+                                        }
+                                        ?>
+
+                                    </td>
+
+                                    <td class="small d-none d-md-table-cell text-center">
+                                        <?php
+                                        $date = $item->created;
+                                        echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
+
+                                        if ($item->modified != $item->created)
+                                        {
+                                            echo '<br>(';
+                                            $date = $item->modified;
+                                            echo $date > 0 ? HTMLHelper::_('date', $date, Text::_('DATE_FORMAT_LC4')) : '-';
+                                            echo ')';
+                                        }
+                                        ?>
+                                    </td>
+
+                                    <td class="d-none d-lg-table-cell text-center">
+                                            <span class="badge badge-info">
+                                                <?php
+                                                echo (int) $item->hits; ?>
+                                            </span>
+                                    </td>
 
 
-                                <td class="d-none d-md-table-cell">
+                                    <td class="d-none d-md-table-cell">
+                                        <?php
+                                        echo (int) $item->id; ?>
+                                    </td>
+
+
                                     <?php
-                                    echo (int) $item->id; ?>
-                                </td>
+                                    /**
+                                     *
+                                     * if ($this->assoc) : ?>
+                                     * <td class="d-none d-md-table-cell">
+                                     * <?php if ($item->association) : ?>
+                                     * <?php echo HTMLHelper::_('galleriesadministrator.association', $item->id, $extension); ?>
+                                     * <?php endif; ?>
+                                     * </td>
+                                     * <?php endif; ?>
+                                     * <?php if (Multilanguage::isEnabled()) : ?>
+                                     * <td class="small d-none d-md-table-cell">
+                                     * <?php echo LayoutHelper::render('joomla.content.language', $item); ?>
+                                     * </td>
+                                     * <?php endif; ?>
+                                     * <td class="d-none d-md-table-cell">
+                                     * <?php echo (int) $item->id; ?>
+                                     * </td>
+                                     */
+                                    ?>
 
+                                    <?php if ($this->isDevelop) : ?>
+                                        <th scope="col" style="width:5%" class="d-none d-md-table-cell">
+                                            <?php echo $item->lft; ?>
+                                        </th>
+                                    <?php endif; ?>
 
-                                <?php
-                                /**
-                                 *
-                                 * if ($this->assoc) : ?>
-                                 * <td class="d-none d-md-table-cell">
-                                 * <?php if ($item->association) : ?>
-                                 * <?php echo HTMLHelper::_('galleriesadministrator.association', $item->id, $extension); ?>
-                                 * <?php endif; ?>
-                                 * </td>
-                                 * <?php endif; ?>
-                                 * <?php if (Multilanguage::isEnabled()) : ?>
-                                 * <td class="small d-none d-md-table-cell">
-                                 * <?php echo LayoutHelper::render('joomla.content.language', $item); ?>
-                                 * </td>
-                                 * <?php endif; ?>
-                                 * <td class="d-none d-md-table-cell">
-                                 * <?php echo (int) $item->id; ?>
-                                 * </td>
-                                 */
-                                ?>
-
-                                <?php if ($this->isDevelop) : ?>
-                                    <th scope="col" style="width:5%" class="d-none d-md-table-cell">
-                                        <?php echo $item->lft; ?>
-                                    </th>
-                                <?php endif; ?>
-
-                            </tr>
-                        <?php
-                        endforeach; ?>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
 

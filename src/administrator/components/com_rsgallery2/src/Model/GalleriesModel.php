@@ -51,9 +51,9 @@ class GalleriesModel extends ListModel
                 'created_by', 'a.created_by',
 
                 'published', 'a.published',
-// ToDo: add selection modified
-//              'modified', 'a.modified',
-//              'modified_by', 'a.modified_by',
+
+                'modified', 'a.modified',
+                'modified_by', 'a.modified_by',
 
                 'parent_id', 'a.parent_id',
                 'lft', 'a.lft',
