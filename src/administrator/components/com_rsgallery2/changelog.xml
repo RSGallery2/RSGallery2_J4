@@ -3,6 +3,19 @@
 	<changelog>
 		<element>com_rsgallery2</element>
 		<type>component</type>
+		<version>5.3.2</version>
+		<date>2026-08-18</date>
+		<security>
+			<item>The operation rotate/flip could be used on a different image when session id and form token is known</item>
+			<item>Resolved Path Traversal vulnerability in image operations. Special thanks to Said Garazade for reporting</item>
+		</fix>
+		<note>
+			<item>Minimum Joomla version is now J!5x</item>
+		</note>
+	</changelog>
+	<changelog>
+		<element>com_rsgallery2</element>
+		<type>component</type>
 		<version>5.3.1</version>
 		<date>2026-07-31</date>
 		<fix>
