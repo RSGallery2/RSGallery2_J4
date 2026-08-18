@@ -1,17 +1,19 @@
 <?php
 
 /**
-  * @package        RSGallery2
-  * @subpackage     com_rsgallery2
-  * @author         RSGallery2 Team <team2@rsgallery2.org>
-  * @copyright  (c) 2003-2026 RSGallery2 Team
-  * @license        GNU General Public License version 2 or later
-  */
- /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Develop\HtmlView $this */
- namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Develop;
+ * @package        RSGallery2
+ * @subpackage     com_rsgallery2
+ * @author         RSGallery2 Team <team2@rsgallery2.org>
+ * @copyright  (c) 2003-2026 RSGallery2 Team
+ * @license        GNU General Public License version 2 or later
+ */
+
+/** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Develop\HtmlView $this */
+namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Develop;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
+
 // phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
@@ -23,9 +25,12 @@ use Joomla\CMS\Session\Session;
 
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 
+/** @var Session $session */
 $session = Factory::getApplication()->getSession();
-//$sessionId = Factory::getApplication()->getSession()->getId();
-$sessionId = $session->getId();
+
+$sessionId   = $session->getId();
+$sessionName = $session->getName();
+
 //$sessionFormToken = Session::getFormToken()
 $sessionFormToken = $session->getFormToken()
 
@@ -33,7 +38,11 @@ $sessionFormToken = $session->getFormToken()
 
 <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=develop'); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
+
+    <h1>Developer test site</h1><br />
+
     <div class="d-flex flex-row">
+
         <?php if (!empty($this->sidebar)) : ?>
             <div id="j-sidebar-container" class="">
                 <?php echo $this->sidebar; ?>
@@ -44,7 +53,7 @@ $sessionFormToken = $session->getFormToken()
                     <div id="j-toggle-sidebar-wrapper">
                         <div id="sidebar" class="sidebar">
 
-                            <button class="btn btn-sm btn-secondary my-2 options-menu" type="button"  data-bs-toggle="collapse" data-bs-target=".sub-sidebar-item"
+                            <button class="btn btn-sm btn-secondary my-2 options-menu" type="button" data-bs-toggle="collapse" data-bs-target=".sub-sidebar-item"
                                     aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle Menu">
                                 <span class="fas fa-toggle-on" aria-hidden="true"></span>
                                 <!--span class="sidebar-item-title">Toggle Menu</span-->
@@ -95,9 +104,9 @@ $sessionFormToken = $session->getFormToken()
         <?php endif; ?>
         <div class="<?php if (!empty($this->sidebar)) {
             echo 'col-md-10';
-                    } else {
-                        echo 'col-md-12';
-                    } ?>">
+        } else {
+            echo 'col-md-12';
+        } ?>">
             <div id="j-main-container" class="j-main-container">
 
                 <?php
@@ -112,23 +121,27 @@ $sessionFormToken = $session->getFormToken()
 
     <hr>
 
-    <h4>SessionId</h4>
-    <label id="" title="">
-        <?php echo $sessionId; ?>
-    </label>
-    <br /><br />
+    <div>
+        <h2>Session data</h2>
 
-    <h4>Formtoken</h4>
-    <label id="" title="">
-        <?php echo $sessionFormToken; ?>
-    </label>
-    <br />
+        <h4>Session name</h4>
+        <label id="" title="">
+            <?php echo $sessionName; ?>
+        </label>
+        <br/><br/>
 
-<!--    <h4></h4>-->
-<!--    <label id="" title="">-->
-<!--        &nbsp;&nbsp;-->
-<!--    </label>-->
-<!--    <br />-->
+        <h4>Session id</h4>
+        <label id="" title="">
+            <?php echo $sessionId; ?>
+        </label>
+        <br/><br/>
+
+        <h4>Form token</h4>
+        <label id="" title="">
+            <?php echo $sessionFormToken; ?>
+        </label>
+        <br/>
+    </div>
 
     <hr>
 
@@ -142,7 +155,7 @@ $sessionFormToken = $session->getFormToken()
             <div id="j-toggle-sidebar-wrapper">
                 <div id="sidebar" class="sidebar">
 
-                    <button class="btn btn-sm btn-secondary my-2 options-menu" type="button"  data-bs-toggle="collapse" data-bs-target=".sidebar-nav"
+                    <button class="btn btn-sm btn-secondary my-2 options-menu" type="button" data-bs-toggle="collapse" data-bs-target=".sidebar-nav"
                             aria-controls="sidebar-nav" aria-expanded="false" aria-label="Toggle Menu">
                         <span class="fas fa-align-justify" aria-hidden="true"></span>
                         <span class="sidebar-item-title">Toggle Menu</span>

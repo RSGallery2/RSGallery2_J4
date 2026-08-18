@@ -98,8 +98,6 @@ class HtmlView extends BaseHtmlView
 
         $this->addToolbar($Layout);
 
-        /**/
-
         parent::display($tpl);
         return;
     }
@@ -109,7 +107,8 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void
      *
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     protected function addToolbar($Layout)
     {
         // Get the toolbar object instance
@@ -127,7 +126,7 @@ class HtmlView extends BaseHtmlView
                 if (!empty($this->isDevelop)) {
                     echo '<span style="color:red">'
                         . 'Tasks: <br>'
-                        . '* modal popup on image click (see <div id="popupModal" class="Xmodal"> )<br>'
+                        . '* modal popup on image click (see < div id="popupModal" class="Xmodal" > ) < br >'
                         . '* <br>'
                         //. '* <br>'
                         //. '* <br>'
