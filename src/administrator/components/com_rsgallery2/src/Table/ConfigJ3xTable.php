@@ -10,13 +10,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Table;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\Database\DatabaseDriver;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * J3x config table

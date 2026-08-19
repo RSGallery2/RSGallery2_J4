@@ -10,15 +10,15 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\MaintConsolidateDb\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Maintconsolidatedb;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Component\Finder\Administrator\Indexer\Parser\Html;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // HTMLHelper::_('bootstrap.framework');
 

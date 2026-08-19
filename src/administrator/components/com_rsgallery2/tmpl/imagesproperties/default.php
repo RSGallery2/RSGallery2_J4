@@ -10,10 +10,6 @@
  /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\ImagesProperties\HtmlView $this */
  namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Imagesproperties;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Multilanguage;
@@ -22,6 +18,10 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\String\Inflector;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');
 

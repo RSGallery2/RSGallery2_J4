@@ -11,15 +11,15 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Develop\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Develop;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // HTMLHelper::_('bootstrap.framework');
 

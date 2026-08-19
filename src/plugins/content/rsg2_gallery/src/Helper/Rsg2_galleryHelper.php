@@ -23,7 +23,6 @@ use Joomla\Database\DatabaseAwareTrait;
 use Joomla\Registry\Registry;
 use RSGallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel;
 
-
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects

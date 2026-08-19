@@ -10,10 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -29,6 +25,10 @@ use Joomla\CMS\UCM\UCMType;
 use Joomla\CMS\Workflow\Workflow;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Rsgallery2 Component Gallery Model

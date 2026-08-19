@@ -10,11 +10,11 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helpers;
 
+use Joomla\CMS\Factory;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\Factory;
 
 /**
  * @package     ${yyy}

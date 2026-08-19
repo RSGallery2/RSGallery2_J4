@@ -10,16 +10,16 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helper;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\File;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsJ3xData;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // Include the Log class.
 

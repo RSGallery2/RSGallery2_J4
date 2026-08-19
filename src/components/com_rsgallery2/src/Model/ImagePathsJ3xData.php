@@ -10,13 +10,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Uri\Uri;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 class ImagePathsJ3xData extends ImagePathsJ3xModel
 {

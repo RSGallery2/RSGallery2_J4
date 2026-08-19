@@ -10,15 +10,15 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\Database\DatabaseInterface;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // required is used as classes may not be loaded on fresh install
 // !!! needed by install

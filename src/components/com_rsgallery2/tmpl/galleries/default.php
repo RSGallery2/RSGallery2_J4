@@ -10,15 +10,14 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Site\View\Galleries\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Galleries;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
-
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Router\Route;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // https://blog.kulturbanause.de/2014/09/responsive-images-srcset-sizes-adaptive/
 

@@ -10,12 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
-
-
 use Joomla\Archive\Archive;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Component\ComponentHelper;
@@ -35,6 +29,10 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageFileModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 
 use function dirname;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * global $Rsg2DebugActive;

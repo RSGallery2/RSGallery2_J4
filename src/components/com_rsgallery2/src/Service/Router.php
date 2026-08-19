@@ -10,11 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Service;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Categories\CategoryFactoryInterface;
 use Joomla\CMS\Component\ComponentHelper;
@@ -27,6 +22,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Routing class of com_rsgallery2

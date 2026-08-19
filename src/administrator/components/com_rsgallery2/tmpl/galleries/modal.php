@@ -10,10 +10,6 @@
  /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Galleries\HtmlView $this */
  namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Galleries;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Multilanguage;
@@ -22,6 +18,10 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $app = Factory::getApplication();
 

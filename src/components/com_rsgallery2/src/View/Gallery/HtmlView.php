@@ -12,10 +12,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Gallery;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -24,6 +20,10 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\Registry\Registry;
 use Joomla\CMS\User\User;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component

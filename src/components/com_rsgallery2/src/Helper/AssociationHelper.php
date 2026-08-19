@@ -10,13 +10,13 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Helper;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
 use Joomla\Component\Categories\Administrator\Helper\CategoryAssociationHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Rsgallery2 Component Association Helper

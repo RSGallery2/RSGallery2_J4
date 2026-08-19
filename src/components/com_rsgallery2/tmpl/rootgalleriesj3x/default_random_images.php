@@ -10,12 +10,12 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Site\View\Rootgalleriesj3x\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Rootgalleriesj3x;
 
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\FileLayout;
 
 // on develop show open tasks if existing
 if (!empty($this->isDevelopSite)) {

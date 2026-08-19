@@ -10,10 +10,6 @@
 
 namespace Rsgallery2\Module\Rsg2_image\Site\Helper;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 //use Joomla\Component\Content\Administrator\Extension\ContentComponent;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -24,6 +20,10 @@ use Rsgallery2\Component\Rsgallery2\Site\Model\ImagePathsData;
 use RuntimeException;
 
 use function defined;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Helper for mod_rsg2_image

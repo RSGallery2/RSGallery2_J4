@@ -13,6 +13,7 @@ namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Image;
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
+
 ?>
 <div class="container-popup">
     <?php $this->setLayout('edit'); ?>

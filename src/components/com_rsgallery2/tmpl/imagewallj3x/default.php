@@ -10,15 +10,13 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Site\View\Imagewallj3x\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Rootgalleriesj3x;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Router\Route;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.imageWallJ3x');
 

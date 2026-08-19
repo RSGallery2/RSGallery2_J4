@@ -10,12 +10,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\SlideshowJ3x;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Uri\Uri;
 
 /*---------------------------------------------------
 Show slideshow from bootstrap

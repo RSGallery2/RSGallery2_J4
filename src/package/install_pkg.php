@@ -10,12 +10,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Rsgallery2;
 
+use Joomla\Database\DatabaseAwareInterface;
+use Joomla\Database\DatabaseAwareTrait;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\Database\DatabaseAwareInterface;
-use Joomla\Database\DatabaseAwareTrait;
 
 /**
  * Installation class to perform additional changes during install/uninstall/update

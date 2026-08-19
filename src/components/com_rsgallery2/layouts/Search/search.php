@@ -10,14 +10,14 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\Search;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\Component\Fields\Administrator\Helper\FieldsHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 
 // ToDo: getWebAssetManager Move to all display php files or include in common *.scss file

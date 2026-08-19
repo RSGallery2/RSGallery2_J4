@@ -10,12 +10,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\ImagesFlexJ3x;
 
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 
 /*---------------------------------------------------
 image display by flex arrangement

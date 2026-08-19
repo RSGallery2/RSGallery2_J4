@@ -10,12 +10,12 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\ConfigJ3x\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Configj3x;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
 
 // HTMLHelper::_('bootstrap.framework');
 

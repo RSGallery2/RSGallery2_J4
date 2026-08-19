@@ -10,13 +10,13 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Images\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Images;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\User\UserFactoryInterface;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 $params = ComponentHelper::getParams('com_rsgallery2');
 

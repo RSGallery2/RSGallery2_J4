@@ -10,12 +10,12 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Gallery\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Gallery;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 
 echo HTMLHelper::_('bootstrap.startAccordion', 'galleryOptions', ['active' => 'collapse0']);
 $fieldSets = $this->form->getFieldsets('params');

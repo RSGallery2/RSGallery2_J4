@@ -10,10 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use DateTime;
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
@@ -25,6 +21,10 @@ use Joomla\CMS\Router\Route;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\GalleryModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImageModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\Rsg2ExtensionModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 
 

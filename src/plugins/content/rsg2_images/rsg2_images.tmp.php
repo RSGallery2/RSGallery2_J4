@@ -19,10 +19,6 @@
 // $this->db: das Datenbankobjekt
 // $this->app: das Anwendungsobjekt
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 //use Joomla\CMS\Event\Event;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -31,6 +27,10 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Registry\Registry;
 use Rsgallery2\Module\Rsg2_images\Site\Helper\Rsg2_imagesHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 //use Joomla\Event\SubscriberInterface;
 //use Joomla\Utilities\ArrayHelper;

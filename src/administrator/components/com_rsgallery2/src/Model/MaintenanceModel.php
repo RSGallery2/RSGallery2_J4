@@ -10,12 +10,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Model;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 
 /**

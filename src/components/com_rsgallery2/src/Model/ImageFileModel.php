@@ -10,10 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Image\Image;
@@ -27,6 +23,9 @@ use Joomla\Filesystem\Path;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsJ3xModel;
 use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 //require_once JPATH_COMPONENT_ADMINISTRATOR . '/includes/ImgWatermarkNames.php';
 

@@ -10,12 +10,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Helpers;
 
+// ToDo: 2024.10: namespace helper
+use Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-// ToDo: 2024.10: namespace helper
-use Rsgallery2\Component\Rsgallery2\Administrator\Helper\GalleriesHelper;
 
 /**
  * Galleries helper.

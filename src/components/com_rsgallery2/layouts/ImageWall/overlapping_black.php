@@ -14,7 +14,6 @@ namespace Rsgallery2\Component\Rsgallery2\Site\Layouts\ImageWall;
 use Joomla\CMS\Uri\Uri;
 
 // phpcs:enable PSR1.Files.SideEffects
-
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 

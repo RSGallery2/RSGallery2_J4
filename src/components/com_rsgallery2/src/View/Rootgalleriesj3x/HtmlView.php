@@ -10,11 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Rootgalleriesj3x;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
@@ -24,6 +19,10 @@ use Joomla\Registry\Registry;
 use Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel;
 
 //use Rsgallery2\Component\Rsgallery2\Site\Model\Rootgalleriesj3xModel;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component

@@ -10,11 +10,11 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Site\View\Develop\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Develop;
 
+use Joomla\CMS\Language\Text;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\Language\Text;
 
 //if ($this->item->params->get('show_name')) {
 //  if ($this->Params->get('show_rsgallery2_name_label')) {

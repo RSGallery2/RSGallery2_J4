@@ -20,7 +20,6 @@ use Rsgallery2\Plugin\Content\Rsg2_gallery\Helper\Rsg2_galleryHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
-
 // phpcs:enable PSR1.Files.SideEffects
 
 class Rsg2_gallery extends CMSPlugin implements SubscriberInterface

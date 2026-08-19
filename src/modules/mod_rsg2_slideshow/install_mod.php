@@ -8,13 +8,13 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// No direct access to this file
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Script file of Rsg2_slideshow module

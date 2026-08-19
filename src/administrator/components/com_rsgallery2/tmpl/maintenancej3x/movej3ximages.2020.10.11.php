@@ -10,15 +10,15 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\MaintenanceJ3x\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Maintenancej3x;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/moveJ3xImages.css', ['version' => 'auto', 'relative' => true]);
 //$this->document->getWebAssetManager()->usePreset('com_rsgallery2.backend.imagesProperties');

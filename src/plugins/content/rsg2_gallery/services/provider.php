@@ -8,10 +8,6 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -19,6 +15,10 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Rsgallery2\Plugin\Content\Rsg2_gallery\Extension\Rsg2_gallery;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 return new class () implements ServiceProviderInterface {
     /**

@@ -8,13 +8,12 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Helper\ModuleHelper;
 use Rsg2_imagesNamespace\Module\Rsg2_images\Site\Helper\Rsg2_galleriesHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // ToDo: all see images module
 

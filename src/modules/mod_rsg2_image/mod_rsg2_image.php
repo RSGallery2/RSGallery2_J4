@@ -8,14 +8,14 @@
  * @license        GNU General Public License version 2 or later
  */
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Rsgallery2\Module\Rsg2_image\Site\Helper\Rsg2_imageHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 HTMLHelper::_('stylesheet', 'com_rsgallery2/site/image.css', ['version' => 'auto', 'relative' => true]);
 

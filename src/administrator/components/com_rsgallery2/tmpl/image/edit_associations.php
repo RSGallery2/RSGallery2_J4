@@ -10,10 +10,10 @@
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Image\HtmlView $this */
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Image;
 
+use Joomla\CMS\Layout\LayoutHelper;
+
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
-
-use Joomla\CMS\Layout\LayoutHelper;
 
 echo LayoutHelper::render('joomla.edit.associations', $this);

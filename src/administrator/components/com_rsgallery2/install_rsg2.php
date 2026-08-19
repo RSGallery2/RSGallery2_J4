@@ -11,10 +11,6 @@
 // wrong or not needed
 // namespace Rsgallery2\Component\Rsgallery2;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Factory;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScript;
@@ -22,6 +18,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Folder;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Script (install file of Rsgallery2 Component)

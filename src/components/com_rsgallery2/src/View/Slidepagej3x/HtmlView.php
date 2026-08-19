@@ -10,10 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Slidepagej3x;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -23,6 +19,10 @@ use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\CMS\User\User;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\ImageExif;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * Single image with pagination

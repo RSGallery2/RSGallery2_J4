@@ -19,10 +19,6 @@
 // $this->db: das Datenbankobjekt
 // $this->app: das Anwendungsobjekt
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 //use Joomla\CMS\Event\Event;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -36,6 +32,10 @@ use Rsgallery2\Module\Rsg2_image\Site\Helper\Rsg2_imageHelper;
 //use Joomla\Utilities\ArrayHelper;
 
 // use Rsg2_imageNamespace\Module\Rsg2_image\Site\Helper\Rsg2_imageHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * look for RSG ... to be replaced by gallery image

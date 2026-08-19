@@ -11,13 +11,13 @@
 //  J3x legacy view default => gallery images
 namespace Rsgallery2\Component\Rsgallery2\Site\Tmpl\Gallery;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Router\Route;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 // https://kulturbanause.de/blog/responsive-images-srcset-sizes-adaptive/
 

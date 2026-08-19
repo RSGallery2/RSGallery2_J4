@@ -10,10 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Services;
 
-// phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
-// phpcs:enable PSR1.Files.SideEffects
-
 use Joomla\CMS\Component\Router\RouterFactoryInterface;
 use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
 use Joomla\CMS\Extension\ComponentInterface;
@@ -28,6 +24,10 @@ use Joomla\DI\ServiceProviderInterface;
 
 use Rsgallery2\Component\Rsgallery2\Administrator\Extension\Rsgallery2Component;
 use Rsgallery2\Component\Rsgallery2\Administrator\Helper\AssociationsHelper;
+
+// phpcs:disable PSR1.Files.SideEffects
+\defined('_JEXEC') or die;
+// phpcs:enable PSR1.Files.SideEffects
 
 /**
  * The rsgallery2 service provider.
