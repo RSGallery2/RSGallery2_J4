@@ -1417,7 +1417,6 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
         else
         {
             // J3x
-
             $ImagePathJ3x = new ImagePathsJ3xModel();
 
             //---  -------------------------------------------------
@@ -1476,4 +1475,69 @@ class ImageFileModel extends BaseDatabaseModel // AdminModel
 
         return $IsDownloaded;
     }
+
+
+    /**
+     *
+     * @return bool
+     *
+     * @since  5.1.0     */
+    public function isPathsExisting($galleryId, $use_j3x_location)
+    {
+        $isPathsExisting = false;
+
+        // J4x ?
+        if (!$use_j3x_location)
+        {
+            $imagePaths = new ImagePathsModel($galleryId);
+
+            //---  -------------------------------------------------
+
+            $isPathsExisting  = $imagePaths->isPathsExisting();
+        }
+        else
+        {
+            // J3x
+            $ImagePathJ3x = new ImagePathsJ3xModel();
+
+            //---  -------------------------------------------------
+
+            $isPathsExisting  = $ImagePathJ3x->isPathsExisting();
+        }
+
+        return $isPathsExisting;
+    }
+
+    /**
+     *
+     * @return bool
+     *
+     * @since  5.1.0     */
+    public function createAllPaths($galleryId, $use_j3x_location)
+    {
+        $isCreated = false;
+
+        // J4x ?
+        if (!$use_j3x_location)
+        {
+            $imagePaths = new ImagePathsModel($galleryId);
+
+            //---  -------------------------------------------------
+
+            $isCreated  = $imagePaths->createAllPaths();
+        }
+        else
+        {
+            // J3x
+            $ImagePathJ3x = new ImagePathsJ3xModel();
+
+            //---  -------------------------------------------------
+
+            $isCreated  = $ImagePathJ3x->createAllPaths();
+        }
+
+        return $isCreated;
+    }
+
+
 }

@@ -58,7 +58,9 @@ class MaintRemoveAllDataModel extends BaseDatabaseModel
             $app    = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'notice');
             $isRemoved = true;
+
 //          $this->removeImagesInFolder($removePath);
+
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'MaintRemoveAllDataModel: Error executing removeAllImageFiles: <br>';

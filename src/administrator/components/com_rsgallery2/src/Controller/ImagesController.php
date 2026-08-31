@@ -122,7 +122,6 @@ class ImagesController extends AdminController
      */
     public function moveImagesToGallery()
     {
-        //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:moveTo: ";
         $msgType = 'notice';
 
@@ -133,20 +132,46 @@ class ImagesController extends AdminController
         if (!$canAdmin) {
             $msg     = $msg . Text::_('JERROR_ALERTNOAUTHOR');
             $msgType = 'warning';
-            // replace newlines with html line breaks.
-            $msg = nl2br($msg);
         } else {
             try {
-                // Model tells if successful
-                /* @var ImageModel $model */
-                $model = $this->getModel('image');
 
-                $IsMoved = $model->moveImagesToGallery();
-                if ($IsMoved) {
-                    $msg .= 'Moved images successfully';
-                } else {
-                    $msg     .= 'Move of images ... failed';
+                $input = Factory::getApplication()->input;
+                $cids  = $input->get('cid', [], 'ARRAY');
+                ArrayHelper::toInteger($cids);
+
+                $NewGalleryId = $input->get('gallery_id', -1, 'INT');
+
+                // Wrong number for gallery id  ?
+                if ($NewGalleryId < 2) {
+
+                    $msg     = $msg . Text::_('COM_RSGALLERY2_ERROR_WRONG_GALLERY_ID');
                     $msgType = 'error';
+
+                } else {
+                    // No image selected ?
+                    if (empty($cids)) {
+                        $msg     = $msg . Text::_('COM_RSGALLERY2_NO_IMAGE_SELECTED');
+                        $msgType = 'error';
+                    } else {
+
+                        // Model tells if successful
+                        /* @var ImageModel $imgModel */
+                        $imgModel = $this->getModel('image');
+
+                        //================================================================
+
+                        [$movedCount, $errorCount] = $imgModel->moveImagesToGallery($NewGalleryId, $cids);
+
+                        if (!empty($movedCount)) {
+                            $msg .= 'Moved ' . $movedCount . ' images successfully' . '<br>';
+                        }
+
+                        if (!empty($errorCount)) {
+                            $msg .= 'Error on move for ' . $errorCount . ' images' . '<br>';
+                            $msgType = 'error';
+                        }
+
+                    }
                 }
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
@@ -157,6 +182,9 @@ class ImagesController extends AdminController
                 $app->enqueueMessage($OutTxt, 'error');
             }
         }
+
+        // replace newlines with html line breaks.
+        $msg = nl2br($msg);
 
         $link = 'index.php?option=com_rsgallery2&view=images';
         $this->setRedirect($link, $msg, $msgType);
@@ -170,7 +198,6 @@ class ImagesController extends AdminController
      */
     public function copyImagesToGallery()
     {
-        //Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'warning');
         $msg     = "Control:copyTo: ";
         $msgType = 'notice';
 
@@ -185,16 +212,42 @@ class ImagesController extends AdminController
             $msg = nl2br($msg);
         } else {
             try {
-                // Model tells if successful
-                /* @var ImageModel $model */
-                $model = $this->getModel('image');
+                $input = Factory::getApplication()->input;
+                $cids  = $input->get('cid', [], 'ARRAY');
+                ArrayHelper::toInteger($cids);
 
-                $IsCopied = $model->copyImagesToGallery();
-                if ($IsCopied) {
-                    $msg .= 'Copied mages successfully';
-                } else {
-                    $msg     .= 'Copy of images ... failed';
+                $newGalleryId = $input->get('gallery_id', -1, 'INT');
+
+                // Wrong number for gallery id  ?
+                if ($newGalleryId < 2) {
+
+                    $msg     = $msg . Text::_('COM_RSGALLERY2_ERROR_WRONG_GALLERY_ID');
                     $msgType = 'error';
+
+                } else {
+                    // No image selected ?
+                    if (empty($cids)) {
+                        $msg     = $msg . Text::_('COM_RSGALLERY2_NO_IMAGE_SELECTED');
+                        $msgType = 'error';
+                    } else {
+                        // Model tells if successful
+                        /* @var ImageModel $imgModel */
+                        $imgModel = $this->getModel('image');
+
+                        //================================================================
+
+                        [$copiedCount, $errorCount] = $imgModel->copyImagesToGallery($newGalleryId, $cids);
+
+                        if (!empty($movedCount)) {
+                            $msg .= 'Copied ' . $copiedCount . ' images successfully' . '<br>';
+                        }
+
+                        if (!empty($errorCount)) {
+                            $msg .= 'Error on copy for ' . $errorCount . ' images' . '<br>';
+                            $msgType = 'error';
+                        }
+
+                    }
                 }
             } catch (\RuntimeException $e) {
                 $OutTxt = '';
