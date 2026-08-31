@@ -987,7 +987,7 @@ class ImageModel extends AdminModel
 
             $query = $db->createQuery()
                 ->select('MAX(ordering)')
-                ->from($db->quoteName('#__rsg2_files'))
+                ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('gallery_id') . ' = ' . $db->quote($GalleryId));
             $db->setQuery($query);
             $max = $db->loadResult();
