@@ -1,4 +1,4 @@
-![RSGallery logo with text](https://github.com/RSGallery2/RSGallery2_Project/blob/master/RSG2_icons/RSG2_Logo/RSG2_logoText.svg)
+![RSGallery logo with text](https://raw.githubusercontent.com/RSGallery2/RSGallery2_Project/refs/heads/master/RSG2_icons/RSG2_Logo/RSG2_logoText.svg)
 
 # RSGallery2_Component
 
@@ -11,7 +11,7 @@ evolved with the Joomla! content management into what it is nowadays.
 
 RSGallery2 is released by the GPL license and will be **free to use** (as in free beer).
 
-## **joomla! 4.x RSG2 restart**
+## **RSG2 restart for Joomla! 4.x , now for Joomla5x only**
 
 This version is developed from scratch. The jump from J3.x to J4x needed to get rid of all the J1.5 code and template
 constructs still around in the version for J3x.
