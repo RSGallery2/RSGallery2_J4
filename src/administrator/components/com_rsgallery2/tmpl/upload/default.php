@@ -7,7 +7,9 @@
  * @copyright  (c) 2005-2026 RSGallery2 Team
  * @license        GNU General Public License version 2 or later
  */
+
 /** @var \Rsgallery2\Component\Rsgallery2\Administrator\View\Upload\HtmlView $this */
+
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Tmpl\Upload;
 
 use Joomla\CMS\Factory;
@@ -79,173 +81,177 @@ $maxSize = $this->uploadLimit;
                         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 
                     <?php else : ?>
-                        <?php //echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'dragAndDrop']); ?>
-                        <?php //echo HTMLHelper::_('uitab.addTab', 'myTab', 'dragAndDrop', Text::_('COM_RSGALLERY2_DO_UPLOAD')); ?>
+                <?php //echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'dragAndDrop']); ?>
+                <?php //echo HTMLHelper::_('uitab.addTab', 'myTab', 'dragAndDrop', Text::_('COM_RSGALLERY2_DO_UPLOAD')); ?>
 
-                        <!--legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?></legend-->
-                        <legend></legend>
-                        <h2>
+                    <!--legend><?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?></legend-->
+                    <legend></legend>
+                    <h2>
                         <span class="mb-2">
                             <?php echo Text::_('COM_RSGALLERY2_UPLOAD_BY_DRAG_AND_DROP_LABEL'); ?>
                         </span>
-                        </h2>
+                    </h2>
 
-                        <?php
-                        // specify gallery
-                        // toDO: change name as used for all
-                        echo $this->form->renderFieldset('upload_gallery');
-                        ?>
+                <?php
+                // specify gallery
+                // toDO: change name as used for all
+                echo $this->form->renderFieldset('upload_gallery');
+                ?>
 
-                        <?php
-                        /*---------------------------------------------------------------------------
-                        Drag and drop
-                        ---------------------------------------------------------------------------*/
-                        ?>
-                        <fieldset class="uploadform">
+                <?php
+                /*---------------------------------------------------------------------------
+                Drag and drop
+                ---------------------------------------------------------------------------*/
+                ?>
+                    <fieldset class="uploadform">
 
-                            <div id="uploader-wrapper">
-                                <div id="dragarea" data-state="pending">
-                                    <div id="dragarea-content" class="text-center">
-                                        <div id="imagesArea" class="imagesArea">
-                                            <ul id="imagesAreaList" class='thumbnails'>
+                        <div id="uploader-wrapper">
+                            <div id="dragarea" data-state="pending">
+                                <div id="dragarea-content" class="text-center">
+                                    <div id="imagesArea" class="imagesArea">
+                                        <ul id="imagesAreaList" class='thumbnails'>
 
-                                            </ul>
-                                        </div>
-                                        <p>
-                                            <span id="upload-icon" class="icon-upload" aria-hidden="true"></span>
-                                        </p>
-                                        <div id="upload-progress" class="upload-progress">
-                                            <div class="progress progress-striped active">
-                                                <div class="bar bar-success"
-                                                     style="width: 0;"
-                                                     role="progressbar"
-                                                     aria-valuenow="0"
-                                                     aria-valuemin="0"
-                                                     aria-valuemax="100"
-                                                >
-                                                </div>
+                                        </ul>
+                                    </div>
+                                    <p>
+                                        <span id="upload-icon" class="icon-upload" aria-hidden="true"></span>
+                                    </p>
+                                    <div id="upload-progress" class="upload-progress">
+                                        <div class="progress progress-striped active">
+                                            <div class="bar bar-success"
+                                                 style="width: 0;"
+                                                 role="progressbar"
+                                                 aria-valuenow="0"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                            >
                                             </div>
-                                            <p class="lead">
+                                        </div>
+                                        <p class="lead">
                                             <span class="uploading-text">
                                                 <?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_UPLOADING'); ?>
                                             </span>
-                                                <span class="uploading-number">0</span><span
-                                                        class="uploading-symbol">%</span>
-                                            </p>
-                                        </div>
-
-                                        <div class="upload-actions">
-                                            <p class="lead">
-                                                <?php echo Text::_('COM_RSGALLERY2_DRAG_IMAGES_HERE'); ?>
-                                            </p>
-                                            <p>
-                                                <button id="select-file-button-drop" type="button"
-                                                        class="btn btn-info btn-rsg2 btn-file w-25"
-                                                        title="<?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_DESC'); ?>"
-                                                        disabled
-                                                >
-                                                    <span class="icon-copy" aria-hidden="true"></span>
-                                                    <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES'); ?>
-                                                </button>
-                                            </p>
-                                            <p>
-                                                <button id="select-zip-file-button-drop" type="button"
-                                                        class="btn btn-warning btn-rsg2 btn-zip w-25"
-                                                        title="<?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE_DESC'); ?>"
-                                                        disabled
-                                                >
-                                                    <span class="icon-contract-2" aria-hidden="true"></span>
-                                                    <?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE'); ?>
-                                                </button>
-                                            </p>
-                                            <hr>
-                                            <p>
-                                                <button id="ftp-upload-folder-button-drop" type="button"
-                                                        class="btn btn-secondary btn-rsg2 btn-folder w-25"
-                                                        title="<?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD_DESC'); ?>"
-                                                        disabled
-                                                >
-                                                    <span class="icon-arrow-up-2" aria-hidden="true"></span>
-                                                    <?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD'); ?>
-                                                </button>
-                                                <div class="form-group">
-                                                    <label for="ftp_upload_directory"><?php echo Text::_('COM_RSGALLERY2_PATH'); ?>
-                                                        : </label>
-                                                    <input type="text" id="ftp_upload_directory" name="ftp_upload_directory"
-                                                           class="w-50 h-100 mx-auto"
-                                                           value="<?php echo $this->FtpUploadPath; ?>"
-                                                    />
-                                                </div>
-                                            </p>
-                                        </div>
-
+                                            <span class="uploading-number">0</span><span
+                                                class="uploading-symbol">%</span>
+                                        </p>
                                     </div>
-                                </div>
 
-                                <div class="col-md-4 mb-0 mt-2">
-                                    <?php
-                                    DisplaySystemSettings($this->uploadLimit, $this->postMaxSize,
-                                        $this->memoryLimit, $this->mediaSize, $this->maxSize);
-                                    ?>
-                                    <?php endif; ?>
-                                </div>
-
-                                <button
-                                        id="AssignImageProperties"
-                                        type="button"
-                                        class="btn btn-warning mx-auto mt-2"
-                                        onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
-                                        title="disabled<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
-                                        disabled
-                                >
-                                    <span class="icon-copy" aria-hidden="true"></span>
-                                    <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>
-                                </button>
-
-                                <p>
-                                    <div id="uploadProgressArea"></div>
-                                </p>
-                                <p>
-                                    <div id="uploadErrorArea"></div>
-                                </p>
-                            </div>
-                            <div id="hidden-input-buttons" style="display: none;">
-                                <div class="control-group">
-                                    <label for="input_files"
-                                           class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
-                                    <div class="controls">
-                                        <input class="form-control-file" id="input_files" name="input_files" type="file"
-                                               multiple="multiple" />
-                                        <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
+                                    <div class="upload-actions">
+                                        <p class="lead">
+                                            <?php echo Text::_('COM_RSGALLERY2_DRAG_IMAGES_HERE'); ?>
+                                        </p>
+                                        <p>
+                                            <button id="select-file-button-drop" type="button"
+                                                    class="btn btn-info btn-rsg2 btn-file w-25"
+                                                    title="<?php echo Text::_('COM_RSGALLERY2_SELECT_FILES_DESC'); ?>"
+                                                    disabled
+                                            >
+                                                <span class="icon-copy" aria-hidden="true"></span>
+                                                <?php echo Text::_('COM_RSGALLERY2_SELECT_FILES'); ?>
+                                            </button>
+                                        </p>
+                                        <p>
+                                            <button id="select-zip-file-button-drop" type="button"
+                                                    class="btn btn-warning btn-rsg2 btn-zip w-25"
+                                                    title="<?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE_DESC'); ?>"
+                                                    disabled
+                                            >
+                                                <span class="icon-contract-2" aria-hidden="true"></span>
+                                                <?php echo Text::_('COM_RSGALLERY2_SELECT_ZIP_FILE'); ?>
+                                            </button>
+                                        </p>
+                                        <hr>
+                                        <p>
+                                            <button id="ftp-upload-folder-button-drop" type="button"
+                                                    class="btn btn-secondary btn-rsg2 btn-folder w-25"
+                                                    title="<?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD_DESC'); ?>"
+                                                    disabled
+                                            >
+                                                <span class="icon-arrow-up-2" aria-hidden="true"></span>
+                                                <?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD'); ?>
+                                            </button>
+                                            <div class="form-group">
+                                                <label for="ftp_upload_directory"><?php echo Text::_('COM_RSGALLERY2_PATH'); ?>: </label>
+                                                <input type="text" id="ftp_upload_directory" name="ftp_upload_directory"
+                                                       class="w-50 h-100 mx-auto"
+                                                       value="<?php echo $this->FtpUploadPath; ?>"
+                                                />
+                                            </div>
+                                        </p>
                                     </div>
-                                </div>
-                                <div class="control-group">
-                                    <label for="input_zip"
-                                           class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
-                                    <div class="controls">
-                                        <input class="form-control-file" id="input_zip" name="input_zip" type="file"
-                                               multiple="multiple" />
-                                        <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
-                                    </div>
+
                                 </div>
                             </div>
-                        </fieldset>
 
-                        <?php echo HTMLHelper::_('uitab.endTab'); ?>
-                        <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
-                        <?php
-                        // LimitsAndMaxInfo($this->uploadLimit, $this->postMaxSize, $this->memoryLimit)
-                        ?>
-                </div>
+                            <div class="col-md-4 mb-0 mt-2">
+                                <?php
+                                DisplaySystemSettings(
+                                    $this->uploadLimit,
+                                    $this->postMaxSize,
+                                    $this->memoryLimit,
+                                    $this->mediaSize,
+                                    $this->maxSize,
+                                );
+                                ?>
+                                <?php endif; ?>
+                            </div>
+
+                            <button
+                                id="AssignImageProperties"
+                                type="button"
+                                class="btn btn-warning mx-auto mt-2"
+                                onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
+                                title="disabled<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
+                                disabled
+                            >
+                                <span class="icon-copy" aria-hidden="true"></span>
+                                <?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES'); ?>
+                            </button>
+
+                            <p>
+                            <div id="uploadProgressArea"></div>
+                            </p>
+                            <p>
+                            <div id="uploadErrorArea"></div>
+                            </p>
+                        </div>
+                        <div id="hidden-input-buttons" style="display: none;">
+                            <div class="control-group">
+                                <label for="input_files"
+                                       class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
+                                <div class="controls">
+                                    <input class="form-control-file" id="input_files" name="input_files" type="file"
+                                           multiple="multiple"/>
+                                    <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="input_zip"
+                                       class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
+                                <div class="controls">
+                                    <input class="form-control-file" id="input_zip" name="input_zip" type="file"
+                                           multiple="multiple"/>
+                                    <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <?php echo HTMLHelper::_('uitab.endTab'); ?>
+                    <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+                    <?php
+                    // LimitsAndMaxInfo($this->uploadLimit, $this->postMaxSize, $this->memoryLimit)
+                    ?>
             </div>
         </div>
 
-        <input type="hidden" name="installtype" value="" />
-        <input type="hidden" name="task" value="install.install" />
+
+        <input type="hidden" name="installtype" value=""/>
+        <input type="hidden" name="task" value="install.install"/>
         <?php echo HTMLHelper::_('form.token'); ?>
     </form>
 
-<?php
+    <?php
 
 function LimitsAndMaxInfo($UploadLimit, $PostMaxSize, $MemoryLimit)
 {
@@ -315,79 +321,79 @@ function LimitsAndMaxInfo($UploadLimit, $PostMaxSize, $MemoryLimit)
  */
 function DisplaySystemSettings($UploadLimit, $PostMaxSize, $MemoryLimit, $mediaSize, $maxSize)
 {
-  $title  = Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_CALCULATED', $maxSize);
-  $id     = 127000;
-  $itemId = 127001;
-  ?>
+    $title  = Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_CALCULATED', $maxSize);
+    $id     = 127000;
+    $itemId = 127001;
+    ?>
 
-  <div class="card">
-    <div class="accordion" id="<?php echo $id; ?>">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="<?php echo $itemId; ?>Header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#<?php echo $itemId; ?>" aria-expanded="false" aria-controls="<?php echo $itemId; ?>">
-            <?php echo Text::_($title); ?>
-          </button>
-        </h2>
-        <div id="<?php echo $itemId; ?>" class="accordion-collapse collapse"
-             aria-labelledby="<?php echo $itemId; ?>Header" data-bs-parent="#<?php echo $id; ?>">
-          <div class="accordion-Xbody secondary">
-            <table class="table table-striped mb-0 ">
-              <tbody>
-                <tr>
-                  <td class="d-md-table-cell">
-                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_UPLOAD_LIMIT_IS'); ?>
-                  </td>
-                  <td class="d-md-table-cell px-0 text-end">
-                    <strong><?php echo $UploadLimit; ?></strong>
-                  </td>
-                  <td class="d-md-table-cell ps-1  text-start">
-                    MB (PHP 'upload_max_filesize')
-                  </td>
-                </tr>
-                <tr>
-                  <td class="d-md-table-cell">
-                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_POST_MAX_SIZE_IS'); ?>
-                  </td>
-                  <td class="d-md-table-cell px-0 text-end">
-                    <strong><?php echo $PostMaxSize; ?></strong>
-                  </td>
-                  <td class="d-md-table-cell ps-1 text-start">
-                    MB (PHP 'post_max_size')
-                  </td>
-                </tr>
-                <tr>
-                  <td class="d-md-table-cell">
-                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_POST_MEMORY_LIMIT_IS'); ?>
-                  </td>
-                  <td class="d-md-table-cell px-0 text-end">
-                    <strong><?php echo $MemoryLimit; ?></strong>
-                  </td>
-                  <td class="d-md-table-cell ps-1  text-start">
-                    MB (PHP 'memory_limit')
-                  </td>
-                </tr>
-                <tr>
-                  <td class="d-md-table-cell">
-                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_MEDIA_LIMIT_IS', $mediaSize); ?>
-                  </td>
-                  <td class="d-md-table-cell px-0 text-end">
-                    <strong><?php echo $mediaSize; ?></strong>
-                  </td>
-                  <td class="d-md-table-cell ps-1 text-start">
-                    MB
-                  </td>
-                </tr>
+    <div class="card">
+        <div class="accordion" id="<?php echo $id; ?>">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="<?php echo $itemId; ?>Header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#<?php echo $itemId; ?>" aria-expanded="false" aria-controls="<?php echo $itemId; ?>">
+                        <?php echo Text::_($title); ?>
+                    </button>
+                </h2>
+                <div id="<?php echo $itemId; ?>" class="accordion-collapse collapse"
+                     aria-labelledby="<?php echo $itemId; ?>Header" data-bs-parent="#<?php echo $id; ?>">
+                    <div class="accordion-Xbody secondary">
+                        <table class="table table-striped mb-0 ">
+                            <tbody>
+                            <tr>
+                                <td class="d-md-table-cell">
+                                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_UPLOAD_LIMIT_IS'); ?>
+                                </td>
+                                <td class="d-md-table-cell px-0 text-end">
+                                    <strong><?php echo $UploadLimit; ?></strong>
+                                </td>
+                                <td class="d-md-table-cell ps-1  text-start">
+                                    MB (PHP 'upload_max_filesize')
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-md-table-cell">
+                                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_POST_MAX_SIZE_IS'); ?>
+                                </td>
+                                <td class="d-md-table-cell px-0 text-end">
+                                    <strong><?php echo $PostMaxSize; ?></strong>
+                                </td>
+                                <td class="d-md-table-cell ps-1 text-start">
+                                    MB (PHP 'post_max_size')
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-md-table-cell">
+                                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_POST_MEMORY_LIMIT_IS'); ?>
+                                </td>
+                                <td class="d-md-table-cell px-0 text-end">
+                                    <strong><?php echo $MemoryLimit; ?></strong>
+                                </td>
+                                <td class="d-md-table-cell ps-1  text-start">
+                                    MB (PHP 'memory_limit')
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d-md-table-cell">
+                                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_MEDIA_LIMIT_IS', $mediaSize); ?>
+                                </td>
+                                <td class="d-md-table-cell px-0 text-end">
+                                    <strong><?php echo $mediaSize; ?></strong>
+                                </td>
+                                <td class="d-md-table-cell ps-1 text-start">
+                                    MB
+                                </td>
+                            </tr>
 
-              </tbody>
-            </table>
-          </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
-  <?php return;
+    <?php return;
 }
 
 
