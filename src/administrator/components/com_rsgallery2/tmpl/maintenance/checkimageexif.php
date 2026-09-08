@@ -124,15 +124,15 @@ $exifDataOfFiles = $this->exifDataRawOfFiles;
                                                         <td class="text-center">
                                                             <div class="input-group mb-3 ">
                                                                 <input id="jform_gal_<?php echo $galleryId ?>" class="form-control w-25 " type="text"
-                                                                       value="<?php echo $galleryId ?>" size="25" name="jform[galIds][] aria-invalid=" false">
+                                                                       value="<?php echo $galleryId ?>" size="25" name="jform[galIds][] aria-invalid=" false" />
                                                             </div>
                                                         </td>
 
                                                         <td class="text-center">
 
                                                             <div class="input-group mb-3 w-100">
-                                                                <input id="jform_file_<?php echo $imageName ?>" class="form-control" type="text" 
-                                                                    value="<?php echo $imageName ?>" size="75" name="jform[imgNames][] aria-invalid=" false">
+                                                                <input id="jform_file_<?php echo $imageName ?>" class="form-control" type="text"
+                                                                    value="<?php echo $imageName ?>" size="75" name="jform[imgNames][] aria-invalid=" false" />
                                                             </div>
 
                                                         </td>

@@ -82,7 +82,8 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
                                         <div class="controls">
                                             <input name="title[]" type="text" size="15" aria-invalid="false"
                                                    value="<?php echo $this->escape($item->title); ?>"
-                                                       style="width:95%;>
+                                                   style="width:95%;"
+                                            />
                                         </div>
                                     </div>
 
@@ -121,7 +122,7 @@ Text::script('COM_RSGALLERY2_PLEASE_CHOOSE_A_GALLERY_FIRST', true);
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="cid[]" value="<?php echo $item->id;?>">
+                                    <input type="hidden" name="cid[]" value="<?php echo $item->id;?>" />
                                 </div>
                             </li>
 

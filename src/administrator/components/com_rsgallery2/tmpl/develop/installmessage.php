@@ -107,7 +107,7 @@ use Joomla\CMS\Router\Route;
                 <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 
 
-                <input type="hidden" value="" name="task">
+                <input type="hidden" name="task" value="" />
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div>
         </div>

@@ -67,7 +67,7 @@ function configInputField($name = 'unknown', $value = '')
             </div>
             <div class="controls">
                 <input id="jform_<?php echo $name ?>" class="input-xxlarge input_box" type="text"
-                       value="<?php echo $value ?>" size="70" name="jform[<?php echo $name ?>] aria-invalid=" false">
+                       value="<?php echo $value ?>" size="70" name="jform[<?php echo $name ?>] aria-invalid=" false" />
             </div>
         </div>
 
@@ -77,13 +77,13 @@ function configInputField($name = 'unknown', $value = '')
             <label class="control-label" for="<?php echo $name?>"><?php echo $name?>:</label>
             <div class="controls">
                 <input id="<?php echo $name?>" class="input-xxlarge input_box" type="text"
-                    value="<?php echo $value?>" size="70" name="<?php echo $name?>">
+                    value="<?php echo $value?>" size="70" name="<?php echo $name?>" />
             </div>
         </div>
 
         <td>version</td>
         <td>
-            <input type="text" value="4.1.0" name="version">
+            <input type="text" value="4.1.0" name="version" />
         </td>
         */
     } catch (\RuntimeException $e) {

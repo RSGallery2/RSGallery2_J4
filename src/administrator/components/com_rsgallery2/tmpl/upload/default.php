@@ -174,7 +174,7 @@ $maxSize = $this->uploadLimit;
                                                     <input type="text" id="ftp_upload_directory" name="ftp_upload_directory"
                                                            class="w-50 h-100 mx-auto"
                                                            value="<?php echo $this->FtpUploadPath; ?>"
-                                                    >
+                                                    />
                                                 </div>
                                             </p>
                                         </div>
@@ -203,10 +203,10 @@ $maxSize = $this->uploadLimit;
                                 </button>
 
                                 <p>
-                                <div id="uploadProgressArea"></div>
+                                    <div id="uploadProgressArea"></div>
                                 </p>
                                 <p>
-                                <div id="uploadErrorArea"></div>
+                                    <div id="uploadErrorArea"></div>
                                 </p>
                             </div>
                             <div id="hidden-input-buttons" style="display: none;">
@@ -215,7 +215,7 @@ $maxSize = $this->uploadLimit;
                                            class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
                                     <div class="controls">
                                         <input class="form-control-file" id="input_files" name="input_files" type="file"
-                                               multiple="multiple">
+                                               multiple="multiple" />
                                         <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@ $maxSize = $this->uploadLimit;
                                            class="control-label"><?php echo Text::_('PLG_INSTALLER_PACKAGEINSTALLER_EXTENSION_PACKAGE_FILE'); ?></label>
                                     <div class="controls">
                                         <input class="form-control-file" id="input_zip" name="input_zip" type="file"
-                                               multiple="multiple">
+                                               multiple="multiple" />
                                         <small class="form-text text-muted"><?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?></small>
                                     </div>
                                 </div>
@@ -240,8 +240,8 @@ $maxSize = $this->uploadLimit;
             </div>
         </div>
 
-        <input type="hidden" name="installtype" value="">
-        <input type="hidden" name="task" value="install.install">
+        <input type="hidden" name="installtype" value="" />
+        <input type="hidden" name="task" value="install.install" />
         <?php echo HTMLHelper::_('form.token'); ?>
     </form>
 

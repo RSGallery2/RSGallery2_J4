@@ -300,7 +300,7 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                                         <?php
                                         if ($canChange && $saveOrder) : ?>
                                             <input type="text" style="display:none" name="order[]" size="5" value="<?php
-                                            echo $item->lft; ?>">
+                                            echo $item->lft; ?>" />
                                         <?php
                                         endif; ?>
                                     </td>
@@ -510,9 +510,9 @@ echo Route::_('index.php?option=com_rsgallery2&view=galleries'); ?>"
                 endif; ?>
 
                 <input type="hidden" name="extension" value="<?php
-                echo $extension; ?>">
-                <input type="hidden" name="task" value="">
-                <input type="hidden" name="boxchecked" value="0">
+                echo $extension; ?>" />
+                <input type="hidden" name="task" value="" />
+                <input type="hidden" name="boxchecked" value="0" />
                 <?php
                 echo HTMLHelper::_('form.token'); ?>
             </div>

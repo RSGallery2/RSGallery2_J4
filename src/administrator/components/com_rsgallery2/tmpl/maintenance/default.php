@@ -964,7 +964,7 @@ function zoneInfo($info = 'Unknown zone info')
         <!--                <label for="config_file" class="control-label">--><?php
         //echo Text::_('RSG2 import configuration from file'); ?><!--</label>-->
         <!--                <div class="controls">-->
-        <!--                    <input class="form-control-file" id="config_file" name="config_file" type="file" >-->
+        <!--                    <input class="form-control-file" id="config_file" name="config_file" type="file" />-->
         <!--                </div>-->
         <!--            </div>-->
         <!--        </div>-->

@@ -122,6 +122,6 @@ ksort($manifestVars);
         </div>
     </div>
 
-    <input type="hidden" name="task" value=""/>
+    <input type="hidden" name="task" value="" />
     <?php echo HTMLHelper::_('form.token'); ?>
 </form>
