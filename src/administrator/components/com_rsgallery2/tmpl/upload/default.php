@@ -39,7 +39,7 @@ $app->getDocument()->addScriptDeclaration(implode("\n", $script));
 $tabs = [];
 
 //$maxSize = min($this->UploadLimit, $this->PostMaxSize);
-$maxSize = $this->UploadLimit;
+$maxSize = $this->uploadLimit;
 
 ?>
     <form action="<?php echo Route::_('index.php?option=com_rsgallery2&view=upload'); ?>"
@@ -168,29 +168,32 @@ $maxSize = $this->UploadLimit;
                                                     <span class="icon-arrow-up-2" aria-hidden="true"></span>
                                                     <?php echo Text::_('COM_RSGALLERY2_FTP_FOLDER_UPLOAD'); ?>
                                                 </button>
-                                            <div class="form-group">
-                                                <label for="ftp_upload_directory"><?php echo Text::_('COM_RSGALLERY2_PATH'); ?>
-                                                    : </label>
-                                                <input type="text" id="ftp_upload_directory" name="ftp_upload_directory"
-                                                       class="w-50 h-100 mx-auto"
-                                                       value="<?php echo $this->FtpUploadPath; ?>"
-                                                >
-                                            </div>
-                                            </p>
-                                            <hr>
-                                            <p>
-                                                <?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $this->PostMaxSize); ?>
-                                                MB
+                                                <div class="form-group">
+                                                    <label for="ftp_upload_directory"><?php echo Text::_('COM_RSGALLERY2_PATH'); ?>
+                                                        : </label>
+                                                    <input type="text" id="ftp_upload_directory" name="ftp_upload_directory"
+                                                           class="w-50 h-100 mx-auto"
+                                                           value="<?php echo $this->FtpUploadPath; ?>"
+                                                    >
+                                                </div>
                                             </p>
                                         </div>
 
                                     </div>
                                 </div>
 
+                                <div class="col-md-4 mb-0 mt-2">
+                                    <?php
+                                    DisplaySystemSettings($this->uploadLimit, $this->postMaxSize,
+                                        $this->memoryLimit, $this->mediaSize, $this->maxSize);
+                                    ?>
+                                    <?php endif; ?>
+                                </div>
+
                                 <button
                                         id="AssignImageProperties"
                                         type="button"
-                                        class="btn btn-primary mx-auto mt-2"
+                                        class="btn btn-warning mx-auto mt-2"
                                         onclick="Joomla.submitbutton('imagesProperties.PropertiesView')"
                                         title="disabled<?php echo Text::_('COM_RSGALLERY2_ADD_IMAGES_PROPERTIES_DESC'); ?>"
                                         disabled
@@ -228,14 +231,13 @@ $maxSize = $this->UploadLimit;
                             </div>
                         </fieldset>
 
-                        <?php
-                        LimitsAndMaxInfo($this->UploadLimit, $this->PostMaxSize, $this->MemoryLimit)
-                        ?>
                         <?php echo HTMLHelper::_('uitab.endTab'); ?>
                         <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
-                    <?php endif; ?>
+                        <?php
+                        // LimitsAndMaxInfo($this->uploadLimit, $this->postMaxSize, $this->memoryLimit)
+                        ?>
+                </div>
             </div>
-        </div>
         </div>
 
         <input type="hidden" name="installtype" value="">
@@ -296,21 +298,96 @@ function LimitsAndMaxInfo($UploadLimit, $PostMaxSize, $MemoryLimit)
         </div>
     </div>
     <?php
+}
 
-    /**
-     * // use footnote ? -> or display none and on hover display: block
-     * //                        <label for="ToGallery"
-     * //                               style="padding-bottom: 20px"
-     * //                               class="control-label"><?php echo Text::_('COM_RSGALLERY2_ONE_GALLERY_MUST_EXIST'); ?></label>
-     * /**/
-    $uploadMaxsTitle = ""
-        . Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_IS', $UploadLimit)
-        . Text::sprintf('COM_RSGALLERY2_POST_MAX_SIZE_IS', $PostMaxSize)
-        . Text::sprintf('COM_RSGALLERY2_POST_MEMORY_LIMIT_IS', $MemoryLimit)
-        . Text::_('COM_RSGALLERY2_MEGABYTES_SET_IN_PHPINI');
-    /**
-     * echo '<div title="' . $uploadMaxsTitle . '" >ToDo: Make /Maximum/ Element with title in hover</div>';
-     * /**/
+/**
+ * Display system settings as collapsed
+ *
+ * Parameter: limits in megabytes, created in viewhtml.php
+ *
+ * @param   int  $UploadLimit  php setting 'upload_max_filesize'
+ * @param   int  $PostMaxSize  php setting 'post_max_size'
+ * @param   int  $MemoryLimit  php setting 'memory_limit'
+ * @param   int  $mediaSize    upload limit by joomgallery / joomla media configuration
+ * @param   int  $maxSize      Min of above
+ *
+ * @since 5.3.3
+ */
+function DisplaySystemSettings($UploadLimit, $PostMaxSize, $MemoryLimit, $mediaSize, $maxSize)
+{
+  $title  = Text::sprintf('COM_RSGALLERY2_UPLOAD_LIMIT_CALCULATED', $maxSize);
+  $id     = 127000;
+  $itemId = 127001;
+  ?>
+
+  <div class="card">
+    <div class="accordion" id="<?php echo $id; ?>">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="<?php echo $itemId; ?>Header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#<?php echo $itemId; ?>" aria-expanded="false" aria-controls="<?php echo $itemId; ?>">
+            <?php echo Text::_($title); ?>
+          </button>
+        </h2>
+        <div id="<?php echo $itemId; ?>" class="accordion-collapse collapse"
+             aria-labelledby="<?php echo $itemId; ?>Header" data-bs-parent="#<?php echo $id; ?>">
+          <div class="accordion-Xbody secondary">
+            <table class="table table-striped mb-0 ">
+              <tbody>
+                <tr>
+                  <td class="d-md-table-cell">
+                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_UPLOAD_LIMIT_IS'); ?>
+                  </td>
+                  <td class="d-md-table-cell px-0 text-end">
+                    <strong><?php echo $UploadLimit; ?></strong>
+                  </td>
+                  <td class="d-md-table-cell ps-1  text-start">
+                    MB (PHP 'upload_max_filesize')
+                  </td>
+                </tr>
+                <tr>
+                  <td class="d-md-table-cell">
+                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_POST_MAX_SIZE_IS'); ?>
+                  </td>
+                  <td class="d-md-table-cell px-0 text-end">
+                    <strong><?php echo $PostMaxSize; ?></strong>
+                  </td>
+                  <td class="d-md-table-cell ps-1 text-start">
+                    MB (PHP 'post_max_size')
+                  </td>
+                </tr>
+                <tr>
+                  <td class="d-md-table-cell">
+                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_POST_MEMORY_LIMIT_IS'); ?>
+                  </td>
+                  <td class="d-md-table-cell px-0 text-end">
+                    <strong><?php echo $MemoryLimit; ?></strong>
+                  </td>
+                  <td class="d-md-table-cell ps-1  text-start">
+                    MB (PHP 'memory_limit')
+                  </td>
+                </tr>
+                <tr>
+                  <td class="d-md-table-cell">
+                    <?php echo Text::sprintf('COM_RSGALLERY2_UPLOAD_MEDIA_LIMIT_IS', $mediaSize); ?>
+                  </td>
+                  <td class="d-md-table-cell px-0 text-end">
+                    <strong><?php echo $mediaSize; ?></strong>
+                  </td>
+                  <td class="d-md-table-cell ps-1 text-start">
+                    MB
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <?php return;
 }
 
 

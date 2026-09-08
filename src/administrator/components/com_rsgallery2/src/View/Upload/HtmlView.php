@@ -45,10 +45,10 @@ class HtmlView extends BaseHtmlView
     protected $isDebugBackend;
     protected $isDevelop;
 
-    protected $UploadLimit;
-    protected $PostMaxSize;
-    protected $MemoryLimit;
-    protected $MaxSize;
+    protected $uploadLimit;
+    protected $postMaxSize;
+    protected $memoryLimit;
+    protected $maxSize;
 
     protected $FtpUploadPath;
     // protected $LastUsedUploadZip;
@@ -89,18 +89,8 @@ class HtmlView extends BaseHtmlView
 
         //--- Limits --------------------------------------------------------------------
 
-        // Instantiate the media helper
-        $mediaHelper = new MediaHelper();
-
-        // Maximum allowed size in MB
-        $this->UploadLimit = round($mediaHelper->toBytes(ini_get('upload_max_filesize')) / (1024 * 1024));
-        $this->PostMaxSize = round($mediaHelper->toBytes(ini_get('post_max_size')) / (1024 * 1024));
-        $this->MemoryLimit = round($mediaHelper->toBytes(ini_get('memory_limit')) / (1024 * 1024));
-
-        // Max size to be used (previously defined by joomla function but ...)
-        // j old: $max_size   = parseSize(ini_get('post_max_size'));
-        // j old: $upload_max = parseSize(ini_get('upload_max_filesize'));
-        $this->MaxSize = min($this->UploadLimit, $this->PostMaxSize);
+        // Limits php.ini, config, ...
+        $this->limitsPhpConfig();
 
         //--- FtpUploadPath ------------------------
 
@@ -241,5 +231,40 @@ class HtmlView extends BaseHtmlView
 //      {
 //          $toolbar->preferences('com_rsgallery2');
 //      }
+    }
+
+    /**
+     * Reads php.ini values to determine the minimum size for upload
+     * The memory_limit for the php script was not reliable (0 on some systems)
+     * so it is just shown
+     *
+     * On UploadMaxsize = 0 (from com_media) the php.ini limits are used
+     *
+     * @since 5.3.3
+     */
+    public function limitsPhpConfig(): void
+    {
+        $mediaHelper = new MediaHelper();
+
+        // Maximum allowed size in MB
+        $this->uploadLimit = round($mediaHelper->toBytes(\ini_get('upload_max_filesize')) / (1024 * 1024));
+        $this->postMaxSize = round($mediaHelper->toBytes(\ini_get('post_max_size')) / (1024 * 1024));
+        $this->memoryLimit = round($mediaHelper->toBytes(\ini_get('memory_limit')) / (1024 * 1024));
+
+        $mediaParams        = ComponentHelper::getParams('com_media');
+        $mediaUploadMaxsize = $mediaParams->get('upload_maxsize', 0);
+        $this->mediaSize    = $mediaUploadMaxsize;
+
+        //--- Max size to be used (previously defined by joomla function but ...) -------------------------
+
+        // $uploadMaxSize=0 for no limit
+        if(empty($mediaUploadMaxsize))
+        {
+            $this->maxSize = min($this->uploadLimit, $this->postMaxSize);
+        }
+        else
+        {
+            $this->maxSize = min($this->uploadLimit, $this->postMaxSize, $mediaUploadMaxsize);
+        }
     }
 }
