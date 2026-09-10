@@ -10,15 +10,10 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\Model;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -27,7 +22,7 @@ use Joomla\Registry\Registry;
 /**
  * Rsgallery2 model for the Joomla Rsgallery2 component.
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
 class Galleriesj3xModel extends ListModel
 {
@@ -56,6 +51,7 @@ class Galleriesj3xModel extends ListModel
      *
      * @param   array                     $config  An optional associative array of configuration settings.
      * @param   MVCFactoryInterface|null  $factory
+     *
      * @throws \Exception
      * @since   1.6
      */
@@ -63,24 +59,32 @@ class Galleriesj3xModel extends ListModel
     {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = [
-                'id', 'a.id',
-                'name', 'a.name',
+                'id',
+                'a.id',
+                'name',
+                'a.name',
 
-                'created', 'a.created',
-                'created_by', 'a.created_by',
+                'created',
+                'a.created',
+                'created_by',
+                'a.created_by',
 
-                'published', 'a.published',
+                'published',
+                'a.published',
 
 //              'modified', 'a.modified',
 //              'modified_by', 'a.modified_by',
 
-                'parent_id', 'a.parent_id',
-                'lft', 'a.lft',
+                'parent_id',
+                'a.parent_id',
+                'lft',
+                'a.lft',
 
-                'hits', 'a.hits',
+                'hits',
+                'a.hits',
 //              'tag',
                 'a.access',
-                'image_count'
+                'image_count',
             ];
         }
 
@@ -117,7 +121,8 @@ class Galleriesj3xModel extends ListModel
                 if ($galleryId == 0) {
                     $galleries = parent::getItems();
                 } else {
-                    $galleries = $this->getChildGalleries($galleryId);
+//                    $galleries = $this->getChildGalleries($galleryId);
+                    $galleries = $this->getParentAndChildGalleries($galleryId);
                 }
 
                 // see above $galleries = parent::getItems();
@@ -151,6 +156,7 @@ class Galleriesj3xModel extends ListModel
 
     /**
      * return actual gallery id or given in input
+     *
      * @var string item
      */
     /**/
@@ -175,45 +181,51 @@ class Galleriesj3xModel extends ListModel
      *
      * @return mixed
      *
-     * @since  5.1.0     *
-     * private function getGalleryAndChilds(int $gid)
-     * {
-     * $galleries = [];
+     * @since  5.1.0
+     */
+    private function getParentAndChildGalleries(int $gid)
+    {
+        $galleries = [];
+
+        try {
+// Select parent and child galleries
+            $db    = $this->getDatabase();
+            $query = $db->createQuery();
+
+            $query
+                ->select('*')
+//->from($db->quoteName('#__rsg2_galleries', 'a'))
+                ->from($db->quoteName('#__rsg2_galleries'))
+//->where('a.id = ' . (int) $gid);
+                ->where('id = ' . (int)$gid, 'OR')
+                ->where('parent_id = ' . (int)$gid);
+
+            $db->setQuery($query);
+//$data = $db->loadObjectList();
+            $galleries = $db->loadObjectList();
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Galleriesj3xModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $galleries;
+    }
+
+    /**
+     * @param   int  $gid
      *
-     * try {
-     * // Select parent and child galleries
-     * $db = $this->getDatabase();
-     * $query = $db->createQuery();
+     * @return mixed|null
      *
-     * $query->select('*')
-     * //->from($db->quoteName('#__rsg2_galleries', 'a'))
-     * ->from($db->quoteName('#__rsg2_galleries'))
-     * //->where('a.id = ' . (int) $gid);
-     * ->where('id = ' . (int)$gid, 'OR')
-     * ->where('parent_id = ' . (int)$gid);
-     *
-     * $db->setQuery($query);
-     * //$data = $db->loadObjectList();
-     * $galleries = $db->loadObjectList();
-     * }
-     * catch (\RuntimeException $e)
-     * {
-     * $OutTxt = '';
-     * $OutTxt .= 'Galleriesj3xModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
-     * $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-     *
-     * $app = Factory::getApplication();
-     * $app->enqueueMessage($OutTxt, 'error');
-     * }
-     *
-     * return $galleries;
-     * }
-     *
-     * /    /**
-     * @since 5.1.0     */
+     * @throws \Exception
+     * @since version
+     */
     public function getChildGalleries(int $gid)
     {
-        $parentGallery = null;
+        $childGalleries = null;
 
         try {
             // old: $gid = $this->galleryId;
@@ -226,6 +238,47 @@ class Galleriesj3xModel extends ListModel
             $query
                 ->select('*')
                 ->from($db->quoteName('#__rsg2_galleries'))
+                ->where('parent_id = ' . (int)$gid);
+
+            $db->setQuery($query);
+            //$data = $db->loadObjectList();
+            //$galleries = $db->loadObjectList();
+            $childGalleries = $db->loadObject();
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Galleriesj3xModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $childGalleries;
+    }
+
+    /**
+     * @param   int  $gid
+     *
+     * @return mixed
+     *
+     * @since  5.1.0     */
+    public function getParentGallery()
+    {
+        $parentGallery = null;
+
+        try {
+            $gid = $this->galleryId;
+
+            // Select parent and child galleries
+            $db = $this->getDatabase();
+
+            $query = $db->createQuery();
+
+            $query
+                ->select('*')
+                //->from($db->quoteName('#__rsg2_galleries', 'a'))
+                ->from($db->quoteName('#__rsg2_galleries'))
+                //->where('a.id = ' . (int) $gid);
                 ->where('id = ' . (int)$gid);
 
             $db->setQuery($query);
@@ -234,7 +287,7 @@ class Galleriesj3xModel extends ListModel
             $parentGallery = $db->loadObject();
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'Galleriesj3xModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
+            $OutTxt .= 'GalleriesModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
             $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
@@ -315,7 +368,6 @@ class Galleriesj3xModel extends ListModel
                 //--- sub galleries -----------------------------------
 
                 $this->assignSubGalleryList($gallery);
-
             }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -381,7 +433,7 @@ class Galleriesj3xModel extends ListModel
             $app->enqueueMessage($OutTxt, 'error');
         }
 
-        return $imageId;
+        return (int)$imageId;
     }
 
     /**
@@ -486,7 +538,6 @@ class Galleriesj3xModel extends ListModel
             //--- assign data --------------------------------------
 
             foreach ($dbSubGalleries as $subGallery) {
-
                 $subGallery->image_count = $this->imageCount($subGallery->id);
 
                 //--- sub thumb image -----------------------------------
@@ -534,7 +585,6 @@ class Galleriesj3xModel extends ListModel
                 // Add to array
                 $gallery->subGalleryList[] = $subGallery;
             }
-
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleriesj3xModel: assignSubGalleryList: Error executing query: "' . "" . '"' . '<br>';
@@ -614,7 +664,7 @@ class Galleriesj3xModel extends ListModel
                 . '&view=galleryj3x&id=' . $gallery->id,
                 true,
                 0,
-                true
+                true,
             );
 
             /**/
@@ -660,7 +710,7 @@ class Galleriesj3xModel extends ListModel
                 . '/gallery&id=' . $gallery->id . '/slideshow',
                 true,
                 0,
-                true
+                true,
             );
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -720,7 +770,7 @@ class Galleriesj3xModel extends ListModel
             'cmd',
         );
         $this->setState('filter.extension', $extension);
-        $parts = explode('.', (string) $extension);
+        $parts = explode('.', (string)$extension);
 
         // Extract the component name
         $this->setState('filter.component', $parts[0]);
@@ -789,7 +839,8 @@ class Galleriesj3xModel extends ListModel
      *
      * @return
      *
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     protected function getListQuery()
     {
         // Create a new query object.
@@ -996,12 +1047,12 @@ class Galleriesj3xModel extends ListModel
 
             . 'uc.name, '
             . 'ua.name ',
-            //              . 'a.language, '
-            //          . 'ag.title, '
-            //          . 'l.title, '
-            //          . 'l.image, '
-            //no good           . 'image_count '
-            /**/
+        //              . 'a.language, '
+        //          . 'ag.title, '
+        //          . 'l.title, '
+        //          . 'l.image, '
+        //no good           . 'image_count '
+        /**/
         );
 
         return $query;

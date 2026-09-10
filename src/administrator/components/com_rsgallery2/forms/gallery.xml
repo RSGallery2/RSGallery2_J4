@@ -332,8 +332,8 @@
 						name="max_columns_in_images_view"
 						type="number"
 						default="4"
-						label="max_columns_in_images_LABEL"
-						description="max_columns_in_images_DESC"
+						label="COM_RSGALLERY2_NUMBER_OF_THUMB_COLS"
+						description="COM_RSGALLERY2_NUMBER_OF_THUMB_COLS_DESC"
 						showon="images_column_arrangement:1"
 				>
 				</field>
@@ -366,8 +366,8 @@
 						name="max_thumbs_in_images_view"
 						type="number"
 						default="20"
-						label="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_LABEL"
-						description="COM_RSGALLERY2_LIMIT_IMAGES_IN_GALLERY_DESC"
+						label="COM_RSGALLERY2_NUMBER_OF_IMAGES_ON_GALLERY_VIEW"
+						description="COM_RSGALLERY2_NUMBER_OF_IMAGES_ON_GALLERY_DESC"
 						showon="images_row_arrangement:2[AND]images_column_arrangement:1"
 				>
 				</field>
@@ -379,7 +379,7 @@
 						name="layoutOfImageThumbs"
 						type="list"
 						default="layout02"
-						label="?humbs layout"
+						label="?thumbs layout"
 						description="?Select layout of thumbs in this gallery"
 				>
 					<option value="global">JGLOBAL_USE_GLOBAL</option>
