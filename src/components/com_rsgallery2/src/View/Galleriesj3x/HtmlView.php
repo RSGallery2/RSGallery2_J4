@@ -14,7 +14,10 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\User\User;
 use Joomla\Registry\Registry;
+use Rsgallery2\Component\Rsgallery2\Site\Model\Galleriesj3xModel;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -28,25 +31,60 @@ use Joomla\Registry\Registry;
 class HtmlView extends BaseHtmlView
 {
     /**
-     * The page parameters
+     * The model state
      *
-     * @var    Registry|null
-     * @since  5.1.0     */
-    protected $params = null;
-
-    /**
-     * The item model state
-     *
-     * @var    Registry
-     * @since  5.1.0     */
+     * @var    \stdClass
+     * @since  3.1
+     */
     protected $state;
 
     /**
-     * The item object details
+     * The list of tags
      *
-     * @var    \stdClass
-     * @since  5.1.0     */
+     * @var    array|false
+     * @since  3.1
+     */
     protected $items;
+
+    /**
+     * The pagination object
+     *
+     * @var    Pagination
+     * @since  3.1
+     */
+    protected $pagination;
+
+    /**
+     * The page parameters
+     *
+     * @var    Registry|null
+     * @since  5.1.0
+     */
+    protected $params = null;
+
+    /**
+     * The page class suffix
+     *
+     * @var    string
+     * @since  4.0.0
+     */
+    protected $pageclass_sfx = '';
+
+    /**
+     * The logged in user
+     *
+     * @var    User|null
+     * @since  4.0.0
+     */
+    protected $user = null;
+
+    //protected $menuParams; // (object)[];
+    protected $galleryId; // (object)[];
+    /**
+     * @var mixed|null
+     * @since version
+     */
+    protected mixed $parentGallery;
 
     /**
      * Execute and display a template script.
@@ -57,46 +95,43 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
-        /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Galleriesj3xModel $model */
+        //--- root galleries view (j3x standard) --------------------------------------------------
+
+        $app = Factory::getApplication();
+
+        $input = $app->getInput();
+
+        $this->galleryId = $input->get('id', 0, 'INT');
+
+        /** @var Galleriesj3xModel $model */
         $model = $this->getModel();
-        $app   = Factory::getApplication();
-        $input = Factory::getApplication()->input;
 
         $state =
         $this->state = $model->getState();
-        // Sub galleries
+
+        $params =
+        $this->params = $this->state->get('params');
+
+        // Limit number of galleries shown by menu parameter
+        $limit = $params->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
+        $state->set('list.limit', $limit);
+
+        //$this->pagination = $model->getPagination();
+        $this->pagination = null;
+
+        $user =
+        $this->user = $app->getIdentity();
+
+        // Activate isDebugSite/isDevelopSite manual by URL
+        $this->isDebugSite   = $this->params->get('isDebugSite') || $input->getBool('isDebugSite');
+        $this->isDevelopSite = $this->params->get('isDevelop') || $input->getBool('isDevelop');
+
+        // parent + sub galleries ?
         $this->items = $model->getItems();
 
         // parent gallery
-        $this->parentGallery = $model->getParentGallery();
-
-        //http://127.0.0.1/Joomla4x/index.php?option=com_rsgallery2&view=galleriesj3x
-        //$id=63
-        //&images_show_title=2
-        //&images_show_description=0
-        //&images_show_search=0
-        //&images_column_arrangement=1
-        //&max_columns_in_images_view=4
-        //&images_row_arrangement=2
-        //&max_rows_in_images_view=5
-        //&max_thumbs_in_images_view=20
-        //&intro_text=%3Cp%3EIntroduction%20Text:%20J3x%20-%20Parent%20gallery%20with%20child%20galleries%3C/p%3E%20%20%3Cp%3E%20%3C/p%3E%20%20%3Cp%3E%20%3C/p%3E
-        //&Itemid=160
-
-        $params =
-        $this->params = $state->get('params');
-
-        $this->pagination = $model->getPagination();
-        // Flag indicates to not add limitstart=0 to URL
-        $this->pagination->hideEmptyLimitstart = true;
-        // ToDo: Why is this necessary ?
-//      $this->pagination->setTotal (count($this->items));
-        $this->user = // $user = Factory::getContainer()->get(UserFactoryInterface::class);
-        $user = $app->getIdentity();
-
-        $this->isDebugSite   = $params->get('isDebugSite');
-        $this->isDevelopSite = $params->get('isDevelop');
-
+//        $this->parentGallery = $model->getParentGallery();
+        $this->parentGallery = null;
 
 //      // Merge (overwrite) config parameter with menu parameter
 //      $menuParams = $this->get('Rsg2MenuParams');
@@ -107,26 +142,19 @@ class HtmlView extends BaseHtmlView
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
+// on develop show open tasks if existing
+        if (!empty($this->isDevelopSite)) {
+            echo '<span style="color:red">'
+                . 'Tasks: galleriesJ3x view<br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                //  . '* <br>'
+                . '</span><br><br>';
+        }
 
-//      $temp = clone $params;
-//      $temp->merge($itemparams);
-//      $item->params = $temp;
-//
-//      Factory::getApplication()->triggerEvent('onContentPrepare', array ('com_rsgallery2.rsgallery2', &$item));
-//
-//      // Store the events for later
-//      $item->event = new \stdClass;
-//      $results = Factory::getApplication()->triggerEvent('onContentAfterTitle', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//      $item->event->afterDisplayTitle = trim(implode("\n", $results));
-//
 
-
-//      $results = Factory::getApplication()->triggerEvent('onContentBeforeDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//      $item->event->beforeDisplayContent = trim(implode("\n", $results));
-//
-//      $results = Factory::getApplication()->triggerEvent('onContentAfterDisplay', array('com_rsgallery2.rsgallery2', &$item, &$item->params));
-//      $item->event->afterDisplayContent = trim(implode("\n", $results));
-//
 
         parent::display($tpl);
     }

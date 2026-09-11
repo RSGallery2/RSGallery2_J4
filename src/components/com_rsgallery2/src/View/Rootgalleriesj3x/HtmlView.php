@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null): void
     {
-        //--- root galleries (j3x standard --------------------------------------------------
+        //--- root galleries view (j3x standard) --------------------------------------------------
 
         $app = Factory::getApplication();
 
@@ -149,26 +149,6 @@ class HtmlView extends BaseHtmlView
 //            Galleryj3xModel::AddLayoutData($this->latestImages);
 //        }
 //        /**/
-
-// on develop show open tasks if existing
-        if (!empty($this->isDevelopSite)) {
-            echo '<span style="color:red">'
-                . 'Tasks: rootgalleriesJ3x view<br>'
-                . '* !!! Menu intro text -> Save gets following lines double !!!<br>'
-                . '* !!! Root gallery shows gallery list as text a) needed ? b) stop after 20 !!!<br>'
-                . '* !!! latest images URLS wrong -> shows wrong image ? should show slide image of gallery ? !!!<br>'
-                . '* !!! root images URLS wrong -> shows wrong image ? should show slide image of gallery ? !!!<br>'
-                . '* User limit selection box -> layout ? Nbr of galleries  -> yes no ?  <br>'
-                . '* Format of date is already in database -> improve ... <br>'
-                . '* Events in general<br>'
-                . '* User count of galleries displayed not working: 0, 1,2,3<br>'
-                //  . '* <br>'
-                //  . '* <br>'
-                //  . '* <br>'
-                //  . '* <br>'
-                //  . '* <br>'
-                . '</span><br><br>';
-        }
 
         parent::display($tpl);
     }

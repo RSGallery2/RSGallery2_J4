@@ -188,25 +188,19 @@ class Galleriesj3xModel extends ListModel
         $galleries = [];
 
         try {
-// Select parent and child galleries
-            $db    = $this->getDatabase();
-            $query = $db->createQuery();
+            $parentGallery = $this->getParentGallery();
 
-            $query
-                ->select('*')
-//->from($db->quoteName('#__rsg2_galleries', 'a'))
-                ->from($db->quoteName('#__rsg2_galleries'))
-//->where('a.id = ' . (int) $gid);
-                ->where('id = ' . (int)$gid, 'OR')
-                ->where('parent_id = ' . (int)$gid);
+            $galleries = $this->getChildGalleriesRecursive($parentGallery->id);
 
-            $db->setQuery($query);
-//$data = $db->loadObjectList();
-            $galleries = $db->loadObjectList();
+            if (!empty($galleries)) {
+                // parent as first element
+                array_unshift($galleries, $parentGallery);
+            } else {
+                $galleries[] = $parentGallery;
+            }
         } catch (\RuntimeException $e) {
             $OutTxt = '';
-            $OutTxt .= 'Galleriesj3xModel: getGalleryAndChilds: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+            $OutTxt .= 'Galleriesj3xModel: getParentAndChildGalleries: ' . $e->getMessage() . '"' . '<br>';
 
             $app = Factory::getApplication();
             $app->enqueueMessage($OutTxt, 'error');
@@ -235,15 +229,35 @@ class Galleriesj3xModel extends ListModel
 
             $query = $db->createQuery();
 
-            $query
-                ->select('*')
-                ->from($db->quoteName('#__rsg2_galleries'))
-                ->where('parent_id = ' . (int)$gid);
+            $this->selectTheRequiredFieldsFromTheTable($query);
+            $this->countImages($query);
+            $this->joinUserRights($query);
+
+            $query->where('parent_id = ' . (int)$gid);
+            $query->where('a.published = 1');
+
+            //--- ordering -------------------------------------------
+
+            // Add the list ordering clause
+            $listOrdering = $this->getState('list.ordering', 'a.lft');
+            $listDirn     = $db->escape($this->getState('list.direction', 'ASC'));
+
+            if ($listOrdering == 'a.access') {
+                $query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
+            } else {
+                $query->order($db->escape($listOrdering) . ' ' . $listDirn);
+            }
+
+            //--- execute query -------------------------------------------------
+
+            // Group by on Galleries for \JOIN with component tables to count items
+            $this->doGroupBy($query);
+
+            //--- assign query -------------------------------------------------
 
             $db->setQuery($query);
-            //$data = $db->loadObjectList();
-            //$galleries = $db->loadObjectList();
-            $childGalleries = $db->loadObject();
+
+            $childGalleries = $db->loadObjectList();
         } catch (\RuntimeException $e) {
             $OutTxt = '';
             $OutTxt .= 'Galleriesj3xModel: getParentGallery: Error executing query: "' . "" . '"' . '<br>';
@@ -261,7 +275,8 @@ class Galleriesj3xModel extends ListModel
      *
      * @return mixed
      *
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     public function getParentGallery()
     {
         $parentGallery = null;
@@ -274,16 +289,34 @@ class Galleriesj3xModel extends ListModel
 
             $query = $db->createQuery();
 
-            $query
-                ->select('*')
-                //->from($db->quoteName('#__rsg2_galleries', 'a'))
-                ->from($db->quoteName('#__rsg2_galleries'))
-                //->where('a.id = ' . (int) $gid);
-                ->where('id = ' . (int)$gid);
+            $this->selectTheRequiredFieldsFromTheTable($query);
+            $this->countImages($query);
+            $this->joinUserRights($query);
+
+            $query->where('a.published = 1');
+            $query->where('a.id = ' . (int)$gid);
+
+            //--- ordering -------------------------------------------
+
+            // Add the list ordering clause
+            $listOrdering = $this->getState('list.ordering', 'a.lft');
+            $listDirn     = $db->escape($this->getState('list.direction', 'ASC'));
+
+            if ($listOrdering == 'a.access') {
+                $query->order('a.access ' . $listDirn . ', a.lft ' . $listDirn);
+            } else {
+                $query->order($db->escape($listOrdering) . ' ' . $listDirn);
+            }
+
+            //--- group for join -------------------------------------------------
+
+            // Group by on Galleries for \JOIN with component tables to count items
+            $this->doGroupBy($query);
+
+            //--- execute query -------------------------------------------------
 
             $db->setQuery($query);
-            //$data = $db->loadObjectList();
-            //$galleries = $db->loadObjectList();
+
             $parentGallery = $db->loadObject();
         } catch (\RuntimeException $e) {
             $OutTxt = '';
@@ -409,6 +442,7 @@ class Galleriesj3xModel extends ListModel
                 ->select('id')
                 ->from($db->quoteName('#__rsg2_images'))
                 ->where($db->quoteName('gallery_id') . '=' . (int)$galleryId)
+                ->where('published = 1')
                 ->setLimit((int)$limit)
                 ->order('RAND()');
 
@@ -680,49 +714,6 @@ class Galleriesj3xModel extends ListModel
     }
 
     /**
-     * Assign slideshow url to gallery data
-     *
-     * @param $gallery
-     *
-     *
-     * @throws \Exception
-     * @since  5.1.0
-     */
-    public function assignSlideshowUrl($gallery)
-    {
-        try {
-            //$gallery->UrlSlideshow = ''; // fall back
-
-            // Link to single gallery in actual menu
-            // /joomla3x/index.php/j3x-galleries-overview/gallery/8
-
-//            $gallery->UrlSlideshow = Route::_(index.php?option=com_rsgallery2 ....
-//                . '/gallery/' . $gallery->id . '/slideshow'
-////                . '&id=' . $image->gallery_id
-////                . '&iid=' . $gallery->id
-////                . '&layout=galleryJ3xAsInline'
-//                ,true,0,true);
-
-            // http://127.0.0.1/joomla4x/index.php?option=com_rsgallery2&view=slideshow&id=2&slides_layout=default&Itemid=130
-
-            $gallery->UrlSlideshow = Route::_(
-                'index.php?option=com_rsgallery2'
-                . '/gallery&id=' . $gallery->id . '/slideshow',
-                true,
-                0,
-                true,
-            );
-        } catch (\RuntimeException $e) {
-            $OutTxt = '';
-            $OutTxt .= 'Galleriesj3xModel: assignSlideshowUrl: Error executing query: "' . "" . '"' . '<br>';
-            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
-
-            $app = Factory::getApplication();
-            $app->enqueueMessage($OutTxt, 'error');
-        }
-    }
-
-    /**
      * Method to get the starting number of items for the data set.
      *
      * @return  integer  The starting number of items available in the data set.
@@ -732,6 +723,151 @@ class Galleriesj3xModel extends ListModel
     public function getStart()
     {
         return $this->getState('list.start');
+    }
+
+    /**
+     * @param $query
+     *
+     *
+     * @since version
+     */
+    public function selectTheRequiredFieldsFromTheTable($query): void
+    {
+// Select the required fields from the table.
+        $query->select(
+            $this->getState(
+            /**/
+                'list.select',
+                'a.id, '
+                . 'a.name, '
+                . 'a.alias, '
+                . 'a.description, '
+                . 'a.thumb_id, '
+
+                . 'a.note, '
+                . 'a.params, '
+                . 'a.published, '
+                . 'a.publish_up,'
+                . 'a.publish_down,'
+
+                . 'a.hits, '
+
+                . 'a.checked_out, '
+                . 'a.checked_out_time, '
+                . 'a.created, '
+                . 'a.created_by, '
+                . 'a.created_by_alias, '
+                . 'a.modified, '
+                . 'a.modified_by, '
+
+                . 'a.parent_id,'
+                . 'a.level, '
+                . 'a.path, '
+                . 'a.lft, '
+                . 'a.rgt,'
+
+                . 'a.approved,'
+                . 'a.asset_id,'
+                . 'a.access',
+            ),
+        );
+        $query->from('#__rsg2_galleries AS a');
+    }
+
+    /**
+     * @param $query
+     *
+     *
+     * @since version
+     */
+    public function countImages($query): void
+    {
+        /* Count child images */
+        $query
+            ->select('COUNT(img.gallery_id) as image_count')
+            ->join(
+                'LEFT',
+                '#__rsg2_images AS img ON img.gallery_id = a.id',
+            );
+    }
+
+    /**
+     * @param $query
+     *
+     *
+     * @since version
+     */
+    public function joinUserRights($query): void
+    {
+// Join over the users for the checked out user.
+        $query
+            ->select('uc.name AS editor')
+            ->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+
+        // Join over the asset groups.
+        $query
+            ->select('ag.title AS access_level')
+            ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+
+        // Join over the users for the author.
+        $query
+            ->select('ua.name AS author_name')
+            ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
+    }
+
+    /**
+     * Group by on Galleries for \JOIN with component tables to count items
+     *
+     * @param $query
+     *
+     *
+     * @since version
+     */
+    public function doGroupBy($query): void
+    {
+        $query->group(
+        /**/
+            'a.id, '
+            . 'a.name, '
+            . 'a.alias, '
+            . 'a.description, '
+            . 'a.thumb_id, '
+
+            . 'a.note, '
+            . 'a.params, '
+            . 'a.published, '
+            . 'a.publish_up,'
+            . 'a.publish_down,'
+
+            . 'a.hits, '
+
+            . 'a.checked_out, '
+            . 'a.checked_out_time, '
+            . 'a.created, '
+            . 'a.created_by, '
+            . 'a.created_by_alias, '
+            . 'a.modified, '
+            . 'a.modified_by, '
+
+            . 'a.parent_id, '
+            . 'a.level, '
+            . 'a.path, '
+            . 'a.lft, '
+            . 'a.rgt, '
+
+            . 'a.approved,'
+            . 'a.asset_id,'
+            . 'a.access, '
+
+            . 'uc.name, '
+            . 'ua.name ',
+        //              . 'a.language, '
+        //          . 'ag.title, '
+        //          . 'l.title, '
+        //          . 'l.image, '
+        //no good           . 'image_count '
+        /**/
+        );
     }
 
     /**
@@ -851,74 +987,20 @@ class Galleriesj3xModel extends ListModel
         $app  = Factory::getApplication();
         $user = $app->getIdentity();
 
-        // Select the required fields from the table.
-        $query->select(
-            $this->getState(
-            /**/
-                'list.select',
-                'a.id, '
-                . 'a.name, '
-                . 'a.alias, '
-                . 'a.description, '
-                . 'a.thumb_id, '
-
-                . 'a.note, '
-                . 'a.params, '
-                . 'a.published, '
-                . 'a.publish_up,'
-                . 'a.publish_down,'
-
-                . 'a.hits, '
-
-                . 'a.checked_out, '
-                . 'a.checked_out_time, '
-                . 'a.created, '
-                . 'a.created_by, '
-                . 'a.created_by_alias, '
-                . 'a.modified, '
-                . 'a.modified_by, '
-
-                . 'a.parent_id,'
-                . 'a.level, '
-                . 'a.path, '
-                . 'a.lft, '
-                . 'a.rgt,'
-
-                . 'a.approved,'
-                . 'a.asset_id,'
-                . 'a.access',
-            ),
-        );
-        $query->from('#__rsg2_galleries AS a');
-
-        /* Count child images */
-        $query
-            ->select('COUNT(img.gallery_id) as image_count')
-            ->join(
-                'LEFT',
-                '#__rsg2_images AS img ON img.gallery_id = a.id',
-            );
+        $this->selectTheRequiredFieldsFromTheTable($query);
+        $this->countImages($query);
 
         //// Join over the language
         //$query->select('l.title AS language_title, l.image AS language_image')
         //  ->join('LEFT', $db->quoteName('#__languages') . ' AS l ON l.lang_code = a.language');
 
-        // Join over the users for the checked out user.
-        $query
-            ->select('uc.name AS editor')
-            ->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+        $this->joinUserRights($query);
 
-        // Join over the asset groups.
-        $query
-            ->select('ag.title AS access_level')
-            ->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
+        // see filter below
+        // $query->where('a.published = 1');
 
-        // Join over the users for the author.
-        $query
-            ->select('ua.name AS author_name')
-            ->join('LEFT', '#__users AS ua ON ua.id = a.created_by');
-
-        $query->where('a.published = 1');
+        // no child galleries
+        $query->where('a.parent_id = 1');
 
 //      // Join over the associations.
 //      $assoc = $this->getAssoc();
@@ -1000,6 +1082,8 @@ class Galleriesj3xModel extends ListModel
          * }
          * /**/
 
+        //--- ordering -------------------------------------------
+
         // Add the list ordering clause
         $listOrdering = $this->getState('list.ordering', 'a.lft');
         $listDirn     = $db->escape($this->getState('list.direction', 'ASC'));
@@ -1010,50 +1094,10 @@ class Galleriesj3xModel extends ListModel
             $query->order($db->escape($listOrdering) . ' ' . $listDirn);
         }
 
+        //--- group for join -------------------------------------------------
+
         // Group by on Galleries for \JOIN with component tables to count items
-        $query->group(
-        /**/
-            'a.id, '
-            . 'a.name, '
-            . 'a.alias, '
-            . 'a.description, '
-            . 'a.thumb_id, '
-
-            . 'a.note, '
-            . 'a.params, '
-            . 'a.published, '
-            . 'a.publish_up,'
-            . 'a.publish_down,'
-
-            . 'a.hits, '
-
-            . 'a.checked_out, '
-            . 'a.checked_out_time, '
-            . 'a.created, '
-            . 'a.created_by, '
-            . 'a.created_by_alias, '
-            . 'a.modified, '
-            . 'a.modified_by, '
-
-            . 'a.parent_id, '
-            . 'a.level, '
-            . 'a.path, '
-            . 'a.lft, '
-            . 'a.rgt, '
-
-            . 'a.approved,'
-            . 'a.asset_id,'
-            . 'a.access, '
-
-            . 'uc.name, '
-            . 'ua.name ',
-        //              . 'a.language, '
-        //          . 'ag.title, '
-        //          . 'l.title, '
-        //          . 'l.image, '
-        //no good           . 'image_count '
-        /**/
-        );
+        $this->doGroupBy($query);
 
         return $query;
     }
@@ -1137,4 +1181,65 @@ class Galleriesj3xModel extends ListModel
 //        return $menuParams;
 //    }
 //
+
+    /**
+     * Assign slideshow url to gallery data
+     *
+     * @param $gallery
+     *
+     *
+     * @throws \Exception
+     * @since  5.1.0
+     */
+    public function assignSlideshowUrl($gallery)
+    {
+        try {
+            /**/
+
+            $gallery->UrlSlideshow = Route::_(
+                'index.php?option=com_rsgallery2'
+                . '&view=slideshowj3x&id=' . $gallery->id,
+            );
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Galleriesj3xModel: assignSlideshowUrl ()' . '<br>';
+            $OutTxt .= 'Error: "' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+    }
+
+    private function getChildGalleriesRecursive($id)
+    {
+        $galleries      = [];
+        $childGalleries = [];
+
+        try {
+            if (!empty($id)) {
+                $galleries = $this->getChildGalleries($id);
+
+                foreach ($galleries as $gallery) {
+                    $actChilds = $this->getChildGalleriesRecursive($gallery->id);
+
+                    if (!empty($actChilds)) {
+                        array_push($childGalleries, $actChilds);
+                    }
+                }
+
+                if (!empty($childGalleries)) {
+                    array_push($childGalleries, $galleries);
+                }
+            }
+        } catch (\RuntimeException $e) {
+            $OutTxt = '';
+            $OutTxt .= 'Galleriesj3xModel: getChildGalleriesRecursive: ' . $e->getMessage() . '"' . '<br>';
+
+            $app = Factory::getApplication();
+            $app->enqueueMessage($OutTxt, 'error');
+        }
+
+        return $galleries;
+    }
+
 } // class

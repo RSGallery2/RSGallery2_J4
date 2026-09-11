@@ -62,16 +62,11 @@ if (!empty($this->isDevelopSite)) {
         . '</span><br><br>';
 }
 
+//--- determine layout -------------------------------------------------
+
 //$displayData['images'] = $this->images;
 //$displayData['pagination'] = $this->pagination;
 //echo $layout->render($displayData);
-
-//if ($this->config->displaySearch) {
-if (true) {
-    $layout = new FileLayout('Search.search');
-    echo $layout->render();
-}
-
 
 $layoutName = $this->getLayout();
 
@@ -82,23 +77,34 @@ if ($layoutName == 'default') {
 
 $layout = new FileLayout($layoutName);
 
-$displayData['parentGallery'] = $this->parentGallery;
-$displayData['parent_id']     = $this->state->get('gallery.id');
-$displayData['galleries']     = $this->items;
-
-
-$displayData['params'] = $this->params->toObject();
+$displayData['galleries'] = $this->items;
+$test                     = $this->params->toObject();
+$displayData['params']    = $this->params->toObject();
 //$displayData['menuParams'] = $this->menuParams;
 $displayData['pagination'] = $this->pagination;
 
 $displayData['isDebugSite']   = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
+
+$displayData['parentGallery'] = $this->parentGallery;
+$displayData['parent_id']     = $this->state->get('gallery.id');
+
 // return;
 
 # ToDo: <h1> header on debug  ? develop ?
 
 ?>
+<style>
+    .rsg2-galleryList-thumb {
+        max-height: 120px;
+        max-width: 120px;
+    }
+
+</style>
+
+<!-- ToDo: is form here needed ? check core ...  -->
+<!-- ToDo: form link ...  -->
 
 <div class="rsg2__form rsg2__images_area">
     <form id="rsg2_gallery__form" action="<?php echo Route::_('index.php?option=com_rsgallery2&view=galleriesj3x'); ?>" method="post"

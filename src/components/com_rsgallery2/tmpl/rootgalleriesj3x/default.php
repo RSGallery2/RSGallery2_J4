@@ -29,6 +29,26 @@ use Joomla\CMS\Router\Route;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('version' => 'auto', 'relative' => true));
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x');
 
+// on develop show open tasks if existing
+if (!empty($this->isDevelopSite)) {
+    echo '<span style="color:red">'
+        . 'Tasks: rootgalleriesJ3x view<br>'
+        . '* !!! Menu intro text -> Save gets following lines double !!!<br>'
+        . '* !!! Root gallery shows gallery list as text a) needed ? b) stop after 20 !!!<br>'
+        . '* !!! latest images URLS wrong -> shows wrong image ? should show slide image of gallery ? !!!<br>'
+        . '* !!! root images URLS wrong -> shows wrong image ? should show slide image of gallery ? !!!<br>'
+        . '* User limit selection box -> layout ? Nbr of galleries  -> yes no ?  <br>'
+        . '* Format of date is already in database -> improve ... <br>'
+        . '* Events in general<br>'
+        . '* User count of galleries displayed not working: 0, 1,2,3<br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        //  . '* <br>'
+        . '</span><br><br>';
+}
+
 //--- determine layout -------------------------------------------------
 
 $layoutName = $this->getLayout();
@@ -49,8 +69,6 @@ $displayData['pagination'] = $this->pagination;
 $displayData['isDebugSite']   = $this->isDebugSite;
 $displayData['isDevelopSite'] = $this->isDevelopSite;
 
-$params = $this->params;
-
 // $displaySearch = $this->menuParams->get('displaySearch')
 $displaySearch = $this->params->get('displaySearch');
 $displaySearch = $this->params->get('displaySearch', false);
@@ -60,8 +78,6 @@ if ($displaySearch) {
 }
 
 $displayLatest = $this->params->get('displayLatest');
-$displayLatest = $this->params->get('displayLatest');
-$displayRandom = $this->params->get('displayRandom');
 $displayRandom = $this->params->get('displayRandom');
 
 ?>

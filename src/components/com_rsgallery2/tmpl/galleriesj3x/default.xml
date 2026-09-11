@@ -11,7 +11,6 @@
         <fieldset name="request"
                   addfieldprefix="Rsgallery2\Component\Rsgallery2\Administrator\Field"
         >
-
             <field
                     name="id"
                     type="RootGallerySelect"
@@ -23,7 +22,6 @@
                     edit="true"
                     clear="true"
             />
-
         </fieldset>
     </fields>
 
@@ -42,7 +40,6 @@
                 <option value="1">JYES</option>
                 <option value="0">JNO</option>
             </field>
-
 
             <field
                     name="galleries_show_description"

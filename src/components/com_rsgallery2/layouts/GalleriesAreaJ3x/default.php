@@ -137,6 +137,11 @@ $galStatus = '';
         //          if ($idx > $this->params->Nr of items ) {
         //              break;
         //          }
+
+        // already contained in parent view
+        if ($gallery->parent_id > 1) {
+            continue;
+        }
         ?>
 
         <div class="rsg_galleryblock system-unpublished">
@@ -223,7 +228,7 @@ function display_subGalleries($subGalleryList, $params)
     <div class="rsg_subgalleries_area">
 
         <span class="rsg_subgalleries_title">
-            <?php echo Text::_('COM_RSGALLERY2_SUBGALLERIES') . ': ' ?><br \>
+            <?php echo Text::_('COM_RSGALLERY2_SUBGALLERIES') . ': ' ?><br\>
         </span>
 
         <div class="rsg_subgalleries">
