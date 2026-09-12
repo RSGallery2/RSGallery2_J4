@@ -579,6 +579,8 @@ class GalleryModel extends ListModel
     {
 //        global $rsgConfig;
 
+        parent::populateState($ordering, $direction);
+
         $app   = Factory::getApplication();
         $input = $app->getInput();
 
@@ -653,7 +655,6 @@ class GalleryModel extends ListModel
 
         $this->setState('layout', $app->getInput()->getString('layout'));
 
-        parent::populateState($ordering, $direction);
     }
 
     /**

@@ -195,6 +195,8 @@ class ImagesrandomModel extends ListModel
      */
     protected function populateState($ordering = 'ordering', $direction = 'ASC')
     {
+        parent::populateState($ordering, $direction);
+
         $app = Factory::getApplication();
 
         //$this->setState('foo.id', $app->input->getInt('id'));

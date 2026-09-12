@@ -606,6 +606,8 @@ class ImagesModel extends ListModel
      */
     protected function populateState($ordering = 'ordering', $direction = 'ASC')
     {
+        parent::populateState($ordering, $direction);
+
         $app = Factory::getApplication();
 
         // ToDo: ? move to view html and model (plugin?)

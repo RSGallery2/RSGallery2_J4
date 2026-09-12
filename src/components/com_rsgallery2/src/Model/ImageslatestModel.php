@@ -197,7 +197,6 @@ class ImageslatestModel extends ListModel
     {
         $app = Factory::getApplication();
 
-        //$this->setState('foo.id', $app->input->getInt('id'));
         $this->setState('params', $app->getParams());
 
         // Adjust the context to support modal layouts.

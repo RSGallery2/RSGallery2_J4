@@ -615,6 +615,9 @@ class GalleriesModel extends ListModel
     {
         $app = Factory::getApplication();
 
+        // List state information.
+        parent::populateState($ordering, $direction);
+
 //        $layoutParams = $this->getlayoutParams ();
 
         //$forcedLanguage = $app->input->get('forcedLanguage', '', 'cmd');
@@ -661,9 +664,6 @@ class GalleriesModel extends ListModel
 
         $limitstart = $app->getInput()->get('limitstart', 0, 'uint');
         $this->setState('list.start', $limitstart);
-
-        // List state information.
-        parent::populateState($ordering, $direction);
 
         //// Force a language.
         //if (!empty($forcedLanguage))

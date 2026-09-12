@@ -47,75 +47,84 @@ class SlideshowModel extends GalleryModel
  *
  * @param   string                    $id         A prefix for the store id.
  *
+ * @param array $config An optional associative array of configuration settings.
+ * @param MVCFactoryInterface|null $factory
+ * @param string $ordering An optional ordering field.
+ * @param string $direction An optional direction (asc|desc).
+ *
+ * @param string $id A prefix for the store id.
+ *
+ * @return  void
+ *
+ * @return  string  A store id.
+ *
  * @return  void
  *
  * @return  string  A store id.
  *
  * @throws \Exception
+ * @throws \Exception
  * @var    string
  * @since   3.1
  *
-public $_context = 'com_rsgallery2.slideshowJ3x';
-
-/**
+* public $_context = 'com_rsgallery2.slideshowJ3x';
+ *
+* /**
  * The category context (allows other extensions to derived from this model).
  *
  * @var        string
  *
-protected $_extension = 'com_rsgallery2';
-
-//    protected $layoutParams = null; // col/row count
-
-//
-//    public function getlayoutParams ()
-//    {
-//        if ($this->layoutParams == null) {
-//            $this->layoutParams = $this->CascadedLayoutParameter ();
-//        }
-//        return $this->layoutParams;
-//    }
-//
-//
-
-/**
+* protected $_extension = 'com_rsgallery2';
+ *
+* //    protected $layoutParams = null; // col/row count
+ *
+* //
+* //    public function getlayoutParams ()
+* //    {
+* //        if ($this->layoutParams == null) {
+* //            $this->layoutParams = $this->CascadedLayoutParameter ();
+* //        }
+* //        return $this->layoutParams;
+* //    }
+* //
+* //
+ *
+* /**
  * Constructor.
  *
- * @param array $config An optional associative array of configuration settings.
- * @param MVCFactoryInterface|null $factory
- * @throws \Exception
  * @since   1.6
  *
-public function __construct($config = array(), MVCFactoryInterface $factory = null)
-{
-if (empty($config['filter_fields'])) {
-$config['filter_fields'] = array(
-'id', 'a.id',
-'title', 'a.title',
-'alias', 'a.alias',
-'checked_out', 'a.checked_out',
-'checked_out_time', 'a.checked_out_time',
-'catid', 'a.catid', 'category_title',
-'state', 'a.state',
-'access', 'a.access', 'access_level',
-'created', 'a.created',
-'created_by', 'a.created_by',
-'ordering', 'a.ordering',
-//                'featured', 'a.featured',
-//                'language', 'a.language',
-'hits', 'a.hits',
-'publish_up', 'a.publish_up',
-'publish_down', 'a.publish_down',
-//                'images', 'a.images',
-//                'urls', 'a.urls',
-'filter_tag',
-);
-}
-
-parent::__construct($config, $factory);
-}
-
-
-/**
+* public function __construct($config = array(), MVCFactoryInterface $factory = null)
+* {
+* if (empty($config['filter_fields'])) {
+* $config['filter_fields'] = array(
+* 'id', 'a.id',
+* 'title', 'a.title',
+* 'alias', 'a.alias',
+* 'checked_out', 'a.checked_out',
+* 'checked_out_time', 'a.checked_out_time',
+* 'catid', 'a.catid', 'category_title',
+* 'state', 'a.state',
+* 'access', 'a.access', 'access_level',
+* 'created', 'a.created',
+* 'created_by', 'a.created_by',
+* 'ordering', 'a.ordering',
+* //                'featured', 'a.featured',
+* //                'language', 'a.language',
+* 'hits', 'a.hits',
+* 'publish_up', 'a.publish_up',
+* 'publish_down', 'a.publish_down',
+* //                'images', 'a.images',
+* //                'urls', 'a.urls',
+* 'filter_tag',
+* );
+* }
+ *
+* parent::__construct($config, $factory);
+* }
+ *
+*
+* /**
  * Method to auto-populate the model state.
  *
  * This method should only be called once per instantiation and is designed
@@ -124,127 +133,119 @@ parent::__construct($config, $factory);
  *
  * Note. Calling getState in this method will result in recursion.
  *
- * @param string $ordering An optional ordering field.
- * @param string $direction An optional direction (asc|desc).
- *
- * @return  void
- *
  * @since   3.0.1
  *
-protected function populateState($ordering = 'ordering', $direction = 'ASC')
-{
-global $rsgConfig;
-
-$app = Factory::getApplication();
-
-// ToDo: move to view html and model (plugion?)
-// gallery id
-$gid = $app->input->get('id', '', 'INT');
-$this->setState('images.galleryId', $gid);
-// ??? See above
-$this->setState('gallery.id', $app->input->getInt('id'));
-$this->setState('params', $app->getParams());
-
-// Adjust the context to support modal layouts.
-if ($layout = $app->input->get('layout')) {
-$this->context .= '.' . $layout;
-}
-
-//        $layoutParams = $this->getlayoutParams ();
-
-//        // List state information
-//        // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
-//        // $this->setState('list.limit', $value);
-//        $this->setState('list.limit', $layoutParams->limit);
-//
-//        $value = $app->input->get('limitstart', 0, 'uint');
-//        $this->setState('list.start', $value);
-//
-//        $value = $app->input->get('filter_tag', 0, 'uint');
-//        $this->setState('filter.tag', $value);
-//
-$orderCol = $app->input->get('filter_order', 'a.ordering');
-
-if (!in_array($orderCol, $this->filter_fields)) {
-$orderCol = 'a.ordering';
-}
-
-$this->setState('list.ordering', $orderCol);
-
-$listOrder = $app->input->get('filter_order_Dir', 'ASC');
-
-if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', ''))) {
-$listOrder = 'ASC';
-}
-
-$this->setState('list.direction', $listOrder);
-
-$params = $app->getParams();
-$this->setState('params', $params);
-// $user = Factory::getContainer()->get(UserFactoryInterface::class);
-        $user = $app->getIdentity();
-
-if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
-// Filter on published for those who do not have edit or edit.state rights.
-$this->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
-}
-
-//        $this->setState('filter.language', Multilanguage::isEnabled());
-
-// toDo: ??? when is it needed
-// Process show_noauth parameter
-if ((!$params->get('show_noauth')) || (!ComponentHelper::getParams('com_content')->get('show_noauth'))) {
-$this->setState('filter.access', true);
-} else {
-$this->setState('filter.access', false);
-}
-
-$this->setState('layout', $app->input->getString('layout'));
-
-//--- RSG2 ---------------------------------
-
-$this->setState('rsgallery2.id', $app->input->getInt('id'));
-}
-
-/**
+ * protected function populateState($ordering = 'ordering', $direction = 'ASC')
+ * {
+ * global $rsgConfig;
+ *    parent::populateState($ordering, $direction);
+ *
+ * $app = Factory::getApplication();
+ *
+ * // ToDo: move to view html and model (plugion?)
+ * // gallery id
+ * $gid = $app->input->get('id', '', 'INT');
+* $this->setState('images.galleryId', $gid);
+* // ??? See above
+* $this->setState('gallery.id', $app->input->getInt('id'));
+* $this->setState('params', $app->getParams());
+ *
+* // Adjust the context to support modal layouts.
+* if ($layout = $app->input->get('layout')) {
+* $this->context .= '.' . $layout;
+* }
+ *
+* //        $layoutParams = $this->getlayoutParams ();
+ *
+* //        // List state information
+* //        // $value = $app->input->get('limit', $app->get('list_limit', ), 'uint');
+* //        // $this->setState('list.limit', $value);
+* //        $this->setState('list.limit', $layoutParams->limit);
+* //
+* //        $value = $app->input->get('limitstart', 0, 'uint');
+* //        $this->setState('list.start', $value);
+* //
+* //        $value = $app->input->get('filter_tag', 0, 'uint');
+* //        $this->setState('filter.tag', $value);
+* //
+* $orderCol = $app->input->get('filter_order', 'a.ordering');
+ *
+* if (!in_array($orderCol, $this->filter_fields)) {
+* $orderCol = 'a.ordering';
+* }
+ *
+* $this->setState('list.ordering', $orderCol);
+ *
+* $listOrder = $app->input->get('filter_order_Dir', 'ASC');
+ *
+* if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', ''))) {
+* $listOrder = 'ASC';
+* }
+ *
+* $this->setState('list.direction', $listOrder);
+ *
+* $params = $app->getParams();
+* $this->setState('params', $params);
+* // $user = Factory::getContainer()->get(UserFactoryInterface::class);
+        * $user = $app->getIdentity();
+ *
+* if ((!$user->authorise('core.edit.state', 'com_content')) && (!$user->authorise('core.edit', 'com_content'))) {
+* // Filter on published for those who do not have edit or edit.state rights.
+* $this->setState('filter.condition', ContentComponent::CONDITION_PUBLISHED);
+* }
+ *
+* //        $this->setState('filter.language', Multilanguage::isEnabled());
+ *
+* // toDo: ??? when is it needed
+* // Process show_noauth parameter
+* if ((!$params->get('show_noauth')) || (!ComponentHelper::getParams('com_content')->get('show_noauth'))) {
+* $this->setState('filter.access', true);
+* } else {
+* $this->setState('filter.access', false);
+* }
+ *
+* $this->setState('layout', $app->input->getString('layout'));
+ *
+* //--- RSG2 ---------------------------------
+ *
+* $this->setState('rsgallery2.id', $app->input->getInt('id'));
+* }
+ *
+* /**
  * Method to get a store id based on model configuration state.
  *
  * This is necessary because the model is used by the component and
  * different modules that might need different sets of data or different
  * ordering requirements.
  *
- * @param string $id A prefix for the store id.
- *
- * @return  string  A store id.
- *
  * @since   1.6
  *
-protected function getStoreId($id = '')
-{
-// Compile the store id.
-$id .= ':' . serialize($this->getState('filter.condition'));
-$id .= ':' . $this->getState('filter.access');
-//        $id .= ':' . $this->getState('filter.featured');
-$id .= ':' . serialize($this->getState('filter.article_id'));
-$id .= ':' . $this->getState('filter.article_id.include');
-$id .= ':' . serialize($this->getState('filter.category_id'));
-$id .= ':' . $this->getState('filter.category_id.include');
-$id .= ':' . serialize($this->getState('filter.author_id'));
-$id .= ':' . $this->getState('filter.author_id.include');
-$id .= ':' . serialize($this->getState('filter.author_alias'));
-$id .= ':' . $this->getState('filter.author_alias.include');
-$id .= ':' . $this->getState('filter.date_filtering');
-$id .= ':' . $this->getState('filter.date_field');
-$id .= ':' . $this->getState('filter.start_date_range');
-$id .= ':' . $this->getState('filter.end_date_range');
-$id .= ':' . $this->getState('filter.relative_date');
-$id .= ':' . serialize($this->getState('filter.tag'));
-
-return parent::getStoreId($id);
-}
-
-
-/**
+* protected function getStoreId($id = '')
+* {
+* // Compile the store id.
+* $id .= ':' . serialize($this->getState('filter.condition'));
+* $id .= ':' . $this->getState('filter.access');
+* //        $id .= ':' . $this->getState('filter.featured');
+* $id .= ':' . serialize($this->getState('filter.article_id'));
+* $id .= ':' . $this->getState('filter.article_id.include');
+* $id .= ':' . serialize($this->getState('filter.category_id'));
+* $id .= ':' . $this->getState('filter.category_id.include');
+* $id .= ':' . serialize($this->getState('filter.author_id'));
+* $id .= ':' . $this->getState('filter.author_id.include');
+* $id .= ':' . serialize($this->getState('filter.author_alias'));
+* $id .= ':' . $this->getState('filter.author_alias.include');
+* $id .= ':' . $this->getState('filter.date_filtering');
+* $id .= ':' . $this->getState('filter.date_field');
+* $id .= ':' . $this->getState('filter.start_date_range');
+* $id .= ':' . $this->getState('filter.end_date_range');
+* $id .= ':' . $this->getState('filter.relative_date');
+* $id .= ':' . serialize($this->getState('filter.tag'));
+ *
+* return parent::getStoreId($id);
+* }
+ *
+*
+* /**
  * @var string item
  */
 /**

@@ -926,15 +926,14 @@ class Galleriesj3xModel extends ListModel
         // ToDo: needs a function as config allows several sources
         // max_columns_in_galleries_view, max_rows_in_galleries_view
 
-        $userLimit = $app->getInput()->get('[galleries_count', $configLimit, 'uint');
-        //$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->get('list_limit'), 'uint');
-        $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $configLimit, 'uint');
+        parent::populateState($ordering, $direction);
+
+        // Limit number of galleries shown by menu parameter
+        $limit = $params->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
         $this->setState('list.limit', $limit);
 
         $limitstart = $app->getInput()->get('limitstart', 0, 'uint');
         $this->setState('list.start', $limitstart);
-
-        parent::populateState($ordering, $direction);
 
         //// Force a language.
         //if (!empty($forcedLanguage))
