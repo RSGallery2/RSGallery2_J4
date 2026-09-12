@@ -32,6 +32,13 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\ImagePathsModel;
  */
 class SlideshowJ3xModel extends Galleryj3xModel
 {
+    protected function populateState($ordering = 'ordering', $direction = 'ASC') {
+        parent::populateState($ordering, $direction);
+
+        // show all images
+        $this->setState('list.limit', 99999);
+    }
+
 }
 
 //

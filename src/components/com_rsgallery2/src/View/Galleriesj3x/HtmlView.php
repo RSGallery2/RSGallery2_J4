@@ -106,15 +106,10 @@ class HtmlView extends BaseHtmlView
         /** @var Galleriesj3xModel $model */
         $model = $this->getModel();
 
-        $state =
         $this->state = $model->getState();
 
         $params =
         $this->params = $this->state->get('params');
-
-        // Limit number of galleries shown by menu parameter
-        $limit = $params->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
-        $state->set('list.limit', $limit);
 
         //$this->pagination = $model->getPagination();
         $this->pagination = null;

@@ -109,7 +109,6 @@ class HtmlView extends BaseHtmlView
 
         // Get some data from the models
         $this->state = $model->getState();
-        $this->state->set('list.limit', 999);
 
         $this->items      = $model->getItems();
         $this->pagination = $model->getPagination();

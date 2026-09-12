@@ -888,6 +888,8 @@ class Galleriesj3xModel extends ListModel
      */
     protected function populateState($ordering = 'a.lft', $direction = 'ASC')
     {
+        parent::populateState($ordering, $direction);
+
         $app = Factory::getApplication();
 
         $this->setState('gallery.id', $app->getInput()->getInt('id'));
@@ -925,8 +927,6 @@ class Galleriesj3xModel extends ListModel
         // J4x: use cols * Rows
         // ToDo: needs a function as config allows several sources
         // max_columns_in_galleries_view, max_rows_in_galleries_view
-
-        parent::populateState($ordering, $direction);
 
         // Limit number of galleries shown by menu parameter
         $limit = $params->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
