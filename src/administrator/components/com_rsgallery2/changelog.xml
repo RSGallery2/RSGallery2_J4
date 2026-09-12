@@ -10,6 +10,7 @@
 		</change>
 		<fix>
 			<item>Fixed: Display of root/parent galleries list: Not reachable images </item>
+			<item>Fixed: Display of root/parent galleries list: pagination was ignored </item>
 			<item>Fixed: Display of parent/child galleries list: Now using recursive fetch of child galleries</item>
 		</fix>
 		<note>
