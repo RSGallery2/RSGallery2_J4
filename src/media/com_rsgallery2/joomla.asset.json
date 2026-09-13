@@ -234,6 +234,12 @@
       "uri": "com_rsgallery2/site/images.css"
     },
     {
+      "name": "com_rsgallery2.site.galleries",
+      "description": "Site styling.",
+      "type": "style",
+      "uri": "com_rsgallery2/site/galleries.css"
+    },
+    {
       "name": "com_rsgallery2.site.J3x",
       "description": "Site styling.",
       "type": "style",
@@ -256,6 +262,15 @@
       "description": "Site styling.",
       "type": "style",
       "uri": "com_rsgallery2/site/j3x/rsgallery.css"
+    },
+    {
+      "name": "com_rsgallery2.site.galleriesJ3x",
+      "type": "preset",
+      "dependencies": [
+        "com_rsgallery2.site.galleries#style",
+        "com_rsgallery2.site.J3x#style",
+        "com_rsgallery2.site.rsgallery2J3x#style"
+      ]
     },
     {
       "name": "com_rsgallery2.site.galleryJ3x",

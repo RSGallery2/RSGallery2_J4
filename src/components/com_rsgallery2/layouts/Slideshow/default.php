@@ -177,7 +177,7 @@ if (!empty($images)) {
                         <img class="d-block "
                              src="<?php echo $image->UrlDisplayFile ?>"
                              alt="<?php echo $image->name; ?>"
-                        >
+                        />
                     </div>
                 </div>
 

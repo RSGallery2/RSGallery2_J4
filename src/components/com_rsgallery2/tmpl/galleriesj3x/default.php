@@ -28,6 +28,7 @@ use Joomla\CMS\Router\Route;
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/j3x.css', array('version' => 'auto', 'relative' => true));
 //HTMLHelper::_('stylesheet', 'com_rsgallery2/site/j3x/rsgallery.css', array('version' => 'auto', 'relative' => true));
 $this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleryJ3x');
+$this->document->getWebAssetManager()->usePreset('com_rsgallery2.site.galleriesJ3x');
 
 
 //if ($this->item->params->get('show_name')) {

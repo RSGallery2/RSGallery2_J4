@@ -7,6 +7,7 @@
 		<date>2026-09-??</date>
 		<change>
 			<item>Improved: Upload limits are now shown as table to better distinguish source of limit</item>
+			<item>Improved: Display of galleries (root/parent/child): sub galleries now in one row with parent</item>
 		</change>
 		<fix>
 			<item>Fixed: Display of root/parent galleries list: Not reachable images </item>

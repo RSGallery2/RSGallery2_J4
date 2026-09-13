@@ -142,7 +142,9 @@ if ($cols < 2) {
                            <div class="shadow-box">
                                 <div class="img-shadow">
                                     <a href="<?php echo $image->UrlImageAsInline ?>">
-                                        <img src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>">
+                                        <img class=""
+                                            src="<?php echo $image->UrlThumbFile ?>" alt="<?php echo $image->name; ?>"
+                                        />
                                     </a>
                                 </div>
                             </div>

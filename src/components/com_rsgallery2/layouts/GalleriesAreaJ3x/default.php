@@ -86,6 +86,7 @@ if (!isset($galleries)) {
     $galleries = [];
 }
 
+// ToDo: always assing (all) in htmlview.php
 $noImageUrl = URI::root() . '/media/com_rsgallery2/images/GalleryZeroImages.svg';
 $missingUrl = URI::root() . '/media/com_rsgallery2/images/ImageQuestionmark.svg';
 
@@ -118,7 +119,7 @@ $galStatus = '';
 <?php endif; ?>
 
 
-<div id="rsg2_gallery" class="rsg2">
+<div id="rsg2_gallery" class="rsg_galleries_area">
 
     <?php if (!empty($isDebugSite)) : ?>
         <h7>>>> menu intro start</h7>
@@ -144,17 +145,18 @@ $galStatus = '';
         }
         ?>
 
-        <div class="rsg_galleryblock system-unpublished">
-            <div class="rsg_galleryblock_first_gallery ">
+        <div class="rsg_galleries_gallery_row system-unpublished">
+            <div class="rsg_galleries_area_parent ">
                 <!--            <div class="rsg2-galleryList-status">--><?php //echo $galStatus ?><!--</div>-->
                 <div class="rsg2-galleryList-thumb-box">
-                <span class="img-shadow">
-                    <a href="<?php echo $gallery->UrlGallery ?>">
-                        <img class="rsg2-galleryList-thumb"
-                             src="<?php echo $gallery->UrlThumbFile ?>"
-                             alt="<?php echo $gallery->name ?>">
-                    </a>
-                </span>
+                    <span class="img-shadow">
+                        <a href="<?php echo $gallery->UrlGallery ?>">
+                            <img class="rsg2-galleryList-thumb"
+                                 src="<?php echo $gallery->UrlThumbFile ?>"
+                                 alt="<?php echo $gallery->name ?>"
+                            />
+                        </a>
+                    </span>
                 </div>
 
                 <div class="rsg2-galleryList-text">
@@ -225,17 +227,17 @@ $galStatus = '';
 function display_subGalleries($subGalleryList, $params)
 {
     ?>
-    <div class="rsg_subgalleries_area">
+    <div class="rsg_galleries_subgalleries_row">
 
         <span class="rsg_subgalleries_title">
             <?php echo Text::_('COM_RSGALLERY2_SUBGALLERIES') . ': ' ?><br\>
         </span>
 
-        <div class="rsg_subgalleries">
+        <?php foreach ($subGalleryList as $subIdx => $subGallery) : ?>
 
-            <?php foreach ($subGalleryList as $subIdx => $subGallery) : ?>
+            <div class="rsg_galleries_area_child">
 
-                <!--            <div class="rsg2-galleryList-status">--><?php //echo $galStatus ?><!--</div>-->
+        <!--            <div class="rsg2-galleryList-status">--><?php //echo $galStatus ?><!--</div>-->
                 <div class="rsg2-galleryList-thumb-box">
                     <div>
                         <?php if ($params->galleries_show_title) : ?>
@@ -247,7 +249,8 @@ function display_subGalleries($subGalleryList, $params)
                         <a href="<?php echo $subGallery->UrlGallery ?>">
                             <img class="rsg2-galleryList-thumb"
                                  src="<?php echo $subGallery->UrlThumbFile ?>"
-                                 alt="<?php echo $subGallery->name ?>">
+                                 alt="<?php echo $subGallery->name ?>"
+                            />
                         </a>
                     </span>
                 </div>
@@ -293,9 +296,9 @@ function display_subGalleries($subGalleryList, $params)
                 }
                 ?>
 
-            <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
 
-        </div>
     </div>
 
     <?php

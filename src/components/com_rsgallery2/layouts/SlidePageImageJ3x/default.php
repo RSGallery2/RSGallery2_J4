@@ -107,7 +107,8 @@ if (!empty($image->isHasNoImages)) {
                         <img class="rsg2-displayImage"
                              src="<?php echo $image->UrlDisplayFile; ?>"
                              alt="<?php echo $image->name; ?>"
-                             title="<?php echo $image->title; ?>">
+                             title="<?php echo $image->title; ?>"
+                        />
                     </a>
                 </div>
             </td>

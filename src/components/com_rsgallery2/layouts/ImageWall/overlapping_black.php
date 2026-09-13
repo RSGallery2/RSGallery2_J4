@@ -100,7 +100,7 @@ if (!empty($images)) {
 
             <img class="overlapping-img"
                  src="<?php echo $image->UrlDisplayFile ?>" alt="<?php echo $image->name; ?>"
-            >
+            />
 
         <?php endforeach; ?>
 
