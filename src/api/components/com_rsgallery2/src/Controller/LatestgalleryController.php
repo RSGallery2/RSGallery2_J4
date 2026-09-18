@@ -44,7 +44,7 @@ class LatestgalleryController extends ApiController
      *
      * @since  5.0.10
 	 */
-    /* <br /> error: use following to create an error with prepend error message
+    /* <br /> error: use following to create an error with prepended error message
     public function displayItem(int|null $id = null)
     /**/
     public function displayItem($id = null)

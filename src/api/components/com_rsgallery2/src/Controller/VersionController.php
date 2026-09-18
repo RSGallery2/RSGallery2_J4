@@ -14,7 +14,6 @@ use Joomla\CMS\Access\Exception\NotAllowed;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\ApiController;
 use Joomla\String\Inflector;
-use Rsgallery2\Component\Rsgallery2\Api\Model\ConfigModel;
 use Rsgallery2\Component\Rsgallery2\Api\Model\VersionModel;
 use Rsgallery2\Component\Rsgallery2\Api\View\Version\JsonapiView;
 use Tobscure\JsonApi\Exception\InvalidParameterException;
@@ -50,13 +49,13 @@ class VersionController extends ApiController
      * Generic method to prepare the view
      *
      * @param $cachable
-     * @param $urlParams
+     * @param $urlparams
      *
      * @return VersionController The prepared view
      *
      * @since  5.0.10
      */
-    public function display($cachable = false, $urlParams = [])
+    public function display($cachable = false, $urlparams = []) : self
     {
         $viewType   = $this->app->getDocument()->getType();
         $viewName   = $this->input->get('view', $this->default_view);
@@ -114,7 +113,7 @@ class VersionController extends ApiController
 
 		if (empty($data))
 		{
-			throw new InvalidParameterException(Text::_('No parameter given for patch config'), 403);        //	Text::sprintf('Missing required parameter(s): %s', implode(' & ', $missingParameters))
+			throw new InvalidParameterException(Text::_('No parameter given for patch config'), 403);        //	Text::sprintf("Missing required parameter(s): %s", implode(' & ', $missingParameters))
 		}
 
 		//--- Create the model -----------------------------------------------------------------
