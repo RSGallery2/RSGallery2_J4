@@ -370,7 +370,7 @@ class Rsg2_galleryHelper implements DatabaseAwareInterface
 // <div id="mein-modul-wrapper">
 //    <ul id="module-content-container">
 //        <!-- Initiale Items hier laden -->
-//        <?php echo MeinModulHelper::getItemsAjax(); ?>
+//        < ? php echo MeinModulHelper::getItemsAjax(); ? >
 //    </ul>
 //
 //    <div class="ajax-pagination">
