@@ -6,24 +6,47 @@ RSGallery2 is one of several gallery extensions/components for the well known CM
 
 ## About RSGallery2
 
-RSGallery2 is around since the Mambo days (2003) and is originally developed by Ronald Smit. Since then RSGallery2 has
-evolved with the Joomla! content management into what it is nowadays.
+RSGallery2 is around since the Mambo days (2003) and is originally developed by Ronald Smit. RSGallery2 is around since the Mambo days (2003) and is originally developed by Ronald Smit. Since then, RSGallery2 has continued to evolve and adapt to Joomla! versions.
 
 RSGallery2 is released by the GPL license and will be **free to use** (as in free beer).
 
-## **RSG2 restart for Joomla! 4.x , now for Joomla5x only**
+## **RSG2 restart for Joomla! 4.x, now for Joomla5x only**
 
-This version is developed from scratch. The jump from J3.x to J4x needed to get rid of all the J1.5 code and template
-constructs still around in the version for J3x.
+This version is developed from scratch. The jump from J3.x to J4x needed to get rid of all the J1.5 code and template constructs still around in the version for J3x.
 
 Actual state:
+* Version for J4 is complete (see features below)
+* Version for J5 is complete (see features below)  
+  minor code fixed and features may still be be developed
 
-* J3 files will be used in backend
-* Backend structure ready (some features are missing)
+## Features
+The component and several plugins / modules feature following functions
+* Gallery view with sub galleries
+* User galleries on front end
+* Slideshow(s)
+* Latest images
+* Several additional modules and plugins
+* ...
 
-Next steps:
+## Downloads
+First the component itself is needed. You will want to download the "RSGallery2_Component". The modules and plugins are optional. Please check out the various modules and plugins
 
-* J3x Legacy on site: gallery display (root gallery, Menu, latest , ..., ) like in J3x Version
+The downloads can be found here on github under "releases" in every project
+
+
+## Code repository for J6
+
+Since 2026.10.29 the new code is developed in a separate repository [**RSGallery2_J6**](https://github.com/RSGallery2/RSGallery2_J6) here on github. Please check there for code, issues and releases
+
+That repository will be used to restart the code from scratch 
+an is in development
+
+
+
+
+
+
+
 
 ## **Upgrade from J3x RSG2 version**
 
@@ -56,47 +79,62 @@ beginning with the gallery ID and then each image destination resolution has its
 
 more will follow
 
-### Install instruction to test the backend
+## Documentation
 
-1. Copy project from github. Github->Code->Download->Zip
-2. Extract zip
-3. Copy following files to root of project (-> folder RSGallery2_J4-master)
+First partsof the documentation (still a bit raw) can be found at http://rsgallery2.org/index.php/documentation
+The menu "Documentation" may be used to reduce the information to one section of the documentation
 
-- administrator\components\com_rsgallery2\rsgallery2.xml
-- administrator\components\com_rsgallery2\install_rsg2.php
-- administrator\components\com_rsgallery2\changelog.xml
+## Site: Gallery view
 
-4. Zip the **contents** of folder RSGallery2_J4-master\
-5. Install in Joomla 4x (beta or nightly build)
-
---------------------------------------------------------------------------------
-
-## **This software is in middle development**
-
-State:
-
-- Gallery can be created and edited
-- Images can be uploaded to gallery
-- Image can be edited
-
-Otherwise, the software is **not ready** to be used yet
-
-Missing:
-
-- Site:Menu links
-- Site:Gallery thumb display
-- Site:Gallery images display
-- Site:Slideshow
-
---------------------------------------------------------------------------------
-
-## Anyone wants to help ?
-
-Consider supporting the project
-
-* developing with the team
-* language
-
-Please mail to team2@tomfinnern.de
+![lovelocksgallery 01](https://github.com/RSGallery2/RSGallery2_Project/blob/master/Documentation/J!4x/images4Doc/SiteGalleryView.png/?raw=true)
 
 
+## Backend: Control Panel
+
+![rsgallery2controlpanel](https://github.com/RSGallery2/RSGallery2_Project/blob/master/Documentation/J!4x/images4Doc/Control_Panel.png?raw=true)
+
+
+## Backend: Maintenance
+
+![rsgallery2maintenance 02](https://github.com/RSGallery2/RSGallery2_Project/blob/master/Documentation/J!4x/images4Doc/maintenance_view.png?raw=true)
+
+## Backend: Gallery list
+
+![manageGalleries](https://github.com/RSGallery2/RSGallery2_Project/blob/master/Documentation/J!4x/images4Doc/GalleryList.png?raw=true)
+
+## Backend: Image list
+
+![manageImages](https://github.com/RSGallery2/RSGallery2_Project/blob/master/Documentation/J!4x/images4Doc/imageList.png?raw=true)
+
+## Homepage
+
+http://www.rsgallery2.org/
+
+## Forum
+
+There was a lot more garbage the conten. So it is closed.
+
+## History
+Incomplete (Gathered or imagined by me, Thomas Finnern)
+
+The project started in the mambo days and got really big in J!1.5. Due to reasons unknown the access to the site www.rsgallery2.net got lost and it was not accessible for some time. Mirjam and "locutusweb" arranged for a restart on rsgallery2.nl but the connection to the former developers and their interest was gone.
+
+Mirjam got the version running under J!2.5 and did a great Job supporting user on the forum. While starting to upgrade for J!3x she got a baby and does only user maintenance now. I finished her task. (First rsgallery2 version for J!3.x 16.04.2015)
+
+In Oct. 2016 the forum was moved to forum.rsgallery2.org and a the web page rsgallery.org was created.
+It is planned that from January 2018 on the backend runs completely on ¨new¨ software and is faster.
+
+...   To be continued ;-)
+
+
+# Help is welcome
+
+If you like the project and want to give something back, please help out other users in the forums and share your code.
+RSGallery2 is a project run by volunteers. People who just love Joomla! and this gallery component. So RSGallery2 needs you!
+How? 
+* By reporting bugs and problems in the [issues j4x/j5x](https://github.com/RSGallery2/RSGallery2_J4/issues)
+* By submitting pullrequest for bugs, changes or new code 
+* By writing documentation ... 
+
+Simply send an email to team2@tomfinnern.de, and you will become a member of the RSGallery2 team. 
+   ==> team2 at rsgallery2.org (correct address to match ...)
