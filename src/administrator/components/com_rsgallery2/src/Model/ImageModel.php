@@ -1658,7 +1658,7 @@ class ImageModel extends AdminModel
 
     /**
      * Extracts exif data from given file and returns
-     * [filename => exif datta array] construct
+     * [filename => exif data array] construct
      *
      * @param $filename
      *

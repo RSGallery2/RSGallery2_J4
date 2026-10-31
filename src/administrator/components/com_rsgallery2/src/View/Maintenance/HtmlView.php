@@ -10,7 +10,6 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\View\Maintenance;
 
-use Finnern\Component\Lang4dev\Administrator\Helper\langFileNamesSet;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\Helpers\Sidebar;
@@ -42,7 +41,9 @@ class HtmlView extends BaseHtmlView
      * The sidebar markup
      *
      * @var  string
-     */
+     *
+     * @since 5.1.0
+    */
     protected $sidebar;
 
     protected $buttons = [];
@@ -171,7 +172,7 @@ class HtmlView extends BaseHtmlView
                         if (!empty($pathFileNames)) {
                             //--- extract exif data -----------------------------
 
-                            $imgModel                 = new ImageModel();
+                            $imgModel = new ImageModel();
                             // $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
                             $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($pathFileNames);
 
