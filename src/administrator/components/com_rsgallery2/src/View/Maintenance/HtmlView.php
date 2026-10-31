@@ -161,18 +161,19 @@ class HtmlView extends BaseHtmlView
                     //--- collect files exif data --------------------------------
 
                     // selections
-                    if (!empty($cids)) {
+                    if (!empty($inGalleryIds)) {
                         // create absolute paths (ToDo: improve for galleries ...
                         $pathFileNames = $this->filenamesByGalIdAndImgName($inGalleryIds, $inFileNames);
                         // select chosen files
-                        $exifFileNames = $this->selectedFileNames($cids, $pathFileNames);
+//                        $exifFileNames = $this->selectedFileNames($inGalleryIds, $pathFileNames);
 
-                        if (!empty($exifFileNames)) {
+//                        if (!empty($exifFileNames)) {
+                        if (!empty($pathFileNames)) {
                             //--- extract exif data -----------------------------
 
-                            $imgModel                 = new ImageModel(
-                            );
-                            $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
+                            $imgModel                 = new ImageModel();
+                            // $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
+                            $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($pathFileNames);
 
                             //--- match exif names with enabled / supported --------------------------------
 
@@ -358,7 +359,8 @@ class HtmlView extends BaseHtmlView
                 $fileNames [] = $imageOrFileName;
             } else {
                 // ToDo:
-                $fileNames [] = "";
+                // $fileNames [] = "";
+                $fileNames [] = $imageOrFileName;
             }
         }
 

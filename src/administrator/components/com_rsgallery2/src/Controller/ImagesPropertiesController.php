@@ -10,7 +10,7 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Administrator\Controller;
 
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
