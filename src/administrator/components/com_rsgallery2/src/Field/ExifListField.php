@@ -69,7 +69,7 @@ class ExifListField extends ListField
                 //--- type, name and  translation text --------------------------------
 
                 [$type, $name] = ImageExif::tag2TypeAndName($enabledTag);
-                $translationId = ImageExif::exifTranslationId($name);
+                $translationId = ImageExif::exifTranslationId($type, $name);
                 $translationText = Text::_($translationId);
 
                 //--- create option element ----------------------------------------------

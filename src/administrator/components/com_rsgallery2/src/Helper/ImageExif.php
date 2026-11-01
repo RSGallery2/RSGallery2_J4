@@ -163,6 +163,19 @@ class ImageExif
     {
         $supportedTags = [];
 
+        $supportedTags [] = 'COMPUTED.ApertureFNumber';
+        $supportedTags [] = 'COMPUTED.ByteOrderMotorola';
+        $supportedTags [] = 'COMPUTED.Height';
+        $supportedTags [] = 'COMPUTED.html';
+        $supportedTags [] = 'COMPUTED.IsColor';
+        $supportedTags [] = 'COMPUTED.Thumbnail.FileType';
+        $supportedTags [] = 'COMPUTED.Thumbnail.MimeType';
+        $supportedTags [] = 'COMPUTED.Width';
+        $supportedTags [] = 'COMPUTED.Thumbnail.Height';
+        $supportedTags [] = 'COMPUTED.Thumbnail.Width';
+        $supportedTags [] = 'COMPUTED.UserComment';
+        $supportedTags [] = 'COMPUTED.UserCommentEncoding';
+
         $supportedTags [] = 'EXIF.aperture';
         $supportedTags [] = 'EXIF.color';
         $supportedTags [] = 'EXIF.colorSpace';
@@ -209,6 +222,52 @@ class ImageExif
         $supportedTags [] = 'EXIF.xResolution';
         $supportedTags [] = 'EXIF.YCbCrPositioning';
         $supportedTags [] = 'EXIF.yResolution';
+        $supportedTags [] = 'EXIF.ApertureValue';
+        $supportedTags [] = 'EXIF.BrightnessValue';
+        $supportedTags [] = 'EXIF.CFAPattern';
+        $supportedTags [] = 'EXIF.ComponentsConfiguration';
+        $supportedTags [] = 'EXIF.CompressedBitsPerPixel';
+        $supportedTags [] = 'EXIF.Contrast';
+        $supportedTags [] = 'EXIF.CustomRendered';
+        $supportedTags [] = 'EXIF.DateTimeOriginal';
+        $supportedTags [] = 'EXIF.DigitalZoomRatio';
+        $supportedTags [] = 'EXIF.ExposureBiasValue';
+        $supportedTags [] = 'EXIF.ExposureMode';
+        $supportedTags [] = 'EXIF.ExposureProgram';
+        $supportedTags [] = 'EXIF.FileSource';
+        $supportedTags [] = 'EXIF.Flash';
+        $supportedTags [] = 'EXIF.FocalLengthIn35mmFilm';
+        $supportedTags [] = 'EXIF.GainControl';
+        $supportedTags [] = 'EXIF.ImageUniqueID';
+        $supportedTags [] = 'EXIF.InteroperabilityOffset';
+        $supportedTags [] = 'EXIF.ISOSpeedRatings';
+        $supportedTags [] = 'EXIF.LightSource';
+        $supportedTags [] = 'EXIF.MaxApertureValue';
+        $supportedTags [] = 'EXIF.Saturation';
+        $supportedTags [] = 'EXIF.SceneCaptureType';
+        $supportedTags [] = 'EXIF.SensingMethod';
+        $supportedTags [] = 'EXIF.Sharpness';
+        $supportedTags [] = 'EXIF.ShutterSpeedValue';
+        $supportedTags [] = 'EXIF.SubjectDistanceRange';
+        $supportedTags [] = 'EXIF.SubSecTime';
+        $supportedTags [] = 'EXIF.SubSecTimeDigitized';
+        $supportedTags [] = 'EXIF.SubSecTimeOriginal';
+//        $supportedTags [] = 'EXIF.UndefinedTag:0x8830';
+//        $supportedTags [] = 'EXIF.UndefinedTag:0xA434';
+//        $supportedTags [] = 'EXIF.UndefinedTag:0xEA1C';
+//        $supportedTags [] = 'EXIF.UndefinedTag:0xEA1D';
+        $supportedTags [] = 'EXIF.UserComment';
+
+        $supportedTags [] = 'GPS.GPSAltitude';
+        $supportedTags [] = 'GPS.GPSAltitudeRef';
+        $supportedTags [] = 'GPS.GPSDateStamp';
+        $supportedTags [] = 'GPS.GPSLatitude';
+        $supportedTags [] = 'GPS.GPSLatitudeRef';
+        $supportedTags [] = 'GPS.GPSLongitude';
+        $supportedTags [] = 'GPS.GPSLongitudeRef';
+        $supportedTags [] = 'GPS.GPSMapDatum';
+        $supportedTags [] = 'GPS.GPSTimeStamp';
+        $supportedTags [] = 'GPS.GPSVersion';
 
         $supportedTags [] = 'FILE.FileDateTime';
         $supportedTags [] = 'FILE.FileName';
@@ -217,15 +276,7 @@ class ImageExif
         $supportedTags [] = 'FILE.MimeType';
         $supportedTags [] = 'FILE.SectionsFound';
 
-        $supportedTags [] = 'COMPUTED.ApertureFNumber';
-        $supportedTags [] = 'COMPUTED.ByteOrderMotorola';
-        $supportedTags [] = 'COMPUTED.Height';
-        $supportedTags [] = 'COMPUTED.html';
-        $supportedTags [] = 'COMPUTED.IsColor';
-        $supportedTags [] = 'COMPUTED.Thumbnail.FileType';
-        $supportedTags [] = 'COMPUTED.Thumbnail.MimeType';
-        $supportedTags [] = 'COMPUTED.Width';
-
+//        $supportedTags [] = 'IFD0.UndefinedTag:0xEA1C';
         $supportedTags [] = 'IFD0.DateTime';
         $supportedTags [] = 'IFD0.Exif_IFD_Pointer';
         $supportedTags [] = 'IFD0.GPS_IFD_Pointer';
@@ -238,6 +289,12 @@ class ImageExif
         $supportedTags [] = 'IFD0.YCbCrPositioning';
         $supportedTags [] = 'IFD0.YResolution';
 
+        $supportedTags [] = 'INTEROP.InterOperabilityIndex';
+        $supportedTags [] = 'INTEROP.InterOperabilityVersion';
+
+        $supportedTags [] = 'THUMBNAIL.ImageLength';
+        $supportedTags [] = 'THUMBNAIL.ImageWidth';
+        $supportedTags [] = 'THUMBNAIL.Orientation';
         $supportedTags [] = 'THUMBNAIL.Compression';
         $supportedTags [] = 'THUMBNAIL.JPEGInterchangeFormat';
         $supportedTags [] = 'THUMBNAIL.JPEGInterchangeFormatLength';
@@ -288,9 +345,10 @@ class ImageExif
      *
      * @since  5.1.0
      */
-    public static function exifTranslationId($ExifName)
+    public static function exifTranslationId(string $type, string $ExifName)
     {
-        $translationId = 'COM_RSGALLERY2_EXIF_TAG_' . strtoupper((string) $ExifName);
+        $lang_pre_id = 'COM_RSGALLERY2_' . strtoupper ($type) . '_TAG_';
+        $translationId = $lang_pre_id  . strtoupper((string) $ExifName);
 
         return $translationId;
     }
@@ -382,7 +440,7 @@ class ImageExif
 
         foreach ($supportedExifTags as $exifTag) {
             [$type, $name] = ImageExif::tag2TypeAndName($exifTag);
-            $neededIds [] = ImageExif::exifTranslationId($name);
+            $neededIds [] = ImageExif::exifTranslationId($type, $name);
         }
 
         return $neededIds;

@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Workflow\Workflow;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Filesystem\Path;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
@@ -88,7 +89,36 @@ class ImageModel extends AdminModel
 
         parent::__construct($config, $factory);
     }
+
     /**/
+    public function getImagePathName_byId(int $imgId)
+    {
+        $ImagePathName = '';
+
+        //--- image name and parent gallery id from image id --------------------------
+
+        [$imgName, $galId] = $this->getImageNameGalleryId_byId($imgId);
+
+        if (!empty ($imgName) && $galId > 1) {
+
+            //--- get path by image name and gallery id -----------------------
+
+            $rsgConfig        = ComponentHelper::getParams('com_rsgallery2');
+            $use_j3x_location = $rsgConfig->get('useJ3xOldPaths');
+
+            /* @var ImageFileModel $imgFileModel */
+            $imgFileModel = $this->getInstance('imageFile', 'RSGallery2Model');
+
+            $imagePathFileNames = $imgFileModel->allFilePathsOf($imgName, $galId, $use_j3x_location);
+
+            if (!empty ($imagePathFileNames)) {
+                // original path
+                $ImagePathName = $imagePathFileNames[0];
+            }
+        }
+
+        return $ImagePathName;
+    }
 
     /**
      * Method to test whether a record can be deleted.
@@ -139,17 +169,17 @@ class ImageModel extends AdminModel
     /**
      * Method to get a table object, load it if necessary.
      *
-     * @param   string  $type    The table name. Optional.
-     * @param   string  $prefix  The class prefix. Optional.
-     * @param   array   $config  Configuration array for model. Optional.
+     * @param   string  $name     The table name. Optional.
+     * @param   string  $prefix   The class prefix. Optional.
+     * @param   array   $options  Configuration array for model. Optional.
      *
      * @return  Table  A Table object
      *
      * @since   5.1.0
      */
-    public function getTable($type = 'Image', $prefix = 'Rsgallery2Table', $config = [])
+    public function getTable($name = 'Image', $prefix = 'Rsgallery2Table', $options = [])
     {
-        return parent::getTable($type, $prefix, $config);
+        return parent::getTable($name, $prefix, $options);
     }
 
     /**
@@ -668,16 +698,16 @@ class ImageModel extends AdminModel
     /**
      * Method to change the title & alias.
      *
-     * @param   integer  $dummy  Not used.
-     * @param   string   $alias  The alias.
-     * @param   string   $title  The title.
+     * @param   integer  $categoryId  Not used.
+     * @param   string   $alias       The alias.
+     * @param   string   $title       The title.
      *
      * @return    array  Contains the modified title and alias.
      *
      * @since     5.1.0
      */
     /**/
-    protected function generateNewTitle($dummy, $alias, $title)
+    protected function generateNewTitle($categoryId, $alias, $title)
     {
         // Alter the title & alias
         $table = $this->getTable();
@@ -726,80 +756,81 @@ class ImageModel extends AdminModel
      * @return bool true if successful
      *
      * @throws \Exception
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     /**
-    public function createImageDbBaseItem($imageName)
-    {
-        $IsImageDbCreated = false;
-
-        //--- Create new item -------------------
-
-        $item = $this->getTable();
-        $item->load(0);
-
-        //----------------------------------------------------
-        // image properties
-        //----------------------------------------------------
-
-        //--- image name -------------------------------------
-
-        $item->name = $imageName; // ToDo: check for unique or remove unique. It may already be there
-
-        //--- unique image title and alias -------------------
-        $path_parts = pathinfo($imageName);
-        $fileName   = $path_parts['filename'];
-
-        $item->title = $this->generateNewImageName($fileName, 0);
-        $item->alias = $item->title;
-        $this->alias = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($this->alias);
-
-        // Create unique alias and title
-        list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
-        $item->title = $title;
-        $item->title = $title;
-        $item->alias = $alias;
-
-        //--- date -------------------------------------------
-
-        $date       = Factory::getDate();
-        $item->date = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
-
-        //--- user id -------------------------------------------
-
-        $user         = Factory::getApplication()->getIdentity();
-        $userId       = $user->id;
-        $item->userid = $userId;
-
-        //---  -------------------------------------------
-
-        $item->approved = 0; // dont know why, all images end up with zero ....
-
-        //----------------------------------------------------
-        // save new object
-        //----------------------------------------------------
-
-        // Lets store it!
-        $item->check();
-
-        if (!$item->store())
-        {
-            // ToDo: collect erorrs and display over enque .... with errr type
-            $UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
-            Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
-
-            // $IsImageDbCreated = false;
-
-            $this->setError($this->_db->getErrorMsg());
-        }
-        else
-        {
-
-            $IsImageDbCreated = true;
-        }
-
-        return $IsImageDbCreated;
-    }
-    /**/
+     * public function createImageDbBaseItem($imageName)
+     * {
+     * $IsImageDbCreated = false;
+     *
+     * //--- Create new item -------------------
+     *
+     * $item = $this->getTable();
+     * $item->load(0);
+     *
+     * //----------------------------------------------------
+     * // image properties
+     * //----------------------------------------------------
+     *
+     * //--- image name -------------------------------------
+     *
+     * $item->name = $imageName; // ToDo: check for unique or remove unique. It may already be there
+     *
+     * //--- unique image title and alias -------------------
+     * $path_parts = pathinfo($imageName);
+     * $fileName   = $path_parts['filename'];
+     *
+     * $item->title = $this->generateNewImageName($fileName, 0);
+     * $item->alias = $item->title;
+     * $this->alias = \Joomla\CMS\Filter\OutputFilter::stringURLSafe($this->alias);
+     *
+     * // Create unique alias and title
+     * list($title, $alias) = $this->generateNewTitle(null, $item->alias, $item->title);
+     * $item->title = $title;
+     * $item->title = $title;
+     * $item->alias = $alias;
+     *
+     * //--- date -------------------------------------------
+     *
+     * $date       = Factory::getDate();
+     * $item->date = HTMLHelper::_('date', $date, 'Y-m-d H:i:s');
+     *
+     * //--- user id -------------------------------------------
+     *
+     * $user         = Factory::getApplication()->getIdentity();
+     * $userId       = $user->id;
+     * $item->userid = $userId;
+     *
+     * //---  -------------------------------------------
+     *
+     * $item->approved = 0; // dont know why, all images end up with zero ....
+     *
+     * //----------------------------------------------------
+     * // save new object
+     * //----------------------------------------------------
+     *
+     * // Lets store it!
+     * $item->check();
+     *
+     * if (!$item->store())
+     * {
+     * // ToDo: collect erorrs and display over enque .... with errr type
+     * $UsedNamesText = '<br>SrcImage: ' . $fileName . '<br>DstImage: ' . $item->name;
+     * Factory::getApplication()->enqueueMessage(Text::_('copied image name could not be inseted in database') . $UsedNamesText, 'warning');
+     *
+     * // $IsImageDbCreated = false;
+     *
+     * $this->setError($this->_db->getErrorMsg());
+     * }
+     * else
+     * {
+     *
+     * $IsImageDbCreated = true;
+     * }
+     *
+     * return $IsImageDbCreated;
+     * }
+     * /**/
 
     /**
      * Create a new item in database for image
@@ -909,16 +940,21 @@ class ImageModel extends AdminModel
     }
     /**/
 
+
+
     /**
      * Move images to a different gallery
      * in database and care for new ordering
      *
-     * @return bool true if successful
+     * @param $newGalleryId
+     * @param $cids
      *
+     * @return int[] $copiedCount, $errorCount
+     *
+     * @throws \Exception
      * @since  5.1.0
      */
-    /**/
-    public function moveImagesToGallery($newGalleryId, $cids) // ToDo: Rename moveImagesToGallery (imageIds, galleryId)
+    public function moveImagesToGallery($newGalleryId, $cids): array // ToDo: Rename moveImagesToGallery (imageIds, galleryId)
     {
         $copiedCount = 0;
         $errorCount  = 0;
@@ -1016,7 +1052,6 @@ class ImageModel extends AdminModel
                             try {
                                 if (!empty($srcFile) && is_file($srcFile)) {
                                     if (!empty($dstFile) && Path::check($dstFile)) {
-
                                         //=== move =======================================
 
                                         rename($srcFile, $dstFile);
@@ -1024,7 +1059,6 @@ class ImageModel extends AdminModel
                                         //=== delete original ==================================
 
                                         unlink($srcFile);
-
                                     } else {
                                         $OutTxt = '';
                                         $OutTxt .= 'Error moving file: ' . '<br>';
@@ -1136,12 +1170,15 @@ class ImageModel extends AdminModel
      * Copy already defined images to a different gallery
      * Both database and image file will be copied
      *
-     * @return bool true if successful
+     * @param $newGalleryId
+     * @param $cids
      *
+     * @return int[] $copiedCount, $errorCount
+     *
+     * @throws \Exception
      * @since  5.1.0
      */
-    /**/
-    public function copyImagesToGallery($newGalleryId, $cids)
+    public function copyImagesToGallery($newGalleryId, $cids): array
     {
         $copiedCount = 0;
         $errorCount  = 0;
@@ -1154,14 +1191,14 @@ class ImageModel extends AdminModel
                     //----------------------------------------------------
                     // Prepare
                     //----------------------------------------------------
-
-                    $item = $this->getTable();
-
                     $rsgConfig        = ComponentHelper::getParams('com_rsgallery2');
                     $use_j3x_location = $rsgConfig->get('useJ3xOldPaths');
 
                     /* @var ImageFileModel $imgFileModel */
                     $imgFileModel = $this->getInstance('imageFile', 'RSGallery2Model');
+
+                    $item = $this->getTable();
+
                     //$imgFileModel = $this->getModel('imageFile');
 
                     //----------------------------------------------------
@@ -1253,11 +1290,9 @@ class ImageModel extends AdminModel
                             try {
                                 if (!empty($srcFile) && is_file($srcFile)) {
                                     if (!empty($dstFile) && Path::check($dstFile)) {
-
                                         //=== copy =======================================
 
                                         copy($srcFile, $dstFile);
-
                                     } else {
                                         $OutTxt = '';
                                         $OutTxt .= 'Error copying file: ' . '<br>';
@@ -1744,7 +1779,7 @@ class ImageModel extends AdminModel
             $exifTranslated = [];
             foreach ($exifItems as $exifTag => $value) {
                 [$type, $name] = ImageExif::tag2TypeAndName($exifTag);
-                $transId                  = $oImageExif::exifTranslationId($name);
+                $transId                  = $oImageExif::exifTranslationId($type, $name);
                 $exifTranslated[$transId] = $value;
             }
 
@@ -1764,5 +1799,38 @@ class ImageModel extends AdminModel
 
         return $exifDataOfFile;
     }
-    /**/
+
+    /**
+     * @param   int  $imgId
+     *
+     *
+     * @since version
+     */
+    private function getImageNameGalleryId_byId(int $imgId)
+    {
+        $name  = '';
+        $galId = 0;
+
+        try {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+            $query = $db
+                ->createQuery()
+                ->select($db->quoteName('gallery_id'))
+                ->select($db->quoteName('name'))
+                ->from('#__rsg2_images')
+                ->where($db->quoteName('id') . '=' . (int)$imgId);
+
+            $db->setQuery($query);
+            $imgData = $db->loadObject();
+
+            $name  = $imgData->name;
+            $galId = $imgData->gallery_id;
+
+        } catch (\RuntimeException $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+        }
+
+        return [$name, $galId];
+    }
 }

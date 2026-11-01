@@ -124,9 +124,10 @@ class SlidePageJ3XModel extends Imagesj3xModel
             $exifTranslated = [];
             foreach ($exifItems as $exifTag => $value) {
                 [$type, $name] = ImageExif::tag2TypeAndName($exifTag);
-                $transId                  = $oImageExif::exifTranslationId($name);
+                $transId                  = $oImageExif::exifTranslationId($type, $name);
                 $exifTranslated[$transId] = $value;
             }
+
             //---  -----------------------------------------------------------
 
             if (!empty($exifTranslated)) {

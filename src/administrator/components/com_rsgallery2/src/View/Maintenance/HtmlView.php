@@ -33,7 +33,7 @@ use Rsgallery2\Component\Rsgallery2\Administrator\Model\J3xExistModel;
 /**
  * View class for a list of rsgallery2.
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -43,10 +43,10 @@ class HtmlView extends BaseHtmlView
      * @var  string
      *
      * @since 5.1.0
-    */
+     */
     protected $sidebar;
 
-    protected $buttons = [];
+    protected array $buttons = [];
 
     protected $isDebugBackend;
     protected $isDevelop;
@@ -59,12 +59,17 @@ class HtmlView extends BaseHtmlView
 //    protected $developActive;
 
     protected $intended;
-    protected $exifImageFiles;
+    protected array $exifImageFiles;
 
     // ToDo: Use other rights instead of core.admin -> IsRoot ?
     // core.admin is the permission used to control access to
     // the global config
     protected $UserIsRoot;
+    /**
+     * @var array
+     * @since version
+     */
+    protected array $pathFileIdxs;
 
     /**
      * Method to display the view.
@@ -73,7 +78,8 @@ class HtmlView extends BaseHtmlView
      *
      * @return  mixed  A string if successful, otherwise an \Exception object.
      *
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     public function display($tpl = null)
     {
         //--- config --------------------------------------------------------------------
@@ -134,63 +140,79 @@ class HtmlView extends BaseHtmlView
 
                 // fall back
                 $this->exifDataRawOfFiles = [];
+                $this->pathFileIdxs       = [];
 
                 //--- files and ids from last call --------------------------------------
 
-                $cids         = ArrayHelper::toInteger($input->get('cids', [], 'ARRAY'));
-                $inGalleryIds = ArrayHelper::toInteger($input->get('galIds', [], 'array'));
-                //$inFileNames  = ArrayHelper::toString($input->get('imgNames', [], 'array'));
-                $inFileNames = $input->get('imgNames', [], 'array');
+                $cids       = ArrayHelper::toInteger($input->get('cids', [], 'ARRAY'));
+                $inImageIds = ArrayHelper::toInteger($input->get('imgIds', [], 'array'));
+                //$inFileNames  = ArrayHelper::toString($input->get('imgPathFilenames', [], 'array'));
+                $inFileNames = $input->get('imgPathFilenames', [], 'array');
 
                 //--- self call by user -------------------------------------------------
                 // (self call with user input )
 
-                if (!empty($inFileNames)) {
-                    $test1 = json_encode($inFileNames);
+                $this->exifImageFiles = [];
 
-                    //--- reuse files ---------------------------------------------------
+                if (!empty($inImageIds)) {
+                    //--- Assign not existing file path names ---------------------------------------------------
 
-                    $this->exifImageFiles = [];
+                    $pathFileNames = [];
+                    $pathFileIdxs  = [];
+
+                    $imgModel = new ImageModel();
+
                     foreach ($inFileNames as $idx => $fileName) {
-                        $GalleryId = '';
-                        if ($inGalleryIds[$idx] > 0) {
-                            $GalleryId = $inGalleryIds[$idx];
+                        $imgId = $inImageIds[$idx];
+
+                        // image id is mster
+                        if ($imgId > 0) {
+                            $fileName = $imgModel->getImagePathName_byId($imgId);
+
+                            // display fields
+                            $this->exifImageFiles [] = [$imgId, $fileName];
+
+                            // display exif data
+                            if (empty($cids) || in_array($imgId, $cids)) {
+                                $pathFileNames [] = $fileName;
+                                $pathFileIdxs []  = [$idx, $imgId];
+                            }
+                        } else {
+                            // no img id but filemname is given
+                            if (!empty($fileName)) {
+                                // display fields
+                                $this->exifImageFiles [] = [$imgId, $fileName];
+
+                                // display exif data
+                                $pathFileNames [] = $fileName;
+                                $pathFileIdxs []  = [$idx, $imgId];
+                            }
                         }
-                        $this->exifImageFiles [] = [$GalleryId, $fileName];
                     }
 
                     //--- collect files exif data --------------------------------
 
-                    // selections
-                    if (!empty($inGalleryIds)) {
-                        // create absolute paths (ToDo: improve for galleries ...
-                        $pathFileNames = $this->filenamesByGalIdAndImgName($inGalleryIds, $inFileNames);
-                        // select chosen files
-//                        $exifFileNames = $this->selectedFileNames($inGalleryIds, $pathFileNames);
+                    if (!empty($pathFileNames)) {
+                        //--- extract exif data -----------------------------
 
-//                        if (!empty($exifFileNames)) {
-                        if (!empty($pathFileNames)) {
-                            //--- extract exif data -----------------------------
+                        $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($pathFileNames);
+                        $this->pathFileIdxs       = $pathFileIdxs;
 
-                            $imgModel = new ImageModel();
-                            // $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($exifFileNames);
-                            $this->exifDataRawOfFiles = $imgModel->exifDataAllOfFiles($pathFileNames);
+                        //--- match exif names with enabled / supported --------------------------------
 
-                            //--- match exif names with enabled / supported --------------------------------
+                        // ToDo: rename name to tags
+                        $exifTags = [];
+                        foreach ($this->exifDataRawOfFiles as $exifDataOfFile) {
+                            if (!empty($exifDataOfFile[1])) {
+                                // $fileName = $exifDataOfFile[0];
+                                $exifData = $exifDataOfFile[1];
 
-                            // ToDo: rename name to tags
-                            $exifTags = [];
-                            foreach ($this->exifDataRawOfFiles as $exifDataOfFile) {
-                                if (!empty($exifDataOfFile[1])) {
-                                    // $fileName = $exifDataOfFile[0];
-                                    $exifData = $exifDataOfFile[1];
+                                foreach ($exifData as $exifTagFull => $exifItem) {
+                                    $exifTag = $exifTagFull;
 
-                                    foreach ($exifData as $exifTagFull => $exifItem) {
-                                        $exifTag = $exifTagFull;
-
-                                        if (!in_array($exifTag, $exifTags)) {
-                                            $exifTags [] = $exifTag;
-                                        }
+                                    if (!in_array($exifTag, $exifTags)) {
+                                        $exifTags [] = $exifTag;
+                                    }
 //                                    $exifDataFullName = $exifItem[0];
 
 //                                    // ToDo: ? use part/full name
@@ -199,14 +221,13 @@ class HtmlView extends BaseHtmlView
 //                                    if (!in_array($exifTags, $exifName[1])) {
 //                                        $exifTags [] = $exifDataFullName;
 //                                    }
-                                    }
                                 }
                             }
-
-                            $this->exifAllTagsCollected  = $exifTags;
-                            $this->exifIsNotSupported    = imageExif::checkTagsNotSupported($exifTags);
-                            $this->exifIsNotUserSelected = imageExif::checkNotUserSelected($exifTags);
                         }
+
+                        $this->exifAllTagsCollected  = $exifTags;
+                        $this->exifIsNotSupported    = imageExif::checkTagsNotSupported($exifTags);
+                        $this->exifIsNotUserSelected = imageExif::checkNotUserSelected($exifTags);
                     }
                 } else {
                     //--- first call -------------------------------------------------
@@ -215,6 +236,8 @@ class HtmlView extends BaseHtmlView
                         // preset file list
                         $this->exifImageFiles = $this->presetExifFileList();
                     } else {
+                        // ToDo: last 5 ids
+                        //
                     }
                 }
 
@@ -225,7 +248,7 @@ class HtmlView extends BaseHtmlView
                 if (!empty($this->exifTagsSupported)) {
                     foreach ($this->exifTagsSupported as $exifTag) {
                         [$type, $name] = ImageExif::tag2TypeAndName($exifTag);
-                        $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($name);
+                        $this->exifTagsTranslationIds [] = imageExif::exifTranslationId($type, $name);
                     }
 
                     // ToDo: read ini file for not found translations
@@ -237,7 +260,7 @@ class HtmlView extends BaseHtmlView
 
                 //--- prepare empty input for files -------------------------------------
 
-                $this->exifImageFiles = [];
+                // $this->exifImageFiles = [];
                 for ($idx = count($this->exifImageFiles); $idx < 10; $idx++) {
                     $this->exifImageFiles [] = ['', ''];
                 }
@@ -257,7 +280,8 @@ class HtmlView extends BaseHtmlView
      *
      * @return  void
      *
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     protected function addToolbar($Layout)
     {
         // Get the toolbar object instance
@@ -295,8 +319,10 @@ class HtmlView extends BaseHtmlView
                 ); // 'maintenance');
                 $toolbar->cancel('maintenance.cancel', 'JTOOLBAR_CLOSE');
 
-                ToolBarHelper::custom('maintenance.checkImageExifData', 'none fas fa-camera-retro', 'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
-                $toolbar->link('index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED');
+                // ToolBarHelper::custom('maintenance.checkImageExifData', 'image fas fa-camera-retro', 'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', true);
+//                ToolBarHelper::custom('maintenance.checkImageExifData', 'none fas fa-camera-retro', 'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', true);
+                ToolBarHelper::custom('maintenance.checkImageExifData', 'none fa fa-camera-retro', 'image', 'COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', false);
+//                $toolbar->link('COM_RSGALLERY2_READ_IMAGE_EXIF_SELECTED', 'index.php?option=com_rsgallery2&view=maintenance&layout=checkimageexif', );
 
                 break;
 
@@ -349,24 +375,26 @@ class HtmlView extends BaseHtmlView
      * @param   $ImageNames
      *
      *
-     * @since   5.1.0     */
-    public function filenamesByGalIdAndImgName($galleryIds = [], $ImageOrFileNames = [])
-    {
-        $fileNames = [];
-
-        foreach ($ImageOrFileNames as $idx => $imageOrFileName) {
-            // no gallery specified => filename given
-            if (empty($galleryIds[$idx])) {
-                $fileNames [] = $imageOrFileName;
-            } else {
-                // ToDo:
-                // $fileNames [] = "";
-                $fileNames [] = $imageOrFileName;
-            }
-        }
-
-        return $fileNames;
-    }
+     * @since   5.1.0
+     *
+     * public function filenamesByGalIdAndImgName($galleryIds = [], $ImageOrFileNames = [])
+     * {
+     * $fileNames = [];
+     *
+     * foreach ($ImageOrFileNames as $idx => $imageOrFileName) {
+     * // no gallery specified => filename given
+     * if (empty($galleryIds[$idx])) {
+     * $fileNames [] = $imageOrFileName;
+     * } else {
+     * // ToDo:
+     * // $fileNames [] = "";
+     * $fileNames [] = $imageOrFileName;
+     * }
+     * }
+     *
+     * return $fileNames;
+     * }
+     * /**/
 
     /** ToDo: put into model (image(s))
      *
@@ -374,7 +402,8 @@ class HtmlView extends BaseHtmlView
      * @param   $fileNames
      *
      *
-     * @since   5.1.0     */
+     * @since   5.1.0
+     */
     public function selectedFileNames($cids = [], $inFileNames = [])
     {
         $fileNames = [];
@@ -429,6 +458,7 @@ class HtmlView extends BaseHtmlView
     /**
      * Check if com_rsg2_exif.ini contains all needed translations
      * Returns missing list
+     *
      * @param   array  $neededIds
      *
      * @return array
@@ -442,7 +472,8 @@ class HtmlView extends BaseHtmlView
 
         //--- read exif language file ---------------------------------------------
 
-        $changeLogModelFileName = JPATH_ADMINISTRATOR . '/components/com_rsgallery2/language/en-GB/com_rsg2_exif.ini';
+        $changeLogModelFileName = JPATH_ADMINISTRATOR
+            . '/components/com_rsgallery2/language/en-GB/com_rsg2_exif.ini';
 
         $handle = fopen($changeLogModelFileName, "r");
         if ($handle) {
@@ -472,6 +503,7 @@ class HtmlView extends BaseHtmlView
 
     /**
      * Return the translation ID "COM_RSGALLERY2_EXIF_TAG..." from actual line
+     *
      * @param   bool|string  $line
      *
      * @return string
@@ -482,13 +514,18 @@ class HtmlView extends BaseHtmlView
     {
         $transId = '';
 
-        // COM_RSGALLERY2_EXIF_TAG_FILEMODIFIEDDATE="File modified date"
+        // COM_RSGALLERY2_//EXIF, ...//_TAG_FILEMODIFIEDDATE="File modified date"
 
-        if (str_starts_with($line, 'COM_RSGALLERY2_EXIF_TAG')) {
+        // Valid translation ID ?
+        if (str_starts_with($line, 'COM_RSGALLERY2')) {
+
+            //--- extract first part -------------------------------
+
             $parts = explode('=', $line);
 
             if (!empty($parts[0])) {
                 $transId = $parts[0];
+
             }
         }
 
