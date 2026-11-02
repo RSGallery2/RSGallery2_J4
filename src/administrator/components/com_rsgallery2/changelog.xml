@@ -7,11 +7,12 @@
 		<date>2026-09-??</date>
 		<change>
 			<item>Improved: Upload limits are now shown as table to better distinguish source of limit</item>
-			<item>Improved: Display of galleries (root/parent/child): sub galleries now in one row with parent</item>
+			<item>Improved: Display of galleries (root/parent/child): Sub galleries now in one row with parent</item>
 		</change>
 		<fix>
+			<item>Fixed: No title was displayed for image thumbnails</item>
 			<item>Fixed: Display of root/parent galleries list: Not reachable images </item>
-			<item>Fixed: Display of root/parent galleries list: pagination was ignored </item>
+			<item>Fixed: Display of root/parent galleries list: Pagination was ignored </item>
 			<item>Fixed: Display of parent/child galleries list: Now using recursive fetch of child galleries</item>
 		</fix>
 		<note>
@@ -24,7 +25,7 @@
 		<version>5.3.3</version>
 		<date>2026-08-31</date>
 		<fix>
-			<item>Fixed: Batch copy/move of images were only updateing the db items. No images can be moved/copied to another gallery</item>
+			<item>Fixed: Batch copy/move of images were only updateing the db items. No images could be moved/copied to another gallery</item>
 		</fix>
 		<note>
 			<item></item>
