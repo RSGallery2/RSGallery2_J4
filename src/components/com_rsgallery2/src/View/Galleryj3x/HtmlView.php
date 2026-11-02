@@ -12,13 +12,12 @@
 
 namespace Rsgallery2\Component\Rsgallery2\Site\View\Galleryj3x;
 
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Pagination\Pagination;
-use Joomla\Registry\Registry;
 use Joomla\CMS\User\User;
+use Joomla\Registry\Registry;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -27,7 +26,7 @@ use Joomla\CMS\User\User;
 /**
  * HTML Rsgallery2 View class for the Rsgallery2 component
  *
-     * @since      5.1.0
+ * @since      5.1.0
  */
 class HtmlView extends BaseHtmlView
 {
@@ -59,7 +58,8 @@ class HtmlView extends BaseHtmlView
      * The page parameters
      *
      * @var    Registry|null
-     * @since  5.1.0     */
+     * @since  5.1.0
+     */
     protected $params = null;
 
     /**
@@ -100,7 +100,7 @@ class HtmlView extends BaseHtmlView
         }
         /* @var Galleryj3xModel $model */
         /** @var \Rsgallery2\Component\Rsgallery2\Site\Model\Galleryj3xModel $model */
-        $model         = $this->getModel();
+        $model = $this->getModel();
 
         // Get some data from the models
         $state            =
@@ -115,7 +115,7 @@ class HtmlView extends BaseHtmlView
 
         $this->isDebugSite   = $params->get('isDebugSite');
         $this->isDevelopSite = $params->get('isDevelop');
-        $this->gallery = $model->galleryData($this->galleryId);
+        $this->gallery       = $model->galleryData($this->galleryId);
 
         // ToDo: Status of images
 
