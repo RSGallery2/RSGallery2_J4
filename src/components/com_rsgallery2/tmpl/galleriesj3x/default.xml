@@ -29,19 +29,34 @@
     <fields name="params">
         <fieldset name="basic">
 
-            <field
-                    name="galleries_show_title"
-                    type="radio"
-                    default="1"
-                    label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE"
-                    description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE_DESC"
-                    class="btn-group btn-group-yesno">
-                >
-                <option value="1">JYES</option>
-                <option value="0">JNO</option>
-            </field>
+			<!--		<field-->
+			<!--				name="galleries_show_title"-->
+			<!--				type="list"-->
+			<!--				default="2"-->
+			<!--				label="*Show gallery title"-->
+			<!--				description="*Show title of gallery near thumb"-->
+			<!--				useglobal="true"-->
+			<!--		>-->
+			<!--			<option value="0">JNO</option>-->
+			<!--			<option value="1">*Above thumb</option>-->
+			<!--			<option value="2">*Below thumb</option>-->
+			<!--			<option value="3">*Above description</option>-->
+			<!--			<option value="4">*Below description</option>-->
+			<!--		</field>-->
+			<field
+				name="galleries_show_title"
+				type="radio"
+				default="1"
+				label="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE"
+				description="COM_RSGALLERY2_MENU_J3X_GALLERIES_SHOW_TITLE_DESC"
+				useglobal="true"
+				class="btn-group btn-group-yesno">
+				>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
 
-            <field
+			<field
                     name="galleries_show_description"
                     type="radio"
                     default="0"

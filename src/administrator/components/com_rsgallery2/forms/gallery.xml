@@ -375,17 +375,17 @@
 			</fieldset>
 
 			<fieldset name="layout2" label="COM_RSGALLERY2_FIELD_LAYOUT_LABEL">
-				<field
-						name="layoutOfImageThumbs"
-						type="list"
-						default="layout02"
-						label="?thumbs layout"
-						description="?Select layout of thumbs in this gallery"
-				>
-					<option value="global">JGLOBAL_USE_GLOBAL</option>
-					<option value="layout01">layout 1</option>
-					<option value="layout02">layout 2</option>
-				</field>
+<!--				<field-->
+<!--						name="layoutOfImageThumbs"-->
+<!--						type="list"-->
+<!--						default="layout02"-->
+<!--						label="?thumbs layout"-->
+<!--						description="?Select layout of thumbs in this gallery"-->
+<!--				>-->
+<!--					<option value="global">JGLOBAL_USE_GLOBAL</option>-->
+<!--					<option value="layout01">layout 1</option>-->
+<!--					<option value="layout02">layout 2</option>-->
+<!--				</field>-->
 
 				<field
 						name="gallery_sort_order"
