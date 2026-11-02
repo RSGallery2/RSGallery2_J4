@@ -78,7 +78,7 @@ ksort($configVars);
                     }
 
                     echo '    <dt class="col-sm-3">' . $key . '</dt>';
-                    echo '    <dd class="col-sm-9">' . $value . '</dd>';
+                    echo '    <dd class="col-sm-8">' . $value . '</dd>';
                 }
                 echo '</dl>';
 
