@@ -931,9 +931,11 @@ class Galleriesj3xModel extends ListModel
         // Limit number of galleries shown by menu parameter
         $limit = $params->get('max_thumbs_in_root_galleries_view_j3x', 5, 'INT');
         $this->setState('list.limit', $limit);
+        //echo "<br>limit: " . $limit;
 
         $limitstart = $app->getInput()->get('limitstart', 0, 'uint');
         $this->setState('list.start', $limitstart);
+        //echo "<br>limitstart: " . $limitstart . "<br><br>";
 
         //// Force a language.
         //if (!empty($forcedLanguage))
